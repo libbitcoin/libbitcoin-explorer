@@ -5,10 +5,10 @@ make
 cd ..
 echo "Compiled newpriv"
 # Show Bitcoin address of a private key.
-cd showpriv
+cd addr
 make
 cd ..
-echo "Compiled showpriv"
+echo "Compiled addr"
 # Construct a transaction.
 cd mktx
 make
@@ -29,6 +29,12 @@ cd broadcast-tx
 make
 cd ..
 echo "Compiled broadcast-tx"
+# Send a transaction to a specific node
+# Useful for debugging by sending to a node you own.
+cd send-tx
+make
+cd ..
+echo "Compiled send-tx"
 # Create new deterministic wallet
 cd newseed
 make
@@ -57,11 +63,12 @@ echo "Compiled genpub"
 
 mkdir -p bin
 cp newpriv/newpriv bin/
-cp showpriv/showpriv bin/
+cp addr/addr bin/
 cp mktx/mktx bin/
 cp showtx/showtx bin/
 cp sign-input/sign-input bin/
 cp broadcast-tx/broadcast-tx bin/
+cp send-tx/send-tx bin/
 cp newseed/newseed bin/
 cp mpk/mpk bin/
 cp genpriv/genpriv bin/

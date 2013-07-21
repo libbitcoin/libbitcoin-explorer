@@ -1,12 +1,12 @@
 #include <iostream>
 #include <sstream>
-
 #include <bitcoin/bitcoin.hpp>
+
 using namespace bc;
 
 void error_exit(const char* message, int status=1)
 {
-    std::cerr << "priv: " << message << std::endl;
+    std::cerr << "addr: " << message << std::endl;
     exit(status);
 }
 

@@ -2,7 +2,7 @@ Try this to make a mini-wallet.
 
   $ ./build.sh
   $ ./bin/newpriv > private.key
-  $ ./bin/showpriv < private.key 
+  $ ./bin/addr < private.key 
   134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
 
 Now send some funds to your address (0.01 BTC).
@@ -20,11 +20,11 @@ Here is a screenshot of blockchain.info: http://i.imgur.com/YuQuLW4.png
 
 We can see the tx hash is:
 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3
-And there is a single output at index 0 that we want to spend.
+And there is a single output at index 1 that we want to spend.
 
 Construct the transaction:
 
-  $ ./bin/mktx tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
+  $ ./bin/mktx tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
 
 Because there is 100000 Satoshis going in, but only 9000 Satoshis out,
 the remaining 10000 Satoshis (0.0001 BTC) will be taken by the Bitcoin
