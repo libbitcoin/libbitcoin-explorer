@@ -83,3 +83,46 @@ Deterministic Wallet
   $ ./bin/genpriv 0 < wallet.seed > key0
   $ ./bin/genpub 0 < master_public_key
 
+--------------------------
+balance/history (Advanced)
+--------------------------
+
+To use these 2 tools, you will need Obelisk:
+
+  $ cd ~
+  $ git clone https://github.com/genjix/obelisk
+  $ cd obelisk
+  $ ./build.sh
+
+Make sure you have an up to date version of the blockchain available:
+
+  $ cd worker
+  $ ./download-blockchain.sh
+
+You can edit worker.cfg to configure the backend Bitcoin node(s).
+
+  $ cd ~/obelisk/
+  $ ./queue/ppqueue &
+  $ ./worker/obworker
+
+It's possible to run as many backend workers as you like. The
+load balancer (ppqueue) will distribute requests evenly among the backends.
+Use worker-output.sh to view debug info from the worker. Each worker must
+have their own unique copy of the blockchain database.
+
+The balance/history tools can then use a network connection to make requests
+against the load balancer.
+
+  $ cd ~/subx/
+  $ cd balance
+  $ make
+  $ cd ../history
+  $ make
+  $ cd ..
+
+  $ ./balance/balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+  100000
+  $ ./history/history 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+  Output Hash:Index                           Output Height   Value (Satoshis) Spend Hash:Index                Spend Height
+  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1  247683 100000      Unspent                                 230529504
+
