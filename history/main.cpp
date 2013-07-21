@@ -45,7 +45,7 @@ int main(int argc, char** argv)
         std::cerr << "balance: Invalid address." << std::endl;
         return -1;
     }
-    fullnode_interface fullnode;
+    fullnode_interface fullnode("tcp://localhost:5555");
     fullnode.blockchain.fetch_history(payaddr, history_fetched);
     while (!stopped)
     {
