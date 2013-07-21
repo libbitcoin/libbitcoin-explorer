@@ -2,8 +2,8 @@
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
-
 #include <bitcoin/bitcoin.hpp>
+
 using namespace bc;
 
 bool display_help()
