@@ -1,8 +1,14 @@
+Build:
+
+  $ autoreconf -i
+  $ ./configure
+  $ make
+
 Try this to make a mini-wallet.
 
-  $ ./build.sh
-  $ ./bin/newpriv > private.key
-  $ ./bin/addr < private.key 
+  $ cd src/
+  $ ./newpriv > private.key
+  $ ./addr < private.key 
   134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
 
 Now send some funds to your address (0.01 BTC).
@@ -24,7 +30,7 @@ And there is a single output at index 1 that we want to spend.
 
 Construct the transaction:
 
-  $ ./bin/mktx tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
+  $ ./mktx tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
 
 Because there is 100000 Satoshis going in, but only 9000 Satoshis out,
 the remaining 10000 Satoshis (0.0001 BTC) will be taken by the Bitcoin
@@ -32,7 +38,7 @@ network as a fee. This is how fees work internally in Bitcoin.
 
 'showtx' allows inspecting of tx files.
 
-  $ ./bin/showtx tx
+  $ ./showtx tx
   hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0
   version: 1  locktime: 0
   Input:
@@ -49,8 +55,8 @@ Note that the input script is empty.
 
 We will now sign the first input using our private key.
 
-  $ ./bin/sign-input tx 0 < private.key 
-  $ ./bin/showtx tx 
+  $ ./sign-input tx 0 < private.key 
+  $ ./showtx tx 
   hash: 4a8be467fb75f0f757649348dbb05762142236ec236ac9e55e4683d7083ffca2
   version: 1  locktime: 0
   Input:
@@ -72,16 +78,16 @@ Now the input script is prepared, and the tx is signed.
 
 Broadcast the final tx to the Bitcoin network.
 
-  $ ./bin/broadcast-tx tx
+  $ ./broadcast-tx tx
 
 --------------------
 Deterministic Wallet
 --------------------
 
-  $ ./bin/newseed > wallet.seed
-  $ ./bin/mpk < wallet.seed > master_public_key
-  $ ./bin/genpriv 0 < wallet.seed > key0
-  $ ./bin/genpub 0 < master_public_key
+  $ ./newseed > wallet.seed
+  $ ./mpk < wallet.seed > master_public_key
+  $ ./genpriv 0 < wallet.seed > key0
+  $ ./genpub 0 < master_public_key
 
 --------------------------
 balance/history (Advanced)
@@ -113,7 +119,7 @@ have their own unique copy of the blockchain database.
 The balance/history tools can then use a network connection to make requests
 against the load balancer.
 
-  $ cd ~/subx/
+  $ cd ~/subx/src/
   $ cd balance
   $ make
   $ cd ../history
