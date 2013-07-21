@@ -14,16 +14,20 @@ void history_fetched(const std::error_code& ec,
             << ec.message() << std::endl;
         return;
     }
-    uint64_t total_recv = 0, balance = 0;
+    std::cout << "Output Hash:Index\t\t\t\t\t\t\tOutput Height\t"
+        << "Value (Satoshis)\t\t\tSpend Hash:Index\t\t\t\t"
+        << "Spend Height" << std::endl;
     for (const auto& row: history)
     {
-        uint64_t value = row.value;
-        BITCOIN_ASSERT(value >= 0);
-        total_recv += value;
+        std::cout << row.output.hash << ":" << row.output.index << "\t";
+        std::cout << row.output_height << "\t\t";
+        std::cout << row.value << "\t\t";
         if (row.spend.hash == null_hash)
-            balance += value;
+            std::cout << "Unspent\t\t\t\t\t\t\t\t\t";
+        else
+            std::cout << row.spend.hash << ":" << row.spend.index << "\t";
+        std::cout << row.spend_height << std::endl;
     }
-    std::cout << balance << std::endl;
     stopped = true;
 }
 
