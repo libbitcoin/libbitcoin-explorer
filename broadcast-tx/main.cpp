@@ -158,7 +158,7 @@ int main(int argc, char** argv)
     network net(pool);
     // protocol service.
     protocol prot(pool, hst, hs, net);
-    prot.set_max_outbound(node_count);
+    prot.set_max_outbound(node_count * 6);
     // Perform node discovery if needed and then creating connections.
     prot.start(handle_start);
     prot.subscribe_channel(
