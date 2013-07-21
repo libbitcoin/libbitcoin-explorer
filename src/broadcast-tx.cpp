@@ -1,6 +1,7 @@
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include "util.hpp"
 
 using namespace bc;
 using std::placeholders::_1;
@@ -92,22 +93,6 @@ void send_tx(const std::error_code& ec, channel_ptr node,
         std::bind(send_tx, _1, _2, std::ref(prot), std::ref(tx)));
 }
 
-void load_tx(transaction_type& tx, const std::string& filename)
-{
-    std::ifstream infile(filename, std::ifstream::binary);
-    // Get size of file.
-    infile.seekg(0, infile.end);
-    long size = infile.tellg();
-    infile.seekg(0);
-    // Allocate memory for file contents.
-    data_chunk raw_tx(size);
-    char* buffer = reinterpret_cast<char*>(raw_tx.data());
-    infile.read(buffer, size);
-    infile.close();
-    // Deserialize tx.
-    satoshi_load(raw_tx.begin(), raw_tx.end(), tx);
-}
-
 bool parse_node_count(size_t& node_count, const std::string& count_str)
 {
     try
@@ -129,9 +114,9 @@ int main(int argc, char** argv)
         std::cerr << "Usage: broadcast-tx FILENAME [NODE COUNT]" << std::endl;
         return -1;
     }
-    const std::string tx_filename = argv[1];
+    const std::string filename = argv[1];
     transaction_type tx;
-    load_tx(tx, tx_filename);
+    load_tx(tx, filename);
     size_t node_count = 2;
     if (argc == 3)
     {

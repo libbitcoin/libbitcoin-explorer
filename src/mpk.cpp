@@ -1,4 +1,3 @@
-#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 using namespace bc;
 
@@ -12,7 +11,6 @@ std::string dump_file(std::istream& in_file)
 int main()
 {
     std::string seed = dump_file(std::cin);
-    boost::algorithm::trim(seed);
     deterministic_wallet wallet;
     if (!wallet.set_seed(seed))
     {
@@ -20,7 +18,7 @@ int main()
         return -1;
     }
     const data_chunk mpk = wallet.master_public_key();
-    std::cout << std::string(mpk.begin(), mpk.end()) << std::endl;
+    std::cout << mpk << std::endl;
     return 0;
 }
 

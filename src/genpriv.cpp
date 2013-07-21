@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     }
     catch (const boost::bad_lexical_cast&)
     {
-        std::cerr << "genpriv: Bad N provided" << std::endl;
+        std::cerr << "genpriv: Bad N provided." << std::endl;
         return -1;
     }
     bool for_change = false;
@@ -36,22 +36,14 @@ int main(int argc, char** argv)
             for_change = true;
     }
     std::string seed = dump_file(std::cin);
-    boost::algorithm::trim(seed);
     deterministic_wallet wallet;
     if (!wallet.set_seed(seed))
     {
-        std::cerr << "genpriv: Error setting seed" << std::endl;
+        std::cerr << "genpriv: This command wants a seed." << std::endl;
         return -1;
     }
     secret_parameter secret = wallet.generate_secret(n, for_change);
-    elliptic_curve_key key;
-    if (!key.set_secret(secret))
-    {
-        std::cerr << "genpriv: Internal error setting secret" << std::endl;
-        return -1;
-    }
-    private_data raw_private_key = key.private_key();
-    std::cout << std::string(raw_private_key.begin(), raw_private_key.end());
+    std::cout << secret_to_wif(secret) << std::endl;
     return 0;
 }
 

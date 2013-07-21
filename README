@@ -7,7 +7,7 @@ Build:
 Try this to make a mini-wallet.
 
   $ cd src/
-  $ ./newpriv > private.key
+  $ ./newkey > private.key
   $ ./addr < private.key 
   134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
 

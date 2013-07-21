@@ -6,6 +6,7 @@
 
 using namespace bc;
 
+// Currently unused.
 bool display_help()
 {
     puts("Usage: mktx FILENAME [ARGS]...");
@@ -21,13 +22,6 @@ bool display_help()
     return -1;
 }
 
-std::string read_private_key()
-{
-    std::istreambuf_iterator<char> it(std::cin);
-    std::istreambuf_iterator<char> end;
-    return std::string(it, end);
-}
-
 bool two_args_remain(size_t current_arg, int argc)
 {
     return argc - current_arg >= 2;
@@ -39,14 +33,14 @@ bool load_outpoint(output_point& prevout, const std::string& parameter)
     boost::split(strs, parameter, boost::is_any_of(":"));
     if (strs.size() != 2)
     {
-        std::cerr << "mktx: Format for output point is TXHASH:INDEX"
+        std::cerr << "mktx: Format for output point is TXHASH:INDEX."
             << std::endl;
         return false;
     }
     const std::string& hex_string = strs[0];
     if (hex_string.size() != 64)
     {
-        std::cerr << "mktx: Incorrect TXHASH" << std::endl;
+        std::cerr << "mktx: Incorrect TXHASH." << std::endl;
         return false;
     }
     prevout.hash = decode_hex_digest<hash_digest>(hex_string);
@@ -57,7 +51,7 @@ bool load_outpoint(output_point& prevout, const std::string& parameter)
     }
     catch (const boost::bad_lexical_cast&)
     {
-        std::cerr << "mktx: Bad INDEX provided" << std::endl;
+        std::cerr << "mktx: Bad INDEX provided." << std::endl;
         return false;
     }
     return true;
@@ -95,7 +89,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     boost::split(strs, parameter, boost::is_any_of(":"));
     if (strs.size() != 2)
     {
-        std::cerr << "mktx: Format for output is ADDRESS:VALUE"
+        std::cerr << "mktx: Format for output is ADDRESS:VALUE."
             << std::endl;
         return false;
     }
@@ -103,7 +97,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     payment_address addr;
     if (!addr.set_encoded(addr_str))
     {
-        std::cerr << "mktx: Bad address '" << addr_str << "'" << std::endl;
+        std::cerr << "mktx: Bad address '" << addr_str << "'." << std::endl;
         return false;
     }
     const std::string& value_str = strs[1];
@@ -113,13 +107,13 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     }
     catch (const boost::bad_lexical_cast&)
     {
-        std::cerr << "mktx: Bad VALUE provided" << std::endl;
+        std::cerr << "mktx: Bad VALUE provided." << std::endl;
         return false;
     }
     output.output_script = build_output_script(addr.hash());
     tx.outputs.push_back(output);
     std::cout << "Added output sending " << output.value << " Satoshis to "
-        << addr.encoded() << std::endl;
+        << addr.encoded() << "." << std::endl;
     return true;
 }
 
@@ -136,12 +130,6 @@ bool modify(transaction_type& tx,
 
 int main(int argc, char** argv)
 {
-    if (argc == 1)
-        return display_help();
-    // Test if help should be shown.
-    std::string help_switch = argv[1];
-    if (help_switch == "-h" || help_switch == "--help")
-        return display_help();
     if (argc < 2)
         return display_help();
     const std::string filename = argv[1];
@@ -163,8 +151,7 @@ int main(int argc, char** argv)
     data_chunk raw_tx(satoshi_raw_size(tx));
     satoshi_save(tx, raw_tx.begin());
     std::ofstream outfile(filename, std::ofstream::binary);
-    const char* buffer = reinterpret_cast<const char*>(raw_tx.data());
-    outfile.write(buffer, raw_tx.size());
+    outfile << raw_tx;
     return 0;
 }
 

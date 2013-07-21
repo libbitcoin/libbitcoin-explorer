@@ -1,6 +1,6 @@
 AM_CPPFLAGS = ${libbitcoin_CFLAGS}
 
-bin_PROGRAMS = addr broadcast-tx genpriv genpub mktx mpk newpriv newseed sendtx showtx sign-input
+bin_PROGRAMS = addr broadcast-tx genpriv genpub mktx mpk newkey newseed sendtx showtx sign-input
 
 addr_SOURCES = addr.cpp
 addr_LDADD = ${libbitcoin_LIBS}
@@ -20,8 +20,8 @@ mktx_LDADD = ${libbitcoin_LIBS}
 mpk_SOURCES = mpk.cpp
 mpk_LDADD = ${libbitcoin_LIBS}
 
-newpriv_SOURCES = newpriv.cpp
-newpriv_LDADD = ${libbitcoin_LIBS}
+newkey_SOURCES = newkey.cpp
+newkey_LDADD = ${libbitcoin_LIBS}
 
 newseed_SOURCES = newseed.cpp
 newseed_LDADD = ${libbitcoin_LIBS}

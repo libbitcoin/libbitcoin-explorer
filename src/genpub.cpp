@@ -3,17 +3,11 @@
 #include <bitcoin/bitcoin.hpp>
 using namespace bc;
 
-std::string dump_file(std::istream& in_file)
+std::string read_data()
 {
-    std::istreambuf_iterator<char> it(in_file);
+    std::istreambuf_iterator<char> it(std::cin);
     std::istreambuf_iterator<char> end;
     return std::string(it, end);
-}
-
-data_chunk read_mpk_data()
-{
-    std::string raw_mpk = dump_file(std::cin);
-    return data_chunk(raw_mpk.begin(), raw_mpk.end());
 }
 
 int main(int argc, char** argv)
@@ -41,17 +35,17 @@ int main(int argc, char** argv)
         if (change_str == "true" || change_str == "1")
             for_change = true;
     }
-    const data_chunk mpk = read_mpk_data();
-    if (mpk.empty())
-    {
-        std::cerr << "genpub: Empty master public key" << std::endl;
-        return -1;
-    }
     deterministic_wallet wallet;
-    if (!wallet.set_master_public_key(mpk))
+    std::string user_data = read_data();
+    if (!wallet.set_seed(user_data))
     {
-        std::cerr << "genpub: Error setting master public key" << std::endl;
-        return -1;
+        data_chunk mpk = decode_hex(user_data);
+        if (!wallet.set_master_public_key(mpk))
+        {
+            std::cerr << "genpub: No valid master public key, or "
+                << "private secret key was passed in." << std::endl;
+            return -1;
+        }
     }
     data_chunk pubkey = wallet.generate_public_key(n, for_change);
     payment_address addr;

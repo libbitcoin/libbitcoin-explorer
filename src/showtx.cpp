@@ -1,5 +1,6 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include "util.hpp"
 using namespace bc;
 
 int main(int argc, char** argv)
@@ -10,19 +11,9 @@ int main(int argc, char** argv)
         return -1;
     }
     const std::string& filename = argv[1];
-    std::ifstream infile(filename, std::ifstream::binary);
-    // Get size of file.
-    infile.seekg(0, infile.end);
-    long size = infile.tellg();
-    infile.seekg(0);
-    // Allocate memory for file contents.
-    data_chunk raw_tx(size);
-    char* buffer = reinterpret_cast<char*>(raw_tx.data());
-    infile.read(buffer, size);
-    infile.close();
-    // Deserialize tx.
     transaction_type tx;
-    satoshi_load(raw_tx.begin(), raw_tx.end(), tx);
+    if (!load_tx(tx, filename))
+        return -1;
     // Show details.
     std::cout << "hash: " << hash_transaction(tx) << std::endl;
     std::cout << "version: " << tx.version
