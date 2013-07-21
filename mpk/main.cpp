@@ -1,0 +1,26 @@
+#include <boost/algorithm/string.hpp>
+#include <bitcoin/bitcoin.hpp>
+using namespace bc;
+
+std::string dump_file(std::istream& in_file)
+{
+    std::istreambuf_iterator<char> it(in_file);
+    std::istreambuf_iterator<char> end;
+    return std::string(it, end);
+}
+
+int main()
+{
+    std::string seed = dump_file(std::cin);
+    boost::algorithm::trim(seed);
+    deterministic_wallet wallet;
+    if (!wallet.set_seed(seed))
+    {
+        std::cerr << "mpk: Error setting seed" << std::endl;
+        return -1;
+    }
+    const data_chunk mpk = wallet.master_public_key();
+    std::cout << std::string(mpk.begin(), mpk.end()) << std::endl;
+    return 0;
+}
+
