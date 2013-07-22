@@ -1,5 +1,6 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/client/interface.hpp>
+#include "config.hpp"
 
 using namespace bc;
 
@@ -33,6 +34,8 @@ void history_fetched(const std::error_code& ec,
 
 int main(int argc, char** argv)
 {
+    config_map_type config;
+    load_config(config, "/etc/sx.cfg");
     if (argc != 2)
     {
         std::cerr << "Usage: balance ADDRESS" << std::endl;
@@ -45,7 +48,7 @@ int main(int argc, char** argv)
         std::cerr << "balance: Invalid address." << std::endl;
         return -1;
     }
-    fullnode_interface fullnode("tcp://localhost:5555");
+    fullnode_interface fullnode(config["service"]);
     fullnode.blockchain.fetch_history(payaddr, history_fetched);
     while (!stopped)
     {
