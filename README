@@ -97,6 +97,14 @@ Deterministic Wallet
   $ ./genpub 0 < wallet.seed
   1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
 
+For the 12 word mnemonics, use the mnemonic tool.
+
+  $ ./mnemonic <<< 148f0a1d77e20dbaee3ff920ca40240d
+  people blonde admit dart couple different truth common alas stumble time cookie
+  $ ./mnemonic <<< "people blonde admit dart couple different truth common alas
+stumble time cookie"
+  148f0a1d77e20dbaee3ff920ca40240d
+
 --------------------------
 balance/history (Advanced)
 --------------------------
