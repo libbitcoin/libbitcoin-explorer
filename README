@@ -1,3 +1,8 @@
+You will need libbitcoin: https://github.com/spesmilo/libbitcoin - follow the
+README installation instructions.
+
+ArchLinux users: https://aur.archlinux.org/packages/sx-git/
+
 Build:
 
   $ autoreconf -i
