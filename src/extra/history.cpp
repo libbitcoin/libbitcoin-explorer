@@ -35,7 +35,7 @@ void history_fetched(const std::error_code& ec,
 int main(int argc, char** argv)
 {
     config_map_type config;
-    load_config(config, "/etc/sx.cfg");
+    load_config(config);
     if (argc != 2)
     {
         std::cerr << "Usage: balance ADDRESS" << std::endl;
