@@ -7,6 +7,8 @@ Build:
 Try this to make a mini-wallet.
 
   $ cd src/
+  $ ./newkey
+  5KPFsatiYrJcvCSRrDbtx61822vZjeGGGx3wu38pQDHRF8eVJ8H
   $ ./newkey > private.key
   $ ./addr < private.key 
   134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
@@ -85,9 +87,15 @@ Deterministic Wallet
 --------------------
 
   $ ./newseed > wallet.seed
+  $ cat wallet.seed
+  b220b5bd2909df1d74b71c9e664233bf
   $ ./mpk < wallet.seed > master_public_key
   $ ./genpriv 0 < wallet.seed > key0
+  5Jmb4EYzEqj63rkPwADFY7WyGV2kga3YB1HfDAzg9dHNG57NMPu
   $ ./genpub 0 < master_public_key
+  1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
+  $ ./genpub 0 < wallet.seed
+  1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
 
 --------------------------
 balance/history (Advanced)
