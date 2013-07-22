@@ -1,5 +1,5 @@
-CXXFLAGS=-I$(shell echo ~)/obelisk/include $(shell pkg-config --cflags libbitcoin)
-LIBS=$(shell echo ~)/obelisk/client/libobelisk_client.a -lzmq $(shell pkg-config --libs libbitcoin)
+CXXFLAGS=$(OBELISK_INCLUDE) $(shell pkg-config --cflags libbitcoin)
+LIBS=$(OBELISK_LIB) -lobelisk_client -lzmq $(shell pkg-config --libs libbitcoin)
 
 default: history
 
