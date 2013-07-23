@@ -3,6 +3,24 @@ import zmq
 import hashlib
 import sys
 
+def config_value(filename, option_key, default=""):
+    try:
+        rawfile = open(filename).read()
+    except IOError:
+        print >> sys.stderr, "Config file '%s' does not exist!" % filename
+        return default
+    lines = [line.strip() for line in rawfile.split("\n")]
+    extract_pair = lambda line: \
+        [token.strip() for token in line.split("=", 1)]
+    key_values = [extract_pair(line) for line in lines
+                  if len(extract_pair(line)) == 2]
+    key_values = [(key, value.strip('"')) for key, value in key_values]
+    lookup = dict(key_values)
+    try:
+        return lookup[option_key]
+    except KeyError:
+        return default
+
 def hash_transaction(data):
     return hashlib.sha256(hashlib.sha256(data).digest()).digest()[::-1]
 
@@ -47,5 +65,7 @@ if __name__ == "__main__":
         print >> sys.stderr, "Usage: watchtx TXHASH1 TXHASH2 ..."
     else:
         hashes = convert_hashes(sys.argv[1:])
-        watch("tcp://localhost:9094", hashes)
+        connection = config_value("/etc/sx.cfg", "service",
+                                  "tcp://localhost:9094")
+        watch(connection, hashes)
 
