@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="cheatsheet.svg"
+   inkscape:export-filename="/home/calafou/cheatsheet.png"
+   inkscape:export-xdpi="68.419998"
+   inkscape:export-ydpi="68.419998">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible">
+      <path
+         id="path4051"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mstart"
+       style="overflow:visible">
+      <path
+         id="path4048"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(0.4,0,0,0.4,4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path4042"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mstart-4"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4048-5"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(0.4,0,0,0.4,4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2-0"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4-2"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2-2"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4-1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2-9"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4-6"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2-5"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4-3"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2-29"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4-16"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2-6"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4-5"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2-6-7"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4-5-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2-6-5"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4051-4-5-9"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="691.1754"
+     inkscape:cy="347.42502"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showborder="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1113"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.2677)">
+    <g
+       id="g4981"
+       transform="translate(538.90473,152.75115)">
+      <text
+         sodipodi:linespacing="125%"
+         id="text2985-3"
+         y="677.50751"
+         x="80.923767"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         xml:space="preserve"><tspan
+           y="677.50751"
+           x="80.923767"
+           id="tspan2987-8"
+           sodipodi:role="line">Address</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text2989-5"
+         y="715.89331"
+         x="79.583611"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           id="tspan3030"
+           style="font-size:20px"
+           y="715.89331"
+           x="79.583611"
+           sodipodi:role="line">$ ./addr &lt; private.key</tspan><tspan
+           id="tspan3032"
+           style="font-size:20px"
+           y="740.89331"
+           x="79.583611"
+           sodipodi:role="line">1Ei4RdF6Jv9RPzoiBNbqxuDXuxB6HQ3R9s</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;marker-start:url(#Arrow1Mstart);marker-end:url(#Arrow1Mend)"
+       d="m 375.15023,609.7475 c 48.9798,-1.7948 93.1833,-35.09094 106.5313,-84.90625 6.6309,-24.74689 4.62,-49.79267 -4.1563,-71.90625 m -17.8437,-30.3125 c -8.17,-10.01623 -18.0383,-18.73912 -29.375,-25.59375"
+       id="path4036-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csccc" />
+    <g
+       id="g3244"
+       transform="translate(-933.38097,270.72088)">
+      <text
+         sodipodi:linespacing="125%"
+         id="text2985-3-6-2"
+         y="85.542397"
+         x="946.4494"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         xml:space="preserve"><tspan
+           y="85.542397"
+           x="946.4494"
+           id="tspan2987-8-2-6"
+           sodipodi:role="line">12 Words Mnemonic</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text2989-5-9-3"
+         y="123.92819"
+         x="948.50922"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           id="tspan3079-0"
+           style="font-size:20px"
+           y="123.92819"
+           x="948.50922"
+           sodipodi:role="line">$ ./mnemonic &lt; wallet.seed &gt; 12words</tspan><tspan
+           id="tspan3131"
+           style="font-size:20px"
+           y="148.92819"
+           x="948.50922"
+           sodipodi:role="line">$ cat 12words </tspan><tspan
+           id="tspan3133"
+           style="font-size:20px"
+           y="173.92819"
+           x="948.50922"
+           sodipodi:role="line">money mirror monkey cry reflect cheese suit mom pink bee train doubt</tspan><tspan
+           id="tspan3145"
+           style="font-size:20px"
+           y="198.92819"
+           x="948.50922"
+           sodipodi:role="line" /></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text2989-5-9-3-9"
+         y="210.91806"
+         x="948.90961"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           id="tspan3149-4"
+           style="font-size:20px"
+           y="210.91806"
+           x="948.90961"
+           sodipodi:role="line">$ ./mnemonic &lt; 12words &gt; wallet.seed</tspan><tspan
+           id="tspan3162-2"
+           style="font-size:20px"
+           y="235.91806"
+           x="948.90961"
+           sodipodi:role="line">$ cat wallet.seed</tspan><tspan
+           id="tspan3145-2"
+           style="font-size:20px"
+           y="260.91806"
+           x="948.90961"
+           sodipodi:role="line">92db27eb51165236428c1abccc35e474</tspan></text>
+    </g>
+    <g
+       id="g5744"
+       transform="translate(-933.38097,270.72088)">
+      <g
+         transform="translate(-128.42999,-106)"
+         id="g3235">
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           x="1075.1594"
+           y="422.96689"
+           id="text2985-3-6"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan2987-8-2"
+             x="1075.1594"
+             y="422.96689">Deterministic Seed</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+           x="1077.3396"
+           y="461.35269"
+           id="text2989-5-9"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             x="1077.3396"
+             y="461.35269"
+             style="font-size:20px"
+             id="tspan3073">$ ./newseed &gt; wallet.seed </tspan><tspan
+             sodipodi:role="line"
+             x="1077.3396"
+             y="486.35269"
+             style="font-size:20px"
+             id="tspan3075">$ cat wallet.seed </tspan><tspan
+             sodipodi:role="line"
+             x="1077.3396"
+             y="511.35269"
+             style="font-size:20px"
+             id="tspan3077">92db27eb51165236428c1abccc35e474</tspan><tspan
+             sodipodi:role="line"
+             x="1077.3396"
+             y="536.35266"
+             style="font-size:20px"
+             id="tspan3079" /></text>
+      </g>
+      <text
+         sodipodi:linespacing="125%"
+         id="text2989-5-9-6"
+         y="443.5632"
+         x="948.6264"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           id="tspan3079-3"
+           style="font-size:20px"
+           y="443.5632"
+           x="948.6264"
+           sodipodi:role="line">$ ./genpriv 0 &lt; wallet.seed</tspan><tspan
+           id="tspan4946"
+           style="font-size:20px"
+           y="468.5632"
+           x="948.6264"
+           sodipodi:role="line">5J1kVfBUY7NfJJAGDD6whpwnhEheF9Vmh5Au5RHAKHJjz2ASECg</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text2989-5-9-6-8"
+         y="507.5632"
+         x="948.6264"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           id="tspan4946-5"
+           style="font-size:20px"
+           y="507.5632"
+           x="948.6264"
+           sodipodi:role="line">$ ./genpub 0 &lt; wallet.seed</tspan><tspan
+           id="tspan5398"
+           style="font-size:20px"
+           y="532.56323"
+           x="948.6264"
+           sodipodi:role="line">13ZwXvUwgqbTjrAoxJrU6ojsCPF5dp6Lwo</tspan></text>
+    </g>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect6422"
+       width="41.416256"
+       height="40.406101"
+       x="609.22351"
+       y="710.9306" />
+    <g
+       id="g4973"
+       transform="translate(532.61903,232.27988)">
+      <text
+         sodipodi:linespacing="125%"
+         id="text2985"
+         y="428.08789"
+         x="85.954193"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         xml:space="preserve"><tspan
+           y="428.08789"
+           x="85.954193"
+           id="tspan2987"
+           sodipodi:role="line">Private Key</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text2989"
+         y="466.47369"
+         x="87.851227"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:20px"
+           y="466.47369"
+           x="87.851227"
+           id="tspan2991"
+           sodipodi:role="line">$ ./newkey &gt; private.key </tspan><tspan
+           style="font-size:20px"
+           id="tspan2993"
+           y="491.47369"
+           x="87.851227"
+           sodipodi:role="line">$ cat private.key </tspan><tspan
+           style="font-size:20px"
+           id="tspan2995"
+           y="516.47369"
+           x="87.851227"
+           sodipodi:role="line">5KSVJYqvyeTjeaT6D8YYpUtujUWauE899Y</tspan><tspan
+           style="font-size:20px"
+           y="541.47369"
+           x="87.851227"
+           sodipodi:role="line"
+           id="tspan6424">NwZ5Nc8wZEPdpX4ub</tspan></text>
+    </g>
+    <g
+       id="g4981-0"
+       transform="translate(-63.98788,188.75115)">
+      <text
+         sodipodi:linespacing="125%"
+         id="text2985-3-2"
+         y="677.50751"
+         x="80.923767"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         xml:space="preserve"><tspan
+           y="677.50751"
+           x="80.923767"
+           id="tspan2987-8-1"
+           sodipodi:role="line">Master Public Key</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text2989-5-8"
+         y="715.89331"
+         x="79.583611"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           id="tspan3032-4"
+           style="font-size:20px"
+           y="715.89331"
+           x="79.583611"
+           sodipodi:role="line">$ cat master_public_key </tspan><tspan
+           style="font-size:20px"
+           y="740.89331"
+           x="79.583611"
+           sodipodi:role="line"
+           id="tspan5437">ab0433de769bb42e762521a79cccb9c33626e88bf51c610336a33</tspan><tspan
+           style="font-size:20px"
+           y="765.89331"
+           x="79.583611"
+           sodipodi:role="line"
+           id="tspan5439">bfd3ceee273109d25bd92358bdcffcc1150cbf1822089c0d93505b</tspan><tspan
+           style="font-size:20px"
+           y="790.89331"
+           x="79.583611"
+           sodipodi:role="line"
+           id="tspan5441">71a2bc7c4909f746e9850</tspan><tspan
+           style="font-size:20px"
+           y="815.89331"
+           x="79.583611"
+           sodipodi:role="line"
+           id="tspan5443">$ ./genpub 0 &lt; master_public_key </tspan><tspan
+           style="font-size:20px"
+           y="840.89331"
+           x="79.583611"
+           sodipodi:role="line"
+           id="tspan5447">13ZwXvUwgqbTjrAoxJrU6ojsCPF5dp6Lwo</tspan></text>
+    </g>
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-mid:none;marker-end:none"
+       d="m 454.90473,645.15449 0,211.42857"
+       id="path4988-0-3-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-mid:none;marker-end:url(#Arrow1Mend-2)"
+       d="m 454.90473,645.15449 0,211.42857"
+       id="path4988-0-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend-2-6)"
+       d="m 468.63723,799.21494 129.1582,24.32388"
+       id="path6045"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend-2-6)"
+       d="m 467.47613,697.65449 131.4286,0"
+       id="path6045-8"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend-2-6)"
+       d="m 467.47613,871.65449 131.4286,0"
+       id="path6045-8-4"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="485.71426"
+       y="1022.3622"
+       id="text6445"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan6447"
+         x="485.71426"
+         y="1022.3622"
+         style="font-style:normal;font-weight:normal;fill:#273a87;fill-opacity:1;stroke:none;-inkscape-font-specification:Sans">http://github.com/genjix/sx</tspan></text>
+  </g>
+</svg>
