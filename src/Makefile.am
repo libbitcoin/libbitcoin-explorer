@@ -1,40 +1,43 @@
 AM_CPPFLAGS = ${libbitcoin_CFLAGS}
 
-bin_PROGRAMS = addr broadcast-tx genpriv genpub mktx mpk newkey newseed sendtx showtx sign-input mnemonic
+bin_PROGRAMS = sx-addr sx-broadcast-tx sx-genpriv sx-genpub sx-mktx sx-mpk sx-newkey sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic
 
-addr_SOURCES = addr.cpp
-addr_LDADD = ${libbitcoin_LIBS}
+binscriptdir=$(prefix)/bin
+binscript_DATA = sx-genqr sx-watchtx
 
-broadcast_tx_SOURCES = broadcast-tx.cpp
-broadcast_tx_LDADD = ${libbitcoin_LIBS}
+sx_addr_SOURCES = addr.cpp
+sx_addr_LDADD = ${libbitcoin_LIBS}
 
-genpriv_SOURCES = genpriv.cpp
-genpriv_LDADD = ${libbitcoin_LIBS}
+sx_broadcast_tx_SOURCES = broadcast-tx.cpp
+sx_broadcast_tx_LDADD = ${libbitcoin_LIBS}
 
-genpub_SOURCES = genpub.cpp
-genpub_LDADD = ${libbitcoin_LIBS}
+sx_genpriv_SOURCES = genpriv.cpp
+sx_genpriv_LDADD = ${libbitcoin_LIBS}
 
-mktx_SOURCES = mktx.cpp
-mktx_LDADD = ${libbitcoin_LIBS}
+sx_genpub_SOURCES = genpub.cpp
+sx_genpub_LDADD = ${libbitcoin_LIBS}
 
-mpk_SOURCES = mpk.cpp
-mpk_LDADD = ${libbitcoin_LIBS}
+sx_mktx_SOURCES = mktx.cpp
+sx_mktx_LDADD = ${libbitcoin_LIBS}
 
-newkey_SOURCES = newkey.cpp
-newkey_LDADD = ${libbitcoin_LIBS}
+sx_mpk_SOURCES = mpk.cpp
+sx_mpk_LDADD = ${libbitcoin_LIBS}
 
-newseed_SOURCES = newseed.cpp
-newseed_LDADD = ${libbitcoin_LIBS}
+sx_newkey_SOURCES = newkey.cpp
+sx_newkey_LDADD = ${libbitcoin_LIBS}
 
-sendtx_SOURCES = sendtx.cpp
-sendtx_LDADD = ${libbitcoin_LIBS}
+sx_newseed_SOURCES = newseed.cpp
+sx_newseed_LDADD = ${libbitcoin_LIBS}
 
-showtx_SOURCES = showtx.cpp
-showtx_LDADD = ${libbitcoin_LIBS}
+sx_sendtx_SOURCES = sendtx.cpp
+sx_sendtx_LDADD = ${libbitcoin_LIBS}
 
-sign_input_SOURCES = sign-input.cpp
-sign_input_LDADD = ${libbitcoin_LIBS}
+sx_showtx_SOURCES = showtx.cpp
+sx_showtx_LDADD = ${libbitcoin_LIBS}
 
-mnemonic_SOURCES = mnemonic.cpp
-mnemonic_LDADD = ${libbitcoin_LIBS}
+sx_sign_input_SOURCES = sign-input.cpp
+sx_sign_input_LDADD = ${libbitcoin_LIBS}
+
+sx_mnemonic_SOURCES = mnemonic.cpp
+sx_mnemonic_LDADD = ${libbitcoin_LIBS}
 
