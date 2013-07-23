@@ -2,6 +2,15 @@ AM_CPPFLAGS = ${libbitcoin_CFLAGS}
 
 bin_PROGRAMS = sx-addr sx-broadcast-tx sx-genpriv sx-genpub sx-mktx sx-mpk sx-newkey sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic
 
+if HAVE_OBELISK
+bin_PROGRAMS += sx-history sx-balance
+
+confdir=$(sysconfdir)/obelisk
+conf_DATA = sx.cfg
+
+AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
+endif
+
 binscriptdir=$(prefix)/bin
 binscript_DATA = sx-genqr sx-watchtx
 
@@ -40,4 +49,10 @@ sx_sign_input_LDADD = ${libbitcoin_LIBS}
 
 sx_mnemonic_SOURCES = mnemonic.cpp
 sx_mnemonic_LDADD = ${libbitcoin_LIBS}
+
+sx_history_SOURCES = history.cpp config.cpp
+sx_history_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
+
+sx_balance_SOURCES = balance.cpp config.cpp
+sx_balance_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
 
