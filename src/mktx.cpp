@@ -65,7 +65,7 @@ bool add_input(transaction_type& tx, const std::string& parameter)
         return false;
     input.sequence = 4294967295;
     tx.inputs.push_back(input);
-    std::cout << "Added input "
+    std::cerr << "Added input "
         << prevout.hash << ":" << prevout.index << std::endl;
     return true;
 }
@@ -112,7 +112,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     }
     output.output_script = build_output_script(addr.hash());
     tx.outputs.push_back(output);
-    std::cout << "Added output sending " << output.value << " Satoshis to "
+    std::cerr << "Added output sending " << output.value << " Satoshis to "
         << addr.encoded() << "." << std::endl;
     return true;
 }
@@ -150,8 +150,13 @@ int main(int argc, char** argv)
     // Now serialize transaction.
     data_chunk raw_tx(satoshi_raw_size(tx));
     satoshi_save(tx, raw_tx.begin());
-    std::ofstream outfile(filename, std::ofstream::binary);
-    outfile << raw_tx;
+    if (filename == "-")
+        std::cout << raw_tx << std::endl;
+    else
+    {
+        std::ofstream outfile(filename, std::ofstream::binary);
+        outfile << raw_tx;
+    }
     return 0;
 }
 

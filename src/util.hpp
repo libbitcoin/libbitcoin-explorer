@@ -7,15 +7,23 @@ using namespace bc;
 
 bool load_tx(transaction_type& tx, const std::string& filename)
 {
-    std::ifstream infile(filename, std::ifstream::binary);
-    if (!infile)
-    {
-        std::cerr << "showtx: Bad file." << std::endl;
-        return false;
-    }
     std::ostringstream contents;
-    contents << infile.rdbuf();
-    infile.close();
+    if (filename == "-")
+    {
+        std::istreambuf_iterator<char> first(std::cin);
+        std::istreambuf_iterator<char> last;
+        contents << std::string(first, last);
+    }
+    else
+    {
+        std::ifstream infile(filename, std::ifstream::binary);
+        if (!infile)
+        {
+            std::cerr << "showtx: Bad file." << std::endl;
+            return false;
+        }
+        contents << infile.rdbuf();
+    }
     data_chunk raw_tx = decode_hex(contents.str());
     try
     {
