@@ -30,7 +30,7 @@ In this example we will send the funds to 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe.
 Use blockchain.info (or the history tool provided here) to lookup the
 output for this address. Note down the transaction hash and transaction index.
 
-Here is a screenshot of blockchain.info: http://i.imgur.com/YuQuLW4.png
+Here is a screenshot of blockchain.info: http://i.imgur.com/dZvqJIV.png
 
 We can see the tx hash is:
 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3
@@ -63,7 +63,7 @@ Note that the input script is empty.
 
 We will now sign the first input using our private key.
 
-  $ sx-sign-input txfile.tx 0 < private.key 
+  $ cat private.key | sx-sign-input txfile.tx 0
   $ sx-showtx txfile.tx
   hash: 4a8be467fb75f0f757649348dbb05762142236ec236ac9e55e4683d7083ffca2
   version: 1  locktime: 0
@@ -137,6 +137,10 @@ balance/history (Advanced)
 --------------------------
 
 Install Obelisk and then re-run the 4 steps at the beginning of this README.
+
+  $ git clone https://github.com/genjix/obelisk.git
+  $ cd obelisk
+  $ less README
 
 The balance/history tools can then use a network connection to make requests
 against the load balancer.
