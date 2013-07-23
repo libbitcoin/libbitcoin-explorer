@@ -1,6 +1,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/client/interface.hpp>
 #include "config.hpp"
+#include "util.hpp"
 
 using namespace bc;
 
@@ -11,7 +12,7 @@ void history_fetched(const std::error_code& ec,
 {
     if (ec)
     {
-        std::cerr << "balance: Failed to fetch history: "
+        std::cerr << "history: Failed to fetch history: "
             << ec.message() << std::endl;
         return;
     }
@@ -32,20 +33,14 @@ void history_fetched(const std::error_code& ec,
     stopped = true;
 }
 
-int main(int argc, char** argv)
+int main()
 {
     config_map_type config;
     load_config(config);
-    if (argc != 2)
-    {
-        std::cerr << "Usage: balance ADDRESS" << std::endl;
-        return -1;
-    }
-    std::string addr = argv[1];
     payment_address payaddr;
-    if (!payaddr.set_encoded(addr))
+    if (!payaddr.set_encoded(read_stdin()))
     {
-        std::cerr << "balance: Invalid address." << std::endl;
+        std::cerr << "history: Invalid address." << std::endl;
         return -1;
     }
     fullnode_interface fullnode(config["service"]);

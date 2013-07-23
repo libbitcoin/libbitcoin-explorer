@@ -37,12 +37,16 @@ bool load_tx(transaction_type& tx, const std::string& filename)
     return true;
 }
 
+std::string read_stdin()
+{
+    std::istreambuf_iterator<char> first(std::cin);
+    std::istreambuf_iterator<char> last;
+    return std::string(first, last);
+}
+
 bool read_private_key(elliptic_curve_key& key)
 {
-    std::istreambuf_iterator<char> it(std::cin);
-    std::istreambuf_iterator<char> end;
-    std::string privkey(it, end);
-    secret_parameter secret = wif_to_secret(privkey);
+    secret_parameter secret = wif_to_secret(read_stdin());
     if (secret == null_hash || !key.set_secret(secret))
     {
         std::cerr << "Invalid private key." << std::endl;
