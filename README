@@ -16,7 +16,7 @@ Try this to make a mini-wallet.
   $ sx-newkey
   5KPFsatiYrJcvCSRrDbtx61822vZjeGGGx3wu38pQDHRF8eVJ8H
   $ sx-newkey > private.key
-  $ sx-addr < private.key 
+  $ cat private.key | sx-addr
   134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
 
 Now send some funds to your address (0.01 BTC).
@@ -38,7 +38,7 @@ And there is a single output at index 1 that we want to spend.
 
 Construct the transaction:
 
-  $ sx-mktx tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
+  $ sx-mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
 
 Because there is 100000 Satoshis going in, but only 9000 Satoshis out,
 the remaining 10000 Satoshis (0.0001 BTC) will be taken by the Bitcoin
@@ -46,7 +46,7 @@ network as a fee. This is how fees work internally in Bitcoin.
 
 'showtx' allows inspecting of tx files.
 
-  $ sx-showtx tx
+  $ sx-showtx txfile.tx
   hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0
   version: 1  locktime: 0
   Input:
@@ -63,8 +63,8 @@ Note that the input script is empty.
 
 We will now sign the first input using our private key.
 
-  $ sx-sign-input tx 0 < private.key 
-  $ sx-showtx tx 
+  $ sx-sign-input txfile.tx 0 < private.key 
+  $ sx-showtx txfile.tx
   hash: 4a8be467fb75f0f757649348dbb05762142236ec236ac9e55e4683d7083ffca2
   version: 1  locktime: 0
   Input:
@@ -86,7 +86,11 @@ Now the input script is prepared, and the tx is signed.
 
 Broadcast the final tx to the Bitcoin network.
 
-  $ sx-broadcast-tx tx
+  $ sx-broadcast-tx txfile.tx
+
+Or to send it to one Bitcoin node (like a localhost one), then use:
+
+  $ sx-sendtx txfile.tx localhost 4009
 
 -----------------
 QR Code Generator
@@ -102,42 +106,57 @@ Deterministic Wallet
   $ sx-newseed > wallet.seed
   $ cat wallet.seed
   b220b5bd2909df1d74b71c9e664233bf
-  $ sx-mpk < wallet.seed > master_public_key
-  $ sx-genpriv 0 < wallet.seed > key0
+  $ cat wallet.seed | sx-mpk > master_public.key
+
+Now you can generate your private keys for whatever number:
+
+  $ cat wallet.seed | sx-genpriv 0
   5Jmb4EYzEqj63rkPwADFY7WyGV2kga3YB1HfDAzg9dHNG57NMPu
-  $ sx-genpub 0 < master_public_key
+  $ cat wallet.seed | sx-genpriv 1
+  5KjCYpPyxU2e88S57b1naKUsJ1JNjCudkFSQPxqcYyBYgzzahNe
+
+You can use either the master_public.key or the wallet.seed for generating
+Bitcoin receive addresses. But you cannot use the master_public.key for
+generating the private keys for spending those Bitcoins.
+
+  $ cat master_public.key | sx-genpub 0
   1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
-  $ sx-genpub 0 < wallet.seed
+  $ cat wallet.seed | sx-genpub 0
   1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
 
 For Electrum compatible 12 word seeds, use the mnemonic tool.
 
-  $ sx-mnemonic <<< 148f0a1d77e20dbaee3ff920ca40240d
+  $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx-mnemonic
   people blonde admit dart couple different truth common alas stumble time cookie
-  $ sx-mnemonic <<< "people blonde admit dart couple different truth common alas
-stumble time cookie"
+  $ echo "people blonde admit dart couple different truth common alas
+stumble time cookie" | sx-mnemonic
   148f0a1d77e20dbaee3ff920ca40240d
 
 --------------------------
 balance/history (Advanced)
 --------------------------
 
-See the README inside sx/src/extra/ for instructions.
+Install Obelisk and then re-run the 4 steps at the beginning of this README.
 
 The balance/history tools can then use a network connection to make requests
 against the load balancer.
 
-  $ cd ~/subx/src/extra/
-  $ make
-
-  $ ./sx-balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx-balance
   100000
-  $ ./sx-history 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx-history
   Output Hash:Index                           Output Height   Value (Satoshis) Spend Hash:Index                Spend Height
   97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1  247683 100000      Unspent                                 230529504
 
 It's possible to run as many backend workers as you like. The
-load balancer (ppqueue) will distribute requests evenly among the backends.
+load balancer (obbalancer) will distribute requests evenly among the backends.
 Use worker-output.sh to view debug info from the worker. Each worker must
 have their own unique copy of the blockchain database.
+
+See the Obelisk config files in /usr/local/etc/obelisk/. The sx config file
+is stored at /usr/local/etc/sx.cfg. You can change this configuration
+parameter using './configure --sysconfigdir=/etc/'. By configuring different
+workers and load balancers, you can run multiple setups on the same host.
+By default it is no pointing at my development server, but I will change this
+soon and migrate to a new host. Also I make no guarantees about stability or
+compatibility.
 
