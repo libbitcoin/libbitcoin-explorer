@@ -17,7 +17,15 @@ bool load_tx(transaction_type& tx, const std::string& filename)
     contents << infile.rdbuf();
     infile.close();
     data_chunk raw_tx = decode_hex(contents.str());
-    satoshi_load(raw_tx.begin(), raw_tx.end(), tx);
+    try
+    {
+        satoshi_load(raw_tx.begin(), raw_tx.end(), tx);
+    }
+    catch (end_of_stream)
+    {
+        std::cerr << "showtx: Deserializing transaction failed." << std::endl;
+        return false;
+    }
     return true;
 }
 
