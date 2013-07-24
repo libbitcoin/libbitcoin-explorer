@@ -11,8 +11,7 @@ conf_DATA = sx.cfg
 AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
 endif
 
-binscriptdir=$(prefix)/bin
-binscript_DATA = sx-genqr sx-watchtx
+bin_SCRIPTS = sx-genqr sx-watchtx
 
 sx_addr_SOURCES = addr.cpp
 sx_addr_LDADD = ${libbitcoin_LIBS}

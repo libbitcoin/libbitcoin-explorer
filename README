@@ -1,14 +1,103 @@
-You will need libbitcoin: https://github.com/spesmilo/libbitcoin - follow the
-README installation instructions.
+Hi!
+
+My aim with this project is to provide a set of modular Bitcoin
+commandline utilities, that admin types can engage with Bitcoin
+functionality without having to write code.
+
+By chaining all these commands together in different ways, you can do
+offline transactions, maintain a wallet, work with deterministic keys, ...
+
+It would be cool to see Bitcoin wallets written in bash script using
+these tools to handle the core functionality. I believe the more we
+give good tools to the community, the more we can decentralise
+development and increase access to the core technology for all types.
+
+Use this bash shell script to install sx: http://libbitcoin.dyne.org/install-sx.sh
 
 ArchLinux users: https://aur.archlinux.org/packages/sx-git/
 
-Build:
+==========================
+Debian/Ubuntu Instructions
+==========================
 
-  $ autoreconf -i
-  $ ./configure
-  $ make
-  $ sudo make install
+  VVVVVVVVVVV
+> Start Here! <
+  ^^^^^^^^^^^
+
+    $ wget http://libbitcoin.dyne.org/install-sx.sh
+    $ sudo bash ./install-sx.sh
+
+sx should now be installed.
+
+Enjoy!
+
+    Installation commencing NOW.
+    ...
+
+============
+Instructions
+============
+
+Development repository:
+
+  https://github.com/genjix/sx/
+
+My Bitcoin address (from http://libbitcoin.dyne.org/):
+
+  1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY
+
+I want your feedback and suggestions! amir@unsystem.net
+
+  http://i.imgur.com/8R0cfuw.png
+
+Type sx-TAB to see a list of all the sx commands.
+
+ -------------------|------------------------------------------- 
+| sx-addr           | See Bitcoin address of a private key.     |
+|-------------------|-------------------------------------------|
+| sx-broadcast-tx   | Broadcast tx to network.                  |
+|-------------------|-------------------------------------------|
+| sx-mktx           | Create an unsigned tx.                    |
+|-------------------|-------------------------------------------|
+| sx-newkey         | Create a new private key.                 |
+|-------------------|-------------------------------------------|
+| sx-newseed        | Create a new deterministic wallet seed.   |
+|-------------------|-------------------------------------------|
+| sx-mpk            | Extract a master public key from a        |
+|                   | deterministic wallet seed.                |
+|-------------------|-------------------------------------------|
+| sx-genpriv        | Generate a private key deterministically  |
+|                   | from a seed.                              |
+|-------------------|-------------------------------------------|
+| sx-genpub         | Generate a Bitcoin address                |
+|                   | deterministically from a                  |
+|                   | master public key.                        |
+|-------------------|-------------------------------------------|
+| sx-mnemonic       | Work with Electrum compatible mnemonics   |
+|                   | (12 words wallet seed).                   |
+|-------------------|-------------------------------------------|
+| sx-sendtx         | Send transaction to a single node.        |
+|-------------------|-------------------------------------------|
+| sx-showtx         | Show the details of a transaction.        |
+|-------------------|-------------------------------------------|
+| sx-sign-input     | Sign a transaction input.                 |
+|-------------------|-------------------------------------------|
+| sx-genqr          | Generate Bitcoin QR codes offline.        |
+|-------------------|-------------------------------------------|
+| sx-balance        | Show balance of an address.               |
+|-------------------|-------------------------------------------|
+| sx-history        | Get list of output points, values, and    |
+|                   | their spends for an address. grep can     |
+|                   | filter for just unspent outputs which can |
+|                   | be fed into mktx.                         |
+|-------------------|-------------------------------------------|
+| sx-watchtx        | Watch transactions from the network       |
+|                   | searching for a certain hash.             |
+ -------------------|------------------------------------------- 
+
+=====================
+Simple Bitcoin Client
+=====================
 
 Try this to make a mini-wallet.
 
@@ -92,16 +181,16 @@ Or to send it to one Bitcoin node (like a localhost one), then use:
 
   $ sx-sendtx txfile.tx localhost 4009
 
------------------
+=================
 QR Code Generator
------------------
+=================
 
   $ sudo apt-get install qrencode
   $ sx-genqr 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe qrcode.png
 
---------------------
+====================
 Deterministic Wallet
---------------------
+====================
 
   $ sx-newseed > wallet.seed
   $ cat wallet.seed
@@ -132,18 +221,12 @@ For Electrum compatible 12 word seeds, use the mnemonic tool.
 stumble time cookie" | sx-mnemonic
   148f0a1d77e20dbaee3ff920ca40240d
 
---------------------------
+==========================
 balance/history (Advanced)
---------------------------
+==========================
 
-Install Obelisk and then re-run the 4 steps at the beginning of this README.
-
-  $ git clone https://github.com/genjix/obelisk.git
-  $ cd obelisk
-  $ less README
-
-The balance/history tools can then use a network connection to make requests
-against the load balancer.
+The balance/history tools use a network connection to make requests
+against the load balancer backend.
 
   $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx-balance
   100000
