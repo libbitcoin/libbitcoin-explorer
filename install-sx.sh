@@ -81,7 +81,8 @@ echo "sx now installed."
 echo
 echo "Config files are in /etc/"
 echo "  obelisk cfg:    /etc/obelisk/*.cfg"
-echo "  sx cfg:         /etc/sx.cfg"
+echo "  sx cfg:         ~/.sx.cfg (see /usr/local/share/sx/sx.cfg for an"
+echo "                  example config file."
 echo
 echo "Documentation is available /usr/local/doc/"
 echo "  libbitcoin doc: /usr/local/doc/libbitcoin/"
