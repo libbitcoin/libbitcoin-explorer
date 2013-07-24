@@ -240,10 +240,10 @@ Use worker-output.sh to view debug info from the worker. Each worker must
 have their own unique copy of the blockchain database.
 
 See the Obelisk config files in /usr/local/etc/obelisk/. The sx config file
-is stored at ~/.sx.cfg (there's an example at /usr/local/etc/sx.cfg).
-You can change this configuration parameter using
+is stored at ~/.sx.cfg (there's an example at /usr/local/share/sx.cfg).
+You can change this configuration parameter in Obelisk using
 './configure --sysconfigdir=/etc/'. By configuring different workers and load
-balancers, you can run multiple setups on the same host. By default it is no
+balancers, you can run multiple setups on the same host. By default it is now
 pointing at my development server, but I will change this soon and migrate to
 a new host. Also I make no guarantees about stability or compatibility.
 
