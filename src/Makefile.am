@@ -5,9 +5,6 @@ bin_PROGRAMS = sx-addr sx-broadcast-tx sx-genpriv sx-genpub sx-mktx sx-mpk sx-ne
 if HAVE_OBELISK
 bin_PROGRAMS += sx-history sx-balance
 
-confdir=$(sysconfdir)
-conf_DATA = sx.cfg
-
 AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
 endif
 
