@@ -1,14 +1,26 @@
 AM_CPPFLAGS = ${libbitcoin_CFLAGS}
 
-bin_PROGRAMS = sx-addr sx-broadcast-tx sx-genpriv sx-genpub sx-mktx sx-mpk sx-newkey sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic
+corebindir = ${libdir}/sx-core
+corebin_PROGRAMS = \
+    sx-addr sx-broadcast-tx sx-genpriv sx-genpub sx-mktx sx-mpk sx-newkey \
+    sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic
+corebin_SCRIPTS = sx-qrcode sx-watchtx
+
+bin_SCRIPTS = sx
+CLEANFILES = $(bin_SCRIPTS)
+EXTRADIST = sx.py
+
+do_subst = sed -e "s,[@]corebindir[@],$(corebindir),g"
+
+sx: sx.py Makefile
+	$(do_subst) < $(srcdir)/sx.py > sx
+	chmod +x sx
 
 if HAVE_OBELISK
-bin_PROGRAMS += sx-history sx-balance
+corebin_PROGRAMS += sx-history sx-balance
 
 AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
 endif
-
-bin_SCRIPTS = sx-genqr sx-watchtx
 
 sx_addr_SOURCES = addr.cpp
 sx_addr_LDADD = ${libbitcoin_LIBS}

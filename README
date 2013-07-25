@@ -53,45 +53,45 @@ I want your feedback and suggestions! amir@unsystem.net
 Type sx-TAB to see a list of all the sx commands.
 
  -------------------|------------------------------------------- 
-| sx-addr           | See Bitcoin address of a private key.     |
+| sx addr           | See Bitcoin address of a private key.     |
 |-------------------|-------------------------------------------|
-| sx-broadcast-tx   | Broadcast tx to network.                  |
+| sx broadcast-tx   | Broadcast tx to network.                  |
 |-------------------|-------------------------------------------|
-| sx-mktx           | Create an unsigned tx.                    |
+| sx mktx           | Create an unsigned tx.                    |
 |-------------------|-------------------------------------------|
-| sx-newkey         | Create a new private key.                 |
+| sx newkey         | Create a new private key.                 |
 |-------------------|-------------------------------------------|
-| sx-newseed        | Create a new deterministic wallet seed.   |
+| sx newseed        | Create a new deterministic wallet seed.   |
 |-------------------|-------------------------------------------|
-| sx-mpk            | Extract a master public key from a        |
+| sx mpk            | Extract a master public key from a        |
 |                   | deterministic wallet seed.                |
 |-------------------|-------------------------------------------|
-| sx-genpriv        | Generate a private key deterministically  |
+| sx genpriv        | Generate a private key deterministically  |
 |                   | from a seed.                              |
 |-------------------|-------------------------------------------|
-| sx-genpub         | Generate a Bitcoin address                |
+| sx genpub         | Generate a Bitcoin address                |
 |                   | deterministically from a                  |
 |                   | master public key.                        |
 |-------------------|-------------------------------------------|
-| sx-mnemonic       | Work with Electrum compatible mnemonics   |
+| sx mnemonic       | Work with Electrum compatible mnemonics   |
 |                   | (12 words wallet seed).                   |
 |-------------------|-------------------------------------------|
-| sx-sendtx         | Send transaction to a single node.        |
+| sx sendtx         | Send transaction to a single node.        |
 |-------------------|-------------------------------------------|
-| sx-showtx         | Show the details of a transaction.        |
+| sx showtx         | Show the details of a transaction.        |
 |-------------------|-------------------------------------------|
-| sx-sign-input     | Sign a transaction input.                 |
+| sx sign-input     | Sign a transaction input.                 |
 |-------------------|-------------------------------------------|
-| sx-genqr          | Generate Bitcoin QR codes offline.        |
+| sx genqr          | Generate Bitcoin QR codes offline.        |
 |-------------------|-------------------------------------------|
-| sx-balance        | Show balance of an address.               |
+| sx balance        | Show balance of an address.               |
 |-------------------|-------------------------------------------|
-| sx-history        | Get list of output points, values, and    |
+| sx history        | Get list of output points, values, and    |
 |                   | their spends for an address. grep can     |
 |                   | filter for just unspent outputs which can |
 |                   | be fed into mktx.                         |
 |-------------------|-------------------------------------------|
-| sx-watchtx        | Watch transactions from the network       |
+| sx watchtx        | Watch transactions from the network       |
 |                   | searching for a certain hash.             |
  -------------------|------------------------------------------- 
 
@@ -102,10 +102,10 @@ Simple Bitcoin Client
 Try this to make a mini-wallet.
 
   $ cd src/
-  $ sx-newkey
+  $ sx newkey
   5KPFsatiYrJcvCSRrDbtx61822vZjeGGGx3wu38pQDHRF8eVJ8H
-  $ sx-newkey > private.key
-  $ cat private.key | sx-addr
+  $ sx newkey > private.key
+  $ cat private.key | sx addr
   134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
 
 Now send some funds to your address (0.01 BTC).
@@ -127,7 +127,7 @@ And there is a single output at index 1 that we want to spend.
 
 Construct the transaction:
 
-  $ sx-mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
+  $ sx mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
 
 Because there is 100000 Satoshis going in, but only 9000 Satoshis out,
 the remaining 10000 Satoshis (0.0001 BTC) will be taken by the Bitcoin
@@ -135,7 +135,7 @@ network as a fee. This is how fees work internally in Bitcoin.
 
 'showtx' allows inspecting of tx files.
 
-  $ sx-showtx txfile.tx
+  $ sx showtx txfile.tx
   hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0
   version: 1  locktime: 0
   Input:
@@ -152,8 +152,8 @@ Note that the input script is empty.
 
 We will now sign the first input using our private key.
 
-  $ cat private.key | sx-sign-input txfile.tx 0
-  $ sx-showtx txfile.tx
+  $ cat private.key | sx sign-input txfile.tx 0
+  $ sx showtx txfile.tx
   hash: 4a8be467fb75f0f757649348dbb05762142236ec236ac9e55e4683d7083ffca2
   version: 1  locktime: 0
   Input:
@@ -175,50 +175,50 @@ Now the input script is prepared, and the tx is signed.
 
 Broadcast the final tx to the Bitcoin network.
 
-  $ sx-broadcast-tx txfile.tx
+  $ sx broadcast-tx txfile.tx
 
 Or to send it to one Bitcoin node (like a localhost one), then use:
 
-  $ sx-sendtx txfile.tx localhost 4009
+  $ sx sendtx txfile.tx localhost 4009
 
 =================
 QR Code Generator
 =================
 
   $ sudo apt-get install qrencode
-  $ sx-genqr 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe qrcode.png
+  $ sx qrcode 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe qrcode.png
 
 ====================
 Deterministic Wallet
 ====================
 
-  $ sx-newseed > wallet.seed
+  $ sx newseed > wallet.seed
   $ cat wallet.seed
   b220b5bd2909df1d74b71c9e664233bf
-  $ cat wallet.seed | sx-mpk > master_public.key
+  $ cat wallet.seed | sx mpk > master_public.key
 
 Now you can generate your private keys for whatever number:
 
-  $ cat wallet.seed | sx-genpriv 0
+  $ cat wallet.seed | sx genpriv 0
   5Jmb4EYzEqj63rkPwADFY7WyGV2kga3YB1HfDAzg9dHNG57NMPu
-  $ cat wallet.seed | sx-genpriv 1
+  $ cat wallet.seed | sx genpriv 1
   5KjCYpPyxU2e88S57b1naKUsJ1JNjCudkFSQPxqcYyBYgzzahNe
 
 You can use either the master_public.key or the wallet.seed for generating
 Bitcoin receive addresses. But you cannot use the master_public.key for
 generating the private keys for spending those Bitcoins.
 
-  $ cat master_public.key | sx-genpub 0
+  $ cat master_public.key | sx genpub 0
   1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
-  $ cat wallet.seed | sx-genpub 0
+  $ cat wallet.seed | sx genpub 0
   1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
 
 For Electrum compatible 12 word seeds, use the mnemonic tool.
 
-  $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx-mnemonic
+  $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic
   people blonde admit dart couple different truth common alas stumble time cookie
   $ echo "people blonde admit dart couple different truth common alas
-stumble time cookie" | sx-mnemonic
+stumble time cookie" | sx mnemonic
   148f0a1d77e20dbaee3ff920ca40240d
 
 ==========================
@@ -228,9 +228,9 @@ balance/history (Advanced)
 The balance/history tools use a network connection to make requests
 against the load balancer backend.
 
-  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx-balance
+  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx balance
   100000
-  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx-history
+  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history
   Output Hash:Index                           Output Height   Value (Satoshis) Spend Hash:Index                Spend Height
   97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1  247683 100000      Unspent                                 230529504
 
