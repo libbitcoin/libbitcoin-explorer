@@ -108,7 +108,7 @@ Try this to make a mini-wallet.
   $ cat private.key | sx addr
   134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
 
-Now send some funds to your address (0.01 BTC).
+Now send some funds to your address (0.001 BTC).
 
 In this example we will send the funds to 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe.
 
