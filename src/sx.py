@@ -96,7 +96,6 @@ load balancer backend.
   $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history
   Output Hash:Index                           Output Height   Value (Satoshis) Spend Hash:Index                Spend Height
   97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1  247683 100000      Unspent                                 230529504
-
 \
 """
 ),
@@ -111,8 +110,7 @@ Construct the transaction:
 
   $ sx mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
 
-The VALUE field is in Satoshis.
-\
+The VALUE field is in Satoshis.\
 """
 ),
 
@@ -237,8 +235,7 @@ We will now sign the first input using our private key.
   checksig
     address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe
 
-Now the input script is prepared, and the transaction is signed.
-\
+Now the input script is prepared, and the transaction is signed.\
 """
 ),
 
@@ -265,8 +262,7 @@ stumble time cookie" | sx mnemonic
 """\
 Usage: sx watchtx [TXHASH]...
 
-Watch transactions from the network searching for a certain hash.
-\
+Watch transactions from the network searching for a certain hash.\
 """
 ),
 
