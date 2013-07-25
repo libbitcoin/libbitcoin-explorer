@@ -63,7 +63,7 @@ ldconfig
 echo "obelisk now installed."
 
 # Old sx put binaries in bin/sx-*
-rm /usr/local/bin/sx-*
+rm -f /usr/local/bin/sx-*
 
 cd /usr/local/src/
 if [ -d "sx-git" ]; then
