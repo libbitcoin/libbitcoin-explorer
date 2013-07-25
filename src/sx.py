@@ -277,8 +277,8 @@ def display_usage():
     print
     print "The most commonly used sx commands are:"
     print
-    for cmd, info in command_list.iteritems():
-        short_desc = info[0]
+    for cmd in sorted(command_list.iterkeys()):
+        short_desc = command_list[cmd][0]
         line = "   %s" % cmd
         line += " " * (15 - len(cmd))
         line += short_desc
