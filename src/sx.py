@@ -161,7 +161,9 @@ Usage: sx newseed
 "Send transaction to a single node.",
 
 """\
-Usage: sx sendtx FILENAME HOST PORT
+Usage: sx sendtx FILENAME [HOST] [PORT]
+
+HOST and PORT default to localhost:8333.
 
 Send transaction to one Bitcoin node on localhost port 4009:
 

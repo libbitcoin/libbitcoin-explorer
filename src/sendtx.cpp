@@ -23,14 +23,14 @@ bool stopped = false;
 void send_tx(const std::error_code& ec, channel_ptr node, transaction_type& tx)
 {
     check_error(ec);
-    std::cout << "send-tx: Sending " << hash_transaction(tx) << std::endl;
+    std::cout << "sendtx: Sending " << hash_transaction(tx) << std::endl;
     auto handle_send =
         [node](const std::error_code& ec)
         {
             if (ec)
                 log_warning() << "Send failed: " << ec.message();
             else
-                std::cout << "send-tx: Sent "
+                std::cout << "sendtx: Sent "
                     << time(nullptr) << std::endl;
             stopped = true;
         };
@@ -41,11 +41,11 @@ bool parse_port(uint16_t& port, const std::string& port_str)
 {
     try
     {
-        port = boost::lexical_cast<uint8_t>(port_str);
+        port = boost::lexical_cast<uint16_t>(port_str);
     }
     catch (const boost::bad_lexical_cast&)
     {
-        std::cerr << "send-tx: Bad port number provided" << std::endl;
+        std::cerr << "sendtx: Bad port number provided" << std::endl;
         return false;
     }
     return true;
