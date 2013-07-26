@@ -161,7 +161,7 @@ Usage: sx newseed
 "Send transaction to a single node.",
 
 """\
-Usage: sx sendtx FILENAME
+Usage: sx sendtx FILENAME HOST PORT
 
 Send transaction to one Bitcoin node on localhost port 4009:
 
