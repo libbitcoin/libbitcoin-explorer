@@ -106,6 +106,9 @@ load balancer backend.
 """\
 Usage: sx mktx FILENAME [-i TXHASH:INDEX]... [-o ADDRESS:VALUE]
 
+  -i, --input TXHASH:INDEX      Add input to transaction.
+  -o, --output TXHASH:INDEX     Add output to transaction.
+
 Construct the transaction:
 
   $ sx mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000

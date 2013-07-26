@@ -127,7 +127,7 @@ And there is a single output at index 1 that we want to spend.
 
 Construct the transaction:
 
-  $ sx mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
+  $ sx mktx txfile.tx --input 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 --output 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
 
 Because there is 100000 Satoshis going in, but only 9000 Satoshis out,
 the remaining 10000 Satoshis (0.0001 BTC) will be taken by the Bitcoin
