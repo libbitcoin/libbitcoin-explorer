@@ -9,7 +9,7 @@ using std::placeholders::_2;
 
 typedef std::vector<payment_address> payaddr_list;
 
-bool stopped = false;
+std::atomic_uint fetch_count(0);
 
 void history_fetched(const payment_address& payaddr,
     const std::error_code& ec, const blockchain::history_list& history)
@@ -45,7 +45,7 @@ void history_fetched(const payment_address& payaddr,
         }
         std::cout << std::endl << std::endl;
     }
-    stopped = true;
+    ++fetch_count;
 }
 
 bool payaddr_from_stdin(payment_address& payaddr)
@@ -65,6 +65,7 @@ bool payaddr_from_argv(payaddr_list& payaddrs, int argc, char** argv)
         payment_address payaddr;
         if (!payaddr.set_encoded(argv[i]))
             return false;
+        payaddrs.push_back(payaddr);
     }
     return true;
 }
@@ -90,11 +91,12 @@ int main(int argc, char** argv)
     for (const payment_address& payaddr: payaddrs)
         fullnode.fetch_history(payaddr,
             std::bind(history_fetched, payaddr, _1, _2));
-    while (!stopped)
+    while (fetch_count < payaddrs.size())
     {
         fullnode.update();
         sleep(0.1);
     }
+    BITCOIN_ASSERT(fetch_count == payaddrs.size());
     return 0;
 }
 
