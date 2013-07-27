@@ -1,7 +1,14 @@
 #!/usr/bin/python
-import zmq
 import hashlib
 import sys
+try:
+    import zmq
+except ImportError:
+    print >> sys.stderr, "Please install Python ZeroMQ for this tool to work."
+    print >> sys.stderr, ""
+    print >> sys.stderr, "  $ sudo apt-get install python-zmq"
+    print >> sys.stderr, ""
+    sys.exit(1)
 
 def config_value(filename, option_key, default=""):
     try:
