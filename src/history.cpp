@@ -23,8 +23,12 @@ void history_fetched(const payment_address& payaddr,
     for (const auto& row: history)
     {
         std::cout << "Address: " << payaddr.encoded() << std::endl;
-        std::cout << "  output: " << row.output
-            << "  height: " << row.output_height << std::endl;
+        std::cout << "  output: " << row.output << "  ";
+        if (!row.output_height)
+            std::cout << "Pending";
+        else
+            std::cout << "height: " << row.output_height;
+        std::cout << std::endl;
         std::cout << "  value:  " << row.value << std::endl;
         std::cout << "  spend:  ";
         if (row.spend.hash == null_hash)
@@ -33,7 +37,11 @@ void history_fetched(const payment_address& payaddr,
         }
         else
         {
-            std::cout << row.spend << "  height: " << row.spend_height;
+            std::cout << row.spend << "  ";
+            if (!row.spend_height)
+                std::cout << "Pending";
+            else
+                std::cout << "height: " << row.spend_height;
         }
         std::cout << std::endl << std::endl;
     }
