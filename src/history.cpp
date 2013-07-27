@@ -80,7 +80,7 @@ int main(int argc, char** argv)
     }
     fullnode_interface fullnode(config["service"]);
     for (const payment_address& payaddr: payaddrs)
-        fullnode.blockchain.fetch_history(payaddr,
+        fullnode.fetch_history(payaddr,
             std::bind(history_fetched, payaddr, _1, _2));
     while (!stopped)
     {

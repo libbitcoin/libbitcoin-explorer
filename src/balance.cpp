@@ -16,16 +16,25 @@ void history_fetched(const std::error_code& ec,
             << ec.message() << std::endl;
         return;
     }
-    uint64_t total_recv = 0, balance = 0;
+    uint64_t total_recv = 0, balance = 0, pending_balance = 0;
     for (const auto& row: history)
     {
         uint64_t value = row.value;
         BITCOIN_ASSERT(value >= 0);
         total_recv += value;
         if (row.spend.hash == null_hash)
+        {
+            pending_balance += value;
+        }
+        if (row.output_height != 0 &&
+            (row.spend.hash == null_hash || row.spend_height == 0))
+        {
             balance += value;
+        }
     }
-    std::cout << balance << std::endl;
+    std::cout << "Paid balance:    " << balance << std::endl;
+    std::cout << "Pending balance: " << pending_balance << std::endl;
+    std::cout << "Total received:  " << total_recv << std::endl;
     stopped = true;
 }
 
@@ -40,7 +49,7 @@ int main()
         return -1;
     }
     fullnode_interface fullnode(config["service"]);
-    fullnode.blockchain.fetch_history(payaddr, history_fetched);
+    fullnode.fetch_history(payaddr, history_fetched);
     while (!stopped)
     {
         fullnode.update();
