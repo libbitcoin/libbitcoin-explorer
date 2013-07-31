@@ -4,6 +4,15 @@ import sys
 
 command_list = {
 
+"rawscript": (
+"Create the raw hex representation from a script."
+
+"""\
+Usage: sx rawscript [ARGS]...
+Create the raw hex representation from a script.\
+"""
+),
+
 "pubkey": (
 "See the public part of a private key.",
 

@@ -3,7 +3,8 @@ AM_CPPFLAGS = ${libbitcoin_CFLAGS}
 corebindir = ${libdir}/sx-core
 corebin_PROGRAMS = \
     sx-addr sx-broadcast-tx sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
-    sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey
+    sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
+    sx-rawscript
 corebin_SCRIPTS = sx-qrcode sx-watchtx
 
 bin_SCRIPTS = sx
@@ -21,6 +22,9 @@ corebin_PROGRAMS += sx-history sx-balance
 
 AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
 endif
+
+sx_rawscript_SOURCES = rawscript.cpp
+sx_rawscript_LDADD = ${libbitcoin_LIBS}
 
 sx_pubkey_SOURCES = pubkey.cpp
 sx_pubkey_LDADD = ${libbitcoin_LIBS}
