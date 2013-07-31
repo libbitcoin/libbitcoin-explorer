@@ -4,6 +4,15 @@ import sys
 
 command_list = {
 
+"pubkey": (
+"See the public part of a private key.",
+
+"""\
+Usage: sx pubkey
+Read private key from STDIN and output the public key.\
+"""
+),
+
 "addr": (
 "See Bitcoin address of a private key.",
 
