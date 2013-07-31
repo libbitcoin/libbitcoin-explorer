@@ -4,6 +4,15 @@ import sys
 
 command_list = {
 
+"showscript": (
+"Show the details of a raw script.",
+
+"""\
+Usage: sx showscript
+Show the details of a raw script.\
+"""
+),
+
 "scripthash": (
 "Create BIP 16 script hash address from raw script hex."
 
