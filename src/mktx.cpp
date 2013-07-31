@@ -70,16 +70,41 @@ bool add_input(transaction_type& tx, const std::string& parameter)
     return true;
 }
 
-script build_output_script(const short_hash& public_key_hash)
+script build_pubkey_hash_script(const short_hash& pubkey_hash)
 {
     script result;
     result.push_operation({opcode::dup, data_chunk()});
     result.push_operation({opcode::hash160, data_chunk()});
     result.push_operation({opcode::special,
-        data_chunk(public_key_hash.begin(), public_key_hash.end())});
+        data_chunk(pubkey_hash.begin(), pubkey_hash.end())});
     result.push_operation({opcode::equalverify, data_chunk()});
     result.push_operation({opcode::checksig, data_chunk()});
     return result;
+}
+
+script build_script_hash_script(const short_hash& script_hash)
+{
+    script result;
+    result.push_operation({opcode::hash160, data_chunk()});
+    result.push_operation({opcode::special,
+        data_chunk(script_hash.begin(), script_hash.end())});
+    result.push_operation({opcode::equal, data_chunk()});
+    return result;
+}
+
+bool build_output_script(script& out_script, const payment_address& payaddr)
+{
+    switch (payaddr.type())
+    {
+        case payment_type::pubkey_hash:
+            out_script = build_pubkey_hash_script(payaddr.hash());
+            return true;
+
+        case payment_type::script_hash:
+            out_script = build_script_hash_script(payaddr.hash());
+            return true;
+    }
+    return false;
 }
 
 bool add_output(transaction_type& tx, const std::string& parameter)
@@ -110,7 +135,11 @@ bool add_output(transaction_type& tx, const std::string& parameter)
         std::cerr << "mktx: Bad VALUE provided." << std::endl;
         return false;
     }
-    output.output_script = build_output_script(addr.hash());
+    if (!build_output_script(output.output_script, addr))
+    {
+        std::cerr << "mktx: Unsupported address type." << std::endl;
+        return false;
+    }
     tx.outputs.push_back(output);
     std::cerr << "Added output sending " << output.value << " Satoshis to "
         << addr.encoded() << "." << std::endl;
