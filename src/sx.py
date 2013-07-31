@@ -40,15 +40,15 @@ Generate private keys from a wallet seed.
 """
 ),
 
-"genpub": (
+"genaddr": (
 "Generate a Bitcoin address deterministically from a wallet\n"
 "                  seed or master public key.",
 
 """\
-Usage: sx genpub N [CHANGE]
+Usage: sx genaddr N [CHANGE]
 Generate Bitcoin addresses from a wallet seed or master public key.
 
-  $ cat wallet.seed | sx genpub 0
+  $ cat wallet.seed | sx genaddr 0
   1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
 \
 """

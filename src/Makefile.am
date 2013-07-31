@@ -2,7 +2,7 @@ AM_CPPFLAGS = ${libbitcoin_CFLAGS}
 
 corebindir = ${libdir}/sx-core
 corebin_PROGRAMS = \
-    sx-addr sx-broadcast-tx sx-genpriv sx-genpub sx-mktx sx-mpk sx-newkey \
+    sx-addr sx-broadcast-tx sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
     sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic
 corebin_SCRIPTS = sx-qrcode sx-watchtx
 
@@ -31,8 +31,8 @@ sx_broadcast_tx_LDADD = ${libbitcoin_LIBS}
 sx_genpriv_SOURCES = genpriv.cpp
 sx_genpriv_LDADD = ${libbitcoin_LIBS}
 
-sx_genpub_SOURCES = genpub.cpp
-sx_genpub_LDADD = ${libbitcoin_LIBS}
+sx_genaddr_SOURCES = genaddr.cpp
+sx_genaddr_LDADD = ${libbitcoin_LIBS}
 
 sx_mktx_SOURCES = mktx.cpp
 sx_mktx_LDADD = ${libbitcoin_LIBS}

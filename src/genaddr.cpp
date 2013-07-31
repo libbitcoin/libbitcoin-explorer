@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 {
     if (argc != 2 && argc != 3)
     {
-        std::cerr << "Usage: genpub N [CHANGE]" << std::endl;
+        std::cerr << "Usage: genaddr N [CHANGE]" << std::endl;
         return -1;
     }
     size_t n;
@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     }
     catch (const boost::bad_lexical_cast&)
     {
-        std::cerr << "genpub: Bad N provided" << std::endl;
+        std::cerr << "genaddr: Bad N provided" << std::endl;
         return -1;
     }
     bool for_change = false;
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
         data_chunk mpk = decode_hex(user_data);
         if (!wallet.set_master_public_key(mpk))
         {
-            std::cerr << "genpub: No valid master public key, or "
+            std::cerr << "genaddr: No valid master public key, or "
                 << "private secret key was passed in." << std::endl;
             return -1;
         }
@@ -51,7 +51,7 @@ int main(int argc, char** argv)
     payment_address addr;
     if (!set_public_key(addr, pubkey))
     {
-        std::cerr << "genpub: Internal error setting pubkey" << std::endl;
+        std::cerr << "genaddr: Internal error setting pubkey" << std::endl;
         return -1;
     }
     std::cout << addr.encoded() << std::endl;
