@@ -41,8 +41,8 @@ Generate private keys from a wallet seed.
 ),
 
 "genpub": (
-"Generate a Bitcoin address deterministically from a wallet seed or "\
-"master public key.",
+"Generate a Bitcoin address deterministically from a wallet\n"
+"                  seed or master public key.",
 
 """\
 Usage: sx genpub N [CHANGE]
@@ -84,8 +84,9 @@ load balancer backend.
 ),
 
 "history": (
-"Get list of output points, values, and their spends for an address. grep can "
-"filter for just unspent outputs which can be fed into mktx.",
+"Get list of output points, values, and their spends for an\n"
+"                  address. grep can filter for just unspent outputs which can\n"
+"                  be fed into mktx.",
 
 """\
 Usage: sx history ADDRESS
