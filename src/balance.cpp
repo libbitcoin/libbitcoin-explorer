@@ -28,7 +28,7 @@ void history_fetched(const std::error_code& ec,
             pending_balance += value;
         }
         // Confirmed balance.
-        if (!row.output_height &&
+        if (row.output_height &&
             (row.spend.hash == null_hash || !row.spend_height))
         {
             balance += value;
