@@ -14,39 +14,7 @@ development and increase access to the core technology for all types.
 
 Use this bash shell script to install sx: http://sx.dyne.org/install-sx.sh
 
-ArchLinux users: https://aur.archlinux.org/packages/sx-git/
-
-==========================
-Debian/Ubuntu Instructions
-==========================
-
-  VVVVVVVVVVV
-> Start Here! <
-  ^^^^^^^^^^^
-
-    $ wget http://sx.dyne.org/install-sx.sh
-    $ sudo bash ./install-sx.sh
-
-sx should now be installed.
-
-Enjoy!
-
-    Installation commencing NOW.
-    ...
-
-============
-Instructions
-============
-
-Development repository:
-
-  https://github.com/genjix/sx/
-
-My Bitcoin address (from http://libbitcoin.dyne.org/):
-
-  1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY
-
-I want your feedback and suggestions! amir@unsystem.net
+Cheat sheet:
 
   http://i.imgur.com/8R0cfuw.png
 
