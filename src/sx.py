@@ -14,7 +14,7 @@ Show the details of a raw script.\
 ),
 
 "scripthash": (
-"Create BIP 16 script hash address from raw script hex."
+"Create BIP 16 script hash address from raw script hex.",
 
 """\
 Usage: sx scripthash
@@ -23,7 +23,7 @@ Create BIP 16 script hash address from raw script hex (from STDIN).\
 ),
 
 "rawscript": (
-"Create the raw hex representation from a script."
+"Create the raw hex representation from a script.",
 
 """\
 Usage: sx rawscript [ARGS]...
