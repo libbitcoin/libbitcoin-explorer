@@ -9,6 +9,41 @@ are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.  This file is offered as-is,
 without warranty of any kind.
 
+Debian/Ubuntu Instructions
+==========================
+
+  VVVVVVVVVVV
+> Start Here! <
+  ^^^^^^^^^^^
+
+    $ wget http://sx.dyne.org/install-sx.sh
+    $ sudo bash ./install-sx.sh
+
+sx should now be installed.
+
+Enjoy!
+
+    Installation commencing NOW.
+    ...
+
+ArchLinux
+=========
+
+ArchLinux users: https://aur.archlinux.org/packages/sx-git/
+
+More Stuff
+==========
+
+Development repository:
+
+  https://github.com/genjix/sx/
+
+My Bitcoin address (from http://libbitcoin.dyne.org/):
+
+  1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY
+
+I want your feedback and suggestions! amir@unsystem.net
+
 Basic Installation
 ==================
 
