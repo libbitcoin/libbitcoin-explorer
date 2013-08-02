@@ -1,6 +1,22 @@
 #include <bitcoin/bitcoin.hpp>
 using namespace bc;
 
+operation create_data_operation(data_chunk& data)
+{
+    BITCOIN_ASSERT(data.size() < std::numeric_limits<uint32_t>::max());
+    operation op;
+    op.data = data;
+    if (data.size() <= 75)
+        op.code = opcode::special;
+    else if (data.size() < std::numeric_limits<uint8_t>::max())
+        op.code = opcode::pushdata1;
+    else if (data.size() < std::numeric_limits<uint16_t>::max())
+        op.code = opcode::pushdata2;
+    else if (data.size() < std::numeric_limits<uint32_t>::max())
+        op.code = opcode::pushdata4;
+    return op;
+}
+
 script script_from_pretty(const std::string& pretty_script)
 {
     script script_object;
@@ -15,13 +31,13 @@ script script_from_pretty(const std::string& pretty_script)
             std::string encoded_hex;
             while ((splitter >> token) && token != "]")
                 encoded_hex += token;
-            op.data = decode_hex(encoded_hex);
+            data_chunk data = decode_hex(encoded_hex);
             if (token != "]")
             {
                 log_warning() << "Premature end of script.";
                 return script();
             }
-            op.code = opcode::special;
+            op = create_data_operation(data);
         }
         else
         {

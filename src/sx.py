@@ -233,6 +233,14 @@ Usage: sx showtx FILENAME
 """
 ),
 
+"set-input": (
+"Set a transaction input.",
+
+"""\
+Usage: sx sign-input FILENAME INDEX ADDRESS
+Set a transaction input.\
+"""),
+
 "sign-input": (
 "Sign a transaction input.",
 

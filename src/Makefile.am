@@ -4,7 +4,7 @@ corebindir = ${libdir}/sx-core
 corebin_PROGRAMS = \
     sx-addr sx-broadcast-tx sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
     sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
-    sx-rawscript sx-scripthash sx-showscript
+    sx-rawscript sx-scripthash sx-showscript sx-set-input
 corebin_SCRIPTS = sx-qrcode sx-watchtx
 
 bin_SCRIPTS = sx
@@ -64,6 +64,9 @@ sx_sendtx_LDADD = ${libbitcoin_LIBS}
 
 sx_showtx_SOURCES = showtx.cpp
 sx_showtx_LDADD = ${libbitcoin_LIBS}
+
+sx_set_input_SOURCES = set-input.cpp
+sx_set_input_LDADD = ${libbitcoin_LIBS}
 
 sx_sign_input_SOURCES = sign-input.cpp
 sx_sign_input_LDADD = ${libbitcoin_LIBS}
