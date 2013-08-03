@@ -233,6 +233,14 @@ Usage: sx showtx FILENAME
 """
 ),
 
+"decode-addr": (
+"Decode an address to its internal RIPEMD representation.",
+
+"""\
+Usage: sx decode-addr ADDRESS
+Decode an address to its internal RIPEMD representation.\
+"""),
+
 "set-input": (
 "Set a transaction input.",
 

@@ -4,7 +4,7 @@ corebindir = ${libdir}/sx-core
 corebin_PROGRAMS = \
     sx-addr sx-broadcast-tx sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
     sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
-    sx-rawscript sx-scripthash sx-showscript sx-set-input
+    sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr
 corebin_SCRIPTS = sx-qrcode sx-watchtx
 
 bin_SCRIPTS = sx
@@ -22,6 +22,9 @@ corebin_PROGRAMS += sx-history sx-balance
 
 AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
 endif
+
+sx_decode_addr_SOURCES = decode-addr.cpp
+sx_decode_addr_LDADD = ${libbitcoin_LIBS}
 
 sx_showscript_SOURCES = showscript.cpp
 sx_showscript_LDADD = ${libbitcoin_LIBS}
