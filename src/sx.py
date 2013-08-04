@@ -4,6 +4,24 @@ import sys
 
 command_list = {
 
+"satoshi": (
+"Convert Bitcoins into Satoshis.",
+
+"""\
+Usage: sx satoshi BTC
+Convert Bitcoins into Satoshis.\
+"""
+),
+
+"btc": (
+"Convert Satoshis into Bitcoins.",
+
+"""\
+Usage: sx btc SATOSHIS
+Convert Satoshis into Bitcoins.\
+"""
+),
+
 "showscript": (
 "Show the details of a raw script.",
 
