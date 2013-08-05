@@ -27,7 +27,7 @@ int main(int argc, char** argv)
         std::cout << "  script: " << pretty(input.input_script)
             << "  sequence: " << input.sequence << std::endl;
         payment_address addr;
-        if (extract_input_address(addr, input.input_script))
+        if (extract(addr, input.input_script))
             std::cout << "  address: " << addr.encoded() << std::endl;
     }
     for (const transaction_output_type& output: tx.outputs)
