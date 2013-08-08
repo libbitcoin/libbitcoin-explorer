@@ -136,6 +136,28 @@ Make sure you have the program 'qrencode' installed first.
 """
 ),
 
+"fetch-block-header": (
+"Fetch raw block header.",
+
+"""\
+Usage: sx fetch-block-header [HASH] [HEIGHT]
+
+The fetch-block-header tool uses a network connection to make requests against
+the load balancer backend.\
+"""
+),
+
+"fetch-transaction": (
+"Fetch a raw transaction.",
+
+"""\
+Usage: sx fetch-transaction HASH
+
+The fetch-transaction tool uses a network connection to make requests against
+the load balancer backend.\
+"""
+),
+
 "balance": (
 "Show balance of a Bitcoin address.",
 

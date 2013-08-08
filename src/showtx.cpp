@@ -5,12 +5,9 @@ using namespace bc;
 
 int main(int argc, char** argv)
 {
-    if (argc != 2)
-    {
-        std::cerr << "Usage: showtx FILENAME" << std::endl;
-        return -1;
-    }
-    const std::string& filename = argv[1];
+    std::string filename = "-";
+    if (argc == 2)
+        filename = argv[1];
     transaction_type tx;
     if (!load_tx(tx, filename))
         return -1;
