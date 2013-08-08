@@ -96,7 +96,7 @@ Generate private keys from a wallet seed.
 
 "genpub": (
 "Generate a public key deterministically from a wallet\n"
-"                  seed or master public key.",
+"                       seed or master public key.",
 
 """\
 Usage: sx genpub N [CHANGE]
@@ -110,7 +110,7 @@ Generate public key from a wallet seed or master public key.
 
 "genaddr": (
 "Generate a Bitcoin address deterministically from a wallet\n"
-"                  seed or master public key.",
+"                       seed or master public key.",
 
 """\
 Usage: sx genaddr N [CHANGE]
@@ -147,6 +147,17 @@ the load balancer backend.\
 """
 ),
 
+"fetch-last-height": (
+"Fetch the last block height.",
+
+"""\
+Usage: sx fetch-last-height
+
+The fetch-last-height tool uses a network connection to make requests against
+the load balancer backend.\
+"""
+),
+
 "fetch-transaction": (
 "Fetch a raw transaction.",
 
@@ -175,8 +186,8 @@ load balancer backend.
 
 "history": (
 "Get list of output points, values, and their spends for an\n"
-"                  address. grep can filter for just unspent outputs which can\n"
-"                  be fed into mktx.",
+"                       address. grep can filter for just unspent outputs which can\n"
+"                       be fed into mktx.",
 
 """\
 Usage: sx history ADDRESS
@@ -259,6 +270,30 @@ HOST and PORT default to localhost:8333.
 Send transaction to one Bitcoin node on localhost port 4009:
 
   $ sx sendtx txfile.tx localhost 4009
+\
+"""
+),
+
+"showblkhead": (
+"Show the details of a block header.",
+
+"""\
+Usage: sx showblkhead FILENAME
+
+'showblkhead' allows inspecting of block headers.
+
+  $ sx showblkhead headerfile.blk
+  hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0
+  version: 1  locktime: 0
+  Input:
+    previous output:
+  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0
+    script:   sequence: 4294967295
+  Output:
+    value: 90000
+    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify
+  checksig
+    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe
 \
 """
 ),
@@ -388,7 +423,7 @@ def display_usage():
     for cmd in sorted(command_list.iterkeys()):
         short_desc = command_list[cmd][0]
         line = "   %s" % cmd
-        line += " " * (15 - len(cmd))
+        line += " " * (20 - len(cmd))
         line += short_desc
         print line
     print

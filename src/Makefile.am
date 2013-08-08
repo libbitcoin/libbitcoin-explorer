@@ -5,7 +5,7 @@ corebin_PROGRAMS = \
     sx-addr sx-broadcast-tx sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
     sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
-    sx-genpub
+    sx-genpub sx-showblkhead
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi
 
 bin_SCRIPTS = sx
@@ -20,7 +20,8 @@ sx: sx.py Makefile
 
 if HAVE_OBELISK
 corebin_PROGRAMS += \
-    sx-history sx-balance sx-fetch-block-header sx-fetch-transaction
+    sx-history sx-balance sx-fetch-block-header sx-fetch-transaction \
+    sx-fetch-last-height
 
 AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
 endif
@@ -70,6 +71,9 @@ sx_newseed_LDADD = ${libbitcoin_LIBS}
 sx_sendtx_SOURCES = sendtx.cpp
 sx_sendtx_LDADD = ${libbitcoin_LIBS}
 
+sx_showblkhead_SOURCES = showblkhead.cpp
+sx_showblkhead_LDADD = ${libbitcoin_LIBS}
+
 sx_showtx_SOURCES = showtx.cpp
 sx_showtx_LDADD = ${libbitcoin_LIBS}
 
@@ -87,6 +91,9 @@ sx_history_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
 
 sx_balance_SOURCES = balance.cpp config.cpp
 sx_balance_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
+
+sx_fetch_last_height_SOURCES = fetch-last-height.cpp config.cpp
+sx_fetch_last_height_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS} 
 
 sx_fetch_transaction_SOURCES = fetch-transaction.cpp config.cpp
 sx_fetch_transaction_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS} 
