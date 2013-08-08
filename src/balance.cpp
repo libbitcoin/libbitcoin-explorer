@@ -34,18 +34,25 @@ void history_fetched(const std::error_code& ec,
             balance += value;
         }
     }
+    BITCOIN_ASSERT(pending_balance > balance);
+    BITCOIN_ASSERT(total_recv > pending_balance);
     std::cout << "Paid balance:    " << balance << std::endl;
     std::cout << "Pending balance: " << pending_balance << std::endl;
     std::cout << "Total received:  " << total_recv << std::endl;
     stopped = true;
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    std::string addr_str;
+    if (argc == 2)
+        addr_str = argv[1];
+    else
+        addr_str = read_stdin();
     config_map_type config;
     load_config(config);
     payment_address payaddr;
-    if (!payaddr.set_encoded(read_stdin()))
+    if (!payaddr.set_encoded(addr_str))
     {
         std::cerr << "balance: Invalid address." << std::endl;
         return -1;
