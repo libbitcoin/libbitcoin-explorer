@@ -34,8 +34,8 @@ void history_fetched(const std::error_code& ec,
             balance += value;
         }
     }
-    BITCOIN_ASSERT(pending_balance > balance);
-    BITCOIN_ASSERT(total_recv > pending_balance);
+    BITCOIN_ASSERT(pending_balance >= balance);
+    BITCOIN_ASSERT(total_recv >= pending_balance);
     std::cout << "Paid balance:    " << balance << std::endl;
     std::cout << "Pending balance: " << pending_balance << std::endl;
     std::cout << "Total received:  " << total_recv << std::endl;
