@@ -39,13 +39,7 @@ int main(int argc, char** argv)
     // Now re-serialize transaction.
     data_chunk raw_tx(satoshi_raw_size(tx));
     satoshi_save(tx, raw_tx.begin());
-    if (filename == "-")
-        std::cout << raw_tx << std::endl;
-    else
-    {
-        std::ofstream outfile(filename, std::ofstream::binary);
-        outfile << raw_tx;
-    }
+    std::cout << raw_tx << std::endl;
     return 0;
 }
 
