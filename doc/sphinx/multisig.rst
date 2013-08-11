@@ -78,7 +78,7 @@ Sign an input using::
 Our example will use bash substitution again.
 ::
 
-    $ sx rawscript zero [ $(cat key2 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat key3 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat msig.script) ] | sx set-input txfile.tx 0
+    $ sx rawscript zero [ $(cat key2 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat key3 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat msig.script) ] | sx set-input txfile.tx 0 > txfile.tx
 
 The transaction is finalised! Broadcast it::
 

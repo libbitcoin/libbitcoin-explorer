@@ -334,7 +334,7 @@ Decode an address to its internal RIPEMD representation.\
 "Set a transaction input.",
 
 """\
-Usage: sx sign-input FILENAME INDEX ADDRESS
+Usage: sx sign-input FILENAME INDEX PREVOUT_SCRIPT
 Set a transaction input.\
 """),
 
