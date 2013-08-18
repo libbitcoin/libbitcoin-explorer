@@ -60,7 +60,8 @@ int main(int argc, char** argv)
     }
     const std::string filename = argv[1];
     transaction_type tx;
-    load_tx(tx, filename);
+    if (!load_tx(tx, filename))
+        return -1;
     std::string hostname = "localhost";
     if (argc >= 3)
         hostname = argv[2];

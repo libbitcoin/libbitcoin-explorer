@@ -40,7 +40,8 @@ int main(int argc, char** argv)
     }
     const std::string filename = argv[1];
     transaction_type tx;
-    load_tx(tx, filename);
+    if (!load_tx(tx, filename))
+        return -1;
     const std::string index_str = argv[2];
     size_t input_index;
     try
