@@ -116,7 +116,8 @@ int main(int argc, char** argv)
     }
     const std::string filename = argv[1];
     transaction_type tx;
-    load_tx(tx, filename);
+    if (!load_tx(tx, filename))
+        return -1;
     size_t node_count = 2;
     if (argc == 3)
     {

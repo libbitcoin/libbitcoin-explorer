@@ -49,6 +49,15 @@ Create the raw hex representation from a script.\
 """
 ),
 
+"validtx": (
+"Validate a transaction.",
+
+"""\
+Usage: sx validtx FILENAME
+Validate a transaction.\
+"""
+),
+
 "pubkey": (
 "See the public part of a private key.",
 
