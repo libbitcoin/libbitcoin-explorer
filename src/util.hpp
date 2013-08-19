@@ -44,10 +44,16 @@ std::string read_stdin()
     return std::string(first, last);
 }
 
+bool read_private_key(elliptic_curve_key& key, const std::string& arg)
+{
+    secret_parameter secret = wif_to_secret(arg);
+    if (secret == null_hash || !key.set_secret(secret))
+        return false;
+    return true;
+}
 bool read_private_key(elliptic_curve_key& key)
 {
-    secret_parameter secret = wif_to_secret(read_stdin());
-    if (secret == null_hash || !key.set_secret(secret))
+    if (!read_private_key(key, read_stdin()))
     {
         std::cerr << "Invalid private key." << std::endl;
         return false;
