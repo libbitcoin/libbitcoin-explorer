@@ -23,27 +23,30 @@ void history_fetched(const payment_address& payaddr,
     for (const auto& row: history)
     {
         std::cout << "Address: " << payaddr.encoded() << std::endl;
-        std::cout << "  output: " << row.output << "  ";
+        std::cout << "  output: " << row.output << std::endl;
+        std::cout << "  output_height: ";
         if (!row.output_height)
             std::cout << "Pending";
         else
-            std::cout << "height: " << row.output_height;
+            std::cout << row.output_height;
         std::cout << std::endl;
         std::cout << "  value:  " << row.value << std::endl;
-        std::cout << "  spend:  ";
         if (row.spend.hash == null_hash)
         {
-            std::cout << "Unspent";
+            std::cout << "  spend: Unspent" << std::endl;
+            std::cout << "  spend_height: Unspent" << std::endl;
         }
         else
         {
-            std::cout << row.spend << "  ";
+            std::cout << "  spend: " << row.spend << std::endl;
+            std::cout << "  spend_height: ";
             if (!row.spend_height)
                 std::cout << "Pending";
             else
-                std::cout << "height: " << row.spend_height;
+                std::cout << row.spend_height;
+            std::cout << std::endl;
         }
-        std::cout << std::endl << std::endl;
+        std::cout << std::endl;
     }
     ++fetch_count;
 }
