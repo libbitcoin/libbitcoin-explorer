@@ -63,8 +63,8 @@ We will now sign the first input using our private key.
     $ DECODED_ADDR=$(cat private.key | sx addr | sx decode-addr)
     $ PREVOUT_SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)
     $ SIGNATURE=$(cat private.key | sx sign-input txfile.tx 0 $PREVOUT_SCRIPT)
-    $ sx rawscript [ $SIGNATURE ] [ $(cat private.key | sx pubkey) ] | sx set-input txfile.tx 0 > txfile.tx
-    $ sx showtx txfile.tx
+    $ sx rawscript [ $SIGNATURE ] [ $(cat private.key | sx pubkey) ] | sx set-input txfile.tx 0 > signed-tx
+    $ sx showtx signed-tx
     hash: 4a8be467fb75f0f757649348dbb05762142236ec236ac9e55e4683d7083ffca2
     version: 1  locktime: 0
     Input:
@@ -89,10 +89,10 @@ Put ``txfile.tx`` on a USB stick, transport it to your online computer.
 Broadcast the final tx to the Bitcoin network.
 ::
 
-    $ sx broadcast-tx txfile.tx
+    $ sx broadcast-tx signed-tx
 
 Or to send it to one Bitcoin node (like a localhost one), use:
 ::
 
-    $ sx sendtx txfile.tx localhost 4009
+    $ sx sendtx signed-tx localhost 4009
 
