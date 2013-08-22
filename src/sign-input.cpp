@@ -6,7 +6,7 @@
 using namespace bc;
 
 bool sign(transaction_type& tx, size_t input_index,
-    const elliptic_curve_key& key, const script& script_code)
+    const elliptic_curve_key& key, const script_type& script_code)
 {
     transaction_input_type& input = tx.inputs[input_index];
 
@@ -18,7 +18,7 @@ bool sign(transaction_type& tx, size_t input_index,
         return false;
     }
     hash_digest tx_hash =
-        script::generate_signature_hash(tx, input_index, script_code, 1);
+        script_type::generate_signature_hash(tx, input_index, script_code, 1);
     if (tx_hash == null_hash)
     {
         std::cerr << "sign-input: Error generating signature hash."
@@ -53,7 +53,7 @@ int main(int argc, char** argv)
         std::cerr << "sign-input: Bad N provided." << std::endl;
         return -1;
     }
-    const script script_code = parse_script(decode_hex(argv[3]));
+    const script_type script_code = parse_script(decode_hex(argv[3]));
     if (input_index >= tx.inputs.size())
     {
         std::cerr << "sign-input: N out of range." << std::endl;

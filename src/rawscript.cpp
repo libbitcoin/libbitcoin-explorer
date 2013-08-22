@@ -17,9 +17,9 @@ operation create_data_operation(data_chunk& data)
     return op;
 }
 
-script script_from_pretty(const std::string& pretty_script)
+script_type script_from_pretty(const std::string& pretty_script)
 {
-    script script_object;
+    script_type script_object;
     std::stringstream splitter;
     splitter << pretty_script;
     std::string token;
@@ -35,7 +35,7 @@ script script_from_pretty(const std::string& pretty_script)
             if (token != "]")
             {
                 log_warning() << "Premature end of script.";
-                return script();
+                return script_type();
             }
             op = create_data_operation(data);
         }
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
     std::string joined_args;
     for (size_t i = 1; i < argc; ++i)
         joined_args += std::string(argv[i]) + " ";
-    script parsed_script = script_from_pretty(joined_args);
+    script_type parsed_script = script_from_pretty(joined_args);
     std::cout << save_script(parsed_script) << std::endl;
     return 0;
 }

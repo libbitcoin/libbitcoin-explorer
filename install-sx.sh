@@ -46,6 +46,7 @@ cd /usr/local/src/
 if [ -d "obelisk-git" ]; then
     echo "Updating obelisk.."
     cd obelisk-git
+    git remote set-url origin https://github.com/spesmilo/obelisk.git
     git pull --rebase
 else
     echo "Downloading obelisk..."
@@ -69,10 +70,11 @@ cd /usr/local/src/
 if [ -d "sx-git" ]; then
     echo "Updating sx..."
     cd sx-git
+    git remote set-url origin https://github.com/spesmilo/sx.git
     git pull --rebase
 else
     echo "Downloading sx..."
-    git clone https://github.com/spesmilo/sx sx-git
+    git clone https://github.com/spesmilo/sx.git sx-git
     cd sx-git
 fi
 echo "Beginning build process now..."

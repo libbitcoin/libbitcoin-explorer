@@ -34,7 +34,7 @@ int main(int argc, char** argv)
     }
     // Read script from STDIN.
     std::string hex_script = read_stdin();
-    script new_input_script = parse_script(decode_hex(hex_script));
+    script_type new_input_script = parse_script(decode_hex(hex_script));
     // Set input.
     tx.inputs[input_index].input_script = new_input_script;
     // Now re-serialize transaction.

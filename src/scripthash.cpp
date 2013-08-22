@@ -6,7 +6,7 @@ using namespace bc;
 int main()
 {
     std::string hex_script = read_stdin();
-    script bip16_script = parse_script(decode_hex(hex_script));
+    script_type bip16_script = parse_script(decode_hex(hex_script));
     payment_address payaddr;
     set_script(payaddr, bip16_script);
     std::cout << payaddr.encoded() << std::endl;
