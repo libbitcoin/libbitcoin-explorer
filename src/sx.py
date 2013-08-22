@@ -339,6 +339,14 @@ Usage: sx decode-addr ADDRESS
 Decode an address to its internal RIPEMD representation.\
 """),
 
+"encode-addr": (
+"Encode an address to base58check form.",
+
+"""\
+Usage: sx encode-addr ADDRESS [magic_byte]
+Encode an address to base58check form.\
+"""),
+
 "set-input": (
 "Set a transaction input.",
 
