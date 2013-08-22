@@ -49,7 +49,7 @@ if [ -d "obelisk-git" ]; then
     git pull --rebase
 else
     echo "Downloading obelisk..."
-    git clone https://github.com/genjix/obelisk.git obelisk-git
+    git clone https://github.com/spesmilo/obelisk.git obelisk-git
     cd obelisk-git
 fi
 echo "Installing obelisk dependencies..."
@@ -72,7 +72,7 @@ if [ -d "sx-git" ]; then
     git pull --rebase
 else
     echo "Downloading sx..."
-    git clone https://github.com/genjix/sx sx-git
+    git clone https://github.com/spesmilo/sx sx-git
     cd sx-git
 fi
 echo "Beginning build process now..."
