@@ -1,3 +1,4 @@
+#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include "util.hpp"
 using namespace bc;
@@ -19,19 +20,19 @@ int main(int argc, char** argv)
     }
     else if (argc == 2) 
     {
-        addr_str = argv[1];
-        if (addr_str.size() < 5) 
+        if (strlen(argv[1]) > 5)
+            addr_str = argv[1];
+        else
         {
-            version_byte = atoi(addr_str.c_str());
+            version_byte = boost::lexical_cast<uint32_t>(argv[1]);
             addr_str = read_stdin();
         }
     }
     else
     {
         BITCOIN_ASSERT(argc == 3);
-
-        version_byte = atoi(argv[2]);
-        addr_str = atoi(argv[1]);
+        version_byte = boost::lexical_cast<uint32_t>(argv[2]);
+        addr_str = argv[1];
     }
 
     data_chunk data = decode_hex(addr_str);
