@@ -94,13 +94,13 @@ script build_script_hash_script(const short_hash& script_hash)
 
 bool build_output_script(script& out_script, const payment_address& payaddr)
 {
-    switch (payaddr.type())
+    switch (payaddr.version())
     {
-        case payment_type::pubkey_hash:
+        case payment_address::pubkey_version:
             out_script = build_pubkey_hash_script(payaddr.hash());
             return true;
 
-        case payment_type::script_hash:
+        case payment_address::script_version:
             out_script = build_script_hash_script(payaddr.hash());
             return true;
     }

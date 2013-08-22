@@ -49,11 +49,7 @@ int main(int argc, char** argv)
     }
     data_chunk pubkey = wallet.generate_public_key(n, for_change);
     payment_address addr;
-    if (!set_public_key(addr, pubkey))
-    {
-        std::cerr << "genaddr: Internal error setting pubkey" << std::endl;
-        return -1;
-    }
+    set_public_key(addr, pubkey);
     std::cout << addr.encoded() << std::endl;
     return 0;
 }

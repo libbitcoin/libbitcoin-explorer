@@ -23,11 +23,7 @@ int main()
     if (!read_public_or_private_key(key))
         return -1;
     payment_address address;
-    if (!set_public_key(address, key.public_key()))
-    {
-        std::cerr << "Set public key on address failed." << std::endl;
-        return -1;
-    }
+    set_public_key(address, key.public_key());
     std::cout << address.encoded() << std::endl;
     return 0;
 }
