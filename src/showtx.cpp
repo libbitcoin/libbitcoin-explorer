@@ -21,19 +21,19 @@ int main(int argc, char** argv)
         std::cout << "  previous output: "
             << input.previous_output.hash << ":"
             << input.previous_output.index << std::endl;
-        std::cout << "  script: " << pretty(input.input_script)
+        std::cout << "  script: " << pretty(input.script)
             << "  sequence: " << input.sequence << std::endl;
         payment_address addr;
-        if (extract(addr, input.input_script))
+        if (extract(addr, input.script))
             std::cout << "  address: " << addr.encoded() << std::endl;
     }
     for (const transaction_output_type& output: tx.outputs)
     {
         std::cout << "Output:" << std::endl;
         std::cout << "  value: " << output.value << std::endl;
-        std::cout << "  script: " << pretty(output.output_script) << std::endl;
+        std::cout << "  script: " << pretty(output.script) << std::endl;
         payment_address addr;
-        if (extract(addr, output.output_script))
+        if (extract(addr, output.script))
             std::cout << "  address: " << addr.encoded() << std::endl;
     }
     return 0;

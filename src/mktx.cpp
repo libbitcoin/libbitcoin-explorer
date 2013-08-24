@@ -136,7 +136,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
         std::cerr << "mktx: Bad VALUE provided." << std::endl;
         return false;
     }
-    if (!build_output_script(output.output_script, addr))
+    if (!build_output_script(output.script, addr))
     {
         std::cerr << "mktx: Unsupported address type." << std::endl;
         return false;
