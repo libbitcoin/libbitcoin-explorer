@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     std::string hex_script = read_stdin();
     script_type new_input_script = parse_script(decode_hex(hex_script));
     // Set input.
-    tx.inputs[input_index].input_script = new_input_script;
+    tx.inputs[input_index].script = new_input_script;
     // Now re-serialize transaction.
     data_chunk raw_tx(satoshi_raw_size(tx));
     satoshi_save(tx, raw_tx.begin());
