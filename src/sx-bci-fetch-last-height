@@ -1,0 +1,11 @@
+#!/usr/bin/python
+
+import urllib, json
+
+text = urllib.urlopen('http://blockchain.info/latestblock').read()
+
+try:
+    jsonobj = json.loads(text)
+    print jsonobj["height"]
+except:
+    print "Bad JSON"

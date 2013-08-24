@@ -6,13 +6,13 @@ addrs = sys.argv[1:]
 data = [urllib.urlopen('http://blockchain.info/address/%s?format=json' % s).read() for s in addrs]
 
 try:
-    json = [json.loads(x) for x in data]
+    jsonobj = [json.loads(x) for x in data]
 except:
     print "Invalid JSON"
 
 def addarrays(arrs): return reduce(lambda x,y: x+y,arrs,[])
 
-txs = addarrays([x["txs"] for x in json])
+txs = addarrays([x["txs"] for x in jsonobj])
 
 def extend(obj,key,val):
     o = copy.copy(obj)

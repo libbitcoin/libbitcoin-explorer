@@ -167,6 +167,16 @@ the load balancer backend.\
 """
 ),
 
+"bci-fetch-last-height": (
+"Fetch the last block height using blockchain.info.",
+
+"""\
+Usage: sx bci-fetch-last-height
+
+Fetch the last block height using blockchain.info.\
+"""
+),
+
 "fetch-transaction": (
 "Fetch a raw transaction.",
 
