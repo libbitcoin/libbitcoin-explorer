@@ -88,6 +88,18 @@ Broadcast the transaction to the Bitcoin network.
 """
 ),
 
+"bci-push-tx": (
+"Push tx to blockchain.info/pushtx.",
+
+"""\
+Usage: sx bci-push-tx FILENAME
+Push tx to blockchain.info/pushtx.
+
+  $ sx bci-push-tx txfile.tx
+\
+"""
+),
+
 "genpriv": (
 "Generate a private key deterministically from a seed.",
 
