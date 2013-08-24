@@ -6,7 +6,7 @@ corebin_PROGRAMS = \
     sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
     sx-encode-addr sx-genpub sx-showblkhead
-corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi
+corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history sx-get-utxo
 
 bin_SCRIPTS = sx
 CLEANFILES = $(bin_SCRIPTS)

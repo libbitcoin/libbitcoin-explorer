@@ -211,6 +211,24 @@ load balancer backend.
 """
 ),
 
+"bci-history": (
+"Get list of output points, values and spends using blockchain.info.",
+
+"""\
+Usage: sx bci-history SATOSHIS
+Get list of output points, values and spends using blockchain.info.\
+"""
+),
+
+"get-utxo": (
+"Get enough unspent transaction outputs from a given set of addresses to pay a given number of satoshis"
+
+"""\
+Usage: sx get-utxo ADDRESS1 ADDRESS2... SATOSHIS
+"Get enough unspent transaction outputs from a given set of addresses to pay a given number of satoshis\
+"""
+),
+
 "mktx": (
 "Create an unsigned tx.",
 
