@@ -13,16 +13,16 @@ int main(int argc, char** argv)
         return -1;
     // Show details.
     std::cout << "hash: " << hash_transaction(tx) << std::endl;
-    std::cout << "version: " << tx.version
-        << "  locktime: " << tx.locktime << std::endl;
+    std::cout << "version: " << tx.version <<std::endl;
+    std::cout << "locktime: " << tx.locktime << std::endl;
     for (const transaction_input_type& input: tx.inputs)
     {
         std::cout << "Input:" << std::endl;
         std::cout << "  previous output: "
             << input.previous_output.hash << ":"
             << input.previous_output.index << std::endl;
-        std::cout << "  script: " << pretty(input.script)
-            << "  sequence: " << input.sequence << std::endl;
+        std::cout << "  script: " << pretty(input.script) << std::endl;
+        std::cout << "  sequence: " << input.sequence << std::endl;
         payment_address addr;
         if (extract(addr, input.script))
             std::cout << "  address: " << addr.encoded() << std::endl;

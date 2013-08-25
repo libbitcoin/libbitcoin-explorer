@@ -88,6 +88,18 @@ Broadcast the transaction to the Bitcoin network.
 """
 ),
 
+"bci-push-tx": (
+"Push tx to blockchain.info/pushtx.",
+
+"""\
+Usage: sx bci-push-tx FILENAME
+Push tx to blockchain.info/pushtx.
+
+  $ sx bci-push-tx txfile.tx
+\
+"""
+),
+
 "genpriv": (
 "Generate a private key deterministically from a seed.",
 
@@ -167,6 +179,16 @@ the load balancer backend.\
 """
 ),
 
+"bci-fetch-last-height": (
+"Fetch the last block height using blockchain.info.",
+
+"""\
+Usage: sx bci-fetch-last-height
+
+Fetch the last block height using blockchain.info.\
+"""
+),
+
 "fetch-transaction": (
 "Fetch a raw transaction.",
 
@@ -208,6 +230,24 @@ load balancer backend.
   Output Hash:Index                           Output Height   Value (Satoshis) Spend Hash:Index                Spend Height
   97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1  247683 100000      Unspent                                 230529504
 \
+"""
+),
+
+"bci-history": (
+"Get list of output points, values and spends using blockchain.info.",
+
+"""\
+Usage: sx bci-history SATOSHIS
+Get list of output points, values and spends using blockchain.info.\
+"""
+),
+
+"get-utxo": (
+"Get enough unspent transaction outputs from a given set of addresses to pay a given number of satoshis"
+
+"""\
+Usage: sx get-utxo ADDRESS1 ADDRESS2... SATOSHIS
+"Get enough unspent transaction outputs from a given set of addresses to pay a given number of satoshis\
 """
 ),
 

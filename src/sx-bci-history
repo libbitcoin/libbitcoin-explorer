@@ -1,0 +1,62 @@
+#!/usr/bin/python
+import urllib, sys, json, copy
+
+addrs = sys.argv[1:]
+
+data = [urllib.urlopen('http://blockchain.info/address/%s?format=json' % s).read() for s in addrs]
+
+try:
+    jsonobj = [json.loads(x) for x in data]
+except:
+    print "Invalid JSON"
+
+def addarrays(arrs): return reduce(lambda x,y: x+y,arrs,[])
+
+txs = addarrays([x["txs"] for x in jsonobj])
+
+def extend(obj,key,val):
+    o = copy.copy(obj)
+    o[key] = val
+    return o
+
+def get_outputs(tx):
+    return [extend(o,'output', tx["hash"]+":"+str(o["n"])) for o in tx["out"]]
+
+def get_spends(tx):
+    def format_spend(inp,ind):
+        return extend(inp["prev_out"], 'input', tx["hash"]+":"+str(ind))
+
+    return [format_spend(inp,ind) for ind,inp in enumerate(tx["inputs"])]
+
+outs = addarrays([get_outputs(tx) for tx in txs])
+myouts = sorted([o for o in outs if o["addr"] in addrs],key=lambda x: x["tx_index"])
+
+spends = addarrays([get_spends(tx) for tx in txs])
+myspends = sorted([o for o in spends if o["addr"] in addrs],key=lambda x: x["tx_index"])
+
+utxo = []
+stxo = []
+
+i,j = 0,0
+
+while i < len(myouts) and j < len(myspends):
+    if myouts[i]["tx_index"] < myspends[j]["tx_index"]:
+        myouts[i]["spend"] = "Unspent"
+        utxo.append(myouts[i])
+        i += 1
+    elif myouts[i]["tx_index"] > myspends[j]["tx_index"]:
+        j += 1
+    else:
+        myouts[i]["spend"] = myspends[j]["input"]
+        stxo.append(myouts[i])
+        i += 1
+        j += 1
+
+utxo.extend([extend(x,"spend","Unspent") for x in myouts[i:]])
+
+for txo in utxo+stxo:
+    print "Address: "+txo["addr"]
+    print "  output: "+txo["output"]
+    print "  value: "+str(txo["value"])
+    print "  spend: "+str(txo["spend"])
+    print ""
