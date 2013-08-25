@@ -347,6 +347,14 @@ Usage: sx encode-addr ADDRESS [magic_byte]
 Encode an address to base58check form.\
 """),
 
+"validsig": (
+"Validate a transaction input's signature.",
+
+"""\
+Usage: sx validsig FILENAME INDEX SCRIPT_CODE SIGNATURE
+Validate a transaction input's signature.\
+"""),
+
 "set-input": (
 "Set a transaction input.",
 

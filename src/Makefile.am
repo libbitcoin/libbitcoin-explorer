@@ -5,7 +5,7 @@ corebin_PROGRAMS = \
     sx-addr sx-broadcast-tx sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
     sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
-    sx-encode-addr sx-genpub sx-showblkhead
+    sx-encode-addr sx-genpub sx-showblkhead sx-validsig
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi
 
 bin_SCRIPTS = sx
@@ -58,6 +58,9 @@ sx_genpriv_LDADD = ${libbitcoin_LIBS}
 
 sx_genaddr_SOURCES = genaddr.cpp
 sx_genaddr_LDADD = ${libbitcoin_LIBS}
+
+sx_validsig_SOURCES = validsig.cpp
+sx_validsig_LDADD = ${libbitcoin_LIBS}
 
 sx_mktx_SOURCES = mktx.cpp
 sx_mktx_LDADD = ${libbitcoin_LIBS}

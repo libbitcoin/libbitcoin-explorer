@@ -61,5 +61,17 @@ bool read_private_key(elliptic_curve_key& key)
     return true;
 }
 
+bool read_public_or_private_key(elliptic_curve_key& key)
+{
+    std::string arg = read_stdin();
+    if (read_private_key(key, arg))
+        return true;
+    data_chunk pubkey = decode_hex(arg);
+    if (key.set_public_key(pubkey))
+        return true;
+    std::cerr << "Invalid public or private key." << std::endl;
+    return false;
+}
+
 #endif
 

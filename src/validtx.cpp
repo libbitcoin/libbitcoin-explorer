@@ -11,7 +11,7 @@ void tx_validated(const std::error_code& ec, const index_list& unconfirmed)
 {
     std::cout << "Status: " << ec.message() << std::endl;
     for (size_t unconfirmed_index: unconfirmed)
-        std::cout << "Unconfirmed: " << unconfirmed_index << std::endl;
+        std::cout << "  Unconfirmed: " << unconfirmed_index << std::endl;
     stopped = true;
 }
 
