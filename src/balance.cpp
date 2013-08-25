@@ -8,7 +8,7 @@ using namespace bc;
 bool stopped = false;
 
 void history_fetched(const std::error_code& ec,
-    const blockchain::history_list& history)
+    const blockchain::history_list& history, const worker_uuid&)
 {
     if (ec)
     {
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
         return -1;
     }
     fullnode_interface fullnode(config["service"]);
-    fullnode.fetch_history(payaddr, history_fetched);
+    fullnode.address.fetch_history(payaddr, history_fetched);
     while (!stopped)
     {
         fullnode.update();

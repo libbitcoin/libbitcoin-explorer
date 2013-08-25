@@ -6,13 +6,15 @@
 using namespace bc;
 using std::placeholders::_1;
 using std::placeholders::_2;
+using std::placeholders::_3;
 
 typedef std::vector<payment_address> payaddr_list;
 
 std::atomic_uint fetch_count(0);
 
 void history_fetched(const payment_address& payaddr,
-    const std::error_code& ec, const blockchain::history_list& history)
+    const std::error_code& ec, const blockchain::history_list& history,
+    const worker_uuid& worker)
 {
     if (ec)
     {
@@ -92,8 +94,8 @@ int main(int argc, char** argv)
     }
     fullnode_interface fullnode(config["service"]);
     for (const payment_address& payaddr: payaddrs)
-        fullnode.fetch_history(payaddr,
-            std::bind(history_fetched, payaddr, _1, _2));
+        fullnode.address.fetch_history(payaddr,
+            std::bind(history_fetched, payaddr, _1, _2, _3));
     while (fetch_count < payaddrs.size())
     {
         fullnode.update();
