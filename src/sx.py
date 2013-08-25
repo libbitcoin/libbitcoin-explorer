@@ -88,14 +88,14 @@ Broadcast the transaction to the Bitcoin network.
 """
 ),
 
-"bci-push-tx": (
+"bci-pushtx": (
 "Push tx to blockchain.info/pushtx.",
 
 """\
 Usage: sx bci-push-tx FILENAME
 Push tx to blockchain.info/pushtx.
 
-  $ sx bci-push-tx txfile.tx
+  $ sx bci-pushtx txfile.tx
 \
 """
 ),
