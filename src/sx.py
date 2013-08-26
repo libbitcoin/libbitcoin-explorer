@@ -49,6 +49,15 @@ Create the raw hex representation from a script.\
 """
 ),
 
+"monitor": (
+"Monitor an address.",
+
+"""\
+Usage: sx monitor ADDRESS
+Monitor an address.\
+"""
+),
+
 "validtx": (
 "Validate a transaction.",
 

@@ -7,12 +7,8 @@ using namespace bc;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-typedef std::vector<payment_address> payaddr_list;
-
-std::atomic_uint fetch_count(0);
-
-void history_fetched(const payment_address& payaddr,
-    const std::error_code& ec, const blockchain::history_list& history)
+void history_fetched(const std::error_code& ec,
+    const blockchain::history_list& history)
 {
     if (ec)
     {
@@ -22,7 +18,6 @@ void history_fetched(const payment_address& payaddr,
     }
     for (const auto& row: history)
     {
-        std::cout << "Address: " << payaddr.encoded() << std::endl;
         std::cout << "  output: " << row.output << std::endl;
         std::cout << "  output_height: ";
         if (!row.output_height)
@@ -48,58 +43,36 @@ void history_fetched(const payment_address& payaddr,
         }
         std::cout << std::endl;
     }
-    ++fetch_count;
-}
-
-bool payaddr_from_stdin(payment_address& payaddr)
-{
-    if (!payaddr.set_encoded(read_stdin()))
-    {
-        std::cerr << "history: Invalid address." << std::endl;
-        return false;
-    }
-    return true;
-}
-
-bool payaddr_from_argv(payaddr_list& payaddrs, int argc, char** argv)
-{
-    for (size_t i = 1; i < argc; ++i)
-    {
-        payment_address payaddr;
-        if (!payaddr.set_encoded(argv[i]))
-            return false;
-        payaddrs.push_back(payaddr);
-    }
-    return true;
 }
 
 int main(int argc, char** argv)
 {
+    if (argc != 2)
+    {
+        std::cerr << "Usage: sx monitor ADDRESS" << std::endl;
+        return -1;
+    }
+    std::cerr << std::endl;
+    std::cerr << "**************************************" << std::endl;
+    std::cerr << "Warning: this command is experimental." << std::endl;
+    std::cerr << "**************************************" << std::endl;
+    std::cerr << std::endl;
     config_map_type config;
     load_config(config);
-    payaddr_list payaddrs;
-    if (argc == 1)
-    {
-        payment_address payaddr;
-        if (!payaddr_from_stdin(payaddr))
-            return -1;
-        payaddrs.push_back(payaddr);
-    }
-    else
-    {
-        if (!payaddr_from_argv(payaddrs, argc, argv))
-            return -1;
-    }
     fullnode_interface fullnode(config["service"]);
-    for (const payment_address& payaddr: payaddrs)
-        fullnode.address.fetch_history(payaddr,
-            std::bind(history_fetched, payaddr, _1, _2));
-    while (fetch_count < payaddrs.size())
+    payment_address payaddr;
+    if (!payaddr.set_encoded(argv[1]))
+    {
+        std::cerr << "history: Invalid address." << std::endl;
+        return -1;
+    }
+    fullnode.address.fetch_history(payaddr,
+        std::bind(history_fetched, _1, _2));
+    while (true)
     {
         fullnode.update();
         sleep(0.1);
     }
-    BITCOIN_ASSERT(fetch_count == payaddrs.size());
     return 0;
 }
 

@@ -5,7 +5,7 @@ corebin_PROGRAMS = \
     sx-addr sx-broadcast-tx sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
     sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
-    sx-encode-addr sx-genpub sx-showblkhead sx-validsig
+    sx-encode-addr sx-genpub sx-showblkhead sx-validsig sx-monitor
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height
 
@@ -110,4 +110,7 @@ sx_fetch_block_header_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
 
 sx_validtx_SOURCES = validtx.cpp config.cpp
 sx_validtx_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
+
+sx_monitor_SOURCES = monitor.cpp config.cpp
+sx_monitor_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
 

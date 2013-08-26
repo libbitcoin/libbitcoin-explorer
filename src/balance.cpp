@@ -8,7 +8,7 @@ using namespace bc;
 bool stopped = false;
 
 void history_fetched(const std::error_code& ec,
-    const blockchain::history_list& history, const worker_uuid&)
+    const blockchain::history_list& history)
 {
     if (ec)
     {
