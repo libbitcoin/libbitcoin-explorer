@@ -18,31 +18,26 @@ void history_fetched(const std::error_code& ec,
     }
     for (const auto& row: history)
     {
-        std::cout << "  output: " << row.output << std::endl;
-        std::cout << "  output_height: ";
-        if (!row.output_height)
-            std::cout << "Pending";
-        else
-            std::cout << row.output_height;
-        std::cout << std::endl;
-        std::cout << "  value:  " << row.value << std::endl;
-        if (row.spend.hash == null_hash)
-        {
-            std::cout << "  spend: Unspent" << std::endl;
-            std::cout << "  spend_height: Unspent" << std::endl;
-        }
-        else
-        {
-            std::cout << "  spend: " << row.spend << std::endl;
-            std::cout << "  spend_height: ";
-            if (!row.spend_height)
-                std::cout << "Pending";
-            else
-                std::cout << row.spend_height;
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
+        int64_t value = row.value;
+        std::cout << row.output.hash << " " << value << std::endl;
+        if (row.spend.hash != null_hash)
+            std::cout << row.spend.hash << " " << -value << std::endl;
     }
+}
+
+void subscribed(const std::error_code& ec, const worker_uuid& worker,
+    fullnode_interface& fullnode, const payment_address& payaddr)
+{
+    std::cout << "Worker: " << worker << std::endl;
+    fullnode.address.fetch_history(payaddr,
+        std::bind(history_fetched, _1, _2), 0, worker);
+}
+
+void new_update(const std::error_code& ec,
+    size_t height, const hash_digest& block_hash, const transaction_type& tx)
+{
+    std::cout << "Update " << hash_transaction(tx)
+        << " [ #" << height << " " << block_hash << " ]" << std::endl;
 }
 
 int main(int argc, char** argv)
@@ -57,17 +52,17 @@ int main(int argc, char** argv)
     std::cerr << "Warning: this command is experimental." << std::endl;
     std::cerr << "**************************************" << std::endl;
     std::cerr << std::endl;
-    config_map_type config;
-    load_config(config);
-    fullnode_interface fullnode(config["service"]);
     payment_address payaddr;
     if (!payaddr.set_encoded(argv[1]))
     {
         std::cerr << "history: Invalid address." << std::endl;
         return -1;
     }
-    fullnode.address.fetch_history(payaddr,
-        std::bind(history_fetched, _1, _2));
+    config_map_type config;
+    load_config(config);
+    fullnode_interface fullnode(config["service"]);
+    fullnode.address.subscribe(payaddr, new_update,
+        std::bind(subscribed, _1, _2, std::ref(fullnode), payaddr));
     while (true)
     {
         fullnode.update();

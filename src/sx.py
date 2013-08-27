@@ -58,6 +58,15 @@ Monitor an address.\
 """
 ),
 
+"validaddr": (
+"Validate an address.",
+
+"""\
+Usage: sx validaddr ADDRESS
+Validate an address.\
+"""
+),
+
 "validtx": (
 "Validate a transaction.",
 
