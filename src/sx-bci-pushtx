@@ -6,7 +6,10 @@ if len(sys.argv) < 2:
     print "Need TX argument"
     sys.exit()
 
-txdata = open(sys.argv[1]).read().strip()
+if sys.argv[1] == "-":
+    txdata = sys.stdin.read().strip()
+else:
+    txdata = open(sys.argv[1]).read().strip()
 
 url = 'http://blockchain.info/pushtx'
 form_data = {'tx': txdata }
