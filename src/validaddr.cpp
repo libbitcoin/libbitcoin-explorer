@@ -11,10 +11,10 @@ int main(int argc, char** argv)
     payment_address payaddr;
     if (!payaddr.set_encoded(argv[1]))
     {
-        std::cout << "Status: invalid" << std::endl;
+        std::cout << "Status: Invalid" << std::endl;
         return 1;
     }
-    std::cout << "Status: OK" << std::endl;
+    std::cout << "Status: Success" << std::endl;
     return 0;
 }
 
