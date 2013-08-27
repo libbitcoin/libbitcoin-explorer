@@ -8,7 +8,7 @@ corebin_PROGRAMS = \
     sx-encode-addr sx-genpub sx-showblkhead sx-validsig sx-monitor \
     sx-validaddr
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
-	sx-get-utxo sx-bci-fetch-last-height
+	sx-get-utxo sx-bci-fetch-last-height sx-bci-pushtx
 
 bin_SCRIPTS = sx
 CLEANFILES = $(bin_SCRIPTS)
