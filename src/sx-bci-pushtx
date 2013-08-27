@@ -21,3 +21,5 @@ except Exception, e:
     data = e.read().strip()
 
 print data
+sys.exit(0)
+
