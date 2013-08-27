@@ -9,6 +9,7 @@ try:
     jsonobj = [json.loads(x) for x in data]
 except:
     print "Invalid JSON"
+    sys.exit()
 
 def addarrays(arrs): return reduce(lambda x,y: x+y,arrs,[])
 
@@ -29,10 +30,10 @@ def get_spends(tx):
     return [format_spend(inp,ind) for ind,inp in enumerate(tx["inputs"])]
 
 outs = addarrays([get_outputs(tx) for tx in txs])
-myouts = sorted([o for o in outs if o["addr"] in addrs],key=lambda x: x["tx_index"])
+myouts = sorted([o for o in outs if o["addr"] in addrs],key=lambda x: x["tx_index"]*1000+x["n"])
 
 spends = addarrays([get_spends(tx) for tx in txs])
-myspends = sorted([o for o in spends if o["addr"] in addrs],key=lambda x: x["tx_index"])
+myspends = sorted([o for o in spends if o["addr"] in addrs],key=lambda x: x["tx_index"]*1000+x["n"])
 
 utxo = []
 stxo = []
@@ -40,7 +41,11 @@ stxo = []
 i,j = 0,0
 
 while i < len(myouts) and j < len(myspends):
-    if myouts[i]["tx_index"] < myspends[j]["tx_index"]:
+    if myouts[i]["tx_index"] == myouts[i-1]["tx_index"]:
+        i += 1
+    elif myspends[j]["tx_index"] == myspends[j-1]["tx_index"]:
+        j += 1
+    elif myouts[i]["tx_index"] < myspends[j]["tx_index"]:
         myouts[i]["spend"] = "Unspent"
         utxo.append(myouts[i])
         i += 1
