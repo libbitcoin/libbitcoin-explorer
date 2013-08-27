@@ -94,6 +94,18 @@ Read private key from STDIN and output Bitcoin address.\
 """
 ),
 
+"ob-broadcast-tx": (
+"Broadcast tx to obelisk server.",
+
+"""\
+Usage: sx ob-broadcast-tx FILENAME
+Broadcast the transaction to an obelisk server for the network.
+
+  $ sx ob-broadcast-tx txfile.tx
+\
+"""
+),
+
 "broadcast-tx": (
 "Broadcast tx to network.",
 
