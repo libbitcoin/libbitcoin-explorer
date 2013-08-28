@@ -7,10 +7,12 @@ if [ $# -eq 1 ]; then
     INSTALL_PREFIX=$1
     CONF_DIR=$INSTALL_PREFIX/etc/
     RUN_LDCONFIG=
+    ROOT_INSTALL=0
 elif [ "$(id -u)" != "0" ]; then
     INSTALL_PREFIX=/usr/local/
     CONF_DIR=/etc/
     RUN_LDCONFIG=ldconfig
+    ROOT_INSTALL=1
 else
     echo "Error: This script must be run as root." 1>&2
     echo
@@ -22,10 +24,31 @@ echo " ***********************************************************************"
 echo " * sx command line utilities - Empower The Sysadmin With Bitcoin Tools *"
 echo " ***********************************************************************"
 echo
-echo Installation commencing NOW ($INSTALL_PREFIX).
+echo "Installation commencing NOW ($INSTALL_PREFIX)."
 
-echo "(Installing git if neccessary."
-apt-get install git
+DEPENDENCIES="git build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++-dev"
+
+function pkg_is_installed
+{
+    dpkg -l | grep -E '^ii' | grep -e "ii  $1 " | wc -l
+}
+
+for pkg in $DEPENDENCIES; do
+    if [ $(pkg_is_installed $pkg) -eq 0 ]; then
+        echo "Error: $pkg is not installed!"
+        echo
+        echo "Run the following command:"
+        echo
+        echo "  $ sudo apt-get install $DEPENDENCIES"
+        echo
+        exit 1
+    fi
+done
+
+if [ $ROOT_INSTALL -eq 1 ]; then
+    echo "Installing dependencies..."
+    apt-get install $DEPENDENCIES
+fi
 
 SRC_DIR=$INSTALL_PREFIX/src/
 PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig/
@@ -42,8 +65,6 @@ else
     git clone https://github.com/spesmilo/libbitcoin.git libbitcoin-git
     cd libbitcoin-git
 fi
-echo "Installing libbitcoin dependencies..."
-apt-get install build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev
 echo "Beginning build process now..."
 autoreconf -i
 ./configure --enable-leveldb --prefix $INSTALL_PREFIX
@@ -63,8 +84,6 @@ else
     git clone https://github.com/spesmilo/obelisk.git obelisk-git
     cd obelisk-git
 fi
-echo "Installing obelisk dependencies..."
-apt-get install libzmq-dev libconfig++-dev
 echo "Beginning build process now..."
 autoreconf -i
 ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
@@ -105,7 +124,7 @@ echo "  libbitcoin doc: /usr/local/share/doc/libbitcoin/"
 echo "  obelisk doc:    /usr/local/share/doc/obelisk/"
 echo "  sx doc:         /usr/local/share/doc/sx/"
 echo
-if [ -z "$LD_LIBRARY_PATH" ]
+if [ $ROOT_INSTALL -eq 0 ]; then
     echo "Add these lines to your ~/.bashrc"
     echo
     echo "  export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib/"
