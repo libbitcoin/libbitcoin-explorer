@@ -31,7 +31,11 @@ DEPENDENCIES="git build-essential autoconf libtool libboost-all-dev pkg-config l
 function pkg_is_installed
 {
     dpkg -s $1 > /dev/null
-    echo $?
+    if [ $? -eq 0 ]; then
+        echo 1
+    else
+        echo 0
+    fi
 }
 
 for pkg in $DEPENDENCIES; do
