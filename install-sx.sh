@@ -4,7 +4,7 @@ echo "Welcome to the S(pesmilo)X(change)"
 echo
 
 if [ $# -eq 1 ]; then
-    INSTALL_PREFIX=$1
+    INSTALL_PREFIX=$(pwd)/$1
     CONF_DIR=$INSTALL_PREFIX/etc/
     RUN_LDCONFIG=
     ROOT_INSTALL=0
