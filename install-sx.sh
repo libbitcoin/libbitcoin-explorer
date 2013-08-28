@@ -8,7 +8,7 @@ if [ $# -eq 1 ]; then
     CONF_DIR=$INSTALL_PREFIX/etc/
     RUN_LDCONFIG=
     ROOT_INSTALL=0
-elif [ "$(id -u)" != "0" ]; then
+elif [ "$(id -u)" -eq "0" ]; then
     INSTALL_PREFIX=/usr/local/
     CONF_DIR=/etc/
     RUN_LDCONFIG=ldconfig
@@ -16,7 +16,7 @@ elif [ "$(id -u)" != "0" ]; then
 else
     echo "Error: This script must be run as root." 1>&2
     echo
-    echo "  $ sudo ./install-sx.sh" 1>&2
+    echo "  $ sudo bash ./install-sx.sh" 1>&2
     echo
     exit 1
 fi
