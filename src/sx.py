@@ -1,6 +1,6 @@
 #!/usr/bin/python
-import os
 import sys
+import subprocess
 
 command_list = {
 
@@ -542,16 +542,16 @@ def main(argv):
         return 1
     command = argv[1]
     # args as one string we can pass to the sx sub-command
-    args = " ".join(argv[2:])
+    args = argv[2:]
     if command == "help" or command == "--help" or command == "-h":
         if not args:
             display_usage()
             return 0
-        return display_help(args)
+        return display_help(args[0])
     elif command in command_list:
         # make will come and substitute @corebindir@
-        execstr = "@corebindir@/sx-%s %s" % (command, args)
-        return os.system(execstr)
+        binary = "@corebindir@/sx-%s" % command
+        return subprocess.call([binary] + args)
     else:
         return display_bad(command)
     return 0
