@@ -2,6 +2,8 @@
 import sys
 import subprocess
 
+SPACING = " " * 23
+
 command_list = {
 
 "satoshi": (
@@ -146,8 +148,8 @@ Generate private keys from a wallet seed.
 ),
 
 "genpub": (
-"Generate a public key deterministically from a wallet\n"
-"                       seed or master public key.",
+"Generate a public key deterministically from a wallet\n" +
+SPACING + "seed or master public key.",
 
 """\
 Usage: sx genpub N [CHANGE]
@@ -160,8 +162,8 @@ Generate public key from a wallet seed or master public key.
 ),
 
 "genaddr": (
-"Generate a Bitcoin address deterministically from a wallet\n"
-"                       seed or master public key.",
+"Generate a Bitcoin address deterministically from a wallet\n" +
+SPACING + "seed or master public key.",
 
 """\
 Usage: sx genaddr N [CHANGE]
@@ -246,9 +248,9 @@ load balancer backend.
 ),
 
 "history": (
-"Get list of output points, values, and their spends for an\n"
-"                       address. grep can filter for just unspent outputs which can\n"
-"                       be fed into mktx.",
+"Get list of output points, values, and their spends for an\n" +
+SPACING + "address. grep can filter for just unspent outputs which can\n" +
+SPACING + "be fed into mktx.",
 
 """\
 Usage: sx history ADDRESS
@@ -273,11 +275,12 @@ Get list of output points, values and spends using blockchain.info.\
 ),
 
 "get-utxo": (
-"Get enough unspent transaction outputs from a given set of addresses to pay a given number of satoshis"
+"Get enough unspent transaction outputs from a given set of\n" +
+SPACING + "addresses to pay a given number of satoshis",
 
 """\
 Usage: sx get-utxo ADDRESS1 ADDRESS2... SATOSHIS
-"Get enough unspent transaction outputs from a given set of addresses to pay a given number of satoshis\
+Get enough unspent transaction outputs from a given set of addresses to pay a given number of satoshis\
 """
 ),
 
