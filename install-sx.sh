@@ -90,8 +90,8 @@ echo "  sx cfg:         ~/.sx.cfg (see /usr/local/share/sx/sx.cfg for an"
 echo "                  example config file."
 echo
 echo "Documentation is available /usr/local/doc/"
-echo "  libbitcoin doc: /usr/local/doc/libbitcoin/"
-echo "  obelisk doc:    /usr/local/doc/libbitcoin/"
-echo "  sx doc:         /usr/local/doc/libbitcoin/"
+echo "  libbitcoin doc: /usr/local/share/doc/libbitcoin/"
+echo "  obelisk doc:    /usr/local/share/doc/obelisk/"
+echo "  sx doc:         /usr/local/share/doc/sx/"
 echo
 
