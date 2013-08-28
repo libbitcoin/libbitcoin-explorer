@@ -30,11 +30,13 @@ DEPENDENCIES="git build-essential autoconf libtool libboost-all-dev pkg-config l
 
 function pkg_is_installed
 {
-    dpkg -l | grep -E '^ii' | grep -e "ii  $1 " | wc -l
+    dpkg -s $1 > /dev/null
+    echo $?
 }
 
 for pkg in $DEPENDENCIES; do
     if [ $(pkg_is_installed $pkg) -eq 0 ]; then
+        echo
         echo "Error: $pkg is not installed!"
         echo
         echo "Run the following command:"
