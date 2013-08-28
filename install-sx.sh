@@ -2,7 +2,16 @@
 set -e
 echo "Welcome to the S(pesmilo)X(change)"
 echo
-if [ "$(id -u)" != "0" ]; then
+
+if [ $# -eq 1 ]; then
+    INSTALL_PREFIX=$1
+    CONF_DIR=$INSTALL_PREFIX/etc/
+    RUN_LDCONFIG=
+elif [ "$(id -u)" != "0" ]; then
+    INSTALL_PREFIX=/usr/local/
+    CONF_DIR=/etc/
+    RUN_LDCONFIG=ldconfig
+else
     echo "Error: This script must be run as root." 1>&2
     echo
     echo "  $ sudo ./install-sx.sh" 1>&2
@@ -13,16 +22,17 @@ echo " ***********************************************************************"
 echo " * sx command line utilities - Empower The Sysadmin With Bitcoin Tools *"
 echo " ***********************************************************************"
 echo
-echo Installation commencing NOW.
-
-INSTALL_DATE=$(date +%s)
+echo Installation commencing NOW ($INSTALL_PREFIX).
 
 echo "(Installing git if neccessary."
 apt-get install git
 
-mkdir -p /usr/local/src/
+SRC_DIR=$INSTALL_PREFIX/src/
+PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig/
 
-cd /usr/local/src/
+mkdir -p $SRC_DIR
+
+cd $SRC_DIR
 if [ -d "libbitcoin-git" ]; then
     echo "Updating libbitcoin..."
     cd libbitcoin-git
@@ -36,13 +46,13 @@ echo "Installing libbitcoin dependencies..."
 apt-get install build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev
 echo "Beginning build process now..."
 autoreconf -i
-./configure --enable-leveldb
+./configure --enable-leveldb --prefix $INSTALL_PREFIX
 make
 make install
-ldconfig
+$RUN_LDCONFIG
 echo "libbitcoin now installed."
 
-cd /usr/local/src/
+cd $SRC_DIR
 if [ -d "obelisk-git" ]; then
     echo "Updating obelisk.."
     cd obelisk-git
@@ -57,16 +67,17 @@ echo "Installing obelisk dependencies..."
 apt-get install libzmq-dev libconfig++-dev
 echo "Beginning build process now..."
 autoreconf -i
-./configure --sysconfdir=/etc/
+./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
 make
 make install
-ldconfig
+$RUN_LDCONFIG
 echo "obelisk now installed."
 
 # Old sx put binaries in bin/sx-*
-rm -f /usr/local/bin/sx-*
+BIN_DIR=$INSTALL_PREFIX/bin/
+rm -f $BIN_DIR/sx-*
 
-cd /usr/local/src/
+cd $SRC_DIR
 if [ -d "sx-git" ]; then
     echo "Updating sx..."
     cd sx-git
@@ -79,7 +90,7 @@ else
 fi
 echo "Beginning build process now..."
 autoreconf -i
-./configure --sysconfdir=/etc/
+./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
 make
 make install
 echo "sx now installed."
@@ -94,4 +105,12 @@ echo "  libbitcoin doc: /usr/local/share/doc/libbitcoin/"
 echo "  obelisk doc:    /usr/local/share/doc/obelisk/"
 echo "  sx doc:         /usr/local/share/doc/sx/"
 echo
+if [ -z "$LD_LIBRARY_PATH" ]
+    echo "Add these lines to your ~/.bashrc"
+    echo
+    echo "  export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib/"
+    echo "  export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig/"
+    echo "  export PATH=$PATH:$INSTALL_PREFIX/bin/"
+    echo
+fi
 
