@@ -60,7 +60,8 @@ int main(int argc, char** argv)
     }
     config_map_type config;
     load_config(config);
-    fullnode_interface fullnode(config["service"]);
+    threadpool pool(1);
+    fullnode_interface fullnode(pool, config["service"]);
     fullnode.address.subscribe(payaddr, new_update,
         std::bind(subscribed, _1, _2, std::ref(fullnode), payaddr));
     while (true)
@@ -68,6 +69,8 @@ int main(int argc, char** argv)
         fullnode.update();
         sleep(0.1);
     }
+    pool.stop();
+    pool.join();
     return 0;
 }
 
