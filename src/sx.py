@@ -96,6 +96,60 @@ Read private key from STDIN and output Bitcoin address.\
 """
 ),
 
+"wrap": (
+"Adds version byte and checksum to hexstring.",
+
+"""\
+Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
+"Adds version byte and checksum to hexstring.\
+"""
+),
+
+"unwrap": (
+"Validates checksum and recovers version byte and original data from hexstring.",
+
+"""\
+Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
+"Validates checksum and recovers version byte and original data from hexstring.\
+"""
+),
+
+"base58-decode": (
+"Convert from base58 to hex",
+
+"""\
+Usage: sx base58-decode B58STRING <or> echo B58STRING | sx base58-decode
+Convert from base58 to hex.\
+"""
+),
+
+"base58-encode": (
+"Convert from hex to base58",
+
+"""\
+Usage: sx base58-encode HEXSTRING <or> echo HEXSTRING | sx base58-encode
+Convert from hex to base58.\
+"""
+),
+
+"base58check-decode": (
+"Convert from base58check to hex",
+
+"""\
+Usage: sx base58check-decode B58STRING <or> echo B58STRING | sx base58check-decode
+Convert from base58check to hex.\
+"""
+),
+
+"base58check-encode": (
+"Convert from hex to base58check",
+
+"""\
+Usage: sx base58check-encode HEXSTRING <or> echo HEXSTRING | sx base58check-encode
+Convert from hex to base58check.\
+"""
+),
+
 "ob-broadcast-tx": (
 "Broadcast tx to obelisk server.",
 
