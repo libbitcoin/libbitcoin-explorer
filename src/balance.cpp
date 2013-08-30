@@ -57,13 +57,16 @@ int main(int argc, char** argv)
         std::cerr << "balance: Invalid address." << std::endl;
         return -1;
     }
-    fullnode_interface fullnode(config["service"]);
+    threadpool pool(1);
+    fullnode_interface fullnode(pool, config["service"]);
     fullnode.address.fetch_history(payaddr, history_fetched);
     while (!stopped)
     {
         fullnode.update();
         sleep(0.1);
     }
+    pool.stop();
+    pool.join();
     return 0;
 }
 

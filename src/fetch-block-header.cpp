@@ -32,7 +32,8 @@ int main(int argc, char** argv)
         index_str = read_stdin();
     config_map_type config;
     load_config(config);
-    fullnode_interface fullnode(config["service"]);
+    threadpool pool(1);
+    fullnode_interface fullnode(pool, config["service"]);
     // Try first to interpret index as hash, if that fails then
     // interpret the index as a height instead.
     hash_digest blk_hash = decode_hex_digest<hash_digest>(index_str);
@@ -60,7 +61,8 @@ int main(int argc, char** argv)
         fullnode.update();
         sleep(0.1);
     }
+    pool.stop();
+    pool.join();
     return 0;
 }
-
 

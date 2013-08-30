@@ -90,7 +90,8 @@ int main(int argc, char** argv)
         if (!payaddr_from_argv(payaddrs, argc, argv))
             return -1;
     }
-    fullnode_interface fullnode(config["service"]);
+    threadpool pool(1);
+    fullnode_interface fullnode(pool, config["service"]);
     for (const payment_address& payaddr: payaddrs)
         fullnode.address.fetch_history(payaddr,
             std::bind(history_fetched, payaddr, _1, _2));
@@ -100,6 +101,8 @@ int main(int argc, char** argv)
         sleep(0.1);
     }
     BITCOIN_ASSERT(fetch_count == payaddrs.size());
+    pool.stop();
+    pool.join();
     return 0;
 }
 
