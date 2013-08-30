@@ -54,7 +54,7 @@ int main(int argc, char** argv)
     if (!validsig(tx, input_index, key, script_code, signature))
     {
         std::cout << "Status: Failed" << std::endl;
-        return -1;
+        return 0;
     }
     std::cout << "Status: OK" << std::endl;
     return 0;
