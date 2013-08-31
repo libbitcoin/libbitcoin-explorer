@@ -4,7 +4,7 @@ import urllib, sys, urllib2
 
 if len(sys.argv) < 2: 
     print "Need TX argument"
-    sys.exit()
+    sys.exit(-1)
 
 if sys.argv[1] == "-":
     txdata = sys.stdin.read().strip()
@@ -20,6 +20,9 @@ try:
 except Exception, e:
     data = e.read().strip()
 
-print data
-sys.exit(0)
-
+if len(data) < 500:
+    print data
+    sys.exit(0)
+else:
+    sys.stderr.write(data)
+    sys.exit(-1)
