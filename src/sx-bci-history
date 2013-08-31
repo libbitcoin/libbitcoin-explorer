@@ -5,11 +5,13 @@ addrs = sys.argv[1:]
 
 data = [urllib.urlopen('http://blockchain.info/address/%s?format=json' % s).read() for s in addrs]
 
-try:
-    jsonobj = [json.loads(x) for x in data]
-except:
-    print "Invalid JSON"
-    sys.exit()
+jsonobj = []
+for x in data:
+    try:
+        jsonobj.append(json.loads(x))
+    except:
+        sys.stderr.write(x)
+        sys.exit(-1)
 
 def addarrays(arrs): return reduce(lambda x,y: x+y,arrs,[])
 
@@ -29,11 +31,20 @@ def get_spends(tx):
 
     return [format_spend(inp,ind) for ind,inp in enumerate(tx["inputs"])]
 
+
+def key(a): return (a["tx_index"],a["n"])
+
 outs = addarrays([get_outputs(tx) for tx in txs])
-myouts = sorted([o for o in outs if o["addr"] in addrs],key=lambda x: x["tx_index"]*1000+x["n"])
+myouts = sorted([o for o in outs if o["addr"] in addrs],key=key)
+
+#for o in myouts:
+#    print "o:     ",o
 
 spends = addarrays([get_spends(tx) for tx in txs])
-myspends = sorted([o for o in spends if o["addr"] in addrs],key=lambda x: x["tx_index"]*1000+x["n"])
+myspends = sorted([o for o in spends if o["addr"] in addrs],key=key)
+
+#for s in myspends:
+#    print "s:     ",s
 
 utxo = []
 stxo = []
@@ -41,15 +52,15 @@ stxo = []
 i,j = 0,0
 
 while i < len(myouts) and j < len(myspends):
-    if myouts[i]["tx_index"] == myouts[i-1]["tx_index"]:
+    if i > 0 and key(myouts[i]) == key(myouts[i-1]):
         i += 1
-    elif myspends[j]["tx_index"] == myspends[j-1]["tx_index"]:
+    elif j > 0 and key(myspends[j]) == key(myspends[j-1]):
         j += 1
-    elif myouts[i]["tx_index"] < myspends[j]["tx_index"]:
+    elif key(myouts[i]) < key(myspends[j]):
         myouts[i]["spend"] = "Unspent"
         utxo.append(myouts[i])
         i += 1
-    elif myouts[i]["tx_index"] > myspends[j]["tx_index"]:
+    elif key(myouts[i]) > key(myspends[j]):
         j += 1
     else:
         myouts[i]["spend"] = myspends[j]["input"]
