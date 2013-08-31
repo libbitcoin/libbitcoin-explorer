@@ -8,7 +8,7 @@ def attempt_num(x):
     if re.match('^(-|)[0-9]*(|\.[0-9]*)$',x): return float(x) if '.' in x else int(x)
     else: return x
 
-# Create objectd
+# Create objects
 txo = []
 obj = {}
 for i in range(len(lines)):
@@ -21,6 +21,8 @@ for i in range(len(lines)):
         obj = {}
     obj[fields[0][:-1]] = attempt_num(fields[1])
     obj["$txt"] = obj.get("$txt","") + lines[i]
+
+if obj: txo.append(obj)
 
 utxo = [x for x in txo if x["spend"] == "Unspent"]
 
