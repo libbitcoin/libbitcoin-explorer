@@ -312,6 +312,10 @@ Usage: sx history ADDRESS
 The history tool uses a network connection to make requests against the
 load balancer backend.
 
+  -j, --json                 Enable json parseable output.
+
+Example:
+
   $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history
   Output Hash:Index                           Output Height   Value (Satoshis) Spend Hash:Index                Spend Height
   97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1  247683 100000      Unspent                                 230529504
@@ -438,9 +442,13 @@ Usage: sx showblkhead FILENAME
 "Show the details of a transaction.",
 
 """\
-Usage: sx showtx FILENAME
+Usage: sx showtx [-j] FILENAME
 
 'showtx' allows inspecting of tx files.
+
+  -j, --json                 Enable json parseable output.
+
+Example:
 
   $ sx showtx txfile.tx
   hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0

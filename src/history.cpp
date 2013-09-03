@@ -118,7 +118,7 @@ bool payaddr_from_argv(payaddr_list& payaddrs, int argc, char** argv)
     for (size_t i = 1; i < argc; ++i)
     {
         const std::string arg = argv[i];
-        if (arg == "-j")
+        if (arg == "-j" || arg == "--json")
         {
             json_output = true;
             continue;
