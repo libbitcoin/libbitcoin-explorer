@@ -1,6 +1,6 @@
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/client/interface.hpp>
+#include <obelisk/obelisk.hpp>
 #include "config.hpp"
 #include "util.hpp"
 
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     config_map_type config;
     load_config(config);
     threadpool pool(1);
-    fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"]);
     // Try first to interpret index as hash, if that fails then
     // interpret the index as a height instead.
     hash_digest blk_hash = decode_hex_digest<hash_digest>(index_str);

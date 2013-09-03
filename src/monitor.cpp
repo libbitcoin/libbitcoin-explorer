@@ -1,5 +1,5 @@
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/client/interface.hpp>
+#include <obelisk/obelisk.hpp>
 #include "config.hpp"
 #include "util.hpp"
 
@@ -25,8 +25,8 @@ void history_fetched(const std::error_code& ec,
     }
 }
 
-void subscribed(const std::error_code& ec, const worker_uuid& worker,
-    fullnode_interface& fullnode, const payment_address& payaddr)
+void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker,
+    obelisk::fullnode_interface& fullnode, const payment_address& payaddr)
 {
     std::cout << "Worker: " << worker << std::endl;
     fullnode.address.fetch_history(payaddr,
@@ -61,7 +61,7 @@ int main(int argc, char** argv)
     config_map_type config;
     load_config(config);
     threadpool pool(1);
-    fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"]);
     fullnode.address.subscribe(payaddr, new_update,
         std::bind(subscribed, _1, _2, std::ref(fullnode), payaddr));
     while (true)
