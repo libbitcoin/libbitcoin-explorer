@@ -24,7 +24,7 @@ sx: sx.py Makefile
 if HAVE_OBELISK
 corebin_PROGRAMS += \
     sx-history sx-balance sx-fetch-block-header sx-fetch-transaction \
-    sx-fetch-last-height sx-validtx sx-ob-broadcast-tx
+    sx-fetch-last-height sx-validtx sx-ob-broadcast-tx sx-wallet
 
 AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
 endif
@@ -133,4 +133,7 @@ sx_ob_broadcast_tx_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
 
 sx_monitor_SOURCES = monitor.cpp config.cpp
 sx_monitor_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS}
+
+sx_wallet_SOURCES = wallet.cpp config.cpp
+sx_wallet_LDADD = ${libbitcoin_LIBS} ${libobelisk_LIBS} -lncurses
 

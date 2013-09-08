@@ -51,6 +51,15 @@ Create the raw hex representation from a script.\
 """
 ),
 
+"wallet": (
+"Experimental command line wallet.",
+
+"""\
+Usage: sx wallet
+This is an experimental prototype.\
+"""
+),
+
 "monitor": (
 "Monitor an address.",
 
