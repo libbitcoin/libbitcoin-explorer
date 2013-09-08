@@ -1,3 +1,6 @@
+#include <unordered_set>
+#include <thread>
+#include <mutex>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
@@ -7,10 +10,17 @@
 
 using std::placeholders::_1;
 using std::placeholders::_2;
+using std::placeholders::_3;
+
+// warning: this is not good code!
+std::mutex broadcast_mutex;
+std::vector<bc::transaction_type> tx_broadcast_queue;
 
 class wallet_control;
 
 typedef boost::circular_buffer<std::string> string_buffer;
+
+typedef std::unordered_set<bc::payment_address> unique_address_set;
 
 struct wallet_history_entry
 {
@@ -96,6 +106,113 @@ struct address_cycler
     bc::deterministic_wallet detwallet;
 };
 
+namespace std
+{
+    template <>
+    struct hash<bc::output_point>
+    {
+        size_t operator()(const bc::output_point& outpoint) const
+        {
+            std::string raw;
+            raw.resize(hash_digest_size + 4);
+            auto serial = bc::make_serializer(raw.begin());
+            serial.write_hash(outpoint.hash);
+            serial.write_4_bytes(outpoint.index);
+            std::hash<std::string> hash_fn;
+            return hash_fn(raw);
+        }
+    };
+}
+
+// ---------------------------------------------
+// This will be included in libbitcoin directly at some point.
+// ---------------------------------------------
+
+namespace libbitcoin {
+
+// Move output_info_type into transaction.hpp
+// And put the following typedef there too.
+
+typedef std::vector<output_info_type> output_info_list;
+
+struct select_outputs_result
+{
+    output_point_list points;
+    uint64_t change;
+};
+
+enum class select_outputs_algorithm
+{
+    greedy
+};
+
+select_outputs_result select_outputs(
+    output_info_list outputs, uint64_t min_value,
+    select_outputs_algorithm alg=select_outputs_algorithm::greedy);
+
+// ---------------------------------------------
+// CPP file now.
+// ---------------------------------------------
+
+select_outputs_result select_outputs(
+    output_info_list outputs, uint64_t min_value,
+    select_outputs_algorithm alg)
+{
+    // Just one default implementation for now.
+    // Consider a switch case with greedy_select_outputs(min_value) .etc
+    // if this is ever extended with more algorithms.
+    BITCOIN_ASSERT(alg == select_outputs_algorithm::greedy);
+    // Fail if empty.
+    if (outputs.empty())
+        return select_outputs_result();
+    auto lesser_begin = outputs.begin();
+    auto lesser_end = std::partition(outputs.begin(), outputs.end(),
+        [min_value](const output_info_type& out_info)
+        {
+            return out_info.value < min_value;
+        });
+    auto greater_begin = lesser_end;
+    auto greater_end = outputs.end();
+    auto min_greater = std::min_element(greater_begin, greater_end,
+        [](const output_info_type& info_a, const output_info_type& info_b)
+        {
+            return info_a.value < info_b.value;
+        });
+    select_outputs_result result;
+    if (min_greater != greater_end)
+    {
+        result.change = min_greater->value - min_value;
+        result.points.push_back(min_greater->point);
+        return result;
+    }
+    // Not found in greaters. Try several lessers instead.
+    // Rearrange them from biggest to smallest. We want to use the least
+    // amount of inputs as possible.
+    std::sort(lesser_begin, lesser_end,
+        [](const output_info_type& info_a, const output_info_type& info_b)
+        {
+            return info_a.value > info_b.value;
+        });
+    uint64_t accum = 0;
+    for (auto it = lesser_begin; it != lesser_end; ++it)
+    {
+        result.points.push_back(it->point);
+        accum += it->value;
+        if (accum >= min_value)
+        {
+            result.change = accum - min_value;
+            return result;
+        }
+    }
+    return select_outputs_result();
+}
+
+} // namespace libbitcoin
+
+// ---------------------------------------------
+// End libbitcoin stuff.
+// ---------------------------------------------
+
 class wallet_control
 {
 public:
@@ -118,9 +235,70 @@ public:
         display_.set_receive_address(addr_cycler_.address().encoded());
     }
 
+    void add_address(const bc::payment_address& addr)
+    {
+        our_addrs_.insert(addr);
+    }
+    bool is_ours(const bc::payment_address& addr)
+    {
+        return our_addrs_.find(addr) != our_addrs_.end();
+    }
+
+    void add_unspent(const output_point& outpoint,
+        const bc::payment_address& addr, uint64_t value)
+    {
+        unspent_[outpoint] = output_data{addr, value};
+    }
+
+    select_outputs_result find_unspent(uint64_t value)
+    {
+        // Generate unspent out list.
+        output_info_list outs;
+        for (const auto& pair: unspent_)
+        {
+            outs.push_back({pair.first, pair.second.value});
+        }
+        return select_outputs(outs, value);
+    }
+
+    // For finding the right signing key.
+    const bc::payment_address& lookup(const output_point& outpoint)
+    {
+        return unspent_[outpoint].addr;
+    }
+
+    const bc::payment_address change_address()
+    {
+        return addr_cycler_.address(addr_cycler_.n, true);
+    }
+
+    void add_key(const bc::payment_address& addr,
+        const bc::secret_parameter& secret)
+    {
+        privkeys_[addr] = secret;
+    }
+    const bc::secret_parameter lookup(const bc::payment_address& addr)
+    {
+        return privkeys_[addr];
+    }
+
 private:
+    struct output_data
+    {
+        bc::payment_address addr;
+        uint64_t value;
+    };
+
+    typedef std::unordered_map<output_point, output_data> output_info_map;
+
+    typedef std::unordered_map<bc::payment_address, bc::secret_parameter>
+        keys_map;
+
     wallet_display& display_;
     address_cycler& addr_cycler_;
+    unique_address_set our_addrs_;
+    output_info_map unspent_;
+    keys_map privkeys_;
 };
 
 #include <unistd.h>
@@ -174,7 +352,8 @@ void wallet_display::draw()
 }
 
 void history_fetched(const std::error_code& ec,
-    const bc::blockchain::history_list& history, wallet_display& display,
+    const bc::blockchain::history_list& history,
+    wallet_control& control, wallet_display& display,
     const std::string& btc_address)
 {
     if (ec)
@@ -190,6 +369,9 @@ void history_fetched(const std::error_code& ec,
             btc_address, row.value});
         if (row.spend.hash == bc::null_hash)
         {
+            bc::payment_address addr;
+            addr.set_encoded(btc_address);
+            control.add_unspent(row.output, addr, row.value);
             balance += row.value;
             continue;
         }
@@ -205,13 +387,14 @@ void history_fetched(const std::error_code& ec,
 }
 
 void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker,
-    obelisk::fullnode_interface& fullnode, wallet_display& display,
+    obelisk::fullnode_interface& fullnode,
+    wallet_control& control, wallet_display& display,
     const bc::payment_address& payaddr)
 {
     //std::cout << "Worker: " << worker << std::endl;
     fullnode.address.fetch_history(payaddr,
         std::bind(history_fetched, _1, _2,
-            std::ref(display), payaddr.encoded()),
+            std::ref(control), std::ref(display), payaddr.encoded()),
         0, worker);
 }
 
@@ -225,6 +408,166 @@ void new_update(const std::error_code& ec, size_t height,
 
 // omg hacks
 bool stopped = false;
+
+// Maybe should also be in libbitcoin too?
+script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
+{
+    script_type result;
+    result.push_operation({opcode::dup, data_chunk()});
+    result.push_operation({opcode::hash160, data_chunk()});
+    result.push_operation({opcode::special,
+        data_chunk(pubkey_hash.begin(), pubkey_hash.end())});
+    result.push_operation({opcode::equalverify, data_chunk()});
+    result.push_operation({opcode::checksig, data_chunk()});
+    return result;
+}
+
+script_type build_script_hash_script(const short_hash& script_hash)
+{
+    script_type result;
+    result.push_operation({opcode::hash160, data_chunk()});
+    result.push_operation({opcode::special,
+        data_chunk(script_hash.begin(), script_hash.end())});
+    result.push_operation({opcode::equal, data_chunk()});
+    return result;
+}
+
+bool build_output_script(
+    script_type& out_script, const payment_address& payaddr)
+{
+    switch (payaddr.version())
+    {
+        case payment_address::pubkey_version:
+            out_script = build_pubkey_hash_script(payaddr.hash());
+            return true;
+
+        case payment_address::script_version:
+            out_script = build_script_hash_script(payaddr.hash());
+            return true;
+    }
+    return false;
+}
+
+bool make_signature(transaction_type& tx, size_t input_index,
+    const elliptic_curve_key& key, const script_type& script_code)
+{
+    transaction_input_type& input = tx.inputs[input_index];
+
+    const data_chunk public_key = key.public_key();
+    if (public_key.empty())
+        return false;
+    hash_digest tx_hash =
+        script_type::generate_signature_hash(tx, input_index, script_code, 1);
+    if (tx_hash == null_hash)
+        return false;
+    data_chunk signature = key.sign(tx_hash);
+    signature.push_back(0x01);
+    //std::cout << signature << std::endl;
+    script_type& script = tx.inputs[input_index].script;
+    // signature
+    script.push_operation({opcode::special, signature});
+    // public key
+    script.push_operation({opcode::special, public_key});
+    return true;
+}
+
+bc::hash_digest send(wallet_control& control, std::vector<std::string>& strs,
+    string_buffer& console_output)
+{
+    if (strs.size() != 3 && strs.size() != 4)
+    {
+        console_output.push_back("send: Wrong number of arguments.");
+        return null_hash;
+    }
+    bc::payment_address dest_addr;
+    if (!dest_addr.set_encoded(strs[1]))
+    {
+        console_output.push_back("send: Invalid address.");
+        return null_hash;
+    }
+    uint64_t amount;
+    try
+    {
+        amount = boost::lexical_cast<uint64_t>(strs[2]);
+    }
+    catch (const boost::bad_lexical_cast&)
+    {
+        console_output.push_back("send: Invalid amount.");
+        return null_hash;
+    }
+    // Fee of 0.0001 BTC = 10000 Sat
+    uint64_t fee = 10000;
+    if (strs.size() == 4)
+    {
+        try
+        {
+            fee = boost::lexical_cast<uint64_t>(strs[3]);
+        }
+        catch (const boost::bad_lexical_cast&)
+        {
+            console_output.push_back("send: Invalid fee.");
+            return null_hash;
+        }
+    }
+    console_output.push_back("Sending...");
+    select_outputs_result unspent = control.find_unspent(amount + fee);
+    if (unspent.points.empty())
+    {
+        console_output.push_back("send: Not enough funds.");
+        return null_hash;
+    }
+    // construct transaction now.
+    transaction_type tx;
+    // start with outputs.
+    // dest addr output first.
+    transaction_output_type dest_output;
+    dest_output.value = amount;
+    if (!build_output_script(dest_output.script, dest_addr))
+    {
+        console_output.push_back("send: Unsupported address type.");
+        return null_hash;
+    }
+    tx.outputs.push_back(dest_output);
+    // add change output also.
+    transaction_output_type change_output;
+    change_output.value = unspent.change;
+    bc::payment_address change_addr = control.change_address();
+    bool change_script_success =
+        build_output_script(change_output.script, change_addr);
+    BITCOIN_ASSERT(change_script_success);
+    tx.outputs.push_back(change_output);
+    // notice we have left the fee out.
+    // now do inputs.
+    for (const bc::output_point& prevout: unspent.points)
+    {
+        transaction_input_type input;
+        input.previous_output = prevout;
+        input.sequence = 4294967295;
+        tx.inputs.push_back(input);
+    }
+    // now sign inputs
+    for (size_t i = 0; i < tx.inputs.size(); ++i)
+    {
+        bc::transaction_input_type& input = tx.inputs[i];
+        const bc::payment_address addr = control.lookup(input.previous_output);
+        const bc::secret_parameter secret = control.lookup(addr);
+        elliptic_curve_key key;
+        bool set_secret_success = key.set_secret(secret);
+        BITCOIN_ASSERT(set_secret_success);
+        payment_address address;
+        set_public_key(address, key.public_key());
+        script_type prevout_script_code;
+        bool prevout_script_code_success =
+            build_output_script(prevout_script_code, address);
+        BITCOIN_ASSERT(prevout_script_code_success);
+        bool sign_success = make_signature(tx, i, key, prevout_script_code);
+    }
+    // holy shit! now lets broadcast the tx!
+    broadcast_mutex.lock();
+    tx_broadcast_queue.push_back(tx);
+    broadcast_mutex.unlock();
+    return bc::hash_transaction(tx);
+}
 
 void run_command(std::string user_input, string_buffer& console_output,
     wallet_control& control, bc::deterministic_wallet& detwallet)
@@ -240,6 +583,12 @@ void run_command(std::string user_input, string_buffer& console_output,
     {
         console_output.push_back("Commands:");
         console_output.push_back("send ADDRESS AMOUNT [FEE]");
+    }
+    else if (cmd == "send" || cmd == "s")
+    {
+        bc::hash_digest tx_hash = send(control, strs, console_output);
+        console_output.push_back(
+            std::string("send: Broadcasting ") + bc::encode_hex(tx_hash));;
     }
     else if (cmd == "quit" || cmd == "q")
         stopped = true;
@@ -262,6 +611,74 @@ void init_curses()
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
+}
+
+void handle_start(const std::error_code& ec)
+{
+    if (ec)
+    {
+        mvaddstr(0, 0, "ERROR WITH BROADCASTING SUBSYSTEM!!");
+        refresh();
+    }
+}
+
+void output_to_file(std::ofstream& file, bc::log_level level,
+    const std::string& domain, const std::string& body)
+{
+    if (body.empty())
+        return;
+    file << bc::level_repr(level);
+    if (!domain.empty())
+        file << " [" << domain << "]";
+    file << ": " << body << std::endl;
+}
+
+// warning: this is not good code!
+void broadcast_subsystem()
+{
+    std::ofstream outfile("wallet.log");
+    log_debug().set_output_function(
+        std::bind(output_to_file, std::ref(outfile), _1, _2, _3));
+    log_info().set_output_function(
+        std::bind(output_to_file, std::ref(outfile), _1, _2, _3));
+    log_warning().set_output_function(
+        std::bind(output_to_file, std::ref(outfile), _1, _2, _3));
+    log_error().set_output_function(
+        std::bind(output_to_file, std::ref(outfile), _1, _2, _3));
+    log_fatal().set_output_function(
+        std::bind(output_to_file, std::ref(outfile), _1, _2, _3));
+    threadpool pool(4);
+    // Create dependencies for our protocol object.
+    hosts hst(pool);
+    handshake hs(pool);
+    network net(pool);
+    // protocol service.
+    protocol prot(pool, hst, hs, net);
+    prot.set_max_outbound(4);
+    // Perform node discovery if needed and then creating connections.
+    prot.start(handle_start);
+    // wait
+    while (!stopped)
+    {
+        sleep(0.2);
+        // if any new shit then broadcast it.
+        broadcast_mutex.lock();
+        if (tx_broadcast_queue.empty())
+        {
+            broadcast_mutex.unlock();
+            continue;
+        }
+        transaction_type tx = tx_broadcast_queue.back();
+        tx_broadcast_queue.pop_back();
+        broadcast_mutex.unlock();
+        auto ignore_send = [](const std::error_code&, size_t) {};
+        prot.broadcast(tx, ignore_send);
+    }
+    auto ignore_stop = [](const std::error_code&) {};
+    prot.stop(ignore_stop);
+    // Safely close down.
+    pool.stop();
+    pool.join();
 }
 
 int main(int argc, char** argv)
@@ -306,13 +723,21 @@ int main(int argc, char** argv)
     for (size_t i = 0; i < 60; ++i)
     {
         bc::payment_address payaddr = cycler.address(i, false);
+        control.add_address(payaddr);
+        control.add_key(payaddr,
+            detwallet.generate_secret(i, false));
         fullnode.address.subscribe(payaddr, new_update,
             std::bind(subscribed, _1, _2,
-                std::ref(fullnode), std::ref(display), payaddr));
+                std::ref(fullnode), std::ref(control), std::ref(display),
+                payaddr));
         payaddr = cycler.address(i, true);
+        control.add_address(payaddr);
+        control.add_key(payaddr,
+            detwallet.generate_secret(i, true));
         fullnode.address.subscribe(payaddr, new_update,
             std::bind(subscribed, _1, _2,
-                std::ref(fullnode), std::ref(display), payaddr));
+                std::ref(fullnode), std::ref(control), std::ref(display),
+                payaddr));
     }
     std::thread thr([&fullnode]()
         {
@@ -322,6 +747,7 @@ int main(int argc, char** argv)
                 sleep(0.1);
             }
         });
+    std::thread broadcaster(broadcast_subsystem);
     std::string user_input;
     string_buffer console_output(20);
     console_output.push_back("Type 'help' to get started.");
@@ -379,6 +805,7 @@ int main(int argc, char** argv)
         }
     }
     stopped = true;
+    broadcaster.join();
     thr.join();
     endwin();
     pool.stop();
