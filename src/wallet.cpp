@@ -320,6 +320,7 @@ int main()
         });
     std::string user_input;
     string_buffer console_output(20);
+    console_output.push_back("Type 'help' to get started.");
 	while(true)
     {
         int row, col;
