@@ -255,40 +255,40 @@ std::string read_data()
     return std::string(it, end);
 }
 
-int main()
+void init_curses()
 {
-    bc::deterministic_wallet detwallet;
-    // investigate why master_public_keys are different.
-    // TODO: bug here?
-    detwallet.set_master_public_key(bc::decode_hex(
-        "3315ae236373067ea27d92f10f9475b1ff727eebe45f4ce4dd21cf548a237755397"
-        "548d57fdb94610aef20993b4ff4695cae581d3be98743593336b21090c7d2"));
-    //std::string user_data = read_data();
-    //if (!detwallet.set_seed(user_data))
-    //{
-    //    data_chunk mpk = decode_hex(user_data);
-    //    if (!detwallet.set_master_public_key(mpk))
-    //    {
-    //        std::cerr << "wallet: No valid master public key, or "
-    //            << "private secret key was passed in." << std::endl;
-    //        return -1;
-    //    }
-    //}
-    // TODO: read froma argv... this is testing only.
-    detwallet.new_seed();
     initscr();
     start_color();
+    noecho();
     cbreak();
     keypad(stdscr, TRUE);
+}
+
+int main(int argc, char** argv)
+{
+    if (argc != 2)
+    {
+        std::cerr << "Usage: sx wallet SEED" << std::endl;
+        return -1;
+    }
+    bc::deterministic_wallet detwallet;
+    std::string user_data = argv[1];
+    if (!detwallet.set_seed(user_data))
+    {
+        data_chunk mpk = decode_hex(user_data);
+        if (!detwallet.set_master_public_key(mpk))
+        {
+            std::cerr << "wallet: No valid master public key, or "
+                << "private secret key was passed in." << std::endl;
+            return -1;
+        }
+    }
+    init_curses();
     wallet_display display;
     address_cycler cycler;
-    //cycler.detwallet = detwallet;
-    // TODO: this is a bug. detwallet should be copyable.
-    cycler.detwallet.set_master_public_key(bc::decode_hex(
-        "3315ae236373067ea27d92f10f9475b1ff727eebe45f4ce4dd21cf548a237755397"
-        "548d57fdb94610aef20993b4ff4695cae581d3be98743593336b21090c7d2"));
-    //BITCOIN_ASSERT(
-    //    cycler.detwallet.master_public_key() == detwallet.master_public_key());
+    cycler.detwallet = detwallet;
+    BITCOIN_ASSERT(
+        cycler.detwallet.master_public_key() == detwallet.master_public_key());
     wallet_control control(display, cycler);
     // test data
     //display.add({false, bc::output_point{bc::null_hash, 0}, 0,

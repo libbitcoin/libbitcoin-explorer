@@ -55,7 +55,7 @@ Create the raw hex representation from a script.\
 "Experimental command line wallet.",
 
 """\
-Usage: sx wallet
+Usage: sx wallet SEED
 This is an experimental prototype.\
 """
 ),
