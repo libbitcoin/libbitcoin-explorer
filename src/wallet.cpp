@@ -53,14 +53,20 @@ public:
     {
         ++selected_entry_;
         BITCOIN_ASSERT(selected_entry_ <= history_.size());
-        if (selected_entry_ == history_.size())
+        if (selected_entry_ == 21)
             selected_entry_ = 0;
     }
     void select_previous()
     {
         if (selected_entry_ == 0)
-            selected_entry_ = history_.size();
+            selected_entry_ = 21;
         --selected_entry_;
+    }
+
+    void set_cursor(size_t y, size_t x)
+    {
+        cursor_y_ = y;
+        cursor_x_ = x;
     }
 private:
     typedef std::vector<wallet_history_entry> wallet_history;
@@ -69,6 +75,7 @@ private:
     std::string receive_address_;
     size_t selected_entry_ = 0;
     wallet_history history_;
+    size_t cursor_y_ = 0, cursor_x_ = 0;
 };
 
 struct address_cycler
@@ -162,6 +169,7 @@ void wallet_display::draw()
         if (i == selected_entry_)
             attroff(A_REVERSE);
     }
+    move(cursor_y_, cursor_x_);
     refresh();
 }
 
@@ -331,9 +339,8 @@ int main()
         mvaddstr(50, 2, user_input.c_str());
         attroff(A_REVERSE);
 
+        display.set_cursor(50, user_input.size() + 2);
         display.draw();
-        move(50, user_input.size() + 2);
-        refresh();
         int c = getch();
         if (c == KEY_F(1))
             break;
