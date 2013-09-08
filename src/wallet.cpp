@@ -223,6 +223,9 @@ void new_update(const std::error_code& ec, size_t height,
     //    << bc::encode_hex(block_hash) << " ]" << std::endl;
 }
 
+// omg hacks
+bool stopped = false;
+
 void run_command(std::string user_input, string_buffer& console_output,
     wallet_control& control, bc::deterministic_wallet& detwallet)
 {
@@ -238,6 +241,8 @@ void run_command(std::string user_input, string_buffer& console_output,
         console_output.push_back("Commands:");
         console_output.push_back("send ADDRESS AMOUNT [FEE]");
     }
+    else if (cmd == "quit" || cmd == "q")
+        stopped = true;
     else
         console_output.push_back(
             std::string("Unknown command: ") + cmd);
@@ -309,8 +314,7 @@ int main()
             std::bind(subscribed, _1, _2,
                 std::ref(fullnode), std::ref(display), payaddr));
     }
-    bool stopped = false;
-    std::thread thr([&stopped, &fullnode]()
+    std::thread thr([&fullnode]()
         {
             while (!stopped)
             {
@@ -321,7 +325,7 @@ int main()
     std::string user_input;
     string_buffer console_output(20);
     console_output.push_back("Type 'help' to get started.");
-	while(true)
+	while(!stopped)
     {
         int row, col;
         getmaxyx(stdscr, row, col);
