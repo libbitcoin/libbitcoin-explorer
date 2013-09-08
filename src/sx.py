@@ -105,12 +105,21 @@ Read private key from STDIN and output Bitcoin address.\
 """
 ),
 
+"ripemd-hash": (
+"RIPEMD hash data from STDIN.",
+
+"""\
+Usage: sx ripemd-hash
+RIPEMD hash data from STDIN.\
+"""
+),
+
 "wrap": (
 "Adds version byte and checksum to hexstring.",
 
 """\
 Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
-"Adds version byte and checksum to hexstring.\
+Adds version byte and checksum to hexstring.\
 """
 ),
 
@@ -119,7 +128,7 @@ Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
 
 """\
 Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
-"Validates checksum and recovers version byte and original data from hexstring.\
+Validates checksum and recovers version byte and original data from hexstring.\
 """
 ),
 
@@ -483,11 +492,28 @@ Usage: sx decode-addr ADDRESS
 Decode an address to its internal RIPEMD representation.\
 """),
 
+"embed-addr": (
+"Generate an address used for embedding record of data into the blockchain.",
+
+"""\
+Usage: sx embed-addr
+Generate an address used for embedding record of data into the blockchain.
+
+Example:
+
+  $ cat my_sculpture.jpg | sx embed-addr
+  1N9v8AKBqst9MNceV3gLmFKsgkKv1bZcBU
+
+Now send some Bitcoin to that address and it'll be embedded in the blockchain
+as a record of the data passed in.
+\
+"""),
+
 "encode-addr": (
 "Encode an address to base58check form.",
 
 """\
-Usage: sx encode-addr ADDRESS [magic_byte]
+Usage: sx encode-addr HASH [VERSION]
 Encode an address to base58check form.\
 """),
 

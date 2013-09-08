@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
     if (argc > 3)
     {
-        std::cerr << "Usage: encode-addr ADDRESS [version_byte] " << std::endl;
+        std::cerr << "Usage: sx encode-addr HASH [VERSION] " << std::endl;
         return -1;
     }
 
@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     {
         addr_str = read_stdin();
     }
-    else if (argc == 2) 
+    else if (argc == 2)
     {
         if (strlen(argv[1]) > 5)
             addr_str = argv[1];
@@ -35,13 +35,14 @@ int main(int argc, char** argv)
         addr_str = argv[1];
     }
 
-    data_chunk data = decode_hex(addr_str);
-    short_hash hashdata;
-    std::copy(data.begin(), data.end(), hashdata.begin());
-    payment_address addr;
+    short_hash hashdata = decode_hex_digest<short_hash>(addr_str);
+    if (hashdata == null_short_hash)
+    {
+        std::cerr << "Incorrect HASH passed in." << std::endl;
+        return -1;
+    }
 
-    addr.set(version_byte, hashdata);
-    
+    payment_address addr(version_byte, hashdata);
     std::cout << addr.encoded() << std::endl;
     return 0;
 }
