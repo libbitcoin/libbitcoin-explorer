@@ -518,6 +518,8 @@ bc::hash_digest send(wallet_control& control, std::vector<std::string>& strs,
     }
     // construct transaction now.
     transaction_type tx;
+    tx.version = 1;
+    tx.locktime = 0;
     // start with outputs.
     // dest addr output first.
     transaction_output_type dest_output;
