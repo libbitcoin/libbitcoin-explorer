@@ -651,10 +651,11 @@ void run_command(std::string user_input, string_buffer& console_output,
         return;
     const std::string& cmd = strs[0];
     console_output.push_back(std::string("> ") + user_input);
-    if (cmd == "help")
+    if (cmd == "help" || cmd == "h")
     {
         console_output.push_back("Commands:");
         console_output.push_back("send ADDRESS AMOUNT [FEE]");
+        console_output.push_back("info");
     }
     else if (cmd == "send" || cmd == "s")
     {
