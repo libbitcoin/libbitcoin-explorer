@@ -34,6 +34,11 @@ struct wallet_history_entry
 class wallet_display
 {
 public:
+    string_buffer console_output;
+    std::string user_input;
+
+    wallet_display() : console_output(20) {}
+
     void draw();
 
     void add_balance(uint64_t balance)
@@ -63,13 +68,13 @@ public:
     {
         ++selected_entry_;
         BITCOIN_ASSERT(selected_entry_ <= history_.size());
-        if (selected_entry_ == 21)
+        if (selected_entry_ == 21 || selected_entry_ == history_.size())
             selected_entry_ = 0;
     }
     void select_previous()
     {
         if (selected_entry_ == 0)
-            selected_entry_ = 21;
+            selected_entry_ = std::min(21, (int)history_.size());
         --selected_entry_;
     }
 
@@ -78,6 +83,13 @@ public:
         cursor_y_ = y;
         cursor_x_ = x;
     }
+
+    const wallet_history_entry& selected_entry()
+    {
+        BITCOIN_ASSERT(selected_entry_ < history_.size());
+        return history_[selected_entry_];
+    }
+
 private:
     typedef std::vector<wallet_history_entry> wallet_history;
 
@@ -305,6 +317,24 @@ private:
 
 void wallet_display::draw()
 {
+    int row, col;
+    getmaxyx(stdscr, row, col);
+    mvaddstr(28, 0, "Command:");
+    mvhline(29, 0, ACS_HLINE, 40);
+    for (size_t i = 0; i < console_output.size(); ++i)
+    {
+        std::string clear_line(col, ' ');
+        mvaddstr(30 + i, 0, clear_line.c_str());
+        mvaddstr(30 + i, 0, console_output[i].c_str());
+    }
+    std::string render_string(col - 2, ' ');
+    attron(A_REVERSE);
+    mvaddstr(50, 0, "> ");
+    mvaddstr(50, 2, render_string.c_str());
+    mvaddstr(50, 2, user_input.c_str());
+    attroff(A_REVERSE);
+
+    set_cursor(50, user_input.size() + 2);
     size_t y = 0;
     std::string balance_line =
         "Balance: " + bc::satoshi_to_btc(balance_) + " BTC";
@@ -571,10 +601,50 @@ bc::hash_digest send(wallet_control& control, std::vector<std::string>& strs,
     return bc::hash_transaction(tx);
 }
 
+void showtx(const std::error_code& ec, const transaction_type& tx,
+    string_buffer& console_output, wallet_display& display)
+{
+#define OUTPUT(stuff) \
+    { \
+    std::ostringstream oss; \
+    oss << stuff; \
+    console_output.push_back(oss.str()); \
+    }
+
+    OUTPUT("version: " << tx.version);
+    OUTPUT("locktime: " << tx.locktime);
+    for (const transaction_input_type& input: tx.inputs)
+    {
+        OUTPUT("Input:");
+        OUTPUT("  previous output: "
+            << input.previous_output.hash << ":"
+            << input.previous_output.index);
+        OUTPUT("  script: " << pretty(input.script));
+        OUTPUT("  sequence: " << input.sequence);
+        payment_address addr;
+        if (extract(addr, input.script))
+            OUTPUT("  address: " << addr.encoded());
+    }
+    for (const transaction_output_type& output: tx.outputs)
+    {
+        OUTPUT("Output:");
+        OUTPUT("  value: " << output.value);
+        OUTPUT("  script: " << pretty(output.script));
+        payment_address addr;
+        if (extract(addr, output.script))
+            OUTPUT("  address: " << addr.encoded());
+    }
+    display.draw();
+}
+
 void run_command(std::string user_input, string_buffer& console_output,
-    wallet_control& control, bc::deterministic_wallet& detwallet)
+    wallet_control& control, wallet_display& display,
+    bc::deterministic_wallet& detwallet,
+    obelisk::fullnode_interface& fullnode)
 {
     boost::trim(user_input);
+    if (user_input.empty())
+        return;
     std::vector<std::string> strs;
     boost::split(strs, user_input, boost::is_any_of(" \t"));
     if (strs.empty())
@@ -591,6 +661,18 @@ void run_command(std::string user_input, string_buffer& console_output,
         bc::hash_digest tx_hash = send(control, strs, console_output);
         console_output.push_back(
             std::string("send: Broadcasting ") + bc::encode_hex(tx_hash));;
+    }
+    else if (cmd == "info" || cmd == "i")
+    {
+        const wallet_history_entry entry = display.selected_entry();
+        console_output.push_back(
+            std::string("info: ") +
+            (entry.is_credit ? "Output " : "Input ") +
+            bc::encode_hex(entry.point.hash) + ":" +
+            boost::lexical_cast<std::string>(entry.point.index));
+        fullnode.blockchain.fetch_transaction(entry.point.hash,
+            std::bind(showtx, _1, _2, std::ref(console_output),
+                std::ref(display)));
     }
     else if (cmd == "quit" || cmd == "q")
         stopped = true;
@@ -750,29 +832,11 @@ int main(int argc, char** argv)
             }
         });
     std::thread broadcaster(broadcast_subsystem);
-    std::string user_input;
-    string_buffer console_output(20);
+    string_buffer& console_output = display.console_output;
+    std::string& user_input = display.user_input;
     console_output.push_back("Type 'help' to get started.");
 	while(!stopped)
     {
-        int row, col;
-        getmaxyx(stdscr, row, col);
-        mvaddstr(28, 0, "Command:");
-        mvhline(29, 0, ACS_HLINE, 40);
-        for (size_t i = 0; i < console_output.size(); ++i)
-        {
-            std::string clear_line(col, ' ');
-            mvaddstr(30 + i, 0, clear_line.c_str());
-            mvaddstr(30 + i, 0, console_output[i].c_str());
-        }
-        std::string render_string(col - 2, ' ');
-        attron(A_REVERSE);
-        mvaddstr(50, 0, "> ");
-        mvaddstr(50, 2, render_string.c_str());
-        mvaddstr(50, 2, user_input.c_str());
-        attroff(A_REVERSE);
-
-        display.set_cursor(50, user_input.size() + 2);
         display.draw();
         int c = getch();
         if (c == KEY_F(1))
@@ -798,7 +862,8 @@ int main(int argc, char** argv)
             case KEY_ENTER:
             case '\n':
                 // submit command
-                run_command(user_input, console_output, control, detwallet);
+                run_command(user_input, console_output,
+                    control, display, detwallet, fullnode);
                 user_input.clear();
                 break;
             default:
