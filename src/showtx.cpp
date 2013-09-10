@@ -45,8 +45,8 @@ void json_show_tx(const transaction_type& tx)
         if (is_first)
             is_first = false;
         else
-            std::cout << "    ," << std::endl;
-        std::cout << "    \"previous_output\": \""
+            std::cout << "," << std::endl;
+        std::cout << "   {\"previous_output\": \""
             << input.previous_output.hash << ":"
             << input.previous_output.index << "\"," << std::endl;
         std::cout << "    \"script\": \"" << pretty(input.script)
@@ -59,8 +59,9 @@ void json_show_tx(const transaction_type& tx)
             std::cout << "\"" << addr.encoded() << "\"";
         else
             std::cout << "null";
+        std::cout << "}";
     }
-    std::cout << std::endl << "  ]" << std::endl;
+    std::cout << std::endl << "  ]," << std::endl;
     std::cout << "  \"outputs\": [" << std::endl;
     is_first = true;
     for (const transaction_output_type& output: tx.outputs)
@@ -68,8 +69,8 @@ void json_show_tx(const transaction_type& tx)
         if (is_first)
             is_first = false;
         else
-            std::cout << "    ," << std::endl;
-        std::cout << "    \"value\": " << output.value << "," << std::endl;
+            std::cout << "," << std::endl;
+        std::cout << "   {\"value\": " << output.value << "," << std::endl;
         std::cout << "    \"script\": \"" << pretty(output.script)
             << "\"," << std::endl;
         std::cout << "    \"address\": ";
@@ -78,6 +79,7 @@ void json_show_tx(const transaction_type& tx)
             std::cout << "\"" << addr.encoded() << "\"";
         else
             std::cout << "null";
+        std::cout << "}";
     }
     std::cout << std::endl << "  ]" << std::endl;
     std::cout << "}" << std::endl;
