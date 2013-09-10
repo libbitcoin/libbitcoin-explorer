@@ -144,95 +144,6 @@ namespace std
     };
 }
 
-// ---------------------------------------------
-// This will be included in libbitcoin directly at some point.
-// ---------------------------------------------
-
-namespace libbitcoin {
-
-// Move output_info_type into transaction.hpp
-// And put the following typedef there too.
-
-typedef std::vector<output_info_type> output_info_list;
-
-struct select_outputs_result
-{
-    output_point_list points;
-    uint64_t change;
-};
-
-enum class select_outputs_algorithm
-{
-    greedy
-};
-
-select_outputs_result select_outputs(
-    output_info_list outputs, uint64_t min_value,
-    select_outputs_algorithm alg=select_outputs_algorithm::greedy);
-
-// ---------------------------------------------
-// CPP file now.
-// ---------------------------------------------
-
-select_outputs_result select_outputs(
-    output_info_list outputs, uint64_t min_value,
-    select_outputs_algorithm alg)
-{
-    // Just one default implementation for now.
-    // Consider a switch case with greedy_select_outputs(min_value) .etc
-    // if this is ever extended with more algorithms.
-    BITCOIN_ASSERT(alg == select_outputs_algorithm::greedy);
-    // Fail if empty.
-    if (outputs.empty())
-        return select_outputs_result();
-    auto lesser_begin = outputs.begin();
-    auto lesser_end = std::partition(outputs.begin(), outputs.end(),
-        [min_value](const output_info_type& out_info)
-        {
-            return out_info.value < min_value;
-        });
-    auto greater_begin = lesser_end;
-    auto greater_end = outputs.end();
-    auto min_greater = std::min_element(greater_begin, greater_end,
-        [](const output_info_type& info_a, const output_info_type& info_b)
-        {
-            return info_a.value < info_b.value;
-        });
-    select_outputs_result result;
-    if (min_greater != greater_end)
-    {
-        result.change = min_greater->value - min_value;
-        result.points.push_back(min_greater->point);
-        return result;
-    }
-    // Not found in greaters. Try several lessers instead.
-    // Rearrange them from biggest to smallest. We want to use the least
-    // amount of inputs as possible.
-    std::sort(lesser_begin, lesser_end,
-        [](const output_info_type& info_a, const output_info_type& info_b)
-        {
-            return info_a.value > info_b.value;
-        });
-    uint64_t accum = 0;
-    for (auto it = lesser_begin; it != lesser_end; ++it)
-    {
-        result.points.push_back(it->point);
-        accum += it->value;
-        if (accum >= min_value)
-        {
-            result.change = accum - min_value;
-            return result;
-        }
-    }
-    return select_outputs_result();
-}
-
-} // namespace libbitcoin
-
-// ---------------------------------------------
-// End libbitcoin stuff.
-// ---------------------------------------------
-
 class wallet_control
 {
 public:
@@ -278,7 +189,7 @@ public:
         {
             outs.push_back({pair.first, pair.second.value});
         }
-        return select_outputs(outs, value);
+        return bc::select_outputs(outs, value);
     }
 
     // For finding the right signing key.
