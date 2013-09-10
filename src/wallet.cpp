@@ -66,6 +66,8 @@ public:
 
     void select_next()
     {
+        if (history_.empty())
+            return;
         ++selected_entry_;
         BITCOIN_ASSERT(selected_entry_ <= history_.size());
         if (selected_entry_ == 21 || selected_entry_ == history_.size())
@@ -73,6 +75,8 @@ public:
     }
     void select_previous()
     {
+        if (history_.empty())
+            return;
         if (selected_entry_ == 0)
             selected_entry_ = std::min(21, (int)history_.size());
         --selected_entry_;
@@ -84,6 +88,10 @@ public:
         cursor_x_ = x;
     }
 
+    bool is_selected()
+    {
+        return selected_entry_ != -1;
+    }
     const wallet_history_entry& selected_entry()
     {
         BITCOIN_ASSERT(selected_entry_ < history_.size());
@@ -95,7 +103,7 @@ private:
 
     uint64_t balance_ = 0;
     std::string receive_address_;
-    size_t selected_entry_ = 0;
+    int selected_entry_ = -1;
     wallet_history history_;
     size_t cursor_y_ = 0, cursor_x_ = 0;
 };
@@ -660,11 +668,18 @@ void run_command(std::string user_input, string_buffer& console_output,
     else if (cmd == "send" || cmd == "s")
     {
         bc::hash_digest tx_hash = send(control, strs, console_output);
-        console_output.push_back(
-            std::string("send: Broadcasting ") + bc::encode_hex(tx_hash));;
+        if (tx_hash != null_hash)
+            console_output.push_back(
+                std::string("send: Broadcasting ") + bc::encode_hex(tx_hash));
     }
     else if (cmd == "info" || cmd == "i")
     {
+        if (!display.is_selected())
+        {
+            console_output.push_back(
+                "info: Nothing selected.");
+            return;
+        }
         const wallet_history_entry entry = display.selected_entry();
         console_output.push_back(
             std::string("info: ") +
