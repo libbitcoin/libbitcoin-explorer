@@ -7,7 +7,7 @@ corebin_PROGRAMS = \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
     sx-encode-addr sx-genpub sx-showblkhead sx-validsig sx-monitor \
     sx-validaddr sx-base58-encode sx-base58-decode sx-wrap sx-unwrap \
-    sx-ripemd-hash
+    sx-ripemd-hash sx-initchain
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-bci-pushtx sx-base58check-encode \
 	sx-base58check-decode sx-embed-addr
@@ -32,6 +32,9 @@ endif
 
 sx_ripemd_hash_SOURCES = ripemd-hash.cpp
 sx_ripemd_hash_LDADD = ${libbitcoin_LIBS}
+
+sx_initchain_SOURCES = initchain.cpp
+sx_initchain_LDADD = ${libbitcoin_LIBS}
 
 sx_wrap_SOURCES = wrap.cpp
 sx_wrap_LDADD = ${libbitcoin_LIBS}

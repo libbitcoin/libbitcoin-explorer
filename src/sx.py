@@ -51,6 +51,15 @@ Create the raw hex representation from a script.\
 """
 ),
 
+"initchain": (
+"Initialize a new blockchain.",
+
+"""\
+Usage: sx initchain DIRECTORY
+Initialize a new blockchain.\
+"""
+),
+
 "wallet": (
 "Experimental command line wallet.",
 
