@@ -1,9 +1,12 @@
 #!/usr/bin/python
-import urllib, sys, json, copy
+import urllib, urllib2, sys, json, copy, random
 
 addrs = sys.argv[1:]
 
-data = [urllib.urlopen('http://blockchain.info/address/%s?format=json' % s).read() for s in addrs]
+opener = urllib2.build_opener()
+opener.addheaders = [('User-agent', 'Mozilla/5.0'+str(random.randrange(1000000)))]
+
+data = [opener.open('http://blockchain.info/address/%s?format=json' % s).read() for s in addrs]
 
 jsonobj = []
 for x in data:
