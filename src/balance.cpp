@@ -1,5 +1,5 @@
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/client/interface.hpp>
+#include <obelisk/obelisk.hpp>
 #include "config.hpp"
 #include "util.hpp"
 
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
         return -1;
     }
     threadpool pool(1);
-    fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"]);
     fullnode.address.fetch_history(payaddr, history_fetched);
     while (!stopped)
     {

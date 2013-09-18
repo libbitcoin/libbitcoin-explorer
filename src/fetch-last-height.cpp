@@ -1,5 +1,5 @@
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/client/interface.hpp>
+#include <obelisk/obelisk.hpp>
 #include "config.hpp"
 #include "util.hpp"
 
@@ -24,7 +24,7 @@ int main()
     config_map_type config;
     load_config(config);
     threadpool pool(1);
-    fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"]);
     fullnode.blockchain.fetch_last_height(height_fetched);
     while (!stopped)
     {
