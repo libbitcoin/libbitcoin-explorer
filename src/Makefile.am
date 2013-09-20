@@ -9,7 +9,7 @@ corebin_PROGRAMS = \
     sx-validaddr sx-base58-encode sx-base58-decode sx-wrap sx-unwrap
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-bci-pushtx sx-base58check-encode \
-	sx-base58check-decode
+	sx-base58check-decode sx-bci-transaction-exists
 
 bin_SCRIPTS = sx
 CLEANFILES = $(bin_SCRIPTS)

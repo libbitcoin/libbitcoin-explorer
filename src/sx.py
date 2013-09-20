@@ -186,6 +186,18 @@ Push tx to blockchain.info/pushtx.
 """
 ),
 
+"bci-transaction-exists": (
+"Does a transaction with a given hash exist in the public network?",
+
+"""\
+Usage: sx bci-transaction-exists HASH
+Does a transaction with a given hash exist in the public network?
+
+  $ sx bci-transaction-exists HASH
+\
+"""
+),
+
 "genpriv": (
 "Generate a private key deterministically from a seed.",
 
