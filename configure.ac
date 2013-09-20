@@ -7,6 +7,10 @@ AM_INIT_AUTOMAKE([-Wall -Werror])
 AC_PROG_CXX
 AC_GNU_SOURCE
 AX_CXX_COMPILE_STDCXX_11(noext,mandatory)
+AX_WITH_CURSES
+if test "x$ax_cv_ncursesw" != xyes && test "x$ax_cv_ncurses" != xyes; then
+    AC_MSG_ERROR([requires either NcursesW or Ncurses library])
+fi
 PKG_PROG_PKG_CONFIG
 PKG_CHECK_MODULES([libbitcoin], [libbitcoin])
 PKG_CHECK_MODULES([libobelisk], [libobelisk],

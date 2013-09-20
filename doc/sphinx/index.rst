@@ -18,5 +18,12 @@ the sx tools for the Bitcoin cryptocurrency.
    history
    multisig
 
-Author: Amir Taaki <amir@unsystem.net>
+Authors
+=======
+
+Amir Taaki (genjix) - Development - 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY
+
+Santiago Mendez (d3) - Feedback, heavy testing and improvements.
+
+Vitalik Buterin - Development - 1GNRekXGy7s2UYnE7ZhMcWdv3GpJSGtLkc
 

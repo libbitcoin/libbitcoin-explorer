@@ -51,6 +51,24 @@ Create the raw hex representation from a script.\
 """
 ),
 
+"initchain": (
+"Initialize a new blockchain.",
+
+"""\
+Usage: sx initchain DIRECTORY
+Initialize a new blockchain.\
+"""
+),
+
+"wallet": (
+"Experimental command line wallet.",
+
+"""\
+Usage: sx wallet SEED
+This is an experimental prototype.\
+"""
+),
+
 "monitor": (
 "Monitor an address.",
 
@@ -96,12 +114,21 @@ Read private key from STDIN and output Bitcoin address.\
 """
 ),
 
+"ripemd-hash": (
+"RIPEMD hash data from STDIN.",
+
+"""\
+Usage: sx ripemd-hash
+RIPEMD hash data from STDIN.\
+"""
+),
+
 "wrap": (
 "Adds version byte and checksum to hexstring.",
 
 """\
 Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
-"Adds version byte and checksum to hexstring.\
+Adds version byte and checksum to hexstring.\
 """
 ),
 
@@ -110,7 +137,7 @@ Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
 
 """\
 Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
-"Validates checksum and recovers version byte and original data from hexstring.\
+Validates checksum and recovers version byte and original data from hexstring.\
 """
 ),
 
@@ -324,6 +351,10 @@ Usage: sx history ADDRESS
 The history tool uses a network connection to make requests against the
 load balancer backend.
 
+  -j, --json                 Enable json parseable output.
+
+Example:
+
   $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history
   Output Hash:Index                           Output Height   Value (Satoshis) Spend Hash:Index                Spend Height
   97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1  247683 100000      Unspent                                 230529504
@@ -450,9 +481,13 @@ Usage: sx showblkhead FILENAME
 "Show the details of a transaction.",
 
 """\
-Usage: sx showtx FILENAME
+Usage: sx showtx [-j] FILENAME
 
 'showtx' allows inspecting of tx files.
+
+  -j, --json                 Enable json parseable output.
+
+Example:
 
   $ sx showtx txfile.tx
   hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0
@@ -478,11 +513,28 @@ Usage: sx decode-addr ADDRESS
 Decode an address to its internal RIPEMD representation.\
 """),
 
+"embed-addr": (
+"Generate an address used for embedding record of data into the blockchain.",
+
+"""\
+Usage: sx embed-addr
+Generate an address used for embedding record of data into the blockchain.
+
+Example:
+
+  $ cat my_sculpture.jpg | sx embed-addr
+  1N9v8AKBqst9MNceV3gLmFKsgkKv1bZcBU
+
+Now send some Bitcoin to that address and it'll be embedded in the blockchain
+as a record of the data passed in.
+\
+"""),
+
 "encode-addr": (
 "Encode an address to base58check form.",
 
 """\
-Usage: sx encode-addr ADDRESS [magic_byte]
+Usage: sx encode-addr HASH [VERSION]
 Encode an address to base58check form.\
 """),
 
