@@ -10,7 +10,7 @@ corebin_PROGRAMS = \
     sx-ripemd-hash sx-initchain
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-bci-pushtx sx-base58check-encode \
-	sx-base58check-decode sx-embed-addr sx-bci-transaction-exists
+	sx-base58check-decode sx-embed-addr sx-blke-fetch-transaction
 
 bin_SCRIPTS = sx
 CLEANFILES = $(bin_SCRIPTS)

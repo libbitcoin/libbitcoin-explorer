@@ -213,14 +213,15 @@ Push tx to blockchain.info/pushtx.
 """
 ),
 
-"bci-transaction-exists": (
-"Does a transaction with a given hash exist in the public network?",
+"blke-fetch-transaction": (
+"Fetches a transaction from blockexplorer.com"
 
 """\
-Usage: sx bci-transaction-exists HASH
-Does a transaction with a given hash exist in the public network?
+Usage: sx blke-fetch-transaction HASH
 
-  $ sx bci-transaction-exists HASH
+Fetches a transaction from blockexplorer.com
+
+  $ sx blke-fetch-transaction HASH
 \
 """
 ),
