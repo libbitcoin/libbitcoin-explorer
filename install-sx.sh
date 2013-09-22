@@ -26,7 +26,7 @@ echo " ***********************************************************************"
 echo
 echo "Installation commencing NOW ($INSTALL_PREFIX)."
 
-DEPENDENCIES="git build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++-dev libncurses-dev"
+DEPENDENCIES="git build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++-dev libncurses5-dev"
 
 function pkg_is_installed
 {
