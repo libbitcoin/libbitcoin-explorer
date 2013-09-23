@@ -547,6 +547,18 @@ Usage: sx validsig FILENAME INDEX SCRIPT_CODE SIGNATURE
 Validate a transaction input's signature.\
 """),
 
+"brainwallet": (
+"Make a private key from a brainwallet",
+
+"""\
+Usage: sx brainwallet password
+       sx brainwallet username password
+       sx brainwallet password --algo slowsha
+       sx brainwallet username password --algo slowsha
+Make a private key from a brainwallet.\
+"""
+),
+
 "set-input": (
 "Set a transaction input.",
 
