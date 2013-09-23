@@ -26,7 +26,7 @@ echo " ***********************************************************************"
 echo
 echo "Installation commencing NOW ($INSTALL_PREFIX)."
 
-DEPENDENCIES="git build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++-dev libncurses-dev"
+DEPENDENCIES="git build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++-dev libncurses5-dev"
 
 function pkg_is_installed
 {
@@ -37,6 +37,11 @@ function pkg_is_installed
         echo 0
     fi
 }
+
+if [ $ROOT_INSTALL -eq 1 ]; then
+    echo "Installing dependencies..."
+    apt-get install $DEPENDENCIES
+fi
 
 for pkg in $DEPENDENCIES; do
     if [ $(pkg_is_installed $pkg) -eq 0 ]; then
@@ -50,11 +55,6 @@ for pkg in $DEPENDENCIES; do
         exit 1
     fi
 done
-
-if [ $ROOT_INSTALL -eq 1 ]; then
-    echo "Installing dependencies..."
-    apt-get install $DEPENDENCIES
-fi
 
 SRC_DIR=$INSTALL_PREFIX/src/
 PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig/
