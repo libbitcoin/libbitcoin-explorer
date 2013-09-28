@@ -4,7 +4,13 @@ echo "Welcome to the S(pesmilo)X(change)"
 echo
 
 if [ $# -eq 1 ]; then
-    INSTALL_PREFIX=$(pwd)/$1
+    if [[ "$1" = /* ]]; then
+        # Absolute path.
+        INSTALL_PREFIX=$1
+    else
+        # Relative path.
+        INSTALL_PREFIX=$(pwd)/$1
+    fi
     CONF_DIR=$INSTALL_PREFIX/etc/
     RUN_LDCONFIG=
     ROOT_INSTALL=0
@@ -120,15 +126,15 @@ make
 make install
 echo "sx now installed."
 echo
-echo "Config files are in /etc/"
-echo "  obelisk cfg:    /etc/obelisk/*.cfg"
-echo "  sx cfg:         ~/.sx.cfg (see /usr/local/share/sx/sx.cfg for an"
+echo "Config files are in $CONF_DIR/"
+echo "  obelisk cfg:    $CONF_DIR/obelisk/*.cfg"
+echo "  sx cfg:         ~/.sx.cfg (see $INSTALL_PREFIX/share/sx/sx.cfg for an"
 echo "                  example config file."
 echo
 echo "Documentation is available /usr/local/doc/"
-echo "  libbitcoin doc: /usr/local/share/doc/libbitcoin/"
-echo "  obelisk doc:    /usr/local/share/doc/obelisk/"
-echo "  sx doc:         /usr/local/share/doc/sx/"
+echo "  libbitcoin doc: $INSTALL_PREFIX/share/doc/libbitcoin/"
+echo "  obelisk doc:    $INSTALL_PREFIX/share/doc/obelisk/"
+echo "  sx doc:         $INSTALL_PREFIX/share/doc/sx/"
 echo
 if [ $ROOT_INSTALL -eq 0 ]; then
     echo "Add these lines to your ~/.bashrc"
