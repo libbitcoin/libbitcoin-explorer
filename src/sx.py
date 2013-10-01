@@ -386,10 +386,11 @@ Get enough unspent transaction outputs from a given set of addresses to pay a gi
 "Create an unsigned tx.",
 
 """\
-Usage: sx mktx FILENAME [-i TXHASH:INDEX]... [-o ADDRESS:VALUE]
+        Usage: sx mktx FILENAME [-i TXHASH:INDEX]... [-o ADDRESS:VALUE] [-o HEXSCRIPT:VALUE]
 
   -i, --input TXHASH:INDEX      Add input to transaction.
-  -o, --output TXHASH:INDEX     Add output to transaction.
+  -o, --output ADDRESS:VALUE or HEXSCRIPT:VALUE
+                                Add output to transaction.
 
 Construct the transaction:
 
