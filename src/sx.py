@@ -382,6 +382,15 @@ Get enough unspent transaction outputs from a given set of addresses to pay a gi
 """
 ),
 
+"get-pubkey": (
+"Get the pubkey of an address if available",
+
+"""\
+Usage: sx get-pubkey ADDRESS
+Get the pubkey of an address if available\
+"""
+),
+
 "mktx": (
 "Create an unsigned tx.",
 
