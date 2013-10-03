@@ -5,9 +5,18 @@ using namespace bc;
 
 int main()
 {
-    std::string hex_script = read_stdin();
-    script_type scr = parse_script(decode_hex(hex_script));
-    std::cout << pretty(scr) << std::endl;
+    data_chunk raw_script = decode_hex(read_stdin());
+    script_type script;
+    try
+    {
+        script = parse_script(raw_script);
+    }
+    catch (end_of_stream)
+    {
+        std::cerr << "showscript: Error: Bad script." << std::endl;
+        return -1;
+    }
+    std::cout << pretty(script) << std::endl;
     return 0;
 }
 
