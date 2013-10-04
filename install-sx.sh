@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 echo "Welcome to the S(pesmilo)X(change)"
-echo
 
 if [ $# -eq 1 ]; then
     if [[ "$1" = /* ]]; then
@@ -30,37 +29,40 @@ echo " ***********************************************************************"
 echo " * sx command line utilities - Empower The Sysadmin With Bitcoin Tools *"
 echo " ***********************************************************************"
 echo
-echo "Installation commencing NOW ($INSTALL_PREFIX)."
 
-DEPENDENCIES="git build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++-dev libncurses5-dev"
-
-function pkg_is_installed
-{
-    dpkg -s $1 > /dev/null
-    if [ $? -eq 0 ]; then
-        echo 1
-    else
-        echo 0
-    fi
-}
-
-if [ $ROOT_INSTALL -eq 1 ]; then
-    echo "Installing dependencies..."
-    apt-get install $DEPENDENCIES
+echo "Ubuntu/Debian users require the following packages:"
+echo "git build-essential autoconf libtool libboost-all-dev"
+echo "pkg-config libcurl4-openssl-dev libleveldb-dev"
+echo "libzmq-dev libconfig++-dev libncurses5-dev"
+echo
+echo "Fedora/Redhat users require the following packages:"
+echo "gcc-c++ git autoconf libtool boost-devel pkgconfig"
+echo "libcurl-devel openssl-devel leveldb-devel zeromq"
+echo "zeromq3 zeromq-devel libconfig libconfig-devel"
+echo "ncurses-devel"
+echo "and a package group called 'Development Tools'."
+echo
+mydistro=`cat /etc/*-release | egrep -i "Fedora|Redhat" | wc -l`
+if [ $mydistro -gt 0 ]; then 
+    sudo yum groupinstall "Development Tools"
+    sudo yum install gcc-c++ git autoconf libtool boost-devel pkgconfig libcurl-devel openssl-devel leveldb-devel zeromq zeromq3 zeromq-devel libconfig libconfig-devel ncurses-devel
 fi
-
-for pkg in $DEPENDENCIES; do
-    if [ $(pkg_is_installed $pkg) -eq 0 ]; then
-        echo
-        echo "Error: $pkg is not installed!"
-        echo
-        echo "Run the following command:"
-        echo
-        echo "  $ sudo apt-get install $DEPENDENCIES"
-        echo
-        exit 1
-    fi
-done
+mydistro=`cat /etc/*-release | egrep -i "Debian|Ubuntu" | wc -l`
+if [ $mydistro -gt 0 ]; then 
+    sudo apt-get install git build-essential autoconf libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++-dev libncurses5-dev
+fi
+echo
+echo "You may have some issues regarding the file"
+echo "/usr/include/openssl/ec.h and may need to use the"
+echo "openssl tarball as it is removed by redhat for legal reasons."
+echo
+echo "To compile this software into a local directory before"
+echo "copying it into your root filesystem, run the following commands"
+echo "cd sx"
+echo "mkdir target"
+echo "sudo env PKG_CONFIG_PATH='./target/' ./install-sx.sh target"
+echo
+echo "Installation commencing NOW ($INSTALL_PREFIX)."
 
 SRC_DIR=$INSTALL_PREFIX/src/
 PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig/
