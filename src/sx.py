@@ -326,6 +326,17 @@ the load balancer backend.\
 """
 ),
 
+"fetch-transaction-index": (
+"Fetch block height and index in block of transaction.",
+
+"""\
+Usage: sx fetch-transaction-index HASH
+
+The fetch-transaction-index tool uses a network connection to make requests
+against the load balancer backend.\
+"""
+),
+
 "balance": (
 "Show balance of a Bitcoin address.",
 
