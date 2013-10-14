@@ -141,7 +141,7 @@ if [ $ROOT_INSTALL -eq 0 ]; then
     echo
     echo "  export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib/"
     echo "  export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig/"
-    echo "  export PATH=$PATH:$INSTALL_PREFIX/bin/"
+    echo "  export PATH=\$PATH:$INSTALL_PREFIX/bin/"
     echo
 fi
 
