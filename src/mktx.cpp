@@ -34,7 +34,7 @@ bool load_outpoint(output_point& prevout, const std::string& parameter)
     boost::split(strs, parameter, boost::is_any_of(":"));
     if (strs.size() != 2)
     {
-        std::cerr << "mktx: Format for output point is TXHASH:INDEX."
+        std::cerr << "mktx: Format for previous output is TXHASH:INDEX."
             << std::endl;
         return false;
     }
