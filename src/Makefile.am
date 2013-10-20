@@ -29,7 +29,7 @@ corebin_PROGRAMS += \
     sx-fetch-last-height sx-validtx sx-ob-broadcast-tx sx-wallet \
     sx-fetch-transaction-index
 
-AM_CPPFLAGS += -DSYSCONFDIR=\"${sysconfdir}\"
+AM_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
 endif
 
 sx_ripemd_hash_SOURCES = ripemd-hash.cpp
