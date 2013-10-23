@@ -70,19 +70,19 @@ We use the opcode ``zero`` to represent the emitted signature of key1.
 
 Sign an input using::
 
-    $ cat key2 | sx sign-input txfile.tx 0
+    $ cat key2 | sx sign-input txfile.tx 0 $(cat msig.script)
     3046022100a147c529f7dfa291ceb2c2f21094ca101a1cfe7036cda18935d6899111cad76b022100c0d6392bdd9b31e0e3fe13dce3d928cf6857b411b6e05f35f12403b877c26bad01
-    $ cat key3 | sx sign-input txfile.tx 0
+    $ cat key3 | sx sign-input txfile.tx 0 $(cat msig.script)
     3046022100957f0bfdd476f2d8985268d7964168f6b7e43f54089f8fbff35a4f62e7a221f9022100be8f565e30781d353d71f54202009fe14b8203151d235ba6bf3db2b531680bca01
 
 Our example will use bash substitution again.
 ::
 
-    $ sx rawscript zero [ $(cat key2 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat key3 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat msig.script) ] | sx set-input txfile.tx 0 > txfile.tx
+    $ sx rawscript zero [ $(cat key2 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat key3 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat msig.script) ] | sx set-input txfile.tx 0 > signed.tx
 
 The transaction is finalised! Broadcast it::
 
-    $ sx broadcast-tx txfile.tx
+    $ sx broadcast-tx signed.tx
 
 https://blockchain.info/tx/d646f82bd5fbdb94a36872ce460f97662b80c3050ad3209bef9d1e398ea277ab
 
