@@ -8,9 +8,9 @@ Follow the instructions in the libbitcoin README to install it.
 
 Obelisk:
 
-  https://github.com/genjix/obelisk
+  https://github.com/spesmilo/obelisk
 
-  $ git clone https://github.com/genjix/obelisk.git
+  $ git clone https://github.com/spesmilo/obelisk.git
   $ sudo apt-get install libzmq-dev libconfig++-dev
   $ make
   $ sudo make install
