@@ -45,11 +45,11 @@ Resources and Contact
 
 Development repository:
 
-  https://github.com/genjix/sx/
+  https://github.com/spesmilo/sx/
 
 My Bitcoin address (from http://libbitcoin.dyne.org/):
 
     1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY
 
-Email: amir@unsystem.net
+Email: genjix@riseup.net
 
