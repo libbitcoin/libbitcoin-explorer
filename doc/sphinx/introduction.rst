@@ -45,7 +45,7 @@ Resources and Contact
 
 Development repository:
 
-  https://github.com/genjix/sx/
+  https://github.com/spesmilo/sx/
 
 My Bitcoin address (from http://libbitcoin.dyne.org/):
 
