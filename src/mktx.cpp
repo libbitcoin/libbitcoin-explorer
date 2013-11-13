@@ -17,7 +17,7 @@ bool display_help()
     puts(" -o, --output\tSpecify a destination ADDRESS:AMOUNT");
     puts("\t\tor HEXSCRIPT:AMOUNT");
     puts("\t\tAMOUNT uses internal bitcoin values");
-    puts("\t\t  0.1 BTC = 0.1 * 10^8 = 1000000");
+    puts("\t\t  0.1 BTC = 0.1 * 10^8 = 10000000");
     puts("");
     puts("Please email suggestions and questions to <genjix@riseup.net>.");
     return -1;
