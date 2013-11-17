@@ -37,7 +37,7 @@ int main(int argc, char** argv)
     while (!stopped)
     {
         fullnode.update();
-        msleep(100);
+        usleep(100000);
     }
     pool.stop();
     pool.join();

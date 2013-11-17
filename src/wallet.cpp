@@ -671,7 +671,7 @@ void broadcast_subsystem()
     // wait
     while (!stopped)
     {
-        msleep(200);
+        usleep(200000);
         // if any new shit then broadcast it.
         broadcast_mutex.lock();
         if (tx_broadcast_queue.empty())
@@ -755,7 +755,7 @@ int main(int argc, char** argv)
             while (!stopped)
             {
                 fullnode.update();
-                msleep(100);
+                usleep(100000);
             }
         });
     std::thread broadcaster(broadcast_subsystem);
