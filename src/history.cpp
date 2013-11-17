@@ -165,7 +165,7 @@ int main(int argc, char** argv)
     while (remaining_count > 0)
     {
         fullnode.update();
-        msleep(100);
+        usleep(100000);
     }
     if (json_output)
         std::cout << "]" << std::endl;
