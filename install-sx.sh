@@ -44,19 +44,35 @@ function pkg_is_installed
     fi
 }
 
-if [ $ROOT_INSTALL -eq 1 ]; then
-    echo "Installing dependencies..."
-    apt-get install $DEPENDENCIES
-fi
+function is_ubuntu_precise
+{
+    uname -a | grep precise > /dev/null
+    if [ $? -eq 0 ]; then
+        echo 1
+    else
+        echo 0
+    fi
+}
+
+echo "Installing dependencies..."
 
 for pkg in $DEPENDENCIES; do
     # Workaround for Ubuntu 12.04 64bit
     # https://bitcointalk.org/index.php?topic=259999.msg3802342#msg3802342
     if [ "$pkg" == "libconfig++-dev" ]; then
-        uname -a | grep precise > /dev/null
-        if [ $? -eq 0 ]; then
+        if [ $(is_ubuntu_precise) -eq 1 ]; then
             pkg="libconfig++8-dev"
         fi
+    fi
+    if [ "$pkg" == "libboost-all-dev" ]; then
+        echo "helllolol"
+        if [ $(is_ubuntu_precise) -eq 1 ]; then
+            pkg="libboost1.48-all-dev"
+        fi
+    fi
+
+    if [ $ROOT_INSTALL -eq 1 ]; then
+        apt-get install $pkg
     fi
 
     if [ $(pkg_is_installed $pkg) -eq 0 ]; then
