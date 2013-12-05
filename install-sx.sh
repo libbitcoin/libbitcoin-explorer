@@ -50,6 +50,15 @@ if [ $ROOT_INSTALL -eq 1 ]; then
 fi
 
 for pkg in $DEPENDENCIES; do
+    # Workaround for Ubuntu 12.04 64bit
+    # https://bitcointalk.org/index.php?topic=259999.msg3802342#msg3802342
+    if [ "$pkg" == "libconfig++-dev" ]; then
+        uname -a | grep precise > /dev/null
+        if [ $? -eq 0 ]; then
+            pkg="libconfig++8-dev"
+        fi
+    fi
+
     if [ $(pkg_is_installed $pkg) -eq 0 ]; then
         echo
         echo "Error: $pkg is not installed!"
