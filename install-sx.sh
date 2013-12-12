@@ -110,6 +110,24 @@ $RUN_LDCONFIG
 echo "libbitcoin now installed."
 
 cd $SRC_DIR
+if [ -d "libwallet-git" ]; then
+    echo "Updating libwallet..."
+    cd libwallet-git
+    git pull --rebase
+else
+    echo "Downloading libwallet..."
+    git clone https://github.com/spesmilo/libwallet.git libwallet-git
+    cd libwallet-git
+fi
+echo "Beginning build process now..."
+autoreconf -i
+./configure --prefix $INSTALL_PREFIX
+make
+make install
+$RUN_LDCONFIG
+echo "libwallet now installed."
+
+cd $SRC_DIR
 if [ -d "obelisk-git" ]; then
     echo "Updating obelisk.."
     cd obelisk-git
