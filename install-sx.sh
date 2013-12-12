@@ -30,7 +30,6 @@ echo " * sx command line utilities - Empower The Sysadmin With Bitcoin Tools *"
 echo " ***********************************************************************"
 echo
 
-<<<<<<< HEAD
 function is_ubuntu_precise
 {
     uname -a | grep precise > /dev/null
