@@ -722,7 +722,7 @@ Watch transactions from the network searching for a certain hash.\
 def display_usage():
     print "Usage: sx COMMAND [ARGS]..."
     print
-    print "The most commonly used sx commands are:"
+    print "The sx commands are:"
     print
     categorised = {}
     for cmd in sorted(command_list.iterkeys()):
