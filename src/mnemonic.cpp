@@ -1,7 +1,8 @@
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
-
+#include <wallet/wallet.hpp>
 using namespace bc;
+using namespace libwallet;
 
 bool display_help()
 {
@@ -25,7 +26,7 @@ int main(int argc, char** argv)
     if (words.empty())
         return display_help();
     else if (words.size() == 1 &&
-        words[0].size() == deterministic_wallet::seed_size)
+        words[0].size() == libwallet::deterministic_wallet::seed_size)
     {
         const std::string seed = words[0];
         string_list words = encode_mnemonic(seed);

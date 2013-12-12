@@ -3,6 +3,7 @@
 #include <mutex>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 #include <obelisk/obelisk.hpp>
 #include <ncurses.h>
 #include "config.hpp"
@@ -123,7 +124,7 @@ struct address_cycler
     }
 
     size_t n = 0;
-    bc::deterministic_wallet detwallet;
+    libwallet::deterministic_wallet detwallet;
 };
 
 namespace std
@@ -558,7 +559,7 @@ void showtx(const std::error_code& ec, const transaction_type& tx,
 
 void run_command(std::string user_input, string_buffer& console_output,
     wallet_control& control, wallet_display& display,
-    bc::deterministic_wallet& detwallet,
+    libwallet::deterministic_wallet& detwallet,
     obelisk::fullnode_interface& fullnode)
 {
     boost::trim(user_input);
@@ -699,7 +700,7 @@ int main(int argc, char** argv)
         std::cerr << "Usage: sx wallet SEED" << std::endl;
         return -1;
     }
-    bc::deterministic_wallet detwallet;
+    libwallet::deterministic_wallet detwallet;
     std::string user_data = argv[1];
     if (!detwallet.set_seed(user_data))
     {

@@ -1,7 +1,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 using namespace bc;
+using namespace libwallet;
 
 std::string dump_file(std::istream& in_file)
 {
@@ -36,7 +38,7 @@ int main(int argc, char** argv)
             for_change = true;
     }
     std::string seed = dump_file(std::cin);
-    deterministic_wallet wallet;
+    libwallet::deterministic_wallet wallet;
     if (!wallet.set_seed(seed))
     {
         std::cerr << "genpriv: This command wants a seed." << std::endl;

@@ -1,7 +1,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 using namespace bc;
+using namespace libwallet;
 
 std::string read_data()
 {
@@ -35,7 +37,7 @@ int main(int argc, char** argv)
         if (change_str == "true" || change_str == "1")
             for_change = true;
     }
-    deterministic_wallet wallet;
+    libwallet::deterministic_wallet wallet;
     std::string user_data = read_data();
     if (!wallet.set_seed(user_data))
     {

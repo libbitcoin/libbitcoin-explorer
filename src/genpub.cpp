@@ -1,7 +1,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 using namespace bc;
+using namespace libwallet;
 
 std::string read_data()
 {
@@ -53,7 +55,7 @@ int main(int argc, char** argv)
         std::cerr << "genaddr: RANGESTOP cannot be less than N" << std::endl;
         return -1;
     }
-    deterministic_wallet wallet;
+    libwallet::deterministic_wallet wallet;
     std::string user_data = read_data();
     if (!wallet.set_seed(user_data))
     {

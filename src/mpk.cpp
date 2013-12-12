@@ -1,5 +1,7 @@
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 using namespace bc;
+using namespace libwallet;
 
 std::string dump_file(std::istream& in_file)
 {
@@ -11,7 +13,7 @@ std::string dump_file(std::istream& in_file)
 int main()
 {
     std::string seed = dump_file(std::cin);
-    deterministic_wallet wallet;
+    libwallet::deterministic_wallet wallet;
     if (!wallet.set_seed(seed))
     {
         std::cerr << "mpk: Error setting seed" << std::endl;
