@@ -65,7 +65,6 @@ for pkg in $DEPENDENCIES; do
         fi
     fi
     if [ "$pkg" == "libboost-all-dev" ]; then
-        echo "helllolol"
         if [ $(is_ubuntu_precise) -eq 1 ]; then
             pkg="libboost1.48-all-dev"
         fi
