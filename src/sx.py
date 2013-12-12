@@ -2,11 +2,12 @@
 import sys
 import subprocess
 
-SPACING = " " * 23
+SPACING = " " * 30
 
 command_list = {
 
 "satoshi": (
+"MISC",
 "Convert Bitcoins into Satoshis.",
 
 """\
@@ -16,6 +17,7 @@ Convert Bitcoins into Satoshis.\
 ),
 
 "btc": (
+"MISC",
 "Convert Satoshis into Bitcoins.",
 
 """\
@@ -25,6 +27,7 @@ Convert Satoshis into Bitcoins.\
 ),
 
 "showscript": (
+"BLOCKCHAIN QUERIES",
 "Show the details of a raw script.",
 
 """\
@@ -34,6 +37,7 @@ Show the details of a raw script.\
 ),
 
 "scripthash": (
+"UNSIGNED TRANSACTIONS",
 "Create BIP 16 script hash address from raw script hex.",
 
 """\
@@ -43,6 +47,7 @@ Create BIP 16 script hash address from raw script hex (from STDIN).\
 ),
 
 "rawscript": (
+"UNSIGNED TRANSACTIONS",
 "Create the raw hex representation from a script.",
 
 """\
@@ -52,6 +57,7 @@ Create the raw hex representation from a script.\
 ),
 
 "initchain": (
+"MISC",
 "Initialize a new blockchain.",
 
 """\
@@ -61,6 +67,7 @@ Initialize a new blockchain.\
 ),
 
 "wallet": (
+"MISC",
 "Experimental command line wallet.",
 
 """\
@@ -70,6 +77,7 @@ This is an experimental prototype.\
 ),
 
 "monitor": (
+"BLOCKCHAIN WATCHING",
 "Monitor an address.",
 
 """\
@@ -79,6 +87,7 @@ Monitor an address.\
 ),
 
 "validaddr": (
+"FORMAT",
 "Validate an address.",
 
 """\
@@ -88,6 +97,7 @@ Validate an address.\
 ),
 
 "validtx": (
+"VALIDATE",
 "Validate a transaction.",
 
 """\
@@ -97,6 +107,7 @@ Validate a transaction.\
 ),
 
 "pubkey": (
+"LOOSE KEYS AND ADDRESSES",
 "See the public part of a private key.",
 
 """\
@@ -106,6 +117,7 @@ Read private key from STDIN and output the public key.\
 ),
 
 "addr": (
+"LOOSE KEYS AND ADDRESSES",
 "See Bitcoin address of a private key.",
 
 """\
@@ -115,6 +127,7 @@ Read private key from STDIN and output Bitcoin address.\
 ),
 
 "ripemd-hash": (
+"FORMAT",
 "RIPEMD hash data from STDIN.",
 
 """\
@@ -124,6 +137,7 @@ RIPEMD hash data from STDIN.\
 ),
 
 "wrap": (
+"FORMAT",
 "Adds version byte and checksum to hexstring.",
 
 """\
@@ -133,6 +147,7 @@ Adds version byte and checksum to hexstring.\
 ),
 
 "unwrap": (
+"FORMAT",
 "Validates checksum and recovers version byte and original data from hexstring.",
 
 """\
@@ -142,6 +157,7 @@ Validates checksum and recovers version byte and original data from hexstring.\
 ),
 
 "base58-decode": (
+"FORMAT",
 "Convert from base58 to hex",
 
 """\
@@ -151,6 +167,7 @@ Convert from base58 to hex.\
 ),
 
 "base58-encode": (
+"FORMAT",
 "Convert from hex to base58",
 
 """\
@@ -160,6 +177,7 @@ Convert from hex to base58.\
 ),
 
 "base58check-decode": (
+"FORMAT",
 "Convert from base58check to hex",
 
 """\
@@ -169,6 +187,7 @@ Convert from base58check to hex.\
 ),
 
 "base58check-encode": (
+"FORMAT",
 "Convert from hex to base58check",
 
 """\
@@ -178,6 +197,7 @@ Convert from hex to base58check.\
 ),
 
 "ob-broadcast-tx": (
+"BLOCKCHAIN UPDATES",
 "Broadcast tx to obelisk server.",
 
 """\
@@ -190,6 +210,7 @@ Broadcast the transaction to an obelisk server for the network.
 ),
 
 "broadcast-tx": (
+"BLOCKCHAIN UPDATES",
 "Broadcast tx to network.",
 
 """\
@@ -202,6 +223,7 @@ Broadcast the transaction to the Bitcoin network.
 ),
 
 "bci-pushtx": (
+"BLOCKCHAIN UPDATES",
 "Push tx to blockchain.info/pushtx.",
 
 """\
@@ -214,7 +236,8 @@ Push tx to blockchain.info/pushtx.
 ),
 
 "blke-fetch-transaction": (
-"Fetches a transaction from blockexplorer.com"
+"BLOCKCHAIN UPDATES",
+"Fetches a transaction from blockexplorer.com",
 
 """\
 Usage: sx blke-fetch-transaction HASH
@@ -227,6 +250,7 @@ Fetches a transaction from blockexplorer.com
 ),
 
 "genpriv": (
+"DETERMINISTIC KEYS AND ADDRESSES",
 "Generate a private key deterministically from a seed.",
 
 """\
@@ -242,6 +266,7 @@ Generate private keys from a wallet seed.
 ),
 
 "genpub": (
+"DETERMINISTIC KEYS AND ADDRESSES",
 "Generate a public key deterministically from a wallet\n" +
 SPACING + "seed or master public key.",
 
@@ -256,6 +281,7 @@ Generate public key from a wallet seed or master public key.
 ),
 
 "genaddr": (
+"DETERMINISTIC KEYS AND ADDRESSES",
 "Generate a Bitcoin address deterministically from a wallet\n" +
 SPACING + "seed or master public key.",
 
@@ -270,6 +296,7 @@ Generate Bitcoin addresses from a wallet seed or master public key.
 ),
 
 "qrcode": (
+"MISC",
 "Generate Bitcoin QR codes offline.",
 
 """\
@@ -284,6 +311,7 @@ Make sure you have the program 'qrencode' installed first.
 ),
 
 "fetch-block-header": (
+"BLOCKCHAIN QUERIES",
 "Fetch raw block header.",
 
 """\
@@ -295,6 +323,7 @@ the load balancer backend.\
 ),
 
 "fetch-last-height": (
+"BLOCKCHAIN QUERIES",
 "Fetch the last block height.",
 
 """\
@@ -306,6 +335,7 @@ the load balancer backend.\
 ),
 
 "bci-fetch-last-height": (
+"BLOCKCHAIN QUERIES",
 "Fetch the last block height using blockchain.info.",
 
 """\
@@ -316,6 +346,7 @@ Fetch the last block height using blockchain.info.\
 ),
 
 "fetch-transaction": (
+"BLOCKCHAIN QUERIES",
 "Fetch a raw transaction.",
 
 """\
@@ -327,6 +358,7 @@ the load balancer backend.\
 ),
 
 "fetch-transaction-index": (
+"BLOCKCHAIN QUERIES",
 "Fetch block height and index in block of transaction.",
 
 """\
@@ -338,6 +370,7 @@ against the load balancer backend.\
 ),
 
 "balance": (
+"BLOCKCHAIN QUERIES",
 "Show balance of a Bitcoin address.",
 
 """\
@@ -353,6 +386,7 @@ load balancer backend.
 ),
 
 "history": (
+"BLOCKCHAIN QUERIES",
 "Get list of output points, values, and their spends for an\n" +
 SPACING + "address. grep can filter for just unspent outputs which can\n" +
 SPACING + "be fed into mktx.",
@@ -375,7 +409,9 @@ Example:
 ),
 
 "bci-history": (
-"Get list of output points, values and spends using blockchain.info.",
+"BLOCKCHAIN QUERIES",
+"Get list of output points, values, and their spends\n" +
+SPACING + "from blockchain.info",
 
 """\
 Usage: sx bci-history SATOSHIS
@@ -384,6 +420,7 @@ Get list of output points, values and spends using blockchain.info.\
 ),
 
 "get-utxo": (
+"BLOCKCHAIN QUERIES",
 "Get enough unspent transaction outputs from a given set of\n" +
 SPACING + "addresses to pay a given number of satoshis",
 
@@ -394,6 +431,7 @@ Get enough unspent transaction outputs from a given set of addresses to pay a gi
 ),
 
 "get-pubkey": (
+"LOOSE KEYS AND ADDRESSES",
 "Get the pubkey of an address if available",
 
 """\
@@ -403,6 +441,7 @@ Get the pubkey of an address if available\
 ),
 
 "mktx": (
+"UNSIGNED TRANSACTIONS",
 "Create an unsigned tx.",
 
 """\
@@ -421,6 +460,7 @@ The VALUE field is in Satoshis.\
 ),
 
 "mpk": (
+"DETERMINISTIC KEYS AND ADDRESSES",
 "Extract a master public key from a deterministic wallet seed.",
 
 """\
@@ -437,6 +477,7 @@ Extract a master public key from a deterministic wallet seed.
 ),
 
 "newkey": (
+"LOOSE KEYS AND ADDRESSES",
 "Create a new private key.",
 
 """\
@@ -449,6 +490,7 @@ Usage: sx newkey
 ),
 
 "newseed": (
+"DETERMINISTIC KEYS AND ADDRESSES",
 "Create a new deterministic wallet seed.",
 
 """\
@@ -461,6 +503,7 @@ Usage: sx newseed
 ),
 
 "sendtx": (
+"BLOCKCHAIN UPDATES",
 "Send transaction to a single node.",
 
 """\
@@ -476,6 +519,7 @@ Send transaction to one Bitcoin node on localhost port 4009:
 ),
 
 "showblkhead": (
+"BLOCKCHAIN QUERIES",
 "Show the details of a block header.",
 
 """\
@@ -500,6 +544,7 @@ Usage: sx showblkhead FILENAME
 ),
 
 "showtx": (
+"BLOCKCHAIN QUERIES",
 "Show the details of a transaction.",
 
 """\
@@ -528,6 +573,7 @@ Example:
 ),
 
 "decode-addr": (
+"FORMAT",
 "Decode an address to its internal RIPEMD representation.",
 
 """\
@@ -536,6 +582,7 @@ Decode an address to its internal RIPEMD representation.\
 """),
 
 "embed-addr": (
+"FORMAT",
 "Generate an address used for embedding record of data into the blockchain.",
 
 """\
@@ -553,6 +600,7 @@ as a record of the data passed in.
 """),
 
 "encode-addr": (
+"FORMAT",
 "Encode an address to base58check form.",
 
 """\
@@ -561,6 +609,7 @@ Encode an address to base58check form.\
 """),
 
 "validsig": (
+"VALIDATE",
 "Validate a transaction input's signature.",
 
 """\
@@ -569,6 +618,7 @@ Validate a transaction input's signature.\
 """),
 
 "brainwallet": (
+"BRAINWALLET",
 "Make a private key from a brainwallet",
 
 """\
@@ -581,6 +631,7 @@ Make a private key from a brainwallet.\
 ),
 
 "set-input": (
+"UNSIGNED TRANSACTIONS",
 "Set a transaction input.",
 
 """\
@@ -589,6 +640,7 @@ Set a transaction input.\
 """),
 
 "sign-input": (
+"SIGNED TRANSACTIONS",
 "Sign a transaction input.",
 
 """\
@@ -637,6 +689,7 @@ Now the input script is prepared, and the transaction is signed.\
 ),
 
 "mnemonic": (
+"BRAINWALLET",
 "Work with Electrum compatible mnemonics (12 words wallet seed).",
 
 """\
@@ -654,6 +707,7 @@ stumble time cookie" | sx mnemonic
 ),
 
 "watchtx": (
+"BLOCKCHAIN WATCHING",
 "Watch transactions from the network searching for a certain hash.",
 
 """\
@@ -670,20 +724,28 @@ def display_usage():
     print
     print "The most commonly used sx commands are:"
     print
+    categorised = {}
     for cmd in sorted(command_list.iterkeys()):
-        short_desc = command_list[cmd][0]
+        category = command_list[cmd][0]
+        if category not in categorised:
+            categorised[category] = []
+        short_desc = command_list[cmd][1]
         line = "   %s" % cmd
-        line += " " * (20 - len(cmd))
+        line += " " * (len(SPACING) - len(cmd) - 3)
         line += short_desc
-        print line
-    print
+        categorised[category].append(line)
+    for category, lines in categorised.iteritems():
+        print category
+        for line in lines:
+            print line
+        print
     print "See 'sx help COMMAND' for more information on a specific command."
     print
     print "SpesmiloXchange home page: <http://sx.dyne.org/>"
 
 def display_help(command):
     assert command in command_list
-    long_desc = command_list[command][1]
+    long_desc = command_list[command][2]
     print long_desc
     return 0
 
