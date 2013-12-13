@@ -190,7 +190,7 @@ public:
         {
             outs.push_back({pair.first, pair.second.value});
         }
-        return bc::select_outputs(outs, value);
+        return libwallet::select_outputs(outs, value);
     }
 
     // For finding the right signing key.
