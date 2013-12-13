@@ -2,6 +2,7 @@
 #define SX_LOAD_TX_HPP
 
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 
 using namespace bc;
 
@@ -46,7 +47,7 @@ std::string read_stdin()
 
 bool read_private_key(elliptic_curve_key& key, const std::string& arg)
 {
-    secret_parameter secret = wif_to_secret(arg);
+    secret_parameter secret = libwallet::wif_to_secret(arg);
     if (secret == null_hash || !key.set_secret(secret))
         return false;
     return true;
