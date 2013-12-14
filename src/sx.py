@@ -722,6 +722,8 @@ Watch transactions from the network searching for a certain hash.\
 def display_usage():
     print "Usage: sx COMMAND [ARGS]..."
     print
+    print "  -c, --config               Specify a config file"
+    print
     print "The sx commands are:"
     print
     categorised = {}
@@ -757,6 +759,12 @@ def main(argv):
     if len(argv) == 1:
         display_usage()
         return 1
+    args = argv[1:]
+    if args[0] == "-c" or args[0] == "--config":
+        if len(args) < 3:
+            display_usage()
+            return 1
+        use_cfg = args[1]
     command = argv[1]
     # args as one string we can pass to the sx sub-command
     args = argv[2:]
