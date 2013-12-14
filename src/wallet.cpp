@@ -182,7 +182,7 @@ public:
         unspent_[outpoint] = output_data{addr, value};
     }
 
-    select_outputs_result find_unspent(uint64_t value)
+    libwallet::select_outputs_result find_unspent(uint64_t value)
     {
         // Generate unspent out list.
         output_info_list outs;
@@ -460,7 +460,8 @@ bc::hash_digest send(wallet_control& control, std::vector<std::string>& strs,
         }
     }
     console_output.push_back("Sending...");
-    select_outputs_result unspent = control.find_unspent(amount + fee);
+    libwallet::select_outputs_result unspent =
+        control.find_unspent(amount + fee);
     if (unspent.points.empty())
     {
         console_output.push_back("send: Not enough funds.");
