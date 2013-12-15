@@ -1,3 +1,6 @@
+SX INSTRUCTIONS
+===============
+
 Hi!
 
 My aim with this project is to provide a set of modular Bitcoin
@@ -16,7 +19,7 @@ Use this bash shell script to install sx: http://sx.dyne.org/install-sx.sh
 
 Cheat sheet:
 
-  http://i.imgur.com/8R0cfuw.png
+    http://i.imgur.com/8R0cfuw.png
 
 To see a list of the sx commands type:
 
@@ -37,7 +40,7 @@ Try this to make a mini-wallet.
 
 Now send some funds to your address (0.001 BTC).
 
-In this example we will send the funds to 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe.
+In this example we will send the funds to `13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe`.
 
   100000 Satoshis  (0.001 BTC) in total.
    90000 Satoshis (0.0009 BTC) to send.
@@ -49,7 +52,7 @@ output for this address. Note down the transaction hash and transaction index.
 Here is a screenshot of blockchain.info: http://i.imgur.com/dZvqJIV.png
 
 We can see the tx hash is:
-97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3
+`97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3`
 And there is a single output at index 1 that we want to spend.
 
 Construct the transaction:
@@ -90,7 +93,7 @@ We will now sign the first input using our private key.
       previous output:
     97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0
       script: [
-    304602210083f8b5131f6399cdc01ed8368f6137f288f771e40834a94d65cee6b380fec873022100da5ed6d1d283f228752a88c2d6f629587b2a6fbc102202ae7c20f48af7c0533c01
+      304602210083f8b5131f6399cdc01ed8368f6137f288f771e40834a94d65cee6b380fec873022100da5ed6d1d283f228752a88c2d6f629587b2a6fbc102202ae7c20f48af7c0533c01
     ] [
     04e3af7cdfaab6ba2f14001a7ea0a490f40c6ba43607be92a05111d2e8fc1eecf6fa2c248b3e25ddf7db081684f6f49dc83fd7b9b5a3a88a2e6b83b918f8972351
     ]  sequence: 4294967295
@@ -134,8 +137,8 @@ Now you can generate your private keys for whatever number:
     $ cat wallet.seed | sx genpriv 1
     5KjCYpPyxU2e88S57b1naKUsJ1JNjCudkFSQPxqcYyBYgzzahNe
 
-You can use either the master_public.key or the wallet.seed for generating
-Bitcoin receive addresses. But you cannot use the master_public.key for
+You can use either the `master_public.key` or the `wallet.seed` for generating
+Bitcoin receive addresses. But you cannot use the `master_public.key` for
 generating the private keys for spending those Bitcoins.
 
     $ cat master_public.key | sx genpub 0
@@ -152,7 +155,7 @@ For Electrum compatible 12 word seeds, use the mnemonic tool.
     148f0a1d77e20dbaee3ff920ca40240d
 
 
-balance/history (Advanced)
+Balance/History (Advanced)
 --------------------------
 
 The balance/history tools use a network connection to make requests
@@ -224,9 +227,11 @@ https://blockchain.info/tx/e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e0
 
 We create the basic transaction.
 
+```sh
     $ sx mktx txfile.tx -i e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0 -o 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY:9900000
     Added input e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0
     Added output sending 9900000 Satoshis to 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY.
+```
 
 The transaction has a fee of 0.001 BTC and is saved in the file named
 'txfile.tx'.
