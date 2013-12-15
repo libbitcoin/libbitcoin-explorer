@@ -22,9 +22,9 @@ To see a list of the sx commands type:
 
   $ sx help
 
-=====================
+
 Simple Bitcoin Client
-=====================
+---------------------
 
 Try this to make a mini-wallet.
 
@@ -111,16 +111,16 @@ Or to send it to one Bitcoin node (like a localhost one), then use:
 
   $ sx sendtx txfile.tx localhost 4009
 
-=================
+
 QR Code Generator
-=================
+-----------------
 
   $ sudo apt-get install qrencode
   $ sx qrcode 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe qrcode.png
 
-====================
+
 Deterministic Wallet
-====================
+--------------------
 
   $ sx newseed > wallet.seed
   $ cat wallet.seed
@@ -151,9 +151,9 @@ For Electrum compatible 12 word seeds, use the mnemonic tool.
 stumble time cookie" | sx mnemonic
   148f0a1d77e20dbaee3ff920ca40240d
 
-==========================
+
 balance/history (Advanced)
-==========================
+--------------------------
 
 The balance/history tools use a network connection to make requests
 against the load balancer backend.
@@ -177,9 +177,8 @@ balancers, you can run multiple setups on the same host. By default it is now
 pointing at my development server, but I will change this soon and migrate to
 a new host. Also I make no guarantees about stability or compatibility.
 
-===============================
 Multisignature N-M Transactions
-===============================
+-------------------------------
 
 This example will create a 2-3 multisignature transaction but these
 instructions can be easily generalised for other types.
@@ -220,9 +219,8 @@ This is my transaction:
 
 https://blockchain.info/tx/e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52
 
----------------------------------
-Spending the multisignature coins
----------------------------------
+
+## Spending the multisignature coins
 
 We create the basic transaction.
 
