@@ -169,13 +169,13 @@ against the load balancer backend.
 
 It's possible to run as many backend workers as you like. The
 load balancer (obbalancer) will distribute requests evenly among the backends.
-Use worker-output.sh to view debug info from the worker. Each worker must
+Use `worker-output.sh` to view debug info from the worker. Each worker must
 have their own unique copy of the blockchain database.
 
-See the Obelisk config files in /usr/local/etc/obelisk/. The sx config file
-is stored at ~/.sx.cfg (there's an example at /usr/local/share/sx.cfg).
+See the Obelisk config files in `/usr/local/etc/obelisk/`. The sx config file
+is stored at `~/.sx.cfg` (there's an example at `/usr/local/share/sx.cfg`).
 You can change this configuration parameter in Obelisk using
-'./configure --sysconfigdir=/etc/'. By configuring different workers and load
+`./configure --sysconfigdir=/etc/`. By configuring different workers and load
 balancers, you can run multiple setups on the same host. By default it is now
 pointing at my development server, but I will change this soon and migrate to
 a new host. Also I make no guarantees about stability or compatibility.
@@ -227,23 +227,21 @@ https://blockchain.info/tx/e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e0
 
 We create the basic transaction.
 
-```sh
     $ sx mktx txfile.tx -i e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0 -o 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY:9900000
     Added input e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0
     Added output sending 9900000 Satoshis to 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY.
-```
 
 The transaction has a fee of 0.001 BTC and is saved in the file named
-'txfile.tx'.
+`txfile.tx`.
 
 It has a single input which we will generate the signatures for, create the
 script and then set the input.
 
-Use the sx command 'showtx' to show a transaction.
+Use the sx command `showtx` to show a transaction.
 
 In our example we will emit the first signature and only use key2 and key3.
 
-We use the opcode 'zero' to represent the emitted signature of key1.
+We use the opcode `zero` to represent the emitted signature of key1.
 
 Sign an input using:
 
