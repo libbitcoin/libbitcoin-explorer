@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import sys
 import subprocess
+import os
+import shutil
 
 SPACING = " " * 30
 
@@ -755,19 +757,34 @@ def display_bad(command):
     print "sx: '%s' is not a sx command. See 'sx --help'." % command
     return 1
 
+def create_cfg_if_not_exist():
+    home = os.path.expanduser("~")
+    cfg_path = os.path.join(home, ".sx.cfg")
+    if not os.path.exists(cfg_path):
+        shutil.copyfile("@cfgdefault@", cfg_path)
+        print "Created SX config file:", cfg_path
+
 def main(argv):
     if len(argv) == 1:
         display_usage()
         return 1
     args = argv[1:]
-    if args[0] == "-c" or args[0] == "--config":
+    if args and (args[0] == "-c" or args[0] == "--config"):
         if len(args) < 3:
             display_usage()
             return 1
         use_cfg = args[1]
-    command = argv[1]
+        args = args[2:]
+        os.environ["SX_CFG"] = use_cfg
+        print "Using config file:", use_cfg
+    else:
+        create_cfg_if_not_exist()
+    if not args:
+        display_usage()
+        return 1
+    command = args[0]
     # args as one string we can pass to the sx sub-command
-    args = argv[2:]
+    args = args[2:]
     if command == "help" or command == "--help" or command == "-h":
         if not args:
             display_usage()

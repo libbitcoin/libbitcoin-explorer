@@ -17,11 +17,16 @@ bin_SCRIPTS = sx
 CLEANFILES = $(bin_SCRIPTS)
 EXTRADIST = sx.py
 
-do_subst = sed -e "s,[@]corebindir[@],$(corebindir),g"
+cfgdefault = ${pkgdatadir}/sx.cfg
+
+do_subst_corebindir = sed -e "s,[@]corebindir[@],$(corebindir),g"
+do_subst_cfgdefault = sed -e "s,[@]cfgdefault[@],$(cfgdefault),g"
 
 sx: sx.py Makefile
-	$(do_subst) < $(srcdir)/sx.py > sx
+	$(do_subst_corebindir) < $(srcdir)/sx.py > sx_1
+	$(do_subst_cfgdefault) < sx_1 > sx
 	chmod +x sx
+	rm sx_1
 
 if HAVE_OBELISK
 corebin_PROGRAMS += \

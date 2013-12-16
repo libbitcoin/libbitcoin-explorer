@@ -35,6 +35,10 @@ void get_value(const libconfig::Setting& root, config_map_type& config,
 void load_config(config_map_type& config)
 {
     path conf_path = home_directory() / ".sx.cfg";
+    // Check for env variable config to override default path.
+    char* env_path = getenv("SX_CFG");
+    if (env_path)
+        conf_path = env_path;
     libconfig::Config cfg;
     // Ignore error if unable to read config file.
     try
@@ -45,6 +49,6 @@ void load_config(config_map_type& config)
     catch (const libconfig::ParseException&) {}
     // Read off values
     const libconfig::Setting& root = cfg.getRoot();
-    get_value<std::string>(root, config, "service", "tcp://46.4.92.107:9091");
+    get_value<std::string>(root, config, "service", "tcp://37.139.11.99:9091");
 }
 
