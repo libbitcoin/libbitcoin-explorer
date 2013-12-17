@@ -25,7 +25,7 @@ Ubuntu/Debian
 The simplest way to install sx, is to use the `install-sx.sh` bash script.
 ::
 
-    $ wget http://sx.dyne.org/install-sx.sh
+    $ wget https://github.com/spesmilo/sx/raw/master/install-sx.sh
     $ sudo bash ./install-sx.sh
 
 sx should now be installed.
