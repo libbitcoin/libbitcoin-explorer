@@ -784,7 +784,7 @@ def main(argv):
         return 1
     command = args[0]
     # args as one string we can pass to the sx sub-command
-    args = args[2:]
+    args = args[1:]
     if command == "help" or command == "--help" or command == "-h":
         if not args:
             display_usage()
