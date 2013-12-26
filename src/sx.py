@@ -774,6 +774,10 @@ def main(argv):
             display_usage()
             return 1
         use_cfg = args[1]
+        if not os.path.isfile(use_cfg):
+            print >> sys.stderr, \
+                "sx: config file '%s' doesn't exist!" % use_cfg
+            return 2
         args = args[2:]
         os.environ["SX_CFG"] = use_cfg
         #print "Using config file:", use_cfg
