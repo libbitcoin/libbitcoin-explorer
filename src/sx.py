@@ -776,7 +776,7 @@ def main(argv):
         use_cfg = args[1]
         args = args[2:]
         os.environ["SX_CFG"] = use_cfg
-        print "Using config file:", use_cfg
+        #print "Using config file:", use_cfg
     else:
         create_cfg_if_not_exist()
     if not args:
