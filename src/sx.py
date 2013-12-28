@@ -214,7 +214,7 @@ Convert from hex to base58check.\
 
 "ob-broadcast-tx": (
 "BLOCKCHAIN UPDATES",
-"Broadcast tx to obelisk server.",
+"Send tx to obelisk server.",
 
 """\
 Usage: sx ob-broadcast-tx FILENAME
@@ -227,7 +227,7 @@ Broadcast the transaction to an obelisk server for the network.
 
 "broadcast-tx": (
 "BLOCKCHAIN UPDATES",
-"Broadcast tx to network.",
+"Send tx to bitcoin network.",
 
 """\
 Usage: sx broadcast-tx FILENAME
@@ -239,8 +239,8 @@ Broadcast the transaction to the Bitcoin network.
 ),
 
 "bci-pushtx": (
-"BLOCKCHAIN UPDATES (blockchain.info)",
-"Push tx to blockchain.info/pushtx.",
+"BLOCKCHAIN UPDATES",
+"Send tx to blockchain.info/pushtx.",
 
 """\
 Usage: sx bci-push-tx FILENAME
