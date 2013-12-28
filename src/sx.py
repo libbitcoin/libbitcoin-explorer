@@ -29,7 +29,7 @@ Convert Satoshis into Bitcoins.\
 ),
 
 "showscript": (
-"BLOCKCHAIN QUERIES",
+"TRANSACTION PARSING",
 "Show the details of a raw script.",
 
 """\
@@ -57,7 +57,7 @@ EXAMPLE:
 ),
 
 "rawscript": (
-"UNSIGNED TRANSACTIONS",
+"CREATE TRANSACTIONS",
 "Create the raw hex representation from a script.",
 
 """\
@@ -461,7 +461,7 @@ Get the pubkey of an address if available\
 ),
 
 "mktx": (
-"UNSIGNED TRANSACTIONS",
+"CREATE TRANSACTIONS",
 "Create an unsigned tx.",
 
 """\
@@ -539,7 +539,7 @@ Send transaction to one Bitcoin node on localhost port 4009:
 ),
 
 "showblkhead": (
-"BLOCKCHAIN QUERIES",
+"MISC",
 "Show the details of a block header.",
 
 """\
@@ -656,7 +656,7 @@ Make a private key from a brainwallet.\
 ),
 
 "set-input": (
-"UNSIGNED TRANSACTIONS",
+"CREATE TRANSACTIONS",
 "Set a transaction input.",
 
 """\
@@ -665,7 +665,7 @@ Set a transaction input.\
 """),
 
 "sign-input": (
-"SIGNED TRANSACTIONS",
+"CREATE TRANSACTIONS",
 "Sign a transaction input.",
 
 """\
