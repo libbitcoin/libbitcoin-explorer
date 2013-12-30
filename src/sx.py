@@ -637,7 +637,7 @@ Make a private key from a brainwallet.\
 "Set a transaction input.",
 
 """\
-Usage: sx sign-input FILENAME INDEX PREVOUT_SCRIPT
+Usage: sx set-input FILENAME INDEX PREVOUT_SCRIPT
 Set a transaction input.\
 """),
 
