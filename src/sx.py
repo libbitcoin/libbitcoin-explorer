@@ -29,7 +29,7 @@ Convert Satoshis into Bitcoins.\
 ),
 
 "showscript": (
-"BLOCKCHAIN QUERIES",
+"TRANSACTION PARSING",
 "Show the details of a raw script.",
 
 """\
@@ -39,22 +39,36 @@ Show the details of a raw script.\
 ),
 
 "scripthash": (
-"UNSIGNED TRANSACTIONS",
+"MULTISIG ADDRESSES",
 "Create BIP 16 script hash address from raw script hex.",
 
 """\
 Usage: sx scripthash
-Create BIP 16 script hash address from raw script hex (from STDIN).\
+Create BIP 16 script hash address from raw script hex (from STDIN).
+
+EXAMPLE:
+
+  # generate an address for 2-of-3 multisig transactions
+  for n in 1 2 3; do echo 'b220b5bd2909df1d74b71c9e664233bf' | sx genpriv $n > key${n}; done
+  sx rawscript 2 [ $(cat key1 | sx pubkey) ] [ $(cat key2 | sx pubkey) ] [ $(cat key3 | sx pubkey) ] 3 checkmultisig | sx scripthash
+  33opBmv3oJTXu6rxtzsr571SL2Srtw9Cg8
+
 """
 ),
 
 "rawscript": (
-"UNSIGNED TRANSACTIONS",
+"CREATE TRANSACTIONS",
 "Create the raw hex representation from a script.",
 
 """\
 Usage: sx rawscript [ARGS]...
 Create the raw hex representation from a script.\
+
+EXAMPLE:
+
+  $ sx rawscript dup # translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wik
+  76
+
 """
 ),
 
@@ -99,12 +113,12 @@ Validate an address.\
 ),
 
 "validtx": (
-"VALIDATE",
+"BLOCKCHAIN QUERIES",
 "Validate a transaction.",
 
 """\
 Usage: sx validtx FILENAME
-Validate a transaction.\
+Query blockchain whether transaction has been confirmed.\
 """
 ),
 
@@ -200,7 +214,7 @@ Convert from hex to base58check.\
 
 "ob-broadcast-tx": (
 "BLOCKCHAIN UPDATES",
-"Broadcast tx to obelisk server.",
+"Send tx to obelisk server.",
 
 """\
 Usage: sx ob-broadcast-tx FILENAME
@@ -213,7 +227,7 @@ Broadcast the transaction to an obelisk server for the network.
 
 "broadcast-tx": (
 "BLOCKCHAIN UPDATES",
-"Broadcast tx to network.",
+"Send tx to bitcoin network.",
 
 """\
 Usage: sx broadcast-tx FILENAME
@@ -226,7 +240,7 @@ Broadcast the transaction to the Bitcoin network.
 
 "bci-pushtx": (
 "BLOCKCHAIN UPDATES",
-"Push tx to blockchain.info/pushtx.",
+"Send tx to blockchain.info/pushtx.",
 
 """\
 Usage: sx bci-push-tx FILENAME
@@ -238,7 +252,7 @@ Push tx to blockchain.info/pushtx.
 ),
 
 "blke-fetch-transaction": (
-"BLOCKCHAIN UPDATES",
+"BLOCKCHAIN QUERIES (blockexplorer.com)",
 "Fetches a transaction from blockexplorer.com",
 
 """\
@@ -337,7 +351,7 @@ the load balancer backend.\
 ),
 
 "bci-fetch-last-height": (
-"BLOCKCHAIN QUERIES",
+"BLOCKCHAIN QUERIES (blockchain.info)",
 "Fetch the last block height using blockchain.info.",
 
 """\
@@ -349,13 +363,17 @@ Fetch the last block height using blockchain.info.\
 
 "fetch-transaction": (
 "BLOCKCHAIN QUERIES",
-"Fetch a raw transaction.",
+"Fetch a raw transaction using a network connection to make requests against the obelisk load balancer backend.",
 
 """\
+Fetch a raw transaction using a network connection to make requests against the obelisk load balancer backend.
+
 Usage: sx fetch-transaction HASH
 
-The fetch-transaction tool uses a network connection to make requests against
-the load balancer backend.\
+EXAMPLE: 
+
+  $ sx fetch-transaction 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4 # fetches raw data
+\
 """
 ),
 
@@ -373,7 +391,7 @@ against the load balancer backend.\
 
 "balance": (
 "BLOCKCHAIN QUERIES",
-"Show balance of a Bitcoin address.",
+"Show balance of a Bitcoin address in satoshis.",
 
 """\
 Usage: sx balance ADDRESS
@@ -411,7 +429,7 @@ Example:
 ),
 
 "bci-history": (
-"BLOCKCHAIN QUERIES",
+"BLOCKCHAIN QUERIES (blockchain.info)",
 "Get list of output points, values, and their spends\n" +
 SPACING + "from blockchain.info",
 
@@ -443,7 +461,7 @@ Get the pubkey of an address if available\
 ),
 
 "mktx": (
-"UNSIGNED TRANSACTIONS",
+"CREATE TRANSACTIONS",
 "Create an unsigned tx.",
 
 """\
@@ -524,7 +542,7 @@ Send transaction to one Bitcoin node on localhost port 4009:
 ),
 
 "showblkhead": (
-"BLOCKCHAIN QUERIES",
+"MISC",
 "Show the details of a block header.",
 
 """\
@@ -549,7 +567,7 @@ Usage: sx showblkhead FILENAME
 ),
 
 "showtx": (
-"BLOCKCHAIN QUERIES",
+"TRANSACTION PARSING",
 "Show the details of a transaction.",
 
 """\
@@ -561,18 +579,23 @@ Usage: sx showtx [-j] FILENAME
 
 Example:
 
-  $ sx showtx txfile.tx
-  hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0
-  version: 1  locktime: 0
+  $ sx fetch-transaction cd484f683bc99c94948613a7f7254880e9c98cd74f2760a2d2c4e372fda1bc6a | sx showtx
+  hash: cd484f683bc99c94948613a7f7254880e9c98cd74f2760a2d2c4e372fda1bc6a
+  version: 1
+  locktime: 0
   Input:
-    previous output:
-  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0
-    script:   sequence: 4294967295
+    previous output: f97367c5dc9e521a4c541327cbff69d118e35a2d0b67f91eb7771741a6374b20:0
+    script: [ 3046022100f63b1109e1b04c0a4b5230e6f6c75f5e2a10c16d022cdf93de9b3cc946e6e24a022100ae3da40f05504521f2f3557e736a2d1724d6d1d8c18b66a64990bf1afee78dba01 ] [ 028a2adb719bbf7e9cf0cb868d4f30b10551f2a4402eb2ece9b177b49e68e90511 ]
+    sequence: 4294967295
+    address: 1NYMePixLjAATLaz55vN7FfTLUfFB23Tt
   Output:
-    value: 90000
-    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify
-  checksig
-    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe
+    value: 2676400
+    script: dup hash160 [ 6ff00bd374abb3a3f19d1576bb36520b2cb15e2d ] equalverify checksig
+    address: 1BCsZziw8Q1sMhxr2DjAR7Rmt1qQvYwXSU
+  Output:
+    value: 1000000
+    script: hash160 [ 0db1635fe975792a9a7b6f2d4061b730478dc6b9 ] equal
+    address: 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc
 \
 """
 ),
@@ -636,7 +659,7 @@ Make a private key from a brainwallet.\
 ),
 
 "set-input": (
-"UNSIGNED TRANSACTIONS",
+"CREATE TRANSACTIONS",
 "Set a transaction input.",
 
 """\
@@ -645,7 +668,7 @@ Set a transaction input.\
 """),
 
 "sign-input": (
-"SIGNED TRANSACTIONS",
+"CREATE TRANSACTIONS",
 "Sign a transaction input.",
 
 """\
