@@ -51,5 +51,5 @@ My Bitcoin address (from http://libbitcoin.dyne.org/):
 
     1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY
 
-Email: amir@unsystem.net
+Email: genjix@riseup.net
 
