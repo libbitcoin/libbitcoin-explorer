@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 {
     if (argc != 5)
     {
-        std::cerr << "Usage: sign-input FILENAME N SCRIPT_CODE SIGNATURE" << std::endl;
+        std::cerr << "Usage: validsig FILENAME N SCRIPT_CODE SIGNATURE" << std::endl;
         return -1;
     }
     const std::string filename = argv[1];
@@ -38,13 +38,13 @@ int main(int argc, char** argv)
     }
     catch (const boost::bad_lexical_cast&)
     {
-        std::cerr << "sign-input: Bad N provided." << std::endl;
+        std::cerr << "validsig: Bad N provided." << std::endl;
         return -1;
     }
     const script_type script_code = parse_script(decode_hex(argv[3]));
     if (input_index >= tx.inputs.size())
     {
-        std::cerr << "sign-input: N out of range." << std::endl;
+        std::cerr << "validsig: N out of range." << std::endl;
         return -1;
     }
     const data_chunk signature = decode_hex(argv[4]);
