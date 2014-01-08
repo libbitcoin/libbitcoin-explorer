@@ -394,13 +394,20 @@ against the load balancer backend.\
 "Show balance of a Bitcoin address in satoshis.",
 
 """\
-Usage: sx balance ADDRESS
+Usage: sx balance [-j] ADDRESS1 [ADDRESS2...]
 
 The balance tool uses a network connection to make requests against the
 load balancer backend.
 
+  -j, --json                 Enable json parseable output.
+
+Example:
+
   $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx balance
-  100000
+  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+    Paid balance:    0
+    Pending balance: 0
+    Total received:  100000
 \
 """
 ),
@@ -412,7 +419,7 @@ SPACING + "address. grep can filter for just unspent outputs which can\n" +
 SPACING + "be fed into mktx.",
 
 """\
-Usage: sx history ADDRESS
+Usage: sx history [-j] ADDRESS1 [ADDRESS2...]
 
 The history tool uses a network connection to make requests against the
 load balancer backend.
@@ -422,8 +429,12 @@ load balancer backend.
 Example:
 
   $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history
-  Output Hash:Index                           Output Height   Value (Satoshis) Spend Hash:Index                Spend Height
-  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1  247683 100000      Unspent                                 230529504
+  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+    output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1
+    output_height: 247683
+    value:  100000
+    spend: b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0
+    spend_height: 247742
 \
 """
 ),
