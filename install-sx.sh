@@ -19,7 +19,7 @@ echo " [+] Welcome to S(pesmilo)X(changer)."
 echo
 sleep 0.3
 if [ "$#" = "1" ]; then
-    if [ "$1" = "/*" ]; then
+    if [[ "$1" = /* ]]; then
         #Absolute path
         INSTALL_PREFIX=$1
     elif [ "$1" = "--help" ]; then
