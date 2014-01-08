@@ -230,9 +230,9 @@ show_finish_install_info(){
     elif [ "$ROOT_INSTALL" = "0" ]; then
         echo
         echo " Add these lines to your ~/.bashrc"
-        echo "   export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib/"
-        echo "   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig/"
-        echo "   export PATH=\$PATH:$INSTALL_PREFIX/bin/"
+        echo "   export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib"
+        echo "   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig"
+        echo "   export PATH=\$PATH:$INSTALL_PREFIX/bin"
     fi
     echo 
     echo " To setup a obelisk node, you will need obworker and obbalancer daemons running."
