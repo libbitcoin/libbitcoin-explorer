@@ -7,9 +7,9 @@ using namespace bc;
 
 int main(int argc, char** argv)
 {
-    if (argc != 3)
+    if (argc != 4)
     {
-        std::cerr << "Usage: set-input FILENAME N" << std::endl;
+        std::cerr << "Usage: set-input FILENAME N SIGNATURE_AND_PUBKEY_SCRIPT" << std::endl;
         return -1;
     }
     const std::string filename = argv[1];
@@ -32,8 +32,8 @@ int main(int argc, char** argv)
         std::cerr << "set-input: N out of range." << std::endl;
         return -1;
     }
-    // Read script from STDIN.
-    std::string hex_script = read_stdin();
+
+    std::string hex_script = argv[3]; 
     script_type new_input_script = raw_data_script(decode_hex(hex_script));
     // Set input.
     tx.inputs[input_index].script = new_input_script;

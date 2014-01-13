@@ -684,8 +684,9 @@ Make a private key from a brainwallet.\
 "Set a transaction input.",
 
 """\
-Usage: sx set-input FILENAME INDEX PREVOUT_SCRIPT
-Set a transaction input.\
+Usage: sx set-input TXFILENAME INPUTINDEX SIGNATURE_AND_PUBKEY_SCRIPT
+Set a transaction input.
+See sx help sign-input for an example.\
 """),
 
 "sign-input": (
@@ -693,12 +694,15 @@ Set a transaction input.\
 "Sign a transaction input.",
 
 """\
-Usage: sx sign-input FILENAME INDEX
+Usage: cat secret.key | sx sign-input FILENAME INDEX PREVOUT_SCRIPT
 
 Sign a transaction input.
 
+
+
 Note how the input script in the following transaction is empty.
 
+  $ sx mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
   $ sx showtx txfile.tx
   hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0
   version: 1  locktime: 0
@@ -714,26 +718,36 @@ Note how the input script in the following transaction is empty.
 
 We will now sign the first input using our private key.
 
-  $ cat private.key | sx sign-input txfile.tx 0
-  $ sx showtx txfile.tx
-  hash: 4a8be467fb75f0f757649348dbb05762142236ec236ac9e55e4683d7083ffca2
-  version: 1  locktime: 0
+  $ echo '5KPFsatiYrJcvCSRrDbtx61822vZjeGGGx3wu38pQDHRF8eVJ8H' > private.key
+  $ DECODED_ADDR=$(cat private.key | sx addr | sx decode-addr)
+  $ PREVOUT_SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)
+  $ SIGNATURE=$(cat private.key | sx sign-input txfile.tx 0 $PREVOUT_SCRIPT)
+  $ SIGNATURE_AND_PUBKEY_SCRIPT=$(sx rawscript [ $SIGNATURE ] [ $(cat private.key | sx pubkey) ])
+  $ sx set-input txfile.tx 0 $SIGNATURE_AND_PUBKEY_SCRIPT > txfile.tx.signed  # the first input has index 0
+
+Note how the input script in the following transaction is now filled.
+
+  $ cat txfile.tx.signed | sx showtx
+  hash: cc5650c69173e7607c095200f4ff36265f9fbb45e112b60cd467d696b2724488
+  version: 1
+  locktime: 0
   Input:
-    previous output:
-  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0
-    script: [
-  304602210083f8b5131f6399cdc01ed8368f6137f288f771e40834a94d65cee6b380fec873022100da5ed6d1d283f228752a88c2d6f629587b2a6fbc102202ae7c20f48af7c0533c01
-  ] [
-  04e3af7cdfaab6ba2f14001a7ea0a490f40c6ba43607be92a05111d2e8fc1eecf6fa2c248b3e25ddf7db081684f6f49dc83fd7b9b5a3a88a2e6b83b918f8972351
-  ]  sequence: 4294967295
-    address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+    previous output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0
+    script: [ 3045022100b778f7fb270b751491ba7e935a6978eaea2a44795b3f6636ea583939697b1ca102203ce47d3ecb0b7e832114e88e549fce476d4ea120ca1e60c508fe8083889a9cba01 ] [ 04c40cbd64c9c608df2c9730f49b0888c4db1c436e\
+  8b2b74aead6c6afbd10428c0adb73f303ae1682415253f4411777224ab477ad098347ddb7e0b94d49261e613 ]
+    sequence: 4294967295
+    address: 1MyKMeDsom7rYcp69KpbKn4DcyuvLMkLYJ
   Output:
     value: 90000
-    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify
-  checksig
+    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig
     address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe
 
-Now the input script is prepared, and the transaction is signed.\
+
+Now the input script is prepared, and the transaction is signed.
+
+It can be sent by  $ sx broadcast-tx txfile.tx.signed
+
+\
 """
 ),
 
