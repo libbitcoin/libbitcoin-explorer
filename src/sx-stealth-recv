@@ -2,6 +2,7 @@
 import obelisk
 import hashlib
 import sys
+import os
 
 def uncover_stealth(master_secret, nonce):
     S1 = obelisk.diffie_hellman(master_secret, nonce)
@@ -27,7 +28,8 @@ def main(argv):
     # Start the process...
     address, secret = uncover_stealth(secret, nonce)
     print "Address:", address
-    print "Secret:", secret
+    command = "echo %s | sx secret-to-wif" % secret
+    os.system("echo -n 'Private key: ' && %s" % command)
     return 0
 
 if __name__ == "__main__":
