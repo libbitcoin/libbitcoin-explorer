@@ -15,9 +15,9 @@
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="cheatsheet.svg"
-   inkscape:export-filename="/home/calafou/cheatsheet.png"
-   inkscape:export-xdpi="68.419998"
-   inkscape:export-ydpi="68.419998">
+   inkscape:export-filename="/home/genjix/src/sx/doc/cheatsheet.png"
+   inkscape:export-xdpi="70.639999"
+   inkscape:export-ydpi="70.639999">
   <defs
      id="defs4">
     <marker
@@ -217,8 +217,8 @@
      inkscape:current-layer="layer1"
      showgrid="false"
      showborder="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1113"
+     inkscape:window-width="1280"
+     inkscape:window-height="773"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1" />
@@ -264,7 +264,7 @@
            style="font-size:20px"
            y="715.89331"
            x="79.583611"
-           sodipodi:role="line">$ ./addr &lt; private.key</tspan><tspan
+           sodipodi:role="line">$ sx addr &lt; private.key</tspan><tspan
            id="tspan3032"
            style="font-size:20px"
            y="740.89331"
@@ -302,7 +302,7 @@
            style="font-size:20px"
            y="123.92819"
            x="948.50922"
-           sodipodi:role="line">$ ./mnemonic &lt; wallet.seed &gt; 12words</tspan><tspan
+           sodipodi:role="line">$ sx mnemonic &lt; wallet.seed &gt; 12words</tspan><tspan
            id="tspan3131"
            style="font-size:20px"
            y="148.92819"
@@ -369,7 +369,7 @@
              x="1077.3396"
              y="461.35269"
              style="font-size:20px"
-             id="tspan3073">$ ./newseed &gt; wallet.seed </tspan><tspan
+             id="tspan3073">$ sx newseed &gt; wallet.seed </tspan><tspan
              sodipodi:role="line"
              x="1077.3396"
              y="486.35269"
@@ -397,7 +397,7 @@
            style="font-size:20px"
            y="443.5632"
            x="948.6264"
-           sodipodi:role="line">$ ./genpriv 0 &lt; wallet.seed</tspan><tspan
+           sodipodi:role="line">$ sx genpriv 0 &lt; wallet.seed</tspan><tspan
            id="tspan4946"
            style="font-size:20px"
            y="468.5632"
@@ -414,7 +414,7 @@
            style="font-size:20px"
            y="507.5632"
            x="948.6264"
-           sodipodi:role="line">$ ./genpub 0 &lt; wallet.seed</tspan><tspan
+           sodipodi:role="line">$ sx genpub 0 &lt; wallet.seed</tspan><tspan
            id="tspan5398"
            style="font-size:20px"
            y="532.56323"
@@ -453,7 +453,7 @@
            y="466.47369"
            x="87.851227"
            id="tspan2991"
-           sodipodi:role="line">$ ./newkey &gt; private.key </tspan><tspan
+           sodipodi:role="line">$ sx newkey &gt; private.key </tspan><tspan
            style="font-size:20px"
            id="tspan2993"
            y="491.47369"
@@ -515,7 +515,7 @@
            y="815.89331"
            x="79.583611"
            sodipodi:role="line"
-           id="tspan5443">$ ./genpub 0 &lt; master_public_key </tspan><tspan
+           id="tspan5443">$ sx genpub 0 &lt; master_public_key </tspan><tspan
            style="font-size:20px"
            y="840.89331"
            x="79.583611"
