@@ -8,5 +8,12 @@ print "Secret:", secret.encode("hex")
 d = obelisk.string_to_number(secret)
 G = obelisk.generator_secp256k1
 Q = d * G
-print "Pubkey:", obelisk.get_point_pubkey(Q, True).encode("hex")
+pubkey = obelisk.get_point_pubkey(Q, True)
+prefix = "\x00\x00"
+assert len(prefix) == 2
+version = chr(9)
+address_data = version + pubkey + prefix
+assert len(address_data) == 1 + 33 + 2
+address = obelisk.EncodeBase58Check(address_data)
+print "Address:", address
 

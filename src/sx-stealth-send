@@ -18,10 +18,18 @@ def initiate_stealth(pubkey):
 
 def main(argv):
     if len(argv) != 2:
-        print >> sys.stderr, "sx stealth-send PUBKEY"
+        print >> sys.stderr, "sx stealth-send ADDRESS"
         return -1
-    pubkey = argv[1]
-    pubkey = pubkey.decode("hex")
+    address = argv[1]
+    address_data = obelisk.DecodeBase58Check(address)
+    if address_data is None or len(address_data) != 1 + 33 + 2:
+        print >> sys.stderr, "sx: Incorrect stealth address."
+        return -2
+    pubkey = address_data[1:34]
+    assert len(pubkey) == 33
+    if pubkey[0] != "\x02" and pubkey[0] != "\x03":
+        print >> sys.stderr, "sx: Invalid pubkey in stealth address."
+        return -2
     # Start the process...
     nonce, address = initiate_stealth(pubkey)
     print "Nonce:", nonce
