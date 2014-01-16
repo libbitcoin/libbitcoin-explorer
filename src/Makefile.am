@@ -14,6 +14,14 @@ corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-brainwallet sx-get-pubkey \
     sx-stealth-new sx-stealth-recv sx-stealth-send
 
+pyobeliskdir = ${libdir}/sx-core/obelisk
+pyobelisk_SCRIPTS = \
+    obelisk/bitcoin.py obelisk/client.py obelisk/config.py \
+    obelisk/deserialize.py obelisk/error_code.py obelisk/__init__.py \
+    obelisk/models.py obelisk/numbertheory.py obelisk/serialize.py \
+    obelisk/transaction.py obelisk/util.py obelisk/zmqbase.py \
+    obelisk/zmq_fallback.py
+
 bin_SCRIPTS = sx
 CLEANFILES = $(bin_SCRIPTS)
 EXTRADIST = sx.py
