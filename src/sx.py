@@ -493,6 +493,16 @@ The VALUE field is in Satoshis.\
 """
 ),
 
+"secret-to-wif": (
+"STEALTH",
+"Convert a secret exponent value to Wallet. Import. Format.",
+
+"""\
+Usage: echo SECRET | sx secret-to-wif
+\
+"""
+),
+
 "mpk": (
 "DETERMINISTIC KEYS AND ADDRESSES",
 "Extract a master public key from a deterministic wallet seed.",
@@ -753,6 +763,39 @@ stumble time cookie" | sx mnemonic
 Usage: sx watchtx [TXHASH]...
 
 Watch transactions from the network searching for a certain hash.\
+"""
+),
+
+"stealth-new": (
+"STEALTH",
+"Generate a new master stealth secret.",
+
+"""\
+Usage: sx stealth-new
+
+Generate a new stealth secret.\
+"""
+),
+
+"stealth-recv": (
+"STEALTH",
+"Regenerate the secret from your master secret and provided nonce.",
+
+"""\
+Usage: sx stealth-recv SECRET NONCE
+
+Regenerate the secret from your master secret and provided nonce.\
+"""
+),
+
+"stealth-send": (
+"STEALTH",
+"Generate a new sending address and a stealth nonce.",
+
+"""\
+Usage: sx stealth-send PUBKEY
+
+Generate a new sending address and a stealth nonce.\
 """
 ),
 

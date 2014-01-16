@@ -7,11 +7,12 @@ corebin_PROGRAMS = \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
     sx-encode-addr sx-genpub sx-showblkhead sx-validsig sx-monitor \
     sx-validaddr sx-base58-encode sx-base58-decode sx-wrap sx-unwrap \
-    sx-ripemd-hash sx-initchain
+    sx-ripemd-hash sx-initchain sx-secret-to-wif
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-bci-pushtx sx-base58check-encode \
 	sx-base58check-decode sx-embed-addr sx-blke-fetch-transaction \
-	sx-brainwallet sx-get-pubkey
+	sx-brainwallet sx-get-pubkey \
+    sx-stealth-new sx-stealth-recv sx-stealth-send
 
 bin_SCRIPTS = sx
 CLEANFILES = $(bin_SCRIPTS)
@@ -93,6 +94,9 @@ sx_validsig_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_mktx_SOURCES = mktx.cpp
 sx_mktx_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+
+sx_secret_to_wif_SOURCES = secret-to-wif.cpp
+sx_secret_to_wif_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_mpk_SOURCES = mpk.cpp
 sx_mpk_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}

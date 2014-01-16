@@ -1,0 +1,33 @@
+#!/usr/bin/python
+import obelisk
+import hashlib
+import sys
+
+def initiate_stealth(pubkey):
+    encode_key = obelisk.EllipticCurveKey()
+    encode_key.new_key_pair()
+    S1 = obelisk.diffie_hellman(encode_key.secret, pubkey)
+    # Start the second stage.
+    c = hashlib.sha256(S1).digest()
+    nonce = encode_key.public_key
+    # Now generate address
+    point = obelisk.point_add(pubkey, c)
+    addr_pubkey = obelisk.get_point_pubkey(point, True)
+    address = obelisk.public_key_to_bc_address(addr_pubkey)
+    return nonce.encode("hex"), address
+
+def main(argv):
+    if len(argv) != 2:
+        print >> sys.stderr, "sx stealth-send PUBKEY"
+        return -1
+    pubkey = argv[1]
+    pubkey = pubkey.decode("hex")
+    # Start the process...
+    nonce, address = initiate_stealth(pubkey)
+    print "Nonce:", nonce
+    print "Address:", address
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))
+

@@ -1,0 +1,12 @@
+#!/usr/bin/python
+import os
+import obelisk
+
+secret = os.urandom(32)
+print "Secret:", secret.encode("hex")
+
+d = obelisk.string_to_number(secret)
+G = obelisk.generator_secp256k1
+Q = d * G
+print "Pubkey:", obelisk.get_point_pubkey(Q, True).encode("hex")
+
