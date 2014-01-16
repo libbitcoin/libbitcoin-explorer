@@ -111,7 +111,7 @@ int main(int argc, char** argv)
 {
     if (argc != 2 && argc != 3)
     {
-        std::cerr << "Usage: broadcast-tx FILENAME [NODE COUNT]" << std::endl;
+        std::cerr << "Usage: sx sendtx-p2p FILENAME [NODE COUNT]" << std::endl;
         return -1;
     }
     const std::string filename = argv[1];

@@ -5,7 +5,7 @@ using namespace bc;
 int main()
 {
     elliptic_curve_key key;
-    key.new_key_pair();
+    key.new_keypair();
     secret_parameter secret = key.secret();
     std::cout << libwallet::secret_to_wif(secret) << std::endl;
     return 0;

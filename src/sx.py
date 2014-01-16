@@ -212,33 +212,33 @@ Convert from hex to base58check.\
 """
 ),
 
-"ob-broadcast-tx": (
+"sendtx-obelisk": (
 "BLOCKCHAIN UPDATES",
 "Send tx to obelisk server.",
 
 """\
-Usage: sx ob-broadcast-tx FILENAME
+Usage: sx sendtx-obelisk FILENAME
 Broadcast the transaction to an obelisk server for the network.
 
-  $ sx ob-broadcast-tx txfile.tx
+  $ sx sendtx-obelisk txfile.tx
 \
 """
 ),
 
-"broadcast-tx": (
+"sendtx-p2p": (
 "BLOCKCHAIN UPDATES",
 "Send tx to bitcoin network.",
 
 """\
-Usage: sx broadcast-tx FILENAME
+Usage: sx sendtx-p2p FILENAME
 Broadcast the transaction to the Bitcoin network.
 
-  $ sx broadcast-tx txfile.tx
+  $ sx sendtx-p2p txfile.tx
 \
 """
 ),
 
-"bci-pushtx": (
+"sendtx-bci": (
 "BLOCKCHAIN UPDATES",
 "Send tx to blockchain.info/pushtx.",
 
@@ -246,7 +246,7 @@ Broadcast the transaction to the Bitcoin network.
 Usage: sx bci-push-tx FILENAME
 Push tx to blockchain.info/pushtx.
 
-  $ sx bci-pushtx txfile.tx
+  $ sx sendtx-bci txfile.tx
 \
 """
 ),
@@ -546,18 +546,18 @@ Usage: sx newseed
 """
 ),
 
-"sendtx": (
+"sendtx-node": (
 "BLOCKCHAIN UPDATES",
 "Send transaction to a single node.",
 
 """\
-Usage: sx sendtx FILENAME [HOST] [PORT]
+Usage: sx sendtx-node FILENAME [HOST] [PORT]
 
 HOST and PORT default to localhost:8333.
 
 Send transaction to one Bitcoin node on localhost port 4009:
 
-  $ sx sendtx txfile.tx localhost 4009
+  $ sx sendtx-node txfile.tx localhost 4009
 \
 """
 ),

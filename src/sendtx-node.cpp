@@ -55,7 +55,8 @@ int main(int argc, char** argv)
 {
     if (argc < 2 || argc > 4)
     {
-        std::cerr << "Usage: broadcast-tx FILENAME [HOST] [PORT]" << std::endl;
+        std::cerr << "Usage: sx sendtx-node FILENAME [HOST] [PORT]"
+            << std::endl;
         return -1;
     }
     const std::string filename = argv[1];

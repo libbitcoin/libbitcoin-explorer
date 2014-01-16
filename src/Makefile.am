@@ -2,14 +2,14 @@ AM_CPPFLAGS = ${libbitcoin_CFLAGS} ${libwallet_CFLAGS}
 
 corebindir = ${libdir}/sx-core
 corebin_PROGRAMS = \
-    sx-addr sx-broadcast-tx sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
-    sx-newseed sx-sendtx sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
+    sx-addr sx-sendtx-p2p sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
+    sx-newseed sx-sendtx-node sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
     sx-encode-addr sx-genpub sx-showblkhead sx-validsig sx-monitor \
     sx-validaddr sx-base58-encode sx-base58-decode sx-wrap sx-unwrap \
     sx-ripemd-hash sx-initchain sx-secret-to-wif
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
-	sx-get-utxo sx-bci-fetch-last-height sx-bci-pushtx sx-base58check-encode \
+	sx-get-utxo sx-bci-fetch-last-height sx-sendtx-bci sx-base58check-encode \
 	sx-base58check-decode sx-embed-addr sx-blke-fetch-transaction \
 	sx-brainwallet sx-get-pubkey \
     sx-stealth-new sx-stealth-recv sx-stealth-send
@@ -40,7 +40,7 @@ sx: sx.py Makefile
 if HAVE_OBELISK
 corebin_PROGRAMS += \
     sx-history sx-balance sx-fetch-block-header sx-fetch-transaction \
-    sx-fetch-last-height sx-validtx sx-ob-broadcast-tx sx-wallet \
+    sx-fetch-last-height sx-validtx sx-sendtx-obelisk sx-wallet \
     sx-fetch-transaction-index
 
 AM_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
@@ -88,8 +88,8 @@ sx_genpub_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 sx_addr_SOURCES = addr.cpp
 sx_addr_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
-sx_broadcast_tx_SOURCES = broadcast-tx.cpp
-sx_broadcast_tx_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+sx_sendtx_p2p_SOURCES = sendtx-p2p.cpp
+sx_sendtx_p2p_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_genpriv_SOURCES = genpriv.cpp
 sx_genpriv_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
@@ -115,8 +115,8 @@ sx_newkey_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 sx_newseed_SOURCES = newseed.cpp
 sx_newseed_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
-sx_sendtx_SOURCES = sendtx.cpp
-sx_sendtx_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+sx_sendtx_node_SOURCES = sendtx-node.cpp
+sx_sendtx_node_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_showblkhead_SOURCES = showblkhead.cpp
 sx_showblkhead_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
@@ -157,8 +157,8 @@ sx_fetch_block_header_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_
 sx_validtx_SOURCES = validtx.cpp config.cpp
 sx_validtx_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
 
-sx_ob_broadcast_tx_SOURCES = ob-broadcast-tx.cpp config.cpp
-sx_ob_broadcast_tx_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
+sx_sendtx_obelisk_SOURCES = sendtx-obelisk.cpp config.cpp
+sx_sendtx_obelisk_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
 
 sx_monitor_SOURCES = monitor.cpp config.cpp
 sx_monitor_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
