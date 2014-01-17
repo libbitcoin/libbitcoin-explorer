@@ -1,4 +1,4 @@
-doc_DATA = README INSTALL COPYING doc/cheatsheet.png
+doc_DATA = README.md INSTALL COPYING doc/cheatsheet.png
 
 pkgdata_SCRIPTS = install-sx.sh
 pkgdata_DATA = sx.cfg
