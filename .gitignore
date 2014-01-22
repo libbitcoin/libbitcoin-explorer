@@ -56,3 +56,7 @@ Makefile.in
 /src/sx-validtx
 /src/sx-wallet
 /src/sx-wrap
+/src/sx-secret-to-wif
+/src/sx-sendtx-node
+/src/sx-sendtx-p2p
+/src/sx-sendtx-obelisk
