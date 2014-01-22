@@ -289,6 +289,7 @@ SPACING + "seed or master public key.",
 """\
 Usage: sx genpub N [CHANGE]
 Generate public key from a wallet seed or master public key.
+The output is non-deterministic if any other input is used.
 
   $ cat wallet.seed | sx genpub 0
   040a053d0a42d58b7e34346daae9d40ce33fad5d65bbaa6c615a2b76447734b2c712b5d45de839b2e5e7ac00201cbea3d2d376cfcc7a3f3f508f1e6761f6c271bf
@@ -304,6 +305,7 @@ SPACING + "seed or master public key.",
 """\
 Usage: sx genaddr N [CHANGE]
 Generate Bitcoin addresses from a wallet seed or master public key.
+The output is non-deterministic if any other input is used.
 
   $ cat wallet.seed | sx genaddr 0
   1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
