@@ -134,11 +134,11 @@ Read private key from STDIN and output the public key.\
 
 "addr": (
 "LOOSE KEYS AND ADDRESSES",
-"See Bitcoin address of a private key.",
+"See Bitcoin address of a public or private key.",
 
 """\
 Usage: sx addr
-Read private key from STDIN and output Bitcoin address.\
+Read public or private key from STDIN and output Bitcoin address.\
 """
 ),
 
