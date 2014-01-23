@@ -10,7 +10,7 @@
 # <sudo bash install-sx.sh>
 #
 # To read help instructions run:
-# <sudo bash install-sx.sh --help>
+# <bash install-sx.sh --help>
 #
 #
 set -e
@@ -74,7 +74,7 @@ install_dependencies(){
         fi
     elif [ "$flavour_id" = "ubuntu" ]; then
         if [ "$ROOT_INSTALL" = 1 ]; then
-# Ubunte dependencies
+# Ubuntu dependencies
             U_DEPENDENCIES="git build-essential autoconf apt-utils libtool libboost1.49-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++8-dev libncurses5-dev"
             sleep 0.5
             apt-get -y install $U_DEPENDENCIES
@@ -113,7 +113,7 @@ install_libbitcoin(){
     fi
     cd $SRC_DIR/libbitcoin-git
     echo
-    echo " --> Beggining build process now...."
+    echo " --> Beginning build process now...."
     echo
     autoreconf -i
     ./configure --enable-leveldb --prefix $INSTALL_PREFIX
@@ -142,7 +142,7 @@ install_libwallet(){
     fi
     cd $SRC_DIR/libwallet-git
     echo
-    echo " --> Beggining build process now...."
+    echo " --> Beginning build process now...."
     echo
     autoreconf -i
     ./configure --prefix $INSTALL_PREFIX
@@ -165,13 +165,13 @@ install_obelisk(){
         git pull --rebase
     else
         echo
-        echo " --> Downloading obelisk..."
+        echo " --> Downloading Obelisk..."
         echo
         git clone https://github.com/spesmilo/obelisk.git obelisk-git
     fi
     cd $SRC_DIR/obelisk-git
     echo
-    echo " --> Beggining build process now..."
+    echo " --> Beginning build process now..."
     echo
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
@@ -202,7 +202,7 @@ install_sx(){
     fi
     cd $SRC_DIR/sx-git
     echo
-    echo " --> Beggining build process now...."
+    echo " --> Beginning build process now...."
     echo
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
@@ -235,7 +235,7 @@ show_finish_install_info(){
         echo "   export PATH=\$PATH:$INSTALL_PREFIX/bin"
     fi
     echo 
-    echo " To setup a obelisk node, you will need obworker and obbalancer daemons running."
+    echo " To setup a Obelisk node, you will need obworker and obbalancer daemons running."
     echo " Run <sudo bash $SRC_DIR/obelisk-git/scripts/setup.sh> to create, configure and start the daemons."
     echo
 }
