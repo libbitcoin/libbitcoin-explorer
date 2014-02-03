@@ -747,8 +747,6 @@ Note how the input script in the following transaction is now filled.
 
 Now the input script is prepared, and the transaction is signed.
 
-It can be sent by  $ sx broadcast-tx txfile.tx.signed
-
 \
 """
 ),

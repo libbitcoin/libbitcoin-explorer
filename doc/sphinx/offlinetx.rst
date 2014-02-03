@@ -89,10 +89,20 @@ Put ``txfile.tx`` on a USB stick, transport it to your online computer.
 Broadcast the final tx to the Bitcoin network.
 ::
 
-    $ sx broadcast-tx signed-tx
+    $ sx sendtx-p2p signed-tx
 
-Or to send it to one Bitcoin node (like a localhost one), use:
+Or send it to one Bitcoin node (like a localhost one).
 ::
 
-    $ sx sendtx signed-tx localhost 4009
+    $ sx sendtx-node signed-tx localhost 4009
+
+Or to send it through the ``blockchain.info/pushtx'' service.
+::
+
+    $ sx sendtx-bci signed-tx
+
+Or to send it via an obelisk server.
+::
+
+    $ sx sendtx-obelisk signed-tx
 
