@@ -21,7 +21,6 @@ Makefile.in
 /src/sx-balance
 /src/sx-base58-decode
 /src/sx-base58-encode
-/src/sx-broadcast-tx
 /src/sx-decode-addr
 /src/sx-encode-addr
 /src/sx-fetch-block-header
@@ -39,12 +38,10 @@ Makefile.in
 /src/sx-mpk
 /src/sx-newkey
 /src/sx-newseed
-/src/sx-ob-broadcast-tx
 /src/sx-pubkey
 /src/sx-rawscript
 /src/sx-ripemd-hash
 /src/sx-scripthash
-/src/sx-sendtx
 /src/sx-set-input
 /src/sx-showblkhead
 /src/sx-showscript
@@ -60,3 +57,4 @@ Makefile.in
 /src/sx-sendtx-node
 /src/sx-sendtx-p2p
 /src/sx-sendtx-obelisk
+/src/sx-sendtx-bci
