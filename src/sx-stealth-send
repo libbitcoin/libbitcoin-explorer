@@ -25,6 +25,9 @@ def main(argv):
     if address_data is None or len(address_data) != 1 + 33 + 5:
         print >> sys.stderr, "sx: Incorrect stealth address."
         return -2
+    if address_data[34] != "\x00":
+        print >> sys.stderr, "sx: prefix bits > 0 not currently supported."
+        return -2
     pubkey = address_data[1:34]
     assert len(pubkey) == 33
     if pubkey[0] != "\x02" and pubkey[0] != "\x03":
