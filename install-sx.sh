@@ -74,8 +74,16 @@ install_dependencies(){
         fi
     elif [ "$flavour_id" = "ubuntu" ]; then
         if [ "$ROOT_INSTALL" = 1 ]; then
-# Ubunte dependencies
-            U_DEPENDENCIES="git build-essential autoconf apt-utils libtool libboost1.49-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++8-dev libncurses5-dev"
+# Ubuntu dependencies
+            #some people have 1.53 installed, determine which and install -dev-all
+            for BOOST in libboost1.49 libboost1.53 ; do
+                dpkg -s "$BOOST-dev" >/dev/null 2>&1 && {
+                  echo "installing $BOOST-dev-all"
+                  apt-get install $BOOST-all-dev -y && break
+              }
+            done
+
+            U_DEPENDENCIES="git build-essential autoconf apt-utils libtool pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++8-dev libncurses5-dev"
             sleep 0.5
             apt-get -y install $U_DEPENDENCIES
         fi
