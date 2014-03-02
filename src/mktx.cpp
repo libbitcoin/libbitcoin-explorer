@@ -71,6 +71,12 @@ bool add_input(transaction_type& tx, const std::string& parameter)
     return true;
 }
 
+bool change_locktime(transaction_type& tx, const std::string& parameter)
+{
+    tx.locktime = atoi(parameter.c_str());
+    return true;
+}
+
 script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
 {
     script_type result;
@@ -183,6 +189,8 @@ bool modify(transaction_type& tx,
         return add_input(tx, parameter);
     else if (action == "-o" || action == "--output")
         return add_output(tx, parameter);
+    else if (action == "-l" || action == "--locktime")
+        return change_locktime(tx, parameter);
     std::cerr << "mktx: Action '" << action << "' doesn't exist." << std::endl;
     return false;
 }
