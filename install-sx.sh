@@ -91,9 +91,16 @@ install_dependencies(){
             sleep 0.5
             yum -y install $F_DEPENDENCIES
         fi
+    elif [ "$flavour_id" = "arch" ]; then
+        if [ "$ROOT_INSTALL" = 1 ]; then
+# Arch dependencies
+            A_DEPENDENCIES="gcc git autoconf libtool boost pkg-config curl openssl leveldb zeromq libconfig ncurses"
+            sleep 0.5
+            pacman -S --asdeps --needed --noconfirm $A_DEPENDENCIES
+        fi
     else
         echo
-        echo " [+] ERROR: No GNU/Linux flavour properly detected: $flavour_id" 1>&2
+        echo " [+] ERROR: GNU/Linux flavour not supported: $flavour_id" 1>&2
         echo 
         echo " Please, review the script."
         echo
