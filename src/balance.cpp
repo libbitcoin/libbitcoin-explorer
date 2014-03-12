@@ -145,7 +145,8 @@ int main(int argc, char** argv)
     }
     remaining_count = payaddrs.size();
     threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"],
+        config["client-certificate"], config["server-public-key"]);
     if (json_output)
         std::cout << "[" << std::endl;
     for (const payment_address& payaddr: payaddrs)

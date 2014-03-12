@@ -50,5 +50,7 @@ void load_config(config_map_type& config)
     // Read off values
     const libconfig::Setting& root = cfg.getRoot();
     get_value<std::string>(root, config, "service", "tcp://37.139.11.99:9091");
+    get_value<std::string>(root, config, "client-certificate", ".sx.cert");
+    get_value<std::string>(root, config, "server-public-key", "");
 }
 

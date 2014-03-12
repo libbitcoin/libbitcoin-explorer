@@ -42,7 +42,8 @@ int main(int argc, char** argv)
     config_map_type config;
     load_config(config);
     threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"],
+        config["client-certificate"], config["server-public-key"]);
     // Perform query.
     fullnode.blockchain.fetch_stealth(prefix,
         std::bind(stealth_fetched, _1, _2), from_height);

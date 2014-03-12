@@ -732,7 +732,8 @@ int main(int argc, char** argv)
     config_map_type config;
     load_config(config);
     bc::threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"],
+        config["client-certificate"], config["server-public-key"]);
     for (size_t i = 0; i < 60; ++i)
     {
         bc::payment_address payaddr = cycler.address(i, false);

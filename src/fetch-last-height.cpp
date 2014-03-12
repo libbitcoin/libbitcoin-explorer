@@ -24,7 +24,8 @@ int main()
     config_map_type config;
     load_config(config);
     threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"],
+        config["client-certificate"], config["server-public-key"]);
     fullnode.blockchain.fetch_last_height(height_fetched);
     while (!stopped)
     {
