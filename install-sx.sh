@@ -17,21 +17,18 @@ set -e
 echo
 echo " [+] Welcome to S(pesmilo)X(changer)."
 echo
-sleep 0.3
 if [ "$#" = "1" ]; then
     if [[ "$1" = /* ]]; then
         #Absolute path
         INSTALL_PREFIX=$1
     elif [ "$1" = "--help" ]; then
-        echo
         echo " [+] Install script help:"
-        echo " Requires sudo."
         echo " --> To execute this script type:"
         echo " <sudo bash install-sx.sh>"
         echo " --> To execute this script and install at a specific path type:"
-        echo " <sudo bash install-sx.sh PATH/...>"
+        echo " <bash install-sx.sh PATH/...>"
         echo " This script will install libbitcoin, libwallet, obelisk and sx tools."
-        echo " The standard path to the source instalation is /usr/local/src."
+        echo " The standard path for the installation is /usr/local/"
         echo " The stardard path for the conf files is /etc."
         echo
         exit
@@ -135,7 +132,7 @@ install_libbitcoin(){
     echo
     echo " o/ Libbitcoin now installed."
     echo
-    }
+}
 
 install_libwallet(){
     cd $SRC_DIR
@@ -164,7 +161,7 @@ install_libwallet(){
     echo
     echo " o/ Libwallet now installed."
     echo
-    }
+}
 
 install_obelisk(){
     cd $SRC_DIR
@@ -193,7 +190,7 @@ install_obelisk(){
     echo
     echo " o/ Obelisk now installed."
     echo
-    }
+}
 
 install_sx(){
     BIN_DIR=$INSTALL_PREFIX/bin
@@ -224,7 +221,7 @@ install_sx(){
     echo
     echo " o/ SX tools now installed."
     echo
-    }
+}
 
 show_finish_install_info(){
     echo " --> Installation finished!"
@@ -258,3 +255,4 @@ install_libwallet
 install_obelisk
 install_sx
 show_finish_install_info
+
