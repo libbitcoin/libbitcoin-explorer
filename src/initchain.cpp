@@ -1,8 +1,12 @@
 /*
   Create a new leveldb blockchain database.
 */
+#ifdef LEVELDB_ENABLED
+
 #include <future>
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
+
 using namespace bc;
 
 int main(int argc, char** argv)
@@ -52,4 +56,6 @@ int main(int argc, char** argv)
     chain.stop();
     return 0;
 }
+
+#endif
 

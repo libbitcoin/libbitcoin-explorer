@@ -1,3 +1,4 @@
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include "config.hpp"
@@ -67,7 +68,7 @@ int main(int argc, char** argv)
     while (true)
     {
         fullnode.update();
-        usleep(100000);
+        std::this_thread::sleep_for(std::chrono::seconds(100));
     }
     pool.stop();
     pool.join();

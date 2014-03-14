@@ -158,7 +158,7 @@ int main(int argc, char** argv)
     {
         prot.fetch_connection_count(
             std::bind(check_connection_count, _1, _2, node_count));
-        sleep(2);
+        std::this_thread::sleep_for(std::chrono::seconds(2));
     }
     auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);

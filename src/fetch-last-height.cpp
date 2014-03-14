@@ -29,7 +29,7 @@ int main()
     while (!stopped)
     {
         fullnode.update();
-        usleep(100000);
+        std::this_thread::sleep_for(std::chrono::seconds(100));
     }
     pool.stop();
     pool.join();

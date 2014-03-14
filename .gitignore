@@ -60,3 +60,5 @@ Makefile.in
 /src/sx-sendtx-node
 /src/sx-sendtx-p2p
 /src/sx-sendtx-obelisk
+/obj/
+/bin/
