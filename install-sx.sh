@@ -79,12 +79,12 @@ install_dependencies(){
             libboost-all-dev pkg-config libcurl4-openssl-dev \
             libleveldb-dev libconfig++-dev libncurses5-dev"
         if [ "$ROOT_INSTALL" = 1 ]; then
-            apt-get -y remove libzmq libzmq-dev
+            apt-get -y remove libzmq1 libzmq3 libzmq-dev libzmq3-dev
             apt-get -y install $D_DEPENDENCIES
         else
             echo "Run this command before continuing:"
             echo
-            echo "  sudo apt-get remove libzmq libzmq-dev"
+            echo "  sudo apt-get -y remove libzmq1 libzmq3 libzmq-dev libzmq3-dev"
             echo "  sudo apt-get -y install $(strip_spaces $D_DEPENDENCIES)"
             echo
             continue_or_exit
