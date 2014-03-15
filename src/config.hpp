@@ -1,5 +1,5 @@
-#ifndef OBELISK_WORKER_CONFIG_HPP
-#define OBELISK_WORKER_CONFIG_HPP
+#ifndef SX_CONFIG_HPP
+#define SX_CONFIG_HPP
 
 #include <map>
 #include <string>

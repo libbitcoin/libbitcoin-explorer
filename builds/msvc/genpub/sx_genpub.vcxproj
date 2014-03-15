@@ -11,20 +11,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
+    <ProjectGuid>{0FF69B22-D359-4C59-A45A-39F3B227A8B0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>sx</RootNamespace>
-    <ProjectName>sx</ProjectName>
+    <RootNamespace>sx_genpub</RootNamespace>
+    <ProjectName>sx_genpub</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -36,12 +36,20 @@
     <IntDir>$(ProjectDir)..\..\..\obj\$(PlatformName)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>$(ProjectName)</TargetName>
     <LinkIncremental>true</LinkIncremental>
+    <Linkage-openssl>
+    </Linkage-openssl>
+    <Linkage-zlib>
+    </Linkage-zlib>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\..\..\bin\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\..\..\obj\$(PlatformName)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>$(ProjectName)</TargetName>
     <LinkIncremental>false</LinkIncremental>
+    <Linkage-openssl>
+    </Linkage-openssl>
+    <Linkage-zlib>
+    </Linkage-zlib>
   </PropertyGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -58,14 +66,14 @@
       <MinimalRebuild>false</MinimalRebuild>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;xLEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\libbitcoin\include\;$(ProjectDir)\..\..\..\..\libwallet\include\;$(ProjectDir)\..\..\..\..\libconfig\include\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CONSOLE;_DEBUG;_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;xLEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\libbitcoin\include\;$(ProjectDir)\..\..\..\..\libwallet\include\;$(ProjectDir)\..\..\..\..\obelisk\include\;$(ProjectDir)\..\..\..\..\sx\include\;$(ProjectDir)\..\..\..\..\libconfig\include\;$(ProjectDir)\..\..\..\..\..\libzmq.4.0.3\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4290;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\..\libbitcoin\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\libwallet\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\libconfig\bin\$(PlatformName)\$(ConfigurationName)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\..\libbitcoin\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\libwallet\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\libconfig\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\sx\bin\$(PlatformName)\$(ConfigurationName)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies);libwallet.lib;libbitcoin.lib;libconfig.lib;sx.lib</AdditionalDependencies>
       <DelayLoadDLLs>
       </DelayLoadDLLs>
@@ -79,8 +87,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;BITCOIN_DISABLE_ASSERTS;xLEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\libbitcoin\include\;$(ProjectDir)\..\..\..\..\libwallet\include\;$(ProjectDir)\..\..\..\..\libconfig\include\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CONSOLE;_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;BITCOIN_DISABLE_ASSERTS;xLEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\libbitcoin\include\;$(ProjectDir)\..\..\..\..\libwallet\include\;$(ProjectDir)\..\..\..\..\obelisk\include\;$(ProjectDir)\..\..\..\..\sx\include\;$(ProjectDir)\..\..\..\..\libconfig\include\;$(ProjectDir)\..\..\..\..\..\libzmq.4.0.3\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4290;4275</DisableSpecificWarnings>
     </ClCompile>
@@ -88,31 +96,43 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\..\libbitcoin\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\libwallet\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\libconfig\bin\$(PlatformName)\$(ConfigurationName)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\..\libbitcoin\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\libwallet\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\libconfig\bin\$(PlatformName)\$(ConfigurationName)\;..\..\..\..\sx\bin\$(PlatformName)\$(ConfigurationName)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies);libwallet.lib;libbitcoin.lib;libconfig.lib;sx.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\genpub.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\src\config.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\src\config.hpp" />
-    <ClInclude Include="..\..\..\src\util.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props" Condition="Exists('..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props')" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="..\..\..\..\..\nuget\zlib.redist.1.2.8.6\build\native\zlib.redist.targets" Condition="Exists('..\..\..\..\..\nuget\zlib.redist.1.2.8.6\build\native\zlib.redist.targets')" />
+    <Import Project="..\..\..\..\..\nuget\zlib.1.2.8.6\build\native\zlib.targets" Condition="Exists('..\..\..\..\..\nuget\zlib.1.2.8.6\build\native\zlib.targets')" />
+    <Import Project="..\..\..\..\..\nuget\openssl.redist.1.0.1.24\build\native\openssl.redist.targets" Condition="Exists('..\..\..\..\..\nuget\openssl.redist.1.0.1.24\build\native\openssl.redist.targets')" />
+    <Import Project="..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.targets" Condition="Exists('..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.targets')" />
     <Import Project="..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets')" />
     <Import Project="..\..\..\..\..\nuget\boost_filesystem-vc120.1.55.0.16\build\native\boost_filesystem-vc120.targets" Condition="Exists('..\..\..\..\..\nuget\boost_filesystem-vc120.1.55.0.16\build\native\boost_filesystem-vc120.targets')" />
+    <Import Project="..\..\..\..\..\nuget\boost_system-vc120.1.55.0.16\build\native\boost_system-vc120.targets" Condition="Exists('..\..\..\..\..\nuget\boost_system-vc120.1.55.0.16\build\native\boost_system-vc120.targets')" />
+    <Import Project="..\..\..\..\..\nuget\boost_date_time-vc120.1.55.0.16\build\native\boost_date_time-vc120.targets" Condition="Exists('..\..\..\..\..\nuget\boost_date_time-vc120.1.55.0.16\build\native\boost_date_time-vc120.targets')" />
+    <Import Project="..\..\..\..\..\nuget\boost_regex-vc120.1.55.0.16\build\native\boost_regex-vc120.targets" Condition="Exists('..\..\..\..\..\nuget\boost_regex-vc120.1.55.0.16\build\native\boost_regex-vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\..\nuget\zlib.redist.1.2.8.6\build\native\zlib.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\zlib.redist.1.2.8.6\build\native\zlib.redist.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\zlib.1.2.8.6\build\native\zlib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\zlib.1.2.8.6\build\native\zlib.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\openssl.redist.1.0.1.24\build\native\openssl.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\openssl.redist.1.0.1.24\build\native\openssl.redist.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\nuget\boost_filesystem-vc120.1.55.0.16\build\native\boost_filesystem-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\boost_filesystem-vc120.1.55.0.16\build\native\boost_filesystem-vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\boost_system-vc120.1.55.0.16\build\native\boost_system-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\boost_system-vc120.1.55.0.16\build\native\boost_system-vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\boost_date_time-vc120.1.55.0.16\build\native\boost_date_time-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\boost_date_time-vc120.1.55.0.16\build\native\boost_date_time-vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\boost_regex-vc120.1.55.0.16\build\native\boost_regex-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\boost_regex-vc120.1.55.0.16\build\native\boost_regex-vc120.targets'))" />
   </Target>
 </Project>
