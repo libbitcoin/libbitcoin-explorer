@@ -47,53 +47,97 @@ elif [ `id -u` = "0" ]; then
     ROOT_INSTALL=1
 else
     echo
-    echo "[+] ERROR: This script must be run as root." 1>&2
+    echo "[+] ERROR: This script must be run as root or be provided an install prefix." 1>&2
     echo
     echo "<sudo bash install-sx.sh>"
+    echo "<bash install-sx.sh PATH/...>"
     echo
     exit
 fi
 SRC_DIR=$INSTALL_PREFIX/src
-PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
+export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
 mkdir -p $SRC_DIR
 mkdir -p $PKG_CONFIG_PATH
 #
+strip_spaces(){
+    echo $* | awk '$1=$1'
+}
+continue_or_exit(){
+    read -p "Continue installation? [y/N] " -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
+}
+
 install_dependencies(){
     flavour_id=`cat /etc/*-release | egrep -i "^ID=" | cut -f 2 -d "="`
     echo " Flavour: $flavour_id."
     echo
     if [ "$flavour_id" = "debian" ]; then
+        D_DEPENDENCIES="\
+            git build-essential autoconf apt-utils libtool \
+            libboost-all-dev pkg-config libcurl4-openssl-dev \
+            libleveldb-dev libconfig++-dev libncurses5-dev"
         if [ "$ROOT_INSTALL" = 1 ]; then
-# Debian dependencies
-            D_DEPENDENCIES="git build-essential autoconf apt-utils libtool libboost-all-dev pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++-dev libncurses5-dev"
-            sleep 0.5
+            apt-get -y remove libzmq libzmq-dev
             apt-get -y install $D_DEPENDENCIES
+        else
+            echo "Run this command before continuing:"
+            echo
+            echo "  sudo apt-get remove libzmq libzmq-dev"
+            echo "  sudo apt-get -y install $(strip_spaces $D_DEPENDENCIES)"
+            echo
+            continue_or_exit
         fi
     elif [ "$flavour_id" = "ubuntu" ]; then
+        U_DEPENDENCIES="\
+            git build-essential autoconf apt-utils libtool \
+            pkg-config libcurl4-openssl-dev libleveldb-dev \
+            libconfig++8-dev libncurses5-dev libboost$U_BOOST-all-dev"
         if [ "$ROOT_INSTALL" = 1 ]; then
-# Ubuntu dependencies (some people have libboost1.53-dev installed, determine which is installed rather than error out.  Defaults onto 1.49)
+            apt-get -y remove libzmq libzmq-dev
+            # Ubuntu dependencies (some people have libboost1.53-dev installed,
+            # mine which is installed rather than error out.  Defaults onto 1.49)
             for BOOST_VER in 1.49 1.53 ; do
                 dpkg -s "libboost$BOOST_VER-dev" >/dev/null 2>&1 && U_BOOST=$BOOST_VER
             done
             [[  $U_BOOST && ${U_BOOST-x} ]] && echo "Found libboost $U_BOOST" || export U_BOOST=1.49 ; echo "Defaulting to libboost $U_BOOST"
 
-            U_DEPENDENCIES="git build-essential autoconf apt-utils libtool pkg-config libcurl4-openssl-dev libleveldb-dev libzmq-dev libconfig++8-dev libncurses5-dev libboost$U_BOOST-all-dev"
-            sleep 0.5
             apt-get -y install $U_DEPENDENCIES
+        else
+            echo "Run this command before continuing:"
+            echo
+            echo "  sudo apt-get remove libzmq libzmq-dev"
+            echo "  sudo apt-get -y install $(strip_spaces $U_DEPENDENCIES)"
+            echo
+            continue_or_exit
         fi
     elif [ "$flavour_id" = "fedora" ]; then
+        F_DEPENDENCIES="\
+            gcc-c++ git autoconf libtool boost-devel pkgconfig \
+            libcurl-devel openssl-devel leveldb-devel libconfig \
+            libconfig-devel ncurses-devel"
         if [ "$ROOT_INSTALL" = 1 ]; then
-# Fedora dependencies
-            F_DEPENDENCIES="gcc-c++ git autoconf libtool boost-devel pkgconfig libcurl-devel openssl-devel leveldb-devel zeromq zeromq3 zeromq-devel libconfig libconfig-devel ncurses-devel"
-            sleep 0.5
             yum -y install $F_DEPENDENCIES
+        else
+            echo "Run this command before continuing:"
+            echo
+            echo "yum -y install $(strip_spaces $F_DEPENDENCIES)"
+            echo
+            continue_or_exit
         fi
     elif [ "$flavour_id" = "arch" ]; then
+        A_DEPENDENCIES="\
+            gcc git autoconf libtool boost pkg-config curl openssl \
+            leveldb libconfig ncurses"
         if [ "$ROOT_INSTALL" = 1 ]; then
-# Arch dependencies
-            A_DEPENDENCIES="gcc git autoconf libtool boost pkg-config curl openssl leveldb zeromq libconfig ncurses"
-            sleep 0.5
             pacman -S --asdeps --needed --noconfirm $A_DEPENDENCIES
+        else
+            echo "Run this command before continuing:"
+            echo
+            echo "pacman -S --asdeps --needed --noconfirm $(strip_spaces $A_DEPENDENCIES)"
+            echo
+            continue_or_exit
         fi
     else
         echo
@@ -105,24 +149,143 @@ install_dependencies(){
     fi
 }
 
+install_libsodium(){
+    cd $SRC_DIR
+    if [ -d "libsodium-git" ]; then
+        echo
+        echo " --> Updating libsodium..."
+        echo
+        cd libsodium-git
+        git remote set-url origin https://github.com/jedisct1/libsodium
+        git pull --rebase
+    else
+        echo
+        echo " --> Downloading libsodium from git..."
+        echo
+        git clone https://github.com/jedisct1/libsodium libsodium-git
+    fi
+    cd $SRC_DIR/libsodium-git
+    echo
+    echo " --> Beginning build process now...."
+    echo
+    ./autogen.sh
+    ./configure --prefix $INSTALL_PREFIX
+    make
+    make check
+    make install
+    $RUN_LDCONFIG
+    echo
+    echo " o/ libsodium now installed."
+    echo
+}
+
+install_libzmq(){
+    cd $SRC_DIR
+    if [ -d "libzmq-git" ]; then
+        echo
+        echo " --> Updating libzmq..."
+        echo
+        cd libzmq-git
+        git remote set-url origin https://github.com/zeromq/libzmq
+        git pull --rebase
+    else
+        echo
+        echo " --> Downloading libzmq from git..."
+        echo
+        git clone https://github.com/zeromq/libzmq libzmq-git
+    fi
+    cd $SRC_DIR/libzmq-git
+    echo
+    echo " --> Beginning build process now...."
+    echo
+    ./autogen.sh
+    ./configure --prefix $INSTALL_PREFIX --with-libsodium=$INSTALL_PREFIX
+    make
+    make check
+    make install
+    $RUN_LDCONFIG
+    echo
+    echo " o/ libzmq now installed."
+    echo
+}
+
+install_czmq(){
+    cd $SRC_DIR
+    if [ -d "czmq-git" ]; then
+        echo
+        echo " --> Updating czmq..."
+        echo
+        cd czmq-git
+        git remote set-url origin https://github.com/zeromq/czmq.git
+        git pull --rebase
+    else
+        echo
+        echo " --> Downloading czmq from git..."
+        echo
+        git clone https://github.com/zeromq/czmq czmq-git
+    fi
+    cd $SRC_DIR/czmq-git
+    echo
+    echo " --> Beginning build process now...."
+    echo
+    ./autogen.sh
+    ./configure --prefix $INSTALL_PREFIX --with-libsodium=$INSTALL_PREFIX --with-libzmq=$INSTALL_PREFIX
+    make
+    make check
+    make install
+    $RUN_LDCONFIG
+    echo
+    echo " o/ czmq now installed."
+    echo
+}
+
+install_libczmqpp(){
+    cd $SRC_DIR
+    if [ -d "czmqpp-git" ]; then
+        echo
+        echo " --> Updating czmq++..."
+        echo
+        cd czmqpp-git
+        git remote set-url origin https://github.com/darkwallet/czmqpp
+        git pull --rebase
+    else
+        echo
+        echo " --> Downloading czmq++ from git..."
+        echo
+        git clone https://github.com/darkwallet/czmqpp czmqpp-git
+    fi
+    cd $SRC_DIR/czmqpp-git
+    echo
+    echo " --> Beginning build process now...."
+    echo
+    autoreconf -i
+    ./configure --prefix $INSTALL_PREFIX
+    make
+    make install
+    $RUN_LDCONFIG
+    echo
+    echo " o/ czmq++ now installed."
+    echo
+}
+
 install_libbitcoin(){
     cd $SRC_DIR
     if [ -d "libbitcoin-git" ]; then
         echo
-        echo " --> Updating Libbitcoin..."
+        echo " --> Updating libbitcoin..."
         echo
         cd libbitcoin-git
         git remote set-url origin https://github.com/spesmilo/libbitcoin.git
         git pull --rebase
     else
         echo
-        echo " --> Downloading Libbitcoin from git..."
+        echo " --> Downloading libbitcoin from git..."
         echo
         git clone https://github.com/spesmilo/libbitcoin.git libbitcoin-git
     fi
     cd $SRC_DIR/libbitcoin-git
     echo
-    echo " --> Beggining build process now...."
+    echo " --> Beginning build process now...."
     echo
     autoreconf -i
     ./configure --enable-leveldb --prefix $INSTALL_PREFIX
@@ -130,7 +293,7 @@ install_libbitcoin(){
     make install
     $RUN_LDCONFIG
     echo
-    echo " o/ Libbitcoin now installed."
+    echo " o/ libbitcoin now installed."
     echo
 }
 
@@ -151,7 +314,7 @@ install_libwallet(){
     fi
     cd $SRC_DIR/libwallet-git
     echo
-    echo " --> Beggining build process now...."
+    echo " --> Beginning build process now...."
     echo
     autoreconf -i
     ./configure --prefix $INSTALL_PREFIX
@@ -180,9 +343,10 @@ install_obelisk(){
     fi
     cd $SRC_DIR/obelisk-git
     echo
-    echo " --> Beggining build process now..."
+    echo " --> Beginning build process now..."
     echo
     autoreconf -i
+    pkg-config --cflags --libs libczmqpp
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
     make
     make install 
@@ -211,7 +375,7 @@ install_sx(){
     fi
     cd $SRC_DIR/sx-git
     echo
-    echo " --> Beggining build process now...."
+    echo " --> Beginning build process now...."
     echo
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
@@ -250,6 +414,10 @@ show_finish_install_info(){
 }
 
 install_dependencies
+install_libsodium
+install_libzmq
+install_czmq
+install_libczmqpp
 install_libbitcoin
 install_libwallet
 install_obelisk
