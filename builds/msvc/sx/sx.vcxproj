@@ -58,7 +58,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;xLEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\libbitcoin\include\;$(ProjectDir)\..\..\..\..\libwallet\include\;$(ProjectDir)\..\..\..\..\libconfig\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4290;4275</DisableSpecificWarnings>
@@ -79,7 +79,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;BITCOIN_DISABLE_ASSERTS;xLEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;BITCOIN_DISABLE_ASSERTS;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\libbitcoin\include\;$(ProjectDir)\..\..\..\..\libwallet\include\;$(ProjectDir)\..\..\..\..\libconfig\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4290;4275</DisableSpecificWarnings>
