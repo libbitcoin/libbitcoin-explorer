@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{44C411D8-253D-4D21-9D16-C9611547AC45}</ProjectGuid>
+    <ProjectGuid>{4E603EC0-8FA9-4B07-A0EB-0D612A1A5F7F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>sx_wrap</RootNamespace>
     <ProjectName>sx_wrap</ProjectName>
@@ -104,7 +104,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\sx_wrap.cpp" />
+    <ClCompile Include="..\..\..\src\wrap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props" Condition="Exists('..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props')" />

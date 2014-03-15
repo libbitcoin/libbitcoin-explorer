@@ -66,7 +66,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CONSOLE;_DEBUG;_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;xLEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;_DEBUG;_WINDOWS;_WIN32;WIN32;_WIN32_WINNT=0x0600;LEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\libbitcoin\include\;$(ProjectDir)\..\..\..\..\libwallet\include\;$(ProjectDir)\..\..\..\..\obelisk\include\;$(ProjectDir)\..\..\..\..\sx\include\;$(ProjectDir)\..\..\..\..\libconfig\include\;$(ProjectDir)\..\..\..\..\..\libzmq.4.0.3\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4290;4275</DisableSpecificWarnings>
@@ -87,7 +87,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CONSOLE;_WINDOWS;_WIN32;_WIN32_WINNT=0x0600;BITCOIN_DISABLE_ASSERTS;xLEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;_WINDOWS;_WIN32;WIN32;_WIN32_WINNT=0x0600;BITCOIN_DISABLE_ASSERTS;LEVELDB_ENABLED;LIBCONFIG_STATIC;LIBCONFIGXX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\libbitcoin\include\;$(ProjectDir)\..\..\..\..\libwallet\include\;$(ProjectDir)\..\..\..\..\obelisk\include\;$(ProjectDir)\..\..\..\..\sx\include\;$(ProjectDir)\..\..\..\..\libconfig\include\;$(ProjectDir)\..\..\..\..\..\libzmq.4.0.3\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4290;4275</DisableSpecificWarnings>
@@ -106,8 +106,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="..\..\..\..\..\nuget\LevelDB.1.16.0.5\build\native\LevelDB.props" Condition="Exists('..\..\..\..\..\nuget\LevelDB.1.16.0.5\build\native\LevelDB.props')" />
+  <Import Project="..\..\..\..\..\nuget\Crc32C.1.0.4\build\native\Crc32C.props" Condition="Exists('..\..\..\..\..\nuget\Crc32C.1.0.4\build\native\Crc32C.props')" />
+  <Import Project="..\..\..\..\..\nuget\Snappy.1.1.1.7\build\native\Snappy.props" Condition="Exists('..\..\..\..\..\nuget\Snappy.1.1.1.7\build\native\Snappy.props')" />
   <Import Project="..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props" Condition="Exists('..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props')" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="..\..\..\..\..\nuget\zlib.redist.1.2.8.6\build\native\zlib.redist.targets" Condition="Exists('..\..\..\..\..\nuget\zlib.redist.1.2.8.6\build\native\zlib.redist.targets')" />
@@ -134,5 +137,8 @@
     <Error Condition="!Exists('..\..\..\..\..\nuget\boost_system-vc120.1.55.0.16\build\native\boost_system-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\boost_system-vc120.1.55.0.16\build\native\boost_system-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\nuget\boost_date_time-vc120.1.55.0.16\build\native\boost_date_time-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\boost_date_time-vc120.1.55.0.16\build\native\boost_date_time-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\nuget\boost_regex-vc120.1.55.0.16\build\native\boost_regex-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\boost_regex-vc120.1.55.0.16\build\native\boost_regex-vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\Crc32C.1.0.4\build\native\Crc32C.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\Crc32C.1.0.4\build\native\Crc32C.props'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\Snappy.1.1.1.7\build\native\Snappy.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\Snappy.1.1.1.7\build\native\Snappy.props'))" />
+    <Error Condition="!Exists('..\..\..\..\..\nuget\LevelDB.1.16.0.5\build\native\LevelDB.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\nuget\LevelDB.1.16.0.5\build\native\LevelDB.props'))" />
   </Target>
 </Project>

@@ -1,10 +1,19 @@
 /*
-  Create a new leveldb blockchain database.
+Create a new leveldb blockchain database.
 */
-#ifdef LEVELDB_ENABLED
+#include <iostream>
+
+#ifndef LEVELDB_ENABLED
+
+int main()
+{
+    std::cerr << "initchain: The feature is not supported in this build." << std::endl;
+    return 1;
+}
+
+#else
 
 #include <future>
-#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 
 using namespace bc;

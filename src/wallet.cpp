@@ -1,5 +1,10 @@
-// Need to package ncurses library for windows.
-#ifndef _WINDOWS
+#ifdef _WINDOWS
+// TODO: package ncurses library for windows.
+int main(int argc, char** argv)
+{
+    return 0;
+}
+#else
 
 #include <unordered_set>
 #include <thread>
