@@ -77,14 +77,14 @@ install_dependencies(){
         D_DEPENDENCIES="\
             git build-essential autoconf apt-utils libtool \
             libboost-all-dev pkg-config libcurl4-openssl-dev \
-            libleveldb-dev libconfig++-dev libncurses5-dev"
+            libleveldb-dev libconfig++-dev libncurses5-dev wget"
         if [ "$ROOT_INSTALL" = 1 ]; then
-            apt-get -y remove libzmq1 libzmq3 libzmq-dev libzmq3-dev
+            apt-get -y remove libzmq libzmq-dev
             apt-get -y install $D_DEPENDENCIES
         else
             echo "Run this command before continuing:"
             echo
-            echo "  sudo apt-get -y remove libzmq1 libzmq3 libzmq-dev libzmq3-dev"
+            echo "  sudo apt-get remove libzmq libzmq-dev"
             echo "  sudo apt-get -y install $(strip_spaces $D_DEPENDENCIES)"
             echo
             continue_or_exit
@@ -93,7 +93,7 @@ install_dependencies(){
         U_DEPENDENCIES="\
             git build-essential autoconf apt-utils libtool \
             pkg-config libcurl4-openssl-dev libleveldb-dev \
-            libconfig++8-dev libncurses5-dev libboost$U_BOOST-all-dev"
+            libconfig++8-dev libncurses5-dev libboost$U_BOOST-all-dev wget"
         if [ "$ROOT_INSTALL" = 1 ]; then
             apt-get -y remove libzmq libzmq-dev
             # Ubuntu dependencies (some people have libboost1.53-dev installed,
@@ -116,7 +116,7 @@ install_dependencies(){
         F_DEPENDENCIES="\
             gcc-c++ git autoconf libtool boost-devel pkgconfig \
             libcurl-devel openssl-devel leveldb-devel libconfig \
-            libconfig-devel ncurses-devel"
+            libconfig-devel ncurses-devel wget"
         if [ "$ROOT_INSTALL" = 1 ]; then
             yum -y install $F_DEPENDENCIES
         else
@@ -129,7 +129,7 @@ install_dependencies(){
     elif [ "$flavour_id" = "arch" ]; then
         A_DEPENDENCIES="\
             gcc git autoconf libtool boost pkg-config curl openssl \
-            leveldb libconfig ncurses"
+            leveldb libconfig ncurses wget"
         if [ "$ROOT_INSTALL" = 1 ]; then
             pacman -S --asdeps --needed --noconfirm $A_DEPENDENCIES
         else
@@ -181,20 +181,18 @@ install_libsodium(){
 
 install_libzmq(){
     cd $SRC_DIR
-    if [ -d "libzmq-git" ]; then
+    if [ -d "zeromq-4.0.4" ]; then
         echo
         echo " --> Updating libzmq..."
         echo
-        cd libzmq-git
-        git remote set-url origin https://github.com/zeromq/libzmq
-        git pull --rebase
     else
         echo
         echo " --> Downloading libzmq from git..."
         echo
-        git clone https://github.com/zeromq/libzmq libzmq-git
+        wget http://download.zeromq.org/zeromq-4.0.4.tar.gz
+        tar zxf zeromq-4.0.4.tar.gz
     fi
-    cd $SRC_DIR/libzmq-git
+    cd $SRC_DIR/zeromq-4.0.4
     echo
     echo " --> Beginning build process now...."
     echo
@@ -346,7 +344,6 @@ install_obelisk(){
     echo " --> Beginning build process now..."
     echo
     autoreconf -i
-    pkg-config --cflags --libs libczmqpp
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
     make
     make install 
