@@ -244,13 +244,13 @@ install_libczmqpp(){
         echo " --> Updating czmq++..."
         echo
         cd czmqpp-git
-        git remote set-url origin https://github.com/darkwallet/czmqpp
+        git remote set-url origin https://github.com/zeromq/czmqpp
         git pull --rebase
     else
         echo
         echo " --> Downloading czmq++ from git..."
         echo
-        git clone https://github.com/darkwallet/czmqpp czmqpp-git
+        git clone https://github.com/zeromq/czmqpp czmqpp-git
     fi
     cd $SRC_DIR/czmqpp-git
     echo
