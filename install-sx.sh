@@ -79,12 +79,12 @@ install_dependencies(){
             libboost-all-dev pkg-config libcurl4-openssl-dev \
             libleveldb-dev libconfig++-dev libncurses5-dev wget"
         if [ "$ROOT_INSTALL" = 1 ]; then
-            apt-get -y remove libzmq libzmq-dev
+            apt-get -y remove libzmq*
             apt-get -y install $D_DEPENDENCIES
         else
             echo "Run this command before continuing:"
             echo
-            echo "  sudo apt-get remove libzmq libzmq-dev"
+            echo "  sudo apt-get remove libzmq*"
             echo "  sudo apt-get -y install $(strip_spaces $D_DEPENDENCIES)"
             echo
             continue_or_exit
@@ -95,7 +95,7 @@ install_dependencies(){
             pkg-config libcurl4-openssl-dev libleveldb-dev \
             libconfig++8-dev libncurses5-dev libboost$U_BOOST-all-dev wget"
         if [ "$ROOT_INSTALL" = 1 ]; then
-            apt-get -y remove libzmq libzmq-dev
+            apt-get -y remove libzmq*
             # Ubuntu dependencies (some people have libboost1.53-dev installed,
             # mine which is installed rather than error out.  Defaults onto 1.49)
             for BOOST_VER in 1.49 1.53 ; do
@@ -107,7 +107,7 @@ install_dependencies(){
         else
             echo "Run this command before continuing:"
             echo
-            echo "  sudo apt-get remove libzmq libzmq-dev"
+            echo "  sudo apt-get remove libzmq*"
             echo "  sudo apt-get -y install $(strip_spaces $U_DEPENDENCIES)"
             echo
             continue_or_exit
