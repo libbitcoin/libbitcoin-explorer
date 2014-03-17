@@ -199,7 +199,6 @@ install_libzmq(){
     ./autogen.sh
     ./configure --prefix $INSTALL_PREFIX --with-libsodium=$INSTALL_PREFIX
     make
-    make check
     make install
     $RUN_LDCONFIG
     echo
@@ -229,7 +228,6 @@ install_czmq(){
     ./autogen.sh
     ./configure --prefix $INSTALL_PREFIX --with-libsodium=$INSTALL_PREFIX --with-libzmq=$INSTALL_PREFIX
     make
-    make check
     make install
     $RUN_LDCONFIG
     echo
