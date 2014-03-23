@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <_PropertySheetDisplayName>SX Wallet Common Settings</_PropertySheetDisplayName>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libwallet\include\;$(ProjectDir)..\..\..\..\..\libbitcoin\include\;$(ProjectDir)..\..\..\..\..\obelisk\include\;$(ProjectDir)..\..\..\..\..\czmqpp\include\;$(ProjectDir)..\..\..\..\..\czmq\include\;$(ProjectDir)..\..\..\..\..\libzmq\include\;(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4290;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <EnablePREfast>false</EnablePREfast>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;xLEVELDB_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\czmqpp\bin\$(PlatformName)\;$(ProjectDir)..\..\..\..\..\czmq\bin\$(PlatformName)\;$(ProjectDir)..\..\..\..\..\libzmq\bin\$(PlatformName)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/OPT:NOLBR /IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup>
+    <Link>
+      <!-- obelisk.lib -->
+      <AdditionalDependencies>libwallet.lib;libbitcoin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="$(Configuration.IndexOf('Release')) != -1">
+    <ClCompile>
+      <PreprocessorDefinitions>BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Release\;$(ProjectDir)..\..\..\..\..\libbitcoin\bin\$(PlatformName)\Release\;$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>czmqpp.lib;czmq.lib;libzmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="$(Configuration.IndexOf('Debug')) != -1">
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\;$(ProjectDir)..\..\..\..\..\libbitcoin\bin\$(PlatformName)\Debug\;$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>czmqpp_d.lib;czmq_d.lib;libzmq_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+</Project>
+
+
+

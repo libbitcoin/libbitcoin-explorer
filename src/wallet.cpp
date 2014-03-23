@@ -1,21 +1,22 @@
-#ifdef _WINDOWS
-// TODO: package ncurses library for windows.
-int main(int argc, char** argv)
-{
-    return 0;
-}
-#else
-
 #include <unordered_set>
 #include <thread>
 #include <mutex>
+
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <obelisk/obelisk.hpp>
-#include <ncurses.h>
+
 #include "config.hpp"
 #include "util.hpp"
+
+#ifdef _WIN32
+#include <stdlib.h>
+#include <pdcwin.h>
+#else
+#include <ncurses.h>
+#include <unistd.h>
+#endif
 
 using std::placeholders::_1;
 using std::placeholders::_2;
@@ -78,7 +79,7 @@ public:
         if (history_.empty())
             return;
         ++selected_entry_;
-        BITCOIN_ASSERT(selected_entry_ <= history_.size());
+        BITCOIN_ASSERT(selected_entry_ <= (int)history_.size());
         if (selected_entry_ == 21 || selected_entry_ == history_.size())
             selected_entry_ = 0;
     }
@@ -87,7 +88,8 @@ public:
         if (history_.empty())
             return;
         if (selected_entry_ == 0)
-            selected_entry_ = std::min(21, (int)history_.size());
+            /* Using min macro to avoid macro redefiniton conflit with pdcurses. */
+            selected_entry_ = __min(21, (int)history_.size());
         --selected_entry_;
     }
 
@@ -103,7 +105,7 @@ public:
     }
     const wallet_history_entry& selected_entry()
     {
-        BITCOIN_ASSERT(selected_entry_ < history_.size());
+        BITCOIN_ASSERT(selected_entry_ < (int)history_.size());
         return history_[selected_entry_];
     }
 
@@ -240,8 +242,6 @@ private:
     output_info_map unspent_;
     keys_map privkeys_;
 };
-
-#include <unistd.h>
 
 void wallet_display::draw()
 {
@@ -816,5 +816,3 @@ int main(int argc, char** argv)
     pool.join();
     return 0;
 }
-
-#endif

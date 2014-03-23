@@ -7,7 +7,7 @@
 
 const char* DEFAULT_SERVICE_HOST = "tcp://37.139.11.99:9091";
 
-#ifdef _WINDOWS
+#ifdef _WIN32
 #include <shlobj.h>
 #include <windows.h>
 const wchar_t* home_directory()
@@ -15,11 +15,15 @@ const wchar_t* home_directory()
     wchar_t app_data_path[MAX_PATH];
     auto result = SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL,
         SHGFP_TYPE_CURRENT, app_data_path);
+
+    // return?
     return SUCCEEDED(result) ? app_data_path : nullptr;
 }
 const wchar_t* sx_environment_path()
 {
     wchar_t environment_buffer[MAX_PATH];
+
+    // return?
     return GetEnvironmentVariableW(L"SX_CFG", environment_buffer, MAX_PATH) == 
         TRUE ? environment_buffer : nullptr;
 }
