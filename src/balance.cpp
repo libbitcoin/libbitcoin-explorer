@@ -1,3 +1,6 @@
+#include <atomic>
+#include <condition_variable>
+#include <thread>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include "config.hpp"
@@ -9,7 +12,10 @@ using std::placeholders::_2;
 
 typedef std::vector<payment_address> payaddr_list;
 
-std::atomic_uint remaining_count;
+int remaining_count = std::numeric_limits<int>::max();
+std::mutex mutex;
+std::condition_variable condition;
+
 bool json_output = false;
 
 void history_fetched(const payment_address& payaddr,
@@ -46,7 +52,10 @@ void history_fetched(const payment_address& payaddr,
     std::cout << "  Pending balance: " << pending_balance << std::endl;
     std::cout << "  Total received:  " << total_recv << std::endl;
     std::cout << std::endl;
+    std::lock_guard<std::mutex> lock(mutex);
+    BITCOIN_ASSERT(remaining_count != std::numeric_limits<int>::max());
     --remaining_count;
+    condition.notify_one();
 }
 
 void json_history_fetched(const payment_address& payaddr,
@@ -93,7 +102,11 @@ void json_history_fetched(const payment_address& payaddr,
     std::cout << "  \"pending\":  \"" << pending_balance << "\"," << std::endl;
     std::cout << "  \"received\":  \"" << total_recv << "\"" << std::endl;
     std::cout << "}";
-    if (--remaining_count > 0)
+    std::lock_guard<std::mutex> lock(mutex);
+    BITCOIN_ASSERT(remaining_count != std::numeric_limits<int>::max());
+    --remaining_count;
+    condition.notify_one();
+    if (remaining_count > 0)
         std::cout << ",";
     std::cout << std::endl;
 }
@@ -158,10 +171,20 @@ int main(int argc, char** argv)
             fullnode.address.fetch_history(payaddr,
                 std::bind(history_fetched, payaddr, _1, _2));
     }
+    std::thread update_loop([&fullnode]
+    {
+        while (true)
+        {
+            fullnode.update();
+            usleep(100000);
+        }
+    });
+    update_loop.detach();
+    std::unique_lock<std::mutex> lock(mutex);
     while (remaining_count > 0)
     {
-        fullnode.update();
-        usleep(100000);
+        condition.wait(lock);
+        BITCOIN_ASSERT(remaining_count >= 0);
     }
     if (json_output)
         std::cout << "]" << std::endl;
