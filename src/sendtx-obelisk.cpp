@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 {
     if (argc != 2)
     {
-        std::cerr << "Usage: ob-broadcast-tx FILENAME" << std::endl;
+        std::cerr << "Usage: sendtx-obelisk FILENAME" << std::endl;
         return -1;
     }
     const std::string filename = argv[1];
@@ -29,7 +29,8 @@ int main(int argc, char** argv)
     config_map_type config;
     load_config(config);
     threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"],
+        config["client-certificate"], config["server-public-key"]);
     fullnode.protocol.broadcast_transaction(tx, handle_broadcast);
     while (!stopped)
     {

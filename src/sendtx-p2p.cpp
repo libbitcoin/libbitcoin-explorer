@@ -78,14 +78,14 @@ void send_tx(const std::error_code& ec, channel_ptr node,
     protocol& prot, transaction_type& tx)
 {
     check_error(ec);
-    std::cout << "broadcast-tx: Sending " << hash_transaction(tx) << std::endl;
+    std::cout << "sendtx-p2p: Sending " << hash_transaction(tx) << std::endl;
     auto handle_send =
         [](const std::error_code& ec)
         {
             if (ec)
                 log_warning() << "Send failed: " << ec.message();
             else
-                std::cout << "broadcast-tx: Sent "
+                std::cout << "sendtx-p2p: Sent "
                     << time(nullptr) << std::endl;
         };
     node->send(tx, handle_send);

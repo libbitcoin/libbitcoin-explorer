@@ -5,40 +5,49 @@
 #include <boost/lexical_cast.hpp>
 #include <libconfig.h++>
 
-const char* DEFAULT_SERVICE_HOST = "tcp://37.139.11.99:9091";
-
 #ifdef _WIN32
+
 #include <shlobj.h>
 #include <windows.h>
-const wchar_t* home_directory()
+#include <tchar.h>
+
+// Use explicitly wide char functions and compile for unicode.
+
+tstring home_directory()
 {
-    wchar_t app_data_path[MAX_PATH];
+    tchar app_data_path[MAX_PATH];
     auto result = SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL,
         SHGFP_TYPE_CURRENT, app_data_path);
-
-    // return?
-    return SUCCEEDED(result) ? app_data_path : nullptr;
+    return tstring(SUCCEEDED(result) ? app_data_path : L"");
 }
-const wchar_t* sx_environment_path()
+
+tstring sx_config_path()
 {
-    wchar_t environment_buffer[MAX_PATH];
-
-    // return?
-    return GetEnvironmentVariableW(L"SX_CFG", environment_buffer, MAX_PATH) == 
-        TRUE ? environment_buffer : nullptr;
+    tchar environment_buffer[MAX_PATH];
+    return tstring(GetEnvironmentVariableW(L"SX_CFG", environment_buffer,
+        MAX_PATH) == TRUE ? environment_buffer : L"");
 }
+
 #else
+
 #include <unistd.h>
 #include <pwd.h>
-const char* home_directory()
+
+// This is ANSI/MBCS if compiled on Windows but is always Unicode on Linux,
+// so we can safely return it as tstring when excluded from Windows.
+
+tstring home_directory()
 {
     const char* home_path = getenv("HOME");
-    return (home_path == nullptr) ? getpwuid(getuid())->pw_dir : home_path;
+    return std::string(home_path == nullptr ? getpwuid(getuid())->pw_dir : 
+        home_path);
 }
-const char* sx_environment_path()
+
+tstring sx_config_path()
 {
-    return getenv("SX_CFG");
+    return std::string(getenv("SX_CFG"));
 }
+
 #endif
 
 template <typename T>
@@ -46,36 +55,41 @@ void get_value(const libconfig::Setting& root, config_map_type& config_map,
     const std::string& key_name, const T& fallback_value)
 {
     T value;
+
+    // libconfig is ANSI/MBCS on Windows - no Unicode support.
+    // This reads ANSI/MBCS values from XML. If they are UTF-8 (and above the
+    // ASCII band) the values will be misinterpreted upon use.
     config_map[key_name] = (root.lookupValue(key_name, value)) ?
         boost::lexical_cast<std::string>(value) :
         boost::lexical_cast<std::string>(fallback_value);
 }
 
-void set_config_root(libconfig::Config& configuration, 
-    boost::filesystem::path& config_path)
+void set_config_path(libconfig::Config& configuration, const tpath& config_path)
 {
     // Ignore error if unable to read config file.
     try
     {
+        // libconfig is ANSI/MBCS on Windows - no Unicode support.
+        // This translates the path from Unicode to a "generic" path in
+        // ANSI/MBCS, which can result in failures.
         configuration.readFile(config_path.generic_string().c_str());
     }
     catch (const libconfig::FileIOException&) {}
     catch (const libconfig::ParseException&) {}
 }
 
-void load_config(config_map_type& config_map)
+void load_config(config_map_type& config)
 {
-    // Get configuration file path.
-    auto env_path = sx_environment_path();
-    auto config_path = (env_path == nullptr) ?
-        boost::filesystem::path(home_directory()) / ".sx.cfg" :
-        boost::filesystem::path(env_path);
-
-    // Initialize configuration reader.
+    tstring environment_path = sx_config_path();
+    tpath config_path = environment_path.empty() ?
+        tpath(home_directory()) / L".sx.cfg" : tpath(environment_path);
+    
     libconfig::Config configuration;
-    set_config_root(configuration, config_path);
+    set_config_path(configuration, config_path);
 
-    // Load configuration settings.
-    get_value<std::string>(configuration.getRoot(), config_map, "service",
-        DEFAULT_SERVICE_HOST);
+    // Read off values.
+    const libconfig::Setting& root = configuration.getRoot();
+    get_value<std::string>(root, config, "service", "tcp://37.139.11.99:9091");
+    get_value<std::string>(root, config, "client-certificate", ".sx.cert");
+    get_value<std::string>(root, config, "server-public-key", "");
 }

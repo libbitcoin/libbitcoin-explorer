@@ -19,7 +19,7 @@ def uncover_stealth(master_secret, nonce):
 
 def main(argv):
     if len(argv) != 3:
-        print >> sys.stderr, "sx stealth-recv SECRET NONCE"
+        print >> sys.stderr, "sx stealth-recv SECRET EPHEMERAL_PUBKEY"
         return -1
     secret = argv[1]
     nonce = argv[2]

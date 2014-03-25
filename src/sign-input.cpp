@@ -19,6 +19,7 @@ bool sign(transaction_type& tx, size_t input_index,
     }
     hash_digest tx_hash =
         script_type::generate_signature_hash(tx, input_index, script_code, 1);
+    log_debug() << "sighash: " << tx_hash;
     if (tx_hash == null_hash)
     {
         std::cerr << "sign-input: Error generating signature hash."

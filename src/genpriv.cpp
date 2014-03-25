@@ -47,7 +47,7 @@ int main(int argc, char** argv)
         return -1;
     }
     secret_parameter secret = wallet.generate_secret(n, for_change);
-    std::cout << libwallet::secret_to_wif(secret) << std::endl;
+    std::cout << libwallet::secret_to_wif(secret, false) << std::endl;
     return 0;
 }
 

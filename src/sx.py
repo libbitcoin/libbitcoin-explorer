@@ -363,6 +363,22 @@ Fetch the last block height using blockchain.info.\
 """
 ),
 
+"fetch-stealth": (
+"BLOCKCHAIN QUERIES",
+"Fetch a stealth information using a network connection to make requests against the obelisk load balancer backend.",
+
+"""\
+Fetch a stealth information using a network connection to make requests against the obelisk load balancer backend.
+
+Usage: sx fetch-stealth NUMBER_BITS BITFIELD
+
+EXAMPLE: 
+
+  $ sx fetch-stealth 2 8bf41c69
+\
+"""
+),
+
 "fetch-transaction": (
 "BLOCKCHAIN QUERIES",
 "Fetch a raw transaction using a network connection to make requests against the obelisk load balancer backend.",
@@ -746,8 +762,6 @@ Note how the input script in the following transaction is now filled.
 
 
 Now the input script is prepared, and the transaction is signed.
-
-It can be sent by  $ sx broadcast-tx txfile.tx.signed
 
 \
 """

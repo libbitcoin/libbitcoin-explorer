@@ -33,7 +33,8 @@ int main(int argc, char** argv)
     config_map_type config;
     load_config(config);
     threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"]);
+    obelisk::fullnode_interface fullnode(pool, config["service"],
+        config["client-certificate"], config["server-public-key"]);
     fullnode.transaction_pool.validate(tx, tx_validated);
     while (!stopped)
     {

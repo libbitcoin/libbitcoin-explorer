@@ -9,11 +9,11 @@ d = obelisk.string_to_number(secret)
 G = obelisk.generator_secp256k1
 Q = d * G
 pubkey = obelisk.get_point_pubkey(Q, True)
-prefix = "\x00\x00"
-assert len(prefix) == 2
-version = chr(9)
+prefix = "\x00" * 5
+assert len(prefix) == 5
+version = chr(6)
 address_data = version + pubkey + prefix
-assert len(address_data) == 1 + 33 + 2
+assert len(address_data) == 1 + 33 + 5
 address = obelisk.EncodeBase58Check(address_data)
 print "Address:", address
 

@@ -5,7 +5,7 @@ corebin_PROGRAMS = \
     sx-addr sx-sendtx-p2p sx-genpriv sx-genaddr sx-mktx sx-mpk sx-newkey \
     sx-newseed sx-sendtx-node sx-showtx sx-sign-input sx-mnemonic sx-pubkey \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
-    sx-encode-addr sx-genpub sx-showblkhead sx-validsig sx-monitor \
+    sx-encode-addr sx-genpub sx-showblkhead sx-validsig \
     sx-validaddr sx-base58-encode sx-base58-decode sx-wrap sx-unwrap \
     sx-ripemd-hash sx-initchain sx-secret-to-wif
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
@@ -41,7 +41,7 @@ if HAVE_OBELISK
 corebin_PROGRAMS += \
     sx-history sx-balance sx-fetch-block-header sx-fetch-transaction \
     sx-fetch-last-height sx-validtx sx-sendtx-obelisk sx-wallet \
-    sx-fetch-transaction-index
+    sx-fetch-transaction-index sx-fetch-stealth sx-monitor
 
 AM_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
 endif
@@ -147,6 +147,9 @@ sx_fetch_last_height_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_L
 
 sx_fetch_transaction_SOURCES = fetch-transaction.cpp config.cpp
 sx_fetch_transaction_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} 
+
+sx_fetch_stealth_SOURCES = fetch-stealth.cpp config.cpp
+sx_fetch_stealth_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} 
 
 sx_fetch_transaction_index_SOURCES = fetch-transaction-index.cpp config.cpp
 sx_fetch_transaction_index_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} 
