@@ -56,7 +56,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>CTP_Nov2013</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
