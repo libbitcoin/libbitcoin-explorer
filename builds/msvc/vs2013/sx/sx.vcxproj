@@ -178,9 +178,6 @@
     <ClInclude Include="..\..\..\..\src\config.hpp" />
     <ClInclude Include="..\..\..\..\src\util.hpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="readme.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
