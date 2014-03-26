@@ -13,7 +13,9 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libwallet\include\;$(ProjectDir)..\..\..\..\..\libbitcoin\include\;$(ProjectDir)..\..\..\..\..\obelisk\include\;$(ProjectDir)..\..\..\..\..\czmqpp\include\;$(ProjectDir)..\..\..\..\..\czmq\include\;$(ProjectDir)..\..\..\..\..\libzmq\include\;(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4290;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
-      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;xLEVELDB_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- NOTE: LEVELDB_ENABLED not defined for libbitcoin. -->
+      <!-- _SCL_SECURE_NO_WARNINGS for boost: stackoverflow.com/questions/1301277/c-boost-whats-the-cause-of-this-warning -->
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\czmqpp\bin\$(PlatformName)\;$(ProjectDir)..\..\..\..\..\czmq\bin\$(PlatformName)\;$(ProjectDir)..\..\..\..\..\libzmq\bin\$(PlatformName)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -23,27 +25,42 @@
 
   <ItemDefinitionGroup>
     <Link>
-      <!-- obelisk.lib -->
-      <AdditionalDependencies>libwallet.lib;libbitcoin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!-- Optimizing cURL dependency (which also draws in wldap32.lib): 
+        curl.haxx.se/docs/install.html
+        stackoverflow.com/questions/15251101/how-to-build-customize-libcurl-to-support-http-https-protocol-only. -->
+      <AdditionalDependencies>obelisk.lib;libwallet.lib;libbitcoin.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-
+ 
   <ItemDefinitionGroup Condition="$(Configuration.IndexOf('Release')) != -1">
     <ClCompile>
       <PreprocessorDefinitions>BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Release\;$(ProjectDir)..\..\..\..\..\libbitcoin\bin\$(PlatformName)\Release\;$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Release\libwallet12\;$(ProjectDir)..\..\..\..\..\libbitcoin\bin\$(PlatformName)\Release\libbitcoin12\;$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Release\obelisk12\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>czmqpp.lib;czmq.lib;libzmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
 
   <ItemDefinitionGroup Condition="$(Configuration.IndexOf('Debug')) != -1">
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\;$(ProjectDir)..\..\..\..\..\libbitcoin\bin\$(PlatformName)\Debug\;$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\libwallet12\;$(ProjectDir)..\..\..\..\..\libbitcoin\bin\$(PlatformName)\Debug\libbitcoin12\;$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\obelisk12\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>czmqpp_d.lib;czmq_d.lib;libzmq_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+
+  <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
+    <Message Text="Linkage-libconfig : $(Linkage-libconfig)" Importance="high"/>
+    <Message Text="Linkage-pdcurses  : $(Linkage-pdcurses)" Importance="high"/>
+    <Message Text="Linkage-curl      : $(Linkage-curl)" Importance="high"/>
+    <Message Text="Linkage-zlib      : $(Linkage-zlib)" Importance="high"/>
+    <Message Text="Linkage-openssl   : $(Linkage-openssl)" Importance="high"/>
+    <Message Text="Linkage-libssh2   : $(Linkage-libssh2)" Importance="high"/>
+  </Target>
+  
+  <Target Name="CustomInfo" AfterTargets="Build" Condition="$(Configuration.IndexOf('SEXE')) != -1">
+    <Message Text="A LTCG warning on 'libeay32.lib(mem.obj)' is a the result of a COAPP OpenSSL packaging error and can be safely ignored." Importance="high"/>
+  </Target>
 
 </Project>
 

@@ -29,4 +29,8 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
+  <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
+    <Message Text="Linkage-libconfig : $(Linkage-libconfig)" Importance="high"/>
+  </Target>
+
 </Project>

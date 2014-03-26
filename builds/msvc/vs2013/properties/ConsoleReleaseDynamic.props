@@ -13,6 +13,7 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
+      <!-- Linking CRT dynamically when building a dynamic library is conventional. -->
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
