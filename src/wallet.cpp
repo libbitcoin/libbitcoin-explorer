@@ -694,14 +694,7 @@ void broadcast_subsystem()
         tx_broadcast_queue.pop_back();
         broadcast_mutex.unlock();
         auto ignore_send = [](const std::error_code&, size_t) {};
-
-#ifdef _MSC_VER
-#pragma message( "WARNING: line temporarily disabled, work in progress." )
-#else
-        // THIS LINE CONSISTENTLY CAUSES A COMPILER FAILURE WITH x86 CTP_Nov2013
-        // THIS LINE CONSISTENTLY CAUSES A COMPILATION ERROR WITH x64 CTP_Nov2013
         prot.broadcast(tx, ignore_send);
-#endif
     }
     auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
