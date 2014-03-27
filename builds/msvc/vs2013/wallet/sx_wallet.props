@@ -13,7 +13,6 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libwallet\include\;$(ProjectDir)..\..\..\..\..\libbitcoin\include\;$(ProjectDir)..\..\..\..\..\obelisk\include\;$(ProjectDir)..\..\..\..\..\czmqpp\include\;$(ProjectDir)..\..\..\..\..\czmq\include\;$(ProjectDir)..\..\..\..\..\libzmq\include\;(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4290;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
-      <!-- NOTE: LEVELDB_ENABLED not defined for libbitcoin. -->
       <!-- _SCL_SECURE_NO_WARNINGS for boost: stackoverflow.com/questions/1301277/c-boost-whats-the-cause-of-this-warning -->
       <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>

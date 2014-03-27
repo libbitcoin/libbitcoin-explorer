@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props" Condition="Exists('..\..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props')" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
     <ProjectName>sx_wallet</ProjectName>
@@ -209,6 +208,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\wallet.cpp" />
   </ItemGroup>
+  <Import Project="..\..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props" Condition="Exists('..\..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.props')" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
