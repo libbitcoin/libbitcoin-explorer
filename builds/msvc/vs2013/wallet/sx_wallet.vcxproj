@@ -197,11 +197,6 @@
     <Linkage-openssl>static</Linkage-openssl>
     <Linkage-libssh2>static</Linkage-libssh2>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">
-    <Link>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

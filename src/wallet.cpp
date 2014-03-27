@@ -16,6 +16,7 @@
 #else
 #include <ncurses.h>
 #include <unistd.h>
+#define __min(a,b)  (((a) < (b)) ? (a) : (b))
 #endif
 
 using std::placeholders::_1;
@@ -88,7 +89,7 @@ public:
         if (history_.empty())
             return;
         if (selected_entry_ == 0)
-            /* Using min macro to avoid macro redefiniton conflit with pdcurses. */
+            /* Using min macro to avoid macro redefiniton conflict with pdcurses. */
             selected_entry_ = __min(21, (int)history_.size());
         --selected_entry_;
     }
