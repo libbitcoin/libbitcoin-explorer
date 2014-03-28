@@ -1,6 +1,7 @@
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include "util.hpp"
+
 using namespace bc;
 
 int main(int argc, char** argv)

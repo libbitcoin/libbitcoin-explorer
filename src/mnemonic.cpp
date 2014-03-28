@@ -1,10 +1,12 @@
+#include <iostream>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+
 using namespace bc;
 using namespace libwallet;
 
-bool display_help()
+int display_help()
 {
     puts("Usage:");
     puts("");

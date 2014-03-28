@@ -1,6 +1,7 @@
-#ifndef SX_LOAD_TX_HPP
-#define SX_LOAD_TX_HPP
+#ifndef SX_UTIL_HPP
+#define SX_UTIL_HPP
 
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 

@@ -7,7 +7,7 @@
 using namespace bc;
 
 // Currently unused.
-bool display_help()
+int display_help()
 {
     puts("Usage: mktx FILENAME [ARGS]...");
     puts("");
@@ -204,7 +204,7 @@ int main(int argc, char** argv)
     transaction_type tx;
     tx.version = 1;
     tx.locktime = 0;
-    size_t current_arg = 2;
+    int current_arg = 2;
     while (two_args_remain(current_arg, argc) && current_arg != argc)
     {
         const std::string action = argv[current_arg],

@@ -79,10 +79,10 @@ int main(int argc, char** argv)
     connect(shake, net, hostname, port,
         std::bind(send_tx, _1, _2, std::ref(tx)));
     while (!stopped)
-        sleep(2);
+        std::this_thread::sleep_for(std::chrono::seconds(2));
     // Safely close down.
     pool.stop();
     pool.join();
     return 0;
 }
-
+    

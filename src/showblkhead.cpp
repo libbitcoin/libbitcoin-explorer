@@ -1,6 +1,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include "util.hpp"
+
 using namespace bc;
 
 bool load_blk_header(block_header_type& blk_header, const std::string& filename)

@@ -1,4 +1,6 @@
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
+
 using namespace bc;
 
 operation create_data_operation(data_chunk& data)
@@ -56,7 +58,7 @@ int main(int argc, char** argv)
         return -1;
     }
     std::string joined_args;
-    for (size_t i = 1; i < argc; ++i)
+    for (int i = 1; i < argc; ++i)
         joined_args += std::string(argv[i]) + " ";
     script_type parsed_script = script_from_pretty(joined_args);
     std::cout << save_script(parsed_script) << std::endl;
