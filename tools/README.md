@@ -12,6 +12,15 @@ Navitage (either with the Terminal, or using Nautilus [equivalent to Finder or W
 
 ```$ sudo bash ./install-sx.sh```
 
+Basic SX functionality will work, but for more sophisticated features (i.e. stealth addresses), certain dependencies are required. They may already be installed, but if they are you not will typically need to install the following:
+
+1. ```sudo apt-get install python-setuptools```  
+2. ```sudo easy_install pip```  
+3. ```sudo pip install ecdsa```  
+4. ```sudo pip install pyzmq```  
+
+Afer these steps, generating things like stealth addresses will work perfectly.
+
 2) Download the scripts from the 'n00b-Sx' repo to a directory of your choice. You can either execute the scripts from the Terminal or make the scripts executable upon clicking by first opening the Terminal and typing:
 
 ```chmod +x ./<filename>```
