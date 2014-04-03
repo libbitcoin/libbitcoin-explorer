@@ -21,7 +21,7 @@ Basic SX functionality will work, but for more sophisticated features (i.e. stea
 
 Afer these steps, generating things like stealth addresses will work perfectly.
 
-2) Download the scripts from the 'n00b-Sx' repo to a directory of your choice. You can either execute the scripts from the Terminal or make the scripts executable upon clicking by first opening the Terminal and typing:
+2) Download the scripts from 'sx/tools' to a directory of your choice. You can either run the scripts from the terminal or make the scripts executable upon clicking by first opening the terminal and typing:
 
 ```chmod +x ./<filename>```
 
@@ -33,7 +33,7 @@ Have fun from there.
 
 ## Scripts
 
-**Start.sh**
+**start.sh**
 
 A number of dialog boxes that allow you to create a new private key and stealth address pubkey and ephemeral key. **Text files with the keys will be created in the location of the script!**
 
