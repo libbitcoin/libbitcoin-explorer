@@ -11,12 +11,15 @@
 #include "util.hpp"
 
 #ifdef _WIN32
+#ifndef NOMINMAX
+// Macro min(a,b) a conflicts with pdcurses.
+#define NOMINMAX
+#endif
 #include <stdlib.h>
 #include <pdcwin.h>
 #else
 #include <ncurses.h>
 #include <unistd.h>
-#define __min(a,b)  (((a) < (b)) ? (a) : (b))
 #endif
 
 using std::placeholders::_1;
@@ -89,8 +92,7 @@ public:
         if (history_.empty())
             return;
         if (selected_entry_ == 0)
-            /* Using min macro to avoid macro redefiniton conflict with pdcurses. */
-            selected_entry_ = __min(21, (int)history_.size());
+            selected_entry_ = min(21, (int)history_.size());
         --selected_entry_;
     }
 
