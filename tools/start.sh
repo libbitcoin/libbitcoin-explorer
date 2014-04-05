@@ -1,25 +1,33 @@
-#!/bin/bash
+#!bin/bash
+
+#Create a new keypair
 
 function keypair {
 	sx newkey > privatekey-$(date +%y-%m-%d-%s).txt
 	cat privatekey-$(date +%y-%m-%d-%s).txt | sx addr > publickey-$(date +%y-%m-%d-%s).txt
 }
 
+#Create a new stealth address
+
 function stealth {
 	sx stealth-new > stealthkeys-$(date +%y-%m-%d-%s).txt
 }
 
-if zenity --question --text="Do you want to create a new keypair?"; then
+#Create a variable that is the output
+# of the user's selection in the list
+# dialog box.
+
+OUT=$(zenity --list --checklist --text="Select an action from the list below" --title="SX Tools Menu" --column="Select" --column="Create" TRUE "New Address" FALSE "Stealth Address")
+
+#Pseudo-menu based on Zenity's list dialog box
+
+if [ "$OUT" == "New Address" ]; then
 	keypair
-	if zenity --question --text="Do you want to generate a stealth address?"; then
-		stealth
-	else
-		zenity --info --text="No problem."
-	fi
-	zenity --info --text="Done\!"
-elif zenity --question --text="Do you want to generate a stealth address?"; then
+elif [ "$OUT" == "Stealth Address" ]; then
 	stealth
-	zenity --info --text="Done. Enjoy your privacy\!"
+elif [ "$OUT" == "New Address|Stealth Address" ]; then
+	keypair
+	stealth
 else
 	zenity --info --text="Thanks for using SX\!"
 fi
