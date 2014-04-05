@@ -35,9 +35,10 @@ Have fun from there.
 
 **start.sh**
 
-A number of dialog boxes that allow you to create a new private key and stealth address pubkey and ephemeral key. **Text files with the keys will be created in the location of the script!**
+There is one pseudo-menu created from Zenity's list dialog boxe that allow you to create a new private key and stealth address pubkey and ephemeral key. **Text files with the keys will be created in the location of the script!**
 
-![alt text](http://s11.postimg.org/uug1bf3dv/Aggregate.png "Dialog Boxes")
+![alt text](http://s4.postimg.org/b10oaj2dl/SX_Tools_GUI.png "Pseudo-Menu")
+![alt text](http://s4.postimg.org/ognozzavd/Exit.png "Exit")
 
 ## Contribute
 
