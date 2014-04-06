@@ -4,7 +4,7 @@ Ultimately, the reason for doing this is to allow users to start using [Stealth 
 
 ## Instructions
 
-1) Install Sx [here](https://github.com/spesmilo/sx). Open the root terminal (you should at least know how to do that), and type in:
+1) Install SX [here](https://github.com/spesmilo/sx). Open the root terminal (you should at least know how to do that), and type in:
 
 ```$ wget http://sx.dyne.org/install-sx.sh```
 
@@ -12,7 +12,7 @@ Navitage (either with the Terminal, or using Nautilus [equivalent to Finder or W
 
 ```$ sudo bash ./install-sx.sh```
 
-Basic SX functionality will work, but for more sophisticated features (i.e. stealth addresses), certain dependencies are required. They may already be installed, but if they are you not will typically need to install the following:
+Basic SX functionality will work, but for more sophisticated features (i.e. stealth addresses), **certain dependencies are required**. They may already be installed, but if they are you not will typically need to install the following:
 
 1. ```sudo apt-get install python-setuptools```  
 2. ```sudo easy_install pip```  
@@ -27,7 +27,7 @@ Afer these steps, generating things like stealth addresses will work perfectly.
 
 E.g.
 
-```chmod +x ./Start.sh```
+```chmod +x ./start.sh```
 
 Have fun from there.
 
@@ -37,8 +37,7 @@ Have fun from there.
 
 There is one pseudo-menu created from Zenity's list dialog boxe that allow you to create a new private key and stealth address pubkey and ephemeral key. **Text files with the keys will be created in the location of the script!**
 
-![alt text](http://s4.postimg.org/b10oaj2dl/SX_Tools_GUI.png "Pseudo-Menu")
-![alt text](http://s4.postimg.org/ognozzavd/Exit.png "Exit")
+![alt text](http://s11.postimg.org/4vm5hulir/New_GUI_v2.png "Pseudo-Menu")
 
 ## Contribute
 
