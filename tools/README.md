@@ -38,7 +38,7 @@ Have fun from there.
 
 There is one pseudo-menu created from Zenity's list dialog boxe that allow you to create a new private key and stealth address pubkey and ephemeral key. **Text files with the keys will be created in the location of the script!**
 
-![alt text](http://s11.postimg.org/4vm5hulir/New_GUI_v2.png "Pseudo-Menu")
+![alt text](http://s28.postimg.org/4pk74rfdp/GUI_3.png "Pseudo-Menu")
 
 ## Contribute
 
