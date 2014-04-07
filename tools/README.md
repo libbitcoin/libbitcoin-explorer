@@ -17,7 +17,8 @@ Basic SX functionality will work, but for more sophisticated features (i.e. stea
 1. ```sudo apt-get install python-setuptools```  
 2. ```sudo easy_install pip```  
 3. ```sudo pip install ecdsa```  
-4. ```sudo pip install pyzmq```  
+4. ```sudo pip install pyzmq```
+5. ```sudo apt-get install qrencode```
 
 Afer these steps, generating things like stealth addresses will work perfectly.
 
