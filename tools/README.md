@@ -28,13 +28,13 @@ Afer these steps, generating things like stealth addresses will work perfectly.
 
 E.g.
 
-```chmod +x ./start.sh```
+```chmod +x ./easysx.sh```
 
 Have fun from there.
 
-## Scripts
+## Script
 
-**start.sh**
+**easysx.sh**
 
 There is one pseudo-menu created from Zenity's list dialog boxe that allow you to create a new private key and stealth address pubkey and ephemeral key. **Text files with the keys will be created in the location of the script!**
 
@@ -44,5 +44,5 @@ There is one pseudo-menu created from Zenity's list dialog boxe that allow you t
 
 If you'd like to contribute, please commit: 
 
-1. Write shell scripts for any remaining commands for [Sx](https://sx.dyne.org/) (WIP) // Please test first
+1. Write shell scripts for any remaining commands for [SX](https://sx.dyne.org/) (WIP) // Please test first
 2. Implement [Zenity](http://www.howtogeek.com/107537/how-to-make-simple-graphical-shell-scripts-with-zenity-on-linux/) wraps for the shell scripts
