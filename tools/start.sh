@@ -59,7 +59,7 @@ FALSE "Stealth Address" "Generate a new stealth key pair: address (public) and s
 FALSE "Send Stealth Transaction" "Generate a stealth ephemeral key and Bitcoin public key to send a stealth transaction." \
 FALSE "Receive Stealth Transaction" "Attempt to generate a Bitcoin keypair from a stealth ephemeral key" \
 FALSE "Create QR Code" "Generate a QR code from a Bitcoin public key" \
-FALSE "Create Multisignature Transaction" "Generate rawscript and address for a 2-3 multisignature transaction")
+FALSE "Create Multisignature Address" "Generate rawscript and address for a 2-3 multisignature address")
 
 #Pseudo-menu based on Zenity's list dialog box
 
@@ -73,7 +73,7 @@ elif [ "$Menu" == "Receive Stealth Transaction" ]; then
 	receivestealth
 elif [ "$Menu" == "Create QR code" ]; then
 	qrcodegen
-elif [ "$Menu" == "Create Multisignature Transaction" ]; then
+elif [ "$Menu" == "Create Multisignature Address" ]; then
 	mofn
 else
 	zenity --info --text="Thanks for using SX\!"
