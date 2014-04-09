@@ -96,13 +96,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(ProjectDir)$(ProjectName).props" />
     <Import Project="$(ProjectDir)..\properties\DynamicDebug.props" />
     <Import Project="$(ProjectDir)..\properties\Win32.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(ProjectDir)$(ProjectName).props" />
     <Import Project="$(ProjectDir)..\properties\DynamicRelease.props" />
@@ -168,30 +168,6 @@
     <Import Project="$(ProjectDir)..\properties\StaticRelease.props" />
     <Import Project="$(ProjectDir)..\properties\x64.props" />
   </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLTCG|Win32'">
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTCG|Win32'">
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLTCG|x64'">
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLTCG|x64'">
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">
-    <Linkage-libconfig>static</Linkage-libconfig>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLIB|Win32'">
-    <Linkage-libconfig>static</Linkage-libconfig>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLIB|x64'">
-    <Linkage-libconfig>static</Linkage-libconfig>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLIB|x64'">
-    <Linkage-libconfig>static</Linkage-libconfig>
-  </PropertyGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
@@ -207,8 +183,12 @@
   <ImportGroup Label="ExtensionSettings">
     <Import Project="..\..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_system.1.55.0.16\build\native\boost_system.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_system.1.55.0.16\build\native\boost_system.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\libconfig.1.4.9.2\build\native\package.targets" Condition="Exists('..\..\..\..\..\..\nuget\libconfig.1.4.9.2\build\native\package.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\libconfig_vc120.1.4.9.4\build\native\libconfig_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libconfig_vc120.1.4.9.4\build\native\libconfig_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\libsodium_vc120.0.4.5.1\build\native\libsodium_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libsodium_vc120.0.4.5.1\build\native\libsodium_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.4\build\native\libzmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.4\build\native\libzmq_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.7\build\native\czmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.7\build\native\czmq_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.3\build\native\czmqpp_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.3\build\native\czmqpp_vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -216,7 +196,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_system.1.55.0.16\build\native\boost_system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_system.1.55.0.16\build\native\boost_system.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libconfig.1.4.9.2\build\native\package.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libconfig.1.4.9.2\build\native\package.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libconfig_vc120.1.4.9.4\build\native\libconfig_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libconfig_vc120.1.4.9.4\build\native\libconfig_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libsodium_vc120.0.4.5.1\build\native\libsodium_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libsodium_vc120.0.4.5.1\build\native\libsodium_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.4\build\native\libzmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.4\build\native\libzmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.7\build\native\czmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.7\build\native\czmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.3\build\native\czmqpp_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.3\build\native\czmqpp_vc120.targets'))" />
   </Target>
 </Project>

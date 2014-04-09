@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <_PropertySheetDisplayName>Obelisk Import Settings</_PropertySheetDisplayName>
+  </PropertyGroup>
+  
+  <!-- User Interface -->
+
+  <ItemGroup Label="BuildOptionsExtension">
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)obelisk.import.xml" />
+  </ItemGroup>
+
+  <!-- Configuration -->
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\obelisk\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Linkage-obelisk)' == 'static' Or '$(Linkage-obelisk)' == 'ltcg'">OBELISK_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <!-- Linkage -->
+  
+  <ItemDefinitionGroup Condition="'$(Linkage-obelisk)' == 'dynamic'">
+    <Link Condition="$(Configuration.IndexOf('Debug')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\obelisk12\obelisk.imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="$(Configuration.IndexOf('Release')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Release\obelisk12\obelisk.imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Linkage-obelisk)' == 'static'">
+    <Link Condition="$(Configuration.IndexOf('Debug')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\obelisk12\obelisk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="$(Configuration.IndexOf('Release')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Release\obelisk12\obelisk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Linkage-obelisk)' == 'ltcg'">
+    <Link Condition="$(Configuration.IndexOf('Debug')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\obelisk12\obelisk.ltcg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="$(Configuration.IndexOf('Release')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Release\obelisk12\obelisk.ltcg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- Copy -->
+
+  <Target Name="Linkage-obelisk-dynamic" AfterTargets="AfterBuild" Condition="'$(Linkage-obelisk)' == 'dynamic'">
+    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\obelisk12\obelisk.dll"
+          DestinationFiles="$(TargetDir)obelisk.dll"
+          SkipUnchangedFiles="true" />
+    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\obelisk12\obelisk.pdb"
+          DestinationFiles="$(TargetDir)obelisk.pdb"
+          SkipUnchangedFiles="true" />
+    <Copy Condition="$(Configuration.IndexOf('Release')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Release\obelisk12\obelisk.dll"
+          DestinationFiles="$(TargetDir)obelisk.dll"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- Messages -->
+
+  <Target Name="obelisk-info" BeforeTargets="AfterBuild" Condition="'$(Linkage-obelisk)' == 'dynamic'">
+    <Message Text="Copying obelisk.dll -&gt; $(TargetDir)obelisk.dll" Importance="high"/>
+    <Message Text="Copying obelisk.pdb -&gt; $(TargetDir)obelisk.pdb" Importance="high" Condition="$(Configuration.IndexOf('Debug')) != -1" />
+  </Target>
+
+</Project>

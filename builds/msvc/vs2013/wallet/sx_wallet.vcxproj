@@ -133,70 +133,6 @@
     <Import Project="$(ProjectDir)..\properties\ConsoleReleaseStatic.props" />
     <Import Project="$(ProjectDir)..\properties\x64.props" />
   </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLEXE|Win32'">
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-    <Linkage-pdcurses>ltcg</Linkage-pdcurses>
-    <Linkage-curl>ltcg</Linkage-curl>
-    <Linkage-zlib>ltcg</Linkage-zlib>
-    <Linkage-openssl>ltcg</Linkage-openssl>
-    <Linkage-libssh2>ltcg</Linkage-libssh2>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLEXE|Win32'">
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-    <Linkage-pdcurses>ltcg</Linkage-pdcurses>
-    <Linkage-curl>ltcg</Linkage-curl>
-    <Linkage-zlib>ltcg</Linkage-zlib>
-    <Linkage-openssl>ltcg</Linkage-openssl>
-    <Linkage-libssh2>ltcg</Linkage-libssh2>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLEXE|x64'">
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-    <Linkage-pdcurses>ltcg</Linkage-pdcurses>
-    <Linkage-curl>ltcg</Linkage-curl>
-    <Linkage-zlib>ltcg</Linkage-zlib>
-    <Linkage-openssl>ltcg</Linkage-openssl>
-    <Linkage-libssh2>ltcg</Linkage-libssh2>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLEXE|x64'">
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-    <Linkage-pdcurses>ltcg</Linkage-pdcurses>
-    <Linkage-curl>ltcg</Linkage-curl>
-    <Linkage-zlib>ltcg</Linkage-zlib>
-    <Linkage-openssl>ltcg</Linkage-openssl>
-    <Linkage-libssh2>ltcg</Linkage-libssh2>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">
-    <Linkage-libconfig>static</Linkage-libconfig>
-    <Linkage-pdcurses>static</Linkage-pdcurses>
-    <Linkage-curl>static</Linkage-curl>
-    <Linkage-zlib>static</Linkage-zlib>
-    <Linkage-openssl>static</Linkage-openssl>
-    <Linkage-libssh2>static</Linkage-libssh2>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSEXE|Win32'">
-    <Linkage-libconfig>static</Linkage-libconfig>
-    <Linkage-pdcurses>static</Linkage-pdcurses>
-    <Linkage-curl>static</Linkage-curl>
-    <Linkage-zlib>static</Linkage-zlib>
-    <Linkage-openssl>static</Linkage-openssl>
-    <Linkage-libssh2>static</Linkage-libssh2>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|x64'">
-    <Linkage-libconfig>static</Linkage-libconfig>
-    <Linkage-pdcurses>static</Linkage-pdcurses>
-    <Linkage-curl>static</Linkage-curl>
-    <Linkage-zlib>static</Linkage-zlib>
-    <Linkage-openssl>static</Linkage-openssl>
-    <Linkage-libssh2>static</Linkage-libssh2>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSEXE|x64'">
-    <Linkage-libconfig>static</Linkage-libconfig>
-    <Linkage-pdcurses>static</Linkage-pdcurses>
-    <Linkage-curl>static</Linkage-curl>
-    <Linkage-zlib>static</Linkage-zlib>
-    <Linkage-openssl>static</Linkage-openssl>
-    <Linkage-libssh2>static</Linkage-libssh2>
-  </PropertyGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
@@ -207,7 +143,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\..\..\..\..\nuget\libconfig.1.4.9.2\build\native\package.targets" Condition="Exists('..\..\..\..\..\..\nuget\libconfig.1.4.9.2\build\native\package.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\pdcurses.3.4.0.2\build\native\package.targets" Condition="Exists('..\..\..\..\..\..\nuget\pdcurses.3.4.0.2\build\native\package.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_filesystem-vc120.1.55.0.16\build\native\boost_filesystem-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_filesystem-vc120.1.55.0.16\build\native\boost_filesystem-vc120.targets')" />
@@ -222,12 +157,16 @@
     <Import Project="..\..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.targets" Condition="Exists('..\..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\libssh2.redist.1.4.3.3\build\native\libssh2.redist.targets" Condition="Exists('..\..\..\..\..\..\nuget\libssh2.redist.1.4.3.3\build\native\libssh2.redist.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\libssh2.1.4.3.3\build\native\libssh2.targets" Condition="Exists('..\..\..\..\..\..\nuget\libssh2.1.4.3.3\build\native\libssh2.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\libconfig_vc120.1.4.9.4\build\native\libconfig_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libconfig_vc120.1.4.9.4\build\native\libconfig_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\libsodium_vc120.0.4.5.1\build\native\libsodium_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libsodium_vc120.0.4.5.1\build\native\libsodium_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.4\build\native\libzmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.4\build\native\libzmq_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.7\build\native\czmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.7\build\native\czmq_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.3\build\native\czmqpp_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.3\build\native\czmqpp_vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libconfig.1.4.9.2\build\native\package.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libconfig.1.4.9.2\build\native\package.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\pdcurses.3.4.0.2\build\native\package.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\pdcurses.3.4.0.2\build\native\package.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost.1.55.0.16\build\native\boost.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_filesystem-vc120.1.55.0.16\build\native\boost_filesystem-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_filesystem-vc120.1.55.0.16\build\native\boost_filesystem-vc120.targets'))" />
@@ -243,6 +182,11 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\openssl.1.0.1.24\build\native\openssl.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\libssh2.redist.1.4.3.3\build\native\libssh2.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libssh2.redist.1.4.3.3\build\native\libssh2.redist.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\libssh2.1.4.3.3\build\native\libssh2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libssh2.1.4.3.3\build\native\libssh2.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libconfig_vc120.1.4.9.4\build\native\libconfig_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libconfig_vc120.1.4.9.4\build\native\libconfig_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libsodium_vc120.0.4.5.1\build\native\libsodium_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libsodium_vc120.0.4.5.1\build\native\libsodium_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.4\build\native\libzmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.4\build\native\libzmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.7\build\native\czmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.7\build\native\czmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.3\build\native\czmqpp_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.3\build\native\czmqpp_vc120.targets'))" />
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\sx\sx.vcxproj">
