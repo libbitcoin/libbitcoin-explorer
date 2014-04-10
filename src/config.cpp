@@ -1,56 +1,95 @@
 #include "config.hpp"
 
-#include <unistd.h>
 #include <sys/types.h>
-#include <pwd.h>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <libconfig.h++>
 
-using boost::filesystem::path;
+#ifdef _WIN32
 
-path home_directory()
+#include <shlobj.h>
+#include <windows.h>
+#include <tchar.h>
+
+// Use explicitly wide char functions and compile for unicode.
+
+tstring home_directory()
 {
-    const char* home_path = getenv("HOME");
-    if (!home_path)
-    {
-        passwd* pw = getpwuid(getuid());
-        const char *homedir = pw->pw_dir;
-        return path(homedir);
-    }
-    return path(home_path);
+    tchar app_data_path[MAX_PATH];
+    auto result = SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL,
+        SHGFP_TYPE_CURRENT, app_data_path);
+    return tstring(SUCCEEDED(result) ? app_data_path : L"");
 }
 
+tstring sx_config_path()
+{
+    tchar environment_buffer[MAX_PATH];
+    return tstring(GetEnvironmentVariableW(L"SX_CFG", environment_buffer,
+        MAX_PATH) == TRUE ? environment_buffer : L"");
+}
+
+#else
+
+#include <unistd.h>
+#include <pwd.h>
+
+// This is ANSI/MBCS if compiled on Windows but is always Unicode on Linux,
+// so we can safely return it as tstring when excluded from Windows.
+
+tstring home_directory()
+{
+    const char* home_path = getenv("HOME");
+    return std::string(home_path == nullptr ? getpwuid(getuid())->pw_dir : 
+        home_path);
+}
+
+tstring sx_config_path()
+{
+    return std::string(getenv("SX_CFG"));
+}
+
+#endif
+
 template <typename T>
-void get_value(const libconfig::Setting& root, config_map_type& config,
+void get_value(const libconfig::Setting& root, config_map_type& config_map,
     const std::string& key_name, const T& fallback_value)
 {
     T value;
-    if (root.lookupValue(key_name, value))
-        config[key_name] = boost::lexical_cast<std::string>(value);
-    else
-        config[key_name] = boost::lexical_cast<std::string>(fallback_value);
+
+    // libconfig is ANSI/MBCS on Windows - no Unicode support.
+    // This reads ANSI/MBCS values from XML. If they are UTF-8 (and above the
+    // ASCII band) the values will be misinterpreted upon use.
+    config_map[key_name] = (root.lookupValue(key_name, value)) ?
+        boost::lexical_cast<std::string>(value) :
+        boost::lexical_cast<std::string>(fallback_value);
+}
+
+void set_config_path(libconfig::Config& configuration, const tpath& config_path)
+{
+    // Ignore error if unable to read config file.
+    try
+    {
+        // libconfig is ANSI/MBCS on Windows - no Unicode support.
+        // This translates the path from Unicode to a "generic" path in
+        // ANSI/MBCS, which can result in failures.
+        configuration.readFile(config_path.generic_string().c_str());
+    }
+    catch (const libconfig::FileIOException&) {}
+    catch (const libconfig::ParseException&) {}
 }
 
 void load_config(config_map_type& config)
 {
-    path conf_path = home_directory() / ".sx.cfg";
-    // Check for env variable config to override default path.
-    char* env_path = getenv("SX_CFG");
-    if (env_path)
-        conf_path = env_path;
-    libconfig::Config cfg;
-    // Ignore error if unable to read config file.
-    try
-    {
-        cfg.readFile(conf_path.native().c_str());
-    }
-    catch (const libconfig::FileIOException&) {}
-    catch (const libconfig::ParseException&) {}
-    // Read off values
-    const libconfig::Setting& root = cfg.getRoot();
+    tstring environment_path = sx_config_path();
+    tpath config_path = environment_path.empty() ?
+        tpath(home_directory()) / L".sx.cfg" : tpath(environment_path);
+    
+    libconfig::Config configuration;
+    set_config_path(configuration, config_path);
+
+    // Read off values.
+    const libconfig::Setting& root = configuration.getRoot();
     get_value<std::string>(root, config, "service", "tcp://37.139.11.99:9091");
     get_value<std::string>(root, config, "client-certificate", ".sx.cert");
     get_value<std::string>(root, config, "server-public-key", "");
 }
-

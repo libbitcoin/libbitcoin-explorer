@@ -1,5 +1,6 @@
 #include <bitcoin/bitcoin.hpp>
 #include "util.hpp"
+
 using namespace bc;
 
 int main()

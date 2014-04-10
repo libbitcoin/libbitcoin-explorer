@@ -1,6 +1,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include "util.hpp"
+
 using namespace bc;
 
 void show_tx(const transaction_type& tx)
@@ -89,7 +90,7 @@ int main(int argc, char** argv)
 {
     std::string filename = "-";
     bool json_output = false;
-    for (size_t i = 1; i < argc; ++i)
+    for (int i = 1; i < argc; ++i)
     {
         const std::string arg = argv[i];
         if (arg == "-j" || arg == "--json")

@@ -128,7 +128,7 @@ bool payaddr_from_stdin(payment_address& payaddr)
 
 bool payaddr_from_argv(payaddr_list& payaddrs, int argc, char** argv)
 {
-    for (size_t i = 1; i < argc; ++i)
+    for (int i = 1; i < argc; ++i)
     {
         const std::string arg = argv[i];
         if (arg == "-j" || arg == "--json")
@@ -181,7 +181,7 @@ int main(int argc, char** argv)
         while (true)
         {
             fullnode.update();
-            usleep(100000);
+            std::this_thread::sleep_for(std::chrono::seconds(100));
         }
     });
     update_loop.detach();

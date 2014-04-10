@@ -1,7 +1,9 @@
+#include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+
 using namespace bc;
 using namespace libwallet;
 

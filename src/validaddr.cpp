@@ -1,4 +1,6 @@
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
+
 using namespace bc;
 
 int main(int argc, char** argv)
