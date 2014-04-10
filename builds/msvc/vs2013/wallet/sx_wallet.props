@@ -99,7 +99,7 @@
   </Target>
   
   <Target Name="CustomInfo" AfterTargets="Build" Condition="$(Configuration.IndexOf('SEXE')) != -1">
-    <Message Text="A LTCG warning on 'libeay32.lib(mem.obj)' is a the result of a COAPP OpenSSL packaging error and can be safely ignored." Importance="high"/>
+    <Message Text="A LTCG warning on 'libeay32.lib' is a the result of a COAPP OpenSSL packaging error and can be safely ignored." Importance="high"/>
   </Target>
 
 </Project>
