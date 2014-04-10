@@ -7,7 +7,7 @@ corebin_PROGRAMS = \
     sx-rawscript sx-scripthash sx-showscript sx-set-input sx-decode-addr \
     sx-encode-addr sx-genpub sx-showblkhead sx-validsig \
     sx-validaddr sx-base58-encode sx-base58-decode sx-wrap sx-unwrap \
-    sx-ripemd-hash sx-initchain sx-secret-to-wif
+    sx-ripemd-hash sx-initchain sx-secret-to-wif sx-wif-to-secret
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-sendtx-bci sx-base58check-encode \
 	sx-base58check-decode sx-embed-addr sx-blke-fetch-transaction \
@@ -75,6 +75,9 @@ sx_showscript_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_scripthash_SOURCES = scripthash.cpp
 sx_scripthash_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+
+sx_wif_to_secret_SOURCES = wif-to-secret.cpp
+sx_wif_to_secret_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_rawscript_SOURCES = rawscript.cpp
 sx_rawscript_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
