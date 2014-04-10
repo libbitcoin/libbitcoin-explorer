@@ -1,13 +1,26 @@
 #include <unordered_set>
 #include <thread>
 #include <mutex>
+
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <obelisk/obelisk.hpp>
-#include <ncurses.h>
+
 #include "config.hpp"
 #include "util.hpp"
+
+#ifdef _WIN32
+#ifndef NOMINMAX
+// Macro min(a,b) a conflicts with pdcurses.
+#define NOMINMAX
+#endif
+#include <stdlib.h>
+#include <pdcwin.h>
+#else
+#include <ncurses.h>
+#include <unistd.h>
+#endif
 
 using std::placeholders::_1;
 using std::placeholders::_2;
@@ -70,7 +83,7 @@ public:
         if (history_.empty())
             return;
         ++selected_entry_;
-        BITCOIN_ASSERT(selected_entry_ <= history_.size());
+        BITCOIN_ASSERT(selected_entry_ <= (int)history_.size());
         if (selected_entry_ == 21 || selected_entry_ == history_.size())
             selected_entry_ = 0;
     }
@@ -79,7 +92,7 @@ public:
         if (history_.empty())
             return;
         if (selected_entry_ == 0)
-            selected_entry_ = std::min(21, (int)history_.size());
+            selected_entry_ = min(21, (int)history_.size());
         --selected_entry_;
     }
 
@@ -95,7 +108,7 @@ public:
     }
     const wallet_history_entry& selected_entry()
     {
-        BITCOIN_ASSERT(selected_entry_ < history_.size());
+        BITCOIN_ASSERT(selected_entry_ < (int)history_.size());
         return history_[selected_entry_];
     }
 
@@ -232,8 +245,6 @@ private:
     output_info_map unspent_;
     keys_map privkeys_;
 };
-
-#include <unistd.h>
 
 void wallet_display::draw()
 {
@@ -673,7 +684,7 @@ void broadcast_subsystem()
     // wait
     while (!stopped)
     {
-        usleep(200000);
+        std::this_thread::sleep_for(std::chrono::seconds(200));
         // if any new shit then broadcast it.
         broadcast_mutex.lock();
         if (tx_broadcast_queue.empty())
@@ -758,7 +769,7 @@ int main(int argc, char** argv)
             while (!stopped)
             {
                 fullnode.update();
-                usleep(100000);
+                std::this_thread::sleep_for(std::chrono::seconds(100));
             }
         });
     std::thread broadcaster(broadcast_subsystem);
@@ -809,4 +820,3 @@ int main(int argc, char** argv)
     pool.join();
     return 0;
 }
-
