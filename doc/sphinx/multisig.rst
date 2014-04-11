@@ -79,6 +79,10 @@ Our example will use bash substitution again.
 ::
 
     $ sx rawscript zero [ $(cat key2 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat key3 | sx sign-input txfile.tx 0 $(cat msig.script)) ] [ $(cat msig.script) ] | sx set-input txfile.tx 0 > signed.tx
+    $ SIGNATURE2=$(cat key2 | sx sign-input txfile.tx 0 $(cat msig.script))
+    $ SIGNATURE3=$(cat key3 | sx sign-input txfile.tx 0 $(cat msig.script))
+    $ INPUT_SCRIPT=$(sx rawscript zero [ $SIGNATURE2 ] [ $SIGNATURE3 ] [ $(cat msig.script) ])
+    $ sx set-input txfile.tx 0 $INPUT_SCRIPT > signed.tx
 
 The transaction is finalised! Broadcast it.
 ::
