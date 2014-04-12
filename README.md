@@ -151,9 +151,9 @@ You can use either the `master_public.key` or the `wallet.seed` for generating
 Bitcoin receive addresses. But you cannot use the `master_public.key` for
 generating the private keys for spending those Bitcoins.
 
-    $ cat master_public.key | sx genpub 0
+    $ cat master_public.key | sx genaddr 0
     1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
-    $ cat wallet.seed | sx genpub 0
+    $ cat wallet.seed | sx genaddr 0
     1a4b47AC4ydSnAAcTNH1qozHq2pwJb644
 
 For Electrum compatible 12 word seeds, use the mnemonic tool.
