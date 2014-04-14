@@ -24,7 +24,10 @@ For multisignature stuff we will need to use the public keys of the keypairs.
 We use bash substitution below for convenience.
 ::
 
-    $ sx rawscript 2 [ $(cat key1 | sx pubkey) ] [ $(cat key2 | sx pubkey) ] [ $(cat key3 | sx pubkey) ] 3 checkmultisig > msig.script
+    $ PUBKEY1=$(cat key1 | sx pubkey)
+    $ PUBKEY2=$(cat key2 | sx pubkey)
+    $ PUBKEY3=$(cat key3 | sx pubkey)
+    $ sx rawscript 2 [ $PUBKEY1 ] [ $PUBKEY2 ] [ $PUBKEY3 ] 3 checkmultisig > msig.script
 
 The file 'msig.script' now stores the hex representation of that script.
 We can display it at anytime using:
@@ -52,7 +55,7 @@ Spending the multisignature coins
 We create the basic transaction.
 ::
 
-    $ sx mktx txfile.tx -i e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0 -o 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY:990000
+    $ sx mktx txfile.tx -i e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0 -o 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY:90000
     Added input e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0
     Added output sending 9900000 Satoshis to 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY.
 
