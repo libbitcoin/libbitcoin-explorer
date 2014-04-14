@@ -40,7 +40,7 @@ with the number 3):
     $ cat msig.script | sx scripthash
     34CRZpt8j81rgh9QhzuBepqPi4cBQSjhjr
 
-Send some bitcoin to that address!
+Send 0.001 BTC to that address!
 
 This is my transaction:
 
@@ -52,11 +52,11 @@ Spending the multisignature coins
 We create the basic transaction.
 ::
 
-    $ sx mktx txfile.tx -i e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0 -o 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY:9900000
+    $ sx mktx txfile.tx -i e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0 -o 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY:990000
     Added input e2124d25a7f6fe0d5dd5dd78ba7d98f60f8c47be9c91699e649e04118d531f52:0
     Added output sending 9900000 Satoshis to 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY.
 
-The transaction has a fee of 0.001 BTC and is saved in the file named
+The transaction has a fee of 0.0001 BTC and is saved in the file named
 `txfile.tx`.
 
 It has a single input which we will generate the signatures for, create the
