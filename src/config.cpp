@@ -36,6 +36,7 @@ tstring sx_config_path()
 // This is ANSI/MBCS if compiled on Windows but is always Unicode on Linux,
 // so we can safely return it as tstring when excluded from Windows.
 
+/*
 tstring home_directory()
 {
     const char* home_path = getenv("HOME");
@@ -47,6 +48,21 @@ tstring sx_config_path()
 {
     const char* config_path = getenv("SX_CFG");
     return std::string(config_path == nullptr ? "" : config_path);
+}
+*/
+
+using boost::filesystem::path;
+
+path home_directory()
+{
+    const char* home_path = getenv("HOME");
+    if (!home_path)
+    {
+        passwd* pw = getpwuid(getuid());
+        const char *homedir = pw->pw_dir;
+        return path(homedir);
+    }
+    return path(home_path);
 }
 
 #endif
@@ -65,7 +81,7 @@ void get_value(const libconfig::Setting& root, config_map_type& config_map,
         boost::lexical_cast<std::string>(fallback_value);
 }
 
-void set_config_path(libconfig::Config& configuration, const tpath& config_path)
+void set_config_path(libconfig::Config& configuration, const char* config_path)
 {
     // Ignore error if unable to read config file.
     try
@@ -73,7 +89,7 @@ void set_config_path(libconfig::Config& configuration, const tpath& config_path)
         // libconfig is ANSI/MBCS on Windows - no Unicode support.
         // This translates the path from Unicode to a "generic" path in
         // ANSI/MBCS, which can result in failures.
-        configuration.readFile(config_path.generic_string().c_str());
+        configuration.readFile(config_path);
     }
     catch (const libconfig::FileIOException&) {}
     catch (const libconfig::ParseException&) {}
@@ -81,12 +97,20 @@ void set_config_path(libconfig::Config& configuration, const tpath& config_path)
 
 void load_config(config_map_type& config)
 {
+    libconfig::Config configuration;
+#ifdef _WIN32
     tstring environment_path = sx_config_path();
     tpath config_path = environment_path.empty() ?
         tpath(home_directory()) / L".sx.cfg" : tpath(environment_path);
-    
-    libconfig::Config configuration;
-    set_config_path(configuration, config_path);
+    set_config_path(configuration, config_path.generic_string().c_str());
+#else
+    path conf_path = home_directory() / ".sx.cfg";
+    // Check for env variable config to override default path.
+    char* env_path = getenv("SX_CFG");
+    if (env_path)
+        conf_path = env_path;
+    set_config_path(configuration, conf_path.native().c_str());
+#endif
 
     // Read off values.
     const libconfig::Setting& root = configuration.getRoot();
