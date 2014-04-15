@@ -45,7 +45,8 @@ tstring home_directory()
 
 tstring sx_config_path()
 {
-    return std::string(getenv("SX_CFG"));
+    const char* config_path = getenv("SX_CFG");
+    return std::string(config_path == nullptr ? "" : config_path);
 }
 
 #endif
