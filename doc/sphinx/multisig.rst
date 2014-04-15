@@ -108,4 +108,74 @@ Or to send it via an obelisk server.
 
 https://blockchain.info/tx/d646f82bd5fbdb94a36872ce460f97662b80c3050ad3209bef9d1e398ea277ab
 
+Generalizing for M of N expressions
+-----------------------------------
+
+Many mining pools and Bitcoin nodes currently do not support some types of
+Bitcoin transactions. However a few mining pools do such as eligius which
+we encourage developers and users to support however they can.
+
+You can post transactions to eligius using the pushtxn interface.
+
+http://eligius.st/~wizkid057/newstats/pushtxn.php
+
+Here's an example of creating a 3 of 5 multisignature transaction.
+::
+
+    $ sx newkey > key1
+    $ sx newkey > key2
+    $ sx newkey > key3
+    $ sx newkey > key4
+    $ sx newkey > key5
+    $ PUBKEY1=$(cat key1 | sx pubkey)
+    $ PUBKEY2=$(cat key2 | sx pubkey)
+    $ PUBKEY3=$(cat key3 | sx pubkey)
+    $ PUBKEY4=$(cat key4 | sx pubkey)
+    $ PUBKEY5=$(cat key5 | sx pubkey)
+    $ sx rawscript 3 [ $PUBKEY1 ] [ $PUBKEY2 ] [ $PUBKEY3 ] [ $PUBKEY4 ] [ $PUBKEY5 ] 5 checkmultisig > msig.script
+    $ cat msig.script | sx scripthash
+    3267gLrEz8URAUxjrHqk7aQD3Nv1A9at8j
+
+Now I deposit 0.001 BTC to that address before continuing::
+
+    $ sx mktx --input 01a7836061aa1aae9da07bbf3c85277a4b310dcb0ebcb289740b9d31d36e12eb:0 -o 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY:90000
+    mktx: Action '01a7836061aa1aae9da07bbf3c85277a4b310dcb0ebcb289740b9d31d36e12eb:0' doesn't exist.
+    $ sx mktx txfile.tx -i 01a7836061aa1aae9da07bbf3c85277a4b310dcb0ebcb289740b9d31d36e12eb:0 -o 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY:90000
+    Added input 01a7836061aa1aae9da07bbf3c85277a4b310dcb0ebcb289740b9d31d36e12eb:0
+    Added output sending 90000 Satoshis to 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY.
+    $ SIGNATURE3=$(cat key3 | sx sign-input txfile.tx 0 $(cat msig.script))
+    $ SIGNATURE4=$(cat key4 | sx sign-input txfile.tx 0 $(cat msig.script))
+    $ SIGNATURE5=$(cat key5 | sx sign-input txfile.tx 0 $(cat msig.script))
+    $ INPUT_SCRIPT=$(sx rawscript zero zero [ $SIGNATURE3 ] [ $SIGNATURE4 ] [ $SIGNATURE5 ] [ $(cat msig.script) ])
+    $ sx set-input txfile.tx 0 $INPUT_SCRIPT > signed.tx
+    $ cat signed.tx | sx showtx
+    hash: 408c742365929794525590772475d090e6b3a452fa8f97c376978f068eb07bfd
+    version: 1
+    locktime: 0
+    Input:
+      previous output: 01a7836061aa1aae9da07bbf3c85277a4b310dcb0ebcb289740b9d31d36e12eb:0
+      script: zero [ 3045022100e5afa15cbb67e648cd25d779300b512c455dcfb467bc8db2bb93b2c7818bdb6e022032f06f99909308777ca80205c88477aaba96bcca895059c9883c87859c0e2eb101 ] [ 304402207033c4969e9aa44821bf64590bf3e242e58a7c1a6fa96bc0c0e293934814a340022078958317e9ffc3761398231cee91ba2d16b8969eb12aec78632d9cf1152ab71301 ] [ 3045022031dc9c62121267e838ac834181e8e301506c706bfd5e59d2eb352fbf498c5ab9022100b3dea57d7b239d59fe4843e390860e3556d64cbf15e10c19483f1451ab9f9f7c01 ] [ 5321038f85c1e06acd49da7071d0f861ea4be4e23d2a1c4f02a3d59232837788559200210282ac9b9362eb7df54f1c1985d32ee54ed095e3bd9b3e7a37f3ed680b0e3da5f121029391178193d15a2ae88cc44d1bc1ed4401db3bab2c84d7ab5885a5f745aa95182102e5bdba47e3d78c933c6b616dc686341308646fed4031f9fcd10f1199c0bb1a4421021a301941eefdf88e59a0fc67e40f9fb40227990e09da42e4c74a7ea425a1898955ae ]
+      sequence: 4294967295
+      address: 3267gLrEz8URAUxjrHqk7aQD3Nv1A9at8j
+    Output:
+      value: 90000
+      script: dup hash160 [ a387ba64648b2c78b38d5278a43f0291a06458f0 ] equalverify checksig
+      address: 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY
+    $ cat signed.tx | sx validtx
+    Status: Success
+      Unconfirmed: 0
+
+Finally I submit the transaction to eligius.
+::
+
+    Trying to send...
+    array(3) {
+      ["result"]=>
+      string(64) "408c742365929794525590772475d090e6b3a452fa8f97c376978f068eb07bfd"
+      ["error"]=>
+      NULL
+      ["id"]=>
+      string(1) "1"
+    }
+    Response = 0
 
