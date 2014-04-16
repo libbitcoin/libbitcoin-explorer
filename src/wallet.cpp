@@ -11,15 +11,16 @@
 #include "util.hpp"
 
 #ifdef _WIN32
-#ifndef NOMINMAX
-// Macro min(a,b) a conflicts with pdcurses.
-#define NOMINMAX
-#endif
-#include <stdlib.h>
-#include <pdcwin.h>
+    #ifndef NOMINMAX
+        // Macro min(a,b) a conflicts with pdcurses.
+        #define NOMINMAX
+    #endif
+        #include <stdlib.h>
+        #include <pdcwin.h>
 #else
-#include <ncurses.h>
-#include <unistd.h>
+    #include <ncurses.h>
+    #include <unistd.h>
+    using std::min;
 #endif
 
 using std::placeholders::_1;
