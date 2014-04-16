@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <_PropertySheetDisplayName>Libwallet Import Settings</_PropertySheetDisplayName>
+  </PropertyGroup>
+  
+  <!-- User Interface -->
+
+  <ItemGroup Label="BuildOptionsExtension">
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)libwallet.import.xml" />
+  </ItemGroup>
+
+  <!-- Configuration -->
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libwallet\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Linkage-libwallet)' == 'static' Or '$(Linkage-libwallet)' == 'ltcg'">WALLET_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <!-- Linkage -->
+  
+  <ItemDefinitionGroup Condition="'$(Linkage-libwallet)' == 'dynamic'">
+    <Link Condition="$(Configuration.IndexOf('Debug')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\libwallet12\libwallet.imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="$(Configuration.IndexOf('Release')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Release\libwallet12\libwallet.imp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Linkage-libwallet)' == 'static'">
+    <Link Condition="$(Configuration.IndexOf('Debug')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\libwallet12\libwallet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="$(Configuration.IndexOf('Release')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Release\libwallet12\libwallet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Linkage-libwallet)' == 'ltcg'">
+    <Link Condition="$(Configuration.IndexOf('Debug')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\libwallet12\libwallet.ltcg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Link Condition="$(Configuration.IndexOf('Release')) != -1">
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Release\libwallet12\libwallet.ltcg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- Copy -->
+
+  <Target Name="Linkage-libwallet-dynamic" AfterTargets="AfterBuild" Condition="'$(Linkage-libwallet)' == 'dynamic'">
+    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\libwallet12\libwallet.dll"
+          DestinationFiles="$(TargetDir)libwallet.dll"
+          SkipUnchangedFiles="true" />
+    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\libwallet12\libwallet.pdb"
+          DestinationFiles="$(TargetDir)libwallet.pdb"
+          SkipUnchangedFiles="true" />
+    <Copy Condition="$(Configuration.IndexOf('Release')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Release\libwallet12\libwallet.dll"
+          DestinationFiles="$(TargetDir)libwallet.dll"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- Messages -->
+
+  <Target Name="libwallet-info" BeforeTargets="AfterBuild" Condition="'$(Linkage-libwallet)' == 'dynamic'">
+    <Message Text="Copying libwallet.dll -&gt; $(TargetDir)libwallet.dll" Importance="high"/>
+    <Message Text="Copying libwallet.pdb -&gt; $(TargetDir)libwallet.pdb" Importance="high" Condition="$(Configuration.IndexOf('Debug')) != -1" />
+  </Target>
+
+</Project>
