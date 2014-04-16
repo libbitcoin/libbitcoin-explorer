@@ -46,7 +46,53 @@ tstring home_directory()
 
 tstring sx_config_path()
 {
-    return std::string(getenv("SX_CFG"));
+    const char* config_path = getenv("SX_CFG");
+    return std::string(config_path == nullptr ? "" : config_path);
+}
+*/
+
+using boost::filesystem::path;
+
+path home_directory()
+{
+    const char* home_path = getenv("HOME");
+    if (!home_path)
+    {
+        passwd* pw = getpwuid(getuid());
+        const char *homedir = pw->pw_dir;
+        return path(homedir);
+    }
+    return path(home_path);
+}
+*/
+
+using boost::filesystem::path;
+
+path home_directory()
+{
+    const char* home_path = getenv("HOME");
+    if (!home_path)
+    {
+        passwd* pw = getpwuid(getuid());
+        const char *homedir = pw->pw_dir;
+        return path(homedir);
+    }
+    return path(home_path);
+}
+*/
+
+using boost::filesystem::path;
+
+path home_directory()
+{
+    const char* home_path = getenv("HOME");
+    if (!home_path)
+    {
+        passwd* pw = getpwuid(getuid());
+        const char *homedir = pw->pw_dir;
+        return path(homedir);
+    }
+    return path(home_path);
 }
 */
 

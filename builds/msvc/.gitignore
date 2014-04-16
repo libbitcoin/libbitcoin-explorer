@@ -1,1 +1,5 @@
-*.v12.suo
+*.suo
+*.user
+*.sdf
+*.opensdf
+/vs2013/save/
