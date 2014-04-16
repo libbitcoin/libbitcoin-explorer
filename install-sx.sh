@@ -271,13 +271,13 @@ install_libbitcoin(){
         echo " --> Updating libbitcoin..."
         echo
         cd libbitcoin-git
-        git remote set-url origin https://github.com/spesmilo/libbitcoin.git
+        git remote set-url origin https://github.com/libbitcoin/libbitcoin.git
         git pull --rebase
     else
         echo
         echo " --> Downloading libbitcoin from git..."
         echo
-        git clone https://github.com/spesmilo/libbitcoin.git libbitcoin-git
+        git clone https://github.com/libbitcoin/libbitcoin.git libbitcoin-git
     fi
     cd $SRC_DIR/libbitcoin-git
     echo
@@ -300,13 +300,13 @@ install_libwallet(){
         echo " --> Updating Libwallet..."
         echo
         cd libwallet-git
-        git remote set-url origin https://github.com/spesmilo/libwallet.git
+        git remote set-url origin https://github.com/libbitcoin/libwallet.git
         git pull --rebase
     else
         echo
         echo " --> Downloading Libwallet from git..."
         echo
-        git clone https://github.com/spesmilo/libwallet.git libwallet-git
+        git clone https://github.com/libbitcoin/libwallet.git libwallet-git
     fi
     cd $SRC_DIR/libwallet-git
     echo
@@ -329,13 +329,13 @@ install_obelisk(){
         echo " --> Updating Obelisk..."
         echo
         cd obelisk-git
-        git remote set-url origin https://github.com/spesmilo/obelisk.git
+        git remote set-url origin https://github.com/libbitcoin/obelisk.git
         git pull --rebase
     else
         echo
         echo " --> Downloading obelisk..."
         echo
-        git clone https://github.com/spesmilo/obelisk.git obelisk-git
+        git clone https://github.com/libbitcoin/obelisk.git obelisk-git
     fi
     cd $SRC_DIR/obelisk-git
     echo
