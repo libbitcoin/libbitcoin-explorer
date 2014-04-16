@@ -46,16 +46,23 @@ std::string read_stdin()
     return std::string(first, last);
 }
 
-bool read_private_key(elliptic_curve_key& key, const std::string& arg)
+bool read_private_key(elliptic_curve_key& key, const std::string& arg,
+    int is_compressed=-1)
 {
     secret_parameter secret = libwallet::wif_to_secret(arg);
-    if (secret == null_hash || !key.set_secret(secret, libwallet::is_wif_compressed(arg)))
+    bool compressed_flag = libwallet::is_wif_compressed(arg);
+    // Overrides for compression
+    if (is_compressed == 0)
+        compressed_flag = false;
+    else if (is_compressed == 1)
+        compressed_flag = true;
+    if (secret == null_hash || !key.set_secret(secret, compressed_flag))
         return false;
     return true;
 }
-bool read_private_key(elliptic_curve_key& key)
+bool read_private_key(elliptic_curve_key& key, int is_compressed=-1)
 {
-    if (!read_private_key(key, read_stdin()))
+    if (!read_private_key(key, read_stdin(), is_compressed))
     {
         std::cerr << "Invalid private key." << std::endl;
         return false;
