@@ -28,9 +28,26 @@ int main(int argc, char** argv)
             return -1;
         }
     }
+    std::string arg = read_stdin();
     elliptic_curve_key key;
-    if (!read_private_key(key, is_compressed))
-        return -1;
+    if (!read_private_key(key, arg, is_compressed))
+    {
+        // Try reading it as a public key instead.
+        data_chunk pubkey = decode_hex(arg);
+        if (pubkey.empty())
+        {
+            std::cerr << "Invalid private or public key." << std::endl;
+            return -1;
+        }
+        // OK, it's a public key.
+        if (!key.set_public_key(pubkey))
+        {
+            std::cerr << "Invalid public key." << std::endl;
+            return -1;
+        }
+        if (is_compressed >= 0)
+            key.set_compressed(is_compressed);
+    }
     std::cout << key.public_key() << std::endl;
     return 0;
 }
