@@ -839,6 +839,17 @@ Generate a new sending address and a stealth nonce.\
 """
 ),
 
+"hd-seed": (
+"HD KEYS",
+"Create a random new HD key.",
+
+"""\
+Usage: sx hd-seed [ENTROPY]
+
+Create a random new HD key.\
+"""
+),
+
 }
 
 def display_usage():
