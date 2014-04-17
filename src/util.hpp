@@ -2,6 +2,7 @@
 #define SX_UTIL_HPP
 
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 
@@ -80,6 +81,36 @@ bool read_public_or_private_key(elliptic_curve_key& key)
         return true;
     std::cerr << "Invalid public or private key." << std::endl;
     return false;
+}
+
+// Used by hd-priv and hd-pub commands.
+bool read_hd_command_args(int argc, char** argv,
+    bool& is_hard, uint32_t& index)
+{
+    if (argc == 1 || argc > 3)
+    {
+        std::cerr << "Usage: sx hd-priv [--hard] INDEX" << std::endl;
+        return false;
+    }
+    for (size_t i = 1; i < argc; ++i)
+    {
+        std::string arg = argv[i];
+        if (arg == "-h" || arg == "--hard")
+        {
+            is_hard = true;
+            continue;
+        }
+        try
+        {
+            index = boost::lexical_cast<uint32_t>(arg);
+        }
+        catch (const boost::bad_lexical_cast&)
+        {
+            std::cerr << "hd-priv: Bad INDEX provided." << std::endl;
+            return false;
+        }
+    }
+    return true;
 }
 
 #endif
