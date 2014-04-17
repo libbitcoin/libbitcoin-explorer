@@ -19,15 +19,14 @@ sx is built using `libbitcoin <http://libbitcoin.dyne.org>`_ and `obelisk <http:
    detwallet
    history
    multisig
+   hdkeys
 
 Authors
 =======
 
 Amir Taaki (genjix) - Development - 1Fufjpf9RM2aQsGedhSpbSCGRHrmLMJ7yY
 
+William Swanson (s_tec) of `AirBitz.co <https://airbitz.co/>`_ - Development (HD keys, URI, wallet code)
+
 Santiago Mendez (d3) - Feedback, testing and improvements. - 1BcszqWoLLFeJGMipyqCEMwp8DnjTwM9UK
-
-Vitalik Buterin - Development - 1GNRekXGy7s2UYnE7ZhMcWdv3GpJSGtLkc
-
-Grazcoin - Development - 1HAcKsR5LcV2WaPiYP8LqotQys4r8mw4m
 
