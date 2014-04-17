@@ -8,7 +8,7 @@ corebin_PROGRAMS = \
     sx-encode-addr sx-genpub sx-showblkhead sx-validsig \
     sx-validaddr sx-base58-encode sx-base58-decode sx-wrap sx-unwrap \
     sx-ripemd-hash sx-initchain sx-secret-to-wif sx-wif-to-secret \
-    sx-hd-seed
+    sx-hd-seed sx-hd-priv sx-hd-pub sx-hd-to-address sx-hd-to-wif
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-sendtx-bci sx-base58check-encode \
 	sx-base58check-decode sx-embed-addr sx-blke-fetch-transaction \
@@ -49,6 +49,18 @@ endif
 
 sx_hd_seed_SOURCES = hd-seed.cpp
 sx_hd_seed_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+
+sx_hd_pub_SOURCES = hd-pub.cpp
+sx_hd_pub_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+
+sx_hd_priv_SOURCES = hd-priv.cpp
+sx_hd_priv_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+
+sx_hd_to_address_SOURCES = hd-to-address.cpp
+sx_hd_to_address_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+
+sx_hd_to_wif_SOURCES = hd-to-wif.cpp
+sx_hd_to_wif_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_ripemd_hash_SOURCES = ripemd-hash.cpp
 sx_ripemd_hash_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}

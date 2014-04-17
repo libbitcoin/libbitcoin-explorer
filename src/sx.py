@@ -850,6 +850,50 @@ Create a random new HD key.\
 """
 ),
 
+"hd-priv": (
+"HD KEYS",
+"Create an private HD key from another HD private key.",
+
+"""\
+Usage: sx hd-priv [--hard] INDEX
+
+Create an private HD key from another HD private key.\
+"""
+),
+
+"hd-pub": (
+"HD KEYS",
+"Create an HD public key from another HD private or public key.",
+
+"""\
+Usage: sx hd-pub [--hard] INDEX
+
+Create an HD public key from another HD private or public key.\
+"""
+),
+
+"hd-to-address": (
+"HD KEYS",
+"Convert an HD public or private key to a Bitcoin address.",
+
+"""\
+Usage: sx hd-to-address
+
+Convert an HD public or private key to a Bitcoin address.\
+"""
+),
+
+"hd-to-wif": (
+"HD KEYS",
+"Convert an HD private key to a WIF private key.",
+
+"""\
+Usage: sx hd-to-wif
+
+Convert an HD private key to a WIF private key.\
+"""
+),
+
 }
 
 def display_usage():
