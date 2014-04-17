@@ -64,7 +64,6 @@ path home_directory()
     }
     return path(home_path);
 }
-*/
 
 using boost::filesystem::path;
 
@@ -79,7 +78,6 @@ path home_directory()
     }
     return path(home_path);
 }
-*/
 
 using boost::filesystem::path;
 
@@ -94,7 +92,6 @@ path home_directory()
     }
     return path(home_path);
 }
-*/
 
 using boost::filesystem::path;
 
