@@ -1,6 +1,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <thread>
+#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include "config.hpp"
@@ -118,7 +119,9 @@ void json_history_fetched(const payment_address& payaddr,
 
 bool payaddr_from_stdin(payment_address& payaddr)
 {
-    if (!payaddr.set_encoded(read_stdin()))
+    std::string btc_address = read_stdin();
+    boost::algorithm::trim(btc_address);
+    if (!payaddr.set_encoded(btc_address))
     {
         std::cerr << "history: Invalid address." << std::endl;
         return false;
