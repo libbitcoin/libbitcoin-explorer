@@ -2,7 +2,7 @@
 #include <sstream>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/utility/sha256.hpp>
+#include <bitcoin/utility/hash.hpp>
 #include "util.hpp"
 
 using namespace bc;
@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     }
     data_chunk rawdata(bytes.begin(), bytes.end() - 4);
     data_chunk rawchecksum(bytes.end() - 4, bytes.end());
-    uint32_t checksum = generate_sha256_checksum(rawdata);
+    uint32_t checksum = generate_checksum(rawdata);
     uint32_t my_checksum = cast_chunk<uint32_t>(rawchecksum);
     if (checksum != my_checksum) {
         std::cerr << "Error: checksum does not match" << std::endl;

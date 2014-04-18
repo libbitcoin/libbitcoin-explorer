@@ -7,7 +7,7 @@ int main()
 {
     std::string data = read_stdin();
     const short_hash hash =
-        generate_ripemd_hash(data_chunk(data.begin(), data.end()));
+        generate_short_hash(data_chunk(data.begin(), data.end()));
     std::cout << hash << std::endl;
 }
 

@@ -2,7 +2,7 @@
 #include <sstream>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/utility/sha256.hpp>
+#include <bitcoin/utility/hash.hpp>
 #include "util.hpp"
 
 using namespace bc;
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     data_chunk bytes;
     bytes.push_back(version_byte);
     extend_data(bytes, decode_hex(hex_str));
-    uint32_t checksum = generate_sha256_checksum(bytes);
+    uint32_t checksum = generate_checksum(bytes);
     extend_data(bytes, uncast_type(checksum));
 
     std::cout << bytes << std::endl;
