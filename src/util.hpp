@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 
@@ -44,7 +45,9 @@ std::string read_stdin()
 {
     std::istreambuf_iterator<char> first(std::cin);
     std::istreambuf_iterator<char> last;
-    return std::string(first, last);
+    std::string result(first, last);
+    boost::algorithm::trim(result);
+    return result;
 }
 
 bool read_private_key(elliptic_curve_key& key, const std::string& arg,
