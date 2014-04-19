@@ -70,15 +70,30 @@ function qrcodegen {
 	zenity --info --height=150 --text="Open the 'qrcode-DATE.png' to view your QR code."
 }
 
-#######################################
-## Create a Multisignature Rawscript ##
-#######################################
+##############################################
+## Create a 2 of 3 Multisignature Rawscript ##
+##############################################
 
-function mofn {
-	sx rawscript 2 [ $(zenity --entry --title="Multisignature Transaction (2-3): Address 1." --text="Enter the uncompressed public key for address 1.") ] [ $(zenity --entry --title="Multisignature Transaction (2-3): Address 2." --text="Enter the uncompressed public key for address 2.") ] [$(zenity --entry --title="Multisignature Transaction (2-3): Address 3." --text="Enter the uncompressed public key for address 3.") ] 3 checkmultisig > msig-$(date +%y-%m-%d-%s).script
-	cat msig-$(date +%y-%m-%d-%s).script | sx scripthash > msig-address-$(date +%y-%m-%d-%s).txt
-	zenity --info --height=150 --title="Multisignature (2-3) Bitcoin Address" --text=$(cat msig-$(date +%y-%m-%d-%s).script | sx scripthash)
-	zenity --info --height=150 --text="A copy of the rawscript and public Bitcoin address for your multisignature address can be found in 'msig-address-DATE.txt'."
+function twoofthreemultisig {
+	oneofthree=$(zenity --entry --title="Multisignature Transaction (2-3): Address 1." --text="Enter the uncompressed public key for address 1.")
+	twoofthree=$(zenity --entry --title="Multisignature Transaction (2-3): Address 2." --text="Enter the uncompressed public key for address 2.")
+	threeofthree=$(zenity --entry --title="Multisignature Transaction (2-3): Address 3." --text="Enter the uncompressed public key for address 3.")
+	addroneofthree="$(echo $oneofthree | sx addr)"
+	addrtwoofthree="$(echo $twoofthree | sx addr)"
+	addrthreeofthree="$(echo $threeofthree | sx addr)"
+	validaddroneofthree=$(sx validaddr $addroneofthree)
+	validaddrtwoofthree=$(sx validaddr $addrtwoofthree)
+	validaddrthreeofthree=$(sx validaddr $addrthreeofthree)
+	if [[ -z "$oneofthree" || -z "$twoofthree" || -z "$threeofthree" ]]; then
+		zenity --info --title="Multisignature Fail" --text="One of the addresses is empty, so this isn't going to work"
+	elif [[ "$validaddroneofthree" == "Status: Success" || "$validaddrtwoofthree" == "Status: Success" ||  "$validaddrthreeofthree" == "Status: Success" ]]; then
+		sx rawscript 2 [ $oneofthree ] [ $twoofthree ] [ $threeofthree ] 3 checkmultisig > msig-two-of-three-$(date +%y-%m-%d-%s).script
+		cat msig-two-of-three-$(date +%y-%m-%d-%s).script | sx scripthash > msig-two-of-three-$(date +%y-%m-%d-%s).txt
+		zenity --info --height=150 --title="Multisignature (2-3) Bitcoin Address" --text=$(cat msig-two-of-three-$(date +%y-%m-%d-%s).script | sx scripthash)
+		zenity --info --height=150 --text="A copy of the rawscript and public Bitcoin address for your multisignature address can be found in 'msig-address-DATE.txt'."
+	else
+		zenity --info --title="Multisignature Fail" --text="The pubkeys you entered were not valid. Remember this is the uncompressed version of your address."
+	fi
 }
 
 ##############################################################
@@ -208,7 +223,7 @@ elif [ "$Menu" == "Receive Stealth Transaction" ]; then
 elif [ "$Menu" == "Create QR code" ]; then
 	qrcodegen
 elif [ "$Menu" == "Create Multisignature Address" ]; then
-	mofn
+	twoofthreemultisig
 elif [ "$Menu" == "Create Deterministic Wallet Seed" ]; then
 	dw-seed
 elif [ "$Menu" == "Create Private Key from a DW Seed" ]; then
