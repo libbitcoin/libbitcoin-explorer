@@ -149,7 +149,7 @@ namespace std
         size_t operator()(const bc::output_point& outpoint) const
         {
             std::string raw;
-            raw.resize(hash_digest_size + 4);
+            raw.resize(hash_size + 4);
             auto serial = bc::make_serializer(raw.begin());
             serial.write_hash(outpoint.hash);
             serial.write_4_bytes(outpoint.index);

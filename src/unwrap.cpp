@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     }
     data_chunk rawdata(bytes.begin(), bytes.end() - 4);
     data_chunk rawchecksum(bytes.end() - 4, bytes.end());
-    uint32_t checksum = generate_checksum(rawdata);
+    uint32_t checksum = bitcoin_checksum(rawdata);
     uint32_t my_checksum = cast_chunk<uint32_t>(rawchecksum);
     if (checksum != my_checksum) {
         std::cerr << "Error: checksum does not match" << std::endl;
