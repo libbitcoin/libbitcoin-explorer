@@ -24,10 +24,23 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    if (is_hard)
-        index += libwallet::first_hardened_key;
+    if (!private_key.valid() && is_hard)
+    {
+        std::cerr << "hd-pub: cannot use --hard with public keys."
+            << std::endl;
+        return -1;
+    }
 
-    auto out = key.generate_public_key(index);
+    hd_public_key out;
+    // You must use the private key to generate --hard keys.
+    if (is_hard)
+    {
+        index += libwallet::first_hardened_key;
+        out = private_key.generate_public_key(index);
+    }
+    else
+        out = key.generate_public_key(index);
+
     if (!out.valid())
     {
         std::cerr << "hd-pub: error deriving child key." << std::endl;
