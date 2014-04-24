@@ -20,7 +20,14 @@ int main(int argc, char** argv)
     }
     if (is_hard)
         index += libwallet::first_hardened_key;
-    std::cout << key.generate_private_key(index).serialize() << std::endl;
+
+    auto out = key.generate_private_key(index);
+    if (!out.valid())
+    {
+        std::cerr << "hd-priv: error deriving child key." << std::endl;
+        return -1;
+    }
+    std::cout << out.serialize() << std::endl;
     return 0;
 }
 
