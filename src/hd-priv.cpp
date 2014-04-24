@@ -11,6 +11,16 @@ int main(int argc, char** argv)
     if (!read_hd_command_args(argc, argv, is_hard, index))
         return -1;
     // Arguments now parsed. Read key from STDIN.
+    std::string encoded_key = read_stdin();
+    hd_private_key key;
+    if (!key.set_serialized(encoded_key))
+    {
+        std::cerr << "hd-priv: error reading private key." << std::endl;
+        return -1;
+    }
+    if (is_hard)
+        index += libwallet::first_hardened_key;
+    std::cout << key.generate_private_key(index).serialize() << std::endl;
     return 0;
 }
 
