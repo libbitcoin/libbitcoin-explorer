@@ -173,6 +173,46 @@ function checkhistory {
 	zenity --info --title="History of Bitcoin Address" --text="$historyaddress"
 }
 
+#############################################
+## Create an unsigned offline transaction ##
+#############################################
+
+function unsignedtx {
+	OUTPUT=$(zenity --forms --title="Unsigned Offline Transaction" --text="Please enter the following field carefully." \
+	--separator="," \
+	--add-entry="What is the input hash (not the address)?" \
+	--add-entry="What is the destination address?" \
+	--add-entry="How much to send to destination address (in Satoshis)?" \
+	--add-entry="What is the change address?" \
+	--add-entry="How much to send to change address (in Satoshis)?"\ )
+
+	accepted=$?
+
+	if ((accepted != 0)); then
+    		echo "something went wrong"
+    		exit 1
+	fi
+
+	inputhash=$(awk -F, '{print $1}' <<<$OUTPUT)
+	destinationaddr=$(awk -F, '{print $2}' <<<$OUTPUT)
+	outputquantity=$(awk -F, '{print $3}' <<<$OUTPUT)
+	changeaddr=$(awk -F, '{print $4}' <<<$OUTPUT)
+	changequantity=$(awk -F, '{print $5}' <<<$OUTPUT)
+
+	sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 --output $destinationaddr:$outputquantity --output $changeaddr:$changequantity
+	zenity --info --text="$(sx showtx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt)"
+	zenity --info --title="Unsigned Offline Transaction" --text="You have successfully created an unsigned offline transaction. No bitcoins have been sent, you still need to sign the 'tx-file-unsignedtx-DATE.txt file with your private key and broadcast it before anything is sent to the network. Review the values carefully... seriously, I mean it!"
+
+}
+
+#############################################
+## Display an unsigned offline transaction ##
+#############################################
+
+function showofflinetransaction {
+	zenity --info --text="$(sx showtx < $(zenity --file-selection --title="Select Offline Transaction txt file"))"
+}
+
 ##############################
 ##############################
 #### MENU OUTPUTS TO VARS ####
@@ -189,6 +229,8 @@ Menu=$(zenity --list --radiolist --width=1100 --height=400 \
 FALSE "Check Balance" "Check the balance of a Bitcoin address" \
 FALSE "Check History" "Check the history of a Bitcoin address" \
 FALSE "New Address" "Generate a new Bitcoin address" \
+FALSE "Create unsigned offline transaction" "Create a transaction offline that requires you to sign with your private keys before broadcasting to the bitcoin network" \
+FALSE "Display Offline Transaction" "Dislay the unsigned offline transaction" \
 FALSE "Stealth Address" "Generate a new stealth key pair: address (public) and secret (private)." \
 FALSE "Send Stealth Transaction" "Generate a stealth ephemeral key and Bitcoin public key to send a stealth transaction." \
 FALSE "Receive Stealth Transaction" "Attempt to generate a Bitcoin keypair from a stealth ephemeral key" \
@@ -214,6 +256,10 @@ elif [ "$Menu" == "Check History" ]; then
 	checkhistory
 elif [ "$Menu" == "New Address" ]; then
 	keypair
+elif [ "$Menu" == "Create unsigned offline transaction" ]; then
+	unsignedtx
+elif [ "$Menu" == "Display Offline Transaction" ]; then
+	showofflinetransaction
 elif [ "$Menu" == "Stealth Address" ]; then
 	stealth
 elif [ "$Menu" == "Send Stealth Transaction" ]; then
