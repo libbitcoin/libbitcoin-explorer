@@ -205,6 +205,24 @@ function unsignedtx {
 
 }
 
+function daoutputs {
+
+	START=1
+	END=$(zenity --entry --title="Offline Transaction" --text="How many outputs in this transaction?")
+
+	for (( c=$START; c<=$END; c++ ))
+	do
+		echo -n "--output $(zenity --entry --title="Offline Transaction" --text="What is the destination address?"):$(zenity --entry --title="Offline Transaction" --text="What is the quantity of Satoshis to send")" ""
+	done
+
+}
+
+function unsignedtx2 {
+	inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+	sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs)
+
+}
+
 #############################################
 ## Display an unsigned offline transaction ##
 #############################################
@@ -257,7 +275,7 @@ elif [ "$Menu" == "Check History" ]; then
 elif [ "$Menu" == "New Address" ]; then
 	keypair
 elif [ "$Menu" == "Create unsigned offline transaction" ]; then
-	unsignedtx
+	unsignedtx2
 elif [ "$Menu" == "Display Offline Transaction" ]; then
 	showofflinetransaction
 elif [ "$Menu" == "Stealth Address" ]; then
