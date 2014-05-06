@@ -208,24 +208,21 @@ install_libzmq(){
 
 install_czmq(){
     cd $SRC_DIR
-    if [ -d "czmq-git" ]; then
+    if [ -d "czmq-2.2.0" ]; then
         echo
         echo " --> Updating czmq..."
         echo
-        cd czmq-git
-        git remote set-url origin https://github.com/zeromq/czmq.git
-        git pull --rebase
     else
         echo
         echo " --> Downloading czmq from git..."
         echo
-        git clone https://github.com/zeromq/czmq czmq-git
+        wget http://download.zeromq.org/czmq-2.2.0.tar.gz
+        tar zxf czmq-2.2.0.tar.gz
     fi
-    cd $SRC_DIR/czmq-git
+    cd $SRC_DIR/czmq-2.2.0
     echo
     echo " --> Beginning build process now...."
     echo
-    ./autogen.sh
     ./configure --prefix $INSTALL_PREFIX --with-libsodium=$INSTALL_PREFIX --with-libzmq=$INSTALL_PREFIX
     make
     make install
