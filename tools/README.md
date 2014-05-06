@@ -49,8 +49,8 @@ If you'd like to contribute, please commit:
 
 ## Donations
 
-Sean's Outpost: 1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd
-Wikileaks: 1Bz5699fHoH1t6UhSF7ksFKiBHBdhn9RnY
-SNI: 1Bz5699fHoH1t6UhSF7ksFKiBHBdhn9RnY
+Sean's Outpost: 1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd  
+Wikileaks: 1Bz5699fHoH1t6UhSF7ksFKiBHBdhn9RnY  
+SNI: 1Bz5699fHoH1t6UhSF7ksFKiBHBdhn9RnY  
 unSYSTEM: 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc  
 TOR: 15RT6H7YeP6ohxs43r9fVVakzFoQPcov9z
