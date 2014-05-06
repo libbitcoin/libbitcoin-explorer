@@ -126,8 +126,6 @@ bool add_output(transaction_type& tx, const std::string& parameter)
         address,
         raw_script
     };
-    output_decoded_type out_type = output_decoded_type::unknown;
-
     if (strs.size() != 2)
     {
         std::cerr << "mktx: Format for output is ADDRESS:VALUE"
@@ -137,14 +135,27 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     }
     const std::string& output_str = strs[0];
     payment_address addr;
+    stealth_address stealth;
     script_type rawscript;
     std::string payto;
 
     if (addr.set_encoded(output_str))
     {
         payto=addr.encoded();
-        out_type = output_decoded_type::address;
-    } else {
+        if (!build_output_script(output.script, addr))
+        {
+            std::cerr << "mktx: Unsupported address type." << std::endl;
+            return false;
+        }
+    }
+    else if (stealth.set_encoded(output_str))
+    {
+        // Do stealth stuff.
+        // Add RETURN output.
+        // Build output script.
+    }
+    else
+    {
         try
         {
             rawscript = parse_script(decode_hex(output_str));
@@ -154,7 +165,6 @@ bool add_output(transaction_type& tx, const std::string& parameter)
             std::cerr << "mktx: Bad address or script '" << output_str << "'." << std::endl;
             return false;
         }
-        out_type = output_decoded_type::raw_script;
         payto=pretty(rawscript);
         output.script = rawscript;
     }
@@ -169,13 +179,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
         std::cerr << "mktx: Bad VALUE provided." << std::endl;
         return false;
     }
-    if (out_type == output_decoded_type::address) {
-        if (!build_output_script(output.script, addr))
-        {
-            std::cerr << "mktx: Unsupported address type." << std::endl;
-            return false;
-        }
-    }
+
     tx.outputs.push_back(output);
     std::cerr << "Added output sending " << output.value << " Satoshis to "
         << payto << "." << std::endl;
