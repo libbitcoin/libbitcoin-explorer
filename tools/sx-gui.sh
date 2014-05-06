@@ -173,9 +173,9 @@ function checkhistory {
 	zenity --info --title="History of Bitcoin Address" --text="$historyaddress"
 }
 
-#############################################
-## Create an unsigned offline transaction ##
-#############################################
+###########################################################
+## Create an unsigned offline transaction for one output ##
+###########################################################
 
 function unsignedtx {
 	OUTPUT=$(zenity --forms --title="Unsigned Offline Transaction" --text="Please enter the following field carefully." \
@@ -202,8 +202,11 @@ function unsignedtx {
 	sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 --output $destinationaddr:$outputquantity --output $changeaddr:$changequantity
 	zenity --info --text="$(sx showtx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt)"
 	zenity --info --title="Unsigned Offline Transaction" --text="You have successfully created an unsigned offline transaction. No bitcoins have been sent, you still need to sign the 'tx-file-unsignedtx-DATE.txt file with your private key and broadcast it before anything is sent to the network. Review the values carefully... seriously, I mean it!"
-
 }
+
+##################################
+## Backend for multiple outputs ##
+##################################
 
 function daoutputs {
 
@@ -214,13 +217,52 @@ function daoutputs {
 	do
 		echo -n "--output $(zenity --entry --title="Offline Transaction" --text="What is the destination address?"):$(zenity --entry --title="Offline Transaction" --text="What is the quantity of Satoshis to send")" ""
 	done
-
 }
 
-function unsignedtx2 {
-	inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
-	sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs)
+##################################################################
+## Create an unsigned offline transaction with multiple outputs ##
+##################################################################
 
+# Menu
+
+function multioutputmenu {
+	multioutputmenu=$(zenity --list --radiolist --width=1100 --height=400\
+	--text="Select an option from below. An additional output will be created for your transaction to donate 0.1 mBTC to your selected charity or organisation." --title="Charity Output Donation" \
+	--column="Select" --column="Charity" --column="Description" \
+	FALSE "None" "Do not make any donations." \
+	FALSE "Sean's Outpost" "Sean's Outpost provides both food and shelter for the homeless in Pensacola, Florida." \
+	FALSE "Wikileaks" "Secrets are their business." \
+	FALSE "unSYSTEM" "Creators of libbitcoin, SX, DarkWallet, DarkMarket and many more projects to come." \
+	FALSE "Satoshi Nakamoto Institute" "An organisation dedicated to the legacy of Satoshi Nakamoto." \
+	FALSE "TOR Project" "Essential software dedicated to maintaing privacy and anonymity." \
+	FALSE "Free Software Foundation" "The Free Software Foundation (FSF) is a nonprofit with a worldwide mission to promote computer user freedom and to defend the rights of all free software users." )
+
+# Selected Transactions
+
+	if [ "$multioutputmenu" == "None" ]; then
+		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs)
+	elif [ "$multioutputmenu" == "Sean's Outpost" ]; then
+		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd:10000
+	elif [ "$multioutputmenu" == "Wikileaks" ]; then
+		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v:10000
+	elif [ "$multioutputmenu" == "unSYSTEM" ]; then
+		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc:10000
+	elif [ "$multioutputmenu" == "Satoshi Nakamoto Institute" ]; then
+		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1QGEHm62AF674C46zWjbRXw5vH3aS5d63n:10000
+	elif [ "$multioutputmenu" == "TOR Project" ]; then
+		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 15RT6H7YeP6ohxs43r9fVVakzFoQPcov9z:10000
+	elif [ "$multioutputmenu" == "Free Software Foundation" ]; then
+		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1PC9aZC4hNX2rmmrt7uHTfYAS3hRbph4UN:10000
+	else
+		zenity --info --text="No transaction made."
+	fi
 }
 
 #############################################
@@ -247,7 +289,7 @@ Menu=$(zenity --list --radiolist --width=1100 --height=400 \
 FALSE "Check Balance" "Check the balance of a Bitcoin address" \
 FALSE "Check History" "Check the history of a Bitcoin address" \
 FALSE "New Address" "Generate a new Bitcoin address" \
-FALSE "Create unsigned offline transaction" "Create a transaction offline that requires you to sign with your private keys before broadcasting to the bitcoin network" \
+FALSE "Create unsigned offline transaction for multiple outputs" "For creating transactions with more than one output. These transactions need to be signed with the private key before broadcasting to the network." \
 FALSE "Display Offline Transaction" "Dislay the unsigned offline transaction" \
 FALSE "Stealth Address" "Generate a new stealth key pair: address (public) and secret (private)." \
 FALSE "Send Stealth Transaction" "Generate a stealth ephemeral key and Bitcoin public key to send a stealth transaction." \
@@ -274,8 +316,8 @@ elif [ "$Menu" == "Check History" ]; then
 	checkhistory
 elif [ "$Menu" == "New Address" ]; then
 	keypair
-elif [ "$Menu" == "Create unsigned offline transaction" ]; then
-	unsignedtx2
+elif [ "$Menu" == "Create unsigned offline transaction for multiple outputs" ]; then
+	multioutputmenu
 elif [ "$Menu" == "Display Offline Transaction" ]; then
 	showofflinetransaction
 elif [ "$Menu" == "Stealth Address" ]; then
