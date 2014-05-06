@@ -14,6 +14,7 @@ void stealth_fetched(const std::error_code& ec,
     if (ec)
     {
         log_error() << "Stealth fetch failed: " << ec.message();
+        stopped = true;
         return;
     }
     for (const blockchain::stealth_row& row: stealth_results)
@@ -50,7 +51,7 @@ int main(int argc, char** argv)
     while (!stopped)
     {
         fullnode.update();
-        usleep(100000);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     pool.stop();
     pool.join();
