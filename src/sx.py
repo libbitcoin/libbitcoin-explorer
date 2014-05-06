@@ -819,6 +819,17 @@ Generate a new stealth address.
 """
 ),
 
+"stealth-show-addr": (
+"STEALTH",
+"Show details for a stealth address.",
+
+"""\
+Usage: sx stealth-show-addr STEALTH_ADDRESS
+
+Show details for a stealth address.\
+"""
+),
+
 "hd-seed": (
 "HD KEYS",
 "Create a random new HD key.",

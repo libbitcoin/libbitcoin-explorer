@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     // Read scan pubkey.
     if (args.empty())
     {
-        std::cout << "sx: scan pubkey must be provided." << std::endl;
+        std::cout << "sx: Scan pubkey must be provided." << std::endl;
         return -1;
     }
     const data_chunk scan_pubkey = decode_hex(args[0]);
@@ -37,7 +37,7 @@ int main(int argc, char** argv)
     // options byte.
     uint8_t options_bitfield = 0;
     if (reuse_address)
-        options_bitfield &= 1;
+        options_bitfield |= 1;
     raw_addr.push_back(options_bitfield);
     extend_data(raw_addr, scan_pubkey);
     uint8_t number_keys = spend_pubkeys.size();
