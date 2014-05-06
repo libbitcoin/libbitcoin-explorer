@@ -46,3 +46,11 @@ If you'd like to contribute, please commit:
 
 1. Write shell scripts for any remaining commands for [SX](https://sx.dyne.org/) (WIP) // Please test first
 2. Implement [Zenity](http://www.howtogeek.com/107537/how-to-make-simple-graphical-shell-scripts-with-zenity-on-linux/) wraps for the shell scripts
+
+## Donations
+
+Sean's Outpost: 1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd
+Wikileaks: 1Bz5699fHoH1t6UhSF7ksFKiBHBdhn9RnY
+SNI: 1Bz5699fHoH1t6UhSF7ksFKiBHBdhn9RnY
+unSYSTEM: 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc  
+TOR: 15RT6H7YeP6ohxs43r9fVVakzFoQPcov9z
