@@ -28,17 +28,23 @@ Afer these steps, generating things like stealth addresses will work perfectly.
 
 E.g.
 
-```chmod +x ./easysx.sh```
+```chmod +x ./sx-gui.sh```
 
 Have fun from there.
 
 ## Script
 
-**easysx.sh**
+**sx-gui.sh**
 
 There is one pseudo-menu created from Zenity's list dialog boxe that allow you to create a new private key and stealth address pubkey and ephemeral key. **Text files with the keys will be created in the location of the script!**
 
 ![alt text](http://s9.postimg.org/h1ic5t98v/GUI4.png "Pseudo-Menu")
+
+## Charity Donations
+
+For transactions made through SX, you now have the option to include a donation (0.1 mBTC, equivalent to a miner's fee) to some pre-selected charities and organisations that we like.
+
+![alt text](http://s10.postimg.org/hg4sl7d4p/Charity.png "Donations")
 
 ## Contribute
 
@@ -46,11 +52,3 @@ If you'd like to contribute, please commit:
 
 1. Write shell scripts for any remaining commands for [SX](https://sx.dyne.org/) (WIP) // Please test first
 2. Implement [Zenity](http://www.howtogeek.com/107537/how-to-make-simple-graphical-shell-scripts-with-zenity-on-linux/) wraps for the shell scripts
-
-## Donations
-
-Sean's Outpost: 1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd  
-Wikileaks: 1Bz5699fHoH1t6UhSF7ksFKiBHBdhn9RnY  
-SNI: 1Bz5699fHoH1t6UhSF7ksFKiBHBdhn9RnY  
-unSYSTEM: 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc  
-TOR: 15RT6H7YeP6ohxs43r9fVVakzFoQPcov9z
