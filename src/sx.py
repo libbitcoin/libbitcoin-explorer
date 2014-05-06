@@ -806,36 +806,16 @@ Watch transactions from the network searching for a certain hash.\
 """
 ),
 
-"stealth-new": (
+"stealth-addr": (
 "STEALTH",
-"Generate a new master stealth secret.",
+"Generate a new stealth address.",
 
 """\
-Usage: sx stealth-new
+Usage: sx stealth-addr [--reuse-key|-r] SCAN_PUBKEY SPEND_PUBKEY1 ...  SPEND_PUBKEYN
 
-Generate a new stealth secret.\
-"""
-),
+Generate a new stealth address.
 
-"stealth-recv": (
-"STEALTH",
-"Regenerate the secret from your master secret and provided nonce.",
-
-"""\
-Usage: sx stealth-recv SECRET NONCE
-
-Regenerate the secret from your master secret and provided nonce.\
-"""
-),
-
-"stealth-send": (
-"STEALTH",
-"Generate a new sending address and a stealth nonce.",
-
-"""\
-Usage: sx stealth-send PUBKEY
-
-Generate a new sending address and a stealth nonce.\
+  --reuse-key -r    Reuse SCAN_PUBKEY for SPEND_PUBKEY
 """
 ),
 

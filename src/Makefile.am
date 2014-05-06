@@ -8,12 +8,12 @@ corebin_PROGRAMS = \
     sx-encode-addr sx-genpub sx-showblkhead sx-validsig \
     sx-validaddr sx-base58-encode sx-base58-decode sx-wrap sx-unwrap \
     sx-ripemd-hash sx-initchain sx-secret-to-wif sx-wif-to-secret \
-    sx-hd-seed sx-hd-priv sx-hd-pub sx-hd-to-address sx-hd-to-wif
+    sx-hd-seed sx-hd-priv sx-hd-pub sx-hd-to-address sx-hd-to-wif \
+    sx-stealth-addr
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-sendtx-bci sx-base58check-encode \
 	sx-base58check-decode sx-embed-addr sx-blke-fetch-transaction \
-	sx-brainwallet sx-get-pubkey \
-    sx-stealth-new sx-stealth-recv sx-stealth-send
+	sx-brainwallet sx-get-pubkey
 
 pyobeliskdir = ${libdir}/sx-core/obelisk
 pyobelisk_SCRIPTS = \
@@ -46,6 +46,9 @@ corebin_PROGRAMS += \
 
 AM_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
 endif
+
+sx_stealth_addr_SOURCES = stealth-addr.cpp
+sx_stealth_addr_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_hd_seed_SOURCES = hd-seed.cpp
 sx_hd_seed_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
