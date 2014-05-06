@@ -29,6 +29,16 @@ void show_tx(const transaction_type& tx)
         payment_address addr;
         if (extract(addr, output.script))
             std::cout << "  address: " << addr.encoded() << std::endl;
+        if (output.script.type() == payment_type::stealth_info)
+        {
+            const data_chunk& data = output.script.operations()[1].data;
+            BITCOIN_ASSERT(data.size() == 1 + 4 + 33);
+            const data_chunk ephemkey(data.begin() + 5, data.end());
+            BITCOIN_ASSERT(ephemkey.size() == 33);
+            std::cout << "  stealth ephemkey: " << ephemkey << std::endl;
+            std::cout << "  stealth bitfield: "
+                << calculate_stealth_bitfield(data) << std::endl;
+        }
     }
 }
 
