@@ -226,8 +226,9 @@ function daoutputs {
 # Menu
 
 function multioutputmenu {
+	donationamt=$(zenity --entry --title="Charity Output" --text="What is the amount of bitcoin you would like to donate (in Satoshis)?")
 	multioutputmenu=$(zenity --list --radiolist --width=1100 --height=400\
-	--text="Select an option from below. An additional output will be created for your transaction to donate 0.1 mBTC to your selected charity or organisation." --title="Charity Output Donation" \
+	--text="Select an option from below. An additional output will be created for your transaction to donate $donationamt Satoshis to your selected charity or organisation." --title="Charity Output Donation" \
 	--column="Select" --column="Charity" --column="Description" \
 	FALSE "None" "Do not make any donations." \
 	FALSE "Sean's Outpost" "Sean's Outpost provides both food and shelter for the homeless in Pensacola, Florida." \
@@ -244,22 +245,25 @@ function multioutputmenu {
 		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs)
 	elif [ "$multioutputmenu" == "Sean's Outpost" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
-		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd:10000
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1M72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd:$donationamt
 	elif [ "$multioutputmenu" == "Wikileaks" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
-		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v:10000
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v:$donationamt
 	elif [ "$multioutputmenu" == "unSYSTEM" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
-		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc:10000
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc:$donationamt
 	elif [ "$multioutputmenu" == "Satoshi Nakamoto Institute" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
-		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1QGEHm62AF674C46zWjbRXw5vH3aS5d63n:10000
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1QGEHm62AF674C46zWjbRXw5vH3aS5d63n:$donationamt
 	elif [ "$multioutputmenu" == "TOR Project" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
-		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 15RT6H7YeP6ohxs43r9fVVakzFoQPcov9z:10000
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 15RT6H7YeP6ohxs43r9fVVakzFoQPcov9z:$donationamt
 	elif [ "$multioutputmenu" == "Free Software Foundation" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
-		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1PC9aZC4hNX2rmmrt7uHTfYAS3hRbph4UN:10000
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1PC9aZC4hNX2rmmrt7uHTfYAS3hRbph4UN:$donationamt
+		elif [ "$multioutputmenu" == "Free Software Foundation" ]; then
+		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
+		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output $(zenity --entry --title="Charity Output" --text="What is the address you would like to donate to?"):$donationamt
 	else
 		zenity --info --text="No transaction made."
 	fi
