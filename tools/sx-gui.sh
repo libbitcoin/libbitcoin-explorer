@@ -261,7 +261,7 @@ function multioutputmenu {
 	elif [ "$multioutputmenu" == "Free Software Foundation" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
 		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1PC9aZC4hNX2rmmrt7uHTfYAS3hRbph4UN:$donationamt
-		elif [ "$multioutputmenu" == "Free Software Foundation" ]; then
+	elif [ "$multioutputmenu" == "Free Software Foundation" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
 		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output $(zenity --entry --title="Charity Output" --text="What is the address you would like to donate to?"):$donationamt
 	else
