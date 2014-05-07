@@ -236,7 +236,9 @@ function multioutputmenu {
 	FALSE "unSYSTEM" "Creators of libbitcoin, SX, DarkWallet, DarkMarket and many more projects to come." \
 	FALSE "Satoshi Nakamoto Institute" "An organisation dedicated to the legacy of Satoshi Nakamoto." \
 	FALSE "TOR Project" "Essential software dedicated to maintaing privacy and anonymity." \
-	FALSE "Free Software Foundation" "The Free Software Foundation (FSF) is a nonprofit with a worldwide mission to promote computer user freedom and to defend the rights of all free software users." )
+	FALSE "Free Software Foundation" "The Free Software Foundation (FSF) is a nonprofit with a worldwide mission to promote computer user freedom and to defend the rights of all free software users." \
+	FALSE "Custom" "Add the address of a charity, organisation, or individual you want to donate to." \
+)
 
 # Selected Transactions
 
@@ -261,7 +263,7 @@ function multioutputmenu {
 	elif [ "$multioutputmenu" == "Free Software Foundation" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
 		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output 1PC9aZC4hNX2rmmrt7uHTfYAS3hRbph4UN:$donationamt
-	elif [ "$multioutputmenu" == "Free Software Foundation" ]; then
+	elif [ "$multioutputmenu" == "Custom" ]; then
 		inputhash=$(zenity --entry --title="Unsigned Offline Transaction" --text="What is the input hash (note: not the address)?")
 		sx mktx txfile-unsignedtx-$(date +%y-%m-%d-%s).txt --input $inputhash:1 $(daoutputs) --output $(zenity --entry --title="Charity Output" --text="What is the address you would like to donate to?"):$donationamt
 	else
@@ -349,3 +351,4 @@ elif [ "$Menu" == "Derive Deterministic Wallet Seed from Electrum-style Word See
 else
 	zenity --info --text="Thanks for using SX\!"
 fi
+
