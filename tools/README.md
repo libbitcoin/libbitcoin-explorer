@@ -38,13 +38,15 @@ Have fun from there.
 
 There is one pseudo-menu created from Zenity's list dialog boxe that allow you to create a new private key and stealth address pubkey and ephemeral key. **Text files with the keys will be created in the location of the script!**
 
-![alt text](http://s9.postimg.org/h1ic5t98v/GUI4.png "Pseudo-Menu")
+![alt text](http://s1.postimg.org/uopvzblwv/SX_Tools_Menu.png "Pseudo-Menu")
 
 ## Charity Donations
 
 For transactions made through SX, you now have the option to include a donation (e.g. 10000 Satoshis, equivalent to a transaction fee) to any charity, organisation, or individual, either as a background component of any transaction you choose.
 
-![alt text](http://s10.postimg.org/hg4sl7d4p/Charity.png "Donations")
+![alt text](http://s1.postimg.org/pyzyapuwf/Donation_Amount.png "Choose how much to donate")
+
+![alt text](http://s1.postimg.org/ckmveoo8f/Charity_Output_Menu.png "Donations")
 
 ## Contribute
 
