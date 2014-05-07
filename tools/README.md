@@ -42,7 +42,7 @@ There is one pseudo-menu created from Zenity's list dialog boxe that allow you t
 
 ## Charity Donations
 
-For transactions made through SX, you now have the option to include a donation (0.1 mBTC, equivalent to a miner's fee) to some pre-selected charities and organisations that we like.
+For transactions made through SX, you now have the option to include a donation (0.1 mBTC, equivalent to a miner's fee) to any charity, organisation, or individual, either as a transaction or as a background component of any transaction you choose.
 
 ![alt text](http://s10.postimg.org/hg4sl7d4p/Charity.png "Donations")
 
@@ -52,3 +52,4 @@ If you'd like to contribute, please commit:
 
 1. Write shell scripts for any remaining commands for [SX](https://sx.dyne.org/) (WIP) // Please test first
 2. Implement [Zenity](http://www.howtogeek.com/107537/how-to-make-simple-graphical-shell-scripts-with-zenity-on-linux/) wraps for the shell scripts
+3. Open an issue for [ABIS](https://github.com/ABISprotocol/ABIS) -- see also [http://abis.io](http://abis.io)
