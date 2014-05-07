@@ -885,6 +885,28 @@ Convert an HD private key to a WIF private key.\
 """
 ),
 
+"ec-multiply": (
+"EC MATH",
+"Multiply an integer and a point together.",
+
+"""\
+Usage: sx ec-multiply INTEGER POINT
+
+Multiply an integer and a point together.\
+"""
+),
+
+"ec-add": (
+"EC MATH",
+"Add two points together.",
+
+"""\
+Usage: sx ec-add POINT POINT
+
+Add two points together.\
+"""
+),
+
 }
 
 def display_usage():

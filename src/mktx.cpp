@@ -3,6 +3,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 
 using namespace bc;
 
@@ -135,7 +136,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     }
     const std::string& output_str = strs[0];
     payment_address addr;
-    stealth_address stealth;
+    libwallet::stealth_address stealth;
     script_type rawscript;
     std::string payto;
 
