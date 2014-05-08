@@ -512,7 +512,7 @@ The VALUE field is in Satoshis.\
 ),
 
 "wif-to-secret": (
-"STEALTH",
+"LOOSE KEYS AND ADDRESSES",
 "Convert a Wallet. Import. Format to secret exponent value.",
 
 """\
@@ -522,7 +522,7 @@ Usage: echo WIF | sx wif-to-secret
 ),
 
 "secret-to-wif": (
-"STEALTH",
+"LOOSE KEYS AND ADDRESSES",
 "Convert a secret exponent value to Wallet. Import. Format.",
 
 """\
