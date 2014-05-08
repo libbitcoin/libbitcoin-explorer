@@ -6,6 +6,7 @@
 #include <wallet/wallet.hpp>
 
 using namespace bc;
+using namespace libwallet;
 
 // Currently unused.
 int display_help()
@@ -116,6 +117,16 @@ bool build_output_script(
     return false;
 }
 
+ec_secret generate_random_ephemkey()
+{
+    std::random_device random;
+    std::default_random_engine engine(random());
+    ec_secret secret;
+    for (uint8_t& byte: secret)
+        byte = engine() % std::numeric_limits<uint8_t>::max();
+    return secret;
+}
+
 bool add_output(transaction_type& tx, const std::string& parameter)
 {
     transaction_output_type output;
@@ -136,13 +147,13 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     }
     const std::string& output_str = strs[0];
     payment_address addr;
-    libwallet::stealth_address stealth;
+    stealth_address stealth;
     script_type rawscript;
     std::string payto;
 
     if (addr.set_encoded(output_str))
     {
-        payto=addr.encoded();
+        payto = addr.encoded();
         if (!build_output_script(output.script, addr))
         {
             std::cerr << "mktx: Unsupported address type." << std::endl;
@@ -151,9 +162,39 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     }
     else if (stealth.set_encoded(output_str))
     {
+        bool reuse_key = stealth.options() & stealth_address::reuse_key_option;
+        // Get our scan and spend pubkeys.
+        const ec_point& scan_pubkey = stealth.scan_pubkey();
+        BITCOIN_ASSERT_MSG(
+            (!reuse_key && stealth.spend_pubkeys().size() == 1) ||
+            (reuse_key && stealth.spend_pubkeys().empty()),
+            "Multisig stealth addresses not yet supported!");
+        BITCOIN_ASSERT_MSG(stealth.prefix().number_bits == 0,
+            "Prefix not supported yet!");
+        ec_point spend_pubkey = scan_pubkey;
+        if (!reuse_key)
+            spend_pubkey = stealth.spend_pubkeys().front();
         // Do stealth stuff.
+        ec_secret ephem_secret = generate_random_ephemkey();
+        ec_point addr_pubkey = initiate_stealth(
+            ephem_secret, scan_pubkey, spend_pubkey);
+        // stealth_metadata
+        ec_point ephem_pubkey = secret_to_public_key(ephem_secret);
+        data_chunk stealth_metadata{{0x06, 0x00, 0x00, 0x00, 0x00}};
+        extend_data(stealth_metadata, ephem_pubkey);
         // Add RETURN output.
+        transaction_output_type meta_output;
+        meta_output.value = 0;
+        meta_output.script.push_operation({opcode::return_, data_chunk()});
+        meta_output.script.push_operation({opcode::special, stealth_metadata});
+        tx.outputs.push_back(meta_output);
+        // Generate the address.
+        payment_address payaddr;
+        set_public_key(payaddr, addr_pubkey);
+        payto = payaddr.encoded();
         // Build output script.
+        bool success = build_output_script(output.script, payaddr);
+        BITCOIN_ASSERT(success);
     }
     else
     {
