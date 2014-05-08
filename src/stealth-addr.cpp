@@ -1,3 +1,4 @@
+#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 using namespace bc;
 
@@ -9,16 +10,30 @@ int main(int argc, char** argv)
         args.push_back(argv[i]);
     // Check for optional arguments.
     bool reuse_address = false;
-    for (auto it = args.begin(); it != args.end(); ++it)
+    uint8_t number_sigs = 0;
+    for (auto it = args.begin(); it != args.end(); )
+    {
         if (*it == "--reuse-key" || *it == "-r")
         {
-            args.erase(it);
+            it = args.erase(it);
             break;
         }
+        if (*it == "--signatures" || *it == "-s")
+        {
+            it = args.erase(it);
+            if (it == args.end())
+            {
+                std::cerr << "sx: --signatures requires a number." << std::endl;
+                return -1;
+            }
+            number_sigs = static_cast<uint8_t>(boost::lexical_cast<int>(*it));
+        }
+        ++it;
+    }
     // Read scan pubkey.
     if (args.empty())
     {
-        std::cout << "sx: Scan pubkey must be provided." << std::endl;
+        std::cerr << "sx: Scan pubkey must be provided." << std::endl;
         return -1;
     }
     const data_chunk scan_pubkey = decode_hex(args[0]);
@@ -44,9 +59,11 @@ int main(int argc, char** argv)
     raw_addr.push_back(number_keys);
     for (const auto& pubkey: spend_pubkeys)
         extend_data(raw_addr, pubkey);
-    // For now put number_sigs = number_keys
-    // Allow configuring this later.
-    uint8_t number_sigs = number_keys;
+    // If not configured then set it to the number_keys
+    if (!number_sigs)
+        number_sigs = number_keys;
+    if (reuse_address)
+        ++number_sigs;
     raw_addr.push_back(number_sigs);
     // Prefix filter currently unused.
     // Allow configuring this later.
