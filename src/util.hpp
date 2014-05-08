@@ -116,5 +116,15 @@ bool read_hd_command_args(int argc, char** argv,
     return true;
 }
 
+ec_secret generate_random_secret()
+{
+    std::random_device random;
+    std::default_random_engine engine(random());
+    ec_secret secret;
+    for (uint8_t& byte: secret)
+        byte = engine() % std::numeric_limits<uint8_t>::max();
+    return secret;
+}
+
 #endif
 

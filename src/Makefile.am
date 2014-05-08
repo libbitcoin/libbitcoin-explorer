@@ -10,7 +10,7 @@ corebin_PROGRAMS = \
     sx-ripemd-hash sx-initchain sx-secret-to-wif sx-wif-to-secret \
     sx-hd-seed sx-hd-priv sx-hd-pub sx-hd-to-address sx-hd-to-wif \
     sx-stealth-addr sx-stealth-show-addr sx-stealth-initiate \
-    sx-stealth-uncover sx-stealth-uncover-secret \
+    sx-stealth-uncover sx-stealth-uncover-secret sx-stealth-newkey \
     sx-ec-multiply sx-ec-tweak-add
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-sendtx-bci sx-base58check-encode \
@@ -66,6 +66,9 @@ sx_stealth_uncover_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_stealth_uncover_secret_SOURCES = stealth-uncover-secret.cpp
 sx_stealth_uncover_secret_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+
+sx_stealth_newkey_SOURCES = stealth-newkey.cpp
+sx_stealth_newkey_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_stealth_addr_SOURCES = stealth-addr.cpp
 sx_stealth_addr_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}

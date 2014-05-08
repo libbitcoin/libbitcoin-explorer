@@ -839,6 +839,17 @@ Uncover a stealth secret.\
 """
 ),
 
+"stealth-newkey": (
+"STEALTH",
+"Generate a new stealth keys and an address.",
+
+"""\
+Usage: sx stealth-newkey
+
+Generate a new stealth keys and an address.\
+"""
+),
+
 "stealth-addr": (
 "STEALTH",
 "Generate a new stealth address.",

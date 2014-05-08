@@ -4,6 +4,7 @@
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include "util.hpp"
 
 using namespace bc;
 using namespace libwallet;
@@ -117,16 +118,6 @@ bool build_output_script(
     return false;
 }
 
-ec_secret generate_random_ephemkey()
-{
-    std::random_device random;
-    std::default_random_engine engine(random());
-    ec_secret secret;
-    for (uint8_t& byte: secret)
-        byte = engine() % std::numeric_limits<uint8_t>::max();
-    return secret;
-}
-
 bool add_output(transaction_type& tx, const std::string& parameter)
 {
     transaction_output_type output;
@@ -175,7 +166,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
         if (!reuse_key)
             spend_pubkey = stealth.spend_pubkeys.front();
         // Do stealth stuff.
-        ec_secret ephem_secret = generate_random_ephemkey();
+        ec_secret ephem_secret = generate_random_secret();
         ec_point addr_pubkey = initiate_stealth(
             ephem_secret, scan_pubkey, spend_pubkey);
         // stealth_metadata
