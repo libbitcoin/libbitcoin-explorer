@@ -806,6 +806,39 @@ Watch transactions from the network searching for a certain hash.\
 """
 ),
 
+"stealth-initiate": (
+"STEALTH",
+"Initiate a new stealth address.",
+
+"""\
+Usage: sx stealth-initiate EPHEM_SECRET SCAN_PUBKEY SPEND_PUBKEY
+
+Initiate a new stealth address.\
+"""
+),
+
+"stealth-uncover": (
+"STEALTH",
+"Uncover a stealth address.",
+
+"""\
+Usage: sx stealth-uncover EPHEM_PUBKEY SCAN_SECRET SPEND_PUBKEY
+
+Uncover a stealth address.\
+"""
+),
+
+"stealth-uncover-secret": (
+"STEALTH",
+"Uncover a stealth secret.",
+
+"""\
+Usage: sx stealth-uncover-secret EPHEM_PUBKEY SCAN_SECRET SPEND_SECRET
+
+Uncover a stealth secret.\
+"""
+),
+
 "stealth-addr": (
 "STEALTH",
 "Generate a new stealth address.",
