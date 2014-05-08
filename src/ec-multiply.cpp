@@ -11,7 +11,7 @@ int main(int argc, char** argv)
     ec_point point_part;
     if (!ec_math_parse_args(argc, argv, int_part, point_part))
         return -1;
-    bool success = (point_part *= int_part);
+    bool success = ec_multiply(point_part, int_part);
     if (!success)
     {
         std::cerr << "sx: Out of range." << std::endl;
