@@ -64,7 +64,7 @@ sx_stealth_initiate_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 sx_stealth_uncover_SOURCES = stealth-uncover.cpp
 sx_stealth_uncover_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
-sx_stealth_uncover_secret_SOURCES = stealth-uncover.cpp
+sx_stealth_uncover_secret_SOURCES = stealth-uncover-secret.cpp
 sx_stealth_uncover_secret_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_stealth_addr_SOURCES = stealth-addr.cpp
