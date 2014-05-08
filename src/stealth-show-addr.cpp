@@ -29,21 +29,21 @@ int main(int argc, char** argv)
     }
     // Now display fields.
     std::cout << "Options: ";
-    if (addr.options() & stealth_address::reuse_key_option)
+    if (addr.options & stealth_address::reuse_key_option)
         std::cout << "reuse_key";
     else
         std::cout << "none";
     std::cout << std::endl;
-    std::cout << "Scan pubkey: " << addr.scan_pubkey() << std::endl;
+    std::cout << "Scan pubkey: " << addr.scan_pubkey << std::endl;
     std::cout << "Spend pubkeys:" << std::endl;
-    for (const auto& pubkey: addr.spend_pubkeys())
+    for (const auto& pubkey: addr.spend_pubkeys)
         std::cout << "  " << pubkey << std::endl;
     std::cout << "Number required signatures: "
-        << addr.number_signatures() << std::endl;
+        << addr.number_signatures << std::endl;
     // Display prefix.
     std::cout << "Prefix: "
-        << (size_t)addr.prefix().number_bits << " "
-        << addr.prefix().bitfield << std::endl;
+        << (size_t)addr.prefix.number_bits << " "
+        << addr.prefix.bitfield << std::endl;
     return 0;
 }
 

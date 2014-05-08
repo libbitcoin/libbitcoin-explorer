@@ -162,18 +162,18 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     }
     else if (stealth.set_encoded(output_str))
     {
-        bool reuse_key = stealth.options() & stealth_address::reuse_key_option;
+        bool reuse_key = stealth.options & stealth_address::reuse_key_option;
         // Get our scan and spend pubkeys.
-        const ec_point& scan_pubkey = stealth.scan_pubkey();
+        const ec_point& scan_pubkey = stealth.scan_pubkey;
         BITCOIN_ASSERT_MSG(
-            (!reuse_key && stealth.spend_pubkeys().size() == 1) ||
-            (reuse_key && stealth.spend_pubkeys().empty()),
+            (!reuse_key && stealth.spend_pubkeys.size() == 1) ||
+            (reuse_key && stealth.spend_pubkeys.empty()),
             "Multisig stealth addresses not yet supported!");
-        BITCOIN_ASSERT_MSG(stealth.prefix().number_bits == 0,
+        BITCOIN_ASSERT_MSG(stealth.prefix.number_bits == 0,
             "Prefix not supported yet!");
         ec_point spend_pubkey = scan_pubkey;
         if (!reuse_key)
-            spend_pubkey = stealth.spend_pubkeys().front();
+            spend_pubkey = stealth.spend_pubkeys.front();
         // Do stealth stuff.
         ec_secret ephem_secret = generate_random_ephemkey();
         ec_point addr_pubkey = initiate_stealth(
