@@ -53,8 +53,13 @@ std::string read_stdin()
 bool read_private_key(elliptic_curve_key& key, const std::string& arg,
     int is_compressed=-1)
 {
-    secret_parameter secret = libwallet::wif_to_secret(arg);
-    bool compressed_flag = libwallet::is_wif_compressed(arg);
+    secret_parameter secret = decode_hex_digest<secret_parameter>(arg);
+    bool compressed_flag = true;
+    if (secret == null_hash)
+    {
+        secret = libwallet::wif_to_secret(arg);
+        compressed_flag = libwallet::is_wif_compressed(arg);
+    }
     // Overrides for compression
     if (is_compressed == 0)
         compressed_flag = false;
