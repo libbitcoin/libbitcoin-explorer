@@ -10,7 +10,7 @@ corebin_PROGRAMS = \
     sx-ripemd-hash sx-initchain sx-secret-to-wif sx-wif-to-secret \
     sx-hd-seed sx-hd-priv sx-hd-pub sx-hd-to-address sx-hd-to-wif \
     sx-stealth-addr sx-stealth-show-addr \
-    sx-ec-multiply sx-ec-add
+    sx-ec-multiply sx-ec-tweak-add
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-sendtx-bci sx-base58check-encode \
 	sx-base58check-decode sx-embed-addr sx-blke-fetch-transaction \
@@ -48,8 +48,8 @@ corebin_PROGRAMS += \
 AM_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
 endif
 
-sx_ec_add_SOURCES = ec-add.cpp
-sx_ec_add_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+sx_ec_tweak_add_SOURCES = ec-tweak-add.cpp
+sx_ec_tweak_add_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_ec_multiply_SOURCES = ec-multiply.cpp
 sx_ec_multiply_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}

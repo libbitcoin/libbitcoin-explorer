@@ -896,14 +896,14 @@ Multiply an integer and a point together.\
 """
 ),
 
-"ec-add": (
+"ec-tweak-add": (
 "EC MATH",
-"Add two points together.",
+"Calculate the result of POINT + INTEGER * G.",
 
 """\
-Usage: sx ec-add POINT POINT
+Usage: sx ec-tweak-add INTEGER POINT
 
-Add two points together.\
+Calculate the result of POINT + INTEGER * G.\
 """
 ),
 
