@@ -38,8 +38,8 @@ understanding the mechanics behind them.
        fetch-stealth              Fetch a stealth information using a network connection
                                   to make requests against the obelisk load balancer backend.
 
-Creating a stealth tx and discovering the secret
-------------------------------------------------
+Sending stealth
+---------------
     
 Alice creates a new stealth address.
 ::
@@ -79,6 +79,10 @@ transaction.
 
 The transaction is then sent publically to the network becoming part of the
 blockchain, whereby Alice is able to detect and decode the data.
+
+Uncloaking payments
+-------------------
+
 In the output above, there are 2 outputs with the first containing the stealth
 metadata and the second containing the actual payment. Transactions can have
 multiple stealth payments but the metadata and payment always occurs in pairs.
@@ -122,6 +126,43 @@ importing into different Bitcoin wallets using the 'secret-to-wif' command.
 
     $ sx stealth-uncover-secret $EPHEM_PUBKEY $SCAN_SECRET $SPEND_SECRET | sx secret-to-wif
     KzUfPmcB7htVsbt18WA9SzyRdpXET63ppjVNEQyyEEXD9ChEQ4eD
+
+Stealth scan blockchain
+-----------------------
+
+Make sure your ~/.sx.cfg is configured properly to connect to an Obelisk
+blockchain server.
+::
+
+    $ cat .sx.cfg 
+    service = "tcp://obelisk.unsystem.net:9091"
+
+Then you can use the command fetch-stealth to return lists of candidate
+stealth payments, which the recipient can test to see if it belongs to them.
+::
+
+    $ sx help fetch-stealth
+    ...
+    Usage: sx fetch-stealth NUMBER_BITS BITFIELD [FROM_HEIGHT]
+    ...
+    $ sx fetch-stealth
+    ephemkey: 0276044981dc13bdc5e118b63c8715f0d1b00e6c0814d778668fa6b594b2a0ffbd address: 1DUhzP41otHNKijH4B6dZN1SRVuYJyYfrp tx_hash: 63e75e43de21b73d7eb0220ce44dcfa5fc7717a8decebb254b31ef13047fa518
+    ephemkey: 024398667c6a11652ae80fe6370e140cc67d4f82fb8310122cdaddae1524dad9e0 address: 1Nw1EKu8Y6mPGhMGyrKPS9TZWDyTPLvi8a tx_hash: 6a6246ccc7cb9427efee85dd3c7b80164f8a61213a7ce357b8cfd3816f59aab9
+    ephemkey: 0365b5a5b0ba059666e907b0b5e07b37fdb162d1399ed829315491fe1f30c87b3f address: 13wagxR12CYG4KZGbrf8aFMvjN73vTJkva tx_hash: 66da969fff214c329e27062beaf3baf20ed035801559b31f3e868c2de4cdfc5b
+    ...
+
+In the future once stealth transaction volume picks up, wallets will use
+prefixes to shard stealth payments, narrowing down the volume of data that
+must be scanned.
+
+The command fetch-transaction allows us to fetch transaction data.
+::
+
+    $ sx fetch-transaction 75885e50418cee0e527316df1f740ef6bc6b60a4b325c6d8d20e00a053cd27f9
+    ...
+    # NOTE: use sx showtx to display the transaction details.
+    $ sx fetch-transaction 75885e50418cee0e527316df1f740ef6bc6b60a4b325c6d8d20e00a053cd27f9 | sx showtx
+    ...
 
 Further understanding
 ---------------------
@@ -167,8 +208,8 @@ the same address on Alice's side.
     $ sx stealth-uncover $EPHEM_PUBKEY $SCAN_SECRET $SPEND_PUBKEY | sx addr
     1JF7ATY1pBQtvGSmNxiBUwKSZjzg5FkBjG
 
-Stealth math
-------------
+Internal math
+-------------
 
 For deeper technical explanation see `DarkWallet stealth documentation <https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Dual-key_stealth>`_.
 We will go through the calculations with SX here.
