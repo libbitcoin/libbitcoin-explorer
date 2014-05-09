@@ -365,10 +365,12 @@ Fetch the last block height using blockchain.info.\
 
 "fetch-stealth": (
 "BLOCKCHAIN QUERIES",
-"Fetch a stealth information using a network connection to make requests against the obelisk load balancer backend.",
+"Fetch a stealth information using a network connection to\n" +
+SPACING + "make requests against the obelisk load balancer backend.",
 
 """\
-Fetch a stealth information using a network connection to make requests against the obelisk load balancer backend.
+Fetch a stealth information using a network connection to
+make requests against the obelisk load balancer backend.
 
 Usage: sx fetch-stealth NUMBER_BITS BITFIELD
 
@@ -381,10 +383,12 @@ EXAMPLE:
 
 "fetch-transaction": (
 "BLOCKCHAIN QUERIES",
-"Fetch a raw transaction using a network connection to make requests against the obelisk load balancer backend.",
+"Fetch a raw transaction using a network connection to\n" +
+SPACING + "make requests against the obelisk load balancer backend.",
 
 """\
-Fetch a raw transaction using a network connection to make requests against the obelisk load balancer backend.
+Fetch a raw transaction using a network connection to
+make requests against the obelisk load balancer backend.
 
 Usage: sx fetch-transaction HASH
 
