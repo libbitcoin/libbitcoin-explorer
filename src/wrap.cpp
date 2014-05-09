@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     bytes.push_back(version_byte);
     extend_data(bytes, decode_hex(hex_str));
     uint32_t checksum = bitcoin_checksum(bytes);
-    extend_data(bytes, uncast_type(checksum));
+    extend_data(bytes, to_little_endian(checksum));
 
     std::cout << bytes << std::endl;
     return 0;
