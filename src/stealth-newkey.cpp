@@ -9,7 +9,7 @@ int main()
     ec_point spend_pubkey = secret_to_public_key(spend_secret);
 
     stealth_address addr;
-    addr.options |= stealth_address::reuse_key_option;
+    addr.options = 0;
     addr.scan_pubkey = secret_to_public_key(scan_secret);
     addr.spend_pubkeys.push_back(spend_pubkey);
     addr.number_signatures = 1;
