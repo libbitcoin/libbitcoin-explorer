@@ -11,7 +11,7 @@ corebin_PROGRAMS = \
     sx-hd-seed sx-hd-priv sx-hd-pub sx-hd-to-address sx-hd-to-wif \
     sx-stealth-addr sx-stealth-show-addr sx-stealth-initiate \
     sx-stealth-uncover sx-stealth-uncover-secret sx-stealth-newkey \
-    sx-ec-multiply sx-ec-tweak-add
+    sx-ec-multiply sx-ec-tweak-add sx-ec-add-modp sx-sha256
 corebin_SCRIPTS = sx-qrcode sx-watchtx sx-btc sx-satoshi sx-bci-history \
 	sx-get-utxo sx-bci-fetch-last-height sx-sendtx-bci sx-base58check-encode \
 	sx-base58check-decode sx-embed-addr sx-blke-fetch-transaction \
@@ -48,6 +48,9 @@ corebin_PROGRAMS += \
 
 AM_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
 endif
+
+sx_ec_add_modp_SOURCES = ec-add-modp.cpp
+sx_ec_add_modp_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_ec_tweak_add_SOURCES = ec-tweak-add.cpp
 sx_ec_tweak_add_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
@@ -129,6 +132,9 @@ sx_pubkey_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_genpub_SOURCES = genpub.cpp
 sx_genpub_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
+
+sx_sha256_SOURCES = sha256.cpp
+sx_sha256_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_addr_SOURCES = addr.cpp
 sx_addr_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
