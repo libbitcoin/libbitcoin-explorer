@@ -372,7 +372,9 @@ SPACING + "make requests against the obelisk load balancer backend.",
 Fetch a stealth information using a network connection to
 make requests against the obelisk load balancer backend.
 
-Usage: sx fetch-stealth NUMBER_BITS BITFIELD
+Usage: sx fetch-stealth NUMBER_BITS BITFIELD [FROM_HEIGHT]
+
+Default NUMBER_BITS is 0 (if not specified).
 
 EXAMPLE: 
 
