@@ -261,6 +261,35 @@ install_libczmqpp(){
     echo
 }
 
+install_libsecp256k1(){
+    cd $SRC_DIR
+    if [ -d "secp256k1-git" ]; then
+        echo
+        echo " --> Updating secp256k1..."
+        echo
+        cd secp256k1-git
+        git remote set-url origin https://github.com/bitcoin/secp256k1.git
+        git pull --rebase
+    else
+        echo
+        echo " --> Downloading secp256k1 from git..."
+        echo
+        git clone https://github.com/bitcoin/secp256k1.git secp256k1-git
+    fi
+    cd $SRC_DIR/secp256k1-git
+    echo
+    echo " --> Beginning build process now...."
+    echo
+    autoreconf -i
+    ./configure --prefix $INSTALL_PREFIX
+    make
+    make install
+    $RUN_LDCONFIG
+    echo
+    echo " o/ secp256k1 now installed."
+    echo
+}
+
 install_libbitcoin(){
     cd $SRC_DIR
     if [ -d "libbitcoin-git" ]; then
@@ -281,7 +310,7 @@ install_libbitcoin(){
     echo " --> Beginning build process now...."
     echo
     autoreconf -i
-    ./configure --enable-leveldb --prefix $INSTALL_PREFIX
+    ./configure --enable-leveldb --prefix $INSTALL_PREFIX --with-libsecp256k1=$INSTALL_PREFIX
     make
     make install
     $RUN_LDCONFIG
@@ -410,6 +439,7 @@ install_libsodium
 install_libzmq
 install_czmq
 install_libczmqpp
+install_libsecp256k1
 install_libbitcoin
 install_libwallet
 install_obelisk
