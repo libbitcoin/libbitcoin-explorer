@@ -28,7 +28,7 @@ int main(int argc, char** argv)
         tx_hash_str = argv[1];
     else
         tx_hash_str = read_stdin();
-    hash_digest tx_hash = decode_hex_digest<hash_digest>(tx_hash_str);
+    hash_digest tx_hash = decode_hash(tx_hash_str);
     config_map_type config;
     load_config(config);
     threadpool pool(1);

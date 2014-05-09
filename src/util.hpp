@@ -53,7 +53,7 @@ std::string read_stdin()
 bool read_private_key(elliptic_curve_key& key, const std::string& arg,
     int is_compressed=-1)
 {
-    secret_parameter secret = decode_hex_digest<secret_parameter>(arg);
+    secret_parameter secret = decode_hash(arg);
     bool compressed_flag = true;
     if (secret == null_hash)
     {

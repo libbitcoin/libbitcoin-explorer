@@ -37,7 +37,7 @@ int main(int argc, char** argv)
         config["client-certificate"], config["server-public-key"]);
     // Try first to interpret index as hash, if that fails then
     // interpret the index as a height instead.
-    hash_digest blk_hash = decode_hex_digest<hash_digest>(index_str);
+    hash_digest blk_hash = decode_hash(index_str);
     if (blk_hash == null_hash)
     {
         size_t height = 0;

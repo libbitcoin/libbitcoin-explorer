@@ -15,7 +15,7 @@ std::string dump_file(std::istream& in_file)
 int main()
 {
     std::string secret_str = dump_file(std::cin);
-    secret_parameter secret = decode_hex_digest<hash_digest>(secret_str);
+    secret_parameter secret = decode_hash(secret_str);
     std::cout << secret_to_wif(secret) << std::endl;
     return 0;
 }

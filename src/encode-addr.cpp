@@ -36,7 +36,7 @@ int main(int argc, char** argv)
         addr_str = argv[1];
     }
 
-    short_hash hashdata = decode_hex_digest<short_hash>(addr_str);
+    short_hash hashdata = decode_short_hash(addr_str);
     if (hashdata == null_short_hash)
     {
         std::cerr << "Incorrect HASH passed in." << std::endl;

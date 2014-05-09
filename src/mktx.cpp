@@ -47,7 +47,7 @@ bool load_outpoint(output_point& prevout, const std::string& parameter)
         std::cerr << "mktx: Incorrect TXHASH." << std::endl;
         return false;
     }
-    prevout.hash = decode_hex_digest<hash_digest>(hex_string);
+    prevout.hash = decode_hash(hex_string);
     const std::string& index_string = strs[1];
     try
     {

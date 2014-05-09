@@ -3,7 +3,7 @@ using namespace bc;
 
 bool set_ec_secret(ec_secret& secret, const std::string& arg)
 {
-    ec_secret result = decode_hex_digest<ec_secret>(arg);
+    ec_secret result = decode_hash(arg);
     if (result == null_hash)
         return false;
     secret = result;

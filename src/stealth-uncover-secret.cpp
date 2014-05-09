@@ -12,8 +12,8 @@ int main(int argc, char** argv)
         return -1;
     }
     ec_point ephem_pubkey = decode_hex(argv[1]);
-    ec_secret scan_secret = decode_hex_digest<ec_secret>(argv[2]);
-    ec_secret spend_secret = decode_hex_digest<ec_secret>(argv[3]);
+    ec_secret scan_secret = decode_hash(argv[2]);
+    ec_secret spend_secret = decode_hash(argv[3]);
     ec_secret secret = uncover_stealth_secret(
         ephem_pubkey, scan_secret, spend_secret);
     std::cout << secret << std::endl;
