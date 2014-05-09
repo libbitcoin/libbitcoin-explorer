@@ -531,6 +531,17 @@ Usage: echo SECRET | sx secret-to-wif
 """
 ),
 
+"sha256": (
+"MISC",
+"Perform SHA256 hash of data.",
+
+"""\
+Usage: sx sha256 DATA
+
+Perform SHA256 hash of data.\
+"""
+),
+
 "mpk": (
 "DETERMINISTIC KEYS AND ADDRESSES",
 "Extract a master public key from a deterministic wallet seed.",
@@ -808,12 +819,12 @@ Watch transactions from the network searching for a certain hash.\
 
 "stealth-initiate": (
 "STEALTH",
-"Initiate a new stealth address.",
+"Initiate a new stealth payment.",
 
 """\
 Usage: sx stealth-initiate EPHEM_SECRET SCAN_PUBKEY SPEND_PUBKEY
 
-Initiate a new stealth address.\
+Initiate a new stealth payment.\
 """
 ),
 
@@ -841,25 +852,26 @@ Uncover a stealth secret.\
 
 "stealth-newkey": (
 "STEALTH",
-"Generate a new stealth keys and an address.",
+"Generate new stealth keys and an address.",
 
 """\
 Usage: sx stealth-newkey
 
-Generate a new stealth keys and an address.\
+Generate new stealth keys and an address.\
 """
 ),
 
 "stealth-addr": (
 "STEALTH",
-"Generate a new stealth address.",
+"See a stealth address from given input.",
 
 """\
-Usage: sx stealth-addr [--reuse-key|-r] SCAN_PUBKEY SPEND_PUBKEY1 ...  SPEND_PUBKEYN
+Usage: sx stealth-addr [--reuse-key|-r] [--signatures|-s NSIGS] SCAN_PUBKEY SPEND_PUBKEY1 ...  SPEND_PUBKEYN
 
-Generate a new stealth address.
+See a stealth address from given input.
 
   --reuse-key -r    Reuse SCAN_PUBKEY for SPEND_PUBKEY
+  --signatures -s   Specify NUMBER_SIGNATURES needed.
 """
 ),
 
@@ -948,6 +960,17 @@ Multiply an integer and a point together.\
 Usage: sx ec-tweak-add INTEGER POINT
 
 Calculate the result of POINT + INTEGER * G.\
+"""
+),
+
+"ec-add-modp": (
+"EC MATH",
+"Calculate the result of INTEGER + INTEGER.",
+
+"""\
+Usage: sx ec-add-modp INTEGER INTEGER
+
+Calculate the result of INTEGER + INTEGER.\
 """
 ),
 
