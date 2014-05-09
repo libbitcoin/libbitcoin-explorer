@@ -18,9 +18,9 @@ void stealth_fetched(const std::error_code& ec,
         return;
     }
     for (const blockchain::stealth_row& row: stealth_results)
-        log_debug() << "ephemkey: " << row.ephemkey
+        std::cout << "ephemkey: " << row.ephemkey
             << " address: " << row.address.encoded()
-            << " tx_hash: " << row.transaction_hash;
+            << " tx_hash: " << row.transaction_hash << std::endl;
     stopped = true;
 }
 
