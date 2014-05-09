@@ -5,7 +5,7 @@ Stealth Payments
 ****************
 
 Stealth payments is an anonymity technique that protects the privacy of
-the recipient. The concept was invented by BitcoinByte and Peter Todd, and
+the recipient. The concept was invented by ByteCoin and Peter Todd, and
 is powerful tool for allowing one to accept Bitcoins using a public Bitcoin
 address while preventing passive observers from knowing your transaction
 history.
