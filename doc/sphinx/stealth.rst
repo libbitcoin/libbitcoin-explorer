@@ -38,8 +38,8 @@ understanding the mechanics behind them.
        fetch-stealth              Fetch a stealth information using a network connection
                                   to make requests against the obelisk load balancer backend.
 
-Sending stealth
----------------
+Initiate stealth
+----------------
     
 Alice creates a new stealth address.
 ::
