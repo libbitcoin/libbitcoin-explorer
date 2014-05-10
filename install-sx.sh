@@ -17,7 +17,16 @@ set -e
 echo
 echo " [+] Welcome to S(pesmilo)X(changer)."
 echo
-if [ "$#" = "1" ]; then
+ENABLE_DEVELOP=0
+if [ "$#" = "1" ] || [ "$#" == "2" ]; then
+    if [ "$#" == "2" ]; then
+        if [ "$2" != "--develop" ]; then
+            echo "Usage: install-sx.sh INSTALL_PATH [--develop]"
+            exit
+        fi
+        ENABLE_DEVELOP=1
+    fi
+
     if [[ "$1" = /* ]]; then
         #Absolute path
         INSTALL_PREFIX=$1
@@ -309,6 +318,13 @@ install_libbitcoin(){
     echo
     echo " --> Beginning build process now...."
     echo
+    if [ "$ENABLE_DEVELOP" = 1 ]; then
+        echo " --> Using development version..."
+        git checkout -t origin/develop
+        git checkout develop
+    else
+        git checkout master
+    fi
     autoreconf -i
     ./configure --enable-leveldb --prefix $INSTALL_PREFIX --with-libsecp256k1=$INSTALL_PREFIX
     make
@@ -338,6 +354,13 @@ install_libwallet(){
     echo
     echo " --> Beginning build process now...."
     echo
+    if [ "$ENABLE_DEVELOP" = 1 ]; then
+        echo " --> Using development version..."
+        git checkout -t origin/develop
+        git checkout develop
+    else
+        git checkout master
+    fi
     autoreconf -i
     ./configure --prefix $INSTALL_PREFIX
     make
@@ -367,6 +390,13 @@ install_obelisk(){
     echo
     echo " --> Beginning build process now..."
     echo
+    if [ "$ENABLE_DEVELOP" = 1 ]; then
+        echo " --> Using development version..."
+        git checkout -t origin/develop
+        git checkout develop
+    else
+        git checkout master
+    fi
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
     make
@@ -398,6 +428,13 @@ install_sx(){
     echo
     echo " --> Beginning build process now...."
     echo
+    if [ "$ENABLE_DEVELOP" = 1 ]; then
+        echo " --> Using development version..."
+        git checkout -t origin/develop
+        git checkout develop
+    else
+        git checkout master
+    fi
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
     make
