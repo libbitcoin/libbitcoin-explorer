@@ -16,7 +16,6 @@
       <EnablePREfast>false</EnablePREfast>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Linkage-libwallet)' == 'static' Or '$(Linkage-libwallet)' == 'ltcg'">BCW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 
@@ -30,6 +29,8 @@
 
   <PropertyGroup Condition="$(Configuration.IndexOf('DLL')) != -1">
     <Linkage-openssl>dynamic</Linkage-openssl>
+    <!--<Linkage-secp256k1>dynamic</Linkage-secp256k1>-->
+    <Linkage-mpir>dynamic</Linkage-mpir>
     <Linkage-czmqpp>dynamic</Linkage-czmqpp>
     <Linkage-czmq>dynamic</Linkage-czmq>
     <Linkage-libzmq>dynamic</Linkage-libzmq>
@@ -41,6 +42,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.IndexOf('LTCG')) != -1">
     <Linkage-openssl>static</Linkage-openssl>
+    <Linkage-secp256k1>ltcg</Linkage-secp256k1>
+    <Linkage-mpir>static</Linkage-mpir>
     <Linkage-czmqpp>ltcg</Linkage-czmqpp>
     <Linkage-czmq>ltcg</Linkage-czmq>
     <Linkage-libzmq>ltcg</Linkage-libzmq>
@@ -52,6 +55,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.IndexOf('LIB')) != -1">
     <Linkage-openssl>static</Linkage-openssl>
+    <Linkage-secp256k1>static</Linkage-secp256k1>
+    <Linkage-mpir>static</Linkage-mpir>
     <Linkage-czmqpp>static</Linkage-czmqpp>
     <Linkage-czmq>static</Linkage-czmq>
     <Linkage-libzmq>static</Linkage-libzmq>
@@ -66,6 +71,8 @@
 
   <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
     <Message Text="Linkage-openssl   : $(Linkage-openssl)" Importance="high"/>
+    <Message Text="Linkage-secp256k1 : $(Linkage-secp256k1)" Importance="high"/>
+    <Message Text="Linkage-mpir      : $(Linkage-mpir)" Importance="high"/>
     <Message Text="Linkage-czmqpp    : $(Linkage-czmqpp)" Importance="high"/>
     <Message Text="Linkage-czmq      : $(Linkage-czmq)" Importance="high"/>
     <Message Text="Linkage-libzmq    : $(Linkage-libzmq)" Importance="high"/>
