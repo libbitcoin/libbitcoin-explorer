@@ -101,7 +101,7 @@ bool read_hd_command_args(int argc, char** argv,
         std::cerr << "Usage: sx hd-priv [--hard] INDEX" << std::endl;
         return false;
     }
-    for (size_t i = 1; i < argc; ++i)
+    for (int i = 1; i < argc; ++i)
     {
         std::string arg = argv[i];
         if (arg == "-h" || arg == "--hard")
