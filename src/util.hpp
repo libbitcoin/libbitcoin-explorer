@@ -2,6 +2,7 @@
 #define SX_UTIL_HPP
 
 #include <iostream>
+#include <random>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
