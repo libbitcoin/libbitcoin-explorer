@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 {
     if (argc > 2)
     {
-        std::cerr << "sx pubkey [IS_COMPRESSED]" << std::endl;
+        std::cerr << "Usage: sx pubkey [--uncompressed|--compressed]" << std::endl;
         return -1;
     }
     int is_compressed = -1;
@@ -18,9 +18,11 @@ int main(int argc, char** argv)
     {
         std::string flag_str = argv[1];
         boost::algorithm::to_lower(flag_str);
-        if (flag_str == "1" || flag_str == "true" || flag_str == "yes")
+        if (flag_str == "1" || flag_str == "true" || flag_str == "yes" ||
+            flag_str == "--compressed" || flag_str == "-c")
             is_compressed = 1;
-        else if (flag_str == "0" || flag_str == "false" || flag_str == "no")
+        else if (flag_str == "0" || flag_str == "false" || flag_str == "no" ||
+            flag_str == "--uncompressed" || flag_str == "-u")
             is_compressed = 0;
         else
         {

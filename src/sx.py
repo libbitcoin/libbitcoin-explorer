@@ -127,8 +127,12 @@ Query blockchain whether transaction has been confirmed.\
 "See the public part of a private key.",
 
 """\
-Usage: sx pubkey
-Read private key from STDIN and output the public key.\
+Usage: sx pubkey [OPTION]
+
+  -c, --compressed      Use compressed public key format.
+  -u, --uncompressed    Use uncompressed public key format.
+
+Read private or public key from STDIN and output the public key.\
 """
 ),
 
