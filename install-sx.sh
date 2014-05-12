@@ -13,64 +13,92 @@
 # <sudo bash install-sx.sh --help>
 #
 #
+
 set -e
 echo
 echo " [+] Welcome to S(pesmilo)X(changer)."
 echo
-ENABLE_DEVELOP=0
-if [ "$#" = "1" ] || [ "$#" == "2" ]; then
-    if [ "$#" == "2" ]; then
-        if [ "$2" != "--develop" ]; then
-            echo "Usage: install-sx.sh INSTALL_PATH [--develop]"
-            exit
-        fi
-        ENABLE_DEVELOP=1
-    fi
 
-    if [[ "$1" = /* ]]; then
-        #Absolute path
-        INSTALL_PREFIX=$1
-    elif [ "$1" = "--help" ]; then
-        echo " [+] Install script help:"
-        echo " --> To execute this script type:"
-        echo " <sudo bash install-sx.sh>"
-        echo " --> To execute this script and install at a specific path type:"
-        echo " <bash install-sx.sh PATH/...>"
-        echo " This script will install libbitcoin, libwallet, obelisk and sx tools."
-        echo " The standard path for the installation is /usr/local/"
-        echo " The stardard path for the conf files is /etc."
-        echo
-        exit
-    else
-        #Relative path
-        RELATIVE=`pwd`
-        INSTALL_PREFIX=$RELATIVE/$1
-    fi
-    CONF_DIR=$INSTALL_PREFIX/etc
-    RUN_LDCONFIG=
-    ROOT_INSTALL=0
-elif [ `id -u` = "0" ]; then
-    INSTALL_PREFIX=/usr/local
-    CONF_DIR=/etc
-    RUN_LDCONFIG=ldconfig
-    ROOT_INSTALL=1
-else
+# Defaults
+INSTALL_PREFIX=/usr/local
+CONF_DIR=/etc
+RUN_LDCONFIG=ldconfig
+ROOT_INSTALL=1
+TOOLCHAIN_BRANCH="master"
+TOOLCHAIN_TESTNET=
+
+usage() {
+    echo " [+] Install script usage:"
+    echo
+    echo " [sudo] bash install-sx.sh [<--argument> <value> [...]]"
+    echo
+    echo " If no arguments are provided, defaults will be used, and sudo is mandatory."
+    echo
+    echo " Default path for installation is $INSTALL_PREFIX"
+    echo " Default path for the conf files is $CONF_DIR"
+    echo " Stable versions of toolchain packages (from git $TOOLCHAIN_BRANCH branches) will be installed for libbitcoin, libwallet, obelisk and sx tools."
+    echo
+    echo " Optional arguments:"
+    echo " --prefix <path>  Path prefix to install to, e.g. /home/user/usr"
+    echo " --branch <name>  libbitcoin toolchain branch to use, e.g. develop"
+    echo " --testnet        Build for testnet, takes no value"
+}
+
+# Parse arguments.
+argc=0
+while [ $# -ne 0 ]; do
+    argc=$[$argc + 1]
+    case $1 in
+	--help)
+	    usage
+	    ;;
+        --prefix)
+	    shift
+	    if [[ "$1" = /* ]]; then
+		# Absolute path
+		INSTALL_PREFIX=$1
+	    else
+		# Relative path
+		INSTALL_PREFIX=`pwd`/$1
+	    fi
+	    CONF_DIR=$INSTALL_PREFIX/etc
+	    RUN_LDCONFIG=
+	    ROOT_INSTALL=0
+	    ;;
+	--branch)
+	    shift
+	    TOOLCHAIN_BRANCH=$1
+	    ;;
+	--testnet|--enable-testnet)
+	    TOOLCHAIN_TESTNET="--enable-testnet"
+	    ;;
+	*)
+	    echo "[+] ERROR: Invalid argument \"$1\"."
+	    echo
+	    usage
+	    ;;
+    esac
+    shift
+done
+
+if [ `id -u` != "0" -a $ROOT_INSTALL -eq 1 ]; then
     echo
     echo "[+] ERROR: This script must be run as root or be provided an install prefix." 1>&2
     echo
-    echo "<sudo bash install-sx.sh>"
-    echo "<bash install-sx.sh PATH/...>"
-    echo
+    usage
     exit
 fi
+
 SRC_DIR=$INSTALL_PREFIX/src
 export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
 mkdir -p $SRC_DIR
 mkdir -p $PKG_CONFIG_PATH
+
 #
 strip_spaces(){
     echo $* | awk '$1=$1'
 }
+
 continue_or_exit(){
     read -p "Continue installation? [y/N] " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -318,15 +346,9 @@ install_libbitcoin(){
     echo
     echo " --> Beginning build process now...."
     echo
-    if [ "$ENABLE_DEVELOP" = 1 ]; then
-        echo " --> Using development version..."
-        git checkout -t origin/develop
-        git checkout develop
-    else
-        git checkout master
-    fi
+    git checkout $TOOLCHAIN_BRANCH
     autoreconf -i
-    ./configure --enable-leveldb --prefix $INSTALL_PREFIX --with-libsecp256k1=$INSTALL_PREFIX
+    ./configure --enable-leveldb --prefix $INSTALL_PREFIX --with-libsecp256k1=$INSTALL_PREFIX $TOOLCHAIN_TESTNET
     make
     make install
     $RUN_LDCONFIG
@@ -354,15 +376,9 @@ install_libwallet(){
     echo
     echo " --> Beginning build process now...."
     echo
-    if [ "$ENABLE_DEVELOP" = 1 ]; then
-        echo " --> Using development version..."
-        git checkout -t origin/develop
-        git checkout develop
-    else
-        git checkout master
-    fi
+    git checkout $TOOLCHAIN_BRANCH
     autoreconf -i
-    ./configure --prefix $INSTALL_PREFIX
+    ./configure --prefix $INSTALL_PREFIX $TOOLCHAIN_TESTNET
     make
     make install
     $RUN_LDCONFIG
@@ -390,13 +406,7 @@ install_obelisk(){
     echo
     echo " --> Beginning build process now..."
     echo
-    if [ "$ENABLE_DEVELOP" = 1 ]; then
-        echo " --> Using development version..."
-        git checkout -t origin/develop
-        git checkout develop
-    else
-        git checkout master
-    fi
+    git checkout $TOOLCHAIN_BRANCH
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
     make
@@ -428,13 +438,7 @@ install_sx(){
     echo
     echo " --> Beginning build process now...."
     echo
-    if [ "$ENABLE_DEVELOP" = 1 ]; then
-        echo " --> Using development version..."
-        git checkout -t origin/develop
-        git checkout develop
-    else
-        git checkout master
-    fi
+    git checkout $TOOLCHAIN_BRANCH
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
     make
