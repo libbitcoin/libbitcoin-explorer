@@ -13,64 +13,105 @@
 # <sudo bash install-sx.sh --help>
 #
 #
+
 set -e
 echo
 echo " [+] Welcome to S(pesmilo)X(changer)."
 echo
-ENABLE_DEVELOP=0
-if [ "$#" = "1" ] || [ "$#" == "2" ]; then
-    if [ "$#" == "2" ]; then
-        if [ "$2" != "--develop" ]; then
-            echo "Usage: install-sx.sh INSTALL_PATH [--develop]"
-            exit
-        fi
-        ENABLE_DEVELOP=1
-    fi
 
-    if [[ "$1" = /* ]]; then
-        #Absolute path
-        INSTALL_PREFIX=$1
-    elif [ "$1" = "--help" ]; then
-        echo " [+] Install script help:"
-        echo " --> To execute this script type:"
-        echo " <sudo bash install-sx.sh>"
-        echo " --> To execute this script and install at a specific path type:"
-        echo " <bash install-sx.sh PATH/...>"
-        echo " This script will install libbitcoin, libwallet, obelisk and sx tools."
-        echo " The standard path for the installation is /usr/local/"
-        echo " The stardard path for the conf files is /etc."
-        echo
-        exit
-    else
-        #Relative path
-        RELATIVE=`pwd`
-        INSTALL_PREFIX=$RELATIVE/$1
-    fi
-    CONF_DIR=$INSTALL_PREFIX/etc
-    RUN_LDCONFIG=
-    ROOT_INSTALL=0
-elif [ `id -u` = "0" ]; then
-    INSTALL_PREFIX=/usr/local
-    CONF_DIR=/etc
-    RUN_LDCONFIG=ldconfig
-    ROOT_INSTALL=1
-else
+# Defaults
+INSTALL_PREFIX=/usr/local
+CONF_DIR=/etc
+RUN_LDCONFIG=ldconfig
+ROOT_INSTALL=1
+TOOLCHAIN_BRANCH="master"
+TOOLCHAIN_BRANCH_KEEP=0
+TOOLCHAIN_TESTNET=
+
+usage() {
+    echo " [+] Install script usage:"
+    echo
+    echo " [sudo] bash install-sx.sh [<--argument> <value> [...]]"
+    echo
+    echo " If no arguments are provided, defaults will be used, and sudo is mandatory."
+    echo
+    echo " Default path for installation is $INSTALL_PREFIX"
+    echo " Default path for the conf files is $CONF_DIR"
+    echo " Stable versions of toolchain packages (from git $TOOLCHAIN_BRANCH branches) will be installed for libbitcoin, libwallet, obelisk and sx tools."
+    echo
+    echo " Optional arguments:"
+    echo " --prefix <path>  Path prefix to install to, e.g. /home/user/usr"
+    echo " --branch <name>  libbitcoin toolchain branch to use, e.g. develop"
+    echo " --branch-keep    Don't check out from git for libbitcoin toolchain or dependencies, takes no value"
+    echo " --testnet        Build for testnet, takes no value"
+}
+
+# Parse arguments.
+argc=0
+while [ $# -ne 0 ]; do
+    argc=$[$argc + 1]
+    case $1 in
+	--help)
+	    usage
+	    ;;
+        --prefix)
+	    shift
+	    if [[ "$1" = /* ]]; then
+		# Absolute path
+		INSTALL_PREFIX=$1
+	    else
+		# Relative path
+		INSTALL_PREFIX=`pwd`/$1
+	    fi
+	    CONF_DIR=$INSTALL_PREFIX/etc
+	    RUN_LDCONFIG=
+	    ROOT_INSTALL=0
+	    ;;
+	--branch)
+	    shift
+	    TOOLCHAIN_BRANCH=$1
+	    ;;
+	--branch-keep)
+	    TOOLCHAIN_BRANCH_KEEP=1
+	    ;;
+	--testnet|--enable-testnet)
+	    TOOLCHAIN_TESTNET="--enable-testnet"
+	    ;;
+	*)
+	    echo "[+] ERROR: Invalid argument \"$1\"."
+	    echo
+	    usage
+	    ;;
+    esac
+    shift
+done
+
+if [ `id -u` != "0" -a $ROOT_INSTALL -eq 1 ]; then
     echo
     echo "[+] ERROR: This script must be run as root or be provided an install prefix." 1>&2
     echo
-    echo "<sudo bash install-sx.sh>"
-    echo "<bash install-sx.sh PATH/...>"
-    echo
+    usage
     exit
 fi
+
+BIN_DIR=$INSTALL_PREFIX/bin
 SRC_DIR=$INSTALL_PREFIX/src
-export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
+TOOLCHAIN_LD_LIBRARY_PATH=$INSTALL_PREFIX/lib
+TOOLCHAIN_PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
+
+export LD_LIBRARY_PATH=$TOOLCHAIN_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=$TOOLCHAIN_PKG_CONFIG_PATH:$PKG_CONFIG_PATH
+
+mkdir -p $BIN_DIR
 mkdir -p $SRC_DIR
-mkdir -p $PKG_CONFIG_PATH
+mkdir -p $TOOLCHAIN_LD_LIBRARY_PATH
+mkdir -p $TOOLCHAIN_PKG_CONFIG_PATH
+
 #
 strip_spaces(){
     echo $* | awk '$1=$1'
 }
+
 continue_or_exit(){
     read -p "Continue installation? [y/N] " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -159,20 +200,23 @@ install_dependencies(){
 }
 
 install_libsodium(){
-    cd $SRC_DIR
-    if [ -d "libsodium-git" ]; then
-        echo
-        echo " --> Updating libsodium..."
-        echo
-        cd libsodium-git
-        git remote set-url origin https://github.com/jedisct1/libsodium
-        git pull --rebase
-    else
-        echo
-        echo " --> Downloading libsodium from git..."
-        echo
-        git clone https://github.com/jedisct1/libsodium libsodium-git
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "libsodium-git" ]; then
+            echo
+            echo " --> Updating libsodium..."
+            echo
+            cd libsodium-git
+            git remote set-url origin https://github.com/jedisct1/libsodium
+            git pull --rebase
+	else
+            echo
+            echo " --> Downloading libsodium from git..."
+            echo
+            git clone https://github.com/jedisct1/libsodium libsodium-git
+	fi
     fi
+
     cd $SRC_DIR/libsodium-git
     echo
     echo " --> Beginning build process now...."
@@ -189,18 +233,21 @@ install_libsodium(){
 }
 
 install_libzmq(){
-    cd $SRC_DIR
-    if [ -d "zeromq-4.0.4" ]; then
-        echo
-        echo " --> Updating libzmq..."
-        echo
-    else
-        echo
-        echo " --> Downloading libzmq from git..."
-        echo
-        wget http://download.zeromq.org/zeromq-4.0.4.tar.gz
-        tar zxf zeromq-4.0.4.tar.gz
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "zeromq-4.0.4" ]; then
+            echo
+            echo " --> Updating libzmq..."
+            echo
+	else
+            echo
+            echo " --> Downloading libzmq from git..."
+            echo
+            wget http://download.zeromq.org/zeromq-4.0.4.tar.gz
+            tar zxf zeromq-4.0.4.tar.gz
+	fi
     fi
+
     cd $SRC_DIR/zeromq-4.0.4
     echo
     echo " --> Beginning build process now...."
@@ -216,18 +263,21 @@ install_libzmq(){
 }
 
 install_czmq(){
-    cd $SRC_DIR
-    if [ -d "czmq-2.2.0" ]; then
-        echo
-        echo " --> Updating czmq..."
-        echo
-    else
-        echo
-        echo " --> Downloading czmq from git..."
-        echo
-        wget http://download.zeromq.org/czmq-2.2.0.tar.gz
-        tar zxf czmq-2.2.0.tar.gz
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "czmq-2.2.0" ]; then
+            echo
+            echo " --> Updating czmq..."
+            echo
+	else
+            echo
+            echo " --> Downloading czmq from git..."
+            echo
+            wget http://download.zeromq.org/czmq-2.2.0.tar.gz
+            tar zxf czmq-2.2.0.tar.gz
+	fi
     fi
+
     cd $SRC_DIR/czmq-2.2.0
     echo
     echo " --> Beginning build process now...."
@@ -242,20 +292,23 @@ install_czmq(){
 }
 
 install_libczmqpp(){
-    cd $SRC_DIR
-    if [ -d "czmqpp-git" ]; then
-        echo
-        echo " --> Updating czmq++..."
-        echo
-        cd czmqpp-git
-        git remote set-url origin https://github.com/zeromq/czmqpp
-        git pull --rebase
-    else
-        echo
-        echo " --> Downloading czmq++ from git..."
-        echo
-        git clone https://github.com/zeromq/czmqpp czmqpp-git
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "czmqpp-git" ]; then
+            echo
+            echo " --> Updating czmq++..."
+            echo
+            cd czmqpp-git
+            git remote set-url origin https://github.com/zeromq/czmqpp
+            git pull --rebase
+	else
+            echo
+            echo " --> Downloading czmq++ from git..."
+            echo
+            git clone https://github.com/zeromq/czmqpp czmqpp-git
+	fi
     fi
+
     cd $SRC_DIR/czmqpp-git
     echo
     echo " --> Beginning build process now...."
@@ -271,20 +324,23 @@ install_libczmqpp(){
 }
 
 install_libsecp256k1(){
-    cd $SRC_DIR
-    if [ -d "secp256k1-git" ]; then
-        echo
-        echo " --> Updating secp256k1..."
-        echo
-        cd secp256k1-git
-        git remote set-url origin https://github.com/bitcoin/secp256k1.git
-        git pull --rebase
-    else
-        echo
-        echo " --> Downloading secp256k1 from git..."
-        echo
-        git clone https://github.com/bitcoin/secp256k1.git secp256k1-git
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "secp256k1-git" ]; then
+            echo
+            echo " --> Updating secp256k1..."
+            echo
+            cd secp256k1-git
+            git remote set-url origin https://github.com/bitcoin/secp256k1.git
+            git pull --rebase
+	else
+            echo
+            echo " --> Downloading secp256k1 from git..."
+            echo
+            git clone https://github.com/bitcoin/secp256k1.git secp256k1-git
+	fi
     fi
+
     cd $SRC_DIR/secp256k1-git
     echo
     echo " --> Beginning build process now...."
@@ -300,33 +356,30 @@ install_libsecp256k1(){
 }
 
 install_libbitcoin(){
-    cd $SRC_DIR
-    if [ -d "libbitcoin-git" ]; then
-        echo
-        echo " --> Updating libbitcoin..."
-        echo
-        cd libbitcoin-git
-        git remote set-url origin https://github.com/libbitcoin/libbitcoin.git
-        git pull --rebase
-    else
-        echo
-        echo " --> Downloading libbitcoin from git..."
-        echo
-        git clone https://github.com/libbitcoin/libbitcoin.git libbitcoin-git
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "libbitcoin-git" ]; then
+            echo
+            echo " --> Updating libbitcoin..."
+            echo
+            cd libbitcoin-git
+            git remote set-url origin https://github.com/libbitcoin/libbitcoin.git
+            git pull --rebase
+	else
+            echo
+            echo " --> Downloading libbitcoin from git..."
+            echo
+            git clone https://github.com/libbitcoin/libbitcoin.git libbitcoin-git
+	fi
     fi
+
     cd $SRC_DIR/libbitcoin-git
     echo
     echo " --> Beginning build process now...."
     echo
-    if [ "$ENABLE_DEVELOP" = 1 ]; then
-        echo " --> Using development version..."
-        git checkout -t origin/develop
-        git checkout develop
-    else
-        git checkout master
-    fi
+    [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ] && git checkout $TOOLCHAIN_BRANCH
     autoreconf -i
-    ./configure --enable-leveldb --prefix $INSTALL_PREFIX --with-libsecp256k1=$INSTALL_PREFIX
+    ./configure --enable-leveldb --prefix $INSTALL_PREFIX --with-libsecp256k1=$INSTALL_PREFIX $TOOLCHAIN_TESTNET
     make
     make install
     $RUN_LDCONFIG
@@ -336,33 +389,30 @@ install_libbitcoin(){
 }
 
 install_libwallet(){
-    cd $SRC_DIR
-    if [ -d "libwallet-git" ]; then
-        echo
-        echo " --> Updating Libwallet..."
-        echo
-        cd libwallet-git
-        git remote set-url origin https://github.com/libbitcoin/libwallet.git
-        git pull --rebase
-    else
-        echo
-        echo " --> Downloading Libwallet from git..."
-        echo
-        git clone https://github.com/libbitcoin/libwallet.git libwallet-git
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "libwallet-git" ]; then
+            echo
+            echo " --> Updating Libwallet..."
+            echo
+            cd libwallet-git
+            git remote set-url origin https://github.com/libbitcoin/libwallet.git
+            git pull --rebase
+	else
+            echo
+            echo " --> Downloading Libwallet from git..."
+            echo
+            git clone https://github.com/libbitcoin/libwallet.git libwallet-git
+	fi
     fi
+
     cd $SRC_DIR/libwallet-git
     echo
     echo " --> Beginning build process now...."
     echo
-    if [ "$ENABLE_DEVELOP" = 1 ]; then
-        echo " --> Using development version..."
-        git checkout -t origin/develop
-        git checkout develop
-    else
-        git checkout master
-    fi
+    [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ] && git checkout $TOOLCHAIN_BRANCH
     autoreconf -i
-    ./configure --prefix $INSTALL_PREFIX
+    ./configure --prefix $INSTALL_PREFIX $TOOLCHAIN_TESTNET
     make
     make install
     $RUN_LDCONFIG
@@ -372,31 +422,28 @@ install_libwallet(){
 }
 
 install_obelisk(){
-    cd $SRC_DIR
-    if [ -d "obelisk-git" ]; then
-        echo
-        echo " --> Updating Obelisk..."
-        echo
-        cd obelisk-git
-        git remote set-url origin https://github.com/libbitcoin/obelisk.git
-        git pull --rebase
-    else
-        echo
-        echo " --> Downloading obelisk..."
-        echo
-        git clone https://github.com/libbitcoin/obelisk.git obelisk-git
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "obelisk-git" ]; then
+            echo
+            echo " --> Updating Obelisk..."
+            echo
+            cd obelisk-git
+            git remote set-url origin https://github.com/libbitcoin/obelisk.git
+            git pull --rebase
+	else
+            echo
+            echo " --> Downloading obelisk..."
+            echo
+            git clone https://github.com/libbitcoin/obelisk.git obelisk-git
+	fi
     fi
+
     cd $SRC_DIR/obelisk-git
     echo
     echo " --> Beginning build process now..."
     echo
-    if [ "$ENABLE_DEVELOP" = 1 ]; then
-        echo " --> Using development version..."
-        git checkout -t origin/develop
-        git checkout develop
-    else
-        git checkout master
-    fi
+    [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ] && git checkout $TOOLCHAIN_BRANCH
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
     make
@@ -408,33 +455,29 @@ install_obelisk(){
 }
 
 install_sx(){
-    BIN_DIR=$INSTALL_PREFIX/bin
     rm -rf $BIN_DIR/sx-*
-    cd $SRC_DIR
-    if [ -d "sx-git" ]; then
-        echo
-        echo " --> Updating SX..."
-        echo
-        cd sx-git
-        git remote set-url origin https://github.com/spesmilo/sx.git
-        git pull --rebase
-    else
-        echo
-        echo " --> Downloading SX from git..."
-        echo
-        git clone https://github.com/spesmilo/sx.git sx-git
+    if [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ]; then
+	cd $SRC_DIR
+	if [ -d "sx-git" ]; then
+            echo
+            echo " --> Updating SX..."
+            echo
+            cd sx-git
+            git remote set-url origin https://github.com/spesmilo/sx.git
+            git pull --rebase
+	else
+            echo
+            echo " --> Downloading SX from git..."
+            echo
+            git clone https://github.com/spesmilo/sx.git sx-git
+	fi
     fi
+
     cd $SRC_DIR/sx-git
     echo
     echo " --> Beginning build process now...."
     echo
-    if [ "$ENABLE_DEVELOP" = 1 ]; then
-        echo " --> Using development version..."
-        git checkout -t origin/develop
-        git checkout develop
-    else
-        git checkout master
-    fi
+    [ $TOOLCHAIN_BRANCH_KEEP -eq 0 ] && git checkout $TOOLCHAIN_BRANCH
     autoreconf -i
     ./configure --sysconfdir $CONF_DIR --prefix $INSTALL_PREFIX
     make
@@ -447,26 +490,26 @@ install_sx(){
 
 show_finish_install_info(){
     echo " --> Installation finished!"
-    if [ "$ROOT_INSTALL" = "1" ]; then
-        echo
-        echo " Config Files are in: $CONF_DIR"
-        echo "   obelisk configuration files: $CONF_DIR/obelisk/*.cfg"
-        echo "   sx configuration file: ~/.sx.cfg (see $INSTALL_PREFIX/share/sx/sx.cfg for an example config file)"
-        echo 
-        echo " Documentation available /usr/local/doc:"
-        echo "   libbitcoin doc: $INSTALL_PREFIX/share/doc/libbitcoin/"
-        echo "   obelisk doc:    $INSTALL_PREFIX/share/doc/obelisk/"
-        echo "   sx doc:         $INSTALL_PREFIX/share/doc/sx/"
-        echo
-    elif [ "$ROOT_INSTALL" = "0" ]; then
+    echo
+    echo " Config Files are in: $CONF_DIR"
+    echo "   obelisk configuration files: $CONF_DIR/obelisk/*.cfg"
+    echo "   sx configuration file: ~/.sx.cfg (see $INSTALL_PREFIX/share/sx/sx.cfg for an example config file)"
+    echo
+    echo " Documentation available in $INSTALL_PREFIX/share/doc:"
+    echo "   libbitcoin: $INSTALL_PREFIX/share/doc/libbitcoin/"
+    echo "   libwallet:  $INSTALL_PREFIX/share/doc/libwallet/"
+    echo "   obelisk:    $INSTALL_PREFIX/share/doc/obelisk/"
+    echo "   sx:         $INSTALL_PREFIX/share/doc/sx/"
+    echo
+    if [ "$ROOT_INSTALL" = "0" ]; then
         echo
         echo " Add these lines to your ~/.bashrc"
-        echo "   export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib"
-        echo "   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig"
-        echo "   export PATH=\$PATH:$INSTALL_PREFIX/bin"
+        echo "   export LD_LIBRARY_PATH=$TOOLCHAIN_LD_LIBRARY_PATH"
+        echo "   export PKG_CONFIG_PATH=$TOOLCHAIN_PKG_CONFIG_PATH"
+        echo "   export PATH=$BIN_DIR:\$PATH"
     fi
-    echo 
-    echo " To setup an obelisk node, you will to run obworker."
+    echo
+    echo " To setup an obelisk node, you will need to run obworker."
     echo " Run <sudo bash $SRC_DIR/obelisk-git/scripts/setup.sh> to create, configure and start the daemons."
     echo
 }
