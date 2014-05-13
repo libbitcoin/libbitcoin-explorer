@@ -90,9 +90,15 @@ if [ `id -u` != "0" -a $ROOT_INSTALL -eq 1 ]; then
 fi
 
 SRC_DIR=$INSTALL_PREFIX/src
-export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
+TOOLCHAIN_LD_LIBRARY_PATH=$INSTALL_PREFIX/lib
+TOOLCHAIN_PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
+
+export LD_LIBRARY_PATH=$TOOLCHAIN_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=$TOOLCHAIN_PKG_CONFIG_PATH:$PKG_CONFIG_PATH
+
 mkdir -p $SRC_DIR
-mkdir -p $PKG_CONFIG_PATH
+mkdir -p $TOOLCHAIN_LD_LIBRARY_PATH
+mkdir -p $TOOLCHAIN_PKG_CONFIG_PATH
 
 #
 strip_spaces(){
@@ -451,26 +457,26 @@ install_sx(){
 
 show_finish_install_info(){
     echo " --> Installation finished!"
-    if [ "$ROOT_INSTALL" = "1" ]; then
-        echo
-        echo " Config Files are in: $CONF_DIR"
-        echo "   obelisk configuration files: $CONF_DIR/obelisk/*.cfg"
-        echo "   sx configuration file: ~/.sx.cfg (see $INSTALL_PREFIX/share/sx/sx.cfg for an example config file)"
-        echo 
-        echo " Documentation available /usr/local/doc:"
-        echo "   libbitcoin doc: $INSTALL_PREFIX/share/doc/libbitcoin/"
-        echo "   obelisk doc:    $INSTALL_PREFIX/share/doc/obelisk/"
-        echo "   sx doc:         $INSTALL_PREFIX/share/doc/sx/"
-        echo
-    elif [ "$ROOT_INSTALL" = "0" ]; then
+    echo
+    echo " Config Files are in: $CONF_DIR"
+    echo "   obelisk configuration files: $CONF_DIR/obelisk/*.cfg"
+    echo "   sx configuration file: ~/.sx.cfg (see $INSTALL_PREFIX/share/sx/sx.cfg for an example config file)"
+    echo
+    echo " Documentation available in $INSTALL_PREFIX/share/doc:"
+    echo "   libbitcoin: $INSTALL_PREFIX/share/doc/libbitcoin/"
+    echo "   libwallet:  $INSTALL_PREFIX/share/doc/libwallet/"
+    echo "   obelisk:    $INSTALL_PREFIX/share/doc/obelisk/"
+    echo "   sx:         $INSTALL_PREFIX/share/doc/sx/"
+    echo
+    if [ "$ROOT_INSTALL" = "0" ]; then
         echo
         echo " Add these lines to your ~/.bashrc"
-        echo "   export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib"
-        echo "   export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig"
+        echo "   export LD_LIBRARY_PATH=$TOOLCHAIN_LD_LIBRARY_PATH"
+        echo "   export PKG_CONFIG_PATH=$TOOLCHAIN_PKG_CONFIG_PATH"
         echo "   export PATH=\$PATH:$INSTALL_PREFIX/bin"
     fi
-    echo 
-    echo " To setup an obelisk node, you will to run obworker."
+    echo
+    echo " To setup an obelisk node, you will need to run obworker."
     echo " Run <sudo bash $SRC_DIR/obelisk-git/scripts/setup.sh> to create, configure and start the daemons."
     echo
 }
