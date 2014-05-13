@@ -94,6 +94,7 @@ if [ `id -u` != "0" -a $ROOT_INSTALL -eq 1 ]; then
     exit
 fi
 
+BIN_DIR=$INSTALL_PREFIX/bin
 SRC_DIR=$INSTALL_PREFIX/src
 TOOLCHAIN_LD_LIBRARY_PATH=$INSTALL_PREFIX/lib
 TOOLCHAIN_PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
@@ -101,6 +102,7 @@ TOOLCHAIN_PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig
 export LD_LIBRARY_PATH=$TOOLCHAIN_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$TOOLCHAIN_PKG_CONFIG_PATH:$PKG_CONFIG_PATH
 
+mkdir -p $BIN_DIR
 mkdir -p $SRC_DIR
 mkdir -p $TOOLCHAIN_LD_LIBRARY_PATH
 mkdir -p $TOOLCHAIN_PKG_CONFIG_PATH
@@ -504,7 +506,7 @@ show_finish_install_info(){
         echo " Add these lines to your ~/.bashrc"
         echo "   export LD_LIBRARY_PATH=$TOOLCHAIN_LD_LIBRARY_PATH"
         echo "   export PKG_CONFIG_PATH=$TOOLCHAIN_PKG_CONFIG_PATH"
-        echo "   export PATH=\$PATH:$INSTALL_PREFIX/bin"
+        echo "   export PATH=$BIN_DIR:\$PATH"
     fi
     echo
     echo " To setup an obelisk node, you will need to run obworker."
