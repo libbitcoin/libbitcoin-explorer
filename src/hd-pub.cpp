@@ -35,13 +35,13 @@ int main(int argc, char** argv)
         key = private_key;
     else if (!key.set_serialized(encoded_key))
     {
-        std::cerr << "hd-pub: error reading key." << std::endl;
+        std::cerr << "sx: Error reading key." << std::endl;
         return -1;
     }
 
     if (!private_key.valid() && is_hard)
     {
-        std::cerr << "hd-pub: cannot use --hard with public keys."
+        std::cerr << "sx: Cannot use --hard with public keys."
             << std::endl;
         return -1;
     }
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
 
     if (!out.valid())
     {
-        std::cerr << "hd-pub: error deriving child key." << std::endl;
+        std::cerr << "sx: Error deriving child key." << std::endl;
         return -1;
     }
     std::cout << out.serialize() << std::endl;
