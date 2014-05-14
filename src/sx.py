@@ -925,7 +925,10 @@ Create an private HD key from another HD private key.\
 """\
 Usage: sx hd-pub [--hard] INDEX
 
-Create an HD public key from another HD private or public key.\
+Create an HD public key from another HD private or public key.
+
+If no arguments are passed then hd-pub expects a private key in
+STDIN and will convert it to a public key.\
 """
 ),
 

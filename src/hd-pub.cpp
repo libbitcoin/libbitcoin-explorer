@@ -6,6 +6,21 @@ using namespace libwallet;
 
 int main(int argc, char** argv)
 {
+    // Special case - read private key from STDIN and
+    // convert it to a public key.
+    if (argc == 1)
+    {
+        std::string encoded_key = read_stdin();
+        hd_private_key private_key;
+        if (!private_key.set_serialized(encoded_key))
+        {
+            std::cerr << "sx: Error reading private key." << std::endl;
+            return -1;
+        }
+        const hd_public_key public_key = private_key;
+        std::cout << public_key.serialize() << std::endl;
+        return 0;
+    }
     bool is_hard = false;
     uint32_t index = 0;
     if (!read_hd_command_args(argc, argv, is_hard, index))
