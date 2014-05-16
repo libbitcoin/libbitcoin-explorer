@@ -77,7 +77,7 @@ sx_stealth_addr_SOURCES = stealth-addr.cpp
 sx_stealth_addr_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
 sx_hd_seed_SOURCES = hd-seed.cpp config.cpp
-sx_hd_seed_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
+sx_hd_seed_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} -lconfig++
 
 sx_hd_pub_SOURCES = hd-pub.cpp
 sx_hd_pub_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
