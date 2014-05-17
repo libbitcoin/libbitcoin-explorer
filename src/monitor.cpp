@@ -30,8 +30,8 @@ void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker,
     obelisk::fullnode_interface& fullnode, const payment_address& payaddr)
 {
     std::cout << "Worker: " << worker << std::endl;
-    fullnode.address.fetch_history(payaddr,
-        std::bind(history_fetched, _1, _2), 0, worker);
+    //fullnode.address.fetch_history(payaddr,
+    //    std::bind(history_fetched, _1, _2), 0, worker);
 }
 
 void new_update(const std::error_code& ec,
