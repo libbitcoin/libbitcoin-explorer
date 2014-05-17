@@ -181,7 +181,7 @@ allows wallets to check for received payments but not redeem the secret key.
     Spend pubkeys:
       024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969
     Number required signatures: 1
-    Prefix: 0 0
+    Prefix: none
 
 And to recreate the stealth address:
 ::

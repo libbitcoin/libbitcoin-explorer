@@ -26,22 +26,18 @@ void stealth_fetched(const std::error_code& ec,
 
 int main(int argc, char** argv)
 {
-    if (argc != 1 && argc != 3 && argc != 4)
+    if (argc > 3)
     {
-        std::cerr << "Usage: fetch-stealth NUMBER_BITS BITFIELD [FROM_HEIGHT]"
+        std::cerr << "Usage: fetch-stealth BITFIELD [FROM_HEIGHT]"
             << std::endl;
         return -1;
     }
     size_t from_height = 0;
-    if (argc == 4)
-        from_height = boost::lexical_cast<size_t>(argv[3]);
-    stealth_prefix prefix{0, 0};
-    if (argc >= 3)
-    {
-        prefix.number_bits = boost::lexical_cast<int>(argv[1]);
-        data_chunk bitfield_bytes = decode_hex(argv[2]);
-        prefix.bitfield = from_little_endian<uint32_t>(bitfield_bytes.begin());
-    }
+    if (argc == 3)
+        from_height = boost::lexical_cast<size_t>(argv[2]);
+    stealth_prefix prefix;
+    if (argc >= 2)
+        prefix = stealth_prefix(std::string(argv[1]));
     // Start Obelisk
     config_map_type config;
     load_config(config);

@@ -160,7 +160,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
             (!reuse_key && stealth.spend_pubkeys.size() == 1) ||
             (reuse_key && stealth.spend_pubkeys.empty()),
             "Multisig stealth addresses not yet supported!");
-        BITCOIN_ASSERT_MSG(stealth.prefix.number_bits == 0,
+        BITCOIN_ASSERT_MSG(stealth.prefix.size() == 0,
             "Prefix not supported yet!");
         ec_point spend_pubkey = scan_pubkey;
         if (!reuse_key)

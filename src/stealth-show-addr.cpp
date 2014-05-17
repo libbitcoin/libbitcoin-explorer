@@ -41,9 +41,10 @@ int main(int argc, char** argv)
     std::cout << "Number required signatures: "
         << addr.number_signatures << std::endl;
     // Display prefix.
-    std::cout << "Prefix: "
-        << (size_t)addr.prefix.number_bits << " "
-        << addr.prefix.bitfield << std::endl;
+    std::string prefix_str = "none";
+    if (!addr.prefix.empty())
+        boost::to_string(addr.prefix, prefix_str);
+    std::cout << "Prefix: " << prefix_str << std::endl;
     return 0;
 }
 
