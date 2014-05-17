@@ -1,5 +1,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include "config.hpp"
+
 using namespace bc;
 using namespace libwallet;
 
@@ -27,7 +29,17 @@ int main(int argc, char** argv)
         entropy = decode_hex(argv[1]);
     else
         entropy = random_bytes(32);
-    hd_private_key hd_key(entropy);
+
+    config_map_type config;
+    load_config(config);
+
+    bool testnet;
+    if (config["testnet"] == "true")
+	testnet = true;
+    else
+	testnet = false;
+
+    hd_private_key hd_key(entropy, testnet);
     std::cout << hd_key.serialize() << std::endl;
     return 0;
 }
