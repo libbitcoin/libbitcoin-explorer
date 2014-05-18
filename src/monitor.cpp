@@ -26,10 +26,14 @@ void history_fetched(const std::error_code& ec,
     }
 }
 
-void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker,
-    obelisk::fullnode_interface& fullnode, const payment_address& payaddr)
+void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker)
 {
-    std::cout << "Worker: " << worker << std::endl;
+    if (ec)
+    {
+        std::cerr << "Error: " << ec.message() << std::endl;
+        return;
+    }
+    std::cout << "Subscribed." << std::endl;
     //fullnode.address.fetch_history(payaddr,
     //    std::bind(history_fetched, _1, _2), 0, worker);
 }
@@ -45,7 +49,7 @@ int main(int argc, char** argv)
 {
     if (argc != 2)
     {
-        std::cerr << "Usage: sx monitor ADDRESS" << std::endl;
+        std::cerr << "Usage: sx monitor PREFIX" << std::endl;
         return -1;
     }
     std::cerr << std::endl;
@@ -53,19 +57,14 @@ int main(int argc, char** argv)
     std::cerr << "Warning: this command is experimental." << std::endl;
     std::cerr << "**************************************" << std::endl;
     std::cerr << std::endl;
-    payment_address payaddr;
-    if (!payaddr.set_encoded(argv[1]))
-    {
-        std::cerr << "history: Invalid address." << std::endl;
-        return -1;
-    }
+    std::string bits = argv[1];
+    obelisk::address_prefix prefix(bits);
     config_map_type config;
     load_config(config);
     threadpool pool(1);
     obelisk::fullnode_interface fullnode(pool, config["service"],
         config["client-certificate"], config["server-public-key"]);
-    fullnode.address.subscribe(payaddr, new_update,
-        std::bind(subscribed, _1, _2, std::ref(fullnode), payaddr));
+    fullnode.address.subscribe(prefix, new_update, subscribed);
     while (true)
     {
         fullnode.update();

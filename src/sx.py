@@ -97,8 +97,8 @@ This is an experimental prototype.\
 "Monitor an address.",
 
 """\
-Usage: sx monitor ADDRESS
-Monitor an address.\
+Usage: sx monitor PREFIX
+Monitor an address prefix.\
 """
 ),
 

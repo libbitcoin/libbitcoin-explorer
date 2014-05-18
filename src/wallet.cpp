@@ -752,7 +752,10 @@ int main(int argc, char** argv)
         control.add_address(payaddr);
         control.add_key(payaddr,
             detwallet.generate_secret(i, false));
-        fullnode.address.subscribe(payaddr, new_update,
+        obelisk::address_prefix prefix;
+        boost::from_block_range(
+            payaddr.hash().begin(), payaddr.hash().end(), prefix);
+        fullnode.address.subscribe(prefix, new_update,
             std::bind(subscribed, _1, _2,
                 std::ref(fullnode), std::ref(control), std::ref(display),
                 payaddr));
@@ -760,7 +763,9 @@ int main(int argc, char** argv)
         control.add_address(payaddr);
         control.add_key(payaddr,
             detwallet.generate_secret(i, true));
-        fullnode.address.subscribe(payaddr, new_update,
+        boost::from_block_range(
+            payaddr.hash().begin(), payaddr.hash().end(), prefix);
+        fullnode.address.subscribe(prefix, new_update,
             std::bind(subscribed, _1, _2,
                 std::ref(fullnode), std::ref(control), std::ref(display),
                 payaddr));
