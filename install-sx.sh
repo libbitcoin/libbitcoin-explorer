@@ -512,7 +512,7 @@ show_finish_install_info(){
         echo "   export PATH=$BIN_DIR:\$PATH"
     fi
     echo
-    echo " To setup an obelisk node, you will need to run obworker."
+    echo " To setup an obelisk node, you will need to run obelisk-server."
     echo " Run <sudo bash $SRC_DIR/obelisk-git/scripts/setup.sh> to create, configure and start the daemons."
     echo
 }
