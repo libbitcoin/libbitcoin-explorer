@@ -10,7 +10,7 @@ command_list = {
 
 "satoshi": (
 "UTILITY",
-"MISC",
+"SATOSHI MATH",
 "Convert Bitcoins into Satoshis.",
 
 """\
@@ -21,7 +21,7 @@ Convert Bitcoins into Satoshis.\
 
 "btc": (
 "UTILITY",
-"MISC",
+"SATOSHI MATH",
 "Convert Satoshis into Bitcoins.",
 
 """\
@@ -78,8 +78,8 @@ EXAMPLE:
 ),
 
 "initchain": (
-"UTILITY",
-"MISC",
+"ONLINE (OBELISK)",
+"OBELISK ADMIN",
 "Initialize a new blockchain.",
 
 """\
@@ -160,7 +160,7 @@ Read public or private key from STDIN and output Bitcoin address.\
 
 "ripemd-hash": (
 "UTILITY",
-"FORMAT",
+"HASHES",
 "RIPEMD hash data from STDIN.",
 
 """\
@@ -170,8 +170,8 @@ RIPEMD hash data from STDIN.\
 ),
 
 "wrap": (
-"UTILITY",
-"FORMAT",
+"OFFLINE TRANSACTIONS",
+"SCRIPTING",
 "Adds version byte and checksum to hexstring.",
 
 """\
@@ -181,8 +181,8 @@ Adds version byte and checksum to hexstring.\
 ),
 
 "unwrap": (
-"UTILITY",
-"FORMAT",
+"OFFLINE TRANSACTIONS",
+"SCRIPTING",
 "Validates checksum and recovers version byte and original data from hexstring.",
 
 """\
@@ -193,7 +193,7 @@ Validates checksum and recovers version byte and original data from hexstring.\
 
 "base58-decode": (
 "UTILITY",
-"FORMAT",
+"FORMAT (BASE 58)",
 "Convert from base58 to hex",
 
 """\
@@ -204,7 +204,7 @@ Convert from base58 to hex.\
 
 "base58-encode": (
 "UTILITY",
-"FORMAT",
+"FORMAT (BASE 58)",
 "Convert from hex to base58",
 
 """\
@@ -215,7 +215,7 @@ Convert from hex to base58.\
 
 "base58check-decode": (
 "UTILITY",
-"FORMAT",
+"FORMAT (BASE58CHECK)",
 "Convert from base58check to hex",
 
 """\
@@ -226,7 +226,7 @@ Convert from base58check to hex.\
 
 "base58check-encode": (
 "UTILITY",
-"FORMAT",
+"FORMAT (BASE58CHECK)",
 "Convert from hex to base58check",
 
 """\
@@ -561,8 +561,8 @@ The VALUE field is in Satoshis.\
 
 "wif-to-secret": (
 "UTILITY",
-"LOOSE KEYS AND ADDRESSES",
-"Convert a Wallet. Import. Format to secret exponent value.",
+"FORMAT (WIF)",
+"Convert a Wallet Import Format to secret exponent value.",
 
 """\
 Usage: echo WIF | sx wif-to-secret
@@ -572,8 +572,8 @@ Usage: echo WIF | sx wif-to-secret
 
 "secret-to-wif": (
 "UTILITY",
-"LOOSE KEYS AND ADDRESSES",
-"Convert a secret exponent value to Wallet. Import. Format.",
+"FORMAT (WIF)",
+"Convert a secret exponent value to Wallet Import Format",
 
 """\
 Usage: echo SECRET | sx secret-to-wif
@@ -583,7 +583,7 @@ Usage: echo SECRET | sx secret-to-wif
 
 "sha256": (
 "UTILITY",
-"MISC",
+"HASHES",
 "Perform SHA256 hash of data.",
 
 """\
@@ -640,7 +640,7 @@ Usage: sx newseed
 ),
 
 "sendtx-node": (
-"ONLINE (OBELISK)",
+"ONLINE (BITCOIN P2P)",
 "BLOCKCHAIN UPDATES",
 "Send transaction to a single node.",
 
@@ -657,8 +657,8 @@ Send transaction to one Bitcoin node on localhost port 4009:
 ),
 
 "showblkhead": (
-"UTILITY",
-"MISC",
+"OFFLINE BLOCKCHAIN",
+"HEADERS",
 "Show the details of a block header.",
 
 """\
@@ -719,8 +719,8 @@ Example:
 
 "decode-addr": (
 "UTILITY",
-"FORMAT",
-"Decode an address to its internal RIPEMD representation.",
+"FORMAT (BASE58CHECK)",
+"Decode a address from base58check form to internal RIPEMD representation",
 
 """\
 Usage: sx decode-addr ADDRESS
@@ -728,9 +728,9 @@ Decode an address to its internal RIPEMD representation.\
 """),
 
 "embed-addr": (
-"UTILITY",
-"FORMAT",
-"Generate an address used for embedding record of data into the blockchain.",
+"OFFLINE KEYS AND ADDRESSES",
+"BASIC",
+"Generate an address used for embedding record of data into the blockchain",
 
 """\
 Usage: sx embed-addr
@@ -748,8 +748,8 @@ as a record of the data passed in.
 
 "encode-addr": (
 "UTILITY",
-"FORMAT",
-"Encode an address to base58check form.",
+"FORMAT (BASE58CHECK)",
+"Encode an address from internal RIPEMD representation to base58check form",
 
 """\
 Usage: sx encode-addr HASH [VERSION]
