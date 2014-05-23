@@ -39,6 +39,7 @@
     <Linkage-libzmq>dynamic</Linkage-libzmq>
     <Linkage-libsodium>dynamic</Linkage-libsodium>
     <Linkage-libconfig>dynamic</Linkage-libconfig>
+    <Linkage-pdcurses>dynamic</Linkage-pdcurses>
     <Linkage-obelisk>dynamic</Linkage-obelisk>
     <Linkage-libwallet>dynamic</Linkage-libwallet>
     <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
@@ -52,6 +53,7 @@
     <Linkage-libzmq>ltcg</Linkage-libzmq>
     <Linkage-libsodium>ltcg</Linkage-libsodium>
     <Linkage-libconfig>ltcg</Linkage-libconfig>
+    <Linkage-pdcurses>ltcg</Linkage-pdcurses>
     <Linkage-obelisk>ltcg</Linkage-obelisk>
     <Linkage-libwallet>ltcg</Linkage-libwallet>
     <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
@@ -65,6 +67,7 @@
     <Linkage-libzmq>static</Linkage-libzmq>
     <Linkage-libsodium>static</Linkage-libsodium>
     <Linkage-libconfig>static</Linkage-libconfig>
+    <Linkage-pdcurses>static</Linkage-pdcurses>
     <Linkage-obelisk>static</Linkage-obelisk>
     <Linkage-libwallet>static</Linkage-libwallet>
     <Linkage-libbitcoin>static</Linkage-libbitcoin>
