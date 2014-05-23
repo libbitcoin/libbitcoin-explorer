@@ -1,6 +1,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include "util.hpp"
+
 using namespace bc;
 using namespace libwallet;
 
@@ -18,4 +19,3 @@ int main()
     std::cout << secret_to_wif(secret) << std::endl;
     return 0;
 }
-

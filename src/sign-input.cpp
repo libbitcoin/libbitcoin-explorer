@@ -17,8 +17,8 @@ bool sign(transaction_type& tx, size_t input_index,
             << std::endl;
         return false;
     }
-    hash_digest tx_hash =
-        script_type::generate_signature_hash(tx, input_index, script_code, 1);
+    hash_digest tx_hash = script_type::generate_signature_hash(
+        tx, static_cast<uint32_t>(input_index), script_code, 1);
     if (tx_hash == null_hash)
     {
         std::cerr << "sign-input: Error generating signature hash."

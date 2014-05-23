@@ -1,12 +1,14 @@
+#include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+
 using namespace bc;
 
 int main(int argc, char** argv)
 {
     typedef std::vector<std::string> string_list;
     string_list args;
-    for (size_t i = 1; i < argc; ++i)
+    for (int i = 1; i < argc; ++i)
         args.push_back(argv[i]);
     // Check for optional arguments.
     bool reuse_address = false;
@@ -55,7 +57,7 @@ int main(int argc, char** argv)
         options_bitfield |= 1;
     raw_addr.push_back(options_bitfield);
     extend_data(raw_addr, scan_pubkey);
-    uint8_t number_keys = spend_pubkeys.size();
+    uint8_t number_keys = static_cast<uint8_t>(spend_pubkeys.size());
     raw_addr.push_back(number_keys);
     for (const auto& pubkey: spend_pubkeys)
         extend_data(raw_addr, pubkey);

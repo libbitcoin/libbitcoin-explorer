@@ -1,12 +1,10 @@
-#include <unordered_set>
-#include <thread>
 #include <mutex>
-
+#include <thread>
+#include <unordered_set>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <obelisk/obelisk.hpp>
-
+#include <wallet/wallet.hpp>
 #include "config.hpp"
 #include "util.hpp"
 
@@ -15,8 +13,8 @@
         // Macro min(a,b) a conflicts with pdcurses.
         #define NOMINMAX
     #endif
-        #include <stdlib.h>
-        #include <pdcwin.h>
+    #include <stdlib.h>
+    #include <pdcwin.h>
 #else
     #include <ncurses.h>
     #include <unistd.h>
@@ -99,8 +97,8 @@ public:
 
     void set_cursor(size_t y, size_t x)
     {
-        cursor_y_ = y;
-        cursor_x_ = x;
+        cursor_y_ = static_cast<int>(y);
+        cursor_x_ = static_cast<int>(x);
     }
 
     bool is_selected()
@@ -120,7 +118,7 @@ private:
     std::string receive_address_;
     int selected_entry_ = -1;
     wallet_history history_;
-    size_t cursor_y_ = 0, cursor_x_ = 0;
+    int cursor_y_ = 0, cursor_x_ = 0;
 };
 
 struct address_cycler
@@ -256,8 +254,8 @@ void wallet_display::draw()
     for (size_t i = 0; i < console_output.size(); ++i)
     {
         std::string clear_line(col, ' ');
-        mvaddstr(30 + i, 0, clear_line.c_str());
-        mvaddstr(30 + i, 0, console_output[i].c_str());
+        mvaddstr(static_cast<int>(30 + i), 0, clear_line.c_str());
+        mvaddstr(static_cast<int>(30 + i), 0, console_output[i].c_str());
     }
     std::string render_string(col - 2, ' ');
     attron(A_REVERSE);
@@ -267,7 +265,7 @@ void wallet_display::draw()
     attroff(A_REVERSE);
 
     set_cursor(50, user_input.size() + 2);
-    size_t y = 0;
+    int y = 0;
     std::string balance_line =
         "Balance: " + bc::satoshi_to_btc(balance_) + " BTC";
     mvaddstr(y++, 0, balance_line.c_str());
@@ -282,7 +280,7 @@ void wallet_display::draw()
         // Bail...
         if (i > 20)
         {
-            mvaddstr(offset + i, 0, "...");
+            mvaddstr(static_cast<int>(offset + i), 0, "...");
             break;
         }
         const auto& entry = history_[i];
@@ -305,7 +303,7 @@ void wallet_display::draw()
         entry_line += amount_str;
         if (i == selected_entry_)
             attron(A_REVERSE);
-        mvaddstr(offset + i, 0, entry_line.c_str());
+        mvaddstr(static_cast<int>(offset + i), 0, entry_line.c_str());
         if (i == selected_entry_)
             attroff(A_REVERSE);
     }
@@ -418,8 +416,8 @@ bool make_signature(transaction_type& tx, size_t input_index,
     const data_chunk public_key = key.public_key();
     if (public_key.empty())
         return false;
-    hash_digest tx_hash =
-        script_type::generate_signature_hash(tx, input_index, script_code, 1);
+    hash_digest tx_hash = script_type::generate_signature_hash(
+        tx, static_cast<uint32_t>(input_index), script_code, 1);
     if (tx_hash == null_hash)
         return false;
     data_chunk signature = key.sign(tx_hash);

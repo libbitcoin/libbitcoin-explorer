@@ -161,7 +161,7 @@ int main(int argc, char** argv)
         if (!payaddr_from_argv(payaddrs, argc, argv))
             return -1;
     }
-    remaining_count = payaddrs.size();
+    remaining_count = static_cast<int>(payaddrs.size());
     threadpool pool(1);
     obelisk::fullnode_interface fullnode(pool, config["service"],
         config["client-certificate"], config["server-public-key"]);
