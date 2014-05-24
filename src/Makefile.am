@@ -76,7 +76,7 @@ sx_stealth_newkey_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 sx_stealth_addr_SOURCES = stealth-addr.cpp
 sx_stealth_addr_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
-sx_hd_seed_SOURCES = hd-seed.cpp config.cpp
+sx_hd_seed_SOURCES = hd-seed.cpp config.cpp environment.cpp
 sx_hd_seed_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} -lconfig++
 
 sx_hd_pub_SOURCES = hd-pub.cpp
@@ -187,36 +187,36 @@ sx_sign_input_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 sx_mnemonic_SOURCES = mnemonic.cpp
 sx_mnemonic_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS}
 
-sx_history_SOURCES = history.cpp config.cpp
+sx_history_SOURCES = history.cpp config.cpp environment.cpp
 sx_history_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
 
-sx_balance_SOURCES = balance.cpp config.cpp
+sx_balance_SOURCES = balance.cpp config.cpp environment.cpp
 sx_balance_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
 
-sx_fetch_last_height_SOURCES = fetch-last-height.cpp config.cpp
+sx_fetch_last_height_SOURCES = fetch-last-height.cpp config.cpp environment.cpp
 sx_fetch_last_height_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} 
 
-sx_fetch_transaction_SOURCES = fetch-transaction.cpp config.cpp
+sx_fetch_transaction_SOURCES = fetch-transaction.cpp config.cpp environment.cpp
 sx_fetch_transaction_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} 
 
-sx_fetch_stealth_SOURCES = fetch-stealth.cpp config.cpp
+sx_fetch_stealth_SOURCES = fetch-stealth.cpp config.cpp environment.cpp
 sx_fetch_stealth_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} 
 
-sx_fetch_transaction_index_SOURCES = fetch-transaction-index.cpp config.cpp
+sx_fetch_transaction_index_SOURCES = fetch-transaction-index.cpp config.cpp environment.cpp
 sx_fetch_transaction_index_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} 
 
-sx_fetch_block_header_SOURCES = fetch-block-header.cpp config.cpp
+sx_fetch_block_header_SOURCES = fetch-block-header.cpp config.cpp environment.cpp
 sx_fetch_block_header_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} 
 
-sx_validtx_SOURCES = validtx.cpp config.cpp
+sx_validtx_SOURCES = validtx.cpp config.cpp environment.cpp
 sx_validtx_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
 
-sx_sendtx_obelisk_SOURCES = sendtx-obelisk.cpp config.cpp
+sx_sendtx_obelisk_SOURCES = sendtx-obelisk.cpp config.cpp environment.cpp
 sx_sendtx_obelisk_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
 
-sx_monitor_SOURCES = monitor.cpp config.cpp
+sx_monitor_SOURCES = monitor.cpp config.cpp environment.cpp
 sx_monitor_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS}
 
-sx_wallet_SOURCES = wallet.cpp config.cpp
+sx_wallet_SOURCES = wallet.cpp config.cpp environment.cpp
 sx_wallet_LDADD = ${libbitcoin_LIBS} ${libwallet_LIBS} ${libobelisk_LIBS} -lncurses
 

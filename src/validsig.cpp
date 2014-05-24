@@ -13,9 +13,8 @@ bool validsig(transaction_type& tx, size_t input_index,
     hash_type = signature.back();
     signature.pop_back();
 
-    hash_digest tx_hash =
-        script_type::generate_signature_hash(
-            tx, input_index, script_code, hash_type);
+    hash_digest tx_hash = script_type::generate_signature_hash(
+        tx, static_cast<uint32_t>(input_index), script_code, hash_type);
     return key.verify(tx_hash, signature);
 }
 

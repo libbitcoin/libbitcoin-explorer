@@ -1,5 +1,6 @@
 #include <wallet/wallet.hpp>
 #include "util.hpp"
+
 using namespace libwallet;
 
 int main()

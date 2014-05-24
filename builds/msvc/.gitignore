@@ -2,4 +2,5 @@
 *.user
 *.sdf
 *.opensdf
+*.log
 /vs2013/save/

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <sstream>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/utility/base58.hpp>
 #include "util.hpp"
 
 using namespace bc;

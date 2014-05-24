@@ -1,4 +1,9 @@
+#ifndef SX_EC_UTIL_HPP
+#define SX_EC_UTIL_HPP
+
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
+
 using namespace bc;
 
 bool set_ec_secret(ec_secret& secret, const std::string& arg)
@@ -9,6 +14,7 @@ bool set_ec_secret(ec_secret& secret, const std::string& arg)
     secret = result;
     return true;
 }
+
 bool set_ec_point(ec_point& point, const std::string& arg)
 {
     ec_point result = decode_hex(arg);
@@ -23,7 +29,7 @@ bool set_ec_point(ec_point& point, const std::string& arg)
 bool ec_math_parse_args(
     int argc, char** argv, ec_secret& secret, ec_point& point)
 {
-    for (size_t i = 1; i < argc; ++i)
+    for (int i = 1; i < argc; ++i)
     {
         const auto arg = argv[i];
         if (set_ec_secret(secret, arg))
@@ -39,3 +45,4 @@ bool ec_math_parse_args(
     return true;
 }
 
+#endif

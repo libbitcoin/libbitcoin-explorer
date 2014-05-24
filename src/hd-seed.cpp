@@ -1,3 +1,5 @@
+#include <iostream>
+#include <random>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include "config.hpp"
@@ -9,11 +11,14 @@ data_chunk random_bytes(size_t size)
 {
     std::random_device rd;
     std::default_random_engine engine(rd());
-    std::uniform_int_distribution<uint8_t> uniform_dist(0, 255);
+
+    // std::uniform_int_distribution requires at least 16 bits on msvc builds.
+    std::uniform_int_distribution<uint16_t> 
+        uniform_dist(0, std::numeric_limits<uint16_t>::max());
 
     data_chunk result;
     for (size_t i = 0; i < size; ++i)
-        result.push_back(uniform_dist(engine));
+        result.push_back(static_cast<uint8_t>(uniform_dist(engine) >> 8));
     return result;
 }
 

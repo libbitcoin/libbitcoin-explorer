@@ -2,6 +2,10 @@
 
 int main(int argc, char** argv)
 {
+    std::cerr << "sx: Not Implemented" << std::endl;
+
+    // This is excluded because += is not yet defined for ec_point.
+#ifdef false
     if (argc != 3)
     {
         std::cerr << "Usage: sx ec-add POINT POINT" << std::endl;
@@ -25,6 +29,8 @@ int main(int argc, char** argv)
         return -1;
     }
     std::cout << point_a << std::endl;
+#endif
+
     return 0;
 }
 

@@ -47,8 +47,7 @@ int main(int argc, char** argv)
             std::cerr << "Invalid public key." << std::endl;
             return -1;
         }
-        if (is_compressed >= 0)
-            key.set_compressed(is_compressed);
+        key.set_compressed(is_compressed >= 0);
     }
     std::cout << key.public_key() << std::endl;
     return 0;
