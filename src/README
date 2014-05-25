@@ -2,15 +2,15 @@ To build these tools you will need libbitcoin, and obelisk.
 
 libbitcoin:
 
-  https://github.com/spesmilo/libbitcoin
+  https://github.com/libbitcoin/libbitcoin
 
 Follow the instructions in the libbitcoin README to install it.
 
 Obelisk:
 
-  https://github.com/spesmilo/obelisk
+  https://github.com/libbitcoin/obelisk
 
-  $ git clone https://github.com/spesmilo/obelisk.git
+  $ git clone https://github.com/libbitcoin/obelisk.git
   $ sudo apt-get install libzmq-dev libconfig++-dev
   $ make
   $ sudo make install

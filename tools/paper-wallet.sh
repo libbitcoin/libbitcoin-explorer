@@ -4,7 +4,7 @@
 # Script to generate offline Bitcoin addresses
 #
 # Requires libbitcoin and sx
-# https://github.com/spesmilo/libbitcoin/
+# https://github.com/libbitcoin/libbitcoin/
 # https://github.com/spesmilo/sx
 #
 # Console dialogs:
