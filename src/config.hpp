@@ -4,10 +4,13 @@
 #include <map>
 #include <string>
 
-#define OBELISK_SERVICE_URI "tcp://37.139.11.99:9091"
+// TODO: determine if we should have both of these.
+#define OBELISK_DEFAULT_URI "tcp://obelisk.unsystem.net:8081"
+#define OBELISK_FALLBACK_URI "tcp://37.139.11.99:9091"
 
 typedef std::map<std::string, std::string> config_map_type;
 
-void load_config(config_map_type& config_map);
+void get_config(config_map_type& map);
+bool set_config_path(std::string& path);
 
 #endif

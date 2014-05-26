@@ -1,11 +1,16 @@
+#pragma warning(push)
+// choorucode.com/2010/08/30/visual-c-c4996-warning-on-copy-with-array-parameters
+#pragma warning(disable: 4996)
 #include <mutex>
 #include <thread>
 #include <unordered_set>
+#pragma warning(pop)
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <wallet/wallet.hpp>
 #include "config.hpp"
+#include "main.hpp"
 #include "util.hpp"
 
 #ifdef _WIN32
@@ -704,25 +709,39 @@ void broadcast_subsystem()
     pool.join();
 }
 
-int main(int argc, char** argv)
+void display_error_no_master_public_key()
+{
+    std::cerr << "wallet: No valid master public key, or "
+        << "private secret key was passed in." << std::endl;
+}
+
+bool wallet::display_usage()
+{
+    std::cerr << "Usage: sx wallet SEED" << std::endl;
+    std::cerr << "This is an experimental prototype." << std::endl;
+    return true;
+}
+
+bool wallet::invoke(const int argc, const char* argv[])
 {
     if (argc != 2)
     {
-        std::cerr << "Usage: sx wallet SEED" << std::endl;
-        return -1;
+        display_usage();
+        return false;
     }
+
     libwallet::deterministic_wallet detwallet;
-    std::string user_data = argv[1];
+    std::string user_data(argv[1]);
     if (!detwallet.set_seed(user_data))
     {
         data_chunk mpk = decode_hex(user_data);
         if (!detwallet.set_master_public_key(mpk))
         {
-            std::cerr << "wallet: No valid master public key, or "
-                << "private secret key was passed in." << std::endl;
-            return -1;
+            display_error_no_master_public_key();
+            return false;
         }
     }
+
     init_curses();
     wallet_display display;
     address_cycler cycler;
@@ -739,11 +758,13 @@ int main(int argc, char** argv)
     //    "1foobarbar", 610020000});
     //display.add({false, bc::output_point{bc::null_hash, 0}, 0,
     //    "1afgoYY", 1020000});
+
     config_map_type config;
-    load_config(config);
+    get_config(config);
     bc::threadpool pool(1);
     obelisk::fullnode_interface fullnode(pool, config["service"],
         config["client-certificate"], config["server-public-key"]);
+
     for (size_t i = 0; i < 60; ++i)
     {
         bc::payment_address payaddr = cycler.address(i, false);
@@ -822,5 +843,5 @@ int main(int argc, char** argv)
     endwin();
     pool.stop();
     pool.join();
-    return 0;
+    return true;
 }

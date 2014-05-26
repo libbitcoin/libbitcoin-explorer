@@ -18,37 +18,76 @@ void get_value(const libconfig::Setting& root, config_map_type& config_map,
         boost::lexical_cast<std::string>(fallback_value);
 }
 
-void set_config_path(libconfig::Config& configuration, const char* config_path)
+// read the spefied configuration file
+bool read_config_file(libconfig::Config& config, tpath path)
 {
-    // Ignore error if unable to read config file.
     try
     {
         // libconfig is ANSI/MBCS on Windows - no Unicode support.
         // This translates the path from Unicode to a "generic" path in
-        // ANSI/MBCS, which can result in failures.
-        configuration.readFile(config_path);
+        // ANSI/MBCS, which can result in failures if above ASCII.
+        config.readFile(path.generic_string().c_str());
+        return true;
     }
     catch (const libconfig::FileIOException&) {}
     catch (const libconfig::ParseException&) {}
+    return false;
 }
 
-void initialize_config(libconfig::Config& configuration)
+// determine the proper configuration file path and read the file
+bool read_config(libconfig::Config& config)
 {
-    tstring environment_path = sx_config_path();
-    tpath config_path = environment_path.empty() ?
-        tpath(home_directory()) / L".sx.cfg" :
-        tpath(environment_path);
-    set_config_path(configuration, config_path.generic_string().c_str());
+    tpath path(get_sx_cfg());
+    if (path.empty())
+    {
+        path = home_directory();
+        if (path.empty())
+            return false;
+        path = path / L".sx.cfg";
+    }
+
+    return read_config_file(config, path);
 }
 
-void load_config(config_map_type& config_map)
+// get configuration settings from file w/fallbacks or defaults
+void get_config(config_map_type& map)
 {
-    libconfig::Config configuration;
-    initialize_config(configuration);
+    libconfig::Config config;
 
-    // Read off values.
-    const libconfig::Setting& root = configuration.getRoot();
-    get_value<std::string>(root, config_map, "service", OBELISK_SERVICE_URI);
-    get_value<std::string>(root, config_map, "client-certificate", ".sx.cert");
-    get_value<std::string>(root, config_map, "server-public-key", "");
+    if (read_config(config))
+    {
+        // load values from config file, with fallbacks
+        const libconfig::Setting& root = config.getRoot();
+        get_value<std::string>(root, map, "service", OBELISK_FALLBACK_URI);
+        get_value<std::string>(root, map, "client-certificate", ".sx.cert");
+        get_value<std::string>(root, map, "server-public-key", "");;
+    }
+    else
+    {
+        // load config defaults from memory.
+        map["service"] = OBELISK_DEFAULT_URI;
+        map["client-certificate"] = ".sx.cert";
+        map["server-public-key"] = "";
+
+        //# ~/.sx.cfg Sample file.
+        //service = "tcp://obelisk.unsystem.net:8081"
+        //# Use CZMQ program 'makecert' to generate these values.
+        //#client - certificate = "/home/genjix/.sx.cert"
+        //#server - public - key = "W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
+        //#testnet = "false"
+    }
+}
+
+// validate file existence and set environment SX_CFG environment variable
+bool set_config_path(std::string& path)
+{
+    tpath config_path(path);
+    libconfig::Config config;
+
+    // reading the file is overkill, but we don't do it often
+    if (!read_config_file(config, config_path))
+        return false;
+
+    set_sx_cfg(config_path);
+    return true;
 }

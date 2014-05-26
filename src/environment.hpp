@@ -3,6 +3,7 @@
 
 #include <boost/filesystem.hpp>
 
+// TODO: move to compat.h
 // On windows std::string is non-unicode (char is ANSI and wchar_t is UCS-16).
 #ifdef _WIN32
     typedef wchar_t tchar;
@@ -16,6 +17,7 @@
 #endif
 
 tstring home_directory();
-tstring sx_config_path();
+tstring get_sx_cfg();
+bool set_sx_cfg(tpath& path);
 
 #endif
