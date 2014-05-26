@@ -85,9 +85,5 @@ bool set_config_path(std::string& path)
     libconfig::Config config;
 
     // reading the file is overkill, but we don't do it often
-    if (!read_config_file(config, config_path))
-        return false;
-
-    set_sx_cfg(config_path);
-    return true;
+    return read_config_file(config, config_path) && set_sx_cfg(config_path);
 }

@@ -27,7 +27,7 @@ tstring get_sx_cfg()
 #ifdef _WIN32
     tchar environment_buffer[MAX_PATH];
     return tstring(GetEnvironmentVariableW(L"SX_CFG", environment_buffer,
-        MAX_PATH) == TRUE ? environment_buffer : L"");
+        MAX_PATH) != FALSE ? environment_buffer : L"");
 #else
     const char* config_path = getenv("SX_CFG");
     return std::string(config_path == nullptr ? "" : config_path);
@@ -37,8 +37,7 @@ tstring get_sx_cfg()
 bool set_sx_cfg(tpath& path)
 {
 #ifdef _WIN32
-    return SetEnvironmentVariableW(L"SX_CFG", path.generic_wstring().c_str())
-        == TRUE;
+    return SetEnvironmentVariableW(L"SX_CFG", path.c_str()) != FALSE;
 #else
     putenv(("SX_CFG=" + path.generic_string()).c_str());
 #endif
