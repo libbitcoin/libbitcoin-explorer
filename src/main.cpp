@@ -3,11 +3,43 @@
 #include "config.hpp"
 #include "main.hpp"
 
-void display_invalid(std::string& command)
+// localizable
+
+void display_invalid_config(std::string& file)
+{
+    std::cerr << "sx: config file '" << file 
+        << "' doesn't exist!" << std::endl;
+}
+
+void display_invalid_command(std::string& command)
 {
     std::cerr << "sx: " << command
         << " is not a sx option or command. See 'sx --help'." << std::endl;
 }
+
+void display_usage()
+{
+    std::cerr << "Usage: sx COMMAND [ARGS]..." << std::endl;
+    std::cerr << std::endl;
+    std::cerr << "  -c, --config               "
+        "Specify a config file" << std::endl;
+    std::cerr << std::endl;
+    std::cerr << "The sx commands are:" << std::endl;
+    std::cerr << std::endl;
+
+    // TODO: get category, subcategory and short description, sort categories.
+    wallet::display_usage();
+    wallet::display_usage();
+    wallet::display_usage();
+
+    std::cerr << std::endl;
+    std::cerr << "See 'sx help COMMAND' for more information "
+        "on a specific command." << std::endl;
+    std::cerr << std::endl;
+    std::cerr << "SX home page: <http://sx.dyne.org/>" << std::endl;
+}
+
+// not localizable
 
 bool dispatch_invoke(const int argc, const char* argv[])
 {
@@ -20,7 +52,7 @@ bool dispatch_invoke(const int argc, const char* argv[])
     if (command == "wallet")
         return wallet::invoke(argc, argv);
 
-    display_invalid(command);
+    display_invalid_command(command);
 
     return false;
 }
@@ -34,29 +66,9 @@ bool dispatch_usage(std::string& command)
     if (command == "wallet")
         return wallet::display_usage();
 
-    display_invalid(command);
+    display_invalid_command(command);
 
     return false;
-}
-
-void display_usage()
-{
-    std::cerr << "Usage: sx COMMAND [ARGS]..." << std::endl;
-    std::cerr << std::endl;
-    std::cerr << "  -c, --config               Specify a config file" << std::endl;
-    std::cerr << std::endl;
-    std::cerr << "The sx commands are:" << std::endl;
-    std::cerr << std::endl;
-
-    // TODO: get category, subcategory and short description, sort categories.
-    wallet::display_usage();
-    wallet::display_usage();
-    wallet::display_usage();
-
-    std::cerr << std::endl;
-    std::cerr << "See 'sx help COMMAND' for more information on a specific command." << std::endl;
-    std::cerr << std::endl;
-    std::cerr << "SX home page: <http://sx.dyne.org/>" << std::endl;
 }
 
 int main(int argc, char* argv[])
@@ -92,7 +104,7 @@ int main(int argc, char* argv[])
 
         if (!set_config_path(token))
         {
-            std::cerr << "sx: config file '%s' doesn't exist!" << std::endl;
+            display_invalid_config(token);
             return main_failure;
         }
 

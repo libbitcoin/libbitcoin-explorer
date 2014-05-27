@@ -74,6 +74,7 @@
     <ClCompile Include="..\..\..\..\src\wallet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\src\compat.hpp" />
     <ClInclude Include="..\..\..\..\src\ec_util.hpp" />
     <ClInclude Include="..\..\..\..\src\environment.hpp" />
     <ClInclude Include="..\..\..\..\src\config.hpp" />
