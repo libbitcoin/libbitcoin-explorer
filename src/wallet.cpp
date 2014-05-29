@@ -771,9 +771,8 @@ bool wallet::invoke(const int argc, const char* argv[])
         control.add_address(payaddr);
         control.add_key(payaddr,
             detwallet.generate_secret(i, false));
-        obelisk::address_prefix prefix;
-        boost::from_block_range(
-            payaddr.hash().begin(), payaddr.hash().end(), prefix);
+        obelisk::address_prefix prefix(payaddr.hash().begin(), 
+            payaddr.hash().end());
         fullnode.address.subscribe(prefix, new_update,
             std::bind(subscribed, _1, _2,
                 std::ref(fullnode), std::ref(control), std::ref(display),
