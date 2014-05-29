@@ -61,5 +61,6 @@ Makefile.in
 /src/sx-sendtx-p2p
 /src/sx-sendtx-obelisk
 /src/sx-sendtx-bci
+
 /obj/
 /bin/

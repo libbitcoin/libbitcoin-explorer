@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_PropertySheetDisplayName>SX Wallet Common Settings</_PropertySheetDisplayName>
+    <_PropertySheetDisplayName>SX Test Common Settings</_PropertySheetDisplayName>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -11,10 +11,9 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <DisableSpecificWarnings>4290;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
-      <!-- _SCL_SECURE_NO_WARNINGS for boost: stackoverflow.com/questions/1301277/c-boost-whats-the-cause-of-this-warning -->
-      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(DebugOrRelease)' == 'Release'">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -28,6 +27,7 @@
     <Import Project="$(SolutionDir)obelisk.import.props" />
     <Import Project="$(SolutionDir)libwallet.import.props" />
     <Import Project="$(SolutionDir)libbitcoin.import.props" />
+    <Import Project="$(SolutionDir)libsx.import.props" />
   </ImportGroup> 
 
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
@@ -43,6 +43,7 @@
     <Linkage-obelisk>dynamic</Linkage-obelisk>
     <Linkage-libwallet>dynamic</Linkage-libwallet>
     <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
+    <Linkage-libsx>dynamic</Linkage-libsx>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
     <Linkage-openssl>static</Linkage-openssl>
@@ -57,6 +58,7 @@
     <Linkage-obelisk>ltcg</Linkage-obelisk>
     <Linkage-libwallet>ltcg</Linkage-libwallet>
     <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
+    <Linkage-libsx>ltcg</Linkage-libsx>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
     <Linkage-openssl>static</Linkage-openssl>
@@ -71,6 +73,7 @@
     <Linkage-obelisk>static</Linkage-obelisk>
     <Linkage-libwallet>static</Linkage-libwallet>
     <Linkage-libbitcoin>static</Linkage-libbitcoin>
+    <Linkage-libsx>static</Linkage-libsx>
   </PropertyGroup>
 
   <!-- Messages -->
@@ -88,6 +91,7 @@
     <Message Text="Linkage-obelisk   : $(Linkage-obelisk)" Importance="high"/>
     <Message Text="Linkage-libwallet : $(Linkage-libwallet)" Importance="high"/>
     <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
+    <Message Text="Linkage-libsx     : $(Linkage-libsx)" Importance="high"/>
   </Target>
 
 </Project>

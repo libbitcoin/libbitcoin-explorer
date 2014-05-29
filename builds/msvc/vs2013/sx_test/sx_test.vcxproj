@@ -2,10 +2,10 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ConfigurationType>Application</ConfigurationType>
-    <NuGetPackageImportStamp>8cb4f6ea</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>1fe54765</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
-    <ProjectGuid>{098A91F3-291C-4A0D-AE5A-BC5F9F5693ED}</ProjectGuid>
-    <ProjectName>sx</ProjectName>
+    <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
+    <ProjectName>sx_test</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDEXE|Win32">
@@ -68,7 +68,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\main.cpp" />
+    <ClCompile Include="..\..\..\..\src\test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

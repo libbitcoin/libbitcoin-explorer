@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <_PropertySheetDisplayName>SX Import Settings</_PropertySheetDisplayName>
+  </PropertyGroup>
+  
+  <!-- User Interface -->
+
+  <ItemGroup Label="BuildOptionsExtension">
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)libsx.import.xml" />
+  </ItemGroup>
+
+  <!-- Linkage -->
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libsx\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!--<PreprocessorDefinitions Condition="'$(Linkage-libsx)' == 'static' Or '$(Linkage-libsx)' == 'ltcg'">SX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>-->
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libsx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\sx\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libsx)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\sx\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libsx)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
+    </Link>    
+  </ItemDefinitionGroup>
+
+  <!-- Copy -->
+
+  <Target Name="Linkage-libsx-dynamic" AfterTargets="AfterBuild" Condition="'$(Linkage-libsx)' == 'dynamic'">
+    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libsx\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libsx.dll"
+          DestinationFiles="$(TargetDir)libsx.dll"
+          SkipUnchangedFiles="true" />
+    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libsx\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libsx.pdb"
+          DestinationFiles="$(TargetDir)libsx.pdb"
+          SkipUnchangedFiles="true" />
+    <Copy Condition="$(Configuration.IndexOf('Release')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libsx\bin\$(PlatformName)\Release\$(PlatformToolset)\dynamic\libsx.dll"
+          DestinationFiles="$(TargetDir)libsx.dll"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- Messages -->
+
+  <Target Name="libsx-info" BeforeTargets="AfterBuild" Condition="'$(Linkage-libsx)' == 'dynamic'">
+    <Message Text="Copying libsx.dll -&gt; $(TargetDir)libsx.dll" Importance="high"/>
+    <Message Text="Copying libsx.pdb -&gt; $(TargetDir)libsx.pdb" Importance="high" Condition="$(Configuration.IndexOf('Debug')) != -1" />
+  </Target>
+
+</Project>

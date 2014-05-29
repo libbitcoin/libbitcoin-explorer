@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{6afc4dd0-6330-4dca-b176-cd4887f27b9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{f75d4585-8ee2-45e8-96ec-880c63fc243e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\commands">
+      <UniqueIdentifier>{7cf6fe23-da90-44c8-8b78-b68a8f1ff830}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\src\config.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\util.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\environment.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\ec_util.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\compat.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\command_line.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\config.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.codecvt_error_category.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.operations.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path_traits.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.portability.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.unique_path.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.utf8_codecvt_facet.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.windows_file_codecvt.cpp" />
+    <ClCompile Include="..\..\..\..\src\environment.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\decode-addr.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ec-add.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ec-add-modp.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ec-multiply.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ec-tweak-add.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\encode-addr.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\fetch-block-header.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\fetch-last-height.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\fetch-stealth.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\fetch-transaction.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\fetch-transaction-index.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\genaddr.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\genpriv.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\genpub.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\hd-priv.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\hd-pub.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\hd-seed.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\hd-to-address.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\hd-to-wif.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\history.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\initchain.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\mktx.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\mnemonic.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\monitor.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\mpk.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\newkey.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\newseed.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\pubkey.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\rawscript.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ripemd-hash.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\scripthash.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\secret-to-wif.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\sendtx-node.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\sendtx-obelisk.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\sendtx-p2p.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\set-input.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\sha256.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\showblkhead.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\showscript.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\showtx.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\sign-input.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\stealth-addr.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\stealth-initiate.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\stealth-newkey.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\stealth-show-addr.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\stealth-uncover.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\stealth-uncover-secret.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\unwrap.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\validaddr.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\validsig.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\validtx.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\wif-to-secret.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\wrap.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\addr.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\balance.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\base58-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\base58-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\wallet.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\command_line.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
