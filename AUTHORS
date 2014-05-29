@@ -20,6 +20,10 @@ Authors:
  * Dr Washington Y. Sanchez <drwasho>
    GUI design and development
    washington.sanchez@gmail.com
+   
+ * Eric Voskuil <evoskuil>
+   Windows build and single binary port.
+   eric@voskuil.org
 
 Special thanks to Andrew Day for the early inspiration.
 
