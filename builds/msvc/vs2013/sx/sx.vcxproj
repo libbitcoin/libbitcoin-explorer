@@ -108,7 +108,7 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\pdcurses_vc120.3.4.0.3\build\native\pdcurses_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\pdcurses_vc120.3.4.0.3\build\native\pdcurses_vc120.targets'))" />
   </Target>
   <ItemGroup>
-    <ProjectReference Include="..\sx\sx.vcxproj">
+    <ProjectReference Include="..\libsx\libsx.vcxproj">
       <Project>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</Project>
     </ProjectReference>
   </ItemGroup>
