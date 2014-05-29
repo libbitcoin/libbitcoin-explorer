@@ -10,6 +10,9 @@
     <Filter Include="include">
       <UniqueIdentifier>{f75d4585-8ee2-45e8-96ec-880c63fc243e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\commands">
+      <UniqueIdentifier>{7cf6fe23-da90-44c8-8b78-b68a8f1ff830}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\src\config.hpp">
@@ -46,11 +49,11 @@
     <ClCompile Include="..\..\..\..\src\environment.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wallet.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\main.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wallet.cpp">
+      <Filter>src\commands</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
