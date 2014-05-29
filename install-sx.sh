@@ -483,9 +483,9 @@ install_sx(){
     make
     make install
     $RUN_LDCONFIG
-    if [ "$flavour_id" = "arch" ]; then
-        sed -i 's/python/python2/' $INSTALL_PREFIX/bin/sx
-    fi
+    # if [ "$flavour_id" = "arch" ]; then
+    #     sed -i 's/python/python2/' $INSTALL_PREFIX/bin/sx
+    # fi
     echo
     echo " o/ SX tools now installed."
     echo
