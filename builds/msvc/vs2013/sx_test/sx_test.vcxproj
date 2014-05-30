@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ConfigurationType>Application</ConfigurationType>
-    <NuGetPackageImportStamp>8da4ee19</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>c49c34f7</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
     <ProjectName>sx_test</ProjectName>
@@ -67,9 +67,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\test.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
@@ -87,7 +84,6 @@
     <Import Project="..\..\..\..\..\..\nuget\secp256k1_gmp_vc120.0.1.0.1\build\native\secp256k1_gmp_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\secp256k1_gmp_vc120.0.1.0.1\build\native\secp256k1_gmp_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\openssl_no-asm_vc120.1.0.1.703\build\native\openssl_no-asm_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\openssl_no-asm_vc120.1.0.1.703\build\native\openssl_no-asm_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\pdcurses_vc120.3.4.0.3\build\native\pdcurses_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\pdcurses_vc120.3.4.0.3\build\native\pdcurses_vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\boost_test.1.55.0.10\build\native\boost_test.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_test.1.55.0.10\build\native\boost_test.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.55.0.16\build\native\boost_unit_test_framework-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.55.0.16\build\native\boost_unit_test_framework-vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -108,12 +104,16 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\secp256k1_gmp_vc120.0.1.0.1\build\native\secp256k1_gmp_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\secp256k1_gmp_vc120.0.1.0.1\build\native\secp256k1_gmp_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\openssl_no-asm_vc120.1.0.1.703\build\native\openssl_no-asm_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\openssl_no-asm_vc120.1.0.1.703\build\native\openssl_no-asm_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\pdcurses_vc120.3.4.0.3\build\native\pdcurses_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\pdcurses_vc120.3.4.0.3\build\native\pdcurses_vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_test.1.55.0.10\build\native\boost_test.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_test.1.55.0.10\build\native\boost_test.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.55.0.16\build\native\boost_unit_test_framework-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.55.0.16\build\native\boost_unit_test_framework-vc120.targets'))" />
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\libsx\libsx.vcxproj">
       <Project>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\test\command_line.cpp" />
+    <ClCompile Include="..\..\..\..\src\test\generated.cpp" />
+    <ClCompile Include="..\..\..\..\src\test\main.cpp" />
   </ItemGroup>
 </Project>

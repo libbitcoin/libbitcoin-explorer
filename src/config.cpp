@@ -20,8 +20,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <libconfig.h++>
-#include "config.hpp"
-#include "environment.hpp"
+#include <sx/config.hpp>
+#include <sx/environment.hpp>
 
 // read the spefied configuration file setting
 template <typename T>

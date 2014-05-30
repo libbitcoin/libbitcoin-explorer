@@ -25,7 +25,8 @@
     #include <pwd.h>
     #include <unistd.h>
 #endif
-#include "environment.hpp"
+#include <sx/environment.hpp>
+#include <sx/utility/compat.hpp>
 
 tstring get_sx_cfg()
 {

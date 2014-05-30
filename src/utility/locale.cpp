@@ -20,13 +20,13 @@
 #include <iostream>
 #include <string>
 
-void display_invalid_command(std::string& command)
+void display_invalid_command(const char* command)
 {
     std::cerr << "sx: " << command
         << " is not a sx option or command. See 'sx --help'." << std::endl;
 }
 
-void display_invalid_config(std::string& file)
+void display_invalid_config(const char* file)
 {
     std::cerr << "sx: config file '" << file << "' doesn't exist!" 
         << std::endl;

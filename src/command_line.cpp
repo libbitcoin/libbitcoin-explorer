@@ -19,21 +19,20 @@
  */
 #include <iostream>
 #include <string>
-#include "command_line.hpp"
-#include "config.hpp"
-#include "generated.hpp"
-#include "commands/wallet.hpp"
-#include "utility/console.hpp"
-#include "utility/locale.hpp"
+#include <sx/command_line.hpp>
+#include <sx/command/generated.hpp>
+#include <sx/command/wallet.hpp>
+#include <sx/config.hpp>
+#include <sx/utility/console.hpp>
+#include <sx/utility/locale.hpp>
 
 bool dispatch_invoke(const int argc, const char* argv[])
 {
-    auto symbol = std::string(argv[0]);
-    auto command = find_command(symbol);
+    auto command = sx::extensions::find(argv[0]);
 
     if (command == nullptr)
     {
-        display_invalid_command(symbol);
+        display_invalid_command(argv[0]);
         return false;
     }
 
@@ -47,12 +46,12 @@ bool dispatch_usage()
         display_usage(sx_command);
     };
 
-    return broadcast_command(func);
+    return sx::extensions::broadcast(func);
 }
 
-bool dispatch_usage(std::string& symbol)
+bool dispatch_usage(const char* symbol)
 {
-    auto command = find_command(symbol);
+    auto command = sx::extensions::find(symbol);
 
     if (command == nullptr)
     {
@@ -103,7 +102,7 @@ int invoke(const int argc, const char* argv[])
 
         if (!set_config_path(token))
         {
-            display_invalid_config(token);
+            display_invalid_config(token.c_str());
             return main_failure;
         }
 
@@ -131,7 +130,7 @@ int invoke(const int argc, const char* argv[])
             token = std::string(argv[++position]);
 
             // sx [-c|--config path] -h|--help|help command
-            if (!dispatch_usage(token))
+            if (!dispatch_usage(token.c_str()))
                 return main_failure;
         }
 

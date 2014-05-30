@@ -71,201 +71,29 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\commands\addr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\balance.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\base58-decode.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\base58-encode.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\decode-addr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\ec-add-modp.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\ec-add.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\ec-multiply.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\ec-tweak-add.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\encode-addr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\fetch-block-header.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\fetch-last-height.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\fetch-stealth.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\fetch-transaction-index.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\fetch-transaction.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\genaddr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\genpriv.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\genpub.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\hd-priv.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\hd-pub.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\hd-seed.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\hd-to-address.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\hd-to-wif.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\history.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\initchain.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\mktx.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\mnemonic.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\monitor.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\mpk.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\newkey.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\newseed.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\pubkey.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\rawscript.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\ripemd-hash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\scripthash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\secret-to-wif.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\sendtx-node.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\sendtx-obelisk.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\sendtx-p2p.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\set-input.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\sha256.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\showblkhead.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\showscript.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\showtx.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\sign-input.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\stealth-addr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\stealth-initiate.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\stealth-newkey.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\stealth-show-addr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\stealth-uncover-secret.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\stealth-uncover.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\unwrap.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\validaddr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\validsig.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\validtx.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\wallet.cpp">
-      <ExcludedFromBuild>false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\wif-to-secret.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\wrap.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\command\generated.cpp" />
+    <ClCompile Include="..\..\..\..\src\command\wallet.cpp" />
     <ClCompile Include="..\..\..\..\src\environment.cpp" />
     <ClCompile Include="..\..\..\..\src\config.cpp" />
     <ClCompile Include="..\..\..\..\src\command_line.cpp" />
-    <ClCompile Include="..\..\..\..\src\generated.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\curve.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\locale.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\src\command.hpp" />
-    <ClInclude Include="..\..\..\..\src\commands\wallet.hpp" />
-    <ClInclude Include="..\..\..\..\src\environment.hpp" />
-    <ClInclude Include="..\..\..\..\src\config.hpp" />
-    <ClInclude Include="..\..\..\..\src\command_line.hpp" />
-    <ClInclude Include="..\..\..\..\src\generated.hpp" />
-    <ClInclude Include="..\..\..\..\src\utility\coin.hpp" />
-    <ClInclude Include="..\..\..\..\src\utility\compat.hpp" />
-    <ClInclude Include="..\..\..\..\src\utility\console.hpp" />
-    <ClInclude Include="..\..\..\..\src\utility\curve.hpp" />
-    <ClInclude Include="..\..\..\..\src\utility\locale.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\generated.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command_line.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\config.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\environment.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\sx.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\curve.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\locale.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

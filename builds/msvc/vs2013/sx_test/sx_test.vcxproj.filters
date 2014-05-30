@@ -4,6 +4,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\test.cpp" />
+    <Filter Include="tests">
+      <UniqueIdentifier>{272f2634-0335-488d-8741-271dd38c6092}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\test\main.cpp" />
+    <ClCompile Include="..\..\..\..\src\test\command_line.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\test\generated.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

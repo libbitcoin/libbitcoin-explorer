@@ -20,9 +20,20 @@
 #ifndef SX_GENERATED_HPP
 #define SX_GENERATED_HPP
 
+#include <functional>
 #include <memory>
 #include <string>
-#include "command.hpp"
+#include <sx/command.hpp>
+
+/* TODO: GSL Code generation */
+#include <sx/command/wallet.hpp>
+//#include <sx/command/wallet.hpp>
+//#include <sx/command/wallet.hpp>
+
+/********** WARNING: This file is generated, do not edit directly. **********/
+
+namespace sx {
+namespace extensions {
 
 /**
  * Find the command identified by the specified symbolic command name.
@@ -30,7 +41,7 @@
  * @param symbol the symbolic command name.
  * @return An instance of the command or nullptr if not found.
  */
-std::shared_ptr<command> find_command(std::string& symbol);
+std::shared_ptr<command> find(const char* symbol);
 
 /**
  * Invoke a specified function on all commands.
@@ -38,6 +49,9 @@ std::shared_ptr<command> find_command(std::string& symbol);
  * @param the function to invoke on all commands.
  * @return True if invoked successfully, otherwise false.
  */
-bool broadcast_command(std::function<void(std::shared_ptr<command>)> func);
+bool broadcast(std::function<void(std::shared_ptr<command>)> func);
+
+}
+}
 
 #endif

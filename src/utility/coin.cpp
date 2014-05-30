@@ -22,8 +22,8 @@
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
-#include "coin.hpp"
-#include "console.hpp"
+#include <sx/utility/coin.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 

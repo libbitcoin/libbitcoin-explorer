@@ -23,7 +23,7 @@
 #include <map>
 #include <string>
 #include <libconfig.h++>
-#include "utility/compat.hpp"
+#include <sx/utility/compat.hpp>
 
 #define OBELISK_DEFAULT_URI "tcp://obelisk.unsystem.net:8081"
 

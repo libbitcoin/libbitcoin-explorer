@@ -28,7 +28,7 @@
  *
  * @param command the value that was attempted as a command.
  */
-void display_invalid_command(std::string& command);
+void display_invalid_command(const char* command);
 
 /**
  * Display an error message to the console that the specified sx command does
@@ -36,7 +36,7 @@ void display_invalid_command(std::string& command);
  *
  * @param the path of a file that was tested.
  */
-void display_invalid_config(std::string& file);
+void display_invalid_config(const char* file);
 
 /**
  * Display usage instructions (help) for the sx command line.

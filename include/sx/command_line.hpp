@@ -22,7 +22,7 @@
 
 #include <memory>
 #include <string>
-#include "command.hpp"
+#include <sx/command.hpp>
 
 /**
  * Success return code for int main().
