@@ -28,10 +28,10 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <wallet/wallet.hpp>
-#include "../config.hpp"
-#include "../utility/coin.hpp"
-#include "../utility/console.hpp"
-#include "wallet.hpp"
+#include <sx/config.hpp>
+#include <sx/utility/coin.hpp>
+#include <sx/utility/console.hpp>
+#include <sx/command/wallet.hpp>
 
 #ifdef _WIN32
     #ifndef NOMINMAX
@@ -729,7 +729,7 @@ void broadcast_subsystem()
     pool.join();
 }
 
-bool wallet::invoke(const int argc, const char* argv[])
+bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
 {
     if (argc != 2)
     {
@@ -744,7 +744,7 @@ bool wallet::invoke(const int argc, const char* argv[])
         data_chunk mpk = decode_hex(user_data);
         if (!detwallet.set_master_public_key(mpk))
         {
-            display_error(WALLET_NO_MASTER_PUBLIC_KEY);
+            display_error(NO_MASTER_PUBLIC_KEY);
             return false;
         }
     }
