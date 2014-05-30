@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
 #include <random>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/utility/curve.hpp>
 
+namespace sx {
 using namespace bc;
 
 ec_secret generate_random_secret()
@@ -31,6 +32,25 @@ ec_secret generate_random_secret()
     for (uint8_t& byte : secret)
         byte = engine() % std::numeric_limits<uint8_t>::max();
     return secret;
+}
+
+// TODO: move this loc text to consuming method and emit when this is false.
+// std::cerr << "sx: Unable to read input values." << std::endl;
+bool ec_math_parse_args(const int argc, const char* argv[],
+    ec_secret& secret, ec_point& point)
+{
+    for (int i = 1; i < argc; ++i)
+    {
+        const auto arg = argv[i];
+        if (set_ec_secret(secret, arg))
+            continue;
+        if (set_ec_point(point, arg))
+            continue;
+    }
+
+    // NOTE: these values are never set by this function 
+    // so it is assumed they are the initial values.
+    return (secret != null_hash && !point.empty());
 }
 
 bool set_ec_secret(ec_secret& secret, const std::string& arg)
@@ -53,21 +73,4 @@ bool set_ec_point(ec_point& point, const std::string& arg)
     return true;
 }
 
-bool ec_math_parse_args(int argc, char** argv, ec_secret& secret, 
-    ec_point& point)
-{
-    for (int i = 1; i < argc; ++i)
-    {
-        const auto arg = argv[i];
-        if (set_ec_secret(secret, arg))
-            continue;
-        if (set_ec_point(point, arg))
-            continue;
-    }
-    if (secret == null_hash || point.empty())
-    {
-        std::cerr << "sx: Unable to read input values." << std::endl;
-        return false;
-    }
-    return true;
-}
+} // sx

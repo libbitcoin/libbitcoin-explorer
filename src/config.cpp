@@ -23,6 +23,8 @@
 #include <sx/config.hpp>
 #include <sx/environment.hpp>
 
+namespace sx {
+
 // read the spefied configuration file setting
 template <typename T>
 void get_value(const libconfig::Setting& root, config_map_type& map,
@@ -40,7 +42,7 @@ void get_value(const libconfig::Setting& root, config_map_type& map,
 }
 
 // read the spefied configuration file
-bool read_config_file(libconfig::Config& config, tpath path)
+bool read_config_file(libconfig::Config& config, const tpath path)
 {
     // libconfig is ANSI/MBCS on Windows - no Unicode support.
     // This translates the path from Unicode to a "generic" path in
@@ -104,3 +106,5 @@ bool set_config_path(std::string& path)
 
     return false;
 }
+
+} // sx

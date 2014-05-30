@@ -22,6 +22,8 @@
 
 #include <sx/utility/compat.hpp>
 
+namespace sx {
+
 /**
 * Get the value of the SX_CFG environment variable.
 *
@@ -42,6 +44,8 @@ tstring home_directory();
  * @param path The path to set into the SX_CFG environment variable.
  * @return True if successful, otherwise false.
  */
-bool set_sx_cfg(tpath& path);
+bool set_sx_cfg(const tpath& path);
+
+} // sx
 
 #endif

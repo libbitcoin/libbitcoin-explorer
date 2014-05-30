@@ -18,7 +18,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <string>
 #include <boost/algorithm/string.hpp>
+
+namespace sx {
 
 void display_error(const char* message)
 {
@@ -37,3 +40,5 @@ std::string read_stdin()
     boost::algorithm::trim(result);
     return result;
 }
+
+} // sx

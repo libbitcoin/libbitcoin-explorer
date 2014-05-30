@@ -25,6 +25,8 @@
 #include <libconfig.h++>
 #include <sx/utility/compat.hpp>
 
+namespace sx {
+
 #define OBELISK_DEFAULT_URI "tcp://obelisk.unsystem.net:8081"
 
 typedef std::map<std::string, std::string> config_map_type;
@@ -35,7 +37,7 @@ void get_value(const libconfig::Setting& root, config_map_type& map,
     const std::string& key);
 
 // read the spefied configuration file
-bool read_config_file(libconfig::Config& config, tpath path);
+bool read_config_file(libconfig::Config& config, const tpath path);
 
 // determine the proper configuration file path and read the file
 bool read_config(libconfig::Config& config);
@@ -46,5 +48,7 @@ void get_config(config_map_type& map);
 
 // validate file existence and set environment SX_CFG environment variable
 bool set_config_path(std::string& path);
+
+} // sx
 
 #endif

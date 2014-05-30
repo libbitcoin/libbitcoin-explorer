@@ -28,6 +28,8 @@
 #include <sx/environment.hpp>
 #include <sx/utility/compat.hpp>
 
+namespace sx {
+
 tstring get_sx_cfg()
 {
 #ifdef _WIN32
@@ -54,7 +56,7 @@ tstring home_directory()
 #endif
 }
 
-bool set_sx_cfg(tpath& path)
+bool set_sx_cfg(const tpath& path)
 {
 #ifdef _WIN32
     return SetEnvironmentVariableW(L"SX_CFG", path.c_str()) != FALSE;
@@ -62,3 +64,5 @@ bool set_sx_cfg(tpath& path)
     putenv(("SX_CFG=" + path.generic_string()).c_str());
 #endif
 }
+
+} // sx

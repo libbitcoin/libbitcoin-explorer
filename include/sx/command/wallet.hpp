@@ -109,7 +109,7 @@ public:
     bool invoke(const int argc, const char* argv[]);
 };
 
-}
-}
+} // extensions
+} // sx
 
 #endif

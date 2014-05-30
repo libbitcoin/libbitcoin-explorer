@@ -22,6 +22,7 @@
 
 #include <boost/filesystem.hpp>
 
+/* This doesn't go far enough, but it makes things work for ASCII input. */
 #ifdef _WIN32
     typedef wchar_t tchar;
     typedef std::wstring tstring;

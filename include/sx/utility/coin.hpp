@@ -20,22 +20,63 @@
 #ifndef SX_COIN_HPP
 #define SX_COIN_HPP
 
+#include <stdint.h>
 #include <bitcoin/bitcoin.hpp>
 
+namespace sx {
 using namespace bc;
 
+/**
+ * Load a transaction from the specified transaction file.
+ *
+ * @param tx the loaded transaction.
+ * @param filename the path and file name for the transaction file.
+ * @return True if a transaction was loaded.
+ */
 bool load_tx(transaction_type& tx, const std::string& filename);
 
-bool read_private_key(elliptic_curve_key& key, const std::string& arg,
-    int is_compressed = -1);
-
-bool read_private_key(elliptic_curve_key& key, int is_compressed = -1);
-
-bool read_public_or_private_key(elliptic_curve_key& key);
-
-// Used by hd-priv and hd-pub commands.
+/**
+ * Parse command line args for hd hardness and index.
+ * Searches every argument and returns the last is hard and the last index
+ * discovered.
+ *
+ * @param argc the count of arguments in the argument array.
+ * @param argv the argument array.
+ * @param is_hard the hd is hard parsed value.
+ * @param index the hd index parsed value.
+ * @return True if an is hard and an index have been returned.
+ */
 bool read_hd_command_args(int argc, char* argv[], bool& is_hard,
     uint32_t& index);
 
-#endif
+/**
+ * Read a private key from the standard input stream.
+ *
+ * @param key the read key.
+ * @param is_compressed a flag indicating whether key compression is expected.
+ * @return True if a key was read.
+ */
+bool read_private_key(elliptic_curve_key& key, int is_compressed = -1);
 
+/**
+ * Read a private key from the standard input stream.
+ *
+ * @param key the read key.
+ * @param arg the argument from which to read the key.
+ * @param is_compressed a flag indicating whether key compression is expected.
+ * @return True if a key was read.
+ */
+bool read_private_key(elliptic_curve_key& key, const std::string& arg,
+    int is_compressed = -1);
+
+/**
+ * Read a public or private key from the standard input stream.
+ *
+ * @param key the read key.
+ * @return True if a key was read.
+ */
+bool read_public_or_private_key(elliptic_curve_key& key);
+
+} // sx
+
+#endif

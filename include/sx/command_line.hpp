@@ -24,6 +24,8 @@
 #include <string>
 #include <sx/command.hpp>
 
+namespace sx {
+
 /**
  * Success return code for int main().
  */
@@ -75,5 +77,7 @@ bool display_usage(std::shared_ptr<command> command);
  * @return Success (main_success) or failure (main_failure).
  */
 int invoke(const int argc, const char* argv[]);
+
+} // sx
 
 #endif

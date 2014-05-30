@@ -49,9 +49,9 @@ std::shared_ptr<command> find(const char* symbol);
  * @param the function to invoke on all commands.
  * @return True if invoked successfully, otherwise false.
  */
-bool broadcast(std::function<void(std::shared_ptr<command>)> func);
+bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
-}
-}
+} // extensions
+} // sx
 
 #endif

@@ -20,8 +20,10 @@
 #ifndef SX_CONSOLE_HPP
 #define SX_CONSOLE_HPP
 
-#include <iostream>
+#include <string>
 #include <boost/algorithm/string.hpp>
+
+namespace sx {
 
 /**
  * Display the specified message followed by a line return to the standard
@@ -45,6 +47,8 @@ void display_line(const char* message);
  * @return The message read from the standard input stream.
  */
 std::string read_stdin();
+
+} // sx
 
 #endif
 

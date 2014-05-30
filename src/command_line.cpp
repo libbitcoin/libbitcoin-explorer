@@ -23,8 +23,10 @@
 #include <sx/command/generated.hpp>
 #include <sx/command/wallet.hpp>
 #include <sx/config.hpp>
+#include <sx/locale.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/locale.hpp>
+
+namespace sx {
 
 bool dispatch_invoke(const int argc, const char* argv[])
 {
@@ -144,3 +146,5 @@ int invoke(const int argc, const char* argv[])
 
     return main_success;
 }
+
+} // sx

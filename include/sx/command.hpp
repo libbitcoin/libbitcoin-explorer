@@ -20,6 +20,8 @@
 #ifndef SX_COMMAND_HPP
 #define SX_COMMAND_HPP
 
+namespace sx {
+
 /**
  * Pure virtual base class for definition of each SX command.
  */
@@ -70,5 +72,7 @@ public:
      */
     virtual bool invoke(const int argc, const char* argv[]) = 0;
 };
+
+} // sx
 
 #endif

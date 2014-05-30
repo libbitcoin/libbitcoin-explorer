@@ -25,15 +25,16 @@
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
+namespace sx {
 using namespace bc;
 
+// TODO: extract localized text.
 bool load_tx(transaction_type& tx, const std::string& filename)
 {
     std::ostringstream contents;
     if (filename == "-")
     {
-        std::istreambuf_iterator<char> first(std::cin);
-        std::istreambuf_iterator<char> last;
+        std::istreambuf_iterator<char> first(std::cin), last;
         contents << std::string(first, last);
     }
     else
@@ -46,7 +47,7 @@ bool load_tx(transaction_type& tx, const std::string& filename)
         }
         contents << infile.rdbuf();
     }
-    data_chunk raw_tx = decode_hex(contents.str());
+    auto raw_tx = decode_hex(contents.str());
     try
     {
         satoshi_load(raw_tx.begin(), raw_tx.end(), tx);
@@ -59,48 +60,7 @@ bool load_tx(transaction_type& tx, const std::string& filename)
     return true;
 }
 
-bool read_private_key(elliptic_curve_key& key, const std::string& arg,
-    int is_compressed)
-{
-    secret_parameter secret = decode_hash(arg);
-    bool compressed_flag = true;
-    if (secret == null_hash)
-    {
-        secret = libwallet::wif_to_secret(arg);
-        compressed_flag = libwallet::is_wif_compressed(arg);
-    }
-    // Overrides for compression
-    if (is_compressed == 0)
-        compressed_flag = false;
-    else if (is_compressed == 1)
-        compressed_flag = true;
-    if (secret == null_hash || !key.set_secret(secret, compressed_flag))
-        return false;
-    return true;
-}
-
-bool read_private_key(elliptic_curve_key& key, int is_compressed)
-{
-    if (!read_private_key(key, read_stdin(), is_compressed))
-    {
-        std::cerr << "Invalid private key." << std::endl;
-        return false;
-    }
-    return true;
-}
-
-bool read_public_or_private_key(elliptic_curve_key& key)
-{
-    std::string arg = read_stdin();
-    if (read_private_key(key, arg))
-        return true;
-    data_chunk pubkey = decode_hex(arg);
-    if (key.set_public_key(pubkey))
-        return true;
-    std::cerr << "Invalid public or private key." << std::endl;
-    return false;
-}
-
+// TODO: extract localized text.
 bool read_hd_command_args(int argc, char* argv[], bool& is_hard,
     uint32_t& index)
 {
@@ -109,6 +69,7 @@ bool read_hd_command_args(int argc, char* argv[], bool& is_hard,
         std::cerr << "Usage: sx hd-priv [--hard] INDEX" << std::endl;
         return false;
     }
+
     for (int i = 1; i < argc; ++i)
     {
         std::string arg = argv[i];
@@ -130,3 +91,42 @@ bool read_hd_command_args(int argc, char* argv[], bool& is_hard,
     return true;
 }
 
+// TODO: move to consumer and emit when this is false.
+// std::cerr << "Invalid private key." << std::endl;
+bool read_private_key(elliptic_curve_key& key, int is_compressed)
+{
+    return read_private_key(key, read_stdin(), is_compressed);
+}
+
+bool read_private_key(elliptic_curve_key& key, const std::string& arg,
+    int is_compressed)
+{
+    bool compressed_flag = true;
+    auto secret = decode_hash(arg);
+    if (secret == null_hash)
+    {
+        secret = libwallet::wif_to_secret(arg);
+        compressed_flag = libwallet::is_wif_compressed(arg);
+    }
+
+    // Overrides for compression
+    if (is_compressed == 0)
+        compressed_flag = false;
+    else if (is_compressed == 1)
+        compressed_flag = true;
+
+    return secret != null_hash && key.set_secret(secret, compressed_flag);
+}
+
+// TODO: move to consumer and emit when this is false.
+// std::cerr << "Invalid public or private key." << std::endl;
+bool read_public_or_private_key(elliptic_curve_key& key)
+{
+    auto arg = read_stdin();
+    if (read_private_key(key, arg))
+        return true;
+    auto pubkey = decode_hex(arg);
+    return key.set_public_key(pubkey);
+}
+
+} // sx
