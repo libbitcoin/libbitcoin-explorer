@@ -17,20 +17,42 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iomanip>
 #include <iostream>
+#include <stdint.h>
 #include <string>
 #include <boost/algorithm/string.hpp>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/utility/console.hpp>
 
 namespace sx {
 
-void display_error(const char* message)
+void line_out(std::ostream& stream, const char* line, 
+    const size_t offset, const char* inset)
 {
-    std::cerr << message << std::endl;
+    // safe string length 
+    size_t length = std::string(inset).length();
+
+    // overflow safe assurance that offset is always non-negative
+    size_t padding = length > offset ? 0 : offset - length;
+
+    // output the inset-offset-line to the specified stream
+    stream << inset << std::string(padding, ' ') << line << std::endl;
 }
 
-void display_line(const char* message)
+void line_out(std::ostream& stream, const std::vector<char*> lines,
+    const size_t offset, const char* inset)
 {
-    std::cout << message << std::endl;
+    // we allow empty multi-line values in source data
+    if (lines.size() < 1)
+        return;
+
+    // emit the first line as inset-offset-line
+    line_out(stream, lines[0], offset, inset);
+
+    // emit the remaining lines as offset-line
+    std::for_each(++lines.begin(), lines.end(), 
+        [&](const char* line){ line_out(stream, line, offset); });
 }
 
 std::string read_stdin()

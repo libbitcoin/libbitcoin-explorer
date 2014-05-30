@@ -23,6 +23,7 @@
 #ifndef SX_WALLET_HPP
 #define SX_WALLET_HPP
 
+#include <vector>
 #include <sx/command.hpp>
 #include <sx/utility/compat.hpp>
 
@@ -44,12 +45,12 @@ class wallet : public command
 public:
 
     /**
-     * The symbolic (not localizable) command name, in lower case.
+     * The symbolic (not localizable) command name, lower case.
      */
     static const char* symbol() { return "wallet"; }
 
     /**
-     * The member symbolic (not localizable) command name, in lower case.
+     * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
@@ -57,15 +58,7 @@ public:
     }
 
     /**
-     * The non-localizable tutorial for the command, in one line, grammatical.
-     */
-    const char* usage()
-    {
-        return "sx wallet SEED";
-    }
-
-    /**
-     * The localizable category name for the command, in upper case.
+     * The localizable command category name, upper case.
      */
     const char* category()
     {
@@ -73,7 +66,7 @@ public:
     }
 
     /**
-     * The localizable subcategory name for the command, in upper case.
+     * The localizable command subcategory name, upper case.
      */
     const char* subcategory()
     {
@@ -81,26 +74,42 @@ public:
     }
 
     /**
-     * The localizable description for the command, in one line, punctuated.
+     * The localizable command description, multiple lines, punctuated.
      */
-    const char* description()
+    const std::vector<char*> description()
     {
-        return "Experimental command line wallet.";
+        return
+        { 
+            { "Experimental command line wallet." }
+        };
+    }
+
+
+    /**
+     * The non-localizable command usage examples, multipled lines.
+     */
+    const std::vector<char*> examples()
+    {
+        return
+        {
+            { "sx wallet SEED" }
+        };
     }
 
     /**
-     * The localizable explanation for the command, multiple lines, punctuated.
-     * Lines are terminated by std:endl.
+     * The localizable command explanation, multiple lines, punctuated.
      */
-    const char* explanation()
+    const std::vector<char*> explanation()
     {
-        return 
-            "This is an experimental prototype." END_LINE;
+        return
+        {
+            { "This is an experimental prototype." }
+        };
     }
 
     /**
-     * Invoke the wallet with the raw arguments as provided on the command
-     * line. The process name is remove and argument count decremented.
+     * Invoke the command with the raw arguments as provided on the command
+     * line. The process name is removed and argument count decremented.
      *
      * @param argc the number of elements in the argv array
      * @param argv the array of arguments, excluding the process

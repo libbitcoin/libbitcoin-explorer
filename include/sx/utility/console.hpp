@@ -20,26 +20,36 @@
 #ifndef SX_CONSOLE_HPP
 #define SX_CONSOLE_HPP
 
+#include <iostream>
 #include <string>
+#include <vector>
 #include <boost/algorithm/string.hpp>
 
 namespace sx {
 
 /**
- * Display the specified message followed by a line return to the standard
- * error stream.
+ * Write the specified message, with optional padding and inset text, and a
+ * line return, to the specified stream.
  *
- * @param message the message to display.
+ * @param stream the stream to write to.
+ * @param line the line to write.
+ * @param offset the number of spaces to pad the left side of the line.
+ * @param inset text to display in the offset padding.
  */
-void display_error(const char* message);
+void line_out(std::ostream& stream, const char* line, 
+    const size_t offset = 0, const char* inset = "");
 
 /**
- * Display the specified message followed by a line return to the standard
- * output stream.
+ * Write the specified messages, with optional padding and first line inset 
+ * text, and line returns, to the specified stream.
  *
- * @param message the message to display.
+ * @param stream the stream to write to.
+ * @param lines the lines to write.
+ * @param offset the number of spaces to pad the left side of the line.
+ * @param inset text to display in the offset padding.
  */
-void display_line(const char* message);
+void line_out(std::ostream& stream, const std::vector<char*> lines,
+    const size_t offset = 0, const char* inset = "");
 
 /**
  * Get a trimmed message from the standard input stream.
@@ -51,4 +61,3 @@ std::string read_stdin();
 } // sx
 
 #endif
-

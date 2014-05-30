@@ -66,8 +66,7 @@ bool dispatch_usage(const char* symbol)
 
 bool display_usage(std::shared_ptr<command> command)
 {
-    // TODO: expand this presentation.
-    std::cout << command->usage() << std::endl;
+    line_out(std::cout, command->examples());
     return true;
 }
 

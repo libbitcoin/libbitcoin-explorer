@@ -20,6 +20,8 @@
 #ifndef SX_COMMAND_HPP
 #define SX_COMMAND_HPP
 
+#include <vector>
+
 namespace sx {
 
 /**
@@ -30,41 +32,55 @@ class command
 public:
 
     /**
-     * The symbolic (not localizable) command name, in lower case.
-     * Exmaple: "btc"
+     * The symbolic (not localizable) command name, lower case.
+     *
+     * @return Exmaple: "fetch-transaction"
      */
     virtual const char* name() = 0;
 
     /**
-     * The localizable category name for the command, in upper case.
-     * Example: "UTILITY"
+     * The localizable command category name, upper case.
+     *
+     * @return Example: "ONLINE (OBELISK)"
      */
     virtual const char* category() = 0;
 
     /**
-     * The localizable subcategory name for the command, in upper case.
-     * Example: "SATOSHI MATH"
+     * The localizable command subcategory name, upper case.
+     *
+     * @return Example: "BLOCKCHAIN QUERIES"
      */
     virtual const char* subcategory() = 0;
 
     /**
-     * The localizable description for the command, in one line, punctuated.
-     * Example: "Convert Bitcoins into Satoshis."
+     * The localizable command description, multiple lines, punctuated.
+     *
+     * @return Example:
+     * "Fetch a raw transaction using a network connection to"
+     * "make requests against the obelisk load balancer back end."
      */
-    virtual const char* description() = 0;
+    virtual const std::vector<char*> description() = 0;
 
     /**
-     * The non-localizable tutorial for the command, in one line, grammatical.
-     * This should not include the process, command name or a leading space.
-     * Example:
-     * "sx btc SATOSHIS"
-     * "Convert Satoshis into Bitcoins."
+     * The non-localizable command usage examples, multipled lines.
+     *
+     * @return Example:
+     * "sx fetch-transaction HASH"
      */
-    virtual const char* usage() = 0;
+    virtual const std::vector<char*> examples() = 0;
+
+    /**
+     * The localizable command explanation, multiple lines, punctuated.
+     *
+     * @return Example:
+     * "EXAMPLE:"
+     * "$ sx fetch-transaction ... # fetches raw data"
+     */
+    virtual const std::vector<char*> explanation() = 0;
 
     /**
      * Invoke the command with the raw arguments as provided on the command
-     * line. The process name is remove and argument count decremented.
+     * line. The process name is removed and argument count decremented.
      *
      * @param argc the number of elements in the argv array
      * @param argv the array of arguments, excluding the process
