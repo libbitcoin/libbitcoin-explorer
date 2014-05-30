@@ -17,31 +17,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_ENVIRONMENT_HPP
-#define SX_ENVIRONMENT_HPP
+#include <memory>
+#include <string>
+#include "command.hpp"
 
-#include "utility/compat.hpp"
+/* TODO: GSL Code generation */
+#include "commands/wallet.hpp"
+//#include "commands/wallet.hpp"
+//#include "commands/wallet.hpp"
 
-/**
-* Get the value of the SX_CFG environment variable.
-*
-* @return The value of the SX_CFG environment variable.
-*/
-tstring get_sx_cfg();
+std::shared_ptr<command> find_command(std::string& symbol)
+{
+    /* TODO: GSL Code generation */
+    if (symbol == wallet::symbol())
+        return std::make_shared<wallet>();
+    //if (symbol == wallet::symbol())
+    //    return std::make_shared<wallet>();
+    //if (symbol == wallet::symbol())
+    //    return std::make_shared<wallet>();
 
-/**
- * Get the user's home directory.
- *
- * @return The user's home directory.
- */
-tstring home_directory();
+    return nullptr;
+}
 
-/**
- * Set the value of the SX_CFG environment variable to the specified path.
- *
- * @param path The path to set into the SX_CFG environment variable.
- * @return True if successful, otherwise false.
- */
-bool set_sx_cfg(tpath& path);
+bool broadcast_command(std::function<void(std::shared_ptr<command>)> func)
+{
+    /* TODO: GSL Code generation */
+    func(std::make_shared<wallet>());
+    //func(std::make_shared<wallet>());
+    //func(std::make_shared<wallet>());
 
-#endif
+    return true;
+}

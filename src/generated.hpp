@@ -17,31 +17,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_ENVIRONMENT_HPP
-#define SX_ENVIRONMENT_HPP
+#ifndef SX_GENERATED_HPP
+#define SX_GENERATED_HPP
 
-#include "utility/compat.hpp"
-
-/**
-* Get the value of the SX_CFG environment variable.
-*
-* @return The value of the SX_CFG environment variable.
-*/
-tstring get_sx_cfg();
+#include <memory>
+#include <string>
+#include "command.hpp"
 
 /**
- * Get the user's home directory.
+ * Find the command identified by the specified symbolic command name.
  *
- * @return The user's home directory.
+ * @param symbol the symbolic command name.
+ * @return An instance of the command or nullptr if not found.
  */
-tstring home_directory();
+std::shared_ptr<command> find_command(std::string& symbol);
 
 /**
- * Set the value of the SX_CFG environment variable to the specified path.
+ * Invoke a specified function on all commands.
  *
- * @param path The path to set into the SX_CFG environment variable.
- * @return True if successful, otherwise false.
+ * @param the function to invoke on all commands.
+ * @return True if invoked successfully, otherwise false.
  */
-bool set_sx_cfg(tpath& path);
+bool broadcast_command(std::function<void(std::shared_ptr<command>)> func);
 
 #endif

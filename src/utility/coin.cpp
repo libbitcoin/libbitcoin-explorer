@@ -1,12 +1,29 @@
-#ifndef SX_UTIL_HPP
-#define SX_UTIL_HPP
-
+/*
+ * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ *
+ * This file is part of sx.
+ *
+ * sx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include <iostream>
-#include <random>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include "coin.hpp"
+#include "console.hpp"
 
 using namespace bc;
 
@@ -42,17 +59,8 @@ bool load_tx(transaction_type& tx, const std::string& filename)
     return true;
 }
 
-std::string read_stdin()
-{
-    std::istreambuf_iterator<char> first(std::cin);
-    std::istreambuf_iterator<char> last;
-    std::string result(first, last);
-    boost::algorithm::trim(result);
-    return result;
-}
-
 bool read_private_key(elliptic_curve_key& key, const std::string& arg,
-    int is_compressed=-1)
+    int is_compressed)
 {
     secret_parameter secret = decode_hash(arg);
     bool compressed_flag = true;
@@ -70,7 +78,8 @@ bool read_private_key(elliptic_curve_key& key, const std::string& arg,
         return false;
     return true;
 }
-bool read_private_key(elliptic_curve_key& key, int is_compressed=-1)
+
+bool read_private_key(elliptic_curve_key& key, int is_compressed)
 {
     if (!read_private_key(key, read_stdin(), is_compressed))
     {
@@ -92,9 +101,8 @@ bool read_public_or_private_key(elliptic_curve_key& key)
     return false;
 }
 
-// Used by hd-priv and hd-pub commands.
-bool read_hd_command_args(int argc, char** argv,
-    bool& is_hard, uint32_t& index)
+bool read_hd_command_args(int argc, char* argv[], bool& is_hard,
+    uint32_t& index)
 {
     if (argc == 1 || argc > 3)
     {
@@ -121,16 +129,4 @@ bool read_hd_command_args(int argc, char** argv,
     }
     return true;
 }
-
-ec_secret generate_random_secret()
-{
-    std::random_device random;
-    std::default_random_engine engine(random());
-    ec_secret secret;
-    for (uint8_t& byte: secret)
-        byte = engine() % std::numeric_limits<uint8_t>::max();
-    return secret;
-}
-
-#endif
 

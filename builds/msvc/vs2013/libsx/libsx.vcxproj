@@ -248,14 +248,24 @@
     <ClCompile Include="..\..\..\..\src\environment.cpp" />
     <ClCompile Include="..\..\..\..\src\config.cpp" />
     <ClCompile Include="..\..\..\..\src\command_line.cpp" />
+    <ClCompile Include="..\..\..\..\src\generated.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\curve.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\locale.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\src\compat.hpp" />
-    <ClInclude Include="..\..\..\..\src\ec_util.hpp" />
+    <ClInclude Include="..\..\..\..\src\command.hpp" />
+    <ClInclude Include="..\..\..\..\src\commands\wallet.hpp" />
     <ClInclude Include="..\..\..\..\src\environment.hpp" />
     <ClInclude Include="..\..\..\..\src\config.hpp" />
     <ClInclude Include="..\..\..\..\src\command_line.hpp" />
-    <ClInclude Include="..\..\..\..\src\util.hpp" />
+    <ClInclude Include="..\..\..\..\src\generated.hpp" />
+    <ClInclude Include="..\..\..\..\src\utility\coin.hpp" />
+    <ClInclude Include="..\..\..\..\src\utility\compat.hpp" />
+    <ClInclude Include="..\..\..\..\src\utility\console.hpp" />
+    <ClInclude Include="..\..\..\..\src\utility\curve.hpp" />
+    <ClInclude Include="..\..\..\..\src\utility\locale.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

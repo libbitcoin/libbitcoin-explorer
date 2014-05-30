@@ -17,31 +17,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_ENVIRONMENT_HPP
-#define SX_ENVIRONMENT_HPP
+#ifndef SX_COMPAT_H
+#define SX_COMPAT_H
 
-#include "utility/compat.hpp"
+#include <boost/filesystem.hpp>
 
-/**
-* Get the value of the SX_CFG environment variable.
-*
-* @return The value of the SX_CFG environment variable.
-*/
-tstring get_sx_cfg();
-
-/**
- * Get the user's home directory.
- *
- * @return The user's home directory.
- */
-tstring home_directory();
-
-/**
- * Set the value of the SX_CFG environment variable to the specified path.
- *
- * @param path The path to set into the SX_CFG environment variable.
- * @return True if successful, otherwise false.
- */
-bool set_sx_cfg(tpath& path);
+#ifdef _WIN32
+    typedef wchar_t tchar;
+    typedef std::wstring tstring;
+    typedef boost::filesystem::wpath tpath;
+    #define END_LINE "\r\n"
+#else
+    #define L
+    typedef char tchar;
+    typedef std::string tstring;
+    typedef boost::filesystem::path tpath;
+    #define END_LINE "\n"
+#endif
 
 #endif

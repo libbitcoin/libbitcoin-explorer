@@ -13,25 +13,49 @@
     <Filter Include="src\commands">
       <UniqueIdentifier>{7cf6fe23-da90-44c8-8b78-b68a8f1ff830}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\commands">
+      <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utility">
+      <UniqueIdentifier>{c50b43cf-9009-45a6-b813-7a61877602f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\utility">
+      <UniqueIdentifier>{dc28e2c9-d07d-4242-8007-e44440c133a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\src\config.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\util.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\src\environment.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\ec_util.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\compat.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\command_line.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\command.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\config.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\commands\wallet.hpp">
+      <Filter>include\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\generated.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\utility\curve.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\utility\locale.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\utility\coin.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\utility\compat.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\utility\console.hpp">
+      <Filter>include\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -220,11 +244,26 @@
     <ClCompile Include="..\..\..\..\src\commands\base58-encode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\wallet.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\command_line.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\wallet.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\generated.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\console.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\curve.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\locale.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\coin.cpp">
+      <Filter>src\utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

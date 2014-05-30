@@ -17,31 +17,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_ENVIRONMENT_HPP
-#define SX_ENVIRONMENT_HPP
+#ifndef SX_LOCALE_HPP
+#define SX_LOCALE_HPP
 
-#include "utility/compat.hpp"
-
-/**
-* Get the value of the SX_CFG environment variable.
-*
-* @return The value of the SX_CFG environment variable.
-*/
-tstring get_sx_cfg();
+#include <string>
 
 /**
- * Get the user's home directory.
+ * Display an error message to the console that the specified configuration
+ * file does not exist.
  *
- * @return The user's home directory.
+ * @param command the value that was attempted as a command.
  */
-tstring home_directory();
+void display_invalid_command(std::string& command);
 
 /**
- * Set the value of the SX_CFG environment variable to the specified path.
+ * Display an error message to the console that the specified sx command does
+ * not exist.
  *
- * @param path The path to set into the SX_CFG environment variable.
- * @return True if successful, otherwise false.
+ * @param the path of a file that was tested.
  */
-bool set_sx_cfg(tpath& path);
+void display_invalid_config(std::string& file);
+
+/**
+ * Display usage instructions (help) for the sx command line.
+ */
+void display_usage();
 
 #endif

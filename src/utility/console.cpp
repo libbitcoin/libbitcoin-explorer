@@ -17,31 +17,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_ENVIRONMENT_HPP
-#define SX_ENVIRONMENT_HPP
+#include <iostream>
+#include <boost/algorithm/string.hpp>
 
-#include "utility/compat.hpp"
+void display_error(const char* message)
+{
+    std::cerr << message << std::endl;
+}
 
-/**
-* Get the value of the SX_CFG environment variable.
-*
-* @return The value of the SX_CFG environment variable.
-*/
-tstring get_sx_cfg();
+void display_line(const char* message)
+{
+    std::cout << message << std::endl;
+}
 
-/**
- * Get the user's home directory.
- *
- * @return The user's home directory.
- */
-tstring home_directory();
-
-/**
- * Set the value of the SX_CFG environment variable to the specified path.
- *
- * @param path The path to set into the SX_CFG environment variable.
- * @return True if successful, otherwise false.
- */
-bool set_sx_cfg(tpath& path);
-
-#endif
+std::string read_stdin()
+{
+    std::istreambuf_iterator<char> first(std::cin), last;
+    std::string result(first, last);
+    boost::algorithm::trim(result);
+    return result;
+}

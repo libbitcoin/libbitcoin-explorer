@@ -17,31 +17,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_ENVIRONMENT_HPP
-#define SX_ENVIRONMENT_HPP
+#ifndef SX_CONSOLE_HPP
+#define SX_CONSOLE_HPP
 
-#include "utility/compat.hpp"
-
-/**
-* Get the value of the SX_CFG environment variable.
-*
-* @return The value of the SX_CFG environment variable.
-*/
-tstring get_sx_cfg();
+#include <iostream>
+#include <boost/algorithm/string.hpp>
 
 /**
- * Get the user's home directory.
+ * Display the specified message followed by a line return to the standard
+ * error stream.
  *
- * @return The user's home directory.
+ * @param message the message to display.
  */
-tstring home_directory();
+void display_error(const char* message);
 
 /**
- * Set the value of the SX_CFG environment variable to the specified path.
+ * Display the specified message followed by a line return to the standard
+ * output stream.
  *
- * @param path The path to set into the SX_CFG environment variable.
- * @return True if successful, otherwise false.
+ * @param message the message to display.
  */
-bool set_sx_cfg(tpath& path);
+void display_line(const char* message);
+
+/**
+ * Get a trimmed message from the standard input stream.
+ *
+ * @return The message read from the standard input stream.
+ */
+std::string read_stdin();
 
 #endif
+

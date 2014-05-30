@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ *
+ * This file is part of sx.
+ *
+ * sx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #pragma warning(push)
 // choorucode.com/2010/08/30/visual-c-c4996-warning-on-copy-with-array-parameters
 #pragma warning(disable: 4996)
@@ -10,7 +29,9 @@
 #include <obelisk/obelisk.hpp>
 #include <wallet/wallet.hpp>
 #include "../config.hpp"
-#include "../util.hpp"
+#include "../utility/coin.hpp"
+#include "../utility/console.hpp"
+#include "wallet.hpp"
 
 #ifdef _WIN32
     #ifndef NOMINMAX
@@ -708,24 +729,11 @@ void broadcast_subsystem()
     pool.join();
 }
 
-void display_error_no_master_public_key()
-{
-    std::cerr << "wallet: No valid master public key, or "
-        << "private secret key was passed in." << std::endl;
-}
-
-bool wallet_display_usage()
-{
-    std::cerr << "Usage: sx wallet SEED" << std::endl;
-    std::cerr << "This is an experimental prototype." << std::endl;
-    return true;
-}
-
-bool wallet_invoke(const int argc, const char* argv[])
+bool wallet::invoke(const int argc, const char* argv[])
 {
     if (argc != 2)
     {
-        wallet_display_usage();
+        display_error(usage());
         return false;
     }
 
@@ -736,7 +744,7 @@ bool wallet_invoke(const int argc, const char* argv[])
         data_chunk mpk = decode_hex(user_data);
         if (!detwallet.set_master_public_key(mpk))
         {
-            display_error_no_master_public_key();
+            display_error(WALLET_NO_MASTER_PUBLIC_KEY);
             return false;
         }
     }
