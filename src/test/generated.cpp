@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(find_returns_object)
 BOOST_AUTO_TEST_CASE(broadcast_returns_true)
 {
     // TODO: mocks and dependency injection required to test proper execution.
-    auto func = [](std::shared_ptr<command> sx_command) -> void {};
+    auto func = [](std::shared_ptr<sx::command> sx_command) -> void {};
     BOOST_REQUIRE(broadcast(func));
 }
 

@@ -22,6 +22,6 @@
 
 BOOST_AUTO_TEST_CASE(main_returns)
 {
-    BOOST_REQUIRE(main_failure == -1);
-    BOOST_REQUIRE(main_success == 0);
+    BOOST_REQUIRE(sx::main_failure == -1);
+    BOOST_REQUIRE(sx::main_success == 0);
 }
