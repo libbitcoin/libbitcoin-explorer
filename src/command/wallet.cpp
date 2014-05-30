@@ -17,13 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma warning(push)
-// choorucode.com/2010/08/30/visual-c-c4996-warning-on-copy-with-array-parameters
-#pragma warning(disable: 4996)
+#include <iostream>
 #include <mutex>
 #include <thread>
 #include <unordered_set>
-#pragma warning(pop)
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
@@ -734,7 +731,7 @@ bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
 {
     if (argc != 2)
     {
-        display_error(usage());
+        line_out(std::cerr, examples());
         return false;
     }
 
@@ -745,7 +742,7 @@ bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
         data_chunk mpk = decode_hex(user_data);
         if (!detwallet.set_master_public_key(mpk))
         {
-            display_error(NO_MASTER_PUBLIC_KEY);
+            line_out(std::cerr, NO_MASTER_PUBLIC_KEY);
             return false;
         }
     }
