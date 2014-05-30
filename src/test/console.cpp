@@ -76,10 +76,8 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_streams_lines)
         { "So if I happen to run you down," },
         { "Please don't leave a scratch." }
     });
-
     std::stringstream stream;
     sx::line_out(stream, lines);
-
     BOOST_REQUIRE(stream.str() ==
         "My folks got me a bitchin' Camero,\n"
         "With no insurance to match;\n"
@@ -96,10 +94,8 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_offset_streams_offset)
         { "And I didn't get arrested," },
         { "Because my dad's the mayor." }
     });
-
     std::stringstream stream;
     sx::line_out(stream, lines, 15);
-
     BOOST_REQUIRE(stream.str() ==
         "               I ran over some old lady,\n"
         "               One night at the county fair;\n"
@@ -116,10 +112,8 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_inset_streams_inset)
         { "Bitchin' Camero, bitchin' Camero," },
         { "Tony Orlando and Dawn." }
     });
-
     std::stringstream stream;
     sx::line_out(stream, lines, 15, "Dead Milkmen");
-
     BOOST_REQUIRE(stream.str() ==
         "Dead Milkmen   Bitchin' Camero, bitchin' Camero,\n"
         "               Doughnuts on your lawn;\n"
@@ -136,10 +130,8 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_inset_equals_offset_streams_bump)
         { "Because I've got a bitchin' Camero," },
         { "And they have to ride the bus." }
     });
-
     std::stringstream stream;
     sx::line_out(stream, lines, 12, "Dead Milkmen");
-
     BOOST_REQUIRE(stream.str() ==
         "Dead MilkmenWhen I drive past the kids,\n"
         "            They all spit and cuss,\n"
@@ -156,10 +148,8 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_inset_exceeds_offset_streams_overflow)
         { "Bitchin' Camero, bitchin' Camero," },
         { "I don't want unleaded!" }
     });
-
     std::stringstream stream;
     sx::line_out(stream, lines, 10, "Dead Milkmen");
-
     BOOST_REQUIRE(stream.str() ==
         "Dead MilkmenBitchin' Camero, bitchin' Camero,\n"
         "          Hey man where you headed?\n"
@@ -170,19 +160,15 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_inset_exceeds_offset_streams_overflow)
 BOOST_AUTO_TEST_CASE(line_out_multiple_none_streams_nothing)
 {
     auto lines = std::vector<char*>();
-
     std::stringstream stream;
     sx::line_out(stream, lines, 10, "Dead Milkmen");
-
     BOOST_REQUIRE(stream.str() == "");
 }
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_empty_streams_inset)
 {
     auto lines = std::vector<char*>({ { "" } });
-
     std::stringstream stream;
     sx::line_out(stream, lines, 10, "Dead Milkmen");
-
     BOOST_REQUIRE(stream.str() == "Dead Milkmen\n");
 }
