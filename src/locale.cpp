@@ -18,7 +18,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <string>
+#include <sx/command_line.hpp>
+
+namespace sx {
 
 void display_invalid_command(const char* command)
 {
@@ -42,7 +44,7 @@ void display_usage()
     std::cerr << "The sx commands are:" << std::endl;
     std::cerr << std::endl;
 
-    // dispatch_usage();
+    dispatch_usage();
 
     std::cerr << std::endl;
     std::cerr << "See 'sx help COMMAND' for more information "
@@ -50,3 +52,5 @@ void display_usage()
     std::cerr << std::endl;
     std::cerr << "SX home page: <http://sx.dyne.org/>" << std::endl;
 }
+
+} // sx

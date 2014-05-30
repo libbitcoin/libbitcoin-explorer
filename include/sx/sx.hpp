@@ -28,10 +28,10 @@
 #include <sx/command/generated.hpp>
 #include <sx/config.hpp>
 #include <sx/environment.hpp>
+#include <sx/locale.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/curve.hpp>
-#include <sx/utility/locale.hpp>
 
 #endif

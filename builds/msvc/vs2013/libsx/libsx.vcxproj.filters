@@ -36,9 +36,6 @@
     <ClInclude Include="..\..\..\..\include\sx\utility\curve.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\locale.hpp">
-      <Filter>include\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
@@ -58,6 +55,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\locale.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -85,9 +85,6 @@
     <ClCompile Include="..\..\..\..\src\utility\curve.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\locale.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
@@ -96,6 +93,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\generated.cpp">
       <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\locale.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

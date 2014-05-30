@@ -20,7 +20,7 @@
 #ifndef SX_LOCALE_HPP
 #define SX_LOCALE_HPP
 
-#include <string>
+namespace sx {
 
 /**
  * Display an error message to the console that the specified configuration
@@ -42,5 +42,7 @@ void display_invalid_config(const char* file);
  * Display usage instructions (help) for the sx command line.
  */
 void display_usage();
+
+} // sx
 
 #endif

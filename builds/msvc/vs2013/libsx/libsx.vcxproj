@@ -76,10 +76,10 @@
     <ClCompile Include="..\..\..\..\src\environment.cpp" />
     <ClCompile Include="..\..\..\..\src\config.cpp" />
     <ClCompile Include="..\..\..\..\src\command_line.cpp" />
+    <ClCompile Include="..\..\..\..\src\locale.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\curve.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\locale.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\command.hpp" />
@@ -88,12 +88,12 @@
     <ClInclude Include="..\..\..\..\include\sx\command_line.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\config.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\environment.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\locale.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\curve.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\locale.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
