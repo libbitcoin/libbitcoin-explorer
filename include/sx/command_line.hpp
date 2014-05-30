@@ -56,7 +56,7 @@ bool dispatch_usage();
 /**
  * Display usage for the command identified by the symbolic command name.
  *
- * @param argc the number of elements in the argv parameter.
+ * @param symbol the symbolic command name for the command of interest.
  * @return True if displayed successfully, otherwise false.
  */
 bool dispatch_usage(std::string& symbol);
