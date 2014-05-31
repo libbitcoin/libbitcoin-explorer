@@ -731,7 +731,7 @@ bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
 {
     if (argc != 2)
     {
-        line_out(std::cerr, examples());
+        line_out(std::cerr, example());
         return false;
     }
 

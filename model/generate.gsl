@@ -1,0 +1,264 @@
+.#  Generate C++ project file for SX
+.#
+.#  This is a code generator built using the iMatix GSL code generation
+.#  language. See https://github.com/imatix/gsl for details. This script
+.#  is licensed under MIT/X11.
+.#
+.echo "Generating src/command/generated.cpp..."
+.output "../src/command/generated.cpp"
+/*
+ * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ *
+ * This file is part of sx.
+ *
+ * sx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <functional>
+#include <memory>
+#include <string>
+#include <sx/command.hpp>
+#include <sx/command/generated.hpp>
+
+/********** WARNING: This file is generated, do not edit directly. **********/
+
+namespace sx {
+namespace extensions {
+
+std::shared_ptr<command> find(const char* symbol)
+{
+    auto symbolic = std::string(symbol);
+
+.for command
+    if (symbolic == $(symbol)::symbol())
+        return std::make_shared<$(symbol)>();
+.endfor
+
+    return nullptr;
+}
+
+bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
+{
+.for command
+    func(std::make_shared<$(symbol)>());
+.endfor
+
+    return true;
+}
+
+} // extensions
+} // sx
+.echo "Generating include/sx/command/generated.hpp..."
+.output "../include/sx/command/generated.hpp"
+/*
+ * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ *
+ * This file is part of sx.
+ *
+ * sx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+#ifndef SX_GENERATED_HPP
+#define SX_GENERATED_HPP
+
+#include <functional>
+#include <memory>
+#include <string>
+#include <sx/command.hpp>
+
+.for command
+#include <sx/command/$(symbol).hpp>
+.endfor
+
+/********** WARNING: This file is generated, do not edit directly. **********/
+
+namespace sx {
+namespace extensions {
+
+/**
+ * Find the command identified by the specified symbolic command name.
+ *
+ * @param symbol the symbolic command name.
+ * @return An instance of the command or nullptr if not found.
+ */
+std::shared_ptr<command> find(const char* symbol);
+
+/**
+ * Invoke a specified function on all commands.
+ *
+ * @param the function to invoke on all commands.
+ * @return True if invoked successfully, otherwise false.
+ */
+bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
+
+} // extensions
+} // sx
+
+#endif
+.for command
+.echo "Generating include/sx/command/$(symbol).hpp..."
+.output "../include/sx/command/$(symbol).hpp"
+/*
+ * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ *
+ * This file is part of sx.
+ *
+ * sx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+#ifndef SX_$(SYMBOL)_HPP
+#define SX_$(SYMBOL)_HPP
+
+#include <vector>
+#include <sx/command.hpp>
+#include <sx/utility/compat.hpp>
+
+/********** WARNING: This file is generated, do not edit directly. **********/
+
+namespace sx {
+namespace extensions {
+
+/**
+ * Various localizable strings used by sx $(symbol).
+ */
+.for define
+#define $(symbol:) "$(value)"
+.endfor
+
+/**
+ * Class to implement the sx $(symbol) command.
+ */
+class $(symbol) : public command
+{
+public:
+
+    /**
+     * The symbolic (not localizable) command name, lower case.
+     */
+    static const char* symbol() { return "$(symbol)"; }
+
+    /**
+     * The member symbolic (not localizable) command name, lower case.
+     */
+    const char* name()
+    {
+        return $(symbol)::symbol();
+    }
+
+    /**
+     * The localizable command category name, upper case.
+     */
+    const char* category()
+    {
+        return "$(category)";
+    }
+
+    /**
+     * The localizable command subcategory name, upper case.
+     */
+    const char* subcategory()
+    {
+        return "$(subcategory)";
+    }
+
+    /**
+     * The localizable command description, multiple lines, punctuated.
+     */
+    const std::vector<char*> description()
+    {
+        return
+        {
+.for description
+.   if last()
+            { "$(value)" }
+.   else
+            { "$(value)" },
+.   endif
+.endfor
+        };
+    }
+
+
+    /**
+     * The non-localizable command usage examples, multiple lines.
+     */
+    const std::vector<char*> example()
+    {
+        return
+        {
+.for example
+.   if last()
+            { "$(value)" }
+.   else
+            { "$(value)" },
+.   endif
+.endfor
+        };
+    }
+
+    /**
+     * The localizable command explanation, multiple lines, punctuated.
+     */
+    const std::vector<char*> explanation()
+    {
+        return
+        {
+.for explanation
+.   if last()
+            { "$(value)" }
+.   else
+            { "$(value)" },
+.   endif
+.endfor
+        };
+    }
+
+    /**
+     * Invoke the command with the raw arguments as provided on the command
+     * line. The process name is removed and argument count decremented.
+     *
+     * @param argc the number of elements in the argv array
+     * @param argv the array of arguments, excluding the process
+     * @return Success (true) or failure (false).
+     */
+    bool invoke(const int argc, const char* argv[]);
+};
+
+} // extensions
+} // sx
+
+#endif
+.endfor

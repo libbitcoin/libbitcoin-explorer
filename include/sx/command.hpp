@@ -62,12 +62,12 @@ public:
     virtual const std::vector<char*> description() = 0;
 
     /**
-     * The non-localizable command usage examples, multipled lines.
+     * The non-localizable command usage examples, multiple lines.
      *
      * @return Example:
      * "sx fetch-transaction HASH"
      */
-    virtual const std::vector<char*> examples() = 0;
+    virtual const std::vector<char*> example() = 0;
 
     /**
      * The localizable command explanation, multiple lines, punctuated.

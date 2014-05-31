@@ -1,0 +1,7 @@
+#   Run code generation
+#   Requires iMatix GSL, from http://github.com/imatix/gsl
+
+mkdir -p ../src/command
+mkdir -p ../include/sx/command
+
+gsl -q project.xml

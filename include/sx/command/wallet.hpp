@@ -17,9 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-/* TODO: GSL Code generation */
-
 #ifndef SX_WALLET_HPP
 #define SX_WALLET_HPP
 
@@ -35,7 +32,7 @@ namespace extensions {
 /**
  * Various localizable strings used by sx wallet.
  */
-#define NO_MASTER_PUBLIC_KEY "No valid master public key or private secret key was passed in."
+#define NO_MASTER_PUBLIC_KEY "no valid master public key or private secret key was passed in."
 
 /**
  * Class to implement the sx wallet command.
@@ -62,7 +59,7 @@ public:
      */
     const char* category()
     {
-        return "EXPERIMENTAL";
+        return "experimental";
     }
 
     /**
@@ -70,7 +67,7 @@ public:
      */
     const char* subcategory()
     {
-        return "APPS";
+        return "apps";
     }
 
     /**
@@ -79,20 +76,20 @@ public:
     const std::vector<char*> description()
     {
         return
-        { 
-            { "Experimental command line wallet." }
+        {
+            { "experimental command line wallet." }
         };
     }
 
 
     /**
-     * The non-localizable command usage examples, multipled lines.
+     * The non-localizable command usage examples, multiple lines.
      */
-    const std::vector<char*> examples()
+    const std::vector<char*> example()
     {
         return
         {
-            { "sx wallet SEED" }
+            { "sx wallet seed" }
         };
     }
 
@@ -103,7 +100,7 @@ public:
     {
         return
         {
-            { "This is an experimental prototype." }
+            { "this is an experimental prototype." }
         };
     }
 

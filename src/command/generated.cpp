@@ -32,23 +32,15 @@ std::shared_ptr<command> find(const char* symbol)
 {
     auto symbolic = std::string(symbol);
 
-    /* TODO: GSL Code generation */
     if (symbolic == wallet::symbol())
         return std::make_shared<wallet>();
-    //if (symbolic == wallet::symbol())
-    //    return std::make_shared<wallet>();
-    //if (symbolic == wallet::symbol())
-    //    return std::make_shared<wallet>();
 
     return nullptr;
 }
 
 bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 {
-    /* TODO: GSL Code generation */
     func(std::make_shared<wallet>());
-    //func(std::make_shared<wallet>());
-    //func(std::make_shared<wallet>());
 
     return true;
 }

@@ -75,7 +75,7 @@ bool display_summary(std::shared_ptr<command> command)
 
 bool display_usage(std::shared_ptr<command> command)
 {
-    line_out(std::cout, command->examples());
+    line_out(std::cout, command->example());
     line_out(std::cout, command->explanation());
     return true;
 }

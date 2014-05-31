@@ -1,0 +1,8 @@
+<generate name="sx" script="generate.gsl">
+  <command symbol="wallet" category="EXPERIMENTAL" subcategory="APPS">
+    <define symbol="NO_MASTER_PUBLIC_KEY" value="No valid master public key or private secret key was passed in." />
+    <description value="Experimental command line wallet." />
+    <example value="sx wallet SEED" />
+    <explanation value="This is an experimental prototype." />
+  </command>
+</generate>

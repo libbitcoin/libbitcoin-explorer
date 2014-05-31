@@ -25,10 +25,7 @@
 #include <string>
 #include <sx/command.hpp>
 
-/* TODO: GSL Code generation */
 #include <sx/command/wallet.hpp>
-//#include <sx/command/wallet.hpp>
-//#include <sx/command/wallet.hpp>
 
 /********** WARNING: This file is generated, do not edit directly. **********/
 
