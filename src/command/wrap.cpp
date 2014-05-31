@@ -2,7 +2,7 @@
 #include <sstream>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include "util.hpp"
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 

@@ -30,9 +30,10 @@ namespace sx {
 namespace extensions {
 
 /**
- * Various localizable strings used by sx no_master_public_key.
+ * Various localizable strings used by sx NO_MASTER_PUBLIC_KEY.
  */
-#define NO_MASTER_PUBLIC_KEY "no valid master public key or private secret key was passed in."
+#define NO_MASTER_PUBLIC_KEY \
+    "No valid master public key or private secret key was passed in."
 
 /**
  * Class to implement the sx wallet command.
@@ -59,7 +60,7 @@ public:
      */
     const char* category()
     {
-        return "experimental";
+        return "EXPERIMENTAL";
     }
 
     /**
@@ -67,7 +68,7 @@ public:
      */
     const char* subcategory()
     {
-        return "apps";
+        return "APPS";
     }
 
     /**
@@ -77,7 +78,7 @@ public:
     {
         return
         {
-            { "experimental command line wallet." }
+            { "Experimental command line wallet." }
         };
     }
 
@@ -89,7 +90,7 @@ public:
     {
         return
         {
-            { "sx wallet seed" }
+            { "sx wallet SEED" }
         };
     }
 
@@ -100,7 +101,7 @@ public:
     {
         return
         {
-            { "this is an experimental prototype." }
+            { "This is an experimental prototype." }
         };
     }
 

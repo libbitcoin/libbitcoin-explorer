@@ -41,8 +41,8 @@ std::shared_ptr<command> find(const char* symbol)
     auto symbolic = std::string(symbol);
 
 .for command by symbol
-    if (symbolic == $(symbol)::symbol())
-        return std::make_shared<$(symbol)>();
+    if (symbolic == $(symbol:c)::symbol())
+        return std::make_shared<$(symbol:c)>();
 .endfor
 
     return nullptr;
@@ -51,7 +51,7 @@ std::shared_ptr<command> find(const char* symbol)
 bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 {
 .for command by symbol
-    func(std::make_shared<$(symbol)>());
+    func(std::make_shared<$(symbol:c)>());
 .endfor
 
     return true;
@@ -89,7 +89,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 #include <sx/command.hpp>
 
 .for command by symbol
-#include <sx/command/$(symbol).hpp>
+#include <sx/command/$(symbol:c).hpp>
 .endfor
 
 /********** WARNING: This file is generated, do not edit directly. **********/
@@ -118,8 +118,8 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
 #endif
 .for command by symbol
-.echo "Generating include/sx/command/$(symbol).hpp..."
-.output "../include/sx/command/$(symbol).hpp"
+.echo "Generating include/sx/command/$(symbol:c).hpp..."
+.output "../include/sx/command/$(symbol:c).hpp"
 /*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
@@ -139,8 +139,8 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_$(SYMBOL)_HPP
-#define SX_$(SYMBOL)_HPP
+#ifndef SX_$(SYMBOL:c)_HPP
+#define SX_$(SYMBOL:c)_HPP
 
 #include <vector>
 #include <sx/command.hpp>
@@ -154,30 +154,31 @@ namespace extensions {
 .   if first()
 
 /**
- * Various localizable strings used by sx $(symbol).
+ * Various localizable strings used by sx $(symbol:).
  */
 .   endif
-#define $(symbol:) "$(value)"
+#define $(SYMBOL:c) \\
+    "$(value:)"
 .endfor
 
 /**
- * Class to implement the sx $(symbol) command.
+ * Class to implement the sx $(symbol:) command.
  */
-class $(symbol) : public command
+class $(symbol:c) : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "$(symbol)"; }
+    static const char* symbol() { return "$(symbol:)"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return $(symbol)::symbol();
+        return $(symbol:c)::symbol();
     }
 
     /**
@@ -185,7 +186,7 @@ public:
      */
     const char* category()
     {
-        return "$(category)";
+        return "$(category:)";
     }
 
     /**
@@ -193,7 +194,7 @@ public:
      */
     const char* subcategory()
     {
-        return "$(subcategory)";
+        return "$(subcategory:)";
     }
 
     /**
@@ -205,9 +206,9 @@ public:
         {
 .for description
 .   if last()
-            { "$(value)" }
+            { "$(value:)" }
 .   else
-            { "$(value)" },
+            { "$(value:)" },
 .   endif
 .endfor
         };
@@ -223,9 +224,9 @@ public:
         {
 .for example
 .   if last()
-            { "$(value)" }
+            { "$(value:)" }
 .   else
-            { "$(value)" },
+            { "$(value:)" },
 .   endif
 .endfor
         };
@@ -240,9 +241,9 @@ public:
         {
 .for explanation
 .   if last()
-            { "$(value)" }
+            { "$(value:)" }
 .   else
-            { "$(value)" },
+            { "$(value:)" },
 .   endif
 .endfor
         };

@@ -1,10 +1,31 @@
+/*
+ * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ *
+ * This file is part of sx.
+ *
+ * sx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include <atomic>
 #include <condition_variable>
+#include <iostream>
 #include <thread>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include "config.hpp"
-#include "util.hpp"
+#include <sx/command/balance.hpp>
+#include <sx/config.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 using std::placeholders::_1;
@@ -113,7 +134,7 @@ void json_history_fetched(const payment_address& payaddr,
 
 bool payaddr_from_stdin(payment_address& payaddr)
 {
-    if (!payaddr.set_encoded(read_stdin()))
+    if (!payaddr.set_encoded(sx::read_stdin()))
     {
         std::cerr << "balance: Invalid address." << std::endl;
         return false;
@@ -121,7 +142,8 @@ bool payaddr_from_stdin(payment_address& payaddr)
     return true;
 }
 
-bool payaddr_from_argv(payaddr_list& payaddrs, int argc, char** argv)
+bool payaddr_from_argv(payaddr_list& payaddrs, const int argc, 
+    const char* argv[])
 {
     for (int i = 1; i < argc; ++i)
     {
@@ -139,22 +161,22 @@ bool payaddr_from_argv(payaddr_list& payaddrs, int argc, char** argv)
     return true;
 }
 
-bool invoke(const int argc, const char* argv[])
+bool sx::extensions::balance::invoke(const int argc, const char* argv[])
 {
     config_map_type config;
-    load_config(config);
+    get_config(config);
     payaddr_list payaddrs;
     if (argc == 1)
     {
         payment_address payaddr;
         if (!payaddr_from_stdin(payaddr))
-            return -1;
+            return false;
         payaddrs.push_back(payaddr);
     }
     else
     {
         if (!payaddr_from_argv(payaddrs, argc, argv))
-            return -1;
+            return false;
     }
     remaining_count = static_cast<int>(payaddrs.size());
     threadpool pool(1);
@@ -176,7 +198,7 @@ bool invoke(const int argc, const char* argv[])
         while (true)
         {
             fullnode.update();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     });
     update_loop.detach();
@@ -190,6 +212,6 @@ bool invoke(const int argc, const char* argv[])
         std::cout << "]" << std::endl;
     pool.stop();
     pool.join();
-    return 0;
+    return true;
 }
 

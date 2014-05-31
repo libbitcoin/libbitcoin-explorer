@@ -54,7 +54,7 @@ public:
      */
     const char* category()
     {
-        return "offline keys and addresses";
+        return "OFFLINE KEYS AND ADDRESSES";
     }
 
     /**
@@ -62,7 +62,7 @@ public:
      */
     const char* subcategory()
     {
-        return "basic";
+        return "BASIC";
     }
 
     /**
@@ -72,7 +72,7 @@ public:
     {
         return
         {
-            { "see bitcoin address of a public or private key." }
+            { "See Bitcoin address of a public or private key." }
         };
     }
 
@@ -95,7 +95,7 @@ public:
     {
         return
         {
-            { "read public or private key from stdin and output bitcoin address." }
+            { "Read public or private key from STDIN and output Bitcoin address." }
         };
     }
 
