@@ -44,6 +44,7 @@ void display_usage()
     std::cerr << "The sx commands are:" << std::endl;
     std::cerr << std::endl;
 
+    // TODO: sort commands and organize streamed output.
     dispatch_usage();
 
     std::cerr << std::endl;

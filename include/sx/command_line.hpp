@@ -47,6 +47,14 @@ const int main_failure = -1;
 bool dispatch_invoke(const int argc, const char* argv[]);
 
 /**
+ * Display a summary for the command identified by the symbolic command name.
+ *
+ * @param symbol the symbolic command name for the command of interest.
+ * @return True if displayed successfully, otherwise false.
+ */
+bool dispatch_summary(std::string& symbol);
+
+/**
  * Display usage for all commands.
  *
  * @return True if displayed successfully, otherwise false.
@@ -54,12 +62,12 @@ bool dispatch_invoke(const int argc, const char* argv[]);
 bool dispatch_usage();
 
 /**
- * Display usage for the command identified by the symbolic command name.
+ * Display a summary for the specified command.
  *
- * @param symbol the symbolic command name for the command of interest.
+ * @param command a pointer to the command to display.
  * @return True if displayed successfully, otherwise false.
  */
-bool dispatch_usage(std::string& symbol);
+bool display_summary(std::shared_ptr<command> command);
 
 /**
  * Display usage for the specified command.

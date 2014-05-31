@@ -41,6 +41,19 @@ bool dispatch_invoke(const int argc, const char* argv[])
     return command->invoke(argc, argv);
 }
 
+bool dispatch_summary(const char* symbol)
+{
+    auto command = sx::extensions::find(symbol);
+
+    if (command == nullptr)
+    {
+        display_invalid_command(symbol);
+        return false;
+    }
+
+    return display_summary(command);
+}
+
 bool dispatch_usage()
 {
     auto func = [](std::shared_ptr<command> sx_command) -> void 
@@ -51,22 +64,19 @@ bool dispatch_usage()
     return sx::extensions::broadcast(func);
 }
 
-bool dispatch_usage(const char* symbol)
+bool display_summary(std::shared_ptr<command> command)
 {
-    auto command = sx::extensions::find(symbol);
-
-    if (command == nullptr)
-    {
-        display_invalid_command(symbol);
-        return false;
-    }
-
-    return display_usage(command);
+    auto inset = (std::string(8, ' ') + command->name());
+    line_out(std::cout, command->category());
+    line_out(std::cout, command->subcategory(), 3);
+    line_out(std::cout, command->description(), 35, inset.c_str());
+    return true;
 }
 
 bool display_usage(std::shared_ptr<command> command)
 {
     line_out(std::cout, command->examples());
+    line_out(std::cout, command->explanation());
     return true;
 }
 
@@ -131,7 +141,7 @@ int invoke(const int argc, const char* argv[])
             token = std::string(argv[++position]);
 
             // sx [-c|--config path] -h|--help|help command
-            if (!dispatch_usage(token.c_str()))
+            if (!dispatch_summary(token.c_str()))
                 return main_failure;
         }
 
