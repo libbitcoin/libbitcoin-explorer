@@ -25,8 +25,9 @@
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
-namespace sx {
 using namespace bc;
+
+namespace sx {
 
 // TODO: extract localized text.
 bool load_tx(transaction_type& tx, const std::string& filename)

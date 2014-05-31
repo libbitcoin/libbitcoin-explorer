@@ -25,8 +25,6 @@
 #include <string>
 #include <sx/command.hpp>
 
-#include <sx/command/symbol.hpp>
-#include <sx/command/symbol.hpp>
 #include <sx/command/addr.hpp>
 #include <sx/command/balance.hpp>
 #include <sx/command/base58_decode.hpp>
@@ -42,6 +40,7 @@
 #include <sx/command/ec_add_modp.hpp>
 #include <sx/command/ec_multiply.hpp>
 #include <sx/command/ec_tweak_add.hpp>
+#include <sx/command/ec_add.hpp>
 #include <sx/command/embed_addr.hpp>
 #include <sx/command/encode_addr.hpp>
 #include <sx/command/fetch_block_header.hpp>
@@ -107,16 +106,16 @@ namespace extensions {
 /**
  * Find the command identified by the specified symbolic command name.
  *
- * @param symbol the symbolic command name.
- * @return An instance of the command or nullptr if not found.
+ * @param[in]  symbol  The symbolic command name.
+ * @return             An instance of the command or nullptr if not found.
  */
 std::shared_ptr<command> find(const char* symbol);
 
 /**
  * Invoke a specified function on all commands.
  *
- * @param the function to invoke on all commands.
- * @return True if invoked successfully, otherwise false.
+ * @param[in]  func  The function to invoke on all commands.
+ * @return           True if invoked successfully.
  */
 bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 

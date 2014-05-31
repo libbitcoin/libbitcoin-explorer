@@ -40,49 +40,49 @@ const int main_failure = -1;
  * Invoke the command identified by the specified arguments.
  * The first argument in the array is the command symbolic name.
  *
- * @param argc the number of elements in the argv parameter.
- * @param argv an array of command line arguments, exlcuding the process.
- * @return True if invoked successfully, otherwise false.
+ * @param[in]  argc  The number of elements in the argv parameter.
+ * @param[in]  argv  Array of command line arguments, exlcuding the process.
+ * @return           True if invoked successfully.
  */
 bool dispatch_invoke(const int argc, const char* argv[]);
 
 /**
  * Display a summary for the command identified by the symbolic command name.
  *
- * @param symbol the symbolic command name for the command of interest.
- * @return True if displayed successfully, otherwise false.
+ * @param[in]  symbol  The symbolic command name for the command of interest.
+ * @return              True if displayed successfully.
  */
 bool dispatch_summary(std::string& symbol);
 
 /**
  * Display usage for all commands.
  *
- * @return True if displayed successfully, otherwise false.
+ * @return  True if displayed successfully.
  */
 bool dispatch_usage();
 
 /**
  * Display a summary for the specified command.
  *
- * @param command a pointer to the command to display.
- * @return True if displayed successfully, otherwise false.
+ * @param[in]  command  Pointer to the command to display.
+ * @return              True if displayed successfully.
  */
 bool display_summary(std::shared_ptr<command> command);
 
 /**
  * Display usage for the specified command.
  *
- * @param command a pointer to the command to display.
- * @return True if displayed successfully, otherwise false.
+ * @param[in]  command  Pointer to the command to display.
+ * @return              True if displayed successfully.
  */
 bool display_usage(std::shared_ptr<command> command);
 
 /**
  * Invoke the command with the raw arguments as provided on the command line.
  *
- * @param argc the number of elements in the argv array.
- * @param argv the array of arguments, including the process.
- * @return Success (main_success) or failure (main_failure).
+ * @param[in]  argc  The number of elements in the argv array.
+ * @param[in]  argv  The array of arguments, including the process.
+ * @return           Success (main_success) or failure (main_failure).
  */
 int invoke(const int argc, const char* argv[]);
 

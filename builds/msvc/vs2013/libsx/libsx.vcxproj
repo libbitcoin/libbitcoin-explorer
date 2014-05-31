@@ -152,6 +152,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\decode_addr.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\ec_add.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec_add_modp.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec_multiply.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec_tweak_add.hpp" />
@@ -204,7 +205,6 @@
     <ClInclude Include="..\..\..\..\include\sx\command\stealth_show_addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth_uncover.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth_uncover_secret.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\symbol.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\validaddr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\validsig.hpp" />

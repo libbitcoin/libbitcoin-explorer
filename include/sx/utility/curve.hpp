@@ -23,46 +23,45 @@
 #include <bitcoin/bitcoin.hpp>
 
 namespace sx {
-using namespace bc;
 
 /**
  * Generate a random secret using the default random engine.
  *
- * @return The new secret.
+ * @return  The new secret.
  */
-ec_secret generate_random_secret();
+bc::ec_secret generate_random_secret();
 
 /**
  * Parse command line args for a secret and a point.
  * Searches every argument and returns the last secret and the last point
  * discovered.
  *
- * @param argc the count of arguments in the argument array.
- * @param argv the argument array.
- * @param secret the parsed secret.
- * @param point the parsed point.
- * @return True if a secret and a point have been returned.
+ * @param[in]  argc    The count of arguments in the argument array.
+ * @param[in]  argv    The argument array.
+ * @param[out] secret  The parsed secret.
+ * @param[out] point   The parsed point.
+ * @return             True if a secret and a point have been returned.
  */
 bool ec_math_parse_args(const int argc, const char* argv[], 
-    ec_secret& secret, ec_point& point);
+    bc::ec_secret& secret, bc::ec_point& point);
 
 /**
  * Parse a point from the specified argument.
  *
- * @param point the parsed point.
- * @param arg the argument to parse.
- * @return True if a point has been returned.
+ * @param[out] point   The parsed point.
+ * @param[in]  arg     The argument to parse.
+ * @return             True if a point has been returned.
  */
-bool set_ec_point(ec_point& point, const std::string& arg);
+bool set_ec_point(bc::ec_point& point, const std::string& arg);
 
 /**
  * Parse a secret from the specified argument.
  *
- * @param secret the parsed secret.
- * @param arg the argument to parse.
- * @return True if a secret has been returned.
+ * @param[out] secret  The parsed secret.
+ * @param[in]  arg     The argument to parse.
+ * @return             True if a secret has been returned.
  */
-bool set_ec_secret(ec_secret& secret, const std::string& arg);
+bool set_ec_secret(bc::ec_secret& secret, const std::string& arg);
 
 } // sx
 

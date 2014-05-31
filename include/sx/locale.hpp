@@ -26,7 +26,7 @@ namespace sx {
  * Display an error message to the console that the specified configuration
  * file does not exist.
  *
- * @param command the value that was attempted as a command.
+ * @param[in]  command  The value that was attempted as a command.
  */
 void display_invalid_command(const char* command);
 
@@ -34,7 +34,7 @@ void display_invalid_command(const char* command);
  * Display an error message to the console that the specified sx command does
  * not exist.
  *
- * @param the path of a file that was tested.
+ * @param[in]  file  The path of a file that was tested.
  */
 void display_invalid_config(const char* file);
 

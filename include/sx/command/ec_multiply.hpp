@@ -84,7 +84,8 @@ public:
     {
         return
         {
-            { "sx ec-multiply INTEGER POINT" }
+            { "sx ec-multiply INTEGER POINT" },
+            { "sx ec-multiply POINT INTEGER" }
         };
     }
 
@@ -103,9 +104,9 @@ public:
      * Invoke the command with the raw arguments as provided on the command
      * line. The process name is removed and argument count decremented.
      *
-     * @param argc the number of elements in the argv array
-     * @param argv the array of arguments, excluding the process
-     * @return Success (true) or failure (false).
+     * @param[in]  argc  The number of elements in the argv array.
+     * @param[in]  argv  The array of arguments, excluding the process.
+     * @return           True if successful.
      */
     bool invoke(const int argc, const char* argv[]);
 };

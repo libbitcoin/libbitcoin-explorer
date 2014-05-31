@@ -21,8 +21,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/curve.hpp>
 
-namespace sx {
 using namespace bc;
+
+namespace sx {
 
 ec_secret generate_random_secret()
 {

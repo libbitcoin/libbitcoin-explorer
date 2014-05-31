@@ -225,9 +225,6 @@
     <ClInclude Include="..\..\..\..\include\sx\command\stealth_uncover_secret.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\symbol.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -271,6 +268,9 @@
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\bci_fetch_last_height.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\ec_add.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
   </ItemGroup>

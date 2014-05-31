@@ -27,22 +27,22 @@ namespace sx {
 /**
 * Get the value of the SX_CFG environment variable.
 *
-* @return The value of the SX_CFG environment variable.
+* @return  The value of the SX_CFG environment variable.
 */
 tstring get_sx_cfg();
 
 /**
  * Get the user's home directory.
  *
- * @return The user's home directory.
+ * @return  The user's home directory.
  */
 tstring home_directory();
 
 /**
  * Set the value of the SX_CFG environment variable to the specified path.
  *
- * @param path The path to set into the SX_CFG environment variable.
- * @return True if successful, otherwise false.
+ * @param[in]  path  The path to set into the SX_CFG environment variable.
+ * @return           True if successful.
  */
 bool set_sx_cfg(const tpath& path);
 

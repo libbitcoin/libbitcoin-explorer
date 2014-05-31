@@ -34,28 +34,28 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      *
-     * @return Exmaple: "fetch-transaction"
+     * @return  Exmaple: "fetch-transaction"
      */
     virtual const char* name() = 0;
 
     /**
      * The localizable command category name, upper case.
      *
-     * @return Example: "ONLINE (OBELISK)"
+     * @return  Example: "ONLINE (OBELISK)"
      */
     virtual const char* category() = 0;
 
     /**
      * The localizable command subcategory name, upper case.
      *
-     * @return Example: "BLOCKCHAIN QUERIES"
+     * @return  Example: "BLOCKCHAIN QUERIES"
      */
     virtual const char* subcategory() = 0;
 
     /**
      * The localizable command description, multiple lines, punctuated.
      *
-     * @return Example:
+     * @return  Example:
      * "Fetch a raw transaction using a network connection to"
      * "make requests against the obelisk load balancer back end."
      */
@@ -64,7 +64,7 @@ public:
     /**
      * The non-localizable command usage examples, multiple lines.
      *
-     * @return Example:
+     * @return  Example:
      * "sx fetch-transaction HASH"
      */
     virtual const std::vector<char*> example() = 0;
@@ -72,8 +72,7 @@ public:
     /**
      * The localizable command explanation, multiple lines, punctuated.
      *
-     * @return Example:
-     * "EXAMPLE:"
+     * @return  Example:
      * "$ sx fetch-transaction ... # fetches raw data"
      */
     virtual const std::vector<char*> explanation() = 0;
@@ -82,9 +81,9 @@ public:
      * Invoke the command with the raw arguments as provided on the command
      * line. The process name is removed and argument count decremented.
      *
-     * @param argc the number of elements in the argv array
-     * @param argv the array of arguments, excluding the process
-     * @return Success (true) or failure (false).
+     * @param[in]  argc  The number of elements in the argv array.
+     * @param[in]  argv  The array of arguments, excluding the process.
+     * @return           True if successful.
      */
     virtual bool invoke(const int argc, const char* argv[]) = 0;
 };

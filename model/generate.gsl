@@ -100,16 +100,16 @@ namespace extensions {
 /**
  * Find the command identified by the specified symbolic command name.
  *
- * @param symbol the symbolic command name.
- * @return An instance of the command or nullptr if not found.
+ * @param[in]  symbol  The symbolic command name.
+ * @return             An instance of the command or nullptr if not found.
  */
 std::shared_ptr<command> find(const char* symbol);
 
 /**
  * Invoke a specified function on all commands.
  *
- * @param the function to invoke on all commands.
- * @return True if invoked successfully, otherwise false.
+ * @param[in]  func  The function to invoke on all commands.
+ * @return           True if invoked successfully.
  */
 bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
@@ -253,9 +253,9 @@ public:
      * Invoke the command with the raw arguments as provided on the command
      * line. The process name is removed and argument count decremented.
      *
-     * @param argc the number of elements in the argv array
-     * @param argv the array of arguments, excluding the process
-     * @return Success (true) or failure (false).
+     * @param[in]  argc  The number of elements in the argv array.
+     * @param[in]  argv  The array of arguments, excluding the process.
+     * @return           True if successful.
      */
     bool invoke(const int argc, const char* argv[]);
 };

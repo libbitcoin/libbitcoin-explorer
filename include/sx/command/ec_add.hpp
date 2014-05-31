@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_SYMBOL_HPP
-#define SX_SYMBOL_HPP
+#ifndef SX_EC_ADD_HPP
+#define SX_EC_ADD_HPP
 
 #include <vector>
 #include <sx/command.hpp>
@@ -30,23 +30,23 @@ namespace sx {
 namespace extensions {
 
 /**
- * Class to implement the sx SYMBOL command.
+ * Class to implement the sx ec_add command.
  */
-class symbol : public command
+class ec_add : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "SYMBOL"; }
+    static const char* symbol() { return "ec_add"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return symbol::symbol();
+        return ec_add::symbol();
     }
 
     /**
@@ -62,7 +62,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BLOCKCHAIN";
+        return "EC MATH";
     }
 
     /**
@@ -72,7 +72,7 @@ public:
     {
         return
         {
-            { "DESCRIPTION" }
+            { "Calculate the result of POINT + POINT." }
         };
     }
 
@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "USAGE" }
+            { "sx ec-add POINT POINT" }
         };
     }
 
@@ -95,9 +95,7 @@ public:
     {
         return
         {
-            { "EXPLANATION" },
-            { "EXPLANATION" },
-            { "EXPLANATION" }
+            { "Calculate the result of POINT + POINT." }
         };
     }
 
@@ -105,9 +103,9 @@ public:
      * Invoke the command with the raw arguments as provided on the command
      * line. The process name is removed and argument count decremented.
      *
-     * @param argc the number of elements in the argv array
-     * @param argv the array of arguments, excluding the process
-     * @return Success (true) or failure (false).
+     * @param[in]  argc  The number of elements in the argv array.
+     * @param[in]  argv  The array of arguments, excluding the process.
+     * @return           True if successful.
      */
     bool invoke(const int argc, const char* argv[]);
 };

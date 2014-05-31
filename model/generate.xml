@@ -262,7 +262,6 @@
     <example value="sx fetch-transaction-index HASH" />
     <explanation value="The fetch-transaction-index tool uses a network connection to make requests" />
     <explanation value="against the load balancer backend." />
-    <explanation value="EXPLANATION" />
   </command>
 
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
@@ -454,14 +453,6 @@
     <explanation value="Decode an address to its internal RIPEMD representation." />
   </command>
 
-  <command symbol="SYMBOL" category="UTILITY" subcategory="BLOCKCHAIN">
-    <description value="DESCRIPTION" />
-    <example value="USAGE" />
-    <explanation value="EXPLANATION" />
-    <explanation value="EXPLANATION" />
-    <explanation value="EXPLANATION" />
-  </command>
-
   <command symbol="embed-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
     <description value="Generate an address used for embedding record of data into the blockchain." />
     <example value="sx embed-addr" />
@@ -631,8 +622,6 @@
     <description value="Create a private HD key from another HD private key." />
     <example value="sx hd-priv [--hard] INDEX" />
     <explanation value="Create a private HD key from another HD private key." />
-    <explanation value="EXPLANATION" />
-    <explanation value="EXPLANATION" />
   </command>
 
   <command symbol="hd-pub" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
@@ -642,14 +631,6 @@
     <explanation value="" />
     <explanation value="If no arguments are passed then hd-pub expects a private key in" />
     <explanation value="STDIN and will convert it to a public key." />
-  </command>
-
-  <command symbol="SYMBOL" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <description value="DESCRIPTION" />
-    <example value="USAGE" />
-    <explanation value="EXPLANATION" />
-    <explanation value="EXPLANATION" />
-    <explanation value="EXPLANATION" />
   </command>
 
   <command symbol="hd-to-address" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
@@ -663,23 +644,31 @@
     <example value="sx hd-to-wif" />
     <explanation value="Convert an HD private key to a WIF private key." />
   </command>
-
-  <command symbol="ec-multiply" category="UTILITY" subcategory="EC MATH">
-    <description value="Multiply an integer and a point together." />
-    <example value="sx ec-multiply INTEGER POINT" />
-    <explanation value="Multiply an integer and a point together." />
-  </command>
-
-  <command symbol="ec-tweak-add" category="UTILITY" subcategory="EC MATH">
-    <description value="Calculate the result of POINT + INTEGER * G." />
-    <example value="sx ec-tweak-add INTEGER POINT" />
-    <explanation value="Calculate the result of POINT + INTEGER * G." />
+  
+  <command symbol="ec_add" category="UTILITY" subcategory="EC MATH">
+    <description value="Calculate the result of POINT + POINT." />
+    <example value="sx ec-add POINT POINT" />
+    <explanation value="Calculate the result of POINT + POINT." />
   </command>
 
   <command symbol="ec-add-modp" category="UTILITY" subcategory="EC MATH">
     <description value="Calculate the result of INTEGER + INTEGER." />
     <example value="sx ec-add-modp INTEGER INTEGER" />
     <explanation value="Calculate the result of INTEGER + INTEGER." />
+  </command>
+
+  <command symbol="ec-tweak-add" category="UTILITY" subcategory="EC MATH">
+    <description value="Calculate the result of POINT + INTEGER * G." />
+    <example value="sx ec-tweak-add INTEGER POINT" />
+    <example value="sx ec-tweak-add POINT INTEGER" />
+    <explanation value="Calculate the result of POINT + INTEGER * G." />
+  </command>
+
+  <command symbol="ec-multiply" category="UTILITY" subcategory="EC MATH">
+    <description value="Multiply an integer and a point together." />
+    <example value="sx ec-multiply INTEGER POINT" />
+    <example value="sx ec-multiply POINT INTEGER" />
+    <explanation value="Multiply an integer and a point together." />
   </command>
   
 </generate>

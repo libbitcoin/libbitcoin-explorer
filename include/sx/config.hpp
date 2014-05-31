@@ -39,10 +39,10 @@ typedef std::map<std::string, std::string> config_map_type;
  * in the specified configuration map. If the setting is not located any 
  * pre-existing setting value is unchanged.
  *
- * @param <T> the type of the configuration setting to read.
- * @param root the root of the configuration settings object to read from.
- * @param map the configuration settings map to write into.
- * @param key the name of the configuration setting to read.
+ * @param      <T>   The type of the configuration setting to read.
+ * @param[in]  root  Root of the configuration settings object to read from.
+ * @param[out] map   Configuration settings map to write into.
+ * @param[in]  key   The name of the configuration setting to read.
  */
 template <typename T>
 void get_value(const libconfig::Setting& root, config_map_type& map,
@@ -51,9 +51,9 @@ void get_value(const libconfig::Setting& root, config_map_type& map,
 /**
  * Read the configuration file at the specified path.
  *
- * @param config the configuration settings object to write to.
- * @param path the path of the configuration settings file to read.
- * @return true if read successfully, otherwise false.
+ * @param[in]  config  The configuration settings object to write to.
+ * @param[in]  path    The path of the configuration settings file to read.
+ * @return             True if read successfully.
  */
 bool read_config_file(libconfig::Config& config, const tpath path);
 
@@ -61,8 +61,8 @@ bool read_config_file(libconfig::Config& config, const tpath path);
  * Determine the proper configuration file path and read the file into the
  * specified configuration settings object.
  *
- * @param config the configuration settings object to write to.
- * @return true if read successfully, otherwise false.
+ * @param[out] config  The configuration settings object to write to.
+ * @return             True if read successfully.
  */
 bool read_config(libconfig::Config& config);
 
@@ -71,7 +71,7 @@ bool read_config(libconfig::Config& config);
  * after setting defaults from memory. Use CZMQ program 'makecert' to generate
  * cert/key settings values.
  *
- * @param map the configuration settings map to write into.
+ * @param[out] map  The configuration settings map to write to.
  */
 void get_config(config_map_type& map);
 
@@ -79,8 +79,8 @@ void get_config(config_map_type& map);
  * Validate existence of the specified file and then set the environment 
  * SX_CFG environment variable accordingly.
  *
- * @param path the path of the configuration settings file.
- * @return true if set successfully, otherwise false.
+ * @param[in]  path  The path of the configuration settings file.
+ * @return           True if set successfully.
  */
 bool set_config_path(std::string& path);
 

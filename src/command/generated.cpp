@@ -32,10 +32,6 @@ std::shared_ptr<command> find(const char* symbol)
 {
     auto symbolic = std::string(symbol);
 
-    if (symbolic == symbol::symbol())
-        return std::make_shared<symbol>();
-    if (symbolic == symbol::symbol())
-        return std::make_shared<symbol>();
     if (symbolic == addr::symbol())
         return std::make_shared<addr>();
     if (symbolic == balance::symbol())
@@ -66,6 +62,8 @@ std::shared_ptr<command> find(const char* symbol)
         return std::make_shared<ec_multiply>();
     if (symbolic == ec_tweak_add::symbol())
         return std::make_shared<ec_tweak_add>();
+    if (symbolic == ec_add::symbol())
+        return std::make_shared<ec_add>();
     if (symbolic == embed_addr::symbol())
         return std::make_shared<embed_addr>();
     if (symbolic == encode_addr::symbol())
@@ -184,8 +182,6 @@ std::shared_ptr<command> find(const char* symbol)
 
 bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 {
-    func(std::make_shared<symbol>());
-    func(std::make_shared<symbol>());
     func(std::make_shared<addr>());
     func(std::make_shared<balance>());
     func(std::make_shared<base58_decode>());
@@ -201,6 +197,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
     func(std::make_shared<ec_add_modp>());
     func(std::make_shared<ec_multiply>());
     func(std::make_shared<ec_tweak_add>());
+    func(std::make_shared<ec_add>());
     func(std::make_shared<embed_addr>());
     func(std::make_shared<encode_addr>());
     func(std::make_shared<fetch_block_header>());

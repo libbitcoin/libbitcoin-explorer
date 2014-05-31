@@ -21,6 +21,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <string>
+#include <vector>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
@@ -38,6 +39,12 @@ void line_out(std::ostream& stream, const char* line,
 
     // output the inset-offset-line to the specified stream
     stream << inset << std::string(padding, ' ') << line << std::endl;
+}
+
+void line_out(std::ostream& stream, std::string& line,
+    const size_t offset, const char* inset)
+{
+    return line_out(stream, line.c_str(), offset, inset);
 }
 
 void line_out(std::ostream& stream, const std::vector<char*>& lines,
@@ -61,6 +68,21 @@ std::string read_stdin()
     std::string result(first, last);
     boost::algorithm::trim(result);
     return result;
+}
+
+void sleep_ms(uint32_t milliseconds)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
+
+bool validate_argument_range(const int actual,
+    const std::vector<char*>& message, const int minimum, 
+    const int maximum)
+{
+    bool valid = ((actual >= minimum) && (maximum == 0 || actual <= maximum));
+    if (!valid)
+        line_out(std::cerr, message);
+    return valid;
 }
 
 } // sx
