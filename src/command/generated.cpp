@@ -32,6 +32,8 @@ std::shared_ptr<command> find(const char* symbol)
 {
     auto symbolic = std::string(symbol);
 
+    if (symbolic == addr::symbol())
+        return std::make_shared<addr>();
     if (symbolic == wallet::symbol())
         return std::make_shared<wallet>();
 
@@ -40,6 +42,7 @@ std::shared_ptr<command> find(const char* symbol)
 
 bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 {
+    func(std::make_shared<addr>());
     func(std::make_shared<wallet>());
 
     return true;

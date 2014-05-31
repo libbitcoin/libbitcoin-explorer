@@ -25,6 +25,7 @@
 #include <string>
 #include <sx/command.hpp>
 
+#include <sx/command/addr.hpp>
 #include <sx/command/wallet.hpp>
 
 /********** WARNING: This file is generated, do not edit directly. **********/

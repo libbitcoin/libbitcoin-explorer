@@ -40,7 +40,7 @@ std::shared_ptr<command> find(const char* symbol)
 {
     auto symbolic = std::string(symbol);
 
-.for command
+.for command by symbol
     if (symbolic == $(symbol)::symbol())
         return std::make_shared<$(symbol)>();
 .endfor
@@ -50,7 +50,7 @@ std::shared_ptr<command> find(const char* symbol)
 
 bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 {
-.for command
+.for command by symbol
     func(std::make_shared<$(symbol)>());
 .endfor
 
@@ -88,7 +88,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 #include <string>
 #include <sx/command.hpp>
 
-.for command
+.for command by symbol
 #include <sx/command/$(symbol).hpp>
 .endfor
 
@@ -117,7 +117,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 } // sx
 
 #endif
-.for command
+.for command by symbol
 .echo "Generating include/sx/command/$(symbol).hpp..."
 .output "../include/sx/command/$(symbol).hpp"
 /*
@@ -150,11 +150,13 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
 namespace sx {
 namespace extensions {
+.for define
+.   if first()
 
 /**
  * Various localizable strings used by sx $(symbol).
  */
-.for define
+.   endif
 #define $(symbol:) "$(value)"
 .endfor
 

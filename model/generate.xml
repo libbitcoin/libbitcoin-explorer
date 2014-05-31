@@ -1,8 +1,13 @@
-<generate name="sx" script="generate.gsl">
+<generate script="generate.gsl">
+  <command symbol="addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
+    <example value="sx addr" />
+    <description value="See Bitcoin address of a public or private key." />
+    <explanation value="Read public or private key from STDIN and output Bitcoin address." />
+  </command>  
   <command symbol="wallet" category="EXPERIMENTAL" subcategory="APPS">
-    <define symbol="NO_MASTER_PUBLIC_KEY" value="No valid master public key or private secret key was passed in." />
-    <description value="Experimental command line wallet." />
     <example value="sx wallet SEED" />
+    <description value="Experimental command line wallet." />
     <explanation value="This is an experimental prototype." />
+    <define symbol="NO_MASTER_PUBLIC_KEY" value="No valid master public key or private secret key was passed in." />
   </command>
 </generate>

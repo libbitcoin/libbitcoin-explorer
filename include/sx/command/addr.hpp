@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_WALLET_HPP
-#define SX_WALLET_HPP
+#ifndef SX_ADDR_HPP
+#define SX_ADDR_HPP
 
 #include <vector>
 #include <sx/command.hpp>
@@ -30,28 +30,23 @@ namespace sx {
 namespace extensions {
 
 /**
- * Various localizable strings used by sx no_master_public_key.
+ * Class to implement the sx addr command.
  */
-#define NO_MASTER_PUBLIC_KEY "no valid master public key or private secret key was passed in."
-
-/**
- * Class to implement the sx wallet command.
- */
-class wallet : public command
+class addr : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "wallet"; }
+    static const char* symbol() { return "addr"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return wallet::symbol();
+        return addr::symbol();
     }
 
     /**
@@ -59,7 +54,7 @@ public:
      */
     const char* category()
     {
-        return "experimental";
+        return "offline keys and addresses";
     }
 
     /**
@@ -67,7 +62,7 @@ public:
      */
     const char* subcategory()
     {
-        return "apps";
+        return "basic";
     }
 
     /**
@@ -77,7 +72,7 @@ public:
     {
         return
         {
-            { "experimental command line wallet." }
+            { "see bitcoin address of a public or private key." }
         };
     }
 
@@ -89,7 +84,7 @@ public:
     {
         return
         {
-            { "sx wallet seed" }
+            { "sx addr" }
         };
     }
 
@@ -100,7 +95,7 @@ public:
     {
         return
         {
-            { "this is an experimental prototype." }
+            { "read public or private key from stdin and output bitcoin address." }
         };
     }
 

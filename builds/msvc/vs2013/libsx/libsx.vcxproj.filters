@@ -60,6 +60,9 @@
     <ClInclude Include="..\..\..\..\include\sx\locale.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\config.cpp">
@@ -96,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\locale.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\command\addr.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
