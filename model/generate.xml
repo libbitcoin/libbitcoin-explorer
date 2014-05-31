@@ -1,3 +1,4 @@
+<?xml version = "1.0" ?>
 <generate script="generate.gsl">
   <command symbol="addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
     <example value="sx addr" />

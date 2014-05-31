@@ -29,24 +29,59 @@ namespace sx {
 
 #define OBELISK_DEFAULT_URI "tcp://obelisk.unsystem.net:8081"
 
+/**
+ * Map to hold configuration settings read from the config file or defaults.
+ */
 typedef std::map<std::string, std::string> config_map_type;
 
-// read the spefied configuration file setting
+/**
+ * Get a value of the specified type from the configuration object and store it
+ * in the specified configuration map. If the setting is not located any 
+ * pre-existing setting value is unchanged.
+ *
+ * @param <T> the type of the configuration setting to read.
+ * @param root the root of the configuration settings object to read from.
+ * @param map the configuration settings map to write into.
+ * @param key the name of the configuration setting to read.
+ */
 template <typename T>
 void get_value(const libconfig::Setting& root, config_map_type& map,
     const std::string& key);
 
-// read the spefied configuration file
+/**
+ * Read the configuration file at the specified path.
+ *
+ * @param config the configuration settings object to write to.
+ * @param path the path of the configuration settings file to read.
+ * @return true if read successfully, otherwise false.
+ */
 bool read_config_file(libconfig::Config& config, const tpath path);
 
-// determine the proper configuration file path and read the file
+/**
+ * Determine the proper configuration file path and read the file into the
+ * specified configuration settings object.
+ *
+ * @param config the configuration settings object to write to.
+ * @return true if read successfully, otherwise false.
+ */
 bool read_config(libconfig::Config& config);
 
-// get configuration settings from file w/fallbacks or defaults.
-// use CZMQ program 'makecert' to generate cert/key.
+/**
+ * Get configuration settings from the apparopriate configuration file
+ * after setting defaults from memory. Use CZMQ program 'makecert' to generate
+ * cert/key settings values.
+ *
+ * @param map the configuration settings map to write into.
+ */
 void get_config(config_map_type& map);
 
-// validate file existence and set environment SX_CFG environment variable
+/**
+ * Validate existence of the specified file and then set the environment 
+ * SX_CFG environment variable accordingly.
+ *
+ * @param path the path of the configuration settings file.
+ * @return true if set successfully, otherwise false.
+ */
 bool set_config_path(std::string& path);
 
 } // sx
