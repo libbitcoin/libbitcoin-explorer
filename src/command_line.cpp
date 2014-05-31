@@ -31,26 +31,22 @@ namespace sx {
 bool dispatch_invoke(const int argc, const char* argv[])
 {
     auto command = sx::extensions::find(argv[0]);
-
     if (command == nullptr)
     {
         display_invalid_command(argv[0]);
         return false;
     }
-
     return command->invoke(argc, argv);
 }
 
 bool dispatch_summary(const char* symbol)
 {
     auto command = sx::extensions::find(symbol);
-
     if (command == nullptr)
     {
         display_invalid_command(symbol);
         return false;
     }
-
     return display_summary(command);
 }
 
@@ -60,7 +56,6 @@ bool dispatch_usage()
     {
         display_usage(sx_command);
     };
-
     return sx::extensions::broadcast(func);
 }
 
