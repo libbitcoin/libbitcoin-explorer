@@ -40,7 +40,7 @@ void line_out(std::ostream& stream, const char* line,
     stream << inset << std::string(padding, ' ') << line << std::endl;
 }
 
-void line_out(std::ostream& stream, const std::vector<char*> lines,
+void line_out(std::ostream& stream, const std::vector<char*>& lines,
     const size_t offset, const char* inset)
 {
     // we allow empty multi-line values in source data

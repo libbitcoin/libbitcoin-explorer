@@ -48,7 +48,7 @@ void line_out(std::ostream& stream, const char* line,
  * @param offset the number of spaces to pad the left side of the line.
  * @param inset text to display in the offset padding.
  */
-void line_out(std::ostream& stream, const std::vector<char*> lines,
+void line_out(std::ostream& stream, const std::vector<char*>& lines,
     const size_t offset = 0, const char* inset = "");
 
 /**
