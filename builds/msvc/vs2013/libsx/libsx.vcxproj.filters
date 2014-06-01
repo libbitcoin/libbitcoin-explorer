@@ -273,6 +273,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec_add.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\client.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\config.cpp">
@@ -480,6 +483,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\ec_multiply.cpp">
       <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\client.cpp">
+      <Filter>src\utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
