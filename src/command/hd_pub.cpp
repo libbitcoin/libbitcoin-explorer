@@ -17,71 +17,104 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/hd_pub.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-bool invoke(const int argc, const char* argv[])
+// TODO: extract commad-specific error message and centralize implementation.
+bool read_hd_pub_args(const int argc, const char* argv[],
+    bool& is_hard, uint32_t& index)
 {
-    // Special case - read private key from STDIN and
-    // convert it to a public key.
+    index = 0;
+    is_hard = false;
+
+    for (int i = 1; i < argc; ++i)
+    {
+        std::string arg = argv[i];
+        if (arg == "-h" || arg == "--hard")
+            is_hard = true;
+        else if (!sx::to_number(arg, index))
+        {
+            std::cerr << "hd-pub: Bad INDEX provided." << std::endl;
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// Special case - read private key from STDIN and convert it to a public key.
+bool private_to_public_key()
+{
+    hd_private_key private_key;
+    if (!private_key.set_serialized(sx::read_stdin()))
+    {
+        std::cerr << "sx: Error reading private key." << std::endl;
+        return false;
+    }
+
+    const hd_public_key public_key = private_key;
+    std::cout << public_key.serialize() << std::endl;
+    return true;
+}
+
+bool sx::extensions::hd_pub::invoke(const int argc, const char* argv[])
+{
+    if (!validate_argument_range(argc, example(), 1, 3))
+        return false;
+
     if (argc == 1)
     {
-        std::string encoded_key = read_stdin();
-        hd_private_key private_key;
-        if (!private_key.set_serialized(encoded_key))
-        {
-            std::cerr << "sx: Error reading private key." << std::endl;
-            return -1;
-        }
-        const hd_public_key public_key = private_key;
-        std::cout << public_key.serialize() << std::endl;
-        return 0;
+        return private_to_public_key();
     }
-    bool is_hard = false;
-    uint32_t index = 0;
-    if (!read_hd_command_args(argc, argv, is_hard, index))
-        return -1;
-    // Arguments now parsed. Read key from STDIN.
-    std::string encoded_key = read_stdin();
-    hd_public_key key;
 
-    // First try loading private key.
+    bool is_hard;
+    uint32_t index;
+    if (!read_hd_pub_args(argc, argv, is_hard, index))
+        return false;
+    
+    hd_public_key public_key;
     hd_private_key private_key;
+    std::string encoded_key = read_stdin();
+
+    // First try loading private key and otherwise the public key.
     if (private_key.set_serialized(encoded_key))
-        key = private_key;
-    else if (!key.set_serialized(encoded_key))
+        public_key = private_key;
+    else if (!public_key.set_serialized(encoded_key))
     {
         std::cerr << "sx: Error reading key." << std::endl;
-        return -1;
+        return false;
     }
 
     if (!private_key.valid() && is_hard)
     {
         std::cerr << "sx: Cannot use --hard with public keys."
             << std::endl;
-        return -1;
+        return false;
     }
 
-    hd_public_key out;
-    // You must use the private key to generate --hard keys.
+    hd_public_key child_key;
     if (is_hard)
     {
-        index += libwallet::first_hardened_key;
-        out = private_key.generate_public_key(index);
+        // You must use the private key to generate --hard keys.
+        index += first_hardened_key;
+        child_key = private_key.generate_public_key(index);
     }
     else
-        out = key.generate_public_key(index);
+        child_key = public_key.generate_public_key(index);
 
-    if (!out.valid())
+    if (!child_key.valid())
     {
         std::cerr << "sx: Error deriving child key." << std::endl;
-        return -1;
+        return false;
     }
-    std::cout << out.serialize() << std::endl;
-    return 0;
+
+    std::cout << child_key.serialize() << std::endl;
+    return true;
 }
 

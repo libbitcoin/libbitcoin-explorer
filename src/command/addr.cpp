@@ -18,16 +18,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <sstream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/addr.hpp>
 #include <sx/utility/coin.hpp>
+#include <sx/utility/console.hpp>
 #include <sx/utility/curve.hpp>
 
 using namespace bc;
 
 bool sx::extensions::addr::invoke(const int argc, const char* argv[])
 {
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return false;
+
     elliptic_curve_key key;
     if (!read_public_or_private_key(key))
         return false;

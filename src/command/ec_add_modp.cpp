@@ -18,17 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/curve.hpp>
 #include <sx/command/ec_add_modp.hpp>
 
+using namespace bc;
+
 bool sx::extensions::ec_add_modp::invoke(const int argc, const char* argv[])
 {
-    if (argc != 3)
-    {
-        line_out(std::cerr, example());
+    if (!validate_argument_range(argc, example(), 3, 3))
         return false;
-    }
+
     ec_secret secret_a, secret_b;
     if (!set_ec_secret(secret_a, argv[1]))
     {

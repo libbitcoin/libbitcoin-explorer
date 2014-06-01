@@ -18,23 +18,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <sstream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/wif_to_secret.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace libwallet;
 
-bool invoke(const int argc, const char* argv[])
+bool sx::extensions::wif_to_secret::invoke(const int argc, const char* argv[])
 {
-    std::string arg = read_stdin();
-    auto h = libwallet::wif_to_secret(arg);
-    if (h == null_hash)
+    std::string wif = read_stdin();
+    ec_secret secret = libwallet::wif_to_secret(wif);
+    if (secret == null_hash)
     {
         std::cerr << "Invalid private key." << std::endl;
-        return -1;
+        return false;
     }
-    std::cout << h << std::endl;
-    return 0;
+
+    std::cout << secret << std::endl;
+    return true;
 }
 

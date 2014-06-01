@@ -21,7 +21,6 @@
 #include <mutex>
 #include <thread>
 #include <unordered_set>
-#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <wallet/wallet.hpp>
@@ -42,7 +41,8 @@
     #include <unistd.h>
     using std::min;
 #endif
-
+    
+using namespace bc;
 using namespace sx;
 using std::placeholders::_1;
 using std::placeholders::_2;

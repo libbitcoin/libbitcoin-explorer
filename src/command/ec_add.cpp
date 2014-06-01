@@ -18,20 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/utility/console.hpp>
 #include <sx/utility/curve.hpp>
-//#include <sx/command/ec_add.hpp>
+#include <sx/command/ec_add.hpp>
 
-bool /*sx::extensions::ec_add::*/ invoke(const int argc, const char* argv[])
+using namespace bc;
+
+bool sx::extensions::ec_add::invoke(const int argc, const char* argv[])
 {
-    std::cerr << "sx: Not Implemented" << std::endl;
-
-    // This is excluded because += is not yet defined for ec_point.
-#ifdef false
-    if (argc != 3)
-    {
-        std::cerr << "Usage: sx ec-add POINT POINT" << std::endl;
+    if (!validate_argument_range(argc, example(), 3, 3))
         return false;
-    }
+
     ec_point point_a, point_b;
     if (!set_ec_point(point_a, argv[1]))
     {
@@ -43,15 +41,19 @@ bool /*sx::extensions::ec_add::*/ invoke(const int argc, const char* argv[])
         std::cerr << "sx: Invalid point " << argv[2] << std::endl;
         return false;
     }
-    bool success = (point_a += point_b);
+
+    /* This command excluded because += is not yet defined for ec_point. */
+    line_out(std::cerr, "sx: Not Implemented");
+    return false;
+
+    /*bool success = (point_a += point_b);
     if (!success)
     {
         std::cerr << "sx: Out of range." << std::endl;
         return false;
-    }
-    std::cout << point_a << std::endl;
-#endif
+    }*/
 
+    std::cout << point_a << std::endl;
     return true;
 }
 

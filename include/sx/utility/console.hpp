@@ -29,6 +29,11 @@
 namespace sx {
 
 /**
+ * STDIO character iterator.
+ */
+typedef std::istreambuf_iterator<char> charit;
+
+/**
  * Write the specified message, with optional padding and inset text, and a
  * line return, to the specified stream.
  *
@@ -65,26 +70,58 @@ void line_out(std::ostream& stream, const std::vector<char*>& lines,
     const size_t offset = 0, const char* inset = "");
 
 /**
- * Get a trimmed message from the standard input stream.
+ * Get a trimmed message from STDIN.
  *
- * @return  The message read from the standard input stream.
+ * @param[in]  trim  Trim the input of whitespace, defaults to false.
+ * @return           The message read from STDIN.
  */
-std::string read_stdin();
+std::string read_stdin(bool trim = false);
 
 /**
-* Sleep for the specified number of milliseconds.
-*
-* @param[in]  milliseconds  The number of milliseconds to sleep.
-*/
-void sleep_ms(uint32_t milliseconds);
+ * Sleep for the specified number of milliseconds.
+ *
+ * @param[in]  milliseconds  The number of milliseconds to sleep.
+ */
+void sleep_ms(const uint32_t milliseconds);
+
+/**
+ * Uniformly convert a text string to a bool, with whitespace and text case
+ * ignored, although beware that case depends upon locale. The following set 
+ * defines false boolean text values: { 'false', '0' } with all other values
+ * retuning false.
+ *
+ * @param[in]  text    The text to text.
+ * @return             True if the text value is a member of the false set.
+ */
+bool is_false(const std::string text);
+
+/**
+ * Uniformly convert a text string to a bool, with whitespace and text case
+ * ignored, although beware that case depends upon locale. The following set
+ * defines true boolean text values: { 'true', '1' } with all other values
+ * retuning false.
+ *
+ * @param[in]  text    The text to convert.
+ * @return             True if the text value is a member of the true set.
+ */
+bool is_true(const std::string text);
+
+/**
+ * Safely convert a text string to a number, with whitespace ignored.
+ *
+ * @param[in]  text    The text to convert.
+ * @param[out] number  The parsed value.
+ * @return             True if successful.
+ */
+bool to_number(const std::string text, size_t& number);
 
 /**
  * Validate that the actual argument count matches the target, and if not emit
- * the specified error message to the standard error stream. The first argument
+ * the specified error message to the STDERR. The first argument
  * is assumed to be the command symbol.
  *
  * @param[in]  actual   The actual argument count.
- * @param[in]  message  The message to write to the standard error stream.
+ * @param[in]  message  The message to write to STDERR.
  * @param[in]  minimum  The minimum target argument count.
  * @param[in]  maximum  The maximum target argument count, zero for unlimited.
  * @return              True if the argument range satisfies the predicate.

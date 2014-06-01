@@ -18,62 +18,41 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/genaddr.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-std::string read_data()
+bool sx::extensions::genaddr::invoke(const int argc, const char* argv[])
 {
-    std::istreambuf_iterator<char> it(std::cin);
-    std::istreambuf_iterator<char> end;
-    return std::string(it, end);
-}
+    if (!validate_argument_range(argc, example(), 2, 3))
+        return false;
 
-bool invoke(const int argc, const char* argv[])
-{
-    if (argc != 2 && argc != 3)
+    size_t key_number;
+    if (!to_number(argv[1], key_number))
+        return false;
+
+    bool for_change = (argc == 3) && is_true(argv[2]);
+
+    deterministic_wallet wallet;
+    std::string seed = read_stdin();
+    if (!wallet.set_seed(seed))
     {
-        std::cerr << "Usage: genaddr N [CHANGE]" << std::endl;
-        return -1;
-    }
-    size_t n;
-    try
-    {
-        n = boost::lexical_cast<size_t>(argv[1]);
-    }
-    catch (const boost::bad_lexical_cast&)
-    {
-        std::cerr << "genaddr: Bad N provided" << std::endl;
-        return -1;
-    }
-    bool for_change = false;
-    if (argc == 3)
-    {
-        std::string change_str = argv[2];
-        boost::algorithm::to_lower(change_str);
-        if (change_str == "true" || change_str == "1")
-            for_change = true;
-    }
-    libwallet::deterministic_wallet wallet;
-    std::string user_data = read_data();
-    if (!wallet.set_seed(user_data))
-    {
-        data_chunk mpk = decode_hex(user_data);
+        data_chunk mpk = decode_hex(seed);
         if (!wallet.set_master_public_key(mpk))
         {
             std::cerr << "genaddr: No valid master public key, or "
                 << "private secret key was passed in." << std::endl;
-            return -1;
+            return false;
         }
     }
-    data_chunk pubkey = wallet.generate_public_key(n, for_change);
+
     payment_address addr;
+    data_chunk pubkey = wallet.generate_public_key(key_number, for_change);
     set_public_key(addr, pubkey);
     std::cout << addr.encoded() << std::endl;
-    return 0;
+    return true;
 }
-

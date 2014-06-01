@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/command/decode_addr.hpp>
@@ -25,16 +26,11 @@ using namespace bc;
 
 bool sx::extensions::decode_addr::invoke(const int argc, const char* argv[])
 {
-    if (argc != 2 && argc != 1)
-    {
-        std::cerr << "Usage: decode-addr ADDRESS" << std::endl;
+    if (!validate_argument_range(argc, example(), 1, 2))
         return false;
-    }
-    std::string addr_str;
-    if (argc == 1)
-        addr_str = sx::read_stdin();
-    else
-        addr_str = argv[1];
+
+    std::string addr_str(argc == 1 ? sx::read_stdin() : argv[1]);
+
     payment_address addr;
     if (!addr.set_encoded(addr_str))
     {

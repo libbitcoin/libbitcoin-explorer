@@ -17,19 +17,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/command/encode_addr.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 
-bool invoke(const int argc, const char* argv[])
+bool sx::extensions::encode_addr::invoke(const int argc, const char* argv[])
 {
-    if (argc > 3)
-    {
-        std::cerr << "Usage: sx encode-addr HASH [VERSION] " << std::endl;
-        return -1;
-    }
+    if (!validate_argument_range(argc, example(), 1, 3))
+        return false;
 
     std::string addr_str;
     uint8_t version_byte = 0;
@@ -50,7 +49,6 @@ bool invoke(const int argc, const char* argv[])
     }
     else
     {
-        BITCOIN_ASSERT(argc == 3);
         version_byte = boost::lexical_cast<uint32_t>(argv[2]);
         addr_str = argv[1];
     }
@@ -58,11 +56,11 @@ bool invoke(const int argc, const char* argv[])
     short_hash hashdata = decode_short_hash(addr_str);
     if (hashdata == null_short_hash)
     {
-        std::cerr << "Incorrect HASH passed in." << std::endl;
-        return -1;
+        line_out(std::cerr, "Incorrect HASH passed in.");
+        return false;
     }
 
     payment_address addr(version_byte, hashdata);
     std::cout << addr.encoded() << std::endl;
-    return 0;
+    return true;
 }

@@ -18,8 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/utility/coin.hpp>
@@ -57,37 +55,6 @@ bool load_tx(transaction_type& tx, const std::string& filename)
     {
         std::cerr << "showtx: Deserializing transaction failed." << std::endl;
         return false;
-    }
-    return true;
-}
-
-// TODO: extract localized text.
-bool read_hd_command_args(int argc, char* argv[], bool& is_hard,
-    uint32_t& index)
-{
-    if (argc == 1 || argc > 3)
-    {
-        std::cerr << "Usage: sx hd-priv [--hard] INDEX" << std::endl;
-        return false;
-    }
-
-    for (int i = 1; i < argc; ++i)
-    {
-        std::string arg = argv[i];
-        if (arg == "-h" || arg == "--hard")
-        {
-            is_hard = true;
-            continue;
-        }
-        try
-        {
-            index = boost::lexical_cast<uint32_t>(arg);
-        }
-        catch (const boost::bad_lexical_cast&)
-        {
-            std::cerr << "hd-priv: Bad INDEX provided." << std::endl;
-            return false;
-        }
     }
     return true;
 }

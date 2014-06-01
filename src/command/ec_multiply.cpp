@@ -17,26 +17,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "ec_util.hpp"
+#include <iostream>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/command/ec_multiply.hpp>
+#include <sx/utility/console.hpp>
+#include <sx/utility/curve.hpp>
 
-bool invoke(const int argc, const char* argv[])
+using namespace bc;
+
+bool sx::extensions::ec_multiply::invoke(const int argc, const char* argv[])
 {
-    if (argc != 3)
-    {
-        std::cerr << "Usage: sx ec-multiply INTEGER POINT" << std::endl;
-        return -1;
-    }
+    if (!validate_argument_range(argc, example(), 3, 3))
+        return false;
+
     ec_secret int_part;
     ec_point point_part;
     if (!ec_math_parse_args(argc, argv, int_part, point_part))
-        return -1;
-    bool success = ec_multiply(point_part, int_part);
+        return false;
+
+    bool success = bc::ec_multiply(point_part, int_part);
     if (!success)
     {
-        std::cerr << "sx: Out of range." << std::endl;
-        return -1;
+        line_out(std::cerr, "sx: Out of range.");
+        return false;
     }
+
     std::cout << point_part << std::endl;
-    return 0;
+    return true;
 }
 

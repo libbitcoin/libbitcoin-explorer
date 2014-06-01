@@ -22,6 +22,7 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
@@ -62,17 +63,58 @@ void line_out(std::ostream& stream, const std::vector<char*>& lines,
         [&](const char* line){ line_out(stream, line, offset); });
 }
 
-std::string read_stdin()
+std::string read_stdin(bool trim)
 {
     std::istreambuf_iterator<char> first(std::cin), last;
     std::string result(first, last);
-    boost::algorithm::trim(result);
+    if (trim)
+        boost::algorithm::trim(result);
     return result;
 }
 
-void sleep_ms(uint32_t milliseconds)
+void sleep_ms(const uint32_t milliseconds)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
+
+bool is_false(const std::string text)
+{
+    // a reference is avoided in order to prevent original string corruption
+    std::string value(text);
+
+    // case conversion is dependent upon the thread locale
+    boost::algorithm::to_lower(value);
+
+    // the concept of string false is hardwired here
+    return text == "false" || text == "0";
+}
+
+bool is_true(const std::string text)
+{
+    // a reference is avoided in order to prevent original string corruption
+    std::string value(text);
+
+    // case conversion is dependent upon the thread locale
+    boost::algorithm::to_lower(value);
+
+    // the concept of string true is hardwired here
+    return text == "true" || text == "1";
+}
+
+bool to_number(const std::string text, size_t& number)
+{
+    // a reference is avoided in order to prevent original string corruption
+    std::string value(text);
+    boost::algorithm::trim(value);
+    try
+    {
+        number = boost::lexical_cast<size_t>(text);
+    }
+    catch (const boost::bad_lexical_cast&)
+    {
+        return false;
+    }
+    return true;
 }
 
 bool validate_argument_range(const int actual,

@@ -163,6 +163,9 @@ bool payaddr_from_argv(payaddr_list& payaddrs, const int argc,
 
 bool sx::extensions::balance::invoke(const int argc, const char* argv[])
 {
+    if (!validate_argument_range(argc, example(), 1))
+        return false;
+
     config_map_type config;
     get_config(config);
     payaddr_list payaddrs;

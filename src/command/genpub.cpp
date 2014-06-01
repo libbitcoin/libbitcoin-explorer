@@ -18,82 +18,61 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/genpub.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-std::string read_data()
+bool sx::extensions::genpub::invoke(const int argc, const char* argv[])
 {
-    std::istreambuf_iterator<char> it(std::cin);
-    std::istreambuf_iterator<char> end;
-    return std::string(it, end);
-}
+    if (!validate_argument_range(argc, example(), 2, 4))
+        return false;
 
-bool invoke(const int argc, const char* argv[])
-{
-    if (argc < 2 || argc > 4)
-    {
-        std::cerr << "Usage: genaddr N [CHANGE] [RANGESTOP]" << std::endl;
-        return -1;
-    }
-    size_t n;
-    try
-    {
-        n = boost::lexical_cast<size_t>(argv[1]);
-    }
-    catch (const boost::bad_lexical_cast&)
+    size_t key_number;
+    if (!to_number(argv[1], key_number))
     {
         std::cerr << "genaddr: Bad N provided" << std::endl;
-        return -1;
+        return false;
     }
-    bool for_change = false;
-    if (argc >= 3)
+
+    bool for_change = argc > 2 && is_true(argv[2]);
+
+    size_t stop_limit = key_number;
+    if (argc > 3 && !to_number(argv[3], stop_limit))
     {
-        std::string change_str = argv[2];
-        boost::algorithm::to_lower(change_str);
-        if (change_str == "true" || change_str == "1")
-            for_change = true;
+        std::cerr << "genaddr: Bad RANGESTOP provided" << std::endl;
+        return false;
     }
-    size_t stop_limit = n;
-    if (argc == 4)
-    {
-        try
-        {
-            stop_limit = boost::lexical_cast<size_t>(argv[3]);
-        }
-        catch (const boost::bad_lexical_cast&)
-        {
-            std::cerr << "genaddr: Bad RANGESTOP provided" << std::endl;
-            return -1;
-        }
-    }
-    if (stop_limit < n)
+
+    if (stop_limit < key_number)
     {
         std::cerr << "genaddr: RANGESTOP cannot be less than N" << std::endl;
-        return -1;
+        return false;
     }
-    libwallet::deterministic_wallet wallet;
-    std::string user_data = read_data();
-    if (!wallet.set_seed(user_data))
+
+    deterministic_wallet wallet;
+    std::string seed = read_stdin();
+    if (!wallet.set_seed(seed))
     {
-        data_chunk mpk = decode_hex(user_data);
+        data_chunk mpk = decode_hex(seed);
         if (!wallet.set_master_public_key(mpk))
         {
             std::cerr << "genaddr: No valid master public key, or "
                 << "private secret key was passed in." << std::endl;
-            return -1;
+            return false;
         }
     }
-    for (size_t i = n; i <= stop_limit; ++i)
+
+    for (size_t i = key_number; i <= stop_limit; ++i)
     {
-        data_chunk pubkey = wallet.generate_public_key(i, for_change);
-        std::cout << pubkey << std::endl;
+        data_chunk public_key = wallet.generate_public_key(i, for_change);
+        std::cout << public_key << std::endl;
     }
-    return 0;
+
+    return false;
 }
 
 

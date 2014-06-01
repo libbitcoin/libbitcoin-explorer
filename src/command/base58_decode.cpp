@@ -18,7 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <sstream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/base58_decode.hpp>
 #include <sx/utility/console.hpp>
@@ -27,16 +26,11 @@ using namespace bc;
 
 bool sx::extensions::base58_decode::invoke(const int argc, const char* argv[])
 {
-    std::string b58_str;
-    if (argc == 1) {
-        b58_str = sx::read_stdin();
-    }
-    else if (argc == 2) 
-    {
-        b58_str = argv[1];
-    }
-    data_chunk data = decode_base58(b58_str);
-    std::cout << encode_hex(data) << std::endl;
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return false;
+
+    std::string b58_str(argc == 1 ? sx::read_stdin() : argv[1]);
+    line_out(std::cout, encode_hex(decode_base58(b58_str)));
     return true;
 }
 

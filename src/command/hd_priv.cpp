@@ -17,37 +17,66 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/hd_priv.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-bool invoke(const int argc, const char* argv[])
+// TODO: extract commad-specific error message and centralize implementation.
+bool read_hd_priv_args(const int argc, const char* argv[],
+    bool& is_hard, uint32_t& index)
 {
-    bool is_hard = false;
-    uint32_t index = 0;
-    if (!read_hd_command_args(argc, argv, is_hard, index))
-        return -1;
-    // Arguments now parsed. Read key from STDIN.
+    index = 0;
+    is_hard = false;
+
+    for (int i = 1; i < argc; ++i)
+    {
+        std::string arg = argv[i];
+        if (arg == "-h" || arg == "--hard")
+            is_hard = true;
+        else if (!sx::to_number(arg, index))
+        {
+            std::cerr << "hd-priv: Bad INDEX provided." << std::endl;
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool sx::extensions::hd_priv::invoke(const int argc, const char* argv[])
+{
+    if (!validate_argument_range(argc, example(), 1, 3))
+        return false;
+
+    bool is_hard;
+    uint32_t index;
+    if (!read_hd_priv_args(argc, argv, is_hard, index))
+        return false;
+
+    hd_private_key private_key;
     std::string encoded_key = read_stdin();
-    hd_private_key key;
-    if (!key.set_serialized(encoded_key))
+    if (!private_key.set_serialized(encoded_key))
     {
         std::cerr << "hd-priv: error reading private key." << std::endl;
-        return -1;
+        return false;
     }
-    if (is_hard)
-        index += libwallet::first_hardened_key;
 
-    auto out = key.generate_private_key(index);
-    if (!out.valid())
+    if (is_hard)
+        index += first_hardened_key;
+
+    auto child_key = private_key.generate_private_key(index);
+    if (!child_key.valid())
     {
         std::cerr << "hd-priv: error deriving child key." << std::endl;
-        return -1;
+        return false;
     }
-    std::cout << out.serialize() << std::endl;
-    return 0;
+
+    std::cout << child_key.serialize() << std::endl;
+    return true;
 }
 

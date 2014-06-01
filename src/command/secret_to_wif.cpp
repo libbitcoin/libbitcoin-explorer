@@ -20,22 +20,17 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/secret_to_wif.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-std::string dump_file(std::istream& in_file)
+bool sx::extensions::secret_to_wif::invoke(const int argc, const char* argv[])
 {
-    std::istreambuf_iterator<char> it(in_file);
-    std::istreambuf_iterator<char> end;
-    return std::string(it, end);
-}
-
-int main()
-{
-    std::string secret_str = dump_file(std::cin);
-    secret_parameter secret = decode_hash(secret_str);
-    std::cout << secret_to_wif(secret) << std::endl;
-    return 0;
+    std::string secret_hash = read_stdin();
+    secret_parameter secret = decode_hash(secret_hash);
+    std::cout << libwallet::secret_to_wif(secret) << std::endl;
+    return true;
 }
 

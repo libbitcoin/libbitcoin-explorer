@@ -18,55 +18,37 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/genpriv.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-std::string dump_file(std::istream& in_file)
+bool sx::extensions::genpriv::invoke(const int argc, const char* argv[])
 {
-    std::istreambuf_iterator<char> it(in_file);
-    std::istreambuf_iterator<char> end;
-    return std::string(it, end);
-}
+    if (!validate_argument_range(argc, example(), 2, 3))
+        return false;
 
-bool invoke(const int argc, const char* argv[])
-{
-    if (argc != 2 && argc != 3)
-    {
-        std::cerr << "Usage: genpriv N [CHANGE]" << std::endl;
-        return -1;
-    }
-    size_t n;
-    try
-    {
-        n = boost::lexical_cast<size_t>(argv[1]);
-    }
-    catch (const boost::bad_lexical_cast&)
+    size_t key_number;
+    if (!to_number(argv[1], key_number))
     {
         std::cerr << "genpriv: Bad N provided." << std::endl;
-        return -1;
+        return false;
     }
-    bool for_change = false;
-    if (argc == 3)
-    {
-        std::string change_str = argv[2];
-        boost::algorithm::to_lower(change_str);
-        if (change_str == "true" || change_str == "1")
-            for_change = true;
-    }
-    std::string seed = dump_file(std::cin);
-    libwallet::deterministic_wallet wallet;
-    if (!wallet.set_seed(seed))
+
+    bool for_change = (argc == 3) && is_true(argv[2]);
+
+    deterministic_wallet wallet;
+    if (!wallet.set_seed(read_stdin()))
     {
         std::cerr << "genpriv: This command wants a seed." << std::endl;
-        return -1;
+        return false;
     }
-    secret_parameter secret = wallet.generate_secret(n, for_change);
-    std::cout << libwallet::secret_to_wif(secret, false) << std::endl;
-    return 0;
-}
 
+    bool is_compressed = false;
+    secret_parameter secret = wallet.generate_secret(key_number, for_change);
+    std::cout << secret_to_wif(secret, is_compressed) << std::endl;
+    return true;
+}

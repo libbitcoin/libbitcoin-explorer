@@ -17,72 +17,70 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include "config.hpp"
+#include <sx/command/fetch_block_header.hpp>
+#include <sx/config.hpp>
+#include <sx/utility/client.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 
-bool stopped = false;
+// TODO: this should be a member of sx::extensions::fetch_block_header,
+// otherwise concurrent test execution will collide on shared state.
+bool fetch_block_header_stopped = false;
 
+// TODO: fetch_block_header_stopped should be passed here via closure
+// or by converting this to a member function.
 void block_header_fetched(const std::error_code& ec,
     const block_header_type& blk_header)
 {
+    fetch_block_header_stopped = true;
+
     if (ec)
     {
         std::cerr << "fetch-block-header: " << ec.message() << std::endl;
-        stopped = true;
         return;
     }
+
     data_chunk raw_blk_header(satoshi_raw_size(blk_header));
     satoshi_save(blk_header, raw_blk_header.begin());
     std::cout << raw_blk_header << std::endl;
-    stopped = true;
 }
 
-bool invoke(const int argc, const char* argv[])
+// Try first to interpret the index as a hash, otherwise treat it as a height.
+bool initialize_fetch_block_header(std::string& index, 
+    obelisk::fullnode_interface& fullnode)
 {
-    std::string index_str;
-    if (argc == 2)
-        index_str = argv[1];
-    else
-        index_str = read_stdin();
-    config_map_type config;
-    get_config(config);
-    threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"],
-        config["client-certificate"], config["server-public-key"]);
-    // Try first to interpret index as hash, if that fails then
-    // interpret the index as a height instead.
-    hash_digest blk_hash = decode_hash(index_str);
-    if (blk_hash == null_hash)
-    {
-        size_t height = 0;
-        boost::algorithm::trim(index_str);
-        try
-        {
-            height = boost::lexical_cast<size_t>(index_str);
-        }
-        catch (const boost::bad_lexical_cast&)
-        {
-            std::cerr << "fetch-block-header: Bad index provided." << std::endl;
-            return -1;
-        }
+    size_t height;
+    hash_digest hash(decode_hash(index));
+
+    if (hash != null_hash)
+        fullnode.blockchain.fetch_block_header(hash, block_header_fetched);
+    else if (sx::to_number(index, height))
         fullnode.blockchain.fetch_block_header(height, block_header_fetched);
-    }
     else
+        return false;
+
+    return true;
+}
+
+bool sx::extensions::fetch_block_header::invoke(const int argc,
+    const char* argv[])
+{
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return false;
+
+    std::string index(argc == 1 ? read_stdin() : argv[1]);
+
+    OBELISK_FULLNODE(pool, fullnode);
+    if (!initialize_fetch_block_header(index, fullnode))
     {
-        fullnode.blockchain.fetch_block_header(blk_hash, block_header_fetched);
+        line_out(std::cerr, "fetch-block-header: Bad index provided.");
+        return false;
     }
-    while (!stopped)
-    {
-        fullnode.update();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-    pool.stop();
-    pool.join();
-    return 0;
+    poll(fullnode, pool, fetch_block_header_stopped);
+
+    return true;
 }
 
