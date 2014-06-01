@@ -325,42 +325,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\base58check-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\bci-history.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\brainwallet.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\btc.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\embed-addr.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\get-pubkey.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\get-utxo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\qrcode.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\satoshi.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sendtx-bci.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\watchtx.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp" />
+    <ClCompile Include="..\..\..\..\src\bci-history.cpp" />
+    <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\src\brainwallet.cpp" />
+    <ClCompile Include="..\..\..\..\src\btc.cpp" />
+    <ClCompile Include="..\..\..\..\src\embed-addr.cpp" />
+    <ClCompile Include="..\..\..\..\src\get-pubkey.cpp" />
+    <ClCompile Include="..\..\..\..\src\get-utxo.cpp" />
+    <ClCompile Include="..\..\..\..\src\qrcode.cpp" />
+    <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\src\sendtx-bci.cpp" />
+    <ClCompile Include="..\..\..\..\src\watchtx.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\client.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
