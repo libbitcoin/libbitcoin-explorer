@@ -193,7 +193,7 @@
   <command symbol="genaddr" category="DEPRECATED" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES">
     <description value="Generate a Bitcoin address deterministically from a wallet" />
     <description value="seed or master public key." />
-    <example value="sx genaddr N [CHANGE]" />
+    <example value="sx genaddr N [CHANGE] [RANGESTOP]" />
     <explanation value="Generate Bitcoin addresses from a wallet seed or master public key." />
     <explanation value="The output is non-deterministic if any other input is used." />
     <explanation value="" />
@@ -559,6 +559,10 @@
   <command symbol="mnemonic" category="OFFLINE KEYS AND ADDRESSES" subcategory="BRAIN STORAGE">
     <description value="Make 12 word mnemonic out of 128 bit electrum or bip32 seed." />
     <example value="sx mnemonic" />
+    <example value="sx mnemonic SEED" />
+    <example value="sx mnemonic WORD1 WORD2 WORD3 ... WORD12" />
+    <example value="sx mnemonic <<< SEED" />
+    <example value="sx mnemonic <<< 'WORD1 WORD2 WORD3 ... WORD12'" />
     <explanation value="Electrum compatible 12 word seeds." />
     <explanation value="" />
     <explanation value="  $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic" />
