@@ -17,21 +17,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_SX_HPP
-#define SX_SX_HPP
-
-// Convenience header that includes everything.
-// Not to be used internally. For API users.
-// This is intended primarily for test.
-#include <sx/command.hpp>
-#include <sx/command/generated.hpp>
-#include <sx/utility/coin.hpp>
-#include <sx/utility/command_line.hpp>
-#include <sx/utility/compat.hpp>
-#include <sx/utility/config.hpp>
+#include <iostream>
+#include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
+#include <sx/command/secret_to_wif.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/curve.hpp>
-#include <sx/utility/environment.hpp>
-#include <sx/utility/locale.hpp>
 
-#endif
+using namespace bc;
+using namespace libwallet;
+
+bool sx::extensions::secret_to_wif::invoke(const int argc, const char* argv[])
+{
+    if (!validate_argument_range(argc, example(), 1, 1))
+        return false;
+
+    std::string secret_hash = read_stdin();
+    secret_parameter secret = decode_hash(secret_hash);
+    std::cout << libwallet::secret_to_wif(secret) << std::endl;
+    return true;
+}
+

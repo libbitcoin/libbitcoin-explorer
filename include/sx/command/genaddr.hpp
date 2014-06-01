@@ -85,7 +85,7 @@ public:
     {
         return
         {
-            { "sx genaddr N [CHANGE]" }
+            { "sx genaddr N [CHANGE] [RANGESTOP]" }
         };
     }
 

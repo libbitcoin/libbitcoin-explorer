@@ -69,7 +69,7 @@
 
   <command symbol="validtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
     <description value="Validate a transaction." />
-    <example value="sx validtx FILENAME" />
+    <example value="sx validtx [FILENAME]" />
     <explanation value="Query blockchain whether transaction has been confirmed." />
   </command>
 
@@ -390,7 +390,7 @@
 
   <command symbol="sendtx-node" category="ONLINE (BITCOIN P2P)" subcategory="BLOCKCHAIN UPDATES">
     <description value="Send transaction to a single node." />
-    <example value="sx sendtx-node FILENAME [HOST] [PORT]" />
+    <example value="sx sendtx-node [FILENAME] [HOST] [PORT]" />
     <explanation value="Send transaction to a single node." />
     <explanation value="" />
     <explanation value="HOST and PORT default to localhost:8333." />
@@ -402,7 +402,7 @@
 
   <command symbol="showblkhead" category="OFFLINE BLOCKCHAIN" subcategory="HEADERS">
     <description value="Show the details of a block header." />
-    <example value="sx showblkhead FILENAME" />
+    <example value="sx showblkhead [FILENAME]" />
     <explanation value="'showblkhead' allows inspecting of block headers." />
     <explanation value="" />
     <explanation value="  $ sx showblkhead headerfile.blk" />

@@ -84,7 +84,11 @@ public:
     {
         return
         {
-            { "sx mnemonic" }
+            { "sx mnemonic" },
+            { "sx mnemonic SEED" },
+            { "sx mnemonic WORD1 WORD2 WORD3 ... WORD12" },
+            { "sx mnemonic <<< SEED" },
+            { "sx mnemonic <<< 'WORD1 WORD2 WORD3 ... WORD12'" }
         };
     }
 

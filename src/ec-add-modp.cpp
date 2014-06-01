@@ -17,21 +17,36 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_SX_HPP
-#define SX_SX_HPP
-
-// Convenience header that includes everything.
-// Not to be used internally. For API users.
-// This is intended primarily for test.
-#include <sx/command.hpp>
-#include <sx/command/generated.hpp>
-#include <sx/utility/coin.hpp>
-#include <sx/utility/command_line.hpp>
-#include <sx/utility/compat.hpp>
-#include <sx/utility/config.hpp>
+#include <iostream>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/command/ec-add-modp.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/curve.hpp>
-#include <sx/utility/environment.hpp>
-#include <sx/utility/locale.hpp>
 
-#endif
+using namespace bc;
+
+bool sx::extensions::ec_add_modp::invoke(const int argc, const char* argv[])
+{
+    if (!validate_argument_range(argc, example(), 3, 3))
+        return false;
+
+    ec_secret secret_a, secret_b;
+    if (!set_ec_secret(secret_a, argv[1]))
+    {
+        std::cerr << "sx: Invalid secret " << argv[1] << std::endl;
+        return false;
+    }
+    if (!set_ec_secret(secret_b, argv[2]))
+    {
+        std::cerr << "sx: Invalid secret " << argv[2] << std::endl;
+        return false;
+    }
+    if (!ec_add(secret_a, secret_b))
+    {
+        std::cerr << "sx: Error adding numbers." << std::endl;
+        return false;
+    }
+    std::cout << secret_a << std::endl;
+    return true;
+}
+

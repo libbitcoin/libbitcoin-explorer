@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx showblkhead FILENAME" }
+            { "sx showblkhead [FILENAME]" }
         };
     }
 

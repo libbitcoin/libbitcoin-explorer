@@ -22,12 +22,20 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+#pragma warning(push)
+//#pragma warning(disable : ????)
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
+#pragma warning(pop)
 
 namespace sx {
+
+const char* get_filename(const int argc, const char* argv[], const int index)
+{
+    return argc > index ? argv[index] : STDIN_PATH_SENTINEL;
+}
 
 void line_out(std::ostream& stream, const char* line, 
     const size_t offset, const char* inset)
@@ -101,6 +109,14 @@ bool is_true(const std::string text)
     return text == "true" || text == "1";
 }
 
+void terminate_process(const std::error_code& ec)
+{
+    if (!ec)
+        return;
+    bc::log_fatal() << ec.message();
+    exit(main_failure);
+}
+
 bool to_number(const std::string text, size_t& number)
 {
     // a reference is avoided in order to prevent original string corruption
@@ -109,6 +125,22 @@ bool to_number(const std::string text, size_t& number)
     try
     {
         number = boost::lexical_cast<size_t>(text);
+    }
+    catch (const boost::bad_lexical_cast&)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool to_port(const std::string text, uint16_t& port)
+{
+    // a reference is avoided in order to prevent original string corruption
+    std::string value(text);
+    boost::algorithm::trim(value);
+    try
+    {
+        port = boost::lexical_cast<uint16_t>(text);
     }
     catch (const boost::bad_lexical_cast&)
     {

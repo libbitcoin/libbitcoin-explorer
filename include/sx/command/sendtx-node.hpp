@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_VALIDTX_HPP
-#define SX_VALIDTX_HPP
+#ifndef SX_SENDTX_NODE_HPP
+#define SX_SENDTX_NODE_HPP
 
 #include <vector>
 #include <sx/command.hpp>
@@ -30,23 +30,23 @@ namespace sx {
 namespace extensions {
 
 /**
- * Class to implement the sx validtx command.
+ * Class to implement the sx sendtx-node command.
  */
-class validtx : public command
+class sendtx_node : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "validtx"; }
+    static const char* symbol() { return "sendtx-node"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return validtx::symbol();
+        return sendtx_node::symbol();
     }
 
     /**
@@ -54,7 +54,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
+        return "ONLINE (BITCOIN P2P)";
     }
 
     /**
@@ -62,7 +62,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BLOCKCHAIN QUERIES";
+        return "BLOCKCHAIN UPDATES";
     }
 
     /**
@@ -72,7 +72,7 @@ public:
     {
         return
         {
-            { "Validate a transaction." }
+            { "Send transaction to a single node." }
         };
     }
 
@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx validtx [FILENAME]" }
+            { "sx sendtx-node [FILENAME] [HOST] [PORT]" }
         };
     }
 
@@ -95,7 +95,13 @@ public:
     {
         return
         {
-            { "Query blockchain whether transaction has been confirmed." }
+            { "Send transaction to a single node." },
+            { "" },
+            { "HOST and PORT default to localhost:8333." },
+            { "" },
+            { "Send transaction to one Bitcoin node on localhost port 4009:" },
+            { "" },
+            { "  $ sx sendtx-node txfile.tx localhost 4009" }
         };
     }
 

@@ -24,14 +24,42 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
-#include <boost/algorithm/string.hpp>
 
 namespace sx {
+    
+#define STDIN_PATH_SENTINEL "-"
 
 /**
- * STDIO character iterator.
+ * Success return code for int main().
  */
-typedef std::istreambuf_iterator<char> charit;
+const int main_success = 0;
+
+/**
+ * Failure return code for int main().
+ */
+const int main_failure = -1;
+
+/**
+ * Default mainnet port for Bitcoin protocol.
+ */
+const uint16_t mainnet_port_default = 8333;
+
+/**
+ * Default testnet port for Bitcoin protocol.
+ */
+const uint16_t testnet_port_default = 18333;
+    
+/**
+ * Get the filename from the specified arguments, in the specified position,
+ * or the default value if the number of arguments is insufficient.
+ *
+ * @param[in]  argc    The number of args.
+ * @param[in]  argv    The array of args from which to obtain the filename.
+ * @param[in]  index   The arg index from which the filename is to be read.
+ * @return             The filename or the default value if insufficient args.
+ */
+const char* get_filename(const int argc, const char* argv[], 
+    const int index = 1);
 
 /**
  * Write the specified message, with optional padding and inset text, and a
@@ -90,8 +118,8 @@ void sleep_ms(const uint32_t milliseconds);
  * defines false boolean text values: { 'false', '0' } with all other values
  * retuning false.
  *
- * @param[in]  text    The text to text.
- * @return             True if the text value is a member of the false set.
+ * @param[in]  text  The text to text.
+ * @return           True if the text value is a member of the false set.
  */
 bool is_false(const std::string text);
 
@@ -101,10 +129,28 @@ bool is_false(const std::string text);
  * defines true boolean text values: { 'true', '1' } with all other values
  * retuning false.
  *
- * @param[in]  text    The text to convert.
- * @return             True if the text value is a member of the true set.
+ * @param[in]  text  The text to convert.
+ * @return           True if the text value is a member of the true set.
  */
 bool is_true(const std::string text);
+
+/**
+ * DANGER: do not call this if anything iteresting is going on,
+ * like databases open or file operations in progress!
+ * Terminates the console process with main_failure return code.
+ *
+ * @param[in]  text  An error code to log before exiting the process.
+ */
+void terminate_process(const std::error_code& ec);
+
+/**
+ * Uniformly convert a text string to a numeric port identifier.
+ *
+ * @param[in]  text  The text to convert.
+ * @param[out] port  The parsed value.
+ * @return           True if successful.
+ */
+bool to_port(const std::string text, uint16_t& port);
 
 /**
  * Safely convert a text string to a number, with whitespace ignored.

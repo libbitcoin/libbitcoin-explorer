@@ -24,79 +24,40 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp">
-      <Filter>include\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\curve.hpp">
-      <Filter>include\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp">
-      <Filter>include\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp">
-      <Filter>include\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\config.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\environment.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command_line.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\locale.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\bci_history.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\ec_add.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\blke_fetch_transaction.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-add-modp.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-tweak-add.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\decode_addr.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\embed-addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\ec_add_modp.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\encode-addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\ec_multiply.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-block-header.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\ec_tweak_add.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-last-height.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\embed_addr.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-stealth.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\encode_addr.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch_block_header.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch_last_height.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch_stealth.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch_transaction.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch_transaction_index.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction-index.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\genaddr.hpp">
@@ -111,25 +72,25 @@
     <ClInclude Include="..\..\..\..\include\sx\command\genpub.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\get_pubkey.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\get-pubkey.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\get_utxo.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\get-utxo.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd_priv.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-priv.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd_pub.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-pub.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd_seed.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-seed.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd_to_address.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-address.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd_to_wif.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\history.hpp">
@@ -165,7 +126,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\rawscript.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\ripemd_hash.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\ripemd-hash.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp">
@@ -174,22 +135,22 @@
     <ClInclude Include="..\..\..\..\include\sx\command\scripthash.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\secret_to_wif.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\secret-to-wif.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\sendtx_bci.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\sendtx-bci.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\sendtx_node.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\sendtx-node.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\sendtx_obelisk.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\sendtx-obelisk.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\sendtx_p2p.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\sendtx-p2p.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\set_input.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\set-input.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp">
@@ -204,25 +165,25 @@
     <ClInclude Include="..\..\..\..\include\sx\command\showtx.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\sign_input.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\sign-input.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth_addr.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth_initiate.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-initiate.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth_newkey.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-newkey.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth_show_addr.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-show-addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth_uncover.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth_uncover_secret.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-secret.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp">
@@ -243,7 +204,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\watchtx.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\wif_to_secret.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\wif-to-secret.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp">
@@ -255,32 +216,68 @@
     <ClInclude Include="..\..\..\..\include\sx\command\balance.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\base58_decode.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\base58check-decode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\base58_encode.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\base58check-encode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\base58check_decode.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\base58-decode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\base58check_encode.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\base58-encode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\bci_fetch_last_height.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\bci-fetch-last-height.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\ec_add.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\bci-history.hpp">
       <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\blke-fetch-transaction.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\decode-addr.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\curve.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\environment.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\locale.hpp">
+      <Filter>include\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\client.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\command_line.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\config.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.codecvt_error_category.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.operations.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path.cpp" />
@@ -289,11 +286,17 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.unique_path.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.utf8_codecvt_facet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.windows_file_codecvt.cpp" />
-    <ClCompile Include="..\..\..\..\src\environment.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\..\..\src\utility\client.cpp">
+      <Filter>src\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command_line.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\..\..\src\utility\coin.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\command_line.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\config.cpp">
+      <Filter>src\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\console.cpp">
       <Filter>src\utility</Filter>
@@ -301,191 +304,230 @@
     <ClCompile Include="..\..\..\..\src\utility\curve.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\coin.cpp">
+    <ClCompile Include="..\..\..\..\src\utility\environment.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\locale.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\ec_tweak_add.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\encode_addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\fetch_block_header.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\fetch_last_height.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\fetch_stealth.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\fetch_transaction.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\fetch_transaction_index.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\genaddr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\generated.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\genpriv.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\genpub.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\hd_priv.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\hd_pub.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\hd_seed.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\hd_to_address.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\hd_to_wif.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\history.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\initchain.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\mktx.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\mnemonic.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\monitor.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\mpk.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\newkey.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\newseed.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\pubkey.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\rawscript.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\ripemd_hash.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\scripthash.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\secret_to_wif.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\sendtx_node.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\sendtx_obelisk.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\sendtx_p2p.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\set_input.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\sha256.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\showblkhead.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\showscript.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\showtx.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\sign_input.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\stealth_addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\stealth_initiate.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\stealth_newkey.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\stealth_show_addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\stealth_uncover.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\stealth_uncover_secret.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\unwrap.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\validaddr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\validsig.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\validtx.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\wallet.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\wif_to_secret.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\wrap.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\balance.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\base58_decode.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\base58_encode.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\decode_addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\ec_add.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\ec_add_modp.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\command\ec_multiply.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\client.cpp">
+    <ClCompile Include="..\..\..\..\src\utility\locale.cpp">
       <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-seed.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\history.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\initchain.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mktx.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mnemonic.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\monitor.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mpk.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\newkey.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\newseed.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\pubkey.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\rawscript.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ripemd-hash.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\scripthash.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\secret-to-wif.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-node.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\set-input.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sha256.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showscript.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showtx.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sign-input.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-show-addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-base58check-decode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-base58check-encode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-bci-fetch-last-height.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-bci-history.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-blke-fetch-transaction.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-brainwallet.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-btc.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-embed-addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-get-pubkey.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-get-utxo.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-qrcode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-satoshi.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-sendtx-bci.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sx-watchtx.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\unwrap.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validaddr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validsig.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validtx.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wallet.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wif-to-secret.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wrap.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\balance.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\base58-decode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\base58-encode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\decode-addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-add.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-add-modp.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-multiply.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-tweak-add.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\encode-addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-block-header.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-last-height.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-transaction.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-transaction-index.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\genaddr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\generated.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\genpriv.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\genpub.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-priv.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-pub.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

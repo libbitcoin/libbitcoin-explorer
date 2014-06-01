@@ -27,38 +27,6 @@ using namespace bc;
 
 namespace sx {
 
-// TODO: extract localized text.
-bool load_tx(transaction_type& tx, const std::string& filename)
-{
-    std::ostringstream contents;
-    if (filename == "-")
-    {
-        std::istreambuf_iterator<char> first(std::cin), last;
-        contents << std::string(first, last);
-    }
-    else
-    {
-        std::ifstream infile(filename, std::ifstream::binary);
-        if (!infile)
-        {
-            std::cerr << "showtx: Bad file." << std::endl;
-            return false;
-        }
-        contents << infile.rdbuf();
-    }
-    auto raw_tx = decode_hex(contents.str());
-    try
-    {
-        satoshi_load(raw_tx.begin(), raw_tx.end(), tx);
-    }
-    catch (end_of_stream)
-    {
-        std::cerr << "showtx: Deserializing transaction failed." << std::endl;
-        return false;
-    }
-    return true;
-}
-
 // TODO: move to consumer and emit when this is false.
 // std::cerr << "Invalid private key." << std::endl;
 bool read_private_key(elliptic_curve_key& key, int is_compressed)

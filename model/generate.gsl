@@ -89,7 +89,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 #include <sx/command.hpp>
 
 .for command by symbol
-#include <sx/command/$(symbol:c).hpp>
+#include <sx/command/$(symbol).hpp>
 .endfor
 
 /********** WARNING: This file is generated, do not edit directly. **********/
@@ -118,8 +118,8 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
 #endif
 .for command by symbol
-.echo "Generating include/sx/command/$(symbol:c).hpp..."
-.output "../include/sx/command/$(symbol:c).hpp"
+.echo "Generating include/sx/command/$(symbol).hpp..."
+.output "../include/sx/command/$(symbol).hpp"
 /*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *

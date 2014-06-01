@@ -22,17 +22,49 @@
 
 #include <stdint.h>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/utility/console.hpp>
 
 namespace sx {
 
 /**
- * Load a transaction from the specified transaction file.
+ * Load a satoshi item from the specified file.
  *
- * @param[in]  tx        The loaded transaction.
+ * @param      <TItem>   The type of the item to load.
+ * @param[in]  item      The loaded item.
  * @param[in]  filename  The path and file name for the transaction file.
  * @return               True if a transaction was loaded.
  */
-bool load_tx(bc::transaction_type& tx, const std::string& filename);
+template <typename TItem>
+bool load_satoshi_item(TItem& item, const std::string& filename)
+{
+    // TODO: extract localized text.
+
+    std::ostringstream contents;
+    if (filename == STDIN_PATH_SENTINEL)
+        contents << sx::read_stdin();
+
+    else
+    {
+        std::ifstream infile(filename, std::ifstream::binary);
+        if (!infile)
+        {
+            std::cerr << "showtx: Bad file." << std::endl;
+            return false;
+        }
+        contents << infile.rdbuf();
+    }
+    auto raw_tx = decode_hex(contents.str());
+    try
+    {
+        satoshi_load(raw_tx.begin(), raw_tx.end(), item);
+    }
+    catch (end_of_stream)
+    {
+        std::cerr << "sx: Deserializing item failed." << std::endl;
+        return false;
+    }
+    return true;
+}
 
 /**
  * Read a private key from STDIN.
