@@ -27,6 +27,10 @@
 
 namespace sx {
     
+/**
+ * Conventional commend line argument sentinel for indicating that a file
+ * should be read from STDIN.
+ */
 #define STDIN_PATH_SENTINEL "-"
 
 /**
@@ -59,7 +63,15 @@ const uint16_t testnet_port_default = 18333;
  * @return             The filename or the default value if insufficient args.
  */
 const char* get_filename(const int argc, const char* argv[], 
-    const int index = 1);
+    const int index=1);
+
+/**
+ * Join a list of strings into a single string, in order, space delimited.
+ *
+ * @param[in]  words     The list of strings to join.
+ * @param[in]  sentence  The resulting string.
+ */
+void join(std::vector<std::string>& words, std::string& sentence);
 
 /**
  * Write the specified message, with optional padding and inset text, and a
@@ -71,7 +83,7 @@ const char* get_filename(const int argc, const char* argv[],
  * @param[in]  inset   Text to display in the offset padding.
  */
 void line_out(std::ostream& stream, const char* line, 
-    const size_t offset = 0, const char* inset = "");
+    const size_t offset=0, const char* inset ="");
 
 /**
 * Write the specified message, with optional padding and inset text, and a
@@ -83,7 +95,7 @@ void line_out(std::ostream& stream, const char* line,
 * @param[in]  inset   Text to display in the offset padding.
 */
 void line_out(std::ostream& stream, std::string& line,
-    const size_t offset = 0, const char* inset = "");
+    const size_t offset=0, const char* inset="");
 
 /**
  * Write the specified messages, with optional padding and first line inset 
@@ -95,7 +107,7 @@ void line_out(std::ostream& stream, std::string& line,
  * @param[in]  inset   Text to display in the offset padding.
  */
 void line_out(std::ostream& stream, const std::vector<char*>& lines,
-    const size_t offset = 0, const char* inset = "");
+    const size_t offset=0, const char* inset="");
 
 /**
  * Get a trimmed message from STDIN.
@@ -103,7 +115,7 @@ void line_out(std::ostream& stream, const std::vector<char*>& lines,
  * @param[in]  trim  Trim the input of whitespace, defaults to false.
  * @return           The message read from STDIN.
  */
-std::string read_stdin(bool trim = false);
+std::string read_stdin(bool trim=false);
 
 /**
  * Sleep for the specified number of milliseconds.
@@ -111,6 +123,15 @@ std::string read_stdin(bool trim = false);
  * @param[in]  milliseconds  The number of milliseconds to sleep.
  */
 void sleep_ms(const uint32_t milliseconds);
+
+/**
+ * Split a list of strings into a string vector string, in order, white space
+ * delimited.
+ *
+ * @param[in]  sentence  The string to split.
+ * @param[in]  words     The list of resulting strings.
+ */
+void split(std::string& sentence, std::vector<std::string>& words);
 
 /**
  * Uniformly convert a text string to a bool, with whitespace and text case
@@ -174,7 +195,7 @@ bool to_number(const std::string text, size_t& number);
  */
 bool validate_argument_range(const int actual,
     const std::vector<char*>& message, const int minimum,
-    const int maximum = 0);
+    const int maximum=0);
 
 } // sx
 

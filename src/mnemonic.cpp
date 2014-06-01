@@ -36,13 +36,15 @@ void args_to_words(const int argc, const char* argv[], string_list& words)
 // Read STDIN to a string list in order.
 void stdin_to_words(string_list& words)
 {
-    std::string data(sx::read_stdin(true));
-    ////////boost::split(words, data, boost::is_any_of("\n\t "));
+    std::string sentence(sx::read_stdin(true));
+    sx::split(sentence, words);
 }
 
 bool sx::extensions::mnemonic::invoke(const int argc, const char* argv[])
 {
-    if (!validate_argument_range(argc, example(), 1, 12))
+    const int mnemonic_size = 12;
+
+    if (!validate_argument_range(argc, example(), 1, mnemonic_size))
         return false;
 
     string_list in_words;
@@ -52,7 +54,7 @@ bool sx::extensions::mnemonic::invoke(const int argc, const char* argv[])
     else
         args_to_words(argc, argv, in_words);
 
-    if (in_words.size() != 1 && in_words.size() != 12)
+    if (in_words.size() != 1 && in_words.size() != mnemonic_size)
     {
         line_out(std::cerr, explanation());
         return false;
@@ -60,7 +62,7 @@ bool sx::extensions::mnemonic::invoke(const int argc, const char* argv[])
 
     // $ echo "people blonde admit dart couple different truth common alas
     //   stumble time cookie" | sx mnemonic
-    if (in_words.size() == 12)
+    if (in_words.size() == mnemonic_size)
     {
         // Note that there is no dictionary validation in decode_mnemonic.
         std::cout << decode_mnemonic(in_words) << std::endl;
@@ -68,7 +70,7 @@ bool sx::extensions::mnemonic::invoke(const int argc, const char* argv[])
     }
 
     // $ echo foobar | sx mnemonic
-    if (in_words[0].size() != deterministic_wallet::seed_size)
+    if (in_words.front().size() != deterministic_wallet::seed_size)
     {
         std::cerr << "sx: The seed must be exactly " <<
             deterministic_wallet::seed_size << " characters long."
@@ -77,9 +79,9 @@ bool sx::extensions::mnemonic::invoke(const int argc, const char* argv[])
     }
 
     // $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic
-    string_list out_words = encode_mnemonic(in_words[0]);
-    //////std::string sentence = boost::join(out_words, " ");
-    //////std::cout << sentence << std::endl;
+    std::string sentence;
+    join(encode_mnemonic(in_words.front()), sentence);
+    std::cout << sentence << std::endl;
     return true;
 }
 

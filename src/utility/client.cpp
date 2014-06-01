@@ -25,12 +25,12 @@
 namespace sx {
 
 void poll(obelisk::fullnode_interface& fullnode,
-    bc::threadpool& pool, bool& stopped)
+    bc::threadpool& pool, bool& stopped, const uint32_t period_ms)
 {
     while (!stopped)
     {
         fullnode.update();
-        sleep_ms(100);
+        sleep_ms(period_ms);
     }
 
     pool.stop();

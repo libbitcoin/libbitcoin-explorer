@@ -41,12 +41,13 @@ namespace sx {
 /**
  * Poll obelisk for changes until stopped.
  *
- * @param[in]  fullnode  An instance of the obelisk full node interface.
- * @param[in]  pool      The threadpool used by fullnode to poll.
- * @param[in]  stopped   A flag that signals cessation of polling.
+ * @param[in]  fullnode   An instance of the obelisk full node interface.
+ * @param[in]  pool       The threadpool used by fullnode to poll.
+ * @param[in]  stopped    A flag that signals cessation of polling.
+ * @param[in]  period_ms  The polling period in milliseconds, defaults to 100.
  */
 void poll(obelisk::fullnode_interface& fullnode,
-    bc::threadpool& pool, bool& stopped);
+    bc::threadpool& pool, bool& stopped, const uint32_t period_ms=100);
 
 } // sx
 

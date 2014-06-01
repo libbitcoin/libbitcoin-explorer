@@ -73,7 +73,7 @@ bool load_satoshi_item(TItem& item, const std::string& filename)
  * @param[in]  is_compressed  Flag indicating whether compression is expected.
  * @return                    True if a key was read.
  */
-bool read_private_key(bc::elliptic_curve_key& key, int is_compressed = -1);
+bool read_private_key(bc::elliptic_curve_key& key, int is_compressed=-1);
 
 /**
  * Read a private key from STDIN.

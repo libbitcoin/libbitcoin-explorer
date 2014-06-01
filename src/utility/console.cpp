@@ -17,13 +17,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#pragma warning(push)
+//Suppressing msvc warnings from boost that are heard to deal with
+//because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
+//without testing it first. 
+#pragma warning(disable : 4996)
 #include <iomanip>
 #include <iostream>
 #include <stdint.h>
 #include <string>
 #include <vector>
-#pragma warning(push)
-//#pragma warning(disable : ????)
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
@@ -35,6 +38,11 @@ namespace sx {
 const char* get_filename(const int argc, const char* argv[], const int index)
 {
     return argc > index ? argv[index] : STDIN_PATH_SENTINEL;
+}
+
+void join(std::vector<std::string>& words, std::string& sentence)
+{
+    sentence = boost::join(words, " ");
 }
 
 void line_out(std::ostream& stream, const char* line, 
@@ -83,6 +91,11 @@ std::string read_stdin(bool trim)
 void sleep_ms(const uint32_t milliseconds)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
+
+void split(std::string& sentence, std::vector<std::string>& words)
+{
+    boost::split(words, sentence, boost::is_any_of("\n\t "));
 }
 
 bool is_false(const std::string text)

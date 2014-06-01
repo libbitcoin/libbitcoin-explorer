@@ -25,6 +25,11 @@
 namespace sx {
 
 /**
+ * A number is a poor grammatical indicator for this.
+ */
+#define PURE_VIRTUAL = 0
+
+/**
  * Pure virtual base class for definition of each SX command.
  */
 class command
@@ -36,21 +41,21 @@ public:
      *
      * @return  Exmaple: "fetch-transaction"
      */
-    virtual const char* name() = 0;
+    virtual const char* name() PURE_VIRTUAL;
 
     /**
      * The localizable command category name, upper case.
      *
      * @return  Example: "ONLINE (OBELISK)"
      */
-    virtual const char* category() = 0;
+    virtual const char* category() PURE_VIRTUAL;
 
     /**
      * The localizable command subcategory name, upper case.
      *
      * @return  Example: "BLOCKCHAIN QUERIES"
      */
-    virtual const char* subcategory() = 0;
+    virtual const char* subcategory() PURE_VIRTUAL;
 
     /**
      * The localizable command description, multiple lines, punctuated.
@@ -59,7 +64,7 @@ public:
      * "Fetch a raw transaction using a network connection to"
      * "make requests against the obelisk load balancer back end."
      */
-    virtual const std::vector<char*> description() = 0;
+    virtual const std::vector<char*> description() PURE_VIRTUAL;
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -67,7 +72,7 @@ public:
      * @return  Example:
      * "sx fetch-transaction HASH"
      */
-    virtual const std::vector<char*> example() = 0;
+    virtual const std::vector<char*> example() PURE_VIRTUAL;
 
     /**
      * The localizable command explanation, multiple lines, punctuated.
@@ -75,7 +80,7 @@ public:
      * @return  Example:
      * "$ sx fetch-transaction ... # fetches raw data"
      */
-    virtual const std::vector<char*> explanation() = 0;
+    virtual const std::vector<char*> explanation() PURE_VIRTUAL;
 
     /**
      * Invoke the command with the raw arguments as provided on the command
@@ -85,7 +90,7 @@ public:
      * @param[in]  argv  The array of arguments, excluding the process.
      * @return           True if successful.
      */
-    virtual bool invoke(const int argc, const char* argv[]) = 0;
+    virtual bool invoke(const int argc, const char* argv[]) PURE_VIRTUAL;
 };
 
 } // sx
