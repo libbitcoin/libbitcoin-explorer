@@ -33,6 +33,8 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning(pop)
 
+/* NOTE: don't declare 'using namespace foo' in heders. */
+
 namespace sx {
     
 /**

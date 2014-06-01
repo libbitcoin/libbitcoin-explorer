@@ -24,6 +24,8 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
 
+/* NOTE: don't declare 'using namespace foo' in heders. */
+
 namespace sx {
 
 /**
@@ -65,6 +67,15 @@ bool load_satoshi_item(TItem& item, const std::string& filename)
     }
     return true;
 }
+
+/**
+ * Allocate a byte buffer and fill it with a random bit distribution.
+ *
+ * @param[in]  size  The byte size of the return buffer.
+ * @return           The sized buffer with random bit distribution.
+ */
+bc::data_chunk random_fill(size_t size);
+
 /**
  * Read address arguments from the specified args and/or input stream.
  *

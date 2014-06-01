@@ -18,14 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <random>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/utility/coin.hpp>
+#include <sx/utility/compat.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 
 namespace sx {
+
+data_chunk random_fill(size_t size)
+{
+    std::random_device device;
+    std::default_random_engine engine(device());
+
+    std::uniform_int_distribution<min_uniform_dist_size>
+        distribution(0, std::numeric_limits<min_uniform_dist_size>::max());
+
+    data_chunk result;
+    for (size_t i = 0; i < size; ++i)
+        result.push_back(static_cast<uint8_t>(distribution(engine)));
+
+    return result;
+}
 
 void read_address_args(const int argc, const char* argv[], std::istream& cin,
     std::string& hex_str, uint8_t& version_byte)

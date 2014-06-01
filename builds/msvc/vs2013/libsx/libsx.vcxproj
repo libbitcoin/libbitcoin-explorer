@@ -242,9 +242,7 @@
     <ClCompile Include="..\..\..\..\src\genpub.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-priv.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-pub.cpp" />
-    <ClCompile Include="..\..\..\..\src\hd-seed.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-seed.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
     </ClCompile>

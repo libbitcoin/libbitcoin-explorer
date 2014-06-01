@@ -37,4 +37,11 @@
     #define END_LINE "\n"
 #endif
 
+/* This allows std::uniform_int_distribution platform differences. */
+#ifdef _MSC_VER
+    typedef uint16_t min_uniform_dist_size;
+#else
+    typedef uint8_t min_uniform_dist_size;
+#endif
+
 #endif

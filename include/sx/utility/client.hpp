@@ -20,13 +20,18 @@
 #ifndef SX_CLIENT_HPP
 #define SX_CLIENT_HPP
 
+#include <sx/utility/config.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+
+/* NOTE: don't declare 'using namespace foo' in heders. */
 
 namespace sx {
 
 /**
  * This prevents code repetition while retaining stack-based allocation.
+ * A single thread is allocated in the pool and service settings are loaded
+ * from config.
  */
 #define OBELISK_FULLNODE(__pool__, __fullnode__) \
     config_map_type __config__; \
@@ -34,9 +39,9 @@ namespace sx {
     threadpool __pool__(1); \
     obelisk::fullnode_interface __fullnode__( \
         __pool__, \
-        __config__["service"], \
-        __config__["client-certificate"], \
-        __config__["server-public-key"])
+        __config__[SX_SETTING_SERVICE], \
+        __config__[SX_SETTING_CLIENT_CERTIFICATE], \
+        __config__[SX_SETTING_SERVER_PUBLIC_KEY])
 
 /**
  * Poll obelisk for changes until stopped.

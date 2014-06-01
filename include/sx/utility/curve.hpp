@@ -22,6 +22,8 @@
 
 #include <bitcoin/bitcoin.hpp>
 
+/* NOTE: don't declare 'using namespace foo' in heders. */
+
 namespace sx {
 
 /**

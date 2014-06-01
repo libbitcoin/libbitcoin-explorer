@@ -25,10 +25,24 @@
 #include <libconfig.h++>
 #include <sx/utility/compat.hpp>
 
+/* NOTE: don't declare 'using namespace foo' in heders. */
+
 namespace sx {
+
+/*
+ * This is the full set of supported configuration properties. Consumers should
+ * dereference properties using these settings names only.
+ */
+#define SX_SETTING_TESTNET "testnet"
+#define SX_SETTING_SERVICE "service"
+#define SX_SETTING_SERVER_PUBLIC_KEY "server-public-key"
+#define SX_SETTING_CLIENT_CERTIFICATE "client-certificate"
 
 /**
  * Map to hold configuration settings read from the config file or defaults.
+ * TODO: create settings class with symbolic names and strongly-typed values to
+ * prevent the need to coordinate settings names and repeatedly cast settings 
+ * values. We realize no benefit from the flexibility of using a string map.
  */
 typedef std::map<std::string, std::string> config_map_type;
 
@@ -53,6 +67,12 @@ void get_value(const libconfig::Setting& root, config_map_type& map,
     TSetting value;
     if (root.lookupValue(key, value))
     {
+        // We are parsing various types from string and then converting 
+        // them back to string so that they can be held in a uniform container.
+        // It would be better to create a container that holds various types
+        // and thereby retain the type conversion. Otherwise settings consumers
+        // need to re-cast the string back to the particular type, for the third
+        // conversion in this cycle, each time the setting is used.
         map[key] = boost::lexical_cast<std::string>(value);
     }
 }

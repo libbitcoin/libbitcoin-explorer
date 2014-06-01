@@ -20,6 +20,8 @@
 #ifndef SX_LOCALE_HPP
 #define SX_LOCALE_HPP
 
+/* NOTE: don't declare 'using namespace foo' in heders. */
+
 namespace sx {
 
 /**

@@ -20,13 +20,33 @@
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <libconfig.h++>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/environment.hpp>
 
 namespace sx {
 
-#define SX_DEFAULT_CONFIG_FILENAME ".sx.cfg"
-#define SX_DEFAULT_OBELISK_URI "tcp://obelisk.unsystem.net:8081"
+// unfortunately testnet is compiled into libbitcoin, so we have no choice but
+// to use the same value as the library we are linking to or we may encounter
+// problems. once libbitcoin and libwallet are modified to externalize that
+// option we could have more flexibility.
+#ifdef ENABLE_TESTNET
+#define SX_DEFAULT_TESTNET "true"
+#else
+#define SX_DEFAULT_TESTNET "false"
+#endif
+
+// the choice of a server (and therefore its public key) is restricted by the
+// testnet configuration of this build.
+#define SX_DEFAULT_SERVICE "tcp://obelisk.unsystem.net:8081"
+#define SX_DEFAULT_SERVER_PUBLIC_KEY ""
+
+// a client certificate allows a client to be identified by the server, however
+// this requires the server to have issued the client cert or to at least trust
+// that it has the client's public key. this may be useful in administrative
+// contexts but not as much in wallet contexts, which generally prefer 
+// anonymity to strong identification.
+#define SX_DEFAULT_CLIENT_CERTIFICATE ".sx.cfg"
 
 // read the spefied configuration file
 bool read_config_file(libconfig::Config& config, const tpath path)
@@ -54,30 +74,35 @@ bool read_config(libconfig::Config& config)
         path = home_directory();
         if (path.empty())
             return false;
-        path = path / WIDE(SX_DEFAULT_CONFIG_FILENAME);
+        path = path / WIDE(SX_DEFAULT_CLIENT_CERTIFICATE);
     }
 
     return read_config_file(config, path);
 }
 
 // get configuration settings from file w/fallbacks or defaults.
-// use CZMQ program 'makecert' to generate cert/key.
+// Users should use CZMQ program 'makecert' to generate cert/key.
 void get_config(config_map_type& map)
 {
     libconfig::Config config;
 
     // load config defaults from memory (formerly default config file)
-    map["service"] = SX_DEFAULT_OBELISK_URI;
-    map["client-certificate"] = SX_DEFAULT_CONFIG_FILENAME;
-    map["server-public-key"] = "";
+    // these are split out to handle the case where the file doesn't exist
+    // yet we still need to load config, as we should be able to initialize
+    // without forcing the creation of a config file full of defaults.
+    map[SX_SETTING_TESTNET] = SX_DEFAULT_TESTNET;
+    map[SX_SETTING_SERVICE] = SX_DEFAULT_SERVICE;
+    map[SX_SETTING_SERVER_PUBLIC_KEY] = SX_DEFAULT_SERVER_PUBLIC_KEY;
+    map[SX_SETTING_CLIENT_CERTIFICATE] = SX_DEFAULT_CLIENT_CERTIFICATE;
 
     if (read_config(config))
     {
-        // load values from config file
+        // load typed values from config file into our string-to-string mapping
         const libconfig::Setting& root = config.getRoot();
-        get_value<std::string>(root, map, "service");
-        get_value<std::string>(root, map, "client-certificate");
-        get_value<std::string>(root, map, "server-public-key");
+        get_value<bool>(root, map, SX_SETTING_TESTNET);
+        get_value<std::string>(root, map, SX_SETTING_SERVICE);
+        get_value<std::string>(root, map, SX_SETTING_SERVER_PUBLIC_KEY);
+        get_value<std::string>(root, map, SX_SETTING_CLIENT_CERTIFICATE);
     }
 }
 
