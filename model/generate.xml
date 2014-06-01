@@ -234,11 +234,9 @@
   <command symbol="fetch-stealth" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
     <description value="Fetch a stealth information using a network connection to" />
     <description value="make requests against the obelisk load balancer backend." />
-    <example value="sx fetch-stealth NUMBER_BITS BITFIELD [FROM_HEIGHT]" />
+    <example value="sx fetch-stealth BITFIELD [FROM_HEIGHT]" />
     <explanation value="Fetch a stealth information using a network connection to" />
     <explanation value="make requests against the obelisk load balancer backend." />
-    <explanation value="" />
-    <explanation value="Default NUMBER_BITS is 0 (if not specified)." />
     <explanation value="" />
     <explanation value="EXAMPLE:" />
     <explanation value="" />
@@ -624,22 +622,22 @@
 
   <command symbol="hd-priv" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
     <description value="Create a private HD key from another HD private key." />
-    <example value="sx hd-priv [--hard] INDEX" />
+    <example value="sx hd-priv [--hard] [INDEX]" />
     <explanation value="Create a private HD key from another HD private key." />
+    <explanation value="A private key is expected in STDIN." />
+    <explanation value="If no INDEX is provided 0 is used." />
   </command>
 
   <command symbol="hd-pub" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <description value="Create an HD public key from another HD private or public key." />
-    <example value="sx hd-pub [--hard] INDEX" />
-    <explanation value="Create an HD public key from another HD private or public key." />
-    <explanation value="" />
-    <explanation value="If no arguments are passed then hd-pub expects a private key in" />
-    <explanation value="STDIN and will convert it to a public key." />
+    <description value="Create an HD public key from a HD private key or another HD public key." />
+    <example value="sx hd-pub [--hard] [INDEX]" />
+    <description value="Create an HD public key from a HD private key or another HD public key." />
+    <explanation value="If no INDEX is provided 0 is used." />
   </command>
 
   <command symbol="hd-to-address" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
     <description value="Convert an HD public or private key to a Bitcoin address." />
-    <example value="sx hd-to-address" />
+    <example value="sx hd-to-address [KEY]" />
     <explanation value="Convert an HD public or private key to a Bitcoin address." />
   </command>
 
