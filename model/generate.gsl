@@ -4,8 +4,8 @@
 .#  language. See https://github.com/imatix/gsl for details. This script
 .#  is licensed under MIT/X11.
 .#
-.echo "Generating src/command/generated.cpp..."
-.output "../src/command/generated.cpp"
+.echo "Generating src/generated.cpp..."
+.output "../src/generated.cpp"
 /*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
