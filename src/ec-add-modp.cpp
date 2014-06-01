@@ -46,6 +46,7 @@ bool sx::extensions::ec_add_modp::invoke(const int argc, const char* argv[])
         std::cerr << "sx: Error adding numbers." << std::endl;
         return false;
     }
+
     std::cout << secret_a << std::endl;
     return true;
 }

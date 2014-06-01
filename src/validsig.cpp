@@ -68,7 +68,10 @@ bool invoke(const int argc, const char* argv[])
     const data_chunk signature = decode_hex(argv[4]);
     elliptic_curve_key key;
     if (!read_public_or_private_key(key))
+    {
+        std::cerr << "Invalid public or private key." << std::endl;
         return -1;
+    }
     if (!validsig(tx, input_index, key, script_code, signature))
     {
         std::cout << "Status: Failed" << std::endl;

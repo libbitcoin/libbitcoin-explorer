@@ -32,7 +32,7 @@ bool sx::extensions::mpk::invoke(const int argc, const char* argv[])
         return false;
 
     deterministic_wallet wallet;
-    std::string seed = sx::read_stdin();
+    std::string seed = read_stdin();
 
     if (!wallet.set_seed(seed))
     {

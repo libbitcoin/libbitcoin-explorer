@@ -80,7 +80,10 @@ bool invoke(const int argc, const char* argv[])
     }
     elliptic_curve_key signing_key;
     if (!read_private_key(signing_key))
+    {
+        std::cerr << "Invalid private key." << std::endl;
         return -1;
+    }
     if (!sign(tx, input_index, signing_key, script_code))
         return -1;
     return 0;

@@ -32,10 +32,10 @@ bool sx::extensions::genaddr::invoke(const int argc, const char* argv[])
         return false;
 
     size_t key_number;
-    if (!to_number(argv[1], key_number))
+    if (!parse<size_t>(argv[1], key_number))
         return false;
 
-    bool for_change = (argc == 3) && is_true(argv[2]);
+    bool for_change = (argc == 3 && is_true(argv[2]));
 
     deterministic_wallet wallet;
     std::string seed = read_stdin();

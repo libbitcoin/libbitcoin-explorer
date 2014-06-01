@@ -186,7 +186,7 @@ Adds version byte and checksum to hexstring.\
 "Validates checksum and recovers version byte and original data from hexstring.",
 
 """\
-Usage: sx wrap HEXSTRING VERSION_BYTE <or> echo HEXSTRING | sx wrap VERSION_BYTE
+Usage: sx unwrap HEXSTRING <or> echo HEXSTRING | sx wrap
 Validates checksum and recovers version byte and original data from hexstring.\
 """
 ),

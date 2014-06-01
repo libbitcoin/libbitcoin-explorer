@@ -50,16 +50,6 @@ void output_cerr_and_file(std::ofstream& file, log_level level,
     std::cerr << output.str() << std::endl;
 }
 
-// We don't have a database open, and aren't doing any critical file
-// operations so we aren't worried about exiting suddenly.
-void check_error(const std::error_code& ec)
-{
-    if (!ec)
-        return;
-    log_fatal() << ec.message();
-    exit(-1);
-}
-
 // Needed for the C callback capturing the signals.
 bool stopped = false;
 void signal_handler(int sig)
@@ -80,14 +70,14 @@ void send_tx(const std::error_code& ec, channel_ptr node,
 
 void handle_start(const std::error_code& ec)
 {
-    check_error(ec);
+    terminate_process_on_error(ec);
     log_debug() << "Started.";
 }
 
 void check_connection_count(
     const std::error_code& ec, size_t connection_count, size_t node_count)
 {
-    check_error(ec);
+    terminate_process_on_error(ec);
     log_debug() << connection_count << " CONNECTIONS";
     if (connection_count >= node_count)
         stopped = true;
@@ -96,7 +86,7 @@ void check_connection_count(
 void send_tx(const std::error_code& ec, channel_ptr node,
     protocol& prot, transaction_type& tx)
 {
-    check_error(ec);
+    terminate_process_on_error(ec);
     std::cout << "sendtx-p2p: Sending " << hash_transaction(tx) << std::endl;
     auto handle_send =
         [](const std::error_code& ec)

@@ -33,7 +33,10 @@ bool sx::extensions::addr::invoke(const int argc, const char* argv[])
 
     elliptic_curve_key key;
     if (!read_public_or_private_key(key))
+    {
+        std::cerr << "Invalid public or private key." << std::endl;
         return false;
+    }
 
     payment_address address;
     set_public_key(address, key.public_key());

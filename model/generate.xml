@@ -75,7 +75,7 @@
 
   <command symbol="pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
     <description value="See the public part of a private key." />
-    <example value="sx pubkey [OPTION]" />
+    <example value="sx pubkey [COMPRESSION]" />
     <explanation value="" />
     <explanation value="  -c, --compressed      Use compressed public key format." />
     <explanation value="  -u, --uncompressed    Use uncompressed public key format." />
@@ -103,7 +103,7 @@
 
   <command symbol="unwrap" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">
     <description value="Validates checksum and recovers version byte and original data from hexstring." />
-    <example value="sx wrap HEXSTRING VERSION_BYTE" />
+    <example value="sx unwrap HEXSTRING" />
     <!--<example value="echo HEXSTRING | sx wrap VERSION_BYTE" />-->
     <explanation value="Validates checksum and recovers version byte and original data from hexstring." />
   </command>

@@ -18,9 +18,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/encode-addr.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -31,36 +31,17 @@ bool sx::extensions::encode_addr::invoke(const int argc, const char* argv[])
         return false;
 
     std::string addr_str;
-    uint8_t version_byte = 0;
+    uint8_t version_byte;
+    read_address_args(argc, argv, std::cin, addr_str, version_byte);
 
-    if (argc == 1)
-    {
-        addr_str = read_stdin();
-    }
-    else if (argc == 2)
-    {
-        if (strlen(argv[1]) > 5)
-            addr_str = argv[1];
-        else
-        {
-            version_byte = boost::lexical_cast<uint32_t>(argv[1]);
-            addr_str = read_stdin();
-        }
-    }
-    else
-    {
-        version_byte = boost::lexical_cast<uint32_t>(argv[2]);
-        addr_str = argv[1];
-    }
-
-    short_hash hashdata = decode_short_hash(addr_str);
-    if (hashdata == null_short_hash)
+    short_hash hash = decode_short_hash(addr_str);
+    if (hash == null_short_hash)
     {
         line_out(std::cerr, "Incorrect HASH passed in.");
         return false;
     }
 
-    payment_address addr(version_byte, hashdata);
+    payment_address addr(version_byte, hash);
     std::cout << addr.encoded() << std::endl;
     return true;
 }

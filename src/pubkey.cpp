@@ -19,56 +19,63 @@
  */
 #include <iostream>
 #include <sstream>
-#include <boost/algorithm/string.hpp>
+#include <sx/command/pubkey.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 
-bool invoke(const int argc, const char* argv[])
+int get_compression(const int argc, const char* argv[])
 {
-    if (argc > 2)
+    using namespace sx;
+
+    if (argc > 1)
     {
-        std::cerr << "Usage: sx pubkey [--uncompressed|--compressed]" << std::endl;
-        return -1;
-    }
-    int is_compressed = -1;
-    if (argc == 2)
-    {
-        std::string flag_str = argv[1];
-        boost::algorithm::to_lower(flag_str);
-        if (flag_str == "1" || flag_str == "true" || flag_str == "yes" ||
-            flag_str == "--compressed" || flag_str == "-c")
-            is_compressed = 1;
-        else if (flag_str == "0" || flag_str == "false" || flag_str == "no" ||
-            flag_str == "--uncompressed" || flag_str == "-u")
-            is_compressed = 0;
-        else
+        std::string arg(argv[1]);
+        bool compressed = is_true(arg) || is_flag(arg, "compressed");
+        bool uncompressed = is_false(arg) || is_flag(arg, "uncompressed");
+        if (!compressed && !uncompressed)
         {
-            std::cerr << "IS_COMPRESSED should be true or false." << std::endl;
-            return -1;
+            std::cerr << "COMPRESSION is specified incorrectly." << std::endl;
+            return false;
         }
+
+        return (compressed || !uncompressed ? 1 : 0);
     }
-    std::string arg = read_stdin();
+
+    return -1;
+}
+
+bool sx::extensions::pubkey::invoke(const int argc, const char* argv[])
+{
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return false;
+
+    // TODO: swap integer flags for three state enum.
+    int is_compressed = get_compression(argc, argv);
+
+    std::string input(read_stdin());
     elliptic_curve_key key;
-    if (!read_private_key(key, arg, is_compressed))
+    if (!read_private_key(key, input, is_compressed))
     {
         // Try reading it as a public key instead.
-        data_chunk pubkey = decode_hex(arg);
+        data_chunk pubkey = decode_hex(input);
         if (pubkey.empty())
         {
             std::cerr << "Invalid private or public key." << std::endl;
-            return -1;
+            return false;
         }
         // OK, it's a public key.
         if (!key.set_public_key(pubkey))
         {
             std::cerr << "Invalid public key." << std::endl;
-            return -1;
+            return false;
         }
-        key.set_compressed(is_compressed >= 0);
+        key.set_compressed(is_compressed == 1);
     }
+
     std::cout << key.public_key() << std::endl;
-    return 0;
+    return true;
 }
 

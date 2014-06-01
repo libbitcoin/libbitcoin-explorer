@@ -25,6 +25,9 @@
 
 namespace sx {
 
+#define SX_DEFAULT_CONFIG_FILENAME ".sx.cfg"
+#define SX_DEFAULT_OBELISK_URI "tcp://obelisk.unsystem.net:8081"
+
 // read the spefied configuration file
 bool read_config_file(libconfig::Config& config, const tpath path)
 {
@@ -51,7 +54,7 @@ bool read_config(libconfig::Config& config)
         path = home_directory();
         if (path.empty())
             return false;
-        path = path / L".sx.cfg";
+        path = path / WIDE(SX_DEFAULT_CONFIG_FILENAME);
     }
 
     return read_config_file(config, path);
@@ -64,8 +67,8 @@ void get_config(config_map_type& map)
     libconfig::Config config;
 
     // load config defaults from memory (formerly default config file)
-    map["service"] = OBELISK_DEFAULT_URI;
-    map["client-certificate"] = ".sx.cert";
+    map["service"] = SX_DEFAULT_OBELISK_URI;
+    map["client-certificate"] = SX_DEFAULT_CONFIG_FILENAME;
     map["server-public-key"] = "";
 
     if (read_config(config))

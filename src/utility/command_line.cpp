@@ -32,12 +32,14 @@ namespace sx {
 #define TAB2 8
 #define TAB3 35
 
-bool dispatch_invoke(const int argc, const char* argv[])
+bool dispatch_invoke(const int argc, const char* argv[], 
+    const char* alias)
 {
-    auto command = sx::extensions::find(argv[0]);
+    auto target = (alias == nullptr ? argv[0] : alias);
+    auto command = sx::extensions::find(target);
     if (command == nullptr)
     {
-        display_invalid_command(argv[0]);
+        display_invalid_command(target);
         return false;
     }
     return command->invoke(argc, argv);

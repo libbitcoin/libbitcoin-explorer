@@ -30,11 +30,13 @@ namespace sx {
  * Invoke the command identified by the specified arguments.
  * The first argument in the array is the command symbolic name.
  *
- * @param[in]  argc  The number of elements in the argv parameter.
- * @param[in]  argv  Array of command line arguments, exlcuding the process.
- * @return           True if invoked successfully.
+ * @param[in]  argc   The number of elements in the argv parameter.
+ * @param[in]  argv   Array of command line arguments excluding the process.
+ * @param[in]  alias  An command name to redirect the call to.
+ * @return            True if invoked successfully.
  */
-bool dispatch_invoke(const int argc, const char* argv[]);
+bool dispatch_invoke(const int argc, const char* argv[], 
+    const char* alias=nullptr);
 
 /**
  * Display a summary for the command identified by the symbolic command name.

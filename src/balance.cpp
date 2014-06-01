@@ -24,6 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/balance.hpp>
+#include <sx/utility/client.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
 
@@ -166,8 +167,6 @@ bool sx::extensions::balance::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1))
         return false;
 
-    config_map_type config;
-    get_config(config);
     payaddr_list payaddrs;
     if (argc == 1)
     {
@@ -176,15 +175,13 @@ bool sx::extensions::balance::invoke(const int argc, const char* argv[])
             return false;
         payaddrs.push_back(payaddr);
     }
-    else
-    {
-        if (!payaddr_from_argv(payaddrs, argc, argv))
-            return false;
-    }
+    else if (!payaddr_from_argv(payaddrs, argc, argv))
+       return false;
+
     remaining_count = static_cast<int>(payaddrs.size());
-    threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"],
-        config["client-certificate"], config["server-public-key"]);
+
+    OBELISK_FULLNODE(pool, fullnode);
+
     if (json_output)
         std::cout << "[" << std::endl;
     for (const payment_address& payaddr: payaddrs)
@@ -201,7 +198,7 @@ bool sx::extensions::balance::invoke(const int argc, const char* argv[])
         while (true)
         {
             fullnode.update();
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            sleep_ms(100);
         }
     });
     update_loop.detach();

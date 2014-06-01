@@ -32,16 +32,16 @@ bool sx::extensions::genpub::invoke(const int argc, const char* argv[])
         return false;
 
     size_t key_number;
-    if (!to_number(argv[1], key_number))
+    if (!parse<size_t>(argv[1], key_number))
     {
         std::cerr << "genaddr: Bad N provided" << std::endl;
         return false;
     }
 
-    bool for_change = argc > 2 && is_true(argv[2]);
+    bool for_change = (argc > 2 && is_true(argv[2]));
 
     size_t stop_limit = key_number;
-    if (argc > 3 && !to_number(argv[3], stop_limit))
+    if (argc > 3 && !parse<size_t>(argv[3], stop_limit))
     {
         std::cerr << "genaddr: Bad RANGESTOP provided" << std::endl;
         return false;

@@ -34,9 +34,9 @@ void args_to_words(const int argc, const char* argv[], string_list& words)
 }
 
 // Read STDIN to a string list in order.
-void stdin_to_words(string_list& words)
+void stdin_to_words(std::istream& cin, string_list& words)
 {
-    std::string sentence(sx::read_stdin(true));
+    std::string sentence(sx::read_stream(cin, true));
     sx::split(sentence, words);
 }
 
@@ -50,7 +50,7 @@ bool sx::extensions::mnemonic::invoke(const int argc, const char* argv[])
     string_list in_words;
 
     if (argc == 1)
-        stdin_to_words(in_words);
+        stdin_to_words(std::cin, in_words);
     else
         args_to_words(argc, argv, in_words);
 

@@ -27,8 +27,41 @@ using namespace bc;
 
 namespace sx {
 
-// TODO: move to consumer and emit when this is false.
-// std::cerr << "Invalid private key." << std::endl;
+void read_address_args(const int argc, const char* argv[], std::istream& cin,
+    std::string& hex_str, uint8_t& version_byte)
+{
+    version_byte = 0;
+
+    if (argc == 1)
+    {
+        // Two similar techniques for same arg requirements:
+
+        // from encode_addr
+        // hex_str = sx::read_stream(cin);
+
+        // from wrap
+        cin >> hex_str;
+        int vb;
+        cin >> vb;
+        version_byte = vb;
+    }
+    else if (argc == 2)
+    {
+        if (strlen(argv[1]) > 5)
+            hex_str = argv[1];
+        else
+        {
+            sx::parse<uint8_t>(argv[1], version_byte);
+            hex_str = sx::read_stream(cin);
+        }
+    }
+    else if (argc == 3)
+    {
+        sx::parse<uint8_t>(argv[2], version_byte);
+        hex_str = argv[1];
+    }
+}
+
 bool read_private_key(elliptic_curve_key& key, int is_compressed)
 {
     return read_private_key(key, read_stdin(), is_compressed);
@@ -45,17 +78,13 @@ bool read_private_key(elliptic_curve_key& key, const std::string& arg,
         compressed_flag = libwallet::is_wif_compressed(arg);
     }
 
-    // Overrides for compression
-    if (is_compressed == 0)
-        compressed_flag = false;
-    else if (is_compressed == 1)
-        compressed_flag = true;
+    // compression override
+    if (is_compressed != -1)
+        compressed_flag = (is_compressed == 1);
 
     return secret != null_hash && key.set_secret(secret, compressed_flag);
 }
 
-// TODO: move to consumer and emit when this is false.
-// std::cerr << "Invalid public or private key." << std::endl;
 bool read_public_or_private_key(elliptic_curve_key& key)
 {
     auto arg = read_stdin();
@@ -63,6 +92,20 @@ bool read_public_or_private_key(elliptic_curve_key& key)
         return true;
     auto pubkey = decode_hex(arg);
     return key.set_public_key(pubkey);
+}
+
+bool validate_checksum(data_chunk& data)
+{
+    if (data.size() < 5)
+        return false;
+
+    data_chunk rawdata(data.begin(), data.end() - 4);
+    auto bc_checksum = bitcoin_checksum(rawdata);
+
+    data_chunk rawchecksum(data.end() - 4, data.end());
+    auto my_checksum = from_little_endian<uint32_t>(rawchecksum.begin());
+
+    return bc_checksum == my_checksum;
 }
 
 } // sx

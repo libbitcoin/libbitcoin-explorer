@@ -18,38 +18,37 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <sstream>
-#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/command/unwrap.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 
-bool invoke(const int argc, const char* argv[])
+bool sx::extensions::unwrap::invoke(const int argc, const char* argv[])
 {
-    std::string hex_str;
-    if (argc == 1) {
-        hex_str = read_stdin();
-    }
-    else if (argc == 2) 
-    {
-        hex_str = argv[1];
-    }
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return false;
+
+    std::string hex_str(argc > 1 ? argv[1] : read_stdin());
+
     data_chunk bytes = decode_hex(hex_str);
-    if (bytes.size() < 5) {
+    if (bytes.size() < 5)
+    {
         std::cerr << "Error: Must be at least five bytes" << std::endl;
-        return -1;
+        return false;
     }
-    data_chunk rawdata(bytes.begin(), bytes.end() - 4);
-    data_chunk rawchecksum(bytes.end() - 4, bytes.end());
-    uint32_t checksum = bitcoin_checksum(rawdata);
-    uint32_t my_checksum = from_little_endian<uint32_t>(rawchecksum.begin());
-    if (checksum != my_checksum) {
+
+    if (!validate_checksum(bytes))
+    {
         std::cerr << "Error: checksum does not match" << std::endl;
-        return -1;
+        return false;
     }
-    int vbyte = rawdata[0];
-    data_chunk output(rawdata.begin()+1, rawdata.end());
-    std::cout << output << " " << vbyte << std::endl;
-    return 0;
+
+    data_chunk rawdata(bytes.begin(), bytes.end() - 4);
+    data_chunk output(rawdata.begin() + 1, rawdata.end());
+    int version_byte = rawdata.front();
+
+    std::cout << output << " " << version_byte << std::endl;
+    return true;
 }

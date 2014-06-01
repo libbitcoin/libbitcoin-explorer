@@ -20,7 +20,7 @@
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/sendtx_node.hpp>
+#include <sx/command/sendtx-node.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
@@ -37,7 +37,7 @@ bool sendtx_node_stopped = false;
 void send_tx(const std::error_code& ec, channel_ptr node, transaction_type& tx)
 {
     // There must be a better way.
-    sx::terminate_process(ec);
+    sx::terminate_process_on_error(ec);
 
     std::cout << "sendtx: Sending " << hash_transaction(tx) << std::endl;
     auto handle_send =
@@ -70,7 +70,7 @@ bool sx::extensions::sendtx_node::invoke(const int argc, const char* argv[])
 
     uint16_t port = mainnet_port_default;
     if (argc > 3)
-        if (!to_port(argv[3], port))
+        if (!parse<uint16_t>(argv[3], port))
         {
             std::cerr << "sendtx: Bad port number provided" << std::endl;
             return false;

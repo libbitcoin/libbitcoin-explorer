@@ -38,7 +38,7 @@ bool read_hd_pub_args(const int argc, const char* argv[],
         std::string arg = argv[i];
         if (arg == "-h" || arg == "--hard")
             is_hard = true;
-        else if (!sx::to_number(arg, index))
+        else if (!sx::parse<size_t>(arg, index))
         {
             std::cerr << "hd-pub: Bad INDEX provided." << std::endl;
             return false;

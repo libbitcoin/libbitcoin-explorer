@@ -40,9 +40,48 @@ const char* get_filename(const int argc, const char* argv[], const int index)
     return argc > index ? argv[index] : STDIN_PATH_SENTINEL;
 }
 
-void join(std::vector<std::string>& words, std::string& sentence)
+bool is_false(const std::string text)
 {
-    sentence = boost::join(words, " ");
+    // a reference is avoided in order to prevent original string corruption
+    std::string value(text);
+
+    // case conversion is dependent upon the thread locale
+    boost::algorithm::to_lower(value);
+
+    // the concept of string false is hardwired here
+    return text == "false" || text == "0" || "no";
+}
+
+bool is_flag(const std::string& argument, const std::string& flag)
+{
+    std::string arg(argument);
+    boost::algorithm::to_lower(arg);
+
+    // -f
+    bool is_short = arg.size() == 2 && arg[0] == '-' && arg[1] == flag[0];
+
+    // --foobar
+    bool is_long = !is_short && flag.size() > 1 && arg == "--" + flag;
+
+    return is_short || is_long;
+}
+
+bool is_true(const std::string text)
+{
+    // a reference is avoided in order to prevent original string corruption
+    std::string value(text);
+
+    // case conversion is dependent upon the thread locale
+    boost::algorithm::to_lower(value);
+
+    // the concept of string true is hardwired here
+    return text == "true" || text == "1" || "yes";
+}
+
+void join(std::vector<std::string>& words, std::string& sentence, 
+    const char* delimiter)
+{
+    sentence = boost::join(words, delimiter);
 }
 
 void line_out(std::ostream& stream, const char* line, 
@@ -81,7 +120,12 @@ void line_out(std::ostream& stream, const std::vector<char*>& lines,
 
 std::string read_stdin(bool trim)
 {
-    std::istreambuf_iterator<char> first(std::cin), last;
+    return read_stream(std::cin, trim);
+}
+
+std::string read_stream(std::istream& cin, bool trim)
+{
+    std::istreambuf_iterator<char> first(cin), last;
     std::string result(first, last);
     if (trim)
         boost::algorithm::trim(result);
@@ -98,68 +142,12 @@ void split(std::string& sentence, std::vector<std::string>& words)
     boost::split(words, sentence, boost::is_any_of("\n\t "));
 }
 
-bool is_false(const std::string text)
+void terminate_process_on_error(const std::error_code& error)
 {
-    // a reference is avoided in order to prevent original string corruption
-    std::string value(text);
-
-    // case conversion is dependent upon the thread locale
-    boost::algorithm::to_lower(value);
-
-    // the concept of string false is hardwired here
-    return text == "false" || text == "0";
-}
-
-bool is_true(const std::string text)
-{
-    // a reference is avoided in order to prevent original string corruption
-    std::string value(text);
-
-    // case conversion is dependent upon the thread locale
-    boost::algorithm::to_lower(value);
-
-    // the concept of string true is hardwired here
-    return text == "true" || text == "1";
-}
-
-void terminate_process(const std::error_code& ec)
-{
-    if (!ec)
+    if (!error)
         return;
-    bc::log_fatal() << ec.message();
+    bc::log_fatal() << error.message();
     exit(main_failure);
-}
-
-bool to_number(const std::string text, size_t& number)
-{
-    // a reference is avoided in order to prevent original string corruption
-    std::string value(text);
-    boost::algorithm::trim(value);
-    try
-    {
-        number = boost::lexical_cast<size_t>(text);
-    }
-    catch (const boost::bad_lexical_cast&)
-    {
-        return false;
-    }
-    return true;
-}
-
-bool to_port(const std::string text, uint16_t& port)
-{
-    // a reference is avoided in order to prevent original string corruption
-    std::string value(text);
-    boost::algorithm::trim(value);
-    try
-    {
-        port = boost::lexical_cast<uint16_t>(text);
-    }
-    catch (const boost::bad_lexical_cast&)
-    {
-        return false;
-    }
-    return true;
 }
 
 bool validate_argument_range(const int actual,

@@ -27,8 +27,6 @@
 
 namespace sx {
 
-#define OBELISK_DEFAULT_URI "tcp://obelisk.unsystem.net:8081"
-
 /**
  * Map to hold configuration settings read from the config file or defaults.
  */

@@ -20,10 +20,18 @@
 #ifndef SX_CONSOLE_HPP
 #define SX_CONSOLE_HPP
 
+#pragma warning(push)
+//Suppressing msvc warnings from boost that are heard to deal with
+//because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
+//without testing it first. 
+#pragma warning(disable : 4996)
 #include <iostream>
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+#pragma warning(pop)
 
 namespace sx {
     
@@ -66,12 +74,49 @@ const char* get_filename(const int argc, const char* argv[],
     const int index=1);
 
 /**
- * Join a list of strings into a single string, in order, space delimited.
+ * Uniformly convert a text string to a bool, with whitespace and text case
+ * ignored, although beware that case depends upon locale. The following set 
+ * defines false boolean text values: { 'false', '0', 'no' } with all other
+ * values retuning false.
  *
- * @param[in]  words     The list of strings to join.
- * @param[in]  sentence  The resulting string.
+ * @param[in]  text  The text to text.
+ * @return           True if the text value is a member of the false set.
  */
-void join(std::vector<std::string>& words, std::string& sentence);
+bool is_false(const std::string text);
+
+/**
+ * Uniformly test an argument for the presence of the specified flag, in long
+ * or short format. The flag can be a single character or a word. If the flag is
+ * longer than one character then its first character as well as its entire
+ * value will be tested. No other partial tests are made. The flag must be
+ * lower case and should not contain any leading dash "-" characters.
+ *
+ * @param[in]  argument  The argument to test.
+ * @param[in]  flag      The flag to test (must be lower case).
+ * @return               True if the flag is set.
+ */
+bool is_flag(const std::string& argument, const std::string& flag);
+
+/**
+ * Uniformly convert a text string to a bool, with whitespace and text case
+ * ignored, although beware that case depends upon locale. The following set
+ * defines true boolean text values: { 'true', '1', 'yes' } with all other
+ * values retuning false.
+ *
+ * @param[in]  text  The text to convert.
+ * @return           True if the text value is a member of the true set.
+ */
+bool is_true(const std::string text);
+
+/**
+ * Join a list of strings into a single string, in order.
+ *
+ * @param[in]  words      The list of strings to join.
+ * @param[in]  sentence   The resulting string.
+ * @param[in]  delimiter  The optional delimiter, defaults to one space.
+ */
+void join(std::vector<std::string>& words, std::string& sentence,
+    const char* delimiter=" ");
 
 /**
  * Write the specified message, with optional padding and inset text, and a
@@ -83,7 +128,7 @@ void join(std::vector<std::string>& words, std::string& sentence);
  * @param[in]  inset   Text to display in the offset padding.
  */
 void line_out(std::ostream& stream, const char* line, 
-    const size_t offset=0, const char* inset ="");
+    const size_t offset=0, const char* inset="");
 
 /**
 * Write the specified message, with optional padding and inset text, and a
@@ -110,12 +155,46 @@ void line_out(std::ostream& stream, const std::vector<char*>& lines,
     const size_t offset=0, const char* inset="");
 
 /**
+ * Safely convert a text string to the specified type, whitespace ignored.
+ *
+ * @param      <TValue> The converted type.
+ * @param[in]  text     The text to convert.
+ * @param[out] number   The parsed value.
+ * @return              True if successful.
+ */
+template <typename TValue>
+bool parse(const std::string text, TValue& number)
+{
+    // a reference is avoided in order to prevent original string corruption
+    std::string value(text);
+    boost::algorithm::trim(value);
+    try
+    {
+        number = boost::lexical_cast<TValue>(text);
+    }
+    catch (const boost::bad_lexical_cast&)
+    {
+        return false;
+    }
+    return true;
+}
+
+/**
  * Get a trimmed message from STDIN.
  *
  * @param[in]  trim  Trim the input of whitespace, defaults to false.
  * @return           The message read from STDIN.
  */
 std::string read_stdin(bool trim=false);
+
+/**
+ * Get a trimmed message from the specified input stream.
+ *
+ * @param[in]  cin   The input stream to read.
+ * @param[in]  trim  Trim the input of whitespace, defaults to false.
+ * @return           The message read from the input stream.
+ */
+std::string read_stream(std::istream& cin, bool trim=false);
 
 /**
  * Sleep for the specified number of milliseconds.
@@ -134,53 +213,13 @@ void sleep_ms(const uint32_t milliseconds);
 void split(std::string& sentence, std::vector<std::string>& words);
 
 /**
- * Uniformly convert a text string to a bool, with whitespace and text case
- * ignored, although beware that case depends upon locale. The following set 
- * defines false boolean text values: { 'false', '0' } with all other values
- * retuning false.
- *
- * @param[in]  text  The text to text.
- * @return           True if the text value is a member of the false set.
- */
-bool is_false(const std::string text);
-
-/**
- * Uniformly convert a text string to a bool, with whitespace and text case
- * ignored, although beware that case depends upon locale. The following set
- * defines true boolean text values: { 'true', '1' } with all other values
- * retuning false.
- *
- * @param[in]  text  The text to convert.
- * @return           True if the text value is a member of the true set.
- */
-bool is_true(const std::string text);
-
-/**
  * DANGER: do not call this if anything iteresting is going on,
  * like databases open or file operations in progress!
  * Terminates the console process with main_failure return code.
  *
- * @param[in]  text  An error code to log before exiting the process.
+ * @param[in]  error  The error code to test and log before terminating.
  */
-void terminate_process(const std::error_code& ec);
-
-/**
- * Uniformly convert a text string to a numeric port identifier.
- *
- * @param[in]  text  The text to convert.
- * @param[out] port  The parsed value.
- * @return           True if successful.
- */
-bool to_port(const std::string text, uint16_t& port);
-
-/**
- * Safely convert a text string to a number, with whitespace ignored.
- *
- * @param[in]  text    The text to convert.
- * @param[out] number  The parsed value.
- * @return             True if successful.
- */
-bool to_number(const std::string text, size_t& number);
+void terminate_process_on_error(const std::error_code& error);
 
 /**
  * Validate that the actual argument count matches the target, and if not emit

@@ -22,6 +22,9 @@
     <Filter Include="src\command">
       <UniqueIdentifier>{7cf6fe23-da90-44c8-8b78-b68a8f1ff830}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\command\python">
+      <UniqueIdentifier>{e96f4bef-2d18-4897-9078-a8c17783ee65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp">
@@ -403,48 +406,6 @@
     <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-base58check-decode.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-base58check-encode.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-bci-fetch-last-height.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-bci-history.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-blke-fetch-transaction.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-brainwallet.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-btc.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-embed-addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-get-pubkey.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-get-utxo.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-qrcode.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-satoshi.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-sendtx-bci.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sx-watchtx.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\unwrap.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -528,6 +489,48 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-pub.cpp">
       <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\base58check-decode.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\base58check-encode.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\bci-history.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\brainwallet.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\btc.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\embed-addr.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\get-pubkey.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\get-utxo.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\qrcode.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\satoshi.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-bci.cpp">
+      <Filter>src\command\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\watchtx.cpp">
+      <Filter>src\command\python</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

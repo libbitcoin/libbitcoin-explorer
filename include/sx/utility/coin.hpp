@@ -65,6 +65,17 @@ bool load_satoshi_item(TItem& item, const std::string& filename)
     }
     return true;
 }
+/**
+ * Read address arguments from the specified args and/or input stream.
+ *
+ * @param[in]  argc          The number of args.
+ * @param[in]  argv          The arguments to read.
+ * @param[in]  cin           The input stream.
+ * @param[out] hex_str       The return string value.
+ * @param[out] version_byte  The return byte value.
+ */
+void read_address_args(const int argc, const char* argv[], std::istream& cin,
+    std::string& hex_str, uint8_t& version_byte);
 
 /**
  * Read a private key from STDIN.
@@ -80,11 +91,12 @@ bool read_private_key(bc::elliptic_curve_key& key, int is_compressed=-1);
  *
  * @param[out] key            The read key.
  * @param[in]  arg            The argument from which to read the key.
- * @param[in]  is_compressed  Flag indicating whether compression is expected.
+ * @param[in]  is_compressed  Flag indicating whether compression is expected,
+ *                            -1=unspecified, 0=uncompressed, 1=compressed.
  * @return                    True if a key was read.
  */
 bool read_private_key(bc::elliptic_curve_key& key, const std::string& arg,
-    int is_compressed = -1);
+    int is_compressed=-1);
 
 /**
  * Read a public or private key from STDIN.
@@ -93,6 +105,14 @@ bool read_private_key(bc::elliptic_curve_key& key, const std::string& arg,
  * @return          True if a key was read.
  */
 bool read_public_or_private_key(bc::elliptic_curve_key& key);
+
+/**
+ * Validate the bitcoin checksum of a chunk of binary data.
+ *
+ * @param[int] data  The data to validate.
+ * @return           True if the checksum is valid.
+ */
+bool validate_checksum(bc::data_chunk& data);
 
 } // sx
 

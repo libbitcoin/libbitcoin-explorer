@@ -20,7 +20,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
-#include <sx/command/wif_to_secret.hpp>
+#include <sx/command/wif-to-secret.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
