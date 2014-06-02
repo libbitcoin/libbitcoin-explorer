@@ -6,7 +6,7 @@
 .#
 .echo "Generating src/generated.cpp..."
 .output "../src/generated.cpp"
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -61,7 +61,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 } // sx
 .echo "Generating include/sx/command/generated.hpp..."
 .output "../include/sx/command/generated.hpp"
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -120,7 +120,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 .for command by symbol
 .echo "Generating include/sx/command/$(symbol).hpp..."
 .output "../include/sx/command/$(symbol).hpp"
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.

@@ -38,7 +38,7 @@
     <explanation value="Create the raw hex representation from a script." />
     <explanation value="" />
     <explanation value="EXAMPLE:" />
-    <explanation value="  $ sx rawscript dup # translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wiki" />
+    <explanation value="  $ sx rawscript dup # translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wik" />
     <explanation value="  76" />
   </command>
 
@@ -75,7 +75,7 @@
 
   <command symbol="pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
     <description value="See the public part of a private key." />
-    <example value="sx pubkey [COMPRESSION]" />
+    <example value="sx pubkey [-c|-u]" />
     <explanation value="" />
     <explanation value="  -c, --compressed      Use compressed public key format." />
     <explanation value="  -u, --uncompressed    Use uncompressed public key format." />
@@ -631,7 +631,7 @@
   <command symbol="hd-pub" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
     <description value="Create an HD public key from a HD private key or another HD public key." />
     <example value="sx hd-pub [--hard] [INDEX]" />
-    <description value="Create an HD public key from a HD private key or another HD public key." />
+    <explanation value="Create an HD public key from a HD private key or another HD public key." />
     <explanation value="If no INDEX is provided 0 is used." />
   </command>
 
@@ -639,12 +639,14 @@
     <description value="Convert an HD public or private key to a Bitcoin address." />
     <example value="sx hd-to-address [KEY]" />
     <explanation value="Convert an HD public or private key to a Bitcoin address." />
+    <explanation value="The KEY can be provided as an argument or in STDIN." />
   </command>
 
   <command symbol="hd-to-wif" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
     <description value="Convert an HD private key to a WIF private key." />
-    <example value="sx hd-to-wif" />
+    <example value="sx hd-to-wif [KEY]" />
     <explanation value="Convert an HD private key to a WIF private key." />
+    <explanation value="The KEY can be provided as an argument or in STDIN." />
   </command>
   
   <command symbol="ec_add" category="UTILITY" subcategory="EC MATH">
