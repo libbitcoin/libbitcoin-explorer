@@ -112,7 +112,7 @@ bool read_hard_index_args(const int argc, const char* argv[], bool& is_hard,
         const std::string arg(argv[i]);
         if (sx::is_option(arg, SX_OPTION_HARD))
             is_hard = true;
-        else if (!sx::parse<size_t>(arg, index))
+        else if (!sx::parse<uint32_t>(arg, index))
             return false;
     }
 
