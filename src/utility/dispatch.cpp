@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -21,10 +21,10 @@
 #include <string>
 #include <sx/command/generated.hpp>
 #include <sx/command/wallet.hpp>
-#include <sx/utility/command_line.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/locale.hpp>
+#include <sx/utility/dispatch.hpp>
+#include <sx/utility/display.hpp>
 
 namespace sx {
 
@@ -100,7 +100,7 @@ int invoke(const int argc, const char* argv[])
     auto token = std::string(argv[++position]);
 
     // --config
-    if (token == "-c" || token == "--config")
+    if (is_option(token, SX_OPTION_CONFIG))
     {
         if (position == last)
         {
@@ -110,7 +110,7 @@ int invoke(const int argc, const char* argv[])
         }
 
         // next token (skip -c|--config)
-        token = std::string(argv[++position]);
+        token = argv[++position];
 
         if (!set_config_path(token))
         {
@@ -127,11 +127,12 @@ int invoke(const int argc, const char* argv[])
 
         // next token (skip path)
         // config option can be combined with help|command
-        token = std::string(argv[++position]);
+        token = argv[++position];
     }
 
     // --help
-    if (token == "-h" || token == "--help" || token == "help")
+    // The special case for "help" is retained for compatibility.
+    if (is_option(token, SX_OPTION_HELP) || token == "help")
     {
         if (position == last)
             // sx [-c|--config path] -h|--help|help
@@ -139,7 +140,7 @@ int invoke(const int argc, const char* argv[])
         else
         {
             // next token (skip -h|--help|help)
-            token = std::string(argv[++position]);
+            token = argv[++position];
 
             // sx [-c|--config path] -h|--help|help command
             if (!dispatch_summary(token.c_str()))

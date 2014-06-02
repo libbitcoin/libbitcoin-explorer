@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_MAIN_HPP
-#define SX_MAIN_HPP
+#ifndef SX_DISPATCH_HPP
+#define SX_DISPATCH_HPP
 
 #include <memory>
 #include <string>
@@ -27,6 +27,17 @@
 /* NOTE: don't declare 'using namespace foo' in heders. */
 
 namespace sx {
+
+/**
+ * Full set of valid command line options utilized in code that shared code, 
+ * i.e. utility code that spans commands.
+ */
+#define SX_OPTION_COMPRESSED "compressed"
+#define SX_OPTION_CONFIG "config"
+#define SX_OPTION_HARD "hard"
+#define SX_OPTION_HELP "help"
+#define SX_OPTION_JSON "json"
+#define SX_OPTION_UNCOMPRESSED "uncompressed"
 
 /**
  * Invoke the command identified by the specified arguments.

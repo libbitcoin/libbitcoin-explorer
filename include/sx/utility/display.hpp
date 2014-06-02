@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_LOCALE_HPP
-#define SX_LOCALE_HPP
+#ifndef SX_DISPLAY_HPP
+#define SX_DISPLAY_HPP
 
 /* NOTE: don't declare 'using namespace foo' in heders. */
 
