@@ -17,25 +17,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-/*
-Create a new leveldb blockchain database.
-*/
 #include <iostream>
 #include <sx/command/initchain.hpp>
 
+// Create a new leveldb blockchain database.
 // This is currently tied to the build of the libbitcoin dependency.
 #ifndef LEVELDB_ENABLED
 
-int main()
+bool sx::extensions::initchain::invoke(const int argc, const char* argv[])
 {
-    std::cerr << "initchain: The feature is not supported in this build." << std::endl;
-    return 1;
+    std::cerr << "initchain: The feature is not supported in this build." 
+        << std::endl;
+    return false;
 }
 
 #else
 
 #include <future>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 
@@ -62,20 +62,18 @@ void initialize_new_stealth_database(const std::string& filename)
         serial.write_4_bytes(0);
 }
 
-bool invoke(const int argc, const char* argv[])
+bool sx::extensions::initchain::invoke(const int argc, const char* argv[])
 {
-    if (argc != 2)
-    {
-        std::cerr << "initchain: No directory specified." << std::endl;
-        return 1;
-    }
+    if (!validate_argument_range(argc, example(), 2, 2))
+        return false;
+
     const std::string dbpath = argv[1];
     // Create custom databases first.
     initialize_new_stealth_database(dbpath + "/stealth.db");
     // Threadpool context containing 1 thread.
     threadpool pool(1);
     // leveldb_blockchain operations execute in pool's thread.
-    leveldb_blockchain chain(pool);
+    bc::leveldb_blockchain chain(pool);
     // Completion handler for starting the leveldb_blockchain.
     // Does nothing.
     auto blockchain_start = [](const std::error_code& ec) {};
@@ -99,7 +97,7 @@ bool invoke(const int argc, const char* argv[])
     if (ec)
     {
         log_error() << "Importing genesis block failed: " << ec.message();
-        return -1;
+        return false;
     }
     log_info() << "Imported genesis block "
         << hash_block_header(first_block.header);
@@ -109,7 +107,7 @@ bool invoke(const int argc, const char* argv[])
     pool.join();
     // Now safely close leveldb_blockchain.
     chain.stop();
-    return 0;
+    return true;
 }
 
 #endif

@@ -21,7 +21,7 @@
       <!--<PreprocessorDefinitions Condition="'$(Linkage-libsx)' == 'static' Or '$(Linkage-libsx)' == 'ltcg'">SX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>-->
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libsx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libsx.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\sx\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libsx)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\sx\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libsx)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
     </Link>    
