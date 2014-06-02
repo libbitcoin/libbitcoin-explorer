@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx hd-priv [--hard] INDEX" }
+            { "sx hd-priv [--hard] [INDEX]" }
         };
     }
 
@@ -95,7 +95,9 @@ public:
     {
         return
         {
-            { "Create a private HD key from another HD private key." }
+            { "Create a private HD key from another HD private key." },
+            { "A private key is expected in STDIN." },
+            { "If no INDEX is provided 0 is used." }
         };
     }
 

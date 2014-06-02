@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -72,7 +72,7 @@ public:
     {
         return
         {
-            { "Create an HD public key from another HD private or public key." }
+            { "Create an HD public key from a HD private key or another HD public key." }
         };
     }
 
@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx hd-pub [--hard] INDEX" }
+            { "sx hd-pub [--hard] [INDEX]" }
         };
     }
 
@@ -95,10 +95,8 @@ public:
     {
         return
         {
-            { "Create an HD public key from another HD private or public key." },
-            { "" },
-            { "If no arguments are passed then hd-pub expects a private key in" },
-            { "STDIN and will convert it to a public key." }
+            { "Create an HD public key from a HD private key or another HD public key." },
+            { "If no INDEX is provided 0 is used." }
         };
     }
 

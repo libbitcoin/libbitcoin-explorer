@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx hd-to-wif" }
+            { "sx hd-to-wif [KEY]" }
         };
     }
 
@@ -95,7 +95,8 @@ public:
     {
         return
         {
-            { "Convert an HD private key to a WIF private key." }
+            { "Convert an HD private key to a WIF private key." },
+            { "The KEY can be provided as an argument or in STDIN." }
         };
     }
 

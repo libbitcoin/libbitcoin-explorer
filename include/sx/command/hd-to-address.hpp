@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx hd-to-address" }
+            { "sx hd-to-address [KEY]" }
         };
     }
 
@@ -95,7 +95,8 @@ public:
     {
         return
         {
-            { "Convert an HD public or private key to a Bitcoin address." }
+            { "Convert an HD public or private key to a Bitcoin address." },
+            { "The KEY can be provided as an argument or in STDIN." }
         };
     }
 

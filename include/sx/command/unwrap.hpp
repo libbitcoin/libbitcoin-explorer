@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx wrap HEXSTRING VERSION_BYTE" }
+            { "sx unwrap HEXSTRING" }
         };
     }
 

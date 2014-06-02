@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -98,7 +98,7 @@ public:
             { "Create the raw hex representation from a script." },
             { "" },
             { "EXAMPLE:" },
-            { "  $ sx rawscript dup # translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wiki" },
+            { "  $ sx rawscript dup # translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wik" },
             { "  76" }
         };
     }
