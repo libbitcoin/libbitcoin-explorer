@@ -212,13 +212,13 @@
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\client.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\command_line.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\dispatch.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\curve.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\environment.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\locale.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\display.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\addr.cpp" />
@@ -243,14 +243,10 @@
     <ClCompile Include="..\..\..\..\src\hd-priv.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-pub.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-seed.cpp" />
-    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\src\history.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\initchain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
@@ -266,9 +262,7 @@
     <ClCompile Include="..\..\..\..\src\newkey.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\newseed.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\newseed.cpp" />
     <ClCompile Include="..\..\..\..\src\pubkey.cpp" />
     <ClCompile Include="..\..\..\..\src\rawscript.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
@@ -338,12 +332,12 @@
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\client.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\command_line.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\config.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\curve.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\locale.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\display.cpp" />
     <ClCompile Include="..\..\..\..\src\validaddr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
     </ClCompile>

@@ -26,12 +26,12 @@
 #include <sx/command.hpp>
 #include <sx/command/generated.hpp>
 #include <sx/utility/coin.hpp>
-#include <sx/utility/command_line.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/curve.hpp>
+#include <sx/utility/dispatch.hpp>
+#include <sx/utility/display.hpp>
 #include <sx/utility/environment.hpp>
-#include <sx/utility/locale.hpp>
 
 #endif
