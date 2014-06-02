@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -21,7 +21,7 @@
 #include <sx/command/base58check-decode.hpp>
 #include <sx/command/unwrap.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/command_line.hpp>
+#include <sx/utility/dispatch.hpp>
 
 bool sx::extensions::base58check_decode::invoke(const int argc, 
     const char* argv[])

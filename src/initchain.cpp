@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -21,7 +21,9 @@
 Create a new leveldb blockchain database.
 */
 #include <iostream>
+#include <sx/command/initchain.hpp>
 
+// This is currently tied to the build of the libbitcoin dependency.
 #ifndef LEVELDB_ENABLED
 
 int main()

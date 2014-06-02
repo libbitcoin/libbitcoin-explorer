@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,8 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/command/sendtx-p2p.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;

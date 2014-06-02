@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -54,7 +54,7 @@ bool sx::extensions::genpub::invoke(const int argc, const char* argv[])
     }
 
     deterministic_wallet wallet;
-    std::string seed = read_stdin();
+    std::string seed = read_stream(std::cin);
     if (!wallet.set_seed(seed))
     {
         data_chunk mpk = decode_hex(seed);

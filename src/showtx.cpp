@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -19,6 +19,7 @@
  */
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/command/showtx.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;

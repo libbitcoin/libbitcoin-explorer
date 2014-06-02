@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -32,9 +32,9 @@ bool sx::extensions::encode_addr::invoke(const int argc, const char* argv[])
 
     std::string addr_str;
     uint8_t version_byte;
-    read_address_args(argc, argv, std::cin, addr_str, version_byte);
+    read_address_tuple(argc, argv, std::cin, addr_str, version_byte);
 
-    short_hash hash = decode_short_hash(addr_str);
+    auto hash = decode_short_hash(addr_str);
     if (hash == null_short_hash)
     {
         line_out(std::cerr, "Incorrect HASH passed in.");

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -53,7 +53,7 @@ bool sx::extensions::fetch_transaction_index::invoke(const int argc,
     if (!validate_argument_range(argc, example(), 1, 2))
         return false;
 
-    std::string tx_hash_str(argc == 1 ? read_stdin() : argv[1]);
+    std::string tx_hash_str(get_arg_or_stream(argc, argv, std::cin));
     hash_digest tx_hash = decode_hash(tx_hash_str);
 
     OBELISK_FULLNODE(pool, fullnode);

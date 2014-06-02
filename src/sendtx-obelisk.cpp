@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,11 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include "config.hpp"
+#include <sx/command/sendtx-obelisk.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/config.hpp>
 
 using namespace bc;
 

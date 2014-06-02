@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -19,27 +19,33 @@
  */
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/hd-to-address.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-int main()
+bool sx::extensions::hd_to_address::invoke(const int argc, const char* argv[])
 {
-    // Read key from STDIN.
-    std::string encoded_key = read_stdin();
-    hd_public_key key;
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return false;
 
-    // First try loading private key.
+    std::string encoded_key(get_arg_or_stream(argc, argv, std::cin));
+
+    hd_public_key public_key;
     hd_private_key private_key;
+
+    // NOTE: same idiom in hd_pub
+    // First try loading private key and otherwise the public key.
     if (private_key.set_serialized(encoded_key))
-        key = private_key;
-    else if (!key.set_serialized(encoded_key))
+        public_key = private_key;
+    else if (!public_key.set_serialized(encoded_key))
     {
         std::cerr << "hd-pub: error reading key." << std::endl;
-        return -1;
+        return false;
     }
-    std::cout << key.address().encoded() << std::endl;
-    return 0;
+
+    std::cout << public_key.address().encoded() << std::endl;
+    return true;
 }
 

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -71,7 +71,7 @@ bool sx::extensions::fetch_block_header::invoke(const int argc,
     if (!validate_argument_range(argc, example(), 1, 2))
         return false;
 
-    std::string index(argc == 1 ? read_stdin() : argv[1]);
+    std::string index(get_arg_or_stream(argc, argv, std::cin));
 
     OBELISK_FULLNODE(pool, fullnode);
     if (!initialize_fetch_block_header(index, fullnode))

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -23,28 +23,34 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 
-int get_compression(const int argc, const char* argv[])
+bool get_compression(const int argc, const char* argv[], 
+    sx::key_compression& is_compressed)
 {
-    using namespace sx;
+    is_compressed = sx::key_compression::UNSPECIFIED;
 
     if (argc > 1)
     {
         std::string arg(argv[1]);
-        bool compressed = is_true(arg) || is_flag(arg, "compressed");
-        bool uncompressed = is_false(arg) || is_flag(arg, "uncompressed");
-        if (!compressed && !uncompressed)
-        {
-            std::cerr << "COMPRESSION is specified incorrectly." << std::endl;
-            return false;
-        }
 
-        return (compressed || !uncompressed ? 1 : 0);
+        // NOTE: boolean argument has been removed from this parser in favor of
+        // consistency with the use of flags in all other commands.
+        bool compressed = sx::is_option(arg, SX_OPTION_COMPRESSED);
+        bool uncompressed = sx::is_option(arg, SX_OPTION_UNCOMPRESSED);
+
+        // NOTE: it's not currently possible for two to be specified but it is
+        // possible for one to be bogus and another unspecified (invalid).
+        if (compressed == uncompressed)
+            return false;
+
+        is_compressed = (compressed || !uncompressed ? 
+            sx::key_compression::ON : sx::key_compression::OFF);
     }
 
-    return -1;
+    return true;
 }
 
 bool sx::extensions::pubkey::invoke(const int argc, const char* argv[])
@@ -52,10 +58,16 @@ bool sx::extensions::pubkey::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 2))
         return false;
 
-    // TODO: swap integer flags for three state enum.
-    int is_compressed = get_compression(argc, argv);
+    key_compression is_compressed;
+    if (!get_compression(argc, argv, is_compressed))
+    {
+        std::cerr << "Inconsistent compression options." << std::endl;
+        return false;
+    }
 
-    std::string input(read_stdin());
+    // TODO: allow for reading from args.
+    std::string input(read_stream(std::cin));
+
     elliptic_curve_key key;
     if (!read_private_key(key, input, is_compressed))
     {
@@ -72,7 +84,7 @@ bool sx::extensions::pubkey::invoke(const int argc, const char* argv[])
             std::cerr << "Invalid public key." << std::endl;
             return false;
         }
-        key.set_compressed(is_compressed == 1);
+        key.set_compressed(is_compressed == key_compression::ON);
     }
 
     std::cout << key.public_key() << std::endl;

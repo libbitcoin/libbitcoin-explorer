@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,8 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/command/validsig.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -67,7 +67,7 @@ bool invoke(const int argc, const char* argv[])
     }
     const data_chunk signature = decode_hex(argv[4]);
     elliptic_curve_key key;
-    if (!read_public_or_private_key(key))
+    if (!read_public_or_private_key(key, std::cin))
     {
         std::cerr << "Invalid public or private key." << std::endl;
         return -1;

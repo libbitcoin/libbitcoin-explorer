@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -27,6 +27,16 @@
 /* NOTE: don't declare 'using namespace foo' in heders. */
 
 namespace sx {
+    
+/**
+ * The default number of threads initialized by OBELISK_FULLNODE.
+ */
+const size_t default_threadpool_size = 1;
+
+/**
+ * The default polling period initialized by OBELISK_FULLNODE.
+ */
+const uint32_t default_poll_period_ms = 100;
 
 /**
  * This prevents code repetition while retaining stack-based allocation.
@@ -36,7 +46,7 @@ namespace sx {
 #define OBELISK_FULLNODE(__pool__, __fullnode__) \
     config_map_type __config__; \
     get_config(__config__); \
-    threadpool __pool__(1); \
+    threadpool __pool__(default_threadpool_size); \
     obelisk::fullnode_interface __fullnode__( \
         __pool__, \
         __config__[SX_SETTING_SERVICE], \
@@ -52,7 +62,8 @@ namespace sx {
  * @param[in]  period_ms  The polling period in milliseconds, defaults to 100.
  */
 void poll(obelisk::fullnode_interface& fullnode,
-    bc::threadpool& pool, bool& stopped, const uint32_t period_ms=100);
+    bc::threadpool& pool, bool& stopped, 
+    const uint32_t period_ms=default_poll_period_ms);
 
 } // sx
 

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -24,6 +24,7 @@
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 
@@ -44,7 +45,7 @@ data_chunk random_fill(size_t size)
     return result;
 }
 
-void read_address_args(const int argc, const char* argv[], std::istream& cin,
+bool read_address_tuple(const int argc, const char* argv[], std::istream& cin,
     std::string& hex_str, uint8_t& version_byte)
 {
     version_byte = 0;
@@ -54,57 +55,101 @@ void read_address_args(const int argc, const char* argv[], std::istream& cin,
         // Two similar techniques for same arg requirements:
 
         // from encode_addr
-        // hex_str = sx::read_stream(cin);
+        hex_str = sx::read_stream(cin);
 
         // from wrap
-        cin >> hex_str;
-        int vb;
-        cin >> vb;
-        version_byte = vb;
+        //cin >> hex_str;
+        //int vb;
+        //cin >> vb;
+        //version_byte = vb;
     }
     else if (argc == 2)
     {
-        if (strlen(argv[1]) > 5)
-            hex_str = argv[1];
+        const std::string arg(argv[1]);
+        if (arg.length() > 5)
+            hex_str = arg;
         else
         {
-            sx::parse<uint8_t>(argv[1], version_byte);
+            if (!sx::parse<uint8_t>(argv[1], version_byte))
+                return false;
             hex_str = sx::read_stream(cin);
         }
     }
     else if (argc == 3)
     {
-        sx::parse<uint8_t>(argv[2], version_byte);
+        if (!sx::parse<uint8_t>(argv[2], version_byte))
+            return false;
         hex_str = argv[1];
     }
+
+    return true;
 }
 
-bool read_private_key(elliptic_curve_key& key, int is_compressed)
+bool read_addresses(const int argc, const char* argv[], 
+    payaddr_list& payaddrs)
 {
-    return read_private_key(key, read_stdin(), is_compressed);
+    for (int i = 1; i < argc; ++i)
+    {
+        const std::string arg(argv[i]);
+        if (sx::is_option(arg))
+            continue;
+        payment_address payaddr;
+        if (!payaddr.set_encoded(arg))
+            return false;
+        payaddrs.push_back(payaddr);
+    }
+    return true;
+}
+
+bool read_hard_index_args(const int argc, const char* argv[], bool& is_hard,
+    uint32_t& index)
+{
+    index = 0;
+    is_hard = false;
+
+    for (int i = 1; i < argc; ++i)
+    {
+        const std::string arg(argv[i]);
+        if (sx::is_option(arg, SX_OPTION_HARD))
+            is_hard = true;
+        else if (!sx::parse<size_t>(arg, index))
+            return false;
+    }
+
+    return true;
+}
+
+bool read_private_key(elliptic_curve_key& key, std::istream& cin, 
+    key_compression is_compressed)
+{
+    return read_private_key(key, read_stream(cin), is_compressed);
 }
 
 bool read_private_key(elliptic_curve_key& key, const std::string& arg,
-    int is_compressed)
+    key_compression is_compressed)
 {
     bool compressed_flag = true;
     auto secret = decode_hash(arg);
     if (secret == null_hash)
     {
+        // Both compression and uncompression options are necessary because
+        // the default in this case is to accept the format of the key.
         secret = libwallet::wif_to_secret(arg);
         compressed_flag = libwallet::is_wif_compressed(arg);
     }
 
-    // compression override
-    if (is_compressed != -1)
-        compressed_flag = (is_compressed == 1);
+    if (secret == null_hash)
+        return false;
 
-    return secret != null_hash && key.set_secret(secret, compressed_flag);
+    if (is_compressed != key_compression::UNSPECIFIED)
+        compressed_flag = (is_compressed == key_compression::ON);
+
+    return key.set_secret(secret, compressed_flag);
 }
 
-bool read_public_or_private_key(elliptic_curve_key& key)
+bool read_public_or_private_key(elliptic_curve_key& key, std::istream& cin)
 {
-    auto arg = read_stdin();
+    auto arg = read_stream(cin);
     if (read_private_key(key, arg))
         return true;
     auto pubkey = decode_hex(arg);

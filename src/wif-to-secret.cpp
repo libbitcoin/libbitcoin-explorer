@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -31,7 +31,7 @@ bool sx::extensions::wif_to_secret::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 1))
         return false;
 
-    std::string wif = read_stdin();
+    std::string wif = read_stream(std::cin);
     ec_secret secret = libwallet::wif_to_secret(wif);
     if (secret == null_hash)
     {

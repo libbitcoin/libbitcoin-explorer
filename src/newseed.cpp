@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -20,15 +20,20 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/newseed.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-int main()
+bool sx::extensions::newseed::invoke(const int argc, const char* argv[])
 {
+    if (!validate_argument_range(argc, example(), 1, 1))
+        return false;
+
     libwallet::deterministic_wallet wallet;
     wallet.new_seed();
     std::cout << wallet.seed() << std::endl;
-    return 0;
+    return true;
 }
 

@@ -20,6 +20,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/stealth-initiate.hpp>
 
 using namespace libbitcoin;
 using namespace libwallet;

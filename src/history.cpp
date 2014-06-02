@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -19,23 +19,25 @@
  */
 #include <atomic>
 #include <condition_variable>
+#include <stdint.h>
 #include <thread>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include "config.hpp"
+#include <sx/command/history.hpp>
+#include <sx/utility/client.hpp>
+#include <sx/utility/coin.hpp>
+#include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-typedef std::vector<payment_address> payaddr_list;
-
-int remaining_count = std::numeric_limits<int>::max();
-std::mutex mutex;
-std::condition_variable condition;
-
-bool json_output = false;
+static int32_t remaining_count = bc::max_int32;
+static std::mutex mutex;
+static std::condition_variable condition;
+static bool json_output = false;
 
 void history_fetched(const payment_address& payaddr,
     const std::error_code& ec, const blockchain::history_list& history)
@@ -75,11 +77,12 @@ void history_fetched(const payment_address& payaddr,
         std::cout << std::endl;
     }
     std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count != std::numeric_limits<int>::max());
+    BITCOIN_ASSERT(remaining_count != bc::max_int32);
     --remaining_count;
     condition.notify_one();
 }
 
+// TODO: generalize json serialization.
 void json_history_fetched(const payment_address& payaddr,
     const std::error_code& ec, const blockchain::history_list& history)
 {
@@ -97,6 +100,7 @@ void json_history_fetched(const payment_address& payaddr,
             is_first = false;
         else
             std::cout << "," << std::endl;
+
         // Actual row data.
         std::cout << "{" << std::endl;
         std::cout << "  \"address\": \"" << payaddr.encoded()
@@ -127,7 +131,7 @@ void json_history_fetched(const payment_address& payaddr,
         std::cout << "}";
     }
     std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count != std::numeric_limits<int>::max());
+    BITCOIN_ASSERT(remaining_count != bc::max_int32);
     --remaining_count;
     condition.notify_one();
     if (remaining_count > 0)
@@ -135,55 +139,45 @@ void json_history_fetched(const payment_address& payaddr,
     std::cout << std::endl;
 }
 
-bool payaddr_from_stdin(payment_address& payaddr)
+bool sx::extensions::history::invoke(const int argc, const char* argv[])
 {
-    if (!payaddr.set_encoded(read_stdin()))
-    {
-        std::cerr << "history: Invalid address." << std::endl;
+    if (!validate_argument_range(argc, example(), 1))
         return false;
-    }
-    return true;
-}
 
-bool payaddr_from_argv(payaddr_list& payaddrs, int argc, char** argv)
-{
-    for (int i = 1; i < argc; ++i)
-    {
-        const std::string arg = argv[i];
-        if (arg == "-j" || arg == "--json")
-        {
-            json_output = true;
-            continue;
-        }
-        payment_address payaddr;
-        if (!payaddr.set_encoded(arg))
-            return false;
-        payaddrs.push_back(payaddr);
-    }
-    return true;
-}
+    // TODO: create generalized and shared aguments class that:
+    // * sets all arguments to a string list by position
+    // * sets all options arguments to a distinct list
+    // * returns the number of non option arguments
+    // * returns each argument by positional index
+    // * returns each option as a bool by textual index
+    // * generic allows any argument to be read with cast to type
+    // * passed in to each extension, removing access to argc/argv
+    // This will provide for easy faking of arguments for unit testing
+    // and greatly rationalize and simplify command line parsing
+    // across the multitude of command handlers.
+    json_output = get_option(argc, argv, SX_OPTION_JSON);
 
-bool invoke(const int argc, const char* argv[])
-{
-    config_map_type config;
-    get_config(config);
     payaddr_list payaddrs;
     if (argc == 1)
     {
         payment_address payaddr;
-        if (!payaddr_from_stdin(payaddr))
-            return -1;
+        if (!payaddr.set_encoded(sx::read_stream(std::cin)))
+        {
+            std::cerr << "history: Invalid address." << std::endl;
+            return false;
+        }
         payaddrs.push_back(payaddr);
     }
-    else
+    else if (!sx::read_addresses(argc, argv, payaddrs))
     {
-        if (!payaddr_from_argv(payaddrs, argc, argv))
-            return -1;
+        std::cerr << "history: Invalid address." << std::endl;
+        return false;
     }
+
     remaining_count = static_cast<int>(payaddrs.size());
-    threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"],
-        config["client-certificate"], config["server-public-key"]);
+
+    OBELISK_FULLNODE(pool, fullnode);
+
     if (json_output)
         std::cout << "[" << std::endl;
     for (const payment_address& payaddr: payaddrs)
@@ -200,7 +194,7 @@ bool invoke(const int argc, const char* argv[])
         while (true)
         {
             fullnode.update();
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            sleep_ms(100);
         }
     });
     update_loop.detach();
@@ -214,6 +208,6 @@ bool invoke(const int argc, const char* argv[])
         std::cout << "]" << std::endl;
     pool.stop();
     pool.join();
-    return 0;
+    return true;
 }
 

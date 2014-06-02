@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -32,7 +32,7 @@ bool sx::extensions::wrap::invoke(const int argc, const char* argv[])
 
     std::string hex_str;
     uint8_t version_byte;
-    read_address_args(argc, argv, std::cin, hex_str, version_byte);
+    read_address_tuple(argc, argv, std::cin, hex_str, version_byte);
 
     data_chunk bytes;
     bytes.push_back(version_byte);

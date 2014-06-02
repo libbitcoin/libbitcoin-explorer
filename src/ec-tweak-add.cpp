@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -33,7 +33,10 @@ bool sx::extensions::ec_tweak_add::invoke(const int argc, const char* argv[])
     ec_secret int_part;
     ec_point point_part;
     if (!ec_math_parse_args(argc, argv, int_part, point_part))
+    {
+        std::cerr << "sx: Unable to read input values." << std::endl;
         return false;
+    }
 
     bool success = bc::ec_tweak_add(point_part, int_part);
     if (!success)

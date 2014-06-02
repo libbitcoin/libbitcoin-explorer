@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -33,12 +33,15 @@ bool sx::extensions::genaddr::invoke(const int argc, const char* argv[])
 
     size_t key_number;
     if (!parse<size_t>(argv[1], key_number))
+    {
+        std::cerr << "genaddr: Invalid key number." << std::endl;
         return false;
+    }
 
     bool for_change = (argc == 3 && is_true(argv[2]));
 
     deterministic_wallet wallet;
-    std::string seed = read_stdin();
+    std::string seed = read_stream(std::cin);
     if (!wallet.set_seed(seed))
     {
         data_chunk mpk = decode_hex(seed);

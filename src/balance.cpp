@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -20,27 +20,27 @@
 #include <atomic>
 #include <condition_variable>
 #include <iostream>
+#include <stdint.h>
 #include <thread>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/balance.hpp>
 #include <sx/utility/client.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-typedef std::vector<payment_address> payaddr_list;
+static int32_t remaining_count = bc::max_int32;
+static std::mutex mutex;
+static std::condition_variable condition;
+static bool json_output = false;
 
-int remaining_count = std::numeric_limits<int>::max();
-std::mutex mutex;
-std::condition_variable condition;
-
-bool json_output = false;
-
-void history_fetched(const payment_address& payaddr,
+void balance_fetched(const payment_address& payaddr,
     const std::error_code& ec, const blockchain::history_list& history)
 {
     if (ec)
@@ -75,12 +75,13 @@ void history_fetched(const payment_address& payaddr,
     std::cout << "  Total received:  " << total_recv << std::endl;
     std::cout << std::endl;
     std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count != std::numeric_limits<int>::max());
+    BITCOIN_ASSERT(remaining_count != bc::max_int32);
     --remaining_count;
     condition.notify_one();
 }
 
-void json_history_fetched(const payment_address& payaddr,
+// TODO: generalize json serialization.
+void json_balance_fetched(const payment_address& payaddr,
     const std::error_code& ec, const blockchain::history_list& history)
 {
     if (ec)
@@ -125,7 +126,7 @@ void json_history_fetched(const payment_address& payaddr,
     std::cout << "  \"received\":  \"" << total_recv << "\"" << std::endl;
     std::cout << "}";
     std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count != std::numeric_limits<int>::max());
+    BITCOIN_ASSERT(remaining_count != bc::max_int32);
     --remaining_count;
     condition.notify_one();
     if (remaining_count > 0)
@@ -133,50 +134,29 @@ void json_history_fetched(const payment_address& payaddr,
     std::cout << std::endl;
 }
 
-bool payaddr_from_stdin(payment_address& payaddr)
-{
-    if (!payaddr.set_encoded(sx::read_stdin()))
-    {
-        std::cerr << "balance: Invalid address." << std::endl;
-        return false;
-    }
-    return true;
-}
-
-bool payaddr_from_argv(payaddr_list& payaddrs, const int argc, 
-    const char* argv[])
-{
-    for (int i = 1; i < argc; ++i)
-    {
-        const std::string arg = argv[i];
-        if (arg == "-j" || arg == "--json")
-        {
-            json_output = true;
-            continue;
-        }
-        payment_address payaddr;
-        if (!payaddr.set_encoded(arg))
-            return false;
-        payaddrs.push_back(payaddr);
-    }
-    return true;
-}
-
 bool sx::extensions::balance::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1))
         return false;
 
+    json_output = get_option(argc, argv, SX_OPTION_JSON);
+
     payaddr_list payaddrs;
     if (argc == 1)
     {
         payment_address payaddr;
-        if (!payaddr_from_stdin(payaddr))
+        if (!payaddr.set_encoded(sx::read_stream(std::cin)))
+        {
+            std::cerr << "balance: Invalid address." << std::endl;
             return false;
+        }
         payaddrs.push_back(payaddr);
     }
-    else if (!payaddr_from_argv(payaddrs, argc, argv))
-       return false;
+    else if (!sx::read_addresses(argc, argv, payaddrs))
+    {
+        std::cerr << "balance: Invalid address." << std::endl;
+        return false;
+    }
 
     remaining_count = static_cast<int>(payaddrs.size());
 
@@ -188,10 +168,10 @@ bool sx::extensions::balance::invoke(const int argc, const char* argv[])
     {
         if (json_output)
             fullnode.address.fetch_history(payaddr,
-                std::bind(json_history_fetched, payaddr, _1, _2));
+                std::bind(json_balance_fetched, payaddr, _1, _2));
         else
             fullnode.address.fetch_history(payaddr,
-                std::bind(history_fetched, payaddr, _1, _2));
+                std::bind(balance_fetched, payaddr, _1, _2));
     }
     std::thread update_loop([&fullnode]
     {

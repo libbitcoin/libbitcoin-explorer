@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -20,8 +20,9 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include "config.hpp"
+#include <sx/command/monitor.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/config.hpp>
 
 using namespace bc;
 using std::placeholders::_1;

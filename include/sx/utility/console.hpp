@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -62,10 +62,74 @@ const uint16_t mainnet_port_default = 8333;
  * Default testnet port for Bitcoin protocol.
  */
 const uint16_t testnet_port_default = 18333;
-    
+
 /**
- * Get the filename from the specified arguments, in the specified position,
- * or the default value if the number of arguments is insufficient.
+ * Safely convert a text string to the specified type, whitespace ignored.
+ *
+ * @param      <TValue> The converted type.
+ * @param[in]  text     The text to convert.
+ * @param[out] number   The parsed value.
+ * @return              True if successful.
+ */
+template <typename TValue>
+bool parse(const std::string text, TValue& number)
+{
+    // a reference is avoided in order to prevent original string corruption
+    std::string value(text);
+    boost::algorithm::trim(value);
+    try
+    {
+        number = boost::lexical_cast<TValue>(text);
+    }
+    catch (const boost::bad_lexical_cast&)
+    {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Get the argument from the specified args, in the specified index,
+ * or the value specified as the default if the number of args is 
+ * insufficient. Fallback defaults to empty string.
+ *
+ * @param[in]  argc      The number of args.
+ * @param[in]  argv      The array of args from which to obtain the argument.
+ * @param[in]  cin       The input stream from which to read the argument.
+ * @param[in]  fallback  The arg index from which the filename is to be read.
+ * @return               The argument, or the fallback if insufficient args.
+ */
+const char* get_arg(const int argc, const char* argv[],
+    const std::string& fallback="", const int index=1);
+
+/**
+ * Get the set of arguments from the specified argv, excluding options.
+ *
+ * @param[in]  argc      The number of args.
+ * @param[in]  argv      The array of args from which to obtain the argument.
+ * @return               The number of arguments read and returned in the list.
+ */
+size_t get_args(const int argc, const char* argv[],
+    std::vector<std::string>& arguments, const int index=1);
+
+/**
+ * Get the argument from the specified args, in the specified index,
+ * or the value from the specified stream if the number of args is 
+ * insufficient.
+ *
+ * @param[in]  argc   The number of args.
+ * @param[in]  argv   The array of args from which to obtain the argument.
+ * @param[in]  cin    The input stream from which to read the argument.
+ * @param[in]  index  The arg index from which the filename is to be read.
+ * @param[in]  trim   Trim the stream input of whitespace, defaults to false.
+ * @return            The argument, or the stream value if insufficient args.
+ */
+const char* get_arg_or_stream(const int argc, const char* argv[],
+    std::istream& cin, const int index=1, const bool trim=false);
+
+/**
+ * Get the filename from the specified args, in the specified position,
+ * or the default value if the number of args is insufficient.
  *
  * @param[in]  argc    The number of args.
  * @param[in]  argv    The array of args from which to obtain the filename.
@@ -76,6 +140,20 @@ const char* get_filename(const int argc, const char* argv[],
     const int index=1);
 
 /**
+ * Uniformly test argv for the presence of the specified option, in long
+ * or short format. The option can be a single character or a word. If the
+ * option is longer than one character then its first character as well as its 
+ * entire value will be tested. No other partial tests are made. The option
+ * must be lower case and should not contain any leading dash "-" characters.
+ *
+ * @param[in]  argc      The number of arguments in the arguments vector.
+ * @param[in]  argv      The arguments vector.
+ * @param[in]  option    The option value to test (must be lower case).
+ * @return               True if the option is set.
+ */
+bool get_option(const int argc, const char* argv[], const std::string& option);
+
+/**
  * Uniformly convert a text string to a bool, with whitespace and text case
  * ignored, although beware that case depends upon locale. The following set 
  * defines false boolean text values: { 'false', '0', 'no' } with all other
@@ -84,20 +162,30 @@ const char* get_filename(const int argc, const char* argv[],
  * @param[in]  text  The text to text.
  * @return           True if the text value is a member of the false set.
  */
-bool is_false(const std::string text);
+bool is_false(const std::string& text);
 
 /**
- * Uniformly test an argument for the presence of the specified flag, in long
- * or short format. The flag can be a single character or a word. If the flag is
- * longer than one character then its first character as well as its entire
- * value will be tested. No other partial tests are made. The flag must be
- * lower case and should not contain any leading dash "-" characters.
+ * Uniformly test an argument to to determine if it follows the option patter.
+ * Options may be two chars starting with one dash ("-") or more than two chars
+ * starting with a double dash ("--").
  *
  * @param[in]  argument  The argument to test.
- * @param[in]  flag      The flag to test (must be lower case).
- * @return               True if the flag is set.
+ * @return               True if the argument is an option.
  */
-bool is_flag(const std::string& argument, const std::string& flag);
+bool is_option(const std::string& argument);
+
+/**
+ * Uniformly test an argument for the presence of the specified option, in long
+ * or short format. The option can be a single character or a word. If the
+ * option is longer than one character then its first character as well as its 
+ * entire value will be tested. No other partial tests are made. The option
+ * must be lower case and should not contain any leading dash "-" characters.
+ *
+ * @param[in]  argument  The argument to test.
+ * @param[in]  option    The option value to test (must be lower case).
+ * @return               True if the option is set.
+ */
+bool is_option(const std::string& argument, const std::string& option);
 
 /**
  * Uniformly convert a text string to a bool, with whitespace and text case
@@ -108,7 +196,7 @@ bool is_flag(const std::string& argument, const std::string& flag);
  * @param[in]  text  The text to convert.
  * @return           True if the text value is a member of the true set.
  */
-bool is_true(const std::string text);
+bool is_true(const std::string& text);
 
 /**
  * Join a list of strings into a single string, in order.
@@ -155,39 +243,6 @@ void line_out(std::ostream& stream, std::string& line,
  */
 void line_out(std::ostream& stream, const std::vector<char*>& lines,
     const size_t offset=0, const char* inset="");
-
-/**
- * Safely convert a text string to the specified type, whitespace ignored.
- *
- * @param      <TValue> The converted type.
- * @param[in]  text     The text to convert.
- * @param[out] number   The parsed value.
- * @return              True if successful.
- */
-template <typename TValue>
-bool parse(const std::string text, TValue& number)
-{
-    // a reference is avoided in order to prevent original string corruption
-    std::string value(text);
-    boost::algorithm::trim(value);
-    try
-    {
-        number = boost::lexical_cast<TValue>(text);
-    }
-    catch (const boost::bad_lexical_cast&)
-    {
-        return false;
-    }
-    return true;
-}
-
-/**
- * Get a trimmed message from STDIN.
- *
- * @param[in]  trim  Trim the input of whitespace, defaults to false.
- * @return           The message read from STDIN.
- */
-std::string read_stdin(bool trim=false);
 
 /**
  * Get a trimmed message from the specified input stream.

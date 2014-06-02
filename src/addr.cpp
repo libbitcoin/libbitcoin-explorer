@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -32,7 +32,7 @@ bool sx::extensions::addr::invoke(const int argc, const char* argv[])
         return false;
 
     elliptic_curve_key key;
-    if (!read_public_or_private_key(key))
+    if (!read_public_or_private_key(key, std::cin))
     {
         std::cerr << "Invalid public or private key." << std::endl;
         return false;
@@ -41,8 +41,17 @@ bool sx::extensions::addr::invoke(const int argc, const char* argv[])
     payment_address address;
     set_public_key(address, key.public_key());
 
-    if (argc == 2)
-        address.set(atoi(argv[1]), address.hash());
+    if (argc > 1)
+    {
+        uint8_t version;
+        if (!parse<uint8_t>(argv[1], version))
+        {
+            std::cerr << "Invalid key version." << std::endl;
+            return false;
+        }
+
+        address.set(version, address.hash());
+    }
 
     std::cout << address.encoded() << std::endl;
     return true;

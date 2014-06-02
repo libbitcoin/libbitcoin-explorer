@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,13 +18,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <bitcoin/bitcoin.hpp>
+#include <sx/command/showscript.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 
 int main()
 {
-    data_chunk raw_script = decode_hex(read_stdin());
+    data_chunk raw_script = decode_hex(read_stream(std::cin));
     script_type script;
     try
     {

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -29,6 +29,16 @@
 namespace sx {
 
 /**
+ * Type for definiing lists of payment addresses. 
+ */
+typedef std::vector<bc::payment_address> payaddr_list;
+
+/**
+ * Key compression states (3-state boolean). 
+ */
+enum class key_compression { UNSPECIFIED, ON, OFF };
+
+/**
  * Load a satoshi item from the specified file.
  *
  * @param      <TItem>   The type of the item to load.
@@ -43,7 +53,7 @@ bool load_satoshi_item(TItem& item, const std::string& filename)
 
     std::ostringstream contents;
     if (filename == STDIN_PATH_SENTINEL)
-        contents << sx::read_stdin();
+        contents << sx::read_stream(std::cin);
 
     else
     {
@@ -77,45 +87,73 @@ bool load_satoshi_item(TItem& item, const std::string& filename)
 bc::data_chunk random_fill(size_t size);
 
 /**
- * Read address arguments from the specified args and/or input stream.
+ * Read two address arguments from the specified args and/or input stream.
  *
  * @param[in]  argc          The number of args.
  * @param[in]  argv          The arguments to read.
  * @param[in]  cin           The input stream.
  * @param[out] hex_str       The return string value.
  * @param[out] version_byte  The return byte value.
+ * return                    True if there was no parse error.
  */
-void read_address_args(const int argc, const char* argv[], std::istream& cin,
+bool read_address_tuple(const int argc, const char* argv[], std::istream& cin,
     std::string& hex_str, uint8_t& version_byte);
 
 /**
- * Read a private key from STDIN.
+ * Read a set of payment addresses from the specified argv. Each argument
+ * that is not an option is assumed to be a payment address.
+ *
+ * @param[in]  argc      The number of args.
+ * @param[in]  argv      The arguments to read.
+ * @param[out] payaddrs  The payment addresses read.
+ * return                True if there was no payment address parse error.
+ */
+bool read_addresses(const int argc, const char* argv[], 
+    sx::payaddr_list& payaddrs);
+
+/**
+ * Read optional hard/index argument pair from args, with defaults.
+ * Side effects: writes to STDERR in case of parsing error.
+ *
+ * @param[in]  argc     The number of args.
+ * @param[in]  argv     The arguments to read.
+ * @param[out] is_hard  The parsed is hard value or false if not present.
+ * @param[out] index    The parsed index value or zero if not present.
+ * @return              True if there was no error parsing an argument.
+ */
+bool read_hard_index_args(const int argc, const char* argv[], bool& is_hard,
+    uint32_t& index);
+
+/**
+ * Read a private key from the specified input stream.
  *
  * @param[out] key            The read key.
+ * @param[in]  cin  The input stream.
  * @param[in]  is_compressed  Flag indicating whether compression is expected.
  * @return                    True if a key was read.
  */
-bool read_private_key(bc::elliptic_curve_key& key, int is_compressed=-1);
+bool read_private_key(bc::elliptic_curve_key& key, std::istream& cin,
+    key_compression is_compressed = key_compression::UNSPECIFIED);
 
 /**
  * Read a private key from STDIN.
  *
  * @param[out] key            The read key.
  * @param[in]  arg            The argument from which to read the key.
- * @param[in]  is_compressed  Flag indicating whether compression is expected,
- *                            -1=unspecified, 0=uncompressed, 1=compressed.
+ * @param[in]  is_compressed  Flag indicating whether compression is expected.
  * @return                    True if a key was read.
  */
 bool read_private_key(bc::elliptic_curve_key& key, const std::string& arg,
-    int is_compressed=-1);
+    key_compression is_compressed = key_compression::UNSPECIFIED);
 
 /**
- * Read a public or private key from STDIN.
+ * Read a public or private key from the specified input stream.
  *
  * @param[out] key  The read key.
+ * @param[in]  cin  The input stream.
  * @return          True if a key was read.
  */
-bool read_public_or_private_key(bc::elliptic_curve_key& key);
+bool read_public_or_private_key(bc::elliptic_curve_key& key, std::istream& cin);
 
 /**
  * Validate the bitcoin checksum of a chunk of binary data.

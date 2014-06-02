@@ -18,8 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/command/sign-input.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -79,7 +79,7 @@ bool invoke(const int argc, const char* argv[])
         return -1;
     }
     elliptic_curve_key signing_key;
-    if (!read_private_key(signing_key))
+    if (!read_private_key(signing_key, std::cin))
     {
         std::cerr << "Invalid private key." << std::endl;
         return -1;

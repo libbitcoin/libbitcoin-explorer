@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -35,47 +35,93 @@
 
 namespace sx {
 
+const char* get_arg(const int argc, const char* argv[],
+    const std::string& fallback, const int index)
+{
+    return argc > index ? argv[index] : fallback.c_str();
+}
+
+const char* get_arg_or_stream(const int argc, const char* argv[], 
+    std::istream& cin, const int index, const bool trim)
+{
+    return argc > index ? argv[index] : read_stream(cin, trim).c_str();
+}
+
+size_t get_args(const int argc, const char* argv[], 
+    std::vector<std::string>& arguments, const int index)
+{
+    for (int i = index; i < argc; ++i)
+    {
+        std::string argument(argv[i]);
+        if (!sx::is_option(argument))
+            arguments.push_back(argument);
+    }
+
+    return arguments.size();
+}
+
 const char* get_filename(const int argc, const char* argv[], const int index)
 {
     return argc > index ? argv[index] : STDIN_PATH_SENTINEL;
 }
 
-bool is_false(const std::string text)
+bool get_option(const int argc, const char* argv[], const std::string& option)
 {
-    // a reference is avoided in order to prevent original string corruption
-    std::string value(text);
+    for (int i = 1; i < argc; i++)
+    {
+        if (is_option(argv[i], option))
+            return true;
+    }
 
-    // case conversion is dependent upon the thread locale
-    boost::algorithm::to_lower(value);
-
-    // the concept of string false is hardwired here
-    return text == "false" || text == "0" || "no";
+    return false;
 }
 
-bool is_flag(const std::string& argument, const std::string& flag)
+bool is_false(const std::string& text)
 {
-    std::string arg(argument);
+    std::string arg(text);
+
+    // case conversion is dependent upon the thread locale
     boost::algorithm::to_lower(arg);
 
+    // the concept of string false is hardwired here
+    return arg == "false" || arg == "0" || arg == "no";
+}
+
+bool is_option(const std::string& text)
+{
     // -f
-    bool is_short = arg.size() == 2 && arg[0] == '-' && arg[1] == flag[0];
+    bool is_short = text.size() == 2 && text[0] == '-' && text[1] != '-';
 
     // --foobar
-    bool is_long = !is_short && flag.size() > 1 && arg == "--" + flag;
+    bool is_long = !is_short && text.size() > 2 && text[0] == '-' &&
+        text[1] == '-' && text[2] != '-';
 
     return is_short || is_long;
 }
 
-bool is_true(const std::string text)
+bool is_option(const std::string& text, const std::string& option)
 {
-    // a reference is avoided in order to prevent original string corruption
-    std::string value(text);
+    std::string arg(text);
+    boost::algorithm::to_lower(arg);
+
+    // -f
+    bool is_short = arg.size() == 2 && arg[0] == '-' && arg[1] == option[0];
+
+    // --foobar
+    bool is_long = !is_short && option.size() > 1 && arg == "--" + option;
+
+    return is_short || is_long;
+}
+
+bool is_true(const std::string& text)
+{
+    std::string arg(text);
 
     // case conversion is dependent upon the thread locale
-    boost::algorithm::to_lower(value);
+    boost::algorithm::to_lower(arg);
 
     // the concept of string true is hardwired here
-    return text == "true" || text == "1" || "yes";
+    return arg == "true" || arg == "1" || arg == "yes";
 }
 
 void join(std::vector<std::string>& words, std::string& sentence, 
@@ -116,11 +162,6 @@ void line_out(std::ostream& stream, const std::vector<char*>& lines,
     // emit the remaining lines as offset-line
     std::for_each(++lines.begin(), lines.end(), 
         [&](const char* line){ line_out(stream, line, offset); });
-}
-
-std::string read_stdin(bool trim)
-{
-    return read_stream(std::cin, trim);
 }
 
 std::string read_stream(std::istream& cin, bool trim)

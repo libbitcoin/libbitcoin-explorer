@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -32,9 +32,7 @@ bool sx::extensions::mpk::invoke(const int argc, const char* argv[])
         return false;
 
     deterministic_wallet wallet;
-    std::string seed = read_stdin();
-
-    if (!wallet.set_seed(seed))
+    if (!wallet.set_seed(read_stream(std::cin)))
     {
         std::cerr << "mpk: Error setting seed" << std::endl;
         return false;

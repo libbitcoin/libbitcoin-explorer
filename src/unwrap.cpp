@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -30,9 +30,9 @@ bool sx::extensions::unwrap::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 2))
         return false;
 
-    std::string hex_str(argc > 1 ? argv[1] : read_stdin());
-
+    std::string hex_str(get_arg_or_stream(argc, argv, std::cin));
     data_chunk bytes = decode_hex(hex_str);
+
     if (bytes.size() < 5)
     {
         std::cerr << "Error: Must be at least five bytes" << std::endl;

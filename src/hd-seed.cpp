@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -42,8 +42,8 @@ bool sx::extensions::hd_seed::invoke(const int argc, const char* argv[])
     get_config(config);
     auto is_testnet = is_true(config[SX_SETTING_TESTNET]);
 
-    hd_private_key hd_key(entropy, is_testnet);
-    std::cout << hd_key.serialize() << std::endl;
+    hd_private_key private_key(entropy, is_testnet);
+    std::cout << private_key.serialize() << std::endl;
     return true;
 }
 

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -19,10 +19,9 @@
  */
 #include <iostream>
 #include <sstream>
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/mktx.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -38,7 +38,6 @@ bool fetch_stealth_stopped = false;
 void stealth_fetched(const std::error_code& ec,
     const blockchain::stealth_list& stealth_results)
 {
-
     if (ec)
         log_error() << "Stealth fetch failed: " << ec.message();
     else
@@ -55,8 +54,16 @@ bool sx::extensions::fetch_stealth::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 3))
         return false;
 
-    stealth_prefix prefix(argc > 1 ? std::string(argv[1]) : "");
-    size_t height = (argc == 3 ? boost::lexical_cast<size_t>(argv[2]) : 0);
+    std::string prefix_str(get_arg(argc, argv));
+    stealth_prefix prefix(prefix_str);
+
+    // TODO: create console util for this idiom (numeric arg read).
+    size_t height = 0;
+    if (argc > 2 && !parse<size_t>(argv[2], height))
+    {
+        std::cerr << "sx: Invalid height value specified." << std::endl;
+        return false;
+    }
 
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.blockchain.fetch_stealth(prefix, 

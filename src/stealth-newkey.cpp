@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <wallet/wallet.hpp>
+#include <sx/command/stealth-newkey.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace libwallet;

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -30,13 +30,11 @@ ec_secret generate_random_secret()
     std::random_device random;
     std::default_random_engine engine(random());
     ec_secret secret;
-    for (uint8_t& byte : secret)
+    for (uint8_t& byte: secret)
         byte = engine() % std::numeric_limits<uint8_t>::max();
     return secret;
 }
 
-// TODO: move this loc text to consuming method and emit when this is false.
-// std::cerr << "sx: Unable to read input values." << std::endl;
 bool ec_math_parse_args(const int argc, const char* argv[],
     ec_secret& secret, ec_point& point)
 {
@@ -67,9 +65,9 @@ bool set_ec_point(ec_point& point, const std::string& arg)
 {
     ec_point result = decode_hex(arg);
     if (result.size() != ec_compressed_size)
-       return false;
+        return false;
     if (result[0] != 0x02 && result[0] != 0x03)
-       return false;
+        return false;
     point = result;
     return true;
 }

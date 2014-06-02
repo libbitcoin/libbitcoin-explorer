@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -19,22 +19,27 @@
  */
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/hd-to-wif.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
-int main()
+bool sx::extensions::hd_to_wif::invoke(const int argc, const char* argv[])
 {
-    // Read key from STDIN.
-    std::string encoded_key = read_stdin();
-    hd_private_key key;
-    if (!key.set_serialized(encoded_key))
+    if (!validate_argument_range(argc, example(), 1, 1))
+        return false;
+
+    std::string encoded_key(get_arg_or_stream(argc, argv, std::cin));
+
+    hd_private_key private_key;
+    if (!private_key.set_serialized(encoded_key))
     {
         std::cerr << "hd-priv: error reading private key." << std::endl;
-        return -1;
+        return false;
     }
-    secret_parameter secret = key.private_key();
+
+    secret_parameter secret = private_key.private_key();
     std::cout << secret_to_wif(secret) << std::endl;
-    return 0;
+    return true;
 }

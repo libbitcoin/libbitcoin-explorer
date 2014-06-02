@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -21,32 +21,11 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/hd-priv.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
-
-// TODO: extract commad-specific error message and centralize implementation.
-bool read_hd_priv_args(const int argc, const char* argv[],
-    bool& is_hard, uint32_t& index)
-{
-    index = 0;
-    is_hard = false;
-
-    for (int i = 1; i < argc; ++i)
-    {
-        std::string arg = argv[i];
-        if (arg == "-h" || arg == "--hard")
-            is_hard = true;
-        else if (!sx::parse<size_t>(arg, index))
-        {
-            std::cerr << "hd-priv: Bad INDEX provided." << std::endl;
-            return false;
-        }
-    }
-
-    return true;
-}
 
 bool sx::extensions::hd_priv::invoke(const int argc, const char* argv[])
 {
@@ -55,11 +34,17 @@ bool sx::extensions::hd_priv::invoke(const int argc, const char* argv[])
 
     bool is_hard;
     uint32_t index;
-    if (!read_hd_priv_args(argc, argv, is_hard, index))
+    if (!read_hard_index_args(argc, argv, is_hard, index))
+    {
+        std::cerr << "sx: Bad INDEX provided." << std::endl;
         return false;
+    }
+
+    // TODO: constrain read_hard_index_args so that the encoded key can be 
+    // provided as an argument, and then update documentation.
+    std::string encoded_key = read_stream(std::cin);
 
     hd_private_key private_key;
-    std::string encoded_key = read_stdin();
     if (!private_key.set_serialized(encoded_key))
     {
         std::cerr << "hd-priv: error reading private key." << std::endl;

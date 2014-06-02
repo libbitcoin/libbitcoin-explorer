@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -29,12 +29,12 @@ bool sx::extensions::decode_addr::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 2))
         return false;
 
-    std::string addr_str(argc == 1 ? sx::read_stdin() : argv[1]);
+    std::string addr_str(get_arg_or_stream(argc, argv, std::cin));
 
     payment_address addr;
     if (!addr.set_encoded(addr_str))
     {
-        std::cerr << "decode-addr: Bad address '" << addr_str << "'." 
+        std::cerr << "decode-addr: Bad address '" << addr_str << "'."
             << std::endl;
         return false;
     }

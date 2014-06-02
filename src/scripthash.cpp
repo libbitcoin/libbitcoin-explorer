@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,13 +18,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <bitcoin/bitcoin.hpp>
+#include <sx/command/scripthash.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 
 int main()
 {
-    std::string hex_script = read_stdin();
+    std::string hex_script = read_stream(std::cin);
     script_type bip16_script = parse_script(decode_hex(hex_script));
     payment_address payaddr;
     set_script(payaddr, bip16_script);

@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -24,10 +24,10 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/command/wallet.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/command/wallet.hpp>
 
 #ifdef _WIN32
     #ifndef NOMINMAX

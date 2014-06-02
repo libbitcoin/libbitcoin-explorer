@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -29,7 +29,7 @@ bool sx::extensions::base58_decode::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 2))
         return false;
 
-    std::string b58_str(argc == 1 ? sx::read_stdin() : argv[1]);
+    std::string b58_str(get_arg_or_stream(argc, argv, std::cin));
     line_out(std::cout, encode_hex(decode_base58(b58_str)));
     return true;
 }

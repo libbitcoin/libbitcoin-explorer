@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -29,7 +29,7 @@
 
 namespace sx {
 
-/*
+/**
  * This is the full set of supported configuration properties. Consumers should
  * dereference properties using these settings names only.
  */
