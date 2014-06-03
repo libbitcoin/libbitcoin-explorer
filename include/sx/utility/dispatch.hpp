@@ -67,22 +67,6 @@ bool dispatch_summary(std::string& symbol);
 bool dispatch_usage();
 
 /**
- * Display a summary for the specified command.
- *
- * @param[in]  command  Pointer to the command to display.
- * @return              True if displayed successfully.
- */
-bool display_summary(std::shared_ptr<command> command);
-
-/**
- * Display usage for the specified command.
- *
- * @param[in]  command  Pointer to the command to display.
- * @return              True if displayed successfully.
- */
-bool display_usage(std::shared_ptr<command> command);
-
-/**
  * Invoke the command with the raw arguments as provided on the command line.
  *
  * @param[in]  argc  The number of elements in the argv array.

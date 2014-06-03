@@ -28,10 +28,6 @@
 
 namespace sx {
 
-#define TAB1 3
-#define TAB2 8
-#define TAB3 35
-
 bool dispatch_invoke(const int argc, const char* argv[], 
     const char* alias)
 {
@@ -63,22 +59,6 @@ bool dispatch_usage()
         display_usage(sx_command);
     };
     return sx::extensions::broadcast(func);
-}
-
-bool display_summary(std::shared_ptr<command> command)
-{
-    auto inset = (std::string(TAB1, ' ') + command->name());
-    line_out(std::cout, command->category());
-    line_out(std::cout, command->subcategory(), TAB2);
-    line_out(std::cout, command->description(), TAB3, inset.c_str());
-    return true;
-}
-
-bool display_usage(std::shared_ptr<command> command)
-{
-    line_out(std::cout, command->example());
-    line_out(std::cout, command->explanation());
-    return true;
 }
 
 int invoke(const int argc, const char* argv[])

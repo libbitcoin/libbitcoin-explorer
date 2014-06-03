@@ -20,6 +20,8 @@
 #ifndef SX_DISPLAY_HPP
 #define SX_DISPLAY_HPP
 
+#include <sx/command.hpp>
+
 /* NOTE: don't declare 'using namespace foo' in heders. */
 
 namespace sx {
@@ -40,10 +42,27 @@ void display_invalid_command(const char* command);
  */
 void display_invalid_config(const char* file);
 
+
+/**
+ * Display a summary for the specified command.
+ *
+ * @param[in]  command  Pointer to the command to display.
+ * @return              True if displayed successfully.
+ */
+bool display_summary(std::shared_ptr<command> command);
+
 /**
  * Display usage instructions (help) for the sx command line.
  */
 void display_usage();
+
+/**
+ * Display usage for the specified command.
+ *
+ * @param[in]  command  Pointer to the command to display.
+ * @return              True if displayed successfully.
+ */
+bool display_usage(std::shared_ptr<command> command);
 
 } // sx
 
