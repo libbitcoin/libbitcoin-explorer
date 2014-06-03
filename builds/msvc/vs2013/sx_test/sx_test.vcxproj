@@ -112,9 +112,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\test\command_line.cpp" />
-    <ClCompile Include="..\..\..\..\src\test\console.cpp" />
-    <ClCompile Include="..\..\..\..\src\test\generated.cpp" />
+    <ClCompile Include="..\..\..\..\src\test\console_line_out.cpp" />
+    <ClCompile Include="..\..\..\..\src\test\generated_broadcast.cpp" />
+    <ClCompile Include="..\..\..\..\src\test\generated_find.cpp" />
+    <ClCompile Include="..\..\..\..\src\test\generated_symbol.cpp" />
     <ClCompile Include="..\..\..\..\src\test\main.cpp" />
   </ItemGroup>
 </Project>

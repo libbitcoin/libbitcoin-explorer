@@ -10,13 +10,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\test\main.cpp" />
-    <ClCompile Include="..\..\..\..\src\test\command_line.cpp">
+    <ClCompile Include="..\..\..\..\src\test\console_line_out.cpp">
       <Filter>tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\test\generated.cpp">
+    <ClCompile Include="..\..\..\..\src\test\generated_broadcast.cpp">
       <Filter>tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\test\console.cpp">
+    <ClCompile Include="..\..\..\..\src\test\generated_find.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\test\generated_symbol.cpp">
       <Filter>tests</Filter>
     </ClCompile>
   </ItemGroup>

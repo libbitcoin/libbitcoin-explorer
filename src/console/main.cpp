@@ -22,11 +22,14 @@
 /**
  * Invoke the sx library with the raw arguments provided on the command line.
  *
- * @param argc the number of elements in the argv array.
- * @param argv the array of arguments, including the process.
- * @return Success (main_success) or failure (main_failure).
+ * @param argc  The number of elements in the argv array.
+ * @param argv  The array of arguments, including the process.
+ * @return      The numeric result to return via console exit.
  */
 int main(int argc, char* argv[])
 {
-    return sx::invoke(argc, const_cast<const char**>(argv));
+    auto code = sx::invoke(argc, const_cast<const char**>(argv));
+
+    // Cast away the class enum.
+    return static_cast<int>(code);
 }

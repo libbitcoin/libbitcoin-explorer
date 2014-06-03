@@ -265,3 +265,78 @@ public:
 
 #endif
 .endfor
+.echo "Generating src/test/generated_find.cpp..."
+.output "../src/test/generated_find.cpp"
+/*
+ * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ *
+ * This file is part of sx.
+ *
+ * sx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <boost/test/unit_test.hpp>
+#include <sx/sx.hpp>
+
+/********** WARNING: This file is generated, do not edit directly. **********/
+
+using namespace sx::extensions;
+
+BOOST_AUTO_TEST_SUITE(test_suite)
+.for command by symbol
+
+BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_object)
+{
+    BOOST_REQUIRE(find($(symbol:c)::symbol()) != nullptr);
+}
+.endfor
+BOOST_AUTO_TEST_SUITE_END()
+.echo "Generating src/test/generated_symbol.cpp..."
+.output "../src/test/generated_symbol.cpp"
+/*
+ * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ *
+ * This file is part of sx.
+ *
+ * sx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <boost/test/unit_test.hpp>
+#include <sx/sx.hpp>
+
+/********** WARNING: This file is generated, do not edit directly. **********/
+
+using namespace sx::extensions;
+
+BOOST_AUTO_TEST_SUITE(test_suite)
+.for command by symbol
+
+BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_expected_value)
+{
+    BOOST_REQUIRE($(symbol:c)::symbol() == std::string("$(symbol)"));
+}
+.endfor
+
+BOOST_AUTO_TEST_SUITE_END()

@@ -65,7 +65,7 @@
     <description value="Validate an address." />
     <example value="sx validaddr ADDRESS" />
     <explanation value="Validate an address." />
-    <explanation value="Return codes: { -1 failure, 0 = valid address, 1 = invalid address }" />
+    <explanation value="Return codes: { -1 = error, 0 = valid address, 1 = invalid address }" />
   </command>
 
   <command symbol="validtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">

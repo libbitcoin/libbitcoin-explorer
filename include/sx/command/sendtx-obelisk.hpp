@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx sendtx-obelisk FILENAME" }
+            { "sx sendtx-obelisk [FILENAME]" }
         };
     }
 

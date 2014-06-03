@@ -505,9 +505,6 @@
     <ClCompile Include="..\..\..\..\src\wallet.cpp">
       <Filter>src\other</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\mktx.cpp">
-      <Filter>src\other</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\monitor.cpp">
       <Filter>src\fetch</Filter>
     </ClCompile>
@@ -570,6 +567,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\generated.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mktx.cpp">
+      <Filter>src\other</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

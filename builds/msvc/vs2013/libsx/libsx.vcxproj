@@ -185,6 +185,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\initchain.cpp" />
+    <ClCompile Include="..\..\..\..\src\mktx.cpp" />
     <ClCompile Include="..\..\..\..\src\mnemonic.cpp" />
     <ClCompile Include="..\..\..\..\src\monitor.cpp" />
     <ClCompile Include="..\..\..\..\src\mpk.cpp" />

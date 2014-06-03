@@ -21,27 +21,9 @@
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
-
 using namespace sx::extensions;
 
 BOOST_AUTO_TEST_SUITE(test_suite)
-
-BOOST_AUTO_TEST_CASE(symbol_returns_expected_value)
-{
-    /* TODO: GSL Code generation */
-    BOOST_REQUIRE(wallet::symbol() == std::string("wallet"));
-    //BOOST_REQUIRE(wallet::symbol() == std::string("wallet"));
-    //BOOST_REQUIRE(wallet::symbol() == std::string("wallet"));
-}
-
-BOOST_AUTO_TEST_CASE(find_returns_object)
-{
-    /* TODO: GSL Code generation */
-    BOOST_REQUIRE(find(wallet::symbol()) != nullptr);
-    //BOOST_REQUIRE(find(wallet::symbol()) != nullptr);
-    //BOOST_REQUIRE(find(wallet::symbol()) != nullptr);
-}
 
 BOOST_AUTO_TEST_CASE(broadcast_returns_true)
 {

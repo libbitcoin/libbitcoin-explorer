@@ -95,7 +95,8 @@ public:
     {
         return
         {
-            { "Validate an address." }
+            { "Validate an address." },
+            { "Return codes: { -1 = error, 0 = valid address, 1 = invalid address }" }
         };
     }
 
