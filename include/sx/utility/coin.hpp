@@ -36,33 +36,29 @@ typedef std::vector<bc::payment_address> payaddr_list;
 /**
  * Key compression states (3-state boolean). 
  */
-enum class key_compression { UNSPECIFIED, ON, OFF };
+enum class key_compression { unspecified, on, off };
 
 /**
  * Load a satoshi item from the specified file.
  *
  * @param      <TItem>   The type of the item to load.
- * @param[in]  item      The loaded item.
+ * @param[out] item      The loaded item.
  * @param[in]  filename  The path and file name for the transaction file.
+ * @param[in]  stream    The stream to load from, if the file is "-".
  * @return               True if a transaction was loaded.
  */
 template <typename TItem>
-bool load_satoshi_item(TItem& item, const std::string& filename)
+bool load_satoshi_item(TItem& item, const std::string& filename, 
+    std::istream& stream)
 {
-    // TODO: extract localized text.
-
     std::ostringstream contents;
-    if (filename == STDIN_PATH_SENTINEL)
-        contents << sx::read_stream(std::cin);
-
+    if (filename == SX_STDIN_PATH_SENTINEL)
+        contents << sx::read_stream(stream);
     else
     {
         std::ifstream infile(filename, std::ifstream::binary);
         if (!infile)
-        {
-            std::cerr << "showtx: Bad file." << std::endl;
             return false;
-        }
         contents << infile.rdbuf();
     }
     auto raw_tx = decode_hex(contents.str());
@@ -72,7 +68,6 @@ bool load_satoshi_item(TItem& item, const std::string& filename)
     }
     catch (end_of_stream)
     {
-        std::cerr << "sx: Deserializing item failed." << std::endl;
         return false;
     }
     return true;
@@ -91,13 +86,13 @@ bc::data_chunk random_fill(size_t size);
  *
  * @param[in]  argc          The number of args.
  * @param[in]  argv          The arguments to read.
- * @param[in]  cin           The input stream.
+ * @param[in]  stream        The input stream.
  * @param[out] hex_str       The return string value.
  * @param[out] version_byte  The return byte value.
  * return                    True if there was no parse error.
  */
-bool read_address_tuple(const int argc, const char* argv[], std::istream& cin,
-    std::string& hex_str, uint8_t& version_byte);
+bool read_address_tuple(const int argc, const char* argv[], 
+    std::istream& stream, std::string& hex_str, uint8_t& version_byte);
 
 /**
  * Read a set of payment addresses from the specified argv. Each argument
@@ -128,12 +123,12 @@ bool read_hard_index_args(const int argc, const char* argv[], bool& is_hard,
  * Read a private key from the specified input stream.
  *
  * @param[out] key            The read key.
- * @param[in]  cin  The input stream.
+ * @param[in]  stream         The input stream.
  * @param[in]  is_compressed  Flag indicating whether compression is expected.
  * @return                    True if a key was read.
  */
-bool read_private_key(bc::elliptic_curve_key& key, std::istream& cin,
-    key_compression is_compressed = key_compression::UNSPECIFIED);
+bool read_private_key(bc::elliptic_curve_key& key, std::istream& stream,
+    key_compression is_compressed=key_compression::unspecified);
 
 /**
  * Read a private key from STDIN.
@@ -144,16 +139,17 @@ bool read_private_key(bc::elliptic_curve_key& key, std::istream& cin,
  * @return                    True if a key was read.
  */
 bool read_private_key(bc::elliptic_curve_key& key, const std::string& arg,
-    key_compression is_compressed = key_compression::UNSPECIFIED);
+    key_compression is_compressed=key_compression::unspecified);
 
 /**
  * Read a public or private key from the specified input stream.
  *
- * @param[out] key  The read key.
- * @param[in]  cin  The input stream.
- * @return          True if a key was read.
+ * @param[out] key     The read key.
+ * @param[in]  stream  The input stream.
+ * @return             True if a key was read.
  */
-bool read_public_or_private_key(bc::elliptic_curve_key& key, std::istream& cin);
+bool read_public_or_private_key(bc::elliptic_curve_key& key,
+    std::istream& stream);
 
 /**
  * Validate the bitcoin checksum of a chunk of binary data.

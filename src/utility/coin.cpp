@@ -45,8 +45,8 @@ data_chunk random_fill(size_t size)
     return result;
 }
 
-bool read_address_tuple(const int argc, const char* argv[], std::istream& cin,
-    std::string& hex_str, uint8_t& version_byte)
+bool read_address_tuple(const int argc, const char* argv[], 
+    std::istream& stream, std::string& hex_str, uint8_t& version_byte)
 {
     version_byte = 0;
 
@@ -55,12 +55,12 @@ bool read_address_tuple(const int argc, const char* argv[], std::istream& cin,
         // Two similar techniques for same arg requirements:
 
         // from encode_addr
-        hex_str = sx::read_stream(cin);
+        hex_str = sx::read_stream(stream);
 
         // from wrap
-        //cin >> hex_str;
+        //stream >> hex_str;
         //int vb;
-        //cin >> vb;
+        //stream >> vb;
         //version_byte = vb;
     }
     else if (argc == 2)
@@ -72,7 +72,7 @@ bool read_address_tuple(const int argc, const char* argv[], std::istream& cin,
         {
             if (!sx::parse<uint8_t>(argv[1], version_byte))
                 return false;
-            hex_str = sx::read_stream(cin);
+            hex_str = sx::read_stream(stream);
         }
     }
     else if (argc == 3)
@@ -119,10 +119,10 @@ bool read_hard_index_args(const int argc, const char* argv[], bool& is_hard,
     return true;
 }
 
-bool read_private_key(elliptic_curve_key& key, std::istream& cin, 
+bool read_private_key(elliptic_curve_key& key, std::istream& stream,
     key_compression is_compressed)
 {
-    return read_private_key(key, read_stream(cin), is_compressed);
+    return read_private_key(key, read_stream(stream), is_compressed);
 }
 
 bool read_private_key(elliptic_curve_key& key, const std::string& arg,
@@ -141,15 +141,15 @@ bool read_private_key(elliptic_curve_key& key, const std::string& arg,
     if (secret == null_hash)
         return false;
 
-    if (is_compressed != key_compression::UNSPECIFIED)
-        compressed_flag = (is_compressed == key_compression::ON);
+    if (is_compressed != key_compression::unspecified)
+        compressed_flag = (is_compressed == key_compression::on);
 
     return key.set_secret(secret, compressed_flag);
 }
 
-bool read_public_or_private_key(elliptic_curve_key& key, std::istream& cin)
+bool read_public_or_private_key(elliptic_curve_key& key, std::istream& stream)
 {
-    auto arg = read_stream(cin);
+    auto arg = read_stream(stream);
     if (read_private_key(key, arg))
         return true;
     auto pubkey = decode_hex(arg);

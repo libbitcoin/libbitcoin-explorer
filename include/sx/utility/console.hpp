@@ -36,12 +36,22 @@
 /* NOTE: don't declare 'using namespace foo' in heders. */
 
 namespace sx {
+
+/**
+ * Default delimiter for use in word joining operations.
+ */
+#define SX_JOIN_DELIMITER " \n\t"
+
+/**
+ * Default delimiter for use in sentence splitting operations.
+ */
+#define SX_SPLIT_DELIMITER "-"
     
 /**
- * Conventional commend line argument sentinel for indicating that a file
+ * Conventional command line argument sentinel for indicating that a file
  * should be read from STDIN.
  */
-#define STDIN_PATH_SENTINEL "-"
+#define SX_STDIN_PATH_SENTINEL "-"
 
 /**
  * Success return code for int main().
@@ -95,7 +105,7 @@ bool parse(const std::string text, TValue& number)
  *
  * @param[in]  argc      The number of args.
  * @param[in]  argv      The array of args from which to obtain the argument.
- * @param[in]  cin       The input stream from which to read the argument.
+ * @param[in]  stream    The input stream from which to read the argument.
  * @param[in]  fallback  The arg index from which the filename is to be read.
  * @return               The argument, or the fallback if insufficient args.
  */
@@ -117,15 +127,15 @@ size_t get_args(const int argc, const char* argv[],
  * or the value from the specified stream if the number of args is 
  * insufficient.
  *
- * @param[in]  argc   The number of args.
- * @param[in]  argv   The array of args from which to obtain the argument.
- * @param[in]  cin    The input stream from which to read the argument.
- * @param[in]  index  The arg index from which the filename is to be read.
- * @param[in]  trim   Trim the stream input of whitespace, defaults to false.
- * @return            The argument, or the stream value if insufficient args.
+ * @param[in]  argc    The number of args.
+ * @param[in]  argv    The array of args from which to obtain the argument.
+ * @param[in]  stream  The input stream from which to read the argument.
+ * @param[in]  index   The arg index from which the filename is to be read.
+ * @param[in]  trim    Trim the stream input of whitespace, defaults to false.
+ * @return             The argument, or the stream value if insufficient args.
  */
 const char* get_arg_or_stream(const int argc, const char* argv[],
-    std::istream& cin, const int index=1, const bool trim=false);
+    std::istream& stream, const int index=1, const bool trim=false);
 
 /**
  * Get the filename from the specified args, in the specified position,
@@ -203,10 +213,10 @@ bool is_true(const std::string& text);
  *
  * @param[in]  words      The list of strings to join.
  * @param[in]  sentence   The resulting string.
- * @param[in]  delimiter  The optional delimiter, defaults to one space.
+ * @param[in]  delimiter  The delimiter, defaults to SX_JOIN_DELIMITER.
  */
 void join(std::vector<std::string>& words, std::string& sentence,
-    const char* delimiter=" ");
+    const char* delimiter=SX_JOIN_DELIMITER);
 
 /**
  * Write the specified message, with optional padding and inset text, and a
@@ -247,11 +257,11 @@ void line_out(std::ostream& stream, const std::vector<char*>& lines,
 /**
  * Get a trimmed message from the specified input stream.
  *
- * @param[in]  cin   The input stream to read.
- * @param[in]  trim  Trim the input of whitespace, defaults to false.
- * @return           The message read from the input stream.
+ * @param[in]  stream The input stream to read.
+ * @param[in]  trim   Trim the input of whitespace, defaults to false.
+ * @return            The message read from the input stream.
  */
-std::string read_stream(std::istream& cin, bool trim=false);
+std::string read_stream(std::istream& stream, bool trim=false);
 
 /**
  * Sleep for the specified number of milliseconds.
@@ -264,10 +274,12 @@ void sleep_ms(const uint32_t milliseconds);
  * Split a list of strings into a string vector string, in order, white space
  * delimited.
  *
- * @param[in]  sentence  The string to split.
- * @param[in]  words     The list of resulting strings.
+ * @param[in]  sentence   The string to split.
+ * @param[out]  words     The list of resulting strings.
+ * @param[in]  delimiter  The delimeter, defaults to SX_SPLIT_DELIMITER.
  */
-void split(std::string& sentence, std::vector<std::string>& words);
+void split(const std::string& sentence, std::vector<std::string>& words,
+    const char* delimiter=SX_SPLIT_DELIMITER);
 
 /**
  * DANGER: do not call this if anything iteresting is going on,

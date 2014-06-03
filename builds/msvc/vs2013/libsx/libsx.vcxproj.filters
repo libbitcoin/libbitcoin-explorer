@@ -340,12 +340,6 @@
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\mktx.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\monitor.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\newkey.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -398,12 +392,6 @@
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validaddr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\validsig.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wallet.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58check-decode.cpp">
@@ -567,6 +555,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\crc32c.cpp" />
     <ClCompile Include="..\..\..\..\src\initchain.cpp">
       <Filter>src\ported</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wallet.cpp">
+      <Filter>src\ported</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mktx.cpp">
+      <Filter>src\ported</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\monitor.cpp">
+      <Filter>src\ported\fetch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validsig.cpp">
+      <Filter>src\ported\show_satoshi</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

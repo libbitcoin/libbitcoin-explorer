@@ -30,7 +30,7 @@ using namespace bc;
 static bool get_compression(const int argc, const char* argv[],
     sx::key_compression& is_compressed)
 {
-    is_compressed = sx::key_compression::UNSPECIFIED;
+    is_compressed = sx::key_compression::unspecified;
 
     if (argc > 1)
     {
@@ -47,7 +47,7 @@ static bool get_compression(const int argc, const char* argv[],
             return false;
 
         is_compressed = (compressed || !uncompressed ? 
-            sx::key_compression::ON : sx::key_compression::OFF);
+            sx::key_compression::on : sx::key_compression::off);
     }
 
     return true;
@@ -84,7 +84,7 @@ bool sx::extensions::pubkey::invoke(const int argc, const char* argv[])
             std::cerr << "Invalid public key." << std::endl;
             return false;
         }
-        key.set_compressed(is_compressed == key_compression::ON);
+        key.set_compressed(is_compressed == key_compression::on);
     }
 
     std::cout << key.public_key() << std::endl;

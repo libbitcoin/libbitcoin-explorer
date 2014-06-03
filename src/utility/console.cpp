@@ -42,9 +42,9 @@ const char* get_arg(const int argc, const char* argv[],
 }
 
 const char* get_arg_or_stream(const int argc, const char* argv[], 
-    std::istream& cin, const int index, const bool trim)
+    std::istream& stream, const int index, const bool trim)
 {
-    return argc > index ? argv[index] : read_stream(cin, trim).c_str();
+    return argc > index ? argv[index] : read_stream(stream, trim).c_str();
 }
 
 size_t get_args(const int argc, const char* argv[], 
@@ -62,7 +62,7 @@ size_t get_args(const int argc, const char* argv[],
 
 const char* get_filename(const int argc, const char* argv[], const int index)
 {
-    return argc > index ? argv[index] : STDIN_PATH_SENTINEL;
+    return argc > index ? argv[index] : SX_STDIN_PATH_SENTINEL;
 }
 
 bool get_option(const int argc, const char* argv[], const std::string& option)
@@ -164,9 +164,9 @@ void line_out(std::ostream& stream, const std::vector<char*>& lines,
         [&](const char* line){ line_out(stream, line, offset); });
 }
 
-std::string read_stream(std::istream& cin, bool trim)
+std::string read_stream(std::istream& stream, bool trim)
 {
-    std::istreambuf_iterator<char> first(cin), last;
+    std::istreambuf_iterator<char> first(stream), last;
     std::string result(first, last);
     if (trim)
         boost::algorithm::trim(result);
@@ -178,9 +178,10 @@ void sleep_ms(const uint32_t milliseconds)
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
-void split(std::string& sentence, std::vector<std::string>& words)
+void split(const std::string& sentence, std::vector<std::string>& words,
+    const char* delimiter)
 {
-    boost::split(words, sentence, boost::is_any_of("\n\t "));
+    boost::split(words, sentence, boost::is_any_of(delimiter));
 }
 
 void terminate_process_on_error(const std::error_code& error)

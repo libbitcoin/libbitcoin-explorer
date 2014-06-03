@@ -58,11 +58,13 @@ bool sx::extensions::sendtx_node::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 4))
         return false;
 
-    std::string filename(get_filename(argc, argv));
-
     transaction_type tx;
-    if (!sx::load_satoshi_item<transaction_type>(tx, filename))
+    std::string filename(get_filename(argc, argv));
+    if (!sx::load_satoshi_item<transaction_type>(tx, filename, std::cin))
+    {
+        std::cerr << "sx: Deserializing transaction failed." << std::endl;
         return false;
+    }
 
     std::string hostname = "localhost";
     if (argc > 2)

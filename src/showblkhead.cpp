@@ -30,11 +30,13 @@ bool sx::extensions::showblkhead::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 2))
         return false;
 
-    std::string filename(get_filename(argc, argv));
-
     block_header_type blk_header;
-    if (!load_satoshi_item<block_header_type>(blk_header, filename))
+    std::string filename(get_filename(argc, argv));
+    if (!load_satoshi_item<block_header_type>(blk_header, filename, std::cin))
+    {
+        std::cerr << "sx: Deserializing block header failed." << std::endl;
         return false;
+    }
 
     // Show details.
     std::cout << "hash: " << hash_block_header(blk_header) << std::endl;

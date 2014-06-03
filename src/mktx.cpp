@@ -28,21 +28,21 @@ using namespace bc;
 using namespace libwallet;
 
 // Currently unused.
-static int display_help()
-{
-    puts("Usage: mktx FILENAME [ARGS]...");
-    puts("");
-    puts("Options:");
-    puts("");
-    puts(" -i, --input\tPrevious output in the form TXHASH:INDEX");
-    puts(" -o, --output\tSpecify a destination ADDRESS:AMOUNT");
-    puts("\t\tor HEXSCRIPT:AMOUNT");
-    puts("\t\tAMOUNT uses internal bitcoin values");
-    puts("\t\t  0.1 BTC = 0.1 * 10^8 = 10000000");
-    puts("");
-    puts("Please email suggestions and questions to <genjix@riseup.net>.");
-    return -1;
-}
+//static int display_help()
+//{
+//    puts("Usage: mktx FILENAME [ARGS]...");
+//    puts("");
+//    puts("Options:");
+//    puts("");
+//    puts(" -i, --input\tPrevious output in the form TXHASH:INDEX");
+//    puts(" -o, --output\tSpecify a destination ADDRESS:AMOUNT");
+//    puts("\t\tor HEXSCRIPT:AMOUNT");
+//    puts("\t\tAMOUNT uses internal bitcoin values");
+//    puts("\t\t  0.1 BTC = 0.1 * 10^8 = 10000000");
+//    puts("");
+//    puts("Please email suggestions and questions to <genjix@riseup.net>.");
+//    return -1;
+//}
 
 static bool two_args_remain(size_t current_arg, int argc)
 {
@@ -51,22 +51,22 @@ static bool two_args_remain(size_t current_arg, int argc)
 
 static bool load_outpoint(output_point& prevout, const std::string& parameter)
 {
-    std::vector<std::string> strs;
-    boost::split(strs, parameter, boost::is_any_of(":"));
-    if (strs.size() != 2)
+    std::vector<std::string> words;
+    sx::split(parameter, words, ":");
+    if (words.size() != 2)
     {
         std::cerr << "mktx: Format for previous output is TXHASH:INDEX."
             << std::endl;
         return false;
     }
-    const std::string& hex_string = strs[0];
+    const std::string& hex_string = words.front();
     if (hex_string.size() != 64)
     {
         std::cerr << "mktx: Incorrect TXHASH." << std::endl;
         return false;
     }
     prevout.hash = decode_hash(hex_string);
-    const std::string& index_string = strs[1];
+    const std::string& index_string = words[1];
     try
     {
         prevout.index = boost::lexical_cast<uint32_t>(index_string);
@@ -139,22 +139,16 @@ static bool build_output_script(
 static bool add_output(transaction_type& tx, const std::string& parameter)
 {
     transaction_output_type output;
-    std::vector<std::string> strs;
-    boost::split(strs, parameter, boost::is_any_of(":"));
-    enum class output_decoded_type
-    {
-        unknown=0,
-        address,
-        raw_script
-    };
-    if (strs.size() != 2)
+    std::vector<std::string> words;
+    sx::split(parameter, words, ":");
+    if (words.size() != 2)
     {
         std::cerr << "mktx: Format for output is ADDRESS:VALUE"
             << " or HEXSCRIPT:VALUE."
             << std::endl;
         return false;
     }
-    const std::string& output_str = strs[0];
+    const std::string& output_str = words.front();
     payment_address addr;
     stealth_address stealth;
     script_type rawscript;
@@ -216,11 +210,11 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
             std::cerr << "mktx: Bad address or script '" << output_str << "'." << std::endl;
             return false;
         }
-        payto=pretty(rawscript);
+        payto = pretty(rawscript);
         output.script = rawscript;
     }
 
-    const std::string& value_str = strs[1];
+    const std::string& value_str = words[1];
     try
     {
         output.value = boost::lexical_cast<uint64_t>(value_str);
@@ -240,11 +234,11 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
 static bool modify(transaction_type& tx,
     const std::string& action, const std::string& parameter)
 {
-    if (action == "-i" || action == "--input")
+    if (sx::is_option("input"))
         return add_input(tx, parameter);
-    else if (action == "-o" || action == "--output")
+    else if (sx::is_option("output"))
         return add_output(tx, parameter);
-    else if (action == "-l" || action == "--locktime")
+    else if (sx::is_option("locktime"))
         return change_locktime(tx, parameter);
     std::cerr << "mktx: Action '" << action << "' doesn't exist." << std::endl;
     return false;
@@ -252,10 +246,11 @@ static bool modify(transaction_type& tx,
 
 bool sx::extensions::mktx::invoke(const int argc, const char* argv[])
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
+    if (!validate_argument_range(argc, example(), 2))
         return false;
 
-    const std::string filename = argv[1];
+    const std::string filename(get_filename(argc, argv));
+
     // Now create transaction.
     transaction_type tx;
     tx.version = 1;
@@ -270,10 +265,11 @@ bool sx::extensions::mktx::invoke(const int argc, const char* argv[])
         current_arg += 2;
         BITCOIN_ASSERT(current_arg <= argc);
     }
+
     // Now serialize transaction.
     data_chunk raw_tx(satoshi_raw_size(tx));
     satoshi_save(tx, raw_tx.begin());
-    if (filename == "-")
+    if (filename == SX_STDIN_PATH_SENTINEL)
         std::cout << raw_tx << std::endl;
     else
     {
