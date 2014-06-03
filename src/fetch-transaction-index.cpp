@@ -29,11 +29,11 @@ using namespace bc;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction_index,
 // otherwise concurrent test execution will collide on shared state.
-bool fetch_transaction_index_stopped = false;
+static bool node_stopped = false;
 
-// TODO: fetch_transaction_index_stopped should be passed here via closure
+// TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-void transaction_index_fetched(const std::error_code& ec, size_t height,
+static void transaction_index_fetched(const std::error_code& ec, size_t height,
     size_t index)
 {
     if (ec)
@@ -44,7 +44,7 @@ void transaction_index_fetched(const std::error_code& ec, size_t height,
         std::cout << "Index: " << index << std::endl;
     }
 
-    fetch_transaction_index_stopped = true;
+    node_stopped = true;
 }
 
 bool sx::extensions::fetch_transaction_index::invoke(const int argc, 
@@ -59,7 +59,7 @@ bool sx::extensions::fetch_transaction_index::invoke(const int argc,
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.blockchain.fetch_transaction_index(tx_hash, 
         transaction_index_fetched);
-    poll(fullnode, pool, fetch_transaction_index_stopped);
+    poll(fullnode, pool, node_stopped);
 
     return true;
 }

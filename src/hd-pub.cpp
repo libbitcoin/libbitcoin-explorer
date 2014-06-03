@@ -27,7 +27,7 @@
 using namespace bc;
 using namespace libwallet;
 
-bool private_to_public_key()
+static bool private_to_public_key()
 {
     hd_private_key private_key;
     if (!private_key.set_serialized(sx::read_stream(std::cin)))

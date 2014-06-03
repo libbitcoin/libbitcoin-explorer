@@ -39,7 +39,7 @@ static std::mutex mutex;
 static std::condition_variable condition;
 static bool json_output = false;
 
-void history_fetched(const payment_address& payaddr,
+static void history_fetched(const payment_address& payaddr,
     const std::error_code& ec, const blockchain::history_list& history)
 {
     if (ec)
@@ -83,7 +83,7 @@ void history_fetched(const payment_address& payaddr,
 }
 
 // TODO: generalize json serialization.
-void json_history_fetched(const payment_address& payaddr,
+static void json_history_fetched(const payment_address& payaddr,
     const std::error_code& ec, const blockchain::history_list& history)
 {
     if (ec)

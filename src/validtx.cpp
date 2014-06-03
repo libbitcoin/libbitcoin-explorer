@@ -30,17 +30,17 @@ using namespace bc;
 
 // TODO: this should be a member of sx::extensions::validtx,
 // otherwise concurrent test execution will collide on shared state.
-bool validtx_stopped = false;
+static bool node_stopped = false;
 
-// TODO: validtx_stopped should be passed here via closure
+// TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-void tx_validated(const std::error_code& ec, const index_list& unconfirmed)
+static void valid_tx(const std::error_code& ec, const index_list& unconfirmed)
 {
     std::cout << "Status: " << ec.message() << std::endl;
     for (size_t unconfirmed_index: unconfirmed)
         std::cout << "  Unconfirmed: " << unconfirmed_index << std::endl;
 
-    validtx_stopped = true;
+    node_stopped = true;
 }
 
 bool sx::extensions::validtx::invoke(const int argc, const char* argv[])
@@ -55,8 +55,8 @@ bool sx::extensions::validtx::invoke(const int argc, const char* argv[])
         return false;
 
     OBELISK_FULLNODE(pool, fullnode);
-    fullnode.transaction_pool.validate(tx, tx_validated);
-    poll(fullnode, pool, validtx_stopped);
+    fullnode.transaction_pool.validate(tx, valid_tx);
+    poll(fullnode, pool, node_stopped);
 
     return true;
 }

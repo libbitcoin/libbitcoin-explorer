@@ -27,14 +27,14 @@ using namespace bc;
 using namespace libwallet;
 
 // Read all args to a string list in order.
-void args_to_words(const int argc, const char* argv[], string_list& words)
+static void args_to_words(const int argc, const char* argv[], string_list& words)
 {
     for (int i = 1; i < argc; ++i)
         words.push_back(argv[i]);
 }
 
 // Read STDIN to a string list in order.
-void stdin_to_words(std::istream& cin, string_list& words)
+static void stdin_to_words(std::istream& cin, string_list& words)
 {
     std::string sentence(sx::read_stream(cin, true));
     sx::split(sentence, words);

@@ -29,18 +29,18 @@ using namespace bc;
 
 // TODO: this should be a member of sx::extensions::fetch_last_height,
 // otherwise concurrent test execution will collide on shared state.
-bool fetch_last_height_stopped = false;
+static bool node_stopped = false;
 
-// TODO: fetch_last_height_stopped should be passed here via closure
+// TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-void last_height_fetched(const std::error_code& ec, size_t height)
+static void last_height_fetched(const std::error_code& ec, size_t height)
 {
     if (ec)
         std::cerr << "fetch-last-height: " << ec.message() << std::endl;
     else
         std::cout << height << std::endl;
 
-    fetch_last_height_stopped = true;
+    node_stopped = true;
 }
 
 bool sx::extensions::fetch_last_height::invoke(const int argc,
@@ -48,7 +48,7 @@ bool sx::extensions::fetch_last_height::invoke(const int argc,
 {
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.blockchain.fetch_last_height(last_height_fetched);
-    poll(fullnode, pool, fetch_last_height_stopped);
+    poll(fullnode, pool, node_stopped);
 
     return true;
 }

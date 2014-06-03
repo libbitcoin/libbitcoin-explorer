@@ -31,11 +31,11 @@ using std::placeholders::_2;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction,
 // otherwise concurrent test execution will collide on shared state.
-bool fetch_transaction_stopped = false;
+static bool node_stopped = false;
 
-// TODO: fetch_transaction_stopped should be passed here via closure
+// TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-void transaction_fetched(const std::error_code& ec, const transaction_type& tx)
+static void transaction_fetched(const std::error_code& ec, const transaction_type& tx)
 {
     if (ec)
         std::cerr << "fetch-transaction: " << ec.message() << std::endl;
@@ -46,11 +46,11 @@ void transaction_fetched(const std::error_code& ec, const transaction_type& tx)
         std::cout << raw_tx << std::endl;
     }
 
-    fetch_transaction_stopped = true;
+    node_stopped = true;
 }
 
 // Try the tx memory pool if the transaction is not in the blockchain.
-void transaction_fetched_wrapper(const std::error_code& ec, 
+static void transaction_fetched_wrapper(const std::error_code& ec,
     const transaction_type& tx, const hash_digest& tx_hash, 
     obelisk::fullnode_interface& fullnode)
 {
@@ -74,7 +74,7 @@ bool sx::extensions::fetch_transaction::invoke(const int argc,
     fullnode.blockchain.fetch_transaction(tx_hash,
         std::bind(transaction_fetched_wrapper, _1, _2, tx_hash, 
             std::ref(fullnode)));
-    poll(fullnode, pool, fetch_transaction_stopped);
+    poll(fullnode, pool, node_stopped);
 
     return true;
 }

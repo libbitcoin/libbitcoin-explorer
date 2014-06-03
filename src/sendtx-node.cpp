@@ -30,11 +30,11 @@ using std::placeholders::_2;
 
 // TODO: this should be a member of sx::extensions::sendtx_node,
 // otherwise concurrent test execution will collide on shared state.
-bool sendtx_node_stopped = false;
+static bool node_stopped = false;
 
-// TODO: sendtx_node_stopped should be passed here via closure
+// TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-void send_tx(const std::error_code& ec, channel_ptr node, transaction_type& tx)
+static void send_tx(const std::error_code& ec, channel_ptr node, transaction_type& tx)
 {
     // There must be a better way.
     sx::terminate_process_on_error(ec);
@@ -48,7 +48,7 @@ void send_tx(const std::error_code& ec, channel_ptr node, transaction_type& tx)
             else
                 std::cout << "sendtx: Sent " << time(nullptr) << std::endl;
 
-            sendtx_node_stopped = true;
+            node_stopped = true;
         };
     node->send(tx, handle_send);
 }
@@ -81,7 +81,7 @@ bool sx::extensions::sendtx_node::invoke(const int argc, const char* argv[])
     network net(pool);
     connect(shake, net, hostname, port, 
         std::bind(send_tx, _1, _2, std::ref(tx)));
-    while (!sendtx_node_stopped)
+    while (!node_stopped)
         sleep_ms(2000);
     pool.stop();
     pool.join();

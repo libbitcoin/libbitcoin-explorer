@@ -29,11 +29,11 @@ using namespace bc;
 
 // TODO: this should be a member of sx::extensions::fetch_block_header,
 // otherwise concurrent test execution will collide on shared state.
-bool fetch_block_header_stopped = false;
+static bool node_stopped = false;
 
-// TODO: fetch_block_header_stopped should be passed here via closure
+// TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-void block_header_fetched(const std::error_code& ec,
+static void block_header_fetched(const std::error_code& ec,
     const block_header_type& blk_header)
 {
     if (ec)
@@ -45,11 +45,11 @@ void block_header_fetched(const std::error_code& ec,
         std::cout << raw_blk_header << std::endl;
     }
 
-    fetch_block_header_stopped = true;
+    node_stopped = true;
 }
 
 // Try first to interpret the index as a hash, otherwise treat it as a height.
-bool initialize_fetch_block_header(std::string& index, 
+static bool initialize_fetch_block_header(std::string& index,
     obelisk::fullnode_interface& fullnode)
 {
     size_t height;
@@ -79,7 +79,7 @@ bool sx::extensions::fetch_block_header::invoke(const int argc,
         line_out(std::cerr, "fetch-block-header: Bad index provided.");
         return false;
     }
-    poll(fullnode, pool, fetch_block_header_stopped);
+    poll(fullnode, pool, node_stopped);
 
     return true;
 }

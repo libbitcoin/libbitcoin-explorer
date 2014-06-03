@@ -39,7 +39,7 @@ bool sx::extensions::initchain::invoke(const int argc, const char* argv[])
 
 using namespace bc;
 
-void create_file(const std::string& filename, size_t filesize)
+static void create_file(const std::string& filename, size_t filesize)
 {
     std::ofstream file(filename, std::ios::binary | std::ios::trunc);
     constexpr size_t chunk_size = 100000;
@@ -48,7 +48,7 @@ void create_file(const std::string& filename, size_t filesize)
         file.write(random_buffer.data(), chunk_size);
 }
 
-void initialize_new_stealth_database(const std::string& filename)
+static void initialize_new_stealth_database(const std::string& filename)
 {
     create_file(filename, 100000000);
     mmfile file(filename);

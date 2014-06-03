@@ -31,11 +31,11 @@ using std::placeholders::_2;
 
 // TODO: this should be a member of sx::extensions::fetch_stealth,
 // otherwise concurrent test execution will collide on shared state.
-bool fetch_stealth_stopped = false;
+static bool node_stopped = false;
 
-// TODO: fetch_stealth_stopped should be passed here via closure
+// TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-void stealth_fetched(const std::error_code& ec,
+static void stealth_fetched(const std::error_code& ec,
     const blockchain::stealth_list& stealth_results)
 {
     if (ec)
@@ -46,7 +46,7 @@ void stealth_fetched(const std::error_code& ec,
                 << " address: " << row.address.encoded()
                 << " tx_hash: " << row.transaction_hash << std::endl;
 
-    fetch_stealth_stopped = true;
+    node_stopped = true;
 }
 
 bool sx::extensions::fetch_stealth::invoke(const int argc, const char* argv[])
@@ -68,7 +68,7 @@ bool sx::extensions::fetch_stealth::invoke(const int argc, const char* argv[])
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.blockchain.fetch_stealth(prefix, 
         std::bind(stealth_fetched, _1, _2), height);
-    poll(fullnode, pool, fetch_stealth_stopped);
+    poll(fullnode, pool, node_stopped);
 
     return true;
 }

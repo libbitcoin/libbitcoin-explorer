@@ -27,7 +27,7 @@
 
 using namespace bc;
 
-bool get_compression(const int argc, const char* argv[], 
+static bool get_compression(const int argc, const char* argv[],
     sx::key_compression& is_compressed)
 {
     is_compressed = sx::key_compression::UNSPECIFIED;
