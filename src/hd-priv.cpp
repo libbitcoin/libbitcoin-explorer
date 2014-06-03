@@ -54,7 +54,7 @@ bool sx::extensions::hd_priv::invoke(const int argc, const char* argv[])
     if (is_hard)
         index += first_hardened_key;
 
-    auto child_key = private_key.generate_private_key(index);
+    const auto child_key = private_key.generate_private_key(index);
     if (!child_key.valid())
     {
         std::cerr << "hd-priv: error deriving child key." << std::endl;

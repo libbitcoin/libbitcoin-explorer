@@ -148,10 +148,10 @@ bool read_private_key(elliptic_curve_key& key, const std::string& arg,
 
 bool read_public_or_private_key(elliptic_curve_key& key, std::istream& stream)
 {
-    auto arg = read_stream(stream);
+    const auto arg = read_stream(stream);
     if (read_private_key(key, arg))
         return true;
-    auto pubkey = decode_hex(arg);
+    const auto pubkey = decode_hex(arg);
     return key.set_public_key(pubkey);
 }
 
@@ -161,10 +161,10 @@ bool validate_checksum(data_chunk& data)
         return false;
 
     data_chunk rawdata(data.begin(), data.end() - 4);
-    auto bc_checksum = bitcoin_checksum(rawdata);
+    const auto bc_checksum = bitcoin_checksum(rawdata);
 
     data_chunk rawchecksum(data.end() - 4, data.end());
-    auto my_checksum = from_little_endian<uint32_t>(rawchecksum.begin());
+    const auto my_checksum = from_little_endian<uint32_t>(rawchecksum.begin());
 
     return bc_checksum == my_checksum;
 }

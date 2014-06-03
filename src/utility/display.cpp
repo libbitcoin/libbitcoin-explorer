@@ -42,7 +42,7 @@ void display_invalid_config(const char* file)
 
 bool display_summary(std::shared_ptr<command> command)
 {
-    auto inset = (std::string(tab1, ' ') + command->name());
+    const auto inset = (std::string(tab1, ' ') + command->name());
     line_out(std::cout, command->category());
     line_out(std::cout, command->subcategory(), tab2);
     line_out(std::cout, command->description(), tab3, inset.c_str());

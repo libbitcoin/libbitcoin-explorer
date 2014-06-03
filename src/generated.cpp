@@ -30,7 +30,7 @@ namespace extensions {
 
 std::shared_ptr<command> find(const char* symbol)
 {
-    auto symbolic = std::string(symbol);
+    const auto symbolic = std::string(symbol);
 
     if (symbolic == addr::symbol())
         return std::make_shared<addr>();

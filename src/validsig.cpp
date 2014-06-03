@@ -25,11 +25,11 @@
 
 using namespace bc;
 
-static bool valid_signature(transaction_type& tx, uint32_t input_index,
-    elliptic_curve_key& key, const script_type& script_code,
-    data_chunk signature)
+static bool valid_signature(const transaction_type& tx,
+    const uint32_t input_index, elliptic_curve_key& key, 
+    const script_type& script_code, data_chunk signature)
 {
-    auto hash_type = signature.back();
+    const auto hash_type = signature.back();
     signature.pop_back();
     auto tx_hash = script_type::generate_signature_hash(
         tx, input_index, script_code, hash_type);

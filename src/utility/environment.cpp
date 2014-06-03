@@ -46,7 +46,7 @@ tstring home_directory()
 {
 #ifdef _WIN32
     tchar app_data_path[MAX_PATH];
-    auto result = SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL,
+    const auto result = SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL,
         SHGFP_TYPE_CURRENT, app_data_path);
     return tstring(SUCCEEDED(result) ? app_data_path : L"");
 #else

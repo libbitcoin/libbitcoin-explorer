@@ -23,11 +23,14 @@
 
 using namespace bc;
 
-int main()
+bool sx::extensions::ripemd_hash::invoke(const int argc, const char* argv[])
 {
-    std::string data = read_stream(std::cin);
-    const short_hash hash =
-        bitcoin_short_hash(data_chunk(data.begin(), data.end()));
-    std::cout << hash << std::endl;
+    if (!validate_argument_range(argc, example(), 1, 1))
+        return false;
+
+    const auto data = read_stream(std::cin);
+    const auto chunk = data_chunk(data.begin(), data.end());
+    std::cout << bitcoin_short_hash(chunk) << std::endl;
+    return true;
 }
 

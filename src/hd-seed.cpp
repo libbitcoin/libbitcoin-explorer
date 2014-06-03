@@ -40,7 +40,7 @@ bool sx::extensions::hd_seed::invoke(const int argc, const char* argv[])
     // See notes in config.h regarding setting symbolic names and typed values.
     config_map_type config;
     get_config(config);
-    auto is_testnet = is_true(config[SX_SETTING_TESTNET]);
+    const auto is_testnet = is_true(config[SX_SETTING_TESTNET]);
 
     hd_private_key private_key(entropy, is_testnet);
     std::cout << private_key.serialize() << std::endl;

@@ -31,8 +31,8 @@ bool sx::extensions::wif_to_secret::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 1))
         return false;
 
-    auto wif = read_stream(std::cin);
-    auto secret = libwallet::wif_to_secret(wif);
+    const auto wif = read_stream(std::cin);
+    const auto secret = libwallet::wif_to_secret(wif);
     if (secret == null_hash)
     {
         std::cerr << "Invalid private key." << std::endl;

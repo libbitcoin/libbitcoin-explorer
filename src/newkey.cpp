@@ -32,7 +32,7 @@ bool sx::extensions::newkey::invoke(const int argc, const char* argv[])
 
     elliptic_curve_key key;
     key.new_keypair();
-    auto secret = key.secret();
+    const auto secret = key.secret();
     std::cout << libwallet::secret_to_wif(secret) << std::endl;
     return true;
 }

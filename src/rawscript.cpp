@@ -81,7 +81,7 @@ bool sx::extensions::rawscript::invoke(const int argc, const char* argv[])
     get_args(argc, argv, words);
     join(words, sentence);
 
-    auto parsed_script = script_from_pretty(sentence);
+    const auto parsed_script = script_from_pretty(sentence);
     std::cout << save_script(parsed_script) << std::endl;
     return true;
 }

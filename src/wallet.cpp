@@ -697,7 +697,7 @@ static void broadcast_subsystem()
     // wait
     while (!node_stopped)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        sleep_ms(200);
         // if any new shit then broadcast it.
         broadcast_mutex.lock();
         if (tx_broadcast_queue.empty())
@@ -708,10 +708,10 @@ static void broadcast_subsystem()
         transaction_type tx = tx_broadcast_queue.back();
         tx_broadcast_queue.pop_back();
         broadcast_mutex.unlock();
-        auto ignore_send = [](const std::error_code&, size_t) {};
+        const auto ignore_send = [](const std::error_code&, size_t) {};
         prot.broadcast(tx, ignore_send);
     }
-    auto ignore_stop = [](const std::error_code&) {};
+    const auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
     // Safely close down.
     pool.stop();

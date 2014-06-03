@@ -31,8 +31,8 @@ namespace sx {
 bool dispatch_invoke(const int argc, const char* argv[], 
     const char* alias)
 {
-    auto target = (alias == nullptr ? argv[0] : alias);
-    auto command = sx::extensions::find(target);
+    const auto target = (alias == nullptr ? argv[0] : alias);
+    const auto command = sx::extensions::find(target);
     if (command == nullptr)
     {
         display_invalid_command(target);
@@ -43,7 +43,7 @@ bool dispatch_invoke(const int argc, const char* argv[],
 
 bool dispatch_summary(const char* symbol)
 {
-    auto command = sx::extensions::find(symbol);
+    const auto command = sx::extensions::find(symbol);
     if (command == nullptr)
     {
         display_invalid_command(symbol);
@@ -54,7 +54,7 @@ bool dispatch_summary(const char* symbol)
 
 bool dispatch_usage()
 {
-    auto func = [](std::shared_ptr<command> sx_command) -> void 
+    const auto func = [](std::shared_ptr<command> sx_command) -> void
     {
         display_usage(sx_command);
     };

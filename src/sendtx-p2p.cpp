@@ -169,7 +169,7 @@ bool invoke(const int argc, const char* argv[])
             std::bind(check_connection_count, _1, _2, node_count));
         std::this_thread::sleep_for(std::chrono::seconds(2));
     }
-    auto ignore_stop = [](const std::error_code&) {};
+    const auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
     // Safely close down.
     pool.stop();
