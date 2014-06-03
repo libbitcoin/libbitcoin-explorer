@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <NuGetPackageImportStamp>9a850fb6</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>2aa76a0e</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
     <ProjectName>libsx</ProjectName>
@@ -344,7 +344,6 @@
     <ClCompile Include="..\..\..\..\src\validtx.cpp" />
     <ClCompile Include="..\..\..\..\src\wallet.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseLIB|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseLIB|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -371,6 +370,7 @@
     <Import Project="..\..\..\..\..\..\nuget\boost_regex-vc120.1.55.0.16\build\native\boost_regex-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_regex-vc120.1.55.0.16\build\native\boost_regex-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_system-vc120.1.55.0.16\build\native\boost_system-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.55.0.16\build\native\boost_system-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\pdcurses_vc120.3.4.0.3\build\native\pdcurses_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\pdcurses_vc120.3.4.0.3\build\native\pdcurses_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\boost_program_options-vc120.1.55.0.16\build\native\boost_program_options-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_program_options-vc120.1.55.0.16\build\native\boost_program_options-vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -393,5 +393,6 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\Crc32C.1.0.4\build\native\Crc32C.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\Crc32C.1.0.4\build\native\Crc32C.props'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\Snappy.1.1.1.7\build\native\Snappy.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\Snappy.1.1.1.7\build\native\Snappy.props'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\LevelDB.1.16.0.5\build\native\LevelDB.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\LevelDB.1.16.0.5\build\native\LevelDB.props'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_program_options-vc120.1.55.0.16\build\native\boost_program_options-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_program_options-vc120.1.55.0.16\build\native\boost_program_options-vc120.targets'))" />
   </Target>
 </Project>
