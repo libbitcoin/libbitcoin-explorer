@@ -18,17 +18,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <sstream>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/mktx.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/curve.hpp>
 
 using namespace bc;
 using namespace libwallet;
 
 // Currently unused.
-int display_help()
+static int display_help()
 {
     puts("Usage: mktx FILENAME [ARGS]...");
     puts("");
@@ -44,12 +44,12 @@ int display_help()
     return -1;
 }
 
-bool two_args_remain(size_t current_arg, int argc)
+static bool two_args_remain(size_t current_arg, int argc)
 {
     return argc - current_arg >= 2;
 }
 
-bool load_outpoint(output_point& prevout, const std::string& parameter)
+static bool load_outpoint(output_point& prevout, const std::string& parameter)
 {
     std::vector<std::string> strs;
     boost::split(strs, parameter, boost::is_any_of(":"));
@@ -79,7 +79,7 @@ bool load_outpoint(output_point& prevout, const std::string& parameter)
     return true;
 }
 
-bool add_input(transaction_type& tx, const std::string& parameter)
+static bool add_input(transaction_type& tx, const std::string& parameter)
 {
     transaction_input_type input;
     output_point& prevout = input.previous_output;
@@ -92,13 +92,13 @@ bool add_input(transaction_type& tx, const std::string& parameter)
     return true;
 }
 
-bool change_locktime(transaction_type& tx, const std::string& parameter)
+static bool change_locktime(transaction_type& tx, const std::string& parameter)
 {
     tx.locktime = atoi(parameter.c_str());
     return true;
 }
 
-script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
+static script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
 {
     script_type result;
     result.push_operation({opcode::dup, data_chunk()});
@@ -110,7 +110,7 @@ script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
     return result;
 }
 
-script_type build_script_hash_script(const short_hash& script_hash)
+static script_type build_script_hash_script(const short_hash& script_hash)
 {
     script_type result;
     result.push_operation({opcode::hash160, data_chunk()});
@@ -120,7 +120,7 @@ script_type build_script_hash_script(const short_hash& script_hash)
     return result;
 }
 
-bool build_output_script(
+static bool build_output_script(
     script_type& out_script, const payment_address& payaddr)
 {
     switch (payaddr.version())
@@ -136,7 +136,7 @@ bool build_output_script(
     return false;
 }
 
-bool add_output(transaction_type& tx, const std::string& parameter)
+static bool add_output(transaction_type& tx, const std::string& parameter)
 {
     transaction_output_type output;
     std::vector<std::string> strs;
@@ -184,7 +184,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
         if (!reuse_key)
             spend_pubkey = stealth.spend_pubkeys.front();
         // Do stealth stuff.
-        ec_secret ephem_secret = generate_random_secret();
+        ec_secret ephem_secret = sx::generate_random_secret();
         ec_point addr_pubkey = initiate_stealth(
             ephem_secret, scan_pubkey, spend_pubkey);
         // stealth_metadata
@@ -237,7 +237,7 @@ bool add_output(transaction_type& tx, const std::string& parameter)
     return true;
 }
 
-bool modify(transaction_type& tx,
+static bool modify(transaction_type& tx,
     const std::string& action, const std::string& parameter)
 {
     if (action == "-i" || action == "--input")
@@ -250,10 +250,11 @@ bool modify(transaction_type& tx,
     return false;
 }
 
-bool invoke(const int argc, const char* argv[])
+bool sx::extensions::mktx::invoke(const int argc, const char* argv[])
 {
-    if (argc < 2)
-        return display_help();
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return false;
+
     const std::string filename = argv[1];
     // Now create transaction.
     transaction_type tx;
@@ -265,7 +266,7 @@ bool invoke(const int argc, const char* argv[])
         const std::string action = argv[current_arg],
             parameter = argv[current_arg + 1];
         if (!modify(tx, action, parameter))
-            return -1;
+            return false;
         current_arg += 2;
         BITCOIN_ASSERT(current_arg <= argc);
     }
@@ -279,6 +280,6 @@ bool invoke(const int argc, const char* argv[])
         std::ofstream outfile(filename, std::ofstream::binary);
         outfile << raw_tx;
     }
-    return 0;
+    return true;
 }
 

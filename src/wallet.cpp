@@ -48,15 +48,14 @@ using std::placeholders::_1;
 using std::placeholders::_2;
 using std::placeholders::_3;
 
-// warning: this is not good code!
-std::mutex broadcast_mutex;
-std::vector<bc::transaction_type> tx_broadcast_queue;
-
+typedef boost::circular_buffer<std::string> string_buffer;
+typedef std::unordered_set<bc::payment_address> unique_address_set;
 class wallet_control;
 
-typedef boost::circular_buffer<std::string> string_buffer;
-
-typedef std::unordered_set<bc::payment_address> unique_address_set;
+// warning: this is not good code!
+static std::mutex broadcast_mutex;
+static std::vector<bc::transaction_type> tx_broadcast_queue;
+static bool node_stopped = false;
 
 struct wallet_history_entry
 {
@@ -334,7 +333,7 @@ void wallet_display::draw()
     refresh();
 }
 
-void history_fetched(const std::error_code& ec,
+static void history_fetched(const std::error_code& ec,
     const bc::blockchain::history_list& history,
     wallet_control& control, wallet_display& display,
     const std::string& btc_address)
@@ -369,7 +368,7 @@ void history_fetched(const std::error_code& ec,
     display.draw();
 }
 
-void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker,
+static void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker,
     obelisk::fullnode_interface& fullnode,
     wallet_control& control, wallet_display& display,
     const bc::payment_address& payaddr)
@@ -381,7 +380,7 @@ void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker,
         0, worker);
 }
 
-void new_update(const std::error_code& ec, size_t height,
+static void new_update(const std::error_code& ec, size_t height,
     const bc::hash_digest& block_hash, const bc::transaction_type& tx)
 {
     //std::cout << "Update " << bc::encode_hex(bc::hash_transaction(tx))
@@ -389,11 +388,8 @@ void new_update(const std::error_code& ec, size_t height,
     //    << bc::encode_hex(block_hash) << " ]" << std::endl;
 }
 
-// omg hacks
-bool stopped = false;
-
 // Maybe should also be in libbitcoin too?
-script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
+static script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
 {
     script_type result;
     result.push_operation({opcode::dup, data_chunk()});
@@ -405,7 +401,7 @@ script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
     return result;
 }
 
-script_type build_script_hash_script(const short_hash& script_hash)
+static script_type build_script_hash_script(const short_hash& script_hash)
 {
     script_type result;
     result.push_operation({opcode::hash160, data_chunk()});
@@ -415,7 +411,7 @@ script_type build_script_hash_script(const short_hash& script_hash)
     return result;
 }
 
-bool build_output_script(
+static bool build_output_script(
     script_type& out_script, const payment_address& payaddr)
 {
     switch (payaddr.version())
@@ -431,7 +427,7 @@ bool build_output_script(
     return false;
 }
 
-bool make_signature(transaction_type& tx, size_t input_index,
+static bool make_signature(transaction_type& tx, size_t input_index,
     const elliptic_curve_key& key, const script_type& script_code)
 {
     transaction_input_type& input = tx.inputs[input_index];
@@ -454,8 +450,8 @@ bool make_signature(transaction_type& tx, size_t input_index,
     return true;
 }
 
-bc::hash_digest send(wallet_control& control, std::vector<std::string>& strs,
-    string_buffer& console_output)
+static bc::hash_digest send(wallet_control& control, 
+    std::vector<std::string>& strs, string_buffer& console_output)
 {
     if (strs.size() != 3 && strs.size() != 4)
     {
@@ -555,14 +551,14 @@ bc::hash_digest send(wallet_control& control, std::vector<std::string>& strs,
     return bc::hash_transaction(tx);
 }
 
-void showtx(const std::error_code& ec, const transaction_type& tx,
+static void showtx(const std::error_code& ec, const transaction_type& tx,
     string_buffer& console_output, wallet_display& display)
 {
 #define OUTPUT(stuff) \
     { \
-    std::ostringstream oss; \
-    oss << stuff; \
-    console_output.push_back(oss.str()); \
+        std::ostringstream oss; \
+        oss << stuff; \
+        console_output.push_back(oss.str()); \
     }
 
     OUTPUT("version: " << tx.version);
@@ -591,7 +587,7 @@ void showtx(const std::error_code& ec, const transaction_type& tx,
     display.draw();
 }
 
-void run_command(std::string user_input, string_buffer& console_output,
+static void run_command(std::string user_input, string_buffer& console_output,
     wallet_control& control, wallet_display& display,
     libwallet::deterministic_wallet& detwallet,
     obelisk::fullnode_interface& fullnode)
@@ -599,11 +595,13 @@ void run_command(std::string user_input, string_buffer& console_output,
     boost::trim(user_input);
     if (user_input.empty())
         return;
-    std::vector<std::string> strs;
-    boost::split(strs, user_input, boost::is_any_of(" \t"));
-    if (strs.empty())
+
+    std::vector<std::string> words;
+    split(user_input, words);
+    if (words.empty())
         return;
-    const std::string& cmd = strs[0];
+
+    const std::string& cmd = words.front();
     console_output.push_back(std::string("> ") + user_input);
     if (cmd == "help" || cmd == "h")
     {
@@ -613,7 +611,7 @@ void run_command(std::string user_input, string_buffer& console_output,
     }
     else if (cmd == "send" || cmd == "s")
     {
-        bc::hash_digest tx_hash = send(control, strs, console_output);
+        bc::hash_digest tx_hash = send(control, words, console_output);
         if (tx_hash != null_hash)
             console_output.push_back(
                 std::string("send: Broadcasting ") + bc::encode_hex(tx_hash));
@@ -637,13 +635,13 @@ void run_command(std::string user_input, string_buffer& console_output,
                 std::ref(display)));
     }
     else if (cmd == "quit" || cmd == "q")
-        stopped = true;
+        node_stopped = true;
     else
         console_output.push_back(
             std::string("Unknown command: ") + cmd);
 }
 
-void init_curses()
+static void init_curses()
 {
     initscr();
     start_color();
@@ -652,7 +650,7 @@ void init_curses()
     keypad(stdscr, TRUE);
 }
 
-void handle_start(const std::error_code& ec)
+static void handle_start(const std::error_code& ec)
 {
     if (ec)
     {
@@ -661,7 +659,7 @@ void handle_start(const std::error_code& ec)
     }
 }
 
-void output_to_file(std::ofstream& file, bc::log_level level,
+static void output_to_file(std::ofstream& file, bc::log_level level,
     const std::string& domain, const std::string& body)
 {
     if (body.empty())
@@ -673,7 +671,7 @@ void output_to_file(std::ofstream& file, bc::log_level level,
 }
 
 // warning: this is not good code!
-void broadcast_subsystem()
+static void broadcast_subsystem()
 {
     std::ofstream outfile("wallet.log");
     log_debug().set_output_function(
@@ -697,7 +695,7 @@ void broadcast_subsystem()
     // Perform node discovery if needed and then creating connections.
     prot.start(handle_start);
     // wait
-    while (!stopped)
+    while (!node_stopped)
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
         // if any new shit then broadcast it.
@@ -722,11 +720,8 @@ void broadcast_subsystem()
 
 bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
 {
-    if (argc != 2)
-    {
-        line_out(std::cerr, example());
+    if (!validate_argument_range(argc, example(), 1, 2))
         return false;
-    }
 
     libwallet::deterministic_wallet detwallet;
     std::string user_data(argv[1]);
@@ -788,17 +783,17 @@ bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
     }
     std::thread thr([&fullnode]()
         {
-            while (!stopped)
+            while (!node_stopped)
             {
                 fullnode.update();
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                sleep_ms(100);
             }
         });
     std::thread broadcaster(broadcast_subsystem);
     string_buffer& console_output = display.console_output;
     std::string& user_input = display.user_input;
     console_output.push_back("Type 'help' to get started.");
-	while(!stopped)
+    while (!node_stopped)
     {
         display.draw();
         int c = getch();
@@ -834,7 +829,7 @@ bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
                 break;
         }
     }
-    stopped = true;
+    node_stopped = true;
     broadcaster.join();
     thr.join();
     endwin();
