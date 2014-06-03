@@ -19,44 +19,47 @@
     <Filter Include="include\command">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\command">
-      <UniqueIdentifier>{7cf6fe23-da90-44c8-8b78-b68a8f1ff830}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\command\python">
-      <UniqueIdentifier>{e96f4bef-2d18-4897-9078-a8c17783ee65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ported">
-      <UniqueIdentifier>{ea400366-8209-4a7e-aa88-189605c36a90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ported\balance_history">
-      <UniqueIdentifier>{8e46a09b-722d-4db3-8258-f955f104510d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ported\base58">
-      <UniqueIdentifier>{55a6252b-7da3-4fe8-9a3c-7206551d17dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ported\hd-to">
-      <UniqueIdentifier>{2cffd46e-50c9-4ae8-8095-969d4d662525}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ported\fetch">
-      <UniqueIdentifier>{1c4a870e-5e36-4dd7-9fad-686e4d7009bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ported\wrap">
+    <Filter Include="src\wrap">
       <UniqueIdentifier>{147a63ac-c6eb-40c1-8b70-7ff8c03151e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ported\encode_decode">
-      <UniqueIdentifier>{680880be-fb73-4c4b-859c-14c32858fdad}</UniqueIdentifier>
+    <Filter Include="src\balance_history">
+      <UniqueIdentifier>{8e46a09b-722d-4db3-8258-f955f104510d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ported\show_satoshi">
-      <UniqueIdentifier>{0037eb44-4777-45a5-bd02-d1d44815329f}</UniqueIdentifier>
+    <Filter Include="src\base58">
+      <UniqueIdentifier>{55a6252b-7da3-4fe8-9a3c-7206551d17dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ported\deprecated">
+    <Filter Include="src\deprecated">
       <UniqueIdentifier>{a396444b-fc9d-445f-9b50-48d0fb965fa1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ported\ec_math">
+    <Filter Include="src\ec_math">
       <UniqueIdentifier>{ace7bff9-d348-4c38-8db0-ed1147aefa4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ported\secrets">
+    <Filter Include="src\encode_decode">
+      <UniqueIdentifier>{680880be-fb73-4c4b-859c-14c32858fdad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\fetch">
+      <UniqueIdentifier>{1c4a870e-5e36-4dd7-9fad-686e4d7009bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hd-to">
+      <UniqueIdentifier>{2cffd46e-50c9-4ae8-8095-969d4d662525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hash_script">
+      <UniqueIdentifier>{4f67fe44-3372-4c58-8af0-e1b4274b5345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\python">
+      <UniqueIdentifier>{e96f4bef-2d18-4897-9078-a8c17783ee65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\stealth">
+      <UniqueIdentifier>{6299c11a-c035-4d30-9da7-98672f2ac8e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\show_satoshi">
+      <UniqueIdentifier>{0037eb44-4777-45a5-bd02-d1d44815329f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\secrets">
       <UniqueIdentifier>{10fae2ad-5439-465a-98d4-21e6872c0a0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\other">
+      <UniqueIdentifier>{ea400366-8209-4a7e-aa88-189605c36a90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -340,233 +343,233 @@
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ripemd-hash.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\scripthash.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\set-input.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sha256.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\showscript.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sign-input.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-show-addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-uncover.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\validaddr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58check-decode.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58check-encode.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\bci-history.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\brainwallet.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\btc.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\embed-addr.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\get-pubkey.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\get-utxo.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\qrcode.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\satoshi.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-bci.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\watchtx.cpp">
-      <Filter>src\command\python</Filter>
+      <Filter>src\python</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\mnemonic.cpp">
-      <Filter>src\ported</Filter>
+      <Filter>src\other</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\addr.cpp">
-      <Filter>src\ported</Filter>
+      <Filter>src\other</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\balance.cpp">
-      <Filter>src\ported\balance_history</Filter>
+      <Filter>src\balance_history</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\history.cpp">
-      <Filter>src\ported\balance_history</Filter>
+      <Filter>src\balance_history</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58-decode.cpp">
-      <Filter>src\ported\base58</Filter>
+      <Filter>src\base58</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58-encode.cpp">
-      <Filter>src\ported\base58</Filter>
+      <Filter>src\base58</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
-      <Filter>src\ported\hd-to</Filter>
+      <Filter>src\hd-to</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
-      <Filter>src\ported\hd-to</Filter>
+      <Filter>src\hd-to</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-add.cpp">
-      <Filter>src\ported\ec_math</Filter>
+      <Filter>src\ec_math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-add-modp.cpp">
-      <Filter>src\ported\ec_math</Filter>
+      <Filter>src\ec_math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-multiply.cpp">
-      <Filter>src\ported\ec_math</Filter>
+      <Filter>src\ec_math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-tweak-add.cpp">
-      <Filter>src\ported\ec_math</Filter>
+      <Filter>src\ec_math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\dispatch.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-pub.cpp">
-      <Filter>src\ported\hd-to</Filter>
+      <Filter>src\hd-to</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-seed.cpp">
-      <Filter>src\ported\hd-to</Filter>
+      <Filter>src\hd-to</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-priv.cpp">
-      <Filter>src\ported\hd-to</Filter>
+      <Filter>src\hd-to</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-block-header.cpp">
-      <Filter>src\ported\fetch</Filter>
+      <Filter>src\fetch</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-last-height.cpp">
-      <Filter>src\ported\fetch</Filter>
+      <Filter>src\fetch</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
-      <Filter>src\ported\fetch</Filter>
+      <Filter>src\fetch</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-transaction.cpp">
-      <Filter>src\ported\fetch</Filter>
+      <Filter>src\fetch</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-transaction-index.cpp">
-      <Filter>src\ported\fetch</Filter>
+      <Filter>src\fetch</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wif-to-secret.cpp">
-      <Filter>src\ported\secrets</Filter>
+      <Filter>src\secrets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\secret-to-wif.cpp">
-      <Filter>src\ported\secrets</Filter>
+      <Filter>src\secrets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\genaddr.cpp">
-      <Filter>src\ported\deprecated</Filter>
+      <Filter>src\deprecated</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\genpriv.cpp">
-      <Filter>src\ported\deprecated</Filter>
+      <Filter>src\deprecated</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\genpub.cpp">
-      <Filter>src\ported\deprecated</Filter>
+      <Filter>src\deprecated</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wrap.cpp">
-      <Filter>src\ported\wrap</Filter>
+      <Filter>src\wrap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\unwrap.cpp">
-      <Filter>src\ported\wrap</Filter>
+      <Filter>src\wrap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\display.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\decode-addr.cpp">
-      <Filter>src\ported\encode_decode</Filter>
+      <Filter>src\encode_decode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\encode-addr.cpp">
-      <Filter>src\ported\encode_decode</Filter>
+      <Filter>src\encode_decode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\pubkey.cpp">
-      <Filter>src\ported</Filter>
+      <Filter>src\other</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validtx.cpp">
-      <Filter>src\ported\show_satoshi</Filter>
+      <Filter>src\show_satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
-      <Filter>src\ported\show_satoshi</Filter>
+      <Filter>src\show_satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-node.cpp">
-      <Filter>src\ported\show_satoshi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\generated.cpp">
-      <Filter>src\ported</Filter>
+      <Filter>src\show_satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\mpk.cpp">
-      <Filter>src\ported\deprecated</Filter>
+      <Filter>src\deprecated</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\newseed.cpp">
-      <Filter>src\ported\deprecated</Filter>
+      <Filter>src\deprecated</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\leveldb-single-file.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\snappy-single-file.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\crc32c.cpp" />
     <ClCompile Include="..\..\..\..\src\initchain.cpp">
-      <Filter>src\ported</Filter>
+      <Filter>src\other</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wallet.cpp">
-      <Filter>src\ported</Filter>
+      <Filter>src\other</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\mktx.cpp">
-      <Filter>src\ported</Filter>
+      <Filter>src\other</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\monitor.cpp">
-      <Filter>src\ported\fetch</Filter>
+      <Filter>src\fetch</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validsig.cpp">
-      <Filter>src\ported\show_satoshi</Filter>
+      <Filter>src\show_satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\newkey.cpp">
-      <Filter>src\ported\secrets</Filter>
+      <Filter>src\secrets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showtx.cpp">
-      <Filter>src\ported\show_satoshi</Filter>
+      <Filter>src\show_satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\rawscript.cpp">
-      <Filter>src\ported</Filter>
+      <Filter>src\hash_script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ripemd-hash.cpp">
+      <Filter>src\hash_script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\scripthash.cpp">
+      <Filter>src\hash_script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showscript.cpp">
+      <Filter>src\hash_script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sha256.cpp">
+      <Filter>src\hash_script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validaddr.cpp">
+      <Filter>src\show_satoshi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
+      <Filter>src\show_satoshi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp">
+      <Filter>src\show_satoshi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\set-input.cpp">
+      <Filter>src\show_satoshi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sign-input.cpp">
+      <Filter>src\show_satoshi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-show-addr.cpp">
+      <Filter>src\stealth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp">
+      <Filter>src\stealth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp">
+      <Filter>src\stealth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover.cpp">
+      <Filter>src\stealth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
+      <Filter>src\stealth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-addr.cpp">
+      <Filter>src\stealth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\generated.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -17,15 +17,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/showscript.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-int main()
+console_result showscript::invoke(const int argc, const char* argv[])
 {
-    data_chunk raw_script = decode_hex(read_stream(std::cin));
+    if (!validate_argument_range(argc, example(), 1, 1))
+        return console_result::failure;
+
+    const auto raw_script = decode_hex(read_stream(std::cin));
+
     script_type script;
     try
     {
@@ -34,9 +41,9 @@ int main()
     catch (end_of_stream)
     {
         std::cerr << "showscript: Error: Bad script." << std::endl;
-        return -1;
+        return console_result::failure;
     }
-    std::cout << pretty(script) << std::endl;
-    return 0;
-}
 
+    std::cout << pretty(script) << std::endl;
+    return console_result::okay;
+}

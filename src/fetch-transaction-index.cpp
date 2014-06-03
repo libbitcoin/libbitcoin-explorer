@@ -26,6 +26,8 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction_index,
 // otherwise concurrent test execution will collide on shared state.
@@ -33,8 +35,8 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void transaction_index_fetched(const std::error_code& ec, size_t height,
-    size_t index)
+static void transaction_index_fetched(const std::error_code& ec, 
+    const size_t height, size_t index)
 {
     if (ec)
         std::cerr << "fetch-transaction: " << ec.message() << std::endl;
@@ -47,11 +49,11 @@ static void transaction_index_fetched(const std::error_code& ec, size_t height,
     node_stopped = true;
 }
 
-bool sx::extensions::fetch_transaction_index::invoke(const int argc, 
+console_result fetch_transaction_index::invoke(const int argc, 
     const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     std::string tx_hash_str(get_arg_or_stream(argc, argv, std::cin));
     hash_digest tx_hash = decode_hash(tx_hash_str);
@@ -61,6 +63,6 @@ bool sx::extensions::fetch_transaction_index::invoke(const int argc,
         transaction_index_fetched);
     poll(fullnode, pool, node_stopped);
 
-    return true;
+    return console_result::okay;
 }
 

@@ -26,6 +26,8 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
@@ -49,10 +51,10 @@ static void stealth_fetched(const std::error_code& ec,
     node_stopped = true;
 }
 
-bool sx::extensions::fetch_stealth::invoke(const int argc, const char* argv[])
+console_result fetch_stealth::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 3))
-        return false;
+        return console_result::failure;
 
     std::string prefix_str(get_arg(argc, argv));
     stealth_prefix prefix(prefix_str);
@@ -62,7 +64,7 @@ bool sx::extensions::fetch_stealth::invoke(const int argc, const char* argv[])
     if (argc > 2 && !parse<size_t>(argv[2], height))
     {
         std::cerr << "sx: Invalid height value specified." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     OBELISK_FULLNODE(pool, fullnode);
@@ -70,5 +72,5 @@ bool sx::extensions::fetch_stealth::invoke(const int argc, const char* argv[])
         std::bind(stealth_fetched, _1, _2), height);
     poll(fullnode, pool, node_stopped);
 
-    return true;
+    return console_result::okay;
 }

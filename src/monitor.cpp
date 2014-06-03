@@ -26,6 +26,8 @@
 #include <sx/utility/config.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
@@ -75,10 +77,10 @@ static void new_update(const std::error_code& ec,
         << " [ #" << height << " " << block_hash << " ]" << std::endl;
 }
 
-bool sx::extensions::monitor::invoke(const int argc, const char* argv[])
+console_result monitor::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 2))
-        return false;
+        return console_result::failure;
 
     std::cerr << std::endl;
     std::cerr << "**************************************" << std::endl;
@@ -93,6 +95,6 @@ bool sx::extensions::monitor::invoke(const int argc, const char* argv[])
     fullnode.address.subscribe(prefix, new_update, subscribed);
     poll(fullnode, pool, node_stopped);
 
-    return true;
+    return console_result::okay;
 }
 

@@ -23,12 +23,14 @@
 #include <sx/utility/console.hpp>
 #include <sx/utility/dispatch.hpp>
 
-bool sx::extensions::base58check_encode::invoke(const int argc, 
-    const char* argv[])
+using namespace sx;
+using namespace sx::extensions;
+
+console_result base58check_encode::invoke(const int argc, const char* argv[])
 {
     // TODO: invoke functionality from wrap >> base58-encode.
     line_out(std::cerr, "sx: This command is not yet ported from python.");
-    return false;
+    return console_result::failure;
 }
 
 //#!/usr/bin/python

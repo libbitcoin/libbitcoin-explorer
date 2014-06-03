@@ -26,11 +26,13 @@
 #include <sx/utility/dispatch.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 static bool get_compression(const int argc, const char* argv[],
-    sx::key_compression& is_compressed)
+    key_compression& is_compressed)
 {
-    is_compressed = sx::key_compression::unspecified;
+    is_compressed = key_compression::unspecified;
 
     if (argc > 1)
     {
@@ -38,8 +40,8 @@ static bool get_compression(const int argc, const char* argv[],
 
         // NOTE: boolean argument has been removed from this parser in favor of
         // consistency with the use of flags in all other commands.
-        bool compressed = sx::is_option(arg, SX_OPTION_COMPRESSED);
-        bool uncompressed = sx::is_option(arg, SX_OPTION_UNCOMPRESSED);
+        bool compressed = is_option(arg, SX_OPTION_COMPRESSED);
+        bool uncompressed = is_option(arg, SX_OPTION_UNCOMPRESSED);
 
         // NOTE: it's not currently possible for two to be specified but it is
         // possible for one to be bogus and another unspecified (invalid).
@@ -47,22 +49,22 @@ static bool get_compression(const int argc, const char* argv[],
             return false;
 
         is_compressed = (compressed || !uncompressed ? 
-            sx::key_compression::on : sx::key_compression::off);
+            key_compression::on : key_compression::off);
     }
 
     return true;
 }
 
-bool sx::extensions::pubkey::invoke(const int argc, const char* argv[])
+console_result pubkey::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     key_compression is_compressed;
     if (!get_compression(argc, argv, is_compressed))
     {
         std::cerr << "Inconsistent compression options." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     // TODO: allow for reading from args.
@@ -76,18 +78,18 @@ bool sx::extensions::pubkey::invoke(const int argc, const char* argv[])
         if (pubkey.empty())
         {
             std::cerr << "Invalid private or public key." << std::endl;
-            return false;
+            return console_result::failure;
         }
         // OK, it's a public key.
         if (!key.set_public_key(pubkey))
         {
             std::cerr << "Invalid public key." << std::endl;
-            return false;
+            return console_result::failure;
         }
         key.set_compressed(is_compressed == key_compression::on);
     }
 
     std::cout << key.public_key() << std::endl;
-    return true;
+    return console_result::okay;
 }
 

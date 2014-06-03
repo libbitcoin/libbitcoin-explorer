@@ -24,11 +24,13 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::hd_to_address::invoke(const int argc, const char* argv[])
+console_result hd_to_address::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     std::string encoded_key(get_arg_or_stream(argc, argv, std::cin));
 
@@ -42,10 +44,10 @@ bool sx::extensions::hd_to_address::invoke(const int argc, const char* argv[])
     else if (!public_key.set_serialized(encoded_key))
     {
         std::cerr << "hd-pub: error reading key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     std::cout << public_key.address().encoded() << std::endl;
-    return true;
+    return console_result::okay;
 }
 

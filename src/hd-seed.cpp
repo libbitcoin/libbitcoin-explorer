@@ -27,11 +27,13 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::hd_seed::invoke(const int argc, const char* argv[])
+console_result hd_seed::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     const size_t seed_entropy_bytes = 32;
     data_chunk entropy(argc > 1 ? decode_hex(argv[1]) : 
@@ -44,6 +46,6 @@ bool sx::extensions::hd_seed::invoke(const int argc, const char* argv[])
 
     hd_private_key private_key(entropy, is_testnet);
     std::cout << private_key.serialize() << std::endl;
-    return true;
+    return console_result::okay;
 }
 

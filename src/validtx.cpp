@@ -27,6 +27,8 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 // TODO: this should be a member of sx::extensions::validtx,
 // otherwise concurrent test execution will collide on shared state.
@@ -43,23 +45,23 @@ static void valid_tx(const std::error_code& ec, const index_list& unconfirmed)
     node_stopped = true;
 }
 
-bool sx::extensions::validtx::invoke(const int argc, const char* argv[])
+console_result validtx::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     transaction_type tx;
     std::string filename(get_filename(argc, argv));
     if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
     {
         std::cerr << "sx: Deserializing transaction failed." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.transaction_pool.validate(tx, valid_tx);
     poll(fullnode, pool, node_stopped);
 
-    return true;
+    return console_result::okay;
 }
 

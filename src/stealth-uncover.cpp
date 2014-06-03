@@ -24,20 +24,20 @@
 
 using namespace libbitcoin;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool invoke(const int argc, const char* argv[])
+console_result stealth_uncover::invoke(const int argc, const char* argv[])
 {
-    if (argc != 4)
-    {
-        std::cerr << "Usage: sx stealth-uncover EPHEM_PUBKEY SCAN_SECRET "
-            "SPEND_PUBKEY" << std::endl;
-        return -1;
-    }
-    ec_point ephem_pubkey = decode_hex(argv[1]);
-    ec_secret scan_secret = decode_hash(argv[2]);
-    ec_point spend_pubkey = decode_hex(argv[3]);
-    ec_point pubkey = uncover_stealth(ephem_pubkey, scan_secret, spend_pubkey);
+    if (!validate_argument_range(argc, example(), 4, 4))
+        return console_result::failure;
+
+    const auto ephem_pubkey = decode_hex(argv[1]);
+    const auto scan_secret = decode_hash(argv[2]);
+    const auto spend_pubkey = decode_hex(argv[3]);
+    const auto pubkey = uncover_stealth(ephem_pubkey, scan_secret, spend_pubkey);
+
     std::cout << pubkey << std::endl;
-    return 0;
+    return console_result::okay;
 }
 

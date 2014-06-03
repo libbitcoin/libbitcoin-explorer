@@ -26,6 +26,8 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 // TODO: this should be a member of sx::extensions::fetch_last_height,
 // otherwise concurrent test execution will collide on shared state.
@@ -43,13 +45,15 @@ static void last_height_fetched(const std::error_code& ec, size_t height)
     node_stopped = true;
 }
 
-bool sx::extensions::fetch_last_height::invoke(const int argc,
-    const char* argv[])
+console_result fetch_last_height::invoke(const int argc, const char* argv[])
 {
+    if (!validate_argument_range(argc, example(), 1, 1))
+        return console_result::failure;
+
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.blockchain.fetch_last_height(last_height_fetched);
     poll(fullnode, pool, node_stopped);
 
-    return true;
+    return console_result::okay;
 }
 

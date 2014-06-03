@@ -183,12 +183,19 @@ void split(const std::string& sentence, std::vector<std::string>& words,
     boost::split(words, sentence, boost::is_any_of(delimiter));
 }
 
+void stream_to_words(std::istream& stream, 
+    std::vector<std::string>& words, const char* delimiter)
+{
+    std::string sentence(read_stream(stream, true));
+    split(sentence, words, delimiter);
+}
+
 void terminate_process_on_error(const std::error_code& error)
 {
     if (!error)
         return;
     bc::log_fatal() << error.message();
-    exit(main_failure);
+    exit(static_cast<int>(console_result::failure));
 }
 
 bool validate_argument_range(const int actual,

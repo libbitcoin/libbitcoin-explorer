@@ -35,6 +35,8 @@
 #include <sx/utility/dispatch.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
@@ -137,10 +139,10 @@ static void json_balance_fetched(const payment_address& payaddr,
     std::cout << std::endl;
 }
 
-bool sx::extensions::balance::invoke(const int argc, const char* argv[])
+console_result balance::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1))
-        return false;
+        return console_result::failure;
 
     json_output = get_option(argc, argv, SX_OPTION_JSON);
 
@@ -151,14 +153,14 @@ bool sx::extensions::balance::invoke(const int argc, const char* argv[])
         if (!payaddr.set_encoded(read_stream(std::cin)))
         {
             std::cerr << "balance: Invalid address." << std::endl;
-            return false;
+            return console_result::failure;
         }
         payaddrs.push_back(payaddr);
     }
     else if (!read_addresses(argc, argv, payaddrs))
     {
         std::cerr << "balance: Invalid address." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     remaining_count = static_cast<int>(payaddrs.size());
@@ -195,6 +197,6 @@ bool sx::extensions::balance::invoke(const int argc, const char* argv[])
         std::cout << "]" << std::endl;
     pool.stop();
     pool.join();
-    return true;
+    return console_result::okay;
 }
 

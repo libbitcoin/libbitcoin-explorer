@@ -25,63 +25,51 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-// Read all args to a string list in order.
-static void args_to_words(const int argc, const char* argv[], string_list& words)
-{
-    for (int i = 1; i < argc; ++i)
-        words.push_back(argv[i]);
-}
-
-// Read STDIN to a string list in order.
-static void stdin_to_words(std::istream& cin, string_list& words)
-{
-    std::string sentence(sx::read_stream(cin, true));
-    sx::split(sentence, words);
-}
-
-bool sx::extensions::mnemonic::invoke(const int argc, const char* argv[])
+console_result mnemonic::invoke(const int argc, const char* argv[])
 {
     const int mnemonic_size = 12;
 
     if (!validate_argument_range(argc, example(), 1, mnemonic_size))
-        return false;
+        return console_result::failure;
 
-    string_list in_words;
+    string_list words;
 
-    if (argc == 1)
-        stdin_to_words(std::cin, in_words);
+    if (argc > 1)
+        get_args(argc, argv, words);
     else
-        args_to_words(argc, argv, in_words);
+        stream_to_words(std::cin, words);
 
-    if (in_words.size() != 1 && in_words.size() != mnemonic_size)
+    if (words.size() != 1 && words.size() != mnemonic_size)
     {
         line_out(std::cerr, explanation());
-        return false;
+        return console_result::failure;
     }
 
     // $ echo "people blonde admit dart couple different truth common alas
     //   stumble time cookie" | sx mnemonic
-    if (in_words.size() == mnemonic_size)
+    if (words.size() == mnemonic_size)
     {
         // Note that there is no dictionary validation in decode_mnemonic.
-        std::cout << decode_mnemonic(in_words) << std::endl;
-        return true;
+        std::cout << decode_mnemonic(words) << std::endl;
+        return console_result::okay;
     }
 
     // $ echo foobar | sx mnemonic
-    if (in_words.front().size() != deterministic_wallet::seed_size)
+    if (words.front().size() != deterministic_wallet::seed_size)
     {
         std::cerr << "sx: The seed must be exactly " <<
             deterministic_wallet::seed_size << " characters long."
             << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     // $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic
     std::string sentence;
-    join(encode_mnemonic(in_words.front()), sentence);
+    join(encode_mnemonic(words.front()), sentence);
     std::cout << sentence << std::endl;
-    return true;
+    return console_result::okay;
 }
 

@@ -17,16 +17,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/scripthash.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::scripthash::invoke(const int argc, const char* argv[])
+console_result scripthash::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
-        return false;
+        return console_result::failure;
 
     const auto hex_script = read_stream(std::cin);
     const auto bip16_script = parse_script(decode_hex(hex_script));
@@ -34,6 +37,6 @@ bool sx::extensions::scripthash::invoke(const int argc, const char* argv[])
     payment_address payaddr;
     set_script(payaddr, bip16_script);
     std::cout << payaddr.encoded() << std::endl;
-    return true;
+    return console_result::okay;
 }
 

@@ -26,18 +26,20 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::hd_priv::invoke(const int argc, const char* argv[])
+console_result hd_priv::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 3))
-        return false;
+        return console_result::failure;
 
     bool is_hard;
     uint32_t index;
     if (!read_hard_index_args(argc, argv, is_hard, index))
     {
         std::cerr << "sx: Bad INDEX provided." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     // TODO: constrain read_hard_index_args so that the encoded key can be 
@@ -48,7 +50,7 @@ bool sx::extensions::hd_priv::invoke(const int argc, const char* argv[])
     if (!private_key.set_serialized(encoded_key))
     {
         std::cerr << "hd-priv: error reading private key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     if (is_hard)
@@ -58,10 +60,10 @@ bool sx::extensions::hd_priv::invoke(const int argc, const char* argv[])
     if (!child_key.valid())
     {
         std::cerr << "hd-priv: error deriving child key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     std::cout << child_key.serialize() << std::endl;
-    return true;
+    return console_result::okay;
 }
 

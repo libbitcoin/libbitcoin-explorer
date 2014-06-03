@@ -24,36 +24,38 @@
 #include <sx/utility/curve.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::ec_add::invoke(const int argc, const char* argv[])
+console_result ec_add::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 3, 3))
-        return false;
+        return console_result::failure;
 
     ec_point point_a, point_b;
     if (!set_ec_point(point_a, argv[1]))
     {
         std::cerr << "sx: Invalid point " << argv[1] << std::endl;
-        return false;
+        return console_result::failure;
     }
     if (!set_ec_point(point_b, argv[2]))
     {
         std::cerr << "sx: Invalid point " << argv[2] << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     /* This command excluded because += is not yet defined for ec_point. */
     line_out(std::cerr, "sx: Not Implemented");
-    return false;
+    return console_result::failure;
 
     /*bool success = (point_a += point_b);
     if (!success)
     {
         std::cerr << "sx: Out of range." << std::endl;
-        return false;
+        return console_result::failure;
     }*/
 
     std::cout << point_a << std::endl;
-    return true;
+    return console_result::okay;
 }
 

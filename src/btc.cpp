@@ -22,11 +22,14 @@
 #include <sx/utility/console.hpp>
 #include <sx/utility/dispatch.hpp>
 
-bool sx::extensions::btc::invoke(const int argc, const char* argv[])
+using namespace sx;
+using namespace sx::extensions;
+
+console_result btc::invoke(const int argc, const char* argv[])
 {
     // TODO: parse and validate input and multiply by 10^-8.
     line_out(std::cerr, "sx: This command is not yet ported from python.");
-    return false;
+    return console_result::failure;
 }
 
 //#!/usr/bin/python

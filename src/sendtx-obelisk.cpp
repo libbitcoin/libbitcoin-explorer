@@ -21,43 +21,43 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/sendtx-obelisk.hpp>
+#include <sx/utility/coin.hpp>
+#include <sx/utility/client.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/config.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool stopped = false;
+// TODO: this should be a member of sx::extensions::sendtx_obelisk,
+// otherwise concurrent test execution will collide on shared state.
+static bool node_stopped = false;
 
-void handle_broadcast(const std::error_code& ec)
+// TODO: node_stopped should be passed here via closure
+// or by converting this to a member function.
+static void handle_broadcast(const std::error_code& ec)
 {
     std::cout << "Status: " << ec.message() << std::endl;
-    stopped = true;
+    node_stopped = true;
 }
 
-bool invoke(const int argc, const char* argv[])
+console_result sendtx_obelisk::invoke(const int argc, const char* argv[])
 {
-    if (argc != 2)
-    {
-        std::cerr << "Usage: sendtx-obelisk FILENAME" << std::endl;
-        return -1;
-    }
-    const std::string filename = argv[1];
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return console_result::failure;
+
     transaction_type tx;
-    if (!load_tx(tx, filename))
-        return -1;
-    config_map_type config;
-    get_config(config);
-    threadpool pool(1);
-    obelisk::fullnode_interface fullnode(pool, config["service"],
-        config["client-certificate"], config["server-public-key"]);
-    fullnode.protocol.broadcast_transaction(tx, handle_broadcast);
-    while (!stopped)
+    const std::string filename(get_filename(argc, argv));
+    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
     {
-        fullnode.update();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::cerr << "sx: Deserializing transaction failed." << std::endl;
+        return console_result::failure;
     }
-    pool.stop();
-    pool.join();
-    return 0;
+
+    OBELISK_FULLNODE(pool, fullnode);
+    fullnode.protocol.broadcast_transaction(tx, handle_broadcast);
+    poll(fullnode, pool, node_stopped);
+    return console_result::okay;
 }
 

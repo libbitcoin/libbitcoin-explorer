@@ -25,21 +25,23 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::wif_to_secret::invoke(const int argc, const char* argv[])
+console_result wif_to_secret::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
-        return false;
+        return console_result::failure;
 
     const auto wif = read_stream(std::cin);
     const auto secret = libwallet::wif_to_secret(wif);
     if (secret == null_hash)
     {
         std::cerr << "Invalid private key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     std::cout << secret << std::endl;
-    return true;
+    return console_result::okay;
 }
 

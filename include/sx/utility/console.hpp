@@ -54,48 +54,82 @@ namespace sx {
 #define SX_STDIN_PATH_SENTINEL "-"
 
 /**
- * Success return code for int main().
+ * Result codes for int main().
  */
-const int main_success = 0;
+enum class console_result : int
+{
+    failure = -1,
+    okay = 0,
+    invalid = 1
+};
 
 /**
- * Failure return code for int main().
+ * Default ports for the Bitcoin protocol.
  */
-const int main_failure = -1;
+enum class port_defaults : uint16_t
+{
+    mainnet = 8333,
+    testnet = 18333
+};
 
 /**
- * Default mainnet port for Bitcoin protocol.
+ * Conveniently test a numeric value to see if specified flags are set.
+ * Caller should ensure that TValue is the same type as TElement (sorry,
+ * but there are no type constraints in c++).
+ *
+ * @param      <TValue>    The type of the value to test.
+ * @param      <TElement>  The type of the elements of flags' class enum.
+ * @param[in]  value       The value to test.
+ * @param[in]  flags       The flags to test.
+ * @return                 True if all specified flags are set.
  */
-const uint16_t mainnet_port_default = 8333;
-
-/**
- * Default testnet port for Bitcoin protocol.
- */
-const uint16_t testnet_port_default = 18333;
+template <typename TValue, typename TElement>
+bool flags_set(const TValue value, const TElement flags)
+{
+    // This simple template precludes the need to explicitly cast the class
+    // enum (with elements already of the proper type) and ensures the flag 
+    // test isn't inadvertently inverted.
+    return (value & static_cast<TValue>(flags)) != 0;
+}
 
 /**
  * Safely convert a text string to the specified type, whitespace ignored.
  *
  * @param      <TValue> The converted type.
  * @param[in]  text     The text to convert.
- * @param[out] number   The parsed value.
+ * @param[out] value    The parsed value.
  * @return              True if successful.
  */
 template <typename TValue>
-bool parse(const std::string text, TValue& number)
+bool parse(const std::string& text, TValue& value)
 {
-    // a reference is avoided in order to prevent original string corruption
-    std::string value(text);
-    boost::algorithm::trim(value);
+    std::string serialized(text);
+    boost::algorithm::trim(serialized);
     try
     {
-        number = boost::lexical_cast<TValue>(text);
+        value = boost::lexical_cast<TValue>(serialized);
     }
     catch (const boost::bad_lexical_cast&)
     {
         return false;
     }
     return true;
+}
+
+/**
+ * Conveniently convert the specified type to string.
+ *
+ * @param      <TValue>  The type to serialize.
+ * @param[in]  fallback  The text to populate if value is empty.
+ * @return               The serialized value.
+ */
+template <typename TValue>
+const std::string& serialize(const TValue& value, 
+    const std::string& fallback = "")
+{
+    std::string serialized;
+    boost::to_string(value, serialized);
+    return serialized.empty() ? fallback : serialized;
 }
 
 /**
@@ -275,11 +309,22 @@ void sleep_ms(const uint32_t milliseconds);
  * delimited.
  *
  * @param[in]  sentence   The string to split.
- * @param[out]  words     The list of resulting strings.
+ * @param[out] words      The list of resulting strings.
  * @param[in]  delimiter  The delimeter, defaults to SX_SPLIT_DELIMITER.
  */
 void split(const std::string& sentence, std::vector<std::string>& words,
     const char* delimiter=SX_SPLIT_DELIMITER);
+
+/**
+ * Read the specified stream to a string list in order.
+ *
+ * @param[in]  sentence   The string to split.
+ * @param[out] words      The list of resulting strings.
+ * @param[in]  delimiter  The delimeter, defaults to SX_SPLIT_DELIMITER.
+ */
+void stream_to_words(std::istream& stream,
+    std::vector<std::string>& words,
+    const char* delimiter = SX_SPLIT_DELIMITER);
 
 /**
  * DANGER: do not call this if anything iteresting is going on,

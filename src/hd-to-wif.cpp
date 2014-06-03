@@ -24,11 +24,13 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::hd_to_wif::invoke(const int argc, const char* argv[])
+console_result hd_to_wif::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
-        return false;
+        return console_result::failure;
 
     std::string encoded_key(get_arg_or_stream(argc, argv, std::cin));
 
@@ -36,10 +38,10 @@ bool sx::extensions::hd_to_wif::invoke(const int argc, const char* argv[])
     if (!private_key.set_serialized(encoded_key))
     {
         std::cerr << "hd-priv: error reading private key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     secret_parameter secret = private_key.private_key();
     std::cout << secret_to_wif(secret) << std::endl;
-    return true;
+    return console_result::okay;
 }

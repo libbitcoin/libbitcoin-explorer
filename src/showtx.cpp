@@ -28,6 +28,8 @@
 #include <sx/utility/dispatch.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 static void show_tx(const transaction_type& tx)
 {
@@ -121,10 +123,10 @@ static void json_show_tx(const transaction_type& tx)
     std::cout << "}" << std::endl;
 }
 
-bool sx::extensions::showtx::invoke(const int argc, const char* argv[])
+console_result showtx::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     std::string filename(SX_STDIN_PATH_SENTINEL);
     bool json_output = get_option(argc, argv, SX_OPTION_JSON);
@@ -140,7 +142,7 @@ bool sx::extensions::showtx::invoke(const int argc, const char* argv[])
     if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
     {
         std::cerr << "sx: Deserializing transaction failed." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     if (json_output)
@@ -148,6 +150,6 @@ bool sx::extensions::showtx::invoke(const int argc, const char* argv[])
     else
         show_tx(tx);
 
-    return true;
+    return console_result::okay;
 }
 

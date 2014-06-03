@@ -27,6 +27,8 @@
 using namespace bc;
 using std::placeholders::_1;
 using std::placeholders::_2;
+using namespace sx;
+using namespace sx::extensions;
 
 // TODO: this should be a member of sx::extensions::sendtx_node,
 // otherwise concurrent test execution will collide on shared state.
@@ -34,10 +36,11 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void send_tx(const std::error_code& ec, channel_ptr node, transaction_type& tx)
+static void send_tx(const std::error_code& ec, channel_ptr node, 
+    transaction_type& tx)
 {
     // There must be a better way.
-    sx::terminate_process_on_error(ec);
+    terminate_process_on_error(ec);
 
     std::cout << "sendtx: Sending " << hash_transaction(tx) << std::endl;
     auto handle_send =
@@ -53,30 +56,33 @@ static void send_tx(const std::error_code& ec, channel_ptr node, transaction_typ
     node->send(tx, handle_send);
 }
 
-bool sx::extensions::sendtx_node::invoke(const int argc, const char* argv[])
+console_result sendtx_node::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 4))
-        return false;
+        return console_result::failure;
 
     transaction_type tx;
-    std::string filename(get_filename(argc, argv));
+    const auto filename(get_filename(argc, argv));
     if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
     {
         std::cerr << "sx: Deserializing transaction failed." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
-    std::string hostname = "localhost";
-    if (argc > 2)
-        hostname = argv[2];
+    // TODO: read config.service option and alter default hostname accordingly?
+    std::string hostname(argc > 2 ? argv[2] : "localhost");
 
-    uint16_t port = mainnet_port_default;
+    // TODO: read config.testnet option and alter default port accordingly?
+    auto port = static_cast<uint16_t>(port_defaults::mainnet);
+
     if (argc > 3)
+    {
         if (!parse<uint16_t>(argv[3], port))
         {
             std::cerr << "sendtx: Bad port number provided" << std::endl;
-            return false;
+            return console_result::failure;
         }
+    }
 
     threadpool pool(4);
     handshake shake(pool);
@@ -88,6 +94,6 @@ bool sx::extensions::sendtx_node::invoke(const int argc, const char* argv[])
     pool.stop();
     pool.join();
 
-    return true;
+    return console_result::okay;
 }
     

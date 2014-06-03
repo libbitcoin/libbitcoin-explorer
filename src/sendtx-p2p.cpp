@@ -20,14 +20,17 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/sendtx-p2p.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 using std::placeholders::_1;
 using std::placeholders::_2;
 using std::placeholders::_3;
 
-void output_to_file(std::ofstream& file, log_level level,
+static void output_to_file(std::ofstream& file, log_level level,
     const std::string& domain, const std::string& body)
 {
     if (body.empty())
@@ -37,7 +40,8 @@ void output_to_file(std::ofstream& file, log_level level,
         file << " [" << domain << "]";
     file << ": " << body << std::endl;
 }
-void output_cerr_and_file(std::ofstream& file, log_level level,
+
+static void output_cerr_and_file(std::ofstream& file, log_level level,
     const std::string& domain, const std::string& body)
 {
     if (body.empty())
@@ -51,30 +55,24 @@ void output_cerr_and_file(std::ofstream& file, log_level level,
 }
 
 // Needed for the C callback capturing the signals.
-bool stopped = false;
-void signal_handler(int sig)
+static bool stopped = false;
+
+static void signal_handler(int sig)
 {
     log_info() << "Caught signal: " << sig;
     stopped = true;
 }
 
 // Started protocol. Node discovery complete.
-void handle_start(const std::error_code& ec);
-// After number of connections is fetched, this completion handler is called
-// and the number of connections is displayed.
-void check_connection_count(
-    const std::error_code& ec, size_t connection_count, size_t node_count);
-// Send tx to another Bitcoin node.
-void send_tx(const std::error_code& ec, channel_ptr node,
-    protocol& prot, transaction_type& tx);
-
-void handle_start(const std::error_code& ec)
+static void handle_start(const std::error_code& ec)
 {
     terminate_process_on_error(ec);
     log_debug() << "Started.";
 }
 
-void check_connection_count(
+// After number of connections is fetched, this completion handler is called
+// and the number of connections is displayed.
+static void check_connection_count(
     const std::error_code& ec, size_t connection_count, size_t node_count)
 {
     terminate_process_on_error(ec);
@@ -83,7 +81,8 @@ void check_connection_count(
         stopped = true;
 }
 
-void send_tx(const std::error_code& ec, channel_ptr node,
+// Send tx to another Bitcoin node.
+static void send_tx(const std::error_code& ec, channel_ptr node,
     protocol& prot, transaction_type& tx)
 {
     terminate_process_on_error(ec);
@@ -102,36 +101,27 @@ void send_tx(const std::error_code& ec, channel_ptr node,
         std::bind(send_tx, _1, _2, std::ref(prot), std::ref(tx)));
 }
 
-bool parse_node_count(size_t& node_count, const std::string& count_str)
+console_result sendtx_p2p::invoke(const int argc, const char* argv[])
 {
-    try
-    {
-        node_count = boost::lexical_cast<size_t>(count_str);
-    }
-    catch (const boost::bad_lexical_cast&)
-    {
-        std::cerr << "sign-input: Bad N provided" << std::endl;
-        return false;
-    }
-    return true;
-}
+    if (!validate_argument_range(argc, example(), 2, 3))
+        return console_result::failure;
 
-bool invoke(const int argc, const char* argv[])
-{
-    if (argc != 2 && argc != 3)
-    {
-        std::cerr << "Usage: sx sendtx-p2p FILENAME [NODE COUNT]" << std::endl;
-        return -1;
-    }
-    const std::string filename = argv[1];
     transaction_type tx;
-    if (!load_tx(tx, filename))
-        return -1;
-    size_t node_count = 2;
-    if (argc == 3)
+    const std::string filename(get_filename(argc, argv));
+    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
     {
-        if (!parse_node_count(node_count, argv[2]))
-            return -1;
+        std::cerr << "sx: Deserializing transaction failed." << std::endl;
+        return console_result::failure;
+    }
+
+    size_t node_count = 2;
+    if (argc > 2)
+    {
+        if (!parse<size_t>(argv[2], node_count))
+        {
+            std::cerr << "sign-input: Bad N provided" << std::endl;
+            return console_result::failure;
+        }
     }
 
     std::ofstream outfile("debug.log"), errfile("error.log");
@@ -167,12 +157,12 @@ bool invoke(const int argc, const char* argv[])
     {
         prot.fetch_connection_count(
             std::bind(check_connection_count, _1, _2, node_count));
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        sleep_ms(2000);
     }
     const auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
     // Safely close down.
     pool.stop();
     pool.join();
-    return 0;
+    return console_result::okay;
 }

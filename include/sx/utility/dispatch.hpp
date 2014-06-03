@@ -40,7 +40,10 @@ namespace sx {
 #define SX_OPTION_JSON "json"
 #define SX_OPTION_LOCKTIME "locktime"
 #define SX_OPTION_OUTPUT "output"
+#define SX_OPTION_REUSE_KEY "reuse-key"
+#define SX_OPTION_SIGNATURES "signatures"
 #define SX_OPTION_UNCOMPRESSED "uncompressed"
+
 
 /**
  * Invoke the command identified by the specified arguments.
@@ -49,9 +52,9 @@ namespace sx {
  * @param[in]  argc   The number of elements in the argv parameter.
  * @param[in]  argv   Array of command line arguments excluding the process.
  * @param[in]  alias  An command name to redirect the call to.
- * @return            True if invoked successfully.
+ * @return            The appropriate console return code { -1, 0, 1 }.
  */
-bool dispatch_invoke(const int argc, const char* argv[], 
+console_result dispatch_invoke(const int argc, const char* argv[],
     const char* alias=nullptr);
 
 /**
@@ -74,9 +77,9 @@ bool dispatch_usage();
  *
  * @param[in]  argc  The number of elements in the argv array.
  * @param[in]  argv  The array of arguments, including the process.
- * @return           Success (sx::main_success) or failure (sx::main_failure).
+ * @return           The appropriate console return code { -1, 0, 1 }.
  */
-int invoke(const int argc, const char* argv[]);
+console_result invoke(const int argc, const char* argv[]);
 
 } // sx
 

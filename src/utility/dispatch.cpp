@@ -28,22 +28,22 @@
 
 namespace sx {
 
-bool dispatch_invoke(const int argc, const char* argv[], 
+console_result dispatch_invoke(const int argc, const char* argv[], 
     const char* alias)
 {
     const auto target = (alias == nullptr ? argv[0] : alias);
-    const auto command = sx::extensions::find(target);
+    const auto command = extensions::find(target);
     if (command == nullptr)
     {
         display_invalid_command(target);
-        return false;
+        return console_result::failure;
     }
     return command->invoke(argc, argv);
 }
 
 bool dispatch_summary(const char* symbol)
 {
-    const auto command = sx::extensions::find(symbol);
+    const auto command = extensions::find(symbol);
     if (command == nullptr)
     {
         display_invalid_command(symbol);
@@ -58,10 +58,10 @@ bool dispatch_usage()
     {
         display_usage(sx_command);
     };
-    return sx::extensions::broadcast(func);
+    return extensions::broadcast(func);
 }
 
-int invoke(const int argc, const char* argv[])
+console_result invoke(const int argc, const char* argv[])
 {
     // command line usage:
     // sx [-c|--config path] [[-h|--help|help command] | [command [args...]]]
@@ -73,7 +73,7 @@ int invoke(const int argc, const char* argv[])
     if (position == last)
     {
         display_usage();
-        return main_success;
+        return console_result::okay;
     }
 
     // next token (skip process name)
@@ -86,7 +86,7 @@ int invoke(const int argc, const char* argv[])
         {
             // sx -c|--config <missing path>
             display_usage();
-            return main_failure;
+            return console_result::failure;
         }
 
         // next token (skip -c|--config)
@@ -95,14 +95,14 @@ int invoke(const int argc, const char* argv[])
         if (!set_config_path(token))
         {
             display_invalid_config(token.c_str());
-            return main_failure;
+            return console_result::failure;
         }
 
         if (position == last)
         {
             // sx -c|--config path
             // std::cerr << "Using config file: " << token << std::endl;
-            return main_success;
+            return console_result::okay;
         }
 
         // next token (skip path)
@@ -124,18 +124,15 @@ int invoke(const int argc, const char* argv[])
 
             // sx [-c|--config path] -h|--help|help command
             if (!dispatch_summary(token.c_str()))
-                return main_failure;
+                return console_result::failure;
         }
 
         // help option cannot be combined with command, ignore subsequent args
-        return main_success;
+        return console_result::okay;
     }
 
     // invoke: always set the command as the first argument
-    if (!dispatch_invoke(argc - position, &argv[position]))
-        return main_failure;
-
-    return main_success;
+    return dispatch_invoke(argc - position, &argv[position]);
 }
 
 } // sx

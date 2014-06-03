@@ -27,6 +27,8 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
 // Currently unused.
 //static int display_help()
@@ -53,7 +55,7 @@ static bool two_args_remain(size_t current_arg, int argc)
 static bool load_outpoint(output_point& prevout, const std::string& parameter)
 {
     std::vector<std::string> words;
-    sx::split(parameter, words, ":");
+    split(parameter, words, ":");
     if (words.size() != 2)
     {
         std::cerr << "mktx: Format for previous output is TXHASH:INDEX."
@@ -141,7 +143,7 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
 {
     transaction_output_type output;
     std::vector<std::string> words;
-    sx::split(parameter, words, ":");
+    split(parameter, words, ":");
     if (words.size() != 2)
     {
         std::cerr << "mktx: Format for output is ADDRESS:VALUE"
@@ -166,7 +168,8 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
     }
     else if (stealth.set_encoded(output_str))
     {
-        bool reuse_key = stealth.options & stealth_address::reuse_key_option;
+        bool reuse_key = flags_set(stealth.options,
+            stealth_address::flags::reuse_key);
         // Get our scan and spend pubkeys.
         const ec_point& scan_pubkey = stealth.scan_pubkey;
         BITCOIN_ASSERT_MSG(
@@ -179,7 +182,7 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
         if (!reuse_key)
             spend_pubkey = stealth.spend_pubkeys.front();
         // Do stealth stuff.
-        ec_secret ephem_secret = sx::generate_random_secret();
+        ec_secret ephem_secret = generate_random_secret();
         ec_point addr_pubkey = initiate_stealth(
             ephem_secret, scan_pubkey, spend_pubkey);
         // stealth_metadata
@@ -235,21 +238,21 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
 static bool modify(transaction_type& tx,
     const std::string& action, const std::string& parameter)
 {
-    if (sx::is_option(action, SX_OPTION_INPUT))
+    if (is_option(action, SX_OPTION_INPUT))
         return add_input(tx, parameter);
-    if (sx::is_option(action, SX_OPTION_OUTPUT))
+    if (is_option(action, SX_OPTION_OUTPUT))
         return add_output(tx, parameter);
-    if (sx::is_option(action, SX_OPTION_LOCKTIME))
+    if (is_option(action, SX_OPTION_LOCKTIME))
         return change_locktime(tx, parameter);
 
     std::cerr << "mktx: Action '" << action << "' doesn't exist." << std::endl;
     return false;
 }
 
-bool sx::extensions::mktx::invoke(const int argc, const char* argv[])
+console_result mktx::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2))
-        return false;
+        return console_result::failure;
 
     const std::string filename(get_filename(argc, argv));
 
@@ -263,7 +266,7 @@ bool sx::extensions::mktx::invoke(const int argc, const char* argv[])
         const std::string action = argv[current_arg],
             parameter = argv[current_arg + 1];
         if (!modify(tx, action, parameter))
-            return false;
+            return console_result::failure;
         current_arg += 2;
         BITCOIN_ASSERT(current_arg <= argc);
     }
@@ -278,6 +281,6 @@ bool sx::extensions::mktx::invoke(const int argc, const char* argv[])
         std::ofstream outfile(filename, std::ofstream::binary);
         outfile << raw_tx;
     }
-    return true;
+    return console_result::okay;
 }
 

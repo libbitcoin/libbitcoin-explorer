@@ -24,18 +24,20 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::showblkhead::invoke(const int argc, const char* argv[])
+console_result showblkhead::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     block_header_type blk_header;
     std::string filename(get_filename(argc, argv));
     if (!load_satoshi_item<block_header_type>(blk_header, filename, std::cin))
     {
         std::cerr << "sx: Deserializing block header failed." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     // Show details.
@@ -47,5 +49,5 @@ bool sx::extensions::showblkhead::invoke(const int argc, const char* argv[])
     std::cout << "timestamp: " << blk_header.timestamp << std::endl;
     std::cout << "bits: " << blk_header.bits << std::endl;
     std::cout << "nonce: " << blk_header.nonce << std::endl;
-    return true;
+    return console_result::okay;
 }

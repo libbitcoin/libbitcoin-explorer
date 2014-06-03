@@ -25,17 +25,19 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::genaddr::invoke(const int argc, const char* argv[])
+console_result genaddr::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 3))
-        return false;
+        return console_result::failure;
 
     size_t key_number;
     if (!parse<size_t>(argv[1], key_number))
     {
-        std::cerr << "genaddr: Invalid key number." << std::endl;
-        return false;
+        std::cerr << "genaddr: Bad N provided." << std::endl;
+        return console_result::failure;
     }
 
     bool for_change = (argc == 3 && is_true(argv[2]));
@@ -49,7 +51,7 @@ bool sx::extensions::genaddr::invoke(const int argc, const char* argv[])
         {
             std::cerr << "genaddr: No valid master public key, or "
                 << "private secret key was passed in." << std::endl;
-            return false;
+            return console_result::failure;
         }
     }
 
@@ -57,5 +59,5 @@ bool sx::extensions::genaddr::invoke(const int argc, const char* argv[])
     data_chunk pubkey = wallet.generate_public_key(key_number, for_change);
     set_public_key(addr, pubkey);
     std::cout << addr.encoded() << std::endl;
-    return true;
+    return console_result::okay;
 }

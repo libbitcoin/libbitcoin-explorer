@@ -25,10 +25,13 @@
 #include <sx/utility/console.hpp>
 #include <sx/utility/dispatch.hpp>
 
-bool sx::extensions::get_utxo::invoke(const int argc, const char* argv[])
+using namespace sx;
+using namespace sx::extensions;
+
+console_result get_utxo::invoke(const int argc, const char* argv[])
 {
     line_out(std::cerr, "sx: This command is not yet ported from python.");
-    return false;
+    return console_result::failure;
 }
 
 //#!/usr/bin/python

@@ -55,7 +55,7 @@ bool read_address_tuple(const int argc, const char* argv[],
         // Two similar techniques for same arg requirements:
 
         // from encode_addr
-        hex_str = sx::read_stream(stream);
+        hex_str = read_stream(stream);
 
         // from wrap
         //stream >> hex_str;
@@ -70,14 +70,14 @@ bool read_address_tuple(const int argc, const char* argv[],
             hex_str = arg;
         else
         {
-            if (!sx::parse<uint8_t>(argv[1], version_byte))
+            if (!parse<uint8_t>(argv[1], version_byte))
                 return false;
             hex_str = sx::read_stream(stream);
         }
     }
     else if (argc == 3)
     {
-        if (!sx::parse<uint8_t>(argv[2], version_byte))
+        if (!parse<uint8_t>(argv[2], version_byte))
             return false;
         hex_str = argv[1];
     }
@@ -90,7 +90,7 @@ bool read_addresses(const int argc, const char* argv[],
 {
     for (int i = 1; i < argc; ++i)
     {
-        if (sx::is_option_any(argv[i]))
+        if (is_option_any(argv[i]))
             continue;
         payment_address payaddr;
         if (!payaddr.set_encoded(argv[i]))
@@ -109,9 +109,9 @@ bool read_hard_index_args(const int argc, const char* argv[], bool& is_hard,
     for (int i = 1; i < argc; ++i)
     {
         const std::string arg(argv[i]);
-        if (sx::is_option(arg, SX_OPTION_HARD))
+        if (is_option(arg, SX_OPTION_HARD))
             is_hard = true;
-        else if (!sx::parse<uint32_t>(arg, index))
+        else if (!parse<uint32_t>(arg, index))
             return false;
     }
 

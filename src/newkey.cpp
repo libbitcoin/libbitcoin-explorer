@@ -24,15 +24,17 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::newkey::invoke(const int argc, const char* argv[])
+console_result newkey::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
-        return false;
+        return console_result::failure;
 
     elliptic_curve_key key;
     key.new_keypair();
     const auto secret = key.secret();
     std::cout << libwallet::secret_to_wif(secret) << std::endl;
-    return true;
+    return console_result::okay;
 }

@@ -26,11 +26,13 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
 static bool private_to_public_key()
 {
     hd_private_key private_key;
-    if (!private_key.set_serialized(sx::read_stream(std::cin)))
+    if (!private_key.set_serialized(read_stream(std::cin)))
     {
         std::cerr << "sx: Error reading private key." << std::endl;
         return false;
@@ -41,15 +43,16 @@ static bool private_to_public_key()
     return true;
 }
 
-bool sx::extensions::hd_pub::invoke(const int argc, const char* argv[])
+console_result hd_pub::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 3))
-        return false;
+        return console_result::failure;
 
     if (argc == 1)
     {
         // Special case - read private key from STDIN and convert it to public.
-        return private_to_public_key();
+        return private_to_public_key() ? console_result::okay : 
+            console_result::failure;
     }
 
     bool is_hard;
@@ -57,7 +60,7 @@ bool sx::extensions::hd_pub::invoke(const int argc, const char* argv[])
     if (!read_hard_index_args(argc, argv, is_hard, index))
     {
         std::cerr << "sx: Bad INDEX provided." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     // TODO: constrain read_hard_index_args so that the encoded key can be 
@@ -74,14 +77,14 @@ bool sx::extensions::hd_pub::invoke(const int argc, const char* argv[])
     else if (!public_key.set_serialized(encoded_key))
     {
         std::cerr << "sx: Error reading key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     if (!private_key.valid() && is_hard)
     {
         std::cerr << "sx: Cannot use --hard with public keys."
             << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     hd_public_key child_key;
@@ -97,10 +100,10 @@ bool sx::extensions::hd_pub::invoke(const int argc, const char* argv[])
     if (!child_key.valid())
     {
         std::cerr << "sx: Error deriving child key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     std::cout << child_key.serialize() << std::endl;
-    return true;
+    return console_result::okay;
 }
 

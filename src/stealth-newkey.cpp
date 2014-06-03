@@ -20,14 +20,20 @@
 #include <wallet/wallet.hpp>
 #include <sx/command/stealth-newkey.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/curve.hpp>
 
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-int main()
+console_result stealth_newkey::invoke(const int argc, const char* argv[])
 {
-    ec_secret scan_secret = generate_random_secret();
-    ec_secret spend_secret = generate_random_secret();
-    ec_point spend_pubkey = secret_to_public_key(spend_secret);
+    if (!validate_argument_range(argc, example(), 1))
+        return console_result::failure;
+
+    const auto scan_secret = generate_random_secret();
+    const auto spend_secret = generate_random_secret();
+    const auto spend_pubkey = secret_to_public_key(spend_secret);
 
     stealth_address addr;
     addr.options = 0;
@@ -38,6 +44,7 @@ int main()
     std::cout << "Stealth address: " << addr.encoded() << std::endl;
     std::cout << "Scan secret: " << scan_secret << std::endl;
     std::cout << "Spend secret: " << spend_secret << std::endl;
-    return 0;
+
+    return console_result::okay;
 }
 

@@ -23,14 +23,16 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::base58_decode::invoke(const int argc, const char* argv[])
+console_result base58_decode::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     std::string b58_str(get_arg_or_stream(argc, argv, std::cin));
     line_out(std::cout, encode_hex(decode_base58(b58_str)));
-    return true;
+    return console_result::okay;
 }
 

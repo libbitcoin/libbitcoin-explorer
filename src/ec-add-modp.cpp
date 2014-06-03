@@ -24,30 +24,32 @@
 #include <sx/utility/curve.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::ec_add_modp::invoke(const int argc, const char* argv[])
+console_result ec_add_modp::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 3, 3))
-        return false;
+        return console_result::failure;
 
     ec_secret secret_a, secret_b;
     if (!set_ec_secret(secret_a, argv[1]))
     {
         std::cerr << "sx: Invalid secret " << argv[1] << std::endl;
-        return false;
+        return console_result::failure;
     }
     if (!set_ec_secret(secret_b, argv[2]))
     {
         std::cerr << "sx: Invalid secret " << argv[2] << std::endl;
-        return false;
+        return console_result::failure;
     }
     if (!ec_add(secret_a, secret_b))
     {
         std::cerr << "sx: Error adding numbers." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     std::cout << secret_a << std::endl;
-    return true;
+    return console_result::okay;
 }
 

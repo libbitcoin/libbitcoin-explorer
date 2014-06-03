@@ -23,11 +23,13 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::decode_addr::invoke(const int argc, const char* argv[])
+console_result decode_addr::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     std::string addr_str(get_arg_or_stream(argc, argv, std::cin));
 
@@ -36,9 +38,9 @@ bool sx::extensions::decode_addr::invoke(const int argc, const char* argv[])
     {
         std::cerr << "decode-addr: Bad address '" << addr_str << "'."
             << std::endl;
-        return false;
+        return console_result::failure;
     }
     std::cout << addr.hash() << std::endl;
-    return true;
+    return console_result::okay;
 }
 

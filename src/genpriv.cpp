@@ -25,17 +25,19 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::genpriv::invoke(const int argc, const char* argv[])
+console_result genpriv::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 3))
-        return false;
+        return console_result::failure;
 
     size_t key_number;
     if (!parse<size_t>(argv[1], key_number))
     {
         std::cerr << "genpriv: Bad N provided." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     bool for_change = (argc == 3 && is_true(argv[2]));
@@ -44,11 +46,11 @@ bool sx::extensions::genpriv::invoke(const int argc, const char* argv[])
     if (!wallet.set_seed(read_stream(std::cin)))
     {
         std::cerr << "genpriv: This command wants a seed." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     bool is_compressed = false;
     secret_parameter secret = wallet.generate_secret(key_number, for_change);
     std::cout << secret_to_wif(secret, is_compressed) << std::endl;
-    return true;
+    return console_result::okay;
 }

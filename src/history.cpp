@@ -34,6 +34,8 @@
 #include <sx/utility/dispatch.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
@@ -142,10 +144,10 @@ static void json_history_fetched(const payment_address& payaddr,
     std::cout << std::endl;
 }
 
-bool sx::extensions::history::invoke(const int argc, const char* argv[])
+console_result history::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1))
-        return false;
+        return console_result::failure;
 
     // TODO: create generalized and shared aguments class that:
     // * sets all arguments to a string list by position
@@ -167,14 +169,14 @@ bool sx::extensions::history::invoke(const int argc, const char* argv[])
         if (!payaddr.set_encoded(read_stream(std::cin)))
         {
             std::cerr << "history: Invalid address." << std::endl;
-            return false;
+            return console_result::failure;
         }
         payaddrs.push_back(payaddr);
     }
     else if (!read_addresses(argc, argv, payaddrs))
     {
         std::cerr << "history: Invalid address." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     remaining_count = static_cast<int>(payaddrs.size());
@@ -211,6 +213,6 @@ bool sx::extensions::history::invoke(const int argc, const char* argv[])
         std::cout << "]" << std::endl;
     pool.stop();
     pool.join();
-    return true;
+    return console_result::okay;
 }
 

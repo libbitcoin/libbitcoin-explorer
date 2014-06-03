@@ -18,55 +18,59 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <stdint.h>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/stealth-show-addr.hpp>
+#include <sx/utility/console.hpp>
+#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-void show_usage()
+console_result stealth_show_addr::invoke(const int argc, const char* argv[])
 {
-    std::cerr << "Usage: sx stealth-show-addr STEALTH_ADDRESS" << std::endl;
-}
+    if (!validate_argument_range(argc, example(), 2, 2))
+        return console_result::failure;
 
-bool invoke(const int argc, const char* argv[])
-{
-    if (argc != 2)
+    const std::string stealth(argv[1]);
+
+    // TODO: This should be consumed by dispatch.
+    if (is_option(stealth, SX_OPTION_HELP))
     {
-        show_usage();
-        return -1;
+        example();
+        return console_result::okay;
     }
-    const std::string stealth_str = argv[1];
-    if (stealth_str == "--help" || stealth_str == "-h")
-    {
-        show_usage();
-        return -1;
-    }
-    stealth_address addr;
-    if (!addr.set_encoded(stealth_str))
+
+    stealth_address address;
+    if (!address.set_encoded(stealth))
     {
         std::cerr << "sx: Invalid stealth address." << std::endl;
-        return -2;
+        return console_result::failure;
     }
+
     // Now display fields.
     std::cout << "Options: ";
-    if (addr.options & stealth_address::reuse_key_option)
+    if (flags_set(address.options, stealth_address::flags::reuse_key))
         std::cout << "reuse_key";
     else
         std::cout << "none";
     std::cout << std::endl;
-    std::cout << "Scan pubkey: " << addr.scan_pubkey << std::endl;
+    std::cout << "Scan pubkey: " << address.scan_pubkey << std::endl;
     std::cout << "Spend pubkeys:" << std::endl;
-    for (const auto& pubkey: addr.spend_pubkeys)
+    for (const auto& pubkey : address.spend_pubkeys)
         std::cout << "  " << pubkey << std::endl;
     std::cout << "Number required signatures: "
-        << addr.number_signatures << std::endl;
+        << address.number_signatures << std::endl;
+
     // Display prefix.
-    std::string prefix_str = "none";
-    if (!addr.prefix.empty())
-        boost::to_string(addr.prefix, prefix_str);
-    std::cout << "Prefix: " << prefix_str << std::endl;
-    return 0;
+    // TODO: provide serialization override on address_prefix.
+    // TODO: verify that if the prefix is empty() it serializes to "".
+    std::string prefix(serialize(address.prefix, "none"));
+
+    std::cout << "Prefix: " << prefix << std::endl;
+    return console_result::okay;
 }
 

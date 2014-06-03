@@ -65,6 +65,7 @@
     <description value="Validate an address." />
     <example value="sx validaddr ADDRESS" />
     <explanation value="Validate an address." />
+    <explanation value="Return codes: { -1 failure, 0 = valid address, 1 = invalid address }" />
   </command>
 
   <command symbol="validtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
@@ -138,7 +139,7 @@
 
   <command symbol="sendtx-obelisk" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN UPDATES">
     <description value="Send tx to obelisk server." />
-    <example value="sx sendtx-obelisk FILENAME" />
+    <example value="sx sendtx-obelisk [FILENAME]" />
     <explanation value="Broadcast the transaction to an obelisk server for the network." />
     <explanation value="" />
     <explanation value="  $ sx sendtx-obelisk txfile.tx" />

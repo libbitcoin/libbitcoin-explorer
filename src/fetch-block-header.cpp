@@ -26,6 +26,8 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 // TODO: this should be a member of sx::extensions::fetch_block_header,
 // otherwise concurrent test execution will collide on shared state.
@@ -57,7 +59,7 @@ static bool initialize_fetch_block_header(std::string& index,
 
     if (hash != null_hash)
         fullnode.blockchain.fetch_block_header(hash, block_header_fetched);
-    else if (sx::parse<size_t>(index, height))
+    else if (parse<size_t>(index, height))
         fullnode.blockchain.fetch_block_header(height, block_header_fetched);
     else
         return false;
@@ -65,11 +67,10 @@ static bool initialize_fetch_block_header(std::string& index,
     return true;
 }
 
-bool sx::extensions::fetch_block_header::invoke(const int argc,
-    const char* argv[])
+console_result fetch_block_header::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     std::string index(get_arg_or_stream(argc, argv, std::cin));
 
@@ -77,10 +78,10 @@ bool sx::extensions::fetch_block_header::invoke(const int argc,
     if (!initialize_fetch_block_header(index, fullnode))
     {
         line_out(std::cerr, "fetch-block-header: Bad index provided.");
-        return false;
+        return console_result::failure;
     }
     poll(fullnode, pool, node_stopped);
 
-    return true;
+    return console_result::okay;
 }
 

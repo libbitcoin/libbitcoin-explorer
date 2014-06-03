@@ -17,28 +17,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command/sha256.hpp>
 #include <sx/utility/console.hpp>
 
-bool invoke(const int argc, const char* argv[])
+using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
+
+console_result sha256::invoke(const int argc, const char* argv[])
 {
-    if (argc > 2)
-    {
-        std::cerr << "Usage: sx sha256 DATA" << std::endl;
-        return -1;
-    }
-    std::string arg;
-    if (argc == 2)
-        arg = argv[1];
-    else
-        arg = read_stream(std::cin);
-    data_chunk data = decode_hex(arg);
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return console_result::failure;
+
+    const std::string arg(get_arg_or_stream(argc, argv, std::cin));
+    const data_chunk data = decode_hex(arg);
+
     if (data.empty())
     {
         std::cerr << "sx: Non-hex input data." << std::endl;
-        return -1;
+        return console_result::failure;
     }
+
     std::cout << sha256_hash(data) << std::endl;
-    return 0;
+    return console_result::okay;
 }
 

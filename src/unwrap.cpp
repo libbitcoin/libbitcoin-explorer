@@ -24,11 +24,13 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::unwrap::invoke(const int argc, const char* argv[])
+console_result unwrap::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     std::string hex_str(get_arg_or_stream(argc, argv, std::cin));
     data_chunk bytes = decode_hex(hex_str);
@@ -36,13 +38,13 @@ bool sx::extensions::unwrap::invoke(const int argc, const char* argv[])
     if (bytes.size() < 5)
     {
         std::cerr << "Error: Must be at least five bytes" << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     if (!validate_checksum(bytes))
     {
         std::cerr << "Error: checksum does not match" << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     data_chunk rawdata(bytes.begin(), bytes.end() - 4);
@@ -50,5 +52,5 @@ bool sx::extensions::unwrap::invoke(const int argc, const char* argv[])
     int version_byte = rawdata.front();
 
     std::cout << output << " " << version_byte << std::endl;
-    return true;
+    return console_result::okay;
 }

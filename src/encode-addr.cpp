@@ -24,11 +24,13 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::encode_addr::invoke(const int argc, const char* argv[])
+console_result encode_addr::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 3))
-        return false;
+        return console_result::failure;
 
     std::string addr_str;
     uint8_t version_byte;
@@ -38,10 +40,10 @@ bool sx::extensions::encode_addr::invoke(const int argc, const char* argv[])
     if (hash == null_short_hash)
     {
         line_out(std::cerr, "Incorrect HASH passed in.");
-        return false;
+        return console_result::failure;
     }
 
     payment_address addr(version_byte, hash);
     std::cout << addr.encoded() << std::endl;
-    return true;
+    return console_result::okay;
 }

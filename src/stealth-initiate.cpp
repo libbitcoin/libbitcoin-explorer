@@ -18,26 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/stealth-initiate.hpp>
 
-using namespace libbitcoin;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool invoke(const int argc, const char* argv[])
+console_result stealth_initiate::invoke(const int argc, const char* argv[])
 {
-    if (argc != 4)
-    {
-        std::cerr << "Usage: sx stealth-initiate EPHEM_SECRET SCAN_PUBKEY "
-            "SPEND_PUBKEY" << std::endl;
-        return -1;
-    }
+    if (!validate_argument_range(argc, example(), 4, 4))
+        return console_result::failure;
+
     ec_secret ephem_secret = decode_hash(argv[1]);
     ec_point scan_pubkey = decode_hex(argv[2]);
     ec_point spend_pubkey = decode_hex(argv[3]);
     ec_point pubkey = initiate_stealth(ephem_secret, scan_pubkey, spend_pubkey);
+
     std::cout << pubkey << std::endl;
-    return 0;
+    return console_result::okay;
 }
 

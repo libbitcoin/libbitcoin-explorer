@@ -23,6 +23,8 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 static operation create_data_operation(data_chunk& data)
 {
@@ -71,10 +73,10 @@ static script_type script_from_pretty(const std::string& pretty_script)
     return script_object;
 }
 
-bool sx::extensions::rawscript::invoke(const int argc, const char* argv[])
+console_result rawscript::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2))
-        return false;
+        return console_result::failure;
 
     std::vector<std::string> words;
     get_args(argc, argv, words);
@@ -84,6 +86,6 @@ bool sx::extensions::rawscript::invoke(const int argc, const char* argv[])
 
     const auto parsed_script = script_from_pretty(sentence);
     std::cout << save_script(parsed_script) << std::endl;
-    return true;
+    return console_result::okay;
 }
 

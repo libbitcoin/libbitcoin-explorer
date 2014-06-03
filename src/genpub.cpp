@@ -25,32 +25,34 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::genpub::invoke(const int argc, const char* argv[])
+console_result genpub::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 4))
-        return false;
+        return console_result::failure;
 
     size_t key_number;
     if (!parse<size_t>(argv[1], key_number))
     {
         std::cerr << "genaddr: Bad N provided" << std::endl;
-        return false;
+        return console_result::failure;
     }
 
-    bool for_change = (argc > 2 && is_true(argv[2]));
+    auto const for_change = (argc > 2 && is_true(argv[2]));
 
     size_t stop_limit = key_number;
     if (argc > 3 && !parse<size_t>(argv[3], stop_limit))
     {
         std::cerr << "genaddr: Bad RANGESTOP provided" << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     if (stop_limit < key_number)
     {
         std::cerr << "genaddr: RANGESTOP cannot be less than N" << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     deterministic_wallet wallet;
@@ -62,7 +64,7 @@ bool sx::extensions::genpub::invoke(const int argc, const char* argv[])
         {
             std::cerr << "genaddr: No valid master public key, or "
                 << "private secret key was passed in." << std::endl;
-            return false;
+            return console_result::failure;
         }
     }
 
@@ -72,7 +74,7 @@ bool sx::extensions::genpub::invoke(const int argc, const char* argv[])
         std::cout << public_key << std::endl;
     }
 
-    return false;
+    return console_result::okay;
 }
 
 

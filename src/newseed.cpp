@@ -25,15 +25,17 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::newseed::invoke(const int argc, const char* argv[])
+console_result newseed::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
-        return false;
+        return console_result::failure;
 
     libwallet::deterministic_wallet wallet;
     wallet.new_seed();
     std::cout << wallet.seed() << std::endl;
-    return true;
+    return console_result::okay;
 }
 

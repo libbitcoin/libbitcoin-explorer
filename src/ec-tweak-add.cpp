@@ -24,28 +24,30 @@
 #include <sx/utility/curve.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::ec_tweak_add::invoke(const int argc, const char* argv[])
+console_result ec_tweak_add::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 3, 3))
-        return false;
+        return console_result::failure;
 
     ec_secret int_part;
     ec_point point_part;
     if (!ec_math_parse_args(argc, argv, int_part, point_part))
     {
         std::cerr << "sx: Unable to read input values." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     bool success = bc::ec_tweak_add(point_part, int_part);
     if (!success)
     {
         line_out(std::cerr, "sx: Out of range.");
-        return false;
+        return console_result::failure;
     }
 
     std::cout << point_part << std::endl;
-    return true;
+    return console_result::okay;
 }
 

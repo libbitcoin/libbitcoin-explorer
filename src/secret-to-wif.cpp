@@ -25,15 +25,17 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::secret_to_wif::invoke(const int argc, const char* argv[])
+console_result secret_to_wif::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
-        return false;
+        return console_result::failure;
 
     const auto secret_hash = read_stream(std::cin);
     const auto secret = decode_hash(secret_hash);
     std::cout << libwallet::secret_to_wif(secret) << std::endl;
-    return true;
+    return console_result::okay;
 }
 

@@ -17,27 +17,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <future>
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command/initchain.hpp>
+#include <sx/utility/console.hpp>
+
+using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 // Create a new leveldb blockchain database.
 // This is currently tied to the build of the libbitcoin dependency.
 #ifndef LEVELDB_ENABLED
 
-bool sx::extensions::initchain::invoke(const int argc, const char* argv[])
+console_result initchain::invoke(const int argc, const char* argv[])
 {
     std::cerr << "initchain: The feature is not supported in this build." 
         << std::endl;
-    return false;
+    return console_result::failure;
 }
 
 #else
-
-#include <future>
-#include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
-
-using namespace bc;
 
 static void create_file(const std::string& filename, size_t filesize)
 {
@@ -62,10 +63,10 @@ static void initialize_new_stealth_database(const std::string& filename)
         serial.write_4_bytes(0);
 }
 
-bool sx::extensions::initchain::invoke(const int argc, const char* argv[])
+console_result initchain::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 2))
-        return false;
+        return console_result::failure;
 
     const std::string dbpath = argv[1];
     // Create custom databases first.
@@ -97,7 +98,7 @@ bool sx::extensions::initchain::invoke(const int argc, const char* argv[])
     if (ec)
     {
         log_error() << "Importing genesis block failed: " << ec.message();
-        return false;
+        return console_result::failure;
     }
     log_info() << "Imported genesis block "
         << hash_block_header(first_block.header);
@@ -107,7 +108,7 @@ bool sx::extensions::initchain::invoke(const int argc, const char* argv[])
     pool.join();
     // Now safely close leveldb_blockchain.
     chain.stop();
-    return true;
+    return console_result::okay;
 }
 
 #endif

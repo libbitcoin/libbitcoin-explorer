@@ -18,27 +18,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/stealth-uncover-secret.hpp>
 
-using namespace libbitcoin;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool invoke(const int argc, const char* argv[])
+console_result stealth_uncover_secret::invoke(const int argc,
+    const char* argv[])
 {
-    if (argc != 4)
-    {
-        std::cerr << "Usage: sx stealth-uncover-secret EPHEM_PUBKEY "
-            "SCAN_SECRET SPEND_SECRET" << std::endl;
-        return -1;
-    }
-    ec_point ephem_pubkey = decode_hex(argv[1]);
-    ec_secret scan_secret = decode_hash(argv[2]);
-    ec_secret spend_secret = decode_hash(argv[3]);
-    ec_secret secret = uncover_stealth_secret(
-        ephem_pubkey, scan_secret, spend_secret);
+    if (!validate_argument_range(argc, example(), 4, 4))
+        return console_result::failure;
+
+    const auto ephem_pubkey = decode_hex(argv[1]);
+    const auto scan_secret = decode_hash(argv[2]);
+    const auto spend_secret = decode_hash(argv[3]);
+    const auto secret = uncover_stealth_secret(ephem_pubkey, scan_secret,
+        spend_secret);
+
     std::cout << secret << std::endl;
-    return 0;
+    return console_result::okay;
 }
 

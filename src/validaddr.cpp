@@ -20,23 +20,27 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/validaddr.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool invoke(const int argc, const char* argv[])
+console_result validaddr::invoke(const int argc, const char* argv[])
 {
-    if (argc != 2)
-    {
-        std::cerr << "Usage: sx validaddr ADDRESS" << std::endl;
-        return -1;
-    }
+    if (!validate_argument_range(argc, example(), 2, 2))
+        return console_result::failure;
+
     payment_address payaddr;
     if (!payaddr.set_encoded(argv[1]))
     {
-        std::cout << "Status: Invalid" << std::endl;
-        return 1;
+        std::cout << "Status: Failed" << std::endl;
+        return console_result::invalid;
     }
-    std::cout << "Status: Success" << std::endl;
-    return 0;
+    else
+    {
+        std::cout << "Status: OK" << std::endl;
+        return console_result::okay;
+    }
 }
 

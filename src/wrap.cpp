@@ -24,11 +24,13 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::wrap::invoke(const int argc, const char* argv[])
+console_result wrap::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 3))
-        return false;
+        return console_result::failure;
 
     std::string hex_str;
     uint8_t version_byte;
@@ -41,6 +43,6 @@ bool sx::extensions::wrap::invoke(const int argc, const char* argv[])
     extend_data(bytes, to_little_endian(checksum));
 
     std::cout << bytes << std::endl;
-    return true;
+    return console_result::okay;
 }
 

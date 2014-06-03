@@ -118,9 +118,9 @@ public:
      *
      * @param[in]  argc  The number of elements in the argv array.
      * @param[in]  argv  The array of arguments, excluding the process.
-     * @return           True if successful.
+     * @return           The appropriate console return code { -1, 0, 1 }.
      */
-    bool invoke(const int argc, const char* argv[]);
+    console_result invoke(const int argc, const char* argv[]);
 };
 
 } // extensions

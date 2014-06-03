@@ -26,6 +26,8 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
@@ -61,11 +63,11 @@ static void transaction_fetched_wrapper(const std::error_code& ec,
         transaction_fetched(ec, tx);
 }
 
-bool sx::extensions::fetch_transaction::invoke(const int argc,
+console_result fetch_transaction::invoke(const int argc,
     const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     std::string tx_hash_str(get_arg_or_stream(argc, argv, std::cin));
     hash_digest tx_hash = decode_hash(tx_hash_str);
@@ -76,6 +78,6 @@ bool sx::extensions::fetch_transaction::invoke(const int argc,
             std::ref(fullnode)));
     poll(fullnode, pool, node_stopped);
 
-    return true;
+    return console_result::okay;
 }
 

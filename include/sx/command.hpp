@@ -21,6 +21,7 @@
 #define SX_COMMAND_HPP
 
 #include <vector>
+#include <sx/utility/console.hpp>
 
 namespace sx {
 
@@ -88,9 +89,10 @@ public:
      *
      * @param[in]  argc  The number of elements in the argv array.
      * @param[in]  argv  The array of arguments, excluding the process.
-     * @return           True if successful.
+     * @return           The appropriate console return code { -1, 0, 1 }.
      */
-    virtual bool invoke(const int argc, const char* argv[]) PURE_VIRTUAL;
+    virtual console_result invoke(const int argc, const char* argv[]) 
+        PURE_VIRTUAL;
 };
 
 } // sx

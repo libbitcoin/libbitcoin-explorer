@@ -44,6 +44,7 @@
     
 using namespace bc;
 using namespace sx;
+using namespace sx::extensions;
 using std::placeholders::_1;
 using std::placeholders::_2;
 using std::placeholders::_3;
@@ -718,10 +719,10 @@ static void broadcast_subsystem()
     pool.join();
 }
 
-bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
+console_result wallet::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     libwallet::deterministic_wallet detwallet;
     std::string user_data(argv[1]);
@@ -731,7 +732,7 @@ bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
         if (!detwallet.set_master_public_key(mpk))
         {
             line_out(std::cerr, NO_MASTER_PUBLIC_KEY);
-            return false;
+            return console_result::failure;
         }
     }
 
@@ -835,5 +836,5 @@ bool sx::extensions::wallet::invoke(const int argc, const char* argv[])
     endwin();
     pool.stop();
     pool.join();
-    return true;
+    return console_result::okay;
 }

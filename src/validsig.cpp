@@ -24,6 +24,8 @@
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
 static bool valid_signature(const transaction_type& tx,
     const uint32_t input_index, elliptic_curve_key& key, 
@@ -36,49 +38,51 @@ static bool valid_signature(const transaction_type& tx,
     return key.verify(tx_hash, signature);
 }
 
-bool sx::extensions::validsig::invoke(const int argc, const char* argv[])
+console_result validsig::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 5, 5))
-        return false;
+        return console_result::failure;
 
     transaction_type tx;
     const std::string filename(get_filename(argc, argv));
     if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
     {
         std::cerr << "sx: Deserializing transaction failed." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     uint32_t input_index;
     if (!parse<uint32_t>(argv[2], input_index))
     {
         std::cerr << "validsig: Bad N provided." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     if (input_index >= tx.inputs.size())
     {
         std::cerr << "validsig: N out of range." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     elliptic_curve_key key;
     if (!read_public_or_private_key(key, std::cin))
     {
         std::cerr << "Invalid public or private key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     const auto script = parse_script(decode_hex(argv[3]));
     const auto signature = decode_hex(argv[4]);
 
-    // These output strings should probably be basic boolean as they will 
-    // become dependended upon in script code that uses sx.
     if (valid_signature(tx, input_index, key, script, signature))
+    {
         std::cout << "Status: Failed" << std::endl;
+        return console_result::invalid;
+    }
     else
+    {
         std::cout << "Status: OK" << std::endl;
-
-    return true;
+        return console_result::okay;
+    }
 }
 

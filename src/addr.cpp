@@ -25,17 +25,19 @@
 #include <sx/utility/curve.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::addr::invoke(const int argc, const char* argv[])
+console_result addr::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
-        return false;
+        return console_result::failure;
 
     elliptic_curve_key key;
     if (!read_public_or_private_key(key, std::cin))
     {
         std::cerr << "Invalid public or private key." << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     payment_address address;
@@ -47,12 +49,12 @@ bool sx::extensions::addr::invoke(const int argc, const char* argv[])
         if (!parse<uint8_t>(argv[1], version))
         {
             std::cerr << "Invalid key version." << std::endl;
-            return false;
+            return console_result::failure;
         }
 
         address.set(version, address.hash());
     }
 
     std::cout << address.encoded() << std::endl;
-    return true;
+    return console_result::okay;
 }

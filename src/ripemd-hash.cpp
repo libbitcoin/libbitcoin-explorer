@@ -17,20 +17,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/ripemd-hash.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::ripemd_hash::invoke(const int argc, const char* argv[])
+console_result ripemd_hash::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
-        return false;
+        return console_result::failure;
 
     const auto data = read_stream(std::cin);
     const auto chunk = data_chunk(data.begin(), data.end());
     std::cout << bitcoin_short_hash(chunk) << std::endl;
-    return true;
+    return console_result::okay;
 }
 

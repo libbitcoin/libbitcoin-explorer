@@ -25,12 +25,14 @@
 #include <sx/utility/console.hpp>
 #include <sx/utility/dispatch.hpp>
 
-bool sx::extensions::bci_fetch_last_height::invoke(const int argc,
-    const char* argv[])
+using namespace sx;
+using namespace sx::extensions;
+
+console_result bci_fetch_last_height::invoke(const int argc, const char* argv[])
 {
     // TODO: integrate cpp-netlib (without ssl).
     line_out(std::cerr, "sx: This command is not yet ported from python.");
-    return false;
+    return console_result::failure;
 }
 
 //#!/usr/bin/python

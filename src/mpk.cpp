@@ -25,20 +25,22 @@
 
 using namespace bc;
 using namespace libwallet;
+using namespace sx;
+using namespace sx::extensions;
 
-bool sx::extensions::mpk::invoke(const int argc, const char* argv[])
+console_result mpk::invoke(const int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
-        return false;
+        return console_result::failure;
 
     deterministic_wallet wallet;
     if (!wallet.set_seed(read_stream(std::cin)))
     {
         std::cerr << "mpk: Error setting seed" << std::endl;
-        return false;
+        return console_result::failure;
     }
 
     const data_chunk mpk = wallet.master_public_key();
     std::cout << mpk << std::endl;
-    return true;
+    return console_result::okay;
 }
