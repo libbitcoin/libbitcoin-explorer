@@ -199,7 +199,6 @@
     <ClCompile Include="..\..\..\..\src\mpk.cpp" />
     <ClCompile Include="..\..\..\..\src\newkey.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseLIB|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseLIB|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -258,7 +257,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showtx.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseLIB|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseLIB|Win32'">true</ExcludedFromBuild>
     </ClCompile>

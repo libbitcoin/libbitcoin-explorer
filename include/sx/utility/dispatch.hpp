@@ -36,7 +36,10 @@ namespace sx {
 #define SX_OPTION_CONFIG "config"
 #define SX_OPTION_HARD "hard"
 #define SX_OPTION_HELP "help"
+#define SX_OPTION_INPUT "input"
 #define SX_OPTION_JSON "json"
+#define SX_OPTION_LOCKTIME "locktime"
+#define SX_OPTION_OUTPUT "output"
 #define SX_OPTION_UNCOMPRESSED "uncompressed"
 
 /**

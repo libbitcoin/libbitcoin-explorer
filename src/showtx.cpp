@@ -18,13 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+//#include <sstream>
+//#include <boost/property_tree/ptree.hpp>
+//#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/showtx.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 
-void show_tx(const transaction_type& tx)
+static void show_tx(const transaction_type& tx)
 {
     std::cout << "hash: " << hash_transaction(tx) << std::endl;
     std::cout << "version: " << tx.version <<std::endl;
@@ -62,7 +67,7 @@ void show_tx(const transaction_type& tx)
     }
 }
 
-void json_show_tx(const transaction_type& tx)
+static void json_show_tx(const transaction_type& tx)
 {
     std::cout << "{" << std::endl;
     std::cout << "  \"hash\": \"" << hash_transaction(tx)
@@ -116,32 +121,33 @@ void json_show_tx(const transaction_type& tx)
     std::cout << "}" << std::endl;
 }
 
-bool invoke(const int argc, const char* argv[])
+bool sx::extensions::showtx::invoke(const int argc, const char* argv[])
 {
-    std::string filename = "-";
-    bool json_output = false;
+    if (!validate_argument_range(argc, example(), 1, 2))
+        return false;
+
+    std::string filename(SX_STDIN_PATH_SENTINEL);
+    bool json_output = get_option(argc, argv, SX_OPTION_JSON);
+
     for (int i = 1; i < argc; ++i)
     {
-        const std::string arg = argv[i];
-        if (arg == "-j" || arg == "--json")
-        {
-            json_output = true;
+        if (is_option_any(argv[i]))
             continue;
-        }
-        if (filename != "-")
-        {
-            std::cerr << "Usage: sx showtx [-j] FILENAME" << std::endl;
-            return -1;
-        }
-        filename = arg;
+        filename = argv[i];
     }
+
     transaction_type tx;
-    if (!load_tx(tx, filename))
-        return -1;
+    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
+    {
+        std::cerr << "sx: Deserializing transaction failed." << std::endl;
+        return false;
+    }
+
     if (json_output)
         json_show_tx(tx);
     else
         show_tx(tx);
-    return 0;
+
+    return true;
 }
 

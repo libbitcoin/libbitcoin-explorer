@@ -21,15 +21,18 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/newkey.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 
-int main()
+bool sx::extensions::newkey::invoke(const int argc, const char* argv[])
 {
+    if (!validate_argument_range(argc, example(), 1, 1))
+        return false;
+
     elliptic_curve_key key;
     key.new_keypair();
-    secret_parameter secret = key.secret();
+    auto secret = key.secret();
     std::cout << libwallet::secret_to_wif(secret) << std::endl;
-    return 0;
+    return true;
 }
-

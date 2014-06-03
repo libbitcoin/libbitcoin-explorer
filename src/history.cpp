@@ -21,6 +21,9 @@
 #include <condition_variable>
 #include <stdint.h>
 #include <thread>
+//#include <sstream>
+//#include <boost/property_tree/ptree.hpp>
+//#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/history.hpp>
@@ -161,14 +164,14 @@ bool sx::extensions::history::invoke(const int argc, const char* argv[])
     if (argc == 1)
     {
         payment_address payaddr;
-        if (!payaddr.set_encoded(sx::read_stream(std::cin)))
+        if (!payaddr.set_encoded(read_stream(std::cin)))
         {
             std::cerr << "history: Invalid address." << std::endl;
             return false;
         }
         payaddrs.push_back(payaddr);
     }
-    else if (!sx::read_addresses(argc, argv, payaddrs))
+    else if (!read_addresses(argc, argv, payaddrs))
     {
         std::cerr << "history: Invalid address." << std::endl;
         return false;

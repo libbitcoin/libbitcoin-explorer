@@ -90,11 +90,10 @@ bool read_addresses(const int argc, const char* argv[],
 {
     for (int i = 1; i < argc; ++i)
     {
-        const std::string arg(argv[i]);
-        if (sx::is_option(arg))
+        if (sx::is_option_any(argv[i]))
             continue;
         payment_address payaddr;
-        if (!payaddr.set_encoded(arg))
+        if (!payaddr.set_encoded(argv[i]))
             return false;
         payaddrs.push_back(payaddr);
     }

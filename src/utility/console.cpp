@@ -52,9 +52,8 @@ size_t get_args(const int argc, const char* argv[],
 {
     for (int i = index; i < argc; ++i)
     {
-        std::string argument(argv[i]);
-        if (!sx::is_option(argument))
-            arguments.push_back(argument);
+        if (!is_option_any(argv[i]))
+            arguments.push_back(argv[i]);
     }
 
     return arguments.size();
@@ -87,18 +86,6 @@ bool is_false(const std::string& text)
     return arg == "false" || arg == "0" || arg == "no";
 }
 
-bool is_option(const std::string& text)
-{
-    // -f
-    bool is_short = text.size() == 2 && text[0] == '-' && text[1] != '-';
-
-    // --foobar
-    bool is_long = !is_short && text.size() > 2 && text[0] == '-' &&
-        text[1] == '-' && text[2] != '-';
-
-    return is_short || is_long;
-}
-
 bool is_option(const std::string& text, const std::string& option)
 {
     std::string arg(text);
@@ -109,6 +96,18 @@ bool is_option(const std::string& text, const std::string& option)
 
     // --foobar
     bool is_long = !is_short && option.size() > 1 && arg == "--" + option;
+
+    return is_short || is_long;
+}
+
+bool is_option_any(const std::string& text)
+{
+    // -f
+    bool is_short = text.size() == 2 && text[0] == '-' && text[1] != '-';
+
+    // --foobar
+    bool is_long = !is_short && text.size() > 2 && text[0] == '-' &&
+        text[1] == '-' && text[2] != '-';
 
     return is_short || is_long;
 }

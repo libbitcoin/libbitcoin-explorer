@@ -23,6 +23,7 @@
 #include <sx/command/mktx.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/curve.hpp>
+#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 using namespace libwallet;
@@ -234,12 +235,13 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
 static bool modify(transaction_type& tx,
     const std::string& action, const std::string& parameter)
 {
-    if (sx::is_option("input"))
+    if (sx::is_option(action, SX_OPTION_INPUT))
         return add_input(tx, parameter);
-    else if (sx::is_option("output"))
+    if (sx::is_option(action, SX_OPTION_OUTPUT))
         return add_output(tx, parameter);
-    else if (sx::is_option("locktime"))
+    if (sx::is_option(action, SX_OPTION_LOCKTIME))
         return change_locktime(tx, parameter);
+
     std::cerr << "mktx: Action '" << action << "' doesn't exist." << std::endl;
     return false;
 }

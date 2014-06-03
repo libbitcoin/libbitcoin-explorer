@@ -37,14 +37,8 @@
     <Filter Include="src\ported\hd-to">
       <UniqueIdentifier>{2cffd46e-50c9-4ae8-8095-969d4d662525}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ported\ec">
-      <UniqueIdentifier>{ace7bff9-d348-4c38-8db0-ed1147aefa4c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\ported\fetch">
       <UniqueIdentifier>{1c4a870e-5e36-4dd7-9fad-686e4d7009bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ported\wif">
-      <UniqueIdentifier>{10fae2ad-5439-465a-98d4-21e6872c0a0b}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\ported\wrap">
       <UniqueIdentifier>{147a63ac-c6eb-40c1-8b70-7ff8c03151e4}</UniqueIdentifier>
@@ -57,6 +51,12 @@
     </Filter>
     <Filter Include="src\ported\deprecated">
       <UniqueIdentifier>{a396444b-fc9d-445f-9b50-48d0fb965fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ported\ec_math">
+      <UniqueIdentifier>{ace7bff9-d348-4c38-8db0-ed1147aefa4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ported\secrets">
+      <UniqueIdentifier>{10fae2ad-5439-465a-98d4-21e6872c0a0b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -340,9 +340,6 @@
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\newkey.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\rawscript.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -365,9 +362,6 @@
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showscript.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\showtx.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sign-input.cpp">
@@ -461,16 +455,16 @@
       <Filter>src\ported\hd-to</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-add.cpp">
-      <Filter>src\ported\ec</Filter>
+      <Filter>src\ported\ec_math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-add-modp.cpp">
-      <Filter>src\ported\ec</Filter>
+      <Filter>src\ported\ec_math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-multiply.cpp">
-      <Filter>src\ported\ec</Filter>
+      <Filter>src\ported\ec_math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-tweak-add.cpp">
-      <Filter>src\ported\ec</Filter>
+      <Filter>src\ported\ec_math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\dispatch.cpp">
       <Filter>src\utility</Filter>
@@ -500,10 +494,10 @@
       <Filter>src\ported\fetch</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wif-to-secret.cpp">
-      <Filter>src\ported\wif</Filter>
+      <Filter>src\ported\secrets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\secret-to-wif.cpp">
-      <Filter>src\ported\wif</Filter>
+      <Filter>src\ported\secrets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\genaddr.cpp">
       <Filter>src\ported\deprecated</Filter>
@@ -566,6 +560,12 @@
       <Filter>src\ported\fetch</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validsig.cpp">
+      <Filter>src\ported\show_satoshi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\newkey.cpp">
+      <Filter>src\ported\secrets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showtx.cpp">
       <Filter>src\ported\show_satoshi</Filter>
     </ClCompile>
   </ItemGroup>

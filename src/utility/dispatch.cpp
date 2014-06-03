@@ -111,7 +111,7 @@ int invoke(const int argc, const char* argv[])
     }
 
     // --help
-    // The special case for "help" is retained for compatibility.
+    // The special case for "help" is actually an argument, not an option.
     if (is_option(token, SX_OPTION_HELP) || token == "help")
     {
         if (position == last)

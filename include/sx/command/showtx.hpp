@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx showtx [-j] FILENAME" }
+            { "sx showtx [-j] [FILENAME]" }
         };
     }
 

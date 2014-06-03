@@ -419,7 +419,7 @@
 
   <command symbol="showtx" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">
     <description value="Show the details of a transaction." />
-    <example value="sx showtx [-j] FILENAME" />
+    <example value="sx showtx [-j] [FILENAME]" />
     <explanation value="'showtx' allows inspecting of tx files." />
     <explanation value="" />
     <explanation value="  -j, --json                 Enable json parseable output." />

@@ -60,7 +60,7 @@ bool sx::extensions::sendtx_node::invoke(const int argc, const char* argv[])
 
     transaction_type tx;
     std::string filename(get_filename(argc, argv));
-    if (!sx::load_satoshi_item<transaction_type>(tx, filename, std::cin))
+    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
     {
         std::cerr << "sx: Deserializing transaction failed." << std::endl;
         return false;

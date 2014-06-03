@@ -175,16 +175,6 @@ bool get_option(const int argc, const char* argv[], const std::string& option);
 bool is_false(const std::string& text);
 
 /**
- * Uniformly test an argument to to determine if it follows the option patter.
- * Options may be two chars starting with one dash ("-") or more than two chars
- * starting with a double dash ("--").
- *
- * @param[in]  argument  The argument to test.
- * @return               True if the argument is an option.
- */
-bool is_option(const std::string& argument);
-
-/**
  * Uniformly test an argument for the presence of the specified option, in long
  * or short format. The option can be a single character or a word. If the
  * option is longer than one character then its first character as well as its 
@@ -196,6 +186,16 @@ bool is_option(const std::string& argument);
  * @return               True if the option is set.
  */
 bool is_option(const std::string& argument, const std::string& option);
+
+/**
+ * Uniformly test an argument to to determine if it follows the option pattern.
+ * Options may be two chars starting with one dash ("-") or more than two chars
+ * starting with a double dash ("--").
+ *
+ * @param[in]  argument  The argument to test.
+ * @return               True if the argument is an option.
+ */
+bool is_option_any(const std::string& argument);
 
 /**
  * Uniformly convert a text string to a bool, with whitespace and text case
