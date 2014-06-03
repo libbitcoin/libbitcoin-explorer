@@ -340,9 +340,6 @@
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\rawscript.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\ripemd-hash.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -567,6 +564,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showtx.cpp">
       <Filter>src\ported\show_satoshi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\rawscript.cpp">
+      <Filter>src\ported</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

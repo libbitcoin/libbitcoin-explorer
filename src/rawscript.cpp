@@ -20,10 +20,11 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/rawscript.hpp>
+#include <sx/utility/console.hpp>
 
 using namespace bc;
 
-operation create_data_operation(data_chunk& data)
+static operation create_data_operation(data_chunk& data)
 {
     BITCOIN_ASSERT(data.size() < std::numeric_limits<uint32_t>::max());
     operation op;
@@ -39,7 +40,7 @@ operation create_data_operation(data_chunk& data)
     return op;
 }
 
-script_type script_from_pretty(const std::string& pretty_script)
+static script_type script_from_pretty(const std::string& pretty_script)
 {
     script_type script_object;
     std::stringstream splitter;
@@ -70,18 +71,18 @@ script_type script_from_pretty(const std::string& pretty_script)
     return script_object;
 }
 
-bool invoke(const int argc, const char* argv[])
+bool sx::extensions::rawscript::invoke(const int argc, const char* argv[])
 {
-    if (argc < 2)
-    {
-        std::cerr << "Usage: sx rawscript [ARGS]..." << std::endl;
-        return -1;
-    }
-    std::string joined_args;
-    for (int i = 1; i < argc; ++i)
-        joined_args += std::string(argv[i]) + " ";
-    script_type parsed_script = script_from_pretty(joined_args);
+    if (!validate_argument_range(argc, example(), 2))
+        return false;
+
+    std::string sentence;
+    std::vector<std::string> words;
+    get_args(argc, argv, words);
+    join(words, sentence);
+
+    auto parsed_script = script_from_pretty(sentence);
     std::cout << save_script(parsed_script) << std::endl;
-    return 0;
+    return true;
 }
 
