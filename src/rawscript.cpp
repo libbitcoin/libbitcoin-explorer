@@ -76,9 +76,10 @@ bool sx::extensions::rawscript::invoke(const int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 2))
         return false;
 
-    std::string sentence;
     std::vector<std::string> words;
     get_args(argc, argv, words);
+
+    std::string sentence;
     join(words, sentence);
 
     const auto parsed_script = script_from_pretty(sentence);

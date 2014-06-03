@@ -23,13 +23,17 @@
 
 using namespace bc;
 
-int main()
+bool sx::extensions::scripthash::invoke(const int argc, const char* argv[])
 {
-    std::string hex_script = read_stream(std::cin);
-    script_type bip16_script = parse_script(decode_hex(hex_script));
+    if (!validate_argument_range(argc, example(), 1, 1))
+        return false;
+
+    const auto hex_script = read_stream(std::cin);
+    const auto bip16_script = parse_script(decode_hex(hex_script));
+
     payment_address payaddr;
     set_script(payaddr, bip16_script);
     std::cout << payaddr.encoded() << std::endl;
-    return 0;
+    return true;
 }
 
