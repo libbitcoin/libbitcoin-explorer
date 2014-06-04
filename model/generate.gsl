@@ -296,7 +296,7 @@ public:
 
 using namespace sx::extensions;
 
-BOOST_AUTO_TEST_SUITE(test_suite)
+BOOST_AUTO_TEST_SUITE(generated_find)
 .for command by symbol
 
 BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_object)
@@ -335,7 +335,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 using namespace sx::extensions;
 
-BOOST_AUTO_TEST_SUITE(test_suite)
+BOOST_AUTO_TEST_SUITE(generated_symbol)
 .for command by symbol
 
 BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_expected_value)

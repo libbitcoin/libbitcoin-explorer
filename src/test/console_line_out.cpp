@@ -17,11 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
-/* line_out(single) */
+BOOST_AUTO_TEST_SUITE(console_line_out)
 
 BOOST_AUTO_TEST_CASE(line_out_single_streams_line)
 {
@@ -64,8 +63,6 @@ BOOST_AUTO_TEST_CASE(line_out_single_empty_streams_line_feed)
     sx::line_out(stream, "");
     BOOST_REQUIRE(stream.str() == "\n");
 }
-
-/* line_out(multiple) */
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_streams_lines)
 {
@@ -172,3 +169,5 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_empty_streams_inset)
     sx::line_out(stream, lines, 10, "Dead Milkmen");
     BOOST_REQUIRE(stream.str() == "Dead Milkmen\n");
 }
+
+BOOST_AUTO_TEST_SUITE_END()

@@ -24,7 +24,7 @@
 
 using namespace sx::extensions;
 
-BOOST_AUTO_TEST_SUITE(test_suite)
+BOOST_AUTO_TEST_SUITE(generated_symbol)
 
 BOOST_AUTO_TEST_CASE(find_addr_returns_expected_value)
 {
