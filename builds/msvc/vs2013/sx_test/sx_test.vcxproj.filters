@@ -7,23 +7,28 @@
     <Filter Include="tests">
       <UniqueIdentifier>{272f2634-0335-488d-8741-271dd38c6092}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{3eb17572-0d1e-4c0f-b582-bdc503608456}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\test\main.cpp" />
-    <ClCompile Include="..\..\..\..\src\test\console_line_out.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\test\generated_broadcast.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\test\generated_find.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\test\generated_symbol.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\leveldb-single-file.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\snappy-single-file.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\crc32c.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated_find.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated_symbol.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\console_line_out.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated_broadcast.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

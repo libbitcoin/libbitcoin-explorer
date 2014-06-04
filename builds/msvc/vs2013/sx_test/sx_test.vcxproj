@@ -65,13 +65,6 @@
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\test\console_line_out.cpp" />
-    <ClCompile Include="..\..\..\..\src\test\generated_broadcast.cpp" />
-    <ClCompile Include="..\..\..\..\src\test\generated_find.cpp" />
-    <ClCompile Include="..\..\..\..\src\test\generated_symbol.cpp" />
-    <ClCompile Include="..\..\..\..\src\test\main.cpp" />
-  </ItemGroup>  
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -123,5 +116,12 @@
     <ProjectReference Include="..\libsx\libsx.vcxproj">
       <Project>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\test\console_line_out.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated_broadcast.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated_find.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated_symbol.cpp" />
+    <ClCompile Include="..\..\..\..\test\main.cpp" />
   </ItemGroup>
 </Project>
