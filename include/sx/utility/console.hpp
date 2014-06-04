@@ -31,6 +31,7 @@
 #include <vector>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #pragma warning(pop)
 
 /* NOTE: don't declare 'using namespace foo' in heders. */
