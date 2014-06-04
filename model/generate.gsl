@@ -427,9 +427,9 @@ endif
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 AUTOMAKE_OPTIONS = subdir-objects
 
-#TODO:
-#lib_LTLIBRARIES = sx.la
-AM_CPPFLAGS = ${libbitcoin_CFLAGS} ${libwallet_CFLAGS} -I$\(srcdir)/../include
+bin_PROGRAMS=sx
+
+sx_CPPFLAGS = ${libbitcoin_CFLAGS} ${libwallet_CFLAGS} -I$\(srcdir)/../include
 
 sx_LIBADD = \\
     ${libbitcoin_LIBS} ${libwallet_LIBS} \\
@@ -473,7 +473,7 @@ sx_SOURCES += \\
     
 # There is no independent option for ncurses, currently tied to HAVE_OBELISK.
 sx_LIBADD += -lncurses ${libobelisk_LIBS}
-AM_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
+sx_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
 endif
 
 if DO_LEVELDB
