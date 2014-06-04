@@ -1,9 +1,9 @@
-.#  Generate C++ project file for SX
+.#  Generate C++ source and make files for SX
 .#
 .#  This is a code generator built using the iMatix GSL code generation
-.#  language. See https://github.com/imatix/gsl for details. This script
-.#  is licensed under MIT/X11.
+.#  language. See https://github.com/imatix/gsl for details.
 .#
+.##############################################################################
 .echo "Generating src/generated.cpp..."
 .output "../src/generated.cpp"
 /**
@@ -29,9 +29,9 @@
 #include <memory>
 #include <string>
 #include <sx/command.hpp>
-#include <sx/command/generated.hpp>
+#include <sx/generated.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
 namespace extensions {
@@ -59,8 +59,9 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 
 } // extensions
 } // sx
-.echo "Generating include/sx/command/generated.hpp..."
-.output "../include/sx/command/generated.hpp"
+.##############################################################################
+.echo "Generating include/sx/generated.hpp..."
+.output "../include/sx/generated.hpp"
 /**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
@@ -92,7 +93,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
 #include <sx/command/$(symbol).hpp>
 .endfor
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
 namespace extensions {
@@ -117,6 +118,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 } // sx
 
 #endif
+.##############################################################################
 .for command by symbol
 .echo "Generating include/sx/command/$(symbol).hpp..."
 .output "../include/sx/command/$(symbol).hpp"
@@ -146,7 +148,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 #include <sx/command.hpp>
 #include <sx/utility/compat.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
 namespace extensions {
@@ -265,6 +267,7 @@ public:
 
 #endif
 .endfor
+.##############################################################################
 .echo "Generating src/test/generated_find.cpp..."
 .output "../src/test/generated_find.cpp"
 /*
@@ -289,7 +292,7 @@ public:
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace sx::extensions;
 
@@ -301,7 +304,9 @@ BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_object)
     BOOST_REQUIRE(find($(symbol:c)::symbol()) != nullptr);
 }
 .endfor
+
 BOOST_AUTO_TEST_SUITE_END()
+.##############################################################################
 .echo "Generating src/test/generated_symbol.cpp..."
 .output "../src/test/generated_symbol.cpp"
 /*
@@ -326,7 +331,7 @@ BOOST_AUTO_TEST_SUITE_END()
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace sx::extensions;
 
@@ -335,8 +340,481 @@ BOOST_AUTO_TEST_SUITE(test_suite)
 
 BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_expected_value)
 {
-    BOOST_REQUIRE($(symbol:c)::symbol() == std::string("$(symbol)"));
+    BOOST_REQUIRE($(symbol:c)::symbol() == std::string("$(symbol:)"));
 }
 .endfor
 
 BOOST_AUTO_TEST_SUITE_END()
+.##############################################################################
+.echo "Generating include/Makefile.am..."
+.output "../include/Makefile.am"
+# ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
+sx_includedir = $\(includedir)/sx
+sx_include_HEADERS = \\
+    command.hpp \\
+    obelisk.hpp \\
+    sx.hpp
+
+sx_utility_includedir = $\(includedir)/sx/utility
+sx_utility_include_HEADERS += \\
+    coin.hpp \\
+    compat.hpp \\
+    config.hpp \\
+    console.hpp \\
+    curve.hpp \\
+    dispatch.hpp \\
+    display.hpp \\
+    environment.hpp
+
+sx_command_includedir = $\(includedir)/sx/command
+# Generated from XML data source.
+sx_command_include_HEADERS = \\
+.for command by symbol where  \
+    (!defined(obelisk) | obelisk <> "true") & \
+    (!defined(leveldb) | leveldb <> "true")
+.   if last()
+    command/$(symbol:).hpp
+.   else
+    command/$(symbol:).hpp \\
+.   endif
+.endfor
+
+if HAVE_OBELISK
+# Generated from XML data source.
+sx_command_include_HEADERS += \\
+.for command by symbol where \
+    (defined(obelisk) & obelisk = "true") & \
+    (!defined(leveldb) | leveldb <> "true")
+.   if last()
+    command/$(symbol:).hpp
+.   else
+    command/$(symbol:).hpp \\
+.   endif
+.endfor
+endif
+
+if DO_LEVELDB
+# Generated from XML data source.
+# There are currently no sources for DO_LEVELDB without Obelisk.
+# sx_command_include_HEADERS += \\
+.for command by symbol where \
+    (!defined(obelisk) | obelisk <> "true") & \
+    (defined(leveldb) & leveldb = "true")
+.   if last()
+    command/$(symbol:).hpp
+.   else
+    command/$(symbol:).hpp \\
+.   endif
+.endfor
+endfor
+
+if DO_LEVELDB && HAVE_OBELISK
+# Generated from XML data source.
+sx_command_include_HEADERS += \\
+.for command by symbol where \
+    (defined(obelisk) & obelisk = "true") & \
+    (defined(leveldb) & leveldb = "true")
+.   if last()
+    command/$(symbol:).hpp
+.   else
+    command/$(symbol:).hpp \\
+.   endif
+.endfor
+endif
+.##############################################################################
+.echo "Generating src/Makefile.am..."
+.output "../src/Makefile.am"
+# ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
+AUTOMAKE_OPTIONS = subdir-objects
+
+#TODO:
+#lib_LTLIBRARIES = sx.la
+AM_CPPFLAGS = ${libbitcoin_CFLAGS} ${libwallet_CFLAGS} -I$\(srcdir)/../include
+
+sx_LIBADD = \\
+    ${libbitcoin_LIBS} ${libwallet_LIBS} \\
+    -lboost_date_time -lboost_filesystem -lboost_program_options \\
+    -lboost_regex -lboost_system \\
+    -lsecp256k1 -lconfig++ \\
+    @LDFLAG_LEVELDB@
+
+sx_SOURCES = \\
+    generated.cpp \\
+    utility/coin.cpp \\
+    utility/compat.cpp \\
+    utility/config.cpp \\
+    utility/console.cpp \\
+    utility/curve.cpp \\
+    utility/dispatch.cpp \\
+    utility/display.cpp \\
+    utility/environment.cpp
+
+# Generated from XML data source.
+sx_SOURCES += \\
+.for command by symbol where \
+    (!defined(obelisk) | obelisk <> "true") & \
+    (!defined(leveldb) | leveldb <> "true")
+.   if last()
+    $(symbol:).cpp
+.   else
+    $(symbol:).cpp \\
+.   endif
+.endfor
+
+if HAVE_OBELISK
+# Generated from XML data source.
+sx_SOURCES += \\
+.for command by symbol where \
+    (defined(obelisk) & obelisk = "true") & \
+    (!defined(leveldb) | leveldb <> "true")
+    $(symbol:).cpp \\
+.endfor
+    obelisk.cpp
+    
+# There is no independent option for ncurses, currently tied to HAVE_OBELISK.
+sx_LIBADD += -lncurses ${libobelisk_LIBS}
+AM_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
+endif
+
+if DO_LEVELDB
+# If DO_LEVELDB is set then libbitcoin must have been built with it as well!
+# There are currently no sources for DO_LEVELDB without HAVE_OBELISK.
+# Generated from XML data source.
+# sx_SOURCES += \\
+.for command by symbol where \
+    (!defined(obelisk) | obelisk <> "true") & \
+    (defined(leveldb) & leveldb = "true")
+.   if last()
+    $(symbol:).cpp
+.   else
+    $(symbol:).cpp \\
+.   endif
+.endfor
+endif
+
+if DO_LEVELDB && HAVE_OBELISK
+# Generated from XML data source.
+sx_SOURCES += \\
+.for command by symbol where \
+    (defined(obelisk) & obelisk = "true") & \
+    (defined(leveldb) & leveldb = "true")
+.   if last()
+    $(symbol:).cpp
+.   else
+    $(symbol:).cpp \\
+.   endif
+.endfor
+endif
+.##############################################################################
+.echo "Generating builds/msvc/vs2013/libsx/libsx.vcxproj..."
+.output "../builds/msvc/vs2013/libsx/libsx.vcxproj"
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#################################################################
+#   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
+#################################################################
+-->
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NuGetPackageImportStamp>2aa76a0e</NuGetPackageImportStamp>
+    <PlatformToolset>CTP_Nov2013</PlatformToolset>
+    <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
+    <ProjectName>libsx</ProjectName>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugDLL|Win32">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|Win32">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|x64">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|x64">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLTCG|Win32">
+      <Configuration>DebugLTCG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLTCG|Win32">
+      <Configuration>ReleaseLTCG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLTCG|x64">
+      <Configuration>DebugLTCG</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLTCG|x64">
+      <Configuration>ReleaseLTCG</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLIB|Win32">
+      <Configuration>DebugLIB</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLIB|Win32">
+      <Configuration>ReleaseLIB</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLIB|x64">
+      <Configuration>DebugLIB</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLIB|x64">
+      <Configuration>ReleaseLIB</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType Condition="$\(Configuration.IndexOf('DLL')) == -1">StaticLibrary</ConfigurationType>
+    <ConfigurationType Condition="$\(Configuration.IndexOf('DLL')) != -1">DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.Default.props" />
+  <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$\(ProjectDir)..\\..\\properties\\$\(Configuration).props" />
+    <Import Project="$\(ProjectDir)..\\..\\properties\\Output.props" />
+    <Import Project="$\(ProjectDir)$\(ProjectName).props" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk.hpp">
+      <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\dispatch.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\console.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\curve.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\display.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+.for command by symbol
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\command\\$(symbol:).hpp" />
+.endfor
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\obelisk.cpp">
+      <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\dispatch.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\curve.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\display.cpp" />
+  </ItemGroup>  
+  <ItemGroup>
+.for command by symbol
+.   if (!defined(leveldb) | leveldb <> "true") & (!defined(obelisk) | obelisk <> "true")
+    <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp" />
+.   else
+    <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
+.       if (defined(leveldb) & obelisk = "true")
+      <ExcludedFromBuild Condition="'$\(Option-leveldb)' != 'true'">true</ExcludedFromBuild>
+.       endif
+.       if (defined(obelisk) & obelisk = "true")
+      <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+.       endif
+    </ClCompile>
+.   endif
+.endfor
+  </ItemGroup>
+  <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\LevelDB.1.16.0.5\\build\\native\\LevelDB.props" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\LevelDB.1.16.0.5\\build\\native\\LevelDB.props')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\Snappy.1.1.1.7\\build\\native\\Snappy.props" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\Snappy.1.1.1.7\\build\\native\\Snappy.props')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libconfig_vc120.1.4.9.4\\build\\native\\libconfig_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libconfig_vc120.1.4.9.4\\build\\native\\libconfig_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.5.0.0\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.5.0.0\\build\\native\\libsodium_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.703\\build\\native\\openssl_no-asm_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.703\\build\\native\\openssl_no-asm_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.55.0.16\\build\\native\\boost_date_time-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.55.0.16\\build\\native\\boost_date_time-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libconfig_vc120.1.4.9.4\\build\\native\\libconfig_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libconfig_vc120.1.4.9.4\\build\\native\\libconfig_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.5.0.0\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.5.0.0\\build\\native\\libsodium_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.703\\build\\native\\openssl_no-asm_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.703\\build\\native\\openssl_no-asm_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.55.0.16\\build\\native\\boost_date_time-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.55.0.16\\build\\native\\boost_date_time-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\Snappy.1.1.1.7\\build\\native\\Snappy.props')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\Snappy.1.1.1.7\\build\\native\\Snappy.props'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\LevelDB.1.16.0.5\\build\\native\\LevelDB.props')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\LevelDB.1.16.0.5\\build\\native\\LevelDB.props'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets'))" />
+  </Target>
+</Project>
+.##############################################################################
+.echo "Generating builds/msvc/vs2013/libsx/libsx.vcxproj.filter..."
+.output "../builds/msvc/vs2013/libsx/libsx.vcxproj.filters"
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#################################################################
+#   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
+#################################################################
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include\\command">
+      <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\utility">
+      <UniqueIdentifier>{dc28e2c9-d07d-4242-8007-e44440c133a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{f75d4585-8ee2-45e8-96ec-880c63fc243e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command\\obelisk">
+      <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command\\stub">
+      <UniqueIdentifier>{e96f4bef-2d18-4897-9078-a8c17783ee65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command">
+      <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="src\\utility">
+      <UniqueIdentifier>{c50b43cf-9009-45a6-b813-7a61877602f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{6afc4dd0-6330-4dca-b176-cd4887f27b9f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+.for command by symbol
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\command\\$(symbol:).hpp">
+      <Filter>include\\command</Filter>
+    </ClInclude>    
+.endfor
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\console.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\curve.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\dispatch.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\display.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+.for command by symbol
+    <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
+.   if (defined(obelisk) & obelisk = "true")
+      <Filter>src\\command\\obelisk</Filter>
+.   elsif (defined(stub) & stub = "true")
+      <Filter>src\\command\\stub</Filter>
+.   else
+      <Filter>src\\command</Filter>
+.   endif
+    </ClCompile>
+.endfor
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\curve.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\dispatch.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>    
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\display.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\obelisk.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <!--
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\boost_filesystem.codecvt_error_category.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\boost_filesystem.operations.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\boost_filesystem.path.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\boost_filesystem.path_traits.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\boost_filesystem.portability.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\boost_filesystem.unique_path.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\boost_filesystem.utf8_codecvt_facet.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\boost_filesystem.windows_file_codecvt.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\leveldb-single-file.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\snappy-single-file.cpp" />
+    <ClCompile Include="$\(MSBuildThisFileDirectory)..\\..\\lib\\native\\src\\crc32c.cpp" />
+    -->
+  </ItemGroup>
+</Project>
+.##############################################################################

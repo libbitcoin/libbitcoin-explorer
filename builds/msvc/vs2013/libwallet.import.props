@@ -20,7 +20,7 @@
       <PreprocessorDefinitions Condition="'$(Linkage-libwallet)' == 'static' Or '$(Linkage-libwallet)' == 'ltcg'">BCW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>      
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libwallet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Linkage-libwallet)' != ''">libwallet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libwallet)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\libwallet\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libwallet)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
     </Link>      

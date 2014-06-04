@@ -6,4 +6,3 @@ mkdir ..\src\command
 mkdir ..\include\sx\command
 
 gsl -q generate.xml
-PAUSE

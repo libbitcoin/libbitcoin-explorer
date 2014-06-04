@@ -20,7 +20,7 @@
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace sx::extensions;
 
@@ -86,6 +86,11 @@ BOOST_AUTO_TEST_CASE(find_decode_addr_returns_object)
     BOOST_REQUIRE(find(decode_addr::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(find_ec_add_returns_object)
+{
+    BOOST_REQUIRE(find(ec_add::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(find_ec_add_modp_returns_object)
 {
     BOOST_REQUIRE(find(ec_add_modp::symbol()) != nullptr);
@@ -99,11 +104,6 @@ BOOST_AUTO_TEST_CASE(find_ec_multiply_returns_object)
 BOOST_AUTO_TEST_CASE(find_ec_tweak_add_returns_object)
 {
     BOOST_REQUIRE(find(ec_tweak_add::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(find_ec_add_returns_object)
-{
-    BOOST_REQUIRE(find(ec_add::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(find_embed_addr_returns_object)
@@ -385,4 +385,5 @@ BOOST_AUTO_TEST_CASE(find_wrap_returns_object)
 {
     BOOST_REQUIRE(find(wrap::symbol()) != nullptr);
 }
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -22,7 +22,7 @@
 #include <obelisk/obelisk.hpp>
 #include <sx/command/sendtx-obelisk.hpp>
 #include <sx/utility/coin.hpp>
-#include <sx/utility/client.hpp>
+#include <sx/obelisk.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/config.hpp>
 

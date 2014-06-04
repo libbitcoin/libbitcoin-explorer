@@ -24,7 +24,10 @@
 // Not to be used internally. For API users.
 // This is intended primarily for test.
 #include <sx/command.hpp>
-#include <sx/command/generated.hpp>
+#include <sx/generated.hpp>
+#ifdef HAVE_OBELISK
+#include <sx/obelisk.hpp>
+#endif
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>

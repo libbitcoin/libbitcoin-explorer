@@ -24,7 +24,7 @@
 #include <sx/command.hpp>
 #include <sx/utility/compat.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
 namespace extensions {

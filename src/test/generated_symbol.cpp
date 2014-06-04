@@ -20,7 +20,7 @@
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace sx::extensions;
 
@@ -86,6 +86,11 @@ BOOST_AUTO_TEST_CASE(find_decode_addr_returns_expected_value)
     BOOST_REQUIRE(decode_addr::symbol() == std::string("decode-addr"));
 }
 
+BOOST_AUTO_TEST_CASE(find_ec_add_returns_expected_value)
+{
+    BOOST_REQUIRE(ec_add::symbol() == std::string("ec-add"));
+}
+
 BOOST_AUTO_TEST_CASE(find_ec_add_modp_returns_expected_value)
 {
     BOOST_REQUIRE(ec_add_modp::symbol() == std::string("ec-add-modp"));
@@ -99,11 +104,6 @@ BOOST_AUTO_TEST_CASE(find_ec_multiply_returns_expected_value)
 BOOST_AUTO_TEST_CASE(find_ec_tweak_add_returns_expected_value)
 {
     BOOST_REQUIRE(ec_tweak_add::symbol() == std::string("ec-tweak-add"));
-}
-
-BOOST_AUTO_TEST_CASE(find_ec_add_returns_expected_value)
-{
-    BOOST_REQUIRE(ec_add::symbol() == std::string("ec_add"));
 }
 
 BOOST_AUTO_TEST_CASE(find_embed_addr_returns_expected_value)

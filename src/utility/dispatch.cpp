@@ -19,7 +19,7 @@
  */
 #include <iostream>
 #include <string>
-#include <sx/command/generated.hpp>
+#include <sx/generated.hpp>
 #include <sx/command/wallet.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>

@@ -27,7 +27,12 @@
     <Import Project="$(SolutionDir)libwallet.import.props" />
     <Import Project="$(SolutionDir)libbitcoin.import.props" />
     <Import Project="$(SolutionDir)libsx.import.props" />
-  </ImportGroup> 
+  </ImportGroup>
+  
+  <PropertyGroup>
+    <Option-leveldb>true</Option-leveldb>
+    <Option-obelisk>true</Option-obelisk>
+  </PropertyGroup>    
 
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
     <Linkage-openssl>dynamic</Linkage-openssl>
@@ -76,6 +81,11 @@
   </PropertyGroup>
 
   <!-- Messages -->
+  
+  <Target Name="OptionInfo" BeforeTargets="PrepareForBuild">
+    <Message Text="Option-leveldb    : $(Option-leveldb)" Importance="high"/>
+    <Message Text="Option-obelisk    : $(Option-obelisk)" Importance="high"/>
+  </Target>  
 
   <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
     <Message Text="Linkage-openssl   : $(Linkage-openssl)" Importance="high"/>

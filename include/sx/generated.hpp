@@ -37,10 +37,10 @@
 #include <sx/command/brainwallet.hpp>
 #include <sx/command/btc.hpp>
 #include <sx/command/decode-addr.hpp>
+#include <sx/command/ec-add.hpp>
 #include <sx/command/ec-add-modp.hpp>
 #include <sx/command/ec-multiply.hpp>
 #include <sx/command/ec-tweak-add.hpp>
-#include <sx/command/ec_add.hpp>
 #include <sx/command/embed-addr.hpp>
 #include <sx/command/encode-addr.hpp>
 #include <sx/command/fetch-block-header.hpp>
@@ -98,7 +98,7 @@
 #include <sx/command/wif-to-secret.hpp>
 #include <sx/command/wrap.hpp>
 
-/********** WARNING: This file is generated, do not edit directly. **********/
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
 namespace extensions {

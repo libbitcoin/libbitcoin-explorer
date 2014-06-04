@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_MONITOR_HPP
-#define SX_MONITOR_HPP
+#ifndef SX_EC_ADD_HPP
+#define SX_EC_ADD_HPP
 
 #include <vector>
 #include <sx/command.hpp>
@@ -30,23 +30,23 @@ namespace sx {
 namespace extensions {
 
 /**
- * Class to implement the sx monitor command.
+ * Class to implement the sx ec-add command.
  */
-class monitor : public command
+class ec_add : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "monitor"; }
+    static const char* symbol() { return "ec-add"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return monitor::symbol();
+        return ec_add::symbol();
     }
 
     /**
@@ -54,7 +54,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
+        return "UTILITY";
     }
 
     /**
@@ -62,7 +62,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BLOCKCHAIN WATCHING";
+        return "EC MATH";
     }
 
     /**
@@ -72,7 +72,7 @@ public:
     {
         return
         {
-            { "Monitor an address prefix." }
+            { "Calculate the result of POINT + POINT." }
         };
     }
 
@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx monitor PREFIX" }
+            { "sx ec-add POINT POINT" }
         };
     }
 
@@ -95,7 +95,7 @@ public:
     {
         return
         {
-            { "Monitor an address prefix." }
+            { "Calculate the result of POINT + POINT." }
         };
     }
 

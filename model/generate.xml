@@ -1,13 +1,13 @@
 <?xml version = "1.0" ?>
 <generate script="generate.gsl">
 
-  <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH">
+  <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
     <description value="Convert Bitcoins into Satoshis." />
     <example value="sx satoshi BTC" />
     <explanation value="Convert Bitcoins into Satoshis." />
   </command>
   
-  <command symbol="btc" category="UTILITY" subcategory="SATOSHI MATH">
+  <command symbol="btc" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
     <description value="Convert Satoshis into Bitcoins." />
     <example value="sx btc SATOSHIS" />
     <explanation value="Convert Satoshis into Bitcoins." />
@@ -42,20 +42,20 @@
     <explanation value="  76" />
   </command>
 
-  <command symbol="initchain" category="ONLINE (OBELISK)" subcategory="OBELISK ADMIN">
+  <command symbol="initchain" category="ONLINE (OBELISK)" subcategory="OBELISK ADMIN" leveldb="true" obelisk="true">
     <description value="Initialize a new blockchain." />
     <example value="sx initchain DIRECTORY" />
     <explanation value="Initialize a new blockchain." />
   </command>
 
-  <command symbol="wallet" category="EXPERIMENTAL" subcategory="APPS">
+  <command symbol="wallet" category="EXPERIMENTAL" subcategory="APPS" obelisk="true">
     <description value="Experimental command line wallet." />
     <example value="sx wallet SEED" />
     <explanation value="This is an experimental prototype." />
     <define symbol="NO_MASTER_PUBLIC_KEY" value="No valid master public key or private secret key was passed in." />
   </command>
 
-  <command symbol="monitor" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN WATCHING">
+  <command symbol="monitor" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN WATCHING" obelisk="true">
     <description value="Monitor an address prefix." />
     <example value="sx monitor PREFIX" />
     <explanation value="Monitor an address prefix." />
@@ -68,7 +68,7 @@
     <explanation value="Return codes: { -1 = error, 0 = valid address, 1 = invalid address }" />
   </command>
 
-  <command symbol="validtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="validtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <description value="Validate a transaction." />
     <example value="sx validtx [FILENAME]" />
     <explanation value="Query blockchain whether transaction has been confirmed." />
@@ -123,21 +123,21 @@
     <explanation value="Convert from hex to base58." />
   </command>
 
-  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
+  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)" stub="true">
     <description value="Convert from base58check to hex." />
     <example value="sx base58check-decode B58STRING" />
     <!--<example value="echo B58STRING | sx base58check-decode" />-->
     <explanation value="Convert from base58check to hex." />
   </command>
 
-  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
+  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)" stub="true">
     <description value="Convert from hex to base58check." />
     <example value="sx base58check-encode HEXSTRING" />
     <!--<example value="echo HEXSTRING | sx base58check-encode" />-->
     <explanation value="Convert from hex to base58check." />
   </command>
 
-  <command symbol="sendtx-obelisk" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN UPDATES">
+  <command symbol="sendtx-obelisk" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN UPDATES" obelisk="true">
     <description value="Send tx to obelisk server." />
     <example value="sx sendtx-obelisk [FILENAME]" />
     <explanation value="Broadcast the transaction to an obelisk server for the network." />
@@ -153,7 +153,7 @@
     <explanation value="  $ sx sendtx-p2p txfile.tx" />
   </command>
 
-  <command symbol="sendtx-bci" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN UPDATES">
+  <command symbol="sendtx-bci" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN UPDATES" stub="true">
     <description value="Send tx to blockchain.info/pushtx." />
     <example value="sx bci-push-tx FILENAME" />
     <explanation value="Send tx to blockchain.info/pushtx." />
@@ -161,7 +161,7 @@
     <explanation value="  $ sx sendtx-bci txfile.tx" />
   </command>
 
-  <command symbol="blke-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)">
+  <command symbol="blke-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
     <description value="Fetches a transaction from blockexplorer.com" />
     <example value="sx blke-fetch-transaction HASH" />
     <explanation value="Fetches a transaction from blockexplorer.com" />
@@ -202,7 +202,7 @@
     <explanation value="  1a4b47AC4ydSnAAcTNH1qozHq2pwJb644" />
   </command>
 
-  <command symbol="qrcode" category="UTILITY" subcategory="MISC">
+  <command symbol="qrcode" category="UTILITY" subcategory="MISC" stub="true">
     <description value="Generate Bitcoin QR codes offline." />
     <example value="sx qrcode" />
     <explanation value="Make sure you have the program 'qrencode' installed first." />
@@ -211,28 +211,28 @@
     <explanation value="  $ sx qrcode 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe qrcode.png" />
   </command>
   
-  <command symbol="fetch-block-header" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="fetch-block-header" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <description value="Fetch raw block header." />
     <example value="sx fetch-block-header [HASH] [HEIGHT]" />
     <explanation value="The fetch-block-header tool uses a network connection to make requests against" />
     <explanation value="the load balancer backend." />
   </command>
 
-  <command symbol="fetch-last-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="fetch-last-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <description value="Fetch the last block height." />
     <example value="sx fetch-last-height" />
     <explanation value="The fetch-last-height tool uses a network connection to make requests against" />
     <explanation value="the load balancer backend." />
   </command>
 
-  <command symbol="bci-fetch-last-height" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)">
+  <command symbol="bci-fetch-last-height" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
     <description value="Fetch the last block height using blockchain.info." />
     <example value="sx bci-fetch-last-height" />
     <explanation value="" />
     <explanation value="Fetch the last block height using blockchain.info." />
   </command>
   
-  <command symbol="fetch-stealth" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="fetch-stealth" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <description value="Fetch a stealth information using a network connection to" />
     <description value="make requests against the obelisk load balancer backend." />
     <example value="sx fetch-stealth BITFIELD [FROM_HEIGHT]" />
@@ -244,7 +244,7 @@
     <explanation value="  $ sx fetch-stealth 2 8bf41c69" />
   </command>
 
-  <command symbol="fetch-transaction" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="fetch-transaction" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <description value="Fetch a raw transaction using a network connection to" />
     <description value="make requests against the obelisk load balancer backend." />
     <example value="sx fetch-transaction HASH" />
@@ -256,14 +256,14 @@
     <explanation value="  $ sx fetch-transaction 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4 # fetches raw data" />
   </command>
 
-  <command symbol="fetch-transaction-index" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="fetch-transaction-index" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <description value="Fetch block height and index in block of transaction." />
     <example value="sx fetch-transaction-index HASH" />
     <explanation value="The fetch-transaction-index tool uses a network connection to make requests" />
     <explanation value="against the load balancer backend." />
   </command>
 
-  <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <description value="Show balance of a Bitcoin address in satoshis." />
     <example value="sx balance [-j] ADDRESS1 [ADDRESS2...]" />
     <explanation value="The balance tool uses a network connection to make requests against the" />
@@ -280,7 +280,7 @@
     <explanation value="    Total received:  100000" />
   </command>
 
-  <command symbol="history" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="history" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <description value="Get list of output points, values, and their spends for an" />
     <description value="address. grep can filter for just unspent outputs which can" />
     <description value="be fed into mktx." />
@@ -301,21 +301,21 @@
     <explanation value="    spend_height: 247742" />
   </command>
 
-  <command symbol="bci-history" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)">
+  <command symbol="bci-history" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
     <description value="Get list of output points, values, and their spends." />
     <description value="from blockchain.info" />
     <example value="sx bci-history SATOSHIS" />
     <explanation value="Get list of output points, values and spends using blockchain.info." />
   </command>
 
-  <command symbol="get-utxo" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES">
+  <command symbol="get-utxo" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" stub="true" obelisk="true">
     <description value="Get enough unspent transaction outputs from a given set of" />
     <description value="addresses to pay a given number of satoshis." />
     <example value="sx get-utxo ADDRESS1 ADDRESS2... SATOSHIS" />
     <explanation value="Get enough unspent transaction outputs from a given set of addresses to pay a given number of satoshis." />
   </command>
 
-  <command symbol="get-pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
+  <command symbol="get-pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
     <description value="Get the pubkey of an address if available." />
     <example value="sx get-pubkey ADDRESS" />
     <explanation value="Get the pubkey of an address if available." />
@@ -452,7 +452,7 @@
     <explanation value="Decode an address to its internal RIPEMD representation." />
   </command>
 
-  <command symbol="embed-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
+  <command symbol="embed-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
     <description value="Generate an address used for embedding record of data into the blockchain." />
     <example value="sx embed-addr" />
     <explanation value="Generate an address used for embedding record of data into the blockchain." />
@@ -478,7 +478,7 @@
     <explanation value="Validate a transaction input's signature." />
   </command>
 
-  <command symbol="brainwallet" category="OFFLINE KEYS AND ADDRESSES" subcategory="BRAIN STORAGE">
+  <command symbol="brainwallet" category="OFFLINE KEYS AND ADDRESSES" subcategory="BRAIN STORAGE" stub="true">
     <description value="Make 256 bit bitcoin private key from an arbitrary passphrase." />
     <example value="sx brainwallet password" />
     <example value="sx brainwallet username password" />
@@ -570,7 +570,7 @@
     <explanation value="  148f0a1d77e20dbaee3ff920ca40240d" />
   </command>
 
-  <command symbol="watchtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN WATCHING">
+  <command symbol="watchtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN WATCHING" stub="true" obelisk="true">
     <description value="Watch transactions from the network searching for a certain hash." />
     <example value="sx watchtx [TXHASH]..." />
     <explanation value="Watch transactions from the network searching for a certain hash." />
@@ -650,7 +650,7 @@
     <explanation value="The KEY can be provided as an argument or in STDIN." />
   </command>
   
-  <command symbol="ec_add" category="UTILITY" subcategory="EC MATH">
+  <command symbol="ec-add" category="UTILITY" subcategory="EC MATH">
     <description value="Calculate the result of POINT + POINT." />
     <example value="sx ec-add POINT POINT" />
     <explanation value="Calculate the result of POINT + POINT." />

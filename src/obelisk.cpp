@@ -19,7 +19,7 @@
  */
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/utility/client.hpp>
+#include <sx/obelisk.hpp>
 #include <sx/utility/console.hpp>
 
 namespace sx {

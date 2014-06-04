@@ -21,7 +21,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/fetch-transaction-index.hpp>
-#include <sx/utility/client.hpp>
+#include <sx/obelisk.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
 

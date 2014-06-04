@@ -10,18 +10,20 @@
   <ItemGroup Label="BuildOptionsExtension">
     <PropertyPageSchema Include="$(MSBuildThisFileDirectory)libsx.import.xml" />
   </ItemGroup>
-
+  
   <!-- Linkage -->
   
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\sx\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4290;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions Condition="'$(Option-leveldb)' == 'true'">LEVELDB_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Option-obelisk)' == 'true'">HAVE_OBELISK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--<PreprocessorDefinitions Condition="'$(Linkage-libsx)' == 'static' Or '$(Linkage-libsx)' == 'ltcg'">SX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>-->
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libsx.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Linkage-libsx)' != ''">libsx.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\sx\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libsx)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\sx\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libsx)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
     </Link>    

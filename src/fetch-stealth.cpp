@@ -22,7 +22,7 @@
 #include <obelisk/obelisk.hpp>
 #include <sx/command/fetch-stealth.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/client.hpp>
+#include <sx/obelisk.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;

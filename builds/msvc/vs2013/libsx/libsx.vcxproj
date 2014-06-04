@@ -1,4 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#################################################################
+#   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
+#################################################################
+-->
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <NuGetPackageImportStamp>2aa76a0e</NuGetPackageImportStamp>
@@ -71,7 +76,22 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\sx\sx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\generated.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\obelisk.hpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\dispatch.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\curve.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\environment.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\display.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\balance.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58-decode.hpp" />
@@ -84,19 +104,18 @@
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\decode-addr.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add-modp.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-tweak-add.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\ec_add.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\embed-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\encode-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-block-header.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-last-height.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-stealth.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction-index.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction-index.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\genaddr.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\generated.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\genpriv.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\genpub.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\get-pubkey.hpp" />
@@ -135,8 +154,8 @@
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-initiate.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-newkey.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-show-addr.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\validaddr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\validsig.hpp" />
@@ -145,59 +164,95 @@
     <ClInclude Include="..\..\..\..\include\sx\command\watchtx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\sx.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\client.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\dispatch.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\curve.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\environment.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\display.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\generated.cpp" />
+    <ClCompile Include="..\..\..\..\src\obelisk.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\dispatch.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\config.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\curve.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\environment.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\display.cpp" />
+  </ItemGroup>  
+  <ItemGroup>
     <ClCompile Include="..\..\..\..\src\addr.cpp" />
-    <ClCompile Include="..\..\..\..\src\balance.cpp" />
+    <ClCompile Include="..\..\..\..\src\balance.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\base58-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\base58check-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\base58check-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp" />
+    <ClCompile Include="..\..\..\..\src\bci-history.cpp" />
+    <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\src\brainwallet.cpp" />
+    <ClCompile Include="..\..\..\..\src\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\decode-addr.cpp" />
-    <ClCompile Include="..\..\..\..\src\ec-add-modp.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-add.cpp" />
+    <ClCompile Include="..\..\..\..\src\ec-add-modp.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-tweak-add.cpp" />
+    <ClCompile Include="..\..\..\..\src\embed-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\encode-addr.cpp" />
-    <ClCompile Include="..\..\..\..\src\fetch-block-header.cpp" />
-    <ClCompile Include="..\..\..\..\src\fetch-last-height.cpp" />
-    <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp" />
-    <ClCompile Include="..\..\..\..\src\fetch-transaction-index.cpp" />
-    <ClCompile Include="..\..\..\..\src\fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\src\fetch-block-header.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-last-height.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-transaction.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-transaction-index.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\genaddr.cpp" />
-    <ClCompile Include="..\..\..\..\src\generated.cpp" />
     <ClCompile Include="..\..\..\..\src\genpriv.cpp" />
     <ClCompile Include="..\..\..\..\src\genpub.cpp" />
+    <ClCompile Include="..\..\..\..\src\get-pubkey.cpp" />
+    <ClCompile Include="..\..\..\..\src\get-utxo.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-priv.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-pub.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-seed.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-address.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\src\history.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\initchain.cpp" />
+    <ClCompile Include="..\..\..\..\src\initchain.cpp">
+      <ExcludedFromBuild Condition="'$(Option-leveldb)' != 'true'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\mktx.cpp" />
     <ClCompile Include="..\..\..\..\src\mnemonic.cpp" />
-    <ClCompile Include="..\..\..\..\src\monitor.cpp" />
+    <ClCompile Include="..\..\..\..\src\monitor.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\mpk.cpp" />
     <ClCompile Include="..\..\..\..\src\newkey.cpp" />
     <ClCompile Include="..\..\..\..\src\newseed.cpp" />
     <ClCompile Include="..\..\..\..\src\pubkey.cpp" />
+    <ClCompile Include="..\..\..\..\src\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\src\rawscript.cpp" />
     <ClCompile Include="..\..\..\..\src\ripemd-hash.cpp" />
+    <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\scripthash.cpp" />
     <ClCompile Include="..\..\..\..\src\secret-to-wif.cpp" />
+    <ClCompile Include="..\..\..\..\src\sendtx-bci.cpp" />
     <ClCompile Include="..\..\..\..\src\sendtx-node.cpp" />
-    <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp" />
+    <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp" />
     <ClCompile Include="..\..\..\..\src\set-input.cpp" />
     <ClCompile Include="..\..\..\..\src\sha256.cpp" />
@@ -209,35 +264,20 @@
     <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-show-addr.cpp" />
-    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-uncover.cpp" />
-    <ClCompile Include="..\..\..\..\src\base58check-decode.cpp" />
-    <ClCompile Include="..\..\..\..\src\base58check-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp" />
-    <ClCompile Include="..\..\..\..\src\bci-history.cpp" />
-    <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp" />
-    <ClCompile Include="..\..\..\..\src\brainwallet.cpp" />
-    <ClCompile Include="..\..\..\..\src\btc.cpp" />
-    <ClCompile Include="..\..\..\..\src\embed-addr.cpp" />
-    <ClCompile Include="..\..\..\..\src\get-pubkey.cpp" />
-    <ClCompile Include="..\..\..\..\src\get-utxo.cpp" />
-    <ClCompile Include="..\..\..\..\src\qrcode.cpp" />
-    <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
-    <ClCompile Include="..\..\..\..\src\sendtx-bci.cpp" />
-    <ClCompile Include="..\..\..\..\src\watchtx.cpp" />
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\client.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\dispatch.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\config.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\curve.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\environment.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\display.cpp" />
     <ClCompile Include="..\..\..\..\src\validaddr.cpp" />
     <ClCompile Include="..\..\..\..\src\validsig.cpp" />
-    <ClCompile Include="..\..\..\..\src\validtx.cpp" />
-    <ClCompile Include="..\..\..\..\src\wallet.cpp" />
+    <ClCompile Include="..\..\..\..\src\validtx.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wallet.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\watchtx.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\wif-to-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\wrap.cpp" />
   </ItemGroup>

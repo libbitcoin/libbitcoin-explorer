@@ -20,7 +20,7 @@
       <PreprocessorDefinitions Condition="'$(Linkage-obelisk)' == 'static' Or '$(Linkage-obelisk)' == 'ltcg'">BCS_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>obelisk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Linkage-obelisk)' != ''">obelisk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-obelisk)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\obelisk\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-obelisk)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
     </Link>    
