@@ -18,19 +18,20 @@ sx_test_LDADD = \
     -L$(srcdir)/../src/ -lsx \
     $(libbitcoin_LIBS) \
     $(libwallet_LIBS) \
-    -lboost_date_time \
     -lboost_filesystem \
     -lboost_program_options \
     -lboost_regex \
     -lboost_system \
     -lboost_unit_test_framework \
-    -lsecp256k1 \
-    -lconfig++ \
-    -lncurses
-
+    -lconfig++
+    
 if HAVE_OBELISK
-AM_CPPFLAGS += ${libobelisk_CFLAGS} -DBOOST_TEST_DYN_LINK
-
-sx_test_LDADD += $(libobelisk_LIBS)
+    AM_CPPFLAGS += \
+        ${libobelisk_CFLAGS} \
+        -DBOOST_TEST_DYN_LINK
+        
+    sx_test_LDADD += \
+        $(libobelisk_LIBS) \
+        -lncurses
 endif
 

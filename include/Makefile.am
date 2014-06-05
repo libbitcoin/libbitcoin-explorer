@@ -1,4 +1,5 @@
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
+
 sx_includedir = $(includedir)/sx
 sx_include_HEADERS = \
     command.hpp \
@@ -16,8 +17,8 @@ sx_utility_include_HEADERS += \
     display.hpp \
     environment.hpp
 
-sx_command_includedir = $(includedir)/sx/command
 # Generated from XML data source.
+sx_command_includedir = $(includedir)/sx/command
 sx_command_include_HEADERS = \
     command/addr.hpp \
     command/base58-decode.hpp \
@@ -78,32 +79,21 @@ sx_command_include_HEADERS = \
     command/wif-to-secret.hpp \
     command/wrap.hpp
 
+# Generated from XML data source.
 if HAVE_OBELISK
-# Generated from XML data source.
-sx_command_include_HEADERS += \
-    command/balance.hpp \
-    command/fetch-block-header.hpp \
-    command/fetch-last-height.hpp \
-    command/fetch-stealth.hpp \
-    command/fetch-transaction.hpp \
-    command/fetch-transaction-index.hpp \
-    command/get-utxo.hpp \
-    command/history.hpp \
-    command/monitor.hpp \
-    command/sendtx-obelisk.hpp \
-    command/validtx.hpp \
-    command/wallet.hpp \
-    command/watchtx.hpp
-endif
-
-if DO_LEVELDB
-# Generated from XML data source.
-# There are currently no sources for DO_LEVELDB without Obelisk.
-# sx_command_include_HEADERS += \
-endfor
-
-if DO_LEVELDB && HAVE_OBELISK
-# Generated from XML data source.
-sx_command_include_HEADERS += \
-    command/initchain.hpp
+    sx_command_include_HEADERS += \
+        command/balance.hpp \
+        command/fetch-block-header.hpp \
+        command/fetch-last-height.hpp \
+        command/fetch-stealth.hpp \
+        command/fetch-transaction.hpp \
+        command/fetch-transaction-index.hpp \
+        command/get-utxo.hpp \
+        command/history.hpp \
+        command/initchain.hpp \
+        command/monitor.hpp \
+        command/sendtx-obelisk.hpp \
+        command/validtx.hpp \
+        command/wallet.hpp \
+        command/watchtx.hpp
 endif

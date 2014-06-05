@@ -1,8 +1,9 @@
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
+
 AUTOMAKE_OPTIONS = subdir-objects
 
-# library
-noinst_LTLIBRARIES=libsx.la
+# Library
+noinst_LTLIBRARIES = libsx.la
 
 AM_CPPFLAGS = \
     ${libbitcoin_CFLAGS} \
@@ -80,64 +81,48 @@ libsx_la_SOURCES += \
     wif-to-secret.cpp \
     wrap.cpp
 
-if HAVE_OBELISK
 # Generated from XML data source.
-libsx_la_SOURCES += \
-    balance.cpp \
-    fetch-block-header.cpp \
-    fetch-last-height.cpp \
-    fetch-stealth.cpp \
-    fetch-transaction.cpp \
-    fetch-transaction-index.cpp \
-    get-utxo.cpp \
-    history.cpp \
-    monitor.cpp \
-    sendtx-obelisk.cpp \
-    validtx.cpp \
-    wallet.cpp \
-    watchtx.cpp \
-    obelisk.cpp
-    
-# There is no independent option for ncurses, currently tied to HAVE_OBELISK.
-#sxlib_LDADD += -lncurses ${libobelisk_LIBS}
-#sxlib_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR="${sysconfdir}"
-endif
-
 if HAVE_OBELISK
-# Generated from XML data source.
-libsx_la_SOURCES += \
-    initchain.cpp
+    libsx_la_SOURCES += \
+        balance.cpp \
+        fetch-block-header.cpp \
+        fetch-last-height.cpp \
+        fetch-stealth.cpp \
+        fetch-transaction.cpp \
+        fetch-transaction-index.cpp \
+        get-utxo.cpp \
+        history.cpp \
+        initchain.cpp \
+        monitor.cpp \
+        sendtx-obelisk.cpp \
+        validtx.cpp \
+        wallet.cpp \
+        watchtx.cpp \
+        obelisk.cpp
+
+    AM_CPPFLAGS += \
+        ${libobelisk_CFLAGS} \
+        -DSYSCONFDIR="${sysconfdir}"
 endif
 
-if HAVE_OBELISK
+# Console Application
+bin_PROGRAMS = sx
 
-AM_CPPFLAGS += \
-    ${libobelisk_CFLAGS} \
-    -DSYSCONFDIR=\"${sysconfdir}\"
-
-endif
-
-# console app
-
-bin_PROGRAMS=sx
-
-sx_SOURCES = console/main.cpp
+sx_SOURCES = \
+    console/main.cpp
 
 sx_LDADD = \
     -L$(srcdir) -lsx \
     $(libbitcoin_LIBS) \
     $(libwallet_LIBS) \
-    -lboost_date_time \
     -lboost_filesystem \
     -lboost_program_options \
     -lboost_regex \
     -lboost_system \
-    -lsecp256k1 \
-    -lconfig++ \
-    -lncurses
-#    @LDFLAG_LEVELDB@
+    -lconfig++
 
 if HAVE_OBELISK
-sx_LDADD += \
-    $(libobelisk_LIBS)
+    sx_LDADD += \
+        $(libobelisk_LIBS) \
+        -lncurses
 endif

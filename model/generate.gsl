@@ -268,8 +268,8 @@ public:
 #endif
 .endfor
 .##############################################################################
-.echo "Generating src/test/generated_find.cpp..."
-.output "../src/test/generated_find.cpp"
+.echo "Generating test/generated_find.cpp..."
+.output "../test/generated_find.cpp"
 /*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
@@ -307,8 +307,8 @@ BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_object)
 
 BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
-.echo "Generating src/test/generated_symbol.cpp..."
-.output "../src/test/generated_symbol.cpp"
+.echo "Generating test/generated_symbol.cpp..."
+.output "../test/generated_symbol.cpp"
 /*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
@@ -349,6 +349,7 @@ BOOST_AUTO_TEST_SUITE_END()
 .echo "Generating include/Makefile.am..."
 .output "../include/Makefile.am"
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
+
 sx_includedir = $\(includedir)/sx
 sx_include_HEADERS = \\
     command.hpp \\
@@ -366,12 +367,10 @@ sx_utility_include_HEADERS += \\
     display.hpp \\
     environment.hpp
 
+# Generated from XML data source.
 sx_command_includedir = $\(includedir)/sx/command
-# Generated from XML data source.
 sx_command_include_HEADERS = \\
-.for command by symbol where  \
-    (!defined(obelisk) | obelisk <> "true") & \
-    (!defined(leveldb) | leveldb <> "true")
+.for command by symbol where !defined(obelisk) | obelisk <> "true"
 .   if last()
     command/$(symbol:).hpp
 .   else
@@ -379,45 +378,14 @@ sx_command_include_HEADERS = \\
 .   endif
 .endfor
 
+# Generated from XML data source.
 if HAVE_OBELISK
-# Generated from XML data source.
-sx_command_include_HEADERS += \\
-.for command by symbol where \
-    (defined(obelisk) & obelisk = "true") & \
-    (!defined(leveldb) | leveldb <> "true")
+    sx_command_include_HEADERS += \\
+.for command by symbol where defined(obelisk) & obelisk = "true"
 .   if last()
-    command/$(symbol:).hpp
+        command/$(symbol:).hpp
 .   else
-    command/$(symbol:).hpp \\
-.   endif
-.endfor
-endif
-
-if DO_LEVELDB
-# Generated from XML data source.
-# There are currently no sources for DO_LEVELDB without Obelisk.
-# sx_command_include_HEADERS += \\
-.for command by symbol where \
-    (!defined(obelisk) | obelisk <> "true") & \
-    (defined(leveldb) & leveldb = "true")
-.   if last()
-    command/$(symbol:).hpp
-.   else
-    command/$(symbol:).hpp \\
-.   endif
-.endfor
-endfor
-
-if DO_LEVELDB && HAVE_OBELISK
-# Generated from XML data source.
-sx_command_include_HEADERS += \\
-.for command by symbol where \
-    (defined(obelisk) & obelisk = "true") & \
-    (defined(leveldb) & leveldb = "true")
-.   if last()
-    command/$(symbol:).hpp
-.   else
-    command/$(symbol:).hpp \\
+        command/$(symbol:).hpp \\
 .   endif
 .endfor
 endif
@@ -425,23 +393,20 @@ endif
 .echo "Generating src/Makefile.am..."
 .output "../src/Makefile.am"
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
+
 AUTOMAKE_OPTIONS = subdir-objects
 
-bin_PROGRAMS=sx
+# Library
+noinst_LTLIBRARIES = libsx.la
 
-sx_CPPFLAGS = ${libbitcoin_CFLAGS} ${libwallet_CFLAGS} -I$\(srcdir)/../include
+AM_CPPFLAGS = \\
+    ${libbitcoin_CFLAGS} \\
+    ${libwallet_CFLAGS} \\
+    -I$\(srcdir)/../include
 
-sx_LIBADD = \\
-    ${libbitcoin_LIBS} ${libwallet_LIBS} \\
-    -lboost_date_time -lboost_filesystem -lboost_program_options \\
-    -lboost_regex -lboost_system \\
-    -lsecp256k1 -lconfig++ \\
-    @LDFLAG_LEVELDB@
-
-sx_SOURCES = \\
+libsx_la_SOURCES = \\
     generated.cpp \\
     utility/coin.cpp \\
-    utility/compat.cpp \\
     utility/config.cpp \\
     utility/console.cpp \\
     utility/curve.cpp \\
@@ -450,60 +415,48 @@ sx_SOURCES = \\
     utility/environment.cpp
 
 # Generated from XML data source.
-sx_SOURCES += \\
-.for command by symbol where \
-    (!defined(obelisk) | obelisk <> "true") & \
-    (!defined(leveldb) | leveldb <> "true")
+libsx_la_SOURCES += \\
+.for command by symbol where !defined(obelisk) | obelisk <> "true"
 .   if last()
     $(symbol:).cpp
 .   else
     $(symbol:).cpp \\
 .   endif
 .endfor
+
+# Generated from XML data source.
+if HAVE_OBELISK
+    libsx_la_SOURCES += \\
+.for command by symbol where defined(obelisk) & obelisk = "true"
+        $(symbol:).cpp \\
+.endfor
+        obelisk.cpp
+
+    AM_CPPFLAGS += \\
+        ${libobelisk_CFLAGS} \\
+        -DSYSCONFDIR=\"${sysconfdir}\"
+endif
+
+# Console Application
+bin_PROGRAMS = sx
+
+sx_SOURCES = \\
+    console/main.cpp
+
+sx_LDADD = \\
+    -L$\(srcdir) -lsx \\
+    $\(libbitcoin_LIBS) \\
+    $\(libwallet_LIBS) \\
+    -lboost_filesystem \\
+    -lboost_program_options \\
+    -lboost_regex \\
+    -lboost_system \\
+    -lconfig++
 
 if HAVE_OBELISK
-# Generated from XML data source.
-sx_SOURCES += \\
-.for command by symbol where \
-    (defined(obelisk) & obelisk = "true") & \
-    (!defined(leveldb) | leveldb <> "true")
-    $(symbol:).cpp \\
-.endfor
-    obelisk.cpp
-    
-# There is no independent option for ncurses, currently tied to HAVE_OBELISK.
-sx_LIBADD += -lncurses ${libobelisk_LIBS}
-sx_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR=\"${sysconfdir}\"
-endif
-
-if DO_LEVELDB
-# If DO_LEVELDB is set then libbitcoin must have been built with it as well!
-# There are currently no sources for DO_LEVELDB without HAVE_OBELISK.
-# Generated from XML data source.
-# sx_SOURCES += \\
-.for command by symbol where \
-    (!defined(obelisk) | obelisk <> "true") & \
-    (defined(leveldb) & leveldb = "true")
-.   if last()
-    $(symbol:).cpp
-.   else
-    $(symbol:).cpp \\
-.   endif
-.endfor
-endif
-
-if DO_LEVELDB && HAVE_OBELISK
-# Generated from XML data source.
-sx_SOURCES += \\
-.for command by symbol where \
-    (defined(obelisk) & obelisk = "true") & \
-    (defined(leveldb) & leveldb = "true")
-.   if last()
-    $(symbol:).cpp
-.   else
-    $(symbol:).cpp \\
-.   endif
-.endfor
+    sx_LDADD += \\
+        $\(libobelisk_LIBS) \\
+        -lncurses
 endif
 .##############################################################################
 .echo "Generating builds/msvc/vs2013/libsx/libsx.vcxproj..."
