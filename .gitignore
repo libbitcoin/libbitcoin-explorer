@@ -16,6 +16,9 @@ Makefile.in
 /libtool
 .dirstamp
 
+.cproject
+.project
+
 /src/sx
 /src/sx-addr
 /src/sx-balance

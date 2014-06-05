@@ -28,6 +28,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <string>
+#include <system_error>
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>

@@ -1,21 +1,17 @@
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 AUTOMAKE_OPTIONS = subdir-objects
 
-bin_PROGRAMS=sx
+# library
+noinst_LTLIBRARIES=libsx.la
 
-sx_CPPFLAGS = ${libbitcoin_CFLAGS} ${libwallet_CFLAGS} -I$(srcdir)/../include
+AM_CPPFLAGS = \
+    ${libbitcoin_CFLAGS} \
+    ${libwallet_CFLAGS} \
+    -I$(srcdir)/../include
 
-sx_LIBADD = \
-    ${libbitcoin_LIBS} ${libwallet_LIBS} \
-    -lboost_date_time -lboost_filesystem -lboost_program_options \
-    -lboost_regex -lboost_system \
-    -lsecp256k1 -lconfig++ \
-    @LDFLAG_LEVELDB@
-
-sx_SOURCES = \
+libsx_la_SOURCES = \
     generated.cpp \
     utility/coin.cpp \
-    utility/compat.cpp \
     utility/config.cpp \
     utility/console.cpp \
     utility/curve.cpp \
@@ -24,7 +20,7 @@ sx_SOURCES = \
     utility/environment.cpp
 
 # Generated from XML data source.
-sx_SOURCES += \
+libsx_la_SOURCES += \
     addr.cpp \
     base58-decode.cpp \
     base58-encode.cpp \
@@ -86,7 +82,7 @@ sx_SOURCES += \
 
 if HAVE_OBELISK
 # Generated from XML data source.
-sx_SOURCES += \
+libsx_la_SOURCES += \
     balance.cpp \
     fetch-block-header.cpp \
     fetch-last-height.cpp \
@@ -103,19 +99,45 @@ sx_SOURCES += \
     obelisk.cpp
     
 # There is no independent option for ncurses, currently tied to HAVE_OBELISK.
-sx_LIBADD += -lncurses ${libobelisk_LIBS}
-sx_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR="${sysconfdir}"
+#sxlib_LDADD += -lncurses ${libobelisk_LIBS}
+#sxlib_CPPFLAGS += ${libobelisk_CFLAGS} -DSYSCONFDIR="${sysconfdir}"
 endif
 
-if DO_LEVELDB
-# If DO_LEVELDB is set then libbitcoin must have been built with it as well!
-# There are currently no sources for DO_LEVELDB without HAVE_OBELISK.
+if HAVE_OBELISK
 # Generated from XML data source.
-# sx_SOURCES += \
-endif
-
-if DO_LEVELDB && HAVE_OBELISK
-# Generated from XML data source.
-sx_SOURCES += \
+libsx_la_SOURCES += \
     initchain.cpp
+endif
+
+if HAVE_OBELISK
+
+AM_CPPFLAGS += \
+    ${libobelisk_CFLAGS} \
+    -DSYSCONFDIR=\"${sysconfdir}\"
+
+endif
+
+# console app
+
+bin_PROGRAMS=sx
+
+sx_SOURCES = console/main.cpp
+
+sx_LDADD = \
+    -L$(srcdir) -lsx \
+    $(libbitcoin_LIBS) \
+    $(libwallet_LIBS) \
+    -lboost_date_time \
+    -lboost_filesystem \
+    -lboost_program_options \
+    -lboost_regex \
+    -lboost_system \
+    -lsecp256k1 \
+    -lconfig++ \
+    -lncurses
+#    @LDFLAG_LEVELDB@
+
+if HAVE_OBELISK
+sx_LDADD += \
+    $(libobelisk_LIBS)
 endif

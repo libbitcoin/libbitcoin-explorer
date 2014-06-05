@@ -68,7 +68,8 @@ console_result mnemonic::invoke(const int argc, const char* argv[])
 
     // $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic
     std::string sentence;
-    join(encode_mnemonic(words.front()), sentence);
+    auto words_list = encode_mnemonic(words.front());
+    join(words_list, sentence);
     std::cout << sentence << std::endl;
     return console_result::okay;
 }

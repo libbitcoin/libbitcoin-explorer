@@ -66,12 +66,12 @@ bool load_satoshi_item(TItem& item, const std::string& filename,
             return false;
         contents << infile.rdbuf();
     }
-    auto raw_tx = decode_hex(contents.str());
+    auto raw_tx = bc::decode_hex(contents.str());
     try
     {
         satoshi_load(raw_tx.begin(), raw_tx.end(), item);
     }
-    catch (end_of_stream)
+    catch (bc::end_of_stream)
     {
         return false;
     }

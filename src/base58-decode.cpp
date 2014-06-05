@@ -32,7 +32,8 @@ console_result base58_decode::invoke(const int argc, const char* argv[])
         return console_result::failure;
 
     std::string b58_str(get_arg_or_stream(argc, argv, std::cin));
-    line_out(std::cout, encode_hex(decode_base58(b58_str)));
+    std::string hex_str = encode_hex(decode_base58(b58_str));
+    line_out(std::cout, hex_str.c_str());
     return console_result::okay;
 }
 
