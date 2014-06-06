@@ -36,7 +36,7 @@ typedef std::vector<bc::payment_address> payaddr_list;
 /**
  * Key compression states (3-state boolean). 
  */
-enum class key_compression : uint8_t
+enum key_compression : uint8_t
 { 
     unspecified, 
     on, 

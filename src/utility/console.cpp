@@ -193,7 +193,7 @@ void terminate_process_on_error(const std::error_code& error)
         return;
 
     bc::log_fatal() << error.message();
-    exit(static_cast<int>(console_result::failure));
+    exit(console_result::failure);
 }
 
 bool validate_argument_range(int actual, 

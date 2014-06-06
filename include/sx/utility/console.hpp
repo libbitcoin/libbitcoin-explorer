@@ -58,7 +58,7 @@ namespace sx {
 /**
  * Result codes for int main().
  */
-enum class console_result : int
+enum console_result : int
 {
     failure = -1,
     okay = 0,
@@ -68,7 +68,7 @@ enum class console_result : int
 /**
  * Default ports for the Bitcoin protocol.
  */
-enum class port_default : uint16_t
+enum port_default : uint16_t
 {
     mainnet = 8333,
     testnet = 18333
@@ -80,7 +80,7 @@ enum class port_default : uint16_t
  * but there are no type constraints in c++).
  *
  * @param      <TValue>    The type of the value to test.
- * @param      <TElement>  The type of the elements of flags' class enum.
+ * @param      <TElement>  The type of the elements of flags' enum.
  * @param[in]  value       The value to test.
  * @param[in]  flags       The flags to test.
  * @return                 True if all specified flags are set.

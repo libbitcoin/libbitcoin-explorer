@@ -105,7 +105,7 @@ console_result stealth_addr::invoke(int argc, const char* argv[])
     // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
     data_chunk raw_addr;
 
-    // TODO: name 'some_flag' and move to flags class enum.
+    // TODO: name 'some_flag' and move to flags enum.
     const uint8_t some_flag = 1;
     const uint8_t stealth_version = 0x2a;
     const uint8_t default_stealth_prefix_filter = 0x00;

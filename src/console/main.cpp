@@ -28,8 +28,5 @@
  */
 int main(int argc, char* argv[])
 {
-    auto code = sx::invoke(argc, const_cast<const char**>(argv));
-
-    // Cast away the class enum.
-    return static_cast<int>(code);
+    return sx::invoke(argc, const_cast<const char**>(argv));
 }

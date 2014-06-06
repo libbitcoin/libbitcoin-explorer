@@ -24,9 +24,12 @@
 
 namespace sx {
 
-static const size_t tab1 = 3;
-static const size_t tab2 = 8;
-static const size_t tab3 = 35;
+static enum tab
+{
+    name = 3,
+    subcategory = 8,
+    description = 35
+};
 
 void display_invalid_command(const std::string& command)
 {
@@ -42,10 +45,10 @@ void display_invalid_config(const std::string& file)
 
 bool display_summary(const std::shared_ptr<command> command)
 {
-    const auto inset = (std::string(tab1, ' ') + command->name());
+    const auto inset = (std::string(tab::name, ' ') + command->name());
     line_out(std::cout, command->category());
-    line_out(std::cout, command->subcategory(), tab2);
-    line_out(std::cout, command->description(), tab3, inset.c_str());
+    line_out(std::cout, command->subcategory(), tab::subcategory);
+    line_out(std::cout, command->description(), tab::description, inset.c_str());
     return true;
 }
 
