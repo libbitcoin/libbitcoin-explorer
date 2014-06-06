@@ -34,7 +34,7 @@ console_result genaddr::invoke(int argc, const char* argv[])
         return console_result::failure;
 
     size_t key_number;
-    if (!parse<size_t>(argv[1], key_number))
+    if (!parse(key_number, argv[1]))
     {
         std::cerr << "genaddr: Bad N provided." << std::endl;
         return console_result::failure;

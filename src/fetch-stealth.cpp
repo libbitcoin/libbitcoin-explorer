@@ -61,7 +61,7 @@ console_result fetch_stealth::invoke(int argc, const char* argv[])
 
     // TODO: create console util for this idiom (numeric arg read).
     size_t height = 0;
-    if (argc > 2 && !parse<size_t>(argv[2], height))
+    if (argc > 2&&!parse(height, argv[2]))
     {
         std::cerr << "sx: Invalid height value specified." << std::endl;
         return console_result::failure;

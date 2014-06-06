@@ -59,7 +59,7 @@ static bool initialize_fetch_block_header(std::string& index,
 
     if (hash != null_hash)
         fullnode.blockchain.fetch_block_header(hash, block_header_fetched);
-    else if (parse<size_t>(index, height))
+    else if (parse(height, index))
         fullnode.blockchain.fetch_block_header(height, block_header_fetched);
     else
         return false;

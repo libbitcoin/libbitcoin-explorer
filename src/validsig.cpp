@@ -52,7 +52,7 @@ console_result validsig::invoke(int argc, const char* argv[])
     }
 
     uint32_t input_index;
-    if (!parse<uint32_t>(argv[2], input_index))
+    if (!parse<(input_index, argv[2]))
     {
         std::cerr << "validsig: Bad N provided." << std::endl;
         return console_result::failure;

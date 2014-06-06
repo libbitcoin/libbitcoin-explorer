@@ -46,7 +46,7 @@ console_result addr::invoke(int argc, const char* argv[])
     if (argc > 1)
     {
         uint8_t version;
-        if (!parse<uint8_t>(argv[1], version))
+        if (!parse(version, argv[1]))
         {
             std::cerr << "Invalid key version." << std::endl;
             return console_result::failure;

@@ -77,7 +77,7 @@ console_result sendtx_node::invoke(int argc, const char* argv[])
 
     if (argc > 3)
     {
-        if (!parse<uint16_t>(argv[3], port))
+        if (!parse(port, argv[3]))
         {
             std::cerr << "sendtx: Bad port number provided" << std::endl;
             return console_result::failure;

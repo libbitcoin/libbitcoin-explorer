@@ -34,7 +34,7 @@ console_result genpub::invoke(int argc, const char* argv[])
         return console_result::failure;
 
     size_t key_number;
-    if (!parse<size_t>(argv[1], key_number))
+    if (!parse(key_number, argv[1]))
     {
         std::cerr << "genaddr: Bad N provided" << std::endl;
         return console_result::failure;
@@ -43,7 +43,7 @@ console_result genpub::invoke(int argc, const char* argv[])
     auto const for_change = (argc > 2 && is_true(argv[2]));
 
     size_t stop_limit = key_number;
-    if (argc > 3 && !parse<size_t>(argv[3], stop_limit))
+    if (argc > 3&&!parse(stop_limit, argv[3]))
     {
         std::cerr << "genaddr: Bad RANGESTOP provided" << std::endl;
         return console_result::failure;

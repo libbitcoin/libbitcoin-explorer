@@ -70,14 +70,14 @@ bool read_address_tuple(int argc, const char* argv[],
             hex_str = arg;
         else
         {
-            if (!parse<uint8_t>(argv[1], version_byte))
+            if (!parse(version_byte, argv[1]))
                 return false;
             hex_str = sx::read_stream(stream);
         }
     }
     else if (argc == 3)
     {
-        if (!parse<uint8_t>(argv[2], version_byte))
+        if (!parse(version_byte, argv[2]))
             return false;
         hex_str = argv[1];
     }
@@ -111,7 +111,7 @@ bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
         const std::string arg(argv[i]);
         if (is_option(arg, SX_OPTION_HARD))
             is_hard = true;
-        else if (!parse<uint32_t>(arg, index))
+        else if (!parse(index, arg))
             return false;
     }
 

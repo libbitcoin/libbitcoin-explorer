@@ -117,7 +117,7 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
     size_t node_count = 2;
     if (argc > 2)
     {
-        if (!parse<size_t>(argv[2], node_count))
+        if (!parse(node_count, argv[2]))
         {
             std::cerr << "sign-input: Bad N provided" << std::endl;
             return console_result::failure;

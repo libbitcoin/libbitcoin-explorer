@@ -34,7 +34,7 @@ console_result genpriv::invoke(int argc, const char* argv[])
         return console_result::failure;
 
     size_t key_number;
-    if (!parse<size_t>(argv[1], key_number))
+    if (!parse(key_number, argv[1]))
     {
         std::cerr << "genpriv: Bad N provided." << std::endl;
         return console_result::failure;

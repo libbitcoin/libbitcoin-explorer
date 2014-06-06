@@ -103,7 +103,7 @@ bool flags_set(const TValue value, const TElement flags)
  * @return              True if successful.
  */
 template <typename TValue>
-bool parse(const std::string& text, TValue& value)
+bool parse(TValue& value, const std::string& text)
 {
     std::string serialized(text);
     boost::algorithm::trim(serialized);

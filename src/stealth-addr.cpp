@@ -50,7 +50,7 @@ console_result stealth_addr::invoke(int argc, const char* argv[])
                 std::cerr << "sx: --signatures requires a number." << std::endl;
                 return console_result::failure;
             }
-            if (!parse<uint8_t>(arg, number_sigs))
+            if (!parse(number_sigs, arg))
             {
                 std::cerr << "sx: --signatures value is invalid." << std::endl;
                 return console_result::failure;

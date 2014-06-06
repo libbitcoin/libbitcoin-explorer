@@ -41,7 +41,7 @@ console_result set_input::invoke(int argc, const char* argv[])
     }
 
     size_t input_index;
-    if (!parse<size_t>(argv[2], input_index))
+    if (!parse(input_index, argv[2]))
     {
         std::cerr << "set-input: Bad N provided." << std::endl;
         return console_result::failure;
