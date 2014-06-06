@@ -19,7 +19,7 @@
  */
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/ec_add.hpp>
+#include <sx/command/ec-add.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/curve.hpp>
 

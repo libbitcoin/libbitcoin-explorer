@@ -65,7 +65,7 @@ virtual const char* subcategory() PURE_VIRTUAL;
  * "Fetch a raw transaction using a network connection to"
  * "make requests against the obelisk load balancer back end."
  */
-virtual const std::vector<char*> description() PURE_VIRTUAL;
+virtual const std::vector<const char*> description() PURE_VIRTUAL;
 
 /**
  * The non-localizable command usage examples, multiple lines.
@@ -73,7 +73,7 @@ virtual const std::vector<char*> description() PURE_VIRTUAL;
  * @return  Example:
  * "sx fetch-transaction HASH"
  */
-virtual const std::vector<char*> example() PURE_VIRTUAL;
+virtual const std::vector<const char*> example() PURE_VIRTUAL;
 
 /**
  * The localizable command explanation, multiple lines, punctuated.
@@ -81,7 +81,7 @@ virtual const std::vector<char*> example() PURE_VIRTUAL;
  * @return  Example:
  * "$ sx fetch-transaction ... # fetches raw data"
  */
-virtual const std::vector<char*> explanation() PURE_VIRTUAL;
+virtual const std::vector<const char*> explanation() PURE_VIRTUAL;
 
 /**
  * Invoke the command with the raw arguments as provided on the command

@@ -74,7 +74,7 @@ public:
     /**
      * The localizable command description, multiple lines, punctuated.
      */
-    const std::vector<char*> description()
+    const std::vector<const char*> description()
     {
         return
         {
@@ -86,7 +86,7 @@ public:
     /**
      * The non-localizable command usage examples, multiple lines.
      */
-    const std::vector<char*> example()
+    const std::vector<const char*> example()
     {
         return
         {
@@ -97,7 +97,7 @@ public:
     /**
      * The localizable command explanation, multiple lines, punctuated.
      */
-    const std::vector<char*> explanation()
+    const std::vector<const char*> explanation()
     {
         return
         {

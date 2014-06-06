@@ -144,7 +144,7 @@ void line_out(std::ostream& stream, const std::string& line, size_t offset,
 }
 
 
-void line_out(std::ostream& stream, const std::vector<char*>& lines, 
+void line_out(std::ostream& stream, const std::vector<const char*>& lines, 
     size_t offset, const std::string& inset)
 {
     // we allow empty multi-line values in source data
@@ -196,8 +196,8 @@ void terminate_process_on_error(const std::error_code& error)
     exit(static_cast<int>(console_result::failure));
 }
 
-bool validate_argument_range(int actual, const std::vector<char*>& message, 
-    int minimum, int maximum)
+bool validate_argument_range(int actual, 
+    const std::vector<const char*>& message, int minimum, int maximum)
 {
     bool valid = ((actual >= minimum) && (maximum == 0 || actual <= maximum));
     if (!valid)

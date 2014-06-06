@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(line_out_single_empty_streams_line_feed)
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_streams_lines)
 {
-    auto lines = std::vector<char*>(
+    auto lines = std::vector<const char*>(
     {
         { "My folks got me a bitchin' Camero," },
         { "With no insurance to match;" },
@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_streams_lines)
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_offset_streams_offset)
 {
-    auto lines = std::vector<char*>(
+    auto lines = std::vector<const char*>(
     {
         { "I ran over some old lady," },
         { "One night at the county fair;" },
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_offset_streams_offset)
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_inset_streams_inset)
 {
-    auto lines = std::vector<char*>(
+    auto lines = std::vector<const char*>(
     {
         { "Bitchin' Camero, bitchin' Camero," },
         { "Doughnuts on your lawn;" },
@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_inset_streams_inset)
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_inset_equals_offset_streams_bump)
 {
-    auto lines = std::vector<char*>(
+    auto lines = std::vector<const char*>(
     {
         { "When I drive past the kids," },
         { "They all spit and cuss," },
@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_inset_equals_offset_streams_bump)
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_inset_exceeds_offset_streams_overflow)
 {
-    auto lines = std::vector<char*>(
+    auto lines = std::vector<const char*>(
     {
         { "Bitchin' Camero, bitchin' Camero," },
         { "Hey man where you headed?" },
@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_inset_exceeds_offset_streams_overflow)
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_none_streams_nothing)
 {
-    auto lines = std::vector<char*>();
+    auto lines = std::vector<const char*>();
     std::stringstream stream;
     sx::line_out(stream, lines, 10, "Dead Milkmen");
     BOOST_REQUIRE(stream.str() == "");
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE(line_out_multiple_none_streams_nothing)
 
 BOOST_AUTO_TEST_CASE(line_out_multiple_empty_streams_inset)
 {
-    auto lines = std::vector<char*>({ { "" } });
+    auto lines = std::vector<const char*>({ { "" } });
     std::stringstream stream;
     sx::line_out(stream, lines, 10, "Dead Milkmen");
     BOOST_REQUIRE(stream.str() == "Dead Milkmen\n");

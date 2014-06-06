@@ -274,7 +274,7 @@ void line_out(std::ostream& stream, const std::string& line, size_t offset=0,
  * @param[in]  offset  Number of spaces to pad the left side of the line.
  * @param[in]  inset   Text to display in the offset padding.
  */
-void line_out(std::ostream& stream, const std::vector<char*>& lines,
+void line_out(std::ostream& stream, const std::vector<const char*>& lines,
     const size_t offset=0, const std::string& inset="");
 
 /**
@@ -335,8 +335,8 @@ void terminate_process_on_error(const std::error_code& error);
  * @param[in]  maximum  The maximum target argument count, zero for unlimited.
  * @return              True if the argument range satisfies the predicate.
  */
-bool validate_argument_range(int actual, const std::vector<char*>& message,
-    int minimum, int maximum=0);
+bool validate_argument_range(int actual, 
+    const std::vector<const char*>& message, int minimum, int maximum=0);
 
 } // sx
 
