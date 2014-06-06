@@ -47,7 +47,7 @@ static bool get_compression(int argc, const char* argv[],
         if (compressed == uncompressed)
             return false;
 
-        is_compressed = ifelse(compressed || !uncompressed, 
+        is_compressed = if_else(compressed || !uncompressed, 
             key_compression::on, key_compression::off);
     }
 

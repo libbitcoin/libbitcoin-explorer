@@ -70,7 +70,7 @@ console_result sendtx_node::invoke(int argc, const char* argv[])
     }
 
     // TODO: read config.service option and alter default hostname accordingly?
-    std::string hostname(ifelse(argc > 2, argv[2], "localhost"));
+    std::string hostname(if_else(argc > 2, argv[2], "localhost"));
 
     // TODO: read config.testnet option and alter default port accordingly?
     auto port = static_cast<uint16_t>(port_default::mainnet);

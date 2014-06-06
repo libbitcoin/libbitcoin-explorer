@@ -91,6 +91,6 @@ console_result sign_input::invoke(int argc, const char* argv[])
     }
 
     auto okay = sign(tx, input_index, signing_key, script_code);
-    return ifelse(okay, console_result::okay, console_result::failure);
+    return if_else(okay, console_result::okay, console_result::failure);
 }
 

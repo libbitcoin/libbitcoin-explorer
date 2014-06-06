@@ -331,11 +331,11 @@ void wallet_display::draw()
 
         const auto& entry = history_[i];
         std::string entry_line;
-        entry_line = ifelse(entry.is_credit, " To ", " From ");
+        entry_line = if_else(entry.is_credit, " To ", " From ");
         entry_line += std::string(entry.address.begin(),
             entry.address.begin() + 7) + "...";
         std::string amount_str = "[";
-        amount_str += ifelse(entry.is_credit, "+", "-");
+        amount_str += if_else(entry.is_credit, "+", "-");
         amount_str += bc::satoshi_to_btc(entry.amount);
         amount_str += " BTC] ";
         entry_line += std::string( 40 - entry_line.size() - amount_str.size(),
@@ -667,7 +667,7 @@ static void run_command(std::string user_input, string_buffer& console_output,
         const wallet_history_entry entry = display.selected_entry();
         console_output.push_back(
             std::string("info: ") +
-            ifelse(entry.is_credit, "Output ", "Input ") +
+            if_else(entry.is_credit, "Output ", "Input ") +
             bc::encode_hex(entry.point.hash) + ":" +
             boost::lexical_cast<std::string>(entry.point.index));
         fullnode.blockchain.fetch_transaction(entry.point.hash,
