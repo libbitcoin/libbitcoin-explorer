@@ -59,6 +59,7 @@ bool dispatch_usage()
     const auto func = [](std::shared_ptr<command> sx_command) -> void
     {
         display_usage(sx_command);
+        display_line();
     };
 
     return extensions::broadcast(func);

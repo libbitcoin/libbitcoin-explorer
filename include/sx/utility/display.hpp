@@ -42,6 +42,10 @@ void display_invalid_command(const std::string& command);
  */
 void display_invalid_config(const std::string& file);
 
+/**
+ * Display a blank line.
+ */
+void display_line();
 
 /**
  * Display a summary for the specified command.
