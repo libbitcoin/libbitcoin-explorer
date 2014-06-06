@@ -61,12 +61,13 @@ bool set_sx_cfg(const tpath& path)
 #ifdef _WIN32
     return SetEnvironmentVariableW(L"SX_CFG", path.c_str()) != FALSE;
 #else
-    std::string config_path("SX_CFG=" + path.generic_string());
+    std::string path_variable("SX_CFG=" + path.generic_string());
+
     // What a crappy API: www.greenend.org.uk/rjk/tech/putenv.html
     // THIS CAST IS AN UGLY HACK FOR A LOUSY API, NEED TO REPLACE.
     // IT COULD CAUSE THE ENV VAR VALUE TO BE RESET, LEAK OR CRASH.
-    auto pair = const_cast<char*>(config_path.c_str());
-    putenv(pair);
+    auto non_const_path_variable = const_cast<char*>(path_variable.c_str());
+    putenv(non_const_path_variable);
 #endif
 }
 

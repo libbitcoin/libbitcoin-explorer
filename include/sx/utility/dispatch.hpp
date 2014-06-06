@@ -51,11 +51,11 @@ namespace sx {
  *
  * @param[in]  argc   The number of elements in the argv parameter.
  * @param[in]  argv   Array of command line arguments excluding the process.
- * @param[in]  alias  An command name to redirect the call to.
+ * @param[in]  alias  An optional command name to redirect the call to.
  * @return            The appropriate console return code { -1, 0, 1 }.
  */
 console_result dispatch_invoke(int argc, const char* argv[],
-    const char* alias=nullptr);
+    const std::string& alias="");
 
 /**
  * Display a summary for the command identified by the symbolic command name.

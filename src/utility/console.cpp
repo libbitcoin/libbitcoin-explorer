@@ -48,9 +48,9 @@ const char* get_arg_or_stream(int argc, const char* argv[],
 }
 
 size_t get_args(int argc, const char* argv[], 
-    std::vector<std::string>& arguments, int index)
+    std::vector<std::string>& arguments)
 {
-    for (int i = index; i < argc; ++i)
+    for (int i = 0; i < argc; ++i)
     {
         if (!is_option_any(argv[i]))
             arguments.push_back(argv[i]);
@@ -59,9 +59,9 @@ size_t get_args(int argc, const char* argv[],
     return arguments.size();
 }
 
-const char* get_filename(int argc, const char* argv[], int index)
+const char* get_filename(int argc, const char* argv[])
 {
-    return argc > index ? argv[index] : SX_STDIN_PATH_SENTINEL;
+    return argc > 0 ? argv[0] : SX_STDIN_PATH_SENTINEL;
 }
 
 bool get_option(int argc, const char* argv[], const std::string& option)
@@ -123,14 +123,14 @@ bool is_true(const std::string& text)
     return arg == "true" || arg == "1" || arg == "yes";
 }
 
-void join(std::vector<std::string>& words, std::string& sentence, 
-    const char* delimiter)
+void join(const std::vector<std::string>& words, std::string& sentence,
+    const std::string& delimiter)
 {
     sentence = boost::join(words, delimiter);
 }
 
-void line_out(std::ostream& stream, const char* line, 
-    const size_t offset, const char* inset)
+void line_out(std::ostream& stream, const std::string& line, size_t offset,
+    const std::string& inset)
 {
     // safe string length 
     size_t length = std::string(inset).length();
@@ -142,14 +142,14 @@ void line_out(std::ostream& stream, const char* line,
     stream << inset << std::string(padding, ' ') << line << std::endl;
 }
 
-void line_out(std::ostream& stream, std::string& line,
-    const size_t offset, const char* inset)
+void line_out(std::ostream& stream, std::string& line, size_t offset,
+    const std::string& inset)
 {
     return line_out(stream, line.c_str(), offset, inset);
 }
 
-void line_out(std::ostream& stream, const std::vector<char*>& lines,
-    const size_t offset, const char* inset)
+void line_out(std::ostream& stream, const std::vector<char*>& lines, 
+    size_t offset, const std::string& inset)
 {
     // we allow empty multi-line values in source data
     if (lines.size() < 1)
@@ -178,13 +178,13 @@ void sleep_ms(uint32_t milliseconds)
 }
 
 void split(const std::string& sentence, std::vector<std::string>& words,
-    const char* delimiter)
+    const std::string& delimiter)
 {
     boost::split(words, sentence, boost::is_any_of(delimiter));
 }
 
 void stream_to_words(std::istream& stream, 
-    std::vector<std::string>& words, const char* delimiter)
+    std::vector<std::string>& words, const std::string& delimiter)
 {
     std::string sentence(read_stream(stream, true));
     split(sentence, words, delimiter);
@@ -198,9 +198,8 @@ void terminate_process_on_error(const std::error_code& error)
     exit(static_cast<int>(console_result::failure));
 }
 
-bool validate_argument_range(int actual,
-    const std::vector<char*>& message, int minimum, 
-    int maximum)
+bool validate_argument_range(int actual, const std::vector<char*>& message, 
+    int minimum, int maximum)
 {
     bool valid = ((actual >= minimum) && (maximum == 0 || actual <= maximum));
     if (!valid)

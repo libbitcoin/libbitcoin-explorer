@@ -29,9 +29,9 @@
 namespace sx {
 
 console_result dispatch_invoke(int argc, const char* argv[], 
-    const char* alias)
+    const std::string& alias)
 {
-    const auto target = (alias == nullptr ? argv[0] : alias);
+    const auto target = (alias.empty() ? argv[0] : alias);
     const auto command = extensions::find(target);
     if (command == nullptr)
     {
@@ -41,7 +41,7 @@ console_result dispatch_invoke(int argc, const char* argv[],
     return command->invoke(argc, argv);
 }
 
-bool dispatch_summary(const char* symbol)
+bool dispatch_summary(const std::string& symbol)
 {
     const auto command = extensions::find(symbol);
     if (command == nullptr)

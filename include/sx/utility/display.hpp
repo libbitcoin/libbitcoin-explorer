@@ -32,7 +32,7 @@ namespace sx {
  *
  * @param[in]  command  The value that was attempted as a command.
  */
-void display_invalid_command(const char* command);
+void display_invalid_command(const std::string& command);
 
 /**
  * Display an error message to the console that the specified sx command does
@@ -40,7 +40,7 @@ void display_invalid_command(const char* command);
  *
  * @param[in]  file  The path of a file that was tested.
  */
-void display_invalid_config(const char* file);
+void display_invalid_config(const std::string& file);
 
 
 /**
@@ -49,7 +49,7 @@ void display_invalid_config(const char* file);
  * @param[in]  command  Pointer to the command to display.
  * @return              True if displayed successfully.
  */
-bool display_summary(std::shared_ptr<command> command);
+bool display_summary(const std::shared_ptr<command> command);
 
 /**
  * Display usage instructions (help) for the sx command line.
@@ -62,7 +62,7 @@ void display_usage();
  * @param[in]  command  Pointer to the command to display.
  * @return              True if displayed successfully.
  */
-bool display_usage(std::shared_ptr<command> command);
+bool display_usage(const std::shared_ptr<command> command);
 
 } // sx
 

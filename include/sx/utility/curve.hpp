@@ -44,8 +44,8 @@ bc::ec_secret generate_random_secret();
  * @param[out] point   The parsed point.
  * @return             True if a secret and a point have been returned.
  */
-bool ec_math_parse_args(int argc, const char* argv[], 
-    bc::ec_secret& secret, bc::ec_point& point);
+bool ec_math_parse_args(int argc, const char* argv[], bc::ec_secret& secret,
+    bc::ec_point& point);
 
 /**
  * Parse a point from the specified argument.

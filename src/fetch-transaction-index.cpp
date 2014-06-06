@@ -35,8 +35,8 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void transaction_index_fetched(const std::error_code& ec, 
-    const size_t height, size_t index)
+static void transaction_index_fetched(const std::error_code& ec, size_t height,
+    size_t index)
 {
     if (ec)
         std::cerr << "fetch-transaction: " << ec.message() << std::endl;

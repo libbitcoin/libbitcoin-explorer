@@ -68,7 +68,7 @@ enum class console_result : int
 /**
  * Default ports for the Bitcoin protocol.
  */
-enum class port_defaults : uint16_t
+enum class port_default : uint16_t
 {
     mainnet = 8333,
     testnet = 18333
@@ -119,15 +119,16 @@ bool parse(const std::string& text, TValue& value)
 }
 
 /**
- * Conveniently convert the specified type to string.
+ * Conveniently convert an instance of the specified type to string.
  *
  * @param      <TValue>  The type to serialize.
+ * @param[in]  value     The instance to convert.
  * @param[in]  fallback  The text to populate if value is empty.
  * @return               The serialized value.
  */
 template <typename TValue>
 const std::string& serialize(const TValue& value, 
-    const std::string& fallback = "")
+    const std::string& fallback="")
 {
     std::string serialized;
     boost::to_string(value, serialized);
@@ -151,12 +152,13 @@ const char* get_arg(int argc, const char* argv[],
 /**
  * Get the set of arguments from the specified argv, excluding options.
  *
- * @param[in]  argc      The number of args.
- * @param[in]  argv      The array of args from which to obtain the argument.
- * @return               The number of arguments read and returned in the list.
+ * @param[in]  argc       The number of args.
+ * @param[in]  argv       The array of args from which to obtain the argument.
+ * @param[out] arguments  The read argument values.
+ * @return                The number of arguments read and returned in the list.
  */
 size_t get_args(int argc, const char* argv[],
-    std::vector<std::string>& arguments, int index=1);
+    std::vector<std::string>& arguments);
 
 /**
  * Get the argument from the specified args, in the specified index,
@@ -179,11 +181,9 @@ const char* get_arg_or_stream(int argc, const char* argv[],
  *
  * @param[in]  argc    The number of args.
  * @param[in]  argv    The array of args from which to obtain the filename.
- * @param[in]  index   The arg index from which the filename is to be read.
  * @return             The filename or the default value if insufficient args.
  */
-const char* get_filename(int argc, const char* argv[], 
-    int index=1);
+const char* get_filename(int argc, const char* argv[]);
 
 /**
  * Uniformly test argv for the presence of the specified option, in long
@@ -251,8 +251,8 @@ bool is_true(const std::string& text);
  * @param[in]  sentence   The resulting string.
  * @param[in]  delimiter  The delimiter, defaults to SX_JOIN_DELIMITER.
  */
-void join(std::vector<std::string>& words, std::string& sentence,
-    const char* delimiter=SX_JOIN_DELIMITER);
+void join(const std::vector<std::string>& words, std::string& sentence,
+    const std::string& delimiter=SX_JOIN_DELIMITER);
 
 /**
  * Write the specified message, with optional padding and inset text, and a
@@ -263,8 +263,8 @@ void join(std::vector<std::string>& words, std::string& sentence,
  * @param[in]  offset  Number of spaces to pad the left side of the line.
  * @param[in]  inset   Text to display in the offset padding.
  */
-void line_out(std::ostream& stream, const char* line, 
-    const size_t offset=0, const char* inset="");
+void line_out(std::ostream& stream, const std::string& line, size_t offset=0,
+    const std::string& inset="");
 
 /**
 * Write the specified message, with optional padding and inset text, and a
@@ -275,8 +275,8 @@ void line_out(std::ostream& stream, const char* line,
 * @param[in]  offset  Number of spaces to pad the left side of the line.
 * @param[in]  inset   Text to display in the offset padding.
 */
-void line_out(std::ostream& stream, std::string& line,
-    const size_t offset=0, const char* inset="");
+void line_out(std::ostream& stream, std::string& line, size_t offset=0, 
+    const std::string& inset="");
 
 /**
  * Write the specified messages, with optional padding and first line inset 
@@ -315,7 +315,7 @@ void sleep_ms(uint32_t milliseconds);
  * @param[in]  delimiter  The delimeter, defaults to SX_SPLIT_DELIMITER.
  */
 void split(const std::string& sentence, std::vector<std::string>& words,
-    const char* delimiter=SX_SPLIT_DELIMITER);
+    const std::string& delimiter=SX_SPLIT_DELIMITER);
 
 /**
  * Read the specified stream to a string list in order.
@@ -326,7 +326,7 @@ void split(const std::string& sentence, std::vector<std::string>& words,
  */
 void stream_to_words(std::istream& stream,
     std::vector<std::string>& words,
-    const char* delimiter = SX_SPLIT_DELIMITER);
+    const std::string& delimiter=SX_SPLIT_DELIMITER);
 
 /**
  * DANGER: do not call this if anything iteresting is going on,
@@ -348,9 +348,8 @@ void terminate_process_on_error(const std::error_code& error);
  * @param[in]  maximum  The maximum target argument count, zero for unlimited.
  * @return              True if the argument range satisfies the predicate.
  */
-bool validate_argument_range(int actual,
-    const std::vector<char*>& message, int minimum,
-    int maximum=0);
+bool validate_argument_range(int actual, const std::vector<char*>& message,
+    int minimum, int maximum=0);
 
 } // sx
 

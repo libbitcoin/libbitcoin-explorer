@@ -28,19 +28,19 @@ static const size_t tab1 = 3;
 static const size_t tab2 = 8;
 static const size_t tab3 = 35;
 
-void display_invalid_command(const char* command)
+void display_invalid_command(const std::string& command)
 {
     std::cerr << "sx: " << command
         << " is not a sx option or command. See 'sx --help'." << std::endl;
 }
 
-void display_invalid_config(const char* file)
+void display_invalid_config(const std::string& file)
 {
     std::cerr << "sx: config file '" << file << "' doesn't exist!" 
         << std::endl;
 }
 
-bool display_summary(std::shared_ptr<command> command)
+bool display_summary(const std::shared_ptr<command> command)
 {
     const auto inset = (std::string(tab1, ' ') + command->name());
     line_out(std::cout, command->category());
@@ -69,7 +69,7 @@ void display_usage()
     std::cerr << "SX home page: <http://sx.dyne.org/>" << std::endl;
 }
 
-bool display_usage(std::shared_ptr<command> command)
+bool display_usage(const std::shared_ptr<command> command)
 {
     line_out(std::cout, command->example());
     line_out(std::cout, command->explanation());
