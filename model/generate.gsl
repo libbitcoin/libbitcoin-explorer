@@ -36,12 +36,10 @@
 namespace sx {
 namespace extensions {
 
-std::shared_ptr<command> find(const char* symbol)
+std::shared_ptr<command> find(const std::string& symbol)
 {
-    const auto symbolic = std::string(symbol);
-
 .for command by symbol
-    if (symbolic == $(symbol:c)::symbol())
+    if (symbol == $(symbol:c)::symbol())
         return std::make_shared<$(symbol:c)>();
 .endfor
 
@@ -104,7 +102,7 @@ namespace extensions {
  * @param[in]  symbol  The symbolic command name.
  * @return             An instance of the command or nullptr if not found.
  */
-std::shared_ptr<command> find(const char* symbol);
+std::shared_ptr<command> find(const std::string& symbol);
 
 /**
  * Invoke a specified function on all commands.

@@ -28,153 +28,151 @@
 namespace sx {
 namespace extensions {
 
-std::shared_ptr<command> find(const char* symbol)
+std::shared_ptr<command> find(const std::string& symbol)
 {
-    const auto symbolic = std::string(symbol);
-
-    if (symbolic == addr::symbol())
+    if (symbol == addr::symbol())
         return std::make_shared<addr>();
-    if (symbolic == balance::symbol())
+    if (symbol == balance::symbol())
         return std::make_shared<balance>();
-    if (symbolic == base58_decode::symbol())
+    if (symbol == base58_decode::symbol())
         return std::make_shared<base58_decode>();
-    if (symbolic == base58_encode::symbol())
+    if (symbol == base58_encode::symbol())
         return std::make_shared<base58_encode>();
-    if (symbolic == base58check_decode::symbol())
+    if (symbol == base58check_decode::symbol())
         return std::make_shared<base58check_decode>();
-    if (symbolic == base58check_encode::symbol())
+    if (symbol == base58check_encode::symbol())
         return std::make_shared<base58check_encode>();
-    if (symbolic == bci_fetch_last_height::symbol())
+    if (symbol == bci_fetch_last_height::symbol())
         return std::make_shared<bci_fetch_last_height>();
-    if (symbolic == bci_history::symbol())
+    if (symbol == bci_history::symbol())
         return std::make_shared<bci_history>();
-    if (symbolic == blke_fetch_transaction::symbol())
+    if (symbol == blke_fetch_transaction::symbol())
         return std::make_shared<blke_fetch_transaction>();
-    if (symbolic == brainwallet::symbol())
+    if (symbol == brainwallet::symbol())
         return std::make_shared<brainwallet>();
-    if (symbolic == btc::symbol())
+    if (symbol == btc::symbol())
         return std::make_shared<btc>();
-    if (symbolic == decode_addr::symbol())
+    if (symbol == decode_addr::symbol())
         return std::make_shared<decode_addr>();
-    if (symbolic == ec_add::symbol())
+    if (symbol == ec_add::symbol())
         return std::make_shared<ec_add>();
-    if (symbolic == ec_add_modp::symbol())
+    if (symbol == ec_add_modp::symbol())
         return std::make_shared<ec_add_modp>();
-    if (symbolic == ec_multiply::symbol())
+    if (symbol == ec_multiply::symbol())
         return std::make_shared<ec_multiply>();
-    if (symbolic == ec_tweak_add::symbol())
+    if (symbol == ec_tweak_add::symbol())
         return std::make_shared<ec_tweak_add>();
-    if (symbolic == embed_addr::symbol())
+    if (symbol == embed_addr::symbol())
         return std::make_shared<embed_addr>();
-    if (symbolic == encode_addr::symbol())
+    if (symbol == encode_addr::symbol())
         return std::make_shared<encode_addr>();
-    if (symbolic == fetch_block_header::symbol())
+    if (symbol == fetch_block_header::symbol())
         return std::make_shared<fetch_block_header>();
-    if (symbolic == fetch_last_height::symbol())
+    if (symbol == fetch_last_height::symbol())
         return std::make_shared<fetch_last_height>();
-    if (symbolic == fetch_stealth::symbol())
+    if (symbol == fetch_stealth::symbol())
         return std::make_shared<fetch_stealth>();
-    if (symbolic == fetch_transaction::symbol())
+    if (symbol == fetch_transaction::symbol())
         return std::make_shared<fetch_transaction>();
-    if (symbolic == fetch_transaction_index::symbol())
+    if (symbol == fetch_transaction_index::symbol())
         return std::make_shared<fetch_transaction_index>();
-    if (symbolic == genaddr::symbol())
+    if (symbol == genaddr::symbol())
         return std::make_shared<genaddr>();
-    if (symbolic == genpriv::symbol())
+    if (symbol == genpriv::symbol())
         return std::make_shared<genpriv>();
-    if (symbolic == genpub::symbol())
+    if (symbol == genpub::symbol())
         return std::make_shared<genpub>();
-    if (symbolic == get_pubkey::symbol())
+    if (symbol == get_pubkey::symbol())
         return std::make_shared<get_pubkey>();
-    if (symbolic == get_utxo::symbol())
+    if (symbol == get_utxo::symbol())
         return std::make_shared<get_utxo>();
-    if (symbolic == hd_priv::symbol())
+    if (symbol == hd_priv::symbol())
         return std::make_shared<hd_priv>();
-    if (symbolic == hd_pub::symbol())
+    if (symbol == hd_pub::symbol())
         return std::make_shared<hd_pub>();
-    if (symbolic == hd_seed::symbol())
+    if (symbol == hd_seed::symbol())
         return std::make_shared<hd_seed>();
-    if (symbolic == hd_to_address::symbol())
+    if (symbol == hd_to_address::symbol())
         return std::make_shared<hd_to_address>();
-    if (symbolic == hd_to_wif::symbol())
+    if (symbol == hd_to_wif::symbol())
         return std::make_shared<hd_to_wif>();
-    if (symbolic == history::symbol())
+    if (symbol == history::symbol())
         return std::make_shared<history>();
-    if (symbolic == initchain::symbol())
+    if (symbol == initchain::symbol())
         return std::make_shared<initchain>();
-    if (symbolic == mktx::symbol())
+    if (symbol == mktx::symbol())
         return std::make_shared<mktx>();
-    if (symbolic == mnemonic::symbol())
+    if (symbol == mnemonic::symbol())
         return std::make_shared<mnemonic>();
-    if (symbolic == monitor::symbol())
+    if (symbol == monitor::symbol())
         return std::make_shared<monitor>();
-    if (symbolic == mpk::symbol())
+    if (symbol == mpk::symbol())
         return std::make_shared<mpk>();
-    if (symbolic == newkey::symbol())
+    if (symbol == newkey::symbol())
         return std::make_shared<newkey>();
-    if (symbolic == newseed::symbol())
+    if (symbol == newseed::symbol())
         return std::make_shared<newseed>();
-    if (symbolic == pubkey::symbol())
+    if (symbol == pubkey::symbol())
         return std::make_shared<pubkey>();
-    if (symbolic == qrcode::symbol())
+    if (symbol == qrcode::symbol())
         return std::make_shared<qrcode>();
-    if (symbolic == rawscript::symbol())
+    if (symbol == rawscript::symbol())
         return std::make_shared<rawscript>();
-    if (symbolic == ripemd_hash::symbol())
+    if (symbol == ripemd_hash::symbol())
         return std::make_shared<ripemd_hash>();
-    if (symbolic == satoshi::symbol())
+    if (symbol == satoshi::symbol())
         return std::make_shared<satoshi>();
-    if (symbolic == scripthash::symbol())
+    if (symbol == scripthash::symbol())
         return std::make_shared<scripthash>();
-    if (symbolic == secret_to_wif::symbol())
+    if (symbol == secret_to_wif::symbol())
         return std::make_shared<secret_to_wif>();
-    if (symbolic == sendtx_bci::symbol())
+    if (symbol == sendtx_bci::symbol())
         return std::make_shared<sendtx_bci>();
-    if (symbolic == sendtx_node::symbol())
+    if (symbol == sendtx_node::symbol())
         return std::make_shared<sendtx_node>();
-    if (symbolic == sendtx_obelisk::symbol())
+    if (symbol == sendtx_obelisk::symbol())
         return std::make_shared<sendtx_obelisk>();
-    if (symbolic == sendtx_p2p::symbol())
+    if (symbol == sendtx_p2p::symbol())
         return std::make_shared<sendtx_p2p>();
-    if (symbolic == set_input::symbol())
+    if (symbol == set_input::symbol())
         return std::make_shared<set_input>();
-    if (symbolic == sha256::symbol())
+    if (symbol == sha256::symbol())
         return std::make_shared<sha256>();
-    if (symbolic == showblkhead::symbol())
+    if (symbol == showblkhead::symbol())
         return std::make_shared<showblkhead>();
-    if (symbolic == showscript::symbol())
+    if (symbol == showscript::symbol())
         return std::make_shared<showscript>();
-    if (symbolic == showtx::symbol())
+    if (symbol == showtx::symbol())
         return std::make_shared<showtx>();
-    if (symbolic == sign_input::symbol())
+    if (symbol == sign_input::symbol())
         return std::make_shared<sign_input>();
-    if (symbolic == stealth_addr::symbol())
+    if (symbol == stealth_addr::symbol())
         return std::make_shared<stealth_addr>();
-    if (symbolic == stealth_initiate::symbol())
+    if (symbol == stealth_initiate::symbol())
         return std::make_shared<stealth_initiate>();
-    if (symbolic == stealth_newkey::symbol())
+    if (symbol == stealth_newkey::symbol())
         return std::make_shared<stealth_newkey>();
-    if (symbolic == stealth_show_addr::symbol())
+    if (symbol == stealth_show_addr::symbol())
         return std::make_shared<stealth_show_addr>();
-    if (symbolic == stealth_uncover::symbol())
+    if (symbol == stealth_uncover::symbol())
         return std::make_shared<stealth_uncover>();
-    if (symbolic == stealth_uncover_secret::symbol())
+    if (symbol == stealth_uncover_secret::symbol())
         return std::make_shared<stealth_uncover_secret>();
-    if (symbolic == unwrap::symbol())
+    if (symbol == unwrap::symbol())
         return std::make_shared<unwrap>();
-    if (symbolic == validaddr::symbol())
+    if (symbol == validaddr::symbol())
         return std::make_shared<validaddr>();
-    if (symbolic == validsig::symbol())
+    if (symbol == validsig::symbol())
         return std::make_shared<validsig>();
-    if (symbolic == validtx::symbol())
+    if (symbol == validtx::symbol())
         return std::make_shared<validtx>();
-    if (symbolic == wallet::symbol())
+    if (symbol == wallet::symbol())
         return std::make_shared<wallet>();
-    if (symbolic == watchtx::symbol())
+    if (symbol == watchtx::symbol())
         return std::make_shared<watchtx>();
-    if (symbolic == wif_to_secret::symbol())
+    if (symbol == wif_to_secret::symbol())
         return std::make_shared<wif_to_secret>();
-    if (symbolic == wrap::symbol())
+    if (symbol == wrap::symbol())
         return std::make_shared<wrap>();
 
     return nullptr;

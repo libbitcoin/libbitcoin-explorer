@@ -109,7 +109,7 @@ namespace extensions {
  * @param[in]  symbol  The symbolic command name.
  * @return             An instance of the command or nullptr if not found.
  */
-std::shared_ptr<command> find(const char* symbol);
+std::shared_ptr<command> find(const std::string& symbol);
 
 /**
  * Invoke a specified function on all commands.
