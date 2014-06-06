@@ -61,9 +61,8 @@ const uint32_t default_poll_period_ms = 100;
  * @param[in]  stopped    A flag that signals cessation of polling.
  * @param[in]  period_ms  The polling period in milliseconds, defaults to 100.
  */
-void poll(obelisk::fullnode_interface& fullnode,
-    bc::threadpool& pool, bool& stopped, 
-    const uint32_t period_ms=default_poll_period_ms);
+void poll(obelisk::fullnode_interface& fullnode, bc::threadpool& pool,
+    bool& stopped, uint32_t period_ms=default_poll_period_ms);
 
 } // sx
 

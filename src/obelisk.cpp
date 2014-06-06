@@ -24,8 +24,8 @@
 
 namespace sx {
 
-void poll(obelisk::fullnode_interface& fullnode,
-    bc::threadpool& pool, bool& stopped, uint32_t period_ms)
+void poll(obelisk::fullnode_interface& fullnode, bc::threadpool& pool, 
+    bool& stopped, uint32_t period_ms)
 {
     while (!stopped)
     {
