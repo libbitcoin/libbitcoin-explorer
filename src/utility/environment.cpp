@@ -39,7 +39,7 @@ tstring get_sx_cfg()
     return if_else(result != FALSE, tstring(path), tstring());
 #else
     const char* path = getenv("SX_CFG");
-    return if_else(path == nullptr, "", path);
+    return if_else(path == nullptr, tstring(), tstring(path));
 #endif
 }
 
@@ -52,7 +52,10 @@ tstring home_directory()
     return if_else(SUCCEEDED(result), tstring(path), tstring());
 #else
     const char* path = getenv("HOME");
-    return if_else(path == nullptr, getpwuid(getuid())->pw_dir, path);
+    if(path == nullptr)
+        return getpwuid(getuid())->pw_dir;
+    else
+        return path;
 #endif
 }
 
