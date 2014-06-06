@@ -84,7 +84,7 @@ public:
     {
         return
         {
-            { "sx stealth-addr [--reuse-key|-r] [--signatures|-s NSIGS] SCAN_PUBKEY SPEND_PUBKEY1 ...  SPEND_PUBKEYN" }
+            { "sx stealth-addr [--reuse-key|-r] [--signatures|-s NSIGS] SCAN_PUBKEY SPEND_PUBKEY1 ... SPEND_PUBKEYN" }
         };
     }
 

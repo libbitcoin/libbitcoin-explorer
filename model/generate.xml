@@ -602,7 +602,7 @@
 
   <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
     <description value="See a stealth address from given input." />
-    <example value="sx stealth-addr [--reuse-key|-r] [--signatures|-s NSIGS] SCAN_PUBKEY SPEND_PUBKEY1 ...  SPEND_PUBKEYN" />
+    <example value="sx stealth-addr [--reuse-key|-r] [--signatures|-s NSIGS] SCAN_PUBKEY SPEND_PUBKEY1 ... SPEND_PUBKEYN" />
     <explanation value="See a stealth address from given input." />
     <explanation value="" />
     <explanation value="  --reuse-key -r    Reuse SCAN_PUBKEY for SPEND_PUBKEY" />
