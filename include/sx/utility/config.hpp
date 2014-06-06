@@ -111,7 +111,7 @@ void get_config(config_map_type& map);
  * @param[in]  path  The path of the configuration settings file.
  * @return           True if set successfully.
  */
-bool set_config_path(std::string& path);
+bool set_config_path(const std::string& path);
 
 } // sx
 

@@ -31,9 +31,9 @@ namespace sx {
 // problems. once libbitcoin and libwallet are modified to externalize that
 // option we could have more flexibility.
 #ifdef ENABLE_TESTNET
-#define SX_DEFAULT_TESTNET "true"
+    #define SX_DEFAULT_TESTNET "true"
 #else
-#define SX_DEFAULT_TESTNET "false"
+    #define SX_DEFAULT_TESTNET "false"
 #endif
 
 // the choice of a server (and therefore its public key) is restricted by the
@@ -107,7 +107,7 @@ void get_config(config_map_type& map)
 }
 
 // validate file existence and set environment SX_CFG environment variable
-bool set_config_path(std::string& path)
+bool set_config_path(const std::string& path)
 {
     tpath config_path(path);
     libconfig::Config config;
