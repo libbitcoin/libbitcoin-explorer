@@ -108,8 +108,7 @@ bool read_address_tuple(int argc, const char* argv[],
  * @param[out] payaddrs  The payment addresses read.
  * return                True if there was no payment address parse error.
  */
-bool read_addresses(int argc, const char* argv[], 
-    sx::payaddr_list& payaddrs);
+bool read_addresses(int argc, const char* argv[], sx::payaddr_list& payaddrs);
 
 /**
  * Read optional hard/index argument pair from args, with defaults.
