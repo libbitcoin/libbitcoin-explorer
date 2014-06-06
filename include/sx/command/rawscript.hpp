@@ -111,7 +111,7 @@ public:
      * @param[in]  argv  The array of arguments, excluding the process.
      * @return           The appropriate console return code { -1, 0, 1 }.
      */
-    console_result invoke(const int argc, const char* argv[]);
+    console_result invoke(int argc, const char* argv[]);
 };
 
 } // extensions

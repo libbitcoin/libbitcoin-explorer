@@ -67,7 +67,7 @@ static bool initialize_fetch_block_header(std::string& index,
     return true;
 }
 
-console_result fetch_block_header::invoke(const int argc, const char* argv[])
+console_result fetch_block_header::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
         return console_result::failure;

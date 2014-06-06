@@ -28,7 +28,7 @@ using namespace sx;
 using namespace sx::extensions;
 
 static bool valid_signature(const transaction_type& tx,
-    const uint32_t input_index, elliptic_curve_key& key, 
+    uint32_t input_index, elliptic_curve_key& key, 
     const script_type& script_code, data_chunk signature)
 {
     const auto hash_type = signature.back();
@@ -38,7 +38,7 @@ static bool valid_signature(const transaction_type& tx,
     return key.verify(tx_hash, signature);
 }
 
-console_result validsig::invoke(const int argc, const char* argv[])
+console_result validsig::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 5, 5))
         return console_result::failure;

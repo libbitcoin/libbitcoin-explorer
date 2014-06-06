@@ -25,7 +25,7 @@ using namespace libwallet;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result stealth_uncover_secret::invoke(const int argc,
+console_result stealth_uncover_secret::invoke(int argc,
     const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 4, 4))

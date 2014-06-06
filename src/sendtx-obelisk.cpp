@@ -42,7 +42,7 @@ static void handle_broadcast(const std::error_code& ec)
     node_stopped = true;
 }
 
-console_result sendtx_obelisk::invoke(const int argc, const char* argv[])
+console_result sendtx_obelisk::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
         return console_result::failure;

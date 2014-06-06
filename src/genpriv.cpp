@@ -28,7 +28,7 @@ using namespace libwallet;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result genpriv::invoke(const int argc, const char* argv[])
+console_result genpriv::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 3))
         return console_result::failure;

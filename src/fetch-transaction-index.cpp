@@ -49,7 +49,7 @@ static void transaction_index_fetched(const std::error_code& ec,
     node_stopped = true;
 }
 
-console_result fetch_transaction_index::invoke(const int argc, 
+console_result fetch_transaction_index::invoke(int argc, 
     const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))

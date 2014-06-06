@@ -249,7 +249,7 @@ static bool modify(transaction_type& tx,
     return false;
 }
 
-console_result mktx::invoke(const int argc, const char* argv[])
+console_result mktx::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2))
         return console_result::failure;

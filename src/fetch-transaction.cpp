@@ -63,7 +63,7 @@ static void transaction_fetched_wrapper(const std::error_code& ec,
         transaction_fetched(ec, tx);
 }
 
-console_result fetch_transaction::invoke(const int argc,
+console_result fetch_transaction::invoke(int argc,
     const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))

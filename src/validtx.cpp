@@ -45,7 +45,7 @@ static void valid_tx(const std::error_code& ec, const index_list& unconfirmed)
     node_stopped = true;
 }
 
-console_result validtx::invoke(const int argc, const char* argv[])
+console_result validtx::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
         return console_result::failure;

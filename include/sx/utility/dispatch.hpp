@@ -54,7 +54,7 @@ namespace sx {
  * @param[in]  alias  An command name to redirect the call to.
  * @return            The appropriate console return code { -1, 0, 1 }.
  */
-console_result dispatch_invoke(const int argc, const char* argv[],
+console_result dispatch_invoke(int argc, const char* argv[],
     const char* alias=nullptr);
 
 /**
@@ -79,7 +79,7 @@ bool dispatch_usage();
  * @param[in]  argv  The array of arguments, including the process.
  * @return           The appropriate console return code { -1, 0, 1 }.
  */
-console_result invoke(const int argc, const char* argv[]);
+console_result invoke(int argc, const char* argv[]);
 
 } // sx
 

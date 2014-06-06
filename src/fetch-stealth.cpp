@@ -51,7 +51,7 @@ static void stealth_fetched(const std::error_code& ec,
     node_stopped = true;
 }
 
-console_result fetch_stealth::invoke(const int argc, const char* argv[])
+console_result fetch_stealth::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 3))
         return console_result::failure;

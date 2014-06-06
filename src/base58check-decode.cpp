@@ -26,7 +26,7 @@
 using namespace sx;
 using namespace sx::extensions;
 
-console_result base58check_decode::invoke(const int argc, const char* argv[])
+console_result base58check_decode::invoke(int argc, const char* argv[])
 {
     // TODO: invoke functionality from base58-decode >> unwrap.
     line_out(std::cerr, "sx: This command is not yet ported from python.");

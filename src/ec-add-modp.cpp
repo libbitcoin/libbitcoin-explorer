@@ -27,7 +27,7 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result ec_add_modp::invoke(const int argc, const char* argv[])
+console_result ec_add_modp::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 3, 3))
         return console_result::failure;

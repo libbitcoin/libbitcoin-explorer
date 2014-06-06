@@ -101,7 +101,7 @@ static void send_tx(const std::error_code& ec, channel_ptr node,
         std::bind(send_tx, _1, _2, std::ref(prot), std::ref(tx)));
 }
 
-console_result sendtx_p2p::invoke(const int argc, const char* argv[])
+console_result sendtx_p2p::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 3))
         return console_result::failure;

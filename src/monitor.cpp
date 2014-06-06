@@ -77,7 +77,7 @@ static void new_update(const std::error_code& ec,
         << " [ #" << height << " " << block_hash << " ]" << std::endl;
 }
 
-console_result monitor::invoke(const int argc, const char* argv[])
+console_result monitor::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 2))
         return console_result::failure;

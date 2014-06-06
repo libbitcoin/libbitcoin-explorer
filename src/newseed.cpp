@@ -28,7 +28,7 @@ using namespace libwallet;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result newseed::invoke(const int argc, const char* argv[])
+console_result newseed::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
         return console_result::failure;

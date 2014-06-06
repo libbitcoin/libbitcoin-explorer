@@ -45,7 +45,7 @@ static void last_height_fetched(const std::error_code& ec, size_t height)
     node_stopped = true;
 }
 
-console_result fetch_last_height::invoke(const int argc, const char* argv[])
+console_result fetch_last_height::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))
         return console_result::failure;

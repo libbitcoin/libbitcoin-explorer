@@ -45,7 +45,7 @@ data_chunk random_fill(size_t size)
     return result;
 }
 
-bool read_address_tuple(const int argc, const char* argv[], 
+bool read_address_tuple(int argc, const char* argv[], 
     std::istream& stream, std::string& hex_str, uint8_t& version_byte)
 {
     version_byte = 0;
@@ -85,7 +85,7 @@ bool read_address_tuple(const int argc, const char* argv[],
     return true;
 }
 
-bool read_addresses(const int argc, const char* argv[], 
+bool read_addresses(int argc, const char* argv[], 
     payaddr_list& payaddrs)
 {
     for (int i = 1; i < argc; ++i)
@@ -100,7 +100,7 @@ bool read_addresses(const int argc, const char* argv[],
     return true;
 }
 
-bool read_hard_index_args(const int argc, const char* argv[], bool& is_hard,
+bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
     uint32_t& index)
 {
     index = 0;

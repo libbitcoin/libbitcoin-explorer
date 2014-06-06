@@ -27,7 +27,7 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-static bool sign(transaction_type& tx, const uint32_t input_index,
+static bool sign(transaction_type& tx, uint32_t input_index,
     const elliptic_curve_key& key, const script_type& script_code)
 {
     transaction_input_type& input = tx.inputs[input_index];
@@ -55,7 +55,7 @@ static bool sign(transaction_type& tx, const uint32_t input_index,
     return true;
 }
 
-console_result sign_input::invoke(const int argc, const char* argv[])
+console_result sign_input::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 4, 4))
         return console_result::failure;

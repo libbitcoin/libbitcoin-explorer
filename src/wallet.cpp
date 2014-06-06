@@ -719,7 +719,7 @@ static void broadcast_subsystem()
     pool.join();
 }
 
-console_result wallet::invoke(const int argc, const char* argv[])
+console_result wallet::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 2))
         return console_result::failure;

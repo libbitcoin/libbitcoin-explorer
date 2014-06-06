@@ -28,7 +28,7 @@
 
 namespace sx {
 
-console_result dispatch_invoke(const int argc, const char* argv[], 
+console_result dispatch_invoke(int argc, const char* argv[], 
     const char* alias)
 {
     const auto target = (alias == nullptr ? argv[0] : alias);
@@ -61,13 +61,13 @@ bool dispatch_usage()
     return extensions::broadcast(func);
 }
 
-console_result invoke(const int argc, const char* argv[])
+console_result invoke(int argc, const char* argv[])
 {
     // command line usage:
     // sx [-c|--config path] [[-h|--help|help command] | [command [args...]]]
 
     int position = 0;
-    const int last = argc - 1;
+    int last = argc - 1;
 
     // sx
     if (position == last)

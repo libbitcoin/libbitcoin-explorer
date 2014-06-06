@@ -96,7 +96,7 @@ bc::data_chunk random_fill(size_t size);
  * @param[out] version_byte  The return byte value.
  * return                    True if there was no parse error.
  */
-bool read_address_tuple(const int argc, const char* argv[], 
+bool read_address_tuple(int argc, const char* argv[], 
     std::istream& stream, std::string& hex_str, uint8_t& version_byte);
 
 /**
@@ -108,7 +108,7 @@ bool read_address_tuple(const int argc, const char* argv[],
  * @param[out] payaddrs  The payment addresses read.
  * return                True if there was no payment address parse error.
  */
-bool read_addresses(const int argc, const char* argv[], 
+bool read_addresses(int argc, const char* argv[], 
     sx::payaddr_list& payaddrs);
 
 /**
@@ -121,7 +121,7 @@ bool read_addresses(const int argc, const char* argv[],
  * @param[out] index    The parsed index value or zero if not present.
  * @return              True if there was no error parsing an argument.
  */
-bool read_hard_index_args(const int argc, const char* argv[], bool& is_hard,
+bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
     uint32_t& index);
 
 /**

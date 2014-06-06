@@ -145,8 +145,8 @@ const std::string& serialize(const TValue& value,
  * @param[in]  fallback  The arg index from which the filename is to be read.
  * @return               The argument, or the fallback if insufficient args.
  */
-const char* get_arg(const int argc, const char* argv[],
-    const std::string& fallback="", const int index=1);
+const char* get_arg(int argc, const char* argv[],
+    const std::string& fallback="", int index=1);
 
 /**
  * Get the set of arguments from the specified argv, excluding options.
@@ -155,8 +155,8 @@ const char* get_arg(const int argc, const char* argv[],
  * @param[in]  argv      The array of args from which to obtain the argument.
  * @return               The number of arguments read and returned in the list.
  */
-size_t get_args(const int argc, const char* argv[],
-    std::vector<std::string>& arguments, const int index=1);
+size_t get_args(int argc, const char* argv[],
+    std::vector<std::string>& arguments, int index=1);
 
 /**
  * Get the argument from the specified args, in the specified index,
@@ -170,8 +170,8 @@ size_t get_args(const int argc, const char* argv[],
  * @param[in]  trim    Trim the stream input of whitespace, defaults to false.
  * @return             The argument, or the stream value if insufficient args.
  */
-const char* get_arg_or_stream(const int argc, const char* argv[],
-    std::istream& stream, const int index=1, const bool trim=false);
+const char* get_arg_or_stream(int argc, const char* argv[],
+    std::istream& stream, int index=1, bool trim=false);
 
 /**
  * Get the filename from the specified args, in the specified position,
@@ -182,8 +182,8 @@ const char* get_arg_or_stream(const int argc, const char* argv[],
  * @param[in]  index   The arg index from which the filename is to be read.
  * @return             The filename or the default value if insufficient args.
  */
-const char* get_filename(const int argc, const char* argv[], 
-    const int index=1);
+const char* get_filename(int argc, const char* argv[], 
+    int index=1);
 
 /**
  * Uniformly test argv for the presence of the specified option, in long
@@ -197,7 +197,7 @@ const char* get_filename(const int argc, const char* argv[],
  * @param[in]  option    The option value to test (must be lower case).
  * @return               True if the option is set.
  */
-bool get_option(const int argc, const char* argv[], const std::string& option);
+bool get_option(int argc, const char* argv[], const std::string& option);
 
 /**
  * Uniformly convert a text string to a bool, with whitespace and text case
@@ -348,9 +348,9 @@ void terminate_process_on_error(const std::error_code& error);
  * @param[in]  maximum  The maximum target argument count, zero for unlimited.
  * @return              True if the argument range satisfies the predicate.
  */
-bool validate_argument_range(const int actual,
-    const std::vector<char*>& message, const int minimum,
-    const int maximum=0);
+bool validate_argument_range(int actual,
+    const std::vector<char*>& message, int minimum,
+    int maximum=0);
 
 } // sx
 

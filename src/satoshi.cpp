@@ -25,7 +25,7 @@
 using namespace sx;
 using namespace sx::extensions;
 
-console_result satoshi::invoke(const int argc, const char* argv[])
+console_result satoshi::invoke(int argc, const char* argv[])
 {
     // TODO: parse and validate input and multiply by 10^8.
     line_out(std::cerr, "sx: This command is not yet ported from python.");

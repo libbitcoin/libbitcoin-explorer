@@ -91,8 +91,7 @@ public:
      * @param[in]  argv  The array of arguments, excluding the process.
      * @return           The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(const int argc, const char* argv[]) 
-        PURE_VIRTUAL;
+    virtual console_result invoke(int argc, const char* argv[]) PURE_VIRTUAL;
 };
 
 } // sx

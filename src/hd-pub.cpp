@@ -43,7 +43,7 @@ static bool private_to_public_key()
     return true;
 }
 
-console_result hd_pub::invoke(const int argc, const char* argv[])
+console_result hd_pub::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 3))
         return console_result::failure;

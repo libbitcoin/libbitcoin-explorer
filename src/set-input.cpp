@@ -27,7 +27,7 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result set_input::invoke(const int argc, const char* argv[])
+console_result set_input::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 4, 4))
         return console_result::failure;

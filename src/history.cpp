@@ -144,7 +144,7 @@ static void json_history_fetched(const payment_address& payaddr,
     std::cout << std::endl;
 }
 
-console_result history::invoke(const int argc, const char* argv[])
+console_result history::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1))
         return console_result::failure;

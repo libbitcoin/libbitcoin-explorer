@@ -35,20 +35,20 @@
 
 namespace sx {
 
-const char* get_arg(const int argc, const char* argv[],
-    const std::string& fallback, const int index)
+const char* get_arg(int argc, const char* argv[],
+    const std::string& fallback, int index)
 {
     return argc > index ? argv[index] : fallback.c_str();
 }
 
-const char* get_arg_or_stream(const int argc, const char* argv[], 
-    std::istream& stream, const int index, const bool trim)
+const char* get_arg_or_stream(int argc, const char* argv[], 
+    std::istream& stream, int index, bool trim)
 {
     return argc > index ? argv[index] : read_stream(stream, trim).c_str();
 }
 
-size_t get_args(const int argc, const char* argv[], 
-    std::vector<std::string>& arguments, const int index)
+size_t get_args(int argc, const char* argv[], 
+    std::vector<std::string>& arguments, int index)
 {
     for (int i = index; i < argc; ++i)
     {
@@ -59,12 +59,12 @@ size_t get_args(const int argc, const char* argv[],
     return arguments.size();
 }
 
-const char* get_filename(const int argc, const char* argv[], const int index)
+const char* get_filename(int argc, const char* argv[], int index)
 {
     return argc > index ? argv[index] : SX_STDIN_PATH_SENTINEL;
 }
 
-bool get_option(const int argc, const char* argv[], const std::string& option)
+bool get_option(int argc, const char* argv[], const std::string& option)
 {
     for (int i = 1; i < argc; i++)
     {
@@ -172,7 +172,7 @@ std::string read_stream(std::istream& stream, bool trim)
     return result;
 }
 
-void sleep_ms(const uint32_t milliseconds)
+void sleep_ms(uint32_t milliseconds)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
@@ -198,9 +198,9 @@ void terminate_process_on_error(const std::error_code& error)
     exit(static_cast<int>(console_result::failure));
 }
 
-bool validate_argument_range(const int actual,
-    const std::vector<char*>& message, const int minimum, 
-    const int maximum)
+bool validate_argument_range(int actual,
+    const std::vector<char*>& message, int minimum, 
+    int maximum)
 {
     bool valid = ((actual >= minimum) && (maximum == 0 || actual <= maximum));
     if (!valid)

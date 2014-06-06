@@ -35,7 +35,7 @@ ec_secret generate_random_secret()
     return secret;
 }
 
-bool ec_math_parse_args(const int argc, const char* argv[],
+bool ec_math_parse_args(int argc, const char* argv[],
     ec_secret& secret, ec_point& point)
 {
     for (int i = 1; i < argc; ++i)

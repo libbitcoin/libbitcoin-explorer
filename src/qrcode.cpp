@@ -25,7 +25,7 @@
 using namespace sx;
 using namespace sx::extensions;
 
-console_result qrcode::invoke(const int argc, const char* argv[])
+console_result qrcode::invoke(int argc, const char* argv[])
 {
     line_out(std::cerr, "sx: This command is not yet ported from python.");
     return console_result::failure;

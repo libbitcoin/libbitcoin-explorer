@@ -56,7 +56,7 @@ static void send_tx(const std::error_code& ec, channel_ptr node,
     node->send(tx, handle_send);
 }
 
-console_result sendtx_node::invoke(const int argc, const char* argv[])
+console_result sendtx_node::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 4))
         return console_result::failure;

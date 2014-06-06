@@ -73,7 +73,7 @@ static script_type script_from_pretty(const std::string& pretty_script)
     return script_object;
 }
 
-console_result rawscript::invoke(const int argc, const char* argv[])
+console_result rawscript::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2))
         return console_result::failure;

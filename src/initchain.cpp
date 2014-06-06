@@ -31,7 +31,7 @@ using namespace sx::extensions;
 // This is currently tied to the build of the libbitcoin dependency.
 #ifndef LEVELDB_ENABLED
 
-console_result initchain::invoke(const int argc, const char* argv[])
+console_result initchain::invoke(int argc, const char* argv[])
 {
     std::cerr << "initchain: The feature is not supported in this build." 
         << std::endl;
@@ -63,7 +63,7 @@ static void initialize_new_stealth_database(const std::string& filename)
         serial.write_4_bytes(0);
 }
 
-console_result initchain::invoke(const int argc, const char* argv[])
+console_result initchain::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 2, 2))
         return console_result::failure;

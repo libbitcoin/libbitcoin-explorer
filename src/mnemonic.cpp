@@ -28,9 +28,9 @@ using namespace libwallet;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result mnemonic::invoke(const int argc, const char* argv[])
+console_result mnemonic::invoke(int argc, const char* argv[])
 {
-    const int mnemonic_size = 12;
+    int mnemonic_size = 12;
 
     if (!validate_argument_range(argc, example(), 1, mnemonic_size))
         return console_result::failure;

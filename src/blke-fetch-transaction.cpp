@@ -28,7 +28,7 @@
 using namespace sx;
 using namespace sx::extensions;
 
-console_result blke_fetch_transaction::invoke(const int argc, 
+console_result blke_fetch_transaction::invoke(int argc, 
     const char* argv[])
 {
     line_out(std::cerr, "sx: This command is not yet ported from python.");

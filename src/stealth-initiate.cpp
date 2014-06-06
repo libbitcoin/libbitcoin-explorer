@@ -25,7 +25,7 @@ using namespace libwallet;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result stealth_initiate::invoke(const int argc, const char* argv[])
+console_result stealth_initiate::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 4, 4))
         return console_result::failure;
