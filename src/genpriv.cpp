@@ -41,7 +41,6 @@ console_result genpriv::invoke(int argc, const char* argv[])
     }
 
     bool for_change = (argc == 3 && is_true(argv[2]));
-
     deterministic_wallet wallet;
     if (!wallet.set_seed(read_stream(std::cin)))
     {

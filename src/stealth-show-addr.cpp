@@ -37,14 +37,7 @@ console_result stealth_show_addr::invoke(int argc, const char* argv[])
 
     const std::string stealth(argv[1]);
 
-    // TODO: This should be consumed by dispatch.
-    if (is_option(stealth, SX_OPTION_HELP))
-    {
-        example();
-        return console_result::okay;
-    }
-
-    stealth_address address;
+    stealth_address address; 
     if (!address.set_encoded(stealth))
     {
         std::cerr << "sx: Invalid stealth address." << std::endl;
@@ -53,23 +46,23 @@ console_result stealth_show_addr::invoke(int argc, const char* argv[])
 
     // Now display fields.
     std::cout << "Options: ";
-    if (flags_set(address.options, stealth_address::flags::reuse_key))
+    if (are_flags_set(address.options, stealth_address::flags::reuse_key))
         std::cout << "reuse_key";
     else
         std::cout << "none";
+
     std::cout << std::endl;
     std::cout << "Scan pubkey: " << address.scan_pubkey << std::endl;
     std::cout << "Spend pubkeys:" << std::endl;
     for (const auto& pubkey : address.spend_pubkeys)
         std::cout << "  " << pubkey << std::endl;
+
     std::cout << "Number required signatures: "
         << address.number_signatures << std::endl;
 
     // Display prefix.
-    // TODO: provide serialization override on address_prefix.
     // TODO: verify that if the prefix is empty() it serializes to "".
     std::string prefix(serialize(address.prefix, "none"));
-
     std::cout << "Prefix: " << prefix << std::endl;
     return console_result::okay;
 }

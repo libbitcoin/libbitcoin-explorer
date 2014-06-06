@@ -38,6 +38,7 @@ console_result dispatch_invoke(int argc, const char* argv[],
         display_invalid_command(target);
         return console_result::failure;
     }
+
     return command->invoke(argc, argv);
 }
 
@@ -49,6 +50,7 @@ bool dispatch_summary(const std::string& symbol)
         display_invalid_command(symbol);
         return false;
     }
+
     return display_summary(command);
 }
 
@@ -58,6 +60,7 @@ bool dispatch_usage()
     {
         display_usage(sx_command);
     };
+
     return extensions::broadcast(func);
 }
 
@@ -99,11 +102,9 @@ console_result invoke(int argc, const char* argv[])
         }
 
         if (position == last)
-        {
             // sx -c|--config path
             // std::cerr << "Using config file: " << token << std::endl;
             return console_result::okay;
-        }
 
         // next token (skip path)
         // config option can be combined with help|command

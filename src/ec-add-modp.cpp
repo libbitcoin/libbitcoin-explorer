@@ -38,11 +38,13 @@ console_result ec_add_modp::invoke(int argc, const char* argv[])
         std::cerr << "sx: Invalid secret " << argv[1] << std::endl;
         return console_result::failure;
     }
+
     if (!set_ec_secret(secret_b, argv[2]))
     {
         std::cerr << "sx: Invalid secret " << argv[2] << std::endl;
         return console_result::failure;
     }
+
     if (!ec_add(secret_a, secret_b))
     {
         std::cerr << "sx: Error adding numbers." << std::endl;

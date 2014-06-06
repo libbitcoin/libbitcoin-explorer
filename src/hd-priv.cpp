@@ -44,7 +44,7 @@ console_result hd_priv::invoke(int argc, const char* argv[])
 
     // TODO: constrain read_hard_index_args so that the encoded key can be 
     // provided as an argument, and then update documentation.
-    std::string encoded_key = read_stream(std::cin);
+    const auto encoded_key = read_stream(std::cin);
 
     hd_private_key private_key;
     if (!private_key.set_serialized(encoded_key))

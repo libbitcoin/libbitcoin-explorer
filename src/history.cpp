@@ -45,14 +45,15 @@ static std::condition_variable condition;
 static bool json_output = false;
 
 static void history_fetched(const payment_address& payaddr,
-    const std::error_code& ec, const blockchain::history_list& history)
+    const std::error_code& error, const blockchain::history_list& history)
 {
-    if (ec)
+    if (error)
     {
-        std::cerr << "history: Failed to fetch history: "
-            << ec.message() << std::endl;
+        std::cerr << "history: Failed to fetch history: " << error.message() 
+            << std::endl;
         return;
     }
+
     for (const auto& row: history)
     {
         std::cout << "Address: " << payaddr.encoded() << std::endl;
@@ -62,6 +63,7 @@ static void history_fetched(const payment_address& payaddr,
             std::cout << "Pending";
         else
             std::cout << row.output_height;
+
         std::cout << std::endl;
         std::cout << "  value:  " << row.value << std::endl;
         if (row.spend.hash == null_hash)
@@ -77,10 +79,13 @@ static void history_fetched(const payment_address& payaddr,
                 std::cout << "Pending";
             else
                 std::cout << row.spend_height;
+
             std::cout << std::endl;
         }
+
         std::cout << std::endl;
     }
+
     std::lock_guard<std::mutex> lock(mutex);
     BITCOIN_ASSERT(remaining_count != bc::max_int32);
     --remaining_count;
@@ -89,14 +94,15 @@ static void history_fetched(const payment_address& payaddr,
 
 // TODO: generalize json serialization.
 static void json_history_fetched(const payment_address& payaddr,
-    const std::error_code& ec, const blockchain::history_list& history)
+    const std::error_code& error, const blockchain::history_list& history)
 {
-    if (ec)
+    if (error)
     {
         std::cerr << "history: Failed to fetch history: "
-            << ec.message() << std::endl;
+            << error.message() << std::endl;
         return;
     }
+
     bool is_first = true;
     for (const auto& row: history)
     {
@@ -117,6 +123,7 @@ static void json_history_fetched(const payment_address& payaddr,
             std::cout << "\"Pending\"";
         else
             std::cout << row.output_height;
+
         std::cout << "," << std::endl;
         std::cout << "  \"value\":  \"" << row.value << "\"," << std::endl;
         if (row.spend.hash == null_hash)
@@ -133,14 +140,17 @@ static void json_history_fetched(const payment_address& payaddr,
             else
                 std::cout << "\"" << row.spend_height << "\"";
         }
+
         std::cout << "}";
     }
+
     std::lock_guard<std::mutex> lock(mutex);
     BITCOIN_ASSERT(remaining_count != bc::max_int32);
     --remaining_count;
     condition.notify_one();
     if (remaining_count > 0)
         std::cout << ",";
+
     std::cout << std::endl;
 }
 

@@ -35,11 +35,11 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void block_header_fetched(const std::error_code& ec,
+static void block_header_fetched(const std::error_code& error,
     const block_header_type& blk_header)
 {
-    if (ec)
-        std::cerr << "fetch-block-header: " << ec.message() << std::endl;
+    if (error)
+        std::cerr << "fetch-block-header: " << error.message() << std::endl;
     else
     {
         data_chunk raw_blk_header(satoshi_raw_size(blk_header));
@@ -80,8 +80,8 @@ console_result fetch_block_header::invoke(int argc, const char* argv[])
         line_out(std::cerr, "fetch-block-header: Bad index provided.");
         return console_result::failure;
     }
-    poll(fullnode, pool, node_stopped);
 
+    poll(fullnode, pool, node_stopped);
     return console_result::okay;
 }
 

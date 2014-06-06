@@ -62,12 +62,15 @@ static bool load_outpoint(output_point& prevout, const std::string& parameter)
             << std::endl;
         return false;
     }
+
+    // Magic Number?
     const std::string& hex_string = words.front();
     if (hex_string.size() != 64)
     {
         std::cerr << "mktx: Incorrect TXHASH." << std::endl;
         return false;
     }
+
     prevout.hash = decode_hash(hex_string);
     const std::string& index_string = words[1];
     try
@@ -79,6 +82,7 @@ static bool load_outpoint(output_point& prevout, const std::string& parameter)
         std::cerr << "mktx: Bad INDEX provided." << std::endl;
         return false;
     }
+
     return true;
 }
 
@@ -88,10 +92,12 @@ static bool add_input(transaction_type& tx, const std::string& parameter)
     output_point& prevout = input.previous_output;
     if (!load_outpoint(prevout, parameter))
         return false;
+
+    // Magic Number?
     input.sequence = 4294967295;
     tx.inputs.push_back(input);
-    std::cerr << "Added input "
-        << prevout.hash << ":" << prevout.index << std::endl;
+    std::cerr << "Added input " << prevout.hash << ":" << prevout.index 
+        << std::endl;
     return true;
 }
 
@@ -151,6 +157,7 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
             << std::endl;
         return false;
     }
+
     const std::string& output_str = words.front();
     payment_address addr;
     stealth_address stealth;
@@ -168,8 +175,9 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
     }
     else if (stealth.set_encoded(output_str))
     {
-        bool reuse_key = flags_set(stealth.options,
+        bool reuse_key = are_flags_set(stealth.options,
             stealth_address::flags::reuse_key);
+
         // Get our scan and spend pubkeys.
         const ec_point& scan_pubkey = stealth.scan_pubkey;
         BITCOIN_ASSERT_MSG(
@@ -181,24 +189,30 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
         ec_point spend_pubkey = scan_pubkey;
         if (!reuse_key)
             spend_pubkey = stealth.spend_pubkeys.front();
+
         // Do stealth stuff.
         ec_secret ephem_secret = generate_random_secret();
         ec_point addr_pubkey = initiate_stealth(
             ephem_secret, scan_pubkey, spend_pubkey);
+
+        // Magic Number?
         // stealth_metadata
         ec_point ephem_pubkey = secret_to_public_key(ephem_secret);
         data_chunk stealth_metadata{{0x06, 0x00, 0x00, 0x00, 0x00}};
         extend_data(stealth_metadata, ephem_pubkey);
+
         // Add RETURN output.
         transaction_output_type meta_output;
         meta_output.value = 0;
         meta_output.script.push_operation({opcode::return_, data_chunk()});
         meta_output.script.push_operation({opcode::special, stealth_metadata});
         tx.outputs.push_back(meta_output);
+
         // Generate the address.
         payment_address payaddr;
         set_public_key(payaddr, addr_pubkey);
         payto = payaddr.encoded();
+
         // Build output script.
         bool success = build_output_script(output.script, payaddr);
         BITCOIN_ASSERT(success);
@@ -214,6 +228,7 @@ static bool add_output(transaction_type& tx, const std::string& parameter)
             std::cerr << "mktx: Bad address or script '" << output_str << "'." << std::endl;
             return false;
         }
+
         payto = pretty(rawscript);
         output.script = rawscript;
     }
@@ -240,8 +255,10 @@ static bool modify(transaction_type& tx,
 {
     if (is_option(action, SX_OPTION_INPUT))
         return add_input(tx, parameter);
+
     if (is_option(action, SX_OPTION_OUTPUT))
         return add_output(tx, parameter);
+
     if (is_option(action, SX_OPTION_LOCKTIME))
         return change_locktime(tx, parameter);
 
@@ -254,19 +271,22 @@ console_result mktx::invoke(int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 2))
         return console_result::failure;
 
-    const std::string filename(get_filename(argc, argv));
+    // filename is first arg
+    int current_arg = 2;
 
-    // Now create transaction.
+    // Magic Numbers?
     transaction_type tx;
     tx.version = 1;
     tx.locktime = 0;
-    int current_arg = 2;
+
+    // Create transaction.
     while (two_args_remain(current_arg, argc) && current_arg != argc)
     {
-        const std::string action = argv[current_arg],
-            parameter = argv[current_arg + 1];
+        const std::string action(argv[current_arg]);
+        const std::string parameter(argv[current_arg + 1]);
         if (!modify(tx, action, parameter))
             return console_result::failure;
+
         current_arg += 2;
         BITCOIN_ASSERT(current_arg <= argc);
     }
@@ -274,6 +294,8 @@ console_result mktx::invoke(int argc, const char* argv[])
     // Now serialize transaction.
     data_chunk raw_tx(satoshi_raw_size(tx));
     satoshi_save(tx, raw_tx.begin());
+
+    const std::string filename(get_filename(argc, argv));
     if (filename == SX_STDIN_PATH_SENTINEL)
         std::cout << raw_tx << std::endl;
     else

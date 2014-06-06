@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma warning(push)
-//Suppressing msvc warnings from boost that are heard to deal with
-//because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
-//without testing it first. 
+
+// Suppressing msvc warnings from boost that are heard to deal with
+// because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
+// without first testing it.
+#pragma warning(push) 
 #pragma warning(disable : 4996)
 #include <iomanip>
 #include <iostream>
@@ -35,13 +36,13 @@
 
 namespace sx {
 
-const char* get_arg(int argc, const char* argv[],
-    const std::string& fallback, int index)
+std::string get_arg(int argc, const char* argv[], const std::string& fallback,
+    int index)
 {
     return argc > index ? argv[index] : fallback.c_str();
 }
 
-const char* get_arg_or_stream(int argc, const char* argv[], 
+std::string get_arg_or_stream(int argc, const char* argv[],
     std::istream& stream, int index, bool trim)
 {
     return argc > index ? argv[index] : read_stream(stream, trim).c_str();
@@ -59,7 +60,7 @@ size_t get_args(int argc, const char* argv[],
     return arguments.size();
 }
 
-const char* get_filename(int argc, const char* argv[])
+std::string get_filename(int argc, const char* argv[])
 {
     return argc > 0 ? argv[0] : SX_STDIN_PATH_SENTINEL;
 }
@@ -142,11 +143,6 @@ void line_out(std::ostream& stream, const std::string& line, size_t offset,
     stream << inset << std::string(padding, ' ') << line << std::endl;
 }
 
-void line_out(std::ostream& stream, std::string& line, size_t offset,
-    const std::string& inset)
-{
-    return line_out(stream, line.c_str(), offset, inset);
-}
 
 void line_out(std::ostream& stream, const std::vector<char*>& lines, 
     size_t offset, const std::string& inset)
@@ -169,6 +165,7 @@ std::string read_stream(std::istream& stream, bool trim)
     std::string result(first, last);
     if (trim)
         boost::algorithm::trim(result);
+
     return result;
 }
 
@@ -194,6 +191,7 @@ void terminate_process_on_error(const std::error_code& error)
 {
     if (!error)
         return;
+
     bc::log_fatal() << error.message();
     exit(static_cast<int>(console_result::failure));
 }
@@ -204,6 +202,7 @@ bool validate_argument_range(int actual, const std::vector<char*>& message,
     bool valid = ((actual >= minimum) && (maximum == 0 || actual <= maximum));
     if (!valid)
         line_out(std::cerr, message);
+
     return valid;
 }
 

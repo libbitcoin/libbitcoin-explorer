@@ -41,9 +41,8 @@ console_result genpub::invoke(int argc, const char* argv[])
     }
 
     auto const for_change = (argc > 2 && is_true(argv[2]));
-
     size_t stop_limit = key_number;
-    if (argc > 3&&!parse(stop_limit, argv[3]))
+    if (argc > 3 && !parse(stop_limit, argv[3]))
     {
         std::cerr << "genaddr: Bad RANGESTOP provided" << std::endl;
         return console_result::failure;
@@ -56,7 +55,7 @@ console_result genpub::invoke(int argc, const char* argv[])
     }
 
     deterministic_wallet wallet;
-    std::string seed = read_stream(std::cin);
+    const auto seed = read_stream(std::cin);
     if (!wallet.set_seed(seed))
     {
         data_chunk mpk = decode_hex(seed);

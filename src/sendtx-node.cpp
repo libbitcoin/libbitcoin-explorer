@@ -36,18 +36,18 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void send_tx(const std::error_code& ec, channel_ptr node, 
+static void send_tx(const std::error_code& error, channel_ptr node,
     transaction_type& tx)
 {
     // There must be a better way.
-    terminate_process_on_error(ec);
+    terminate_process_on_error(error);
 
     std::cout << "sendtx: Sending " << hash_transaction(tx) << std::endl;
     auto handle_send =
-        [node](const std::error_code& ec)
+        [node](const std::error_code& error)
         {
-            if (ec)
-                log_warning() << "Send failed: " << ec.message();
+            if (error)
+                log_warning() << "Send failed: " << error.message();
             else
                 std::cout << "sendtx: Sent " << time(nullptr) << std::endl;
 
@@ -89,8 +89,11 @@ console_result sendtx_node::invoke(int argc, const char* argv[])
     network net(pool);
     connect(shake, net, hostname, port, 
         std::bind(send_tx, _1, _2, std::ref(tx)));
+
+    // Two full seconds.
     while (!node_stopped)
         sleep_ms(2000);
+
     pool.stop();
     pool.join();
 

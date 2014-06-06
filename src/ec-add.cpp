@@ -38,6 +38,7 @@ console_result ec_add::invoke(int argc, const char* argv[])
         std::cerr << "sx: Invalid point " << argv[1] << std::endl;
         return console_result::failure;
     }
+
     if (!set_ec_point(point_b, argv[2]))
     {
         std::cerr << "sx: Invalid point " << argv[2] << std::endl;

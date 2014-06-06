@@ -32,15 +32,16 @@ using std::placeholders::_1;
 using std::placeholders::_2;
 
 // NOTE: this wasn't called.
-//static void history_fetched(const std::error_code& ec,
+//static void history_fetched(const std::error_code& error,
 //    const blockchain::history_list& history)
 //{
-//    if (ec)
+//    if (error)
 //    {
 //        std::cerr << "history: Failed to fetch history: "
-//            << ec.message() << std::endl;
+//            << error.message() << std::endl;
 //        return;
 //    }
+//
 //    for (const auto& row: history)
 //    {
 //        int64_t value = row.value;
@@ -56,15 +57,13 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void subscribed(const std::error_code& ec,
+static void subscribed(const std::error_code& error,
     const obelisk::worker_uuid& worker)
 {
-    if (ec)
-        std::cerr << "Error: " << ec.message() << std::endl;
+    if (error)
+        std::cerr<<"Error: "<<error.message()<<std::endl;
     else
         std::cout << "Subscribed." << std::endl;
-        //fullnode.address.fetch_history(payaddr,
-        //    std::bind(history_fetched, _1, _2), 0, worker);
 
     // NOTE: added this here, otherwise we have a halting problem, test.
     node_stopped = true;
@@ -94,7 +93,6 @@ console_result monitor::invoke(int argc, const char* argv[])
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.address.subscribe(prefix, new_update, subscribed);
     poll(fullnode, pool, node_stopped);
-
     return console_result::okay;
 }
 

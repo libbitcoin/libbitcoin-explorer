@@ -34,7 +34,6 @@ console_result stealth_initiate::invoke(int argc, const char* argv[])
     ec_point scan_pubkey = decode_hex(argv[2]);
     ec_point spend_pubkey = decode_hex(argv[3]);
     ec_point pubkey = initiate_stealth(ephem_secret, scan_pubkey, spend_pubkey);
-
     std::cout << pubkey << std::endl;
     return console_result::okay;
 }

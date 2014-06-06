@@ -35,6 +35,7 @@ console_result unwrap::invoke(int argc, const char* argv[])
     std::string hex_str(get_arg_or_stream(argc, argv, std::cin));
     data_chunk bytes = decode_hex(hex_str);
 
+    // Magic Number?
     if (bytes.size() < 5)
     {
         std::cerr << "Error: Must be at least five bytes" << std::endl;

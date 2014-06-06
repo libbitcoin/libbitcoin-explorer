@@ -37,10 +37,11 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void transaction_fetched(const std::error_code& ec, const transaction_type& tx)
+static void transaction_fetched(const std::error_code& error, 
+    const transaction_type& tx)
 {
-    if (ec)
-        std::cerr << "fetch-transaction: " << ec.message() << std::endl;
+    if (error)
+        std::cerr << "fetch-transaction: " << error.message() << std::endl;
     else
     {
         data_chunk raw_tx(satoshi_raw_size(tx));
@@ -77,7 +78,6 @@ console_result fetch_transaction::invoke(int argc,
         std::bind(transaction_fetched_wrapper, _1, _2, tx_hash, 
             std::ref(fullnode)));
     poll(fullnode, pool, node_stopped);
-
     return console_result::okay;
 }
 

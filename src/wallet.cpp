@@ -73,6 +73,7 @@ public:
     string_buffer console_output;
     std::string user_input;
 
+    // Magic Number?
     wallet_display() : console_output(20) {}
 
     void draw();
@@ -81,6 +82,7 @@ public:
     {
         balance_ += balance;
     }
+
     void set_receive_address(const std::string& addr)
     {
         receive_address_ = addr;
@@ -90,6 +92,7 @@ public:
     {
         history_.clear();
     }
+
     void add(wallet_history_entry&& entry)
     {
         history_.push_back(std::move(entry));
@@ -104,17 +107,24 @@ public:
     {
         if (history_.empty())
             return;
+
         ++selected_entry_;
         BITCOIN_ASSERT(selected_entry_ <= (int)history_.size());
+
+        // Magic Number?
         if (selected_entry_ == 21 || selected_entry_ == history_.size())
             selected_entry_ = 0;
     }
+
     void select_previous()
     {
         if (history_.empty())
             return;
+
+        // Magic Number?
         if (selected_entry_ == 0)
             selected_entry_ = min(21, (int)history_.size());
+
         --selected_entry_;
     }
 
@@ -128,6 +138,7 @@ public:
     {
         return selected_entry_ != -1;
     }
+
     const wallet_history_entry& selected_entry()
     {
         BITCOIN_ASSERT(selected_entry_ < (int)history_.size());
@@ -153,6 +164,7 @@ struct address_cycler
             detwallet.generate_public_key(sequence, change));
         return addr;
     }
+
     const bc::payment_address address()
     {
         return address(n, false);
@@ -170,7 +182,10 @@ namespace std
         size_t operator()(const bc::output_point& outpoint) const
         {
             std::string raw;
+
+            // Magic Number?
             raw.resize(hash_size + 4);
+
             auto serial = bc::make_serializer(raw.begin());
             serial.write_hash(outpoint.hash);
             serial.write_4_bytes(outpoint.index);
@@ -194,10 +209,12 @@ public:
         ++addr_cycler_.n;
         display_.set_receive_address(addr_cycler_.address().encoded());
     }
+
     void previous_address()
     {
         if (addr_cycler_.n == 0)
             return;
+
         --addr_cycler_.n;
         display_.set_receive_address(addr_cycler_.address().encoded());
     }
@@ -206,6 +223,7 @@ public:
     {
         our_addrs_.insert(addr);
     }
+
     bool is_ours(const bc::payment_address& addr)
     {
         return our_addrs_.find(addr) != our_addrs_.end();
@@ -244,6 +262,7 @@ public:
     {
         privkeys_[addr] = secret;
     }
+
     const bc::secret_parameter lookup(const bc::payment_address& addr)
     {
         return privkeys_[addr];
@@ -268,6 +287,7 @@ private:
     keys_map privkeys_;
 };
 
+// Magic Numbers?
 void wallet_display::draw()
 {
     int row, col;
@@ -280,6 +300,7 @@ void wallet_display::draw()
         mvaddstr(static_cast<int>(30 + i), 0, clear_line.c_str());
         mvaddstr(static_cast<int>(30 + i), 0, console_output[i].c_str());
     }
+
     std::string render_string(col - 2, ' ');
     attron(A_REVERSE);
     mvaddstr(50, 0, "> ");
@@ -289,8 +310,8 @@ void wallet_display::draw()
 
     set_cursor(50, user_input.size() + 2);
     int y = 0;
-    std::string balance_line =
-        "Balance: " + bc::satoshi_to_btc(balance_) + " BTC";
+    std::string balance_line = "Balance: " + bc::satoshi_to_btc(balance_) +
+        " BTC";
     mvaddstr(y++, 0, balance_line.c_str());
     std::string receive_line = "Receive: " + receive_address_;
     mvaddstr(y++, 0, receive_line.c_str());
@@ -298,6 +319,7 @@ void wallet_display::draw()
     mvaddstr(y++, 0, "History");
     mvhline(y++, 0, ACS_HLINE, 40);
     size_t offset = 5;
+
     for (size_t i = 0; i < history_.size(); ++i)
     {
         // Bail...
@@ -306,50 +328,47 @@ void wallet_display::draw()
             mvaddstr(static_cast<int>(offset + i), 0, "...");
             break;
         }
+
         const auto& entry = history_[i];
         std::string entry_line;
-        if (entry.is_credit)
-            entry_line = " To ";
-        else
-            entry_line = " From ";
-        entry_line += std::string(
-            entry.address.begin(), entry.address.begin() + 7) + "...";
+        entry_line = entry.is_credit ? " To " : " From ";
+        entry_line += std::string(entry.address.begin(),
+            entry.address.begin() + 7) + "...";
         std::string amount_str = "[";
-        if (entry.is_credit)
-            amount_str += "+";
-        else
-            amount_str += "-";
+        amount_str += entry.is_credit ? "+" : "-";
         amount_str += bc::satoshi_to_btc(entry.amount);
         amount_str += " BTC] ";
-        entry_line += std::string(
-            40 - entry_line.size() - amount_str.size(), ' ');
+        entry_line += std::string( 40 - entry_line.size() - amount_str.size(),
+            ' ');
         entry_line += amount_str;
         if (i == selected_entry_)
             attron(A_REVERSE);
+
         mvaddstr(static_cast<int>(offset + i), 0, entry_line.c_str());
         if (i == selected_entry_)
             attroff(A_REVERSE);
     }
+
     move(cursor_y_, cursor_x_);
     refresh();
 }
 
-static void history_fetched(const std::error_code& ec,
-    const bc::blockchain::history_list& history,
-    wallet_control& control, wallet_display& display,
-    const std::string& btc_address)
+static void history_fetched(const std::error_code& error,
+    const bc::blockchain::history_list& history, wallet_control& control,
+    wallet_display& display, const std::string& btc_address)
 {
-    if (ec)
+    if (error)
     {
         //std::cerr << "history: Failed to fetch history: "
-        //    << ec.message() << std::endl;
+        //    << error.message() << std::endl;
         return;
     }
+
     uint64_t balance = 0;
     for (const auto& row: history)
     {
-        display.add({true, row.output, row.output_height,
-            btc_address, row.value});
+        display.add({true, row.output, row.output_height, btc_address, 
+            row.value});
         if (row.spend.hash == bc::null_hash)
         {
             bc::payment_address addr;
@@ -358,26 +377,28 @@ static void history_fetched(const std::error_code& ec,
             balance += row.value;
             continue;
         }
-        display.add({false, row.spend, row.spend_height,
-            btc_address, row.value});
+
+        display.add({false, row.spend, row.spend_height, btc_address, 
+            row.value});
         //int64_t value = row.value;
         //std::cout << row.output.hash << " " << value << std::endl;
         //if (row.spend.hash != null_hash)
         //    std::cout << row.spend.hash << " " << -value << std::endl;
     }
+
     display.add_balance(balance);
     display.draw();
 }
 
-static void subscribed(const std::error_code& ec, const obelisk::worker_uuid& worker,
-    obelisk::fullnode_interface& fullnode,
+static void subscribed(const std::error_code& error, 
+    const obelisk::worker_uuid& worker, obelisk::fullnode_interface& fullnode,
     wallet_control& control, wallet_display& display,
     const bc::payment_address& payaddr)
 {
     //std::cout << "Worker: " << worker << std::endl;
     fullnode.address.fetch_history(payaddr,
-        std::bind(history_fetched, _1, _2,
-            std::ref(control), std::ref(display), payaddr.encoded()),
+        std::bind(history_fetched, _1, _2, std::ref(control),
+            std::ref(display), payaddr.encoded()),
         0, worker);
 }
 
@@ -412,8 +433,8 @@ static script_type build_script_hash_script(const short_hash& script_hash)
     return result;
 }
 
-static bool build_output_script(
-    script_type& out_script, const payment_address& payaddr)
+static bool build_output_script(script_type& out_script, 
+    const payment_address& payaddr)
 {
     switch (payaddr.version())
     {
@@ -425,6 +446,7 @@ static bool build_output_script(
             out_script = build_script_hash_script(payaddr.hash());
             return true;
     }
+
     return false;
 }
 
@@ -436,16 +458,20 @@ static bool make_signature(transaction_type& tx, size_t input_index,
     const data_chunk public_key = key.public_key();
     if (public_key.empty())
         return false;
+
     hash_digest tx_hash = script_type::generate_signature_hash(
         tx, static_cast<uint32_t>(input_index), script_code, 1);
     if (tx_hash == null_hash)
         return false;
-    data_chunk signature = key.sign(tx_hash);
-    signature.push_back(0x01);
+
     //std::cout << signature << std::endl;
     script_type& script = tx.inputs[input_index].script;
+
     // signature
+    data_chunk signature = key.sign(tx_hash);
+    signature.push_back(0x01);
     script.push_operation({opcode::special, signature});
+
     // public key
     script.push_operation({opcode::special, public_key});
     return true;
@@ -459,12 +485,14 @@ static bc::hash_digest send(wallet_control& control,
         console_output.push_back("send: Wrong number of arguments.");
         return null_hash;
     }
+
     bc::payment_address dest_addr;
     if (!dest_addr.set_encoded(strs[1]))
     {
         console_output.push_back("send: Invalid address.");
         return null_hash;
     }
+
     uint64_t amount;
     try
     {
@@ -475,6 +503,7 @@ static bc::hash_digest send(wallet_control& control,
         console_output.push_back("send: Invalid amount.");
         return null_hash;
     }
+
     // Fee of 0.0001 BTC = 10000 Sat
     uint64_t fee = 10000;
     if (strs.size() == 4)
@@ -489,6 +518,7 @@ static bc::hash_digest send(wallet_control& control,
             return null_hash;
         }
     }
+
     console_output.push_back("Sending...");
     libwallet::select_outputs_result unspent =
         control.find_unspent(amount + fee);
@@ -497,10 +527,12 @@ static bc::hash_digest send(wallet_control& control,
         console_output.push_back("send: Not enough funds.");
         return null_hash;
     }
+
     // construct transaction now.
     transaction_type tx;
     tx.version = 1;
     tx.locktime = 0;
+
     // start with outputs.
     // dest addr output first.
     transaction_output_type dest_output;
@@ -510,15 +542,18 @@ static bc::hash_digest send(wallet_control& control,
         console_output.push_back("send: Unsupported address type.");
         return null_hash;
     }
+
     tx.outputs.push_back(dest_output);
+
     // add change output also.
     transaction_output_type change_output;
     change_output.value = unspent.change;
     bc::payment_address change_addr = control.change_address();
-    bool change_script_success =
-        build_output_script(change_output.script, change_addr);
+    bool change_script_success = build_output_script(change_output.script,
+        change_addr);
     BITCOIN_ASSERT(change_script_success);
     tx.outputs.push_back(change_output);
+
     // notice we have left the fee out.
     // now do inputs.
     for (const bc::output_point& prevout: unspent.points)
@@ -528,6 +563,7 @@ static bc::hash_digest send(wallet_control& control,
         input.sequence = 4294967295;
         tx.inputs.push_back(input);
     }
+
     // now sign inputs
     for (size_t i = 0; i < tx.inputs.size(); ++i)
     {
@@ -545,6 +581,7 @@ static bc::hash_digest send(wallet_control& control,
         BITCOIN_ASSERT(prevout_script_code_success);
         bool sign_success = make_signature(tx, i, key, prevout_script_code);
     }
+
     // holy shit! now lets broadcast the tx!
     broadcast_mutex.lock();
     tx_broadcast_queue.push_back(tx);
@@ -576,6 +613,7 @@ static void showtx(const std::error_code& ec, const transaction_type& tx,
         if (extract(addr, input.script))
             OUTPUT("  address: " << addr.encoded());
     }
+
     for (const transaction_output_type& output: tx.outputs)
     {
         OUTPUT("Output:");
@@ -585,6 +623,7 @@ static void showtx(const std::error_code& ec, const transaction_type& tx,
         if (extract(addr, output.script))
             OUTPUT("  address: " << addr.encoded());
     }
+
     display.draw();
 }
 
@@ -621,10 +660,10 @@ static void run_command(std::string user_input, string_buffer& console_output,
     {
         if (!display.is_selected())
         {
-            console_output.push_back(
-                "info: Nothing selected.");
+            console_output.push_back("info: Nothing selected.");
             return;
         }
+
         const wallet_history_entry entry = display.selected_entry();
         console_output.push_back(
             std::string("info: ") +
@@ -638,8 +677,7 @@ static void run_command(std::string user_input, string_buffer& console_output,
     else if (cmd == "quit" || cmd == "q")
         node_stopped = true;
     else
-        console_output.push_back(
-            std::string("Unknown command: ") + cmd);
+        console_output.push_back(std::string("Unknown command: ") + cmd);
 }
 
 static void init_curses()
@@ -651,9 +689,9 @@ static void init_curses()
     keypad(stdscr, TRUE);
 }
 
-static void handle_start(const std::error_code& ec)
+static void handle_start(const std::error_code& error)
 {
-    if (ec)
+    if (error)
     {
         mvaddstr(0, 0, "ERROR WITH BROADCASTING SUBSYSTEM!!");
         refresh();
@@ -665,9 +703,11 @@ static void output_to_file(std::ofstream& file, bc::log_level level,
 {
     if (body.empty())
         return;
+
     file << bc::level_repr(level);
     if (!domain.empty())
         file << " [" << domain << "]";
+
     file << ": " << body << std::endl;
 }
 
@@ -686,19 +726,24 @@ static void broadcast_subsystem()
     log_fatal().set_output_function(
         std::bind(output_to_file, std::ref(outfile), _1, _2, _3));
     threadpool pool(4);
+
     // Create dependencies for our protocol object.
     hosts hst(pool);
     handshake hs(pool);
     network net(pool);
+
     // protocol service.
     protocol prot(pool, hst, hs, net);
     prot.set_max_outbound(4);
+
     // Perform node discovery if needed and then creating connections.
     prot.start(handle_start);
+
     // wait
     while (!node_stopped)
     {
         sleep_ms(200);
+
         // if any new shit then broadcast it.
         broadcast_mutex.lock();
         if (tx_broadcast_queue.empty())
@@ -706,15 +751,17 @@ static void broadcast_subsystem()
             broadcast_mutex.unlock();
             continue;
         }
+
         transaction_type tx = tx_broadcast_queue.back();
         tx_broadcast_queue.pop_back();
         broadcast_mutex.unlock();
         const auto ignore_send = [](const std::error_code&, size_t) {};
         prot.broadcast(tx, ignore_send);
     }
+
     const auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
-    // Safely close down.
+
     pool.stop();
     pool.join();
 }
@@ -740,8 +787,8 @@ console_result wallet::invoke(int argc, const char* argv[])
     wallet_display display;
     address_cycler cycler;
     cycler.detwallet = detwallet;
-    BITCOIN_ASSERT(
-        cycler.detwallet.master_public_key() == detwallet.master_public_key());
+    BITCOIN_ASSERT(cycler.detwallet.master_public_key() == 
+        detwallet.master_public_key());
     wallet_control control(display, cycler);
     // test data
     //display.add({false, bc::output_point{bc::null_hash, 0}, 0,
@@ -782,6 +829,7 @@ console_result wallet::invoke(int argc, const char* argv[])
                 std::ref(fullnode), std::ref(control), std::ref(display),
                 payaddr));
     }
+
     std::thread thr([&fullnode]()
         {
             while (!node_stopped)
@@ -794,6 +842,7 @@ console_result wallet::invoke(int argc, const char* argv[])
     string_buffer& console_output = display.console_output;
     std::string& user_input = display.user_input;
     console_output.push_back("Type 'help' to get started.");
+
     while (!node_stopped)
     {
         display.draw();
@@ -820,7 +869,7 @@ console_result wallet::invoke(int argc, const char* argv[])
                 break;
             case KEY_ENTER:
             case '\n':
-                // submit command
+                /* submit command */
                 run_command(user_input, console_output,
                     control, display, detwallet, fullnode);
                 user_input.clear();
@@ -830,6 +879,7 @@ console_result wallet::invoke(int argc, const char* argv[])
                 break;
         }
     }
+
     node_stopped = true;
     broadcaster.join();
     thr.join();

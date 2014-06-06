@@ -33,7 +33,6 @@ static bool get_compression(int argc, const char* argv[],
     key_compression& is_compressed)
 {
     is_compressed = key_compression::unspecified;
-
     if (argc > 1)
     {
         std::string arg(argv[1]);
@@ -68,7 +67,7 @@ console_result pubkey::invoke(int argc, const char* argv[])
     }
 
     // TODO: allow for reading from args.
-    std::string input(read_stream(std::cin));
+    auto input = read_stream(std::cin);
 
     elliptic_curve_key key;
     if (!read_private_key(key, input, is_compressed))
@@ -80,12 +79,14 @@ console_result pubkey::invoke(int argc, const char* argv[])
             std::cerr << "Invalid private or public key." << std::endl;
             return console_result::failure;
         }
+
         // OK, it's a public key.
         if (!key.set_public_key(pubkey))
         {
             std::cerr << "Invalid public key." << std::endl;
             return console_result::failure;
         }
+
         key.set_compressed(is_compressed == key_compression::on);
     }
 

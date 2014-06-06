@@ -30,14 +30,19 @@ using std::placeholders::_1;
 using std::placeholders::_2;
 using std::placeholders::_3;
 
+// Needed for the C callback capturing the signals.
+static bool stopped = false;
+
 static void output_to_file(std::ofstream& file, log_level level,
     const std::string& domain, const std::string& body)
 {
     if (body.empty())
         return;
+
     file << level_repr(level);
     if (!domain.empty())
         file << " [" << domain << "]";
+
     file << ": " << body << std::endl;
 }
 
@@ -46,16 +51,15 @@ static void output_cerr_and_file(std::ofstream& file, log_level level,
 {
     if (body.empty())
         return;
+
     std::ostringstream output;
     output << level_repr(level);
     if (!domain.empty())
         output << " [" << domain << "]";
+
     output << ": " << body;
     std::cerr << output.str() << std::endl;
 }
-
-// Needed for the C callback capturing the signals.
-static bool stopped = false;
 
 static void signal_handler(int sig)
 {
@@ -64,41 +68,40 @@ static void signal_handler(int sig)
 }
 
 // Started protocol. Node discovery complete.
-static void handle_start(const std::error_code& ec)
+static void handle_start(const std::error_code& error)
 {
-    terminate_process_on_error(ec);
+    terminate_process_on_error(error);
     log_debug() << "Started.";
 }
 
 // After number of connections is fetched, this completion handler is called
 // and the number of connections is displayed.
-static void check_connection_count(
-    const std::error_code& ec, size_t connection_count, size_t node_count)
+static void check_connection_count(const std::error_code& error, 
+    size_t connection_count, size_t node_count)
 {
-    terminate_process_on_error(ec);
+    terminate_process_on_error(error);
     log_debug() << connection_count << " CONNECTIONS";
     if (connection_count >= node_count)
         stopped = true;
 }
 
 // Send tx to another Bitcoin node.
-static void send_tx(const std::error_code& ec, channel_ptr node,
+static void send_tx(const std::error_code& error, channel_ptr node, 
     protocol& prot, transaction_type& tx)
 {
-    terminate_process_on_error(ec);
+    terminate_process_on_error(error);
     std::cout << "sendtx-p2p: Sending " << hash_transaction(tx) << std::endl;
     auto handle_send =
-        [](const std::error_code& ec)
+        [](const std::error_code& error)
         {
-            if (ec)
-                log_warning() << "Send failed: " << ec.message();
+            if (error)
+                log_warning() << "Send failed: " << error.message();
             else
-                std::cout << "sendtx-p2p: Sent "
-                    << time(nullptr) << std::endl;
+                std::cout << "sendtx-p2p: Sent " << time(nullptr) << std::endl;
         };
     node->send(tx, handle_send);
-    prot.subscribe_channel(
-        std::bind(send_tx, _1, _2, std::ref(prot), std::ref(tx)));
+    prot.subscribe_channel(std::bind(send_tx, _1, _2, std::ref(prot), 
+        std::ref(tx)));
 }
 
 console_result sendtx_p2p::invoke(int argc, const char* argv[])
@@ -137,31 +140,36 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
         std::bind(output_cerr_and_file, std::ref(errfile), _1, _2, _3));
 
     threadpool pool(4);
+
     // Create dependencies for our protocol object.
     hosts hst(pool);
     handshake hs(pool);
     network net(pool);
+
     // protocol service.
     protocol prot(pool, hst, hs, net);
     prot.set_max_outbound(node_count * 6);
+
     // Perform node discovery if needed and then creating connections.
     prot.start(handle_start);
     prot.subscribe_channel(
         std::bind(send_tx, _1, _2, std::ref(prot), std::ref(tx)));
+
     // Catch C signals for stopping the program.
     signal(SIGABRT, signal_handler);
     signal(SIGTERM, signal_handler);
     signal(SIGINT, signal_handler);
-    // Check the connection count every 5 seconds.
+
+    // Check the connection count every 2 seconds.
     while (!stopped)
     {
         prot.fetch_connection_count(
             std::bind(check_connection_count, _1, _2, node_count));
         sleep_ms(2000);
     }
+
     const auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
-    // Safely close down.
     pool.stop();
     pool.join();
     return console_result::okay;

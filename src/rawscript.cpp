@@ -29,8 +29,11 @@ using namespace sx::extensions;
 static operation create_data_operation(data_chunk& data)
 {
     BITCOIN_ASSERT(data.size() < std::numeric_limits<uint32_t>::max());
+
     operation op;
     op.data = data;
+
+    // Magic Number?
     if (data.size() <= 75)
         op.code = opcode::special;
     else if (data.size() < std::numeric_limits<uint8_t>::max())
@@ -39,6 +42,7 @@ static operation create_data_operation(data_chunk& data)
         op.code = opcode::pushdata2;
     else if (data.size() < std::numeric_limits<uint32_t>::max())
         op.code = opcode::pushdata4;
+
     return op;
 }
 
@@ -56,20 +60,24 @@ static script_type script_from_pretty(const std::string& pretty_script)
             std::string encoded_hex;
             while ((splitter >> token) && token != "]")
                 encoded_hex += token;
+
             data_chunk data = decode_hex(encoded_hex);
             if (token != "]")
             {
                 log_warning() << "Premature end of script.";
                 return script_type();
             }
+
             op = create_data_operation(data);
         }
         else
         {
             op.code = string_to_opcode(token);
         }
+
         script_object.push_operation(op);
     }
+
     return script_object;
 }
 
@@ -80,10 +88,8 @@ console_result rawscript::invoke(int argc, const char* argv[])
 
     std::vector<std::string> words;
     get_args(argc, argv, words);
-
     std::string sentence;
     join(words, sentence);
-
     const auto parsed_script = script_from_pretty(sentence);
     std::cout << save_script(parsed_script) << std::endl;
     return console_result::okay;

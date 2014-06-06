@@ -33,7 +33,6 @@ console_result sha256::invoke(int argc, const char* argv[])
 
     const std::string arg(get_arg_or_stream(argc, argv, std::cin));
     const data_chunk data = decode_hex(arg);
-
     if (data.empty())
     {
         std::cerr << "sx: Non-hex input data." << std::endl;

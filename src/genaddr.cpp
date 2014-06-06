@@ -41,9 +41,8 @@ console_result genaddr::invoke(int argc, const char* argv[])
     }
 
     bool for_change = (argc == 3 && is_true(argv[2]));
-
     deterministic_wallet wallet;
-    std::string seed = read_stream(std::cin);
+    const auto seed = read_stream(std::cin);
     if (!wallet.set_seed(seed))
     {
         data_chunk mpk = decode_hex(seed);

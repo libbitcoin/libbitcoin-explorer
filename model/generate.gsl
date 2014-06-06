@@ -154,7 +154,7 @@ namespace extensions {
 .   if first()
 
 /**
- * Various localizable strings used by sx $(symbol:).
+ * Various localizable strings.
  */
 .   endif
 #define $(SYMBOL:c) \\

@@ -32,7 +32,6 @@ console_result showscript::invoke(int argc, const char* argv[])
         return console_result::failure;
 
     const auto raw_script = decode_hex(read_stream(std::cin));
-
     script_type script;
     try
     {

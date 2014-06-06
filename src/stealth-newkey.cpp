@@ -44,7 +44,6 @@ console_result stealth_newkey::invoke(int argc, const char* argv[])
     std::cout << "Stealth address: " << addr.encoded() << std::endl;
     std::cout << "Scan secret: " << scan_secret << std::endl;
     std::cout << "Spend secret: " << spend_secret << std::endl;
-
     return console_result::okay;
 }
 

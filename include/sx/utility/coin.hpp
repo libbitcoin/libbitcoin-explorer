@@ -64,6 +64,7 @@ bool load_satoshi_item(TItem& item, const std::string& filename,
         std::ifstream infile(filename, std::ifstream::binary);
         if (!infile)
             return false;
+
         contents << infile.rdbuf();
     }
     auto raw_tx = bc::decode_hex(contents.str());

@@ -65,7 +65,7 @@ console_result hd_pub::invoke(int argc, const char* argv[])
 
     // TODO: constrain read_hard_index_args so that the encoded key can be 
     // provided as an argument, and then update documentation.
-    std::string encoded_key(read_stream(std::cin));
+    const auto encoded_key = read_stream(std::cin);
     
     hd_public_key public_key;
     hd_private_key private_key;
@@ -74,6 +74,7 @@ console_result hd_pub::invoke(int argc, const char* argv[])
     // First try loading private key and otherwise the public key.
     if (private_key.set_serialized(encoded_key))
         public_key = private_key;
+
     else if (!public_key.set_serialized(encoded_key))
     {
         std::cerr << "sx: Error reading key." << std::endl;

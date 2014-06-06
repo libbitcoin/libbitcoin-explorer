@@ -26,7 +26,7 @@
 #include <sx/command.hpp>
 #include <sx/generated.hpp>
 #ifdef HAVE_OBELISK
-#include <sx/obelisk.hpp>
+    #include <sx/obelisk.hpp>
 #endif
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>

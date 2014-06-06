@@ -35,11 +35,11 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void transaction_index_fetched(const std::error_code& ec, size_t height,
-    size_t index)
+static void transaction_index_fetched(const std::error_code& error, 
+    size_t height, size_t index)
 {
-    if (ec)
-        std::cerr << "fetch-transaction: " << ec.message() << std::endl;
+    if (error)
+        std::cerr << "fetch-transaction: " << error.message() << std::endl;
     else
     {
         std::cout << "Height: " << height << std::endl;
@@ -62,7 +62,6 @@ console_result fetch_transaction_index::invoke(int argc,
     fullnode.blockchain.fetch_transaction_index(tx_hash, 
         transaction_index_fetched);
     poll(fullnode, pool, node_stopped);
-
     return console_result::okay;
 }
 

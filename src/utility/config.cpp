@@ -74,6 +74,7 @@ bool read_config(libconfig::Config& config)
         path = home_directory();
         if (path.empty())
             return false;
+
         path = path / WIDE(SX_DEFAULT_CLIENT_CERTIFICATE);
     }
 

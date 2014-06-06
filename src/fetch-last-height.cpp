@@ -35,10 +35,10 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void last_height_fetched(const std::error_code& ec, size_t height)
+static void last_height_fetched(const std::error_code& error, size_t height)
 {
-    if (ec)
-        std::cerr << "fetch-last-height: " << ec.message() << std::endl;
+    if (error)
+        std::cerr << "fetch-last-height: " << error.message() << std::endl;
     else
         std::cout << height << std::endl;
 
@@ -53,7 +53,6 @@ console_result fetch_last_height::invoke(int argc, const char* argv[])
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.blockchain.fetch_last_height(last_height_fetched);
     poll(fullnode, pool, node_stopped);
-
     return console_result::okay;
 }
 

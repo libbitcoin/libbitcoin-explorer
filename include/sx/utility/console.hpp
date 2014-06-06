@@ -20,10 +20,10 @@
 #ifndef SX_CONSOLE_HPP
 #define SX_CONSOLE_HPP
 
+// Suppressing msvc warnings from boost that are heard to deal with
+// because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
+// without testing it first. 
 #pragma warning(push)
-//Suppressing msvc warnings from boost that are heard to deal with
-//because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
-//without testing it first. 
 #pragma warning(disable : 4996)
 #include <iostream>
 #include <stdint.h>
@@ -86,7 +86,7 @@ enum class port_default : uint16_t
  * @return                 True if all specified flags are set.
  */
 template <typename TValue, typename TElement>
-bool flags_set(const TValue value, const TElement flags)
+bool are_flags_set(const TValue value, const TElement flags)
 {
     // This simple template precludes the need to explicitly cast the class
     // enum (with elements already of the proper type) and ensures the flag 
@@ -127,8 +127,7 @@ bool parse(TValue& value, const std::string& text)
  * @return               The serialized value.
  */
 template <typename TValue>
-const std::string& serialize(const TValue& value, 
-    const std::string& fallback="")
+std::string serialize(const TValue& value, const std::string& fallback="")
 {
     std::string serialized;
     boost::to_string(value, serialized);
@@ -146,7 +145,7 @@ const std::string& serialize(const TValue& value,
  * @param[in]  fallback  The arg index from which the filename is to be read.
  * @return               The argument, or the fallback if insufficient args.
  */
-const char* get_arg(int argc, const char* argv[],
+std::string get_arg(int argc, const char* argv[],
     const std::string& fallback="", int index=1);
 
 /**
@@ -172,7 +171,7 @@ size_t get_args(int argc, const char* argv[],
  * @param[in]  trim    Trim the stream input of whitespace, defaults to false.
  * @return             The argument, or the stream value if insufficient args.
  */
-const char* get_arg_or_stream(int argc, const char* argv[],
+std::string get_arg_or_stream(int argc, const char* argv[],
     std::istream& stream, int index=1, bool trim=false);
 
 /**
@@ -183,7 +182,7 @@ const char* get_arg_or_stream(int argc, const char* argv[],
  * @param[in]  argv    The array of args from which to obtain the filename.
  * @return             The filename or the default value if insufficient args.
  */
-const char* get_filename(int argc, const char* argv[]);
+std::string get_filename(int argc, const char* argv[]);
 
 /**
  * Uniformly test argv for the presence of the specified option, in long
@@ -267,18 +266,6 @@ void line_out(std::ostream& stream, const std::string& line, size_t offset=0,
     const std::string& inset="");
 
 /**
-* Write the specified message, with optional padding and inset text, and a
-* line return, to the specified stream.
-*
-* @param[out] stream  The stream to write to.
-* @param[in]  line    The line to write.
-* @param[in]  offset  Number of spaces to pad the left side of the line.
-* @param[in]  inset   Text to display in the offset padding.
-*/
-void line_out(std::ostream& stream, std::string& line, size_t offset=0, 
-    const std::string& inset="");
-
-/**
  * Write the specified messages, with optional padding and first line inset 
  * text, and line returns, to the specified stream.
  *
@@ -288,7 +275,7 @@ void line_out(std::ostream& stream, std::string& line, size_t offset=0,
  * @param[in]  inset   Text to display in the offset padding.
  */
 void line_out(std::ostream& stream, const std::vector<char*>& lines,
-    const size_t offset=0, const char* inset="");
+    const size_t offset=0, const std::string& inset="");
 
 /**
  * Get a trimmed message from the specified input stream.

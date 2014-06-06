@@ -40,6 +40,7 @@ console_result decode_addr::invoke(int argc, const char* argv[])
             << std::endl;
         return console_result::failure;
     }
+
     std::cout << addr.hash() << std::endl;
     return console_result::okay;
 }

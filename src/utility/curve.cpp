@@ -32,6 +32,7 @@ ec_secret generate_random_secret()
     ec_secret secret;
     for (uint8_t& byte: secret)
         byte = engine() % std::numeric_limits<uint8_t>::max();
+
     return secret;
 }
 
@@ -43,6 +44,7 @@ bool ec_math_parse_args(int argc, const char* argv[], ec_secret& secret,
         const auto arg = argv[i];
         if (set_ec_secret(secret, arg))
             continue;
+
         if (set_ec_point(point, arg))
             continue;
     }
@@ -57,6 +59,7 @@ bool set_ec_secret(ec_secret& secret, const std::string& arg)
     ec_secret result = decode_hash(arg);
     if (result == null_hash)
         return false;
+
     secret = result;
     return true;
 }
@@ -66,8 +69,10 @@ bool set_ec_point(ec_point& point, const std::string& arg)
     ec_point result = decode_hex(arg);
     if (result.size() != ec_compressed_size)
         return false;
+
     if (result[0] != 0x02 && result[0] != 0x03)
         return false;
+
     point = result;
     return true;
 }

@@ -28,13 +28,11 @@
     typedef wchar_t tchar;
     typedef std::wstring tstring;
     typedef boost::filesystem::wpath tpath;
-    #define END_LINE "\r\n"
 #else
     #define WIDE(s) s
     typedef char tchar;
     typedef std::string tstring;
     typedef boost::filesystem::path tpath;
-    #define END_LINE "\n"
 #endif
 
 /* This allows std::uniform_int_distribution platform differences. */

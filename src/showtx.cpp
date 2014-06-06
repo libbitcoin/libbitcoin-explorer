@@ -48,6 +48,7 @@ static void show_tx(const transaction_type& tx)
         if (extract(addr, input.script))
             std::cout << "  address: " << addr.encoded() << std::endl;
     }
+
     for (const transaction_output_type& output: tx.outputs)
     {
         std::cout << "Output:" << std::endl;
@@ -99,6 +100,7 @@ static void json_show_tx(const transaction_type& tx)
             std::cout << "null";
         std::cout << "}";
     }
+
     std::cout << std::endl << "  ]," << std::endl;
     std::cout << "  \"outputs\": [" << std::endl;
     is_first = true;
@@ -119,6 +121,7 @@ static void json_show_tx(const transaction_type& tx)
             std::cout << "null";
         std::cout << "}";
     }
+
     std::cout << std::endl << "  ]" << std::endl;
     std::cout << "}" << std::endl;
 }

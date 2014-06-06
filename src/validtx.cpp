@@ -61,7 +61,6 @@ console_result validtx::invoke(int argc, const char* argv[])
     OBELISK_FULLNODE(pool, fullnode);
     fullnode.transaction_pool.validate(tx, valid_tx);
     poll(fullnode, pool, node_stopped);
-
     return console_result::okay;
 }
 

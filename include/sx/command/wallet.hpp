@@ -30,7 +30,7 @@ namespace sx {
 namespace extensions {
 
 /**
- * Various localizable strings used by sx NO_MASTER_PUBLIC_KEY.
+ * Various localizable strings.
  */
 #define NO_MASTER_PUBLIC_KEY \
     "No valid master public key or private secret key was passed in."

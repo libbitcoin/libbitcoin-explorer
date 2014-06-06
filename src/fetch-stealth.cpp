@@ -37,11 +37,11 @@ static bool node_stopped = false;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void stealth_fetched(const std::error_code& ec,
+static void stealth_fetched(const std::error_code& error,
     const blockchain::stealth_list& stealth_results)
 {
-    if (ec)
-        log_error() << "Stealth fetch failed: " << ec.message();
+    if (error)
+        log_error() << "Stealth fetch failed: " << error.message();
     else
         for (const blockchain::stealth_row& row: stealth_results)
             std::cout << "ephemkey: " << row.ephemkey
@@ -59,9 +59,8 @@ console_result fetch_stealth::invoke(int argc, const char* argv[])
     std::string prefix_str(get_arg(argc, argv));
     stealth_prefix prefix(prefix_str);
 
-    // TODO: create console util for this idiom (numeric arg read).
     size_t height = 0;
-    if (argc > 2&&!parse(height, argv[2]))
+    if (argc > 2 && !parse(height, argv[2]))
     {
         std::cerr << "sx: Invalid height value specified." << std::endl;
         return console_result::failure;
@@ -71,6 +70,5 @@ console_result fetch_stealth::invoke(int argc, const char* argv[])
     fullnode.blockchain.fetch_stealth(prefix, 
         std::bind(stealth_fetched, _1, _2), height);
     poll(fullnode, pool, node_stopped);
-
     return console_result::okay;
 }

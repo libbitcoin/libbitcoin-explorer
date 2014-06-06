@@ -33,7 +33,6 @@ console_result scripthash::invoke(int argc, const char* argv[])
 
     const auto hex_script = read_stream(std::cin);
     const auto bip16_script = parse_script(decode_hex(hex_script));
-
     payment_address payaddr;
     set_script(payaddr, bip16_script);
     std::cout << payaddr.encoded() << std::endl;

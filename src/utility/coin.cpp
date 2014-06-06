@@ -45,8 +45,8 @@ data_chunk random_fill(size_t size)
     return result;
 }
 
-bool read_address_tuple(int argc, const char* argv[], 
-    std::istream& stream, std::string& hex_str, uint8_t& version_byte)
+bool read_address_tuple(int argc, const char* argv[], std::istream& stream,
+    std::string& hex_str, uint8_t& version_byte)
 {
     version_byte = 0;
 
@@ -72,29 +72,32 @@ bool read_address_tuple(int argc, const char* argv[],
         {
             if (!parse(version_byte, argv[1]))
                 return false;
-            hex_str = sx::read_stream(stream);
+
+            hex_str = read_stream(stream);
         }
     }
     else if (argc == 3)
     {
         if (!parse(version_byte, argv[2]))
             return false;
+
         hex_str = argv[1];
     }
 
     return true;
 }
 
-bool read_addresses(int argc, const char* argv[], 
-    payaddr_list& payaddrs)
+bool read_addresses(int argc, const char* argv[], payaddr_list& payaddrs)
 {
     for (int i = 1; i < argc; ++i)
     {
         if (is_option_any(argv[i]))
             continue;
+
         payment_address payaddr;
         if (!payaddr.set_encoded(argv[i]))
             return false;
+
         payaddrs.push_back(payaddr);
     }
     return true;
@@ -111,6 +114,7 @@ bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
         const std::string arg(argv[i]);
         if (is_option(arg, SX_OPTION_HARD))
             is_hard = true;
+
         else if (!parse(index, arg))
             return false;
     }
@@ -151,6 +155,7 @@ bool read_public_or_private_key(elliptic_curve_key& key, std::istream& stream)
     const auto arg = read_stream(stream);
     if (read_private_key(key, arg))
         return true;
+
     const auto pubkey = decode_hex(arg);
     return key.set_public_key(pubkey);
 }

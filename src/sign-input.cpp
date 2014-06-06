@@ -39,7 +39,6 @@ static bool sign(transaction_type& tx, uint32_t input_index,
         return false;
     }
 
-    // TODO: const for hash_type (1).
     const auto tx_hash = script_type::generate_signature_hash(tx, input_index,
         script_code, 1);
     if (tx_hash == null_hash)
@@ -50,6 +49,8 @@ static bool sign(transaction_type& tx, uint32_t input_index,
     }
 
     auto signature = key.sign(tx_hash);
+
+    // Magic Number?
     signature.push_back(0x01);
     std::cout << signature << std::endl;
     return true;
