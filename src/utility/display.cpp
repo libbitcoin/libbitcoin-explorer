@@ -24,7 +24,7 @@
 
 namespace sx {
 
-static enum tab
+enum tab
 {
     name = 8,
     subcategory = 3,
