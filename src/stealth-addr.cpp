@@ -109,7 +109,7 @@ console_result stealth_addr::invoke(int argc, const char* argv[])
     const uint8_t some_flag = 1;
     const uint8_t stealth_version = 0x2a;
     const uint8_t default_stealth_prefix_filter = 0x00;
-    const uint8_t options_bitfield = (reuse_address ? some_flag : 0);
+    const uint8_t options_bitfield = if_else(reuse_address, some_flag, 0);
     const uint8_t number_keys = static_cast<uint8_t>(spend_pubkeys.size());
 
     raw_addr.push_back(stealth_version);

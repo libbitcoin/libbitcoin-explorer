@@ -95,6 +95,28 @@ bool are_flags_set(const TValue value, const TElement flags)
 }
 
 /**
+ * Avoid the if_else (yes, it's just fun and games).
+ * You should use with expressions as consequent or alternative as they will be
+ * executed regardless of the predicate.
+ *
+ * @param      <TConsequent>   The type of the consequent.
+ * @param      <TAlternative>  The type of the alternative.
+ * @param[in]  antecedent      The proposition's antecedent.
+ * @param[in]  consequent      The proposition's consequent (if predicate).
+ * @param[in]  consequent      The proposition's alternative (if !predicate).
+ * @return                     Either the consequent or the alternative.
+ */
+template <typename TConsequent, typename TAlternative>
+TConsequent if_else(bool antecedent, const TConsequent consequent,
+    const TAlternative alternative)
+{
+    if (antecedent)
+        return consequent;
+    else 
+        return alternative;
+}
+
+/**
  * Safely convert a text string to the specified type, whitespace ignored.
  *
  * @param      <TValue> The converted type.
@@ -131,7 +153,7 @@ std::string serialize(const TValue& value, const std::string& fallback="")
 {
     std::string serialized;
     boost::to_string(value, serialized);
-    return serialized.empty() ? fallback : serialized;
+    return if_else(serialized.empty(), fallback, serialized);
 }
 
 /**

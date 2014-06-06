@@ -39,13 +39,14 @@ namespace sx {
 std::string get_arg(int argc, const char* argv[], const std::string& fallback,
     int index)
 {
-    return argc > index ? argv[index] : fallback.c_str();
+    return if_else(argc > index, argv[index], fallback.c_str());
 }
 
 std::string get_arg_or_stream(int argc, const char* argv[],
     std::istream& stream, int index, bool trim)
 {
-    return argc > index ? argv[index] : read_stream(stream, trim).c_str();
+    return if_else(argc > index, argv[index], 
+        read_stream(stream, trim).c_str());
 }
 
 size_t get_args(int argc, const char* argv[], 
@@ -62,7 +63,7 @@ size_t get_args(int argc, const char* argv[],
 
 std::string get_filename(int argc, const char* argv[])
 {
-    return argc > 0 ? argv[0] : SX_STDIN_PATH_SENTINEL;
+    return if_else(argc > 0, argv[0], SX_STDIN_PATH_SENTINEL);
 }
 
 bool get_option(int argc, const char* argv[], const std::string& option)
@@ -137,7 +138,7 @@ void line_out(std::ostream& stream, const std::string& line, size_t offset,
     size_t length = std::string(inset).length();
 
     // overflow safe assurance that offset is always non-negative
-    size_t padding = length > offset ? 0 : offset - length;
+    size_t padding = if_else(length > offset, 0, offset - length);
 
     // output the inset-offset-line to the specified stream
     stream << inset << std::string(padding, ' ') << line << std::endl;

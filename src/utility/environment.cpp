@@ -27,32 +27,32 @@
 #endif
 #include <sx/utility/environment.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/console.hpp>
 
 namespace sx {
-
+    
 tstring get_sx_cfg()
 {
 #ifdef _WIN32
-    tchar environment_buffer[MAX_PATH];
-    return tstring(GetEnvironmentVariableW(L"SX_CFG", environment_buffer,
-        MAX_PATH) != FALSE ? environment_buffer : L"");
+    tchar path[MAX_PATH];
+    auto result = GetEnvironmentVariableW(L"SX_CFG", path, MAX_PATH);
+    return if_else(result != FALSE, tstring(path), tstring());
 #else
-    const char* config_path = getenv("SX_CFG");
-    return std::string(config_path == nullptr ? "" : config_path);
+    const char* path = getenv("SX_CFG");
+    return if_else(path == nullptr, "", path);
 #endif
 }
 
 tstring home_directory()
 {
 #ifdef _WIN32
-    tchar app_data_path[MAX_PATH];
+    tchar path[MAX_PATH];
     const auto result = SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL,
-        SHGFP_TYPE_CURRENT, app_data_path);
-    return tstring(SUCCEEDED(result) ? app_data_path : L"");
+        SHGFP_TYPE_CURRENT, path);
+    return if_else(SUCCEEDED(result), tstring(path), tstring());
 #else
-    const char* home_path = getenv("HOME");
-    return std::string(home_path == nullptr ? getpwuid(getuid())->pw_dir :
-        home_path);
+    const char* path = getenv("HOME");
+    return if_else(path == nullptr, getpwuid(getuid())->pw_dir, path);
 #endif
 }
 

@@ -51,8 +51,8 @@ console_result hd_pub::invoke(int argc, const char* argv[])
     if (argc == 1)
     {
         // Special case - read private key from STDIN and convert it to public.
-        return private_to_public_key() ? console_result::okay : 
-            console_result::failure;
+        return ifelse(private_to_public_key(), console_result::okay,
+            console_result::failure);
     }
 
     bool is_hard;
