@@ -22,7 +22,7 @@
 
 #include <bitcoin/bitcoin.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in heders. */
+/* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 

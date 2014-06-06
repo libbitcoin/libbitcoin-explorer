@@ -24,7 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in heders. */
+/* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
     

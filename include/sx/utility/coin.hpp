@@ -24,7 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in heders. */
+/* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 

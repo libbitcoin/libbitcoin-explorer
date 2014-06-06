@@ -24,7 +24,7 @@
 #include <string>
 #include <sx/command.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in heders. */
+/* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 

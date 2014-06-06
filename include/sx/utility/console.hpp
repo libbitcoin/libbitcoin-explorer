@@ -35,7 +35,7 @@
 #include <boost/lexical_cast.hpp>
 #pragma warning(pop)
 
-/* NOTE: don't declare 'using namespace foo' in heders. */
+/* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 
@@ -304,7 +304,7 @@ std::string read_stream(std::istream& stream, bool trim=false);
  *
  * @param[in]  milliseconds  The number of milliseconds to sleep.
  */
-void sleep_ms(const uint32_t milliseconds);
+void sleep_ms(uint32_t milliseconds);
 
 /**
  * Split a list of strings into a string vector string, in order, white space

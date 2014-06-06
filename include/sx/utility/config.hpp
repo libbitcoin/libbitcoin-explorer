@@ -25,7 +25,7 @@
 #include <libconfig.h++>
 #include <sx/utility/compat.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in heders. */
+/* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 
