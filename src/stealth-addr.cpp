@@ -43,9 +43,10 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const auto encoded_spend_pubkeys = get_spend_pubkeys_argument();
     const auto testnet = get_general_testnet_setting();
 
-    // Decode raw parameters.
     // TODO: figure out how to incorporate standard deserialization into the
     // boost::program_options::value_semantic definition so we can skip this.
+    // ------------------------------------------------------------------------
+    // Decode raw parameters.
     const auto scan_pubkey = decode_hex(encoded_scan_pubkey);
     typedef std::vector<data_chunk> pubkey_list;
     pubkey_list spend_pubkeys;
@@ -53,7 +54,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
         spend_pubkeys.emplace_back(decode_hex(spend_pubkey));
     // ------------------------------------------------------------------------
 
-    // Now we have the data, construct actual address.
+    // Construct actual address.
     // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
     data_chunk raw_addr;
 
@@ -73,7 +74,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     for (const auto& pubkey: spend_pubkeys)
         extend_data(raw_addr, pubkey);
     
-    // If not configured then set it to the number_keys
+    // If not configured then set it to the number_keys.
     if (signatures == 0)
         signatures = number_keys;
 
@@ -89,6 +90,8 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const auto checksum = bitcoin_checksum(raw_addr);
     append_checksum(raw_addr);
     const auto stealth_addr = encode_base58(raw_addr);
+
+    // Return the results.
     line_out(output, stealth_addr);
     return console_result::okay;
 }

@@ -120,10 +120,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\test\command_stealth_addr.cpp" />
     <ClCompile Include="..\..\..\..\test\console_line_out.cpp" />
     <ClCompile Include="..\..\..\..\test\generated_broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated_find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated_symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\test\setup.hpp" />
   </ItemGroup>
 </Project>

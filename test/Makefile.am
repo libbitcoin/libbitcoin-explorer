@@ -8,6 +8,7 @@ AM_CPPFLAGS = \
     -I$(srcdir)/../include 
 
 sx_test_SOURCES = \
+    command_stealth_addr.cpp \
     console_line_out.cpp \
     generated_broadcast.cpp \
     generated_find.cpp \
@@ -22,8 +23,7 @@ sx_test_LDADD = \
     -lboost_program_options \
     -lboost_regex \
     -lboost_system \
-    -lboost_unit_test_framework \
-    -lconfig++
+    -lboost_unit_test_framework
     
 if HAVE_OBELISK
     AM_CPPFLAGS += \
