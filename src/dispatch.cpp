@@ -157,7 +157,7 @@ bool load_variables(variables_map& variables, std::string& message,
         // Send notifications and update bound variables.
         notify(variables);
     }
-    catch (const options_exception& e)
+    catch (const po::error& e)
     {
         message = e.what();
         return false;

@@ -131,11 +131,6 @@ namespace po = boost::program_options;
 namespace sx {
 
 /**
- * Convenience type that prevents conflict with use of common symbol 'error'.
- */
-typedef po::error options_exception;
-
-/**
  * Invoke a specified function on all commands.
  *
  * @param[in]  func  The function to invoke on all commands.
