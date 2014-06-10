@@ -89,7 +89,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const auto checksum = bitcoin_checksum(raw_addr);
     append_checksum(raw_addr);
     const auto stealth_addr = encode_base58(raw_addr);
-    ////line_out(pout->out, stealth_addr);
+    line_out(output, stealth_addr);
     return console_result::okay;
 }
 
