@@ -119,10 +119,7 @@
 .endfunction
 .
 .function global.vectored_type(type, is_vector)
-.   vectored = if_else_empty(my.is_vector, "std::vector<")
-.   vectored += my.type
-.   vectored += if_else_empty(my.is_vector, ">")
-.   return vectored
+.   return if_else(my.is_vector, "std::vector<$(my.type:)>", my.type)
 .endfunction
 .
 .config_description = resource("sx_config_description")
