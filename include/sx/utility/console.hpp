@@ -66,15 +66,6 @@ enum console_result : int
 };
 
 /**
- * Default ports for the Bitcoin protocol.
- */
-enum port_default : uint16_t
-{
-    mainnet = 8333,
-    testnet = 18333
-};
-
-/**
  * Conveniently test a numeric value to see if specified flags are set.
  * Caller should ensure that TValue is the same type as TElement (sorry,
  * but there are no type constraints in c++).

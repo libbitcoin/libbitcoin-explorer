@@ -47,8 +47,7 @@ sx_LDADD = \
     -lboost_filesystem \
     -lboost_program_options \
     -lboost_regex \
-    -lboost_system \
-    -lconfig++
+    -lboost_system
 
 if HAVE_OBELISK
     sx_LDADD += \

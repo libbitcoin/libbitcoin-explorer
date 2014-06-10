@@ -130,7 +130,7 @@ public:
         definitions.add_options()
             (
                 SX_VARIABLE_CONFIG ",c",
-                value<boost::filesystem::path>(),
+                value<boost::filesystem::path>(),                 
                 "The path and file name for the configuration settings file for this application."
             )
             (

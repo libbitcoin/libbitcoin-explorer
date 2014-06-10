@@ -3,11 +3,10 @@
 .#  This is a code generator built using the iMatix GSL code generation
 .#  language. See https://github.com/imatix/gsl for details.
 .#
+.#  This file contains no localizable resources.
+.#
 .##############################################################################
 .# This section is a GSL define/macro/function library.
-.
-.xml_false = "false"
-.xml_true = "true"
 .
 .macro global.copyleft
 /**
@@ -35,39 +34,57 @@
 .   return string.substr(my.value, 0, 0)
 .endfunction
 .
-.function global.format_c(text)
-    return my.text
-.endfunction
-.
 .function global.if_else(antecedent, consequent, alternate)
 .   return my.antecedent ?? my.consequent ? my.alternate
 .endfunction
 .
-.function global.is_default(value, default_value)
-.   return conv.number(my.value ? my.default_value) = my.default_value
+.function global.if_else_empty(antecedent, consequent)
+.   return if_else(my.antecedent, my.consequent, "")
+.endfunction
+.
+.function global.is_default(value, fallback)
+.   return conv.number(my.value ? my.fallback) = my.fallback
 .endfunction
 .
 .function global.is_empty(value)
 .   return ((my.value ? "") = "")
 .endfunction
 .
-.function global.is_true(value)
+.function global.is_xml_true(value)
 .   return ((my.value ? xml_false) = xml_true)
 .endfunction
 .
-.# TODO: Get type map from XML data source.
 .function global.normalize_type(type)
-.   if my.type = "string"
-.       return "std::" + my.type
+.   if my.type = type_string
+.       return type_string_std
 .   endif
-.   if my.type = "path"
-.       return "boost::filesystem::" + my.type
+.   if my.type = type_path
+.       return type_path_boost
 .   endif
 .   return my.type
 .endfunction
 .
 .function global.pluralize(name, is_plural)
-.   return my.name + if_else(my.is_plural, "s", "")
+.   return my.name + if_else_empty(my.is_plural, "s")
+.endfunction
+.
+.function global.pretty(text, format)
+.   return "$(my.text:$(my.format))"
+.endfunction
+.
+.function global.quote(text, is_quoted)
+.   return if_else(my.is_quoted, "\"$(my.text:)\"", my.text)
+.endfunction
+.
+.function global.resource(name, fallback)
+.   for resource
+.       for resource.string
+.           if (name ? "") = my.name
+.               return value ? ""
+.           endif
+.       endfor
+.   endfor
+.   return my.fallback ? ""
 .endfunction
 .
 .function global.true()
@@ -76,40 +93,52 @@
 .
 .function global.type_default(is_option, type, required, unlimited)
 .   is_toggle = my.is_option & (is_empty(my.type) | my.required | my.unlimited)
-.   return normalize_type(if_else(is_toggle, "bool", my.type ? "string"))
+.   return normalize_type(if_else(is_toggle, type_bool, my.type ? type_string))
 .endfunction 
 .
 .function global.value_semantic(is_option, type, required, unlimited,\
     variable, fallback)
+.
 .   is_toggle = my.is_option & (is_empty(my.type) | my.required | my.unlimited)
-.   type_value = normalize_type(if_else(is_toggle, "bool", my.type ? "string"))
+.   base_type = if_else(is_toggle, type_bool, my.type ? type_string)
+.   norm_type = normalize_type(base_type)
 .   defaulted = !is_empty(my.fallback)
-.   quote_default = defaulted &\
-        (type_value = "boost::filesystem::path") |\
-        (type_value = "std::string")
-.   default_value = if_else(quote_default, "\"", "")
-.   default_value += if_else(defaulted, "$(my.fallback:)", "")
-.   default_value += if_else(quote_default, "\"", "")
-.   binding = if_else(is_empty(my.variable), "", "&" + my.variable)
-.   expression = "value<"
-.   expression += vectored_type(type_value, my.unlimited)
-.   expression += ">($(binding:))"
-.   expression += if_else(my.required, "->required()", "")
-.   expression += if_else(defaulted, "->default_value($(default_value:))", "")
-.   expression += if_else(is_toggle, "->implicit_value(true)", "")
+.   is_text = ((norm_type = type_path_boost) | (norm_type = type_string_std))
+.   quote_default = (defaulted & is_text)
+.
+.   parameter = if_else_empty(!is_empty(my.variable), "&$(my.variable:)")
+.   binding = pluralize(parameter, my.unlimited)
+.   default_value = quote(if_else_empty(defaulted, my.fallback), quote_default)
+.
+.   expression = "value<$(vectored_type(norm_type, my.unlimited))>($(binding:))"
+.   expression += if_else_empty(my.required, "->required()")
+.   expression += if_else_empty(defaulted, "->default_value($(default_value:))")
+.   expression += if_else_empty(is_toggle, "->implicit_value(true)")
 .   return expression
+.
 .endfunction
 .
 .function global.vectored_type(type, is_vector)
-.   vectored = if_else(my.is_vector, "std::vector<", "")
+.   vectored = if_else_empty(my.is_vector, "std::vector<")
 .   vectored += my.type
-.   vectored += if_else(my.is_vector, ">", "")
+.   vectored += if_else_empty(my.is_vector, ">")
 .   return vectored
 .endfunction
+.
+.config_description = resource("sx_config_description")
+.config_option = "config"
+.type_bool = "bool"
+.type_path = "path"
+.type_path_boost = "boost::filesystem::path"
+.type_string = "string"
+.type_string_std = "std::string"
+.xml_false = "false"
+.xml_true = "true"
+.
 .##############################################################################
 .echo "Generating include/sx/generated.hpp..."
 .output "../include/sx/generated.hpp"
-.global.copyleft()
+.copyleft()
 #ifndef SX_GENERATED_HPP
 #define SX_GENERATED_HPP
 
@@ -124,7 +153,7 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-#define SX_VARIABLE_CONFIG "config"
+#define SX_VARIABLE_CONFIG "$(config_option:)"
 
 namespace po = boost::program_options;
 
@@ -152,7 +181,7 @@ std::shared_ptr<command> find(const std::string& symbol);
 .##############################################################################
 .echo "Generating src/generated.cpp..."
 .output "../src/generated.cpp"
-.global.copyleft()
+.copyleft()
 #include <functional>
 #include <memory>
 #include <string>
@@ -192,7 +221,7 @@ shared_ptr<command> find(const string& symbol)
 .##############################################################################
 .echo "Generating include/sx/command.hpp..."
 .output "../include/sx/command.hpp"
-.global.copyleft()
+.copyleft()
 #ifndef SX_COMMAND_HPP
 #define SX_COMMAND_HPP
 
@@ -224,7 +253,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      *
-     * @return  Exmaple: "fetch-transaction"
+     * @return  Example: "fetch-transaction"
      */
     virtual const char* name()
     {
@@ -321,7 +350,7 @@ public:
                 SX_VARIABLE_CONFIG, 
                 value<boost::filesystem::path>()
                     ->composing()->default_value(config_default()),
-                "The path and file name for the configuration settings file for this application."
+                "$(config_description:)"
             );
     }
 
@@ -354,10 +383,10 @@ public:
 .   for setting
 .       is_last_setting = is_last_configuration & last()
 .       identifiers = section + "." + name
-.       variable = "settings." + global.format_c(section) + "." +\
-            global.format_c(name)
-.       expression = global.value_semantic(!global.true(), type,\
-            is_true(required), is_true(multiple), variable, default)
+.       variable = "settings." + pretty(section, "lower,c") + "." +\
+            pretty(name, "lower,c")
+.       expression = value_semantic(!true(), type,\
+            is_xml_true(required), is_xml_true(multiple), variable, default)
             (
                 "$(identifiers:)",
                 $(expression),
@@ -384,11 +413,11 @@ protected:
         struct
         {
 .   for setting
-.       is_vector = is_true(multiple)
-.       setting_type = global.type_default(!global.true(), type,\
-            is_true(required), is_vector)
-.       vectored_type = global.vectored_type(setting_type, is_vector)
-.       pluralized_name = global.pluralize(name, is_vector)      
+.       is_vector = is_xml_true(multiple)
+.       setting_type = type_default(!true(), type,\
+            is_xml_true(required), is_vector)
+.       vectored_type = vectored_type(setting_type, is_vector)
+.       pluralized_name = pluralize(name, is_vector)      
             $(vectored_type:) $(pluralized_name:c);
 .   endfor
         } $(section:c);
@@ -411,7 +440,7 @@ protected:
 .for command by symbol
 .echo "Generating include/sx/command/$(symbol).hpp..."
 .output "../include/sx/command/$(symbol).hpp"
-.global.copyleft()
+.copyleft()
 #ifndef SX_$(SYMBOL:c)_HPP
 #define SX_$(SYMBOL:c)_HPP
 
@@ -546,8 +575,8 @@ public:
         definitions.add_options()
             (
                 SX_VARIABLE_CONFIG ",c",
-                value<boost::filesystem::path>(),
-                "The path and file name for the configuration settings file for this application."
+                value<boost::filesystem::path>(),                 
+                "$(config_description:)"
             )
 .
 .# HACK: There must be a better way to count a collection.
@@ -558,12 +587,12 @@ public:
 .
 .# TODO: How to block the description so as not to exceed max line length?
 .for option
-.   short_name = shortcut ? global.first_char(name)
+.   short_name = shortcut ? first_char(name)
 .   identifiers = name
 .   identifiers += if_else(short_name = "", "", "," + short_name)
-.   variable = "option." + global.format_c(name)
-.   expression = global.value_semantic(global.true(), type,\
-        is_true(required), is_true(multiple), variable, default)
+.   variable = "option." + pretty(name, "lower,c")
+.   expression = value_semantic(true(), type,is_xml_true(required),\
+        is_xml_true(multiple), variable, default)
             (
                 "$(identifiers:)",
                 $(expression:),
@@ -571,8 +600,9 @@ public:
             )$((last() & (argument_count = 0)) ?? ";")
 .endfor
 .for argument
-.   expression = global.value_semantic(!global.true(), type,\
-        is_true(required), !is_default(limit, 1), name)
+.   variable = "argument." + pretty(name, "lower,c")
+.   expression = value_semantic(!true(), type, is_xml_true(required),\
+        !is_default(limit, 1), variable)
             (
                 "$(name:)",
                 $(expression:),
@@ -597,10 +627,10 @@ protected:
     {
 .for argument
 .   is_vector = !is_default(limit, 1)
-.   argument_type = global.type_default(!global.true(), type,\
-        is_true(required), is_vector)
-.   vectored_type = global.vectored_type(argument_type, is_vector)        
-.   pluralized_name = global.pluralize(name, is_vector)      
+.   argument_type = type_default(!true(), type, is_xml_true(required),\
+        is_vector)
+.   vectored_type = vectored_type(argument_type, is_vector)        
+.   pluralized_name = pluralize(name, is_vector)      
         $(vectored_type:) $(pluralized_name:c);
 .endfor
     } argument;
@@ -611,11 +641,11 @@ protected:
     struct
     {
 .for option
-.   is_vector = is_true(multiple)
-.   option_type = global.type_default(global.true(), type,\
-        is_true(required), is_vector)
-.   vectored_type = global.vectored_type(option_type, is_vector)
-.   pluralized_name = global.pluralize(name, is_vector)      
+.   is_vector = is_xml_true(multiple)
+.   option_type = type_default(true(), type, is_xml_true(required),\
+        is_vector)
+.   vectored_type = vectored_type(option_type, is_vector)
+.   pluralized_name = pluralize(name, is_vector)      
         $(vectored_type:) $(pluralized_name:c);
 .endfor
     } option;
@@ -629,7 +659,7 @@ protected:
 .##############################################################################
 .echo "Generating test/generated_find.cpp..."
 .output "../test/generated_find.cpp"
-.global.copyleft()
+.copyleft()
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
@@ -651,7 +681,7 @@ BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
 .echo "Generating test/generated_symbol.cpp..."
 .output "../test/generated_symbol.cpp"
-.global.copyleft()
+.copyleft()
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
@@ -694,14 +724,14 @@ sx_utility_include_HEADERS += \\
 # Generated from XML data source.
 sx_command_includedir = $\(includedir)/sx/command
 sx_command_include_HEADERS = \\
-.for command by symbol where !global.is_true(obelisk)
+.for command by symbol where !is_xml_true(obelisk)
     command/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
 
 # Generated from XML data source.
 if HAVE_OBELISK
     sx_command_include_HEADERS += \\
-.for command by symbol where global.is_true(obelisk)
+.for command by symbol where is_xml_true(obelisk)
         command/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
 endif
@@ -731,14 +761,14 @@ libsx_la_SOURCES = \\
 
 # Generated from XML data source.
 libsx_la_SOURCES += \\
-.for command by symbol where !global.is_true(obelisk)
+.for command by symbol where !is_xml_true(obelisk)
     $(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
 # Generated from XML data source.
 if HAVE_OBELISK
     libsx_la_SOURCES += \\
-.for command by symbol where global.is_true(obelisk)
+.for command by symbol where is_xml_true(obelisk)
         $(symbol:).cpp \\
 .endfor
         obelisk.cpp
@@ -882,14 +912,14 @@ endif
   </ItemGroup>  
   <ItemGroup>
 .for command by symbol
-.   if (!is_true(leveldb) & !is_true(obelisk))
+.   if (!is_xml_true(leveldb) & !is_xml_true(obelisk))
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp" />
 .   else
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
-.       if (is_true(leveldb))
+.       if (is_xml_true(leveldb))
       <ExcludedFromBuild Condition="'$\(Option-leveldb)' != 'true'">true</ExcludedFromBuild>
 .       endif
-.       if (is_true(obelisk))
+.       if (is_xml_true(obelisk))
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
 .       endif
     </ClCompile>
@@ -1022,9 +1052,9 @@ endif
   <ItemGroup>
 .for command by symbol
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
-.   if (is_true(obelisk))
+.   if (is_xml_true(obelisk))
       <Filter>src\\command\\obelisk</Filter>
-.   elsif (is_true(stub))
+.   elsif (is_xml_true(stub))
       <Filter>src\\command\\stub</Filter>
 .   else
       <Filter>src\\command</Filter>

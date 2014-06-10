@@ -20,11 +20,21 @@
 #ifndef SX_CONFIG_HPP
 #define SX_CONFIG_HPP
 
+#include <stdint.h>
 #include <string>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
+
+///**
+// * Default ports for the Bitcoin protocol.
+// */
+//enum port_default : uint16_t
+//{
+//    mainnet = 8333,
+//    testnet = 18333
+//};
 
 /**
  * The default configuration file name to use when the path/file has not been

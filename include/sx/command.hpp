@@ -48,7 +48,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      *
-     * @return  Exmaple: "fetch-transaction"
+     * @return  Example: "fetch-transaction"
      */
     virtual const char* name()
     {

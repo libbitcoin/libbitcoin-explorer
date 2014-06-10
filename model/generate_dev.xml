@@ -1,6 +1,10 @@
 <?xml version = "1.0" ?>
-<generate script="generate.gsl">
+<generate script="generate.gsl" language="en-us">
 
+  <resource>
+    <string name="sx_config_description" value="The path and file name for the configuration settings file for this application." />
+  </resource>
+  
   <configuration section="general">
     <setting name="testnet" type="bool" description="Set to true in order to operate this application using Bitcoin testnet (vs. mainnet) addressing and blockchain data. This option is EXPERIMENTAL because other  libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
   </configuration>
