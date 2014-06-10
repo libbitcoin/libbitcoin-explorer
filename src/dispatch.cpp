@@ -87,7 +87,7 @@ path get_config_variable(variables_map& variables)
 }
 
 void load_command_variables(variables_map& variables, command& instance,
-    int argc, const char* argv[])
+    int argc, const char* argv[]) throw()
 {
     options_description command_options("command");
     instance.load_options(command_options);
@@ -104,6 +104,7 @@ void load_command_variables(variables_map& variables, command& instance,
 
 // Not unit testable (without creating actual config files).
 void load_configuration_variables(variables_map& variables, command& instance)
+    throw()
 {
     const auto config_path = get_config_variable(variables);
     if (config_path.empty())
@@ -124,6 +125,7 @@ void load_configuration_variables(variables_map& variables, command& instance)
 
 // Not unit testable (reliance on shared test process environment).
 void load_environment_variables(variables_map& variables, command& instance)
+    throw()
 {
     options_description environment_variables("environment");
     instance.load_environment(environment_variables);

@@ -20,6 +20,7 @@
 #ifndef SX_COIN_HPP
 #define SX_COIN_HPP
 
+#include <iostream>
 #include <stdint.h>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
