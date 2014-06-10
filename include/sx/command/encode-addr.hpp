@@ -20,9 +20,14 @@
 #ifndef SX_ENCODE_ADDR_HPP
 #define SX_ENCODE_ADDR_HPP
 
+#include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -32,7 +37,8 @@ namespace extensions {
 /**
  * Class to implement the sx encode-addr command.
  */
-class encode_addr : public command
+class encode_addr 
+    : public command
 {
 public:
 
@@ -72,10 +78,9 @@ public:
     {
         return
         {
-            { "Encode an address from internal RIPEMD representation to base58check form." }
+            { "Encode an address from internal RIPEMD representation to base58check form." },
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -84,7 +89,7 @@ public:
     {
         return
         {
-            { "sx encode-addr HASH [VERSION]" }
+            { "sx encode-addr HASH [VERSION]" },
         };
     }
 
@@ -95,9 +100,38 @@ public:
     {
         return
         {
-            { "Encode an address to base58check form." }
+            { "Encode an address to base58check form." },
         };
     }
+    
+    /**
+     * Initialize the program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void initialize_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+    
+    /**
+     * Initialize the program option definitions.
+     * The implicit_value call allows flags to be stringly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void initialize_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace std;
+        using namespace boost::filesystem;
+        using namespace boost::program_options;
+        definitions.add_options()
+    }   
 
     /**
      * Invoke the command with the raw arguments as provided on the command

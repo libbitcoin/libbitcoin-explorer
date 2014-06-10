@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_QRCODE_HPP
-#define SX_QRCODE_HPP
+#ifndef SX_HELP_HPP
+#define SX_HELP_HPP
 
 #include <stdint.h>
+#include <string>
 #include <vector>
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
@@ -35,9 +36,9 @@ namespace sx {
 namespace extensions {
 
 /**
- * Class to implement the sx qrcode command.
+ * Class to implement the sx help command.
  */
-class qrcode 
+class help 
     : public command
 {
 public:
@@ -45,14 +46,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "qrcode"; }
+    static const char* symbol() { return "help"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return qrcode::symbol();
+        return help::symbol();
     }
 
     /**
@@ -60,7 +61,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
+        return "SX";
     }
 
     /**
@@ -68,7 +69,7 @@ public:
      */
     const char* subcategory()
     {
-        return "MISC";
+        return "DOCUMENTATION";
     }
 
     /**
@@ -78,7 +79,6 @@ public:
     {
         return
         {
-            { "Generate Bitcoin QR codes offline." },
         };
     }
 
@@ -89,7 +89,6 @@ public:
     {
         return
         {
-            { "sx qrcode" },
         };
     }
 
@@ -100,51 +99,70 @@ public:
     {
         return
         {
-            { "Make sure you have the program 'qrencode' installed first." }
-            { "" }
-            { "  $ sudo apt-get install qrencode" }
-            { "  $ sx qrcode 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe qrcode.png" },
         };
     }
     
     /**
-     * Initialize the program argument definitions.
+     * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      *
      * @param[out] definitions  The defined program argument definitions.
      */
-    void initialize_arguments(
+    void load_arguments(
         boost::program_options::positional_options_description& definitions)
     {
+        definitions.add("COMMAND", 1);
     }
     
     /**
-     * Initialize the program option definitions.
-     * The implicit_value call allows flags to be stringly-typed on read while
+     * Load program option definitions.
+     * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
      *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      *
      * @param[out] definitions  The defined program option definitions.
      */
-    void initialize_options(
+    void load_options(
         boost::program_options::options_description& definitions)
     {
-        using namespace std;
-        using namespace boost::filesystem;
         using namespace boost::program_options;
         definitions.add_options()
+            (
+                SX_VARIABLE_CONFIG ",c",
+                value<boost::filesystem::path>(),
+                "The path and file name for the configuration settings file for this application."
+            )
+            (
+                "COMMAND",
+                value<std::string>(&argument.command),
+                "Get help for the COMMAND."
+            );
     }   
 
     /**
-     * Invoke the command with the raw arguments as provided on the command
-     * line. The process name is removed and argument count decremented.
+     * Invoke the command.
      *
-     * @param[in]  argc  The number of elements in the argv array.
-     * @param[in]  argv  The array of arguments, excluding the process.
-     * @return           The appropriate console return code { -1, 0, 1 }.
+     * @return  The appropriate console return code { -1, 0, 1 }.
      */
-    console_result invoke(int argc, const char* argv[]);
+    console_result invoke();
+    
+protected:
+
+    /**
+     * Command line argument bound variables.
+     */
+    struct
+    {
+        std::string command;
+    } argument;
+    
+    /**
+     * Command line option bound variables.
+     */
+    struct
+    {
+    } option;
 };
 
 } // extensions

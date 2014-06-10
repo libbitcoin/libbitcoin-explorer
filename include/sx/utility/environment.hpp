@@ -20,33 +20,28 @@
 #ifndef SX_ENVIRONMENT_HPP
 #define SX_ENVIRONMENT_HPP
 
-#include <sx/utility/compat.hpp>
+#include <string>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 
 /**
-* Get the value of the SX_CFG environment variable.
-*
-* @return  The value of the SX_CFG environment variable.
-*/
-tstring get_sx_cfg();
+ * Naming convention prefix for SX environment variables.
+ */
+#define SX_ENVIRONMENT_VARIABLE_PREFIX "SX_"
+
+/**
+ * The name of the linux environment variable that defines the home directory.
+ */
+#define SX_LINUX_HOME_ENVIRONMENT_VARIABLE "HOME"
 
 /**
  * Get the user's home directory.
  *
  * @return  The user's home directory.
  */
-tstring home_directory();
-
-/**
- * Set the value of the SX_CFG environment variable to the specified path.
- *
- * @param[in]  path  The path to set into the SX_CFG environment variable.
- * @return           True if successful.
- */
-bool set_sx_cfg(const tpath& path);
+    std::string home_directory();
 
 } // sx
 

@@ -24,6 +24,8 @@
 // Not to be used internally. For API users.
 // This is intended primarily for test.
 #include <sx/command.hpp>
+#include <sx/dispatch.hpp>
+#include <sx/display.hpp>
 #include <sx/generated.hpp>
 #ifdef HAVE_OBELISK
     #include <sx/obelisk.hpp>
@@ -32,9 +34,6 @@
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/curve.hpp>
-#include <sx/utility/dispatch.hpp>
-#include <sx/utility/display.hpp>
 #include <sx/utility/environment.hpp>
 
 #endif

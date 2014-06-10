@@ -17,19 +17,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <string>
-#include <boost/filesystem.hpp>
-#include <sx/utility/config.hpp>
-#include <sx/utility/environment.hpp>
+#include <iostream>
+#include <sx/command/help.hpp>
+#include <sx/utility/console.hpp>
 
-namespace sx {
+using namespace sx;
+using namespace sx::extensions;
 
-std::string config_default()
+console_result help::invoke()
 {
-    boost::filesystem::path home(home_directory());
-    if (home.empty())
-        return "";
-    return (home / SX_DEFAULT_CONFIG_FILE_NAME).generic_string();
-}
+    // Bound parameters.
+    const auto command = argument.command;
+    const auto testnet = settings.general.testnet;
 
-} // sx
+    return console_result::failure;
+}

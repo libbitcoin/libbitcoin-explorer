@@ -43,6 +43,14 @@ void display_invalid_command(const std::string& command);
 void display_invalid_config(const std::string& file);
 
 /**
+ * Display an error message to the console that indicates what is wrong with
+ * initialization in terms of command line, config settings file, environment.
+ *
+ * @param[in]  message  The message to display.
+ */
+void display_invalid_variables(const std::string& message);
+
+/**
  * Display a blank line.
  */
 void display_line();

@@ -24,6 +24,7 @@
 
 namespace sx {
 
+// Not unit testable (sleep and full node).
 void poll(obelisk::fullnode_interface& fullnode, bc::threadpool& pool, 
     bool& stopped, uint32_t period_ms)
 {

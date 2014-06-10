@@ -135,15 +135,15 @@ void line_out(std::ostream& stream, const std::string& line, size_t offset,
     const std::string& inset)
 {
     // safe string length 
-    size_t length = std::string(inset).length();
+    auto length = static_cast<size_t>(std::string(inset).length());
 
     // overflow safe assurance that offset is always non-negative
-    size_t padding = if_else(length > offset, 0, offset - length);
+    auto padding = if_else(length > offset, 0, offset - length);
 
     // output the inset-offset-line to the specified stream
-    stream << inset << std::string(padding, ' ') << line << std::endl;
+    stream << inset << std::string((padding), ' ')
+        << line << std::endl;
 }
-
 
 void line_out(std::ostream& stream, const std::vector<const char*>& lines, 
     size_t offset, const std::string& inset)
@@ -170,6 +170,7 @@ std::string read_stream(std::istream& stream, bool trim)
     return result;
 }
 
+// Not unit testable (sleep).
 void sleep_ms(uint32_t milliseconds)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
@@ -188,6 +189,7 @@ void stream_to_words(std::istream& stream,
     split(sentence, words, delimiter);
 }
 
+// Not unit testable (process termination).
 void terminate_process_on_error(const std::error_code& error)
 {
     if (!error)

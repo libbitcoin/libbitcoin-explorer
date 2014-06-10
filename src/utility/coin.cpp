@@ -21,20 +21,53 @@
 #include <random>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/dispatch.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 
 namespace sx {
 
+// TODO: reconcile with [data_chunk random_fill(size_t size)]
+// Not testable due to lack of random engine injection.
+ec_secret generate_random_secret()
+{
+    std::random_device random;
+    std::default_random_engine engine(random());
+
+    ec_secret secret;
+    for (uint8_t& byte: secret)
+        byte = engine() % std::numeric_limits<uint8_t>::max();
+
+    return secret;
+}
+
+//bool ec_math_parse_args(int argc, const char* argv[], ec_secret& secret,
+//    ec_point& point)
+//{
+//    for (int i = 1; i < argc; ++i)
+//    {
+//        const auto arg = argv[i];
+//        if (set_ec_secret(secret, arg))
+//            continue;
+//
+//        if (set_ec_point(point, arg))
+//            continue;
+//    }
+//
+//    // NOTE: these values are never set by this function 
+//    // so it is assumed they are the initial values.
+//    return (secret != null_hash && !point.empty());
+//}
+
+// TODO: reconcile with [data_chunk random_fill(size_t size)]
+// Not testable due to lack of random engine injection.
 data_chunk random_fill(size_t size)
 {
     std::random_device device;
     std::default_random_engine engine(device());
-
     std::uniform_int_distribution<min_uniform_dist_size>
         distribution(0, std::numeric_limits<min_uniform_dist_size>::max());
 
@@ -112,7 +145,7 @@ bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
     for (int i = 1; i < argc; ++i)
     {
         const std::string arg(argv[i]);
-        if (is_option(arg, SX_OPTION_HARD))
+        if (is_option(arg, "hard" /*SX_OPTION_HARD*/))
             is_hard = true;
 
         else if (!parse(index, arg))
@@ -158,6 +191,29 @@ bool read_public_or_private_key(elliptic_curve_key& key, std::istream& stream)
 
     const auto pubkey = decode_hex(arg);
     return key.set_public_key(pubkey);
+}
+
+bool set_ec_secret(ec_secret& secret, const std::string& arg)
+{
+    ec_secret result = decode_hash(arg);
+    if (result == null_hash)
+        return false;
+
+    secret = result;
+    return true;
+}
+
+bool set_ec_point(ec_point& point, const std::string& arg)
+{
+    ec_point result = decode_hex(arg);
+    if (result.size() != ec_compressed_size)
+        return false;
+
+    if (result[0] != 0x02 && result[0] != 0x03)
+        return false;
+
+    point = result;
+    return true;
 }
 
 bool validate_checksum(data_chunk& data)

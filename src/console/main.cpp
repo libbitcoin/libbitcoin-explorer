@@ -28,5 +28,5 @@
  */
 int main(int argc, char* argv[])
 {
-    return sx::invoke(argc, const_cast<const char**>(argv));
+    return sx::dispatch(argc, const_cast<const char**>(argv));
 }

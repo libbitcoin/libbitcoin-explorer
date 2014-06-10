@@ -80,6 +80,13 @@ bool load_satoshi_item(TItem& item, const std::string& filename,
 }
 
 /**
+* Generate a random secret using the default random engine.
+*
+* @return  The new secret.
+*/
+bc::ec_secret generate_random_secret();
+
+/**
  * Allocate a byte buffer and fill it with a random bit distribution.
  *
  * @param[in]  size  The byte size of the return buffer.
@@ -155,6 +162,24 @@ bool read_private_key(bc::elliptic_curve_key& key, const std::string& arg,
  */
 bool read_public_or_private_key(bc::elliptic_curve_key& key,
     std::istream& stream);
+
+/**
+ * Parse a point from the specified argument.
+ *
+ * @param[out] point   The parsed point.
+ * @param[in]  arg     The argument to parse.
+ * @return             True if a point has been returned.
+ */
+bool set_ec_point(bc::ec_point& point, const std::string& arg);
+
+/**
+ * Parse a secret from the specified argument.
+ *
+ * @param[out] secret  The parsed secret.
+ * @param[in]  arg     The argument to parse.
+ * @return             True if a secret has been returned.
+ */
+bool set_ec_secret(bc::ec_secret& secret, const std::string& arg);
 
 /**
  * Validate the bitcoin checksum of a chunk of binary data.

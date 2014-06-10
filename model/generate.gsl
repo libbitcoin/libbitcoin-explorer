@@ -4,8 +4,12 @@
 .#  language. See https://github.com/imatix/gsl for details.
 .#
 .##############################################################################
-.echo "Generating src/generated.cpp..."
-.output "../src/generated.cpp"
+.# This section is a GSL define/macro/function library.
+.
+.xml_false = "false"
+.xml_true = "true"
+.
+.macro global.copyleft
 /**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
@@ -25,84 +29,111 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <functional>
-#include <memory>
-#include <string>
-#include <sx/command.hpp>
-#include <sx/generated.hpp>
-
-/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
-
-namespace sx {
-namespace extensions {
-
-std::shared_ptr<command> find(const std::string& symbol)
-{
-.for command by symbol
-    if (symbol == $(symbol:c)::symbol())
-        return std::make_shared<$(symbol:c)>();
-.endfor
-
-    return nullptr;
-}
-
-bool broadcast(const std::function<void(std::shared_ptr<command>)> func)
-{
-.for command by symbol
-    func(std::make_shared<$(symbol:c)>());
-.endfor
-
-    return true;
-}
-
-} // extensions
-} // sx
+.endmacro
+.
+.function global.first_char(value)
+.   return string.substr(my.value, 0, 0)
+.endfunction
+.
+.function global.format_c(text)
+    return my.text
+.endfunction
+.
+.function global.if_else(antecedent, consequent, alternate)
+.   return my.antecedent ?? my.consequent ? my.alternate
+.endfunction
+.
+.function global.is_default(value, default_value)
+.   return conv.number(my.value ? my.default_value) = my.default_value
+.endfunction
+.
+.function global.is_empty(value)
+.   return ((my.value ? "") = "")
+.endfunction
+.
+.function global.is_true(value)
+.   return ((my.value ? xml_false) = xml_true)
+.endfunction
+.
+.# TODO: Get type map from XML data source.
+.function global.normalize_type(type)
+.   if my.type = "string"
+.       return "std::" + my.type
+.   endif
+.   if my.type = "path"
+.       return "boost::filesystem::" + my.type
+.   endif
+.   return my.type
+.endfunction
+.
+.function global.pluralize(name, is_plural)
+.   return my.name + if_else(my.is_plural, "s", "")
+.endfunction
+.
+.function global.true()
+.   return 0 = 0
+.endfunction
+.
+.function global.type_default(is_option, type, required, unlimited)
+.   is_toggle = my.is_option & (is_empty(my.type) | my.required | my.unlimited)
+.   return normalize_type(if_else(is_toggle, "bool", my.type ? "string"))
+.endfunction 
+.
+.function global.value_semantic(is_option, type, required, unlimited,\
+    variable, fallback)
+.   is_toggle = my.is_option & (is_empty(my.type) | my.required | my.unlimited)
+.   type_value = normalize_type(if_else(is_toggle, "bool", my.type ? "string"))
+.   defaulted = !is_empty(my.fallback)
+.   quote_default = defaulted &\
+        (type_value = "boost::filesystem::path") |\
+        (type_value = "std::string")
+.   default_value = if_else(quote_default, "\"", "")
+.   default_value += if_else(defaulted, "$(my.fallback:)", "")
+.   default_value += if_else(quote_default, "\"", "")
+.   binding = if_else(is_empty(my.variable), "", "&" + my.variable)
+.   expression = "value<"
+.   expression += vectored_type(type_value, my.unlimited)
+.   expression += ">($(binding:))"
+.   expression += if_else(my.required, "->required()", "")
+.   expression += if_else(defaulted, "->default_value($(default_value:))", "")
+.   expression += if_else(is_toggle, "->implicit_value(true)", "")
+.   return expression
+.endfunction
+.
+.function global.vectored_type(type, is_vector)
+.   vectored = if_else(my.is_vector, "std::vector<", "")
+.   vectored += my.type
+.   vectored += if_else(my.is_vector, ">", "")
+.   return vectored
+.endfunction
 .##############################################################################
 .echo "Generating include/sx/generated.hpp..."
 .output "../include/sx/generated.hpp"
-/**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
- *
- * This file is part of sx.
- *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+.global.copyleft()
 #ifndef SX_GENERATED_HPP
 #define SX_GENERATED_HPP
 
 #include <functional>
 #include <memory>
 #include <string>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
-
 .for command by symbol
 #include <sx/command/$(symbol).hpp>
 .endfor
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+#define SX_VARIABLE_CONFIG "config"
+
+namespace po = boost::program_options;
+
 namespace sx {
-namespace extensions {
 
 /**
- * Find the command identified by the specified symbolic command name.
- *
- * @param[in]  symbol  The symbolic command name.
- * @return             An instance of the command or nullptr if not found.
+ * Convenience type that prevents conflict with use of common symbol 'error'.
  */
-std::shared_ptr<command> find(const std::string& symbol);
+typedef po::error options_exception;
 
 /**
  * Invoke a specified function on all commands.
@@ -112,7 +143,272 @@ std::shared_ptr<command> find(const std::string& symbol);
  */
 bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
-} // extensions
+/**
+ * Find the command identified by the specified symbolic command name.
+ *
+ * @param[in]  symbol  The symbolic command name.
+ * @return             An instance of the command or nullptr if not found.
+ */
+std::shared_ptr<command> find(const std::string& symbol);
+
+} // sx
+
+#endif
+.##############################################################################
+.echo "Generating src/generated.cpp..."
+.output "../src/generated.cpp"
+.global.copyleft()
+#include <functional>
+#include <memory>
+#include <string>
+#include <vector>
+#include <sx/command.hpp>
+#include <sx/generated.hpp>
+
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
+
+using namespace po;
+using namespace std;
+using namespace boost::filesystem;
+    
+namespace sx {
+using namespace extensions;
+
+bool broadcast(const function<void(shared_ptr<command>)> func)
+{
+.for command by symbol
+    func(make_shared<$(symbol:c)>());
+.endfor
+
+    return true;
+}
+
+shared_ptr<command> find(const string& symbol)
+{
+.for command by symbol
+    if (symbol == $(symbol:c)::symbol())
+        return make_shared<$(symbol:c)>();
+.endfor
+
+    return nullptr;
+}
+
+} // sx
+.##############################################################################
+.echo "Generating include/sx/command.hpp..."
+.output "../include/sx/command.hpp"
+.global.copyleft()
+#ifndef SX_COMMAND_HPP
+#define SX_COMMAND_HPP
+
+#include <string>
+#include <vector>
+#include <boost/filesystem.hpp>
+#include <boost/program_options.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
+
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
+
+namespace sx {
+
+#define SX_VARIABLE_CONFIG "config"
+
+/**
+ * Abstract base class for definition of each SX command.
+ */
+class command
+{
+public:
+
+    /**
+     * The symbolic (not localizable) command name, lower case.
+     */
+    static const char* symbol() { return "not-implemented"; }
+
+    /**
+     * The symbolic (not localizable) command name, lower case.
+     *
+     * @return  Exmaple: "fetch-transaction"
+     */
+    virtual const char* name()
+    {
+        return symbol();
+    }
+
+    /**
+     * The localizable command category name, upper case.
+     *
+     * @return  Example: "ONLINE (OBELISK)"
+     */
+    virtual const char* category()
+    {
+        return symbol();
+    }
+
+    /**
+     * The localizable command subcategory name, upper case.
+     *
+     * @return  Example: "BLOCKCHAIN QUERIES"
+     */
+    virtual const char* subcategory()
+    {
+        return symbol();
+    }
+
+    /**
+     * The localizable command description, multiple lines, punctuated.
+     *
+     * @return  Example:
+     * "Fetch a raw transaction using a network connection to"
+     * "make requests against the obelisk load balancer back end."
+     */
+    virtual const std::vector<const char*> description()
+    {
+        return { symbol() };
+    }
+
+    /**
+     * The non-localizable command usage examples, multiple lines.
+     *
+     * @return  Example:
+     * "sx fetch-transaction HASH"
+     */
+    virtual const std::vector<const char*> example()
+    {
+        return { symbol() };
+    }
+
+    /**
+     * The localizable command explanation, multiple lines, punctuated.
+     *
+     * @return  Example:
+     * "$ sx fetch-transaction ... # fetches raw data"
+     */
+    virtual const std::vector<const char*> explanation()
+    {
+        return { symbol() };
+    }
+    
+    /**
+     * Invoke the command.
+     *
+     * @return  The appropriate console return code { -1, 0, 1 }.
+     */
+    virtual console_result invoke()
+    {
+        return console_result::failure;
+    }
+
+    /**
+     * Load command argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    virtual void load_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+
+    /**
+     * Load environment variable definitions.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    virtual void load_environment(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace boost::program_options;
+        definitions.add_options()
+            /* This composes with the command line options. */
+            (
+                SX_VARIABLE_CONFIG, 
+                value<boost::filesystem::path>()
+                    ->composing()->default_value(config_default()),
+                "The path and file name for the configuration settings file for this application."
+            );
+    }
+
+    /**
+     * Load command option definitions.
+     * The implicit_value call allows flags to be strongly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    virtual void load_options(
+        boost::program_options::options_description& definitions)
+    {
+    }
+    
+    /**
+     * Load configuration setting definitions.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    virtual void load_settings(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace boost::program_options;
+        definitions.add_options()
+.for configuration
+.   is_last_configuration = last()
+.   for setting
+.       is_last_setting = is_last_configuration & last()
+.       identifiers = section + "." + name
+.       variable = "settings." + global.format_c(section) + "." +\
+            global.format_c(name)
+.       expression = global.value_semantic(!global.true(), type,\
+            is_true(required), is_true(multiple), variable, default)
+            (
+                "$(identifiers:)",
+                $(expression),
+                "$(description:)"
+            )$(is_last_setting ?? ";")
+.   endfor
+.endfor
+    }      
+
+protected:
+
+    /**
+     * This base class is abstract but not pure virtual, so prevent direct 
+     * construction here.
+     */
+    command() {}
+
+    /**
+     * Configuration settings file bound variables.
+     */
+    struct
+    {
+.for configuration
+        struct
+        {
+.   for setting
+.       is_vector = is_true(multiple)
+.       setting_type = global.type_default(!global.true(), type,\
+            is_true(required), is_vector)
+.       vectored_type = global.vectored_type(setting_type, is_vector)
+.       pluralized_name = global.pluralize(name, is_vector)      
+            $(vectored_type:) $(pluralized_name:c);
+.   endfor
+        } $(section:c);
+.endfor
+    } settings;
+    
+    /**
+     * Environment variable bound variables.
+     */
+    struct
+    {
+        boost::filesystem::path config;
+    } environment;
+};
+
 } // sx
 
 #endif
@@ -120,31 +416,19 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 .for command by symbol
 .echo "Generating include/sx/command/$(symbol).hpp..."
 .output "../include/sx/command/$(symbol).hpp"
-/**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
- *
- * This file is part of sx.
- *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+.global.copyleft()
 #ifndef SX_$(SYMBOL:c)_HPP
 #define SX_$(SYMBOL:c)_HPP
 
+#include <stdint.h>
+#include <string>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -164,7 +448,8 @@ namespace extensions {
 /**
  * Class to implement the sx $(symbol:) command.
  */
-class $(symbol:c) : public command
+class $(symbol:c) 
+    : public command
 {
 public:
 
@@ -205,15 +490,10 @@ public:
         return
         {
 .for description
-.   if last()
-            { "$(value:)" }
-.   else
-            { "$(value:)" },
-.   endif
+            { "$(value:)" }$(last() ?? ",")
 .endfor
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -223,11 +503,7 @@ public:
         return
         {
 .for example
-.   if last()
-            { "$(value:)" }
-.   else
-            { "$(value:)" },
-.   endif
+            { "$(value:)" }$(last() ?? ",")
 .endfor
         };
     }
@@ -240,24 +516,114 @@ public:
         return
         {
 .for explanation
-.   if last()
-            { "$(value:)" }
-.   else
-            { "$(value:)" },
-.   endif
+            { "$(value:)" }$(last() ?? ",")
 .endfor
         };
     }
+    
+    /**
+     * Load program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void load_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+.for argument
+        definitions.add("$(name:)", $(limit ? "1"));
+.endfor          
+    }
+    
+    /**
+     * Load program option definitions.
+     * The implicit_value call allows flags to be strongly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void load_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace boost::program_options;
+        definitions.add_options()
+            (
+                SX_VARIABLE_CONFIG ",c",
+                value<boost::filesystem::path>(),
+                "The path and file name for the configuration settings file for this application."
+            )
+.
+.# HACK: There must be a better way to count a collection.
+.argument_count = 0
+.for argument
+.   argument_count += 1
+.endfor
+.
+.# TODO: How to block the description so as not to exceed max line length?
+.for option
+.   short_name = shortcut ? global.first_char(name)
+.   identifiers = name
+.   identifiers += if_else(short_name = "", "", "," + short_name)
+.   variable = "option." + global.format_c(name)
+.   expression = global.value_semantic(global.true(), type,\
+        is_true(required), is_true(multiple), variable, default)
+            (
+                "$(identifiers:)",
+                $(expression:),
+                "$(description:)"
+            )$((last() & (argument_count = 0)) ?? ";")
+.endfor
+.for argument
+.   expression = global.value_semantic(!global.true(), type,\
+        is_true(required), !is_default(limit, 1), name)
+            (
+                "$(name:)",
+                $(expression:),
+                "$(description:)"
+            )$(last() ?? ";")
+.endfor
+    }   
 
     /**
-     * Invoke the command with the raw arguments as provided on the command
-     * line. The process name is removed and argument count decremented.
+     * Invoke the command.
      *
-     * @param[in]  argc  The number of elements in the argv array.
-     * @param[in]  argv  The array of arguments, excluding the process.
-     * @return           The appropriate console return code { -1, 0, 1 }.
+     * @return  The appropriate console return code { -1, 0, 1 }.
      */
-    console_result invoke(int argc, const char* argv[]);
+    console_result invoke();
+    
+protected:
+
+    /**
+     * Command line argument bound variables.
+     */
+    struct
+    {
+.for argument
+.   is_vector = !is_default(limit, 1)
+.   argument_type = global.type_default(!global.true(), type,\
+        is_true(required), is_vector)
+.   vectored_type = global.vectored_type(argument_type, is_vector)        
+.   pluralized_name = global.pluralize(name, is_vector)      
+        $(vectored_type:) $(pluralized_name:c);
+.endfor
+    } argument;
+    
+    /**
+     * Command line option bound variables.
+     */
+    struct
+    {
+.for option
+.   is_vector = is_true(multiple)
+.   option_type = global.type_default(global.true(), type,\
+        is_true(required), is_vector)
+.   vectored_type = global.vectored_type(option_type, is_vector)
+.   pluralized_name = global.pluralize(name, is_vector)      
+        $(vectored_type:) $(pluralized_name:c);
+.endfor
+    } option;
 };
 
 } // extensions
@@ -268,30 +634,13 @@ public:
 .##############################################################################
 .echo "Generating test/generated_find.cpp..."
 .output "../test/generated_find.cpp"
-/*
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
- *
- * This file is part of sx.
- *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+.global.copyleft()
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+using namespace sx;
 using namespace sx::extensions;
 
 BOOST_AUTO_TEST_SUITE(generated_find)
@@ -307,30 +656,13 @@ BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
 .echo "Generating test/generated_symbol.cpp..."
 .output "../test/generated_symbol.cpp"
-/*
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
- *
- * This file is part of sx.
- *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+.global.copyleft()
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+using namespace sx;
 using namespace sx::extensions;
 
 BOOST_AUTO_TEST_SUITE(generated_symbol)
@@ -351,6 +683,8 @@ BOOST_AUTO_TEST_SUITE_END()
 sx_includedir = $\(includedir)/sx
 sx_include_HEADERS = \\
     command.hpp \\
+    dispatch.hpp \\
+    display.hpp \\
     obelisk.hpp \\
     sx.hpp
 
@@ -360,31 +694,20 @@ sx_utility_include_HEADERS += \\
     compat.hpp \\
     config.hpp \\
     console.hpp \\
-    curve.hpp \\
-    dispatch.hpp \\
-    display.hpp \\
     environment.hpp
 
 # Generated from XML data source.
 sx_command_includedir = $\(includedir)/sx/command
 sx_command_include_HEADERS = \\
-.for command by symbol where !defined(obelisk) | obelisk <> "true"
-.   if last()
-    command/$(symbol:).hpp
-.   else
-    command/$(symbol:).hpp \\
-.   endif
+.for command by symbol where !global.is_true(obelisk)
+    command/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
 
 # Generated from XML data source.
 if HAVE_OBELISK
     sx_command_include_HEADERS += \\
-.for command by symbol where defined(obelisk) & obelisk = "true"
-.   if last()
-        command/$(symbol:).hpp
-.   else
-        command/$(symbol:).hpp \\
-.   endif
+.for command by symbol where global.is_true(obelisk)
+        command/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
 endif
 .##############################################################################
@@ -403,29 +726,24 @@ AM_CPPFLAGS = \\
     -I$\(srcdir)/../include
 
 libsx_la_SOURCES = \\
+    dispatch.cpp \\
+    display.cpp \\
     generated.cpp \\
     utility/coin.cpp \\
     utility/config.cpp \\
     utility/console.cpp \\
-    utility/curve.cpp \\
-    utility/dispatch.cpp \\
-    utility/display.cpp \\
     utility/environment.cpp
 
 # Generated from XML data source.
 libsx_la_SOURCES += \\
-.for command by symbol where !defined(obelisk) | obelisk <> "true"
-.   if last()
-    $(symbol:).cpp
-.   else
-    $(symbol:).cpp \\
-.   endif
+.for command by symbol where !global.is_true(obelisk)
+    $(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
 # Generated from XML data source.
 if HAVE_OBELISK
     libsx_la_SOURCES += \\
-.for command by symbol where defined(obelisk) & obelisk = "true"
+.for command by symbol where global.is_true(obelisk)
         $(symbol:).cpp \\
 .endfor
         obelisk.cpp
@@ -448,8 +766,7 @@ sx_LDADD = \\
     -lboost_filesystem \\
     -lboost_program_options \\
     -lboost_regex \\
-    -lboost_system \\
-    -lconfig++
+    -lboost_system
 
 if HAVE_OBELISK
     sx_LDADD += \\
@@ -539,18 +856,17 @@ endif
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk.hpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\dispatch.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\console.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\curve.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\display.hpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -558,28 +874,27 @@ endif
 .endfor
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\curve.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\display.cpp" />
   </ItemGroup>  
   <ItemGroup>
 .for command by symbol
-.   if (!defined(leveldb) | leveldb <> "true") & (!defined(obelisk) | obelisk <> "true")
+.   if (!is_true(leveldb) & !is_true(obelisk))
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp" />
 .   else
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
-.       if (defined(leveldb) & obelisk = "true")
+.       if (is_true(leveldb))
       <ExcludedFromBuild Condition="'$\(Option-leveldb)' != 'true'">true</ExcludedFromBuild>
 .       endif
-.       if (defined(obelisk) & obelisk = "true")
+.       if (is_true(obelisk))
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
 .       endif
     </ClCompile>
@@ -594,7 +909,6 @@ endif
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libconfig_vc120.1.4.9.4\\build\\native\\libconfig_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libconfig_vc120.1.4.9.4\\build\\native\\libconfig_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets')" />
@@ -614,7 +928,6 @@ endif
     </PropertyGroup>
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libconfig_vc120.1.4.9.4\\build\\native\\libconfig_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libconfig_vc120.1.4.9.4\\build\\native\\libconfig_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets'))" />
@@ -686,24 +999,21 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\console.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\curve.hpp">
-      <Filter>include\\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\dispatch.hpp">
-      <Filter>include\\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\display.hpp">
-      <Filter>include\\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp">
+      <Filter>include</Filter>
+    </ClInclude>    
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -717,9 +1027,9 @@ endif
   <ItemGroup>
 .for command by symbol
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
-.   if (defined(obelisk) & obelisk = "true")
+.   if (is_true(obelisk))
       <Filter>src\\command\\obelisk</Filter>
-.   elsif (defined(stub) & stub = "true")
+.   elsif (is_true(stub))
       <Filter>src\\command\\stub</Filter>
 .   else
       <Filter>src\\command</Filter>
@@ -735,18 +1045,15 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp">
       <Filter>src\\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\curve.cpp">
-      <Filter>src\\utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp">
       <Filter>src\\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\dispatch.cpp">
-      <Filter>src\\utility</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp">
+      <Filter>src</Filter>
     </ClCompile>    
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\display.cpp">
-      <Filter>src\\utility</Filter>
-    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\display.cpp">
+      <Filter>src</Filter>
+    </ClCompile>    
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp">
       <Filter>src</Filter>
     </ClCompile>

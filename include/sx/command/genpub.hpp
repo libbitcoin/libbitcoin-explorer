@@ -20,9 +20,14 @@
 #ifndef SX_GENPUB_HPP
 #define SX_GENPUB_HPP
 
+#include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -32,7 +37,8 @@ namespace extensions {
 /**
  * Class to implement the sx genpub command.
  */
-class genpub : public command
+class genpub 
+    : public command
 {
 public:
 
@@ -72,11 +78,10 @@ public:
     {
         return
         {
-            { "Generate a public key deterministically from a wallet" },
-            { "seed or master public key." }
+            { "Generate a public key deterministically from a wallet" }
+            { "seed or master public key." },
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -85,7 +90,7 @@ public:
     {
         return
         {
-            { "sx genpub N [CHANGE]" }
+            { "sx genpub N [CHANGE]" },
         };
     }
 
@@ -96,13 +101,42 @@ public:
     {
         return
         {
-            { "Generate public key from a wallet seed or master public key." },
-            { "The output is non-deterministic if any other input is used." },
-            { "" },
-            { "  $ cat wallet.seed | sx genpub 0" },
-            { "  040a053d0a42d58b7e34346daae9d40ce33fad5d65bbaa6c615a2b76447734b2c712b5d45de839b2e5e7ac00201cbea3d2d376cfcc7a3f3f508f1e6761f6c271bf" }
+            { "Generate public key from a wallet seed or master public key." }
+            { "The output is non-deterministic if any other input is used." }
+            { "" }
+            { "  $ cat wallet.seed | sx genpub 0" }
+            { "  040a053d0a42d58b7e34346daae9d40ce33fad5d65bbaa6c615a2b76447734b2c712b5d45de839b2e5e7ac00201cbea3d2d376cfcc7a3f3f508f1e6761f6c271bf" },
         };
     }
+    
+    /**
+     * Initialize the program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void initialize_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+    
+    /**
+     * Initialize the program option definitions.
+     * The implicit_value call allows flags to be stringly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void initialize_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace std;
+        using namespace boost::filesystem;
+        using namespace boost::program_options;
+        definitions.add_options()
+    }   
 
     /**
      * Invoke the command with the raw arguments as provided on the command

@@ -23,17 +23,17 @@
 #include <boost/filesystem.hpp>
 
 /* This doesn't go far enough, but it helps make things work for ASCII input. */
-#ifdef _WIN32
-    #define WIDE(s) L#s
-    typedef wchar_t tchar;
-    typedef std::wstring tstring;
-    typedef boost::filesystem::wpath tpath;
-#else
-    #define WIDE(s) s
-    typedef char tchar;
-    typedef std::string tstring;
-    typedef boost::filesystem::path tpath;
-#endif
+//#ifdef _WIN32
+//    #define WIDE(s) L#s
+//    typedef wchar_t tchar;
+//    typedef std::wstring tstring;
+//    typedef boost::filesystem::wpath tpath;
+//#else
+//    #define WIDE(s) s
+//    typedef char tchar;
+//    typedef std::string tstring;
+//    typedef boost::filesystem::path tpath;
+//#endif
 
 /* This allows std::uniform_int_distribution platform differences. */
 #ifdef _MSC_VER

@@ -18,9 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <sx/dispatch.hpp>
+#include <sx/display.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/display.hpp>
-#include <sx/utility/dispatch.hpp>
+
+// TODO: once these settle down make testable through stream injection.
 
 namespace sx {
 
@@ -41,6 +43,11 @@ void display_invalid_config(const std::string& file)
 {
     std::cerr << "sx: config file '" << file << "' doesn't exist!" 
         << std::endl;
+}
+
+void display_invalid_variables(const std::string& message)
+{
+    std::cerr << "sx: " << message << std::endl;
 }
 
 void display_line()

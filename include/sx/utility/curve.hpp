@@ -33,19 +33,19 @@ namespace sx {
  */
 bc::ec_secret generate_random_secret();
 
-/**
- * Parse command line args for a secret and a point.
- * Searches every argument and returns the last secret and the last point
- * discovered.
- *
- * @param[in]  argc    The count of arguments in the argument array.
- * @param[in]  argv    The argument array.
- * @param[out] secret  The parsed secret.
- * @param[out] point   The parsed point.
- * @return             True if a secret and a point have been returned.
- */
-bool ec_math_parse_args(int argc, const char* argv[], bc::ec_secret& secret,
-    bc::ec_point& point);
+///**
+// * Parse command line args for a secret and a point.
+// * Searches every argument and returns the last secret and the last point
+// * discovered.
+// *
+// * @param[in]  argc    The count of arguments in the argument array.
+// * @param[in]  argv    The argument array.
+// * @param[out] secret  The parsed secret.
+// * @param[out] point   The parsed point.
+// * @return             True if a secret and a point have been returned.
+// */
+//bool ec_math_parse_args(int argc, const char* argv[], bc::ec_secret& secret,
+//    bc::ec_point& point);
 
 /**
  * Parse a point from the specified argument.

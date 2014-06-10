@@ -18,88 +18,39 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <string>
+#include <vector>
 #include <bitcoin/bitcoin.hpp>
+#include <boost/program_options.hpp>
+#include <sx/command.hpp>
 #include <sx/command/stealth-addr.hpp>
+#include <sx/generated.hpp>
+#include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
+#include <sx/utility/environment.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-bool capture_signatures(int argc, const char* argv[], 
-    std::vector<std::string> args, uint8_t& signatures, bool& reuse_address)
+console_result stealth_addr::invoke()
 {
-    signatures = 0;
-    reuse_address = false;
+    // Bound parameters.
+    auto signatures = option.signatures;
+    const auto reuse_key = option.reuse_key;
+    const auto encoded_scan_pubkey = argument.scan_pubkey;
+    const auto encoded_spend_pubkeys = argument.spend_pubkeys;
+    const auto testnet = settings.general.testnet;
 
-    for (int i = 1; i < argc; i++)
-    {
-        std::string arg = argv[i];
-
-        if (is_option(arg, SX_OPTION_REUSE_KEY))
-        {
-            reuse_address = true;
-            continue;
-        }
-
-        if (is_option(arg, SX_OPTION_SIGNATURES))
-        {
-            if (++i == argc)
-            {
-                std::cerr << "sx: --signatures requires a number." << std::endl;
-                return false;
-            }
-
-            if (!parse(signatures, arg))
-            {
-                std::cerr << "sx: --signatures value is invalid." << std::endl;
-                return false;
-            }
-
-            continue;
-        }
-
-        args.push_back(arg);
-    }
-
-    return true;
-}
-
-console_result stealth_addr::invoke(int argc, const char* argv[])
-{
-    if (!validate_argument_range(argc, example(), 2))
-        return console_result::failure;
-
-    uint8_t number_sigs;
-    bool reuse_address = false;
-    std::vector<std::string> args;
-
-    if (!capture_signatures(argc, argv, args, number_sigs, reuse_address))
-        return console_result::failure;
-
-    if (args.empty())
-    {
-        std::cerr << "sx: Scan pubkey must be provided." << std::endl;
-        return console_result::failure;
-    }
-
-    // Remove the first value as the scan_pubkey.
-    const auto scan_pubkey = decode_hex(args.front());
-    args.erase(args.begin());
-
-    // Read spend pubkeys.
-    if (args.size() > std::numeric_limits<uint8_t>::max())
-    {
-        std::cerr << "sx: Too many spend pubkeys." << std::endl;
-        return console_result::failure;
-    }
-
-    // Remaining keys are spend_pubkeys.
+    // Decode raw parameters.
+    // TODO: figure out how to incorporate standard deserialization into the
+    // boost::program_options::value_semantic definition so we can skip this.
+    const auto scan_pubkey = decode_hex(encoded_scan_pubkey);
     typedef std::vector<data_chunk> pubkey_list;
     pubkey_list spend_pubkeys;
-    for (const auto& arg: args)
-        spend_pubkeys.emplace_back(decode_hex(arg));
+    for (const auto& spend_pubkey: encoded_spend_pubkeys)
+        spend_pubkeys.emplace_back(decode_hex(spend_pubkey));
+    // ------------------------------------------------------------------------
 
     // Now we have the data, construct actual address.
     // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
@@ -109,7 +60,7 @@ console_result stealth_addr::invoke(int argc, const char* argv[])
     const uint8_t some_flag = 1;
     const uint8_t stealth_version = 0x2a;
     const uint8_t default_stealth_prefix_filter = 0x00;
-    const uint8_t options_bitfield = if_else(reuse_address, some_flag, 0);
+    const uint8_t options_bitfield = if_else(reuse_key, some_flag, 0);
     const uint8_t number_keys = static_cast<uint8_t>(spend_pubkeys.size());
 
     raw_addr.push_back(stealth_version);
@@ -122,14 +73,14 @@ console_result stealth_addr::invoke(int argc, const char* argv[])
         extend_data(raw_addr, pubkey);
     
     // If not configured then set it to the number_keys
-    if (number_sigs == 0)
-        number_sigs = number_keys;
+    if (signatures == 0)
+        signatures = number_keys;
 
     // if reusing the address increment the number of signatures.
-    if (reuse_address)
-        ++number_sigs;
+    if (reuse_key)
+        ++signatures;
 
-    raw_addr.push_back(number_sigs);
+    raw_addr.push_back(signatures);
 
     // TODO: enable this feature later (Prefix filter currently unused).
     raw_addr.push_back(default_stealth_prefix_filter);

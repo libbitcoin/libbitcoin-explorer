@@ -20,9 +20,14 @@
 #ifndef SX_FETCH_TRANSACTION_HPP
 #define SX_FETCH_TRANSACTION_HPP
 
+#include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -32,7 +37,8 @@ namespace extensions {
 /**
  * Class to implement the sx fetch-transaction command.
  */
-class fetch_transaction : public command
+class fetch_transaction 
+    : public command
 {
 public:
 
@@ -72,11 +78,10 @@ public:
     {
         return
         {
-            { "Fetch a raw transaction using a network connection to" },
-            { "make requests against the obelisk load balancer backend." }
+            { "Fetch a raw transaction using a network connection to" }
+            { "make requests against the obelisk load balancer backend." },
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -85,7 +90,7 @@ public:
     {
         return
         {
-            { "sx fetch-transaction HASH" }
+            { "sx fetch-transaction HASH" },
         };
     }
 
@@ -96,14 +101,43 @@ public:
     {
         return
         {
-            { "Fetch a raw transaction using a network connection to" },
-            { "make requests against the obelisk load balancer backend." },
-            { "" },
-            { "EXAMPLE:" },
-            { "" },
-            { "  $ sx fetch-transaction 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4 # fetches raw data" }
+            { "Fetch a raw transaction using a network connection to" }
+            { "make requests against the obelisk load balancer backend." }
+            { "" }
+            { "EXAMPLE:" }
+            { "" }
+            { "  $ sx fetch-transaction 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4 # fetches raw data" },
         };
     }
+    
+    /**
+     * Initialize the program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void initialize_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+    
+    /**
+     * Initialize the program option definitions.
+     * The implicit_value call allows flags to be stringly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void initialize_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace std;
+        using namespace boost::filesystem;
+        using namespace boost::program_options;
+        definitions.add_options()
+    }   
 
     /**
      * Invoke the command with the raw arguments as provided on the command

@@ -42,6 +42,8 @@ const uint32_t default_poll_period_ms = 100;
  * This prevents code repetition while retaining stack-based allocation.
  * A single thread is allocated in the pool and service settings are loaded
  * from config.
+ *
+ * TODO: this is not testable as is - move into function.
  */
 #define OBELISK_FULLNODE(__pool__, __fullnode__) \
     config_map_type __config__; \

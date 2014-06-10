@@ -20,9 +20,14 @@
 #ifndef SX_HISTORY_HPP
 #define SX_HISTORY_HPP
 
+#include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -32,7 +37,8 @@ namespace extensions {
 /**
  * Class to implement the sx history command.
  */
-class history : public command
+class history 
+    : public command
 {
 public:
 
@@ -72,12 +78,11 @@ public:
     {
         return
         {
-            { "Get list of output points, values, and their spends for an" },
-            { "address. grep can filter for just unspent outputs which can" },
-            { "be fed into mktx." }
+            { "Get list of output points, values, and their spends for an" }
+            { "address. grep can filter for just unspent outputs which can" }
+            { "be fed into mktx." },
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -86,7 +91,7 @@ public:
     {
         return
         {
-            { "sx history [-j] ADDRESS1 [ADDRESS2...]" }
+            { "sx history [-j] ADDRESS1 [ADDRESS2...]" },
         };
     }
 
@@ -97,22 +102,51 @@ public:
     {
         return
         {
-            { "The history tool uses a network connection to make requests against the" },
-            { "load balancer backend." },
-            { "" },
-            { "  -j, --json                 Enable json parseable output." },
-            { "" },
-            { "Example:" },
-            { "" },
-            { "  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history" },
-            { "  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" },
-            { "    output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1" },
-            { "    output_height: 247683" },
-            { "    value:  100000" },
-            { "    spend: b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0" },
-            { "    spend_height: 247742" }
+            { "The history tool uses a network connection to make requests against the" }
+            { "load balancer backend." }
+            { "" }
+            { "  -j, --json                 Enable json parseable output." }
+            { "" }
+            { "Example:" }
+            { "" }
+            { "  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history" }
+            { "  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }
+            { "    output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1" }
+            { "    output_height: 247683" }
+            { "    value:  100000" }
+            { "    spend: b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0" }
+            { "    spend_height: 247742" },
         };
     }
+    
+    /**
+     * Initialize the program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void initialize_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+    
+    /**
+     * Initialize the program option definitions.
+     * The implicit_value call allows flags to be stringly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void initialize_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace std;
+        using namespace boost::filesystem;
+        using namespace boost::program_options;
+        definitions.add_options()
+    }   
 
     /**
      * Invoke the command with the raw arguments as provided on the command

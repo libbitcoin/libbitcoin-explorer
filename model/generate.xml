@@ -1,6 +1,54 @@
 <?xml version = "1.0" ?>
 <generate script="generate.gsl">
 
+  <configuration section="general">
+    <setting name="testnet" type="bool" description="Set to true in order to operate this application using Bitcoin testnet (vs. mainnet) addressing and blockchain data. This option is EXPERIMENTAL because other  libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
+  </configuration>
+  <configuration section="obelisk">
+    <setting name="client-certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.sx.cert" />
+    <setting name="server-public-key" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
+    <setting name="service" default="tcp://obelisk.unsystem.net:8081" description="The URI of the server to which this application may connect." />
+  </configuration>  
+  
+  <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
+    <description value="See a stealth address from given input." />
+    <example value="sx stealth-addr [--reuse-key|-r] [--signatures|-s NUMBER_SIGNATURES] SCAN_PUBKEY SPEND_PUBKEY1 ... SPEND_PUBKEYN" />
+    <explanation value="See a stealth address from given input." />
+    <explanation value="" />
+    <explanation value="  --reuse-key -r    Reuse SCAN_PUBKEY for SPEND_PUBKEY." />
+    <explanation value="  --signatures -s   Specify NUMBER_SIGNATURES needed." />
+  </command>
+
+  <command symbol="stealth-initiate" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
+    <description value="Initiate a new stealth payment." />
+    <example value="sx stealth-initiate EPHEM_SECRET SCAN_PUBKEY SPEND_PUBKEY" />
+    <explanation value="Initiate a new stealth payment." />
+  </command>
+
+  <command symbol="stealth-uncover" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
+    <description value="Uncover a stealth address." />
+    <example value="sx stealth-uncover EPHEM_PUBKEY SCAN_SECRET SPEND_PUBKEY" />
+    <explanation value="Uncover a stealth address." />
+  </command>
+
+  <command symbol="stealth-uncover-secret" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
+    <description value="Uncover a stealth secret." />
+    <example value="sx stealth-uncover-secret EPHEM_PUBKEY SCAN_SECRET SPEND_SECRET" />
+    <explanation value="Uncover a stealth secret." />
+  </command>
+
+  <command symbol="stealth-newkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
+    <description value="Generate new stealth keys and an address." />
+    <example value="sx stealth-newkey" />
+    <explanation value="Generate new stealth keys and an address." />
+  </command>
+
+  <command symbol="stealth-show-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
+    <description value="Show details for a stealth address." />
+    <example value="sx stealth-show-addr STEALTH_ADDRESS" />
+    <explanation value="Show details for a stealth address." />
+  </command>
+
   <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
     <description value="Convert Bitcoins into Satoshis." />
     <example value="sx satoshi BTC" />
@@ -29,7 +77,7 @@
     <explanation value="  # generate an address for 2-of-3 multisig transactions" />
     <explanation value="  for n in 1 2 3; do echo 'b220b5bd2909df1d74b71c9e664233bf' | sx genpriv $n > key${n}; done" />
     <explanation value="  sx rawscript 2 [ $(cat key1 | sx pubkey) ] [ $(cat key2 | sx pubkey) ] [ $(cat key3 | sx pubkey) ] 3 checkmultisig | sx scripthash" />
-    <explanation value="  33opBmv3oJTXu6rxtzsr571SL2Srtw9Cg8" />    
+    <explanation value="  33opBmv3oJTXu6rxtzsr571SL2Srtw9Cg8" />
   </command>
   
   <command symbol="rawscript" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">
@@ -574,45 +622,6 @@
     <description value="Watch transactions from the network searching for a certain hash." />
     <example value="sx watchtx [TXHASH]..." />
     <explanation value="Watch transactions from the network searching for a certain hash." />
-  </command>
-
-  <command symbol="stealth-initiate" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <description value="Initiate a new stealth payment." />
-    <example value="sx stealth-initiate EPHEM_SECRET SCAN_PUBKEY SPEND_PUBKEY" />
-    <explanation value="Initiate a new stealth payment." />
-  </command>
-
-  <command symbol="stealth-uncover" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <description value="Uncover a stealth address." />
-    <example value="sx stealth-uncover EPHEM_PUBKEY SCAN_SECRET SPEND_PUBKEY" />
-    <explanation value="Uncover a stealth address." />
-  </command>
-
-  <command symbol="stealth-uncover-secret" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <description value="Uncover a stealth secret." />
-    <example value="sx stealth-uncover-secret EPHEM_PUBKEY SCAN_SECRET SPEND_SECRET" />
-    <explanation value="Uncover a stealth secret." />
-  </command>
-
-  <command symbol="stealth-newkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <description value="Generate new stealth keys and an address." />
-    <example value="sx stealth-newkey" />
-    <explanation value="Generate new stealth keys and an address." />
-  </command>
-
-  <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <description value="See a stealth address from given input." />
-    <example value="sx stealth-addr [--reuse-key|-r] [--signatures|-s NSIGS] SCAN_PUBKEY SPEND_PUBKEY1 ... SPEND_PUBKEYN" />
-    <explanation value="See a stealth address from given input." />
-    <explanation value="" />
-    <explanation value="  --reuse-key -r    Reuse SCAN_PUBKEY for SPEND_PUBKEY" />
-    <explanation value="  --signatures -s   Specify NUMBER_SIGNATURES needed." />
-  </command>
-
-  <command symbol="stealth-show-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <description value="Show details for a stealth address." />
-    <example value="sx stealth-show-addr STEALTH_ADDRESS" />
-    <explanation value="Show details for a stealth address." />
   </command>
 
   <command symbol="hd-seed" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">

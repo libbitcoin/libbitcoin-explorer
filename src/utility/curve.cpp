@@ -25,10 +25,13 @@ using namespace bc;
 
 namespace sx {
 
+// TODO: reconcile with [data_chunk random_fill(size_t size)]
+// Not testable due to lack of random engine injection.
 ec_secret generate_random_secret()
 {
     std::random_device random;
     std::default_random_engine engine(random());
+
     ec_secret secret;
     for (uint8_t& byte: secret)
         byte = engine() % std::numeric_limits<uint8_t>::max();
@@ -36,23 +39,23 @@ ec_secret generate_random_secret()
     return secret;
 }
 
-bool ec_math_parse_args(int argc, const char* argv[], ec_secret& secret,
-    ec_point& point)
-{
-    for (int i = 1; i < argc; ++i)
-    {
-        const auto arg = argv[i];
-        if (set_ec_secret(secret, arg))
-            continue;
-
-        if (set_ec_point(point, arg))
-            continue;
-    }
-
-    // NOTE: these values are never set by this function 
-    // so it is assumed they are the initial values.
-    return (secret != null_hash && !point.empty());
-}
+//bool ec_math_parse_args(int argc, const char* argv[], ec_secret& secret,
+//    ec_point& point)
+//{
+//    for (int i = 1; i < argc; ++i)
+//    {
+//        const auto arg = argv[i];
+//        if (set_ec_secret(secret, arg))
+//            continue;
+//
+//        if (set_ec_point(point, arg))
+//            continue;
+//    }
+//
+//    // NOTE: these values are never set by this function 
+//    // so it is assumed they are the initial values.
+//    return (secret != null_hash && !point.empty());
+//}
 
 bool set_ec_secret(ec_secret& secret, const std::string& arg)
 {

@@ -20,9 +20,14 @@
 #ifndef SX_RAWSCRIPT_HPP
 #define SX_RAWSCRIPT_HPP
 
+#include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -32,7 +37,8 @@ namespace extensions {
 /**
  * Class to implement the sx rawscript command.
  */
-class rawscript : public command
+class rawscript 
+    : public command
 {
 public:
 
@@ -72,10 +78,9 @@ public:
     {
         return
         {
-            { "Create the raw hex representation from a script." }
+            { "Create the raw hex representation from a script." },
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -84,7 +89,7 @@ public:
     {
         return
         {
-            { "sx rawscript [ARGS]..." }
+            { "sx rawscript [ARGS]..." },
         };
     }
 
@@ -95,13 +100,42 @@ public:
     {
         return
         {
-            { "Create the raw hex representation from a script." },
-            { "" },
-            { "EXAMPLE:" },
-            { "  $ sx rawscript dup # translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wik" },
-            { "  76" }
+            { "Create the raw hex representation from a script." }
+            { "" }
+            { "EXAMPLE:" }
+            { "  $ sx rawscript dup # translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wik" }
+            { "  76" },
         };
     }
+    
+    /**
+     * Initialize the program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void initialize_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+    
+    /**
+     * Initialize the program option definitions.
+     * The implicit_value call allows flags to be stringly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void initialize_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace std;
+        using namespace boost::filesystem;
+        using namespace boost::program_options;
+        definitions.add_options()
+    }   
 
     /**
      * Invoke the command with the raw arguments as provided on the command

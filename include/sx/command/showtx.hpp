@@ -20,9 +20,14 @@
 #ifndef SX_SHOWTX_HPP
 #define SX_SHOWTX_HPP
 
+#include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -32,7 +37,8 @@ namespace extensions {
 /**
  * Class to implement the sx showtx command.
  */
-class showtx : public command
+class showtx 
+    : public command
 {
 public:
 
@@ -72,10 +78,9 @@ public:
     {
         return
         {
-            { "Show the details of a transaction." }
+            { "Show the details of a transaction." },
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -84,7 +89,7 @@ public:
     {
         return
         {
-            { "sx showtx [-j] [FILENAME]" }
+            { "sx showtx [-j] [FILENAME]" },
         };
     }
 
@@ -95,31 +100,60 @@ public:
     {
         return
         {
-            { "'showtx' allows inspecting of tx files." },
-            { "" },
-            { "  -j, --json                 Enable json parseable output." },
-            { "" },
-            { "Example:" },
-            { "" },
-            { "  $ sx fetch-transaction cd484f683bc99c94948613a7f7254880e9c98cd74f2760a2d2c4e372fda1bc6a | sx showtx" },
-            { "  hash: cd484f683bc99c94948613a7f7254880e9c98cd74f2760a2d2c4e372fda1bc6a" },
-            { "  version: 1" },
-            { "  locktime: 0" },
-            { "  Input:" },
-            { "    previous output: f97367c5dc9e521a4c541327cbff69d118e35a2d0b67f91eb7771741a6374b20:0" },
-            { "    script: [ 3046022100f63b1109e1b04c0a4b5230e6f6c75f5e2a10c16d022cdf93de9b3cc946e6e24a022100ae3da40f05504521f2f3557e736a2d1724d6d1d8c18b66a64990bf1afee78dba01 ] [ 028a2adb719bbf7e9cf0cb868d4f30b10551f2a4402eb2ece9b177b49e68e90511 ]" },
-            { "    sequence: 4294967295" },
-            { "    address: 1NYMePixLjAATLaz55vN7FfTLUfFB23Tt" },
-            { "  Output:" },
-            { "    value: 2676400" },
-            { "    script: dup hash160 [ 6ff00bd374abb3a3f19d1576bb36520b2cb15e2d ] equalverify checksig" },
-            { "    address: 1BCsZziw8Q1sMhxr2DjAR7Rmt1qQvYwXSU" },
-            { "  Output:" },
-            { "    value: 1000000" },
-            { "    script: hash160 [ 0db1635fe975792a9a7b6f2d4061b730478dc6b9 ] equal" },
-            { "    address: 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc" }
+            { "'showtx' allows inspecting of tx files." }
+            { "" }
+            { "  -j, --json                 Enable json parseable output." }
+            { "" }
+            { "Example:" }
+            { "" }
+            { "  $ sx fetch-transaction cd484f683bc99c94948613a7f7254880e9c98cd74f2760a2d2c4e372fda1bc6a | sx showtx" }
+            { "  hash: cd484f683bc99c94948613a7f7254880e9c98cd74f2760a2d2c4e372fda1bc6a" }
+            { "  version: 1" }
+            { "  locktime: 0" }
+            { "  Input:" }
+            { "    previous output: f97367c5dc9e521a4c541327cbff69d118e35a2d0b67f91eb7771741a6374b20:0" }
+            { "    script: [ 3046022100f63b1109e1b04c0a4b5230e6f6c75f5e2a10c16d022cdf93de9b3cc946e6e24a022100ae3da40f05504521f2f3557e736a2d1724d6d1d8c18b66a64990bf1afee78dba01 ] [ 028a2adb719bbf7e9cf0cb868d4f30b10551f2a4402eb2ece9b177b49e68e90511 ]" }
+            { "    sequence: 4294967295" }
+            { "    address: 1NYMePixLjAATLaz55vN7FfTLUfFB23Tt" }
+            { "  Output:" }
+            { "    value: 2676400" }
+            { "    script: dup hash160 [ 6ff00bd374abb3a3f19d1576bb36520b2cb15e2d ] equalverify checksig" }
+            { "    address: 1BCsZziw8Q1sMhxr2DjAR7Rmt1qQvYwXSU" }
+            { "  Output:" }
+            { "    value: 1000000" }
+            { "    script: hash160 [ 0db1635fe975792a9a7b6f2d4061b730478dc6b9 ] equal" }
+            { "    address: 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc" },
         };
     }
+    
+    /**
+     * Initialize the program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void initialize_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+    
+    /**
+     * Initialize the program option definitions.
+     * The implicit_value call allows flags to be stringly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void initialize_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace std;
+        using namespace boost::filesystem;
+        using namespace boost::program_options;
+        definitions.add_options()
+    }   
 
     /**
      * Invoke the command with the raw arguments as provided on the command

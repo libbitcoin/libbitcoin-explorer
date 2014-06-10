@@ -20,9 +20,14 @@
 #ifndef SX_SHOWBLKHEAD_HPP
 #define SX_SHOWBLKHEAD_HPP
 
+#include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -32,7 +37,8 @@ namespace extensions {
 /**
  * Class to implement the sx showblkhead command.
  */
-class showblkhead : public command
+class showblkhead 
+    : public command
 {
 public:
 
@@ -72,10 +78,9 @@ public:
     {
         return
         {
-            { "Show the details of a block header." }
+            { "Show the details of a block header." },
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -84,7 +89,7 @@ public:
     {
         return
         {
-            { "sx showblkhead [FILENAME]" }
+            { "sx showblkhead [FILENAME]" },
         };
     }
 
@@ -95,22 +100,51 @@ public:
     {
         return
         {
-            { "'showblkhead' allows inspecting of block headers." },
-            { "" },
-            { "  $ sx showblkhead headerfile.blk" },
-            { "  hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0" },
-            { "  version: 1  locktime: 0" },
-            { "  Input:" },
-            { "    previous output:" },
-            { "  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0" },
-            { "    script:   sequence: 4294967295" },
-            { "  Output:" },
-            { "    value: 90000" },
-            { "    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify" },
-            { "  checksig" },
-            { "    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe" }
+            { "'showblkhead' allows inspecting of block headers." }
+            { "" }
+            { "  $ sx showblkhead headerfile.blk" }
+            { "  hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0" }
+            { "  version: 1  locktime: 0" }
+            { "  Input:" }
+            { "    previous output:" }
+            { "  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0" }
+            { "    script:   sequence: 4294967295" }
+            { "  Output:" }
+            { "    value: 90000" }
+            { "    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify" }
+            { "  checksig" }
+            { "    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe" },
         };
     }
+    
+    /**
+     * Initialize the program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void initialize_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+    
+    /**
+     * Initialize the program option definitions.
+     * The implicit_value call allows flags to be stringly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void initialize_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace std;
+        using namespace boost::filesystem;
+        using namespace boost::program_options;
+        definitions.add_options()
+    }   
 
     /**
      * Invoke the command with the raw arguments as provided on the command

@@ -20,9 +20,14 @@
 #ifndef SX_SIGN_INPUT_HPP
 #define SX_SIGN_INPUT_HPP
 
+#include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/compat.hpp>
+#include <sx/utility/config.hpp>
+#include <sx/utility/console.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -32,7 +37,8 @@ namespace extensions {
 /**
  * Class to implement the sx sign-input command.
  */
-class sign_input : public command
+class sign_input 
+    : public command
 {
 public:
 
@@ -72,10 +78,9 @@ public:
     {
         return
         {
-            { "Sign a transaction input." }
+            { "Sign a transaction input." },
         };
     }
-
 
     /**
      * The non-localizable command usage examples, multiple lines.
@@ -84,7 +89,7 @@ public:
     {
         return
         {
-            { "cat secret.key | sx sign-input FILENAME INDEX PREVOUT_SCRIPT" }
+            { "cat secret.key | sx sign-input FILENAME INDEX PREVOUT_SCRIPT" },
         };
     }
 
@@ -95,53 +100,82 @@ public:
     {
         return
         {
-            { "Sign a transaction input." },
-            { "" },
-            { "" },
-            { "Note how the input script in the following transaction is empty." },
-            { "  $ sx mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000" },
-            { "  $ sx showtx txfile.tx" },
-            { "  hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0" },
-            { "  version: 1  locktime: 0" },
-            { "  Input:" },
-            { "    previous output:" },
-            { "  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0" },
-            { "    script:   sequence: 4294967295" },
-            { "  Output:" },
-            { "    value: 90000" },
-            { "    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify" },
-            { "  checksig" },
-            { "    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe" },
-            { "" },
-            { "We will now sign the first input using our private key." },
-            { "" },
-            { "  $ echo '5KPFsatiYrJcvCSRrDbtx61822vZjeGGGx3wu38pQDHRF8eVJ8H' > private.key" },
-            { "  $ DECODED_ADDR=$(cat private.key | sx addr | sx decode-addr)" },
-            { "  $ PREVOUT_SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)" },
-            { "  $ SIGNATURE=$(cat private.key | sx sign-input txfile.tx 0 $PREVOUT_SCRIPT)" },
-            { "  $ SIGNATURE_AND_PUBKEY_SCRIPT=$(sx rawscript [ $SIGNATURE ] [ $(cat private.key | sx pubkey) ])" },
-            { "  $ sx set-input txfile.tx 0 $SIGNATURE_AND_PUBKEY_SCRIPT > txfile.tx.signed  # the first input has index 0" },
-            { "" },
-            { "Note how the input script in the following transaction is now filled." },
-            { "" },
-            { "  $ cat txfile.tx.signed | sx showtx" },
-            { "  hash: cc5650c69173e7607c095200f4ff36265f9fbb45e112b60cd467d696b2724488" },
-            { "  version: 1" },
-            { "  locktime: 0" },
-            { "  Input:" },
-            { "    previous output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0" },
-            { "    script: [ 3045022100b778f7fb270b751491ba7e935a6978eaea2a44795b3f6636ea583939697b1ca102203ce47d3ecb0b7e832114e88e549fce476d4ea120ca1e60c508fe8083889a9cba01 ] [ 04c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0adb73f303ae1682415253f4411777224ab477ad098347ddb7e0b94d49261e613 ]" },
-            { "    sequence: 4294967295" },
-            { "    address: 1MyKMeDsom7rYcp69KpbKn4DcyuvLMkLYJ" },
-            { "  Output:" },
-            { "    value: 90000" },
-            { "    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig" },
-            { "    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe" },
-            { "" },
-            { "" },
-            { "Now the input script is prepared, and the transaction is signed." }
+            { "Sign a transaction input." }
+            { "" }
+            { "" }
+            { "Note how the input script in the following transaction is empty." }
+            { "  $ sx mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000" }
+            { "  $ sx showtx txfile.tx" }
+            { "  hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0" }
+            { "  version: 1  locktime: 0" }
+            { "  Input:" }
+            { "    previous output:" }
+            { "  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0" }
+            { "    script:   sequence: 4294967295" }
+            { "  Output:" }
+            { "    value: 90000" }
+            { "    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify" }
+            { "  checksig" }
+            { "    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe" }
+            { "" }
+            { "We will now sign the first input using our private key." }
+            { "" }
+            { "  $ echo '5KPFsatiYrJcvCSRrDbtx61822vZjeGGGx3wu38pQDHRF8eVJ8H' > private.key" }
+            { "  $ DECODED_ADDR=$(cat private.key | sx addr | sx decode-addr)" }
+            { "  $ PREVOUT_SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)" }
+            { "  $ SIGNATURE=$(cat private.key | sx sign-input txfile.tx 0 $PREVOUT_SCRIPT)" }
+            { "  $ SIGNATURE_AND_PUBKEY_SCRIPT=$(sx rawscript [ $SIGNATURE ] [ $(cat private.key | sx pubkey) ])" }
+            { "  $ sx set-input txfile.tx 0 $SIGNATURE_AND_PUBKEY_SCRIPT > txfile.tx.signed  # the first input has index 0" }
+            { "" }
+            { "Note how the input script in the following transaction is now filled." }
+            { "" }
+            { "  $ cat txfile.tx.signed | sx showtx" }
+            { "  hash: cc5650c69173e7607c095200f4ff36265f9fbb45e112b60cd467d696b2724488" }
+            { "  version: 1" }
+            { "  locktime: 0" }
+            { "  Input:" }
+            { "    previous output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0" }
+            { "    script: [ 3045022100b778f7fb270b751491ba7e935a6978eaea2a44795b3f6636ea583939697b1ca102203ce47d3ecb0b7e832114e88e549fce476d4ea120ca1e60c508fe8083889a9cba01 ] [ 04c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0adb73f303ae1682415253f4411777224ab477ad098347ddb7e0b94d49261e613 ]" }
+            { "    sequence: 4294967295" }
+            { "    address: 1MyKMeDsom7rYcp69KpbKn4DcyuvLMkLYJ" }
+            { "  Output:" }
+            { "    value: 90000" }
+            { "    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig" }
+            { "    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe" }
+            { "" }
+            { "" }
+            { "Now the input script is prepared, and the transaction is signed." },
         };
     }
+    
+    /**
+     * Initialize the program argument definitions.
+     * A value of -1 indicates that the number of instances is unlimited.
+     *
+     * @param[out] definitions  The defined program argument definitions.
+     */
+    void initialize_arguments(
+        boost::program_options::positional_options_description& definitions)
+    {
+    }
+    
+    /**
+     * Initialize the program option definitions.
+     * The implicit_value call allows flags to be stringly-typed on read while
+     * allowing but not requiring a value on the command line for the option.
+     *
+     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
+     *
+     * @param[out] definitions  The defined program option definitions.
+     */
+    void initialize_options(
+        boost::program_options::options_description& definitions)
+    {
+        using namespace std;
+        using namespace boost::filesystem;
+        using namespace boost::program_options;
+        definitions.add_options()
+    }   
 
     /**
      * Invoke the command with the raw arguments as provided on the command
