@@ -135,7 +135,7 @@ public:
             )
             (
                 "COMMAND",
-                value<std::string>(&argument.command),
+                value<std::string>(&argument_.command),
                 "Get help for the COMMAND."
             );
     }   
@@ -143,11 +143,23 @@ public:
     /**
      * Invoke the command.
      *
+     * @param[in]   input   The input stream for the command execution.
+     * @param[out]  output  The input stream for the command execution.
+     * @param[out]  error   The input stream for the command execution.
      * @return  The appropriate console return code { -1, 0, 1 }.
      */
-    console_result invoke();
+    virtual console_result invoke(std::istream& input, std::ostream& output,
+        std::ostream& cerr);
+
+    /**
+     * Get the value of the COMMAND argument.
+     */
+    virtual std::string get_command_argument()
+    {
+        return argument_.command;
+    }           
     
-protected:
+private:
 
     /**
      * Command line argument bound variables.
@@ -155,14 +167,14 @@ protected:
     struct
     {
         std::string command;
-    } argument;
+    } argument_;
     
     /**
      * Command line option bound variables.
      */
     struct
     {
-    } option;
+    } option_;
 };
 
 } // extensions

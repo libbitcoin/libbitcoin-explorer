@@ -33,14 +33,15 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result stealth_addr::invoke()
+console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
     // Bound parameters.
-    auto signatures = option.signatures;
-    const auto reuse_key = option.reuse_key;
-    const auto encoded_scan_pubkey = argument.scan_pubkey;
-    const auto encoded_spend_pubkeys = argument.spend_pubkeys;
-    const auto testnet = settings.general.testnet;
+    auto signatures = get_signatures_option();
+    const auto reuse_key = get_reuse_key_option();
+    const auto encoded_scan_pubkey = get_scan_pubkey_argument();
+    const auto encoded_spend_pubkeys = get_spend_pubkeys_argument();
+    const auto testnet = get_general_testnet_setting();
 
     // Decode raw parameters.
     // TODO: figure out how to incorporate standard deserialization into the
@@ -88,6 +89,7 @@ console_result stealth_addr::invoke()
     const auto checksum = bitcoin_checksum(raw_addr);
     append_checksum(raw_addr);
     const auto stealth_addr = encode_base58(raw_addr);
+    ////line_out(pout->out, stealth_addr);
     return console_result::okay;
 }
 

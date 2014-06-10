@@ -24,11 +24,12 @@
 using namespace sx;
 using namespace sx::extensions;
 
-console_result help::invoke()
+console_result help::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
     // Bound parameters.
-    const auto command = argument.command;
-    const auto testnet = settings.general.testnet;
+    const auto command = get_command_argument();
+    const auto testnet = get_general_testnet_setting();
 
     return console_result::failure;
 }

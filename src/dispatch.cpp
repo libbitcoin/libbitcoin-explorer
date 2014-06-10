@@ -44,7 +44,7 @@ console_result dispatch(int argc, const char* argv[])
     return dispatch_invoke(argc - 1, &argv[1]);
 }
 
-// Not unit testable (reliance on untestable functions).
+// Not unit testable (reliance on untestable functions and embeded io).
 console_result dispatch_invoke(int argc, const char* argv[])
 {
     const std::string target(argv[0]);
@@ -63,7 +63,8 @@ console_result dispatch_invoke(int argc, const char* argv[])
         return console_result::failure;
     }
 
-    return command->invoke();
+    // Injection of io streams allows for test.
+    return command->invoke(std::cin, std::cout, std::cerr);
 }
 
 // TODO: Update using program_options presentation.

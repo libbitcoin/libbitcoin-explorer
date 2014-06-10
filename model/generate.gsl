@@ -222,6 +222,7 @@ shared_ptr<command> find(const string& symbol)
 #ifndef SX_COMMAND_HPP
 #define SX_COMMAND_HPP
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/filesystem.hpp>
@@ -314,9 +315,13 @@ public:
     /**
      * Invoke the command.
      *
+     * @param[in]   input   The input stream for the command execution.
+     * @param[out]  output  The input stream for the command execution.
+     * @param[out]  error   The input stream for the command execution.
      * @return  The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke()
+    virtual console_result invoke(std::istream& input, std::ostream& output,
+        std::ostream& error)
     {
         return console_result::failure;
     }
@@ -380,7 +385,7 @@ public:
 .   for setting
 .       is_last_setting = is_last_configuration & last()
 .       identifiers = section + "." + name
-.       variable = "settings." + pretty(section, "lower,c") + "." +\
+.       variable = "setting_." + pretty(section, "lower,c") + "." +\
             pretty(name, "lower,c")
 .       expression = value_semantic(!true(), type,\
             is_xml_true(required), is_xml_true(multiple), variable, default)
@@ -391,8 +396,26 @@ public:
             )$(is_last_setting ?? ";")
 .   endfor
 .endfor
-    }      
+    }
 
+.for configuration
+.   for setting
+.       is_vector = is_xml_true(multiple)
+.       setting_type = type_default(!true(), type,\
+            is_xml_true(required), is_vector)
+.       vectored_type = vectored_type(setting_type, is_vector)
+.       pluralized_name = pluralize(name, is_vector)
+.       pluralized_setting = pluralize("setting", is_vector)
+    /**
+     * Get the value of the $(section:c).$(name:) $(pluralized_setting:).
+     */
+    virtual $(vectored_type:) get_$(section:c)_$(pluralized_name:c)_setting()
+    {
+        return setting_.$(section:c).$(pluralized_name:c);
+    }
+    
+.   endfor
+.endfor
 protected:
 
     /**
@@ -400,9 +423,19 @@ protected:
      * construction here.
      */
     command() {}
+    
+private:
+    
+    /**
+     * Environment variable bound variables.
+     */
+    struct
+    {
+        boost::filesystem::path config;
+    } environment_;
 
     /**
-     * Configuration settings file bound variables.
+     * Configuration setting file bound variables.
      */
     struct
     {
@@ -418,16 +451,9 @@ protected:
             $(vectored_type:) $(pluralized_name:c);
 .   endfor
         } $(section:c);
+
 .endfor
-    } settings;
-    
-    /**
-     * Environment variable bound variables.
-     */
-    struct
-    {
-        boost::filesystem::path config;
-    } environment;
+    } setting_;
 };
 
 } // sx
@@ -587,7 +613,7 @@ public:
 .   short_name = shortcut ? first_char(name)
 .   identifiers = name
 .   identifiers += if_else(short_name = "", "", "," + short_name)
-.   variable = "option." + pretty(name, "lower,c")
+.   variable = "option_." + pretty(name, "lower,c")
 .   expression = value_semantic(true(), type,is_xml_true(required),\
         is_xml_true(multiple), variable, default)
             (
@@ -597,7 +623,7 @@ public:
             )$((last() & (argument_count = 0)) ?? ";")
 .endfor
 .for argument
-.   variable = "argument." + pretty(name, "lower,c")
+.   variable = "argument_." + pretty(name, "lower,c")
 .   expression = value_semantic(!true(), type, is_xml_true(required),\
         !is_default(limit, 1), variable)
             (
@@ -611,11 +637,47 @@ public:
     /**
      * Invoke the command.
      *
+     * @param[in]   input   The input stream for the command execution.
+     * @param[out]  output  The input stream for the command execution.
+     * @param[out]  error   The input stream for the command execution.
      * @return  The appropriate console return code { -1, 0, 1 }.
      */
-    console_result invoke();
+    virtual console_result invoke(std::istream& input, std::ostream& output,
+        std::ostream& cerr);
+
+.for argument
+.   is_vector = !is_default(limit, 1)
+.   argument_type = type_default(!true(), type, is_xml_true(required),\
+        is_vector)
+.   vectored_type = vectored_type(argument_type, is_vector)        
+.   pluralized_name = pluralize(name, is_vector)      
+.   pluralized_argument = pluralize("argument", is_vector)
+    /**
+     * Get the value of the $(name:) $(pluralized_argument:).
+     */
+    virtual $(vectored_type:) get_$(pluralized_name:c)_argument()
+    {
+        return argument_.$(pluralized_name:c);
+    }           
     
-protected:
+.endfor
+.for option
+.   is_vector = is_xml_true(multiple)
+.   option_type = type_default(true(), type, is_xml_true(required),\
+        is_vector)
+.   vectored_type = vectored_type(option_type, is_vector)
+.   pluralized_name = pluralize(name, is_vector)      
+.   pluralized_option = pluralize("option", is_vector)
+    /**
+     * Get the value of the $(name:) $(pluralized_option:).
+     */
+    virtual $(vectored_type:) get_$(pluralized_name:c)_option()
+    {
+        return option_.$(pluralized_name:c);
+    }           
+    
+.endfor
+private:
 
     /**
      * Command line argument bound variables.
@@ -630,7 +692,7 @@ protected:
 .   pluralized_name = pluralize(name, is_vector)      
         $(vectored_type:) $(pluralized_name:c);
 .endfor
-    } argument;
+    } argument_;
     
     /**
      * Command line option bound variables.
@@ -645,7 +707,7 @@ protected:
 .   pluralized_name = pluralize(name, is_vector)      
         $(vectored_type:) $(pluralized_name:c);
 .endfor
-    } option;
+    } option_;
 };
 
 } // extensions

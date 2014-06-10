@@ -136,27 +136,27 @@ public:
             )
             (
                 "help,h",
-                value<bool>(&option.help)->implicit_value(true),
+                value<bool>(&option_.help)->implicit_value(true),
                 "Generate a stealth address from given input."
             )
             (
                 "reuse-key,r",
-                value<bool>(&option.reuse_key)->implicit_value(true),
+                value<bool>(&option_.reuse_key)->implicit_value(true),
                 "Reuse the SCAN_PUBKEY as a SPEND_PUBKEY."
             )
             (
                 "signatures,s",
-                value<uint8_t>(&option.signatures),
+                value<uint8_t>(&option_.signatures),
                 "Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided."
             )
             (
                 "SCAN_PUBKEY",
-                value<std::string>(&argument.scan_pubkey)->required(),
+                value<std::string>(&argument_.scan_pubkey)->required(),
                 "The public key of the recipient."
             )
             (
                 "SPEND_PUBKEY",
-                value<std::vector<std::string>>(&argument.spend_pubkeys),
+                value<std::vector<std::string>>(&argument_.spend_pubkeys),
                 "The public key that is spent to."
             );
     }   
@@ -164,11 +164,55 @@ public:
     /**
      * Invoke the command.
      *
+     * @param[in]   input   The input stream for the command execution.
+     * @param[out]  output  The input stream for the command execution.
+     * @param[out]  error   The input stream for the command execution.
      * @return  The appropriate console return code { -1, 0, 1 }.
      */
-    console_result invoke();
+    virtual console_result invoke(std::istream& input, std::ostream& output,
+        std::ostream& cerr);
+
+    /**
+     * Get the value of the SCAN_PUBKEY argument.
+     */
+    virtual std::string get_scan_pubkey_argument()
+    {
+        return argument_.scan_pubkey;
+    }           
     
-protected:
+    /**
+     * Get the value of the SPEND_PUBKEY arguments.
+     */
+    virtual std::vector<std::string> get_spend_pubkeys_argument()
+    {
+        return argument_.spend_pubkeys;
+    }           
+    
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }           
+    
+    /**
+     * Get the value of the reuse-key option.
+     */
+    virtual bool get_reuse_key_option()
+    {
+        return option_.reuse_key;
+    }           
+    
+    /**
+     * Get the value of the signatures option.
+     */
+    virtual uint8_t get_signatures_option()
+    {
+        return option_.signatures;
+    }           
+    
+private:
 
     /**
      * Command line argument bound variables.
@@ -177,7 +221,7 @@ protected:
     {
         std::string scan_pubkey;
         std::vector<std::string> spend_pubkeys;
-    } argument;
+    } argument_;
     
     /**
      * Command line option bound variables.
@@ -187,7 +231,7 @@ protected:
         bool help;
         bool reuse_key;
         uint8_t signatures;
-    } option;
+    } option_;
 };
 
 } // extensions

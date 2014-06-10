@@ -20,6 +20,7 @@
 #ifndef SX_COMMAND_HPP
 #define SX_COMMAND_HPP
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/filesystem.hpp>
@@ -112,9 +113,13 @@ public:
     /**
      * Invoke the command.
      *
+     * @param[in]   input   The input stream for the command execution.
+     * @param[out]  output  The input stream for the command execution.
+     * @param[out]  error   The input stream for the command execution.
      * @return  The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke()
+    virtual console_result invoke(std::istream& input, std::ostream& output,
+        std::ostream& error)
     {
         return console_result::failure;
     }
@@ -175,26 +180,58 @@ public:
         definitions.add_options()
             (
                 "general.testnet",
-                value<bool>(&settings.general.testnet),
+                value<bool>(&setting_.general.testnet),
                 "Set to true in order to operate this application using Bitcoin testnet (vs. mainnet) addressing and blockchain data. This option is EXPERIMENTAL because other  libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
             )
             (
                 "obelisk.client-certificate",
-                value<boost::filesystem::path>(&settings.obelisk.client_certificate),
+                value<boost::filesystem::path>(&setting_.obelisk.client_certificate),
                 "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.sx.cert"
             )
             (
                 "obelisk.server-public-key",
-                value<std::string>(&settings.obelisk.server_public_key),
+                value<std::string>(&setting_.obelisk.server_public_key),
                 "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
             )
             (
                 "obelisk.service",
-                value<std::string>(&settings.obelisk.service)->default_value("tcp://obelisk.unsystem.net:8081"),
+                value<std::string>(&setting_.obelisk.service)->default_value("tcp://obelisk.unsystem.net:8081"),
                 "The URI of the server to which this application may connect."
             );
-    }      
+    }
 
+    /**
+     * Get the value of the general.testnet setting.
+     */
+    virtual bool get_general_testnet_setting()
+    {
+        return setting_.general.testnet;
+    }
+    
+    /**
+     * Get the value of the obelisk.client-certificate setting.
+     */
+    virtual boost::filesystem::path get_obelisk_client_certificate_setting()
+    {
+        return setting_.obelisk.client_certificate;
+    }
+    
+    /**
+     * Get the value of the obelisk.server-public-key setting.
+     */
+    virtual std::string get_obelisk_server_public_key_setting()
+    {
+        return setting_.obelisk.server_public_key;
+    }
+    
+    /**
+     * Get the value of the obelisk.service setting.
+     */
+    virtual std::string get_obelisk_service_setting()
+    {
+        return setting_.obelisk.service;
+    }
+    
 protected:
 
     /**
@@ -202,23 +239,8 @@ protected:
      * construction here.
      */
     command() {}
-
-    /**
-     * Configuration settings file bound variables.
-     */
-    struct
-    {
-        struct
-        {
-            bool testnet;
-        } general;
-        struct
-        {
-            boost::filesystem::path client_certificate;
-            std::string server_public_key;
-            std::string service;
-        } obelisk;
-    } settings;
+    
+private:
     
     /**
      * Environment variable bound variables.
@@ -226,7 +248,26 @@ protected:
     struct
     {
         boost::filesystem::path config;
-    } environment;
+    } environment_;
+
+    /**
+     * Configuration setting file bound variables.
+     */
+    struct
+    {
+        struct
+        {
+            bool testnet;
+        } general;
+
+        struct
+        {
+            boost::filesystem::path client_certificate;
+            std::string server_public_key;
+            std::string service;
+        } obelisk;
+
+    } setting_;
 };
 
 } // sx
