@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -84,6 +84,7 @@
     <ClInclude Include="..\..\..\..\include\sx\obelisk.hpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp" />
@@ -105,7 +106,7 @@
     <ClCompile Include="..\..\..\..\src\utility\config.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp" />
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />

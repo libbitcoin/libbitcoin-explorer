@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -64,7 +64,7 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\display.hpp">
       <Filter>include</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\generated.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -73,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp">
+      <Filter>include\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,10 +99,10 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\dispatch.cpp">
       <Filter>src</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\display.cpp">
       <Filter>src</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\generated.cpp">
       <Filter>src</Filter>
     </ClCompile>
