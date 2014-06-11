@@ -47,6 +47,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     // boost::program_options::value_semantic definition so we can skip this.
     // ------------------------------------------------------------------------
     // Decode raw parameters.
+    // TODO: there should be validation on input key values, length only?
     const auto scan_pubkey = decode_hex(encoded_scan_pubkey);
     typedef std::vector<data_chunk> pubkey_list;
     pubkey_list spend_pubkeys;
