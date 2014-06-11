@@ -259,18 +259,29 @@ private:
 
     /**
      * Command line argument bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct argument
     {
+        argument()
+            {}
         std::string scan_pubkey;
         std::vector<std::string> spend_pubkeys;
     } argument_;
     
     /**
      * Command line option bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct option
     {
+        option()
+            : help(),
+            reuse_key(),
+            signatures()
+            {}    
         bool help;
         bool reuse_key;
         sx::byte signatures;

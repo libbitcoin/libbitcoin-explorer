@@ -278,28 +278,46 @@ private:
     
     /**
      * Environment variable bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct environment
     {
+        environment()
+            {}
     } environment_;
 
     /**
      * Configuration setting file bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct setting
     {
-        struct
+        struct general
         {
+            general()
+                : testnet()
+                {}
             bool testnet;
         } general;
 
-        struct
+        struct obelisk
         {
+            obelisk()
+                : client_certificate(),
+                server_public_key(),
+                service()
+                {}
             boost::filesystem::path client_certificate;
             std::string server_public_key;
             std::string service;
         } obelisk;
 
+        setting()
+            : general(),
+            obelisk()
+            {}
     } setting_;
 };
 

@@ -54,14 +54,13 @@
 .   return ((my.value ? xml_false) = xml_true)
 .endfunction
 .
+.# TODO: hash table
 .function global.normalize_type(type)
 .   if my.type = type_string
 .       return type_string_std
-.   endif
-.   if my.type = type_path
+.   elsif my.type = type_path
 .       return type_path_boost
-.   endif
-.   if my.type = type_byte
+.   elsif my.type = type_byte
 .       return type_byte_sx
 .   endif
 .   return my.type
@@ -94,10 +93,10 @@
 .   return 0 = 0
 .endfunction
 .
-.function global.type_default(is_option, type, required, unlimited)
+.function global.default_type(is_option, type, required, unlimited)
 .   is_toggle = my.is_option & (is_empty(my.type) | my.required | my.unlimited)
 .   return normalize_type(if_else(is_toggle, type_bool, my.type ? type_string))
-.endfunction 
+.endfunction
 .
 .function global.value_semantic(is_option, type, required, unlimited,\
     variable, fallback)
@@ -408,7 +407,7 @@ public:
 .for configuration
 .   for setting
 .       is_vector = is_xml_true(multiple)
-.       setting_type = type_default(!true(), type,\
+.       setting_type = default_type(!true(), type,\
             is_xml_true(required), is_vector)
 .       vectored_type = vectored_type(setting_type, is_vector)
 .       pluralized_name = pluralize(name, is_vector)
@@ -443,32 +442,50 @@ private:
     
     /**
      * Environment variable bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct environment
     {
-.# There is no reason to expose the config path, as the config has been read.    
-.#        boost::filesystem::path config;
+        environment()
+            {}
+.# There is no reason to expose the config path, as the config has been read.
+.#      boost::filesystem::path config;
     } environment_;
 
     /**
      * Configuration setting file bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct setting
     {
 .for configuration
-        struct
+        struct $(section:c)
         {
+            $(section:c)()
 .   for setting
 .       is_vector = is_xml_true(multiple)
-.       setting_type = type_default(!true(), type,\
+.       pluralized_name = pluralize(name, is_vector)
+                $(first() ?? ": ")$(pluralized_name:c)()$(!last() ?? ",")
+.   endfor
+                {}
+.   for setting
+.       is_vector = is_xml_true(multiple)
+.       setting_type = default_type(!true(), type,\
             is_xml_true(required), is_vector)
 .       vectored_type = vectored_type(setting_type, is_vector)
-.       pluralized_name = pluralize(name, is_vector)      
+.       pluralized_name = pluralize(name, is_vector)
             $(vectored_type:) $(pluralized_name:c);
 .   endfor
         } $(section:c);
 
 .endfor
+        setting()
+.for configuration
+            $(first() ?? ": ")$(section:c)()$(!last() ?? ",")
+.endfor
+            {}
     } setting_;
 };
 
@@ -666,7 +683,7 @@ public:
 
 .for argument
 .   is_vector = !is_default(limit, 1)
-.   argument_type = type_default(!true(), type, is_xml_true(required),\
+.   argument_type = default_type(!true(), type, is_xml_true(required),\
         is_vector)
 .   vectored_type = vectored_type(argument_type, is_vector)        
 .   pluralized_name = pluralize(name, is_vector)      
@@ -690,7 +707,7 @@ public:
 .endfor
 .for option
 .   is_vector = is_xml_true(multiple)
-.   option_type = type_default(true(), type, is_xml_true(required),\
+.   option_type = default_type(true(), type, is_xml_true(required),\
         is_vector)
 .   vectored_type = vectored_type(option_type, is_vector)
 .   pluralized_name = pluralize(name, is_vector)      
@@ -716,27 +733,45 @@ private:
 
     /**
      * Command line argument bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct argument
     {
+        argument()
+.for setting
+.   is_vector = !is_default(limit, 1)
+.   pluralized_name = pluralize(name, is_vector)
+            $(first() ?? ": ")$(pluralized_name:c)()$(!last() ?? ",")
+.   endfor
+            {}
 .for argument
 .   is_vector = !is_default(limit, 1)
-.   argument_type = type_default(!true(), type, is_xml_true(required),\
+.   argument_type = default_type(!true(), type, is_xml_true(required),\
         is_vector)
 .   vectored_type = vectored_type(argument_type, is_vector)        
 .   pluralized_name = pluralize(name, is_vector)      
         $(vectored_type:) $(pluralized_name:c);
-.endfor
+.endfor            
     } argument_;
     
     /**
      * Command line option bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct option
     {
+        option()
+.for option
+.   is_vector = !is_default(limit, 1)
+.   pluralized_name = pluralize(name, is_vector)
+            $(first() ?? ": ")$(pluralized_name:c)()$(!last() ?? ",")
+.   endfor
+            {}    
 .for option
 .   is_vector = is_xml_true(multiple)
-.   option_type = type_default(true(), type, is_xml_true(required),\
+.   option_type = default_type(true(), type, is_xml_true(required),\
         is_vector)
 .   vectored_type = vectored_type(option_type, is_vector)
 .   pluralized_name = pluralize(name, is_vector)      
@@ -994,6 +1029,7 @@ endif
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp" />
@@ -1023,7 +1059,7 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
 .for command by symbol
 .   if (!is_xml_true(leveldb) & !is_xml_true(obelisk))
@@ -1129,6 +1165,9 @@ endif
       <Filter>include\\command</Filter>
     </ClInclude>
 .endfor
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\byte.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
@@ -1152,7 +1191,7 @@ endif
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp">
       <Filter>include</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -1189,10 +1228,10 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp">
       <Filter>src</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp">
       <Filter>src</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp">
       <Filter>src</Filter>
     </ClCompile>

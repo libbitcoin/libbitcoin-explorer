@@ -174,17 +174,25 @@ private:
 
     /**
      * Command line argument bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct argument
     {
+        argument()
+            {}
         std::string command;
     } argument_;
     
     /**
      * Command line option bound variables.
+     * Uses cross-compiler safe constructor-based zeroize.
+     * Zeroize for unit test consistency with program_options initialization.
      */
-    struct
+    struct option
     {
+        option()
+            {}    
     } option_;
 };
 

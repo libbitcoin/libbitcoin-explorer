@@ -34,8 +34,6 @@ BOOST_AUTO_TEST_SUITE(stealth_addr__invoke)
 BOOST_AUTO_TEST_CASE(default_input__expected_output)
 {
     SX_DECLARE_COMMAND(stealth_addr);
-    command.set_reuse_key_option(false);
-    command.set_signatures_option(0);
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("Y1QsNeLdxLo6\n");
 }
@@ -43,8 +41,6 @@ BOOST_AUTO_TEST_CASE(default_input__expected_output)
 BOOST_AUTO_TEST_CASE(bogus_input__expected_output)
 {
     SX_DECLARE_COMMAND_INPUT(stealth_addr, "bogus");
-    command.set_reuse_key_option(false);
-    command.set_signatures_option(0);
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("Y1QsNeLdxLo6\n");
 }
@@ -53,7 +49,6 @@ BOOST_AUTO_TEST_CASE(signatures_four__expected_output)
 {
     SX_DECLARE_COMMAND(stealth_addr);
     command.set_signatures_option(4);
-    command.set_reuse_key_option(false);
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("Y1QsQdtFq3a8\n");
 }

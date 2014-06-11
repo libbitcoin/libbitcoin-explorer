@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -41,6 +41,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
@@ -73,9 +76,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp">
-      <Filter>include\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
