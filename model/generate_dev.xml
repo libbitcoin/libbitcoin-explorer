@@ -20,7 +20,7 @@
   <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
     <option name="help" description="Generate a stealth address from given input." />
     <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />
-    <option name="signatures" type="uint8_t" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
+    <option name="signatures" type="byte" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
     <argument name="SCAN_PUBKEY" required="true" description="The public key of the recipient." />
     <argument name="SPEND_PUBKEY" limit="-1" description="The public key that is spent to." />
   </command>

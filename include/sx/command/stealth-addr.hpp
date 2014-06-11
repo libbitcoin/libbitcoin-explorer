@@ -26,6 +26,7 @@
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
 #include <sx/generated.hpp>
+#include <sx/utility/byte.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -146,7 +147,7 @@ public:
             )
             (
                 "signatures,s",
-                value<uint8_t>(&option_.signatures),
+                value<sx::byte>(&option_.signatures),
                 "Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided."
             )
             (
@@ -167,10 +168,12 @@ public:
      * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
-     * @return  The appropriate console return code { -1, 0, 1 }.
+     * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::istream& input, std::ostream& output,
         std::ostream& cerr);
+        
+    /* Properties */
 
     /**
      * Get the value of the SCAN_PUBKEY argument.
@@ -178,40 +181,80 @@ public:
     virtual std::string get_scan_pubkey_argument()
     {
         return argument_.scan_pubkey;
-    }           
+    }
     
+    /**
+     * Set the value of the SCAN_PUBKEY argument.
+     */
+    virtual void set_scan_pubkey_argument(std::string value)
+    {
+        argument_.scan_pubkey = value;
+    }
+
     /**
      * Get the value of the SPEND_PUBKEY arguments.
      */
     virtual std::vector<std::string> get_spend_pubkeys_argument()
     {
         return argument_.spend_pubkeys;
-    }           
+    }
     
+    /**
+     * Set the value of the SPEND_PUBKEY arguments.
+     */
+    virtual void set_spend_pubkeys_argument(std::vector<std::string> value)
+    {
+        argument_.spend_pubkeys = value;
+    }
+
     /**
      * Get the value of the help option.
      */
     virtual bool get_help_option()
     {
         return option_.help;
-    }           
+    }
     
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
+    }
+
     /**
      * Get the value of the reuse-key option.
      */
     virtual bool get_reuse_key_option()
     {
         return option_.reuse_key;
-    }           
+    }
     
+    /**
+     * Set the value of the reuse-key option.
+     */
+    virtual void set_reuse_key_option(bool value)
+    {
+        option_.reuse_key = value;
+    }
+
     /**
      * Get the value of the signatures option.
      */
-    virtual uint8_t get_signatures_option()
+    virtual sx::byte get_signatures_option()
     {
         return option_.signatures;
-    }           
+    }
     
+    /**
+     * Set the value of the signatures option.
+     */
+    virtual void set_signatures_option(sx::byte value)
+    {
+        option_.signatures = value;
+    }
+
 private:
 
     /**
@@ -230,7 +273,7 @@ private:
     {
         bool help;
         bool reuse_key;
-        uint8_t signatures;
+        sx::byte signatures;
     } option_;
 };
 

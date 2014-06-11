@@ -17,8 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <boost/test/unit_test.hpp>
+#include <iostream>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
 #include <sx/sx.hpp>
+#include "setup.hpp"
 
 BOOST_AUTO_TEST_SUITE(console__line_out)
 

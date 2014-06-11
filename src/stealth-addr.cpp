@@ -41,7 +41,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const auto reuse_key = get_reuse_key_option();
     const auto encoded_scan_pubkey = get_scan_pubkey_argument();
     const auto encoded_spend_pubkeys = get_spend_pubkeys_argument();
-    const auto testnet = get_general_testnet_setting();
+    // const auto testnet = get_general_testnet_setting();
 
     // TODO: figure out how to incorporate standard deserialization into the
     // boost::program_options::value_semantic definition so we can skip this.
@@ -51,13 +51,13 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const auto scan_pubkey = decode_hex(encoded_scan_pubkey);
     typedef std::vector<data_chunk> pubkey_list;
     pubkey_list spend_pubkeys;
-    for (const auto& spend_pubkey: encoded_spend_pubkeys)
-        spend_pubkeys.emplace_back(decode_hex(spend_pubkey));
+    for (const auto& encoded_spend_pubkey : encoded_spend_pubkeys)
+        spend_pubkeys.emplace_back(decode_hex(encoded_spend_pubkey));
     // ------------------------------------------------------------------------
 
     // Construct actual address.
     // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
-    data_chunk raw_addr;
+    data_chunk raw_address;
 
     // TODO: name 'some_flag' and move to flags enum.
     const uint8_t some_flag = 1;
@@ -66,14 +66,14 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const uint8_t options_bitfield = if_else(reuse_key, some_flag, 0);
     const uint8_t number_keys = static_cast<uint8_t>(spend_pubkeys.size());
 
-    raw_addr.push_back(stealth_version);
-    raw_addr.push_back(options_bitfield);
+    raw_address.push_back(stealth_version);
+    raw_address.push_back(options_bitfield);
 
-    extend_data(raw_addr, scan_pubkey);
-    raw_addr.push_back(number_keys);
+    extend_data(raw_address, scan_pubkey);
+    raw_address.push_back(number_keys);
 
-    for (const auto& pubkey: spend_pubkeys)
-        extend_data(raw_addr, pubkey);
+    for (const auto& spend_pubkey: spend_pubkeys)
+        extend_data(raw_address, spend_pubkey);
     
     // If not configured then set it to the number_keys.
     if (signatures == 0)
@@ -83,17 +83,16 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     if (reuse_key)
         ++signatures;
 
-    raw_addr.push_back(signatures);
+    raw_address.push_back(signatures);
 
     // TODO: enable this feature later (Prefix filter currently unused).
-    raw_addr.push_back(default_stealth_prefix_filter);
+    raw_address.push_back(default_stealth_prefix_filter);
 
-    const auto checksum = bitcoin_checksum(raw_addr);
-    append_checksum(raw_addr);
-    const auto stealth_addr = encode_base58(raw_addr);
+    const auto checksum = bitcoin_checksum(raw_address);
+    append_checksum(raw_address);
+    const auto stealth_address = encode_base58(raw_address);
 
     // Return the results.
-    line_out(output, stealth_addr);
+    line_out(output, stealth_address);
     return console_result::okay;
 }
-

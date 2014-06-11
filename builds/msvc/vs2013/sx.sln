@@ -96,6 +96,7 @@ Global
 		{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}.StaticRelease|Win32.ActiveCfg = ReleaseSEXE|Win32
 		{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}.StaticRelease|Win32.Build.0 = ReleaseSEXE|Win32
 		{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}.StaticRelease|x64.ActiveCfg = ReleaseSEXE|x64
+		{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}.StaticRelease|x64.Build.0 = ReleaseSEXE|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@
 
 sx_includedir = $(includedir)/sx
 sx_include_HEADERS = \
+    byte.hpp \
     command.hpp \
     dispatch.hpp \
     display.hpp \

@@ -61,6 +61,9 @@
 .   if my.type = type_path
 .       return type_path_boost
 .   endif
+.   if my.type = type_byte
+.       return type_byte_sx
+.   endif
 .   return my.type
 .endfunction
 .
@@ -125,6 +128,8 @@
 .config_description = resource("sx_config_description")
 .config_option = "config"
 .type_bool = "bool"
+.type_byte = "byte"
+.type_byte_sx = "sx::byte"
 .type_path = "path"
 .type_path_boost = "boost::filesystem::path"
 .type_string = "string"
@@ -318,7 +323,7 @@ public:
      * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
-     * @return  The appropriate console return code { -1, 0, 1 }.
+     * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::istream& input, std::ostream& output,
         std::ostream& error)
@@ -397,6 +402,8 @@ public:
 .   endfor
 .endfor
     }
+    
+    /* Properties */
 
 .for configuration
 .   for setting
@@ -412,6 +419,14 @@ public:
     virtual $(vectored_type:) get_$(section:c)_$(pluralized_name:c)_setting()
     {
         return setting_.$(section:c).$(pluralized_name:c);
+    }
+
+    /**
+     * Set the value of the $(section:c).$(name:) $(pluralized_setting:).
+     */
+    virtual void set_$(section:c)_$(pluralized_name:c)_setting($(vectored_type:) value)
+    {
+        setting_.$(section:c).$(pluralized_name:c) = value;
     }
     
 .   endfor
@@ -431,7 +446,8 @@ private:
      */
     struct
     {
-        boost::filesystem::path config;
+.# There is no reason to expose the config path, as the config has been read.    
+.#        boost::filesystem::path config;
     } environment_;
 
     /**
@@ -473,6 +489,7 @@ private:
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
 #include <sx/generated.hpp>
+#include <sx/utility/byte.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -640,10 +657,12 @@ public:
      * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
-     * @return  The appropriate console return code { -1, 0, 1 }.
+     * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::istream& input, std::ostream& output,
         std::ostream& cerr);
+        
+    /* Properties */
 
 .for argument
 .   is_vector = !is_default(limit, 1)
@@ -658,8 +677,16 @@ public:
     virtual $(vectored_type:) get_$(pluralized_name:c)_argument()
     {
         return argument_.$(pluralized_name:c);
-    }           
+    }
     
+    /**
+     * Set the value of the $(name:) $(pluralized_argument:).
+     */
+    virtual void set_$(pluralized_name:c)_argument($(vectored_type:) value)
+    {
+        argument_.$(pluralized_name:c) = value;
+    }
+
 .endfor
 .for option
 .   is_vector = is_xml_true(multiple)
@@ -674,8 +701,16 @@ public:
     virtual $(vectored_type:) get_$(pluralized_name:c)_option()
     {
         return option_.$(pluralized_name:c);
-    }           
+    }
     
+    /**
+     * Set the value of the $(name:) $(pluralized_option:).
+     */
+    virtual void set_$(pluralized_name:c)_option($(vectored_type:) value)
+    {
+        option_.$(pluralized_name:c) = value;
+    }
+
 .endfor
 private:
 
@@ -785,6 +820,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 sx_includedir = $\(includedir)/sx
 sx_include_HEADERS = \\
+    byte.hpp \\
     command.hpp \\
     dispatch.hpp \\
     display.hpp \\

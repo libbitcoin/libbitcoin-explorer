@@ -17,10 +17,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef SETUP_HPP
+#define SETUP_HPP
+
 #include <iostream>
-#include <boost/test/unit_test.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
 #include <sx/sx.hpp>
-#include <sx/utility/console.hpp>
 
 #define SX_USING_NAMESPACES()
 using namespace std; \
@@ -41,3 +44,5 @@ using namespace sx::extensions;
 #define SX_REQUIRE_OKAY(value) BOOST_REQUIRE(value == console_result::okay)
 #define SX_REQUIRE_ERROR(value) BOOST_REQUIRE(error.str() == value)
 #define SX_REQUIRE_OUTPUT(value) BOOST_REQUIRE(output.str() == value)
+
+#endif

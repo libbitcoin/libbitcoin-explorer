@@ -26,6 +26,7 @@
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
 #include <sx/generated.hpp>
+#include <sx/utility/byte.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -146,10 +147,12 @@ public:
      * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
-     * @return  The appropriate console return code { -1, 0, 1 }.
+     * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::istream& input, std::ostream& output,
         std::ostream& cerr);
+        
+    /* Properties */
 
     /**
      * Get the value of the COMMAND argument.
@@ -157,8 +160,16 @@ public:
     virtual std::string get_command_argument()
     {
         return argument_.command;
-    }           
+    }
     
+    /**
+     * Set the value of the COMMAND argument.
+     */
+    virtual void set_command_argument(std::string value)
+    {
+        argument_.command = value;
+    }
+
 private:
 
     /**

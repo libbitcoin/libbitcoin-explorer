@@ -11,11 +11,11 @@ sx_test_HEADERS = \
     setup.hpp
 
 sx_test_SOURCES = \
-    stealth_addr.cpp \
     console__line_out.cpp \
     generated__broadcast.cpp \
     generated__find.cpp \
     generated__symbol.cpp \
+    stealth_addr.cpp \
     main.cpp
 
 sx_test_LDADD = \

@@ -116,7 +116,7 @@ public:
      * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
-     * @return  The appropriate console return code { -1, 0, 1 }.
+     * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::istream& input, std::ostream& output,
         std::ostream& error)
@@ -199,6 +199,8 @@ public:
                 "The URI of the server to which this application may connect."
             );
     }
+    
+    /* Properties */
 
     /**
      * Get the value of the general.testnet setting.
@@ -206,6 +208,14 @@ public:
     virtual bool get_general_testnet_setting()
     {
         return setting_.general.testnet;
+    }
+
+    /**
+     * Set the value of the general.testnet setting.
+     */
+    virtual void set_general_testnet_setting(bool value)
+    {
+        setting_.general.testnet = value;
     }
     
     /**
@@ -215,6 +225,14 @@ public:
     {
         return setting_.obelisk.client_certificate;
     }
+
+    /**
+     * Set the value of the obelisk.client-certificate setting.
+     */
+    virtual void set_obelisk_client_certificate_setting(boost::filesystem::path value)
+    {
+        setting_.obelisk.client_certificate = value;
+    }
     
     /**
      * Get the value of the obelisk.server-public-key setting.
@@ -223,6 +241,14 @@ public:
     {
         return setting_.obelisk.server_public_key;
     }
+
+    /**
+     * Set the value of the obelisk.server-public-key setting.
+     */
+    virtual void set_obelisk_server_public_key_setting(std::string value)
+    {
+        setting_.obelisk.server_public_key = value;
+    }
     
     /**
      * Get the value of the obelisk.service setting.
@@ -230,6 +256,14 @@ public:
     virtual std::string get_obelisk_service_setting()
     {
         return setting_.obelisk.service;
+    }
+
+    /**
+     * Set the value of the obelisk.service setting.
+     */
+    virtual void set_obelisk_service_setting(std::string value)
+    {
+        setting_.obelisk.service = value;
     }
     
 protected:
@@ -247,7 +281,6 @@ private:
      */
     struct
     {
-        boost::filesystem::path config;
     } environment_;
 
     /**
