@@ -5,14 +5,17 @@ noinst_PROGRAMS = sx_test
 AM_CPPFLAGS = \
     ${libbitcoin_CFLAGS} \
     ${libwallet_CFLAGS} \
-    -I$(srcdir)/../include 
+    -I$(srcdir)/../include
+
+sx_test_HEADERS = \
+    setup.hpp
 
 sx_test_SOURCES = \
-    command_stealth_addr.cpp \
-    console_line_out.cpp \
-    generated_broadcast.cpp \
-    generated_find.cpp \
-    generated_symbol.cpp \
+    stealth_addr.cpp \
+    console__line_out.cpp \
+    generated__broadcast.cpp \
+    generated__find.cpp \
+    generated__symbol.cpp \
     main.cpp
 
 sx_test_LDADD = \

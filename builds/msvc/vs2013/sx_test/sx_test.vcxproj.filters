@@ -4,28 +4,45 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="tests">
-      <UniqueIdentifier>{272f2634-0335-488d-8741-271dd38c6092}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{3eb17572-0d1e-4c0f-b582-bdc503608456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\tests">
+      <UniqueIdentifier>{272f2634-0335-488d-8741-271dd38c6092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tests\command">
+      <UniqueIdentifier>{854c3ba2-ea3e-45ba-a329-75b1c9545712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tests\utility">
+      <UniqueIdentifier>{ad3dcd3b-991e-438d-84e2-58b47c198365}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\test\generated_find.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\generated_symbol.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\console_line_out.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\generated_broadcast.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\console__line_out.cpp">
+      <Filter>src\tests\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\leveldb-single-file.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\snappy-single-file.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\crc32c.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp">
+      <Filter>src\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated__find.cpp">
+      <Filter>src\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated__symbol.cpp">
+      <Filter>src\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth_addr.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\test\setup.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

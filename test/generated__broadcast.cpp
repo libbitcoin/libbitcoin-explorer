@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -20,18 +20,11 @@
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
 
-//#include <iostream>
-//struct global_fixture 
-//{
-//    global_fixture()   { std::cout << "global setup\n"; }
-//    ~global_fixture()  { std::cout << "global teardown\n"; }
-//};
-//
-//BOOST_GLOBAL_FIXTURE(global_fixture);
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-BOOST_AUTO_TEST_SUITE(generated_broadcast)
+BOOST_AUTO_TEST_SUITE(generated__broadcast)
 
-BOOST_AUTO_TEST_CASE(broadcast_returns_true)
+BOOST_AUTO_TEST_CASE(always__returns_true)
 {
     // TODO: mocks and dependency injection required to test proper execution.
     auto func = [](std::shared_ptr<sx::command> sx_command) -> void {};

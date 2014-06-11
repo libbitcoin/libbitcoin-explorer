@@ -716,8 +716,27 @@ private:
 #endif
 .endfor
 .##############################################################################
-.echo "Generating test/generated_find.cpp..."
-.output "../test/generated_find.cpp"
+.echo "Generating test/generated__broadcast.cpp..."
+.output "../test/generated__broadcast.cpp"
+.copyleft()
+#include <boost/test/unit_test.hpp>
+#include <sx/sx.hpp>
+
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
+
+BOOST_AUTO_TEST_SUITE(generated__broadcast)
+
+BOOST_AUTO_TEST_CASE(always__returns_true)
+{
+    // TODO: mocks and dependency injection required to test proper execution.
+    auto func = [](std::shared_ptr<sx::command> sx_command) -> void {};
+    BOOST_REQUIRE(sx::broadcast(func));
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+.##############################################################################
+.echo "Generating test/generated__find.cpp..."
+.output "../test/generated__find.cpp"
 .copyleft()
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
@@ -727,10 +746,10 @@ private:
 using namespace sx;
 using namespace sx::extensions;
 
-BOOST_AUTO_TEST_SUITE(generated_find)
+BOOST_AUTO_TEST_SUITE(generated__find)
 .for command by symbol
 
-BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_object)
+BOOST_AUTO_TEST_CASE($(symbol:c)__returns_object)
 {
     BOOST_REQUIRE(find($(symbol:c)::symbol()) != nullptr);
 }
@@ -738,8 +757,8 @@ BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_object)
 
 BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
-.echo "Generating test/generated_symbol.cpp..."
-.output "../test/generated_symbol.cpp"
+.echo "Generating test/generated__symbol.cpp..."
+.output "../test/generated__symbol.cpp"
 .copyleft()
 #include <boost/test/unit_test.hpp>
 #include <sx/sx.hpp>
@@ -749,10 +768,10 @@ BOOST_AUTO_TEST_SUITE_END()
 using namespace sx;
 using namespace sx::extensions;
 
-BOOST_AUTO_TEST_SUITE(generated_symbol)
+BOOST_AUTO_TEST_SUITE(generated__symbol)
 .for command by symbol
 
-BOOST_AUTO_TEST_CASE(find_$(symbol:c)_returns_expected_value)
+BOOST_AUTO_TEST_CASE($(symbol:c)__returns_expected_value)
 {
     BOOST_REQUIRE($(symbol:c)::symbol() == std::string("$(symbol:)"));
 }

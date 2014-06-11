@@ -25,16 +25,16 @@
 using namespace sx;
 using namespace sx::extensions;
 
-BOOST_AUTO_TEST_SUITE(generated_symbol)
+BOOST_AUTO_TEST_SUITE(generated__find)
 
-BOOST_AUTO_TEST_CASE(find_help_returns_expected_value)
+BOOST_AUTO_TEST_CASE(help__returns_object)
 {
-    BOOST_REQUIRE(help::symbol() == std::string("help"));
+    BOOST_REQUIRE(find(help::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(find_stealth_addr_returns_expected_value)
+BOOST_AUTO_TEST_CASE(stealth_addr__returns_object)
 {
-    BOOST_REQUIRE(stealth_addr::symbol() == std::string("stealth-addr"));
+    BOOST_REQUIRE(find(stealth_addr::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
