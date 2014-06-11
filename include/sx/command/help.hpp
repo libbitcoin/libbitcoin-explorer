@@ -74,6 +74,7 @@ public:
     }
 
     /**
+     * DEPRECATED
      * The localizable command description, multiple lines, punctuated.
      */
     const std::vector<const char*> description()
@@ -84,6 +85,7 @@ public:
     }
 
     /**
+     * DEPRECATED
      * The non-localizable command usage examples, multiple lines.
      */
     const std::vector<const char*> example()
@@ -94,6 +96,7 @@ public:
     }
 
     /**
+     * DEPRECATED
      * The localizable command explanation, multiple lines, punctuated.
      */
     const std::vector<const char*> explanation()
