@@ -7,8 +7,8 @@ AM_CPPFLAGS = \
     ${libwallet_CFLAGS} \
     -I$(srcdir)/../include
 
-sx_test_HEADERS = \
-    setup.hpp
+#sx_test_HEADERS = \
+#    setup.hpp
 
 sx_test_SOURCES = \
     console__line_out.cpp \
