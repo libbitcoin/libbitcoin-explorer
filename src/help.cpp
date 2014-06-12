@@ -29,7 +29,19 @@ console_result help::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     const auto command = get_command_argument();
-    const auto testnet = get_general_testnet_setting();
 
-    return console_result::failure;
+    if (command.empty())
+    {
+        cerr << "error" << std::endl;
+        return console_result::invalid;
+    }
+    /* TODO: use command.find() */
+    else if (command != stealth_addr::symbol())
+    {
+        cerr << "error bogus" << std::endl;
+        return console_result::failure;
+    }
+
+    output << "success" << std::endl;
+    return console_result::okay;
 }

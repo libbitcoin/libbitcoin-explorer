@@ -120,6 +120,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth_addr.cpp" />
     <ClCompile Include="..\..\..\..\test\console__line_out.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
