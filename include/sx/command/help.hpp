@@ -20,6 +20,7 @@
 #ifndef SX_HELP_HPP
 #define SX_HELP_HPP
 
+#include <iostream>
 #include <stdint.h>
 #include <string>
 #include <vector>
@@ -36,6 +37,12 @@
 
 namespace sx {
 namespace extensions {
+
+/**
+ * Various localizable strings.
+ */
+#define SX_HELP_NOT_COMMAND \
+    "The word '%1%' is not a sx command. All commands:"
 
 /**
  * Class to implement the sx help command.
@@ -105,6 +112,16 @@ public:
         return
         {
         };
+    }
+    
+    /**
+     * Write the usage help for this command to the specified stream.
+     *
+     * @param[out] stream  The stream of interest.
+     */
+    void write_usage(std::ostream& stream)
+    {
+        stream << "foobar" << std::endl;
     }
     
     /**

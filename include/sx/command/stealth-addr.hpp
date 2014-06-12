@@ -20,6 +20,7 @@
 #ifndef SX_STEALTH_ADDR_HPP
 #define SX_STEALTH_ADDR_HPP
 
+#include <iostream>
 #include <stdint.h>
 #include <string>
 #include <vector>
@@ -105,6 +106,16 @@ public:
         return
         {
         };
+    }
+    
+    /**
+     * Write the usage help for this command to the specified stream.
+     *
+     * @param[out] stream  The stream of interest.
+     */
+    void write_usage(std::ostream& stream)
+    {
+        stream << "foobar" << std::endl;
     }
     
     /**

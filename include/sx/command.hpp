@@ -111,6 +111,15 @@ public:
     }
     
     /**
+     * Write the usage help for this command to the specified stream.
+     *
+     * @param[out] stream  The stream of interest.
+     */
+    virtual void write_usage(std::ostream& stream)
+    {
+    }    
+    
+    /**
      * Invoke the command.
      *
      * @param[in]   input   The input stream for the command execution.

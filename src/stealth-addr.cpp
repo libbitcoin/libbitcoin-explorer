@@ -30,6 +30,7 @@ using namespace sx::extensions;
 // TODO: enable prefix filter, currently unused.
 // TODO: Is testnet used here, it was loaded by not referenced
 // TODO: there should be validation on input key values, length only?
+// 100% coverage by line, loc ready.
 console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {

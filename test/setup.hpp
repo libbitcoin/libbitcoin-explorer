@@ -42,12 +42,17 @@ using namespace sx::extensions;
     _SX_DECLARE_COMMAND(extension)
 
 // console results
-#define SX_REQUIRE_OKAY(value) BOOST_REQUIRE(value == console_result::okay)
-#define SX_REQUIRE_FAILURE(value) BOOST_REQUIRE(value == console_result::failure)
-#define SX_REQUIRE_INVALID(value) BOOST_REQUIRE(value == console_result::invalid)
+#define SX_REQUIRE_OKAY(value) \
+    BOOST_REQUIRE(value == console_result::okay)
+#define SX_REQUIRE_FAILURE(value) \
+    BOOST_REQUIRE(value == console_result::failure)
+#define SX_REQUIRE_INVALID(value) \
+    BOOST_REQUIRE(value == console_result::invalid)
 
-// stream results
-#define SX_REQUIRE_ERROR(value) BOOST_REQUIRE(error.str() == value)
-#define SX_REQUIRE_OUTPUT(value) BOOST_REQUIRE(output.str() == value)
+// stream results (assume mutual exclusivity)
+#define SX_REQUIRE_ERROR(value) \
+    BOOST_REQUIRE(error.str() == value && output.str().empty())
+#define SX_REQUIRE_OUTPUT(value) \
+    BOOST_REQUIRE(output.str() == value &&  error.str().empty())
 
 #endif

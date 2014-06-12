@@ -28,30 +28,47 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(help__invoke)
 
-BOOST_AUTO_TEST_CASE(no_command__expected_output)
+BOOST_AUTO_TEST_CASE(no_command__failure_output)
 {
     // $ sx help
     SX_DECLARE_COMMAND(help);
-    SX_REQUIRE_INVALID(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("error\n");
-}
-
-BOOST_AUTO_TEST_CASE(bogus_command__expected_output)
-{
-    // $ sx help
-    SX_DECLARE_COMMAND(help);
-    command.set_command_argument("bogus");
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("error bogus\n");
+    SX_REQUIRE_ERROR("foobar\n");
 }
 
-BOOST_AUTO_TEST_CASE(valid_command__expected_output)
+BOOST_AUTO_TEST_CASE(bogus_command__failure_output)
 {
-    // $ sx help
+    // $ sx help booger
+    SX_DECLARE_COMMAND(help);
+    command.set_command_argument("booger");
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\nhelp\nstealth-addr\n");
+}
+
+BOOST_AUTO_TEST_CASE(valid_command_bogus_input__okay_output)
+{
+    // $ echo bogus | $ sx help stealth-addr
+    SX_DECLARE_COMMAND_INPUT(help, "bogus");
+    command.set_command_argument("stealth-addr");
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("foobar\n");
+}
+
+BOOST_AUTO_TEST_CASE(valid_command__okay_output)
+{
+    // $ sx help stealth-addr
     SX_DECLARE_COMMAND(help);
     command.set_command_argument("stealth-addr");
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    SX_REQUIRE_OUTPUT("success\n");
+    SX_REQUIRE_OUTPUT("foobar\n");
+}
+
+BOOST_AUTO_TEST_CASE(valid_input__okay_output)
+{
+    // $ echo stealth-addr | $ sx help
+    SX_DECLARE_COMMAND_INPUT(help, "stealth-addr");
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("foobar\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

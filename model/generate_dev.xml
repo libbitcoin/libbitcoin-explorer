@@ -3,10 +3,8 @@
 
   <resource>
     <!-- General localizable resource strings. -->
-    <!-- TODO: general this in the GSL template to incorporate format strings. -->
     <string name="sx_config_description" value="The path and file name for the configuration settings file for this application." />
   </resource>
-  
   <configuration section="general">
     <!-- NOTE: we could move this into the obelisk section if it was dynamic. -->
     <!-- NOTE: we probably shouldn't use this setting since the fact is compiled into dependencies. -->
@@ -21,6 +19,7 @@
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
     <argument name="COMMAND" description="Get help for the COMMAND." />
+    <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
   </command>
   
   <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">

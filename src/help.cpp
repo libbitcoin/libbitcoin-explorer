@@ -18,29 +18,55 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <cstdarg>
+#include <boost/format.hpp>
 #include <sx/command/help.hpp>
+#include <sx/display.hpp>
+#include <sx/generated.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace sx;
 using namespace sx::extensions;
 
+// 100% coverage by line (as private to invoke())
+static bool write_all_command_names(std::ostream& stream)
+{
+    const auto func = [&](std::shared_ptr<command> sx_command) -> void
+    {
+        stream << sx_command->name() << std::endl;
+    };
+
+    return broadcast(func);
+}
+
+// 100% coverage by line, loc ready.
 console_result help::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const auto command = get_command_argument();
+    auto symbol = get_command_argument();
 
-    if (command.empty())
+    // Stream input fallback.
+    if (symbol.empty())
+        symbol = read_stream(input);
+
+    // If there is no COMMAND argument then show usage for this command.
+    if (symbol.empty())
     {
-        cerr << "error" << std::endl;
-        return console_result::invalid;
-    }
-    else if (find(command) == nullptr)
-    {
-        cerr << "error bogus" << std::endl;
+        write_usage(cerr);
         return console_result::failure;
     }
 
-    output << "success" << std::endl;
+    // If the COMMAND argument is not a command, say so and list all commands.
+    auto command = find(symbol);
+    if (command == nullptr)
+    {
+        cerr << boost::format(SX_HELP_NOT_COMMAND) % symbol << std::endl;
+        write_all_command_names(cerr);
+        return console_result::failure;
+    }
+
+    // The COMMAND argument is valid so show the command's usage.
+    command->write_usage(output);
     return console_result::okay;
 }
