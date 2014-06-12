@@ -1032,7 +1032,6 @@ endif
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp" />
@@ -1040,6 +1039,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk.hpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
