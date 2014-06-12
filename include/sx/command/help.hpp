@@ -27,6 +27,7 @@
 #include <sx/command.hpp>
 #include <sx/generated.hpp>
 #include <sx/utility/byte.hpp>
+#include <sx/utility/bytes.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>

@@ -17,52 +17,61 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BYTE_HPP
-#define BYTE_HPP
+#ifndef BYTES_HPP
+#define BYTES_HPP
 
 #include <iostream>
 #include <stdint.h>
+#include <vector>
+#include <bitcoin/bitcoin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 
 /**
- * Serialization helper for numeric byte, because byte-sized integral types 
- * stream as characters.
+ * Serialization helper to convert between hex string and data_chunk.
  */
-class byte
+class bytes
 {
 public:
 
     /**
      * Constructor.
      */
-    byte() 
+    bytes() 
         : value() {}
 
     /**
      * Initialization counstructor.
      * 
-     * @param[in]  argument  The value to initialize with.
+     * @param[in]  chunk  The value to initialize with.
      */
-    byte(const uint8_t& argument)
-        : value(argument) {}
+    bytes(const bc::data_chunk& chunk)
+        : value(chunk) {}
+
+    /**
+     * Initialization counstructor.
+     * 
+     * @param[in]  hex  The value to initialize with.
+     */
+    bytes(const std::string& hex)
+        : value(bc::decode_hex(hex)) {}
 
     /**
      * Copy counstructor.
      *
      * @param[in]  argument  The object to copy into self on construct.
      */
-    byte(const byte& argument)
+    bytes(const bytes& argument)
         : value(argument.value) {}
 
     /**
-     * Overload cast to uint8_t.
+     * Overload cast to bc::data_chunk.
      *
-     * @return  This object's value cast to uint8_t.
+     * @return  This object's value cast to bc::data_chunk.
      */
-    operator uint8_t() const 
+    operator bc::data_chunk() const
     {
         return value; 
     }
@@ -74,11 +83,11 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, byte& argument)
+    friend std::istream& operator>>(std::istream& input, bytes& argument)
     {
-        int number;
-        input >> number;
-        argument.value = static_cast<uint8_t>(number);
+        std::string hex;
+        input >> hex;
+        argument.value = bc::decode_hex(hex);
         return input;
     }
 
@@ -89,33 +98,10 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, byte& argument)
+    friend std::ostream& operator<<(std::ostream& output, bytes& argument)
     {
-        output << static_cast<int>(argument.value);
+        output << bc::encode_hex(argument.value);
         return output;
-    }
-
-    /**
-     * Overload prefix increment.
-     *
-     * @return  This object referenced, with incremented value.
-     */
-    byte& operator++()
-    {
-        ++value;
-        return *this;
-    }
-
-    /**
-     * Overload postfix increment.
-     *
-     * @return  This object copied, with incremented value.
-     */
-    byte operator++(int)
-    {
-        byte temp(*this);
-        operator++();
-        return temp;
     }
 
 private:
@@ -123,7 +109,7 @@ private:
     /**
      * The state of this object.
      */
-    uint8_t value;
+    bc::data_chunk value;
 };
 
 } //sx

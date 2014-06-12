@@ -44,6 +44,12 @@
     <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\bytes.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
@@ -54,9 +60,6 @@
       <Filter>include\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\environment.hpp">
-      <Filter>include\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command.hpp">

@@ -28,11 +28,18 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(stealth_addr__invoke)
 
+//#define public_key \
+//{\
+//    0x03, 0x1b, 0xab, 0x84, 0xe6, 0x87, 0xe3, 0x65, 0x14, 0xee, 0xaf,\
+//    0x5a, 0x01, 0x7c, 0x30, 0xd3, 0x2c, 0x1f, 0x59, 0xdd, 0x4e, 0xa6,\
+//    0x62, 0x9d, 0xa7, 0x97, 0x0c, 0xa3, 0x74, 0x51, 0x3d, 0xd0, 0x06\
+//};
+
 BOOST_AUTO_TEST_CASE(scan_pubkey__expected_output)
 {
     // $ sx stealth-addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
-    command.set_scan_pubkey_argument("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006");
+    command.set_scan_pubkey_argument(bytes("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"));
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU8ys8T1tX7\n");
 }
@@ -41,7 +48,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_bogus_input__expected_output)
 {
     // $ echo bogus | sx stealth-addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND_INPUT(stealth_addr, "bogus");
-    command.set_scan_pubkey_argument("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006");
+    command.set_scan_pubkey_argument(bytes("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"));
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU8ys8T1tX7\n");
 }
@@ -51,7 +58,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_signatures_four__expected_output)
     // $ sx stealth-addr -s 4 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
     command.set_signatures_option(4);
-    command.set_scan_pubkey_argument("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006");
+    command.set_scan_pubkey_argument(bytes("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"));
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU91raMWbWq\n");
 }
@@ -61,7 +68,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_reuse_key__expected_output)
     // $ sx stealth-addr -r 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
     command.set_reuse_key_option(true);
-    command.set_scan_pubkey_argument("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006");
+    command.set_scan_pubkey_argument(bytes("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"));
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i\n");
 }
@@ -72,7 +79,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_reuse_key_signatures__expected_output)
     SX_DECLARE_COMMAND(stealth_addr);
     command.set_reuse_key_option(true);
     command.set_signatures_option(4);
-    command.set_scan_pubkey_argument("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006");
+    command.set_scan_pubkey_argument(bytes("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"));
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7exZGU8BmV\n");
 }
@@ -82,8 +89,8 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_one_spend_pubkeys__expected_output)
 {
     // $ sx stealth-addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969
     SX_DECLARE_COMMAND(stealth_addr);
-    command.set_scan_pubkey_argument("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006");
-    command.set_spend_pubkeys_argument({ "024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969" });
+    command.set_scan_pubkey_argument(bytes("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"));
+    command.set_spend_pubkeys_argument({ bytes("024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969") });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("vJmwY32eS5VDC2C4GaZyXt7i4iCjzSMZ1XSd6KbkA7QbGE492akT2eZZMjCwWDqKRSYhnSA8Bgp78KeAYFVCi8ke5mELdoYMBNep7L\n");
 }

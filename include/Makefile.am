@@ -2,7 +2,6 @@
 
 sx_includedir = $(includedir)/sx
 sx_include_HEADERS = \
-    byte.hpp \
     command.hpp \
     dispatch.hpp \
     display.hpp \
@@ -11,6 +10,8 @@ sx_include_HEADERS = \
 
 sx_utility_includedir = $(includedir)/sx/utility
 sx_utility_include_HEADERS += \
+    byte.hpp \
+    bytes.hpp \
     coin.hpp \
     compat.hpp \
     config.hpp \

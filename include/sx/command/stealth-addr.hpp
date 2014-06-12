@@ -27,6 +27,7 @@
 #include <sx/command.hpp>
 #include <sx/generated.hpp>
 #include <sx/utility/byte.hpp>
+#include <sx/utility/bytes.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -155,12 +156,12 @@ public:
             )
             (
                 "SCAN_PUBKEY",
-                value<std::string>(&argument_.scan_pubkey)->required(),
+                value<bytes>(&argument_.scan_pubkey)->required(),
                 "The public key of the recipient."
             )
             (
                 "SPEND_PUBKEY",
-                value<std::vector<std::string>>(&argument_.spend_pubkeys),
+                value<std::vector<bytes>>(&argument_.spend_pubkeys),
                 "The public key that is spent to."
             );
     }   
@@ -181,7 +182,7 @@ public:
     /**
      * Get the value of the SCAN_PUBKEY argument.
      */
-    virtual std::string get_scan_pubkey_argument()
+    virtual bytes get_scan_pubkey_argument()
     {
         return argument_.scan_pubkey;
     }
@@ -189,7 +190,7 @@ public:
     /**
      * Set the value of the SCAN_PUBKEY argument.
      */
-    virtual void set_scan_pubkey_argument(std::string value)
+    virtual void set_scan_pubkey_argument(bytes value)
     {
         argument_.scan_pubkey = value;
     }
@@ -197,7 +198,7 @@ public:
     /**
      * Get the value of the SPEND_PUBKEY arguments.
      */
-    virtual std::vector<std::string> get_spend_pubkeys_argument()
+    virtual std::vector<bytes> get_spend_pubkeys_argument()
     {
         return argument_.spend_pubkeys;
     }
@@ -205,7 +206,7 @@ public:
     /**
      * Set the value of the SPEND_PUBKEY arguments.
      */
-    virtual void set_spend_pubkeys_argument(std::vector<std::string> value)
+    virtual void set_spend_pubkeys_argument(std::vector<bytes> value)
     {
         argument_.spend_pubkeys = value;
     }
@@ -269,8 +270,8 @@ private:
     {
         argument()
             {}
-        std::string scan_pubkey;
-        std::vector<std::string> spend_pubkeys;
+        bytes scan_pubkey;
+        std::vector<bytes> spend_pubkeys;
     } argument_;
     
     /**

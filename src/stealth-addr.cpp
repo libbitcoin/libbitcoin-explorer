@@ -38,22 +38,12 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     auto signatures = get_signatures_option();
-    const auto reuse_key = get_reuse_key_option();
-    const auto encoded_scan_pubkey = get_scan_pubkey_argument();
-    const auto encoded_spend_pubkeys = get_spend_pubkeys_argument();
-    // const auto testnet = get_general_testnet_setting();
+    auto reuse_key = get_reuse_key_option();
+    const auto scan_pubkey = get_scan_pubkey_argument();
+    const auto spend_pubkeys = get_spend_pubkeys_argument();
 
-    // TODO: figure out how to incorporate standard deserialization into the
-    // boost::program_options::value_semantic definition so we can skip this.
-    // ------------------------------------------------------------------------
-    // Decode raw parameters.
+    // auto testnet = get_general_testnet_setting();
     // TODO: there should be validation on input key values, length only?
-    const auto scan_pubkey = decode_hex(encoded_scan_pubkey);
-    typedef std::vector<data_chunk> pubkey_list;
-    pubkey_list spend_pubkeys;
-    for (const auto& encoded_spend_pubkey : encoded_spend_pubkeys)
-        spend_pubkeys.emplace_back(decode_hex(encoded_spend_pubkey));
-    // ------------------------------------------------------------------------
 
     // Construct actual address.
     // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
@@ -69,11 +59,11 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     raw_address.push_back(stealth_version);
     raw_address.push_back(options_bitfield);
 
-    extend_data(raw_address, scan_pubkey);
+    extend_data(raw_address, static_cast<bc::data_chunk>(scan_pubkey));
     raw_address.push_back(number_keys);
 
     for (const auto& spend_pubkey: spend_pubkeys)
-        extend_data(raw_address, spend_pubkey);
+        extend_data(raw_address, static_cast<bc::data_chunk>(spend_pubkey));
     
     // If not configured then set it to the number_keys.
     if (signatures == 0)
