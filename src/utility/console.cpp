@@ -121,7 +121,8 @@ bool is_true(const std::string& text)
     // case conversion is dependent upon the thread locale
     boost::algorithm::to_lower(arg);
 
-    // the concept of string true is hardwired here
+    // the concept of string true is hardwired here,
+    // these match boost::program_options
     return arg == "true" || arg == "1" || arg == "yes";
 }
 
@@ -135,10 +136,11 @@ void line_out(std::ostream& stream, const std::string& line, size_t offset,
     const std::string& inset)
 {
     // safe string length 
-    auto length = static_cast<size_t>(std::string(inset).length());
+    auto length = std::string(inset).length();
 
     // overflow safe assurance that offset is always non-negative
-    auto padding = if_else(length > offset, 0, offset - length);
+    auto padding = if_else(length > offset, static_cast<size_t>(0), 
+        offset - length);
 
     // output the inset-offset-line to the specified stream
     stream << inset << std::string((padding), ' ')
