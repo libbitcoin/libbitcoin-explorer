@@ -9,7 +9,7 @@ using namespace boost;
 using namespace algorithm;
 using namespace program_options;
 
-namespace rad {
+namespace printer {
 
 const size_t LONG_NON_PREPENDED_IF_EXIST_ELSE_PREPENDED_SHORT = 0;
 const size_t LONG_PREPENDED_IF_EXIST_ELSE_PREPENDED_SHORT = 1;

@@ -8,7 +8,7 @@ using namespace boost;
 using namespace algorithm;
 using namespace program_options;
 
-namespace rad {
+namespace printer {
 
 void option_printer::add(const custom_option_description& description)
 {

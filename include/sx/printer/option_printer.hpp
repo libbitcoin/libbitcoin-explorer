@@ -6,7 +6,7 @@
 #include <boost/program_options.hpp>
 #include <sx/printer/custom_option_description.hpp>
 
-namespace rad {
+namespace printer {
 
 class option_printer
 {
@@ -25,6 +25,7 @@ public:
         boost::program_options::options_description description,
         boost::program_options::positional_options_description* 
             positional=NULL);
+
     static void formatRequiredOptionError(
         boost::program_options::required_option& error);
 

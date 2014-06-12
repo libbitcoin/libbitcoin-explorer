@@ -6,16 +6,18 @@
 #include <string>
 #include <boost/program_options.hpp>
 
-namespace rad {
+namespace printer {
 
 class custom_option_description
 {
 public:
     custom_option_description(
         boost::shared_ptr<boost::program_options::option_description> option);
+
     void checkIfPositional(
         const boost::program_options::positional_options_description& 
         positional);
+
     std::string getOptionUsageString();
 
 public:
