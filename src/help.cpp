@@ -35,8 +35,7 @@ console_result help::invoke(std::istream& input, std::ostream& output,
         cerr << "error" << std::endl;
         return console_result::invalid;
     }
-    /* TODO: use command.find() */
-    else if (command != stealth_addr::symbol())
+    else if (find(command) == nullptr)
     {
         cerr << "error bogus" << std::endl;
         return console_result::failure;
