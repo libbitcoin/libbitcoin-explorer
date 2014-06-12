@@ -33,6 +33,10 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
+// TODO: name 'some_flag' and move to flags enum.
+// TODO: enable prefix filter, currently unused.
+// TODO: Is testnet used here, it was loaded by not referenced
+// TODO: there should be validation on input key values, length only?
 console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
@@ -42,14 +46,10 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const auto scan_pubkey = get_scan_pubkey_argument();
     const auto spend_pubkeys = get_spend_pubkeys_argument();
 
-    // auto testnet = get_general_testnet_setting();
-    // TODO: there should be validation on input key values, length only?
-
     // Construct actual address.
     // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
     data_chunk raw_address;
 
-    // TODO: name 'some_flag' and move to flags enum.
     const uint8_t some_flag = 1;
     const uint8_t stealth_version = 0x2a;
     const uint8_t default_stealth_prefix_filter = 0x00;
@@ -58,7 +58,6 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
 
     raw_address.push_back(stealth_version);
     raw_address.push_back(options_bitfield);
-
     extend_data(raw_address, static_cast<bc::data_chunk>(scan_pubkey));
     raw_address.push_back(number_keys);
 
@@ -74,11 +73,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
         ++signatures;
 
     raw_address.push_back(signatures);
-
-    // TODO: enable this feature later (Prefix filter currently unused).
     raw_address.push_back(default_stealth_prefix_filter);
-
-    const auto checksum = bitcoin_checksum(raw_address);
     append_checksum(raw_address);
     const auto stealth_address = encode_base58(raw_address);
 
