@@ -27,16 +27,16 @@
 namespace sx {
 
 /**
- * Display an error message to the console that the specified configuration
- * file does not exist.
+ * Display an error message to the console that the specified sx command does
+ * not exist.
  *
  * @param[in]  command  The value that was attempted as a command.
  */
 void display_invalid_command(const std::string& command);
 
 /**
- * Display an error message to the console that the specified sx command does
- * not exist.
+ * Display an error message to the console that the specified configuration
+ * file does not exist.
  *
  * @param[in]  file  The path of a file that was tested.
  */
