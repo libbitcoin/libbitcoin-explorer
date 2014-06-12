@@ -18,16 +18,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <string>
-#include <vector>
 #include <bitcoin/bitcoin.hpp>
-#include <boost/program_options.hpp>
-#include <sx/command.hpp>
 #include <sx/command/stealth-addr.hpp>
-#include <sx/generated.hpp>
-#include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/environment.hpp>
 
 using namespace bc;
 using namespace sx;
