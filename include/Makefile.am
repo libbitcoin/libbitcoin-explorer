@@ -7,7 +7,12 @@ sx_include_HEADERS = \
     display.hpp \
     obelisk.hpp \
     sx.hpp
-
+    
+sx_printer_includedir = $(includedir)/sx/printer
+sx_printer_include_HEADERS += \
+    custom_option_description.hpp \
+    option_printer.hpp
+    
 sx_utility_includedir = $(includedir)/sx/utility
 sx_utility_include_HEADERS += \
     byte.hpp \

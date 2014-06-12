@@ -47,11 +47,11 @@
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\options\custom_option_description.hpp">
-      <Filter>includeprinter</Filter>
+    <ClInclude Include="..\..\..\..\include\sx\printer\custom_option_description.hpp">
+      <Filter>include\printer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\options\option_printer.hpp">
-      <Filter>includeprinter</Filter>
+    <ClInclude Include="..\..\..\..\include\sx\printer\option_printer.hpp">
+      <Filter>include\printer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp">
       <Filter>include\utility</Filter>
@@ -100,11 +100,11 @@
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\options\custom_option_description.cpp">
-      <Filter>srcprinter</Filter>
+    <ClCompile Include="..\..\..\..\src\printer\custom_option_description.cpp">
+      <Filter>src\printer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\options\option_printer.cpp">
-      <Filter>srcprinter</Filter>
+    <ClCompile Include="..\..\..\..\src\printer\option_printer.cpp">
+      <Filter>src\printer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp">
       <Filter>src\utility</Filter>

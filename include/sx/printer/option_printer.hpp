@@ -4,7 +4,7 @@
 #define RAD_PRETTYOPTIONPRINTER_HPP
 
 #include <boost/program_options.hpp>
-#include <sx/options/custom_option_description.hpp>
+#include <sx/printer/custom_option_description.hpp>
 
 namespace rad {
 
@@ -13,7 +13,7 @@ class option_printer
 public:
     void add(const custom_option_description& description);
 
-    /** Print the single line application usage description */
+    // Print the single line application usage description
     std::string usage();
 
     std::string positionalOptionDetails();

@@ -884,7 +884,12 @@ sx_include_HEADERS = \\
     display.hpp \\
     obelisk.hpp \\
     sx.hpp
-
+    
+sx_printer_includedir = $\(includedir)/sx/printer
+sx_printer_include_HEADERS += \\
+    custom_option_description.hpp \\
+    option_printer.hpp
+    
 sx_utility_includedir = $\(includedir)/sx/utility
 sx_utility_include_HEADERS += \\
     byte.hpp \\
@@ -928,6 +933,8 @@ libsx_la_SOURCES = \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
+    printer/custom_option_description.hpp \\
+    printer/option_printer.hpp
     utility/coin.cpp \\
     utility/config.cpp \\
     utility/console.cpp \\
@@ -1201,11 +1208,11 @@ endif
       <Filter>include\\command</Filter>
     </ClInclude>
 .endfor
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\options\\custom_option_description.hpp">
-      <Filter>include\printer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\printer\\custom_option_description.hpp">
+      <Filter>include\\printer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\options\\option_printer.hpp">
-      <Filter>include\printer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\printer\\option_printer.hpp">
+      <Filter>include\\printer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\byte.hpp">
       <Filter>include\\utility</Filter>
@@ -1259,11 +1266,11 @@ endif
 .   endif
     </ClCompile>
 .endfor
-    <ClCompile Include="..\\..\\..\\..\\src\\options\\custom_option_description.cpp">
-      <Filter>src\printer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\printer\\custom_option_description.cpp">
+      <Filter>src\\printer</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\options\\option_printer.cpp">
-      <Filter>src\printer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\printer\\option_printer.cpp">
+      <Filter>src\\printer</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp">
       <Filter>src\\utility</Filter>

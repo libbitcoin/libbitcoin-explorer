@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <boost/program_options.hpp>
 #include <boost/algorithm/string/erase.hpp>
-#include <sx/options/custom_option_description.hpp>
+#include <sx/printer/custom_option_description.hpp>
 
 using namespace boost;
 using namespace algorithm;

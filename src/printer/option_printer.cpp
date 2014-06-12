@@ -2,7 +2,7 @@
 
 #include <boost/program_options.hpp>
 #include <boost/algorithm/string/regex.hpp>
-#include <sx/options/option_printer.hpp>
+#include <sx/printer/option_printer.hpp>
 
 using namespace boost;
 using namespace algorithm;
@@ -110,7 +110,6 @@ void option_printer::formatRequiredOptionError(required_option& error)
     auto current = error.get_option_name();
     erase_regex(current, regex("^-+"));
     error.set_option_name(current);
-
 }
 
 } // rad
