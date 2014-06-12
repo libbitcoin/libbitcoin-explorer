@@ -84,6 +84,8 @@
     <ClInclude Include="..\..\..\..\include\sx\obelisk.hpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\printer\custom_option_description.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\printer\option_printer.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\bytes.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
@@ -103,6 +105,8 @@
     <ClCompile Include="..\..\..\..\src\obelisk.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\printer\custom_option_description.cpp" />
+    <ClCompile Include="..\..\..\..\src\printer\option_printer.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\config.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
