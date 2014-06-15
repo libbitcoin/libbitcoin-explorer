@@ -117,7 +117,9 @@ public:
      */
     virtual void write_usage(std::ostream& stream)
     {
-    }    
+        auto options = load_options();
+        auto arguments = load_arguments();
+    }
     
     /**
      * Invoke the command.
@@ -137,11 +139,12 @@ public:
      * Load command argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      *
-     * @param[out] definitions  The defined program argument definitions.
+     * @return  The loaded argument definitions.
      */
-    virtual void load_arguments(
-        boost::program_options::positional_options_description& definitions)
+    virtual boost::program_options::positional_options_description&
+        load_arguments()
     {
+        return argument_metadata_;
     }
 
     /**
@@ -170,11 +173,11 @@ public:
      *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      *
-     * @param[out] definitions  The defined program option definitions.
+     * @return  The loaded option definitions.
      */
-    virtual void load_options(
-        boost::program_options::options_description& definitions)
+    virtual boost::program_options::options_description& load_options()
     {
+        return option_metadata_;
     }
     
     /**
@@ -210,6 +213,23 @@ public:
     }
     
     /* Properties */
+    
+    /**
+     * Get command line argument metadata.
+     */
+    virtual boost::program_options::positional_options_description& 
+        get_argument_metadata()
+    {
+        return argument_metadata_;
+    }
+    
+    /**
+     * Get command line option metadata.
+     */
+    virtual boost::program_options::options_description& get_option_metadata()
+    {
+        return option_metadata_;
+    }
 
     /**
      * Get the value of the general.testnet setting.
@@ -284,6 +304,16 @@ protected:
     command() {}
     
 private:
+    
+    /**
+     * Command line argument metadata.
+     */
+    boost::program_options::positional_options_description argument_metadata_;
+
+    /**
+     * Command line option metadata.
+     */
+    boost::program_options::options_description option_metadata_;
     
     /**
      * Environment variable bound variables.

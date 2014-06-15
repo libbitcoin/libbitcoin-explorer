@@ -20,18 +20,20 @@
 #include <iostream>
 #include <cstdarg>
 #include <boost/format.hpp>
+#include <boost/program_options.hpp>
 #include <sx/command/help.hpp>
 #include <sx/display.hpp>
 #include <sx/generated.hpp>
 #include <sx/utility/console.hpp>
 
+using namespace boost::program_options;
 using namespace sx;
 using namespace sx::extensions;
 
 // 100% coverage by line (as private to invoke())
 static bool write_all_command_names(std::ostream& stream)
 {
-    const auto func = [&](std::shared_ptr<command> sx_command) -> void
+    const auto func = [&](std::shared_ptr<command> sx_command)
     {
         stream << sx_command->name() << std::endl;
     };
@@ -46,18 +48,18 @@ console_result help::invoke(std::istream& input, std::ostream& output,
     // Bound parameters.
     auto symbol = get_command_argument();
 
-    // Stream input fallback.
+    // Fallback to stream input when COMMAND argument is missing.
     if (symbol.empty())
         symbol = read_stream(input);
 
-    // If there is no COMMAND argument then show usage for this command.
+    // If there is no COMMAND then show usage for this command.
     if (symbol.empty())
     {
         write_usage(cerr);
         return console_result::failure;
     }
 
-    // If the COMMAND argument is not a command, say so and list all commands.
+    // If the COMMAND is not a command, say so and list all commands.
     auto command = find(symbol);
     if (command == nullptr)
     {
@@ -66,7 +68,7 @@ console_result help::invoke(std::istream& input, std::ostream& output,
         return console_result::failure;
     }
 
-    // The COMMAND argument is valid so show the command's usage.
+    // The COMMAND is valid so show its usage.
     command->write_usage(output);
     return console_result::okay;
 }

@@ -21,14 +21,14 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <sx/sx.hpp>
-#include "setup.hpp"
+#include "command.hpp"
 
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(stealth_addr__invoke)
 
-BOOST_AUTO_TEST_CASE(scan_pubkey__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey__okay_output)
 {
     // $ sx stealth-addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey__okay_output)
     SX_REQUIRE_OUTPUT("hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU8ys8T1tX7\n");
 }
 
-BOOST_AUTO_TEST_CASE(scan_pubkey_bogus_input__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_bogus_input__okay_output)
 {
     // $ echo bogus | sx stealth-addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND_INPUT(stealth_addr, "bogus");
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_bogus_input__okay_output)
     SX_REQUIRE_OUTPUT("hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU8ys8T1tX7\n");
 }
 
-BOOST_AUTO_TEST_CASE(scan_pubkey_signatures_four__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_signatures_four__okay_output)
 {
     // $ sx stealth-addr -s 4 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_signatures_four__okay_output)
     SX_REQUIRE_OUTPUT("hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU91raMWbWq\n");
 }
 
-BOOST_AUTO_TEST_CASE(scan_pubkey_reuse_key__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_reuse_key__okay_output)
 {
     // $ sx stealth-addr -r 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_reuse_key__okay_output)
     SX_REQUIRE_OUTPUT("hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i\n");
 }
 
-BOOST_AUTO_TEST_CASE(scan_pubkey_reuse_key_signatures__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_reuse_key_signatures__okay_output)
 {
     // $ sx stealth-addr -r -s 4 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_reuse_key_signatures__okay_output)
 }
 
 // sx.dyne.org/stealth.html#further-understanding
-BOOST_AUTO_TEST_CASE(scan_pubkey_one_spend_pubkeys__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_one_spend_pubkeys__okay_output)
 {
     // $ sx stealth-addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969
     SX_DECLARE_COMMAND(stealth_addr);
@@ -89,13 +89,3 @@ BOOST_AUTO_TEST_CASE(scan_pubkey_one_spend_pubkeys__okay_output)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-// Additional namespace for helper functions/methods.
-//BOOST_AUTO_TEST_SUITE(stealth_addr__nop)
-//
-//BOOST_AUTO_TEST_CASE(always__is_true)
-//{
-//    BOOST_REQUIRE(true);
-//}
-//
-//BOOST_AUTO_TEST_SUITE_END()

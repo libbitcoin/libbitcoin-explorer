@@ -78,14 +78,13 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\define.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\dispatch.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\display.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\generated.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\obelisk.hpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\printer\custom_option_description.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\printer\option_printer.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\bytes.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
@@ -93,6 +92,8 @@
     <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\environment.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\parameter.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\printer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
@@ -105,12 +106,12 @@
     <ClCompile Include="..\..\..\..\src\obelisk.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\printer\custom_option_description.cpp" />
-    <ClCompile Include="..\..\..\..\src\printer\option_printer.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\config.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\console.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\parameter.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility\printer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\help.cpp" />

@@ -14,12 +14,12 @@ libsx_la_SOURCES = \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
-    printer/custom_option_description.hpp \
-    printer/option_printer.hpp
     utility/coin.cpp \
     utility/config.cpp \
     utility/console.cpp \
-    utility/environment.cpp
+    utility/environment.cpp \
+    utility/parameter.cpp \
+    utility/printer.cpp
 
 # Generated from XML data source.
 libsx_la_SOURCES += \

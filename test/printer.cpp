@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,24 +17,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <boost/test/unit_test.hpp>
+#include <iostream>
+#include <vector>
+#include <boost/program_options.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
 #include <sx/sx.hpp>
 
-/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
+BOOST_AUTO_TEST_SUITE(printer__initialize)
 
-using namespace sx;
-using namespace sx::extensions;
-
-BOOST_AUTO_TEST_SUITE(generated__symbol)
-
-BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
+BOOST_AUTO_TEST_CASE(printer__initialize_todo)
 {
-    BOOST_REQUIRE(help::symbol() == std::string("help"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr__returns_expected_value)
-{
-    BOOST_REQUIRE(stealth_addr::symbol() == std::string("stealth-addr"));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -64,6 +64,7 @@
     <Import Project="$(ProjectDir)..\..\properties\Output.props" />
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'" />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
@@ -121,6 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\help.cpp" />
+    <ClCompile Include="..\..\..\..\test\parameter.cpp" />
+    <ClCompile Include="..\..\..\..\test\printer.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth_addr.cpp" />
     <ClCompile Include="..\..\..\..\test\console__line_out.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
@@ -129,6 +132,6 @@
     <ClCompile Include="..\..\..\..\test\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\test\setup.hpp" />
+    <ClInclude Include="..\..\..\..\test\command.hpp" />
   </ItemGroup>
 </Project>

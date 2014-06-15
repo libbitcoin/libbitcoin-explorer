@@ -42,10 +42,16 @@
     <ClCompile Include="..\..\..\..\test\help.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\parameter.cpp">
+      <Filter>src\tests\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\printer.cpp">
+      <Filter>src\tests\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\test\setup.hpp">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\..\..\test\command.hpp">
+      <Filter>src\tests\command</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

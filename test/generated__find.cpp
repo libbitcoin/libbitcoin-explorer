@@ -27,12 +27,12 @@ using namespace sx::extensions;
 
 BOOST_AUTO_TEST_SUITE(generated__find)
 
-BOOST_AUTO_TEST_CASE(help__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(stealth_addr__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_addr__returns_object)
 {
     BOOST_REQUIRE(find(stealth_addr::symbol()) != nullptr);
 }

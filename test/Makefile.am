@@ -11,7 +11,9 @@ AM_CPPFLAGS = \
 #    setup.hpp
 
 sx_test_SOURCES = \
-    console__line_out.cpp \
+    utility/console__line_out.cpp \
+    utility/parameter.cpp \
+    utility/printer.cpp \
     generated__broadcast.cpp \
     generated__find.cpp \
     generated__symbol.cpp \

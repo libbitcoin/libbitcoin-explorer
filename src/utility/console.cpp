@@ -201,6 +201,12 @@ void terminate_process_on_error(const std::error_code& error)
     exit(console_result::failure);
 }
 
+void trim_left(std::string& value, const std::string& chars)
+{
+    using namespace boost::algorithm;
+    trim_left_if(value, is_any_of(chars));
+}
+
 bool validate_argument_range(int actual, 
     const std::vector<const char*>& message, int minimum, int maximum)
 {

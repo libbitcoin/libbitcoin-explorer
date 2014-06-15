@@ -26,6 +26,7 @@
 #include <vector>
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/utility/byte.hpp>
 #include <sx/utility/bytes.hpp>
@@ -109,26 +110,16 @@ public:
     }
     
     /**
-     * Write the usage help for this command to the specified stream.
-     *
-     * @param[out] stream  The stream of interest.
-     */
-    void write_usage(std::ostream& stream)
-    {
-        stream << "foobar" << std::endl;
-    }
-    
-    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      *
-     * @param[out] definitions  The defined program argument definitions.
+     * @return  The loaded program argument definitions.
      */
-    void load_arguments(
-        boost::program_options::positional_options_description& definitions)
+    arguments_metadata& load_arguments()
     {
-        definitions.add("SCAN_PUBKEY", 1);
-        definitions.add("SPEND_PUBKEY", -1);
+        return get_argument_metadata()
+            .add("SCAN_PUBKEY", 1)
+            .add("SPEND_PUBKEY", -1);
     }
     
     /**
@@ -138,13 +129,13 @@ public:
      *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      *
-     * @param[out] definitions  The defined program option definitions.
+     * @return  The loaded program option definitions.
      */
-    void load_options(
-        boost::program_options::options_description& definitions)
+    options_metadata& load_options()
     {
-        using namespace boost::program_options;
-        definitions.add_options()
+        using namespace po;
+        options_description& options = get_option_metadata();
+        options.add_options()
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
@@ -175,6 +166,8 @@ public:
                 value<std::vector<bytes>>(&argument_.spend_pubkeys),
                 "The public key that is spent to."
             );
+
+        return options;
     }   
 
     /**

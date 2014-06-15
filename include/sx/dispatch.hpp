@@ -24,6 +24,7 @@
 #include <string>
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -61,8 +62,7 @@ bool dispatch_usage();
  * @param[in]  variables  The variable map to read the config from.
  * @return                The read path.
  */
-boost::filesystem::path get_config_variable(
-    boost::program_options::variables_map& variables);
+boost::filesystem::path get_config_variable( po::variables_map& variables);
 
 /**
  * Load command line variables.
@@ -72,8 +72,8 @@ boost::filesystem::path get_config_variable(
  * @param[in]  argc       The number of elements in the argv parameter.
  * @param[in]  argv       Array of command line arguments excluding process.
  */
-void load_command_variables(boost::program_options::variables_map& variables,
-    command& instance, int argc, const char* argv[]) throw();
+void load_command_variables(po::variables_map& variables, command& instance,
+    int argc, const char* argv[]) throw();
 
 /**
  * Load configuration file variable.
@@ -81,9 +81,8 @@ void load_command_variables(boost::program_options::variables_map& variables,
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
  */
-void load_configuration_variables(
-    boost::program_options::variables_map& variables, command& instance)
-    throw();
+void load_configuration_variables(po::variables_map& variables, 
+    command& instance) throw();
 
 /**
  * Load environment variable.
@@ -91,9 +90,8 @@ void load_configuration_variables(
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
  */
-void load_environment_variables(
-    boost::program_options::variables_map& variables, command& instance)
-    throw();
+void load_environment_variables(po::variables_map& variables,
+    command& instance) throw();
 
 /**
  * Load command line variable.
@@ -105,8 +103,8 @@ void load_environment_variables(
  * @param[in]  argv       Array of command line arguments excluding process.
  * @return                True if the load is successful.
  */
-bool load_variables(boost::program_options::variables_map& variables, 
-    std::string& message, command& instance, int argc, const char* argv[]);
+bool load_variables(po::variables_map& variables, std::string& message,
+    command& instance, int argc, const char* argv[]);
 
 } // sx
 

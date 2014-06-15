@@ -146,7 +146,6 @@
 #include <functional>
 #include <memory>
 #include <string>
-#include <boost/program_options.hpp>
 #include <sx/command.hpp>
 .for command by symbol
 #include <sx/command/$(symbol).hpp>
@@ -155,8 +154,6 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 #define SX_VARIABLE_CONFIG "$(config_option:)"
-
-namespace po = boost::program_options;
 
 namespace sx {
 
@@ -323,7 +320,9 @@ public:
      */
     virtual void write_usage(std::ostream& stream)
     {
-    }    
+        auto options = load_options();
+        auto arguments = load_arguments();
+    }
     
     /**
      * Invoke the command.
@@ -343,11 +342,12 @@ public:
      * Load command argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      *
-     * @param[out] definitions  The defined program argument definitions.
+     * @return  The loaded argument definitions.
      */
-    virtual void load_arguments(
-        boost::program_options::positional_options_description& definitions)
+    virtual boost::program_options::positional_options_description&
+        load_arguments()
     {
+        return argument_metadata_;
     }
 
     /**
@@ -376,11 +376,11 @@ public:
      *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      *
-     * @param[out] definitions  The defined program option definitions.
+     * @return  The loaded option definitions.
      */
-    virtual void load_options(
-        boost::program_options::options_description& definitions)
+    virtual boost::program_options::options_description& load_options()
     {
+        return option_metadata_;
     }
     
     /**
@@ -412,6 +412,23 @@ public:
     }
     
     /* Properties */
+    
+    /**
+     * Get command line argument metadata.
+     */
+    virtual boost::program_options::positional_options_description& 
+        get_argument_metadata()
+    {
+        return argument_metadata_;
+    }
+    
+    /**
+     * Get command line option metadata.
+     */
+    virtual boost::program_options::options_description& get_option_metadata()
+    {
+        return option_metadata_;
+    }
 
 .for configuration
 .   for setting
@@ -448,6 +465,16 @@ protected:
     command() {}
     
 private:
+    
+    /**
+     * Command line argument metadata.
+     */
+    boost::program_options::positional_options_description argument_metadata_;
+
+    /**
+     * Command line option metadata.
+     */
+    boost::program_options::options_description option_metadata_;
     
     /**
      * Environment variable bound variables.
@@ -515,6 +542,7 @@ private:
 #include <vector>
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/utility/byte.hpp>
 #include <sx/utility/bytes.hpp>
@@ -617,27 +645,17 @@ public:
     }
     
     /**
-     * Write the usage help for this command to the specified stream.
-     *
-     * @param[out] stream  The stream of interest.
-     */
-    void write_usage(std::ostream& stream)
-    {
-        stream << "foobar" << std::endl;
-    }
-    
-    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      *
-     * @param[out] definitions  The defined program argument definitions.
+     * @return  The loaded program argument definitions.
      */
-    void load_arguments(
-        boost::program_options::positional_options_description& definitions)
+    arguments_metadata& load_arguments()
     {
+        return get_argument_metadata()
 .for argument
-        definitions.add("$(name:)", $(limit ? "1"));
-.endfor          
+            .add("$(name:)", $(limit ? "1"))$(last() ?? ";")
+.endfor
     }
     
     /**
@@ -647,13 +665,13 @@ public:
      *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      *
-     * @param[out] definitions  The defined program option definitions.
+     * @return  The loaded program option definitions.
      */
-    void load_options(
-        boost::program_options::options_description& definitions)
+    options_metadata& load_options()
     {
-        using namespace boost::program_options;
-        definitions.add_options()
+        using namespace po;
+        options_description& options = get_option_metadata();
+        options.add_options()
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
@@ -690,6 +708,8 @@ public:
                 "$(description:)"
             )$(last() ?? ";")
 .endfor
+
+        return options;
     }   
 
     /**
@@ -820,7 +840,7 @@ private:
 
 BOOST_AUTO_TEST_SUITE(generated__broadcast)
 
-BOOST_AUTO_TEST_CASE(always__returns_true)
+BOOST_AUTO_TEST_CASE(generated__broadcast__always__returns_true)
 {
     // TODO: mocks and dependency injection required to test proper execution.
     auto func = [](std::shared_ptr<sx::command> sx_command) -> void {};
@@ -843,7 +863,7 @@ using namespace sx::extensions;
 BOOST_AUTO_TEST_SUITE(generated__find)
 .for command by symbol
 
-BOOST_AUTO_TEST_CASE($(symbol:c)__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__$(symbol:c)__returns_object)
 {
     BOOST_REQUIRE(find($(symbol:c)::symbol()) != nullptr);
 }
@@ -865,7 +885,7 @@ using namespace sx::extensions;
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 .for command by symbol
 
-BOOST_AUTO_TEST_CASE($(symbol:c)__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__$(symbol:c)__returns_expected_value)
 {
     BOOST_REQUIRE($(symbol:c)::symbol() == std::string("$(symbol:)"));
 }
@@ -884,12 +904,7 @@ sx_include_HEADERS = \\
     display.hpp \\
     obelisk.hpp \\
     sx.hpp
-    
-sx_printer_includedir = $\(includedir)/sx/printer
-sx_printer_include_HEADERS += \\
-    custom_option_description.hpp \\
-    option_printer.hpp
-    
+
 sx_utility_includedir = $\(includedir)/sx/utility
 sx_utility_include_HEADERS += \\
     byte.hpp \\
@@ -898,7 +913,9 @@ sx_utility_include_HEADERS += \\
     compat.hpp \\
     config.hpp \\
     console.hpp \\
-    environment.hpp
+    environment.hpp \\
+    parameter.hpp \\
+    printer.hpp
 
 # Generated from XML data source.
 sx_command_includedir = $\(includedir)/sx/command
@@ -933,12 +950,12 @@ libsx_la_SOURCES = \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
-    printer/custom_option_description.hpp \\
-    printer/option_printer.hpp
     utility/coin.cpp \\
     utility/config.cpp \\
     utility/console.cpp \\
-    utility/environment.cpp
+    utility/environment.cpp \\
+    utility/parameter.cpp \\
+    utility/printer.cpp
 
 # Generated from XML data source.
 libsx_la_SOURCES += \\
@@ -1062,14 +1079,13 @@ endif
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\define.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk.hpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\printer\\custom_option_description.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\printer\\option_printer.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\bytes.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
@@ -1077,6 +1093,8 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\console.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\parameter.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\printer.hpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1090,12 +1108,12 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\printer\\custom_option_description.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\printer\\option_printer.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1174,9 +1192,6 @@ endif
     <Filter Include="include\\command">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\printer">
-      <UniqueIdentifier>{019e864a-adba-4787-94a2-2f66826b3f1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\\utility">
       <UniqueIdentifier>{dc28e2c9-d07d-4242-8007-e44440c133a0}</UniqueIdentifier>
     </Filter>
@@ -1192,9 +1207,6 @@ endif
     <Filter Include="src\\command">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\printer">
-      <UniqueIdentifier>{235a9000-2435-44bd-912c-3ec63edf51bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\\utility">
       <UniqueIdentifier>{c50b43cf-9009-45a6-b813-7a61877602f4}</UniqueIdentifier>
     </Filter>
@@ -1208,12 +1220,6 @@ endif
       <Filter>include\\command</Filter>
     </ClInclude>
 .endfor
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\printer\\custom_option_description.hpp">
-      <Filter>include\\printer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\printer\\option_printer.hpp">
-      <Filter>include\\printer</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\byte.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
@@ -1235,7 +1241,16 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\parameter.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\printer.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\define.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp">
@@ -1266,12 +1281,6 @@ endif
 .   endif
     </ClCompile>
 .endfor
-    <ClCompile Include="..\\..\\..\\..\\src\\printer\\custom_option_description.cpp">
-      <Filter>src\\printer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\printer\\option_printer.cpp">
-      <Filter>src\\printer</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp">
       <Filter>src\\utility</Filter>
     </ClCompile>
@@ -1282,6 +1291,12 @@ endif
       <Filter>src\\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp">
       <Filter>src\\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp">

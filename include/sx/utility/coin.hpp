@@ -48,14 +48,14 @@ enum key_compression : uint8_t
 /**
  * Load a satoshi item from the specified file.
  *
- * @param      <TItem>   The type of the item to load.
+ * @param      <Item>    The type of the item to load.
  * @param[out] item      The loaded item.
  * @param[in]  filename  The path and file name for the transaction file.
  * @param[in]  stream    The stream to load from, if the file is "-".
  * @return               True if a transaction was loaded.
  */
-template <typename TItem>
-bool load_satoshi_item(TItem& item, const std::string& filename, 
+template <typename Item>
+bool load_satoshi_item(Item& item, const std::string& filename,
     std::istream& stream)
 {
     std::ostringstream contents;

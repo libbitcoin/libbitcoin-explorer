@@ -91,16 +91,15 @@ path get_config_variable(variables_map& variables)
 void load_command_variables(variables_map& variables, command& instance,
     int argc, const char* argv[]) throw()
 {
-    options_description command_options("command");
-    instance.load_options(command_options);
-
-    positional_options_description command_arguments;
-    instance.load_arguments(command_arguments);
+    // command metadata is preserved on members for later usage presentation
+    auto options = instance.load_options();
+    auto arguments = instance.load_arguments();
 
     // parse inputs
-    auto command_parser = command_line_parser(argc, argv)
-        .options(command_options).positional(command_arguments);
+    auto command_parser = command_line_parser(argc, argv).options(options)
+        .positional(arguments);
 
+    // map parsed inputs into variables map
     store(command_parser.run(), variables);
 }
 

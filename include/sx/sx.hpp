@@ -37,5 +37,7 @@
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
 #include <sx/utility/environment.hpp>
+#include <sx/utility/parameter.hpp>
+#include <sx/utility/printer.hpp>
 
 #endif

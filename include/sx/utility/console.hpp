@@ -29,9 +29,12 @@
 #include <stdint.h>
 #include <string>
 #include <system_error>
+#include <tuple>
 #include <vector>
 #include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
+#include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning(pop)
 
@@ -70,36 +73,71 @@ enum console_result : int
  * Caller should ensure that TValue is the same type as TElement (sorry,
  * but there are no type constraints in c++).
  *
- * @param      <TValue>    The type of the value to test.
- * @param      <TElement>  The type of the elements of flags' enum.
+ * @param      <Value>     The type of the value to test.
+ * @param      <Element>   The type of the elements of flags' enum.
  * @param[in]  value       The value to test.
  * @param[in]  flags       The flags to test.
  * @return                 True if all specified flags are set.
  */
-template <typename TValue, typename TElement>
-bool are_flags_set(const TValue value, const TElement flags)
+template <typename Value, typename Element>
+bool are_flags_set(const Value value, const Element flags)
 {
     // This simple template precludes the need to explicitly cast the class
     // enum (with elements already of the proper type) and ensures the flag 
     // test isn't inadvertently inverted.
-    return (value & static_cast<TValue>(flags)) != 0;
+    return (value & static_cast<Value>(flags)) != 0;
 }
 
 /**
- * Avoid the if_else (yes, it's just fun and games).
+ * Find the position of an element in an ordered list.
+ *
+ * @param      <Element>  The type of list member elements.
+ * @param[in]  list       The list to search.
+ * @param[in]  element    The element to find.
+ * @return                The position or -1 if not found.
+ */
+template <typename Element>
+int find_position(const std::vector<Element>& list, const Element& element)
+{
+    auto it = std::find(list.begin(), list.end(), element);
+    return if_else(it == list.end(), -1, distance(list.begin(), it));
+}
+
+/**
+ * Find the position of a pair in an ordered list.
+ *
+ * @param      <Pair>  The type of list member elements.
+ * @param[in]  list    The list to search.
+ * @param[in]  key     The key to the element to find.
+ * @return             The position or -1 if not found.
+ */
+template <typename Pair, typename Key>
+int find_pair_position(const std::vector<Pair>& list, const Key& key)
+{
+    const auto predicate = [&](const Pair& pair)
+    {
+        return pair.first == key;
+    };
+
+    auto it = std::find_if(list.begin(), list.end(), predicate);
+    return if_else(it == list.end(), -1, distance(list.begin(), it));
+}
+
+/**
+ * Avoid the ternary (just for fun).
  * You should use with expressions as consequent or alternative as they will be
  * executed regardless of the predicate.
  *
- * @param      <TConsequent>   The type of the consequent.
- * @param      <TAlternative>  The type of the alternative.
- * @param[in]  antecedent      The proposition's antecedent.
- * @param[in]  consequent      The proposition's consequent (if predicate).
- * @param[in]  consequent      The proposition's alternative (if !predicate).
- * @return                     Either the consequent or the alternative.
+ * @param      <Consequent>  The type of the consequent.
+ * @param      <Alternate>   The type of the alternative.
+ * @param[in]  antecedent    The proposition's antecedent.
+ * @param[in]  consequent    The proposition's consequent (if predicate).
+ * @param[in]  consequent    The proposition's alternative (if !predicate).
+ * @return                   Either the consequent or the alternative.
  */
-template <typename TConsequent, typename TAlternative>
-TConsequent if_else(bool antecedent, const TConsequent consequent,
-    const TAlternative alternative)
+template <typename Consequent, typename Alternate>
+Consequent if_else(bool antecedent, const Consequent consequent,
+    const Alternate alternative)
 {
     if (antecedent)
         return consequent;
@@ -110,19 +148,19 @@ TConsequent if_else(bool antecedent, const TConsequent consequent,
 /**
  * Safely convert a text string to the specified type, whitespace ignored.
  *
- * @param      <TValue> The converted type.
+ * @param      <Value>  The converted type.
  * @param[in]  text     The text to convert.
  * @param[out] value    The parsed value.
  * @return              True if successful.
  */
-template <typename TValue>
-bool parse(TValue& value, const std::string& text)
+template <typename Value>
+bool parse(Value& value, const std::string& text)
 {
     std::string serialized(text);
     boost::algorithm::trim(serialized);
     try
     {
-        value = boost::lexical_cast<TValue>(serialized);
+        value = boost::lexical_cast<Value>(serialized);
     }
     catch (const boost::bad_lexical_cast&)
     {
@@ -134,13 +172,13 @@ bool parse(TValue& value, const std::string& text)
 /**
  * Conveniently convert an instance of the specified type to string.
  *
- * @param      <TValue>  The type to serialize.
+ * @param      <Value>   The type to serialize.
  * @param[in]  value     The instance to convert.
  * @param[in]  fallback  The text to populate if value is empty.
  * @return               The serialized value.
  */
-template <typename TValue>
-std::string serialize(const TValue& value, const std::string& fallback="")
+template <typename Value>
+std::string serialize(const Value& value, const std::string& fallback = "")
 {
     std::string serialized;
     boost::to_string(value, serialized);
@@ -336,6 +374,15 @@ void stream_to_words(std::istream& stream,
  * @param[in]  error  The error code to test and log before terminating.
  */
 void terminate_process_on_error(const std::error_code& error);
+
+/**
+ * Trim the left side of a string of the specified characters.
+ *
+ * @param[out] value   The string to split.
+ * @param[out] value   The characters to trim, defaults to SX_SPLIT_DELIMITER.
+ */
+void trim_left(std::string& value, 
+    const std::string& chars=SX_SPLIT_DELIMITER);
 
 /**
  * Validate that the actual argument count matches the target, and if not emit

@@ -24,7 +24,7 @@
 
 BOOST_AUTO_TEST_SUITE(generated__broadcast)
 
-BOOST_AUTO_TEST_CASE(always__returns_true)
+BOOST_AUTO_TEST_CASE(generated__broadcast__always__returns_true)
 {
     // TODO: mocks and dependency injection required to test proper execution.
     auto func = [](std::shared_ptr<sx::command> sx_command) -> void {};

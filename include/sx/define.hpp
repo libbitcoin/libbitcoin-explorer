@@ -17,24 +17,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <boost/test/unit_test.hpp>
-#include <sx/sx.hpp>
+#ifndef DEFINE_HPP
+#define DEFINE_HPP
 
-/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
+#include <boost/format.hpp>
+#include <boost/program_options.hpp>
 
-using namespace sx;
-using namespace sx::extensions;
+#define REGION
 
-BOOST_AUTO_TEST_SUITE(generated__symbol)
+#define PROPERTY(type, name) \
+    public: virtual type get_##name() { return name##_; } \
+    public: virtual void set_##name(type value) { name##_ = value; } \
+    private: type name##_
 
-BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
-{
-    BOOST_REQUIRE(help::symbol() == std::string("help"));
-}
+#define PROPERTY_GET(type, name) \
+    public: virtual type get_##name() { return name##_; } \
+    private: type name##_
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr__returns_expected_value)
-{
-    BOOST_REQUIRE(stealth_addr::symbol() == std::string("stealth-addr"));
-}
+#define PROPERTY_SET(type, name) \
+    public: virtual void set_##name(type value) { name##_ = value; } \
+    private: type name##_
 
-BOOST_AUTO_TEST_SUITE_END()
+namespace po = boost::program_options;
+
+typedef po::option_description option_metadata;
+typedef po::options_description options_metadata;
+typedef po::positional_options_description arguments_metadata;
+
+#endif

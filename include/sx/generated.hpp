@@ -23,7 +23,6 @@
 #include <functional>
 #include <memory>
 #include <string>
-#include <boost/program_options.hpp>
 #include <sx/command.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/stealth-addr.hpp>
@@ -31,8 +30,6 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 #define SX_VARIABLE_CONFIG "config"
-
-namespace po = boost::program_options;
 
 namespace sx {
 

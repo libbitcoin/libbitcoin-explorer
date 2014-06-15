@@ -21,53 +21,52 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <sx/sx.hpp>
-#include "setup.hpp"
 
 BOOST_AUTO_TEST_SUITE(console__line_out)
 
-BOOST_AUTO_TEST_CASE(single__streams_line)
+BOOST_AUTO_TEST_CASE(console__line_out__console__line_out__single__streams_line)
 {
     std::stringstream stream;
     sx::line_out(stream, "World!");
     BOOST_REQUIRE(stream.str() == "World!\n");
 }
 
-BOOST_AUTO_TEST_CASE(single_offset__streams_offset)
+BOOST_AUTO_TEST_CASE(console__line_out__single_offset__streams_offset)
 {
     std::stringstream stream;
     sx::line_out(stream, "World!", 6);
     BOOST_REQUIRE(stream.str() == "      World!\n");
 }
 
-BOOST_AUTO_TEST_CASE(single_inset__streams_inset)
+BOOST_AUTO_TEST_CASE(console__line_out__single_inset__streams_inset)
 {
     std::stringstream stream;
     sx::line_out(stream, "World!", 6, "Hello");
     BOOST_REQUIRE(stream.str() == "Hello World!\n");
 }
 
-BOOST_AUTO_TEST_CASE(single_inset_equals_offset__streams_bump)
+BOOST_AUTO_TEST_CASE(console__line_out__single_inset_equals_offset__streams_bump)
 {
     std::stringstream stream;
     sx::line_out(stream, "World!", 5, "Hello");
     BOOST_REQUIRE(stream.str() == "HelloWorld!\n");
 }
 
-BOOST_AUTO_TEST_CASE(single_inset_exceeds_offset__streams_bump)
+BOOST_AUTO_TEST_CASE(console__line_out__single_inset_exceeds_offset__streams_bump)
 {
     std::stringstream stream;
     sx::line_out(stream, "World!", 4, "Hello");
     BOOST_REQUIRE(stream.str() == "HelloWorld!\n");
 }
 
-BOOST_AUTO_TEST_CASE(single_empty_streams__line_feed)
+BOOST_AUTO_TEST_CASE(console__line_out__single_empty_streams__line_feed)
 {
     std::stringstream stream;
     sx::line_out(stream, "");
     BOOST_REQUIRE(stream.str() == "\n");
 }
 
-BOOST_AUTO_TEST_CASE(multiple__streams_lines)
+BOOST_AUTO_TEST_CASE(console__line_out__multiple__streams_lines)
 {
     auto lines = std::vector<const char*>(
     {
@@ -85,7 +84,7 @@ BOOST_AUTO_TEST_CASE(multiple__streams_lines)
         "Please don't leave a scratch.\n");
 }
 
-BOOST_AUTO_TEST_CASE(multiple_offset__streams_offset)
+BOOST_AUTO_TEST_CASE(console__line_out__multiple_offset__streams_offset)
 {
     auto lines = std::vector<const char*>(
     {
@@ -103,7 +102,7 @@ BOOST_AUTO_TEST_CASE(multiple_offset__streams_offset)
         "               Because my dad's the mayor.\n");
 }
 
-BOOST_AUTO_TEST_CASE(multiple_inset__streams_inset)
+BOOST_AUTO_TEST_CASE(console__line_out__multiple_inset__streams_inset)
 {
     auto lines = std::vector<const char*>(
     {
@@ -121,7 +120,7 @@ BOOST_AUTO_TEST_CASE(multiple_inset__streams_inset)
         "               Tony Orlando and Dawn.\n");
 }
 
-BOOST_AUTO_TEST_CASE(multiple_inset_equals_offset__streams_bump)
+BOOST_AUTO_TEST_CASE(console__line_out__multiple_inset_equals_offset__streams_bump)
 {
     auto lines = std::vector<const char*>(
     {
@@ -139,7 +138,7 @@ BOOST_AUTO_TEST_CASE(multiple_inset_equals_offset__streams_bump)
         "            And they have to ride the bus.\n");
 }
 
-BOOST_AUTO_TEST_CASE(multiple_inset_exceeds_offset__streams_overflow)
+BOOST_AUTO_TEST_CASE(console__line_out__multiple_inset_exceeds_offset__streams_overflow)
 {
     auto lines = std::vector<const char*>(
     {
@@ -157,7 +156,7 @@ BOOST_AUTO_TEST_CASE(multiple_inset_exceeds_offset__streams_overflow)
         "          I don't want unleaded!\n");
 }
 
-BOOST_AUTO_TEST_CASE(multiple_none__streams_nothing)
+BOOST_AUTO_TEST_CASE(console__line_out__multiple_none__streams_nothing)
 {
     auto lines = std::vector<const char*>();
     std::stringstream stream;
@@ -165,7 +164,7 @@ BOOST_AUTO_TEST_CASE(multiple_none__streams_nothing)
     BOOST_REQUIRE(stream.str() == "");
 }
 
-BOOST_AUTO_TEST_CASE(multiple_empty__streams_inset)
+BOOST_AUTO_TEST_CASE(console__line_out__multiple_empty__streams_inset)
 {
     auto lines = std::vector<const char*>({ { "" } });
     std::stringstream stream;
