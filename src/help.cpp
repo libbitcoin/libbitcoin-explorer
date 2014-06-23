@@ -20,7 +20,6 @@
 #include <iostream>
 #include <cstdarg>
 #include <boost/format.hpp>
-#include <boost/program_options.hpp>
 #include <sx/command/help.hpp>
 #include <sx/display.hpp>
 #include <sx/generated.hpp>
@@ -47,10 +46,6 @@ console_result help::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     auto symbol = get_command_argument();
-
-    // Fallback to stream input when COMMAND argument is missing.
-    if (symbol.empty())
-        symbol = read_stream(input);
 
     // If there is no COMMAND then show usage for this command.
     if (symbol.empty())

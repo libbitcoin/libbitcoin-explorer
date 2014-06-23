@@ -410,6 +410,17 @@ public:
 .   endfor
 .endfor
     }
+	
+	/**
+     * Load streamed value as parameter fallback.
+     *
+     * @param[in]  input  The input stream for loading the parameter.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_stream(std::istream& input,
+        boost::program_options::variables_map& variables)
+    {
+    }
     
     /* Properties */
     
@@ -710,7 +721,32 @@ public:
 .endfor
 
         return options;
-    }   
+    }
+	
+	/**
+     * Load streamed value as parameter fallback.
+     *
+     * @param[in]  input  The input stream for loading the parameter.
+     * @param[in]         The loaded variables.
+     */
+    void load_stream(std::istream& input,
+        boost::program_options::variables_map& variables)
+    {
+.for argument
+.   if (is_xml_true(stream))
+        auto $(name:c) = variables.find("$(name:)");
+        if ($(name:c) == variables.end())
+            parse(argument_.$(name:c), read_stream(input));
+.   endif
+.endfor
+.for option
+.   if (is_xml_true(stream))
+        auto $(name:c) = variables.find("$(name:)");
+        if ($(name:c) == variables.end())
+            parse(option_.$(name:c), read_stream(input));
+.   endif
+.endfor
+    }
 
     /**
      * Invoke the command.
@@ -1192,6 +1228,12 @@ endif
     <Filter Include="include\\command">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
+	<Filter Include="include\\command\\obelisk">
+      <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
+    </Filter>
+	<Filter Include="include\\command\\stub">
+      <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\\utility">
       <UniqueIdentifier>{dc28e2c9-d07d-4242-8007-e44440c133a0}</UniqueIdentifier>
     </Filter>
@@ -1217,7 +1259,13 @@ endif
   <ItemGroup>
 .for command by symbol
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command\\$(symbol:).hpp">
+.   if (is_xml_true(obelisk))
+      <Filter>include\\command\\obelisk</Filter>
+.   elsif (is_xml_true(stub))
+      <Filter>include\\command\\stub</Filter>
+.   else
       <Filter>include\\command</Filter>
+.   endif
     </ClInclude>
 .endfor
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\byte.hpp">

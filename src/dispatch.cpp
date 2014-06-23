@@ -57,7 +57,7 @@ console_result dispatch_invoke(int argc, const char* argv[])
 
     std::string message;
     variables_map variables;
-    if (!load_variables(variables, message, *command, argc, argv))
+    if (!load_variables(variables, message, *command, std::cin, argc, argv))
     {
         display_invalid_variables(message);
         return console_result::failure;
@@ -89,7 +89,7 @@ path get_config_variable(variables_map& variables)
 }
 
 void load_command_variables(variables_map& variables, command& instance,
-    int argc, const char* argv[]) throw()
+    std::istream& input, int argc, const char* argv[]) throw()
 {
     // command metadata is preserved on members for later usage presentation
     auto options = instance.load_options();
@@ -101,6 +101,9 @@ void load_command_variables(variables_map& variables, command& instance,
 
     // map parsed inputs into variables map
     store(command_parser.run(), variables);
+
+    // For variables with STDIN fallback load the input stream as necessary.
+    instance.load_stream(input, variables);
 }
 
 // Not unit testable (without creating actual config files).
@@ -140,12 +143,12 @@ void load_environment_variables(variables_map& variables, command& instance)
 
 // Not unit testable (reliance on untestable functions).
 bool load_variables(variables_map& variables, std::string& message,
-    command& instance, int argc, const char* argv[])
+    command& instance, std::istream& input, int argc, const char* argv[])
 {
     try
     {
         // Command must store before environment in order for commands to supercede.
-        load_command_variables(variables, instance, argc, argv);
+        load_command_variables(variables, instance, input, argc, argv);
 
         // Environment must store before configuration in order to specify the path.
         load_environment_variables(variables, instance);

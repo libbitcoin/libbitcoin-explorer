@@ -96,6 +96,7 @@
     <ClInclude Include="..\..\..\..\include\sx\utility\printer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
   </ItemGroup>
@@ -114,6 +115,7 @@
     <ClCompile Include="..\..\..\..\src\utility\printer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\addr.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
   </ItemGroup>

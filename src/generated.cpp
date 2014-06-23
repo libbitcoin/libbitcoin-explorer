@@ -35,6 +35,7 @@ using namespace extensions;
 
 bool broadcast(const function<void(shared_ptr<command>)> func)
 {
+    func(make_shared<addr>());
     func(make_shared<help>());
     func(make_shared<stealth_addr>());
 
@@ -43,6 +44,8 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
 
 shared_ptr<command> find(const string& symbol)
 {
+    if (symbol == addr::symbol())
+        return make_shared<addr>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == stealth_addr::symbol())

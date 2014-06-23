@@ -121,14 +121,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\test\help.cpp" />
-    <ClCompile Include="..\..\..\..\test\parameter.cpp" />
-    <ClCompile Include="..\..\..\..\test\printer.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth_addr.cpp" />
-    <ClCompile Include="..\..\..\..\test\console__line_out.cpp" />
-    <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
-    <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
-    <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
+    <ClCompile Include="..\..\..\..\test\addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\help.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\parameter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\printer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth_addr.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\console__line_out.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated__find.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\generated__symbol.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\main.cpp" />
   </ItemGroup>
   <ItemGroup>

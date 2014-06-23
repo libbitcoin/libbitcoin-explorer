@@ -153,7 +153,21 @@ public:
             );
 
         return options;
-    }   
+    }
+	
+	/**
+     * Load streamed value as parameter fallback.
+     *
+     * @param[in]  input  The input stream for loading the parameter.
+     * @param[in]         The loaded variables.
+     */
+    void load_stream(std::istream& input,
+        boost::program_options::variables_map& variables)
+    {
+        auto command = variables.find("COMMAND");
+        if (command == variables.end())
+            parse(argument_.command, read_stream(input));
+    }
 
     /**
      * Invoke the command.

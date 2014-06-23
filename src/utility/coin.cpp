@@ -155,11 +155,11 @@ bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
     return true;
 }
 
-bool read_private_key(elliptic_curve_key& key, std::istream& stream,
-    key_compression is_compressed)
-{
-    return read_private_key(key, read_stream(stream), is_compressed);
-}
+//bool read_private_key(elliptic_curve_key& key, std::istream& stream,
+//    key_compression is_compressed)
+//{
+//    return read_private_key(key, read_stream(stream), is_compressed);
+//}
 
 bool read_private_key(elliptic_curve_key& key, const std::string& arg,
     key_compression is_compressed)
@@ -183,9 +183,8 @@ bool read_private_key(elliptic_curve_key& key, const std::string& arg,
     return key.set_secret(secret, compressed_flag);
 }
 
-bool read_public_or_private_key(elliptic_curve_key& key, std::istream& stream)
+bool read_public_or_private_key(elliptic_curve_key& key, std::string& arg)
 {
-    const auto arg = read_stream(stream);
     if (read_private_key(key, arg))
         return true;
 

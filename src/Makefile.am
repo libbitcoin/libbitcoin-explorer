@@ -23,6 +23,7 @@ libsx_la_SOURCES = \
 
 # Generated from XML data source.
 libsx_la_SOURCES += \
+    addr.cpp \
     help.cpp \
     stealth-addr.cpp
 

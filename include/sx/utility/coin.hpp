@@ -141,11 +141,11 @@ bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
  * @param[in]  is_compressed  Flag indicating whether compression is expected.
  * @return                    True if a key was read.
  */
-bool read_private_key(bc::elliptic_curve_key& key, std::istream& stream,
-    key_compression is_compressed=key_compression::unspecified);
+//bool read_private_key(bc::elliptic_curve_key& key, std::istream& stream,
+//    key_compression is_compressed=key_compression::unspecified);
 
 /**
- * Read a private key from STDIN.
+ * Read a private key from string.
  *
  * @param[out] key            The read key.
  * @param[in]  arg            The argument from which to read the key.
@@ -156,14 +156,14 @@ bool read_private_key(bc::elliptic_curve_key& key, const std::string& arg,
     key_compression is_compressed=key_compression::unspecified);
 
 /**
- * Read a public or private key from the specified input stream.
+ * Read a public or private key from the specified characters.
  *
- * @param[out] key     The read key.
- * @param[in]  stream  The input stream.
- * @return             True if a key was read.
+ * @param[out] key  The read key.
+ * @param[in]  arg  The raw key characters.
+ * @return          True if a key was read.
  */
 bool read_public_or_private_key(bc::elliptic_curve_key& key,
-    std::istream& stream);
+    std::string& arg);
 
 /**
  * Parse a point from the specified argument.

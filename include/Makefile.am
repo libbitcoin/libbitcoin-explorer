@@ -23,6 +23,7 @@ sx_utility_include_HEADERS += \
 # Generated from XML data source.
 sx_command_includedir = $(includedir)/sx/command
 sx_command_include_HEADERS = \
+    command/addr.hpp \
     command/help.hpp \
     command/stealth-addr.hpp
 

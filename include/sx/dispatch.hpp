@@ -62,21 +62,22 @@ bool dispatch_usage();
  * @param[in]  variables  The variable map to read the config from.
  * @return                The read path.
  */
-boost::filesystem::path get_config_variable( po::variables_map& variables);
+boost::filesystem::path get_config_variable(po::variables_map& variables);
 
 /**
  * Load command line variables.
  *
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
+ * @param[in]  input      The input stream for loading variable fallbacks.
  * @param[in]  argc       The number of elements in the argv parameter.
  * @param[in]  argv       Array of command line arguments excluding process.
  */
 void load_command_variables(po::variables_map& variables, command& instance,
-    int argc, const char* argv[]) throw();
+    std::istream& input, int argc, const char* argv[]) throw();
 
 /**
- * Load configuration file variable.
+ * Load configuration file variables.
  *
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
@@ -85,7 +86,7 @@ void load_configuration_variables(po::variables_map& variables,
     command& instance) throw();
 
 /**
- * Load environment variable.
+ * Load environment variables.
  *
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
@@ -94,17 +95,18 @@ void load_environment_variables(po::variables_map& variables,
     command& instance) throw();
 
 /**
- * Load command line variable.
+ * Load command line variables.
  *
  * @param[out] variables  The variable map to populate.
  * @param[out] message    Displayable error message in case of failure.
  * @param[in]  instance   The command instance for the current command.
+ * @param[in]  input      The input stream for loading variable fallbacks.
  * @param[in]  argc       The number of elements in the argv parameter.
  * @param[in]  argv       Array of command line arguments excluding process.
  * @return                True if the load is successful.
  */
 bool load_variables(po::variables_map& variables, std::string& message,
-    command& instance, int argc, const char* argv[]);
+    command& instance, std::istream& input, int argc, const char* argv[]);
 
 } // sx
 

@@ -24,6 +24,7 @@
 #include <memory>
 #include <string>
 #include <sx/command.hpp>
+#include <sx/command/addr.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/stealth-addr.hpp>
 

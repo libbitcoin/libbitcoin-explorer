@@ -18,43 +18,39 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/addr.hpp>
 #include <sx/utility/coin.hpp>
-#include <sx/utility/console.hpp>
-#include <sx/utility/curve.hpp>
+//#include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result addr::invoke(int argc, const char* argv[])
+console_result addr::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    // Bound parameters.
+    auto version = get_version_option();
+    auto key = get_key_argument();
 
-    elliptic_curve_key key;
-    if (!read_public_or_private_key(key, std::cin))
+    // Convert the input to a key.
+    elliptic_curve_key ec_key;
+    if (!read_public_or_private_key(ec_key, key))
     {
-        std::cerr << "Invalid public or private key." << std::endl;
+        cerr << boost::format(SX_ADDR_INVALID_KEY) % key << std::endl;
         return console_result::failure;
     }
 
+    // Get the (public key) payment address from the public or private key.
     payment_address address;
-    set_public_key(address, key.public_key());
+    set_public_key(address, ec_key.public_key());
 
-    if (argc > 1)
-    {
-        uint8_t version;
-        if (!parse(version, argv[1]))
-        {
-            std::cerr << "Invalid key version." << std::endl;
-            return console_result::failure;
-        }
-
+    // Set the desired key version.
+    if (version > 0)
         address.set(version, address.hash());
-    }
 
-    std::cout << address.encoded() << std::endl;
+    output << address.encoded() << std::endl;
     return console_result::okay;
 }

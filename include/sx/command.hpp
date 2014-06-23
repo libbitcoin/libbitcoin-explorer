@@ -211,6 +211,17 @@ public:
                 "The URI of the server to which this application may connect."
             );
     }
+	
+	/**
+     * Load streamed value as parameter fallback.
+     *
+     * @param[in]  input  The input stream for loading the parameter.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_stream(std::istream& input,
+        boost::program_options::variables_map& variables)
+    {
+    }
     
     /* Properties */
     

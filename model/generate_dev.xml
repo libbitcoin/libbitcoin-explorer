@@ -1,24 +1,37 @@
 <?xml version = "1.0" ?>
 <generate script="generate.gsl" language="en-us">
 
+  <!-- Resource strings for use by GSL template -->
   <resource>
-    <!-- General localizable resource strings. -->
     <string name="sx_config_description" value="The path and file name for the configuration settings file for this application." />
   </resource>
+  
+  <!-- Configuration file sections -->
+  
   <configuration section="general">
     <!-- NOTE: we could move this into the obelisk section if it was dynamic. -->
     <!-- NOTE: we probably shouldn't use this setting since the fact is compiled into dependencies. -->
     <setting name="testnet" type="bool" description="Set to true in order to operate this application using Bitcoin testnet (vs. mainnet) addressing and blockchain data. This option is EXPERIMENTAL because other  libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
   </configuration>
+  
   <configuration section="obelisk">
-    <!-- TODO: create serialized type for path and URI -->
+    <!-- TODO: create serialized type for URI -->
     <setting name="client-certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.sx.cert" />
     <setting name="server-public-key" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
     <setting name="service" default="tcp://obelisk.unsystem.net:8081" description="The URI of the server to which this application may connect." />
-  </configuration>  
+  </configuration>
+
+  <!-- SX Commands -->
+  
+  <command symbol="addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
+    <option name="help" description="Convert a public key (hex bytes) or private key (hash or WIF) to a Bitcoin address." />
+    <option name="version" type="byte" description="The desired address version." />
+    <argument name="KEY" stream="true" description="A public or private key." />
+    <define name="SX_ADDR_INVALID_KEY" value="Invalid public or private key '%1%'." />
+  </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
-    <argument name="COMMAND" description="Get help for the COMMAND." />
+    <argument name="COMMAND" stream="true" description="Get help for the COMMAND." />
     <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
   </command>
   
