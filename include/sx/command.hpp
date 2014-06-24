@@ -347,7 +347,7 @@ private:
         struct general
         {
             general()
-                : testnet()
+              : testnet()
                 {}
             bool testnet;
         } general;
@@ -355,7 +355,7 @@ private:
         struct obelisk
         {
             obelisk()
-                : client_certificate(),
+              : client_certificate(),
                 server_public_key(),
                 service()
                 {}
@@ -365,7 +365,7 @@ private:
         } obelisk;
 
         setting()
-            : general(),
+          : general(),
             obelisk()
             {}
     } setting_;

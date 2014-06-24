@@ -44,6 +44,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_output)
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
     SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\naddr\nhelp\nstealth-addr\n");
 }
+
 BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
 {
     // $ sx help stealth-addr

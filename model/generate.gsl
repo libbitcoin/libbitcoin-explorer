@@ -514,7 +514,7 @@ private:
 .   for setting
 .       is_vector = is_xml_true(multiple)
 .       pluralized_name = pluralize(name, is_vector)
-                $(first() ?? ": ")$(pluralized_name:c)()$(!last() ?? ",")
+              $(if_else(first(), ":", " ")) $(pluralized_name:c)()$(!last() ?? ",")
 .   endfor
                 {}
 .   for setting
@@ -530,7 +530,7 @@ private:
 .endfor
         setting()
 .for configuration
-            $(first() ?? ": ")$(section:c)()$(!last() ?? ",")
+          $(if_else(first(), ":", " ")) $(section:c)()$(!last() ?? ",")
 .endfor
             {}
     } setting_;
@@ -822,7 +822,7 @@ private:
 .for setting
 .   is_vector = !is_default(limit, 1)
 .   pluralized_name = pluralize(name, is_vector)
-            $(first() ?? ": ")$(pluralized_name:c)()$(!last() ?? ",")
+          $(if_else(first(), ":", " ")) $(pluralized_name:c)()$(!last() ?? ",")
 .   endfor
             {}
 .for argument
@@ -846,7 +846,7 @@ private:
 .for option
 .   is_vector = !is_default(limit, 1)
 .   pluralized_name = pluralize(name, is_vector)
-            $(first() ?? ": ")$(pluralized_name:c)()$(!last() ?? ",")
+          $(if_else(first(), ":", " ")) $(pluralized_name:c)()$(!last() ?? ",")
 .   endfor
             {}    
 .for option

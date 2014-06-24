@@ -297,7 +297,7 @@ private:
     struct option
     {
         option()
-            : help(),
+          : help(),
             reuse_key(),
             signatures()
             {}    

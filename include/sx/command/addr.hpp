@@ -262,7 +262,7 @@ private:
     struct option
     {
         option()
-            : help(),
+          : help(),
             version()
             {}    
         bool help;

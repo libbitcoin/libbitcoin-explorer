@@ -32,8 +32,8 @@ console_result addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto version = get_version_option();
     auto key = get_key_argument();
+    auto version = get_version_option();
 
     // Convert the input to a key.
     elliptic_curve_key ec_key;
@@ -47,7 +47,8 @@ console_result addr::invoke(std::istream& input, std::ostream& output,
     payment_address address;
     set_public_key(address, ec_key.public_key());
 
-    // Set the desired key version.
+    // Set the desired key version, using zero as a sentinel for 'not set'.
+    // TODO: generate a flag to indicate wheher optional values are set.
     if (version > 0)
         address.set(version, address.hash());
 
