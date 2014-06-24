@@ -110,15 +110,13 @@ bool read_address_tuple(int argc, const char* argv[],
     std::istream& stream, std::string& hex_str, uint8_t& version_byte);
 
 /**
- * Read a set of payment addresses from the specified argv. Each argument
- * that is not an option is assumed to be a payment address.
+ * Read a set of payment addresses from the specified vector.
  *
- * @param[in]  argc      The number of args.
- * @param[in]  argv      The arguments to read.
- * @param[out] payaddrs  The payment addresses read.
- * return                True if there was no payment address parse error.
+ * @param[in]  addresses  The payment addresses to read.
+ * @param[out] payaddrs   The payment addresses read.
+ * return                 True if there was no payment address parse error.
  */
-bool read_addresses(int argc, const char* argv[], sx::payaddr_list& payaddrs);
+bool read_addresses(std::vector<std::string> addresses, sx::payaddr_list& payaddrs);
 
 /**
  * Read optional hard/index argument pair from args, with defaults.

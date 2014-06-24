@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\balance.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
     </ClCompile>

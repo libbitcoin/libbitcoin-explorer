@@ -30,4 +30,5 @@ sx_command_include_HEADERS = \
 # Generated from XML data source.
 if HAVE_OBELISK
     sx_command_include_HEADERS += \
+        command/balance.hpp
 endif

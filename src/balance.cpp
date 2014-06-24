@@ -28,23 +28,21 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/balance.hpp>
+#include <sx/dispatch.hpp>
 #include <sx/obelisk.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
-using std::placeholders::_1;
-using std::placeholders::_2;
 
-static int32_t remaining_count = bc::max_int32;
 static std::mutex mutex;
 static std::condition_variable condition;
-static bool json_output = false;
+static int32_t remaining_count = bc::max_int32;
 
+// TODO: for testability parameterize STDOUT and STDERR.
 static void balance_fetched(const payment_address& payaddr,
     const std::error_code& error, const blockchain::history_list& history)
 {
@@ -87,6 +85,7 @@ static void balance_fetched(const payment_address& payaddr,
 }
 
 // TODO: generalize json serialization.
+// TODO: for testability parameterize STDOUT and STDERR.
 static void json_balance_fetched(const payment_address& payaddr,
     const std::error_code& error, const blockchain::history_list& history)
 {
@@ -144,46 +143,50 @@ static void json_balance_fetched(const payment_address& payaddr,
     std::cout << std::endl;
 }
 
-console_result balance::invoke(int argc, const char* argv[])
+console_result balance::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1))
-        return console_result::failure;
+    // Bound parameters.
+    // TODO: improve code generation pluralization.
+    auto addresses = get_addresss_argument();
+    auto json = get_json_option();
 
-    json_output = get_option(argc, argv, SX_OPTION_JSON);
-
+    // TODO: implement support for defaulting a collection ARG to STDIN.
     payaddr_list payaddrs;
-    if (argc == 1)
+    if (addresses.empty())
     {
         payment_address payaddr;
-        if (!payaddr.set_encoded(read_stream(std::cin)))
+        if (!payaddr.set_encoded(read_stream(input)))
         {
-            std::cerr << "balance: Invalid address." << std::endl;
+            // TODO: provide address info with error.
+            cerr << boost::format(SX_BALANCE_INVALID_ADDRESS) << std::endl;
             return console_result::failure;
         }
 
         payaddrs.push_back(payaddr);
     }
-    else if (!read_addresses(argc, argv, payaddrs))
+    else if (!read_addresses(addresses, payaddrs))
     {
-        std::cerr << "balance: Invalid address." << std::endl;
+        // TODO: provide address info with error.
+        cerr << boost::format(SX_BALANCE_INVALID_ADDRESS) << std::endl;
         return console_result::failure;
     }
 
-    remaining_count = static_cast<int>(payaddrs.size());
-
     OBELISK_FULLNODE(pool, fullnode);
 
-    if (json_output)
-        std::cout << "[" << std::endl;
+    if (json)
+        output << "[" << std::endl;
 
     for (const payment_address& payaddr: payaddrs)
     {
-        if (json_output)
+        if (json)
             fullnode.address.fetch_history(payaddr,
-                std::bind(json_balance_fetched, payaddr, _1, _2));
+                std::bind(json_balance_fetched, payaddr, 
+                    std::placeholders::_1, std::placeholders::_2));
         else
             fullnode.address.fetch_history(payaddr,
-                std::bind(balance_fetched, payaddr, _1, _2));
+                std::bind(balance_fetched, payaddr, 
+                    std::placeholders::_1, std::placeholders::_2));
     }
 
     std::thread update_loop([&fullnode]
@@ -195,15 +198,17 @@ console_result balance::invoke(int argc, const char* argv[])
         }
     });
     update_loop.detach();
+
     std::unique_lock<std::mutex> lock(mutex);
+    remaining_count = static_cast<int>(payaddrs.size());
     while (remaining_count > 0)
     {
         condition.wait(lock);
         BITCOIN_ASSERT(remaining_count >= 0);
     }
 
-    if (json_output)
-        std::cout << "]" << std::endl;
+    if (json)
+        output << "]" << std::endl;
 
     pool.stop();
     pool.join();

@@ -54,6 +54,12 @@
 .   return ((my.value ? xml_false) = xml_true)
 .endfunction
 .
+.function global.last_char(value)
+.   position = string.length(my.value)
+.   character = string.substr(my.value, position, position)
+.   return character
+.endfunction
+.
 .# TODO: hash table
 .function global.normalize_type(type)
 .   if my.type = type_string
@@ -67,7 +73,11 @@
 .endfunction
 .
 .function global.pluralize(name, is_plural)
-.   return my.name + if_else_empty(my.is_plural, "s")
+.   if (my.is_plural)
+.#BUGBUG: the string comparison just doesn't work.
+.       return my.name + if_else_empty(last_char(my.name) = "s", "e") + "s"
+.   endif
+.   return my.name
 .endfunction
 .
 .function global.pretty(text, format)

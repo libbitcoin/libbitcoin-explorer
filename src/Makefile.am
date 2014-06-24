@@ -30,6 +30,7 @@ libsx_la_SOURCES += \
 # Generated from XML data source.
 if HAVE_OBELISK
     libsx_la_SOURCES += \
+        balance.cpp \
         obelisk.cpp
 
     AM_CPPFLAGS += \

@@ -30,6 +30,20 @@
     <define name="SX_ADDR_INVALID_KEY" value="Invalid public or private key '%1%'." />
   </command>
 
+  <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+    <option name="help" description="Show the balance in satoshis of one or more Bitcoin addresses. Requires a server connection." />
+    <option name="json" description="Enable JSON output." />
+    <argument name="ADDRESS" limit="-1" description="The address to show." />
+    <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address." />
+    <!--<explanation value="Example:" />
+    <explanation value="" />
+    <explanation value="  $ sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
+    <explanation value="  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
+    <explanation value="    Paid balance:    0" />
+    <explanation value="    Pending balance: 0" />
+    <explanation value="    Total received:  100000" />-->
+  </command>
+
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
     <argument name="COMMAND" stream="true" description="Get help for the COMMAND." />
     <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />

@@ -32,6 +32,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__addr__returns_expected_value)
     BOOST_REQUIRE(addr::symbol() == std::string("addr"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__balance__returns_expected_value)
+{
+    BOOST_REQUIRE(balance::symbol() == std::string("balance"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));

@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_signatures_four__okay_out
 
 BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_reuse_key__okay_output)
 {
-    // $ sx stealth-addr -r 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    // $ sx stealth-addr -r true 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
     command.set_reuse_key_option(true);
     command.set_scan_pubkey_argument(bytes("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"));
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_reuse_key__okay_output)
 
 BOOST_AUTO_TEST_CASE(stealth_addr__invoke__scan_pubkey_reuse_key_signatures__okay_output)
 {
-    // $ sx stealth-addr -r -s 4 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    // $ sx stealth-addr -r true -s 4 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(stealth_addr);
     command.set_reuse_key_option(true);
     command.set_signatures_option(4);

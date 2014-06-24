@@ -46,14 +46,12 @@ const uint32_t default_poll_period_ms = 100;
  * TODO: this is not testable as is - move into function.
  */
 #define OBELISK_FULLNODE(__pool__, __fullnode__) \
-    config_map_type __config__; \
-    get_config(__config__); \
     threadpool __pool__(default_threadpool_size); \
     obelisk::fullnode_interface __fullnode__( \
         __pool__, \
-        __config__[SX_SETTING_SERVICE], \
-        __config__[SX_SETTING_CLIENT_CERTIFICATE], \
-        __config__[SX_SETTING_SERVER_PUBLIC_KEY])
+        get_obelisk_service_setting(), \
+        get_obelisk_client_certificate_setting().generic_string(), \
+        get_obelisk_server_public_key_setting())
 
 /**
  * Poll obelisk for changes until stopped.

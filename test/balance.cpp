@@ -26,32 +26,33 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(help__invoke)
+BOOST_AUTO_TEST_SUITE(balance__invoke)
 
-BOOST_AUTO_TEST_CASE(help__invoke__no_command__failure_output)
+BOOST_AUTO_TEST_CASE(balance__invoke__bogus_address__failure)
 {
-    // $ sx help
-    SX_DECLARE_COMMAND(help);
+    // $ sx balance bogus
+    SX_DECLARE_COMMAND(balance);
+    command.set_addresss_argument({ "bogus" });
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("");
 }
 
-BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_output)
-{
-    // $ sx help booger
-    SX_DECLARE_COMMAND(help);
-    command.set_command_argument("booger");
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\naddr\nbalance\nhelp\nstealth-addr\n");
-}
+// DISABLED until client-server calls are isolated for test.
 
-BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
-{
-    // $ sx help stealth-addr
-    SX_DECLARE_COMMAND(help);
-    command.set_command_argument("addr");
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    SX_REQUIRE_OUTPUT("");
-}
+//BOOST_AUTO_TEST_CASE(balance__invoke__address__okay)
+//{
+//    // $ sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+//    SX_DECLARE_COMMAND(balance);
+//    command.set_addresss_argument({ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" });
+//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//}
+//
+//BOOST_AUTO_TEST_CASE(balance__invoke__address_json__okay)
+//{
+//    // $ sx balance -j true 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+//    SX_DECLARE_COMMAND(balance);
+//    command.set_addresss_argument({"134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"});
+//    command.set_json_option(true);
+//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//}
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -32,6 +32,11 @@ BOOST_AUTO_TEST_CASE(generated__find__addr__returns_object)
     BOOST_REQUIRE(find(addr::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__balance__returns_object)
+{
+    BOOST_REQUIRE(find(balance::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);

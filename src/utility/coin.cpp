@@ -120,19 +120,17 @@ bool read_address_tuple(int argc, const char* argv[], std::istream& stream,
     return true;
 }
 
-bool read_addresses(int argc, const char* argv[], payaddr_list& payaddrs)
+bool read_addresses(std::vector<std::string> addresses, payaddr_list& payaddrs)
 {
-    for (int i = 1; i < argc; ++i)
+    for (auto address: addresses)
     {
-        if (is_option_any(argv[i]))
-            continue;
-
         payment_address payaddr;
-        if (!payaddr.set_encoded(argv[i]))
+        if (!payaddr.set_encoded(address))
             return false;
 
         payaddrs.push_back(payaddr);
     }
+
     return true;
 }
 

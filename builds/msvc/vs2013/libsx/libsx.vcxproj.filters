@@ -44,6 +44,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\balance.hpp">
+      <Filter>include\command\obelisk</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -102,6 +105,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\addr.cpp">
       <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\balance.cpp">
+      <Filter>src\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>
