@@ -24,6 +24,8 @@ sx_utility_include_HEADERS += \
 sx_command_includedir = $(includedir)/sx/command
 sx_command_include_HEADERS = \
     command/addr.hpp \
+    command/base58check-decode.hpp \
+    command/base58check-encode.hpp \
     command/help.hpp \
     command/stealth-addr.hpp
 

@@ -108,7 +108,7 @@ public:
         {
         };
     }
-    
+
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.

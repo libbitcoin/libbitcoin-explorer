@@ -664,7 +664,18 @@ public:
 .endfor
         };
     }
-    
+
+.
+.# HACK: There must be a better way to count a collection.
+.argument_count = 0
+.for argument
+.   argument_count += 1
+.endfor
+.option_count = 0
+.for option
+.   option_count += 1
+.endfor
+.
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
@@ -673,7 +684,7 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
+        return get_argument_metadata()$(if_else_empty(argument_count = 0, ";"))
 .for argument
             .add("$(name:)", $(limit ? "1"))$(last() ?? ";")
 .endfor
@@ -698,13 +709,6 @@ public:
                 value<boost::filesystem::path>(),                 
                 "$(config_description:)"
             )
-.
-.# HACK: There must be a better way to count a collection.
-.argument_count = 0
-.for argument
-.   argument_count += 1
-.endfor
-.
 .# TODO: How to block the description so as not to exceed max line length?
 .for option
 .   short_name = shortcut ? first_char(name)

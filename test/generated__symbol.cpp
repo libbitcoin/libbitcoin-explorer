@@ -37,6 +37,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__balance__returns_expected_value)
     BOOST_REQUIRE(balance::symbol() == std::string("balance"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__base58check_decode__returns_expected_value)
+{
+    BOOST_REQUIRE(base58check_decode::symbol() == std::string("base58check-decode"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__base58check_encode__returns_expected_value)
+{
+    BOOST_REQUIRE(base58check_encode::symbol() == std::string("base58check-encode"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));

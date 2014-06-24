@@ -17,19 +17,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/base58-encode.hpp>
+//#include <sx/command/base58-encode.hpp>
 #include <sx/command/base58check-encode.hpp>
-#include <sx/command/wrap.hpp>
+//#include <sx/command/wrap.hpp>
+#include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace sx;
 using namespace sx::extensions;
 
-console_result base58check_encode::invoke(int argc, const char* argv[])
+console_result base58check_encode::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
     // TODO: invoke functionality from wrap >> base58-encode.
-    line_out(std::cerr, "sx: This command is not yet ported from python.");
+    cerr << SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

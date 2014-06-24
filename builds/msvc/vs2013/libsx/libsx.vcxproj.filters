@@ -47,6 +47,12 @@
     <ClInclude Include="..\..\..\..\include\sx\command\balance.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\base58check-decode.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\base58check-encode.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -108,6 +114,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\balance.cpp">
       <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\base58check-decode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\base58check-encode.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>

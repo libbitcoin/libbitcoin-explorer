@@ -56,6 +56,18 @@
     <argument name="SCAN_PUBKEY" type="bytes" required="true" description="The public key of the recipient." />
     <argument name="SPEND_PUBKEY" type="bytes" limit="-1" description="The public key that is spent to." />
   </command>
+
+  <command symbol="base58check-decode" category="UTILITY" subcategory="NOT IMPLEMENTED">
+    <option name="help" description="This command is not yet ported from python." />
+    <argument name="VALUE" stream="true" description="The Base58Check encoded value to decode." />
+    <define name="SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
+
+  <command symbol="base58check-encode" category="UTILITY" subcategory="NOT IMPLEMENTED">
+    <option name="help" description="This command is not yet ported from python." />
+    <argument name="VALUE" stream="true" type="bytes" description="The value to Base58Check encode." />
+    <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
   
   <!--<command symbol="stealth-initiate" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
     <description value="Initiate a new stealth payment." />

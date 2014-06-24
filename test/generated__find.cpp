@@ -37,6 +37,16 @@ BOOST_AUTO_TEST_CASE(generated__find__balance__returns_object)
     BOOST_REQUIRE(find(balance::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__base58check_decode__returns_object)
+{
+    BOOST_REQUIRE(find(base58check_decode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__base58check_encode__returns_object)
+{
+    BOOST_REQUIRE(find(base58check_encode::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);

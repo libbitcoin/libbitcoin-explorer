@@ -24,6 +24,8 @@ libsx_la_SOURCES = \
 # Generated from XML data source.
 libsx_la_SOURCES += \
     addr.cpp \
+    base58check-decode.cpp \
+    base58check-encode.cpp \
     help.cpp \
     stealth-addr.cpp
 
