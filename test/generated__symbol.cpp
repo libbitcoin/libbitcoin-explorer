@@ -57,6 +57,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__base58check_encode__returns_expected_val
     BOOST_REQUIRE(base58check_encode::symbol() == std::string("base58check-encode"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__bci_fetch_last_height__returns_expected_value)
+{
+    BOOST_REQUIRE(bci_fetch_last_height::symbol() == std::string("bci-fetch-last-height"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__bci_history__returns_expected_value)
+{
+    BOOST_REQUIRE(bci_history::symbol() == std::string("bci-history"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));

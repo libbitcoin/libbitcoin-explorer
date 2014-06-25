@@ -164,7 +164,7 @@ public:
             (
                 "SPEND_PUBKEY",
                 value<std::vector<bytes>>(&argument_.spend_pubkeys),
-                "The public key that is spent to."
+                "The public key(s) that is/are spent to."
             );
 
         return options;

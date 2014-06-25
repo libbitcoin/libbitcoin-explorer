@@ -163,7 +163,7 @@ public:
             (
                 "ADDRESS",
                 value<std::vector<std::string>>(&argument_.addresss),
-                "The address to show."
+                "The address(es) to show."
             );
 
         return options;

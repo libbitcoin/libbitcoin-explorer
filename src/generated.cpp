@@ -41,6 +41,8 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
     func(make_shared<base58check_encode>());
+    func(make_shared<bci_fetch_last_height>());
+    func(make_shared<bci_history>());
     func(make_shared<help>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
@@ -63,6 +65,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base58check_decode>();
     if (symbol == base58check_encode::symbol())
         return make_shared<base58check_encode>();
+    if (symbol == bci_fetch_last_height::symbol())
+        return make_shared<bci_fetch_last_height>();
+    if (symbol == bci_history::symbol())
+        return make_shared<bci_history>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == stealth_addr::symbol())

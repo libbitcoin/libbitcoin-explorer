@@ -72,6 +72,12 @@
     <ClCompile Include="..\..\..\..\test\unwrap.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\bci-history.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

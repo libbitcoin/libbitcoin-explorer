@@ -57,6 +57,16 @@ BOOST_AUTO_TEST_CASE(generated__find__base58check_encode__returns_object)
     BOOST_REQUIRE(find(base58check_encode::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__bci_fetch_last_height__returns_object)
+{
+    BOOST_REQUIRE(find(bci_fetch_last_height::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__bci_history__returns_object)
+{
+    BOOST_REQUIRE(find(bci_history::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);

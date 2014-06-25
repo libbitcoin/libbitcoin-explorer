@@ -33,7 +33,7 @@
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Show the balance in satoshis of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" description="The address to show." />
+    <argument name="ADDRESS" limit="-1" description="The address(es) to show." />
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address." />
     <define name="SX_BALANCE_FETCH_HISTORY_FAIL" value="Failed to fetch history: %1%" />
     <define name="SX_BALANCE_FETCHED_OUTPUT" value="Address:           %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
@@ -46,26 +46,13 @@
     <explanation value="    Total received:  100000" />-->
   </command>
 
-  <command symbol="help" category="SX" subcategory="DOCUMENTATION">
-    <argument name="COMMAND" stream="true" description="Get help for the COMMAND." />
-    <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
-  </command>
-  
-  <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <option name="help" description="Generate a stealth address from given input." />
-    <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />
-    <option name="signatures" type="byte" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
-    <argument name="SCAN_PUBKEY" type="bytes" required="true" description="The public key of the recipient." />
-    <argument name="SPEND_PUBKEY" type="bytes" limit="-1" description="The public key that is spent to." />
-  </command>
-
-  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)">
+  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)" stub="true">
     <option name="help" description="Convert a Base58Check value to a hex string." />
     <argument name="BASE58CHECK" stream="true" description="The Base58Check encoded value to decode." />
     <define name="SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
-  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)">
+  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)" stub="true">
     <option name="help" description="Convert a hex string to Base58Check." />
     <argument name="HEX" stream="true" type="bytes" description="The hex string to Base58Check encode." />
     <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
@@ -80,11 +67,29 @@
     <option name="help" description="Convert a hex string to Base58." />
     <argument name="HEX" stream="true" type="bytes" description="The hex string to Base58 encode." />
   </command>
+  
+  <command symbol="bci-fetch-last-height" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
+    <option name="help" description="Get the last block height from blockchain.info." />
+    <define name="SX_BCI_FETCH_LAST_HEIGHT_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
 
-  <command symbol="wrap" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">
-    <option name="help" description="Add a version byte and checksum to a hex string." />
-    <option name="version" type="byte" required="true" description="The desired version number." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to wrap." />
+  <command symbol="bci-history" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
+    <option name="help" description="Get the list of outputs, values and spends for an address from blockchain.info." />
+    <argument name="ADDRESS" stream="true" description="The address to query." />
+    <define name="SX_BCI_HISTORY_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
+
+  <command symbol="help" category="SX" subcategory="DOCUMENTATION">
+    <argument name="COMMAND" stream="true" description="Get help for the COMMAND." />
+    <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
+  </command>
+  
+  <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
+    <option name="help" description="Generate a stealth address from given input." />
+    <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />
+    <option name="signatures" type="byte" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
+    <argument name="SCAN_PUBKEY" type="bytes" required="true" description="The public key of the recipient." />
+    <argument name="SPEND_PUBKEY" type="bytes" limit="-1" description="The public key(s) that is/are spent to." />
   </command>
 
   <command symbol="unwrap" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">
@@ -92,6 +97,12 @@
     <argument name="HEX" stream="true" type="bytes" description="The hex string to unwrap." />
     <define name="SX_UNWRAP_INVALID_SIZE" value="The HEX argument size must be at least five bytes." />
     <define name="SX_UNWRAP_INVALID_CHECKSUM" value="The HEX argument checksum is not valid." />
+  </command>
+
+  <command symbol="wrap" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">
+    <option name="help" description="Add a version byte and checksum to a hex string." />
+    <option name="version" type="byte" required="true" description="The desired version number." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex string to wrap." />
   </command>
   
   <!--<command symbol="stealth-initiate" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">

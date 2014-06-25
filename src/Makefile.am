@@ -28,6 +28,8 @@ libsx_la_SOURCES += \
     base58-encode.cpp \
     base58check-decode.cpp \
     base58check-encode.cpp \
+    bci-fetch-last-height.cpp \
+    bci-history.cpp \
     help.cpp \
     stealth-addr.cpp \
     unwrap.cpp \

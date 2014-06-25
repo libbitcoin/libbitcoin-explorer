@@ -54,10 +54,16 @@
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-decode.hpp">
-      <Filter>include\command</Filter>
+      <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-encode.hpp">
-      <Filter>include\command</Filter>
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\bci-fetch-last-height.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\bci-history.hpp">
+      <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
@@ -134,10 +140,16 @@
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58check-decode.cpp">
-      <Filter>src\command</Filter>
+      <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58check-encode.cpp">
-      <Filter>src\command</Filter>
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp">
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\bci-history.cpp">
+      <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>
