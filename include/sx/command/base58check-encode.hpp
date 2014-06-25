@@ -149,7 +149,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert from hex string to Base58Check."
+                "Convert a hex string to Base58Check."
             )
             (
                 "HEX",
@@ -229,6 +229,7 @@ private:
     struct argument
     {
         argument()
+          : hex()
             {}
         bytes hex;
     } argument_;

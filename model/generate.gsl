@@ -103,17 +103,18 @@
 .   return 0 = 0
 .endfunction
 .
-.function global.default_type(is_option, type, required, unlimited)
-.   is_toggle = my.is_option & (is_empty(my.type) | my.required | my.unlimited)
-.   return normalize_type(if_else(is_toggle, type_bool, my.type ? type_string))
+.function global.default_type(is_option, type)
+.   bool_default = my.is_option & is_empty(my.type)
+.   return normalize_type(if_else(bool_default, type_bool, my.type ? \
+        type_string))
 .endfunction
 .
 .function global.value_semantic(is_option, type, required, unlimited,\
     variable, fallback)
 .
-.   is_toggle = my.is_option & (is_empty(my.type) | my.required | my.unlimited)
-.   base_type = if_else(is_toggle, type_bool, my.type ? type_string)
+.   base_type = default_type(my.is_option, my.type)
 .   norm_type = normalize_type(base_type)
+.   implicit_bool = my.is_option & (norm_type = type_bool)
 .   defaulted = !is_empty(my.fallback)
 .   is_text = ((norm_type = type_path_boost) | (norm_type = type_string_std))
 .   quote_default = (defaulted & is_text)
@@ -125,7 +126,7 @@
 .   expression = "value<$(vectored_type(norm_type, my.unlimited))>($(binding:))"
 .   expression += if_else_empty(my.required, "->required()")
 .   expression += if_else_empty(defaulted, "->default_value($(default_value:))")
-.   expression += if_else_empty(is_toggle, "->implicit_value(true)")
+.   expression += if_else_empty(implicit_bool, "->implicit_value(true)")
 .   return expression
 .
 .endfunction
@@ -454,8 +455,7 @@ public:
 .for configuration
 .   for setting
 .       is_vector = is_xml_true(multiple)
-.       setting_type = default_type(!true(), type,\
-            is_xml_true(required), is_vector)
+.       setting_type = default_type(!true(), type)
 .       vectored_type = vectored_type(setting_type, is_vector)
 .       pluralized_name = pluralize(name, is_vector)
 .       pluralized_setting = pluralize("setting", is_vector)
@@ -529,8 +529,7 @@ private:
                 {}
 .   for setting
 .       is_vector = is_xml_true(multiple)
-.       setting_type = default_type(!true(), type,\
-            is_xml_true(required), is_vector)
+.       setting_type = default_type(!true(), type)
 .       vectored_type = vectored_type(setting_type, is_vector)
 .       pluralized_name = pluralize(name, is_vector)
             $(vectored_type:) $(pluralized_name:c);
@@ -777,8 +776,7 @@ public:
 
 .for argument
 .   is_vector = !is_default(limit, 1)
-.   argument_type = default_type(!true(), type, is_xml_true(required),\
-        is_vector)
+.   argument_type = default_type(!true(), type)
 .   vectored_type = vectored_type(argument_type, is_vector)        
 .   pluralized_name = pluralize(name, is_vector)      
 .   pluralized_argument = pluralize("argument", is_vector)
@@ -801,8 +799,7 @@ public:
 .endfor
 .for option
 .   is_vector = is_xml_true(multiple)
-.   option_type = default_type(true(), type, is_xml_true(required),\
-        is_vector)
+.   option_type = default_type(true(), type)
 .   vectored_type = vectored_type(option_type, is_vector)
 .   pluralized_name = pluralize(name, is_vector)      
 .   pluralized_option = pluralize("option", is_vector)
@@ -833,7 +830,7 @@ private:
     struct argument
     {
         argument()
-.for setting
+.for argument
 .   is_vector = !is_default(limit, 1)
 .   pluralized_name = pluralize(name, is_vector)
           $(if_else(first(), ":", " ")) $(pluralized_name:c)()$(!last() ?? ",")
@@ -841,8 +838,7 @@ private:
             {}
 .for argument
 .   is_vector = !is_default(limit, 1)
-.   argument_type = default_type(!true(), type, is_xml_true(required),\
-        is_vector)
+.   argument_type = default_type(!true(), type)
 .   vectored_type = vectored_type(argument_type, is_vector)        
 .   pluralized_name = pluralize(name, is_vector)      
         $(vectored_type:) $(pluralized_name:c);
@@ -858,15 +854,14 @@ private:
     {
         option()
 .for option
-.   is_vector = !is_default(limit, 1)
+.   is_vector = is_xml_true(multiple)
 .   pluralized_name = pluralize(name, is_vector)
           $(if_else(first(), ":", " ")) $(pluralized_name:c)()$(!last() ?? ",")
-.   endfor
+.endfor
             {}    
 .for option
 .   is_vector = is_xml_true(multiple)
-.   option_type = default_type(true(), type, is_xml_true(required),\
-        is_vector)
+.   option_type = default_type(true(), type)
 .   vectored_type = vectored_type(option_type, is_vector)
 .   pluralized_name = pluralize(name, is_vector)      
         $(vectored_type:) $(pluralized_name:c);

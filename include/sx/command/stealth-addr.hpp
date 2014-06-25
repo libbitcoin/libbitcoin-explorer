@@ -284,6 +284,8 @@ private:
     struct argument
     {
         argument()
+          : scan_pubkey(),
+            spend_pubkeys()
             {}
         bytes scan_pubkey;
         std::vector<bytes> spend_pubkeys;

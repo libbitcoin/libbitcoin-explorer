@@ -43,6 +43,8 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<base58check_encode>());
     func(make_shared<help>());
     func(make_shared<stealth_addr>());
+    func(make_shared<unwrap>());
+    func(make_shared<wrap>());
 
     return true;
 }
@@ -65,6 +67,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<help>();
     if (symbol == stealth_addr::symbol())
         return make_shared<stealth_addr>();
+    if (symbol == unwrap::symbol())
+        return make_shared<unwrap>();
+    if (symbol == wrap::symbol())
+        return make_shared<wrap>();
 
     return nullptr;
 }

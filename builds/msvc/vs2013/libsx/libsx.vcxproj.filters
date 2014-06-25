@@ -65,6 +65,12 @@
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\byte.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
@@ -137,6 +143,12 @@
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\unwrap.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wrap.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp">

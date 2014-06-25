@@ -29,7 +29,9 @@ libsx_la_SOURCES += \
     base58check-decode.cpp \
     base58check-encode.cpp \
     help.cpp \
-    stealth-addr.cpp
+    stealth-addr.cpp \
+    unwrap.cpp \
+    wrap.cpp
 
 # Generated from XML data source.
 if HAVE_OBELISK

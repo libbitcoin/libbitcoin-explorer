@@ -32,6 +32,8 @@
 #include <sx/command/base58check-encode.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/stealth-addr.hpp>
+#include <sx/command/unwrap.hpp>
+#include <sx/command/wrap.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 

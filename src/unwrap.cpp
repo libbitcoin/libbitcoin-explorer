@@ -20,6 +20,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/unwrap.hpp>
+#include <sx/utility/bytes.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
@@ -27,31 +28,32 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result unwrap::invoke(int argc, const char* argv[])
+// 100% coverage by line, loc ready.
+console_result unwrap::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    // Bound parameters.
+    auto hex = (data_chunk)get_hex_argument();
 
-    std::string hex_str(get_arg_or_stream(argc, argv, std::cin));
-    data_chunk bytes = decode_hex(hex_str);
+    // require at least 1 byte of data with a 4 byte checksum
+    const size_t minimum_size = 5;
 
-    // Magic Number?
-    if (bytes.size() < 5)
+    if (hex.size() < minimum_size)
     {
-        std::cerr << "Error: Must be at least five bytes" << std::endl;
+        cerr << SX_UNWRAP_INVALID_SIZE << std::endl;
         return console_result::failure;
     }
 
-    if (!validate_checksum(bytes))
+    if (!validate_checksum(hex))
     {
-        std::cerr << "Error: checksum does not match" << std::endl;
+        cerr << SX_UNWRAP_INVALID_CHECKSUM << std::endl;
         return console_result::failure;
     }
 
-    data_chunk rawdata(bytes.begin(), bytes.end() - 4);
-    data_chunk output(rawdata.begin() + 1, rawdata.end());
-    int version_byte = rawdata.front();
+    byte version(hex.front());
+    bytes data(data_chunk(hex.begin() + 1, hex.end() - 4));
+    bytes checksum(data_chunk(hex.end() - 4, hex.end()));
 
-    std::cout << output << " " << version_byte << std::endl;
+    output << version << " " << data << " " << checksum << std::endl;
     return console_result::okay;
 }

@@ -143,7 +143,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert from Base58 to hex string."
+                "Convert a Base58 value to a hex string."
             )
             (
                 "BASE58",
@@ -223,6 +223,7 @@ private:
     struct argument
     {
         argument()
+          : base58()
             {}
         std::string base58;
     } argument_;

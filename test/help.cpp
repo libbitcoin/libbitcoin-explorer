@@ -50,7 +50,9 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "base58check-decode\n" \
         "base58check-encode\n" \
         "help\n" \
-        "stealth-addr\n");
+        "stealth-addr\n" \
+        "unwrap\n" \
+        "wrap\n");
 }
 
 BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)

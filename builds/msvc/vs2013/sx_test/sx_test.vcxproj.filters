@@ -66,6 +66,12 @@
     <ClCompile Include="..\..\..\..\test\base58_decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\wrap.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\unwrap.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

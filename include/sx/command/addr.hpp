@@ -250,6 +250,7 @@ private:
     struct argument
     {
         argument()
+          : key()
             {}
         std::string key;
     } argument_;

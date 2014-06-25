@@ -67,4 +67,14 @@ BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr__returns_expected_value)
     BOOST_REQUIRE(stealth_addr::symbol() == std::string("stealth-addr"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__unwrap__returns_expected_value)
+{
+    BOOST_REQUIRE(unwrap::symbol() == std::string("unwrap"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__wrap__returns_expected_value)
+{
+    BOOST_REQUIRE(wrap::symbol() == std::string("wrap"));
+}
+
 BOOST_AUTO_TEST_SUITE_END()

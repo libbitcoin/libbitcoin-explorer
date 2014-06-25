@@ -44,6 +44,10 @@ namespace extensions {
  */
 #define SX_BALANCE_INVALID_ADDRESS \
     "Invalid address."
+#define SX_BALANCE_FETCH_HISTORY_FAIL \
+    "Failed to fetch history: %1%"
+#define SX_BALANCE_FETCHED_OUTPUT \
+    "Address:           %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n"
 
 /**
  * Class to implement the sx balance command.
@@ -247,6 +251,7 @@ private:
     struct argument
     {
         argument()
+          : addresss()
             {}
         std::vector<std::string> addresss;
     } argument_;

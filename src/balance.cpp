@@ -23,6 +23,7 @@
 #include <stdint.h>
 #include <thread>
 //#include <sstream>
+#include <boost/format.hpp>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
@@ -38,9 +39,37 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
+static bool is_first;
 static std::mutex mutex;
 static std::condition_variable condition;
-static int32_t remaining_count = bc::max_int32;
+static size_t remaining_count = 0;
+
+static void parse_history(uint64_t& total_recieved, uint64_t& balance,
+    uint64_t& pending_balance, const blockchain::history_list& history)
+{
+    total_recieved = 0;
+    balance = 0;
+    pending_balance = 0;
+
+    for (const auto& row: history)
+    {
+        uint64_t value = row.value;
+        BITCOIN_ASSERT(value >= 0);
+        total_recieved += value;
+
+        // Unconfirmed balance.
+        if (row.spend.hash == null_hash)
+            pending_balance += value;
+
+        // Confirmed balance.
+        if (row.output_height &&
+            (row.spend.hash == null_hash || !row.spend_height))
+            balance += value;
+
+        BITCOIN_ASSERT(total_recieved >= balance);
+        BITCOIN_ASSERT(total_recieved >= pending_balance);
+    }
+}
 
 // TODO: for testability parameterize STDOUT and STDERR.
 static void balance_fetched(const payment_address& payaddr,
@@ -48,38 +77,19 @@ static void balance_fetched(const payment_address& payaddr,
 {
     if (error)
     {
-        std::cerr << "balance: Failed to fetch history: " << error.message()
-            <<std::endl;
+        std::cerr << boost::format(SX_BALANCE_FETCH_HISTORY_FAIL) % 
+            error.message() << std::endl;
         return;
     }
 
-    uint64_t total_recv = 0, balance = 0, pending_balance = 0;
-    for (const auto& row: history)
-    {
-        auto value = row.value;
-        BITCOIN_ASSERT(value >= 0);
-        total_recv += value;
+    uint64_t total_recieved, balance, pending_balance;
+    parse_history(total_recieved, balance, pending_balance, history);
 
-        // Unconfirmed balance.
-        if (row.spend.hash == null_hash)
-            pending_balance += value;
+    std::cout << boost::format(SX_BALANCE_FETCHED_OUTPUT) % 
+        payaddr.encoded() % balance % pending_balance % total_recieved;
 
-        // Confirmed balance.
-        if (row.output_height && 
-            (row.spend.hash == null_hash || !row.spend_height))
-            balance += value;
-
-        BITCOIN_ASSERT(total_recv >= balance);
-        BITCOIN_ASSERT(total_recv >= pending_balance);
-    }
-
-    std::cout << "Address: " << payaddr.encoded() << std::endl;
-    std::cout << "  Paid balance:    " << balance << std::endl;
-    std::cout << "  Pending balance: " << pending_balance << std::endl;
-    std::cout << "  Total received:  " << total_recv << std::endl;
-    std::cout << std::endl;
     std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count != bc::max_int32);
+    BITCOIN_ASSERT(remaining_count > 0);
     --remaining_count;
     condition.notify_one();
 }
@@ -91,63 +101,42 @@ static void json_balance_fetched(const payment_address& payaddr,
 {
     if (error)
     {
-        std::cerr << "balance: Failed to fetch history: " << error.message()
-            <<std::endl;
+        std::cerr << boost::format(SX_BALANCE_FETCH_HISTORY_FAIL) %
+            error.message() << std::endl;
         return;
     }
 
-    bool is_first = true;
-    uint64_t total_recv = 0, balance = 0, pending_balance = 0;
-    for (const auto& row: history)
-    {
-        uint64_t value = row.value;
-        BITCOIN_ASSERT(value >= 0);
-        total_recv += value;
+    uint64_t total_recieved, balance, pending_balance;
+    parse_history(total_recieved, balance, pending_balance, history);
 
-        // Unconfirmed balance.
-        if (row.spend.hash == null_hash)
-            pending_balance += value;
-
-        // Confirmed balance.
-        if (row.output_height &&
-            (row.spend.hash == null_hash || !row.spend_height))
-            balance += value;
-
-        BITCOIN_ASSERT(total_recv >= balance);
-        BITCOIN_ASSERT(total_recv >= pending_balance);
-    }
-
-    // Put commas between each array item in json output.
     if (is_first)
-        is_first = false;
-    else
-        std::cout << "," << std::endl;
+        std::cout << "[" << std::endl;
 
     // Actual row data.
     std::cout << "{" << std::endl;
-    std::cout << "  \"address\": \"" << payaddr.encoded()
-        << "\"," << std::endl;
+    std::cout << "  \"address\": \"" << payaddr.encoded() << "\"," << std::endl;
     std::cout << "  \"paid\":  \"" << balance << "\"," << std::endl;
     std::cout << "  \"pending\":  \"" << pending_balance << "\"," << std::endl;
-    std::cout << "  \"received\":  \"" << total_recv << "\"" << std::endl;
+    std::cout << "  \"received\":  \"" << total_recieved << "\"" << std::endl;
     std::cout << "}";
+
     std::lock_guard<std::mutex> lock(mutex);
-
-    BITCOIN_ASSERT(remaining_count != bc::max_int32);
-
+    BITCOIN_ASSERT(remaining_count > 0);
     --remaining_count;
     condition.notify_one();
-    if (remaining_count > 0)
-        std::cout << ",";
 
-    std::cout << std::endl;
+    if (remaining_count > 0)
+        std::cout << "," << std::endl;
+    else
+        std::cout << "]" << std::endl;
 }
 
+// Untestable without server isolation, loc ready.
 console_result balance::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    // TODO: improve code generation pluralization.
+    // TODO: improve generated property pluralization.
     auto addresses = get_addresss_argument();
     auto json = get_json_option();
 
@@ -167,16 +156,14 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
     }
     else if (!read_addresses(addresses, payaddrs))
     {
-        // TODO: provide address info with error.
+        // TODO: provide failed address info with error.
         cerr << boost::format(SX_BALANCE_INVALID_ADDRESS) << std::endl;
         return console_result::failure;
     }
 
     OBELISK_FULLNODE(pool, fullnode);
 
-    if (json)
-        output << "[" << std::endl;
-
+    is_first = true;
     for (const payment_address& payaddr: payaddrs)
     {
         if (json)
@@ -200,15 +187,12 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
     update_loop.detach();
 
     std::unique_lock<std::mutex> lock(mutex);
-    remaining_count = static_cast<int>(payaddrs.size());
+    remaining_count = payaddrs.size();
     while (remaining_count > 0)
     {
         condition.wait(lock);
         BITCOIN_ASSERT(remaining_count >= 0);
     }
-
-    if (json)
-        output << "]" << std::endl;
 
     pool.stop();
     pool.join();

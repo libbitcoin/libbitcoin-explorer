@@ -26,15 +26,26 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(base58check_encode__invoke)
+BOOST_AUTO_TEST_SUITE(wrap__invoke)
 
-BOOST_AUTO_TEST_CASE(base58check_encode__invoke__bogus_value__failure_error)
+BOOST_AUTO_TEST_CASE(wrap__invoke__bogus_hex__okay_output)
 {
-    // $ sx base58check-encode bogus
-    SX_DECLARE_COMMAND(base58check_encode);
+    // $ sx wrap bogus
+    SX_DECLARE_COMMAND(wrap);
+    command.set_version_option(0);
     command.set_hex_argument({ "bogus" });
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED "\n");
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("001406e058\n");
+}
+
+BOOST_AUTO_TEST_CASE(wrap__invoke__valid_hex_version__okay_output)
+{
+    // $ sx wrap 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    SX_DECLARE_COMMAND(wrap);
+    command.set_version_option(42);
+    command.set_hex_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("2a031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006298eebe4\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

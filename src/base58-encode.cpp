@@ -20,6 +20,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/base58-encode.hpp>
+#include <sx/utility/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -33,6 +34,7 @@ console_result base58_encode::invoke(std::istream& input,
     const auto hex = get_hex_argument();
 
     const auto base58 = encode_base58(hex);
-    line_out(output, base58.c_str());
+
+    output << base58 << std::endl;
     return console_result::okay;
 }

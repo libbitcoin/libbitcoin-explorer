@@ -29,7 +29,9 @@ sx_command_include_HEADERS = \
     command/base58check-decode.hpp \
     command/base58check-encode.hpp \
     command/help.hpp \
-    command/stealth-addr.hpp
+    command/stealth-addr.hpp \
+    command/unwrap.hpp \
+    command/wrap.hpp
 
 # Generated from XML data source.
 if HAVE_OBELISK

@@ -104,6 +104,8 @@
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
@@ -130,6 +132,8 @@
     <ClCompile Include="..\..\..\..\src\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
+    <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
+    <ClCompile Include="..\..\..\..\src\wrap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

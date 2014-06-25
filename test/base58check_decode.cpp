@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(base58check_decode__invoke__bogus_value__failure_error)
     SX_DECLARE_COMMAND(base58check_decode);
     command.set_base58check_argument({ "bogus" });
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("This command is not yet ported from python.\n");
+    SX_REQUIRE_ERROR(SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

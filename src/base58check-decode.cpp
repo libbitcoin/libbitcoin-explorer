@@ -19,7 +19,7 @@
  */
 #include <sx/command/base58-decode.hpp>
 #include <sx/command/base58check-decode.hpp>
-//#include <sx/command/unwrap.hpp>
+#include <sx/command/unwrap.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
 

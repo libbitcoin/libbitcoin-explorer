@@ -20,29 +20,27 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/wrap.hpp>
-#include <sx/utility/coin.hpp>
+#include <sx/utility/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result wrap::invoke(int argc, const char* argv[])
+// 100% coverage by line, loc ready.
+console_result wrap::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 3))
-        return console_result::failure;
+    // Bound parameters.
+    const auto hex = (data_chunk)get_hex_argument();
+    const auto version = get_version_option();
+    
+    data_chunk data;
+    data.push_back(version);
+    extend_data(data, hex);
+    auto checksum = bitcoin_checksum(data);
+    extend_data(data, to_little_endian(checksum));
 
-    std::string hex_str;
-    uint8_t version_byte;
-    read_address_tuple(argc, argv, std::cin, hex_str, version_byte);
-
-    data_chunk bytes;
-    bytes.push_back(version_byte);
-    extend_data(bytes, decode_hex(hex_str));
-    uint32_t checksum = bitcoin_checksum(bytes);
-    extend_data(bytes, to_little_endian(checksum));
-
-    std::cout << bytes << std::endl;
+    output << bytes(data) << std::endl;
     return console_result::okay;
 }
-

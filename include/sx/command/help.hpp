@@ -208,6 +208,7 @@ private:
     struct argument
     {
         argument()
+          : command()
             {}
         std::string command;
     } argument_;

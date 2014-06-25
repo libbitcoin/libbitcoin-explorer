@@ -67,4 +67,14 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_addr__returns_object)
     BOOST_REQUIRE(find(stealth_addr::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__unwrap__returns_object)
+{
+    BOOST_REQUIRE(find(unwrap::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__wrap__returns_object)
+{
+    BOOST_REQUIRE(find(wrap::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
