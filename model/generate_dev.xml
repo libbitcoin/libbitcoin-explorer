@@ -2,6 +2,7 @@
 <generate script="generate.gsl" language="en-us">
 
   <!-- Resource strings for use by GSL template -->
+  
   <resource>
     <string name="sx_config_description" value="The path and file name for the configuration settings file for this application." />
   </resource>
@@ -36,14 +37,14 @@
     <argument name="ADDRESS" limit="-1" description="The address(es) to show." />
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address." />
     <define name="SX_BALANCE_FETCH_HISTORY_FAIL" value="Failed to fetch history: %1%" />
-    <define name="SX_BALANCE_FETCHED_OUTPUT" value="Address:           %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
-    <!--<explanation value="Example:" />
-    <explanation value="" />
-    <explanation value="  $ sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
-    <explanation value="  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
-    <explanation value="    Paid balance:    0" />
-    <explanation value="    Pending balance: 0" />
-    <explanation value="    Total received:  100000" />-->
+    <define name="SX_BALANCE_FETCHED_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
+    <!--
+    <explanation value="$ sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
+    <explanation value="Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
+    <explanation value="  Paid balance:    0" />
+    <explanation value="  Pending balance: 0" />
+    <explanation value="  Total received:  100000" />
+    -->
   </command>
 
   <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)" stub="true">
