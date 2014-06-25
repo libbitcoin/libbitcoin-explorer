@@ -49,6 +49,8 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "base58-encode\n" \
         "base58check-decode\n" \
         "base58check-encode\n" \
+        "bci-fetch-last-height\n" \
+        "bci-history\n" \
         "help\n" \
         "stealth-addr\n" \
         "unwrap\n" \
