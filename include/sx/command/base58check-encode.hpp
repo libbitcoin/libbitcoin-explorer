@@ -79,7 +79,7 @@ public:
      */
     const char* subcategory()
     {
-        return "NOT IMPLEMENTED";
+        return "FORMAT (BASE 58 CHECK)";
     }
 
     /**
@@ -124,7 +124,7 @@ public:
     arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("VALUE", 1);
+            .add("HEX", 1);
     }
     
     /**
@@ -149,12 +149,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "This command is not yet ported from python."
+                "Convert from hex string to Base58Check."
             )
             (
-                "VALUE",
-                value<bytes>(&argument_.value),
-                "The value to Base58Check encode."
+                "HEX",
+                value<bytes>(&argument_.hex),
+                "The hex string to Base58Check encode."
             );
 
         return options;
@@ -169,9 +169,9 @@ public:
     void load_stream(std::istream& input,
         boost::program_options::variables_map& variables)
     {
-        auto value = variables.find("VALUE");
-        if (value == variables.end())
-            parse(argument_.value, read_stream(input));
+        auto hex = variables.find("HEX");
+        if (hex == variables.end())
+            parse(argument_.hex, read_stream(input));
     }
 
     /**
@@ -188,19 +188,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the VALUE argument.
+     * Get the value of the HEX argument.
      */
-    virtual bytes get_value_argument()
+    virtual bytes get_hex_argument()
     {
-        return argument_.value;
+        return argument_.hex;
     }
     
     /**
-     * Set the value of the VALUE argument.
+     * Set the value of the HEX argument.
      */
-    virtual void set_value_argument(bytes value)
+    virtual void set_hex_argument(bytes value)
     {
-        argument_.value = value;
+        argument_.hex = value;
     }
 
     /**
@@ -230,7 +230,7 @@ private:
     {
         argument()
             {}
-        bytes value;
+        bytes hex;
     } argument_;
     
     /**

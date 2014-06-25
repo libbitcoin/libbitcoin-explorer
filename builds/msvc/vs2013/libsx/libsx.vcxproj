@@ -98,6 +98,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\balance.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\base58-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\base58-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
@@ -122,6 +124,8 @@
     <ClCompile Include="..\..\..\..\src\balance.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\base58-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\base58-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />

@@ -125,6 +125,8 @@
     <ClCompile Include="..\..\..\..\test\balance.cpp" />
     <ClCompile Include="..\..\..\..\test\base58check_decode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58check_encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\base58_decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\base58_encode.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
     </ClCompile>

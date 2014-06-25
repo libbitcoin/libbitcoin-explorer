@@ -28,7 +28,7 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(help__invoke)
 
-BOOST_AUTO_TEST_CASE(help__invoke__no_command__failure_output)
+BOOST_AUTO_TEST_CASE(help__invoke__no_command__failure_error)
 {
     // $ sx help
     SX_DECLARE_COMMAND(help);
@@ -36,13 +36,21 @@ BOOST_AUTO_TEST_CASE(help__invoke__no_command__failure_output)
     SX_REQUIRE_ERROR("");
 }
 
-BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_output)
+BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
 {
     // $ sx help booger
     SX_DECLARE_COMMAND(help);
     command.set_command_argument("booger");
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\naddr\nbalance\nbase58check-decode\nbase58check-encode\nhelp\nstealth-addr\n");
+    SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
+        "addr\n" \
+        "balance\n" \
+        "base58-decode\n" \
+        "base58-encode\n" \
+        "base58check-decode\n" \
+        "base58check-encode\n" \
+        "help\n" \
+        "stealth-addr\n");
 }
 
 BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)

@@ -28,11 +28,11 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(base58check_decode__invoke)
 
-BOOST_AUTO_TEST_CASE(base58check_decode__invoke__bogus_value__failure_output)
+BOOST_AUTO_TEST_CASE(base58check_decode__invoke__bogus_value__failure_error)
 {
     // $ sx base58check-decode bogus
     SX_DECLARE_COMMAND(base58check_decode);
-    command.set_value_argument({ "bogus" });
+    command.set_base58check_argument({ "bogus" });
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
     SX_REQUIRE_ERROR("This command is not yet ported from python.\n");
 }

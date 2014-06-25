@@ -79,7 +79,7 @@ public:
      */
     const char* subcategory()
     {
-        return "NOT IMPLEMENTED";
+        return "FORMAT (BASE 58 CHECK)";
     }
 
     /**
@@ -124,7 +124,7 @@ public:
     arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("VALUE", 1);
+            .add("BASE58CHECK", 1);
     }
     
     /**
@@ -149,11 +149,11 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "This command is not yet ported from python."
+                "Convert from Base58Check to hex string."
             )
             (
-                "VALUE",
-                value<std::string>(&argument_.value),
+                "BASE58CHECK",
+                value<std::string>(&argument_.base58check),
                 "The Base58Check encoded value to decode."
             );
 
@@ -169,9 +169,9 @@ public:
     void load_stream(std::istream& input,
         boost::program_options::variables_map& variables)
     {
-        auto value = variables.find("VALUE");
-        if (value == variables.end())
-            parse(argument_.value, read_stream(input));
+        auto base58check = variables.find("BASE58CHECK");
+        if (base58check == variables.end())
+            parse(argument_.base58check, read_stream(input));
     }
 
     /**
@@ -188,19 +188,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the VALUE argument.
+     * Get the value of the BASE58CHECK argument.
      */
-    virtual std::string get_value_argument()
+    virtual std::string get_base58check_argument()
     {
-        return argument_.value;
+        return argument_.base58check;
     }
     
     /**
-     * Set the value of the VALUE argument.
+     * Set the value of the BASE58CHECK argument.
      */
-    virtual void set_value_argument(std::string value)
+    virtual void set_base58check_argument(std::string value)
     {
-        argument_.value = value;
+        argument_.base58check = value;
     }
 
     /**
@@ -230,7 +230,7 @@ private:
     {
         argument()
             {}
-        std::string value;
+        std::string base58check;
     } argument_;
     
     /**

@@ -37,6 +37,8 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
 {
     func(make_shared<addr>());
     func(make_shared<balance>());
+    func(make_shared<base58_decode>());
+    func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
     func(make_shared<base58check_encode>());
     func(make_shared<help>());
@@ -51,6 +53,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<addr>();
     if (symbol == balance::symbol())
         return make_shared<balance>();
+    if (symbol == base58_decode::symbol())
+        return make_shared<base58_decode>();
+    if (symbol == base58_encode::symbol())
+        return make_shared<base58_encode>();
     if (symbol == base58check_decode::symbol())
         return make_shared<base58check_decode>();
     if (symbol == base58check_encode::symbol())

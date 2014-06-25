@@ -26,6 +26,8 @@
 #include <sx/command.hpp>
 #include <sx/command/addr.hpp>
 #include <sx/command/balance.hpp>
+#include <sx/command/base58-decode.hpp>
+#include <sx/command/base58-encode.hpp>
 #include <sx/command/base58check-decode.hpp>
 #include <sx/command/base58check-encode.hpp>
 #include <sx/command/help.hpp>

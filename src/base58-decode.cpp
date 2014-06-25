@@ -26,14 +26,13 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result base58_decode::invoke(int argc, const char* argv[])
+console_result base58_decode::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    // Bound parameters.
+    const auto base58 = get_base58_argument();
 
-    std::string b58_str(get_arg_or_stream(argc, argv, std::cin));
-    std::string hex_str = encode_hex(decode_base58(b58_str));
-    line_out(std::cout, hex_str.c_str());
+    const auto hex = encode_hex(decode_base58(base58));
+    line_out(output, hex.c_str());
     return console_result::okay;
 }
-

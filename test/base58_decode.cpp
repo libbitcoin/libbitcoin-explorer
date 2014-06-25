@@ -26,15 +26,24 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(base58check_encode__invoke)
+BOOST_AUTO_TEST_SUITE(base58_decode__invoke)
 
-BOOST_AUTO_TEST_CASE(base58check_encode__invoke__bogus_value__failure_error)
+BOOST_AUTO_TEST_CASE(base58_decode__invoke__bogus_value__okay_output)
 {
-    // $ sx base58check-encode bogus
-    SX_DECLARE_COMMAND(base58check_encode);
-    command.set_hex_argument({ "bogus" });
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("This command is not yet ported from python.\n");
+    // $ sx base58-decode "?? --*&^aa !"
+    SX_DECLARE_COMMAND(base58_decode);
+    command.set_base58_argument({ "?? --*&^aa !" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("\n");
+}
+
+BOOST_AUTO_TEST_CASE(base58_decode__invoke__valid_value__okay_output)
+{
+    // $ sx base58-decode somebase58text
+    SX_DECLARE_COMMAND(base58_decode);
+    command.set_base58_argument({ "somebase58text" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("03885215aefaf0f35ad805\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
