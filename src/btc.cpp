@@ -19,16 +19,20 @@
  */
 #include <sx/command/btc.hpp>
 #include <sx/command/unwrap.hpp>
+#include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace sx;
 using namespace sx::extensions;
 
-console_result btc::invoke(int argc, const char* argv[])
+console_result btc::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
+    // Bound parameters.
+    auto algorithm = get_satoshi_argument();
+
     // TODO: parse and validate input and multiply by 10^-8.
-    line_out(std::cerr, "sx: This command is not yet ported from python.");
+    cerr << SX_BTC_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

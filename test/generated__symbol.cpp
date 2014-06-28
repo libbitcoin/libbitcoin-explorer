@@ -77,9 +77,19 @@ BOOST_AUTO_TEST_CASE(generated__symbol__brainwallet__returns_expected_value)
     BOOST_REQUIRE(brainwallet::symbol() == std::string("brainwallet"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__btc__returns_expected_value)
+{
+    BOOST_REQUIRE(btc::symbol() == std::string("btc"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__satoshi__returns_expected_value)
+{
+    BOOST_REQUIRE(satoshi::symbol() == std::string("satoshi"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr__returns_expected_value)

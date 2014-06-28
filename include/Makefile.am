@@ -32,7 +32,9 @@ sx_command_include_HEADERS = \
     command/bci-history.hpp \
     command/blke-fetch-transaction.hpp \
     command/brainwallet.hpp \
+    command/btc.hpp \
     command/help.hpp \
+    command/satoshi.hpp \
     command/stealth-addr.hpp \
     command/unwrap.hpp \
     command/wrap.hpp

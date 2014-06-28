@@ -77,9 +77,19 @@ BOOST_AUTO_TEST_CASE(generated__find__brainwallet__returns_object)
     BOOST_REQUIRE(find(brainwallet::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__btc__returns_object)
+{
+    BOOST_REQUIRE(find(btc::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__satoshi__returns_object)
+{
+    BOOST_REQUIRE(find(satoshi::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_addr__returns_object)

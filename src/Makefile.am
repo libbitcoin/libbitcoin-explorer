@@ -32,7 +32,9 @@ libsx_la_SOURCES += \
     bci-history.cpp \
     blke-fetch-transaction.cpp \
     brainwallet.cpp \
+    btc.cpp \
     help.cpp \
+    satoshi.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
     wrap.cpp

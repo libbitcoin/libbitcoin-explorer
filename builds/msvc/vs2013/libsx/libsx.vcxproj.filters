@@ -71,8 +71,14 @@
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp">
+      <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp">
       <Filter>include\command</Filter>
@@ -163,8 +169,14 @@
     <ClCompile Include="..\..\..\..\src\brainwallet.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\btc.cpp">
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\satoshi.cpp">
+      <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp">
       <Filter>src\command</Filter>

@@ -106,7 +106,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\bci-history.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\blke-fetch-transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp" />
@@ -138,7 +140,9 @@
     <ClCompile Include="..\..\..\..\src\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\src\brainwallet.cpp" />
+    <ClCompile Include="..\..\..\..\src\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
+    <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
     <ClCompile Include="..\..\..\..\src\wrap.cpp" />
