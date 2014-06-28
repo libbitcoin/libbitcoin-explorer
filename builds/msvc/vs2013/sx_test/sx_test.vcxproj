@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp" />
     <ClCompile Include="..\..\..\..\test\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\test\brainwallet.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
     </ClCompile>

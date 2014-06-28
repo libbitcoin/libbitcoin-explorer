@@ -31,6 +31,7 @@ sx_command_include_HEADERS = \
     command/bci-fetch-last-height.hpp \
     command/bci-history.hpp \
     command/blke-fetch-transaction.hpp \
+    command/brainwallet.hpp \
     command/help.hpp \
     command/stealth-addr.hpp \
     command/unwrap.hpp \

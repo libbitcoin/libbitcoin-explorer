@@ -19,15 +19,21 @@
  */
 #include <sx/command/brainwallet.hpp>
 #include <sx/command/unwrap.hpp>
+#include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace sx;
 using namespace sx::extensions;
 
-console_result brainwallet::invoke(int argc, const char* argv[])
+console_result brainwallet::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    line_out(std::cerr, "sx: This command is not yet ported from python.");
+    // Bound parameters.
+    auto algorithm = get_algo_option();
+    auto password = get_password_argument();
+    auto username = get_username_argument();
+
+    cerr << SX_BRAINWALLET_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

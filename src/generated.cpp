@@ -44,6 +44,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<bci_fetch_last_height>());
     func(make_shared<bci_history>());
     func(make_shared<blke_fetch_transaction>());
+    func(make_shared<brainwallet>());
     func(make_shared<help>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
@@ -72,6 +73,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<bci_history>();
     if (symbol == blke_fetch_transaction::symbol())
         return make_shared<blke_fetch_transaction>();
+    if (symbol == brainwallet::symbol())
+        return make_shared<brainwallet>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == stealth_addr::symbol())

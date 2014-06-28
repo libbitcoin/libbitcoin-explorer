@@ -26,46 +26,15 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(help__invoke)
+BOOST_AUTO_TEST_SUITE(brainwallet__invoke)
 
-BOOST_AUTO_TEST_CASE(help__invoke__no_command__failure_error)
+BOOST_AUTO_TEST_CASE(brainwallet__invoke__bogus_password__failure_error)
 {
-    // $ sx help
-    SX_DECLARE_COMMAND(help);
+    // $ sx brainwallet bogus
+    SX_DECLARE_COMMAND(brainwallet);
+    command.set_password_argument("bogus");
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("");
-}
-
-BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
-{
-    // $ sx help booger
-    SX_DECLARE_COMMAND(help);
-    command.set_command_argument("booger");
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
-        "addr\n" \
-        "balance\n" \
-        "base58-decode\n" \
-        "base58-encode\n" \
-        "base58check-decode\n" \
-        "base58check-encode\n" \
-        "bci-fetch-last-height\n" \
-        "bci-history\n" \
-        "blke-fetch-transaction\n" \
-        "brainwallet\n" \
-        "help\n" \
-        "stealth-addr\n" \
-        "unwrap\n" \
-        "wrap\n");
-}
-
-BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
-{
-    // $ sx help stealth-addr
-    SX_DECLARE_COMMAND(help);
-    command.set_command_argument("addr");
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    SX_REQUIRE_OUTPUT("");
+    SX_REQUIRE_ERROR(SX_BRAINWALLET_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

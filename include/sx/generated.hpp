@@ -33,6 +33,7 @@
 #include <sx/command/bci-fetch-last-height.hpp>
 #include <sx/command/bci-history.hpp>
 #include <sx/command/blke-fetch-transaction.hpp>
+#include <sx/command/brainwallet.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/stealth-addr.hpp>
 #include <sx/command/unwrap.hpp>

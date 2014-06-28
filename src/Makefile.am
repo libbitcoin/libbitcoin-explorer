@@ -31,6 +31,7 @@ libsx_la_SOURCES += \
     bci-fetch-last-height.cpp \
     bci-history.cpp \
     blke-fetch-transaction.cpp \
+    brainwallet.cpp \
     help.cpp \
     stealth-addr.cpp \
     unwrap.cpp \

@@ -68,6 +68,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\blke-fetch-transaction.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -155,6 +158,9 @@
       <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp">
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\brainwallet.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">

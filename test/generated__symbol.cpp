@@ -72,6 +72,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__blke_fetch_transaction__returns_expected
     BOOST_REQUIRE(blke_fetch_transaction::symbol() == std::string("blke-fetch-transaction"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__brainwallet__returns_expected_value)
+{
+    BOOST_REQUIRE(brainwallet::symbol() == std::string("brainwallet"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));
