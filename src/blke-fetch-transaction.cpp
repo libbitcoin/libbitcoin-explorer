@@ -31,6 +31,9 @@ using namespace sx::extensions;
 console_result blke_fetch_transaction::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
+    // Bound parameters.
+    auto hash = get_hash_argument();
+
     cerr << SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }

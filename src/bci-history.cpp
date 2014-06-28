@@ -31,6 +31,9 @@ using namespace sx::extensions;
 console_result bci_history::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
+    // Bound parameters.
+    get_address_argument();
+
     cerr << SX_BCI_HISTORY_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }

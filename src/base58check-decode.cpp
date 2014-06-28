@@ -29,6 +29,9 @@ using namespace sx::extensions;
 console_result base58check_decode::invoke(std::istream& input, 
     std::ostream& output, std::ostream& cerr)
 {
+    // Bound parameters.
+    auto base58check = get_base58check_argument();
+
     // TODO: invoke functionality from base58-decode >> unwrap.
     cerr << SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

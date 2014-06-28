@@ -29,6 +29,9 @@ using namespace sx::extensions;
 console_result base58check_encode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
+    // Bound parameters.
+    auto hex = get_hex_argument();
+
     // TODO: invoke functionality from wrap >> base58-encode.
     cerr << SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
