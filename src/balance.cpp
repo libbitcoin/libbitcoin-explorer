@@ -164,7 +164,7 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
     OBELISK_FULLNODE(pool, fullnode);
 
     is_first = true;
-    for (const payment_address& payaddr: payaddrs)
+    for (const auto& payaddr: payaddrs)
     {
         if (json)
             fullnode.address.fetch_history(payaddr,

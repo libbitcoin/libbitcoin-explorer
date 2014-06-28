@@ -122,7 +122,7 @@ bool read_address_tuple(int argc, const char* argv[], std::istream& stream,
 
 bool read_addresses(std::vector<std::string> addresses, payaddr_list& payaddrs)
 {
-    for (const auto address: addresses)
+    for (const auto& address: addresses)
     {
         payment_address payaddr;
         if (!payaddr.set_encoded(address))
