@@ -30,6 +30,7 @@ sx_command_include_HEADERS = \
     command/base58check-encode.hpp \
     command/bci-fetch-last-height.hpp \
     command/bci-history.hpp \
+    command/blke-fetch-transaction.hpp \
     command/help.hpp \
     command/stealth-addr.hpp \
     command/unwrap.hpp \

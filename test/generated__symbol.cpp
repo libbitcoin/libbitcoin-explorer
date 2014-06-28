@@ -67,6 +67,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__bci_history__returns_expected_value)
     BOOST_REQUIRE(bci_history::symbol() == std::string("bci-history"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__blke_fetch_transaction__returns_expected_value)
+{
+    BOOST_REQUIRE(blke_fetch_transaction::symbol() == std::string("blke-fetch-transaction"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));

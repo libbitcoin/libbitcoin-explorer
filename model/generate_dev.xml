@@ -80,6 +80,12 @@
     <define name="SX_BCI_HISTORY_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
+  <command symbol="blke-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
+    <option name="help" description="Get a transaction from blockexplorer.com." />
+    <argument name="HASH" stream="true" description="The transaction to get." />
+    <define name="SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
+
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
     <argument name="COMMAND" stream="true" description="Get help for the COMMAND." />
     <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />

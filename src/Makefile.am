@@ -30,6 +30,7 @@ libsx_la_SOURCES += \
     base58check-encode.cpp \
     bci-fetch-last-height.cpp \
     bci-history.cpp \
+    blke-fetch-transaction.cpp \
     help.cpp \
     stealth-addr.cpp \
     unwrap.cpp \

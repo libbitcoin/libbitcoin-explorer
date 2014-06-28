@@ -67,6 +67,11 @@ BOOST_AUTO_TEST_CASE(generated__find__bci_history__returns_object)
     BOOST_REQUIRE(find(bci_history::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__blke_fetch_transaction__returns_object)
+{
+    BOOST_REQUIRE(find(blke_fetch_transaction::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);

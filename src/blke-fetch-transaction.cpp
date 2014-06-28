@@ -21,17 +21,17 @@
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
 #include <sx/command/blke-fetch-transaction.hpp>
+#include <sx/dispatch.hpp>
 #include <sx/command/unwrap.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace sx;
 using namespace sx::extensions;
 
-console_result blke_fetch_transaction::invoke(int argc, 
-    const char* argv[])
+console_result blke_fetch_transaction::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    line_out(std::cerr, "sx: This command is not yet ported from python.");
+    cerr << SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

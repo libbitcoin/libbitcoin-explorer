@@ -36,9 +36,6 @@
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp">
       <Filter>src\tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth_addr.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\help.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
@@ -54,18 +51,6 @@
     <ClCompile Include="..\..\..\..\test\balance.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check_decode.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check_encode.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58_encode.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58_decode.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\wrap.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
@@ -76,6 +61,24 @@
       <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58-decode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58-encode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-addr.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
   </ItemGroup>
