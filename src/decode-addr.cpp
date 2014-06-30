@@ -18,30 +18,33 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/decode-addr.hpp>
+#include <sx/utility/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result decode_addr::invoke(int argc, const char* argv[])
+console_result decode_addr::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    // Bound parameters.
+    const auto base58check = get_address_argument();
 
-    std::string addr_str(get_arg_or_stream(argc, argv, std::cin));
-
-    payment_address addr;
-    if (!addr.set_encoded(addr_str))
+    payment_address address;
+    if (!address.set_encoded(base58check))
     {
-        std::cerr << "decode-addr: Bad address '" << addr_str << "'."
+        cerr << boost::format(SX_DECODE_ADDR_INVALID_ADDRESS) % base58check
             << std::endl;
         return console_result::failure;
     }
 
-    std::cout << addr.hash() << std::endl;
+    bytes hex(address.hash());
+
+    output << hex << std::endl;
     return console_result::okay;
 }
 

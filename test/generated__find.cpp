@@ -82,6 +82,16 @@ BOOST_AUTO_TEST_CASE(generated__find__btc__returns_object)
     BOOST_REQUIRE(find(btc::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__decode_addr__returns_object)
+{
+    BOOST_REQUIRE(find(decode_addr::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__encode_addr__returns_object)
+{
+    BOOST_REQUIRE(find(encode_addr::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);

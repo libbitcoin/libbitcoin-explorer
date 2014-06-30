@@ -100,6 +100,19 @@
     <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
+  <command symbol="decode-addr" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
+    <option name="help" description="Convert an address from Base58Check to RIPEMD160." />
+    <argument name="ADDRESS" stream="true" description="The value to convert."/>
+    <define name="SX_DECODE_ADDR_INVALID_ADDRESS" value="Invalid address '%1%'." />
+  </command>
+
+  <command symbol="encode-addr" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
+    <option name="help" description="Convert an address from RIPEMD160 to Base58Check." />
+    <option name="version" type="byte" description="The desired version number." />
+    <argument name="HASH" stream="true" description="The hex string to convert."/>
+    <define name="SX_ENCODE_ADDR_INVALID_HASH" value="Invalid RIPEMD160 hash '%1%'." />
+  </command>
+
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
     <argument name="COMMAND" stream="true" description="Get help for the COMMAND." />
     <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />

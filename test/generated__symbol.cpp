@@ -82,6 +82,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__btc__returns_expected_value)
     BOOST_REQUIRE(btc::symbol() == std::string("btc"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__decode_addr__returns_expected_value)
+{
+    BOOST_REQUIRE(decode_addr::symbol() == std::string("decode-addr"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__encode_addr__returns_expected_value)
+{
+    BOOST_REQUIRE(encode_addr::symbol() == std::string("encode-addr"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));

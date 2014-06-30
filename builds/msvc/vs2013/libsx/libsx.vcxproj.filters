@@ -74,6 +74,12 @@
     <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\decode-addr.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\encode-addr.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -171,6 +177,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\btc.cpp">
       <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\decode-addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\encode-addr.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>

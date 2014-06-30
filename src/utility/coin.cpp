@@ -77,49 +77,6 @@ data_chunk random_fill(size_t size)
 
     return result;
 }
-
-bool read_address_tuple(int argc, const char* argv[], std::istream& stream,
-    std::string& hex_str, uint8_t& version_byte)
-{
-    version_byte = 0;
-
-    if (argc == 1)
-    {
-        // Two similar techniques for same arg requirements:
-
-        // from encode_addr
-        hex_str = read_stream(stream);
-
-        // from wrap
-        //stream >> hex_str;
-        //int vb;
-        //stream >> vb;
-        //version_byte = vb;
-    }
-    else if (argc == 2)
-    {
-        const std::string arg(argv[1]);
-        if (arg.length() > 5)
-            hex_str = arg;
-        else
-        {
-            if (!parse(version_byte, argv[1]))
-                return false;
-
-            hex_str = read_stream(stream);
-        }
-    }
-    else if (argc == 3)
-    {
-        if (!parse(version_byte, argv[2]))
-            return false;
-
-        hex_str = argv[1];
-    }
-
-    return true;
-}
-
 bool read_addresses(std::vector<std::string> addresses, payaddr_list& payaddrs)
 {
     for (const auto& address: addresses)

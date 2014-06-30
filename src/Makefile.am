@@ -33,6 +33,8 @@ libsx_la_SOURCES += \
     blke-fetch-transaction.cpp \
     brainwallet.cpp \
     btc.cpp \
+    decode-addr.cpp \
+    encode-addr.cpp \
     help.cpp \
     satoshi.cpp \
     stealth-addr.cpp \

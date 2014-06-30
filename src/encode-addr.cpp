@@ -27,23 +27,22 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result encode_addr::invoke(int argc, const char* argv[])
+console_result encode_addr::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 3))
-        return console_result::failure;
+    // Bound parameters.
+    const auto hex = get_hash_argument();
+    const auto version = static_cast<uint8_t>(get_version_option());
 
-    std::string addr_str;
-    uint8_t version_byte;
-    read_address_tuple(argc, argv, std::cin, addr_str, version_byte);
-
-    auto hash = decode_short_hash(addr_str);
+    auto hash = decode_short_hash(hex);
     if (hash == null_short_hash)
     {
-        line_out(std::cerr, "Incorrect HASH passed in.");
+        cerr << boost::format(SX_ENCODE_ADDR_INVALID_HASH) % hex << std::endl;
         return console_result::failure;
     }
 
-    payment_address addr(version_byte, hash);
-    std::cout << addr.encoded() << std::endl;
+    payment_address address(version, hash);
+
+    output << address.encoded() << std::endl;
     return console_result::okay;
 }

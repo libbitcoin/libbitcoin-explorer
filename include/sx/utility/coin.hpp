@@ -97,19 +97,6 @@ bc::ec_secret generate_random_secret();
 bc::data_chunk random_fill(size_t size);
 
 /**
- * Read two address arguments from the specified args and/or input stream.
- *
- * @param[in]  argc          The number of args.
- * @param[in]  argv          The arguments to read.
- * @param[in]  stream        The input stream.
- * @param[out] hex_str       The return string value.
- * @param[out] version_byte  The return byte value.
- * return                    True if there was no parse error.
- */
-bool read_address_tuple(int argc, const char* argv[], 
-    std::istream& stream, std::string& hex_str, uint8_t& version_byte);
-
-/**
  * Read a set of payment addresses from the specified vector.
  *
  * @param[in]  addresses  The payment addresses to read.

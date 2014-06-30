@@ -132,6 +132,8 @@
     <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\test\brainwallet.cpp" />
     <ClCompile Include="..\..\..\..\test\btc.cpp" />
+    <ClCompile Include="..\..\..\..\test\decode-addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\encode-addr.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
     </ClCompile>

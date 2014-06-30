@@ -35,6 +35,8 @@
 #include <sx/command/blke-fetch-transaction.hpp>
 #include <sx/command/brainwallet.hpp>
 #include <sx/command/btc.hpp>
+#include <sx/command/decode-addr.hpp>
+#include <sx/command/encode-addr.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/satoshi.hpp>
 #include <sx/command/stealth-addr.hpp>

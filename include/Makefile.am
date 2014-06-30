@@ -33,6 +33,8 @@ sx_command_include_HEADERS = \
     command/blke-fetch-transaction.hpp \
     command/brainwallet.hpp \
     command/btc.hpp \
+    command/decode-addr.hpp \
+    command/encode-addr.hpp \
     command/help.hpp \
     command/satoshi.hpp \
     command/stealth-addr.hpp \

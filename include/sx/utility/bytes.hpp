@@ -20,6 +20,7 @@
 #ifndef BYTES_HPP
 #define BYTES_HPP
 
+#include <array>
 #include <iostream>
 #include <stdint.h>
 #include <vector>
@@ -41,6 +42,15 @@ public:
      */
     bytes() 
         : value() {}
+
+    /**
+     * Initialization counstructor.
+     * 
+     * @param[in]  array  The value to initialize with.
+     */
+    template<size_t Size>
+    bytes(const bc::byte_array<Size>& array)
+        : value(array.begin(), array.end()) {}
 
     /**
      * Initialization counstructor.

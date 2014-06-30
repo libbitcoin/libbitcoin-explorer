@@ -46,6 +46,8 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<blke_fetch_transaction>());
     func(make_shared<brainwallet>());
     func(make_shared<btc>());
+    func(make_shared<decode_addr>());
+    func(make_shared<encode_addr>());
     func(make_shared<help>());
     func(make_shared<satoshi>());
     func(make_shared<stealth_addr>());
@@ -79,6 +81,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<brainwallet>();
     if (symbol == btc::symbol())
         return make_shared<btc>();
+    if (symbol == decode_addr::symbol())
+        return make_shared<decode_addr>();
+    if (symbol == encode_addr::symbol())
+        return make_shared<encode_addr>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == satoshi::symbol())
