@@ -34,6 +34,7 @@ console_result ec_add_secrets::invoke(std::istream& input,
     // Bound parameters.
     auto addends = get_secrets_argument();
 
+    // TODO: initialize sum with first addend.
     ec_secret sum;
     for (auto const& addend: addends)
     {

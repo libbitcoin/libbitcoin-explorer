@@ -26,34 +26,11 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(balance__invoke)
+BOOST_AUTO_TEST_SUITE(ec_multiply__invoke)
 
-BOOST_AUTO_TEST_CASE(balance__invoke__bogus_address__failure_error)
+BOOST_AUTO_TEST_CASE(ec_multiply__invoke__todo)
 {
-    // $ sx balance bogus
-    SX_DECLARE_COMMAND(balance);
-    command.set_addresss_argument({ "bogus" });
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_BALANCE_INVALID_ADDRESS "\n");
+    // $ sx ec-multiply POINT SECRET
 }
-
-// DISABLED until client-server calls are isolated for test.
-
-//BOOST_AUTO_TEST_CASE(balance__invoke__address__okay)
-//{
-//    // $ sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
-//    SX_DECLARE_COMMAND(balance);
-//    command.set_addresss_argument({ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" });
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-//}
-//
-//BOOST_AUTO_TEST_CASE(balance__invoke__address_json__okay)
-//{
-//    // $ sx balance -j true 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
-//    SX_DECLARE_COMMAND(balance);
-//    command.set_addresss_argument({ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" });
-//    command.set_json_option(true);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-//}
 
 BOOST_AUTO_TEST_SUITE_END()

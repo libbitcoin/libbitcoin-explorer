@@ -155,7 +155,7 @@ public:
             )
             (
                 "SECRET",
-                value<std::vector<bytes>>(&argument_.secrets),
+                value<std::vector<bytes>>(&argument_.secrets)->required(),
                 "A secret to add."
             );
 

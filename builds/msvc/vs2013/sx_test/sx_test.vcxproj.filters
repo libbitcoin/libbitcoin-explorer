@@ -96,6 +96,18 @@
     <ClCompile Include="..\..\..\..\test\encode-addr.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-multiply-secrets.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-tweak-add.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-add-secrets.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-multiply.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

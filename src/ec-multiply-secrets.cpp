@@ -34,6 +34,7 @@ console_result ec_multiply_secrets::invoke(std::istream& input,
     // Bound parameters.
     auto factors = get_secrets_argument();
 
+    // TODO: initialize product with first addend.
     ec_secret product;
     for (auto const& factor: factors)
     {
