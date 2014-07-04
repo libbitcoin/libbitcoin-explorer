@@ -87,7 +87,7 @@ public:
     }
 
     /**
-     * Overload stream in.
+     * Overload stream in. If input is invalid sets no bytes in argument.
      *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
@@ -108,7 +108,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, bytes& argument)
+    friend std::ostream& operator<<(std::ostream& output, const bytes& argument)
     {
         output << bc::encode_hex(argument.value);
         return output;

@@ -19,44 +19,45 @@
  */
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/ec-add.hpp>
+#include <sx/command/ec-multiply-secrets.hpp>
+#include <sx/utility/bytes.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/curve.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result ec_add::invoke(int argc, const char* argv[])
+console_result ec_multiply_secrets::invoke(std::istream& input, 
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 3, 3))
-        return console_result::failure;
+    // Bound parameters.
+    auto factors = get_secrets_argument();
 
-    ec_point point_a, point_b;
-    if (!set_ec_point(point_a, argv[1]))
+    ec_secret product;
+    for (auto const& factor: factors)
     {
-        std::cerr << "sx: Invalid point " << argv[1] << std::endl;
-        return console_result::failure;
+        // TODO: create deserializable ec_secret
+        ec_secret secret;
+        if (!set_ec_secret(secret, factor))
+        {
+            cerr << boost::format(SX_EC_MULTIPLY_SECRETS_INVALID_INTEGER) % 
+                factor << std::endl;
+            return console_result::failure;
+        }
+
+        // Elliptic curve function (INTEGER * INTEGER) % curve-order.
+        if (!bc::ec_multiply(product, secret))
+        {
+            cerr << SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE << std::endl;
+            return console_result::failure;
+        }
     }
 
-    if (!set_ec_point(point_b, argv[2]))
-    {
-        std::cerr << "sx: Invalid point " << argv[2] << std::endl;
-        return console_result::failure;
-    }
+    // TODO: create serializable ec_secret
+    bytes hex(product);
 
-    /* This command excluded because += is not yet defined for ec_point. */
-    line_out(std::cerr, "sx: Not Implemented");
-    return console_result::failure;
-
-    /*bool success = (point_a += point_b);
-    if (!success)
-    {
-        std::cerr << "sx: Out of range." << std::endl;
-        return console_result::failure;
-    }*/
-
-    std::cout << point_a << std::endl;
+    output << hex << std::endl;
     return console_result::okay;
 }
 

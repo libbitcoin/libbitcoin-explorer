@@ -106,6 +106,42 @@
     <define name="SX_DECODE_ADDR_INVALID_ADDRESS" value="Invalid address '%1%'." />
   </command>
 
+  <!-- Computes the function (a + b) % n, where n is the curve order. -->
+  <command symbol="ec-add-secrets" category="UTILITY" subcategory="EC MATH">
+    <option name="help" description="Calculate the elliptic curve function (SECRET + SECRET) % curve-order." />
+    <argument name="SECRET" limit="-1" type="bytes" description="A secret to add."/>
+    <define name="SX_EC_ADD_SECRETS_INVALID_INTEGER" value="Invalid secret '%1%'." />
+    <define name="SX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
+  </command>
+
+  <!-- Computes the product a * b. -->
+  <command symbol="ec-multiply" category="UTILITY" subcategory="EC MATH">
+    <option name="help" description="Calculate the elliptic curve product (POINT * SECRET)." />
+    <argument name="POINT" type="bytes" description="A point to multiply."/>
+    <argument name="SECRET" type="bytes" description="A secret to multiply."/>
+    <define name="SX_EC_MULTIPLY_INVALID_POINT" value="Invalid point '%1%'." />
+    <define name="SX_EC_MULTIPLY_INVALID_INTEGER" value="Invalid secret '%1%'." />
+    <define name="SX_EC_MULITPLY_OUT_OF_RANGE" value="Product exceeds valid range." />
+  </command>
+  
+  <!-- Computes the function (a * b) % n, where n is the curve order. -->
+  <command symbol="ec-multiply-secrets" category="UTILITY" subcategory="EC MATH">
+    <option name="help" description="Calculate the elliptic curve function (SECRET * SECRET) % curve-order." />
+    <argument name="SECRET" limit="-1" type="bytes" description="A secret to multiply."/>
+    <define name="SX_EC_MULTIPLY_SECRETS_INVALID_INTEGER" value="Invalid secret '%1%'." />
+    <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
+  </command>
+  
+  <!-- Computes the function a + G*b, where G is the curve's generator point.-->
+  <command symbol="ec-tweak-add" category="UTILITY" subcategory="EC MATH">
+    <option name="help" description="Calculate the elliptic curve function POINT + (SECRET * curve-generator-point)." />
+    <argument name="POINT" type="bytes" description="A point to add."/>
+    <argument name="SECRET" type="bytes" description="A secret to add."/>
+    <define name="SX_EC_TWEAK_ADD_INVALID_POINT" value="Invalid point '%1%'." />
+    <define name="SX_EC_TWEAK_ADD_INVALID_INTEGER" value="Invalid secret '%1%'." />
+    <define name="SX_EC_TWEAK_ADD_OUT_OF_RANGE" value="Function exceeds valid range." />
+  </command>
+
   <command symbol="encode-addr" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
     <option name="help" description="Convert an address from RIPEMD160 to Base58Check." />
     <option name="version" type="byte" description="The desired version number." />

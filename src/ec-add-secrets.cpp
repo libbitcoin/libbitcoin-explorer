@@ -19,39 +19,45 @@
  */
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/ec-add-modp.hpp>
+#include <sx/command/ec-add-secrets.hpp>
+#include <sx/utility/bytes.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/curve.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result ec_add_modp::invoke(int argc, const char* argv[])
+console_result ec_add_secrets::invoke(std::istream& input, 
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 3, 3))
-        return console_result::failure;
+    // Bound parameters.
+    auto addends = get_secrets_argument();
 
-    ec_secret secret_a, secret_b;
-    if (!set_ec_secret(secret_a, argv[1]))
+    ec_secret sum;
+    for (auto const& addend: addends)
     {
-        std::cerr << "sx: Invalid secret " << argv[1] << std::endl;
-        return console_result::failure;
+        // TODO: create deserializable ec_secret
+        ec_secret secret;
+        if (!set_ec_secret(secret, addend))
+        {
+            cerr << boost::format(SX_EC_ADD_SECRETS_INVALID_INTEGER) % 
+                addend << std::endl;
+            return console_result::failure;
+        }
+
+        // Elliptic curve function (INTEGER + INTEGER) % curve-order.
+        if (!bc::ec_add(sum, secret))
+        {
+            cerr << SX_EC_ADD_SECRETS_OUT_OF_RANGE << std::endl;
+            return console_result::failure;
+        }
     }
 
-    if (!set_ec_secret(secret_b, argv[2]))
-    {
-        std::cerr << "sx: Invalid secret " << argv[2] << std::endl;
-        return console_result::failure;
-    }
+    // TODO: create serializable ec_secret
+    bytes hex(sum);
 
-    if (!ec_add(secret_a, secret_b))
-    {
-        std::cerr << "sx: Error adding numbers." << std::endl;
-        return console_result::failure;
-    }
-
-    std::cout << secret_a << std::endl;
+    output << hex << std::endl;
     return console_result::okay;
 }
 

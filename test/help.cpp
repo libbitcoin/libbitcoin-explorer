@@ -55,6 +55,10 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "brainwallet\n" \
         "btc\n" \
         "decode-addr\n" \
+        "ec-add-secrets\n" \
+        "ec-multiply\n" \
+        "ec-multiply-secrets\n" \
+        "ec-tweak-add\n" \
         "encode-addr\n" \
         "help\n" \
         "satoshi\n" \

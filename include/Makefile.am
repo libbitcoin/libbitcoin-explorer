@@ -34,6 +34,10 @@ sx_command_include_HEADERS = \
     command/brainwallet.hpp \
     command/btc.hpp \
     command/decode-addr.hpp \
+    command/ec-add-secrets.hpp \
+    command/ec-multiply.hpp \
+    command/ec-multiply-secrets.hpp \
+    command/ec-tweak-add.hpp \
     command/encode-addr.hpp \
     command/help.hpp \
     command/satoshi.hpp \

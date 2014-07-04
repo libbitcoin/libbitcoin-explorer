@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_EC_ADD_HPP
-#define SX_EC_ADD_HPP
+#ifndef SX_EC_ADD_SECRETS_HPP
+#define SX_EC_ADD_SECRETS_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -42,17 +42,15 @@ namespace extensions {
 /**
  * Various localizable strings.
  */
-#define SX_EC_ADD_INVALID_POINT \
-    "Invalid point '%1%'."
-#define SX_EC_ADD_OUT_OF_RANGE \
+#define SX_EC_ADD_SECRETS_INVALID_INTEGER \
+    "Invalid secret '%1%'."
+#define SX_EC_ADD_SECRETS_OUT_OF_RANGE \
     "Sum exceeds valid range."
-#define SX_EC_ADD_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
 
 /**
- * Class to implement the sx ec-add command.
+ * Class to implement the sx ec-add-secrets command.
  */
-class ec_add 
+class ec_add_secrets 
     : public command
 {
 public:
@@ -60,14 +58,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "ec-add"; }
+    static const char* symbol() { return "ec-add-secrets"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return ec_add::symbol();
+        return ec_add_secrets::symbol();
     }
 
     /**
@@ -128,7 +126,7 @@ public:
     arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("POINT", -1);
+            .add("SECRET", -1);
     }
     
     /**
@@ -153,12 +151,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Calculate the elliptic curve sum of POINTs."
+                "Calculate the elliptic curve function (SECRET + SECRET) % curve-order."
             )
             (
-                "POINT",
-                value<std::vector<std::string>>(&argument_.points),
-                "A point to add."
+                "SECRET",
+                value<std::vector<bytes>>(&argument_.secrets),
+                "A secret to add."
             );
 
         return options;
@@ -189,19 +187,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the POINT arguments.
+     * Get the value of the SECRET arguments.
      */
-    virtual std::vector<std::string> get_points_argument()
+    virtual std::vector<bytes> get_secrets_argument()
     {
-        return argument_.points;
+        return argument_.secrets;
     }
     
     /**
-     * Set the value of the POINT arguments.
+     * Set the value of the SECRET arguments.
      */
-    virtual void set_points_argument(std::vector<std::string> value)
+    virtual void set_secrets_argument(std::vector<bytes> value)
     {
-        argument_.points = value;
+        argument_.secrets = value;
     }
 
     /**
@@ -230,9 +228,9 @@ private:
     struct argument
     {
         argument()
-          : points()
+          : secrets()
             {}
-        std::vector<std::string> points;
+        std::vector<bytes> secrets;
     } argument_;
     
     /**

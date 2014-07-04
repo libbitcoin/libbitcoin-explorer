@@ -24,6 +24,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/utility/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -151,22 +152,22 @@ bool read_public_or_private_key(bc::elliptic_curve_key& key,
     std::string& arg);
 
 /**
- * Parse a point from the specified argument.
+ * Set a point from the specified value.
  *
  * @param[out] point   The parsed point.
- * @param[in]  arg     The argument to parse.
+ * @param[in]  value   The argument to set.
  * @return             True if a point has been returned.
  */
-bool set_ec_point(bc::ec_point& point, const std::string& arg);
+bool set_ec_point(bc::ec_point& point, const bytes& value);
 
 /**
- * Parse a secret from the specified argument.
+ * Set a secret from the specified value.
  *
  * @param[out] secret  The parsed secret.
- * @param[in]  arg     The argument to parse.
+ * @param[in]  value   The argument to set.
  * @return             True if a secret has been returned.
  */
-bool set_ec_secret(bc::ec_secret& secret, const std::string& arg);
+bool set_ec_secret(bc::ec_secret& secret, const bytes& value);
 
 /**
  * Validate the bitcoin checksum of a chunk of binary data.

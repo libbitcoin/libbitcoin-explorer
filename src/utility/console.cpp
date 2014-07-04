@@ -36,6 +36,12 @@
 
 namespace sx {
 
+// wraps std::copy because of boost template warning.
+void vector_to_array(bc::data_chunk& source, bc::ec_secret& target)
+{
+    std::copy(source.begin(), source.end(), target.begin());
+}
+
 std::string get_arg(int argc, const char* argv[], const std::string& fallback,
     int index)
 {

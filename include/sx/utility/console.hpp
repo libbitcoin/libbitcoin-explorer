@@ -37,6 +37,7 @@
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning(pop)
+#include <bitcoin/bitcoin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -184,6 +185,14 @@ std::string serialize(const Value& value, const std::string& fallback = "")
     boost::to_string(value, serialized);
     return if_else(serialized.empty(), fallback, serialized);
 }
+
+/**
+ * Copy a byte vector to a fixed-size std::array.
+ *
+ * @param[in]  source     The vector.
+ * @param[in]  target     The array.
+ */
+void vector_to_array(bc::data_chunk& source, bc::ec_secret& target);
 
 /**
  * Get the argument from the specified args, in the specified index,

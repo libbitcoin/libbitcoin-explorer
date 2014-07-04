@@ -20,34 +20,49 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/ec-tweak-add.hpp>
+#include <sx/utility/bytes.hpp>
+#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/curve.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-console_result ec_tweak_add::invoke(int argc, const char* argv[])
+console_result ec_tweak_add::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 3, 3))
-        return console_result::failure;
+    // Bound parameters.
+    auto point = get_point_argument();
+    auto integer = get_secret_argument();
 
-    ec_secret int_part;
-    ec_point point_part;
-    if (!ec_math_parse_args(argc, argv, int_part, point_part))
+    // TODO: create deserializable ec_point
+    ec_point sum;
+    if (!set_ec_point(sum, point))
     {
-        std::cerr << "sx: Unable to read input values." << std::endl;
+        cerr << boost::format(SX_EC_TWEAK_ADD_INVALID_POINT) % point
+            << std::endl;
         return console_result::failure;
     }
 
-    bool success = bc::ec_tweak_add(point_part, int_part);
-    if (!success)
+    // TODO: create deserializable ec_secret
+    ec_secret secret;
+    if (!set_ec_secret(secret, integer))
     {
-        line_out(std::cerr, "sx: Out of range.");
+        cerr << boost::format(SX_EC_TWEAK_ADD_INVALID_INTEGER) % integer
+            << std::endl;
         return console_result::failure;
     }
 
-    std::cout << point_part << std::endl;
+    // Elliptic curve function POINT + (INTEGER * curve-generator-point).
+    if (!bc::ec_tweak_add(sum, secret))
+    {
+        cerr << SX_EC_TWEAK_ADD_OUT_OF_RANGE << std::endl;
+        return console_result::failure;
+    }
+
+    // TODO: create serializable ec_point
+    bytes hex(sum);
+
+    output << hex << std::endl;
     return console_result::okay;
 }
-

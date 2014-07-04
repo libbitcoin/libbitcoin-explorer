@@ -47,6 +47,10 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<brainwallet>());
     func(make_shared<btc>());
     func(make_shared<decode_addr>());
+    func(make_shared<ec_add_secrets>());
+    func(make_shared<ec_multiply>());
+    func(make_shared<ec_multiply_secrets>());
+    func(make_shared<ec_tweak_add>());
     func(make_shared<encode_addr>());
     func(make_shared<help>());
     func(make_shared<satoshi>());
@@ -83,6 +87,14 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<btc>();
     if (symbol == decode_addr::symbol())
         return make_shared<decode_addr>();
+    if (symbol == ec_add_secrets::symbol())
+        return make_shared<ec_add_secrets>();
+    if (symbol == ec_multiply::symbol())
+        return make_shared<ec_multiply>();
+    if (symbol == ec_multiply_secrets::symbol())
+        return make_shared<ec_multiply_secrets>();
+    if (symbol == ec_tweak_add::symbol())
+        return make_shared<ec_tweak_add>();
     if (symbol == encode_addr::symbol())
         return make_shared<encode_addr>();
     if (symbol == help::symbol())

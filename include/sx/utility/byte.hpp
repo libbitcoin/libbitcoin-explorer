@@ -68,7 +68,7 @@ public:
     }
 
     /**
-     * Overload stream in.
+     * Overload stream in. If input is not a number sets 0x00 in argument.
      *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.

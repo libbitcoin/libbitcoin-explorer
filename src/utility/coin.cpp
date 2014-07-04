@@ -22,6 +22,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/dispatch.hpp>
+#include <sx/utility/bytes.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/console.hpp>
@@ -43,24 +44,6 @@ ec_secret generate_random_secret()
 
     return secret;
 }
-
-//bool ec_math_parse_args(int argc, const char* argv[], ec_secret& secret,
-//    ec_point& point)
-//{
-//    for (int i = 1; i < argc; ++i)
-//    {
-//        const auto arg = argv[i];
-//        if (set_ec_secret(secret, arg))
-//            continue;
-//
-//        if (set_ec_point(point, arg))
-//            continue;
-//    }
-//
-//    // NOTE: these values are never set by this function 
-//    // so it is assumed they are the initial values.
-//    return (secret != null_hash && !point.empty());
-//}
 
 // TODO: reconcile with [data_chunk random_fill(size_t size)]
 // Not testable due to lack of random engine injection.
@@ -147,26 +130,26 @@ bool read_public_or_private_key(elliptic_curve_key& key, std::string& arg)
     return key.set_public_key(pubkey);
 }
 
-bool set_ec_secret(ec_secret& secret, const std::string& arg)
+bool set_ec_secret(ec_secret& secret, const bytes& value)
 {
-    ec_secret result = decode_hash(arg);
-    if (result == null_hash)
+    data_chunk chunk = value;
+    if (chunk.size() != ec_secret_size)
         return false;
 
-    secret = result;
+    vector_to_array(chunk, secret);
     return true;
 }
 
-bool set_ec_point(ec_point& point, const std::string& arg)
+bool set_ec_point(ec_point& point, const bytes& value)
 {
-    ec_point result = decode_hex(arg);
-    if (result.size() != ec_compressed_size)
+    data_chunk chunk = value;
+    if (chunk.size() != ec_compressed_size)
         return false;
 
-    if (result[0] != 0x02 && result[0] != 0x03)
+    if (chunk[0] != 0x02 && chunk[0] != 0x03)
         return false;
 
-    point = result;
+    point.assign(chunk.begin(), chunk.end());
     return true;
 }
 
