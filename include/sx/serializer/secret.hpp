@@ -99,6 +99,7 @@ public:
         input >> hex;
         auto chunk = bc::decode_hex(hex);
 
+        // TODO: determine how to properly raise error in deserialization.
         if (!vector_to_array(chunk, argument.value))
             throw std::exception(SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
 

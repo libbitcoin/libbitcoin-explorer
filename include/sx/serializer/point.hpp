@@ -102,9 +102,11 @@ public:
         input >> hex;
         auto chunk = bc::decode_hex(hex);
 
+        // TODO: determine how to properly raise error in deserialization.
         if (chunk.size() != bc::ec_compressed_size)
             throw std::exception(SX_SERIALIZER_POINT_SIZE_EXCEPTION);
-        
+
+        // TODO: determine how to properly raise error in deserialization.
         if (chunk[0] != 0x02 && chunk[0] != 0x03)
             throw std::exception(SX_SERIALIZER_POINT_PREFIX_EXCEPTION);
         
