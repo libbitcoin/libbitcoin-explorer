@@ -28,8 +28,9 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -37,17 +38,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
-
-/**
- * Various localizable strings.
- */
-#define SX_EC_ADD_INVALID_POINT \
-    "Invalid point '%1%'."
-#define SX_EC_ADD_OUT_OF_RANGE \
-    "Sum exceeds valid range."
-#define SX_EC_ADD_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+namespace extension {
 
 /**
  * Class to implement the sx ec-add command.
@@ -94,6 +85,7 @@ public:
     {
         return
         {
+            { "Calculate the result of POINT + POINT." },
         };
     }
 
@@ -105,6 +97,7 @@ public:
     {
         return
         {
+            { "sx ec-add POINT POINT" },
         };
     }
 
@@ -116,6 +109,7 @@ public:
     {
         return
         {
+            { "Calculate the result of POINT + POINT." },
         };
     }
 
@@ -127,8 +121,7 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("POINT", -1);
+        return get_argument_metadata();
     }
     
     /**
@@ -148,18 +141,8 @@ public:
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                "The path and file name for the configuration settings file for this application."
+                ""
             )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Calculate the elliptic curve sum of POINTs."
-            )
-            (
-                "POINT",
-                value<std::vector<std::string>>(&argument_.points),
-                "A point to add."
-            );
 
         return options;
     }
@@ -188,38 +171,6 @@ public:
         
     /* Properties */
 
-    /**
-     * Get the value of the POINT arguments.
-     */
-    virtual std::vector<std::string> get_points_argument()
-    {
-        return argument_.points;
-    }
-    
-    /**
-     * Set the value of the POINT arguments.
-     */
-    virtual void set_points_argument(std::vector<std::string> value)
-    {
-        argument_.points = value;
-    }
-
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(bool value)
-    {
-        option_.help = value;
-    }
-
 private:
 
     /**
@@ -230,9 +181,7 @@ private:
     struct argument
     {
         argument()
-          : points()
             {}
-        std::vector<std::string> points;
     } argument_;
     
     /**
@@ -243,13 +192,11 @@ private:
     struct option
     {
         option()
-          : help()
             {}    
-        bool help;
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif

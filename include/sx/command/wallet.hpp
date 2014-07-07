@@ -20,11 +20,17 @@
 #ifndef SX_WALLET_HPP
 #define SX_WALLET_HPP
 
+#include <iostream>
 #include <stdint.h>
+#include <string>
 #include <vector>
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -32,125 +38,8 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
+namespace extension {
 
 /**
  * Various localizable strings.
  */
-#define NO_MASTER_PUBLIC_KEY \
-    "No valid master public key or private secret key was passed in."
-
-/**
- * Class to implement the sx wallet command.
- */
-class wallet 
-    : public command
-{
-public:
-
-    /**
-     * The symbolic (not localizable) command name, lower case.
-     */
-    static const char* symbol() { return "wallet"; }
-
-    /**
-     * The member symbolic (not localizable) command name, lower case.
-     */
-    const char* name()
-    {
-        return wallet::symbol();
-    }
-
-    /**
-     * The localizable command category name, upper case.
-     */
-    const char* category()
-    {
-        return "EXPERIMENTAL";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "APPS";
-    }
-
-    /**
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-            { "Experimental command line wallet." },
-        };
-    }
-
-    /**
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-            { "sx wallet SEED" },
-        };
-    }
-
-    /**
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-            { "This is an experimental prototype." },
-        };
-    }
-    
-    /**
-     * Initialize the program argument definitions.
-     * A value of -1 indicates that the number of instances is unlimited.
-     *
-     * @param[out] definitions  The defined program argument definitions.
-     */
-    void initialize_arguments(
-        boost::program_options::positional_options_description& definitions)
-    {
-    }
-    
-    /**
-     * Initialize the program option definitions.
-     * The implicit_value call allows flags to be stringly-typed on read while
-     * allowing but not requiring a value on the command line for the option.
-     *
-     * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
-     * @param[out] definitions  The defined program option definitions.
-     */
-    void initialize_options(
-        boost::program_options::options_description& definitions)
-    {
-        using namespace std;
-        using namespace boost::filesystem;
-        using namespace boost::program_options;
-        definitions.add_options()
-    }   
-
-    /**
-     * Invoke the command with the raw arguments as provided on the command
-     * line. The process name is removed and argument count decremented.
-     *
-     * @param[in]  argc  The number of elements in the argv array.
-     * @param[in]  argv  The array of arguments, excluding the process.
-     * @return           The appropriate console return code { -1, 0, 1 }.
-     */
-    console_result invoke(int argc, const char* argv[]);
-};
-
-} // extensions
-} // sx
-
-#endif

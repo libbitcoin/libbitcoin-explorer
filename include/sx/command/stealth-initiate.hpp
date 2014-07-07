@@ -20,14 +20,17 @@
 #ifndef SX_STEALTH_INITIATE_HPP
 #define SX_STEALTH_INITIATE_HPP
 
+#include <iostream>
 #include <stdint.h>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
 #include <sx/command.hpp>
+#include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -35,7 +38,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
+namespace extension {
 
 /**
  * Class to implement the sx stealth-initiate command.
@@ -109,16 +112,16 @@ public:
             { "Initiate a new stealth payment." },
         };
     }
-    
+
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      *
-     * @param[out] definitions  The defined program argument definitions.
+     * @return  The loaded program argument definitions.
      */
-    void load_arguments(
-        boost::program_options::positional_options_description& definitions)
+    arguments_metadata& load_arguments()
     {
+        return get_argument_metadata();
     }
     
     /**
@@ -128,19 +131,32 @@ public:
      *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      *
-     * @param[out] definitions  The defined program option definitions.
+     * @return  The loaded program option definitions.
      */
-    void load_options(
-        boost::program_options::options_description& definitions)
+    options_metadata& load_options()
     {
-        using namespace boost::program_options;
-        definitions.add_options()
+        using namespace po;
+        options_description& options = get_option_metadata();
+        options.add_options()
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                "The path and file name for the configuration settings file for this application."
+                ""
             )
-    }   
+
+        return options;
+    }
+	
+	/**
+     * Load streamed value as parameter fallback.
+     *
+     * @param[in]  input  The input stream for loading the parameter.
+     * @param[in]         The loaded variables.
+     */
+    void load_stream(std::istream& input,
+        boost::program_options::variables_map& variables)
+    {
+    }
 
     /**
      * Invoke the command.
@@ -180,7 +196,7 @@ private:
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif

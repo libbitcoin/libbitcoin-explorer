@@ -28,8 +28,9 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -37,15 +38,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
-
-/**
- * Various localizable strings.
- */
-#define SX_EC_ADD_MODP_INVALID_INTEGER \
-    "Invalid integer '%1%'."
-#define SX_EC_ADD_MODP_OUT_OF_RANGE \
-    "Sum exceeds valid range."
+namespace extension {
 
 /**
  * Class to implement the sx ec-add-modp command.
@@ -92,6 +85,7 @@ public:
     {
         return
         {
+            { "Calculate the result of INTEGER + INTEGER." },
         };
     }
 
@@ -103,6 +97,7 @@ public:
     {
         return
         {
+            { "sx ec-add-modp INTEGER INTEGER" },
         };
     }
 
@@ -114,6 +109,7 @@ public:
     {
         return
         {
+            { "Calculate the result of INTEGER + INTEGER." },
         };
     }
 
@@ -125,8 +121,7 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("INTEGER", -1);
+        return get_argument_metadata();
     }
     
     /**
@@ -146,18 +141,8 @@ public:
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                "The path and file name for the configuration settings file for this application."
+                ""
             )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Calculate the elliptic curve sum of INTEGERs."
-            )
-            (
-                "INTEGER",
-                value<std::vector<std::string>>(&argument_.integers),
-                "An integer to add."
-            );
 
         return options;
     }
@@ -186,38 +171,6 @@ public:
         
     /* Properties */
 
-    /**
-     * Get the value of the INTEGER arguments.
-     */
-    virtual std::vector<std::string> get_integers_argument()
-    {
-        return argument_.integers;
-    }
-    
-    /**
-     * Set the value of the INTEGER arguments.
-     */
-    virtual void set_integers_argument(std::vector<std::string> value)
-    {
-        argument_.integers = value;
-    }
-
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(bool value)
-    {
-        option_.help = value;
-    }
-
 private:
 
     /**
@@ -228,9 +181,7 @@ private:
     struct argument
     {
         argument()
-          : integers()
             {}
-        std::vector<std::string> integers;
     } argument_;
     
     /**
@@ -241,13 +192,11 @@ private:
     struct option
     {
         option()
-          : help()
             {}    
-        bool help;
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif
