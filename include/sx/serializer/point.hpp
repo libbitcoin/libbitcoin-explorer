@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SECRET_HPP
-#define SECRET_HPP
+#ifndef POINT_HPP
+#define POINT_HPP
 
 #include <array>
 #include <iostream>
@@ -32,20 +32,23 @@
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_SECRET_SIZE_EXCEPTION \
-    "Elliptic curve secret must be 32 bytes."
+#define SX_SERIALIZER_POINT_PREFIX_EXCEPTION \
+    "Elliptic curve point must start with 0x02 or 0x03."
+
+#define SX_SERIALIZER_POINT_SIZE_EXCEPTION \
+    "Elliptic curve point must be 33 bytes."
 
 /**
- * Serialization helper to convert between hex string and ec_secret.
+ * Serialization helper to convert between hex string and ec_point.
  */
-class secret
+class point
 {
 public:
 
     /**
      * Constructor.
      */
-    secret()
+    point()
         : value() {}
 
     /**
@@ -53,7 +56,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    secret(const std::string& hex)
+    point(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -63,15 +66,15 @@ public:
      *
      * @param[in]  argument  The object to copy into self on construct.
      */
-    secret(const secret& argument)
+    point(const point& argument)
         : value(argument.value) {}
 
     /**
      * Overload cast to bc::ec_secret.
      *
-     * @return  This object's value cast to bc::ec_secret.
+     * @return  This object's value cast to bc::ec_point.
      */
-    operator bc::ec_secret() const
+    operator bc::ec_point() const
     {
         return value; 
     }
@@ -81,7 +84,7 @@ public:
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_secret& data()
+    bc::ec_point& data()
     {
         return value;
     }
@@ -93,15 +96,19 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, secret& argument)
+    friend std::istream& operator>>(std::istream& input, point& argument)
     {
         std::string hex;
         input >> hex;
         auto chunk = bc::decode_hex(hex);
 
-        if (!vector_to_array(chunk, argument.value))
-            throw std::exception(SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
-
+        if (chunk.size() != bc::ec_compressed_size)
+            throw std::exception(SX_SERIALIZER_POINT_SIZE_EXCEPTION);
+        
+        if (chunk[0] != 0x02 && chunk[0] != 0x03)
+            throw std::exception(SX_SERIALIZER_POINT_PREFIX_EXCEPTION);
+        
+        argument.value.assign(chunk.begin(), chunk.end());
         return input;
     }
 
@@ -113,7 +120,7 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const secret& argument)
+        const point& argument)
     {
         output << bc::encode_hex(argument.value);
         return output;
@@ -124,7 +131,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_secret value;
+    bc::ec_point value;
 };
 
 } // sx

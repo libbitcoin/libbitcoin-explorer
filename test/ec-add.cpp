@@ -26,26 +26,26 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(ec_multiply__invoke)
+BOOST_AUTO_TEST_SUITE(ec_add__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_multiply__invoke__add_overflow__failure_error)
+BOOST_AUTO_TEST_CASE(ec_add__invoke__add_overflow__failure_error)
 {
     // $ sx ec-add 02ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-    SX_DECLARE_COMMAND(ec_multiply);
+    SX_DECLARE_COMMAND(ec_add);
     command.set_point_argument({ "02ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
     command.set_secret_argument({ "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_EC_MULITPLY_OUT_OF_RANGE "\n");
+    SX_REQUIRE_ERROR(SX_EC_ADD_OUT_OF_RANGE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_multiply__invoke__add_values__okay_output)
+BOOST_AUTO_TEST_CASE(ec_add__invoke__add_values__okay_output)
 {
-    // $ sx ec-multiply 021bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
-    SX_DECLARE_COMMAND(ec_multiply);
+    // $ sx ec-add 021bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    SX_DECLARE_COMMAND(ec_add);
     command.set_point_argument({ "021bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
     command.set_secret_argument({ "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    SX_REQUIRE_OUTPUT("02da5629b7902abcfc166b30eda4cc6b2702b5d0bb867217614101caa710f0753b\n");
+    SX_REQUIRE_OUTPUT("0398dbb46779e5e82fc7422c874e2390f3e076500410481bd129927f78cfc455ac\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

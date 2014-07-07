@@ -30,6 +30,7 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/point.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -43,10 +44,6 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_EC_MULTIPLY_INVALID_POINT \
-    "Invalid point '%1%'."
-#define SX_EC_MULTIPLY_INVALID_INTEGER \
-    "Invalid secret '%1%'."
 #define SX_EC_MULITPLY_OUT_OF_RANGE \
     "Product exceeds valid range."
 
@@ -159,12 +156,12 @@ public:
             )
             (
                 "POINT",
-                value<serializer::bytes>(&argument_.point),
+                value<serializer::point>(&argument_.point)->required(),
                 "A point to multiply."
             )
             (
                 "SECRET",
-                value<serializer::bytes>(&argument_.secret),
+                value<serializer::secret>(&argument_.secret)->required(),
                 "A secret to multiply."
             );
 
@@ -198,7 +195,7 @@ public:
     /**
      * Get the value of the POINT argument.
      */
-    virtual serializer::bytes get_point_argument()
+    virtual serializer::point get_point_argument()
     {
         return argument_.point;
     }
@@ -206,7 +203,7 @@ public:
     /**
      * Set the value of the POINT argument.
      */
-    virtual void set_point_argument(serializer::bytes value)
+    virtual void set_point_argument(serializer::point value)
     {
         argument_.point = value;
     }
@@ -214,7 +211,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual serializer::bytes get_secret_argument()
+    virtual serializer::secret get_secret_argument()
     {
         return argument_.secret;
     }
@@ -222,7 +219,7 @@ public:
     /**
      * Set the value of the SECRET argument.
      */
-    virtual void set_secret_argument(serializer::bytes value)
+    virtual void set_secret_argument(serializer::secret value)
     {
         argument_.secret = value;
     }
@@ -256,8 +253,8 @@ private:
           : point(),
             secret()
             {}
-        serializer::bytes point;
-        serializer::bytes secret;
+        serializer::point point;
+        serializer::secret secret;
     } argument_;
     
     /**

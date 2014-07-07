@@ -130,29 +130,6 @@ bool read_public_or_private_key(elliptic_curve_key& key, std::string& arg)
     return key.set_public_key(pubkey);
 }
 
-bool set_ec_secret(ec_secret& secret, const serializer::bytes& value)
-{
-    data_chunk chunk = value;
-    if (chunk.size() != ec_secret_size)
-        return false;
-
-    vector_to_array(chunk, secret);
-    return true;
-}
-
-bool set_ec_point(ec_point& point, const serializer::bytes& value)
-{
-    data_chunk chunk = value;
-    if (chunk.size() != ec_compressed_size)
-        return false;
-
-    if (chunk[0] != 0x02 && chunk[0] != 0x03)
-        return false;
-
-    point.assign(chunk.begin(), chunk.end());
-    return true;
-}
-
 bool validate_checksum(data_chunk& data)
 {
     if (data.size() < 5)

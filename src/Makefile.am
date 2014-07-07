@@ -34,10 +34,10 @@ libsx_la_SOURCES += \
     brainwallet.cpp \
     btc.cpp \
     decode-addr.cpp \
+    ec-add.cpp \
     ec-add-secrets.cpp \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
-    ec-tweak-add.cpp \
     encode-addr.cpp \
     help.cpp \
     satoshi.cpp \

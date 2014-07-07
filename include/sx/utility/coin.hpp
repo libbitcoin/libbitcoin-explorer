@@ -152,24 +152,6 @@ bool read_public_or_private_key(bc::elliptic_curve_key& key,
     std::string& arg);
 
 /**
- * Set a point from the specified value.
- *
- * @param[out] point   The parsed point.
- * @param[in]  value   The argument to set.
- * @return             True if a point has been returned.
- */
-bool set_ec_point(bc::ec_point& point, const serializer::bytes& value);
-
-/**
- * Set a secret from the specified value.
- *
- * @param[out] secret  The parsed secret.
- * @param[in]  value   The argument to set.
- * @return             True if a secret has been returned.
- */
-bool set_ec_secret(bc::ec_secret& secret, const serializer::bytes& value);
-
-/**
  * Validate the bitcoin checksum of a chunk of binary data.
  *
  * @param[int] data  The data to validate.

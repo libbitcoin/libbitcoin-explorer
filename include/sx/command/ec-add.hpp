@@ -30,6 +30,7 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/point.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -39,6 +40,12 @@
 
 namespace sx {
 namespace extension {
+
+/**
+ * Various localizable strings.
+ */
+#define SX_EC_ADD_OUT_OF_RANGE \
+    "Function exceeds valid range."
 
 /**
  * Class to implement the sx ec-add command.
@@ -85,7 +92,6 @@ public:
     {
         return
         {
-            { "Calculate the result of POINT + POINT." },
         };
     }
 
@@ -97,7 +103,6 @@ public:
     {
         return
         {
-            { "sx ec-add POINT POINT" },
         };
     }
 
@@ -109,7 +114,6 @@ public:
     {
         return
         {
-            { "Calculate the result of POINT + POINT." },
         };
     }
 
@@ -121,7 +125,9 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("POINT", 1)
+            .add("SECRET", 1);
     }
     
     /**
@@ -141,8 +147,23 @@ public:
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                ""
+                "The path and file name for the configuration settings file for this application."
             )
+            (
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Calculate the elliptic curve function POINT + (SECRET * curve-generator-point)."
+            )
+            (
+                "POINT",
+                value<serializer::point>(&argument_.point)->required(),
+                "A point to add."
+            )
+            (
+                "SECRET",
+                value<serializer::secret>(&argument_.secret)->required(),
+                "A secret to add."
+            );
 
         return options;
     }
@@ -171,6 +192,54 @@ public:
         
     /* Properties */
 
+    /**
+     * Get the value of the POINT argument.
+     */
+    virtual serializer::point get_point_argument()
+    {
+        return argument_.point;
+    }
+    
+    /**
+     * Set the value of the POINT argument.
+     */
+    virtual void set_point_argument(serializer::point value)
+    {
+        argument_.point = value;
+    }
+
+    /**
+     * Get the value of the SECRET argument.
+     */
+    virtual serializer::secret get_secret_argument()
+    {
+        return argument_.secret;
+    }
+    
+    /**
+     * Set the value of the SECRET argument.
+     */
+    virtual void set_secret_argument(serializer::secret value)
+    {
+        argument_.secret = value;
+    }
+
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }
+    
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
+    }
+
 private:
 
     /**
@@ -181,7 +250,11 @@ private:
     struct argument
     {
         argument()
+          : point(),
+            secret()
             {}
+        serializer::point point;
+        serializer::secret secret;
     } argument_;
     
     /**
@@ -192,7 +265,9 @@ private:
     struct option
     {
         option()
+          : help()
             {}    
+        bool help;
     } option_;
 };
 

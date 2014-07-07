@@ -87,6 +87,7 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\secret.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
@@ -109,10 +110,10 @@
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\decode-addr.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\ec-tweak-add.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\encode-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
@@ -149,10 +150,10 @@
     <ClCompile Include="..\..\..\..\src\brainwallet.cpp" />
     <ClCompile Include="..\..\..\..\src\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\decode-addr.cpp" />
+    <ClCompile Include="..\..\..\..\src\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp" />
-    <ClCompile Include="..\..\..\..\src\ec-tweak-add.cpp" />
     <ClCompile Include="..\..\..\..\src\encode-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\satoshi.cpp" />

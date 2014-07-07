@@ -20,7 +20,8 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/ec-multiply.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
@@ -34,37 +35,16 @@ console_result ec_multiply::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     auto point = get_point_argument();
-    auto integer = get_secret_argument();
-
-    // TODO: create deserializable ec_point
-    ec_point product;
-    if (!set_ec_point(product, point))
-    {
-        cerr << boost::format(SX_EC_MULTIPLY_INVALID_POINT) % point
-            << std::endl;
-        return console_result::failure;
-    }
-
-    // TODO: create deserializable ec_secret
-    ec_secret secret;
-    if (!set_ec_secret(secret, integer))
-    {
-        cerr << boost::format(SX_EC_MULTIPLY_INVALID_INTEGER) % integer
-            << std::endl;
-        return console_result::failure;
-    }
+    auto secret = get_secret_argument();
 
     // Elliptic curve product (POINT * INTEGER).
-    if (!bc::ec_multiply(product, secret))
+    if (!bc::ec_multiply(point.data(), secret))
     {
         cerr << SX_EC_MULITPLY_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    // TODO: create serializable ec_point
-    bytes hex(product);
-
-    output << hex << std::endl;
+    output << point << std::endl;
     return console_result::okay;
 }
 

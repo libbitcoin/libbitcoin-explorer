@@ -80,6 +80,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\decode-addr.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-add.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add-secrets.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -87,9 +90,6 @@
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\ec-tweak-add.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\encode-addr.hpp">
@@ -114,6 +114,9 @@
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\secret.hpp">
@@ -199,6 +202,9 @@
     <ClCompile Include="..\..\..\..\src\decode-addr.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-add.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-add-secrets.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -206,9 +212,6 @@
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-tweak-add.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\encode-addr.cpp">

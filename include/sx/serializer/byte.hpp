@@ -51,6 +51,16 @@ public:
         : value(argument) {}
 
     /**
+     * Initialization counstructor.
+     * 
+     * @param[in]  hex  The value to initialize with.
+     */
+    byte(const std::string& hex)
+    {
+        std::stringstream(hex) >> *this;
+    }
+
+    /**
      * Copy counstructor.
      *
      * @param[in]  argument  The object to copy into self on construct.

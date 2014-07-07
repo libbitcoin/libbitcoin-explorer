@@ -67,7 +67,9 @@ public:
      * @param[in]  hex  The value to initialize with.
      */
     bytes(const std::string& hex)
-        : value(bc::decode_hex(hex)) {}
+    {
+        std::stringstream(hex) >> *this;
+    }
 
     /**
      * Copy counstructor.
