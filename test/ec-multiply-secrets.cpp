@@ -28,9 +28,57 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(ec_multiply_secrets__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__todo)
+BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__one_value__okay_same_value)
 {
-    // $ sx ec-multiply-secrets SECRET SECRET
+    // $ sx ec-add-secrets 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    SX_DECLARE_COMMAND(ec_multiply_secrets);
+    command.set_secrets_argument(
+    {
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" }
+    });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    auto foo = output.str();
+    SX_REQUIRE_OUTPUT("1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__two_same_values__okay_expected_value)
+{
+    // $ sx ec-add-secrets 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    SX_DECLARE_COMMAND(ec_multiply_secrets);
+    command.set_secrets_argument(
+    {
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" },
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" }
+    });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("e5b87c7917f8414d2fa5caa32ea61b06fca755fee6a113179db70f5e0d5393ba\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__three_same_values__okay_expected_value)
+{
+    // $ sx ec-add-secrets 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    SX_DECLARE_COMMAND(ec_multiply_secrets);
+    command.set_secrets_argument(
+    {
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" },
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" },
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" }
+    });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("1da46d54db3e774fe81dfeea880677b805d2ce041c1e2011b6362ee11df132d8\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__two_unique_values__okay_expected_value)
+{
+    // $ sx ec-add-secrets 4242424242424242424242424242424242424242424242424242424242424242 0000000000000000000000000000000000000000000000000000000000000001
+    SX_DECLARE_COMMAND(ec_multiply_secrets);
+    command.set_secrets_argument(
+    {
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" },
+        { "0000000000000000000000000000000000000000000000000000000000000001" }
+    });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

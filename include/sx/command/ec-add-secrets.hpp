@@ -43,8 +43,6 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_EC_ADD_SECRETS_INVALID_INTEGER \
-    "Invalid secret '%1%'."
 #define SX_EC_ADD_SECRETS_OUT_OF_RANGE \
     "Sum exceeds valid range."
 

@@ -36,12 +36,18 @@ console_result ec_add_secrets::invoke(std::istream& input,
     // Bound parameters.
     auto secrets = get_secrets_argument();
 
-    // TODO: initialize sum with first addend.
-    secret sum;
+    bool first = true;
+    secret sum(secrets[0]);
     for (auto const& secret: secrets)
     {
+        if (first)
+        {
+            first = false;
+            continue;
+        }
+
         // Elliptic curve function (INTEGER + INTEGER) % curve-order.
-        if (!bc::ec_add(static_cast<ec_secret>(sum), secret))
+        if (!bc::ec_add(sum.data(), secret))
         {
             cerr << SX_EC_ADD_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;

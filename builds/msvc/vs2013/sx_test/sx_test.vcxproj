@@ -157,10 +157,10 @@
     <ClCompile Include="..\..\..\..\test\decode-addr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-add-secrets.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-multiply-secrets.cpp">
+    <ClCompile Include="..\..\..\..\test\ec-add-secrets.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-multiply-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-multiply.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
     </ClCompile>

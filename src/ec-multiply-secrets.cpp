@@ -20,7 +20,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/ec-multiply-secrets.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
@@ -33,33 +33,27 @@ console_result ec_multiply_secrets::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto factors = get_secrets_argument();
+    auto secrets = get_secrets_argument();
 
-    // TODO: initialize product with first addend.
-    ec_secret product;
-    for (auto const& factor: factors)
+    bool first = true;
+    secret product(secrets[0]);
+    for (auto const& secret: secrets)
     {
-        // TODO: create deserializable ec_secret
-        ec_secret secret;
-        if (!set_ec_secret(secret, factor))
+        if (first)
         {
-            cerr << boost::format(SX_EC_MULTIPLY_SECRETS_INVALID_INTEGER) % 
-                factor << std::endl;
-            return console_result::failure;
+            first = false;
+            continue;
         }
 
         // Elliptic curve function (INTEGER * INTEGER) % curve-order.
-        if (!bc::ec_multiply(product, secret))
+        if (!bc::ec_multiply(product.data(), secret))
         {
             cerr << SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }
 
-    // TODO: create serializable ec_secret
-    bytes hex(product);
-
-    output << hex << std::endl;
+    output << product << std::endl;
     return console_result::okay;
 }
 

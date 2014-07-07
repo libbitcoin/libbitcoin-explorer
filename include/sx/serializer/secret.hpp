@@ -79,7 +79,17 @@ public:
     }
 
     /**
-     * Overload stream in. If input is invalid sets no bytes in argument.
+     * Return a reference to the data member.
+     *
+     * @return  A reference to the object's internal data.
+     */
+    bc::ec_secret& data()
+    {
+        return value;
+    }
+
+    /**
+     * Overload stream in. Throws if input is invalid.
      *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.

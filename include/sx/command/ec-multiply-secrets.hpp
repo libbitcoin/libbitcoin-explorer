@@ -43,8 +43,6 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_EC_MULTIPLY_SECRETS_INVALID_INTEGER \
-    "Invalid secret '%1%'."
 #define SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE \
     "Function exceeds valid range."
 
@@ -156,7 +154,7 @@ public:
             )
             (
                 "SECRET",
-                value<std::vector<serializer::bytes>>(&argument_.secrets)->required(),
+                value<std::vector<serializer::secret>>(&argument_.secrets)->required(),
                 "A secret to multiply."
             );
 
@@ -190,7 +188,7 @@ public:
     /**
      * Get the value of the SECRET arguments.
      */
-    virtual std::vector<serializer::bytes> get_secrets_argument()
+    virtual std::vector<serializer::secret> get_secrets_argument()
     {
         return argument_.secrets;
     }
@@ -198,7 +196,7 @@ public:
     /**
      * Set the value of the SECRET arguments.
      */
-    virtual void set_secrets_argument(std::vector<serializer::bytes> value)
+    virtual void set_secrets_argument(std::vector<serializer::secret> value)
     {
         argument_.secrets = value;
     }
@@ -231,7 +229,7 @@ private:
         argument()
           : secrets()
             {}
-        std::vector<serializer::bytes> secrets;
+        std::vector<serializer::secret> secrets;
     } argument_;
     
     /**
