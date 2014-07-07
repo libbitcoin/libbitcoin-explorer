@@ -187,14 +187,6 @@ std::string serialize(const Value& value, const std::string& fallback = "")
 }
 
 /**
- * Copy a byte vector to a fixed-size std::array.
- *
- * @param[in]  source     The vector.
- * @param[in]  target     The array.
- */
-void vector_to_array(bc::data_chunk& source, bc::ec_secret& target);
-
-/**
  * Get the argument from the specified args, in the specified index,
  * or the value specified as the default if the number of args is 
  * insufficient. Fallback defaults to empty string.
@@ -406,6 +398,15 @@ void trim_left(std::string& value,
  */
 bool validate_argument_range(int actual, 
     const std::vector<const char*>& message, int minimum, int maximum=0);
+
+/**
+ * Copy a byte vector to a fixed-size std::array.
+ *
+ * @param[in]  source   The vector.
+ * @param[in]  target   The array.
+ * @return              True if the source size equals the target size.
+ */
+bool vector_to_array(bc::data_chunk& source, bc::ec_secret& target);
 
 } // sx
 

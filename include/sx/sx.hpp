@@ -30,8 +30,9 @@
 #ifdef HAVE_OBELISK
     #include <sx/obelisk.hpp>
 #endif
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>

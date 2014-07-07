@@ -24,7 +24,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -158,7 +158,7 @@ bool read_public_or_private_key(bc::elliptic_curve_key& key,
  * @param[in]  value   The argument to set.
  * @return             True if a point has been returned.
  */
-bool set_ec_point(bc::ec_point& point, const bytes& value);
+bool set_ec_point(bc::ec_point& point, const serializer::bytes& value);
 
 /**
  * Set a secret from the specified value.
@@ -167,7 +167,7 @@ bool set_ec_point(bc::ec_point& point, const bytes& value);
  * @param[in]  value   The argument to set.
  * @return             True if a secret has been returned.
  */
-bool set_ec_secret(bc::ec_secret& secret, const bytes& value);
+bool set_ec_secret(bc::ec_secret& secret, const serializer::bytes& value);
 
 /**
  * Validate the bitcoin checksum of a chunk of binary data.

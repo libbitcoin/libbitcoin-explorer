@@ -29,6 +29,7 @@
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
+namespace serializer {
 
 /**
  * Serialization helper to convert between hex string and data_chunk.
@@ -108,7 +109,8 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const bytes& argument)
+    friend std::ostream& operator<<(std::ostream& output, 
+        const bytes& argument)
     {
         output << bc::encode_hex(argument.value);
         return output;
@@ -122,6 +124,7 @@ private:
     bc::data_chunk value;
 };
 
-} //sx
+} // sx
+} // serializer
 
 #endif

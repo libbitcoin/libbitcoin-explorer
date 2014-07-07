@@ -20,12 +20,12 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/base58-encode.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 console_result base58_encode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)

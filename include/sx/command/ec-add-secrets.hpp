@@ -28,8 +28,9 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -37,7 +38,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
+namespace extension {
 
 /**
  * Various localizable strings.
@@ -155,7 +156,7 @@ public:
             )
             (
                 "SECRET",
-                value<std::vector<bytes>>(&argument_.secrets)->required(),
+                value<std::vector<serializer::secret>>(&argument_.secrets)->required(),
                 "A secret to add."
             );
 
@@ -189,7 +190,7 @@ public:
     /**
      * Get the value of the SECRET arguments.
      */
-    virtual std::vector<bytes> get_secrets_argument()
+    virtual std::vector<serializer::secret> get_secrets_argument()
     {
         return argument_.secrets;
     }
@@ -197,7 +198,7 @@ public:
     /**
      * Set the value of the SECRET arguments.
      */
-    virtual void set_secrets_argument(std::vector<bytes> value)
+    virtual void set_secrets_argument(std::vector<serializer::secret> value)
     {
         argument_.secrets = value;
     }
@@ -230,7 +231,7 @@ private:
         argument()
           : secrets()
             {}
-        std::vector<bytes> secrets;
+        std::vector<serializer::secret> secrets;
     } argument_;
     
     /**
@@ -247,7 +248,7 @@ private:
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif

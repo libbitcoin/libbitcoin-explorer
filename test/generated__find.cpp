@@ -23,7 +23,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 BOOST_AUTO_TEST_SUITE(generated__find)
 

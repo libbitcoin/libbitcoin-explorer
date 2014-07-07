@@ -26,7 +26,7 @@
 #include <sx/utility/console.hpp>
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 console_result bci_fetch_last_height::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)

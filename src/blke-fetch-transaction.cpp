@@ -26,7 +26,7 @@
 #include <sx/utility/console.hpp>
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 console_result blke_fetch_transaction::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)

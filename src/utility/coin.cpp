@@ -22,7 +22,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/dispatch.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/bytes.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/console.hpp>
@@ -130,7 +130,7 @@ bool read_public_or_private_key(elliptic_curve_key& key, std::string& arg)
     return key.set_public_key(pubkey);
 }
 
-bool set_ec_secret(ec_secret& secret, const bytes& value)
+bool set_ec_secret(ec_secret& secret, const serializer::bytes& value)
 {
     data_chunk chunk = value;
     if (chunk.size() != ec_secret_size)
@@ -140,7 +140,7 @@ bool set_ec_secret(ec_secret& secret, const bytes& value)
     return true;
 }
 
-bool set_ec_point(ec_point& point, const bytes& value)
+bool set_ec_point(ec_point& point, const serializer::bytes& value)
 {
     data_chunk chunk = value;
     if (chunk.size() != ec_compressed_size)

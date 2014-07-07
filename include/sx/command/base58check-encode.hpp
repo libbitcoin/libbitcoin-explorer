@@ -28,8 +28,9 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -37,7 +38,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
+namespace extension {
 
 /**
  * Various localizable strings.
@@ -153,7 +154,7 @@ public:
             )
             (
                 "HEX",
-                value<bytes>(&argument_.hex),
+                value<serializer::bytes>(&argument_.hex),
                 "The hex string to Base58Check encode."
             );
 
@@ -190,7 +191,7 @@ public:
     /**
      * Get the value of the HEX argument.
      */
-    virtual bytes get_hex_argument()
+    virtual serializer::bytes get_hex_argument()
     {
         return argument_.hex;
     }
@@ -198,7 +199,7 @@ public:
     /**
      * Set the value of the HEX argument.
      */
-    virtual void set_hex_argument(bytes value)
+    virtual void set_hex_argument(serializer::bytes value)
     {
         argument_.hex = value;
     }
@@ -231,7 +232,7 @@ private:
         argument()
           : hex()
             {}
-        bytes hex;
+        serializer::bytes hex;
     } argument_;
     
     /**
@@ -248,7 +249,7 @@ private:
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif

@@ -20,13 +20,14 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/ec-multiply.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/bytes.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
 console_result ec_multiply::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)

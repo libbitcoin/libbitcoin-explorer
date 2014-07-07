@@ -37,7 +37,7 @@
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 static bool is_first;
 static std::mutex mutex;

@@ -28,8 +28,9 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -37,7 +38,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
+namespace extension {
 
 /**
  * Various localizable strings.
@@ -158,12 +159,12 @@ public:
             )
             (
                 "POINT",
-                value<bytes>(&argument_.point),
+                value<serializer::bytes>(&argument_.point),
                 "A point to multiply."
             )
             (
                 "SECRET",
-                value<bytes>(&argument_.secret),
+                value<serializer::bytes>(&argument_.secret),
                 "A secret to multiply."
             );
 
@@ -197,7 +198,7 @@ public:
     /**
      * Get the value of the POINT argument.
      */
-    virtual bytes get_point_argument()
+    virtual serializer::bytes get_point_argument()
     {
         return argument_.point;
     }
@@ -205,7 +206,7 @@ public:
     /**
      * Set the value of the POINT argument.
      */
-    virtual void set_point_argument(bytes value)
+    virtual void set_point_argument(serializer::bytes value)
     {
         argument_.point = value;
     }
@@ -213,7 +214,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual bytes get_secret_argument()
+    virtual serializer::bytes get_secret_argument()
     {
         return argument_.secret;
     }
@@ -221,7 +222,7 @@ public:
     /**
      * Set the value of the SECRET argument.
      */
-    virtual void set_secret_argument(bytes value)
+    virtual void set_secret_argument(serializer::bytes value)
     {
         argument_.secret = value;
     }
@@ -255,8 +256,8 @@ private:
           : point(),
             secret()
             {}
-        bytes point;
-        bytes secret;
+        serializer::bytes point;
+        serializer::bytes secret;
     } argument_;
     
     /**
@@ -273,7 +274,7 @@ private:
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif

@@ -24,7 +24,7 @@
 #include <sx/utility/console.hpp>
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 console_result base58check_encode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)

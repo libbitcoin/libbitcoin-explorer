@@ -26,7 +26,7 @@
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 console_result addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)

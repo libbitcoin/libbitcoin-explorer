@@ -31,7 +31,7 @@ using namespace std;
 using namespace boost::filesystem;
     
 namespace sx {
-using namespace extensions;
+using namespace extension;
 
 bool broadcast(const function<void(shared_ptr<command>)> func)
 {

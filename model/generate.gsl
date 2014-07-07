@@ -68,6 +68,10 @@
 .       return type_path_boost
 .   elsif my.type = type_byte
 .       return type_byte_sx
+.   elsif my.type = type_bytes
+.       return type_bytes_sx
+.   elsif my.type = type_secret
+.       return type_secret_sx
 .   endif
 .   return my.type
 .endfunction
@@ -139,7 +143,11 @@
 .config_option = "config"
 .type_bool = "bool"
 .type_byte = "byte"
-.type_byte_sx = "sx::byte"
+.type_bytes = "bytes"
+.type_secret = "secret"
+.type_byte_sx = "serializer::byte"
+.type_bytes_sx = "serializer::bytes"
+.type_secret_sx = "serializer::secret"
 .type_path = "path"
 .type_path_boost = "boost::filesystem::path"
 .type_string = "string"
@@ -205,7 +213,7 @@ using namespace std;
 using namespace boost::filesystem;
     
 namespace sx {
-using namespace extensions;
+using namespace extension;
 
 bool broadcast(const function<void(shared_ptr<command>)> func)
 {
@@ -564,8 +572,9 @@ private:
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -573,7 +582,7 @@ private:
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
+namespace extension {
 .for define
 .   if first()
 
@@ -869,7 +878,7 @@ private:
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif
@@ -903,7 +912,7 @@ BOOST_AUTO_TEST_SUITE_END()
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 BOOST_AUTO_TEST_SUITE(generated__find)
 .for command by symbol
@@ -925,7 +934,7 @@ BOOST_AUTO_TEST_SUITE_END()
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 .for command by symbol
@@ -1131,8 +1140,9 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk.hpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\byte.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\bytes.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
@@ -1243,6 +1253,9 @@ endif
 	<Filter Include="include\\command\\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\\serializer">
+      <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\\utility">
       <UniqueIdentifier>{dc28e2c9-d07d-4242-8007-e44440c133a0}</UniqueIdentifier>
     </Filter>
@@ -1277,11 +1290,14 @@ endif
 .   endif
     </ClInclude>
 .endfor
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\byte.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp">
+      <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\bytes.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp">
+      <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp">
       <Filter>include\\utility</Filter>

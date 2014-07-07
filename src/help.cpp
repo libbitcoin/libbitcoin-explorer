@@ -27,7 +27,7 @@
 
 using namespace boost::program_options;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 // 100% coverage by line (as private to invoke())
 static bool write_all_command_names(std::ostream& stream)

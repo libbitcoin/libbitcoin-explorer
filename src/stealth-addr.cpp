@@ -24,7 +24,7 @@
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 // TODO: name 'some_flag' and move to flags enum.
 // TODO: enable prefix filter, currently unused.
@@ -72,6 +72,6 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const auto stealth_address = encode_base58(raw_address);
 
     // Return the results.
-    line_out(output, stealth_address);
+    output << stealth_address << std::endl;
     return console_result::okay;
 }

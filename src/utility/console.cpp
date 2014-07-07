@@ -36,12 +36,6 @@
 
 namespace sx {
 
-// wraps std::copy because of boost template warning.
-void vector_to_array(bc::data_chunk& source, bc::ec_secret& target)
-{
-    std::copy(source.begin(), source.end(), target.begin());
-}
-
 std::string get_arg(int argc, const char* argv[], const std::string& fallback,
     int index)
 {
@@ -221,6 +215,16 @@ bool validate_argument_range(int actual,
         line_out(std::cerr, message);
 
     return valid;
+}
+
+// wraps std::copy because of boost template warning.
+bool vector_to_array(bc::data_chunk& source, bc::ec_secret& target)
+{
+    if (source.size() != bc::ec_secret_size)
+        return false;
+
+    std::copy(source.begin(), source.end(), target.begin());
+    return true;
 }
 
 } // sx

@@ -18,47 +18,37 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/ec-add-secrets.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
 console_result ec_add_secrets::invoke(std::istream& input, 
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto addends = get_secrets_argument();
+    auto secrets = get_secrets_argument();
 
     // TODO: initialize sum with first addend.
-    ec_secret sum;
-    for (auto const& addend: addends)
+    secret sum;
+    for (auto const& secret: secrets)
     {
-        // TODO: create deserializable ec_secret
-        ec_secret secret;
-        if (!set_ec_secret(secret, addend))
-        {
-            cerr << boost::format(SX_EC_ADD_SECRETS_INVALID_INTEGER) % 
-                addend << std::endl;
-            return console_result::failure;
-        }
-
         // Elliptic curve function (INTEGER + INTEGER) % curve-order.
-        if (!bc::ec_add(sum, secret))
+        if (!bc::ec_add(static_cast<ec_secret>(sum), secret))
         {
             cerr << SX_EC_ADD_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }
 
-    // TODO: create serializable ec_secret
-    bytes hex(sum);
-
-    output << hex << std::endl;
+    output << sum << std::endl;
     return console_result::okay;
 }
 

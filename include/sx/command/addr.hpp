@@ -28,8 +28,9 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -37,7 +38,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
+namespace extension {
 
 /**
  * Various localizable strings.
@@ -153,7 +154,7 @@ public:
             )
             (
                 "version,v",
-                value<sx::byte>(&option_.version),
+                value<serializer::byte>(&option_.version),
                 "The desired address version."
             )
             (
@@ -227,7 +228,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    virtual sx::byte get_version_option()
+    virtual serializer::byte get_version_option()
     {
         return option_.version;
     }
@@ -235,7 +236,7 @@ public:
     /**
      * Set the value of the version option.
      */
-    virtual void set_version_option(sx::byte value)
+    virtual void set_version_option(serializer::byte value)
     {
         option_.version = value;
     }
@@ -267,11 +268,11 @@ private:
             version()
             {}    
         bool help;
-        sx::byte version;
+        serializer::byte version;
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif

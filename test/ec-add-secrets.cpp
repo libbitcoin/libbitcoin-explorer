@@ -31,14 +31,14 @@ BOOST_AUTO_TEST_SUITE(ec_add_secrets__invoke)
 BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__todo)
 {
     // $ sx ec-add-secrets SECRET SECRET
-    //SX_DECLARE_COMMAND(ec_add_secrets);
-    //command.set_secrets_argument(
-    //{
-    //    { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" },
-    //    { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" }
-    //});
-    //SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    //SX_REQUIRE_OUTPUT("\n");
+    SX_DECLARE_COMMAND(ec_add_secrets);
+    command.set_secrets_argument(
+    {
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" },
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" }
+    });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

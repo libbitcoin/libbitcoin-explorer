@@ -28,7 +28,7 @@
 #define SX_USING_NAMESPACES()
 using namespace std; \
 using namespace sx; \
-using namespace sx::extensions;
+using namespace sx::extension;
 
 #define _SX_DECLARE_COMMAND(extension) \
     stringstream output; \

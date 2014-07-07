@@ -20,12 +20,13 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/wrap.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
 console_result wrap::invoke(std::istream& input, std::ostream& output,

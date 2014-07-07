@@ -28,8 +28,9 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/byte.hpp>
-#include <sx/utility/bytes.hpp>
+#include <sx/serializer/byte.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -37,7 +38,7 @@
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace sx {
-namespace extensions {
+namespace extension {
 
 /**
  * Class to implement the sx stealth-addr command.
@@ -153,17 +154,17 @@ public:
             )
             (
                 "signatures,s",
-                value<sx::byte>(&option_.signatures),
+                value<serializer::byte>(&option_.signatures),
                 "Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided."
             )
             (
                 "SCAN_PUBKEY",
-                value<bytes>(&argument_.scan_pubkey)->required(),
+                value<serializer::bytes>(&argument_.scan_pubkey)->required(),
                 "The public key of the recipient."
             )
             (
                 "SPEND_PUBKEY",
-                value<std::vector<bytes>>(&argument_.spend_pubkeys),
+                value<std::vector<serializer::bytes>>(&argument_.spend_pubkeys),
                 "The public key(s) that is/are spent to."
             );
 
@@ -197,7 +198,7 @@ public:
     /**
      * Get the value of the SCAN_PUBKEY argument.
      */
-    virtual bytes get_scan_pubkey_argument()
+    virtual serializer::bytes get_scan_pubkey_argument()
     {
         return argument_.scan_pubkey;
     }
@@ -205,7 +206,7 @@ public:
     /**
      * Set the value of the SCAN_PUBKEY argument.
      */
-    virtual void set_scan_pubkey_argument(bytes value)
+    virtual void set_scan_pubkey_argument(serializer::bytes value)
     {
         argument_.scan_pubkey = value;
     }
@@ -213,7 +214,7 @@ public:
     /**
      * Get the value of the SPEND_PUBKEY arguments.
      */
-    virtual std::vector<bytes> get_spend_pubkeys_argument()
+    virtual std::vector<serializer::bytes> get_spend_pubkeys_argument()
     {
         return argument_.spend_pubkeys;
     }
@@ -221,7 +222,7 @@ public:
     /**
      * Set the value of the SPEND_PUBKEY arguments.
      */
-    virtual void set_spend_pubkeys_argument(std::vector<bytes> value)
+    virtual void set_spend_pubkeys_argument(std::vector<serializer::bytes> value)
     {
         argument_.spend_pubkeys = value;
     }
@@ -261,7 +262,7 @@ public:
     /**
      * Get the value of the signatures option.
      */
-    virtual sx::byte get_signatures_option()
+    virtual serializer::byte get_signatures_option()
     {
         return option_.signatures;
     }
@@ -269,7 +270,7 @@ public:
     /**
      * Set the value of the signatures option.
      */
-    virtual void set_signatures_option(sx::byte value)
+    virtual void set_signatures_option(serializer::byte value)
     {
         option_.signatures = value;
     }
@@ -287,8 +288,8 @@ private:
           : scan_pubkey(),
             spend_pubkeys()
             {}
-        bytes scan_pubkey;
-        std::vector<bytes> spend_pubkeys;
+        serializer::bytes scan_pubkey;
+        std::vector<serializer::bytes> spend_pubkeys;
     } argument_;
     
     /**
@@ -305,11 +306,11 @@ private:
             {}    
         bool help;
         bool reuse_key;
-        sx::byte signatures;
+        serializer::byte signatures;
     } option_;
 };
 
-} // extensions
+} // extension
 } // sx
 
 #endif

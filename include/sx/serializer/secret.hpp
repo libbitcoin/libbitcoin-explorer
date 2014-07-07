@@ -17,68 +17,83 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BYTE_HPP
-#define BYTE_HPP
+#ifndef SECRET_HPP
+#define SECRET_HPP
 
+#include <array>
 #include <iostream>
 #include <stdint.h>
+#include <vector>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
+namespace serializer {
+
+#define SX_SERIALIZER_SECRET_EXCEPTION \
+    "Elliptic curve secret must be 32 bytes."
 
 /**
- * Serialization helper for numeric byte, because byte-sized integral types 
- * stream as characters.
+ * Serialization helper to convert between hex string and ec_secret.
  */
-class byte
+class secret
 {
 public:
 
     /**
      * Constructor.
      */
-    byte() 
+    secret()
         : value() {}
 
     /**
      * Initialization counstructor.
      * 
-     * @param[in]  argument  The value to initialize with.
+     * @param[in]  hex  The value to initialize with.
      */
-    byte(const uint8_t& argument)
-        : value(argument) {}
+    secret(const std::string& hex)
+    {
+        auto chunk = bc::decode_hex(hex);
+        if (!vector_to_array(chunk, value))
+            throw std::exception(SX_SERIALIZER_SECRET_EXCEPTION);
+    }
 
     /**
      * Copy counstructor.
      *
      * @param[in]  argument  The object to copy into self on construct.
      */
-    byte(const byte& argument)
+    secret(const secret& argument)
         : value(argument.value) {}
 
     /**
-     * Overload cast to uint8_t.
+     * Overload cast to bc::ec_secret.
      *
-     * @return  This object's value cast to uint8_t.
+     * @return  This object's value cast to bc::ec_secret.
      */
-    operator uint8_t() const 
+    operator bc::ec_secret() const
     {
         return value; 
     }
 
     /**
-     * Overload stream in. If input is not a number sets 0x00 in argument.
+     * Overload stream in. If input is invalid sets no bytes in argument.
      *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, byte& argument)
+    friend std::istream& operator>>(std::istream& input, secret& argument)
     {
-        int number;
-        input >> number;
-        argument.value = static_cast<uint8_t>(number);
+        std::string hex;
+        input >> hex;
+        auto chunk = bc::decode_hex(hex);
+
+        if (!vector_to_array(chunk, argument.value))
+            throw std::exception(SX_SERIALIZER_SECRET_EXCEPTION);
+
         return input;
     }
 
@@ -89,33 +104,11 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, byte& argument)
+    friend std::ostream& operator<<(std::ostream& output, 
+        const secret& argument)
     {
-        output << static_cast<int>(argument.value);
+        output << bc::encode_hex(argument.value);
         return output;
-    }
-
-    /**
-     * Overload prefix increment.
-     *
-     * @return  This object referenced, with incremented value.
-     */
-    byte& operator++()
-    {
-        ++value;
-        return *this;
-    }
-
-    /**
-     * Overload postfix increment.
-     *
-     * @return  This object copied, with incremented value.
-     */
-    byte operator++(int)
-    {
-        byte temp(*this);
-        operator++();
-        return temp;
     }
 
 private:
@@ -123,9 +116,10 @@ private:
     /**
      * The state of this object.
      */
-    uint8_t value;
+    bc::ec_secret value;
 };
 
-} //sx
+} // sx
+} // serializer
 
 #endif
