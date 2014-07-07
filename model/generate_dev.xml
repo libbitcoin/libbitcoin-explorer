@@ -34,8 +34,8 @@
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Show the balance in satoshis of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" description="The address(es) to show." />
-    <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to show." />
+    <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_BALANCE_FETCH_HISTORY_FAIL" value="Failed to fetch history: %1%" />
     <define name="SX_BALANCE_FETCHED_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
     <!--
@@ -61,7 +61,7 @@
   
   <command symbol="base58-decode" category="UTILITY" subcategory="FORMAT (BASE 58)">
     <option name="help" description="Convert a Base58 value to a hex string." />
-    <argument name="BASE58" stream="true" description="The Base58 encoded value to decode." />
+    <argument name="BASE58" stream="true" type="base58" description="The Base58 encoded value to decode." />
   </command>
 
   <command symbol="base58-encode" category="UTILITY" subcategory="FORMAT (BASE 58)">

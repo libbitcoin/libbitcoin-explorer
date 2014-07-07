@@ -27,12 +27,13 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
+// 100% coverage by line, loc ready.
 console_result encode_addr::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto hex = get_hash_argument();
-    const auto version = static_cast<uint8_t>(get_version_option());
+    const auto version = get_version_option();
 
     auto hash = decode_short_hash(hex);
     if (hash == null_short_hash)

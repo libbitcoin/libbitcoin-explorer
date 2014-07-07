@@ -110,6 +110,12 @@
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\address.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>

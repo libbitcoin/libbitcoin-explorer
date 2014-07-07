@@ -17,11 +17,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BYTE_HPP
-#define BYTE_HPP
+#ifndef BASE58_HPP
+#define BASE58_HPP
 
+#include <array>
 #include <iostream>
 #include <stdint.h>
+#include <vector>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -29,35 +33,34 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper for numeric byte, because byte-sized integral types 
- * stream as characters.
+ * Serialization helper to convert between data_chunk and base58.
  */
-class byte
+class base58
 {
 public:
 
     /**
      * Constructor.
      */
-    byte() 
+    base58()
         : value() {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  argument  The value to initialize with.
+     * @param[in]  chunk  The value to initialize with.
      */
-    byte(const uint8_t& argument)
-        : value(argument) {}
+    base58(const bc::data_chunk& chunk)
+        : value(chunk) {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  base58  The value to initialize with.
      */
-    byte(const std::string& hex)
+    base58(const std::string& base58)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(base58) >> *this;
     }
 
     /**
@@ -65,31 +68,41 @@ public:
      *
      * @param[in]  argument  The object to copy into self on construct.
      */
-    byte(const byte& argument)
+    base58(const base58& argument)
         : value(argument.value) {}
 
     /**
-     * Overload cast to uint8_t.
+     * Overload cast to std::string.
      *
-     * @return  This object's value cast to uint8_t.
+     * @return  This object's value cast to bc::data_chunk.
      */
-    operator const uint8_t() const
+    operator const bc::data_chunk() const
     {
         return value; 
     }
 
     /**
-     * Overload stream in. If input is not a number sets 0x00 in argument.
+     * Return a reference to the data member.
+     *
+     * @return  A reference to the object's internal data.
+     */
+    bc::data_chunk& data()
+    {
+        return value;
+    }
+
+    /**
+     * Overload stream in. Throws if input is invalid.
      *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, byte& argument)
+    friend std::istream& operator>>(std::istream& input, base58& argument)
     {
-        int number;
-        input >> number;
-        argument.value = static_cast<uint8_t>(number);
+        std::string base58;
+        input >> base58;
+        argument.value = bc::decode_base58(base58);
         return input;
     }
 
@@ -100,33 +113,11 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const byte& argument)
+    friend std::ostream& operator<<(std::ostream& output, 
+        const base58& argument)
     {
-        output << static_cast<int>(argument.value);
+        output << bc::encode_base58(argument.value);
         return output;
-    }
-
-    /**
-     * Overload prefix increment.
-     *
-     * @return  This object referenced, with incremented value.
-     */
-    byte& operator++()
-    {
-        ++value;
-        return *this;
-    }
-
-    /**
-     * Overload postfix increment.
-     *
-     * @return  This object copied, with incremented value.
-     */
-    byte operator++(int)
-    {
-        byte temp(*this);
-        operator++();
-        return temp;
     }
 
 private:
@@ -134,7 +125,7 @@ private:
     /**
      * The state of this object.
      */
-    uint8_t value;
+    bc::data_chunk value;
 };
 
 } // sx

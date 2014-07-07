@@ -28,6 +28,8 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>
@@ -149,7 +151,7 @@ public:
             )
             (
                 "BASE58",
-                value<std::string>(&argument_.base58),
+                value<serializer::base58>(&argument_.base58),
                 "The Base58 encoded value to decode."
             );
 
@@ -186,7 +188,7 @@ public:
     /**
      * Get the value of the BASE58 argument.
      */
-    virtual std::string get_base58_argument()
+    virtual serializer::base58 get_base58_argument()
     {
         return argument_.base58;
     }
@@ -194,7 +196,7 @@ public:
     /**
      * Set the value of the BASE58 argument.
      */
-    virtual void set_base58_argument(std::string value)
+    virtual void set_base58_argument(serializer::base58 value)
     {
         argument_.base58 = value;
     }
@@ -227,7 +229,7 @@ private:
         argument()
           : base58()
             {}
-        std::string base58;
+        serializer::base58 base58;
     } argument_;
     
     /**

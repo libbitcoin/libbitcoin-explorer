@@ -28,15 +28,6 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(balance__invoke)
 
-BOOST_AUTO_TEST_CASE(balance__invoke__bogus_address__failure_error)
-{
-    // $ sx balance bogus
-    SX_DECLARE_COMMAND(balance);
-    command.set_addresss_argument({ "bogus" });
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_BALANCE_INVALID_ADDRESS "\n");
-}
-
 // DISABLED until client-server calls are isolated for test.
 
 //BOOST_AUTO_TEST_CASE(balance__invoke__address__okay)

@@ -22,7 +22,6 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/addr.hpp>
 #include <sx/utility/coin.hpp>
-//#include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -48,7 +47,7 @@ console_result addr::invoke(std::istream& input, std::ostream& output,
     set_public_key(address, ec_key.public_key());
 
     // Set the desired key version, using zero as a sentinel for 'not set'.
-    // TODO: generate a flag to indicate wheher optional values are set.
+    // TODO: generate a flag to indicate whether optional values are set.
     if (version > 0)
         address.set(version, address.hash());
 

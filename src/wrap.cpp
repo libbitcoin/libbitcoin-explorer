@@ -33,7 +33,7 @@ console_result wrap::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const auto hex = (data_chunk)get_hex_argument();
+    const data_chunk hex = get_hex_argument();
     const auto version = get_version_option();
     
     data_chunk data;

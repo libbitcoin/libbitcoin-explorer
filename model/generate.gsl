@@ -66,6 +66,10 @@
 .       return type_string_std
 .   elsif my.type = type_path
 .       return type_path_boost
+.   elsif my.type = type_address
+.       return type_address_sx
+.   elsif my.type = type_base58
+.       return type_base58_sx
 .   elsif my.type = type_byte
 .       return type_byte_sx
 .   elsif my.type = type_bytes
@@ -144,10 +148,14 @@
 .config_description = resource("sx_config_description")
 .config_option = "config"
 .type_bool = "bool"
+.type_address = "address"
+.type_base58 = "base58"
 .type_byte = "byte"
 .type_bytes = "bytes"
 .type_point = "point"
 .type_secret = "secret"
+.type_address_sx = "serializer::address"
+.type_base58_sx = "serializer::base58"
 .type_byte_sx = "serializer::byte"
 .type_bytes_sx = "serializer::bytes"
 .type_point_sx = "serializer::point"
@@ -576,6 +584,8 @@ private:
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>
@@ -1145,6 +1155,8 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk.hpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
@@ -1296,6 +1308,12 @@ endif
 .   endif
     </ClInclude>
 .endfor
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>

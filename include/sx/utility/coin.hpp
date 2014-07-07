@@ -157,7 +157,7 @@ bool read_public_or_private_key(bc::elliptic_curve_key& key,
  * @param[int] data  The data to validate.
  * @return           True if the checksum is valid.
  */
-bool validate_checksum(bc::data_chunk& data);
+bool validate_checksum(const bc::data_chunk& data);
 
 } // sx
 

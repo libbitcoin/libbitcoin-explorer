@@ -45,7 +45,7 @@ public:
         : value() {}
 
     /**
-     * Initialization counstructor.
+     * Initialization constructor.
      * 
      * @param[in]  array  The value to initialize with.
      */
@@ -54,7 +54,7 @@ public:
         : value(array.begin(), array.end()) {}
 
     /**
-     * Initialization counstructor.
+     * Initialization constructor.
      * 
      * @param[in]  chunk  The value to initialize with.
      */
@@ -62,7 +62,7 @@ public:
         : value(chunk) {}
 
     /**
-     * Initialization counstructor.
+     * Initialization constructor.
      * 
      * @param[in]  hex  The value to initialize with.
      */
@@ -72,7 +72,7 @@ public:
     }
 
     /**
-     * Copy counstructor.
+     * Copy constructor.
      *
      * @param[in]  argument  The object to copy into self on construct.
      */
@@ -84,7 +84,7 @@ public:
      *
      * @return  This object's value cast to bc::data_chunk.
      */
-    operator bc::data_chunk() const
+    operator const bc::data_chunk() const
     {
         return value; 
     }

@@ -28,6 +28,8 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>
@@ -45,7 +47,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_BALANCE_INVALID_ADDRESS \
-    "Invalid address."
+    "Invalid address '%1%'."
 #define SX_BALANCE_FETCH_HISTORY_FAIL \
     "Failed to fetch history: %1%"
 #define SX_BALANCE_FETCHED_OUTPUT \
@@ -164,7 +166,7 @@ public:
             )
             (
                 "ADDRESS",
-                value<std::vector<std::string>>(&argument_.addresss),
+                value<std::vector<serializer::address>>(&argument_.addresss),
                 "The address(es) to show."
             );
 
@@ -198,7 +200,7 @@ public:
     /**
      * Get the value of the ADDRESS arguments.
      */
-    virtual std::vector<std::string> get_addresss_argument()
+    virtual std::vector<serializer::address> get_addresss_argument()
     {
         return argument_.addresss;
     }
@@ -206,7 +208,7 @@ public:
     /**
      * Set the value of the ADDRESS arguments.
      */
-    virtual void set_addresss_argument(std::vector<std::string> value)
+    virtual void set_addresss_argument(std::vector<serializer::address> value)
     {
         argument_.addresss = value;
     }
@@ -255,7 +257,7 @@ private:
         argument()
           : addresss()
             {}
-        std::vector<std::string> addresss;
+        std::vector<serializer::address> addresss;
     } argument_;
     
     /**

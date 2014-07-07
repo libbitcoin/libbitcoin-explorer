@@ -52,7 +52,7 @@ public:
         : value() {}
 
     /**
-     * Initialization counstructor.
+     * Initialization constructor.
      * 
      * @param[in]  hex  The value to initialize with.
      */
@@ -62,7 +62,7 @@ public:
     }
 
     /**
-     * Copy counstructor.
+     * Copy constructor.
      *
      * @param[in]  argument  The object to copy into self on construct.
      */
@@ -74,7 +74,7 @@ public:
      *
      * @return  This object's value cast to bc::ec_point.
      */
-    operator bc::ec_point() const
+    operator const bc::ec_point() const
     {
         return value; 
     }

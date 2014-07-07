@@ -34,7 +34,7 @@ console_result unwrap::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto hex = (data_chunk)get_hex_argument();
+    const data_chunk hex = get_hex_argument();
 
     // require at least 1 byte of data with a 4 byte checksum
     const size_t minimum_size = 5;

@@ -121,64 +121,32 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\test\addr.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\balance.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58-decode.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58-encode.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\bci-history.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\brainwallet.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\btc.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\decode-addr.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\balance.cpp" />
+    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\base58-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\base58-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp" />
+    <ClCompile Include="..\..\..\..\test\bci-history.cpp" />
+    <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\test\brainwallet.cpp" />
+    <ClCompile Include="..\..\..\..\test\btc.cpp" />
+    <ClCompile Include="..\..\..\..\test\decode-addr.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-multiply-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-add.cpp" />
-    <ClCompile Include="..\..\..\..\test\encode-addr.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\help.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\encode-addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\printer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\satoshi.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-addr.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\test\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\test\console__line_out.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
     </ClCompile>
@@ -192,16 +160,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\main.cpp" />
-    <ClCompile Include="..\..\..\..\test\unwrap.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wrap.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\unwrap.cpp" />
+    <ClCompile Include="..\..\..\..\test\wrap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\test\command.hpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="..\..\..\..\test\command.hpp" />
   </ItemGroup>
 </Project>

@@ -42,6 +42,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
     SX_DECLARE_COMMAND(help);
     command.set_command_argument("booger");
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    auto foo = error.str();
     SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
         "addr\n" \
         "balance\n" \
@@ -55,10 +56,10 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "brainwallet\n" \
         "btc\n" \
         "decode-addr\n" \
+        "ec-add\n" \
         "ec-add-secrets\n" \
         "ec-multiply\n" \
         "ec-multiply-secrets\n" \
-        "ec-tweak-add\n" \
         "encode-addr\n" \
         "help\n" \
         "satoshi\n" \

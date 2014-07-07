@@ -30,6 +30,8 @@
 #ifdef HAVE_OBELISK
     #include <sx/obelisk.hpp>
 #endif
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>

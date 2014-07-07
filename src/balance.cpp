@@ -31,6 +31,7 @@
 #include <sx/command/balance.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/obelisk.hpp>
+#include <sx/serializer/address.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -38,6 +39,7 @@
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 static bool is_first;
 static std::mutex mutex;
@@ -141,38 +143,32 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
     auto json = get_json_option();
 
     // TODO: implement support for defaulting a collection ARG to STDIN.
-    payaddr_list payaddrs;
     if (addresses.empty())
     {
-        payment_address payaddr;
-        if (!payaddr.set_encoded(read_stream(input)))
+        address address;
+        std::string raw_address(read_stream(input));
+        if (!address.data().set_encoded(raw_address))
         {
-            // TODO: provide address info with error.
-            cerr << boost::format(SX_BALANCE_INVALID_ADDRESS) << std::endl;
+            cerr << boost::format(SX_BALANCE_INVALID_ADDRESS) % raw_address
+                << std::endl;
             return console_result::failure;
         }
 
-        payaddrs.push_back(payaddr);
-    }
-    else if (!read_addresses(addresses, payaddrs))
-    {
-        // TODO: provide failed address info with error.
-        cerr << boost::format(SX_BALANCE_INVALID_ADDRESS) << std::endl;
-        return console_result::failure;
+        addresses.push_back(address);
     }
 
     OBELISK_FULLNODE(pool, fullnode);
 
     is_first = true;
-    for (const auto& payaddr: payaddrs)
+    for (const auto& address: addresses)
     {
         if (json)
-            fullnode.address.fetch_history(payaddr,
-                std::bind(json_balance_fetched, payaddr, 
+            fullnode.address.fetch_history(address,
+                std::bind(json_balance_fetched, address, 
                     std::placeholders::_1, std::placeholders::_2));
         else
-            fullnode.address.fetch_history(payaddr,
-                std::bind(balance_fetched, payaddr, 
+            fullnode.address.fetch_history(address,
+                std::bind(balance_fetched, address, 
                     std::placeholders::_1, std::placeholders::_2));
     }
 
@@ -187,7 +183,7 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
     update_loop.detach();
 
     std::unique_lock<std::mutex> lock(mutex);
-    remaining_count = payaddrs.size();
+    remaining_count = addresses.size();
     while (remaining_count > 0)
     {
         condition.wait(lock);

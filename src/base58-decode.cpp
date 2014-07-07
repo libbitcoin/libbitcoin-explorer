@@ -32,9 +32,9 @@ console_result base58_decode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto base58 = get_base58_argument();
+    const auto encoded = get_base58_argument();
 
-    bytes hex(decode_base58(base58));
+    bytes hex(encoded);
 
     output << hex << std::endl;
     return console_result::okay;

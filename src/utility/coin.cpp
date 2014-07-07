@@ -60,6 +60,7 @@ data_chunk random_fill(size_t size)
 
     return result;
 }
+
 bool read_addresses(std::vector<std::string> addresses, payaddr_list& payaddrs)
 {
     for (const auto& address: addresses)
@@ -130,7 +131,7 @@ bool read_public_or_private_key(elliptic_curve_key& key, std::string& arg)
     return key.set_public_key(pubkey);
 }
 
-bool validate_checksum(data_chunk& data)
+bool validate_checksum(const data_chunk& data)
 {
     if (data.size() < 5)
         return false;

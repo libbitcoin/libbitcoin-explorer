@@ -48,7 +48,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const uint8_t stealth_version = 0x2a;
     const uint8_t default_stealth_prefix_filter = 0x00;
     const uint8_t options_bitfield = if_else(reuse_key, some_flag, 0);
-    const uint8_t number_keys = static_cast<uint8_t>(spend_pubkeys.size());
+    const uint8_t number_keys = spend_pubkeys.size();
 
     raw_address.push_back(stealth_version);
     raw_address.push_back(options_bitfield);
