@@ -157,7 +157,7 @@ public:
             )
             (
                 "ADDRESS",
-                value<std::string>(&argument_.address),
+                value<serializer::address>(&argument_.address),
                 "The value to convert."
             );
 
@@ -194,7 +194,7 @@ public:
     /**
      * Get the value of the ADDRESS argument.
      */
-    virtual std::string get_address_argument()
+    virtual serializer::address get_address_argument()
     {
         return argument_.address;
     }
@@ -202,7 +202,7 @@ public:
     /**
      * Set the value of the ADDRESS argument.
      */
-    virtual void set_address_argument(std::string value)
+    virtual void set_address_argument(serializer::address value)
     {
         argument_.address = value;
     }
@@ -235,7 +235,7 @@ private:
         argument()
           : address()
             {}
-        std::string address;
+        serializer::address address;
     } argument_;
     
     /**

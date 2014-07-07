@@ -58,6 +58,16 @@ public:
     }
 
     /**
+     * Initialization constructor.
+     * 
+     * @param[in]  address  The value to initialize with.
+     */
+    address(const bc::payment_address& address)
+    {
+        value.set_encoded(address.encoded());
+    }
+
+    /**
      * Copy constructor.
      *
      * @param[in]  argument  The object to copy into self on construct.

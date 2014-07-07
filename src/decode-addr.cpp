@@ -33,17 +33,9 @@ console_result decode_addr::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto base58check = get_address_argument();
+    const auto address = get_address_argument();
 
-    payment_address address;
-    if (!address.set_encoded(base58check))
-    {
-        cerr << boost::format(SX_DECODE_ADDR_INVALID_ADDRESS) % base58check
-            << std::endl;
-        return console_result::failure;
-    }
-
-    bytes hex(address.hash());
+    bytes hex(static_cast<payment_address>(address).hash());
 
     output << hex << std::endl;
     return console_result::okay;

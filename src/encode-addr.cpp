@@ -20,12 +20,13 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/encode-addr.hpp>
-#include <sx/utility/coin.hpp>
+#include <sx/serializer/address.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
 console_result encode_addr::invoke(std::istream& input,
@@ -35,6 +36,7 @@ console_result encode_addr::invoke(std::istream& input,
     const auto hex = get_hash_argument();
     const auto version = get_version_option();
 
+    // TODO: create hash serializers.
     auto hash = decode_short_hash(hex);
     if (hash == null_short_hash)
     {
@@ -42,8 +44,8 @@ console_result encode_addr::invoke(std::istream& input,
         return console_result::failure;
     }
 
-    payment_address address(version, hash);
+    address pay_address(payment_address(version, hash));
 
-    output << address.encoded() << std::endl;
+    output << pay_address << std::endl;
     return console_result::okay;
 }

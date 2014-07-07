@@ -76,7 +76,7 @@
 
   <command symbol="bci-history" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
     <option name="help" description="Get the list of outputs, values and spends for an address from blockchain.info." />
-    <argument name="ADDRESS" stream="true" description="The address to query." />
+    <argument name="ADDRESS" stream="true" type="address" description="The address to query." />
     <define name="SX_BCI_HISTORY_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
@@ -102,7 +102,7 @@
 
   <command symbol="decode-addr" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
     <option name="help" description="Convert an address from Base58Check to RIPEMD160." />
-    <argument name="ADDRESS" stream="true" description="The value to convert."/>
+    <argument name="ADDRESS" stream="true" type="address" description="The value to convert."/>
     <define name="SX_DECODE_ADDR_INVALID_ADDRESS" value="Invalid address '%1%'." />
   </command>
   
