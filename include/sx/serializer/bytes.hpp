@@ -42,7 +42,7 @@ public:
      * Constructor.
      */
     bytes() 
-        : value() {}
+        : value_() {}
 
     /**
      * Initialization constructor.
@@ -51,7 +51,7 @@ public:
      */
     template<size_t Size>
     bytes(const bc::byte_array<Size>& array)
-        : value(array.begin(), array.end()) {}
+        : value_(array.begin(), array.end()) {}
 
     /**
      * Initialization constructor.
@@ -59,7 +59,7 @@ public:
      * @param[in]  chunk  The value to initialize with.
      */
     bytes(const bc::data_chunk& chunk)
-        : value(chunk) {}
+        : value_(chunk) {}
 
     /**
      * Initialization constructor.
@@ -74,19 +74,29 @@ public:
     /**
      * Copy constructor.
      *
-     * @param[in]  argument  The object to copy into self on construct.
+     * @param[in]  other  The object to copy into self on construct.
      */
-    bytes(const bytes& argument)
-        : value(argument.value) {}
+    bytes(const bytes& other)
+        : value_(other.value_) {}
 
     /**
-     * Overload cast to bc::data_chunk.
+     * Return a reference to the data member.
      *
-     * @return  This object's value cast to bc::data_chunk.
+     * @return  A reference to the object's internal data.
+     */
+    bc::data_chunk& data()
+    {
+        return value_;
+    }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
      */
     operator const bc::data_chunk() const
     {
-        return value; 
+        return value_; 
     }
 
     /**
@@ -100,7 +110,7 @@ public:
     {
         std::string hex;
         input >> hex;
-        argument.value = bc::decode_hex(hex);
+        argument.value_ = bc::decode_hex(hex);
         return input;
     }
 
@@ -114,7 +124,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const bytes& argument)
     {
-        output << bc::encode_hex(argument.value);
+        output << bc::encode_hex(argument.value_);
         return output;
     }
 
@@ -123,7 +133,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::data_chunk value;
+    bc::data_chunk value_;
 };
 
 } // sx

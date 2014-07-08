@@ -20,12 +20,8 @@
 #ifndef BASE58_HPP
 #define BASE58_HPP
 
-#include <array>
 #include <iostream>
-#include <stdint.h>
-#include <vector>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -43,7 +39,7 @@ public:
      * Constructor.
      */
     base58()
-        : value() {}
+        : value_() {}
 
     /**
      * Initialization constructor.
@@ -51,7 +47,7 @@ public:
      * @param[in]  chunk  The value to initialize with.
      */
     base58(const bc::data_chunk& chunk)
-        : value(chunk) {}
+        : value_(chunk) {}
 
     /**
      * Initialization constructor.
@@ -66,20 +62,10 @@ public:
     /**
      * Copy constructor.
      *
-     * @param[in]  argument  The object to copy into self on construct.
+     * @param[in]  other  The object to copy into self on construct.
      */
-    base58(const base58& argument)
-        : value(argument.value) {}
-
-    /**
-     * Overload cast to std::string.
-     *
-     * @return  This object's value cast to bc::data_chunk.
-     */
-    operator const bc::data_chunk() const
-    {
-        return value; 
-    }
+    base58(const base58& other)
+        : value_(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -88,7 +74,17 @@ public:
      */
     bc::data_chunk& data()
     {
-        return value;
+        return value_;
+    }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
+     */
+    operator const bc::data_chunk() const
+    {
+        return value_; 
     }
 
     /**
@@ -102,7 +98,7 @@ public:
     {
         std::string base58;
         input >> base58;
-        argument.value = bc::decode_base58(base58);
+        argument.value_ = bc::decode_base58(base58);
         return input;
     }
 
@@ -116,7 +112,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const base58& argument)
     {
-        output << bc::encode_base58(argument.value);
+        output << bc::encode_base58(argument.value_);
         return output;
     }
 
@@ -125,7 +121,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::data_chunk value;
+    bc::data_chunk value_;
 };
 
 } // sx

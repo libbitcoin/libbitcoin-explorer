@@ -89,6 +89,7 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\key.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\ripemd160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\secret.hpp" />

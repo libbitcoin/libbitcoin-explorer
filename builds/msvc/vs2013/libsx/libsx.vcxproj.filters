@@ -122,6 +122,9 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\key.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>

@@ -20,12 +20,8 @@
 #ifndef RIPEMD160_HPP
 #define RIPEMD160_HPP
 
-#include <array>
 #include <iostream>
-#include <stdint.h>
-#include <vector>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -46,7 +42,7 @@ public:
      * Constructor.
      */
     ripemd160()
-        : value() {}
+        : value_() {}
 
     /**
      * Initialization constructor.
@@ -65,7 +61,7 @@ public:
      */
     ripemd160(const bc::short_hash& hash)
     {
-        std::copy(hash.begin(), hash.end(), value.begin());
+        std::copy(hash.begin(), hash.end(), value_.begin());
     }
 
     /**
@@ -79,20 +75,10 @@ public:
     /**
      * Copy constructor.
      *
-     * @param[in]  argument  The object to copy into self on construct.
+     * @param[in]  other  The object to copy into self on construct.
      */
-    ripemd160(const ripemd160& argument)
-        : value(argument.value) {}
-
-    /**
-     * Overload cast to bc::short_hash.
-     *
-     * @return  This object's value cast to bc::short_hash.
-     */
-    operator const bc::short_hash() const
-    {
-        return value;
-    }
+    ripemd160(const ripemd160& other)
+        : value_(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -101,7 +87,17 @@ public:
      */
     bc::short_hash& data()
     {
-        return value;
+        return value_;
+    }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
+     */
+    operator const bc::short_hash() const
+    {
+        return value_;
     }
 
     /**
@@ -121,7 +117,7 @@ public:
         if (hash == bc::null_short_hash)
             throw std::exception(SX_SERIALIZER_RIPEMD160_EXCEPTION);
 
-        std::copy(hash.begin(), hash.end(), argument.value.begin());
+        std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;
     }
 
@@ -135,7 +131,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const ripemd160& argument)
     {
-        output << bc::encode_hex(argument.value);
+        output << bc::encode_hex(argument.value_);
         return output;
     }
 
@@ -144,7 +140,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::short_hash value;
+    bc::short_hash value_;
 };
 
 } // sx

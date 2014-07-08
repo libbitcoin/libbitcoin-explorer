@@ -27,8 +27,7 @@
   <command symbol="addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
     <option name="help" description="Convert a public key (hex bytes) or private key (hash or WIF) to a Bitcoin address." />
     <option name="version" type="byte" description="The desired address version." />
-    <argument name="KEY" stream="true" description="A public or private key." />
-    <define name="SX_ADDR_INVALID_KEY" value="Invalid public or private key '%1%'." />
+    <argument name="KEY" stream="true" type="key" description="The hex string representation of a public or private key to convert." />
   </command>
 
   <command symbol="addr-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">

@@ -17,43 +17,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SECRET_HPP
-#define SECRET_HPP
+#ifndef KEY_HPP
+#define KEY_HPP
 
-#include <array>
 #include <iostream>
-#include <stdint.h>
-#include <vector>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/coin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_SECRET_SIZE_EXCEPTION \
-    "Elliptic curve secret must be 32 bytes."
+#define SX_SERIALIZER_KEY_EXCEPTION \
+    "Invalid public or private key."
 
 /**
- * Serialization helper to convert between hex string and ec_secret.
+ * Serialization helper to convert between hex string and elliptic_curve_key.
+ * Reads public or private key and writes corresponding public key.
  */
-class secret
+class key
 {
 public:
 
     /**
      * Constructor.
      */
-    secret()
-        : value() {}
+    key()
+        : value_() {}
 
     /**
      * Initialization constructor.
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    secret(const std::string& hex)
+    key(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -61,30 +59,57 @@ public:
     /**
      * Copy constructor.
      *
-     * @param[in]  argument  The object to copy into self on construct.
+     * @param[in]  other  The object to copy into self on construct.
      */
-    secret(const secret& argument)
-        : value(argument.value) {}
-
-    /**
-     * Overload cast to bc::ec_secret.
-     *
-     * @return  This object's value cast to bc::ec_secret.
-     */
-    operator bc::ec_secret() const
-    {
-        return value; 
-    }
+    key(const key& other)
+        : value_(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_secret& data()
+    bc::elliptic_curve_key& data()
     {
-        return value;
+        return value_;
     }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
+     */
+    operator const bc::elliptic_curve_key() const
+    {
+        return value_; 
+    }
+
+    /**
+     * Overload cast to bc::data_chunk, returning the public key value.
+     *
+     * @return  This object's value cast to bc::data_chunk.
+     */
+    operator const bc::data_chunk() const
+    {
+        return value_.public_key(); 
+    }
+
+    ///**
+    // * TROUBLESHOOTING ONLY.
+    // */
+    //key& operator=(const key& value)
+    //{
+    //    // TODO: change EC_KEY_copy to EC_KEY_dup
+    //    //elliptic_curve_key& elliptic_curve_key::operator=(
+    //    //    const elliptic_curve_key& other)
+    //    //{
+    //    //    key_ = EC_KEY_dup(other.key_);
+    //    //    return *this;
+    //    //}
+
+    //    value_ = value.value_;
+    //    return *this;
+    //}
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -93,15 +118,14 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, secret& argument)
+    friend std::istream& operator>>(std::istream& input, key& argument)
     {
         std::string hex;
         input >> hex;
-        auto chunk = bc::decode_hex(hex);
 
         // TODO: determine how to properly raise error in deserialization.
-        if (!vector_to_array(chunk, argument.value))
-            throw std::exception(SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
+        if (!read_public_or_private_key(argument.value_, hex))
+            throw std::exception(SX_SERIALIZER_KEY_EXCEPTION);
 
         return input;
     }
@@ -114,9 +138,9 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const secret& argument)
+        const key& argument)
     {
-        output << bc::encode_hex(argument.value);
+        output << bc::encode_hex(argument.value_.public_key());
         return output;
     }
 
@@ -125,7 +149,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_secret value;
+    bc::elliptic_curve_key value_;
 };
 
 } // sx

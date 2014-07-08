@@ -20,11 +20,8 @@
 #ifndef ADDRESS_HPP
 #define ADDRESS_HPP
 
-#include <array>
 #include <iostream>
-#include <vector>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -45,7 +42,7 @@ public:
      * Constructor.
      */
     address()
-        : value() {}
+        : value_() {}
 
     /**
      * Initialization constructor.
@@ -64,26 +61,16 @@ public:
      */
     address(const bc::payment_address& address)
     {
-        value.set_encoded(address.encoded());
+        value_.set_encoded(address.encoded());
     }
 
     /**
      * Copy constructor.
      *
-     * @param[in]  argument  The object to copy into self on construct.
+     * @param[in]  other  The object to copy into self on construct.
      */
-    address(const address& argument)
-        : value(argument.value) {}
-
-    /**
-     * Overload cast to bc::payment_address.
-     *
-     * @return  This object's value cast to bc::payment_address.
-     */
-    operator const bc::payment_address() const
-    {
-        return value; 
-    }
+    address(const address& other)
+        : value_(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -92,7 +79,17 @@ public:
      */
     bc::payment_address& data()
     {
-        return value;
+        return value_;
+    }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
+     */
+    operator const bc::payment_address() const
+    {
+        return value_; 
     }
 
     /**
@@ -108,7 +105,7 @@ public:
         input >> base58;
 
         // TODO: determine how to properly raise error in deserialization.
-        if (!argument.value.set_encoded(base58))
+        if (!argument.value_.set_encoded(base58))
             throw std::exception(SX_SERIALIZER_ADDRESS_EXCEPTION);
 
         return input;
@@ -124,7 +121,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const address& argument)
     {
-        output << argument.value.encoded();
+        output << argument.value_.encoded();
         return output;
     }
 
@@ -133,7 +130,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::payment_address value;
+    bc::payment_address value_;
 };
 
 } // sx

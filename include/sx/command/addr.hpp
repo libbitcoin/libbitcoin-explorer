@@ -32,6 +32,7 @@
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
@@ -43,12 +44,6 @@
 
 namespace sx {
 namespace extension {
-
-/**
- * Various localizable strings.
- */
-#define SX_ADDR_INVALID_KEY \
-    "Invalid public or private key '%1%'."
 
 /**
  * Class to implement the sx addr command.
@@ -85,39 +80,6 @@ public:
     const char* subcategory()
     {
         return "BASIC";
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-        };
     }
 
     /**
@@ -163,8 +125,8 @@ public:
             )
             (
                 "KEY",
-                value<std::string>(&argument_.key),
-                "A public or private key."
+                value<serializer::key>(&argument_.key),
+                "The hex string representation of a public or private key to convert."
             );
 
         return options;
@@ -200,7 +162,7 @@ public:
     /**
      * Get the value of the KEY argument.
      */
-    virtual std::string get_key_argument()
+    virtual serializer::key get_key_argument()
     {
         return argument_.key;
     }
@@ -208,7 +170,7 @@ public:
     /**
      * Set the value of the KEY argument.
      */
-    virtual void set_key_argument(std::string value)
+    virtual void set_key_argument(serializer::key value)
     {
         argument_.key = value;
     }
@@ -257,7 +219,7 @@ private:
         argument()
           : key()
             {}
-        std::string key;
+        serializer::key key;
     } argument_;
     
     /**

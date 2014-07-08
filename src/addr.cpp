@@ -22,7 +22,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/addr.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/utility/coin.hpp>
+#include <sx/serializer/key.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -33,25 +33,20 @@ console_result addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const auto key = get_key_argument();
+    auto key = get_key_argument();
     auto version = get_version_option();
 
     // TODO: generate a flag to indicate whether optional values are set.
     bool versioned = true;
 
-    // TODO: create ec_key (public or private) serializer.
-    elliptic_curve_key ec_key;
-    if (!read_public_or_private_key(ec_key, key))
-    {
-        cerr << boost::format(SX_ADDR_INVALID_KEY) % key << std::endl;
-        return console_result::failure;
-    }
-
     // Get the public key's payment address.
-    auto hash = bitcoin_short_hash(ec_key.public_key());
-    version = if_else(versioned, version, payment_address::pubkey_version);
-    address address(payment_address(version, hash));
+    auto ripemd160 = bitcoin_short_hash(key);
 
-    output << address << std::endl;
+    // WARNING: pubkey_version varies by libbitcoin compilation.
+    version = if_else(versioned, version, payment_address::pubkey_version);
+
+    auto pay_address = payment_address(version, ripemd160);
+
+    output << address(pay_address) << std::endl;
     return console_result::okay;
 }

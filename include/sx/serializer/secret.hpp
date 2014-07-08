@@ -20,12 +20,8 @@
 #ifndef SECRET_HPP
 #define SECRET_HPP
 
-#include <array>
 #include <iostream>
-#include <stdint.h>
-#include <vector>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -46,7 +42,7 @@ public:
      * Constructor.
      */
     secret()
-        : value() {}
+        : value_() {}
 
     /**
      * Initialization constructor.
@@ -61,20 +57,10 @@ public:
     /**
      * Copy constructor.
      *
-     * @param[in]  argument  The object to copy into self on construct.
+     * @param[in]  other  The object to copy into self on construct.
      */
-    secret(const secret& argument)
-        : value(argument.value) {}
-
-    /**
-     * Overload cast to bc::ec_secret.
-     *
-     * @return  This object's value cast to bc::ec_secret.
-     */
-    operator const bc::ec_secret() const
-    {
-        return value; 
-    }
+    secret(const secret& other)
+        : value_(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -83,7 +69,17 @@ public:
      */
     bc::ec_secret& data()
     {
-        return value;
+        return value_;
+    }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
+     */
+    operator const bc::ec_secret() const
+    {
+        return value_; 
     }
 
     /**
@@ -100,7 +96,7 @@ public:
         auto chunk = bc::decode_hex(hex);
 
         // TODO: determine how to properly raise error in deserialization.
-        if (!vector_to_array(chunk, argument.value))
+        if (!vector_to_array(chunk, argument.value_))
             throw std::exception(SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
 
         return input;
@@ -116,7 +112,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const secret& argument)
     {
-        output << bc::encode_hex(argument.value);
+        output << bc::encode_hex(argument.value_);
         return output;
     }
 
@@ -125,7 +121,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_secret value;
+    bc::ec_secret value_;
 };
 
 } // sx

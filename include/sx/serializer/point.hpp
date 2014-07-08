@@ -20,12 +20,8 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 
-#include <array>
 #include <iostream>
-#include <stdint.h>
-#include <vector>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -49,7 +45,7 @@ public:
      * Constructor.
      */
     point()
-        : value() {}
+        : value_() {}
 
     /**
      * Initialization constructor.
@@ -64,20 +60,10 @@ public:
     /**
      * Copy constructor.
      *
-     * @param[in]  argument  The object to copy into self on construct.
+     * @param[in]  other  The object to copy into self on construct.
      */
-    point(const point& argument)
-        : value(argument.value) {}
-
-    /**
-     * Overload cast to bc::ec_secret.
-     *
-     * @return  This object's value cast to bc::ec_point.
-     */
-    operator const bc::ec_point() const
-    {
-        return value; 
-    }
+    point(const point& other)
+        : value_(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -86,7 +72,17 @@ public:
      */
     bc::ec_point& data()
     {
-        return value;
+        return value_;
+    }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
+     */
+    operator const bc::ec_point() const
+    {
+        return value_; 
     }
 
     /**
@@ -110,7 +106,7 @@ public:
         if (chunk[0] != 0x02 && chunk[0] != 0x03)
             throw std::exception(SX_SERIALIZER_POINT_PREFIX_EXCEPTION);
         
-        argument.value.assign(chunk.begin(), chunk.end());
+        argument.value_.assign(chunk.begin(), chunk.end());
         return input;
     }
 
@@ -124,7 +120,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const point& argument)
     {
-        output << bc::encode_hex(argument.value);
+        output << bc::encode_hex(argument.value_);
         return output;
     }
 
@@ -133,7 +129,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_point value;
+    bc::ec_point value_;
 };
 
 } // sx

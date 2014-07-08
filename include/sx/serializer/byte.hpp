@@ -40,7 +40,7 @@ public:
      * Constructor.
      */
     byte() 
-        : value() {}
+        : value_() {}
 
     /**
      * Initialization constructor.
@@ -48,7 +48,7 @@ public:
      * @param[in]  argument  The value to initialize with.
      */
     byte(const uint8_t& argument)
-        : value(argument) {}
+        : value_(argument) {}
 
     /**
      * Initialization constructor.
@@ -63,19 +63,29 @@ public:
     /**
      * Copy constructor.
      *
-     * @param[in]  argument  The object to copy into self on construct.
+     * @param[in]  other  The object to copy into self on construct.
      */
-    byte(const byte& argument)
-        : value(argument.value) {}
+    byte(const byte& other)
+        : value_(other.value_) {}
 
     /**
-     * Overload cast to uint8_t.
+     * Return a reference to the data member.
      *
-     * @return  This object's value cast to uint8_t.
+     * @return  A reference to the object's internal data.
+     */
+    uint8_t& data()
+    {
+        return value_;
+    }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
      */
     operator const uint8_t() const
     {
-        return value; 
+        return value_;
     }
 
     /**
@@ -89,7 +99,7 @@ public:
     {
         int number;
         input >> number;
-        argument.value = static_cast<uint8_t>(number);
+        argument.value_ = static_cast<uint8_t>(number);
         return input;
     }
 
@@ -102,7 +112,7 @@ public:
      */
     friend std::ostream& operator<<(std::ostream& output, const byte& argument)
     {
-        output << static_cast<int>(argument.value);
+        output << static_cast<int>(argument.value_);
         return output;
     }
 
@@ -113,7 +123,7 @@ public:
      */
     byte& operator++()
     {
-        ++value;
+        ++value_;
         return *this;
     }
 
@@ -134,7 +144,7 @@ private:
     /**
      * The state of this object.
      */
-    uint8_t value;
+    uint8_t value_;
 };
 
 } // sx
