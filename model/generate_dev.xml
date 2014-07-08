@@ -102,8 +102,7 @@
 
   <command symbol="decode-addr" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
     <option name="help" description="Convert an address from Base58Check to RIPEMD160." />
-    <argument name="ADDRESS" stream="true" type="address" description="The value to convert."/>
-    <define name="SX_DECODE_ADDR_INVALID_ADDRESS" value="Invalid address '%1%'." />
+    <argument name="ADDRESS" stream="true" type="address" description="The address to convert."/>
   </command>
   
   <!-- Computes the function a + G*b, where G is the curve's generator point.-->
@@ -139,8 +138,7 @@
   <command symbol="encode-addr" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
     <option name="help" description="Convert an address from RIPEMD160 to Base58Check." />
     <option name="version" type="byte" description="The desired version number." />
-    <argument name="HASH" stream="true" description="The hex string to convert."/>
-    <define name="SX_ENCODE_ADDR_INVALID_HASH" value="Invalid RIPEMD160 hash '%1%'." />
+    <argument name="RIPEMD160" stream="true" type="ripemd160" description="The hex string to convert."/>
   </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">

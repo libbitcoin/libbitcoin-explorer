@@ -76,6 +76,8 @@
 .       return type_bytes_sx
 .   elsif my.type = type_point
 .       return type_point_sx
+.   elsif my.type = type_ripemd160
+.       return type_ripemd160_sx
 .   elsif my.type = type_secret
 .       return type_secret_sx
 .   endif
@@ -154,11 +156,13 @@
 .type_bytes = "bytes"
 .type_point = "point"
 .type_secret = "secret"
+.type_ripemd160 = "ripemd160"
 .type_address_sx = "serializer::address"
 .type_base58_sx = "serializer::base58"
 .type_byte_sx = "serializer::byte"
 .type_bytes_sx = "serializer::bytes"
 .type_point_sx = "serializer::point"
+.type_ripemd160_sx = "serializer::ripemd160"
 .type_secret_sx = "serializer::secret"
 .type_path = "path"
 .type_path_boost = "boost::filesystem::path"
@@ -589,6 +593,7 @@ private:
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -1160,6 +1165,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ripemd160.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
@@ -1321,6 +1327,9 @@ endif
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ripemd160.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp">

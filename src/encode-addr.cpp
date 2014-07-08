@@ -21,6 +21,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/encode-addr.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -33,19 +34,11 @@ console_result encode_addr::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto hex = get_hash_argument();
+    const auto hash = get_ripemd160_argument();
     const auto version = get_version_option();
 
-    // TODO: create hash serializers.
-    auto hash = decode_short_hash(hex);
-    if (hash == null_short_hash)
-    {
-        cerr << boost::format(SX_ENCODE_ADDR_INVALID_HASH) % hex << std::endl;
-        return console_result::failure;
-    }
+    address address(payment_address(version, hash));
 
-    address pay_address(payment_address(version, hash));
-
-    output << pay_address << std::endl;
+    output << address << std::endl;
     return console_result::okay;
 }

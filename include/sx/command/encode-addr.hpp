@@ -33,6 +33,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -42,12 +43,6 @@
 
 namespace sx {
 namespace extension {
-
-/**
- * Various localizable strings.
- */
-#define SX_ENCODE_ADDR_INVALID_HASH \
-    "Invalid RIPEMD160 hash '%1%'."
 
 /**
  * Class to implement the sx encode-addr command.
@@ -128,7 +123,7 @@ public:
     arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", 1);
+            .add("RIPEMD160", 1);
     }
     
     /**
@@ -161,8 +156,8 @@ public:
                 "The desired version number."
             )
             (
-                "HASH",
-                value<std::string>(&argument_.hash),
+                "RIPEMD160",
+                value<serializer::ripemd160>(&argument_.ripemd160),
                 "The hex string to convert."
             );
 
@@ -178,9 +173,9 @@ public:
     void load_stream(std::istream& input,
         boost::program_options::variables_map& variables)
     {
-        auto hash = variables.find("HASH");
-        if (hash == variables.end())
-            parse(argument_.hash, read_stream(input));
+        auto ripemd160 = variables.find("RIPEMD160");
+        if (ripemd160 == variables.end())
+            parse(argument_.ripemd160, read_stream(input));
     }
 
     /**
@@ -197,19 +192,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HASH argument.
+     * Get the value of the RIPEMD160 argument.
      */
-    virtual std::string get_hash_argument()
+    virtual serializer::ripemd160 get_ripemd160_argument()
     {
-        return argument_.hash;
+        return argument_.ripemd160;
     }
     
     /**
-     * Set the value of the HASH argument.
+     * Set the value of the RIPEMD160 argument.
      */
-    virtual void set_hash_argument(std::string value)
+    virtual void set_ripemd160_argument(serializer::ripemd160 value)
     {
-        argument_.hash = value;
+        argument_.ripemd160 = value;
     }
 
     /**
@@ -254,9 +249,9 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : ripemd160()
             {}
-        std::string hash;
+        serializer::ripemd160 ripemd160;
     } argument_;
     
     /**

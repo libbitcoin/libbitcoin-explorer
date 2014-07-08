@@ -33,6 +33,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -42,12 +43,6 @@
 
 namespace sx {
 namespace extension {
-
-/**
- * Various localizable strings.
- */
-#define SX_DECODE_ADDR_INVALID_ADDRESS \
-    "Invalid address '%1%'."
 
 /**
  * Class to implement the sx decode-addr command.
@@ -158,7 +153,7 @@ public:
             (
                 "ADDRESS",
                 value<serializer::address>(&argument_.address),
-                "The value to convert."
+                "The address to convert."
             );
 
         return options;

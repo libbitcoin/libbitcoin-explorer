@@ -22,6 +22,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/decode-addr.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -35,9 +36,9 @@ console_result decode_addr::invoke(std::istream& input,
     // Bound parameters.
     const auto address = get_address_argument();
 
-    bytes hex(static_cast<payment_address>(address).hash());
+    ripemd160 hash(address);
 
-    output << hex << std::endl;
+    output << hash << std::endl;
     return console_result::okay;
 }
 

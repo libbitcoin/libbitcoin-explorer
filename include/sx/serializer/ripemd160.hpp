@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SECRET_HPP
-#define SECRET_HPP
+#ifndef RIPEMD160_HPP
+#define RIPEMD160_HPP
 
 #include <array>
 #include <iostream>
@@ -32,20 +32,20 @@
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_SECRET_SIZE_EXCEPTION \
-    "Elliptic curve secret must be 32 bytes."
+#define SX_SERIALIZER_RIPEMD160_EXCEPTION \
+    "Invalid RIPEMD160 hash."
 
 /**
- * Serialization helper to convert between hex string and ec_secret.
+ * Serialization helper to convert between hex string and short_hash.
  */
-class secret
+class ripemd160
 {
 public:
 
     /**
      * Constructor.
      */
-    secret()
+    ripemd160()
         : value() {}
 
     /**
@@ -53,27 +53,45 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    secret(const std::string& hex)
+    ripemd160(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  hash  The value to initialize with.
+     */
+    ripemd160(const bc::short_hash& hash)
+    {
+        std::copy(hash.begin(), hash.end(), value.begin());
+    }
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  address  The value to initialize with.
+     */
+    ripemd160(const bc::payment_address& address)
+        : ripemd160(address.hash()) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  argument  The object to copy into self on construct.
      */
-    secret(const secret& argument)
+    ripemd160(const ripemd160& argument)
         : value(argument.value) {}
 
     /**
-     * Overload cast to bc::ec_secret.
+     * Overload cast to bc::short_hash.
      *
-     * @return  This object's value cast to bc::ec_secret.
+     * @return  This object's value cast to bc::short_hash.
      */
-    operator bc::ec_secret() const
+    operator const bc::short_hash() const
     {
-        return value; 
+        return value;
     }
 
     /**
@@ -81,7 +99,7 @@ public:
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_secret& data()
+    bc::short_hash& data()
     {
         return value;
     }
@@ -93,16 +111,17 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, secret& argument)
+    friend std::istream& operator>>(std::istream& input, ripemd160& argument)
     {
         std::string hex;
         input >> hex;
-        auto chunk = bc::decode_hex(hex);
+        auto hash = bc::decode_short_hash(hex);
 
         // TODO: determine how to properly raise error in deserialization.
-        if (!vector_to_array(chunk, argument.value))
-            throw std::exception(SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
+        if (hash == bc::null_short_hash)
+            throw std::exception(SX_SERIALIZER_RIPEMD160_EXCEPTION);
 
+        std::copy(hash.begin(), hash.end(), argument.value.begin());
         return input;
     }
 
@@ -114,7 +133,7 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const secret& argument)
+        const ripemd160& argument)
     {
         output << bc::encode_hex(argument.value);
         return output;
@@ -125,7 +144,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_secret value;
+    bc::short_hash value;
 };
 
 } // sx
