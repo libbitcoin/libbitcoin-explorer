@@ -24,6 +24,8 @@ sx_utility_include_HEADERS += \
 sx_command_includedir = $(includedir)/sx/command
 sx_command_include_HEADERS = \
     command/addr.hpp \
+    command/addr-decode.hpp \
+    command/addr-encode.hpp \
     command/base58-decode.hpp \
     command/base58-encode.hpp \
     command/base58check-decode.hpp \
@@ -33,12 +35,10 @@ sx_command_include_HEADERS = \
     command/blke-fetch-transaction.hpp \
     command/brainwallet.hpp \
     command/btc.hpp \
-    command/decode-addr.hpp \
     command/ec-add.hpp \
     command/ec-add-secrets.hpp \
     command/ec-multiply.hpp \
     command/ec-multiply-secrets.hpp \
-    command/encode-addr.hpp \
     command/help.hpp \
     command/satoshi.hpp \
     command/stealth-addr.hpp \

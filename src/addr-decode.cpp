@@ -20,7 +20,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/decode-addr.hpp>
+#include <sx/command/addr-decode.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/utility/console.hpp>
@@ -30,7 +30,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result decode_addr::invoke(std::istream& input,
+console_result addr_decode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.

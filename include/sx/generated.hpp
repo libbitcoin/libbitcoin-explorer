@@ -25,6 +25,8 @@
 #include <string>
 #include <sx/command.hpp>
 #include <sx/command/addr.hpp>
+#include <sx/command/addr-decode.hpp>
+#include <sx/command/addr-encode.hpp>
 #include <sx/command/balance.hpp>
 #include <sx/command/base58-decode.hpp>
 #include <sx/command/base58-encode.hpp>
@@ -35,12 +37,10 @@
 #include <sx/command/blke-fetch-transaction.hpp>
 #include <sx/command/brainwallet.hpp>
 #include <sx/command/btc.hpp>
-#include <sx/command/decode-addr.hpp>
 #include <sx/command/ec-add.hpp>
 #include <sx/command/ec-add-secrets.hpp>
 #include <sx/command/ec-multiply.hpp>
 #include <sx/command/ec-multiply-secrets.hpp>
-#include <sx/command/encode-addr.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/satoshi.hpp>
 #include <sx/command/stealth-addr.hpp>

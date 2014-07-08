@@ -132,12 +132,12 @@
     <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\test\brainwallet.cpp" />
     <ClCompile Include="..\..\..\..\test\btc.cpp" />
-    <ClCompile Include="..\..\..\..\test\decode-addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\addr-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-multiply-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-add.cpp" />
-    <ClCompile Include="..\..\..\..\test\encode-addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\addr-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">false</ExcludedFromBuild>

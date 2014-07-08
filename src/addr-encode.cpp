@@ -19,7 +19,7 @@
  */
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/encode-addr.hpp>
+#include <sx/command/addr-encode.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/utility/console.hpp>
@@ -30,7 +30,7 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result encode_addr::invoke(std::istream& input,
+console_result addr_encode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.

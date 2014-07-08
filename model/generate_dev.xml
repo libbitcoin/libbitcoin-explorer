@@ -31,6 +31,17 @@
     <define name="SX_ADDR_INVALID_KEY" value="Invalid public or private key '%1%'." />
   </command>
 
+  <command symbol="addr-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
+    <option name="help" description="Convert an address from Base58Check to RIPEMD160." />
+    <argument name="ADDRESS" stream="true" type="address" description="The address to convert."/>
+  </command>
+
+  <command symbol="addr-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
+    <option name="help" description="Convert an address from RIPEMD160 to Base58Check." />
+    <option name="version" type="byte" description="The desired version number." />
+    <argument name="RIPEMD160" stream="true" type="ripemd160" description="The hex string to convert."/>
+  </command>
+
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Show the balance in satoshis of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
@@ -99,11 +110,6 @@
     <argument name="SATOSHI" stream="true" description="The value to convert."/>
     <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
-
-  <command symbol="decode-addr" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
-    <option name="help" description="Convert an address from Base58Check to RIPEMD160." />
-    <argument name="ADDRESS" stream="true" type="address" description="The address to convert."/>
-  </command>
   
   <!-- Computes the function a + G*b, where G is the curve's generator point.-->
   <command symbol="ec-add" category="UTILITY" subcategory="EC MATH">
@@ -133,12 +139,6 @@
     <option name="help" description="Calculate the elliptic curve function (SECRET * SECRET) % curve-order." />
     <argument name="SECRET" limit="-1" required="true" type="secret" description="A secret to multiply."/>
     <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
-  </command>
-
-  <command symbol="encode-addr" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
-    <option name="help" description="Convert an address from RIPEMD160 to Base58Check." />
-    <option name="version" type="byte" description="The desired version number." />
-    <argument name="RIPEMD160" stream="true" type="ripemd160" description="The hex string to convert."/>
   </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">

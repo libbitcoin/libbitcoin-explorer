@@ -27,13 +27,13 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(decode_addr__invoke)
+BOOST_AUTO_TEST_SUITE(addr_decode__invoke)
 
 // TODO: BOOST_REQUIRE_EXCEPTION()
-//BOOST_AUTO_TEST_CASE(decode_addr__invoke__bogus_value__failure_error)
+//BOOST_AUTO_TEST_CASE(addr_decode__invoke__bogus_value__failure_error)
 //{
 //    // $ sx decode-addr "?? --*&^aa !"
-//    SX_DECLARE_COMMAND(decode_addr);
+//    SX_DECLARE_COMMAND(addr_decode);
 //    command.set_address_argument({ "?? --*&^aa !" });
 //    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
 //    stringstream err;
@@ -41,10 +41,10 @@ BOOST_AUTO_TEST_SUITE(decode_addr__invoke)
 //    SX_REQUIRE_ERROR(err.str() + "\n");
 //}
 
-BOOST_AUTO_TEST_CASE(decode_addr__invoke__valid_value__okay_output)
+BOOST_AUTO_TEST_CASE(addr_decode__invoke__valid_value__okay_output)
 {
     // $ sx decode-addr 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
-    SX_DECLARE_COMMAND(decode_addr);
+    SX_DECLARE_COMMAND(addr_decode);
     command.set_address_argument({ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n");

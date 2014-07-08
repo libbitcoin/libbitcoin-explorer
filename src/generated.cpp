@@ -36,6 +36,8 @@ using namespace extension;
 bool broadcast(const function<void(shared_ptr<command>)> func)
 {
     func(make_shared<addr>());
+    func(make_shared<addr_decode>());
+    func(make_shared<addr_encode>());
     func(make_shared<balance>());
     func(make_shared<base58_decode>());
     func(make_shared<base58_encode>());
@@ -46,12 +48,10 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<blke_fetch_transaction>());
     func(make_shared<brainwallet>());
     func(make_shared<btc>());
-    func(make_shared<decode_addr>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
-    func(make_shared<encode_addr>());
     func(make_shared<help>());
     func(make_shared<satoshi>());
     func(make_shared<stealth_addr>());
@@ -65,6 +65,10 @@ shared_ptr<command> find(const string& symbol)
 {
     if (symbol == addr::symbol())
         return make_shared<addr>();
+    if (symbol == addr_decode::symbol())
+        return make_shared<addr_decode>();
+    if (symbol == addr_encode::symbol())
+        return make_shared<addr_encode>();
     if (symbol == balance::symbol())
         return make_shared<balance>();
     if (symbol == base58_decode::symbol())
@@ -85,8 +89,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<brainwallet>();
     if (symbol == btc::symbol())
         return make_shared<btc>();
-    if (symbol == decode_addr::symbol())
-        return make_shared<decode_addr>();
     if (symbol == ec_add::symbol())
         return make_shared<ec_add>();
     if (symbol == ec_add_secrets::symbol())
@@ -95,8 +97,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_multiply>();
     if (symbol == ec_multiply_secrets::symbol())
         return make_shared<ec_multiply_secrets>();
-    if (symbol == encode_addr::symbol())
-        return make_shared<encode_addr>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == satoshi::symbol())

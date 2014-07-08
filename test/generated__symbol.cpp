@@ -32,6 +32,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__addr__returns_expected_value)
     BOOST_REQUIRE(addr::symbol() == std::string("addr"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__addr_decode__returns_expected_value)
+{
+    BOOST_REQUIRE(addr_decode::symbol() == std::string("addr-decode"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__addr_encode__returns_expected_value)
+{
+    BOOST_REQUIRE(addr_encode::symbol() == std::string("addr-encode"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__balance__returns_expected_value)
 {
     BOOST_REQUIRE(balance::symbol() == std::string("balance"));
@@ -82,11 +92,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__btc__returns_expected_value)
     BOOST_REQUIRE(btc::symbol() == std::string("btc"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__decode_addr__returns_expected_value)
-{
-    BOOST_REQUIRE(decode_addr::symbol() == std::string("decode-addr"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_add__returns_expected_value)
 {
     BOOST_REQUIRE(ec_add::symbol() == std::string("ec-add"));
@@ -105,11 +110,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply_secrets__returns_expected_value)
 {
     BOOST_REQUIRE(ec_multiply_secrets::symbol() == std::string("ec-multiply-secrets"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__encode_addr__returns_expected_value)
-{
-    BOOST_REQUIRE(encode_addr::symbol() == std::string("encode-addr"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)

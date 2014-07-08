@@ -45,6 +45,8 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
     auto foo = error.str();
     SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
         "addr\n" \
+        "addr-decode\n" \
+        "addr-encode\n" \
         "balance\n" \
         "base58-decode\n" \
         "base58-encode\n" \
@@ -55,12 +57,10 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "blke-fetch-transaction\n" \
         "brainwallet\n" \
         "btc\n" \
-        "decode-addr\n" \
         "ec-add\n" \
         "ec-add-secrets\n" \
         "ec-multiply\n" \
         "ec-multiply-secrets\n" \
-        "encode-addr\n" \
         "help\n" \
         "satoshi\n" \
         "stealth-addr\n" \

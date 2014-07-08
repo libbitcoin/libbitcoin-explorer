@@ -24,6 +24,8 @@ libsx_la_SOURCES = \
 # Generated from XML data source.
 libsx_la_SOURCES += \
     addr.cpp \
+    addr-decode.cpp \
+    addr-encode.cpp \
     base58-decode.cpp \
     base58-encode.cpp \
     base58check-decode.cpp \
@@ -33,12 +35,10 @@ libsx_la_SOURCES += \
     blke-fetch-transaction.cpp \
     brainwallet.cpp \
     btc.cpp \
-    decode-addr.cpp \
     ec-add.cpp \
     ec-add-secrets.cpp \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
-    encode-addr.cpp \
     help.cpp \
     satoshi.cpp \
     stealth-addr.cpp \

@@ -35,6 +35,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>

@@ -102,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\addr-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\addr-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\balance.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58-encode.hpp" />
@@ -112,12 +114,10 @@
     <ClInclude Include="..\..\..\..\include\sx\command\blke-fetch-transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\decode-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\encode-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
@@ -140,6 +140,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\addr.cpp" />
+    <ClCompile Include="..\..\..\..\src\addr-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\addr-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\balance.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -152,12 +154,10 @@
     <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\src\brainwallet.cpp" />
     <ClCompile Include="..\..\..\..\src\btc.cpp" />
-    <ClCompile Include="..\..\..\..\src\decode-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp" />
-    <ClCompile Include="..\..\..\..\src\encode-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
