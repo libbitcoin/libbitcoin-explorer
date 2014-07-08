@@ -32,7 +32,6 @@ BOOST_AUTO_TEST_CASE(addr__invoke__public_key__okay_output)
 {
     // $ sx addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(addr);
-    // BUGBUG: this fails to copy the contained key_ pointer an assignment after construct.
     command.set_key_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("1uUA1tQ3H1moXtxPJvAN1kzmcdu5NCc6d\n");
@@ -42,7 +41,6 @@ BOOST_AUTO_TEST_CASE(addr__invoke__public_key_version__okay_output)
 {
     // $ sx addr -v 42 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(addr);
-    // BUGBUG: this fails to copy the contained key_ pointer an assignment after construct.
     command.set_key_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
     command.set_version_option(42);
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
