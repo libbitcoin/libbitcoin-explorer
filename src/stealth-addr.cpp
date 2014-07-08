@@ -20,11 +20,13 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/stealth-addr.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 // TODO: name 'some_flag' and move to flags enum.
 // TODO: enable prefix filter, currently unused.
@@ -69,9 +71,8 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     raw_address.push_back(signatures);
     raw_address.push_back(default_stealth_prefix_filter);
     append_checksum(raw_address);
-    const auto stealth_address = encode_base58(raw_address);
 
     // Return the results.
-    output << stealth_address << std::endl;
+    output << base58(raw_address) << std::endl;
     return console_result::okay;
 }

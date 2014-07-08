@@ -21,20 +21,25 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/addr.hpp>
+#include <sx/serializer/address.hpp>
 #include <sx/utility/coin.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 console_result addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto key = get_key_argument();
+    const auto key = get_key_argument();
     auto version = get_version_option();
 
-    // Convert the input to a key.
+    // TODO: generate a flag to indicate whether optional values are set.
+    bool versioned = true;
+
+    // TODO: create ec_key (public or private) serializer.
     elliptic_curve_key ec_key;
     if (!read_public_or_private_key(ec_key, key))
     {
@@ -42,15 +47,11 @@ console_result addr::invoke(std::istream& input, std::ostream& output,
         return console_result::failure;
     }
 
-    // Get the (public key) payment address from the public or private key.
-    payment_address address;
-    set_public_key(address, ec_key.public_key());
+    // Get the public key's payment address.
+    auto hash = bitcoin_short_hash(ec_key.public_key());
+    version = if_else(versioned, version, payment_address::pubkey_version);
+    address address(payment_address(version, hash));
 
-    // Set the desired key version, using zero as a sentinel for 'not set'.
-    // TODO: generate a flag to indicate whether optional values are set.
-    if (version > 0)
-        address.set(version, address.hash());
-
-    output << address.encoded() << std::endl;
+    output << address << std::endl;
     return console_result::okay;
 }

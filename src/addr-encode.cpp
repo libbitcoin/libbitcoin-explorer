@@ -34,11 +34,9 @@ console_result addr_encode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto hash = get_ripemd160_argument();
+    const auto ripemd160 = get_ripemd160_argument();
     const auto version = get_version_option();
 
-    address address(payment_address(version, hash));
-
-    output << address << std::endl;
+    output << address(payment_address(version, ripemd160)) << std::endl;
     return console_result::okay;
 }

@@ -149,7 +149,7 @@ bool read_private_key(bc::elliptic_curve_key& key, const std::string& arg,
  * @return          True if a key was read.
  */
 bool read_public_or_private_key(bc::elliptic_curve_key& key,
-    std::string& arg);
+    const std::string& arg);
 
 /**
  * Validate the bitcoin checksum of a chunk of binary data.

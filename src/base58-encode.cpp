@@ -33,9 +33,7 @@ console_result base58_encode::invoke(std::istream& input,
 {
     // Bound parameters.
     const auto hex = get_hex_argument();
-
-    base58 encoded(hex);
-
-    output << encoded << std::endl;
+    
+    output << base58(hex) << std::endl;
     return console_result::okay;
 }

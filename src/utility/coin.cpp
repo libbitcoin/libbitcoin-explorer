@@ -122,7 +122,8 @@ bool read_private_key(elliptic_curve_key& key, const std::string& arg,
     return key.set_secret(secret, compressed_flag);
 }
 
-bool read_public_or_private_key(elliptic_curve_key& key, std::string& arg)
+bool read_public_or_private_key(elliptic_curve_key& key, 
+    const std::string& arg)
 {
     if (read_private_key(key, arg))
         return true;
