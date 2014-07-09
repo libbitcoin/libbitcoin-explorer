@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -12,10 +12,10 @@
     <Filter Include="include\command">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
-	<Filter Include="include\command\obelisk">
+    <Filter Include="include\command\obelisk">
       <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
     </Filter>
-	<Filter Include="include\command\stub">
+    <Filter Include="include\command\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\serializer">

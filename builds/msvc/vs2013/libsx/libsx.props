@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <Option-leveldb>true</Option-leveldb>
     <Option-obelisk>true</Option-obelisk>
   </PropertyGroup>  
   
@@ -86,7 +85,6 @@
   <!-- Messages -->
   
   <Target Name="OptionInfo" BeforeTargets="PrepareForBuild">
-    <Message Text="Option-leveldb    : $(Option-leveldb)" Importance="high"/>
     <Message Text="Option-obelisk    : $(Option-obelisk)" Importance="high"/>
   </Target>
 

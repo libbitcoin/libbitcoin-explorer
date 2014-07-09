@@ -8,10 +8,6 @@
     <Rule.DataSource>
       <DataSource Persistence="ProjectFile" ItemType="" />
     </Rule.DataSource>
-      <EnumProperty Name="Option-leveldb" DisplayName="Enable LevelDB" Description="Enable the LevelDB build option" Category="leveldb">
-        <EnumValue Name="" DisplayName="No" />
-        <EnumValue Name="true" DisplayName="Yes" />
-    </EnumProperty>
     <EnumProperty Name="Option-obelisk" DisplayName="Enable Testnet" Description="Enable the Obelisk build option" Category="obelisk">
       <EnumValue Name="" DisplayName="No" />
       <EnumValue Name="true" DisplayName="Yes" />
