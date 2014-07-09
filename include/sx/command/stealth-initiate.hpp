@@ -28,8 +28,13 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -75,42 +80,6 @@ public:
     const char* subcategory()
     {
         return "STEALTH";
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-            { "Initiate a new stealth payment." },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-            { "sx stealth-initiate EPHEM_SECRET SCAN_PUBKEY SPEND_PUBKEY" },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-            { "Initiate a new stealth payment." },
-        };
     }
 
     /**

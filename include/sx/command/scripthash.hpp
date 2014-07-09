@@ -28,8 +28,13 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -75,49 +80,6 @@ public:
     const char* subcategory()
     {
         return "MULTISIG ADDRESSES";
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-            { "Create BIP 16 script hash address from raw script hex." },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-            { "sx scripthash" },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-            { "Create BIP 16 script hash address from raw script hex (from STDIN)." }
-            { "" }
-            { "EXAMPLE:" }
-            { "" }
-            { "  # generate an address for 2-of-3 multisig transactions" }
-            { "  for n in 1 2 3; do echo 'b220b5bd2909df1d74b71c9e664233bf' | sx genpriv $n > key${n}; done" }
-            { "  sx rawscript 2 [ $(cat key1 | sx pubkey) ] [ $(cat key2 | sx pubkey) ] [ $(cat key3 | sx pubkey) ] 3 checkmultisig | sx scripthash" }
-            { "  33opBmv3oJTXu6rxtzsr571SL2Srtw9Cg8" },
-        };
     }
 
     /**

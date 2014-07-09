@@ -28,8 +28,13 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -75,51 +80,6 @@ public:
     const char* subcategory()
     {
         return "BRAIN STORAGE";
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-            { "Make 12 word mnemonic out of 128 bit electrum or bip32 seed." },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-            { "sx mnemonic" }
-            { "sx mnemonic SEED" }
-            { "sx mnemonic WORD1 WORD2 WORD3 ... WORD12" }
-            { "sx mnemonic <<< SEED" }
-            { "sx mnemonic <<< 'WORD1 WORD2 WORD3 ... WORD12'" },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-            { "Electrum compatible 12 word seeds." }
-            { "" }
-            { "  $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic" }
-            { "  people blonde admit dart couple different truth common alas stumble time cookie" }
-            { "  $ echo 'people blonde admit dart couple different truth common alas stumble time cookie' | sx mnemonic" }
-            { "  148f0a1d77e20dbaee3ff920ca40240d" },
-        };
     }
 
     /**

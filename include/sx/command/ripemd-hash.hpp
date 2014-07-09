@@ -28,8 +28,13 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -75,42 +80,6 @@ public:
     const char* subcategory()
     {
         return "HASHES";
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-            { "RIPEMD hash data from STDIN." },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-            { "sx ripemd-hash" },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-            { "RIPEMD hash data from STDIN." },
-        };
     }
 
     /**

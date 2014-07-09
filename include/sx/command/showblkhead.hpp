@@ -28,8 +28,13 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -75,55 +80,6 @@ public:
     const char* subcategory()
     {
         return "HEADERS";
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-            { "Show the details of a block header." },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-            { "sx showblkhead [FILENAME]" },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-            { "'showblkhead' allows inspecting of block headers." }
-            { "" }
-            { "  $ sx showblkhead headerfile.blk" }
-            { "  hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0" }
-            { "  version: 1  locktime: 0" }
-            { "  Input:" }
-            { "    previous output:" }
-            { "  97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0" }
-            { "    script:   sequence: 4294967295" }
-            { "  Output:" }
-            { "    value: 90000" }
-            { "    script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify" }
-            { "  checksig" }
-            { "    address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe" },
-        };
     }
 
     /**

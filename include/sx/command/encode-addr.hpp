@@ -32,6 +32,7 @@
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
@@ -82,39 +83,6 @@ public:
     }
 
     /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-        };
-    }
-
-    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      *
@@ -122,8 +90,7 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("RIPEMD160", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -143,23 +110,8 @@ public:
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                "The path and file name for the configuration settings file for this application."
+                ""
             )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Convert an address from RIPEMD160 to Base58Check."
-            )
-            (
-                "version,v",
-                value<serializer::byte>(&option_.version),
-                "The desired version number."
-            )
-            (
-                "RIPEMD160",
-                value<serializer::ripemd160>(&argument_.ripemd160),
-                "The hex string to convert."
-            );
 
         return options;
     }
@@ -173,9 +125,6 @@ public:
     void load_stream(std::istream& input,
         boost::program_options::variables_map& variables)
     {
-        auto ripemd160 = variables.find("RIPEMD160");
-        if (ripemd160 == variables.end())
-            parse(argument_.ripemd160, read_stream(input));
     }
 
     /**
@@ -191,54 +140,6 @@ public:
         
     /* Properties */
 
-    /**
-     * Get the value of the RIPEMD160 argument.
-     */
-    virtual serializer::ripemd160 get_ripemd160_argument()
-    {
-        return argument_.ripemd160;
-    }
-    
-    /**
-     * Set the value of the RIPEMD160 argument.
-     */
-    virtual void set_ripemd160_argument(serializer::ripemd160 value)
-    {
-        argument_.ripemd160 = value;
-    }
-
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(bool value)
-    {
-        option_.help = value;
-    }
-
-    /**
-     * Get the value of the version option.
-     */
-    virtual serializer::byte get_version_option()
-    {
-        return option_.version;
-    }
-    
-    /**
-     * Set the value of the version option.
-     */
-    virtual void set_version_option(serializer::byte value)
-    {
-        option_.version = value;
-    }
-
 private:
 
     /**
@@ -249,9 +150,7 @@ private:
     struct argument
     {
         argument()
-          : ripemd160()
             {}
-        serializer::ripemd160 ripemd160;
     } argument_;
     
     /**
@@ -262,11 +161,7 @@ private:
     struct option
     {
         option()
-          : help(),
-            version()
             {}    
-        bool help;
-        serializer::byte version;
     } option_;
 };
 

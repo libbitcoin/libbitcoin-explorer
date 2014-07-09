@@ -28,8 +28,13 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -75,64 +80,6 @@ public:
     const char* subcategory()
     {
         return "SCRIPTING";
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-            { "Show the details of a transaction." },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-            { "sx showtx [-j] [FILENAME]" },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-            { "'showtx' allows inspecting of tx files." }
-            { "" }
-            { "  -j, --json                 Enable json parseable output." }
-            { "" }
-            { "Example:" }
-            { "" }
-            { "  $ sx fetch-transaction cd484f683bc99c94948613a7f7254880e9c98cd74f2760a2d2c4e372fda1bc6a | sx showtx" }
-            { "  hash: cd484f683bc99c94948613a7f7254880e9c98cd74f2760a2d2c4e372fda1bc6a" }
-            { "  version: 1" }
-            { "  locktime: 0" }
-            { "  Input:" }
-            { "    previous output: f97367c5dc9e521a4c541327cbff69d118e35a2d0b67f91eb7771741a6374b20:0" }
-            { "    script: [ 3046022100f63b1109e1b04c0a4b5230e6f6c75f5e2a10c16d022cdf93de9b3cc946e6e24a022100ae3da40f05504521f2f3557e736a2d1724d6d1d8c18b66a64990bf1afee78dba01 ] [ 028a2adb719bbf7e9cf0cb868d4f30b10551f2a4402eb2ece9b177b49e68e90511 ]" }
-            { "    sequence: 4294967295" }
-            { "    address: 1NYMePixLjAATLaz55vN7FfTLUfFB23Tt" }
-            { "  Output:" }
-            { "    value: 2676400" }
-            { "    script: dup hash160 [ 6ff00bd374abb3a3f19d1576bb36520b2cb15e2d ] equalverify checksig" }
-            { "    address: 1BCsZziw8Q1sMhxr2DjAR7Rmt1qQvYwXSU" }
-            { "  Output:" }
-            { "    value: 1000000" }
-            { "    script: hash160 [ 0db1635fe975792a9a7b6f2d4061b730478dc6b9 ] equal" }
-            { "    address: 32wRDBezxnazSBxMrMqLWqD1ajwEqnDnMc" },
-        };
     }
 
     /**

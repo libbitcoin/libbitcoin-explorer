@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_DECODE_ADDR_HPP
-#define SX_DECODE_ADDR_HPP
+#ifndef SX_EC_TWEAK_ADD_HPP
+#define SX_EC_TWEAK_ADD_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -46,9 +46,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx decode-addr command.
+ * Class to implement the sx ec-tweak-add command.
  */
-class decode_addr 
+class ec_tweak_add 
     : public command
 {
 public:
@@ -56,14 +56,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "decode-addr"; }
+    static const char* symbol() { return "ec-tweak-add"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return decode_addr::symbol();
+        return ec_tweak_add::symbol();
     }
 
     /**
@@ -79,7 +79,7 @@ public:
      */
     const char* subcategory()
     {
-        return "FORMAT (BASE58CHECK)";
+        return "EC MATH";
     }
 
     /**

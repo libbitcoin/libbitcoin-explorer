@@ -28,8 +28,13 @@
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/base58.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/key.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -75,57 +80,6 @@ public:
     const char* subcategory()
     {
         return "BLOCKCHAIN QUERIES";
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command description, multiple lines, punctuated.
-     */
-    const std::vector<const char*> description()
-    {
-        return
-        {
-            { "Get list of output points, values, and their spends for an" }
-            { "address. grep can filter for just unspent outputs which can" }
-            { "be fed into mktx." },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The non-localizable command usage examples, multiple lines.
-     */
-    const std::vector<const char*> example()
-    {
-        return
-        {
-            { "sx history [-j] ADDRESS1 [ADDRESS2...]" },
-        };
-    }
-
-    /**
-     * DEPRECATED
-     * The localizable command explanation, multiple lines, punctuated.
-     */
-    const std::vector<const char*> explanation()
-    {
-        return
-        {
-            { "The history tool uses a network connection to make requests against the" }
-            { "load balancer backend." }
-            { "" }
-            { "  -j, --json                 Enable json parseable output." }
-            { "" }
-            { "Example:" }
-            { "" }
-            { "  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history" }
-            { "  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }
-            { "    output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1" }
-            { "    output_height: 247683" }
-            { "    value:  100000" }
-            { "    spend: b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0" }
-            { "    spend_height: 247742" },
-        };
     }
 
     /**
