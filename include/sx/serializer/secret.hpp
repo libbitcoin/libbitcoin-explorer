@@ -21,12 +21,17 @@
 #define SECRET_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
+
+#define SX_SERIALIZER_SECRET_EXCEPTION \
+    "Invalid elliptic curve secret."
 
 #define SX_SERIALIZER_SECRET_SIZE_EXCEPTION \
     "Elliptic curve secret must be 32 bytes."
@@ -93,11 +98,14 @@ public:
     {
         std::string hex;
         input >> hex;
-        auto chunk = bc::decode_hex(hex);
+        argument.value_ = bc::decode_hash(hex);
 
-        // TODO: determine how to properly raise error in deserialization.
-        if (!vector_to_array(chunk, argument.value_))
-            throw std::exception(SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
+        if (argument.value_ == bc::null_hash)
+            throw po::invalid_option_value(
+                SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
+
+        //if (!bc::verify_private_key(argument))
+        //    throw po::invalid_option_value(SX_SERIALIZER_SECRET_EXCEPTION);
 
         return input;
     }

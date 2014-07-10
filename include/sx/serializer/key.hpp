@@ -21,7 +21,9 @@
 #define KEY_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/utility/coin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -33,7 +35,7 @@ namespace serializer {
     "Invalid public or private key."
 
 /**
- * Serialization helper to convert between hex string and elliptic_curve_key.
+ * Serialization helper to convert between hex string and ec_point.
  * Reads public or private key and writes corresponding public key.
  */
 class key
@@ -49,11 +51,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  arg  The value to initialize with.
      */
-    key(const std::string& hex)
+    key(const std::string& arg)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(arg) >> *this;
     }
 
     /**
@@ -69,7 +71,7 @@ public:
      *
      * @return  A reference to the object's internal data.
      */
-    bc::elliptic_curve_key& data()
+    bc::ec_point& data()
     {
         return value_;
     }
@@ -79,37 +81,10 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::elliptic_curve_key() const
+    operator const bc::ec_point() const
     {
         return value_; 
     }
-
-    /**
-     * Overload cast to bc::data_chunk, returning the public key value.
-     *
-     * @return  This object's value cast to bc::data_chunk.
-     */
-    operator const bc::data_chunk() const
-    {
-        return value_.public_key(); 
-    }
-
-    ///**
-    // * TROUBLESHOOTING ONLY.
-    // */
-    //key& operator=(const key& value)
-    //{
-    //    // TODO: change EC_KEY_copy to EC_KEY_dup
-    //    //elliptic_curve_key& elliptic_curve_key::operator=(
-    //    //    const elliptic_curve_key& other)
-    //    //{
-    //    //    key_ = EC_KEY_dup(other.key_);
-    //    //    return *this;
-    //    //}
-
-    //    value_ = value.value_;
-    //    return *this;
-    //}
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -120,12 +95,21 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, key& argument)
     {
-        std::string hex;
-        input >> hex;
+        std::string arg;
+        input >> arg;
 
-        // TODO: determine how to properly raise error in deserialization.
-        if (!read_public_or_private_key(argument.value_, hex))
-            throw std::exception(SX_SERIALIZER_KEY_EXCEPTION);
+        // First try and read from private key.
+        if (!read_public_of_private_key(argument.value_, arg))
+        {
+            // Otherwise read as public key.
+            argument.value_ = bc::decode_hex(arg);
+
+            if (!bc::verify_public_key_fast(argument))
+                throw po::invalid_option_value(SX_SERIALIZER_KEY_EXCEPTION);
+
+            //if (!bc::verify_public_key(argument))
+            //    throw po::invalid_option_value(SX_SERIALIZER_KEY_EXCEPTION);
+        }
 
         return input;
     }
@@ -140,7 +124,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const key& argument)
     {
-        output << bc::encode_hex(argument.value_.public_key());
+        output << bc::encode_hex(argument.value_);
         return output;
     }
 
@@ -149,7 +133,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::elliptic_curve_key value_;
+    bc::ec_point value_;
 };
 
 } // sx

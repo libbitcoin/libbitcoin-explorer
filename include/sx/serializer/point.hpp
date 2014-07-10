@@ -21,18 +21,20 @@
 #define POINT_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_POINT_PREFIX_EXCEPTION \
-    "Elliptic curve point must start with 0x02 or 0x03."
+#define SX_SERIALIZER_POINT_EXCEPTION \
+    "Invalid elliptic curve point."
 
-#define SX_SERIALIZER_POINT_SIZE_EXCEPTION \
-    "Elliptic curve point must be 33 bytes."
+#define SX_SERIALIZER_POINT_PREFIX_EXCEPTION \
+    "Invalid elliptic curve point prefix byte."
 
 /**
  * Serialization helper to convert between hex string and ec_point.
@@ -98,13 +100,12 @@ public:
         input >> hex;
         auto chunk = bc::decode_hex(hex);
 
-        // TODO: determine how to properly raise error in deserialization.
-        if (chunk.size() != bc::ec_compressed_size)
-            throw std::exception(SX_SERIALIZER_POINT_SIZE_EXCEPTION);
+        if (!bc::verify_public_key_fast(chunk))
+            throw po::invalid_option_value(
+                SX_SERIALIZER_POINT_PREFIX_EXCEPTION);
 
-        // TODO: determine how to properly raise error in deserialization.
-        if (chunk[0] != 0x02 && chunk[0] != 0x03)
-            throw std::exception(SX_SERIALIZER_POINT_PREFIX_EXCEPTION);
+        //if (!bc::verify_public_key(chunk))
+        //    throw po::invalid_option_value(SX_SERIALIZER_POINT_EXCEPTION);
         
         argument.value_.assign(chunk.begin(), chunk.end());
         return input;
