@@ -17,13 +17,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/utility/coin.hpp>
+
 #include <iostream>
 #include <random>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/console.hpp>
 

@@ -17,8 +17,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/base58-encode.hpp>
 #include <sx/command/base58check-encode.hpp>
+
+#include <sx/command/base58-encode.hpp>
 #include <sx/command/wrap.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>

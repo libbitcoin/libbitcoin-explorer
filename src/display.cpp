@@ -17,9 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/display.hpp>
+
 #include <iostream>
 #include <sx/dispatch.hpp>
-#include <sx/display.hpp>
 #include <sx/utility/console.hpp>
 
 // TODO: once these settle down make testable through stream injection.

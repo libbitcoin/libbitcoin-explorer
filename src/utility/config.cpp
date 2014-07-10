@@ -17,9 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/utility/config.hpp>
+
 #include <string>
 #include <boost/filesystem.hpp>
-#include <sx/utility/config.hpp>
 #include <sx/utility/environment.hpp>
 
 namespace sx {

@@ -219,12 +219,13 @@ std::shared_ptr<command> find(const std::string& symbol);
 .echo "Generating src/generated.cpp..."
 .output "../src/generated.cpp"
 .copyleft()
+#include <sx/generated.hpp>
+
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
 #include <sx/command.hpp>
-#include <sx/generated.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 

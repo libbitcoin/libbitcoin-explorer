@@ -17,6 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/balance.hpp>
+
 #include <atomic>
 #include <condition_variable>
 #include <iostream>
@@ -28,7 +30,6 @@
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/command/balance.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/obelisk.hpp>
 #include <sx/serializer/address.hpp>

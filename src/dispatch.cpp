@@ -17,12 +17,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/dispatch.hpp>
+
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
 #include <sx/generated.hpp>
-#include <sx/dispatch.hpp>
 #include <sx/display.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>

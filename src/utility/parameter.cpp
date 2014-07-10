@@ -17,12 +17,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/utility/parameter.hpp>
+
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
 #include <sx/define.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/parameter.hpp>
 
 using namespace sx;
 

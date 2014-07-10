@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/utility/printer.hpp>
+
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <sx/define.hpp>
-#include <sx/utility/printer.hpp>
 
 // TODO: obtain from XML resource as localized text.
 // NOTE: in the usage format "sx command" is the first parameter.

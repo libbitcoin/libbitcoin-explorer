@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/addr.hpp>
+
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/addr.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/key.hpp>
 

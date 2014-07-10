@@ -17,9 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/ec-multiply-secrets.hpp>
+
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/ec-multiply-secrets.hpp>
 #include <sx/serializer/secret.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>

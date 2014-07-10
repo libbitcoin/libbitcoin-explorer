@@ -23,6 +23,8 @@
 // without first testing it.
 #pragma warning(push) 
 #pragma warning(disable : 4996)
+#include <sx/utility/console.hpp>
+
 #include <iomanip>
 #include <iostream>
 #include <stdint.h>
@@ -31,7 +33,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
 #pragma warning(pop)
 
 namespace sx {

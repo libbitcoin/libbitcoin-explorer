@@ -17,9 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/addr-encode.hpp>
+
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/addr-encode.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/utility/console.hpp>
