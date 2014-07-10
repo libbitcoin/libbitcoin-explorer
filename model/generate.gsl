@@ -1039,7 +1039,6 @@ endif
 -->
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <NuGetPackageImportStamp>2aa76a0e</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
     <ProjectName>libsx</ProjectName>
@@ -1172,9 +1171,6 @@ endif
   <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\LevelDB.1.16.0.5\\build\\native\\LevelDB.props" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\LevelDB.1.16.0.5\\build\\native\\LevelDB.props')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\Snappy.1.1.1.7\\build\\native\\Snappy.props" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\Snappy.1.1.1.7\\build\\native\\Snappy.props')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.55.0.16\\build\\native\\boost.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.55.0.16\\build\\native\\boost_filesystem.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.4\\build\\native\\libzmq_vc120.targets')" />
@@ -1207,9 +1203,6 @@ endif
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\Crc32C.1.0.4\\build\\native\\Crc32C.props'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\Snappy.1.1.1.7\\build\\native\\Snappy.props')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\Snappy.1.1.1.7\\build\\native\\Snappy.props'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\LevelDB.1.16.0.5\\build\\native\\LevelDB.props')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\LevelDB.1.16.0.5\\build\\native\\LevelDB.props'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets'))" />
   </Target>
 </Project>
@@ -1230,10 +1223,10 @@ endif
     <Filter Include="include\\command">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
-	<Filter Include="include\\command\\obelisk">
+    <Filter Include="include\\command\\obelisk">
       <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
     </Filter>
-	<Filter Include="include\\command\\stub">
+    <Filter Include="include\\command\\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\\serializer">
