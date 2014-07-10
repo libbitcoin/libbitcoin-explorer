@@ -94,42 +94,28 @@ bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
     return true;
 }
 
-//bool read_private_key(elliptic_curve_key& key, std::istream& stream,
-//    key_compression is_compressed)
-//{
-//    return read_private_key(key, read_stream(stream), is_compressed);
-//}
-
-bool read_private_key(elliptic_curve_key& key, const std::string& arg,
-    key_compression is_compressed)
+bool read_public_of_private_key(ec_point& key, const std::string& arg,
+    key_compression compression)
 {
-    bool compressed_flag = true;
+    bool compressed = true;
     auto secret = decode_hash(arg);
     if (secret == null_hash)
     {
-        // Both compression and uncompression options are necessary because
-        // the default in this case is to accept the format of the key.
+        // Use the compression format of the key.
+        compressed = libwallet::is_wif_compressed(arg);
         secret = libwallet::wif_to_secret(arg);
-        compressed_flag = libwallet::is_wif_compressed(arg);
     }
 
-    if (secret == null_hash)
+    // Not a valid private key.
+    if (secret == bc::null_hash)
         return false;
 
-    if (is_compressed != key_compression::unspecified)
-        compressed_flag = (is_compressed == key_compression::on);
+    // Override compression (to false), otherwise as imported or true.
+    if (compression != key_compression::unspecified)
+        compressed = (compression == key_compression::on);
 
-    return key.set_secret(secret, compressed_flag);
-}
-
-bool read_public_or_private_key(elliptic_curve_key& key, 
-    const std::string& arg)
-{
-    if (read_private_key(key, arg))
-        return true;
-
-    const auto pubkey = decode_hex(arg);
-    return key.set_public_key(pubkey);
+    key = bc::secret_to_public_key(secret, compressed);
+    return true;
 }
 
 bool validate_checksum(const data_chunk& data)
