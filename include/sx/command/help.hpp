@@ -134,8 +134,7 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    void load_stream(std::istream& input,
-        boost::program_options::variables_map& variables)
+    void load_stream(std::istream& input, po::variables_map& variables)
     {
         auto command = variables.find("COMMAND");
         if (command == variables.end())
