@@ -21,7 +21,9 @@
 #define ADDRESS_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -106,7 +108,7 @@ public:
 
         // TODO: determine how to properly raise error in deserialization.
         if (!argument.value_.set_encoded(base58))
-            throw std::exception(SX_SERIALIZER_ADDRESS_EXCEPTION);
+            throw po::invalid_option_value(SX_SERIALIZER_ADDRESS_EXCEPTION);
 
         return input;
     }

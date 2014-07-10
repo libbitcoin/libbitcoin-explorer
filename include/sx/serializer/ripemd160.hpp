@@ -21,7 +21,9 @@
 #define RIPEMD160_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -115,7 +117,7 @@ public:
 
         // TODO: determine how to properly raise error in deserialization.
         if (hash == bc::null_short_hash)
-            throw std::exception(SX_SERIALIZER_RIPEMD160_EXCEPTION);
+            throw po::invalid_option_value(SX_SERIALIZER_RIPEMD160_EXCEPTION);
 
         std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;
