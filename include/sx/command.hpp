@@ -25,6 +25,7 @@
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
+#include <sx/define.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
 
@@ -141,8 +142,7 @@ public:
      *
      * @return  The loaded argument definitions.
      */
-    virtual boost::program_options::positional_options_description&
-        load_arguments()
+    virtual po::positional_options_description& load_arguments()
     {
         return argument_metadata_;
     }
@@ -152,10 +152,9 @@ public:
      *
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(
-        boost::program_options::options_description& definitions)
+    virtual void load_environment(po::options_description& definitions)
     {
-        using namespace boost::program_options;
+        using namespace po;
         definitions.add_options()
             /* This composes with the command line options. */
             (
@@ -175,7 +174,7 @@ public:
      *
      * @return  The loaded option definitions.
      */
-    virtual boost::program_options::options_description& load_options()
+    virtual po::options_description& load_options()
     {
         return option_metadata_;
     }
@@ -185,10 +184,9 @@ public:
      *
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(
-        boost::program_options::options_description& definitions)
+    virtual void load_settings(po::options_description& definitions)
     {
-        using namespace boost::program_options;
+        using namespace po;
         definitions.add_options()
             (
                 "general.testnet",
@@ -218,18 +216,16 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    virtual void load_stream(std::istream& input,
-        boost::program_options::variables_map& variables)
-    {
-    }
+    virtual void load_stream(std::istream& input, po::variables_map& variables)
+	{
+	}
     
     /* Properties */
     
     /**
      * Get command line argument metadata.
      */
-    virtual boost::program_options::positional_options_description& 
-        get_argument_metadata()
+    virtual po::positional_options_description& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -237,7 +233,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    virtual boost::program_options::options_description& get_option_metadata()
+    virtual po::options_description& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -319,12 +315,12 @@ private:
     /**
      * Command line argument metadata.
      */
-    boost::program_options::positional_options_description argument_metadata_;
+    po::positional_options_description argument_metadata_;
 
     /**
      * Command line option metadata.
      */
-    boost::program_options::options_description option_metadata_;
+    po::options_description option_metadata_;
     
     /**
      * Environment variable bound variables.
