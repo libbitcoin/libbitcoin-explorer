@@ -39,7 +39,7 @@ console_result ec_add::invoke(std::istream& input, std::ostream& output,
     auto secret = get_secret_argument();
 
     // Elliptic curve function POINT + (INTEGER * curve-generator-point).
-    if (!bc::ec_tweak_add(point.data(), secret))
+    if (!bc::ec_add(point.data(), secret))
     {
         cerr << SX_EC_ADD_OUT_OF_RANGE << std::endl;
         return console_result::failure;
