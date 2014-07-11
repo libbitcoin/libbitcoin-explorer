@@ -112,6 +112,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply_secrets__returns_expected_va
     BOOST_REQUIRE(ec_multiply_secrets::symbol() == std::string("ec-multiply-secrets"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__embed_addr__returns_expected_value)
+{
+    BOOST_REQUIRE(embed_addr::symbol() == std::string("embed-addr"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));

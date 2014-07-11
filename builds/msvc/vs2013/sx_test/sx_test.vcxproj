@@ -132,6 +132,7 @@
     <ClCompile Include="..\..\..\..\test\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\addr-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\embed-addr.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />

@@ -39,6 +39,7 @@ sx_command_include_HEADERS = \
     command/ec-add-secrets.hpp \
     command/ec-multiply.hpp \
     command/ec-multiply-secrets.hpp \
+    command/embed-addr.hpp \
     command/help.hpp \
     command/satoshi.hpp \
     command/stealth-addr.hpp \

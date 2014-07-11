@@ -95,6 +95,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\embed-addr.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -228,6 +231,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp">
       <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\embed-addr.cpp">
+      <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>

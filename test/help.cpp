@@ -61,6 +61,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "ec-add-secrets\n" \
         "ec-multiply\n" \
         "ec-multiply-secrets\n" \
+        "embed-addr\n" \
         "help\n" \
         "satoshi\n" \
         "stealth-addr\n" \

@@ -139,6 +139,17 @@
     <argument name="SECRET" limit="-1" required="true" type="secret" description="A secret to multiply."/>
     <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
+  
+  <!--
+  <explanation value="$ cat my_sculpture.jpg | sx embed-addr" />
+  <explanation value="1N9v8AKBqst9MNceV3gLmFKsgkKv1bZcBU" />
+  <explanation value="Now send some Bitcoin to that address and it will be embedded in the blockchain as a record of the data passed in." />
+  -->
+  <command symbol="embed-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
+    <option name="help" description="Generate an address used for embedding a record of data into the blockchain." />
+    <argument name="DATA" stream="true" description="The data to embed a record of."/>
+    <define name="SX_EMBED_ADDR_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
     <argument name="COMMAND" stream="true" description="Get help for the COMMAND." />

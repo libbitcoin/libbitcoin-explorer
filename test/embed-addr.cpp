@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,25 +17,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/embed-addr.hpp>
+#include <iostream>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-#include <sx/dispatch.hpp>
-#include <sx/utility/console.hpp>
+SX_USING_NAMESPACES()
 
-using namespace sx;
-using namespace sx::extension;
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(embed_addr__invoke)
 
-console_result embed_addr::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+BOOST_AUTO_TEST_CASE(embed_addr__invoke__bogus_data__failure_error)
 {
-    cerr << SX_EMBED_ADDR_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // $ sx embed-addr bogus
+    SX_DECLARE_COMMAND(embed_addr);
+    command.set_data_argument("bogus");
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_EMBED_ADDR_NOT_IMPLEMENTED "\n");
 }
 
-//#!/bin/bash
-//read INPUT
-//DECODED_ADDR=$(echo $INPUT | sx ripemd-hash)
-//SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)
-//HASH=$(echo $SCRIPT | sx ripemd-hash)
-//sx encode-addr $HASH
-//
+BOOST_AUTO_TEST_SUITE_END()

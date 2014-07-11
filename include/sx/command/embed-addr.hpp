@@ -46,6 +46,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_EMBED_ADDR_NOT_IMPLEMENTED \
+    "This command is not yet ported from python."
+
+/**
  * Class to implement the sx embed-addr command.
  */
 class embed_addr 
@@ -90,7 +96,8 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("DATA", 1);
     }
     
     /**
@@ -110,8 +117,18 @@ public:
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                ""
+                "The path and file name for the configuration settings file for this application."
             )
+            (
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Generate an address used for embedding a record of data into the blockchain."
+            )
+            (
+                "DATA",
+                value<std::string>(&argument_.data),
+                "The data to embed a record of."
+            );
 
         return options;
     }
@@ -122,9 +139,11 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    void load_stream(std::istream& input,
-        boost::program_options::variables_map& variables)
+    void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto data = variables.find("DATA");
+        if (data == variables.end())
+            parse(argument_.data, read_stream(input));
     }
 
     /**
@@ -140,6 +159,38 @@ public:
         
     /* Properties */
 
+    /**
+     * Get the value of the DATA argument.
+     */
+    virtual std::string get_data_argument()
+    {
+        return argument_.data;
+    }
+    
+    /**
+     * Set the value of the DATA argument.
+     */
+    virtual void set_data_argument(std::string value)
+    {
+        argument_.data = value;
+    }
+
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }
+    
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
+    }
+
 private:
 
     /**
@@ -150,7 +201,9 @@ private:
     struct argument
     {
         argument()
+          : data()
             {}
+        std::string data;
     } argument_;
     
     /**
@@ -161,7 +214,9 @@ private:
     struct option
     {
         option()
+          : help()
             {}    
+        bool help;
     } option_;
 };
 

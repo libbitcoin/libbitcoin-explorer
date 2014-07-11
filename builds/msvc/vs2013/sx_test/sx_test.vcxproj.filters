@@ -105,6 +105,9 @@
     <ClCompile Include="..\..\..\..\test\addr-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\embed-addr.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

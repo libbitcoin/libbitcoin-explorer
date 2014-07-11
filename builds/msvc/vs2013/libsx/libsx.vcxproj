@@ -118,6 +118,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\embed-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="..\..\..\..\src\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp" />
+    <ClCompile Include="..\..\..\..\src\embed-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />

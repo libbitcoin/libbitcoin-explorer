@@ -39,6 +39,7 @@ libsx_la_SOURCES += \
     ec-add-secrets.cpp \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
+    embed-addr.cpp \
     help.cpp \
     satoshi.cpp \
     stealth-addr.cpp \

@@ -53,6 +53,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
+    func(make_shared<embed_addr>());
     func(make_shared<help>());
     func(make_shared<satoshi>());
     func(make_shared<stealth_addr>());
@@ -98,6 +99,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_multiply>();
     if (symbol == ec_multiply_secrets::symbol())
         return make_shared<ec_multiply_secrets>();
+    if (symbol == embed_addr::symbol())
+        return make_shared<embed_addr>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == satoshi::symbol())

@@ -112,6 +112,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_multiply_secrets__returns_object)
     BOOST_REQUIRE(find(ec_multiply_secrets::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__embed_addr__returns_object)
+{
+    BOOST_REQUIRE(find(embed_addr::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);

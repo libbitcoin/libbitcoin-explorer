@@ -41,6 +41,7 @@
 #include <sx/command/ec-add-secrets.hpp>
 #include <sx/command/ec-multiply.hpp>
 #include <sx/command/ec-multiply-secrets.hpp>
+#include <sx/command/embed-addr.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/satoshi.hpp>
 #include <sx/command/stealth-addr.hpp>
