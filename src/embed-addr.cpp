@@ -28,6 +28,9 @@ using namespace sx::extension;
 console_result embed_addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
+    // Bound parameters.
+    auto data = get_data_argument();
+
     cerr << SX_EMBED_ADDR_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
