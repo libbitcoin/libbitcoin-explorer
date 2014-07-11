@@ -19,8 +19,6 @@
  */
 #include <sx/command/base58check-encode.hpp>
 
-#include <sx/command/base58-encode.hpp>
-#include <sx/command/wrap.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
 

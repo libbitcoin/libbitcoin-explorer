@@ -22,7 +22,6 @@
 //#include <sstream>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
-#include <sx/command/unwrap.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
 

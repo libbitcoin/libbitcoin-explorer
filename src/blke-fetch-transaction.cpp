@@ -23,7 +23,6 @@
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
 #include <sx/dispatch.hpp>
-#include <sx/command/unwrap.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace sx;

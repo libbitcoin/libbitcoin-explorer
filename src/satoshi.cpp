@@ -19,7 +19,6 @@
  */
 #include <sx/command/satoshi.hpp>
 
-#include <sx/command/unwrap.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
 
