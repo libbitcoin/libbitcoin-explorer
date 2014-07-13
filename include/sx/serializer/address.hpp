@@ -59,11 +59,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  address  The value to initialize with.
+     * @param[in]  value  The value to initialize with.
      */
-    address(const bc::payment_address& address)
+    address(const bc::payment_address& value)
     {
-        value_.set_encoded(address.encoded());
+        value_.set_encoded(value.encoded());
     }
 
     /**
@@ -72,7 +72,7 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     address(const address& other)
-        : value_(other.value_) {}
+        : address(other.value_) {}
 
     /**
      * Return a reference to the data member.

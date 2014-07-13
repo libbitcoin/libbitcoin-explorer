@@ -60,12 +60,22 @@ public:
     }
 
     /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    secret(const bc::ec_secret& value)
+    {
+        std::copy(value.begin(), value.end(), value_.begin());
+    }
+
+    /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
     secret(const secret& other)
-        : value_(other.value_) {}
+        : secret(other.value_) {}
 
     /**
      * Return a reference to the data member.

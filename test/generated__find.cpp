@@ -117,6 +117,36 @@ BOOST_AUTO_TEST_CASE(generated__find__embed_addr__returns_object)
     BOOST_REQUIRE(find(embed_addr::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__fetch_header_hash__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_header_hash::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_header_height__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_header_height::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_last_height__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_last_height::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_stealth__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_stealth::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_transaction__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_transaction::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_transaction_index__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_transaction_index::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);

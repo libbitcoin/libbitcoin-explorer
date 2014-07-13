@@ -98,6 +98,24 @@
     <ClInclude Include="..\..\..\..\include\sx\command\embed-addr.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-header-hash.hpp">
+      <Filter>include\command\obelisk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-header-height.hpp">
+      <Filter>include\command\obelisk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-last-height.hpp">
+      <Filter>include\command\obelisk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-stealth.hpp">
+      <Filter>include\command\obelisk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction.hpp">
+      <Filter>include\command\obelisk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction-index.hpp">
+      <Filter>include\command\obelisk</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -132,6 +150,9 @@
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\ripemd160.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\sha256.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\secret.hpp">
@@ -234,6 +255,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\embed-addr.cpp">
       <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-header-hash.cpp">
+      <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-header-height.cpp">
+      <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-last-height.cpp">
+      <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
+      <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-transaction.cpp">
+      <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-transaction-index.cpp">
+      <Filter>src\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>

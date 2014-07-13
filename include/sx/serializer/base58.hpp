@@ -44,14 +44,6 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  chunk  The value to initialize with.
-     */
-    base58(const bc::data_chunk& chunk)
-        : value_(chunk) {}
-
-    /**
-     * Initialization constructor.
-     * 
      * @param[in]  base58  The value to initialize with.
      */
     base58(const std::string& base58)
@@ -60,12 +52,20 @@ public:
     }
 
     /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    base58(const bc::data_chunk& value)
+        : value_(value.begin(), value.end()) {}
+
+    /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
     base58(const base58& other)
-        : value_(other.value_) {}
+        : base58(other.value_) {}
 
     /**
      * Return a reference to the data member.

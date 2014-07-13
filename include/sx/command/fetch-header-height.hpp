@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_BASE58CHECK_ENCODE_HPP
-#define SX_BASE58CHECK_ENCODE_HPP
+#ifndef SX_FETCH_HEADER_HEIGHT_HPP
+#define SX_FETCH_HEADER_HEIGHT_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -47,15 +47,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx fetch-header-height command.
  */
-#define SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED \
-    "This command is not yet ported from python."
-
-/**
- * Class to implement the sx base58check-encode command.
- */
-class base58check_encode 
+class fetch_header_height 
     : public command
 {
 public:
@@ -63,14 +57,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "base58check-encode"; }
+    static const char* symbol() { return "fetch-header-height"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return base58check_encode::symbol();
+        return fetch_header_height::symbol();
     }
 
     /**
@@ -78,7 +72,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
+        return "ONLINE (OBELISK)";
     }
 
     /**
@@ -86,7 +80,7 @@ public:
      */
     const char* subcategory()
     {
-        return "FORMAT (BASE 58 CHECK)";
+        return "BLOCKCHAIN QUERIES";
     }
 
     /**
@@ -98,7 +92,7 @@ public:
     arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HEX", 1);
+            .add("HEIGHT", 1);
     }
     
     /**
@@ -123,12 +117,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a hex string to Base58Check."
+                "Get a raw block header from the specified height. Requires a server connection."
             )
             (
-                "HEX",
-                value<serializer::bytes>(&argument_.hex),
-                "The hex string to Base58Check encode."
+                "HEIGHT",
+                value<size_t>(&argument_.height),
+                "The height of the block."
             );
 
         return options;
@@ -142,9 +136,9 @@ public:
      */
     void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto hex = variables.find("HEX");
-        if (hex == variables.end())
-            parse(argument_.hex, read_stream(input));
+        auto height = variables.find("HEIGHT");
+        if (height == variables.end())
+            parse(argument_.height, read_stream(input));
     }
 
     /**
@@ -161,19 +155,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HEX argument.
+     * Get the value of the HEIGHT argument.
      */
-    virtual serializer::bytes get_hex_argument()
+    virtual size_t get_height_argument()
     {
-        return argument_.hex;
+        return argument_.height;
     }
     
     /**
-     * Set the value of the HEX argument.
+     * Set the value of the HEIGHT argument.
      */
-    virtual void set_hex_argument(serializer::bytes value)
+    virtual void set_height_argument(size_t value)
     {
-        argument_.hex = value;
+        argument_.height = value;
     }
 
     /**
@@ -202,9 +196,9 @@ private:
     struct argument
     {
         argument()
-          : hex()
+          : height()
             {}
-        serializer::bytes hex;
+        size_t height;
     } argument_;
     
     /**

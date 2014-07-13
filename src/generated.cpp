@@ -54,6 +54,12 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
     func(make_shared<embed_addr>());
+    func(make_shared<fetch_header_hash>());
+    func(make_shared<fetch_header_height>());
+    func(make_shared<fetch_last_height>());
+    func(make_shared<fetch_stealth>());
+    func(make_shared<fetch_transaction>());
+    func(make_shared<fetch_transaction_index>());
     func(make_shared<help>());
     func(make_shared<satoshi>());
     func(make_shared<stealth_addr>());
@@ -101,6 +107,18 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_multiply_secrets>();
     if (symbol == embed_addr::symbol())
         return make_shared<embed_addr>();
+    if (symbol == fetch_header_hash::symbol())
+        return make_shared<fetch_header_hash>();
+    if (symbol == fetch_header_height::symbol())
+        return make_shared<fetch_header_height>();
+    if (symbol == fetch_last_height::symbol())
+        return make_shared<fetch_last_height>();
+    if (symbol == fetch_stealth::symbol())
+        return make_shared<fetch_stealth>();
+    if (symbol == fetch_transaction::symbol())
+        return make_shared<fetch_transaction>();
+    if (symbol == fetch_transaction_index::symbol())
+        return make_shared<fetch_transaction_index>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == satoshi::symbol())

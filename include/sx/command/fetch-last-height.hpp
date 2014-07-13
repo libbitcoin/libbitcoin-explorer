@@ -36,6 +36,7 @@
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
+#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -110,8 +111,13 @@ public:
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                ""
+                "The path and file name for the configuration settings file for this application."
             )
+            (
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Get the last block height. Requires a server connection."
+            );
 
         return options;
     }
@@ -122,8 +128,7 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    void load_stream(std::istream& input,
-        boost::program_options::variables_map& variables)
+    void load_stream(std::istream& input, po::variables_map& variables)
     {
     }
 
@@ -139,6 +144,22 @@ public:
         std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }
+    
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
+    }
 
 private:
 
@@ -161,7 +182,9 @@ private:
     struct option
     {
         option()
+          : help()
             {}    
+        bool help;
     } option_;
 };
 

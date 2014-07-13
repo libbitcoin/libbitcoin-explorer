@@ -36,6 +36,7 @@
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
+#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -44,6 +45,12 @@
 
 namespace sx {
 namespace extension {
+
+/**
+ * Various localizable strings.
+ */
+#define SX_FETCH_STEALTH_TEXT_OUTPUT \
+    "ephemkey: %1% address: %2% tx_hash: %3%\n"
 
 /**
  * Class to implement the sx fetch-stealth command.
@@ -90,7 +97,8 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("BITFIELD", 1);
     }
     
     /**
@@ -110,8 +118,23 @@ public:
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                ""
+                "The path and file name for the configuration settings file for this application."
             )
+            (
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Get the stealth transactions matching the specified filter. Requires a server connection."
+            )
+            (
+                "height,h",
+                value<size_t>(&option_.height),
+                "The minimum height of transactions to include in the search."
+            )
+            (
+                "BITFIELD",
+                value<uint32_t>(&argument_.bitfield),
+                "The bit field of transactions to include in the search."
+            );
 
         return options;
     }
@@ -122,9 +145,11 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    void load_stream(std::istream& input,
-        boost::program_options::variables_map& variables)
+    void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto bitfield = variables.find("BITFIELD");
+        if (bitfield == variables.end())
+            parse(argument_.bitfield, read_stream(input));
     }
 
     /**
@@ -140,6 +165,54 @@ public:
         
     /* Properties */
 
+    /**
+     * Get the value of the BITFIELD argument.
+     */
+    virtual uint32_t get_bitfield_argument()
+    {
+        return argument_.bitfield;
+    }
+    
+    /**
+     * Set the value of the BITFIELD argument.
+     */
+    virtual void set_bitfield_argument(uint32_t value)
+    {
+        argument_.bitfield = value;
+    }
+
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }
+    
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
+    }
+
+    /**
+     * Get the value of the height option.
+     */
+    virtual size_t get_height_option()
+    {
+        return option_.height;
+    }
+    
+    /**
+     * Set the value of the height option.
+     */
+    virtual void set_height_option(size_t value)
+    {
+        option_.height = value;
+    }
+
 private:
 
     /**
@@ -150,7 +223,9 @@ private:
     struct argument
     {
         argument()
+          : bitfield()
             {}
+        uint32_t bitfield;
     } argument_;
     
     /**
@@ -161,7 +236,11 @@ private:
     struct option
     {
         option()
+          : help(),
+            height()
             {}    
+        bool help;
+        size_t height;
     } option_;
 };
 

@@ -117,6 +117,36 @@ BOOST_AUTO_TEST_CASE(generated__symbol__embed_addr__returns_expected_value)
     BOOST_REQUIRE(embed_addr::symbol() == std::string("embed-addr"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header_hash__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_header_hash::symbol() == std::string("fetch-header-hash"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header_height__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_header_height::symbol() == std::string("fetch-header-height"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_last_height__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_last_height::symbol() == std::string("fetch-last-height"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_stealth__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_stealth::symbol() == std::string("fetch-stealth"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_transaction__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_transaction::symbol() == std::string("fetch-transaction"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_transaction_index__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_transaction_index::symbol() == std::string("fetch-transaction-index"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));

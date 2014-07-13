@@ -74,6 +74,8 @@
 .       return type_byte_sx
 .   elsif my.type = type_bytes
 .       return type_bytes_sx
+.   elsif my.type = type_sha256
+.       return type_sha256_sx
 .   elsif my.type = type_key
 .       return type_key_sx
 .   elsif my.type = type_point
@@ -156,22 +158,26 @@
 .type_base58 = "base58"
 .type_byte = "byte"
 .type_bytes = "bytes"
+.type_sha256 = "sha256"
 .type_key = "key"
+.type_path = "path"
 .type_point = "point"
 .type_secret = "secret"
+.type_string = "string"
 .type_ripemd160 = "ripemd160"
+.
 .type_address_sx = "serializer::address"
 .type_base58_sx = "serializer::base58"
 .type_byte_sx = "serializer::byte"
 .type_bytes_sx = "serializer::bytes"
 .type_key_sx = "serializer::key"
+.type_path_boost = "boost::filesystem::path"
 .type_point_sx = "serializer::point"
 .type_ripemd160_sx = "serializer::ripemd160"
 .type_secret_sx = "serializer::secret"
-.type_path = "path"
-.type_path_boost = "boost::filesystem::path"
-.type_string = "string"
+.type_sha256_sx = "serializer::sha256"
 .type_string_std = "std::string"
+.
 .xml_false = "false"
 .xml_true = "true"
 .
@@ -597,6 +603,7 @@ private:
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
+#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -1125,6 +1132,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ripemd160.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\sha256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
@@ -1286,6 +1294,9 @@ endif
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ripemd160.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\sha256.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp">

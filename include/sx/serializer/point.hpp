@@ -60,12 +60,20 @@ public:
     }
 
     /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    point(const bc::ec_point& value)
+        : value_(value.begin(), value.end()) {}
+
+    /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
     point(const point& other)
-        : value_(other.value_) {}
+        : point(other.value_) {}
 
     /**
      * Return a reference to the data member.

@@ -36,6 +36,7 @@
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
+#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -127,7 +128,7 @@ public:
             (
                 "DATA",
                 value<std::string>(&argument_.data),
-                "The data to embed a record of."
+                "The data of which to embed a record."
             );
 
         return options;

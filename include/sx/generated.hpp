@@ -42,6 +42,12 @@
 #include <sx/command/ec-multiply.hpp>
 #include <sx/command/ec-multiply-secrets.hpp>
 #include <sx/command/embed-addr.hpp>
+#include <sx/command/fetch-header-hash.hpp>
+#include <sx/command/fetch-header-height.hpp>
+#include <sx/command/fetch-last-height.hpp>
+#include <sx/command/fetch-stealth.hpp>
+#include <sx/command/fetch-transaction.hpp>
+#include <sx/command/fetch-transaction-index.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/satoshi.hpp>
 #include <sx/command/stealth-addr.hpp>

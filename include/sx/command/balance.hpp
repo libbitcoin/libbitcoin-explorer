@@ -36,6 +36,7 @@
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
+#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -50,10 +51,10 @@ namespace extension {
  */
 #define SX_BALANCE_INVALID_ADDRESS \
     "Invalid address '%1%'."
-#define SX_BALANCE_FETCH_HISTORY_FAIL \
-    "Failed to fetch history: %1%"
-#define SX_BALANCE_FETCHED_OUTPUT \
+#define SX_BALANCE_FETCHED_TEXT_OUTPUT \
     "Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n"
+#define SX_BALANCE_FETCHED_JSON_OUTPUT \
+    "{\n   \"address\": \"%1%\",\n   \"paid\": \"%2%\",\n   \"pending\": \"%3%\",\n   \"received\": \"%4%\"\n}\n"
 
 /**
  * Class to implement the sx balance command.

@@ -44,15 +44,16 @@ using namespace sx::serializer;
 
 static bool is_first;
 static std::mutex mutex;
-static std::condition_variable condition;
 static size_t remaining_count = 0;
+static std::condition_variable condition;
+static console_result result = console_result::okay;
 
-static void parse_history(uint64_t& total_recieved, uint64_t& balance,
-    uint64_t& pending_balance, const blockchain::history_list& history)
+static void parse_history(uint64_t& balance, uint64_t& pending_balance,
+    uint64_t& total_recieved, const blockchain::history_list& history)
 {
-    total_recieved = 0;
     balance = 0;
     pending_balance = 0;
+    total_recieved = 0;
 
     for (const auto& row: history)
     {
@@ -80,15 +81,16 @@ static void balance_fetched(const payment_address& payaddr,
 {
     if (error)
     {
-        std::cerr << boost::format(SX_BALANCE_FETCH_HISTORY_FAIL) % 
-            error.message() << std::endl;
+        std::cerr << error.message() << std::endl;
+        remaining_count = 0;
+        result = console_result::failure;
         return;
     }
 
     uint64_t total_recieved, balance, pending_balance;
-    parse_history(total_recieved, balance, pending_balance, history);
+    parse_history(balance, pending_balance, total_recieved, history);
 
-    std::cout << boost::format(SX_BALANCE_FETCHED_OUTPUT) % 
+    std::cout << boost::format(SX_BALANCE_FETCHED_TEXT_OUTPUT) % 
         payaddr.encoded() % balance % pending_balance % total_recieved;
 
     std::lock_guard<std::mutex> lock(mutex);
@@ -97,31 +99,27 @@ static void balance_fetched(const payment_address& payaddr,
     condition.notify_one();
 }
 
-// TODO: generalize json serialization.
+// TODO: use json serializer.
 // TODO: for testability parameterize STDOUT and STDERR.
 static void json_balance_fetched(const payment_address& payaddr,
     const std::error_code& error, const blockchain::history_list& history)
 {
     if (error)
     {
-        std::cerr << boost::format(SX_BALANCE_FETCH_HISTORY_FAIL) %
-            error.message() << std::endl;
+        std::cerr << error.message() << std::endl;
+        remaining_count = 0;
+        result = console_result::failure;
         return;
     }
 
     uint64_t total_recieved, balance, pending_balance;
-    parse_history(total_recieved, balance, pending_balance, history);
+    parse_history(balance, pending_balance, total_recieved, history);
 
     if (is_first)
         std::cout << "[" << std::endl;
 
-    // Actual row data.
-    std::cout << "{" << std::endl;
-    std::cout << "  \"address\": \"" << payaddr.encoded() << "\"," << std::endl;
-    std::cout << "  \"paid\":  \"" << balance << "\"," << std::endl;
-    std::cout << "  \"pending\":  \"" << pending_balance << "\"," << std::endl;
-    std::cout << "  \"received\":  \"" << total_recieved << "\"" << std::endl;
-    std::cout << "}";
+    std::cout << boost::format(SX_BALANCE_FETCHED_JSON_OUTPUT) %
+        payaddr.encoded() % balance % pending_balance % total_recieved;
 
     std::lock_guard<std::mutex> lock(mutex);
     BITCOIN_ASSERT(remaining_count > 0);
@@ -193,6 +191,6 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
 
     pool.stop();
     pool.join();
-    return console_result::okay;
+    return result;
 }
 

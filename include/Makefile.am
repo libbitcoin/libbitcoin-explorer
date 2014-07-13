@@ -49,5 +49,11 @@ sx_command_include_HEADERS = \
 # Generated from XML data source.
 if HAVE_OBELISK
     sx_command_include_HEADERS += \
-        command/balance.hpp
+        command/balance.hpp \
+        command/fetch-header-hash.hpp \
+        command/fetch-header-height.hpp \
+        command/fetch-last-height.hpp \
+        command/fetch-stealth.hpp \
+        command/fetch-transaction.hpp \
+        command/fetch-transaction-index.hpp
 endif

@@ -45,14 +45,6 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  argument  The value to initialize with.
-     */
-    byte(const uint8_t& argument)
-        : value_(argument) {}
-
-    /**
-     * Initialization constructor.
-     * 
      * @param[in]  hex  The value to initialize with.
      */
     byte(const std::string& hex)
@@ -61,12 +53,20 @@ public:
     }
 
     /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    byte(const uint8_t& value)
+        : value_(value) {}
+
+    /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
     byte(const byte& other)
-        : value_(other.value_) {}
+        : byte(other.value_) {}
 
     /**
      * Return a reference to the data member.

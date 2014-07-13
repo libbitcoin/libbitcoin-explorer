@@ -40,21 +40,15 @@
     <option name="version" type="byte" description="The desired version number." />
     <argument name="RIPEMD160" stream="true" type="ripemd160" description="The hex string to convert."/>
   </command>
-
+  
+  <!-- sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" -->
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Show the balance in satoshis of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
     <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to show." />
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
-    <define name="SX_BALANCE_FETCH_HISTORY_FAIL" value="Failed to fetch history: %1%" />
-    <define name="SX_BALANCE_FETCHED_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
-    <!--
-    <explanation value="$ sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
-    <explanation value="Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
-    <explanation value="  Paid balance:    0" />
-    <explanation value="  Pending balance: 0" />
-    <explanation value="  Total received:  100000" />
-    -->
+    <define name="SX_BALANCE_FETCHED_TEXT_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
+    <define name="SX_BALANCE_FETCHED_JSON_OUTPUT" value="{\n   \&quot;address\&quot;: \&quot;%1%\&quot;,\n   \&quot;paid\&quot;: \&quot;%2%\&quot;,\n   \&quot;pending\&quot;: \&quot;%3%\&quot;,\n   \&quot;received\&quot;: \&quot;%4%\&quot;\n}\n" />
   </command>
 
   <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)" stub="true">
@@ -92,7 +86,7 @@
 
   <command symbol="blke-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
     <option name="help" description="Get a transaction from blockexplorer.com." />
-    <argument name="HASH" stream="true" description="The transaction to get." />
+    <argument name="HASH" stream="true" description="The hash of the transaction to get." />
     <define name="SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
@@ -147,8 +141,42 @@
   -->
   <command symbol="embed-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
     <option name="help" description="Generate an address used for embedding a record of data into the blockchain." />
-    <argument name="DATA" stream="true" description="The data to embed a record of."/>
+    <argument name="DATA" stream="true" description="The data of which to embed a record."/>
     <define name="SX_EMBED_ADDR_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
+  
+  <command symbol="fetch-header-hash" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+    <option name="help" description="Get the raw block header from the specified hash. Requires a server connection." />
+    <argument name="HASH" stream="true" type="sha256" description="The hash of the block."/>
+  </command>
+  
+  <command symbol="fetch-header-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+    <option name="help" description="Get a raw block header from the specified height. Requires a server connection." />
+    <argument name="HEIGHT" stream="true" type="size_t" description="The height of the block."/>
+  </command>
+
+  <command symbol="fetch-last-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+    <option name="help" description="Get the last block height. Requires a server connection." />
+  </command>
+  
+  <!-- sx fetch-stealth 2 8bf41c69 -->
+  <command symbol="fetch-stealth" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+    <option name="help" description="Get the stealth transactions matching the specified filter. Requires a server connection." />
+    <option name="height" type="size_t" description="The minimum height of transactions to include in the search."/>
+    <argument name="BITFIELD" stream="true" type="uint32_t" description="The bit field of transactions to include in the search."/>
+    <define name="SX_FETCH_STEALTH_TEXT_OUTPUT" value="ephemkey: %1% address: %2% tx_hash: %3%\n" />
+  </command>
+
+  <!-- sx fetch-transaction 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4 -->
+  <command symbol="fetch-transaction" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+    <option name="help" description="Get a transaction. Requires a server connection." />
+    <argument name="HASH" stream="true" type="sha256" description="The hash of the transaction." />
+  </command>
+
+  <command symbol="fetch-transaction-index" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+    <option name="help" description="Get the block height and index of a transaction. Requires a server connection." />
+    <argument name="HASH" stream="true" type="sha256" description="The hash of the transaction." />
+    <define name="SX_FETCH_TRANSACTION_INDEX_TEXT_OUTPUT" value="Height: %1%\nIndex: %2%\n" />
   </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">

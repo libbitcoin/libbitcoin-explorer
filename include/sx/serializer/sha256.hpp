@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef RIPEMD160_HPP
-#define RIPEMD160_HPP
+#ifndef SHA256_HPP
+#define SHA256_HPP
 
 #include <iostream>
 #include <boost/program_options.hpp>
@@ -30,20 +30,20 @@
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_RIPEMD160_EXCEPTION \
-    "Invalid RIPEMD160 hash."
+#define SX_SERIALIZER_SHA256_SIZE_EXCEPTION \
+    "SHA256 hash must be 32 bytes."
 
 /**
- * Serialization helper to convert between hex string and short_hash.
+ * Serialization helper to convert between hex string and hash_digest.
  */
-class ripemd160
+class sha256
 {
 public:
 
     /**
      * Constructor.
      */
-    ripemd160()
+    sha256()
         : value_() {}
 
     /**
@@ -51,7 +51,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    ripemd160(const std::string& hex)
+    sha256(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -61,33 +61,25 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    ripemd160(const bc::short_hash& value)
+    sha256(const bc::hash_digest& value)
     {
         std::copy(value.begin(), value.end(), value_.begin());
     }
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  address  The value to initialize with.
-     */
-    ripemd160(const bc::payment_address& address)
-        : ripemd160(address.hash()) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    ripemd160(const ripemd160& other)
-        : ripemd160(other.value_) {}
+    sha256(const sha256& other)
+        : sha256(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::short_hash& data()
+    bc::hash_digest& data()
     {
         return value_;
     }
@@ -97,9 +89,9 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::short_hash() const
+    operator const bc::hash_digest() const
     {
-        return value_;
+        return value_; 
     }
 
     /**
@@ -109,17 +101,16 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, ripemd160& argument)
+    friend std::istream& operator>>(std::istream& input, sha256& argument)
     {
         std::string hex;
         input >> hex;
-        auto hash = bc::decode_short_hash(hex);
+        argument.value_ = bc::decode_hash(hex);
 
-        // TODO: determine how to properly raise error in deserialization.
-        if (hash == bc::null_short_hash)
-            throw po::invalid_option_value(SX_SERIALIZER_RIPEMD160_EXCEPTION);
+        if (argument.value_ == bc::null_hash)
+            throw po::invalid_option_value(
+                SX_SERIALIZER_SHA256_SIZE_EXCEPTION);
 
-        std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;
     }
 
@@ -131,7 +122,7 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const ripemd160& argument)
+        const sha256& argument)
     {
         output << bc::encode_hex(argument.value_);
         return output;
@@ -142,7 +133,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::short_hash value_;
+    bc::hash_digest value_;
 };
 
 } // sx

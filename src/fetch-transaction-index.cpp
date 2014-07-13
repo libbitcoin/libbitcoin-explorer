@@ -17,49 +17,47 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/fetch-transaction-index.hpp>
+
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/command/fetch-transaction-index.hpp>
 #include <sx/obelisk.hpp>
-#include <sx/utility/config.hpp>
+#include <sx/serializer/sha256.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction_index,
 // otherwise concurrent test execution will collide on shared state.
 static bool node_stopped = false;
 
+// TODO: abstract formats.
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
 static void transaction_index_fetched(const std::error_code& error, 
     size_t height, size_t index)
 {
     if (error)
-        std::cerr << "fetch-transaction: " << error.message() << std::endl;
+        std::cerr << error.message() << std::endl;
     else
-    {
-        std::cout << "Height: " << height << std::endl;
-        std::cout << "Index: " << index << std::endl;
-    }
+        std::cout << boost::format(SX_FETCH_TRANSACTION_INDEX_TEXT_OUTPUT) %
+            height % index;
 
     node_stopped = true;
 }
 
-console_result fetch_transaction_index::invoke(int argc, 
-    const char* argv[])
+console_result fetch_transaction_index::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
-
-    std::string tx_hash_str(get_arg_or_stream(argc, argv, std::cin));
-    hash_digest tx_hash = decode_hash(tx_hash_str);
+    // Bound parameters.
+    auto hash = get_hash_argument();
 
     OBELISK_FULLNODE(pool, fullnode);
-    fullnode.blockchain.fetch_transaction_index(tx_hash, 
+    fullnode.blockchain.fetch_transaction_index(hash,
         transaction_index_fetched);
     poll(fullnode, pool, node_stopped);
     return console_result::okay;

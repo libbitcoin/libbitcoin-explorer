@@ -50,6 +50,12 @@ libsx_la_SOURCES += \
 if HAVE_OBELISK
     libsx_la_SOURCES += \
         balance.cpp \
+        fetch-header-hash.cpp \
+        fetch-header-height.cpp \
+        fetch-last-height.cpp \
+        fetch-stealth.cpp \
+        fetch-transaction.cpp \
+        fetch-transaction-index.cpp \
         obelisk.cpp
 
     AM_CPPFLAGS += \

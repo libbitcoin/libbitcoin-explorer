@@ -47,23 +47,6 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  array  The value to initialize with.
-     */
-    template<size_t Size>
-    bytes(const bc::byte_array<Size>& array)
-        : value_(array.begin(), array.end()) {}
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  chunk  The value to initialize with.
-     */
-    bytes(const bc::data_chunk& chunk)
-        : value_(chunk) {}
-
-    /**
-     * Initialization constructor.
-     * 
      * @param[in]  hex  The value to initialize with.
      */
     bytes(const std::string& hex)
@@ -72,12 +55,29 @@ public:
     }
 
     /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    bytes(const bc::data_chunk& value)
+        : value_(value.begin(), value.end()) {}
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  array  The value to initialize with.
+     */
+    template<size_t Size>
+    bytes(const bc::byte_array<Size>& value)
+        : bytes(value) {}
+
+    /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
     bytes(const bytes& other)
-        : value_(other.value_) {}
+        : bytes(other.value_) {}
 
     /**
      * Return a reference to the data member.

@@ -90,7 +90,8 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("HASH", 1);
     }
     
     /**
@@ -110,8 +111,23 @@ public:
             (
                 SX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
-                ""
+                "The path and file name for the configuration settings file for this application."
             )
+            (
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Get a raw block header. Requires a server connection."
+            )
+            (
+                "height,h",
+                value<bool>(&option_.height)->implicit_value(true),
+                "???"
+            )
+            (
+                "HASH",
+                value<std::string>(&argument_.hash),
+                "The hash of the block."
+            );
 
         return options;
     }
@@ -122,9 +138,11 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    void load_stream(std::istream& input,
-        boost::program_options::variables_map& variables)
+    void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto hash = variables.find("HASH");
+        if (hash == variables.end())
+            parse(argument_.hash, read_stream(input));
     }
 
     /**
@@ -140,6 +158,54 @@ public:
         
     /* Properties */
 
+    /**
+     * Get the value of the HASH argument.
+     */
+    virtual std::string get_hash_argument()
+    {
+        return argument_.hash;
+    }
+    
+    /**
+     * Set the value of the HASH argument.
+     */
+    virtual void set_hash_argument(std::string value)
+    {
+        argument_.hash = value;
+    }
+
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }
+    
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
+    }
+
+    /**
+     * Get the value of the height option.
+     */
+    virtual bool get_height_option()
+    {
+        return option_.height;
+    }
+    
+    /**
+     * Set the value of the height option.
+     */
+    virtual void set_height_option(bool value)
+    {
+        option_.height = value;
+    }
+
 private:
 
     /**
@@ -150,7 +216,9 @@ private:
     struct argument
     {
         argument()
+          : hash()
             {}
+        std::string hash;
     } argument_;
     
     /**
@@ -161,7 +229,11 @@ private:
     struct option
     {
         option()
+          : help(),
+            height()
             {}    
+        bool help;
+        bool height;
     } option_;
 };
 

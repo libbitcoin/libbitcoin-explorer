@@ -17,35 +17,36 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/fetch-transaction.hpp>
+
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/command/fetch-transaction.hpp>
 #include <sx/obelisk.hpp>
-#include <sx/utility/config.hpp>
+#include <sx/serializer/sha256.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
-using std::placeholders::_1;
-using std::placeholders::_2;
+using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction,
 // otherwise concurrent test execution will collide on shared state.
 static bool node_stopped = false;
 
+// TODO: abstract formats.
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
 static void transaction_fetched(const std::error_code& error, 
-    const transaction_type& tx)
+    const transaction_type& tx_type)
 {
     if (error)
-        std::cerr << "fetch-transaction: " << error.message() << std::endl;
+        std::cerr << error.message() << std::endl;
     else
     {
-        data_chunk raw_tx(satoshi_raw_size(tx));
-        satoshi_save(tx, raw_tx.begin());
+        data_chunk raw_tx(satoshi_raw_size(tx_type));
+        satoshi_save(tx_type, raw_tx.begin());
         std::cout << raw_tx << std::endl;
     }
 
@@ -54,29 +55,25 @@ static void transaction_fetched(const std::error_code& error,
 
 // Try the tx memory pool if the transaction is not in the blockchain.
 static void transaction_fetched_wrapper(const std::error_code& ec,
-    const transaction_type& tx, const hash_digest& tx_hash, 
+    const transaction_type& tx_type, const hash_digest& hash,
     obelisk::fullnode_interface& fullnode)
 {
     if (ec == error::not_found)
-        fullnode.transaction_pool.fetch_transaction(tx_hash, 
-            transaction_fetched);
+        fullnode.transaction_pool.fetch_transaction(hash, transaction_fetched);
     else
-        transaction_fetched(ec, tx);
+        transaction_fetched(ec, tx_type);
 }
 
-console_result fetch_transaction::invoke(int argc,
-    const char* argv[])
+console_result fetch_transaction::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
-
-    std::string tx_hash_str(get_arg_or_stream(argc, argv, std::cin));
-    hash_digest tx_hash = decode_hash(tx_hash_str);
+    // Bound parameters.
+    auto hash = get_hash_argument();
 
     OBELISK_FULLNODE(pool, fullnode);
-    fullnode.blockchain.fetch_transaction(tx_hash,
-        std::bind(transaction_fetched_wrapper, _1, _2, tx_hash, 
-            std::ref(fullnode)));
+    fullnode.blockchain.fetch_transaction(hash,
+        std::bind(transaction_fetched_wrapper, std::placeholders::_1, 
+            std::placeholders::_2, hash, std::ref(fullnode)));
     poll(fullnode, pool, node_stopped);
     return console_result::okay;
 }
