@@ -81,7 +81,7 @@
     <ClInclude Include="..\..\..\..\include\sx\dispatch.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\display.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\generated.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\obelisk.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\obelisk_client.hpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\address.hpp" />
@@ -127,6 +127,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction-index.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\history.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
@@ -136,7 +137,7 @@
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />
-    <ClCompile Include="..\..\..\..\src\obelisk.cpp">
+    <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\coin.cpp" />
@@ -186,6 +187,9 @@
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp" />
+    <ClCompile Include="..\..\..\..\src\history.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />

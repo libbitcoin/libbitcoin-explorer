@@ -22,7 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/obelisk.hpp>
+#include <sx/obelisk_client.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -31,14 +31,18 @@ using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::fetch_last_height,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped = false;
+static bool node_stopped;
+static console_result result;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
 static void last_height_fetched(const std::error_code& error, size_t height)
 {
     if (error)
+    {
         std::cerr << error.message() << std::endl;
+        result = console_result::failure;
+    }
     else
         std::cout << height << std::endl;
 
@@ -48,9 +52,14 @@ static void last_height_fetched(const std::error_code& error, size_t height)
 console_result fetch_last_height::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
-    OBELISK_FULLNODE(pool, fullnode);
+    node_stopped = false;
+    result = console_result::okay;
+
+    obelisk_client client(*this);
+    auto& fullnode = client.get_fullnode();
     fullnode.blockchain.fetch_last_height(last_height_fetched);
-    poll(fullnode, pool, node_stopped);
-    return console_result::okay;
+    client.poll(node_stopped);
+
+    return result;
 }
 

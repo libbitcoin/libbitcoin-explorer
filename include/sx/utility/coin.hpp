@@ -83,11 +83,22 @@ bool load_satoshi_item(Item& item, const std::string& filename,
 }
 
 /**
-* Generate a random secret using the default random engine.
-*
-* @return  The new secret.
-*/
-bc::ec_secret generate_random_secret();
+ * Parse a history result object into individual balance parameters.
+ *
+ * @param[out] balance          The parsed balance.
+ * @param[out] pending_balance  The parsed pending balance.
+ * @param[out] total_recieved   The parsed total recieved.
+ * @param[in] history           The history to parse.
+ */
+void parse_balance_history(uint64_t& balance, uint64_t& pending_balance,
+    uint64_t& total_recieved, const bc::blockchain::history_list& history);
+
+/**
+ * Generate a random secret using the default random engine.
+ *
+ * @return  The new secret.
+ */
+bc::ec_secret random_secret();
 
 /**
  * Allocate a byte buffer and fill it with a random bit distribution.

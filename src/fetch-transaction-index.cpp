@@ -23,7 +23,7 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/obelisk.hpp>
+#include <sx/obelisk_client.hpp>
 #include <sx/serializer/sha256.hpp>
 #include <sx/utility/console.hpp>
 
@@ -33,16 +33,20 @@ using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction_index,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped = false;
+static bool node_stopped;
+static console_result result;
 
 // TODO: abstract formats.
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void transaction_index_fetched(const std::error_code& error, 
+static void index_fetched(const std::error_code& error,
     size_t height, size_t index)
 {
     if (error)
+    {
         std::cerr << error.message() << std::endl;
+        result = console_result::failure;
+    }
     else
         std::cout << boost::format(SX_FETCH_TRANSACTION_INDEX_TEXT_OUTPUT) %
             height % index;
@@ -56,10 +60,14 @@ console_result fetch_transaction_index::invoke(std::istream& input,
     // Bound parameters.
     auto hash = get_hash_argument();
 
-    OBELISK_FULLNODE(pool, fullnode);
-    fullnode.blockchain.fetch_transaction_index(hash,
-        transaction_index_fetched);
-    poll(fullnode, pool, node_stopped);
-    return console_result::okay;
+    node_stopped = false;
+    result = console_result::okay;
+
+    obelisk_client client(*this);
+    auto& fullnode = client.get_fullnode();
+    fullnode.blockchain.fetch_transaction_index(hash, index_fetched);
+    client.poll(node_stopped);
+
+    return result;
 }
 

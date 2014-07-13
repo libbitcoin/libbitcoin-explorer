@@ -32,9 +32,36 @@ using namespace bc;
 
 namespace sx {
 
+void parse_balance_history(uint64_t& balance, uint64_t& pending_balance,
+    uint64_t& total_recieved, const blockchain::history_list& history)
+{
+    balance = 0;
+    pending_balance = 0;
+    total_recieved = 0;
+
+    for (const auto& row: history)
+    {
+        auto value = row.value;
+        BITCOIN_ASSERT(value >= 0);
+        total_recieved += value;
+
+        // Unconfirmed balance.
+        if (row.spend.hash == null_hash)
+            pending_balance += value;
+
+        // Confirmed balance.
+        if (row.output_height &&
+            (row.spend.hash == null_hash || !row.spend_height))
+            balance += value;
+
+        BITCOIN_ASSERT(balance < total_recieved);
+        BITCOIN_ASSERT(pending_balance < total_recieved);
+    }
+}
+
 // TODO: reconcile with [data_chunk random_fill(size_t size)]
 // Not testable due to lack of random engine injection.
-ec_secret generate_random_secret()
+ec_secret random_secret()
 {
     std::random_device random;
     std::default_random_engine engine(random());
@@ -46,7 +73,7 @@ ec_secret generate_random_secret()
     return secret;
 }
 
-// TODO: reconcile with [data_chunk random_fill(size_t size)]
+// TODO: reconcile with [data_chunk random_secret()]
 // Not testable due to lack of random engine injection.
 data_chunk random_fill(size_t size)
 {

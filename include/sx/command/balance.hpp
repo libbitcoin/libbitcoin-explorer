@@ -51,9 +51,9 @@ namespace extension {
  */
 #define SX_BALANCE_INVALID_ADDRESS \
     "Invalid address '%1%'."
-#define SX_BALANCE_FETCHED_TEXT_OUTPUT \
+#define SX_BALANCE_TEXT_OUTPUT \
     "Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n"
-#define SX_BALANCE_FETCHED_JSON_OUTPUT \
+#define SX_BALANCE_JSON_OUTPUT \
     "{\n   \"address\": \"%1%\",\n   \"paid\": \"%2%\",\n   \"pending\": \"%3%\",\n   \"received\": \"%4%\"\n}\n"
 
 /**
@@ -127,7 +127,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Show the balance in satoshis of one or more Bitcoin addresses. Requires a server connection."
+                "Get the balance in satoshis of one or more Bitcoin addresses. Requires a server connection."
             )
             (
                 "json,j",
@@ -137,7 +137,7 @@ public:
             (
                 "ADDRESS",
                 value<std::vector<serializer::address>>(&argument_.addresss),
-                "The address(es) to show."
+                "The address(es) to get."
             );
 
         return options;

@@ -43,12 +43,12 @@
   
   <!-- sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" -->
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
-    <option name="help" description="Show the balance in satoshis of one or more Bitcoin addresses. Requires a server connection." />
+    <option name="help" description="Get the balance in satoshis of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to show." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to get." />
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
-    <define name="SX_BALANCE_FETCHED_TEXT_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
-    <define name="SX_BALANCE_FETCHED_JSON_OUTPUT" value="{\n   \&quot;address\&quot;: \&quot;%1%\&quot;,\n   \&quot;paid\&quot;: \&quot;%2%\&quot;,\n   \&quot;pending\&quot;: \&quot;%3%\&quot;,\n   \&quot;received\&quot;: \&quot;%4%\&quot;\n}\n" />
+    <define name="SX_BALANCE_TEXT_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
+    <define name="SX_BALANCE_JSON_OUTPUT" value="{\n   \&quot;address\&quot;: \&quot;%1%\&quot;,\n   \&quot;paid\&quot;: \&quot;%2%\&quot;,\n   \&quot;pending\&quot;: \&quot;%3%\&quot;,\n   \&quot;received\&quot;: \&quot;%4%\&quot;\n}\n" />
   </command>
 
   <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)" stub="true">
@@ -177,6 +177,22 @@
     <option name="help" description="Get the block height and index of a transaction. Requires a server connection." />
     <argument name="HASH" stream="true" type="sha256" description="The hash of the transaction." />
     <define name="SX_FETCH_TRANSACTION_INDEX_TEXT_OUTPUT" value="Height: %1%\nIndex: %2%\n" />
+  </command>
+  
+  <command symbol="history" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+    <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires a server connection." />
+    <option name="json" description="Enable JSON output." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to get." />
+    <define name="SX_HISTORY_INVALID_ADDRESS" value="Invalid address '%1%'." />
+    <define name="SX_HISTORY_TEXT_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
+    <define name="SX_HISTORY_JSON_OUTPUT" value="{\n   \&quot;address\&quot;: \&quot;%1%\&quot;,\n   \&quot;paid\&quot;: \&quot;%2%\&quot;,\n   \&quot;pending\&quot;: \&quot;%3%\&quot;,\n   \&quot;received\&quot;: \&quot;%4%\&quot;\n}\n" />
+    <!--<explanation value="  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history" />
+    <explanation value="  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
+    <explanation value="    output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1" />
+    <explanation value="    output_height: 247683" />
+    <explanation value="    value:  100000" />
+    <explanation value="    spend: b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0" />
+    <explanation value="    spend_height: 247742" />-->
   </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">

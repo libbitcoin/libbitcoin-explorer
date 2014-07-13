@@ -152,6 +152,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
     BOOST_REQUIRE(help::symbol() == std::string("help"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__history__returns_expected_value)
+{
+    BOOST_REQUIRE(history::symbol() == std::string("history"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__satoshi__returns_expected_value)
 {
     BOOST_REQUIRE(satoshi::symbol() == std::string("satoshi"));

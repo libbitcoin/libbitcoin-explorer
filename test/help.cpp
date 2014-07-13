@@ -42,7 +42,6 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
     SX_DECLARE_COMMAND(help);
     command.set_command_argument("booger");
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    auto foo = error.str();
     SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
         "addr\n" \
         "addr-decode\n" \
@@ -69,6 +68,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "fetch-transaction\n" \
         "fetch-transaction-index\n" \
         "help\n" \
+        "history\n" \
         "satoshi\n" \
         "stealth-addr\n" \
         "unwrap\n" \

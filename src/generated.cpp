@@ -61,6 +61,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_transaction>());
     func(make_shared<fetch_transaction_index>());
     func(make_shared<help>());
+    func(make_shared<history>());
     func(make_shared<satoshi>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
@@ -121,6 +122,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_transaction_index>();
     if (symbol == help::symbol())
         return make_shared<help>();
+    if (symbol == history::symbol())
+        return make_shared<history>();
     if (symbol == satoshi::symbol())
         return make_shared<satoshi>();
     if (symbol == stealth_addr::symbol())

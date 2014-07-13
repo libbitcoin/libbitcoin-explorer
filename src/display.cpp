@@ -56,17 +56,6 @@ void display_line()
     line_out(std::cout, "");
 }
 
-bool display_summary(const std::shared_ptr<command> command)
-{
-    line_out(std::cout, command->category());
-    line_out(std::cout, command->subcategory(), tab::subcategory);
-
-    const auto inset = (std::string(tab::name, ' ') + command->name());
-    line_out(std::cout, command->description(), tab::description,
-        inset.c_str());
-    return true;
-}
-
 void display_usage()
 {
     std::cerr << "Usage: sx COMMAND [ARGS]..." << std::endl;
@@ -89,8 +78,7 @@ void display_usage()
 
 bool display_usage(const std::shared_ptr<command> command)
 {
-    line_out(std::cout, command->example());
-    line_out(std::cout, command->explanation());
+    std::cerr << "Not Implemented" << std::endl;
     return true;
 }
 

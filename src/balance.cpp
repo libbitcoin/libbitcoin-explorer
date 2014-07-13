@@ -31,7 +31,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/dispatch.hpp>
-#include <sx/obelisk.hpp>
+#include <sx/obelisk_client.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/config.hpp>
@@ -43,96 +43,56 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 static bool is_first;
+static bool json_output;
 static std::mutex mutex;
-static size_t remaining_count = 0;
+static console_result result;
+static size_t remaining_count;
 static std::condition_variable condition;
-static console_result result = console_result::okay;
-
-static void parse_history(uint64_t& balance, uint64_t& pending_balance,
-    uint64_t& total_recieved, const blockchain::history_list& history)
-{
-    balance = 0;
-    pending_balance = 0;
-    total_recieved = 0;
-
-    for (const auto& row: history)
-    {
-        uint64_t value = row.value;
-        BITCOIN_ASSERT(value >= 0);
-        total_recieved += value;
-
-        // Unconfirmed balance.
-        if (row.spend.hash == null_hash)
-            pending_balance += value;
-
-        // Confirmed balance.
-        if (row.output_height &&
-            (row.spend.hash == null_hash || !row.spend_height))
-            balance += value;
-
-        BITCOIN_ASSERT(total_recieved >= balance);
-        BITCOIN_ASSERT(total_recieved >= pending_balance);
-    }
-}
 
 // TODO: for testability parameterize STDOUT and STDERR.
+// TODO: use json serializer and generalize to all command outputs.
 static void balance_fetched(const payment_address& payaddr,
     const std::error_code& error, const blockchain::history_list& history)
 {
     if (error)
     {
         std::cerr << error.message() << std::endl;
-        remaining_count = 0;
         result = console_result::failure;
+
+        std::lock_guard<std::mutex> lock(mutex);
+        BITCOIN_ASSERT(remaining_count > 0);
+        remaining_count = 0;
+        condition.notify_one();
         return;
     }
 
     uint64_t total_recieved, balance, pending_balance;
-    parse_history(balance, pending_balance, total_recieved, history);
+    parse_balance_history(balance, pending_balance, total_recieved, history);
 
-    std::cout << boost::format(SX_BALANCE_FETCHED_TEXT_OUTPUT) % 
-        payaddr.encoded() % balance % pending_balance % total_recieved;
-
-    std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count > 0);
-    --remaining_count;
-    condition.notify_one();
-}
-
-// TODO: use json serializer.
-// TODO: for testability parameterize STDOUT and STDERR.
-static void json_balance_fetched(const payment_address& payaddr,
-    const std::error_code& error, const blockchain::history_list& history)
-{
-    if (error)
-    {
-        std::cerr << error.message() << std::endl;
-        remaining_count = 0;
-        result = console_result::failure;
-        return;
-    }
-
-    uint64_t total_recieved, balance, pending_balance;
-    parse_history(balance, pending_balance, total_recieved, history);
-
-    if (is_first)
+    if (json_output && is_first)
         std::cout << "[" << std::endl;
 
-    std::cout << boost::format(SX_BALANCE_FETCHED_JSON_OUTPUT) %
-        payaddr.encoded() % balance % pending_balance % total_recieved;
+    auto format = if_else(json_output, SX_BALANCE_JSON_OUTPUT, 
+        SX_BALANCE_TEXT_OUTPUT);
+
+    std::cout << boost::format(format) % payaddr.encoded() % balance %
+        pending_balance % total_recieved;
 
     std::lock_guard<std::mutex> lock(mutex);
     BITCOIN_ASSERT(remaining_count > 0);
     --remaining_count;
     condition.notify_one();
 
-    if (remaining_count > 0)
-        std::cout << "," << std::endl;
-    else
-        std::cout << "]" << std::endl;
+    if (json_output)
+    {
+        if (remaining_count > 0)
+            std::cout << "," << std::endl;
+        else
+            std::cout << "]" << std::endl;
+    }
 }
 
-// Untestable without server isolation, loc ready.
+// Untestable without fullnode virtualization, loc ready.
 console_result balance::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
@@ -156,41 +116,30 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
         addresses.push_back(address);
     }
 
-    OBELISK_FULLNODE(pool, fullnode);
-
     is_first = true;
+    json_output = json;
+    result = console_result::okay;
+    remaining_count = addresses.size();
+
+    obelisk_client client(*this);
+    auto& fullnode = client.get_fullnode();
+
     for (const auto& address: addresses)
     {
-        if (json)
-            fullnode.address.fetch_history(address,
-                std::bind(json_balance_fetched, address, 
-                    std::placeholders::_1, std::placeholders::_2));
-        else
-            fullnode.address.fetch_history(address,
-                std::bind(balance_fetched, address, 
-                    std::placeholders::_1, std::placeholders::_2));
+        fullnode.address.fetch_history(address,
+            std::bind(balance_fetched, address, std::placeholders::_1, 
+                std::placeholders::_2));
     }
 
-    std::thread update_loop([&fullnode]
-    {
-        while (true)
-        {
-            fullnode.update();
-            sleep_ms(100);
-        }
-    });
-    update_loop.detach();
+    bool done = false;
+    client.detached_poll(done);
 
     std::unique_lock<std::mutex> lock(mutex);
-    remaining_count = addresses.size();
     while (remaining_count > 0)
-    {
         condition.wait(lock);
-        BITCOIN_ASSERT(remaining_count >= 0);
-    }
 
-    pool.stop();
-    pool.join();
+    client.stop();
+    done = true;
+
     return result;
 }
-

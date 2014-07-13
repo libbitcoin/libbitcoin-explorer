@@ -55,5 +55,6 @@ if HAVE_OBELISK
         command/fetch-last-height.hpp \
         command/fetch-stealth.hpp \
         command/fetch-transaction.hpp \
-        command/fetch-transaction-index.hpp
+        command/fetch-transaction-index.hpp \
+        command/history.hpp
 endif

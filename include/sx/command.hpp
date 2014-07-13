@@ -76,40 +76,6 @@ public:
     {
         return symbol();
     }
-
-    /**
-     * The localizable command description, multiple lines, punctuated.
-     *
-     * @return  Example:
-     * "Fetch a raw transaction using a network connection to"
-     * "make requests against the obelisk load balancer back end."
-     */
-    virtual const std::vector<const char*> description()
-    {
-        return { symbol() };
-    }
-
-    /**
-     * The non-localizable command usage examples, multiple lines.
-     *
-     * @return  Example:
-     * "sx fetch-transaction HASH"
-     */
-    virtual const std::vector<const char*> example()
-    {
-        return { symbol() };
-    }
-
-    /**
-     * The localizable command explanation, multiple lines, punctuated.
-     *
-     * @return  Example:
-     * "$ sx fetch-transaction ... # fetches raw data"
-     */
-    virtual const std::vector<const char*> explanation()
-    {
-        return { symbol() };
-    }
     
     /**
      * Write the usage help for this command to the specified stream.

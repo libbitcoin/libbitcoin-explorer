@@ -119,6 +119,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\history.hpp">
+      <Filter>include\command\obelisk</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
@@ -194,7 +197,7 @@
     <ClInclude Include="..\..\..\..\include\sx\generated.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\obelisk.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\obelisk_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp">
@@ -277,6 +280,9 @@
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\history.cpp">
+      <Filter>src\command\obelisk</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\satoshi.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
@@ -316,7 +322,7 @@
     <ClCompile Include="..\..\..\..\src\generated.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\obelisk.cpp">
+    <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

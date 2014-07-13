@@ -23,7 +23,7 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/obelisk.hpp>
+#include <sx/obelisk_client.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/sha256.hpp>
 #include <sx/utility/console.hpp>
@@ -35,7 +35,8 @@ using namespace sx::serializer;
 
 // TODO: this should be a member of sx::extensions::fetch_stealth,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped = false;
+static bool node_stopped;
+static console_result result;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
@@ -43,12 +44,15 @@ static void stealth_fetched(const std::error_code& error,
     const blockchain::stealth_list& stealth_results)
 {
     if (error)
+    {
         std::cerr << error.message() << std::endl;
+        result = console_result::failure;
+    }
     else
-        for (const blockchain::stealth_row& row: stealth_results)
+        for (const blockchain::stealth_row& row : stealth_results)
             std::cout << boost::format(SX_FETCH_STEALTH_TEXT_OUTPUT) %
-                bytes(row.ephemkey) % row.address.encoded() % 
-                sha256(row.transaction_hash);
+            bytes(row.ephemkey) % row.address.encoded() %
+            sha256(row.transaction_hash);
 
     node_stopped = true;
 }
@@ -64,10 +68,15 @@ console_result fetch_stealth::invoke(std::istream& input,
     //stealth_prefix prefix(prefix_str);
     stealth_prefix prefix(bitfield);
 
-    OBELISK_FULLNODE(pool, fullnode);
-    fullnode.blockchain.fetch_stealth(prefix, 
-        std::bind(stealth_fetched, std::placeholders::_1, 
+    node_stopped = false;
+    result = console_result::okay;
+
+    obelisk_client client(*this);
+    auto& fullnode = client.get_fullnode();
+    fullnode.blockchain.fetch_stealth(prefix,
+        std::bind(stealth_fetched, std::placeholders::_1,
             std::placeholders::_2), height);
-    poll(fullnode, pool, node_stopped);
-    return console_result::okay;
+    client.poll(node_stopped);
+
+    return result;
 }

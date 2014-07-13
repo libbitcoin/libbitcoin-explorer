@@ -56,6 +56,7 @@ if HAVE_OBELISK
         fetch-stealth.cpp \
         fetch-transaction.cpp \
         fetch-transaction-index.cpp \
+        history.cpp \
         obelisk.cpp
 
     AM_CPPFLAGS += \

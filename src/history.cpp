@@ -22,207 +22,169 @@
 #include <stdint.h>
 #include <thread>
 //#include <sstream>
+#include <boost/format.hpp>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/history.hpp>
-#include <sx/obelisk.hpp>
+#include <sx/obelisk_client.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
-using std::placeholders::_1;
-using std::placeholders::_2;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-static int32_t remaining_count = bc::max_int32;
+static bool is_first;
+static bool json_output;
 static std::mutex mutex;
+static console_result result;
+static size_t remaining_count;
 static std::condition_variable condition;
-static bool json_output = false;
+
+//for (const auto& row: history)
+//{
+//    std::cout << "Address: " << payaddr.encoded() << std::endl;
+//    std::cout << "  output: " << row.output << std::endl;
+//    std::cout << "  output_height: ";
+//    if (!row.output_height)
+//        std::cout << "Pending";
+//    else
+//        std::cout << row.output_height;
+//
+//    std::cout << std::endl;
+//    std::cout << "  value:  " << row.value << std::endl;
+//    if (row.spend.hash == null_hash)
+//    {
+//        std::cout << "  spend: Unspent" << std::endl;
+//        std::cout << "  spend_height: Unspent" << std::endl;
+//    }
+//    else
+//    {
+//        std::cout << "  spend: " << row.spend << std::endl;
+//        std::cout << "  spend_height: ";
+//        if (!row.spend_height)
+//            std::cout << "Pending";
+//        else
+//            std::cout << row.spend_height;
+//
+//        std::cout << std::endl;
+//    }
+//
+//    std::cout << std::endl;
+//}
 
 static void history_fetched(const payment_address& payaddr,
     const std::error_code& error, const blockchain::history_list& history)
 {
     if (error)
     {
-        std::cerr << "history: Failed to fetch history: " << error.message() 
-            << std::endl;
+        std::cerr << error.message() << std::endl;
+        result = console_result::failure;
+
+        std::lock_guard<std::mutex> lock(mutex);
+        BITCOIN_ASSERT(remaining_count > 0);
+        remaining_count = 0;
+        condition.notify_one();
         return;
     }
 
-    for (const auto& row: history)
-    {
-        std::cout << "Address: " << payaddr.encoded() << std::endl;
-        std::cout << "  output: " << row.output << std::endl;
-        std::cout << "  output_height: ";
-        if (!row.output_height)
-            std::cout << "Pending";
-        else
-            std::cout << row.output_height;
+    //for (const auto& row : history)
+    //{
+    //    uint64_t total_recieved, balance, pending_balance;
+    //    parse_balance_history(balance, pending_balance, total_recieved, history);
 
-        std::cout << std::endl;
-        std::cout << "  value:  " << row.value << std::endl;
-        if (row.spend.hash == null_hash)
-        {
-            std::cout << "  spend: Unspent" << std::endl;
-            std::cout << "  spend_height: Unspent" << std::endl;
-        }
-        else
-        {
-            std::cout << "  spend: " << row.spend << std::endl;
-            std::cout << "  spend_height: ";
-            if (!row.spend_height)
-                std::cout << "Pending";
-            else
-                std::cout << row.spend_height;
+    //    // Put commas between each array item in json output.
+    //    if (is_first)
+    //        is_first = false;
+    //    else
+    //        std::cout << "," << std::endl;
 
-            std::cout << std::endl;
-        }
+    //    // Actual row data.
+    //    std::cout << "{" << std::endl;
+    //    std::cout << "  \"address\": \"" << payaddr.encoded()
+    //        << "\"," << std::endl;
+    //    std::cout << "  \"output\": \"" << row.output
+    //        << "\"," << std::endl;
+    //    std::cout << "  \"output_height\": ";
+    //    if (!row.output_height)
+    //        std::cout << "\"Pending\"";
+    //    else
+    //        std::cout << row.output_height;
 
-        std::cout << std::endl;
-    }
+    //    std::cout << "," << std::endl;
+    //    std::cout << "  \"value\":  \"" << row.value << "\"," << std::endl;
+    //    if (row.spend.hash == null_hash)
+    //    {
+    //        std::cout << "  \"spend\": \"Unspent\"," << std::endl;
+    //        std::cout << "  \"spend_height\": \"Unspent\"" << std::endl;
+    //    }
+    //    else
+    //    {
+    //        std::cout << "  \"spend\": \"" << row.spend << "\"," << std::endl;
+    //        std::cout << "  \"spend_height\": ";
+    //        if (!row.spend_height)
+    //            std::cout << "\"Pending\"";
+    //        else
+    //            std::cout << "\"" << row.spend_height << "\"";
+    //    }
 
-    std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count != bc::max_int32);
-    --remaining_count;
-    condition.notify_one();
+    //    std::cout << "}";
+    //}
 }
 
-// TODO: generalize json serialization.
-static void json_history_fetched(const payment_address& payaddr,
-    const std::error_code& error, const blockchain::history_list& history)
+// Untestable without fullnode virtualization, loc ready.
+console_result history::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (error)
+    // Bound parameters.
+    // TODO: improve generated property pluralization.
+    auto addresses = get_addresss_argument();
+    auto json = get_json_option();
+
+    // TODO: implement support for defaulting a collection ARG to STDIN.
+    if (addresses.empty())
     {
-        std::cerr << "history: Failed to fetch history: "
-            << error.message() << std::endl;
-        return;
-    }
-
-    bool is_first = true;
-    for (const auto& row: history)
-    {
-        // Put commas between each array item in json output.
-        if (is_first)
-            is_first = false;
-        else
-            std::cout << "," << std::endl;
-
-        // Actual row data.
-        std::cout << "{" << std::endl;
-        std::cout << "  \"address\": \"" << payaddr.encoded()
-            << "\"," << std::endl;
-        std::cout << "  \"output\": \"" << row.output
-            << "\"," << std::endl;
-        std::cout << "  \"output_height\": ";
-        if (!row.output_height)
-            std::cout << "\"Pending\"";
-        else
-            std::cout << row.output_height;
-
-        std::cout << "," << std::endl;
-        std::cout << "  \"value\":  \"" << row.value << "\"," << std::endl;
-        if (row.spend.hash == null_hash)
+        address address;
+        std::string raw_address(read_stream(input));
+        if (!address.data().set_encoded(raw_address))
         {
-            std::cout << "  \"spend\": \"Unspent\"," << std::endl;
-            std::cout << "  \"spend_height\": \"Unspent\"" << std::endl;
-        }
-        else
-        {
-            std::cout << "  \"spend\": \"" << row.spend << "\"," << std::endl;
-            std::cout << "  \"spend_height\": ";
-            if (!row.spend_height)
-                std::cout << "\"Pending\"";
-            else
-                std::cout << "\"" << row.spend_height << "\"";
-        }
-
-        std::cout << "}";
-    }
-
-    std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count != bc::max_int32);
-    --remaining_count;
-    condition.notify_one();
-    if (remaining_count > 0)
-        std::cout << ",";
-
-    std::cout << std::endl;
-}
-
-console_result history::invoke(int argc, const char* argv[])
-{
-    if (!validate_argument_range(argc, example(), 1))
-        return console_result::failure;
-
-    // TODO: create generalized and shared aguments class that:
-    // * sets all arguments to a string list by position
-    // * sets all options arguments to a distinct list
-    // * returns the number of non option arguments
-    // * returns each argument by positional index
-    // * returns each option as a bool by textual index
-    // * generic allows any argument to be read with cast to type
-    // * passed in to each extension, removing access to argc/argv
-    // This will provide for easy faking of arguments for unit testing
-    // and greatly rationalize and simplify command line parsing
-    // across the multitude of command handlers.
-    json_output = get_option(argc, argv, SX_OPTION_JSON);
-
-    payaddr_list payaddrs;
-    if (argc == 1)
-    {
-        payment_address payaddr;
-        if (!payaddr.set_encoded(read_stream(std::cin)))
-        {
-            std::cerr << "history: Invalid address." << std::endl;
+            cerr << boost::format(SX_HISTORY_INVALID_ADDRESS) % raw_address
+                << std::endl;
             return console_result::failure;
         }
-        payaddrs.push_back(payaddr);
-    }
-    else if (!read_addresses(argc, argv, payaddrs))
-    {
-        std::cerr << "history: Invalid address." << std::endl;
-        return console_result::failure;
+
+        addresses.push_back(address);
     }
 
-    remaining_count = static_cast<int>(payaddrs.size());
+    is_first = true;
+    json_output = json;
+    result = console_result::okay;
+    remaining_count = addresses.size();
 
-    OBELISK_FULLNODE(pool, fullnode);
+    obelisk_client client(*this);
+    auto& fullnode = client.get_fullnode();
 
-    if (json_output)
-        std::cout << "[" << std::endl;
-    for (const payment_address& payaddr: payaddrs)
+    for (const auto& address : addresses)
     {
-        if (json_output)
-            fullnode.address.fetch_history(payaddr,
-                std::bind(json_history_fetched, payaddr, _1, _2));
-        else
-            fullnode.address.fetch_history(payaddr,
-                std::bind(history_fetched, payaddr, _1, _2));
+        fullnode.address.fetch_history(address,
+            std::bind(history_fetched, address, std::placeholders::_1,
+                std::placeholders::_2));
     }
-    std::thread update_loop([&fullnode]
-    {
-        while (true)
-        {
-            fullnode.update();
-            sleep_ms(100);
-        }
-    });
-    update_loop.detach();
+
+    bool done = false;
+    client.detached_poll(done);
+
     std::unique_lock<std::mutex> lock(mutex);
     while (remaining_count > 0)
-    {
         condition.wait(lock);
-        BITCOIN_ASSERT(remaining_count >= 0);
-    }
-    if (json_output)
-        std::cout << "]" << std::endl;
-    pool.stop();
-    pool.join();
-    return console_result::okay;
+
+    client.stop();
+    done = true;
+
+    return result;
 }
 

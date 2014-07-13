@@ -152,6 +152,11 @@ BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
     BOOST_REQUIRE(find(help::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__history__returns_object)
+{
+    BOOST_REQUIRE(find(history::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__satoshi__returns_object)
 {
     BOOST_REQUIRE(find(satoshi::symbol()) != nullptr);
