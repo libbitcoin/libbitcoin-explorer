@@ -133,7 +133,14 @@
     <ClCompile Include="..\..\..\..\test\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\addr-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\embed-addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\fetch-header-hash.cpp" />
+    <ClCompile Include="..\..\..\..\test\fetch-header-height.cpp" />
+    <ClCompile Include="..\..\..\..\test\fetch-last-height.cpp" />
+    <ClCompile Include="..\..\..\..\test\fetch-stealth.cpp" />
+    <ClCompile Include="..\..\..\..\test\fetch-transaction-index.cpp" />
+    <ClCompile Include="..\..\..\..\test\fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp" />
+    <ClCompile Include="..\..\..\..\test\history.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />
     <ClCompile Include="..\..\..\..\test\satoshi.cpp" />
