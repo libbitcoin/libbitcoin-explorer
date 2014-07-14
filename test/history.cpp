@@ -26,22 +26,22 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(balance__invoke)
+BOOST_AUTO_TEST_SUITE(history__invoke)
 
 // DISABLED until client-server calls are isolated for test.
 
-//BOOST_AUTO_TEST_CASE(balance__invoke__address__okay)
+//BOOST_AUTO_TEST_CASE(history__invoke__address__okay)
 //{
-//    // $ sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
-//    SX_DECLARE_COMMAND(balance);
+//    // $ sx history 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+//    SX_DECLARE_COMMAND(history);
 //    command.set_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
 //    SX_REQUIRE_OKAY(command.invoke(input, output, error));
 //}
 
-//BOOST_AUTO_TEST_CASE(balance__invoke__address_json__okay)
+//BOOST_AUTO_TEST_CASE(history__invoke__address_json__okay)
 //{
-//    // $ sx balance -j 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
-//    SX_DECLARE_COMMAND(balance);
+//    // $ sx history -j 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+//    SX_DECLARE_COMMAND(history);
 //    command.set_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
 //    command.set_json_option(true);
 //    SX_REQUIRE_OKAY(command.invoke(input, output, error));

@@ -51,10 +51,8 @@ namespace extension {
  */
 #define SX_BALANCE_INVALID_ADDRESS \
     "Invalid address '%1%'."
-#define SX_BALANCE_TEXT_OUTPUT \
+#define SX_BALANCE_OUTPUT \
     "Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n"
-#define SX_BALANCE_JSON_OUTPUT \
-    "{\n   \"address\": \"%1%\",\n   \"paid\": \"%2%\",\n   \"pending\": \"%3%\",\n   \"received\": \"%4%\"\n}\n"
 
 /**
  * Class to implement the sx balance command.
