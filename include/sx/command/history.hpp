@@ -51,10 +51,12 @@ namespace extension {
  */
 #define SX_HISTORY_INVALID_ADDRESS \
     "Invalid address '%1%'."
-#define SX_HISTORY_TEXT_OUTPUT \
-    "Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n"
-#define SX_HISTORY_JSON_OUTPUT \
-    "{\n   \"address\": \"%1%\",\n   \"paid\": \"%2%\",\n   \"pending\": \"%3%\",\n   \"received\": \"%4%\"\n}\n"
+#define SX_HISTORY_PENDING \
+    "Pending"
+#define SX_HISTORY_UNSPENT \
+    "Unspent"
+#define SX_HISTORY_OUTPUT \
+    "Address: %1%\n  output: %2%\n  output_height: %3%\n  value: %4%\n  spend: %5%\n  spend_height: %6%\n"
 
 /**
  * Class to implement the sx history command.

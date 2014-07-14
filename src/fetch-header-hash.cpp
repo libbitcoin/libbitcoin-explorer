@@ -59,14 +59,14 @@ console_result fetch_header_hash::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto hash = get_hash_argument();
+    auto block_hash = get_hash_argument();
 
     node_stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.blockchain.fetch_block_header(hash, hash_header_fetched);
+    fullnode.blockchain.fetch_block_header(block_hash, hash_header_fetched);
     client.poll(node_stopped);
 
     return result;

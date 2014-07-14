@@ -47,8 +47,7 @@
     <option name="json" description="Enable JSON output." />
     <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to get." />
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
-    <define name="SX_BALANCE_TEXT_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
-    <define name="SX_BALANCE_JSON_OUTPUT" value="{\n   \&quot;address\&quot;: \&quot;%1%\&quot;,\n   \&quot;paid\&quot;: \&quot;%2%\&quot;,\n   \&quot;pending\&quot;: \&quot;%3%\&quot;,\n   \&quot;received\&quot;: \&quot;%4%\&quot;\n}\n" />
+    <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
   </command>
 
   <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)" stub="true">
@@ -99,7 +98,7 @@
   </command>
   
   <command symbol="btc" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
-    <option name="help" description="Convert Satoshi to Bitcoin." />
+    <option name="help" description="Convert satoshi to bitcoin." />
     <argument name="SATOSHI" stream="true" description="The value to convert."/>
     <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
@@ -159,7 +158,6 @@
     <option name="help" description="Get the last block height. Requires a server connection." />
   </command>
   
-  <!-- sx fetch-stealth 2 8bf41c69 -->
   <command symbol="fetch-stealth" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get the stealth transactions matching the specified filter. Requires a server connection." />
     <option name="height" type="size_t" description="The minimum height of transactions to include in the search."/>
@@ -167,7 +165,6 @@
     <define name="SX_FETCH_STEALTH_TEXT_OUTPUT" value="ephemkey: %1% address: %2% tx_hash: %3%\n" />
   </command>
 
-  <!-- sx fetch-transaction 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4 -->
   <command symbol="fetch-transaction" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get a transaction. Requires a server connection." />
     <argument name="HASH" stream="true" type="sha256" description="The hash of the transaction." />
@@ -184,15 +181,9 @@
     <option name="json" description="Enable JSON output." />
     <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to get." />
     <define name="SX_HISTORY_INVALID_ADDRESS" value="Invalid address '%1%'." />
-    <define name="SX_HISTORY_TEXT_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
-    <define name="SX_HISTORY_JSON_OUTPUT" value="{\n   \&quot;address\&quot;: \&quot;%1%\&quot;,\n   \&quot;paid\&quot;: \&quot;%2%\&quot;,\n   \&quot;pending\&quot;: \&quot;%3%\&quot;,\n   \&quot;received\&quot;: \&quot;%4%\&quot;\n}\n" />
-    <!--<explanation value="  $ echo 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz | sx history" />
-    <explanation value="  Address: 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" />
-    <explanation value="    output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1" />
-    <explanation value="    output_height: 247683" />
-    <explanation value="    value:  100000" />
-    <explanation value="    spend: b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0" />
-    <explanation value="    spend_height: 247742" />-->
+    <define name="SX_HISTORY_PENDING" value="Pending" />
+    <define name="SX_HISTORY_UNSPENT" value="Unspent" />
+    <define name="SX_HISTORY_OUTPUT" value="Address: %1%\n  output: %2%\n  output_height: %3%\n  value: %4%\n  spend: %5%\n  spend_height: %6%\n" />
   </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
@@ -201,7 +192,7 @@
   </command>
 
   <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
-    <option name="help" description="Convert Bitcoin to Satoshi." />
+    <option name="help" description="Convert bitcoin to satoshi." />
     <argument name="BTC" stream="true" description="The value to convert."/>
     <define name="SX_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>

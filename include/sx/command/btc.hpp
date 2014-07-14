@@ -123,7 +123,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert Satoshi to Bitcoin."
+                "Convert satoshi to bitcoin."
             )
             (
                 "SATOSHI",
