@@ -64,7 +64,9 @@
     <Import Project="$(ProjectDir)..\..\properties\Output.props" />
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

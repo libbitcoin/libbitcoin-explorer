@@ -78,6 +78,5 @@ char parameter::short_name(const option_metadata& option)
 {
     auto name = option.canonical_display_name(
         search_options::dashed_short_prefer_short);
-    const char second = name[1];
-    return if_else(name[0] == option_prefix_char, second, no_short_name);
+    return if_else(name[0] == option_prefix_char, name[1], no_short_name);
 }

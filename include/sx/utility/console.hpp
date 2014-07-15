@@ -70,6 +70,28 @@ enum console_result : int
 };
 
 /**
+ * Avoid the ternary (just for fun). Must precede tempalte usage for gcc build.
+ * You should use with expressions as consequent or alternative as they will be
+ * executed regardless of the predicate.
+ *
+ * @param      <Consequent>  The type of the consequent.
+ * @param      <Alternate>   The type of the alternative.
+ * @param[in]  antecedent    The proposition's antecedent.
+ * @param[in]  consequent    The proposition's consequent (if predicate).
+ * @param[in]  consequent    The proposition's alternative (if !predicate).
+ * @return                   Either the consequent or the alternative.
+ */
+template <typename Consequent, typename Alternate>
+Consequent if_else(bool antecedent, const Consequent consequent,
+    const Alternate alternative)
+{
+    if (antecedent)
+        return consequent;
+    else 
+        return alternative;
+}
+
+/**
  * Conveniently test a numeric value to see if specified flags are set.
  * Caller should ensure that TValue is the same type as TElement (sorry,
  * but there are no type constraints in c++).
@@ -122,28 +144,6 @@ int find_pair_position(const std::vector<Pair>& list, const Key& key)
 
     auto it = std::find_if(list.begin(), list.end(), predicate);
     return if_else(it == list.end(), -1, distance(list.begin(), it));
-}
-
-/**
- * Avoid the ternary (just for fun).
- * You should use with expressions as consequent or alternative as they will be
- * executed regardless of the predicate.
- *
- * @param      <Consequent>  The type of the consequent.
- * @param      <Alternate>   The type of the alternative.
- * @param[in]  antecedent    The proposition's antecedent.
- * @param[in]  consequent    The proposition's consequent (if predicate).
- * @param[in]  consequent    The proposition's alternative (if !predicate).
- * @return                   Either the consequent or the alternative.
- */
-template <typename Consequent, typename Alternate>
-Consequent if_else(bool antecedent, const Consequent consequent,
-    const Alternate alternative)
-{
-    if (antecedent)
-        return consequent;
-    else 
-        return alternative;
 }
 
 /**
