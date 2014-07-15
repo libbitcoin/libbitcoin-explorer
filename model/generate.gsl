@@ -70,18 +70,18 @@
 .       return type_address_sx
 .   elsif my.type = type_base58
 .       return type_base58_sx
+.   elsif my.type = type_bitcoin160
+.       return type_bitcoin160_sx
+.   elsif my.type = type_bitcoin256
+.       return type_bitcoin256_sx
 .   elsif my.type = type_byte
 .       return type_byte_sx
 .   elsif my.type = type_bytes
 .       return type_bytes_sx
-.   elsif my.type = type_sha256
-.       return type_sha256_sx
 .   elsif my.type = type_key
 .       return type_key_sx
 .   elsif my.type = type_point
 .       return type_point_sx
-.   elsif my.type = type_ripemd160
-.       return type_ripemd160_sx
 .   elsif my.type = type_secret
 .       return type_secret_sx
 .   endif
@@ -156,26 +156,26 @@
 .type_bool = "bool"
 .type_address = "address"
 .type_base58 = "base58"
+.type_bitcoin160 = "bitcoin160"
+.type_bitcoin256 = "bitcoin256"
 .type_byte = "byte"
 .type_bytes = "bytes"
-.type_sha256 = "sha256"
 .type_key = "key"
 .type_path = "path"
 .type_point = "point"
 .type_secret = "secret"
 .type_string = "string"
-.type_ripemd160 = "ripemd160"
 .
 .type_address_sx = "serializer::address"
 .type_base58_sx = "serializer::base58"
+.type_bitcoin160_sx = "serializer::bitcoin160"
+.type_bitcoin256_sx = "serializer::bitcoin256"
 .type_byte_sx = "serializer::byte"
 .type_bytes_sx = "serializer::bytes"
 .type_key_sx = "serializer::key"
 .type_path_boost = "boost::filesystem::path"
 .type_point_sx = "serializer::point"
-.type_ripemd160_sx = "serializer::ripemd160"
 .type_secret_sx = "serializer::secret"
-.type_sha256_sx = "serializer::sha256"
 .type_string_std = "std::string"
 .
 .xml_false = "false"
@@ -563,13 +563,13 @@ private:
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/bitcoin160.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
-#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -643,7 +643,7 @@ public:
      *
      * @return  The loaded program argument definitions.
      */
-    arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()$(if_else_empty(argument_count = 0, ";"))
 .for argument
@@ -660,7 +660,7 @@ public:
      *
      * @return  The loaded program option definitions.
      */
-    options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -704,7 +704,7 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    void load_stream(std::istream& input, po::variables_map& variables)
+    virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
 .for argument
 .   if (is_xml_true(stream))
@@ -1093,12 +1093,13 @@ endif
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin160.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\io_point.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ripemd160.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\sha256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
@@ -1201,6 +1202,9 @@ endif
     <Filter Include="include\\command\\obelisk">
       <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\\command\\obsolete">
+      <UniqueIdentifier>{268700C7-1C9D-44FF-B1CE-3104893288A4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\\command\\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
@@ -1215,6 +1219,9 @@ endif
     </Filter>
     <Filter Include="src\\command\\obelisk">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command\\obsolete">
+      <UniqueIdentifier>{DF81EBEE-BB03-406B-B4C5-1D9FD2964E97}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\\command\\stub">
       <UniqueIdentifier>{e96f4bef-2d18-4897-9078-a8c17783ee65}</UniqueIdentifier>
@@ -1232,10 +1239,12 @@ endif
   <ItemGroup>
 .for command by symbol
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command\\$(symbol:).hpp">
-.   if (is_xml_true(obelisk))
-      <Filter>include\\command\\obelisk</Filter>
-.   elsif (is_xml_true(stub))
+.   if (is_xml_true(stub))
       <Filter>include\\command\\stub</Filter>
+.   elsif (is_xml_true(obelisk))
+      <Filter>include\\command\\obelisk</Filter>
+.   elsif (is_xml_true(obsolete))
+      <Filter>include\\command\\obsolete</Filter>
 .   else
       <Filter>include\\command</Filter>
 .   endif
@@ -1247,22 +1256,25 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin160.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin256.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\io_point.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\key.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp">
-      <Filter>include\\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ripemd160.hpp">
-      <Filter>include\\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\sha256.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp">
@@ -1314,10 +1326,12 @@ endif
   <ItemGroup>
 .for command by symbol
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
-.   if (is_xml_true(obelisk))
-      <Filter>src\\command\\obelisk</Filter>
-.   elsif (is_xml_true(stub))
+.   if (is_xml_true(stub))
       <Filter>src\\command\\stub</Filter>
+.   elsif (is_xml_true(obelisk))
+      <Filter>src\\command\\obelisk</Filter>
+.   elsif (is_xml_true(obsolete))
+      <Filter>src\\command\\obsolete</Filter>
 .   else
       <Filter>src\\command</Filter>
 .   endif

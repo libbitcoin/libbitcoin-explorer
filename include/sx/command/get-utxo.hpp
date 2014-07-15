@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_HELP_HPP
-#define SX_HELP_HPP
+#ifndef SX_GET_UTXO_HPP
+#define SX_GET_UTXO_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -49,13 +49,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_HELP_NOT_COMMAND \
-    "The word '%1%' is not a sx command. All commands:"
+#define SX_GET_UXTO_NOT_IMPLEMENTED \
+    "This command is not yet ported from python."
 
 /**
- * Class to implement the sx help command.
+ * Class to implement the sx get-utxo command.
  */
-class help 
+class get_utxo 
     : public command
 {
 public:
@@ -63,14 +63,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "help"; }
+    static const char* symbol() { return "get-utxo"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return help::symbol();
+        return get_utxo::symbol();
     }
 
     /**
@@ -78,7 +78,7 @@ public:
      */
     const char* category()
     {
-        return "SX";
+        return "ONLINE (OBELISK)";
     }
 
     /**
@@ -86,7 +86,7 @@ public:
      */
     const char* subcategory()
     {
-        return "DOCUMENTATION";
+        return "BLOCKCHAIN QUERIES";
     }
 
     /**
@@ -98,7 +98,8 @@ public:
     arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("COMMAND", 1);
+            .add("SATOSHI", 1)
+            .add("ADDRESS", -1);
     }
     
     /**
@@ -121,9 +122,19 @@ public:
                 "The path and file name for the configuration settings file for this application."
             )
             (
-                "COMMAND",
-                value<std::string>(&argument_.command),
-                "Get help for the COMMAND."
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Get enough unspent transaction outputs from a set of addresses to pay a number of satoshi. Requires a server connection."
+            )
+            (
+                "SATOSHI",
+                value<uint64_t>(&argument_.satoshi),
+                "The number of satoshi."
+            )
+            (
+                "ADDRESS",
+                value<std::vector<serializer::address>>(&argument_.addresss),
+                "The set of addresses."
             );
 
         return options;
@@ -137,9 +148,9 @@ public:
      */
     void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto command = variables.find("COMMAND");
-        if (command == variables.end())
-            parse(argument_.command, read_stream(input));
+        auto satoshi = variables.find("SATOSHI");
+        if (satoshi == variables.end())
+            parse(argument_.satoshi, read_stream(input));
     }
 
     /**
@@ -156,19 +167,51 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the COMMAND argument.
+     * Get the value of the SATOSHI argument.
      */
-    virtual std::string get_command_argument()
+    virtual uint64_t get_satoshi_argument()
     {
-        return argument_.command;
+        return argument_.satoshi;
     }
     
     /**
-     * Set the value of the COMMAND argument.
+     * Set the value of the SATOSHI argument.
      */
-    virtual void set_command_argument(std::string value)
+    virtual void set_satoshi_argument(uint64_t value)
     {
-        argument_.command = value;
+        argument_.satoshi = value;
+    }
+
+    /**
+     * Get the value of the ADDRESS arguments.
+     */
+    virtual std::vector<serializer::address> get_addresss_argument()
+    {
+        return argument_.addresss;
+    }
+    
+    /**
+     * Set the value of the ADDRESS arguments.
+     */
+    virtual void set_addresss_argument(std::vector<serializer::address> value)
+    {
+        argument_.addresss = value;
+    }
+
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }
+    
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
     }
 
 private:
@@ -181,9 +224,11 @@ private:
     struct argument
     {
         argument()
-          : command()
+          : satoshi(),
+            addresss()
             {}
-        std::string command;
+        uint64_t satoshi;
+        std::vector<serializer::address> addresss;
     } argument_;
     
     /**
@@ -194,7 +239,9 @@ private:
     struct option
     {
         option()
+          : help()
             {}    
+        bool help;
     } option_;
 };
 

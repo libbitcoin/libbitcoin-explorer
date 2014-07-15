@@ -21,9 +21,8 @@
 #define SECRET_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/define.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -108,15 +107,16 @@ public:
     {
         std::string hex;
         input >> hex;
-        argument.value_ = bc::decode_hash(hex);
+        bc::hash_digest hash = bitcoin256(hex);
 
-        if (argument.value_ == bc::null_hash)
+        if (hash == bc::null_hash)
             throw po::invalid_option_value(
                 SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
 
         //if (!bc::verify_private_key(argument))
         //    throw po::invalid_option_value(SX_SERIALIZER_SECRET_EXCEPTION);
 
+        std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;
     }
 
@@ -130,7 +130,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const secret& argument)
     {
-        output << bc::encode_hex(argument.value_);
+        output << bitcoin256(argument.value_);
         return output;
     }
 

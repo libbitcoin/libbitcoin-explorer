@@ -67,6 +67,11 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "fetch-stealth\n" \
         "fetch-transaction\n" \
         "fetch-transaction-index\n" \
+        "genaddr\n" \
+        "genpriv\n" \
+        "genpub\n" \
+        "get-pubkey\n" \
+        "get-utxo\n" \
         "help\n" \
         "history\n" \
         "satoshi\n" \
@@ -77,7 +82,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
 
 BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
 {
-    // $ sx help stealth-addr
+    // $ sx help addr
     SX_DECLARE_COMMAND(help);
     command.set_command_argument("addr");
     SX_REQUIRE_OKAY(command.invoke(input, output, error));

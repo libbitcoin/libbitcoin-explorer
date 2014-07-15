@@ -24,8 +24,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/serializer/address.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/sha256.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -50,9 +51,9 @@ static void stealth_fetched(const std::error_code& error,
     }
     else
         for (const blockchain::stealth_row& row : stealth_results)
-            std::cout << boost::format(SX_FETCH_STEALTH_TEXT_OUTPUT) %
-            bytes(row.ephemkey) % row.address.encoded() %
-            sha256(row.transaction_hash);
+            std::cout << boost::format(SX_FETCH_STEALTH_OUTPUT) %
+            bytes(row.ephemkey) % address(row.address) %
+            bitcoin256(row.transaction_hash);
 
     node_stopped = true;
 }

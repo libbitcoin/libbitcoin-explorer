@@ -17,41 +17,42 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ADDRESS_HPP
-#define ADDRESS_HPP
+#ifndef SHA256_HPP
+#define SHA256_HPP
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/serializer/bytes.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_ADDRESS_EXCEPTION \
-    "Invalid payment address."
+#define SX_SERIALIZER_SHA256_SIZE_EXCEPTION \
+    "Invalid SHA256 hash must be 32 bytes."
 
 /**
- * Serialization helper to convert between base58 string and payment_address.
+ * Serialization helper to convert between hex string and hash_digest.
  */
-class address
+class bitcoin256
 {
 public:
 
     /**
      * Constructor.
      */
-    address()
+    bitcoin256()
         : value_() {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  base58  The value to initialize with.
+     * @param[in]  hex  The value to initialize with.
      */
-    address(const std::string& base58)
+    bitcoin256(const std::string& hex)
     {
-        std::stringstream(base58) >> *this;
+        std::stringstream(hex) >> *this;
     }
 
     /**
@@ -59,23 +60,25 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    address(const bc::payment_address& value)
-        : address(value.encoded()) {}
+    bitcoin256(const bc::hash_digest& value)
+    {
+        std::copy(value.begin(), value.end(), value_.begin());
+    }
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    address(const address& other)
-        : address(other.value_) {}
+    bitcoin256(const bitcoin256& other)
+        : bitcoin256(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::payment_address& data()
+    bc::hash_digest& data()
     {
         return value_;
     }
@@ -85,7 +88,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::payment_address() const
+    operator const bc::hash_digest() const
     {
         return value_; 
     }
@@ -97,14 +100,17 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, address& argument)
+    friend std::istream& operator>>(std::istream& input, bitcoin256& argument)
     {
-        std::string base58;
-        input >> base58;
+        std::string hex;
+        input >> hex;
+        auto hash = bc::decode_hash(hex);
 
-        if (!argument.value_.set_encoded(base58))
-            throw po::invalid_option_value(SX_SERIALIZER_ADDRESS_EXCEPTION);
+        if (hash == bc::null_hash)
+            throw po::invalid_option_value(
+                SX_SERIALIZER_SHA256_SIZE_EXCEPTION);
 
+        std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;
     }
 
@@ -116,9 +122,9 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const address& argument)
+        const bitcoin256& argument)
     {
-        output << argument.value_.encoded();
+        output << bytes(argument.value_);
         return output;
     }
 
@@ -127,7 +133,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::payment_address value_;
+    bc::hash_digest value_;
 };
 
 } // sx

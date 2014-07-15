@@ -60,6 +60,11 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_stealth>());
     func(make_shared<fetch_transaction>());
     func(make_shared<fetch_transaction_index>());
+    func(make_shared<genaddr>());
+    func(make_shared<genpriv>());
+    func(make_shared<genpub>());
+    func(make_shared<get_pubkey>());
+    func(make_shared<get_utxo>());
     func(make_shared<help>());
     func(make_shared<history>());
     func(make_shared<satoshi>());
@@ -120,6 +125,16 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_transaction>();
     if (symbol == fetch_transaction_index::symbol())
         return make_shared<fetch_transaction_index>();
+    if (symbol == genaddr::symbol())
+        return make_shared<genaddr>();
+    if (symbol == genpriv::symbol())
+        return make_shared<genpriv>();
+    if (symbol == genpub::symbol())
+        return make_shared<genpub>();
+    if (symbol == get_pubkey::symbol())
+        return make_shared<get_pubkey>();
+    if (symbol == get_utxo::symbol())
+        return make_shared<get_utxo>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == history::symbol())

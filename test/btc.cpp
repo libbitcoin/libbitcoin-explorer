@@ -28,11 +28,11 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(btc__invoke)
 
-BOOST_AUTO_TEST_CASE(btc__invoke__bogus_saoshi__failure_error)
+BOOST_AUTO_TEST_CASE(btc__invoke__zero_satoshi__failure_error)
 {
-    // $ sx btc bogus
+    // $ sx btc 0
     SX_DECLARE_COMMAND(btc);
-    command.set_satoshi_argument("bogus");
+    command.set_satoshi_argument(0);
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
     SX_REQUIRE_ERROR(SX_BTC_NOT_IMPLEMENTED "\n");
 }

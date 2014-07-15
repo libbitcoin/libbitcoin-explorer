@@ -65,7 +65,7 @@
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -141,6 +141,11 @@
     <ClCompile Include="..\..\..\..\test\fetch-stealth.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-transaction-index.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\test\genaddr.cpp" />
+    <ClCompile Include="..\..\..\..\test\genpriv.cpp" />
+    <ClCompile Include="..\..\..\..\test\genpub.cpp" />
+    <ClCompile Include="..\..\..\..\test\get-pubkey.cpp" />
+    <ClCompile Include="..\..\..\..\test\get-utxo.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\history.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />

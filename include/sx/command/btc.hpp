@@ -30,13 +30,13 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/bitcoin160.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
-#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -123,12 +123,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert satoshi to bitcoin."
+                "Convert satoshi to BTC."
             )
             (
                 "SATOSHI",
-                value<std::string>(&argument_.satoshi),
-                "The value to convert."
+                value<uint64_t>(&argument_.satoshi),
+                "The number of satoshi to convert."
             );
 
         return options;
@@ -163,7 +163,7 @@ public:
     /**
      * Get the value of the SATOSHI argument.
      */
-    virtual std::string get_satoshi_argument()
+    virtual uint64_t get_satoshi_argument()
     {
         return argument_.satoshi;
     }
@@ -171,7 +171,7 @@ public:
     /**
      * Set the value of the SATOSHI argument.
      */
-    virtual void set_satoshi_argument(std::string value)
+    virtual void set_satoshi_argument(uint64_t value)
     {
         argument_.satoshi = value;
     }
@@ -204,7 +204,7 @@ private:
         argument()
           : satoshi()
             {}
-        std::string satoshi;
+        uint64_t satoshi;
     } argument_;
     
     /**

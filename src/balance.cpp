@@ -25,7 +25,6 @@
 #include <stdint.h>
 #include <thread>
 //#include <sstream>
-#include <boost/format.hpp>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
@@ -87,7 +86,7 @@ static void parse_balance_history(uint64_t& balance, uint64_t& pending_balance,
 
 // TODO: for testability parameterize STDOUT and STDERR.
 // TODO: use json serializer and generalize to all command outputs.
-static void balance_fetched(const payment_address& payaddr,
+static void balance_fetched(const payment_address& pay_address,
     const std::error_code& error, const blockchain::history_list& history)
 {
     std::lock_guard<std::mutex> lock(mutex);
@@ -113,7 +112,7 @@ static void balance_fetched(const payment_address& payaddr,
 
     auto format = if_else(json_output, json_format, SX_BALANCE_OUTPUT);
 
-    std::cout << boost::format(format) % payaddr.encoded() % balance %
+    std::cout << boost::format(format) % address(pay_address) % balance %
         pending_balance % total_recieved;
 
     if (json_output)

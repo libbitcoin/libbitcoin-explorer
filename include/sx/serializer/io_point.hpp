@@ -17,33 +17,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef RIPEMD160_HPP
-#define RIPEMD160_HPP
+#ifndef IO_POINT_HPP
+#define IO_POINT_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/define.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_RIPEMD160_EXCEPTION \
-    "Invalid RIPEMD160 hash."
+#define SX_SERIALIZER_IO_POINT_DELIMITER ":"
+#define SX_SERIALIZER_IO_POINT_DELIMITER_EXCEPTION \
+    "Point must have two parts delimited by a colon."
 
 /**
- * Serialization helper to convert between hex string and short_hash.
+ * Serialization helper to convert between hex string and input_point and
+ * output_point. These points should not be confused with points on a curve.
  */
-class ripemd160
+class io_point
 {
 public:
 
     /**
      * Constructor.
      */
-    ripemd160()
+    io_point()
         : value_() {}
 
     /**
@@ -51,7 +52,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    ripemd160(const std::string& hex)
+    io_point(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -61,33 +62,26 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    ripemd160(const bc::short_hash& value)
+    io_point(const bc::output_point& value)
     {
-        std::copy(value.begin(), value.end(), value_.begin());
+        std::copy(value.hash.begin(), value.hash.end(), value_.hash.begin());
+        value_.index = value.index;
     }
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  address  The value to initialize with.
-     */
-    ripemd160(const bc::payment_address& address)
-        : ripemd160(address.hash()) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    ripemd160(const ripemd160& other)
-        : ripemd160(other.value_) {}
+    io_point(const io_point& other)
+        : io_point(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::short_hash& data()
+    bc::output_point& data()
     {
         return value_;
     }
@@ -97,9 +91,9 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::short_hash() const
+    operator const bc::output_point() const
     {
-        return value_;
+        return value_; 
     }
 
     /**
@@ -109,17 +103,23 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, ripemd160& argument)
+    friend std::istream& operator>>(std::istream& input, io_point& argument)
     {
-        std::string hex;
-        input >> hex;
-        auto hash = bc::decode_short_hash(hex);
+        std::string structure;
+        input >> structure;
 
-        // TODO: determine how to properly raise error in deserialization.
-        if (hash == bc::null_short_hash)
-            throw po::invalid_option_value(SX_SERIALIZER_RIPEMD160_EXCEPTION);
+        // Note: there is no bc::uncat_point()
+        std::vector<std::string> members;
+        split(structure, members, SX_SERIALIZER_IO_POINT_DELIMITER);
 
-        std::copy(hash.begin(), hash.end(), argument.value_.begin());
+        if (members.size() != 2)
+            throw po::invalid_option_value(
+                SX_SERIALIZER_IO_POINT_DELIMITER);
+
+        parse(argument.value_.index, members[1]);
+        bc::hash_digest hash = bitcoin256(members[0]);
+
+        std::copy(hash.begin(), hash.end(), argument.value_.hash.begin());
         return input;
     }
 
@@ -131,9 +131,11 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const ripemd160& argument)
+        const io_point& argument)
     {
-        output << bc::encode_hex(argument.value_);
+        // See bc::concat_point()
+        output << bitcoin256(argument.value_.hash) <<
+            SX_SERIALIZER_IO_POINT_DELIMITER << argument.value_.index;
         return output;
     }
 
@@ -142,7 +144,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::short_hash value_;
+    bc::output_point value_;
 };
 
 } // sx

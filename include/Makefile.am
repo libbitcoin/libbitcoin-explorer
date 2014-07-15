@@ -40,6 +40,10 @@ sx_command_include_HEADERS = \
     command/ec-multiply.hpp \
     command/ec-multiply-secrets.hpp \
     command/embed-addr.hpp \
+    command/genaddr.hpp \
+    command/genpriv.hpp \
+    command/genpub.hpp \
+    command/get-pubkey.hpp \
     command/help.hpp \
     command/satoshi.hpp \
     command/stealth-addr.hpp \
@@ -56,5 +60,6 @@ if HAVE_OBELISK
         command/fetch-stealth.hpp \
         command/fetch-transaction.hpp \
         command/fetch-transaction-index.hpp \
+        command/get-utxo.hpp \
         command/history.hpp
 endif

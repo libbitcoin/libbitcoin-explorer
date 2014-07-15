@@ -98,7 +98,8 @@ public:
     {
         std::string base58;
         input >> base58;
-        argument.value_ = bc::decode_base58(base58);
+        bc::data_chunk chunk = bc::decode_base58(base58);
+        argument.value_.assign(chunk.begin(), chunk.end());
         return input;
     }
 

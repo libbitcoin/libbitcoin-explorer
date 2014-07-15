@@ -20,10 +20,9 @@
 #include <sx/command/addr-decode.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/serializer/bitcoin160.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ripemd160.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -38,7 +37,7 @@ console_result addr_decode::invoke(std::istream& input,
     // Bound parameters.
     const auto address = get_address_argument();
     
-    output << ripemd160(address) << std::endl;
+    output << bitcoin160(address) << std::endl;
     return console_result::okay;
 }
 

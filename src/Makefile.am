@@ -40,6 +40,10 @@ libsx_la_SOURCES += \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
     embed-addr.cpp \
+    genaddr.cpp \
+    genpriv.cpp \
+    genpub.cpp \
+    get-pubkey.cpp \
     help.cpp \
     satoshi.cpp \
     stealth-addr.cpp \
@@ -56,6 +60,7 @@ if HAVE_OBELISK
         fetch-stealth.cpp \
         fetch-transaction.cpp \
         fetch-transaction-index.cpp \
+        get-utxo.cpp \
         history.cpp \
         obelisk.cpp
 

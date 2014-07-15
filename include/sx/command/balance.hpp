@@ -30,13 +30,13 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/bitcoin160.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
-#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -125,7 +125,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the balance in satoshis of one or more Bitcoin addresses. Requires a server connection."
+                "Get the balance in satoshi of one or more Bitcoin addresses. Requires a server connection."
             )
             (
                 "json,j",
@@ -135,7 +135,7 @@ public:
             (
                 "ADDRESS",
                 value<std::vector<serializer::address>>(&argument_.addresss),
-                "The address(es) to get."
+                "The set of addresses."
             );
 
         return options;

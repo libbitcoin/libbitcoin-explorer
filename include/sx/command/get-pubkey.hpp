@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_HELP_HPP
-#define SX_HELP_HPP
+#ifndef SX_GET_PUBKEY_HPP
+#define SX_GET_PUBKEY_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -49,13 +49,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_HELP_NOT_COMMAND \
-    "The word '%1%' is not a sx command. All commands:"
+#define SX_GET_PUBKEY_NOT_IMPLEMENTED \
+    "This command is not yet ported from python."
 
 /**
- * Class to implement the sx help command.
+ * Class to implement the sx get-pubkey command.
  */
-class help 
+class get_pubkey 
     : public command
 {
 public:
@@ -63,14 +63,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "help"; }
+    static const char* symbol() { return "get-pubkey"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return help::symbol();
+        return get_pubkey::symbol();
     }
 
     /**
@@ -78,7 +78,7 @@ public:
      */
     const char* category()
     {
-        return "SX";
+        return "OFFLINE KEYS AND ADDRESSES";
     }
 
     /**
@@ -86,7 +86,7 @@ public:
      */
     const char* subcategory()
     {
-        return "DOCUMENTATION";
+        return "BASIC";
     }
 
     /**
@@ -98,7 +98,7 @@ public:
     arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("COMMAND", 1);
+            .add("ADDRESS", 1);
     }
     
     /**
@@ -121,9 +121,14 @@ public:
                 "The path and file name for the configuration settings file for this application."
             )
             (
-                "COMMAND",
-                value<std::string>(&argument_.command),
-                "Get help for the COMMAND."
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Get the public key of an address if available."
+            )
+            (
+                "ADDRESS",
+                value<serializer::address>(&argument_.address),
+                "The address from which to derive the public key."
             );
 
         return options;
@@ -137,9 +142,9 @@ public:
      */
     void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto command = variables.find("COMMAND");
-        if (command == variables.end())
-            parse(argument_.command, read_stream(input));
+        auto address = variables.find("ADDRESS");
+        if (address == variables.end())
+            parse(argument_.address, read_stream(input));
     }
 
     /**
@@ -156,19 +161,35 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the COMMAND argument.
+     * Get the value of the ADDRESS argument.
      */
-    virtual std::string get_command_argument()
+    virtual serializer::address get_address_argument()
     {
-        return argument_.command;
+        return argument_.address;
     }
     
     /**
-     * Set the value of the COMMAND argument.
+     * Set the value of the ADDRESS argument.
      */
-    virtual void set_command_argument(std::string value)
+    virtual void set_address_argument(serializer::address value)
     {
-        argument_.command = value;
+        argument_.address = value;
+    }
+
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }
+    
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
     }
 
 private:
@@ -181,9 +202,9 @@ private:
     struct argument
     {
         argument()
-          : command()
+          : address()
             {}
-        std::string command;
+        serializer::address address;
     } argument_;
     
     /**
@@ -194,7 +215,9 @@ private:
     struct option
     {
         option()
+          : help()
             {}    
+        bool help;
     } option_;
 };
 

@@ -17,33 +17,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SHA256_HPP
-#define SHA256_HPP
+#ifndef RIPEMD160_HPP
+#define RIPEMD160_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/define.hpp>
+#include <sx/serializer/bytes.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_SHA256_SIZE_EXCEPTION \
-    "SHA256 hash must be 32 bytes."
+#define SX_SERIALIZER_RIPEMD160_EXCEPTION \
+    "Invalid RIPEMD160 hash."
 
 /**
- * Serialization helper to convert between hex string and hash_digest.
+ * Serialization helper to convert between hex string and short_hash.
  */
-class sha256
+class bitcoin160
 {
 public:
 
     /**
      * Constructor.
      */
-    sha256()
+    bitcoin160()
         : value_() {}
 
     /**
@@ -51,7 +50,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    sha256(const std::string& hex)
+    bitcoin160(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -61,25 +60,33 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    sha256(const bc::hash_digest& value)
+    bitcoin160(const bc::short_hash& value)
     {
         std::copy(value.begin(), value.end(), value_.begin());
     }
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  address  The value to initialize with.
+     */
+    bitcoin160(const bc::payment_address& address)
+        : bitcoin160(address.hash()) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    sha256(const sha256& other)
-        : sha256(other.value_) {}
+    bitcoin160(const bitcoin160& other)
+        : bitcoin160(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::hash_digest& data()
+    bc::short_hash& data()
     {
         return value_;
     }
@@ -89,9 +96,9 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::hash_digest() const
+    operator const bc::short_hash() const
     {
-        return value_; 
+        return value_;
     }
 
     /**
@@ -101,16 +108,16 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, sha256& argument)
+    friend std::istream& operator>>(std::istream& input, bitcoin160& argument)
     {
         std::string hex;
         input >> hex;
-        argument.value_ = bc::decode_hash(hex);
+        auto hash = bc::decode_short_hash(hex);
 
-        if (argument.value_ == bc::null_hash)
-            throw po::invalid_option_value(
-                SX_SERIALIZER_SHA256_SIZE_EXCEPTION);
+        if (hash == bc::null_short_hash)
+            throw po::invalid_option_value(SX_SERIALIZER_RIPEMD160_EXCEPTION);
 
+        std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;
     }
 
@@ -122,9 +129,9 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const sha256& argument)
+        const bitcoin160& argument)
     {
-        output << bc::encode_hex(argument.value_);
+        output << bytes(argument.value_);
         return output;
     }
 
@@ -133,7 +140,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::hash_digest value_;
+    bc::short_hash value_;
 };
 
 } // sx

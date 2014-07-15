@@ -65,11 +65,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  array  The value to initialize with.
+     * @param[in]  value  The value to initialize with.
      */
     template<size_t Size>
     bytes(const bc::byte_array<Size>& value)
-        : bytes(value) {}
+        : value_(value.begin(), value.end()) {}
 
     /**
      * Copy constructor.
@@ -110,7 +110,8 @@ public:
     {
         std::string hex;
         input >> hex;
-        argument.value_ = bc::decode_hex(hex);
+        bc::data_chunk chunk = bc::decode_hex(hex);
+        argument.value_.assign(chunk.begin(), chunk.end());
         return input;
     }
 

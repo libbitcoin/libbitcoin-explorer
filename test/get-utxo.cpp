@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,15 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <sx/command/genpub.hpp>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-using namespace sx;
-using namespace sx::extension;
+SX_USING_NAMESPACES()
 
-console_result genpub::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(get_utxo__invoke)
+
+BOOST_AUTO_TEST_CASE(get_uxto__invoke__zero_satoshi__failure_error)
 {
-    cerr << SX_GENPUB_OBSOLETE << std::endl;
-    return console_result::failure;
+    // $ sx get-utxo 0 bogus
+    SX_DECLARE_COMMAND(get_utxo);
+    command.set_satoshi_argument(0);
+    //command.set_addresss_argument({{ "bogus" }});
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_BTC_NOT_IMPLEMENTED "\n");
 }
+
+BOOST_AUTO_TEST_SUITE_END()

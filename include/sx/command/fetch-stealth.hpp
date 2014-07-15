@@ -30,13 +30,13 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/bitcoin160.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
-#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -49,8 +49,8 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_FETCH_STEALTH_TEXT_OUTPUT \
-    "ephemkey: %1% address: %2% tx_hash: %3%\n"
+#define SX_FETCH_STEALTH_OUTPUT \
+    "Ephemkey: %1% Address: %2% Transaction hash: %3%\n"
 
 /**
  * Class to implement the sx fetch-stealth command.

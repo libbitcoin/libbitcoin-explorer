@@ -24,7 +24,6 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/serializer/sha256.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -48,7 +47,7 @@ static void index_fetched(const std::error_code& error,
         result = console_result::failure;
     }
     else
-        std::cout << boost::format(SX_FETCH_TRANSACTION_INDEX_TEXT_OUTPUT) %
+        std::cout << boost::format(SX_FETCH_TRANSACTION_INDEX_OUTPUT) %
             height % index;
 
     node_stopped = true;

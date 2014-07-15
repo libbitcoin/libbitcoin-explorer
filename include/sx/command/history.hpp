@@ -30,13 +30,13 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/bitcoin160.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
-#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -56,7 +56,7 @@ namespace extension {
 #define SX_HISTORY_UNSPENT \
     "Unspent"
 #define SX_HISTORY_OUTPUT \
-    "Address: %1%\n  output: %2%\n  output_height: %3%\n  value: %4%\n  spend: %5%\n  spend_height: %6%\n"
+    "Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%\n"
 
 /**
  * Class to implement the sx history command.
@@ -139,7 +139,7 @@ public:
             (
                 "ADDRESS",
                 value<std::vector<serializer::address>>(&argument_.addresss),
-                "The address(es) to get."
+                "The set of addresses."
             );
 
         return options;

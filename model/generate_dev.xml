@@ -38,14 +38,14 @@
   <command symbol="addr-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
     <option name="help" description="Convert an address from RIPEMD160 to Base58Check." />
     <option name="version" type="byte" description="The desired version number." />
-    <argument name="RIPEMD160" stream="true" type="ripemd160" description="The hex string to convert."/>
+    <argument name="RIPEMD160" stream="true" type="bitcoin160" description="The hex string to convert."/>
   </command>
   
   <!-- sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" -->
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
-    <option name="help" description="Get the balance in satoshis of one or more Bitcoin addresses. Requires a server connection." />
+    <option name="help" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to get." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
   </command>
@@ -85,21 +85,21 @@
 
   <command symbol="blke-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
     <option name="help" description="Get a transaction from blockexplorer.com." />
-    <argument name="HASH" stream="true" description="The hash of the transaction to get." />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The hash of the transaction." />
     <define name="SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
   <command symbol="brainwallet" category="OFFLINE KEYS AND ADDRESSES" subcategory="BRAIN STORAGE" stub="true">
     <option name="help" description="Make a SHA256 private key from an arbitrary passphrase. Unsafe if passphrase is low in entropy. See diceware and xkcd for advice on entropy and generating a safe brainwallet." />
-    <option name="algo" description="The algorithm, e.g. slowsha" />
+    <option name="algorithm" description="The algorithm (e.g. slowsha)." />
     <argument name="PASSWORD" required="true" description="A passphrase." />
     <argument name="USERNAME" description="A username." />
     <define name="SX_BRAINWALLET_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
   
   <command symbol="btc" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
-    <option name="help" description="Convert satoshi to bitcoin." />
-    <argument name="SATOSHI" stream="true" description="The value to convert."/>
+    <option name="help" description="Convert satoshi to BTC." />
+    <argument name="SATOSHI" stream="true" type="uint64_t" description="The number of satoshi to convert."/>
     <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
   
@@ -146,7 +146,7 @@
   
   <command symbol="fetch-header-hash" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get the raw block header from the specified hash. Requires a server connection." />
-    <argument name="HASH" stream="true" type="sha256" description="The hash of the block."/>
+    <argument name="HASH" stream="true" type="bitcoin256" description="The hash of the block."/>
   </command>
   
   <command symbol="fetch-header-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
@@ -162,28 +162,56 @@
     <option name="help" description="Get the stealth transactions matching the specified filter. Requires a server connection." />
     <option name="height" type="size_t" description="The minimum height of transactions to include in the search."/>
     <argument name="BITFIELD" stream="true" type="uint32_t" description="The bit field of transactions to include in the search."/>
-    <define name="SX_FETCH_STEALTH_TEXT_OUTPUT" value="ephemkey: %1% address: %2% tx_hash: %3%\n" />
+    <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemkey: %1% Address: %2% Transaction hash: %3%\n" />
   </command>
 
   <command symbol="fetch-transaction" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get a transaction. Requires a server connection." />
-    <argument name="HASH" stream="true" type="sha256" description="The hash of the transaction." />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The hash of the transaction." />
   </command>
 
   <command symbol="fetch-transaction-index" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get the block height and index of a transaction. Requires a server connection." />
-    <argument name="HASH" stream="true" type="sha256" description="The hash of the transaction." />
-    <define name="SX_FETCH_TRANSACTION_INDEX_TEXT_OUTPUT" value="Height: %1%\nIndex: %2%\n" />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The hash of the transaction." />
+    <define name="SX_FETCH_TRANSACTION_INDEX_OUTPUT" value="Height: %1% Index: %2%\n" />
+  </command>
+
+  <command symbol="genaddr" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+    <option name="help" description="Generate a Bitcoin address deterministically from an Electrum wallet." />
+    <define name="SX_GENADDR_OBSOLETE" value="Electrum style key functions are obsolete." />
+  </command>
+  
+  <command symbol="genpriv" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+    <option name="help" description="Generate a private key deterministically from an Electrum seed." />
+    <define name="SX_GENPRIV_OBSOLETE" value="Electrum style key functions are obsolete." />
+  </command>
+
+  <command symbol="genpub" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES"obsolete="true">
+    <option name="help" description="Generate a public key deterministically from an Electrum wallet." />
+    <define name="SX_GENPUB_OBSOLETE" value="Electrum style key functions are obsolete." />
+  </command>
+
+  <command symbol="get-pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
+    <option name="help" description="Get the public key of an address if available." />
+    <argument name="ADDRESS" stream="true" type="address" description="The address from which to derive the public key." />
+    <define name="SX_GET_PUBKEY_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
+
+  <command symbol="get-utxo" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" stub="true" obelisk="true">
+    <option name="help" description="Get enough unspent transaction outputs from a set of addresses to pay a number of satoshi. Requires a server connection." />
+    <argument name="SATOSHI" stream="true" type="uint64_t" description="The number of satoshi." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
+    <define name="SX_GET_UXTO_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
   
   <command symbol="history" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The address(es) to get." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
     <define name="SX_HISTORY_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_HISTORY_PENDING" value="Pending" />
     <define name="SX_HISTORY_UNSPENT" value="Unspent" />
-    <define name="SX_HISTORY_OUTPUT" value="Address: %1%\n  output: %2%\n  output_height: %3%\n  value: %4%\n  spend: %5%\n  spend_height: %6%\n" />
+    <define name="SX_HISTORY_OUTPUT" value="Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%\n" />
   </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
@@ -192,13 +220,13 @@
   </command>
 
   <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
-    <option name="help" description="Convert bitcoin to satoshi." />
+    <option name="help" description="Convert BTC to satoshi." />
     <argument name="BTC" stream="true" description="The value to convert."/>
     <define name="SX_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
   
   <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <option name="help" description="Generate a stealth address from given input." />
+    <option name="help" description="Generate a stealth address." />
     <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />
     <option name="signatures" type="byte" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
     <argument name="SCAN_PUBKEY" type="bytes" required="true" description="The public key of the recipient." />

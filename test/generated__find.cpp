@@ -147,6 +147,31 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_transaction_index__returns_object)
     BOOST_REQUIRE(find(fetch_transaction_index::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__genaddr__returns_object)
+{
+    BOOST_REQUIRE(find(genaddr::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__genpriv__returns_object)
+{
+    BOOST_REQUIRE(find(genpriv::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__genpub__returns_object)
+{
+    BOOST_REQUIRE(find(genpub::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__get_pubkey__returns_object)
+{
+    BOOST_REQUIRE(find(get_pubkey::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__get_utxo__returns_object)
+{
+    BOOST_REQUIRE(find(get_utxo::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);

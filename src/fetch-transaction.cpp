@@ -24,12 +24,13 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/serializer/sha256.hpp>
+#include <sx/serializer/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction,
 // otherwise concurrent test execution will collide on shared state.
@@ -51,7 +52,7 @@ static void transaction_fetched(const std::error_code& error,
     {
         data_chunk raw_tx(satoshi_raw_size(tx_type));
         satoshi_save(tx_type, raw_tx.begin());
-        std::cout << raw_tx << std::endl;
+        std::cout << bytes(raw_tx) << std::endl;
     }
 
     node_stopped = true;

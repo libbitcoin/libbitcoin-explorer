@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_HELP_HPP
-#define SX_HELP_HPP
+#ifndef SX_GENPRIV_HPP
+#define SX_GENPRIV_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -49,13 +49,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_HELP_NOT_COMMAND \
-    "The word '%1%' is not a sx command. All commands:"
+#define SX_GENPRIV_OBSOLETE \
+    "Electrum style key functions are obsolete."
 
 /**
- * Class to implement the sx help command.
+ * Class to implement the sx genpriv command.
  */
-class help 
+class genpriv 
     : public command
 {
 public:
@@ -63,14 +63,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "help"; }
+    static const char* symbol() { return "genpriv"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return help::symbol();
+        return genpriv::symbol();
     }
 
     /**
@@ -78,7 +78,7 @@ public:
      */
     const char* category()
     {
-        return "SX";
+        return "OBSOLETE";
     }
 
     /**
@@ -86,7 +86,7 @@ public:
      */
     const char* subcategory()
     {
-        return "DOCUMENTATION";
+        return "ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES";
     }
 
     /**
@@ -97,8 +97,7 @@ public:
      */
     arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("COMMAND", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -121,9 +120,9 @@ public:
                 "The path and file name for the configuration settings file for this application."
             )
             (
-                "COMMAND",
-                value<std::string>(&argument_.command),
-                "Get help for the COMMAND."
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Generate a private key deterministically from an Electrum seed."
             );
 
         return options;
@@ -137,9 +136,6 @@ public:
      */
     void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto command = variables.find("COMMAND");
-        if (command == variables.end())
-            parse(argument_.command, read_stream(input));
     }
 
     /**
@@ -156,19 +152,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the COMMAND argument.
+     * Get the value of the help option.
      */
-    virtual std::string get_command_argument()
+    virtual bool get_help_option()
     {
-        return argument_.command;
+        return option_.help;
     }
     
     /**
-     * Set the value of the COMMAND argument.
+     * Set the value of the help option.
      */
-    virtual void set_command_argument(std::string value)
+    virtual void set_help_option(bool value)
     {
-        argument_.command = value;
+        option_.help = value;
     }
 
 private:
@@ -181,9 +177,7 @@ private:
     struct argument
     {
         argument()
-          : command()
             {}
-        std::string command;
     } argument_;
     
     /**
@@ -194,7 +188,9 @@ private:
     struct option
     {
         option()
+          : help()
             {}    
+        bool help;
     } option_;
 };
 

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,15 +18,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <sx/command/genpub.hpp>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-using namespace sx;
-using namespace sx::extension;
+SX_USING_NAMESPACES()
 
-console_result genpub::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(genaddr__invoke)
+
+BOOST_AUTO_TEST_CASE(genaddr__invoke__always__failure_error)
 {
-    cerr << SX_GENPUB_OBSOLETE << std::endl;
-    return console_result::failure;
+    // $ sx genaddr ...
+    SX_DECLARE_COMMAND(genaddr);
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_GENADDR_OBSOLETE "\n");
 }
+
+BOOST_AUTO_TEST_SUITE_END()

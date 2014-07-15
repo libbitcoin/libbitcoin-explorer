@@ -22,13 +22,14 @@
 #include <stdint.h>
 #include <thread>
 //#include <sstream>
-#include <boost/format.hpp>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/history.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/serializer/io_point.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -75,7 +76,7 @@ static void parse_history(std::string& output_height, std::string& row_spend,
     if (row.spend.hash == null_hash)
         row_spend_stream << unspent;
     else
-        row_spend_stream << row.spend;
+        row_spend_stream << io_point(row.spend);
     row_spend = row_spend_stream.str();
 
     std::stringstream spend_height_stream;
@@ -88,7 +89,8 @@ static void parse_history(std::string& output_height, std::string& row_spend,
     spend_height = spend_height_stream.str();
 }
 
-static void history_fetched(const payment_address& payaddr,
+// TODO: for testability parameterize STDOUT and STDERR.
+static void history_fetched(const payment_address& pay_address,
     const std::error_code& error, const blockchain::history_list& history)
 {
     std::lock_guard<std::mutex> lock(mutex);
@@ -130,8 +132,8 @@ static void history_fetched(const payment_address& payaddr,
         parse_history(output_height, row_spend, spend_height, row,
             json_output);
 
-        std::cout << boost::format(format) % payaddr.encoded() % row.output %
-            output_height % row.value %  row_spend % spend_height;
+        std::cout << boost::format(format) % address(pay_address) % 
+            row.output % output_height % row.value %  row_spend % spend_height;
     }
 
     if (json_output)

@@ -48,6 +48,11 @@
 #include <sx/command/fetch-stealth.hpp>
 #include <sx/command/fetch-transaction.hpp>
 #include <sx/command/fetch-transaction-index.hpp>
+#include <sx/command/genaddr.hpp>
+#include <sx/command/genpriv.hpp>
+#include <sx/command/genpub.hpp>
+#include <sx/command/get-pubkey.hpp>
+#include <sx/command/get-utxo.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/history.hpp>
 #include <sx/command/satoshi.hpp>

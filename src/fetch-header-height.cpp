@@ -23,11 +23,13 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/serializer/bytes.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 // TODO: this should be a member of sx::extensions::fetch_header_height,
 // otherwise concurrent test execution will collide on shared state.
@@ -48,7 +50,7 @@ static void height_header_fetched(const std::error_code& error,
     {
         data_chunk raw_block_header(satoshi_raw_size(block_header));
         satoshi_save(block_header, raw_block_header.begin());
-        std::cout << raw_block_header << std::endl;
+        std::cout << bytes(raw_block_header) << std::endl;
     }
 
     node_stopped = true;

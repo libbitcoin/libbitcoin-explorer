@@ -21,9 +21,8 @@
 #define POINT_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/define.hpp>
+#include <sx/serializer/bytes.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -106,7 +105,7 @@ public:
     {
         std::string hex;
         input >> hex;
-        auto chunk = bc::decode_hex(hex);
+        bc::data_chunk chunk = bytes(hex);
 
         if (!bc::verify_public_key_fast(chunk))
             throw po::invalid_option_value(
@@ -129,7 +128,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const point& argument)
     {
-        output << bc::encode_hex(argument.value_);
+        output << bytes(argument.value_);
         return output;
     }
 

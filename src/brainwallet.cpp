@@ -29,7 +29,7 @@ console_result brainwallet::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto algorithm = get_algo_option();
+    auto algorithm = get_algorithm_option();
     auto password = get_password_argument();
     auto username = get_username_argument();
 
@@ -59,17 +59,17 @@ console_result brainwallet::invoke(std::istream& input,
 //elif len(args) == 1: seed = args[0]
 //else: seed = args[0] + ':' + args[1]
 //
-//def sha256(x): return hashlib.sha256(x).hexdigest()
+//def bitcoin256(x): return hashlib.bitcoin256(x).hexdigest()
 //
 //def slowsha(x,rounds=1000):
 //    old, new = x, ''
 //    for i in range(rounds):
-//        new = hashlib.sha256(old).digest()
+//        new = hashlib.bitcoin256(old).digest()
 //        old = new+x
 //    return new.encode('hex')
 //
 //if opts.get('algo','') == 'slowsha': algo = slowsha
 //elif opts.get('rounds',None): algo = lambda x: slowsha(x,int(opts['rounds']))
-//else: algo = sha256
+//else: algo = bitcoin256
 //
 //print runcmd(['sx','base58check-encode',algo(seed),'128']).strip()

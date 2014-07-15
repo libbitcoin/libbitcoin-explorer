@@ -30,13 +30,13 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/bitcoin160.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
-#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -127,9 +127,9 @@ public:
                 "Make a SHA256 private key from an arbitrary passphrase. Unsafe if passphrase is low in entropy. See diceware and xkcd for advice on entropy and generating a safe brainwallet."
             )
             (
-                "algo,a",
-                value<bool>(&option_.algo)->implicit_value(true),
-                "The algorithm, e.g. slowsha"
+                "algorithm,a",
+                value<bool>(&option_.algorithm)->implicit_value(true),
+                "The algorithm (e.g. slowsha)."
             )
             (
                 "PASSWORD",
@@ -217,19 +217,19 @@ public:
     }
 
     /**
-     * Get the value of the algo option.
+     * Get the value of the algorithm option.
      */
-    virtual bool get_algo_option()
+    virtual bool get_algorithm_option()
     {
-        return option_.algo;
+        return option_.algorithm;
     }
     
     /**
-     * Set the value of the algo option.
+     * Set the value of the algorithm option.
      */
-    virtual void set_algo_option(bool value)
+    virtual void set_algorithm_option(bool value)
     {
-        option_.algo = value;
+        option_.algorithm = value;
     }
 
 private:
@@ -258,10 +258,10 @@ private:
     {
         option()
           : help(),
-            algo()
+            algorithm()
             {}    
         bool help;
-        bool algo;
+        bool algorithm;
     } option_;
 };
 

@@ -18,45 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <sx/command/genaddr.hpp>
 #include <sx/utility/console.hpp>
 
-using namespace bc;
-using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result genaddr::invoke(int argc, const char* argv[])
+console_result genaddr::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 2, 3))
-        return console_result::failure;
-
-    size_t key_number;
-    if (!parse(key_number, argv[1]))
-    {
-        std::cerr << "genaddr: Bad N provided." << std::endl;
-        return console_result::failure;
-    }
-
-    bool for_change = (argc == 3 && is_true(argv[2]));
-    deterministic_wallet wallet;
-    const auto seed = read_stream(std::cin);
-    if (!wallet.set_seed(seed))
-    {
-        data_chunk mpk = decode_hex(seed);
-        if (!wallet.set_master_public_key(mpk))
-        {
-            std::cerr << "genaddr: No valid master public key, or "
-                << "private secret key was passed in." << std::endl;
-            return console_result::failure;
-        }
-    }
-
-    payment_address addr;
-    data_chunk pubkey = wallet.generate_public_key(key_number, for_change);
-    set_public_key(addr, pubkey);
-    std::cout << addr.encoded() << std::endl;
-    return console_result::okay;
+    cerr << SX_GENADDR_OBSOLETE << std::endl;
+    return console_result::failure;
 }

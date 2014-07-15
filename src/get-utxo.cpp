@@ -17,20 +17,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-//#include <sstream>
-//#include <boost/property_tree/ptree.hpp>
-//#include <boost/property_tree/json_parser.hpp>
 #include <sx/command/get-utxo.hpp>
-#include <sx/command/unwrap.hpp>
+
+#include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result get_utxo::invoke(int argc, const char* argv[])
+console_result get_utxo::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    line_out(std::cerr, "sx: This command is not yet ported from python.");
+    // Bound parameters.
+    // TODO: improve generated property pluralization.
+    auto addresses = get_addresss_argument();
+    auto satoshi = get_satoshi_argument();
+
+    cerr << SX_GET_UXTO_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

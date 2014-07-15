@@ -147,6 +147,31 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_transaction_index__returns_expecte
     BOOST_REQUIRE(fetch_transaction_index::symbol() == std::string("fetch-transaction-index"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__genaddr__returns_expected_value)
+{
+    BOOST_REQUIRE(genaddr::symbol() == std::string("genaddr"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__genpriv__returns_expected_value)
+{
+    BOOST_REQUIRE(genpriv::symbol() == std::string("genpriv"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__genpub__returns_expected_value)
+{
+    BOOST_REQUIRE(genpub::symbol() == std::string("genpub"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__get_pubkey__returns_expected_value)
+{
+    BOOST_REQUIRE(get_pubkey::symbol() == std::string("get-pubkey"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__get_utxo__returns_expected_value)
+{
+    BOOST_REQUIRE(get_utxo::symbol() == std::string("get-utxo"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));

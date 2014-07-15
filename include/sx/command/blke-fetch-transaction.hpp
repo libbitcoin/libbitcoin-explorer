@@ -30,13 +30,13 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/bitcoin160.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/ripemd160.hpp>
 #include <sx/serializer/secret.hpp>
-#include <sx/serializer/sha256.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -127,8 +127,8 @@ public:
             )
             (
                 "HASH",
-                value<std::string>(&argument_.hash),
-                "The hash of the transaction to get."
+                value<serializer::bitcoin256>(&argument_.hash),
+                "The hash of the transaction."
             );
 
         return options;
@@ -163,7 +163,7 @@ public:
     /**
      * Get the value of the HASH argument.
      */
-    virtual std::string get_hash_argument()
+    virtual serializer::bitcoin256 get_hash_argument()
     {
         return argument_.hash;
     }
@@ -171,7 +171,7 @@ public:
     /**
      * Set the value of the HASH argument.
      */
-    virtual void set_hash_argument(std::string value)
+    virtual void set_hash_argument(serializer::bitcoin256 value)
     {
         argument_.hash = value;
     }
@@ -204,7 +204,7 @@ private:
         argument()
           : hash()
             {}
-        std::string hash;
+        serializer::bitcoin256 hash;
     } argument_;
     
     /**

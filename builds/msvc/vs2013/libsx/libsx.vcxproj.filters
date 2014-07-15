@@ -15,6 +15,9 @@
     <Filter Include="include\command\obelisk">
       <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\command\obsolete">
+      <UniqueIdentifier>{268700C7-1C9D-44FF-B1CE-3104893288A4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\command\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
@@ -29,6 +32,9 @@
     </Filter>
     <Filter Include="src\command\obelisk">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\command\obsolete">
+      <UniqueIdentifier>{DF81EBEE-BB03-406B-B4C5-1D9FD2964E97}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\command\stub">
       <UniqueIdentifier>{e96f4bef-2d18-4897-9078-a8c17783ee65}</UniqueIdentifier>
@@ -116,6 +122,21 @@
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction-index.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\genaddr.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\genpriv.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\genpub.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\get-pubkey.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\get-utxo.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -140,22 +161,25 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\bitcoin160.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\bitcoin256.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\io_point.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\key.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp">
-      <Filter>include\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\ripemd160.hpp">
-      <Filter>include\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\sha256.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\secret.hpp">
@@ -276,6 +300,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-transaction-index.cpp">
       <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\genaddr.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\genpriv.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\genpub.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\get-pubkey.cpp">
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\get-utxo.cpp">
+      <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>

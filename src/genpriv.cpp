@@ -18,38 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <sx/command/genpriv.hpp>
 #include <sx/utility/console.hpp>
 
-using namespace bc;
-using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result genpriv::invoke(int argc, const char* argv[])
+console_result genpriv::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 2, 3))
-        return console_result::failure;
-
-    size_t key_number;
-    if (!parse(key_number, argv[1]))
-    {
-        std::cerr << "genpriv: Bad N provided." << std::endl;
-        return console_result::failure;
-    }
-
-    bool for_change = (argc == 3 && is_true(argv[2]));
-    deterministic_wallet wallet;
-    if (!wallet.set_seed(read_stream(std::cin)))
-    {
-        std::cerr << "genpriv: This command wants a seed." << std::endl;
-        return console_result::failure;
-    }
-
-    bool is_compressed = false;
-    secret_parameter secret = wallet.generate_secret(key_number, for_change);
-    std::cout << secret_to_wif(secret, is_compressed) << std::endl;
-    return console_result::okay;
+    cerr << SX_GENPRIV_OBSOLETE << std::endl;
+    return console_result::failure;
 }

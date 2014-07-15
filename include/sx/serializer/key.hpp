@@ -21,9 +21,8 @@
 #define KEY_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/define.hpp>
+#include <sx/serializer/bytes.hpp>
 #include <sx/utility/coin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -109,14 +108,16 @@ public:
         // First try and read from private key.
         if (!read_public_of_private_key(argument.value_, arg))
         {
-            // Otherwise read as public key.
-            argument.value_ = bc::decode_hex(arg);
+            bc::data_chunk chunk = bytes(arg);
 
-            if (!bc::verify_public_key_fast(argument))
+            // Otherwise read as public key.
+            if (!bc::verify_public_key_fast(chunk))
                 throw po::invalid_option_value(SX_SERIALIZER_KEY_EXCEPTION);
 
-            //if (!bc::verify_public_key(argument))
+            //if (!bc::verify_public_key(chunk))
             //    throw po::invalid_option_value(SX_SERIALIZER_KEY_EXCEPTION);
+
+            argument.value_.assign(chunk.begin(), chunk.end());
         }
 
         return input;
@@ -132,7 +133,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const key& argument)
     {
-        output << bc::encode_hex(argument.value_);
+        output << bytes(argument.value_);
         return output;
     }
 

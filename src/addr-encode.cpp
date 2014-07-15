@@ -22,7 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/ripemd160.hpp>
+#include <sx/serializer/bitcoin160.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
