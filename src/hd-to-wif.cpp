@@ -20,28 +20,22 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/hd-to-wif.hpp>
+#include <sx/serializer/wif.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result hd_to_wif::invoke(int argc, const char* argv[])
+// TODO: test
+console_result hd_to_wif::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 1))
-        return console_result::failure;
+    // Bound parameters.
+    hd_private_key secret = get_secret_argument();
 
-    std::string encoded_key(get_arg_or_stream(argc, argv, std::cin));
-
-    hd_private_key private_key;
-    if (!private_key.set_serialized(encoded_key))
-    {
-        std::cerr << "hd-priv: error reading private key." << std::endl;
-        return console_result::failure;
-    }
-
-    secret_parameter secret = private_key.private_key();
-    std::cout << secret_to_wif(secret) << std::endl;
+    output << wif(secret) << std::endl;
     return console_result::okay;
 }

@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -50,7 +54,7 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_HD_PRIV_DERIVATION_EXCEPTION \
+#define SX_HD_PRIV_DERIVATION_ERROR \
     "Child private key derivation failed."
 
 /**
@@ -99,7 +103,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HD_PRIVATE", 1)
+            .add("SECRET", 1)
             .add("INDEX", 1);
     }
     
@@ -133,9 +137,9 @@ public:
                 "Signal to create a hardened key."
             )
             (
-                "HD_PRIVATE",
-                value<hd_private>(&argument_.hd_private),
-                "The hex or WIF encoded HD private key."
+                "SECRET",
+                value<serializer::hd_private>(&argument_.secret),
+                "The hex encoded HD private key."
             )
             (
                 "INDEX",
@@ -154,9 +158,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto hd_private = variables.find("HD_PRIVATE");
-        if (hd_private == variables.end())
-            parse(argument_.hd_private, read_stream(input));
+        auto secret = variables.find("SECRET");
+        if (secret == variables.end())
+            parse(argument_.secret, read_stream(input));
     }
 
     /**
@@ -173,19 +177,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HD_PRIVATE argument.
+     * Get the value of the SECRET argument.
      */
-    virtual hd_private get_hd_private_argument()
+    virtual serializer::hd_private get_secret_argument()
     {
-        return argument_.hd_private;
+        return argument_.secret;
     }
     
     /**
-     * Set the value of the HD_PRIVATE argument.
+     * Set the value of the SECRET argument.
      */
-    virtual void set_hd_private_argument(hd_private value)
+    virtual void set_secret_argument(serializer::hd_private value)
     {
-        argument_.hd_private = value;
+        argument_.secret = value;
     }
 
     /**
@@ -246,10 +250,10 @@ private:
     struct argument
     {
         argument()
-          : hd_private(),
+          : secret(),
             index()
             {}
-        hd_private hd_private;
+        serializer::hd_private secret;
         uint32_t index;
     } argument_;
     

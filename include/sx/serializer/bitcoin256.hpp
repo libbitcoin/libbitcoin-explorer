@@ -21,16 +21,15 @@
 #define SHA256_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/bytes.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
-
-#define SX_SERIALIZER_SHA256_EXCEPTION \
-    "Invalid SHA256 hash."
 
 /**
  * Serialization helper to convert between hex string and hash_digest.
@@ -107,7 +106,7 @@ public:
 
         auto hash = bc::decode_hash(hex);
         if (hash == bc::null_hash)
-            throw po::invalid_option_value(SX_SERIALIZER_SHA256_EXCEPTION);
+            throw po::invalid_option_value(hex);
 
         std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;

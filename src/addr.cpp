@@ -23,7 +23,6 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/key.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -47,8 +46,7 @@ console_result addr::invoke(std::istream& input, std::ostream& output,
     // TODO: make libbitcoin testnet dynamic and then do the same here.
     // auto testnet = get_general_testnet_setting();
     version = if_else(versioned, version, payment_address::pubkey_version);
-
-    auto pay_address = payment_address(version, ripemd160);
+    payment_address pay_address(version, ripemd160);
 
     output << address(pay_address) << std::endl;
     return console_result::okay;

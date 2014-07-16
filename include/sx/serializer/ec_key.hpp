@@ -17,13 +17,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BASE58_HPP
-#define BASE58_HPP
+#ifndef EC_KEY_HPP
+#define EC_KEY_HPP
 
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/wif.hpp>
+#include <sx/utility/coin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -31,26 +35,27 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between data_chunk and base58.
+ * Serialization helper to convert between hex string and ec_point.
+ * Reads public or private key and writes corresponding public key.
  */
-class base58
+class ec_key
 {
 public:
 
     /**
      * Constructor.
      */
-    base58()
+    ec_key()
         : value_() {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  base58  The value to initialize with.
+     * @param[in]  arg  The value to initialize with.
      */
-    base58(const std::string& base58)
+    ec_key(const std::string& arg)
     {
-        std::stringstream(base58) >> *this;
+        std::stringstream(arg) >> *this;
     }
 
     /**
@@ -58,23 +63,39 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    base58(const bc::data_chunk& value)
+    ec_key(const bc::ec_point& value)
         : value_(value.begin(), value.end()) {}
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    ec_key(const libwallet::hd_private_key& value)
+        : ec_key(value.public_key()) {}
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    ec_key(const libwallet::hd_public_key& value)
+        : ec_key(value.public_key()) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    base58(const base58& other)
-        : base58(other.value_) {}
+    ec_key(const ec_key& other)
+        : ec_key(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::data_chunk& data()
+    bc::ec_point& data()
     {
         return value_;
     }
@@ -84,7 +105,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::data_chunk() const
+    operator const bc::ec_point() const
     {
         return value_; 
     }
@@ -96,16 +117,35 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, base58& argument)
+    friend std::istream& operator>>(std::istream& input, ec_key& argument)
     {
-        std::string base58;
-        input >> base58;
+        std::string text;
+        input >> text;
 
-        bc::data_chunk chunk = bc::decode_base58(base58);
-        if (chunk.empty())
-            throw po::invalid_option_value(base58);
+        bc::ec_point value;
+        try
+        {
+            // First try to read as WIF secret, and convert.
+            auto import = wif(text);
+            value = bc::secret_to_public_key(import,
+                import.get_compressed());
+        }
+        catch (po::invalid_option_value)
+        {
+            try
+            {
+                // Next try to read as hash secret, and convert.
+                bc::ec_secret hash = ec_private(text);
+                value = bc::secret_to_public_key(hash, true);
+            }
+            catch (po::invalid_option_value)
+            {
+                // Finally try to read as hex public key.
+                value = ec_public(text);
+            }
+        }
 
-        argument.value_.assign(chunk.begin(), chunk.end());
+        argument.value_.assign(value.begin(), value.end());
         return input;
     }
 
@@ -117,9 +157,9 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const base58& argument)
+        const ec_key& argument)
     {
-        output << bc::encode_base58(argument.value_);
+        output << bytes(argument.value_);
         return output;
     }
 
@@ -128,7 +168,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::data_chunk value_;
+    bc::ec_point value_;
 };
 
 } // sx

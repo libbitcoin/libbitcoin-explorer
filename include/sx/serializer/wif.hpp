@@ -21,16 +21,15 @@
 #define WIF_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
-
-#define SX_SERIALIZER_WIF_EXCEPTION \
-    "Invalid wallet import format."
 
 /**
  * Serialization helper to convert between hex string and ec_secret.
@@ -65,6 +64,14 @@ public:
     {
         std::copy(value.begin(), value.end(), value_.begin());
     }
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    wif(const libwallet::hd_private_key& value)
+        : wif(value.private_key()) {}
 
     /**
      * Copy constructor.
@@ -124,7 +131,7 @@ public:
 
         auto value = libwallet::wif_to_secret(text);
         if (!bc::verify_private_key(value))
-            throw po::invalid_option_value(SX_SERIALIZER_WIF_EXCEPTION);
+            throw po::invalid_option_value(text);
 
         argument.compressed_ = libwallet::is_wif_compressed(text);
         std::copy(value.begin(), value.end(), argument.value_.begin());

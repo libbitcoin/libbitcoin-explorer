@@ -22,6 +22,7 @@
 #include <stdint.h>
 #include <thread>
 //#include <sstream>
+#include <boost/format.hpp>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
@@ -29,7 +30,7 @@
 #include <sx/command/history.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/io_point.hpp>
+#include <sx/serializer/point.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -50,7 +51,7 @@ static const char* json_format = \
     "   \"value\": \"%4%\",\n"
     "   \"spend\": \"%5%\",\n"
     "   \"spend_height\": \"%6%\"\n"
-    "}\n";
+    "}";
 
 static bool json_output;
 static bool first_address;
@@ -76,7 +77,7 @@ static void parse_history(std::string& output_height, std::string& row_spend,
     if (row.spend.hash == null_hash)
         row_spend_stream << unspent;
     else
-        row_spend_stream << io_point(row.spend);
+        row_spend_stream << point(row.spend);
     row_spend = row_spend_stream.str();
 
     std::stringstream spend_height_stream;

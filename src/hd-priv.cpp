@@ -27,25 +27,23 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
+// TODO: test
 console_result hd_priv::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
     const auto hard = get_hard_option();
-    auto private_key = get_hd_private_argument();
+    auto secret = get_secret_argument();
     auto index = get_index_argument();
-
-    //hd_private_key private_key;
-    //if (!private_key.set_serialized(encoded_key))
 
     if (hard)
         index += first_hardened_key;
 
+    hd_private_key private_key = secret;
     const auto child_key = private_key.generate_private_key(index);
-
     if (!child_key.valid())
     {
-        cerr << SX_HD_PRIV_DERIVATION_EXCEPTION << std::endl;
+        cerr << SX_HD_PRIV_DERIVATION_ERROR << std::endl;
         return console_result::failure;
     }
 

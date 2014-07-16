@@ -21,16 +21,15 @@
 #define RIPEMD160_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/bytes.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
-
-#define SX_SERIALIZER_RIPEMD160_EXCEPTION \
-    "Invalid RIPEMD160 hash."
 
 /**
  * Serialization helper to convert between hex string and short_hash.
@@ -115,7 +114,7 @@ public:
 
         auto hash = bc::decode_short_hash(hex);
         if (hash == bc::null_short_hash)
-            throw po::invalid_option_value(SX_SERIALIZER_RIPEMD160_EXCEPTION);
+            throw po::invalid_option_value(hex);
 
         std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;

@@ -21,8 +21,6 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 

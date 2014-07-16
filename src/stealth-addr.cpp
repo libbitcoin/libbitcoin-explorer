@@ -40,8 +40,8 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     // Bound parameters.
     auto signatures = get_signatures_option();
     auto reuse_key = get_reuse_key_option();
-    const auto scan_pubkey = get_scan_pubkey_argument();
-    const auto spend_pubkeys = get_spend_pubkeys_argument();
+    const auto scan_key = get_scan_key_argument();
+    const auto spend_keys = get_spend_keys_argument();
 
     // Construct actual address.
     // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
@@ -51,15 +51,15 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     const uint8_t stealth_version = 0x2a;
     const uint8_t default_stealth_prefix_filter = 0x00;
     const uint8_t options_bitfield = if_else(reuse_key, some_flag, 0);
-    const uint8_t number_keys = spend_pubkeys.size();
+    const uint8_t number_keys = spend_keys.size();
 
     raw_address.push_back(stealth_version);
     raw_address.push_back(options_bitfield);
-    extend_data(raw_address, static_cast<bc::data_chunk>(scan_pubkey));
+    extend_data(raw_address, static_cast<bc::data_chunk>(scan_key));
     raw_address.push_back(number_keys);
 
-    for (const auto& spend_pubkey: spend_pubkeys)
-        extend_data(raw_address, static_cast<bc::data_chunk>(spend_pubkey));
+    for (const auto& spend_key : spend_keys)
+        extend_data(raw_address, static_cast<bc::data_chunk>(spend_key));
     
     // If not configured then set it to the number_keys.
     if (signatures == 0)

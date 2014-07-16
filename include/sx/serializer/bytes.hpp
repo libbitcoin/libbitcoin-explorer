@@ -24,7 +24,9 @@
 #include <iostream>
 #include <stdint.h>
 #include <vector>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -110,7 +112,11 @@ public:
     {
         std::string hex;
         input >> hex;
+
         bc::data_chunk chunk = bc::decode_hex(hex);
+        if (chunk.empty())
+            throw po::invalid_option_value(hex);
+
         argument.value_.assign(chunk.begin(), chunk.end());
         return input;
     }

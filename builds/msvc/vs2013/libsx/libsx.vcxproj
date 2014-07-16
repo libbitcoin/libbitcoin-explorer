@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -90,10 +90,13 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\bitcoin256.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\io_point.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\key.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\ec_key.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\ec_private.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\ec_public.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_key.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_private.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_public.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\secret.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
@@ -205,21 +208,11 @@
     <ClCompile Include="..\..\..\..\src\get-utxo.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-priv.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-pub.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-seed.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugLIB|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-priv.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-pub.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-seed.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\history.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>

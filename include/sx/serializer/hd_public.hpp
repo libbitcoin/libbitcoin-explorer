@@ -17,47 +17,42 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef KEY_HPP
-#define KEY_HPP
+#ifndef HD_PUBLIC_HPP
+#define HD_PUBLIC_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
-#include <sx/serializer/wif.hpp>
-#include <sx/utility/coin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_KEY_EXCEPTION \
-    "Invalid public or private key."
-
 /**
  * Serialization helper to convert between hex string and ec_point.
- * Reads public or private key and writes corresponding public key.
  */
-class key
+class hd_public
 {
 public:
 
     /**
      * Constructor.
      */
-    key()
+    hd_public()
         : value_() {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  arg  The value to initialize with.
+     * @param[in]  hex  The value to initialize with.
      */
-    key(const std::string& arg)
+    hd_public(const std::string& hex)
     {
-        std::stringstream(arg) >> *this;
+        std::stringstream(hex) >> *this;
     }
 
     /**
@@ -65,23 +60,26 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    key(const bc::ec_point& value)
-        : value_(value.begin(), value.end()) {}
+    hd_public(const libwallet::hd_public_key& value)
+    {
+        // hd_public_key doesn't provide a copy constructor.
+        value_.set_serialized(value.serialize());
+    }
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    key(const key& other)
-        : key(other.value_) {}
+    hd_public(const hd_public& other)
+        : hd_public(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_point& data()
+    libwallet::hd_public_key& data()
     {
         return value_;
     }
@@ -91,7 +89,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_point() const
+    operator const libwallet::hd_public_key() const
     {
         return value_; 
     }
@@ -103,44 +101,15 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, key& argument)
+    friend std::istream& operator>>(std::istream& input, hd_public& argument)
     {
-        std::string text;
-        input >> text;
+        std::string hex;
+        input >> hex;
 
-        bc::ec_point value;
+        libwallet::hd_public_key value;
+        if (!argument.value_.set_serialized(hex))
+            throw po::invalid_option_value(hex);
 
-        try
-        {
-            // First try to read as WIF secret, and convert.
-            auto import = wif(text);
-            value = bc::secret_to_public_key(import,
-                import.get_compressed());
-        }
-        catch (po::invalid_option_value)
-        {
-            try
-            {
-                // Next try to read as hash secret, and convert.
-                bc::ec_secret hash = secret(text);
-                value = bc::secret_to_public_key(hash, true);
-            }
-            catch (po::invalid_option_value)
-            {
-                try
-                {
-                    // Finally try to read as hex public key.
-                    value = point(text);
-                }
-                catch (po::invalid_option_value)
-                {
-                    throw po::invalid_option_value(
-                        SX_SERIALIZER_KEY_EXCEPTION);
-                }
-            }
-        }
-
-        argument.value_.assign(value.begin(), value.end());
         return input;
     }
 
@@ -152,9 +121,9 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const key& argument)
+        const hd_public& argument)
     {
-        output << bytes(argument.value_);
+        output << argument.value_.serialize();
         return output;
     }
 
@@ -163,7 +132,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_point value_;
+    libwallet::hd_public_key value_;
 };
 
 } // sx

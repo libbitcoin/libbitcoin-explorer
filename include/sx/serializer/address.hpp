@@ -21,15 +21,16 @@
 #define ADDRESS_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
-
-#define SX_SERIALIZER_ADDRESS_EXCEPTION \
-    "Invalid payment address."
 
 /**
  * Serialization helper to convert between base58 string and payment_address.
@@ -71,6 +72,22 @@ public:
         : address(other.value_) {}
 
     /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    address(const libwallet::hd_private_key& value)
+        : address(value.address()) {}
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    address(const libwallet::hd_public_key& value)
+        : address(value.address()) {}
+
+    /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
@@ -103,7 +120,7 @@ public:
         input >> base58;
 
         if (!argument.value_.set_encoded(base58))
-            throw po::invalid_option_value(SX_SERIALIZER_ADDRESS_EXCEPTION);
+            throw po::invalid_option_value(base58);
 
         return input;
     }

@@ -20,28 +20,28 @@
 #include <iostream>
 #include <wallet/wallet.hpp>
 #include <sx/command/hd-seed.hpp>
-#include <sx/utility/console.hpp>
 #include <sx/serializer/hd_private.hpp>
+#include <sx/utility/console.hpp>
 
-using namespace bc;
 using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
+// TODO: test
 console_result hd_seed::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    data_chunk entropy = get_entropy_argument();
+    data_chunk seed = get_seed_argument();
     const bool testnet = get_general_testnet_setting();
 
-    const size_t fill_entropy_size = 32;
+    const size_t fill_seed_size = 32;
+    if (seed.size() == 0)
+        seed = random_fill(fill_seed_size);
 
-    if (entropy.size() == 0)
-        entropy = random_fill(fill_entropy_size);
+    const hd_private_key private_key(seed, testnet);
 
-    hd_private_key private_key(entropy, testnet);
     std::cout << hd_private(private_key) << std::endl;
     return console_result::okay;
 }

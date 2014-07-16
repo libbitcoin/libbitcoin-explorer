@@ -17,11 +17,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SECRET_HPP
-#define SECRET_HPP
+#ifndef HD_PRIVATE_HPP
+#define HD_PRIVATE_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/wif.hpp>
 
@@ -30,20 +33,17 @@
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_SECRET_EXCEPTION \
-    "Invalid elliptic curve secret."
-
 /**
  * Serialization helper to convert between hex string and ec_secret.
  */
-class secret
+class hd_private
 {
 public:
 
     /**
      * Constructor.
      */
-    secret()
+    hd_private()
         : value_() {}
 
     /**
@@ -51,7 +51,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    secret(const std::string& hex)
+    hd_private(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -61,9 +61,10 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    secret(const bc::ec_secret& value)
+    hd_private(const libwallet::hd_private_key& value)
     {
-        std::copy(value.begin(), value.end(), value_.begin());
+        // hd_private_key doesn't provide a copy constructor.
+        value_.set_serialized(value.serialize());
     }
 
     /**
@@ -71,15 +72,15 @@ public:
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    secret(const secret& other)
-        : secret(other.value_) {}
+    hd_private(const hd_private& other)
+        : hd_private(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_secret& data()
+    libwallet::hd_private_key& data()
     {
         return value_;
     }
@@ -89,7 +90,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_secret() const
+    operator const libwallet::hd_private_key() const
     {
         return value_; 
     }
@@ -101,26 +102,15 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, secret& argument)
+    friend std::istream& operator>>(std::istream& input, hd_private& argument)
     {
         std::string text;
         input >> text;
-        bc::ec_secret value;
 
-        try
-        {
-            // First try to read as WIF secret.
-            value = wif(text);
-        }
-        catch (po::invalid_option_value)
-        {
-            // Next try to read as hash secret.
-            value = bitcoin256(text);
-            if (!bc::verify_private_key(value))
-                throw po::invalid_option_value(SX_SERIALIZER_SECRET_EXCEPTION);
-        }
+        libwallet::hd_private_key value;
+        if (!argument.value_.set_serialized(text))
+            throw po::invalid_option_value(text);
 
-        std::copy(value.begin(), value.end(), argument.value_.begin());
         return input;
     }
 
@@ -132,9 +122,9 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const secret& argument)
+        const hd_private& argument)
     {
-        output << bitcoin256(argument.value_);
+        output << argument.value_.serialize();
         return output;
     }
 
@@ -143,7 +133,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_secret value_;
+    libwallet::hd_private_key value_;
 };
 
 } // sx

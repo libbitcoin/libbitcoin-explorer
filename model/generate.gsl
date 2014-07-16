@@ -62,11 +62,7 @@
 .
 .# TODO: hash table
 .function global.normalize_type(type)
-.   if my.type = type_string
-.       return type_string_std
-.   elsif my.type = type_path
-.       return type_path_boost
-.   elsif my.type = type_address
+.   if my.type = type_address
 .       return type_address_sx
 .   elsif my.type = type_base58
 .       return type_base58_sx
@@ -78,12 +74,24 @@
 .       return type_byte_sx
 .   elsif my.type = type_bytes
 .       return type_bytes_sx
-.   elsif my.type = type_key
-.       return type_key_sx
+.   elsif my.type = type_ec_key
+.       return type_ec_key_sx
+.   elsif my.type = type_ec_private
+.       return type_ec_private_sx
+.   elsif my.type = type_ec_public
+.       return type_ec_public_sx
+.   elsif my.type = type_hd_key
+.       return type_hd_key_sx
+.   elsif my.type = type_hd_private
+.       return type_hd_private_sx
+.   elsif my.type = type_hd_public
+.       return type_hd_public_sx
+.   elsif my.type = type_path
+.       return type_path_boost
 .   elsif my.type = type_point
 .       return type_point_sx
-.   elsif my.type = type_secret
-.       return type_secret_sx
+.   elsif my.type = type_string
+.       return type_string_std
 .   endif
 .   return my.type
 .endfunction
@@ -160,10 +168,14 @@
 .type_bitcoin256 = "bitcoin256"
 .type_byte = "byte"
 .type_bytes = "bytes"
-.type_key = "key"
+.type_ec_key = "ec_key"
+.type_ec_private = "ec_private"
+.type_ec_public = "ec_public"
+.type_hd_key = "hd_key"
+.type_hd_private = "hd_private"
+.type_hd_public = "hd_public"
 .type_path = "path"
 .type_point = "point"
-.type_secret = "secret"
 .type_string = "string"
 .
 .type_address_sx = "serializer::address"
@@ -172,10 +184,14 @@
 .type_bitcoin256_sx = "serializer::bitcoin256"
 .type_byte_sx = "serializer::byte"
 .type_bytes_sx = "serializer::bytes"
-.type_key_sx = "serializer::key"
+.type_ec_key_sx = "serializer::ec_key"
+.type_ec_private_sx = "serializer::ec_private"
+.type_ec_public_sx = "serializer::ec_public"
+.type_hd_key_sx = "serializer::hd_key"
+.type_hd_private_sx = "serializer::hd_private"
+.type_hd_public_sx = "serializer::hd_public"
 .type_path_boost = "boost::filesystem::path"
 .type_point_sx = "serializer::point"
-.type_secret_sx = "serializer::secret"
 .type_string_std = "std::string"
 .
 .xml_false = "false"
@@ -567,9 +583,13 @@ private:
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -1098,10 +1118,13 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\io_point.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\key.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_key.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_private.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
@@ -1270,16 +1293,25 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\io_point.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_key.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\key.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_private.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_public.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp">
-      <Filter>include\\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">

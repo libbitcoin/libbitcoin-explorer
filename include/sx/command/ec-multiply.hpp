@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -129,12 +133,12 @@ public:
             )
             (
                 "POINT",
-                value<serializer::point>(&argument_.point)->required(),
+                value<serializer::ec_public>(&argument_.point)->required(),
                 "The point to multiply."
             )
             (
                 "SECRET",
-                value<serializer::secret>(&argument_.secret)->required(),
+                value<serializer::ec_private>(&argument_.secret)->required(),
                 "The hex or WIF encoded secret to multiply."
             );
 
@@ -167,7 +171,7 @@ public:
     /**
      * Get the value of the POINT argument.
      */
-    virtual serializer::point get_point_argument()
+    virtual serializer::ec_public get_point_argument()
     {
         return argument_.point;
     }
@@ -175,7 +179,7 @@ public:
     /**
      * Set the value of the POINT argument.
      */
-    virtual void set_point_argument(serializer::point value)
+    virtual void set_point_argument(serializer::ec_public value)
     {
         argument_.point = value;
     }
@@ -183,7 +187,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual serializer::secret get_secret_argument()
+    virtual serializer::ec_private get_secret_argument()
     {
         return argument_.secret;
     }
@@ -191,7 +195,7 @@ public:
     /**
      * Set the value of the SECRET argument.
      */
-    virtual void set_secret_argument(serializer::secret value)
+    virtual void set_secret_argument(serializer::ec_private value)
     {
         argument_.secret = value;
     }
@@ -225,8 +229,8 @@ private:
           : point(),
             secret()
             {}
-        serializer::point point;
-        serializer::secret secret;
+        serializer::ec_public point;
+        serializer::ec_private secret;
     } argument_;
     
     /**

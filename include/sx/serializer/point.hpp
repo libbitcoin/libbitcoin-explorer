@@ -21,22 +21,21 @@
 #define POINT_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/bitcoin256.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_POINT_EXCEPTION \
-    "Invalid elliptic curve point."
-
-#define SX_SERIALIZER_POINT_PREFIX_EXCEPTION \
-    "Invalid elliptic curve point prefix byte."
+#define SX_SERIALIZER_POINT_DELIMITER ":"
 
 /**
- * Serialization helper to convert between hex string and ec_point.
+ * Serialization helper to convert between hex string and input_point and
+ * output_point. These points should not be confused with points on a curve.
  */
 class point
 {
@@ -63,8 +62,11 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    point(const bc::ec_point& value)
-        : value_(value.begin(), value.end()) {}
+    point(const bc::output_point& value)
+    {
+        std::copy(value.hash.begin(), value.hash.end(), value_.hash.begin());
+        value_.index = value.index;
+    }
 
     /**
      * Copy constructor.
@@ -79,7 +81,7 @@ public:
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_point& data()
+    bc::output_point& data()
     {
         return value_;
     }
@@ -89,7 +91,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_point() const
+    operator const bc::output_point() const
     {
         return value_; 
     }
@@ -103,19 +105,19 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, point& argument)
     {
-        std::string hex;
-        input >> hex;
+        std::string text;
+        input >> text;
 
-        bc::ec_point point = bytes(hex);
+        // Note: there is no bc::uncat_point()
+        std::vector<std::string> tokens;
+        split(text, tokens, SX_SERIALIZER_POINT_DELIMITER);
+        if (tokens.size() != 2)
+            throw po::invalid_option_value(text);
 
-        //if (!bc::verify_public_key_fast(point))
-        //    throw po::invalid_option_value(
-        //        SX_SERIALIZER_POINT_PREFIX_EXCEPTION);
+        parse(argument.value_.index, tokens[1]);
+        bc::hash_digest hash = bitcoin256(tokens[0]);
 
-        if (!bc::verify_public_key(point))
-            throw po::invalid_option_value(SX_SERIALIZER_POINT_EXCEPTION);
-        
-        argument.value_.assign(point.begin(), point.end());
+        std::copy(hash.begin(), hash.end(), argument.value_.hash.begin());
         return input;
     }
 
@@ -129,7 +131,9 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const point& argument)
     {
-        output << bytes(argument.value_);
+        // See bc::concat_point()
+        output << bitcoin256(argument.value_.hash) <<
+            SX_SERIALIZER_POINT_DELIMITER << argument.value_.index;
         return output;
     }
 
@@ -138,7 +142,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_point value_;
+    bc::output_point value_;
 };
 
 } // sx

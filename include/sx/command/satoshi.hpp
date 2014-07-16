@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>

@@ -25,6 +25,7 @@
 #include <stdint.h>
 #include <thread>
 //#include <sstream>
+#include <boost/format.hpp>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
@@ -48,7 +49,7 @@ static const char* json_format =
     "   \"paid\": \"%2%\",\n"
     "   \"pending\": \"%3%\",\n"
     "   \"received\": \"%4%\"\n"
-    "}\n";
+    "}";
 
 static bool json_output;
 static bool first_address;

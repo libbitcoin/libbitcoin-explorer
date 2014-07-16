@@ -22,7 +22,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/secret.hpp>
+#include <sx/serializer/ec_private.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
@@ -39,7 +39,7 @@ console_result ec_add_secrets::invoke(std::istream& input,
     auto secrets = get_secrets_argument();
 
     bool first = true;
-    secret sum(secrets[0]);
+    ec_private sum(secrets[0]);
     for (auto const& secret: secrets)
     {
         if (first)

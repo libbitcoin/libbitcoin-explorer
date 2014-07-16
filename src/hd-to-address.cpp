@@ -17,37 +17,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/hd-to-address.hpp>
+#include <sx/serializer/address.hpp>
 #include <sx/utility/console.hpp>
 
-using namespace bc;
 using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result hd_to_address::invoke(int argc, const char* argv[])
+// TODO: test
+console_result hd_to_address::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    // Bound parameters.
+    hd_public_key public_key = get_key_argument();
 
-    std::string encoded_key(get_arg_or_stream(argc, argv, std::cin));
-
-    hd_public_key public_key;
-    hd_private_key private_key;
-
-    // NOTE: same idiom in hd_pub
-    // First try loading private key and otherwise the public key.
-    if (private_key.set_serialized(encoded_key))
-        public_key = private_key;
-    else if (!public_key.set_serialized(encoded_key))
-    {
-        std::cerr << "hd-pub: error reading key." << std::endl;
-        return console_result::failure;
-    }
-
-    std::cout << public_key.address().encoded() << std::endl;
+    output << address(public_key) << std::endl;
     return console_result::okay;
 }
-

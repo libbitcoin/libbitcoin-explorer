@@ -17,34 +17,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef IO_POINT_HPP
-#define IO_POINT_HPP
+#ifndef EC_PUBLIC_HPP
+#define EC_PUBLIC_HPP
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_IO_POINT_DELIMITER ":"
-#define SX_SERIALIZER_IO_POINT_DELIMITER_EXCEPTION \
-    "Point must have two parts delimited by a colon."
-
 /**
- * Serialization helper to convert between hex string and input_point and
- * output_point. These points should not be confused with points on a curve.
+ * Serialization helper to convert between hex string and ec_point.
  */
-class io_point
+class ec_public
 {
 public:
 
     /**
      * Constructor.
      */
-    io_point()
+    ec_public()
         : value_() {}
 
     /**
@@ -52,7 +51,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    io_point(const std::string& hex)
+    ec_public(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -62,26 +61,39 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    io_point(const bc::output_point& value)
-    {
-        std::copy(value.hash.begin(), value.hash.end(), value_.hash.begin());
-        value_.index = value.index;
-    }
+    ec_public(const bc::ec_point& value)
+        : value_(value.begin(), value.end()) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    io_point(const io_point& other)
-        : io_point(other.value_) {}
+    ec_public(const ec_public& other)
+        : ec_public(other.value_) {}
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    ec_public(const libwallet::hd_private_key& value)
+        : ec_public(value.public_key()) {}
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    ec_public(const libwallet::hd_public_key& value)
+        : ec_public(value.public_key()) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::output_point& data()
+    bc::ec_point& data()
     {
         return value_;
     }
@@ -91,7 +103,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::output_point() const
+    operator const bc::ec_point() const
     {
         return value_; 
     }
@@ -103,23 +115,17 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, io_point& argument)
+    friend std::istream& operator>>(std::istream& input, ec_public& argument)
     {
-        std::string structure;
-        input >> structure;
+        std::string hex;
+        input >> hex;
 
-        // Note: there is no bc::uncat_point()
-        std::vector<std::string> members;
-        split(structure, members, SX_SERIALIZER_IO_POINT_DELIMITER);
-
-        if (members.size() != 2)
-            throw po::invalid_option_value(
-                SX_SERIALIZER_IO_POINT_DELIMITER);
-
-        parse(argument.value_.index, members[1]);
-        bc::hash_digest hash = bitcoin256(members[0]);
-
-        std::copy(hash.begin(), hash.end(), argument.value_.hash.begin());
+        bc::ec_point point = bytes(hex);
+        if (!bc::verify_public_key_fast(point)
+            /*|| !bc::verify_public_key(point)*/)
+            throw po::invalid_option_value(hex);
+        
+        argument.value_.assign(point.begin(), point.end());
         return input;
     }
 
@@ -131,11 +137,9 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const io_point& argument)
+        const ec_public& argument)
     {
-        // See bc::concat_point()
-        output << bitcoin256(argument.value_.hash) <<
-            SX_SERIALIZER_IO_POINT_DELIMITER << argument.value_.index;
+        output << bytes(argument.value_);
         return output;
     }
 
@@ -144,7 +148,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::output_point value_;
+    bc::ec_point value_;
 };
 
 } // sx

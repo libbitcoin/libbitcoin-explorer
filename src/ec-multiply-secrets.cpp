@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/secret.hpp>
+#include <sx/serializer/ec_private.hpp>
 #include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
@@ -38,7 +38,7 @@ console_result ec_multiply_secrets::invoke(std::istream& input,
     auto secrets = get_secrets_argument();
 
     bool first = true;
-    secret product(secrets[0]);
+    ec_private product(secrets[0]);
     for (auto const& secret: secrets)
     {
         if (first)

@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -93,8 +97,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SCAN_PUBKEY", 1)
-            .add("SPEND_PUBKEY", -1);
+            .add("SCAN_KEY", 1)
+            .add("SPEND_KEY", -1);
     }
     
     /**
@@ -132,13 +136,13 @@ public:
                 "Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided."
             )
             (
-                "SCAN_PUBKEY",
-                value<serializer::bytes>(&argument_.scan_pubkey)->required(),
+                "SCAN_KEY",
+                value<serializer::bytes>(&argument_.scan_key)->required(),
                 "The public key of the recipient."
             )
             (
-                "SPEND_PUBKEY",
-                value<std::vector<serializer::bytes>>(&argument_.spend_pubkeys),
+                "SPEND_KEY",
+                value<std::vector<serializer::bytes>>(&argument_.spend_keys),
                 "The public key(s) that is/are spent to."
             );
 
@@ -169,35 +173,35 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SCAN_PUBKEY argument.
+     * Get the value of the SCAN_KEY argument.
      */
-    virtual serializer::bytes get_scan_pubkey_argument()
+    virtual serializer::bytes get_scan_key_argument()
     {
-        return argument_.scan_pubkey;
+        return argument_.scan_key;
     }
     
     /**
-     * Set the value of the SCAN_PUBKEY argument.
+     * Set the value of the SCAN_KEY argument.
      */
-    virtual void set_scan_pubkey_argument(serializer::bytes value)
+    virtual void set_scan_key_argument(serializer::bytes value)
     {
-        argument_.scan_pubkey = value;
+        argument_.scan_key = value;
     }
 
     /**
-     * Get the value of the SPEND_PUBKEY arguments.
+     * Get the value of the SPEND_KEY arguments.
      */
-    virtual std::vector<serializer::bytes> get_spend_pubkeys_argument()
+    virtual std::vector<serializer::bytes> get_spend_keys_argument()
     {
-        return argument_.spend_pubkeys;
+        return argument_.spend_keys;
     }
     
     /**
-     * Set the value of the SPEND_PUBKEY arguments.
+     * Set the value of the SPEND_KEY arguments.
      */
-    virtual void set_spend_pubkeys_argument(std::vector<serializer::bytes> value)
+    virtual void set_spend_keys_argument(std::vector<serializer::bytes> value)
     {
-        argument_.spend_pubkeys = value;
+        argument_.spend_keys = value;
     }
 
     /**
@@ -258,11 +262,11 @@ private:
     struct argument
     {
         argument()
-          : scan_pubkey(),
-            spend_pubkeys()
+          : scan_key(),
+            spend_keys()
             {}
-        serializer::bytes scan_pubkey;
-        std::vector<serializer::bytes> spend_pubkeys;
+        serializer::bytes scan_key;
+        std::vector<serializer::bytes> spend_keys;
     } argument_;
     
     /**

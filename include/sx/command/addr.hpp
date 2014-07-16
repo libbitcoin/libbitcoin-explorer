@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -127,7 +131,7 @@ public:
             )
             (
                 "KEY",
-                value<serializer::key>(&argument_.key),
+                value<serializer::ec_key>(&argument_.key),
                 "The public key or hex or WIF encoded private key to convert."
             );
 
@@ -163,7 +167,7 @@ public:
     /**
      * Get the value of the KEY argument.
      */
-    virtual serializer::key get_key_argument()
+    virtual serializer::ec_key get_key_argument()
     {
         return argument_.key;
     }
@@ -171,7 +175,7 @@ public:
     /**
      * Set the value of the KEY argument.
      */
-    virtual void set_key_argument(serializer::key value)
+    virtual void set_key_argument(serializer::ec_key value)
     {
         argument_.key = value;
     }
@@ -220,7 +224,7 @@ private:
         argument()
           : key()
             {}
-        serializer::key key;
+        serializer::ec_key key;
     } argument_;
     
     /**

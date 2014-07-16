@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -50,8 +54,10 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_HD_PUB_DERIVATION_EXCEPTION \
+#define SX_HD_PUB_DERIVATION_ERROR \
     "Child public key derivation failed."
+#define SX_HD_PUB_HARD_OPTION_CONFLICT \
+    "The hard option requires a private key."
 
 /**
  * Class to implement the sx hd-pub command.
@@ -99,7 +105,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HD_KEY", 1)
+            .add("KEY", 1)
             .add("INDEX", 1);
     }
     
@@ -133,9 +139,9 @@ public:
                 "Signal to create a hardened key."
             )
             (
-                "HD_KEY",
-                value<hd_key>(&argument_.hd_key),
-                "The HD public key, or hex or WIF encoded HD private key."
+                "KEY",
+                value<serializer::hd_key>(&argument_.key),
+                "The hex encoded HD public or private key."
             )
             (
                 "INDEX",
@@ -154,9 +160,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto hd_key = variables.find("HD_KEY");
-        if (hd_key == variables.end())
-            parse(argument_.hd_key, read_stream(input));
+        auto key = variables.find("KEY");
+        if (key == variables.end())
+            parse(argument_.key, read_stream(input));
     }
 
     /**
@@ -173,19 +179,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HD_KEY argument.
+     * Get the value of the KEY argument.
      */
-    virtual hd_key get_hd_key_argument()
+    virtual serializer::hd_key get_key_argument()
     {
-        return argument_.hd_key;
+        return argument_.key;
     }
     
     /**
-     * Set the value of the HD_KEY argument.
+     * Set the value of the KEY argument.
      */
-    virtual void set_hd_key_argument(hd_key value)
+    virtual void set_key_argument(serializer::hd_key value)
     {
-        argument_.hd_key = value;
+        argument_.key = value;
     }
 
     /**
@@ -246,10 +252,10 @@ private:
     struct argument
     {
         argument()
-          : hd_key(),
+          : key(),
             index()
             {}
-        hd_key hd_key;
+        serializer::hd_key key;
         uint32_t index;
     } argument_;
     

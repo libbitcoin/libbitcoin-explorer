@@ -20,6 +20,7 @@
 #include <sx/command/unwrap.hpp>
 
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/utility/coin.hpp>
@@ -29,6 +30,9 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
+
+// This is potentially localizable.
+static const char* format = "%1% %2% %3%";
 
 // 100% coverage by line, loc ready.
 console_result unwrap::invoke(std::istream& input, std::ostream& output,
@@ -56,6 +60,6 @@ console_result unwrap::invoke(std::istream& input, std::ostream& output,
     bytes data(data_chunk(hex.begin() + 1, hex.end() - 4));
     bytes checksum(data_chunk(hex.end() - 4, hex.end()));
 
-    output << version << " " << data << " " << checksum << std::endl;
+    output << boost::format(format) % version % data % checksum << std::endl;
     return console_result::okay;
 }

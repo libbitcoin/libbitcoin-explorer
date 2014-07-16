@@ -20,6 +20,7 @@
 #include <iostream>
 #include <wallet/wallet.hpp>
 #include <sx/command/hd-pub.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
@@ -28,80 +29,41 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static bool private_to_public_key()
-{
-    hd_private_key private_key;
-    if (!private_key.set_serialized(read_stream(std::cin)))
-    {
-        std::cerr << "sx: Error reading private key." << std::endl;
-        return false;
-    }
-
-    const hd_public_key public_key = private_key;
-    std::cout << public_key.serialize() << std::endl;
-    return true;
-}
-
+// TODO: test
 console_result hd_pub::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
-    if (argc == 1)
+    // Bound parameters.
+    const auto hard = get_hard_option();
+    auto key = get_key_argument();
+    auto index = get_index_argument();
+
+    hd_private_key private_key = key;
+    if (!private_key.valid() && hard)
     {
-        // Special case - read private key from STDIN and convert it to public.
-        return if_else(private_to_public_key(), console_result::okay,
-            console_result::failure);
-    }
-
-    bool is_hard;
-    uint32_t index;
-    if (!read_hard_index_args(argc, argv, is_hard, index))
-    {
-        std::cerr << "sx: Bad INDEX provided." << std::endl;
-        return console_result::failure;
-    }
-
-    // TODO: constrain read_hard_index_args so that the encoded key can be 
-    // provided as an argument, and then update documentation.
-    const auto encoded_key = read_stream(std::cin);
-    
-    hd_public_key public_key;
-    hd_private_key private_key;
-
-    // NOTE: same idiom in hd_to_address
-    // First try loading private key and otherwise the public key.
-    if (private_key.set_serialized(encoded_key))
-        public_key = private_key;
-
-    else if (!public_key.set_serialized(encoded_key))
-    {
-        std::cerr << "sx: Error reading key." << std::endl;
-        return console_result::failure;
-    }
-
-    if (!private_key.valid() && is_hard)
-    {
-        std::cerr << "sx: Cannot use --hard with public keys."
-            << std::endl;
+        cerr << SX_HD_PUB_HARD_OPTION_CONFLICT << std::endl;
         return console_result::failure;
     }
 
     hd_public_key child_key;
-    if (is_hard)
+    if (hard)
     {
         // You must use the private key to generate --hard keys.
         index += first_hardened_key;
         child_key = private_key.generate_public_key(index);
     }
     else
+    {
+        hd_public_key public_key = key;
         child_key = public_key.generate_public_key(index);
+    }
 
     if (!child_key.valid())
     {
-        std::cerr << "sx: Error deriving child key." << std::endl;
+        cerr << SX_HD_PUB_DERIVATION_ERROR << std::endl;
         return console_result::failure;
     }
 
-    std::cout << child_key.serialize() << std::endl;
+    output << hd_public(child_key) << std::endl;
     return console_result::okay;
 }
-

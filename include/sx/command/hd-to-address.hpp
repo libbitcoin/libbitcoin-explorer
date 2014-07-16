@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -93,7 +97,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HD_KEY", 1);
+            .add("KEY", 1);
     }
     
     /**
@@ -121,9 +125,9 @@ public:
                 "Convert a HD public or private key to a Bitcoin address."
             )
             (
-                "HD_KEY",
-                value<hd_key>(&argument_.hd_key),
-                "The HD public key, or hex or WIF encoded HD private key."
+                "KEY",
+                value<serializer::hd_key>(&argument_.key),
+                "The hex encoded HD public or private key."
             );
 
         return options;
@@ -137,9 +141,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto hd_key = variables.find("HD_KEY");
-        if (hd_key == variables.end())
-            parse(argument_.hd_key, read_stream(input));
+        auto key = variables.find("KEY");
+        if (key == variables.end())
+            parse(argument_.key, read_stream(input));
     }
 
     /**
@@ -156,19 +160,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HD_KEY argument.
+     * Get the value of the KEY argument.
      */
-    virtual hd_key get_hd_key_argument()
+    virtual serializer::hd_key get_key_argument()
     {
-        return argument_.hd_key;
+        return argument_.key;
     }
     
     /**
-     * Set the value of the HD_KEY argument.
+     * Set the value of the KEY argument.
      */
-    virtual void set_hd_key_argument(hd_key value)
+    virtual void set_key_argument(serializer::hd_key value)
     {
-        argument_.hd_key = value;
+        argument_.key = value;
     }
 
     /**
@@ -197,9 +201,9 @@ private:
     struct argument
     {
         argument()
-          : hd_key()
+          : key()
             {}
-        hd_key hd_key;
+        serializer::hd_key key;
     } argument_;
     
     /**

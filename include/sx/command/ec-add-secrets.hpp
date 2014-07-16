@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -128,7 +132,7 @@ public:
             )
             (
                 "SECRET",
-                value<std::vector<serializer::secret>>(&argument_.secrets)->required(),
+                value<std::vector<serializer::ec_private>>(&argument_.secrets)->required(),
                 "The hex or WIF encoded secret to add."
             );
 
@@ -161,7 +165,7 @@ public:
     /**
      * Get the value of the SECRET arguments.
      */
-    virtual std::vector<serializer::secret> get_secrets_argument()
+    virtual std::vector<serializer::ec_private> get_secrets_argument()
     {
         return argument_.secrets;
     }
@@ -169,7 +173,7 @@ public:
     /**
      * Set the value of the SECRET arguments.
      */
-    virtual void set_secrets_argument(std::vector<serializer::secret> value)
+    virtual void set_secrets_argument(std::vector<serializer::ec_private> value)
     {
         argument_.secrets = value;
     }
@@ -202,7 +206,7 @@ private:
         argument()
           : secrets()
             {}
-        std::vector<serializer::secret> secrets;
+        std::vector<serializer::ec_private> secrets;
     } argument_;
     
     /**

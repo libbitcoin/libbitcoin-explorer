@@ -34,9 +34,13 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/key.hpp>
+#include <sx/serializer/ec_key.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/secret.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -93,7 +97,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("ENTROPY", 1);
+            .add("SEED", 1);
     }
     
     /**
@@ -121,8 +125,8 @@ public:
                 "Create a HD private key from entropy."
             )
             (
-                "ENTROPY",
-                value<serializer::bytes>(&argument_.entropy),
+                "SEED",
+                value<serializer::bytes>(&argument_.seed),
                 "The hex encoded seed for the new key, defaults to a random value."
             );
 
@@ -137,9 +141,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto entropy = variables.find("ENTROPY");
-        if (entropy == variables.end())
-            parse(argument_.entropy, read_stream(input));
+        auto seed = variables.find("SEED");
+        if (seed == variables.end())
+            parse(argument_.seed, read_stream(input));
     }
 
     /**
@@ -156,19 +160,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the ENTROPY argument.
+     * Get the value of the SEED argument.
      */
-    virtual serializer::bytes get_entropy_argument()
+    virtual serializer::bytes get_seed_argument()
     {
-        return argument_.entropy;
+        return argument_.seed;
     }
     
     /**
-     * Set the value of the ENTROPY argument.
+     * Set the value of the SEED argument.
      */
-    virtual void set_entropy_argument(serializer::bytes value)
+    virtual void set_seed_argument(serializer::bytes value)
     {
-        argument_.entropy = value;
+        argument_.seed = value;
     }
 
     /**
@@ -197,9 +201,9 @@ private:
     struct argument
     {
         argument()
-          : entropy()
+          : seed()
             {}
-        serializer::bytes entropy;
+        serializer::bytes seed;
     } argument_;
     
     /**

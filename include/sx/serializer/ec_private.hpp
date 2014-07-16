@@ -17,13 +17,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BASE58_HPP
-#define BASE58_HPP
+#ifndef EC_PRIVATE_HPP
+#define EC_PRIVATE_HPP
 
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 #include <sx/define.hpp>
+#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/wif.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -31,26 +35,26 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between data_chunk and base58.
+ * Serialization helper to convert between hex string and ec_secret.
  */
-class base58
+class ec_private
 {
 public:
 
     /**
      * Constructor.
      */
-    base58()
+    ec_private()
         : value_() {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  base58  The value to initialize with.
+     * @param[in]  hex  The value to initialize with.
      */
-    base58(const std::string& base58)
+    ec_private(const std::string& hex)
     {
-        std::stringstream(base58) >> *this;
+        std::stringstream(hex) >> *this;
     }
 
     /**
@@ -58,23 +62,33 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    base58(const bc::data_chunk& value)
-        : value_(value.begin(), value.end()) {}
+    ec_private(const bc::ec_secret& value)
+    {
+        std::copy(value.begin(), value.end(), value_.begin());
+    }
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    ec_private(const libwallet::hd_private_key& value)
+        : ec_private(value.private_key()) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    base58(const base58& other)
-        : base58(other.value_) {}
+    ec_private(const ec_private& other)
+        : ec_private(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::data_chunk& data()
+    bc::ec_secret& data()
     {
         return value_;
     }
@@ -84,7 +98,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::data_chunk() const
+    operator const bc::ec_secret() const
     {
         return value_; 
     }
@@ -96,16 +110,26 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, base58& argument)
+    friend std::istream& operator>>(std::istream& input, ec_private& argument)
     {
-        std::string base58;
-        input >> base58;
+        std::string text;
+        input >> text;
 
-        bc::data_chunk chunk = bc::decode_base58(base58);
-        if (chunk.empty())
-            throw po::invalid_option_value(base58);
+        bc::ec_secret value;
+        try
+        {
+            // First try to read as WIF secret.
+            value = wif(text);
+        }
+        catch (po::invalid_option_value)
+        {
+            // Next try to read as hash secret.
+            value = bitcoin256(text);
+            if (!bc::verify_private_key(value))
+                throw po::invalid_option_value(text);
+        }
 
-        argument.value_.assign(chunk.begin(), chunk.end());
+        std::copy(value.begin(), value.end(), argument.value_.begin());
         return input;
     }
 
@@ -117,9 +141,9 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const base58& argument)
+        const ec_private& argument)
     {
-        output << bc::encode_base58(argument.value_);
+        output << bitcoin256(argument.value_);
         return output;
     }
 
@@ -128,7 +152,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::data_chunk value_;
+    bc::ec_secret value_;
 };
 
 } // sx
