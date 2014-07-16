@@ -153,6 +153,9 @@
     <ClCompile Include="..\..\..\..\test\genpub.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-priv.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

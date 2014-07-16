@@ -67,6 +67,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">
     <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">
+    <PostBuildEvent>
+      <Command>"$(TargetPath)" --run_test=hd_priv__invoke --random=1 --show_progress=yes --result_code=no --detect_memory_leak=0 --report_level=no --build_info=yes</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
@@ -146,6 +151,7 @@
     <ClCompile Include="..\..\..\..\test\genpub.cpp" />
     <ClCompile Include="..\..\..\..\test\get-pubkey.cpp" />
     <ClCompile Include="..\..\..\..\test\get-utxo.cpp" />
+    <ClCompile Include="..\..\..\..\test\hd-priv.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\history.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
