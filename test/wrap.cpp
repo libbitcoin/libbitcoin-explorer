@@ -28,14 +28,11 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(wrap__invoke)
 
-BOOST_AUTO_TEST_CASE(wrap__invoke__bogus_hex__okay_output)
+BOOST_AUTO_TEST_CASE(unwrap__invoke__bogus_hex__throws_invalid_option_value)
 {
     // $ sx wrap bogus
-    SX_DECLARE_COMMAND(wrap);
-    command.set_version_option(0);
-    command.set_hex_argument({ "bogus" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    SX_REQUIRE_OUTPUT("001406e058\n");
+    SX_DECLARE_COMMAND(unwrap);
+    SX_REQUIRE_INVALID_OPTION_VALUE(command.set_hex_argument({ "bogus" }));
 }
 
 BOOST_AUTO_TEST_CASE(wrap__invoke__valid_hex_version__okay_output)

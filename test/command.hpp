@@ -55,4 +55,8 @@ using namespace sx::extension;
 #define SX_REQUIRE_OUTPUT(value) \
     BOOST_REQUIRE(output.str() == value &&  error.str().empty())
 
+// exceptions
+#define SX_REQUIRE_INVALID_OPTION_VALUE(expression) \
+    BOOST_REQUIRE_THROW(expression, po::invalid_option_value)
+
 #endif

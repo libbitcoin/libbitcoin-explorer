@@ -72,6 +72,11 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "genpub\n" \
         "get-pubkey\n" \
         "get-utxo\n" \
+        "hd-priv\n" \
+        "hd-pub\n" \
+        "hd-seed\n" \
+        "hd-to-address\n" \
+        "hd-to-wif\n" \
         "help\n" \
         "history\n" \
         "satoshi\n" \

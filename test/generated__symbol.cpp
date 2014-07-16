@@ -172,30 +172,30 @@ BOOST_AUTO_TEST_CASE(generated__symbol__get_utxo__returns_expected_value)
     BOOST_REQUIRE(get_utxo::symbol() == std::string("get-utxo"));
 }
 
-//BOOST_AUTO_TEST_CASE(generated__symbol__hd_priv__returns_expected_value)
-//{
-//    BOOST_REQUIRE(hd_priv::symbol() == std::string("hd-priv"));
-//}
-//
-//BOOST_AUTO_TEST_CASE(generated__symbol__hd_pub__returns_expected_value)
-//{
-//    BOOST_REQUIRE(hd_pub::symbol() == std::string("hd-pub"));
-//}
-//
-//BOOST_AUTO_TEST_CASE(generated__symbol__hd_seed__returns_expected_value)
-//{
-//    BOOST_REQUIRE(hd_seed::symbol() == std::string("hd-seed"));
-//}
-//
-//BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_address__returns_expected_value)
-//{
-//    BOOST_REQUIRE(hd_to_address::symbol() == std::string("hd-to-address"));
-//}
-//
-//BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_wif__returns_expected_value)
-//{
-//    BOOST_REQUIRE(hd_to_wif::symbol() == std::string("hd-to-wif"));
-//}
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_priv__returns_expected_value)
+{
+    BOOST_REQUIRE(hd_priv::symbol() == std::string("hd-priv"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_pub__returns_expected_value)
+{
+    BOOST_REQUIRE(hd_pub::symbol() == std::string("hd-pub"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_seed__returns_expected_value)
+{
+    BOOST_REQUIRE(hd_seed::symbol() == std::string("hd-seed"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_address__returns_expected_value)
+{
+    BOOST_REQUIRE(hd_to_address::symbol() == std::string("hd-to-address"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_wif__returns_expected_value)
+{
+    BOOST_REQUIRE(hd_to_wif::symbol() == std::string("hd-to-wif"));
+}
 
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {

@@ -28,6 +28,14 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(ec_add__invoke)
 
+BOOST_AUTO_TEST_CASE(ec_add__invoke__bogus_secret__throws_invalid_option_value)
+{
+    // $ sx ec-add 0 ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    SX_DECLARE_COMMAND(ec_add);
+    SX_REQUIRE_INVALID_OPTION_VALUE(command.set_secret_argument({ "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" }));
+}
+
+// TODO: generate overflow condition
 //BOOST_AUTO_TEST_CASE(ec_add__invoke__overflow__failure_error)
 //{
 //    // $ sx ec-add 02ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
