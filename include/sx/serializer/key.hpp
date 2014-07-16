@@ -23,6 +23,9 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/bytes.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/secret.hpp>
+#include <sx/serializer/wif.hpp>
 #include <sx/utility/coin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -102,24 +105,41 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, key& argument)
     {
-        std::string arg;
-        input >> arg;
+        std::string text;
+        input >> text;
+        bc::ec_point value;
 
-        // First try and read from private key.
-        if (!read_public_of_private_key(argument.value_, arg))
+        try
         {
-            bc::data_chunk chunk = bytes(arg);
-
-            // Otherwise read as public key.
-            if (!bc::verify_public_key_fast(chunk))
-                throw po::invalid_option_value(SX_SERIALIZER_KEY_EXCEPTION);
-
-            //if (!bc::verify_public_key(chunk))
-            //    throw po::invalid_option_value(SX_SERIALIZER_KEY_EXCEPTION);
-
-            argument.value_.assign(chunk.begin(), chunk.end());
+            // First try to read as WIF secret, and convert.
+            auto import = wif(text);
+            value = bc::secret_to_public_key(import,
+                import.get_compressed());
+        }
+        catch (po::invalid_option_value)
+        {
+            try
+            {
+                // Next try to read as hash secret, and convert.
+                bc::ec_secret hash = secret(text);
+                value = bc::secret_to_public_key(hash, true);
+            }
+            catch (po::invalid_option_value)
+            {
+                try
+                {
+                    // Finally try to read as hex public key.
+                    value = point(text);
+                }
+                catch (po::invalid_option_value)
+                {
+                    throw po::invalid_option_value(
+                        SX_SERIALIZER_KEY_EXCEPTION);
+                }
+            }
         }
 
+        argument.value_.assign(value.begin(), value.end());
         return input;
     }
 

@@ -37,6 +37,7 @@
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/secret.hpp>
+#include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -101,7 +102,7 @@ public:
      *
      * @return  The loaded program argument definitions.
      */
-    arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("ADDRESS", -1);
@@ -116,7 +117,7 @@ public:
      *
      * @return  The loaded program option definitions.
      */
-    options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -151,7 +152,7 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    void load_stream(std::istream& input, po::variables_map& variables)
+    virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
     }
 

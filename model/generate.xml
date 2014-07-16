@@ -624,12 +624,6 @@
     <explanation value="Watch transactions from the network searching for a certain hash." />
   </command>
 
-  <command symbol="hd-seed" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <description value="Create a random new HD key." />
-    <example value="sx hd-seed [ENTROPY]" />
-    <explanation value="Create a random new HD key." />
-  </command>
-
   <command symbol="hd-priv" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
     <description value="Create a private HD key from another HD private key." />
     <example value="sx hd-priv [--hard] [INDEX]" />
@@ -643,6 +637,12 @@
     <example value="sx hd-pub [--hard] [INDEX]" />
     <explanation value="Create an HD public key from a HD private key or another HD public key." />
     <explanation value="If no INDEX is provided 0 is used." />
+  </command>
+
+  <command symbol="hd-seed" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
+    <description value="Create a random new HD key." />
+    <example value="sx hd-seed [ENTROPY]" />
+    <explanation value="Create a random new HD key." />
   </command>
 
   <command symbol="hd-to-address" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">

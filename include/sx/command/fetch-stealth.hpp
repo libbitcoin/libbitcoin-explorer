@@ -37,6 +37,7 @@
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/secret.hpp>
+#include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -50,7 +51,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_FETCH_STEALTH_OUTPUT \
-    "Ephemkey: %1% Address: %2% Transaction hash: %3%\n"
+    "Ephemeral key: %1% Address: %2% Transaction hash: %3%\n"
 
 /**
  * Class to implement the sx fetch-stealth command.
@@ -95,7 +96,7 @@ public:
      *
      * @return  The loaded program argument definitions.
      */
-    arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("BITFIELD", 1);
@@ -110,7 +111,7 @@ public:
      *
      * @return  The loaded program option definitions.
      */
-    options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -145,7 +146,7 @@ public:
      * @param[in]  input  The input stream for loading the parameter.
      * @param[in]         The loaded variables.
      */
-    void load_stream(std::istream& input, po::variables_map& variables)
+    virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
         auto bitfield = variables.find("BITFIELD");
         if (bitfield == variables.end())

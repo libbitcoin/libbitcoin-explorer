@@ -570,6 +570,7 @@ private:
 #include <sx/serializer/key.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/secret.hpp>
+#include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
@@ -1101,6 +1102,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
@@ -1278,6 +1280,9 @@ endif
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\secret.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp">

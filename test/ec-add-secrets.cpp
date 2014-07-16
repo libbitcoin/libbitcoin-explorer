@@ -28,18 +28,18 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(ec_add_secrets__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__add_overflow__failure_error)
-{
-    // $ sx ec-add-secrets ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-    SX_DECLARE_COMMAND(ec_add_secrets);
-    command.set_secrets_argument(
-    {
-        { "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" },
-        { "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" }
-    });
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_EC_ADD_SECRETS_OUT_OF_RANGE "\n");
-}
+//BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__overflow__failure_error)
+//{
+//    // $ sx ec-add-secrets ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+//    SX_DECLARE_COMMAND(ec_add_secrets);
+//    command.set_secrets_argument(
+//    {
+//        { "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" },
+//        { "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" }
+//    });
+//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+//    SX_REQUIRE_ERROR(SX_EC_ADD_SECRETS_OUT_OF_RANGE "\n");
+//}
 
 BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__one_value__okay_output)
 {

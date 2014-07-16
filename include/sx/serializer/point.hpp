@@ -105,16 +105,16 @@ public:
     {
         std::string hex;
         input >> hex;
-        bc::data_chunk chunk = bytes(hex);
+        bc::ec_point point = bytes(hex);
 
-        if (!bc::verify_public_key_fast(chunk))
-            throw po::invalid_option_value(
-                SX_SERIALIZER_POINT_PREFIX_EXCEPTION);
+        //if (!bc::verify_public_key_fast(point))
+        //    throw po::invalid_option_value(
+        //        SX_SERIALIZER_POINT_PREFIX_EXCEPTION);
 
-        //if (!bc::verify_public_key(chunk))
-        //    throw po::invalid_option_value(SX_SERIALIZER_POINT_EXCEPTION);
+        if (!bc::verify_public_key(point))
+            throw po::invalid_option_value(SX_SERIALIZER_POINT_EXCEPTION);
         
-        argument.value_.assign(chunk.begin(), chunk.end());
+        argument.value_.assign(point.begin(), point.end());
         return input;
     }
 

@@ -23,6 +23,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/wif.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -31,9 +32,6 @@ namespace serializer {
 
 #define SX_SERIALIZER_SECRET_EXCEPTION \
     "Invalid elliptic curve secret."
-
-#define SX_SERIALIZER_SECRET_SIZE_EXCEPTION \
-    "Elliptic curve secret must be 32 bytes."
 
 /**
  * Serialization helper to convert between hex string and ec_secret.
@@ -105,18 +103,25 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, secret& argument)
     {
-        std::string hex;
-        input >> hex;
-        bc::hash_digest hash = bitcoin256(hex);
+        std::string text;
+        input >> text;
+        bc::ec_secret value;
 
-        if (hash == bc::null_hash)
-            throw po::invalid_option_value(
-                SX_SERIALIZER_SECRET_SIZE_EXCEPTION);
+        try
+        {
+            // First try to read as WIF secret.
+            value = wif(text);
+        }
+        catch (po::invalid_option_value)
+        {
+            // Next try to read as hash secret.
+            value = bitcoin256(text);
 
-        //if (!bc::verify_private_key(argument))
-        //    throw po::invalid_option_value(SX_SERIALIZER_SECRET_EXCEPTION);
+            if (!bc::verify_private_key(value))
+                throw po::invalid_option_value(SX_SERIALIZER_SECRET_EXCEPTION);
+        }
 
-        std::copy(hash.begin(), hash.end(), argument.value_.begin());
+        std::copy(value.begin(), value.end(), argument.value_.begin());
         return input;
     }
 

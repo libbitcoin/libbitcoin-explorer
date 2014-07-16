@@ -18,16 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/hd-pub.hpp>
-#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
 static bool private_to_public_key()
 {
@@ -43,11 +42,9 @@ static bool private_to_public_key()
     return true;
 }
 
-console_result hd_pub::invoke(int argc, const char* argv[])
+console_result hd_pub::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 3))
-        return console_result::failure;
-
     if (argc == 1)
     {
         // Special case - read private key from STDIN and convert it to public.

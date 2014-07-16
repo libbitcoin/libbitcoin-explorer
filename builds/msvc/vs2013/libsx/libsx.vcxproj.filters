@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -137,6 +137,21 @@
     <ClInclude Include="..\..\..\..\include\sx\command\get-utxo.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-priv.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-pub.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-seed.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-address.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -183,6 +198,9 @@
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\secret.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp">
@@ -316,6 +334,21 @@
     <ClCompile Include="..\..\..\..\src\get-utxo.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-priv.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-pub.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-seed.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -364,5 +397,13 @@
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.codecvt_error_category.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.operations.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path_traits.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.portability.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.unique_path.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.utf8_codecvt_facet.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.windows_file_codecvt.cpp" />
   </ItemGroup>
 </Project>

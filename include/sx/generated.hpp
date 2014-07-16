@@ -53,6 +53,11 @@
 #include <sx/command/genpub.hpp>
 #include <sx/command/get-pubkey.hpp>
 #include <sx/command/get-utxo.hpp>
+//#include <sx/command/hd-priv.hpp>
+//#include <sx/command/hd-pub.hpp>
+//#include <sx/command/hd-seed.hpp>
+//#include <sx/command/hd-to-address.hpp>
+//#include <sx/command/hd-to-wif.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/history.hpp>
 #include <sx/command/satoshi.hpp>

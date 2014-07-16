@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_EC_ADD_HPP
-#define SX_EC_ADD_HPP
+#ifndef SX_HD_PUB_HPP
+#define SX_HD_PUB_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -50,13 +50,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_EC_ADD_OUT_OF_RANGE \
-    "Function exceeds valid range."
+#define SX_HD_PUB_DERIVATION_EXCEPTION \
+    "Child public key derivation failed."
 
 /**
- * Class to implement the sx ec-add command.
+ * Class to implement the sx hd-pub command.
  */
-class ec_add 
+class hd_pub 
     : public command
 {
 public:
@@ -64,14 +64,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "ec-add"; }
+    static const char* symbol() { return "hd-pub"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return ec_add::symbol();
+        return hd_pub::symbol();
     }
 
     /**
@@ -79,7 +79,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
+        return "OFFLINE KEYS AND ADDRESSES";
     }
 
     /**
@@ -87,7 +87,7 @@ public:
      */
     const char* subcategory()
     {
-        return "EC MATH";
+        return "HD / BIP32";
     }
 
     /**
@@ -99,8 +99,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("POINT", 1)
-            .add("SECRET", 1);
+            .add("HD_KEY", 1)
+            .add("INDEX", 1);
     }
     
     /**
@@ -125,17 +125,22 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Calculate the elliptic curve function POINT + (SECRET * curve-generator-point)."
+                "Create a HD public key from another HD public or private key."
             )
             (
-                "POINT",
-                value<serializer::point>(&argument_.point)->required(),
-                "The point to add."
+                "hard,h",
+                value<bool>(&option_.hard)->implicit_value(true),
+                "Signal to create a hardened key."
             )
             (
-                "SECRET",
-                value<serializer::secret>(&argument_.secret)->required(),
-                "The hex or WIF encoded secret to add."
+                "HD_KEY",
+                value<hd_key>(&argument_.hd_key),
+                "The HD public key, or hex or WIF encoded HD private key."
+            )
+            (
+                "INDEX",
+                value<uint32_t>(&argument_.index),
+                "The HD index, defaults to zero."
             );
 
         return options;
@@ -149,6 +154,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto hd_key = variables.find("HD_KEY");
+        if (hd_key == variables.end())
+            parse(argument_.hd_key, read_stream(input));
     }
 
     /**
@@ -165,35 +173,35 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the POINT argument.
+     * Get the value of the HD_KEY argument.
      */
-    virtual serializer::point get_point_argument()
+    virtual hd_key get_hd_key_argument()
     {
-        return argument_.point;
+        return argument_.hd_key;
     }
     
     /**
-     * Set the value of the POINT argument.
+     * Set the value of the HD_KEY argument.
      */
-    virtual void set_point_argument(serializer::point value)
+    virtual void set_hd_key_argument(hd_key value)
     {
-        argument_.point = value;
+        argument_.hd_key = value;
     }
 
     /**
-     * Get the value of the SECRET argument.
+     * Get the value of the INDEX argument.
      */
-    virtual serializer::secret get_secret_argument()
+    virtual uint32_t get_index_argument()
     {
-        return argument_.secret;
+        return argument_.index;
     }
     
     /**
-     * Set the value of the SECRET argument.
+     * Set the value of the INDEX argument.
      */
-    virtual void set_secret_argument(serializer::secret value)
+    virtual void set_index_argument(uint32_t value)
     {
-        argument_.secret = value;
+        argument_.index = value;
     }
 
     /**
@@ -212,6 +220,22 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the hard option.
+     */
+    virtual bool get_hard_option()
+    {
+        return option_.hard;
+    }
+    
+    /**
+     * Set the value of the hard option.
+     */
+    virtual void set_hard_option(bool value)
+    {
+        option_.hard = value;
+    }
+
 private:
 
     /**
@@ -222,11 +246,11 @@ private:
     struct argument
     {
         argument()
-          : point(),
-            secret()
+          : hd_key(),
+            index()
             {}
-        serializer::point point;
-        serializer::secret secret;
+        hd_key hd_key;
+        uint32_t index;
     } argument_;
     
     /**
@@ -237,9 +261,11 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            hard()
             {}    
         bool help;
+        bool hard;
     } option_;
 };
 

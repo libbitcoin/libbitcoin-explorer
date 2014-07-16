@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_EC_ADD_HPP
-#define SX_EC_ADD_HPP
+#ifndef SX_HD_TO_WIF_HPP
+#define SX_HD_TO_WIF_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -48,15 +48,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx hd-to-wif command.
  */
-#define SX_EC_ADD_OUT_OF_RANGE \
-    "Function exceeds valid range."
-
-/**
- * Class to implement the sx ec-add command.
- */
-class ec_add 
+class hd_to_wif 
     : public command
 {
 public:
@@ -64,14 +58,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "ec-add"; }
+    static const char* symbol() { return "hd-to-wif"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return ec_add::symbol();
+        return hd_to_wif::symbol();
     }
 
     /**
@@ -79,7 +73,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
+        return "OFFLINE KEYS AND ADDRESSES";
     }
 
     /**
@@ -87,7 +81,7 @@ public:
      */
     const char* subcategory()
     {
-        return "EC MATH";
+        return "HD / BIP32";
     }
 
     /**
@@ -99,8 +93,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("POINT", 1)
-            .add("SECRET", 1);
+            .add("HD_PRIVATE", 1);
     }
     
     /**
@@ -125,17 +118,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Calculate the elliptic curve function POINT + (SECRET * curve-generator-point)."
+                "Convert an HD private key to a WIF private key."
             )
             (
-                "POINT",
-                value<serializer::point>(&argument_.point)->required(),
-                "The point to add."
-            )
-            (
-                "SECRET",
-                value<serializer::secret>(&argument_.secret)->required(),
-                "The hex or WIF encoded secret to add."
+                "HD_PRIVATE",
+                value<hd_private>(&argument_.hd_private),
+                "The hex or WIF encoded HD private key."
             );
 
         return options;
@@ -149,6 +137,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto hd_private = variables.find("HD_PRIVATE");
+        if (hd_private == variables.end())
+            parse(argument_.hd_private, read_stream(input));
     }
 
     /**
@@ -165,35 +156,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the POINT argument.
+     * Get the value of the HD_PRIVATE argument.
      */
-    virtual serializer::point get_point_argument()
+    virtual hd_private get_hd_private_argument()
     {
-        return argument_.point;
+        return argument_.hd_private;
     }
     
     /**
-     * Set the value of the POINT argument.
+     * Set the value of the HD_PRIVATE argument.
      */
-    virtual void set_point_argument(serializer::point value)
+    virtual void set_hd_private_argument(hd_private value)
     {
-        argument_.point = value;
-    }
-
-    /**
-     * Get the value of the SECRET argument.
-     */
-    virtual serializer::secret get_secret_argument()
-    {
-        return argument_.secret;
-    }
-    
-    /**
-     * Set the value of the SECRET argument.
-     */
-    virtual void set_secret_argument(serializer::secret value)
-    {
-        argument_.secret = value;
+        argument_.hd_private = value;
     }
 
     /**
@@ -222,11 +197,9 @@ private:
     struct argument
     {
         argument()
-          : point(),
-            secret()
+          : hd_private()
             {}
-        serializer::point point;
-        serializer::secret secret;
+        hd_private hd_private;
     } argument_;
     
     /**

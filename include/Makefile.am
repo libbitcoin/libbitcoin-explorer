@@ -44,6 +44,11 @@ sx_command_include_HEADERS = \
     command/genpriv.hpp \
     command/genpub.hpp \
     command/get-pubkey.hpp \
+    command/hd-priv.hpp \
+    command/hd-pub.hpp \
+    command/hd-seed.hpp \
+    command/hd-to-address.hpp \
+    command/hd-to-wif.hpp \
     command/help.hpp \
     command/satoshi.hpp \
     command/stealth-addr.hpp \

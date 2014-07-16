@@ -104,31 +104,8 @@ bc::data_chunk random_fill(size_t size);
  * @param[out] payaddrs   The payment addresses read.
  * return                 True if there was no payment address parse error.
  */
-bool read_addresses(std::vector<std::string> addresses, sx::payaddr_list& payaddrs);
-
-/**
- * Read optional hard/index argument pair from args, with defaults.
- * Side effects: writes to STDERR in case of parsing error.
- *
- * @param[in]  argc     The number of args.
- * @param[in]  argv     The arguments to read.
- * @param[out] is_hard  The parsed is hard value or false if not present.
- * @param[out] index    The parsed index value or zero if not present.
- * @return              True if there was no error parsing an argument.
- */
-bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
-    uint32_t& index);
-
-/**
- * Read the public key of a private key from string.
- *
- * @param[out] key          The public key.
- * @param[in]  arg          The argument from which to read the key.
- * @param[in]  compression  Flag indicating whether compression is expected.
- * @return                  True if a key was read.
- */
-bool read_public_of_private_key(bc::ec_point& key, const std::string& arg,
-    key_compression compression=key_compression::unspecified);
+bool read_addresses(std::vector<std::string> addresses, 
+    sx::payaddr_list& payaddrs);
 
 /**
  * Validate the bitcoin checksum of a chunk of binary data.

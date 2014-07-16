@@ -44,6 +44,11 @@ libsx_la_SOURCES += \
     genpriv.cpp \
     genpub.cpp \
     get-pubkey.cpp \
+    hd-priv.cpp \
+    hd-pub.cpp \
+    hd-seed.cpp \
+    hd-to-address.cpp \
+    hd-to-wif.cpp \
     help.cpp \
     satoshi.cpp \
     stealth-addr.cpp \

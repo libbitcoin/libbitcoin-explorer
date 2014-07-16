@@ -18,52 +18,38 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/hd-priv.hpp>
-#include <sx/utility/coin.hpp>
 #include <sx/utility/console.hpp>
 
-using namespace bc;
 using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result hd_priv::invoke(int argc, const char* argv[])
+console_result hd_priv::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 3))
-        return console_result::failure;
+    // Bound parameters.
+    const auto hard = get_hard_option();
+    auto private_key = get_hd_private_argument();
+    auto index = get_index_argument();
 
-    bool is_hard;
-    uint32_t index;
-    if (!read_hard_index_args(argc, argv, is_hard, index))
-    {
-        std::cerr << "sx: Bad INDEX provided." << std::endl;
-        return console_result::failure;
-    }
+    //hd_private_key private_key;
+    //if (!private_key.set_serialized(encoded_key))
 
-    // TODO: constrain read_hard_index_args so that the encoded key can be 
-    // provided as an argument, and then update documentation.
-    const auto encoded_key = read_stream(std::cin);
-
-    hd_private_key private_key;
-    if (!private_key.set_serialized(encoded_key))
-    {
-        std::cerr << "hd-priv: error reading private key." << std::endl;
-        return console_result::failure;
-    }
-
-    if (is_hard)
+    if (hard)
         index += first_hardened_key;
 
     const auto child_key = private_key.generate_private_key(index);
+
     if (!child_key.valid())
     {
-        std::cerr << "hd-priv: error deriving child key." << std::endl;
+        cerr << SX_HD_PRIV_DERIVATION_EXCEPTION << std::endl;
         return console_result::failure;
     }
 
-    std::cout << child_key.serialize() << std::endl;
+    output << hd_private(child_key) << std::endl;
     return console_result::okay;
 }
 

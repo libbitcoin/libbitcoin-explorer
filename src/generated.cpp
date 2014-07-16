@@ -65,6 +65,11 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<genpub>());
     func(make_shared<get_pubkey>());
     func(make_shared<get_utxo>());
+    //func(make_shared<hd_priv>());
+    //func(make_shared<hd_pub>());
+    //func(make_shared<hd_seed>());
+    //func(make_shared<hd_to_address>());
+    //func(make_shared<hd_to_wif>());
     func(make_shared<help>());
     func(make_shared<history>());
     func(make_shared<satoshi>());
@@ -135,6 +140,16 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<get_pubkey>();
     if (symbol == get_utxo::symbol())
         return make_shared<get_utxo>();
+    //if (symbol == hd_priv::symbol())
+    //    return make_shared<hd_priv>();
+    //if (symbol == hd_pub::symbol())
+    //    return make_shared<hd_pub>();
+    //if (symbol == hd_seed::symbol())
+    //    return make_shared<hd_seed>();
+    //if (symbol == hd_to_address::symbol())
+    //    return make_shared<hd_to_address>();
+    //if (symbol == hd_to_wif::symbol())
+    //    return make_shared<hd_to_wif>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == history::symbol())

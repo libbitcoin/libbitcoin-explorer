@@ -17,42 +17,42 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SHA256_HPP
-#define SHA256_HPP
+#ifndef WIF_HPP
+#define WIF_HPP
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <wallet/wallet.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
-#define SX_SERIALIZER_SHA256_EXCEPTION \
-    "Invalid SHA256 hash."
+#define SX_SERIALIZER_WIF_EXCEPTION \
+    "Invalid wallet import format."
 
 /**
- * Serialization helper to convert between hex string and hash_digest.
+ * Serialization helper to convert between hex string and ec_secret.
  */
-class bitcoin256
+class wif
 {
 public:
 
     /**
      * Constructor.
      */
-    bitcoin256()
-        : value_() {}
+    wif()
+        : compressed_(true), value_() {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  text  The value to initialize with.
      */
-    bitcoin256(const std::string& hex)
+    wif(const std::string& text)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(text) >> *this;
     }
 
     /**
@@ -60,7 +60,8 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    bitcoin256(const bc::hash_digest& value)
+    wif(const bc::ec_secret& value)
+        : compressed_(true)
     {
         std::copy(value.begin(), value.end(), value_.begin());
     }
@@ -70,17 +71,33 @@ public:
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    bitcoin256(const bitcoin256& other)
-        : bitcoin256(other.value_) {}
+    wif(const wif& other)
+        : wif(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::hash_digest& data()
+    bc::ec_secret& data()
     {
         return value_;
+    }
+
+    /**
+     * Get the compressed property.
+     */
+    bool get_compressed()
+    {
+        return compressed_;
+    }
+
+    /**
+     * Set the compressed property.
+     */
+    void set_compressed(bool value)
+    {
+        compressed_ = value;
     }
 
     /**
@@ -88,7 +105,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::hash_digest() const
+    operator const bc::ec_secret() const
     {
         return value_; 
     }
@@ -100,16 +117,17 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, bitcoin256& argument)
+    friend std::istream& operator>>(std::istream& input, wif& argument)
     {
-        std::string hex;
-        input >> hex;
-        auto hash = bc::decode_hash(hex);
+        std::string text;
+        input >> text;
+        auto value = libwallet::wif_to_secret(text);
 
-        if (hash == bc::null_hash)
-            throw po::invalid_option_value(SX_SERIALIZER_SHA256_EXCEPTION);
+        if (!bc::verify_private_key(value))
+            throw po::invalid_option_value(SX_SERIALIZER_WIF_EXCEPTION);
 
-        std::copy(hash.begin(), hash.end(), argument.value_.begin());
+        argument.compressed_ = libwallet::is_wif_compressed(text);
+        std::copy(value.begin(), value.end(), argument.value_.begin());
         return input;
     }
 
@@ -120,19 +138,28 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const bitcoin256& argument)
+    friend std::ostream& operator<<(std::ostream& output, const wif& argument)
     {
-        output << bytes(argument.value_);
+        // bc::secret_to_public_key(secret, compressed);
+        output << libwallet::secret_to_wif(argument.value_, 
+            argument.compressed_);
         return output;
     }
 
 private:
 
     /**
-     * The state of this object.
+     * The state of derived public key compression, indicating that the derived
+     * public key should be compressed when serialized. This is obtained from
+     * and serialized with the WIF private key and otherwise defaults to true.
+     * https://bitcointalk.org/index.php?topic=129652.msg1384929#msg1384929
      */
-    bc::hash_digest value_;
+    bool compressed_;
+
+    /**
+     * The state of this object's secret.
+     */
+    bc::ec_secret value_;
 };
 
 } // sx

@@ -17,41 +17,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <functional>
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/hd-seed.hpp>
-#include <sx/utility/coin.hpp>
-#include <sx/utility/config.hpp>
 #include <sx/utility/console.hpp>
+#include <sx/serializer/hd_private.hpp>
 
 using namespace bc;
 using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-
-console_result hd_seed::invoke(int argc, const char* argv[])
+console_result hd_seed::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    // Bound parameters.
+    data_chunk entropy = get_entropy_argument();
+    const bool testnet = get_general_testnet_setting();
 
-    const size_t seed_entropy_bytes = 32;
+    const size_t fill_entropy_size = 32;
 
-    // Oh the agony of this 5 line if_else.
-    data_chunk entropy;
-    if (argc > 1)
-        entropy = decode_hex(argv[1]);
-    else
-        entropy = random_fill(seed_entropy_bytes);
-        
-    config_map_type config;
-    get_config(config);
-    const auto is_testnet = is_true(config[SX_SETTING_TESTNET]);
+    if (entropy.size() == 0)
+        entropy = random_fill(fill_entropy_size);
 
-    hd_private_key private_key(entropy, is_testnet);
-    std::cout << private_key.serialize() << std::endl;
+    hd_private_key private_key(entropy, testnet);
+    std::cout << hd_private(private_key) << std::endl;
     return console_result::okay;
 }
 

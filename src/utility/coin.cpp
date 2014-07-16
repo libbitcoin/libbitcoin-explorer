@@ -76,49 +76,6 @@ bool read_addresses(std::vector<std::string> addresses, payaddr_list& payaddrs)
     return true;
 }
 
-bool read_hard_index_args(int argc, const char* argv[], bool& is_hard,
-    uint32_t& index)
-{
-    index = 0;
-    is_hard = false;
-
-    for (int i = 1; i < argc; ++i)
-    {
-        const std::string arg(argv[i]);
-        if (is_option(arg, "hard" /*SX_OPTION_HARD*/))
-            is_hard = true;
-
-        else if (!parse(index, arg))
-            return false;
-    }
-
-    return true;
-}
-
-bool read_public_of_private_key(ec_point& key, const std::string& arg,
-    key_compression compression)
-{
-    bool compressed = true;
-    auto secret = decode_hash(arg);
-    if (secret == null_hash)
-    {
-        // Use the compression format of the key.
-        compressed = libwallet::is_wif_compressed(arg);
-        secret = libwallet::wif_to_secret(arg);
-    }
-
-    // Not a valid private key.
-    if (secret == bc::null_hash)
-        return false;
-
-    // Override compression (to false), otherwise as imported or true.
-    if (compression != key_compression::unspecified)
-        compressed = (compression == key_compression::on);
-
-    key = bc::secret_to_public_key(secret, compressed);
-    return true;
-}
-
 bool validate_checksum(const data_chunk& data)
 {
     if (data.size() < 5)

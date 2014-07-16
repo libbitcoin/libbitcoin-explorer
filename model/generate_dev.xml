@@ -27,7 +27,7 @@
   <command symbol="addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
     <option name="help" description="Convert a public key (hex bytes) or private key (hash or WIF) to a Bitcoin address." />
     <option name="version" type="byte" description="The desired address version." />
-    <argument name="KEY" stream="true" type="key" description="The hex string representation of a public or private key to convert." />
+    <argument name="KEY" stream="true" type="key" description="The public key or hex or WIF encoded private key to convert." />
   </command>
 
   <command symbol="addr-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
@@ -85,14 +85,14 @@
 
   <command symbol="blke-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
     <option name="help" description="Get a transaction from blockexplorer.com." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The hash of the transaction." />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The transaction hash." />
     <define name="SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
   <command symbol="brainwallet" category="OFFLINE KEYS AND ADDRESSES" subcategory="BRAIN STORAGE" stub="true">
     <option name="help" description="Make a SHA256 private key from an arbitrary passphrase. Unsafe if passphrase is low in entropy. See diceware and xkcd for advice on entropy and generating a safe brainwallet." />
     <option name="algorithm" description="The algorithm (e.g. slowsha)." />
-    <argument name="PASSWORD" required="true" description="A passphrase." />
+    <argument name="PASSWORD" required="true" description="The passphrase." />
     <argument name="USERNAME" description="A username." />
     <define name="SX_BRAINWALLET_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
@@ -106,30 +106,30 @@
   <!-- Computes the function a + G*b, where G is the curve's generator point.-->
   <command symbol="ec-add" category="UTILITY" subcategory="EC MATH">
     <option name="help" description="Calculate the elliptic curve function POINT + (SECRET * curve-generator-point)." />
-    <argument name="POINT" required="true" type="point" description="A point to add."/>
-    <argument name="SECRET" required="true" type="secret" description="A secret to add."/>
+    <argument name="POINT" required="true" type="point" description="The point to add."/>
+    <argument name="SECRET" required="true" type="secret" description="The hex or WIF encoded secret to add."/>
     <define name="SX_EC_ADD_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
 
   <!-- Computes the function (a + b) % n, where n is the curve order. -->
   <command symbol="ec-add-secrets" category="UTILITY" subcategory="EC MATH">
     <option name="help" description="Calculate the elliptic curve function (SECRET + SECRET) % curve-order." />
-    <argument name="SECRET" limit="-1" required="true" type="secret" description="A secret to add."/>
+    <argument name="SECRET" limit="-1" required="true" type="secret" description="The hex or WIF encoded secret to add."/>
     <define name="SX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
 
   <!-- Computes the product a * b. -->
   <command symbol="ec-multiply" category="UTILITY" subcategory="EC MATH">
     <option name="help" description="Calculate the elliptic curve product (POINT * SECRET)." />
-    <argument name="POINT" required="true" type="point" description="A point to multiply."/>
-    <argument name="SECRET" required="true" type="secret" description="A secret to multiply."/>
+    <argument name="POINT" required="true" type="point" description="The point to multiply."/>
+    <argument name="SECRET" required="true" type="secret" description="The hex or WIF encoded secret to multiply."/>
     <define name="SX_EC_MULITPLY_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
   
   <!-- Computes the function (a * b) % n, where n is the curve order. -->
   <command symbol="ec-multiply-secrets" category="UTILITY" subcategory="EC MATH">
     <option name="help" description="Calculate the elliptic curve function (SECRET * SECRET) % curve-order." />
-    <argument name="SECRET" limit="-1" required="true" type="secret" description="A secret to multiply."/>
+    <argument name="SECRET" limit="-1" required="true" type="secret" description="The hex or WIF encoded secret to multiply."/>
     <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
   
@@ -158,11 +158,12 @@
     <option name="help" description="Get the last block height. Requires a server connection." />
   </command>
   
+  <!-- BUGBUG: help/height option conflict -->
   <command symbol="fetch-stealth" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get the stealth transactions matching the specified filter. Requires a server connection." />
     <option name="height" type="size_t" description="The minimum height of transactions to include in the search."/>
     <argument name="BITFIELD" stream="true" type="uint32_t" description="The bit field of transactions to include in the search."/>
-    <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemkey: %1% Address: %2% Transaction hash: %3%\n" />
+    <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%\n" />
   </command>
 
   <command symbol="fetch-transaction" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
@@ -192,7 +193,7 @@
   </command>
 
   <command symbol="get-pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
-    <option name="help" description="Get the public key of an address if available." />
+    <option name="help" description="Get the public key of an address." />
     <argument name="ADDRESS" stream="true" type="address" description="The address from which to derive the public key." />
     <define name="SX_GET_PUBKEY_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
@@ -202,6 +203,39 @@
     <argument name="SATOSHI" stream="true" type="uint64_t" description="The number of satoshi." />
     <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
     <define name="SX_GET_UXTO_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
+
+  <!-- BUGBUG: help/hard option conflict -->
+  <command symbol="hd-priv" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
+    <option name="help" description="Create a HD private key from another HD private key." />
+    <option name="hard" description="Signal to create a hardened key." />
+    <argument name="HD_PRIVATE" stream="true" type="hd_private" description="The hex or WIF encoded HD private key." />
+    <argument name="INDEX" type="uint32_t" description="The HD index, defaults to zero." />
+    <define name="SX_HD_PRIV_DERIVATION_EXCEPTION" value="Child private key derivation failed." />
+  </command>
+
+  <!-- BUGBUG: help/hard option conflict -->
+  <command symbol="hd-pub" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
+    <option name="help" description="Create a HD public key from another HD public or private key." />
+    <option name="hard" description="Signal to create a hardened key." />
+    <argument name="HD_KEY" stream="true" type="hd_key" description="The HD public key, or hex or WIF encoded HD private key." />
+    <argument name="INDEX" type="uint32_t" description="The HD index, defaults to zero." />
+    <define name="SX_HD_PUB_DERIVATION_EXCEPTION" value="Child public key derivation failed." />
+  </command>
+
+  <command symbol="hd-seed" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
+    <option name="help" description="Create a HD private key from entropy." />
+    <argument name="ENTROPY" stream="true" type="bytes" description="The hex encoded seed for the new key, defaults to a random value." />
+  </command>
+
+  <command symbol="hd-to-address" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
+    <option name="help" description="Convert a HD public or private key to a Bitcoin address." />
+    <argument name="HD_KEY" stream="true" type="hd_key" description="The HD public key, or hex or WIF encoded HD private key." />
+  </command>
+
+  <command symbol="hd-to-wif" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
+    <option name="help" description="Convert an HD private key to a WIF private key." />
+    <argument name="HD_PRIVATE" stream="true" type="hd_private" description="The hex or WIF encoded HD private key." />
   </command>
   
   <command symbol="history" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">

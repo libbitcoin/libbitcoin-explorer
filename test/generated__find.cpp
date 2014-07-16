@@ -172,6 +172,31 @@ BOOST_AUTO_TEST_CASE(generated__find__get_utxo__returns_object)
     BOOST_REQUIRE(find(get_utxo::symbol()) != nullptr);
 }
 
+//BOOST_AUTO_TEST_CASE(generated__find__hd_priv__returns_object)
+//{
+//    BOOST_REQUIRE(find(hd_priv::symbol()) != nullptr);
+//}
+//
+//BOOST_AUTO_TEST_CASE(generated__find__hd_pub__returns_object)
+//{
+//    BOOST_REQUIRE(find(hd_pub::symbol()) != nullptr);
+//}
+//
+//BOOST_AUTO_TEST_CASE(generated__find__hd_seed__returns_object)
+//{
+//    BOOST_REQUIRE(find(hd_seed::symbol()) != nullptr);
+//}
+//
+//BOOST_AUTO_TEST_CASE(generated__find__hd_to_address__returns_object)
+//{
+//    BOOST_REQUIRE(find(hd_to_address::symbol()) != nullptr);
+//}
+//
+//BOOST_AUTO_TEST_CASE(generated__find__hd_to_wif__returns_object)
+//{
+//    BOOST_REQUIRE(find(hd_to_wif::symbol()) != nullptr);
+//}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);
