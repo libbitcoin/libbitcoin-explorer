@@ -104,8 +104,8 @@ public:
     {
         std::string hex;
         input >> hex;
-        auto hash = bc::decode_hash(hex);
 
+        auto hash = bc::decode_hash(hex);
         if (hash == bc::null_hash)
             throw po::invalid_option_value(SX_SERIALIZER_SHA256_EXCEPTION);
 

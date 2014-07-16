@@ -121,8 +121,8 @@ public:
     {
         std::string text;
         input >> text;
-        auto value = libwallet::wif_to_secret(text);
 
+        auto value = libwallet::wif_to_secret(text);
         if (!bc::verify_private_key(value))
             throw po::invalid_option_value(SX_SERIALIZER_WIF_EXCEPTION);
 

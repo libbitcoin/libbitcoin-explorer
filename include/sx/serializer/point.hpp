@@ -105,6 +105,7 @@ public:
     {
         std::string hex;
         input >> hex;
+
         bc::ec_point point = bytes(hex);
 
         //if (!bc::verify_public_key_fast(point))

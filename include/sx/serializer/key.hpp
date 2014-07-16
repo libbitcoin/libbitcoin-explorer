@@ -107,6 +107,7 @@ public:
     {
         std::string text;
         input >> text;
+
         bc::ec_point value;
 
         try

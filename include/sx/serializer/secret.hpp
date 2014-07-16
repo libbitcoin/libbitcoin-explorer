@@ -116,7 +116,6 @@ public:
         {
             // Next try to read as hash secret.
             value = bitcoin256(text);
-
             if (!bc::verify_private_key(value))
                 throw po::invalid_option_value(SX_SERIALIZER_SECRET_EXCEPTION);
         }
