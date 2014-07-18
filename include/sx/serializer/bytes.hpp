@@ -96,7 +96,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::data_chunk() const
+    operator const bc::data_chunk&() const
     {
         return value_; 
     }

@@ -83,7 +83,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const uint8_t() const
+    operator const uint8_t&() const
     {
         return value_;
     }

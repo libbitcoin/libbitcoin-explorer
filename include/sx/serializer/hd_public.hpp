@@ -63,7 +63,7 @@ public:
     hd_public(const libwallet::hd_public_key& value)
     {
         // hd_public_key doesn't provide a copy constructor.
-        value_.set_serialized(value.serialize());
+        value_.deserialize(value.serialize());
     }
 
     /**
@@ -89,7 +89,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_public_key() const
+    operator const libwallet::hd_public_key&() const
     {
         return value_; 
     }
@@ -103,12 +103,11 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, hd_public& argument)
     {
-        std::string hex;
-        input >> hex;
+        std::string text;
+        input >> text;
 
-        libwallet::hd_public_key value;
-        if (!argument.value_.set_serialized(hex))
-            throw po::invalid_option_value(hex);
+        if (!argument.value_.deserialize(text))
+            throw po::invalid_option_value(text);
 
         return input;
     }

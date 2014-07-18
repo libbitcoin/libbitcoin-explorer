@@ -212,7 +212,7 @@
     <option name="hard" alias="d" description="Signal to create a hardened key." />
     <argument name="SECRET" stream="true" type="hd_private" description="The hex encoded HD private key." />
     <argument name="INDEX" type="uint32_t" description="The HD index, defaults to zero." />
-    <define name="SX_HD_PRIV_DERIVATION_ERROR" value="Child private key derivation failed." />
+    <!--<define name="SX_HD_PRIV_DERIVATION_ERROR" value="Child private key derivation failed." />-->
   </command>
 
   <!-- BUGBUG: help/hard option conflict, implement alias -->
@@ -221,7 +221,7 @@
     <option name="hard" alias="d" description="Signal to create a hardened key." />
     <argument name="KEY" stream="true" type="hd_key" description="The hex encoded HD public or private key." />
     <argument name="INDEX" type="uint32_t" description="The HD index, defaults to zero." />
-    <define name="SX_HD_PUB_DERIVATION_ERROR" value="Child public key derivation failed." />
+    <!--<define name="SX_HD_PUB_DERIVATION_ERROR" value="Child public key derivation failed." />-->
     <define name="SX_HD_PUB_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
 

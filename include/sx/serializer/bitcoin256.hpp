@@ -87,7 +87,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::hash_digest() const
+    operator const bc::hash_digest&() const
     {
         return value_; 
     }

@@ -95,7 +95,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::short_hash() const
+    operator const bc::short_hash&() const
     {
         return value_;
     }

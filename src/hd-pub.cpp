@@ -38,31 +38,30 @@ console_result hd_pub::invoke(std::istream& input, std::ostream& output,
     auto key = get_key_argument();
     auto index = get_index_argument();
 
-    hd_private_key private_key = key;
+    hd_public_key child_key;
+    const hd_public_key& public_key = key;
+    const hd_private_key& private_key = key;
+
     if (!private_key.valid() && hard)
     {
         cerr << SX_HD_PUB_HARD_OPTION_CONFLICT << std::endl;
         return console_result::failure;
     }
 
-    hd_public_key child_key;
     if (hard)
-    {
-        // You must use the private key to generate --hard keys.
         index += first_hardened_key;
-        child_key = private_key.generate_public_key(index);
-    }
-    else
-    {
-        hd_public_key public_key = key;
-        child_key = public_key.generate_public_key(index);
-    }
 
-    if (!child_key.valid())
-    {
-        cerr << SX_HD_PUB_DERIVATION_ERROR << std::endl;
-        return console_result::failure;
-    }
+    if (private_key.valid())
+        child_key = private_key.generate_public_key(index);
+    else
+        child_key = public_key.generate_public_key(index);
+
+    // This code is unreachable since public_key is always valid.
+    //if (!child_key.valid())
+    //{
+    //    cerr << SX_HD_PUB_DERIVATION_ERROR << std::endl;
+    //    return console_result::failure;
+    //}
 
     output << hd_public(child_key) << std::endl;
     return console_result::okay;

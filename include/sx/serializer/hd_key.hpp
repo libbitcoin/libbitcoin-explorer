@@ -46,7 +46,7 @@ public:
      * Constructor.
      */
     hd_key()
-        : value_() {}
+        : private_key_value_(), public_key_value_() {}
 
     /**
      * Initialization constructor.
@@ -66,7 +66,7 @@ public:
     hd_key(const libwallet::hd_private_key& value)
     {
         // hd_public_key doesn't provide a copy constructor.
-        value_.set_serialized(value.serialize());
+        private_key_value_.deserialize(value.serialize());
     }
 
     /**
@@ -77,7 +77,7 @@ public:
     hd_key(const libwallet::hd_public_key& value)
     {
         // hd_public_key doesn't provide a copy constructor.
-        value_.set_serialized(value.serialize());
+        public_key_value_.deserialize(value.serialize());
     }
 
     /**
@@ -86,16 +86,22 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     hd_key(const hd_key& other)
-        : hd_key(other.value_) {}
+    {
+        public_key_value_ = other.public_key_value_;
+        private_key_value_ = other.private_key_value_;
+    }
 
     /**
-     * Overload cast to internal type.
+     * Return a reference to the data member.
      *
-     * @return  This object's value cast to internal type.
+     * @return  A reference to the object's internal data.
      */
-    operator const libwallet::hd_private_key() const
+    const libwallet::hd_public_key& data() const
     {
-        return value_;
+        if (private_key_value_.valid())
+            return (libwallet::hd_public_key&)private_key_value_;
+        else
+            return public_key_value_;
     }
 
     /**
@@ -103,9 +109,19 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_public_key() const
+    operator const libwallet::hd_private_key&() const
     {
-        return value_;
+        return private_key_value_;
+    }
+
+    /**
+     * Overload cast to internal type.
+     *
+     * @return  This object's value cast to internal type.
+     */
+    operator const libwallet::hd_public_key&() const
+    {
+        return public_key_value_;
     }
 
     /**
@@ -120,17 +136,12 @@ public:
         std::string text;
         input >> text;
 
-        try
-        {
-            // First try to read as a private key.
-            libwallet::hd_private_key private_key = hd_private(text);
-            argument.value_.set_serialized(private_key.serialize());
-        }
-        catch (po::invalid_option_value)
+        // First try to read as a private key.
+        if (!argument.private_key_value_.deserialize(text))
         {
             // Otherwise try to read as a public key.
-            libwallet::hd_public_key public_key = hd_public(text);
-            argument.value_.set_serialized(public_key.serialize());
+            if (!argument.public_key_value_.deserialize(text))
+                throw po::invalid_option_value(text);
         }
 
         return input;
@@ -146,16 +157,22 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const hd_key& argument)
     {
-        output << hd_public(argument.value_);
+        const auto& data = argument.data();
+        output << data.serialize();
         return output;
     }
 
 private:
 
     /**
-     * The state of this object.
+     * The private key state of this object.
      */
-    libwallet::hd_private_key value_;
+    libwallet::hd_private_key private_key_value_;
+
+    /**
+    * The public key state of this object.
+    */
+    libwallet::hd_public_key public_key_value_;
 };
 
 } // sx

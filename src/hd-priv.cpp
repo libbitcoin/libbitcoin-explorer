@@ -41,11 +41,13 @@ console_result hd_priv::invoke(std::istream& input, std::ostream& output,
 
     hd_private_key private_key = secret;
     const auto child_key = private_key.generate_private_key(index);
-    if (!child_key.valid())
-    {
-        cerr << SX_HD_PRIV_DERIVATION_ERROR << std::endl;
-        return console_result::failure;
-    }
+
+    // This code is unreachable since private_key is always valid.
+    //if (!child_key.valid())
+    //{
+    //    cerr << SX_HD_PRIV_DERIVATION_ERROR << std::endl;
+    //    return console_result::failure;
+    //}
 
     output << hd_private(child_key) << std::endl;
     return console_result::okay;

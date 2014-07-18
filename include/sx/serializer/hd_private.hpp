@@ -64,7 +64,7 @@ public:
     hd_private(const libwallet::hd_private_key& value)
     {
         // hd_private_key doesn't provide a copy constructor.
-        value_.set_serialized(value.serialize());
+        value_.deserialize(value.serialize());
     }
 
     /**
@@ -90,7 +90,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_private_key() const
+    operator const libwallet::hd_private_key&() const
     {
         return value_; 
     }
@@ -107,8 +107,7 @@ public:
         std::string text;
         input >> text;
 
-        libwallet::hd_private_key value;
-        if (!argument.value_.set_serialized(text))
+        if (!argument.value_.deserialize(text))
             throw po::invalid_option_value(text);
 
         return input;

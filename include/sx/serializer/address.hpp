@@ -102,7 +102,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::payment_address() const
+    operator const bc::payment_address&() const
     {
         return value_; 
     }

@@ -112,7 +112,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_secret() const
+    operator const bc::ec_secret&() const
     {
         return value_; 
     }

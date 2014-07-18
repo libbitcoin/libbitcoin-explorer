@@ -91,7 +91,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::output_point() const
+    operator const bc::output_point&() const
     {
         return value_; 
     }
