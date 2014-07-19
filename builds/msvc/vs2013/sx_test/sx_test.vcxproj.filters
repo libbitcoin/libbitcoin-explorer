@@ -165,6 +165,9 @@
     <ClCompile Include="..\..\..\..\test\address.cpp">
       <Filter>src\tests\serializer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58.cpp">
+      <Filter>src\tests\serializer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

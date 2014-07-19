@@ -72,6 +72,9 @@
     <PostBuildEvent />
     <PostBuildEvent />
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>"$(TargetPath)" --run_test=base58__invoke --random=1 --show_progress=yes --result_code=no --detect_memory_leak=0 --report_level=no --build_info=yes</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -126,6 +129,7 @@
     <ClCompile Include="..\..\..\..\test\addr.cpp" />
     <ClCompile Include="..\..\..\..\test\address.cpp" />
     <ClCompile Include="..\..\..\..\test\balance.cpp" />
+    <ClCompile Include="..\..\..\..\test\base58.cpp" />
     <ClCompile Include="..\..\..\..\test\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58-decode.cpp" />

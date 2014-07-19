@@ -12,9 +12,11 @@ AM_CPPFLAGS = \
 
 sx_test_SOURCES = \
     addr.cpp \
+    address.cpp \
     addr-decode.cpp \
     addr-encode.cpp \
     balance.cpp \
+    base58.cpp \
     base58check-decode.cpp \
     base58check-encode.cpp \
     base58-decode.cpp \
