@@ -28,13 +28,6 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(ec_multiply__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_multiply__invoke__bogus_secret__throws_invalid_option_value)
-{
-    // $ sx ec-multiply 0 ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-    SX_DECLARE_COMMAND(ec_multiply);
-    SX_REQUIRE_INVALID_OPTION_VALUE(command.set_secret_argument({ "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" }));
-}
-
 // TODO: generate overflow condition
 //BOOST_AUTO_TEST_CASE(ec_multiply__invoke__overflow__failure_error)
 //{

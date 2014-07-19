@@ -28,18 +28,6 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(addr_encode__invoke)
 
-// TODO: BOOST_REQUIRE_EXCEPTION()
-//BOOST_AUTO_TEST_CASE(addr_encode__invoke__bogus_value__failure_error)
-//{
-//    // $ sx encode-addr bogus
-//    SX_DECLARE_COMMAND(addr_encode);
-//    command.set_ripemd160_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-//    stringstream err;
-//    err << boost::format(SX_ENCODE_ADDR_INVALID_HASH) % "bogus";
-//    SX_REQUIRE_ERROR(err.str() + "\n");
-//}
-
 BOOST_AUTO_TEST_CASE(addr_encode__invoke__hex_value__okay_output)
 {
     // $ sx encode-addr b472a266d0bd89c13706a4132ccfb16f7c3b9fcb

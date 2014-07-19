@@ -28,13 +28,6 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(hd_priv__invoke)
 
-BOOST_AUTO_TEST_CASE(hd_priv__invoke__bogus_secret__throws_invalid_option_value)
-{
-    // $ sx hd-priv bogus
-    SX_DECLARE_COMMAND(hd_priv);
-    SX_REQUIRE_INVALID_OPTION_VALUE(command.set_secret_argument({ "bogus" }));
-}
-
 // https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-1
 
 BOOST_AUTO_TEST_CASE(hd_priv__invoke__vector1_m_0h__okay_output)
