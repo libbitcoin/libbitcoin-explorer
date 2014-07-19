@@ -35,12 +35,12 @@ BOOST_AUTO_TEST_CASE(address__constructor__bogus_text__throws_invalid_option_exc
 
 BOOST_AUTO_TEST_CASE(address__constructor__valid_text__does_not_throw)
 {
-    BOOST_REQUIRE_NO_THROW(address("3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy"));
+    BOOST_REQUIRE_NO_THROW(address("15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"));
 }
 
 BOOST_AUTO_TEST_CASE(address__constructor__valid_payment_address__round_trips)
 {
-    bc::payment_address payment_address("3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy");
+    bc::payment_address payment_address("15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma");
     BOOST_REQUIRE_EQUAL(payment_address.encoded(), address(payment_address).data().encoded());
 }
 
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__valid_hd_public_key__round_trips)
 
 BOOST_AUTO_TEST_CASE(address__serializers__valid_value__round_trips)
 {
-    SX_SERIALIZE_COPY_ROUND_TRIP(address, "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy");
+    SX_SERIALIZE_COPY_ROUND_TRIP(address, "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
