@@ -25,6 +25,9 @@
     <Filter Include="src\tests\command\obsolete">
       <UniqueIdentifier>{930d925a-aab0-4934-96a2-3766c01a2793}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\tests\serializer">
+      <UniqueIdentifier>{14f110d7-6526-4899-bddb-d390b0ca55ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\main.cpp">
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-pub.cpp">
       <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\address.cpp">
+      <Filter>src\tests\serializer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

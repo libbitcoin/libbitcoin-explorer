@@ -70,6 +70,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">
     <PostBuildEvent />
     <PostBuildEvent />
+    <PostBuildEvent />
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -122,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\address.cpp" />
     <ClCompile Include="..\..\..\..\test\balance.cpp" />
     <ClCompile Include="..\..\..\..\test\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58check-encode.cpp" />

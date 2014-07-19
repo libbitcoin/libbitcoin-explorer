@@ -28,11 +28,11 @@
 #define SX_USING_NAMESPACES()
 using namespace std; \
 using namespace sx; \
-using namespace sx::extension;
+using namespace sx::extension; \
+using namespace sx::serializer;
 
 #define _SX_DECLARE_COMMAND(extension) \
-    stringstream output; \
-    stringstream error; \
+    stringstream output, error; \
     extension command
 #define SX_DECLARE_COMMAND(extension) \
     stringstream input; \
@@ -41,22 +41,33 @@ using namespace sx::extension;
     stringstream input(value); \
     _SX_DECLARE_COMMAND(extension)
 
+// serializer results
+#define SX_SERIALIZE_COPY_ROUND_TRIP(serializer, value) \
+    serializer original; \
+    stringstream output, input(value); \
+    input >> original; \
+    serializer copy(original); \
+    output << copy; \
+    BOOST_REQUIRE_EQUAL(value, output.str())
+
 // console results
 #define SX_REQUIRE_OKAY(value) \
-    BOOST_REQUIRE(value == console_result::okay)
+    BOOST_REQUIRE_EQUAL(value, console_result::okay)
 #define SX_REQUIRE_FAILURE(value) \
-    BOOST_REQUIRE(value == console_result::failure)
+    BOOST_REQUIRE_EQUAL(value, console_result::failure)
 #define SX_REQUIRE_INVALID(value) \
-    BOOST_REQUIRE(value == console_result::invalid)
+    BOOST_REQUIRE_EQUAL(value, console_result::invalid)
 
 // stream results (assume mutual exclusivity)
 #define SX_REQUIRE_ERROR(value) \
-    BOOST_REQUIRE(error.str() == value && output.str().empty())
+    BOOST_REQUIRE(output.str().empty()); \
+    BOOST_REQUIRE_EQUAL(value, error.str())
 #define SX_REQUIRE_OUTPUT(value) \
-    BOOST_REQUIRE(output.str() == value &&  error.str().empty())
+    BOOST_REQUIRE(error.str().empty()); \
+    BOOST_REQUIRE_EQUAL(value, output.str())
 
 // exceptions
-#define SX_REQUIRE_INVALID_OPTION_VALUE(expression) \
+#define SX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(expression) \
     BOOST_REQUIRE_THROW(expression, po::invalid_option_value)
 
 #endif

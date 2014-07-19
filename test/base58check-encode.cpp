@@ -28,13 +28,6 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(base58check_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(base58check_encode__invoke__hex_bogus__throws_invalid_option_value)
-{
-    // $ sx base58check-encode bogus
-    SX_DECLARE_COMMAND(base58check_encode);
-    SX_REQUIRE_INVALID_OPTION_VALUE(command.set_hex_argument({ "bogus" }));
-}
-
 BOOST_AUTO_TEST_CASE(base58check_encode__invoke__hex_zero__failure_error)
 {
     // $ sx base58check-encode 00
