@@ -8,17 +8,53 @@ AM_CPPFLAGS = \
     -I$(srcdir)/../include
 
 #sx_test_HEADERS = \
-#    setup.hpp
+     command.hpp
 
 sx_test_SOURCES = \
-    utility/console__line_out.cpp \
-    utility/parameter.cpp \
-    utility/printer.cpp \
+    addr.cpp \
+    addr-decode.cpp \
+    addr-encode.cpp \
+    balance.cpp \
+    base58check-decode.cpp \
+    base58check-encode.cpp \
+    base58-decode.cpp \
+    base58-encode.cpp \
+    bci-fetch-last-height.cpp \
+    bci-history.cpp \
+    blke-fetch-transaction.cpp \
+    brainwallet.cpp \
+    btc.cpp \
+    console__line_out.cpp \
+    ec-add.cpp \
+    ec-add-secrets.cpp \
+    ec-multiply.cpp \
+    ec-multiply-secrets.cpp \
+    embed-addr.cpp \
+    fetch-header-hash.cpp \
+    fetch-header-height.cpp \
+    fetch-last-height.cpp \
+    fetch-stealth.cpp \
+    fetch-transaction.cpp \
+    fetch-transaction-index.cpp \
+    genaddr.cpp \
     generated__broadcast.cpp \
     generated__find.cpp \
     generated__symbol.cpp \
-    stealth_addr.cpp \
-    main.cpp
+    genpriv.cpp \
+    genpub.cpp \
+    get-pubkey.cpp \
+    get-utxo.cpp \
+    hd-priv.cpp \
+    hd-pub.cpp \
+    help.cpp \
+    history.cpp \
+    main.cpp \
+    parameter.cpp \
+    printer.cpp \
+    satoshi.cpp \
+    stealth-addr.cpp \
+    unwrap.cpp \
+    wrap.cpp
 
 sx_test_LDADD = \
     -L$(srcdir)/../src/ -lsx \
