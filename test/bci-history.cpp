@@ -28,7 +28,6 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(bci_history__invoke)
 
-// TODO: BOOST_REQUIRE_EXCEPTION()
 //BOOST_AUTO_TEST_CASE(bci_history__invoke__bogus_address__failure_error)
 //{
 //    // $ sx bci-history bogus

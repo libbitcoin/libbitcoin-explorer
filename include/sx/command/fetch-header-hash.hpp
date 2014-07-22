@@ -127,7 +127,7 @@ public:
             (
                 "HASH",
                 value<serializer::bitcoin256>(&argument_.hash),
-                "The hash of the block."
+                "The block hash."
             );
 
         return options;

@@ -77,9 +77,14 @@ BOOST_AUTO_TEST_CASE(generated__find__bci_history__returns_object)
     BOOST_REQUIRE(find(bci_history::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__blke_fetch_transaction__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__bci_send_transaction__returns_object)
 {
-    BOOST_REQUIRE(find(blke_fetch_transaction::symbol()) != nullptr);
+    BOOST_REQUIRE(find(bci_send_transaction::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__be_fetch_transaction__returns_object)
+{
+    BOOST_REQUIRE(find(be_fetch_transaction::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__brainwallet__returns_object)
@@ -207,6 +212,11 @@ BOOST_AUTO_TEST_CASE(generated__find__history__returns_object)
     BOOST_REQUIRE(find(history::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__qrcode__returns_object)
+{
+    BOOST_REQUIRE(find(qrcode::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__satoshi__returns_object)
 {
     BOOST_REQUIRE(find(satoshi::symbol()) != nullptr);
@@ -220,6 +230,11 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_addr__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__unwrap__returns_object)
 {
     BOOST_REQUIRE(find(unwrap::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__watchtx__returns_object)
+{
+    BOOST_REQUIRE(find(watchtx::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wrap__returns_object)

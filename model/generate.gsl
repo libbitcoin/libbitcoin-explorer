@@ -1143,9 +1143,87 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\initchain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\mnemonic.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\monitor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\mpk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\newkey.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\newseed.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>    
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\pubkey.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\ripemd-hash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\scripthash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\secret-to-wif.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sendtx-node.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sendtx-obelisk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sendtx-p2p.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sha256.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\showscript.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\showtx.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sign-input.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-initiate.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-newkey.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-show-addr.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover-secret.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>    
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp" />
@@ -1168,6 +1246,21 @@ endif
     </ClCompile>
 .   endif
 .endfor
+    <ClCompile Include="..\\..\\..\\..\\src\\validaddr.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\validtx.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\wallet.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\wif-to-secret.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
@@ -1260,6 +1353,18 @@ endif
     <Filter Include="src">
       <UniqueIdentifier>{6afc4dd0-6330-4dca-b176-cd4887f27b9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\\command\\todo">
+      <UniqueIdentifier>{186b583d-9017-424c-8916-26eaa0373abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command\\todo\\experimental">
+      <UniqueIdentifier>{6828e775-f238-4b73-9d18-4c8421cadc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command\\todo\\obsolete">
+      <UniqueIdentifier>{0f120330-c748-4232-b483-e044bec27e39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command\\todo\\obelisk">
+      <UniqueIdentifier>{bca50241-1338-43f2-be5b-dd5ff643ba99}</UniqueIdentifier>
+    </Filter>    
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1404,6 +1509,99 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\mnemonic.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\ripemd-hash.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\scripthash.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\secret-to-wif.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sha256.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\showscript.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\showtx.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sign-input.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-initiate.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-newkey.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-show-addr.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover-secret.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\validaddr.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\wif-to-secret.cpp">
+      <Filter>src\\command\\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\mpk.cpp">
+      <Filter>src\\command\\todo\\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\initchain.cpp">
+      <Filter>src\\command\\todo\\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\monitor.cpp">
+      <Filter>src\\command\\todo\\experimental</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\wallet.cpp">
+      <Filter>src\\command\\todo\\experimental</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\newseed.cpp">
+      <Filter>src\\command\\todo\\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\newkey.cpp">
+      <Filter>src\\command\\todo\\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\pubkey.cpp">
+      <Filter>src\\command\\todo\\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sendtx-p2p.cpp">
+      <Filter>src\\command\\todo\\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sendtx-obelisk.cpp">
+      <Filter>src\\command\\todo\\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\sendtx-node.cpp">
+      <Filter>src\\command\\todo\\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\validtx.cpp">
+      <Filter>src\\command\\todo\\obelisk</Filter>
+    </ClCompile> 
   </ItemGroup>
 </Project>
 .##############################################################################

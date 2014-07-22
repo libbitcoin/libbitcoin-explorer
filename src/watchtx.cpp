@@ -18,16 +18,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <sx/command/watchtx.hpp>
-#include <sx/command/unwrap.hpp>
+
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result watchtx::invoke(int argc, const char* argv[])
+console_result watchtx::invoke(std::istream& input, std::ostream& output, 
+    std::ostream& cerr)
 {
-    line_out(std::cerr, "sx: This command is not yet ported from python.");
+    // Bound parameters.
+    auto hashes = get_hashs_argument();
+
+    cerr << SX_WATCHTX_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

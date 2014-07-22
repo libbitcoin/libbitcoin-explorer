@@ -48,6 +48,18 @@
     <Filter Include="src">
       <UniqueIdentifier>{6afc4dd0-6330-4dca-b176-cd4887f27b9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\command\todo">
+      <UniqueIdentifier>{186b583d-9017-424c-8916-26eaa0373abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\command\todo\experimental">
+      <UniqueIdentifier>{6828e775-f238-4b73-9d18-4c8421cadc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\command\todo\obsolete">
+      <UniqueIdentifier>{0f120330-c748-4232-b483-e044bec27e39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\command\todo\obelisk">
+      <UniqueIdentifier>{bca50241-1338-43f2-be5b-dd5ff643ba99}</UniqueIdentifier>
+    </Filter>    
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp">
@@ -80,7 +92,10 @@
     <ClInclude Include="..\..\..\..\include\sx\command\bci-history.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\blke-fetch-transaction.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\bci-send-transaction.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\be-fetch-transaction.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp">
@@ -158,6 +173,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\history.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\qrcode.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
@@ -166,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp">
       <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\watchtx.hpp">
+      <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp">
       <Filter>include\command</Filter>
@@ -286,7 +307,10 @@
     <ClCompile Include="..\..\..\..\src\bci-history.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp">
+    <ClCompile Include="..\..\..\..\src\bci-send-transaction.cpp">
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\be-fetch-transaction.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\brainwallet.cpp">
@@ -364,6 +388,9 @@
     <ClCompile Include="..\..\..\..\src\history.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\qrcode.cpp">
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\satoshi.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
@@ -372,6 +399,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\unwrap.cpp">
       <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\watchtx.cpp">
+      <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wrap.cpp">
       <Filter>src\command</Filter>
@@ -406,5 +436,98 @@
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mktx.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mnemonic.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\rawscript.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ripemd-hash.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\scripthash.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\secret-to-wif.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\set-input.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sha256.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showscript.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showtx.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sign-input.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-show-addr.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validaddr.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validsig.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wif-to-secret.cpp">
+      <Filter>src\command\todo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mpk.cpp">
+      <Filter>src\command\todo\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\initchain.cpp">
+      <Filter>src\command\todo\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\monitor.cpp">
+      <Filter>src\command\todo\experimental</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wallet.cpp">
+      <Filter>src\command\todo\experimental</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\newseed.cpp">
+      <Filter>src\command\todo\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\newkey.cpp">
+      <Filter>src\command\todo\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\pubkey.cpp">
+      <Filter>src\command\todo\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
+      <Filter>src\command\todo\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp">
+      <Filter>src\command\todo\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-node.cpp">
+      <Filter>src\command\todo\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validtx.cpp">
+      <Filter>src\command\todo\obelisk</Filter>
+    </ClCompile> 
   </ItemGroup>
 </Project>

@@ -24,7 +24,6 @@
 
   <!-- SX Commands -->
   
-  <!-- how does ec_key differ from hd_key? -->
   <command symbol="addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
     <option name="help" description="Convert a public key (hex bytes) or private key (hash or WIF) to a Bitcoin address." />
     <option name="version" type="byte" description="The desired address version." />
@@ -42,7 +41,6 @@
     <argument name="RIPEMD160" stream="true" type="bitcoin160" description="The hex string to convert."/>
   </command>
   
-  <!-- sx balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" -->
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
@@ -83,11 +81,17 @@
     <argument name="ADDRESS" stream="true" type="address" description="The address to query." />
     <define name="SX_BCI_HISTORY_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
+  
+  <command symbol="bci-send-transaction" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN UPDATES (blockchain.info)" stub="true">
+    <option name="help" description="Send a transaction to blockchain.info." />
+    <option name="FILE" description="The transaction file path and file name. If not specified the transaction is read from STDIN."/>
+    <define name="SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
 
-  <command symbol="blke-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
+  <command symbol="be-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
     <option name="help" description="Get a transaction from blockexplorer.com." />
     <argument name="HASH" stream="true" type="bitcoin256" description="The transaction hash." />
-    <define name="SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
   <command symbol="brainwallet" category="OFFLINE KEYS AND ADDRESSES" subcategory="BRAIN STORAGE" stub="true">
@@ -147,12 +151,12 @@
   
   <command symbol="fetch-header-hash" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get the raw block header from the specified hash. Requires a server connection." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The hash of the block."/>
+    <argument name="HASH" stream="true" type="bitcoin256" description="The block hash."/>
   </command>
   
   <command symbol="fetch-header-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get a raw block header from the specified height. Requires a server connection." />
-    <argument name="HEIGHT" stream="true" type="size_t" description="The height of the block."/>
+    <argument name="HEIGHT" stream="true" type="size_t" description="The block height."/>
   </command>
 
   <command symbol="fetch-last-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
@@ -169,12 +173,12 @@
 
   <command symbol="fetch-transaction" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get a transaction. Requires a server connection." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The hash of the transaction." />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The transaction hash." />
   </command>
 
   <command symbol="fetch-transaction-index" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
     <option name="help" description="Get the block height and index of a transaction. Requires a server connection." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The hash of the transaction." />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The transaction hash." />
     <define name="SX_FETCH_TRANSACTION_INDEX_OUTPUT" value="Height: %1% Index: %2%\n" />
   </command>
 
@@ -212,7 +216,6 @@
     <option name="hard" alias="d" description="Signal to create a hardened key." />
     <argument name="SECRET" stream="true" type="hd_private" description="The hex encoded HD private key." />
     <argument name="INDEX" type="uint32_t" description="The HD index, defaults to zero." />
-    <!--<define name="SX_HD_PRIV_DERIVATION_ERROR" value="Child private key derivation failed." />-->
   </command>
 
   <!-- BUGBUG: help/hard option conflict, implement alias -->
@@ -221,7 +224,6 @@
     <option name="hard" alias="d" description="Signal to create a hardened key." />
     <argument name="KEY" stream="true" type="hd_key" description="The hex encoded HD public or private key." />
     <argument name="INDEX" type="uint32_t" description="The HD index, defaults to zero." />
-    <!--<define name="SX_HD_PUB_DERIVATION_ERROR" value="Child public key derivation failed." />-->
     <define name="SX_HD_PUB_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
 
@@ -251,8 +253,16 @@
   </command>
 
   <command symbol="help" category="SX" subcategory="DOCUMENTATION">
-    <argument name="COMMAND" stream="true" description="Get help for the COMMAND." />
+    <option name="help" description="Get help for any command." />
+    <argument name="COMMAND" stream="true" description="The COMMAND." />
     <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
+  </command>
+  
+  <command symbol="qrcode" category="UTILITY" subcategory="MISC" stub="true">
+    <option name="help" description="Generate a QR code image file for a Bitcoin address." />
+    <option name="FILE" type="path" description="The image file path and file name. If not specified the image is written to STDOUT."/>
+    <argument name="ADDRESS" stream="true" type="address" description="The address."/>
+    <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
   <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
@@ -274,6 +284,12 @@
     <argument name="HEX" stream="true" type="bytes" description="The hex string to unwrap." />
     <define name="SX_UNWRAP_INVALID_SIZE" value="The HEX argument size must be at least five bytes." />
     <define name="SX_UNWRAP_INVALID_CHECKSUM" value="The HEX argument checksum is not valid." />
+  </command>
+
+  <command symbol="watchtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN WATCHING" stub="true" obelisk="true">
+    <option name="help" description="Watch the network for one or more transactions by hash." />
+    <argument name="HASH" limit="-1" type="bitcoin256" description="The set of transaction hashes." />
+    <define name="SX_WATCHTX_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
   <command symbol="wrap" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">

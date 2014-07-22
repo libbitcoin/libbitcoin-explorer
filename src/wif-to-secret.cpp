@@ -28,6 +28,7 @@ using namespace libwallet;
 using namespace sx;
 using namespace sx::extensions;
 
+// TODO: create wif-to-ec and wif-to-hd
 console_result wif_to_secret::invoke(int argc, const char* argv[])
 {
     if (!validate_argument_range(argc, example(), 1, 1))

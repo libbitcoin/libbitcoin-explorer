@@ -93,9 +93,6 @@
     <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\bci-history.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
@@ -173,6 +170,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp">
       <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\be-fetch-transaction.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\bci-send-transaction.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\qrcode.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\watchtx.cpp">
+      <Filter>src\tests\command\stub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -53,7 +53,8 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "base58check-encode\n" \
         "bci-fetch-last-height\n" \
         "bci-history\n" \
-        "blke-fetch-transaction\n" \
+        "bci-send-transaction\n" \
+        "be-fetch-transaction\n" \
         "brainwallet\n" \
         "btc\n" \
         "ec-add\n" \
@@ -79,9 +80,11 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "hd-to-wif\n" \
         "help\n" \
         "history\n" \
+        "qrcode\n" \
         "satoshi\n" \
         "stealth-addr\n" \
         "unwrap\n" \
+        "watchtx\n" \
         "wrap\n");
 }
 

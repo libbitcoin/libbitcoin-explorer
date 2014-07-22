@@ -32,7 +32,8 @@ libsx_la_SOURCES += \
     base58check-encode.cpp \
     bci-fetch-last-height.cpp \
     bci-history.cpp \
-    blke-fetch-transaction.cpp \
+    bci-send-transaction.cpp \
+    be-fetch-transaction.cpp \
     brainwallet.cpp \
     btc.cpp \
     ec-add.cpp \
@@ -50,6 +51,7 @@ libsx_la_SOURCES += \
     hd-to-address.cpp \
     hd-to-wif.cpp \
     help.cpp \
+    qrcode.cpp \
     satoshi.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
@@ -67,6 +69,7 @@ if HAVE_OBELISK
         fetch-transaction-index.cpp \
         get-utxo.cpp \
         history.cpp \
+        watchtx.cpp \
         obelisk.cpp
 
     AM_CPPFLAGS += \

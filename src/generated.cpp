@@ -46,7 +46,8 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<base58check_encode>());
     func(make_shared<bci_fetch_last_height>());
     func(make_shared<bci_history>());
-    func(make_shared<blke_fetch_transaction>());
+    func(make_shared<bci_send_transaction>());
+    func(make_shared<be_fetch_transaction>());
     func(make_shared<brainwallet>());
     func(make_shared<btc>());
     func(make_shared<ec_add>());
@@ -72,9 +73,11 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<hd_to_wif>());
     func(make_shared<help>());
     func(make_shared<history>());
+    func(make_shared<qrcode>());
     func(make_shared<satoshi>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
+    func(make_shared<watchtx>());
     func(make_shared<wrap>());
 
     return true;
@@ -102,8 +105,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<bci_fetch_last_height>();
     if (symbol == bci_history::symbol())
         return make_shared<bci_history>();
-    if (symbol == blke_fetch_transaction::symbol())
-        return make_shared<blke_fetch_transaction>();
+    if (symbol == bci_send_transaction::symbol())
+        return make_shared<bci_send_transaction>();
+    if (symbol == be_fetch_transaction::symbol())
+        return make_shared<be_fetch_transaction>();
     if (symbol == brainwallet::symbol())
         return make_shared<brainwallet>();
     if (symbol == btc::symbol())
@@ -154,12 +159,16 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<help>();
     if (symbol == history::symbol())
         return make_shared<history>();
+    if (symbol == qrcode::symbol())
+        return make_shared<qrcode>();
     if (symbol == satoshi::symbol())
         return make_shared<satoshi>();
     if (symbol == stealth_addr::symbol())
         return make_shared<stealth_addr>();
     if (symbol == unwrap::symbol())
         return make_shared<unwrap>();
+    if (symbol == watchtx::symbol())
+        return make_shared<watchtx>();
     if (symbol == wrap::symbol())
         return make_shared<wrap>();
 

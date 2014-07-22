@@ -126,9 +126,14 @@ public:
                 "The path and file name for the configuration settings file for this application."
             )
             (
+                "help,h",
+                value<bool>(&option_.help)->implicit_value(true),
+                "Get help for any command."
+            )
+            (
                 "COMMAND",
                 value<std::string>(&argument_.command),
-                "Get help for the COMMAND."
+                "The COMMAND."
             );
 
         return options;
@@ -176,6 +181,22 @@ public:
         argument_.command = value;
     }
 
+    /**
+     * Get the value of the help option.
+     */
+    virtual bool get_help_option()
+    {
+        return option_.help;
+    }
+    
+    /**
+     * Set the value of the help option.
+     */
+    virtual void set_help_option(bool value)
+    {
+        option_.help = value;
+    }
+
 private:
 
     /**
@@ -199,7 +220,9 @@ private:
     struct option
     {
         option()
+          : help()
             {}    
+        bool help;
     } option_;
 };
 

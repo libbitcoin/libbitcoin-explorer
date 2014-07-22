@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/blke-fetch-transaction.hpp>
+#include <sx/command/be-fetch-transaction.hpp>
 
 //#include <sstream>
 //#include <boost/property_tree/ptree.hpp>
@@ -28,13 +28,13 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result blke_fetch_transaction::invoke(std::istream& input,
+console_result be_fetch_transaction::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     auto hash = get_hash_argument();
 
-    cerr << SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED << std::endl;
+    cerr << SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

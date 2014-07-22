@@ -34,7 +34,8 @@
 #include <sx/command/base58check-encode.hpp>
 #include <sx/command/bci-fetch-last-height.hpp>
 #include <sx/command/bci-history.hpp>
-#include <sx/command/blke-fetch-transaction.hpp>
+#include <sx/command/bci-send-transaction.hpp>
+#include <sx/command/be-fetch-transaction.hpp>
 #include <sx/command/brainwallet.hpp>
 #include <sx/command/btc.hpp>
 #include <sx/command/ec-add.hpp>
@@ -60,9 +61,11 @@
 #include <sx/command/hd-to-wif.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/history.hpp>
+#include <sx/command/qrcode.hpp>
 #include <sx/command/satoshi.hpp>
 #include <sx/command/stealth-addr.hpp>
 #include <sx/command/unwrap.hpp>
+#include <sx/command/watchtx.hpp>
 #include <sx/command/wrap.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/

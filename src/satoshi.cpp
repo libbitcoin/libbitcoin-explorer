@@ -25,8 +25,8 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result satoshi::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result satoshi::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
     // Bound parameters.
     auto btc = get_btc_argument();

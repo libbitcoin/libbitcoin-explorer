@@ -32,7 +32,8 @@ sx_command_include_HEADERS = \
     command/base58check-encode.hpp \
     command/bci-fetch-last-height.hpp \
     command/bci-history.hpp \
-    command/blke-fetch-transaction.hpp \
+    command/bci-send-transaction.hpp \
+    command/be-fetch-transaction.hpp \
     command/brainwallet.hpp \
     command/btc.hpp \
     command/ec-add.hpp \
@@ -50,6 +51,7 @@ sx_command_include_HEADERS = \
     command/hd-to-address.hpp \
     command/hd-to-wif.hpp \
     command/help.hpp \
+    command/qrcode.hpp \
     command/satoshi.hpp \
     command/stealth-addr.hpp \
     command/unwrap.hpp \
@@ -66,5 +68,6 @@ if HAVE_OBELISK
         command/fetch-transaction.hpp \
         command/fetch-transaction-index.hpp \
         command/get-utxo.hpp \
-        command/history.hpp
+        command/history.hpp \
+        command/watchtx.hpp
 endif

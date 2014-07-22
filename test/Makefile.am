@@ -23,10 +23,10 @@ sx_test_SOURCES = \
     base58-encode.cpp \
     bci-fetch-last-height.cpp \
     bci-history.cpp \
-    blke-fetch-transaction.cpp \
+    bci-send-transaction.cpp \
+    be-fetch-transaction.cpp \
     brainwallet.cpp \
     btc.cpp \
-    console__line_out.cpp \
     ec-add.cpp \
     ec-add-secrets.cpp \
     ec-multiply.cpp \
@@ -53,9 +53,11 @@ sx_test_SOURCES = \
     main.cpp \
     parameter.cpp \
     printer.cpp \
+    qrcode.cpp \
     satoshi.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
+    watchtx.cpp \
     wrap.cpp
 
 sx_test_LDADD = \

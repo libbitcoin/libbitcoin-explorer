@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_FETCH_HEADER_HEIGHT_HPP
-#define SX_FETCH_HEADER_HEIGHT_HPP
+#ifndef SX_BCI_SEND_TRANSACTION_HPP
+#define SX_BCI_SEND_TRANSACTION_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,9 +52,15 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx fetch-header-height command.
+ * Various localizable strings.
  */
-class fetch_header_height 
+#define SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED \
+    "This command is not yet ported from python."
+
+/**
+ * Class to implement the sx bci-send-transaction command.
+ */
+class bci_send_transaction 
     : public command
 {
 public:
@@ -62,14 +68,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "fetch-header-height"; }
+    static const char* symbol() { return "bci-send-transaction"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return fetch_header_height::symbol();
+        return bci_send_transaction::symbol();
     }
 
     /**
@@ -77,7 +83,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
+        return "ONLINE (BLOCKCHAIN.INFO)";
     }
 
     /**
@@ -85,7 +91,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BLOCKCHAIN QUERIES";
+        return "BLOCKCHAIN UPDATES (blockchain.info)";
     }
 
     /**
@@ -96,8 +102,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("HEIGHT", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -122,12 +127,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get a raw block header from the specified height. Requires a server connection."
+                "Send a transaction to blockchain.info."
             )
             (
-                "HEIGHT",
-                value<size_t>(&argument_.height),
-                "The block height."
+                "FILE,F",
+                value<bool>(&option_.file)->implicit_value(true),
+                "The transaction file path and file name. If not specified the transaction is read from STDIN."
             );
 
         return options;
@@ -141,9 +146,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto height = variables.find("HEIGHT");
-        if (height == variables.end())
-            parse(argument_.height, read_stream(input));
     }
 
     /**
@@ -158,22 +160,6 @@ public:
         std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the HEIGHT argument.
-     */
-    virtual size_t get_height_argument()
-    {
-        return argument_.height;
-    }
-    
-    /**
-     * Set the value of the HEIGHT argument.
-     */
-    virtual void set_height_argument(size_t value)
-    {
-        argument_.height = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -191,6 +177,22 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the FILE option.
+     */
+    virtual bool get_file_option()
+    {
+        return option_.file;
+    }
+    
+    /**
+     * Set the value of the FILE option.
+     */
+    virtual void set_file_option(bool value)
+    {
+        option_.file = value;
+    }
+
 private:
 
     /**
@@ -201,9 +203,7 @@ private:
     struct argument
     {
         argument()
-          : height()
             {}
-        size_t height;
     } argument_;
     
     /**
@@ -214,9 +214,11 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            file()
             {}    
         bool help;
+        bool file;
     } option_;
 };
 

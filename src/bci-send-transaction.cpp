@@ -17,17 +17,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/sendtx-bci.hpp>
-#include <sx/command/unwrap.hpp>
+#include <sx/command/bci-send-transaction.hpp>
+
+#include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result sendtx_bci::invoke(int argc, const char* argv[])
+console_result bci_send_transaction::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    line_out(std::cerr, "sx: This command is not yet ported from python.");
+    // Bound parameters.
+    auto filename = get_file_option();
+
+    cerr << SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

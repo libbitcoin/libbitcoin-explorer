@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_BLKE_FETCH_TRANSACTION_HPP
-#define SX_BLKE_FETCH_TRANSACTION_HPP
+#ifndef SX_QRCODE_HPP
+#define SX_QRCODE_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -54,13 +54,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_BLKE_FETCH_TRANSACTION_NOT_IMPLEMENTED \
+#define SX_QRCODE_NOT_IMPLEMENTED \
     "This command is not yet ported from python."
 
 /**
- * Class to implement the sx blke-fetch-transaction command.
+ * Class to implement the sx qrcode command.
  */
-class blke_fetch_transaction 
+class qrcode 
     : public command
 {
 public:
@@ -68,14 +68,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "blke-fetch-transaction"; }
+    static const char* symbol() { return "qrcode"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return blke_fetch_transaction::symbol();
+        return qrcode::symbol();
     }
 
     /**
@@ -83,7 +83,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (BLOCKEXPLORER.COM)";
+        return "UTILITY";
     }
 
     /**
@@ -91,7 +91,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BLOCKCHAIN QUERIES (blockexplorer.com)";
+        return "MISC";
     }
 
     /**
@@ -103,7 +103,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", 1);
+            .add("ADDRESS", 1);
     }
     
     /**
@@ -128,12 +128,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get a transaction from blockexplorer.com."
+                "Generate a QR code image file for a Bitcoin address."
             )
             (
-                "HASH",
-                value<serializer::bitcoin256>(&argument_.hash),
-                "The transaction hash."
+                "FILE,F",
+                value<boost::filesystem::path>(&option_.file),
+                "The image file path and file name. If not specified the image is written to STDOUT."
+            )
+            (
+                "ADDRESS",
+                value<serializer::address>(&argument_.address),
+                "The address."
             );
 
         return options;
@@ -147,9 +152,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto hash = variables.find("HASH");
-        if (hash == variables.end())
-            parse(argument_.hash, read_stream(input));
+        auto address = variables.find("ADDRESS");
+        if (address == variables.end())
+            parse(argument_.address, read_stream(input));
     }
 
     /**
@@ -166,19 +171,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HASH argument.
+     * Get the value of the ADDRESS argument.
      */
-    virtual serializer::bitcoin256 get_hash_argument()
+    virtual serializer::address get_address_argument()
     {
-        return argument_.hash;
+        return argument_.address;
     }
     
     /**
-     * Set the value of the HASH argument.
+     * Set the value of the ADDRESS argument.
      */
-    virtual void set_hash_argument(serializer::bitcoin256 value)
+    virtual void set_address_argument(serializer::address value)
     {
-        argument_.hash = value;
+        argument_.address = value;
     }
 
     /**
@@ -197,6 +202,22 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the FILE option.
+     */
+    virtual boost::filesystem::path get_file_option()
+    {
+        return option_.file;
+    }
+    
+    /**
+     * Set the value of the FILE option.
+     */
+    virtual void set_file_option(boost::filesystem::path value)
+    {
+        option_.file = value;
+    }
+
 private:
 
     /**
@@ -207,9 +228,9 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : address()
             {}
-        serializer::bitcoin256 hash;
+        serializer::address address;
     } argument_;
     
     /**
@@ -220,9 +241,11 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            file()
             {}    
         bool help;
+        boost::filesystem::path file;
     } option_;
 };
 

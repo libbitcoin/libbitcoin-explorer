@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,31 +17,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/qrcode.hpp>
+#include <iostream>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-#include <sx/utility/console.hpp>
+SX_USING_NAMESPACES()
 
-using namespace sx;
-using namespace sx::extension;
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(watchtx__invoke)
 
-console_result qrcode::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
-{
-    // Bound parameters.
-    auto filename = get_file_option();
-    auto satoshi = get_address_argument();
+//BOOST_AUTO_TEST_CASE(watchtx__invoke__invoke__always__failure_error)
+//{
+//    // $ sx watchtx bogus
+//    SX_DECLARE_COMMAND(watchtx);
+//    command.set_hash_argument({ "bogus" });
+//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+//    SX_REQUIRE_ERROR(SX_WATCHTX_NOT_IMPLEMENTED "\n");
+//}
 
-    cerr << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
-}
-
-//#!/bin/bash
-//if [ $# -ne 2 ]; then
-//    echo "Usage: qrcode ADDRESS FILENAME"
-//    exit 1
-//fi
-//command -v qrencode >/dev/null 2>&1 || { echo >&2 "Please install 'qrencode'."; exit 1; }
-//ADDR=$1
-//FILE=$2
-//qrencode bitcoin:$ADDR -o $FILE -s 10
-//
+BOOST_AUTO_TEST_SUITE_END()

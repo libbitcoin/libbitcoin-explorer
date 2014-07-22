@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_FETCH_HEADER_HEIGHT_HPP
-#define SX_FETCH_HEADER_HEIGHT_HPP
+#ifndef SX_WATCHTX_HPP
+#define SX_WATCHTX_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,9 +52,15 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx fetch-header-height command.
+ * Various localizable strings.
  */
-class fetch_header_height 
+#define SX_WATCHTX_NOT_IMPLEMENTED \
+    "This command is not yet ported from python."
+
+/**
+ * Class to implement the sx watchtx command.
+ */
+class watchtx 
     : public command
 {
 public:
@@ -62,14 +68,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "fetch-header-height"; }
+    static const char* symbol() { return "watchtx"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return fetch_header_height::symbol();
+        return watchtx::symbol();
     }
 
     /**
@@ -85,7 +91,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BLOCKCHAIN QUERIES";
+        return "BLOCKCHAIN WATCHING";
     }
 
     /**
@@ -97,7 +103,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HEIGHT", 1);
+            .add("HASH", -1);
     }
     
     /**
@@ -122,12 +128,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get a raw block header from the specified height. Requires a server connection."
+                "Watch the network for one or more transactions by hash."
             )
             (
-                "HEIGHT",
-                value<size_t>(&argument_.height),
-                "The block height."
+                "HASH",
+                value<std::vector<serializer::bitcoin256>>(&argument_.hashs),
+                "The set of transaction hashes."
             );
 
         return options;
@@ -141,9 +147,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto height = variables.find("HEIGHT");
-        if (height == variables.end())
-            parse(argument_.height, read_stream(input));
     }
 
     /**
@@ -160,19 +163,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HEIGHT argument.
+     * Get the value of the HASH arguments.
      */
-    virtual size_t get_height_argument()
+    virtual std::vector<serializer::bitcoin256> get_hashs_argument()
     {
-        return argument_.height;
+        return argument_.hashs;
     }
     
     /**
-     * Set the value of the HEIGHT argument.
+     * Set the value of the HASH arguments.
      */
-    virtual void set_height_argument(size_t value)
+    virtual void set_hashs_argument(std::vector<serializer::bitcoin256> value)
     {
-        argument_.height = value;
+        argument_.hashs = value;
     }
 
     /**
@@ -201,9 +204,9 @@ private:
     struct argument
     {
         argument()
-          : height()
+          : hashs()
             {}
-        size_t height;
+        std::vector<serializer::bitcoin256> hashs;
     } argument_;
     
     /**
