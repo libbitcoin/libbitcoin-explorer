@@ -48,6 +48,9 @@ sx_test_SOURCES = \
     get-utxo.cpp \
     hd-priv.cpp \
     hd-pub.cpp \
+    hd-seed.cpp \
+    hd-to-addr.cpp \
+    hd-to-wif.cpp \
     help.cpp \
     history.cpp \
     main.cpp \
