@@ -14,7 +14,6 @@ libsx_la_SOURCES = \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
-    obelisk_client.cpp \
     utility/coin.cpp \
     utility/config.cpp \
     utility/console.cpp \
@@ -71,7 +70,7 @@ if HAVE_OBELISK
         get-utxo.cpp \
         history.cpp \
         watchtx.cpp \
-        obelisk.cpp
+        obelisk_client.cpp
 
     AM_CPPFLAGS += \
         ${libobelisk_CFLAGS} \
