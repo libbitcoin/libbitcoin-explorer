@@ -27,13 +27,17 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// TODO: test
+// 100% coverage by line, loc ready.
 console_result hd_to_address::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    hd_public_key public_key = get_key_argument();
+    auto key = get_key_argument();
 
+    // Get public from private and otherwise get public.
+    auto public_key = key.derived_public_key();
+
+    // RECOMPILE OF LIBBITCOIN REQUIRED FOR TESTNET ADDRESSES.
     output << address(public_key) << std::endl;
     return console_result::okay;
 }

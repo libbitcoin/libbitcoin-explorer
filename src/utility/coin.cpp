@@ -32,34 +32,22 @@ using namespace bc;
 
 namespace sx {
 
-// TODO: reconcile with [data_chunk random_fill(size_t size)]
 // Not testable due to lack of random engine injection.
-ec_secret random_secret()
+void random_fill(data_chunk& chunk)
 {
     std::random_device random;
     std::default_random_engine engine(random());
 
-    ec_secret secret;
-    for (uint8_t& byte: secret)
+    for (uint8_t& byte : chunk)
         byte = engine() % std::numeric_limits<uint8_t>::max();
-
-    return secret;
 }
 
-// TODO: reconcile with [data_chunk random_secret()]
 // Not testable due to lack of random engine injection.
-data_chunk random_fill(size_t size)
+void random_secret(ec_secret& secret)
 {
-    std::random_device device;
-    std::default_random_engine engine(device());
-    std::uniform_int_distribution<min_uniform_dist_size>
-        distribution(0, std::numeric_limits<min_uniform_dist_size>::max());
-
-    data_chunk result;
-    for (size_t i = 0; i < size; ++i)
-        result.push_back(static_cast<uint8_t>(distribution(engine)));
-
-    return result;
+    data_chunk chunk(ec_secret_size);
+    random_fill(chunk);
+    std::copy(chunk.begin(), chunk.end(), secret.begin());
 }
 
 bool read_addresses(std::vector<std::string> addresses, payaddr_list& payaddrs)

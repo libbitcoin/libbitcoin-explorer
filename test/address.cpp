@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__valid_payment_address__round_trips)
     BOOST_REQUIRE_EQUAL(payment_address.encoded(), address(payment_address).data().encoded());
 }
 
-BOOST_AUTO_TEST_CASE(address__constructor__valid_hd_private_key__round_trips)
+BOOST_AUTO_TEST_CASE(address__constructor__valid_mainnet_hd_private_key__round_trips)
 {
     libwallet::hd_private_key private_key;
     private_key.deserialize("xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi");
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__valid_hd_private_key__round_trips)
     BOOST_REQUIRE_EQUAL(instance.encoded(), "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma");
 }
 
-BOOST_AUTO_TEST_CASE(address__constructor__valid_hd_public_key__round_trips)
+BOOST_AUTO_TEST_CASE(address__constructor__valid_hd_mainnet_public_key__round_trips)
 {
     libwallet::hd_public_key public_key;
     public_key.deserialize("xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8");
@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__valid_hd_public_key__round_trips)
     BOOST_REQUIRE_EQUAL(instance.encoded(), "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma");
 }
 
-BOOST_AUTO_TEST_CASE(address__serializers__valid_value__round_trips)
+BOOST_AUTO_TEST_CASE(address__serializers__address__round_trips)
 {
     SX_SERIALIZE_COPY_ROUND_TRIP(address, "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma");
 }

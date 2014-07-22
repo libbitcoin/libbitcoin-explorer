@@ -54,8 +54,6 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_HD_PUB_DERIVATION_ERROR \
-    "Child public key derivation failed."
 #define SX_HD_PUB_HARD_OPTION_CONFLICT \
     "The hard option requires a private key."
 

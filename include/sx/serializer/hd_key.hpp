@@ -92,11 +92,12 @@ public:
     }
 
     /**
-     * Return a reference to the data member.
+     * Return a const reference to the public key of the private key if valid 
+     * and otherwise return the public key.
      *
      * @return  A reference to the object's internal data.
      */
-    const libwallet::hd_public_key& data() const
+    const libwallet::hd_public_key& derived_public_key() const
     {
         if (private_key_value_.valid())
             return (libwallet::hd_public_key&)private_key_value_;
@@ -157,8 +158,8 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const hd_key& argument)
     {
-        const auto& data = argument.data();
-        output << data.serialize();
+        const auto& public_key = argument.derived_public_key();
+        output << public_key.serialize();
         return output;
     }
 

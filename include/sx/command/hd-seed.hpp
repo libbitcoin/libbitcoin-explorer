@@ -127,7 +127,7 @@ public:
             (
                 "SEED",
                 value<serializer::bytes>(&argument_.seed),
-                "The hex encoded seed for the new key, defaults to a random value."
+                "The hex encoded seed for the new key. If empty defaults to a random 32 byte value."
             );
 
         return options;

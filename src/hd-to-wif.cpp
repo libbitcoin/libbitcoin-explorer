@@ -29,7 +29,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// TODO: test
+// 100% coverage by line, loc ready.
 console_result hd_to_wif::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {

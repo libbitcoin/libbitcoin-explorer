@@ -37,16 +37,6 @@ namespace sx {
 typedef std::vector<bc::payment_address> payaddr_list;
 
 /**
- * Key compression states (3-state boolean). 
- */
-enum key_compression : uint8_t
-{ 
-    unspecified, 
-    on, 
-    off 
-};
-
-/**
  * Load a satoshi item from the specified file.
  *
  * @param      <Item>    The type of the item to load.
@@ -83,19 +73,18 @@ bool load_satoshi_item(Item& item, const std::string& filename,
 }
 
 /**
- * Generate a random secret using the default random engine.
+ * Fill a buffer with randomness using the default random engine.
  *
- * @return  The new secret.
+ * @param[in]  chunk  The buffer to fill with randomness.
  */
-bc::ec_secret random_secret();
+void random_fill(bc::data_chunk& chunk);
 
 /**
- * Allocate a byte buffer and fill it with a random bit distribution.
+ * Generate a random secret.
  *
- * @param[in]  size  The byte size of the return buffer.
- * @return           The sized buffer with random bit distribution.
+ * @param[in]  secret  The secret to fill with randomness.
  */
-bc::data_chunk random_fill(size_t size);
+void random_secret(bc::ec_secret& secret);
 
 /**
  * Read a set of payment addresses from the specified vector.

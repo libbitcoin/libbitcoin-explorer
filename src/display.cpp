@@ -53,7 +53,7 @@ void display_invalid_variables(const std::string& message)
 
 void display_line()
 {
-    line_out(std::cout, "");
+    std::cout << std::endl;
 }
 
 void display_usage()

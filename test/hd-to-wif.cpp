@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,36 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <wallet/wallet.hpp>
-#include <sx/command/hd-seed.hpp>
-#include <sx/serializer/hd_private.hpp>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-using namespace libwallet;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+SX_USING_NAMESPACES()
 
-// 100% coverage by line, loc ready.
-console_result hd_seed::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(hd_to_wif__invoke)
+
+BOOST_AUTO_TEST_CASE(hd_to_wif__invoke__mainnet_key__okay_output)
 {
-    // Arbitrary 256 bit length for generated seeds.
-    const size_t fill_seed_size = 32;
-
-    // Bound parameters.
-    data_chunk seed = get_seed_argument();
-    const bool testnet = get_general_testnet_setting();
-
-    if (seed.size() == 0)
-    {
-        seed.resize(fill_seed_size);
-        random_fill(seed);
-    }
-
-    const hd_private_key private_key(seed, testnet);
-
-    output << hd_private(private_key) << std::endl;
-    return console_result::okay;
+    // $ sx hd-to-wif xprv9s21ZrQH143K27rVid1zpeyqZygAX7W7AQ4cctwrSB4A2EoPNT22nR2FCm42oc6UmTNGnjwLscDdkof6dyRVwoG8nU6uY8XTGNHiNzAx3TD
+    SX_DECLARE_COMMAND(hd_to_wif);
+    command.set_secret_argument({ "xprv9s21ZrQH143K27rVid1zpeyqZygAX7W7AQ4cctwrSB4A2EoPNT22nR2FCm42oc6UmTNGnjwLscDdkof6dyRVwoG8nU6uY8XTGNHiNzAx3TD" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()

@@ -37,130 +37,15 @@
 
 namespace sx {
 
-std::string get_arg(int argc, const char* argv[], const std::string& fallback,
-    int index)
-{
-    return if_else(argc > index, argv[index], fallback.c_str());
-}
-
-std::string get_arg_or_stream(int argc, const char* argv[],
-    std::istream& stream, int index, bool trim)
-{
-    return if_else(argc > index, argv[index], 
-        read_stream(stream, trim).c_str());
-}
-
-size_t get_args(int argc, const char* argv[], 
-    std::vector<std::string>& arguments)
-{
-    for (int i = 0; i < argc; ++i)
-    {
-        if (!is_option_any(argv[i]))
-            arguments.push_back(argv[i]);
-    }
-
-    return arguments.size();
-}
-
-std::string get_filename(int argc, const char* argv[])
-{
-    return if_else(argc > 0, argv[0], SX_STDIN_PATH_SENTINEL);
-}
-
-bool get_option(int argc, const char* argv[], const std::string& option)
-{
-    for (int i = 1; i < argc; i++)
-    {
-        if (is_option(argv[i], option))
-            return true;
-    }
-
-    return false;
-}
-
-bool is_false(const std::string& text)
-{
-    std::string arg(text);
-
-    // case conversion is dependent upon the thread locale
-    boost::algorithm::to_lower(arg);
-
-    // the concept of string false is hardwired here
-    return arg == "false" || arg == "0" || arg == "no";
-}
-
-bool is_option(const std::string& text, const std::string& option)
-{
-    std::string arg(text);
-    boost::algorithm::to_lower(arg);
-
-    // -f
-    bool is_short = arg.size() == 2 && arg[0] == '-' && arg[1] == option[0];
-
-    // --foobar
-    bool is_long = !is_short && option.size() > 1 && arg == "--" + option;
-
-    return is_short || is_long;
-}
-
-bool is_option_any(const std::string& text)
-{
-    // -f
-    bool is_short = text.size() == 2 && text[0] == '-' && text[1] != '-';
-
-    // --foobar
-    bool is_long = !is_short && text.size() > 2 && text[0] == '-' &&
-        text[1] == '-' && text[2] != '-';
-
-    return is_short || is_long;
-}
-
-bool is_true(const std::string& text)
-{
-    std::string arg(text);
-
-    // case conversion is dependent upon the thread locale
-    boost::algorithm::to_lower(arg);
-
-    // the concept of string true is hardwired here,
-    // these match boost::program_options
-    return arg == "true" || arg == "1" || arg == "yes";
-}
+//std::string get_filename(int argc, const char* argv[])
+//{
+//    return if_else(argc > 0, argv[0], SX_STDIN_PATH_SENTINEL);
+//}
 
 void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter)
 {
     sentence = boost::join(words, delimiter);
-}
-
-void line_out(std::ostream& stream, const std::string& line, size_t offset,
-    const std::string& inset)
-{
-    // safe string length 
-    auto length = std::string(inset).length();
-
-    // overflow safe assurance that offset is always non-negative
-    auto padding = if_else(length > offset, static_cast<size_t>(0), 
-        offset - length);
-
-    // output the inset-offset-line to the specified stream
-    stream << inset << std::string((padding), ' ')
-        << line << std::endl;
-}
-
-void line_out(std::ostream& stream, const std::vector<const char*>& lines, 
-    size_t offset, const std::string& inset)
-{
-    // we allow empty multi-line values in source data
-    if (lines.size() < 1)
-        return;
-
-    // emit the first line as inset-offset-line
-    line_out(stream, lines[0], offset, inset);
-
-    // emit the remaining lines as offset-line
-    std::for_each(++lines.begin(), lines.end(), 
-        [&](const char* line){ line_out(stream, line, offset); });
 }
 
 std::string read_stream(std::istream& stream, bool trim)
@@ -185,13 +70,6 @@ void split(const std::string& sentence, std::vector<std::string>& words,
     boost::split(words, sentence, boost::is_any_of(delimiter));
 }
 
-void stream_to_words(std::istream& stream, 
-    std::vector<std::string>& words, const std::string& delimiter)
-{
-    std::string sentence(read_stream(stream, true));
-    split(sentence, words, delimiter);
-}
-
 // Not unit testable (process termination).
 void terminate_process_on_error(const std::error_code& error)
 {
@@ -206,16 +84,6 @@ void trim_left(std::string& value, const std::string& chars)
 {
     using namespace boost::algorithm;
     trim_left_if(value, is_any_of(chars));
-}
-
-bool validate_argument_range(int actual, 
-    const std::vector<const char*>& message, int minimum, int maximum)
-{
-    bool valid = ((actual >= minimum) && (maximum == 0 || actual <= maximum));
-    if (!valid)
-        line_out(std::cerr, message);
-
-    return valid;
 }
 
 } // sx

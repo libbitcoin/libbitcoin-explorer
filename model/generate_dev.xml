@@ -227,7 +227,7 @@
 
   <command symbol="hd-seed" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
     <option name="help" description="Create a HD private key from entropy." />
-    <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key, defaults to a random value." />
+    <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key. If empty defaults to a random 32 byte value." />
   </command>
 
   <command symbol="hd-to-address" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">

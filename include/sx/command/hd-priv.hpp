@@ -52,12 +52,6 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
- */
-#define SX_HD_PRIV_DERIVATION_ERROR \
-    "Child private key derivation failed."
-
-/**
  * Class to implement the sx hd-priv command.
  */
 class hd_priv 

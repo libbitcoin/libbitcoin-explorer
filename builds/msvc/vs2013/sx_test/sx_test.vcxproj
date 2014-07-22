@@ -72,9 +72,8 @@
     <PostBuildEvent />
     <PostBuildEvent />
     <PostBuildEvent />
-    <PostBuildEvent>
-      <Command>"$(TargetPath)" --run_test=base58__invoke --random=1 --show_progress=yes --result_code=no --detect_memory_leak=0 --report_level=no --build_info=yes</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -159,6 +158,9 @@
     <ClCompile Include="..\..\..\..\test\get-utxo.cpp" />
     <ClCompile Include="..\..\..\..\test\hd-priv.cpp" />
     <ClCompile Include="..\..\..\..\test\hd-pub.cpp" />
+    <ClCompile Include="..\..\..\..\test\hd-seed.cpp" />
+    <ClCompile Include="..\..\..\..\test\hd-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\history.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
