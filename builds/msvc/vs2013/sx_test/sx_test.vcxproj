@@ -167,7 +167,6 @@
     <ClCompile Include="..\..\..\..\test\printer.cpp" />
     <ClCompile Include="..\..\..\..\test\satoshi.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth-addr.cpp" />
-    <ClCompile Include="..\..\..\..\test\console__line_out.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
