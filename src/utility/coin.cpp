@@ -20,7 +20,6 @@
 #include <sx/utility/coin.hpp>
 
 #include <iostream>
-#include <random>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/dispatch.hpp>
@@ -31,16 +30,6 @@
 using namespace bc;
 
 namespace sx {
-
-// Not testable due to lack of random engine injection.
-void random_fill(data_chunk& chunk)
-{
-    std::random_device random;
-    std::default_random_engine engine(random());
-
-    for (uint8_t& byte : chunk)
-        byte = engine() % std::numeric_limits<uint8_t>::max();
-}
 
 // Not testable due to lack of random engine injection.
 void random_secret(ec_secret& secret)

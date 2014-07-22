@@ -197,6 +197,13 @@ void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter=SX_JOIN_DELIMITER);
 
 /**
+ * Fill a buffer with randomness using the default random engine.
+ *
+ * @param[in]  chunk  The buffer to fill with randomness.
+ */
+void random_fill(bc::data_chunk& chunk);
+
+/**
  * Get a trimmed message from the specified input stream.
  *
  * @param[in]  stream The input stream to read.

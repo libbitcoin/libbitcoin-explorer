@@ -27,6 +27,7 @@
 
 #include <iomanip>
 #include <iostream>
+#include <random>
 #include <stdint.h>
 #include <string>
 #include <vector>
@@ -56,6 +57,16 @@ std::string read_stream(std::istream& stream, bool trim)
         boost::algorithm::trim(result);
 
     return result;
+}
+
+// Not testable due to lack of random engine injection.
+void random_fill(bc::data_chunk& chunk)
+{
+    std::random_device random;
+    std::default_random_engine engine(random());
+
+    for (uint8_t& byte : chunk)
+        byte = engine() % std::numeric_limits<uint8_t>::max();
 }
 
 // Not unit testable (sleep).

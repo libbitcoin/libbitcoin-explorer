@@ -73,13 +73,6 @@ bool load_satoshi_item(Item& item, const std::string& filename,
 }
 
 /**
- * Fill a buffer with randomness using the default random engine.
- *
- * @param[in]  chunk  The buffer to fill with randomness.
- */
-void random_fill(bc::data_chunk& chunk);
-
-/**
  * Generate a random secret.
  *
  * @param[in]  secret  The secret to fill with randomness.
