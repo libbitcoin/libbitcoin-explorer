@@ -927,15 +927,15 @@ BOOST_AUTO_TEST_SUITE_END()
 sx_includedir = $\(includedir)/sx
 sx_include_HEADERS = \\
     command.hpp \\
+    define.hpp \\
     dispatch.hpp \\
     display.hpp \\
-    obelisk.hpp \\
+    generated.hpp \\
+    obelisk_client.hpp \\
     sx.hpp
 
 sx_utility_includedir = $\(includedir)/sx/utility
 sx_utility_include_HEADERS += \\
-    byte.hpp \\
-    bytes.hpp \\
     coin.hpp \\
     compat.hpp \\
     config.hpp \\
@@ -943,6 +943,23 @@ sx_utility_include_HEADERS += \\
     environment.hpp \\
     parameter.hpp \\
     printer.hpp
+    
+sx_utility_includedir = $\(includedir)/sx/serializer
+sx_utility_include_HEADERS += \\
+    address.hpp \\
+    base58.hpp \\
+    bitcoin160.hpp \\
+    bitcoin256.hpp \\
+    byte.hpp \\
+    bytes.hpp \\
+    ec_key.hpp \\
+    ec_private.hpp \\
+    ec_public.hpp \\
+    hd_key.hpp \\
+    hd_private.hpp \\
+    hd_public.hpp \\
+    point.hpp \\
+    wif.hpp
 
 # Generated from XML data source.
 sx_command_includedir = $\(includedir)/sx/command
@@ -977,6 +994,7 @@ libsx_la_SOURCES = \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
+    obelisk_client.cpp \\
     utility/coin.cpp \\
     utility/config.cpp \\
     utility/console.cpp \\

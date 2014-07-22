@@ -14,6 +14,7 @@ libsx_la_SOURCES = \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
+    obelisk_client.cpp \
     utility/coin.cpp \
     utility/config.cpp \
     utility/console.cpp \
