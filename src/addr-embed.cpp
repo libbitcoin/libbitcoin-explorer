@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/embed-addr.hpp>
+#include <sx/command/addr-embed.hpp>
 
 #include <iostream>
 #include <sx/utility/console.hpp>
@@ -25,20 +25,20 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result embed_addr::invoke(std::istream& input, std::ostream& output,
+console_result addr_embed::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
     auto data = get_data_argument();
 
-    cerr << SX_EMBED_ADDR_NOT_IMPLEMENTED << std::endl;
+    cerr << SX_ADDR_EMBED_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 
 //#!/bin/bash
 //read INPUT
-//DECODED_ADDR=$(echo $INPUT | sx ripemd-hash)
+//DECODED_ADDR=$(echo $INPUT | sx ripemd160)
 //SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)
-//HASH=$(echo $SCRIPT | sx ripemd-hash)
+//HASH=$(echo $SCRIPT | sx ripemd160)
 //sx encode-addr $HASH
 //

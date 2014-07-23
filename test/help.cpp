@@ -45,7 +45,9 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
     SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
         "addr\n" \
         "addr-decode\n" \
+        "addr-embed\n" \
         "addr-encode\n" \
+        "addr-validate\n" \
         "balance\n" \
         "base58-decode\n" \
         "base58-encode\n" \
@@ -64,7 +66,6 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "ec-multiply\n" \
         "ec-multiply-secrets\n" \
         "ec-to-wif\n" \
-        "embed-addr\n" \
         "fetch-header-hash\n" \
         "fetch-header-height\n" \
         "fetch-last-height\n" \

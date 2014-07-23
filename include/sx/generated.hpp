@@ -26,7 +26,9 @@
 #include <sx/command.hpp>
 #include <sx/command/addr.hpp>
 #include <sx/command/addr-decode.hpp>
+#include <sx/command/addr-embed.hpp>
 #include <sx/command/addr-encode.hpp>
+#include <sx/command/addr-validate.hpp>
 #include <sx/command/balance.hpp>
 #include <sx/command/base58-decode.hpp>
 #include <sx/command/base58-encode.hpp>
@@ -45,7 +47,6 @@
 #include <sx/command/ec-multiply.hpp>
 #include <sx/command/ec-multiply-secrets.hpp>
 #include <sx/command/ec-to-wif.hpp>
-#include <sx/command/embed-addr.hpp>
 #include <sx/command/fetch-header-hash.hpp>
 #include <sx/command/fetch-header-height.hpp>
 #include <sx/command/fetch-last-height.hpp>

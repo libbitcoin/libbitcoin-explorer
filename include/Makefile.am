@@ -42,7 +42,9 @@ sx_command_includedir = $(includedir)/sx/command
 sx_command_include_HEADERS = \
     command/addr.hpp \
     command/addr-decode.hpp \
+    command/addr-embed.hpp \
     command/addr-encode.hpp \
+    command/addr-validate.hpp \
     command/base58-decode.hpp \
     command/base58-encode.hpp \
     command/base58check-decode.hpp \
@@ -60,7 +62,6 @@ sx_command_include_HEADERS = \
     command/ec-multiply.hpp \
     command/ec-multiply-secrets.hpp \
     command/ec-to-wif.hpp \
-    command/embed-addr.hpp \
     command/genaddr.hpp \
     command/genpriv.hpp \
     command/genpub.hpp \

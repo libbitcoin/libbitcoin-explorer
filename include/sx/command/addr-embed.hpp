@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_WATCHTX_HPP
-#define SX_WATCHTX_HPP
+#ifndef SX_ADDR_EMBED_HPP
+#define SX_ADDR_EMBED_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -54,13 +54,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_WATCHTX_NOT_IMPLEMENTED \
+#define SX_ADDR_EMBED_NOT_IMPLEMENTED \
     "This command is not yet implemented."
 
 /**
- * Class to implement the sx watchtx command.
+ * Class to implement the sx addr-embed command.
  */
-class watchtx 
+class addr_embed 
     : public command
 {
 public:
@@ -68,14 +68,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "watchtx"; }
+    static const char* symbol() { return "addr-embed"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return watchtx::symbol();
+        return addr_embed::symbol();
     }
 
     /**
@@ -83,7 +83,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
+        return "OFFLINE KEYS AND ADDRESSES";
     }
 
     /**
@@ -91,7 +91,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BLOCKCHAIN WATCHING";
+        return "BASIC";
     }
 
     /**
@@ -103,7 +103,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", -1);
+            .add("DATA", 1);
     }
     
     /**
@@ -128,12 +128,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Watch the network for one or more transactions by hash."
+                "Generate an address used for embedding a record of data into the blockchain."
             )
             (
-                "HASH",
-                value<std::vector<serializer::bitcoin256>>(&argument_.hashs),
-                "The set of transaction hashes."
+                "DATA",
+                value<std::string>(&argument_.data),
+                "The data of which to embed a record."
             );
 
         return options;
@@ -147,6 +147,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto data = variables.find("DATA");
+        if (data == variables.end())
+            parse(argument_.data, read_stream(input));
     }
 
     /**
@@ -163,19 +166,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HASH arguments.
+     * Get the value of the DATA argument.
      */
-    virtual std::vector<serializer::bitcoin256> get_hashs_argument()
+    virtual std::string get_data_argument()
     {
-        return argument_.hashs;
+        return argument_.data;
     }
     
     /**
-     * Set the value of the HASH arguments.
+     * Set the value of the DATA argument.
      */
-    virtual void set_hashs_argument(std::vector<serializer::bitcoin256> value)
+    virtual void set_data_argument(std::string value)
     {
-        argument_.hashs = value;
+        argument_.data = value;
     }
 
     /**
@@ -204,9 +207,9 @@ private:
     struct argument
     {
         argument()
-          : hashs()
+          : data()
             {}
-        std::vector<serializer::bitcoin256> hashs;
+        std::string data;
     } argument_;
     
     /**

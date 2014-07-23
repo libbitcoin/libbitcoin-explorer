@@ -34,11 +34,22 @@
     <option name="help" description="Convert an address from Base58Check to RIPEMD160." />
     <argument name="ADDRESS" stream="true" type="address" description="The address to convert."/>
   </command>
+  
+  <command symbol="addr-embed" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
+    <option name="help" description="Generate an address used for embedding a record of data into the blockchain." />
+    <argument name="DATA" stream="true" description="The data of which to embed a record."/>
+    <define name="SX_ADDR_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  </command>
 
   <command symbol="addr-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
     <option name="help" description="Convert an address from RIPEMD160 to Base58Check." />
     <option name="version" type="byte" description="The desired version number." />
     <argument name="RIPEMD160" stream="true" type="bitcoin160" description="The hex string to convert."/>
+  </command>
+
+  <command symbol="addr-validate" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
+    <option name="help" description="Validate a set of addresses. The result is successful if all addresses are valid." />
+    <argument name="ADDRESS" type="address" limit="-1" description="The set of addresses to validate." />
   </command>
   
   <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
@@ -52,13 +63,13 @@
   <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)" stub="true">
     <option name="help" description="Convert a Base58Check value to a hex string." />
     <argument name="BASE58CHECK" stream="true" description="The Base58Check encoded value to decode." />
-    <define name="SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)" stub="true">
     <option name="help" description="Convert a hex string to Base58Check." />
     <argument name="HEX" stream="true" type="bytes" description="The hex string to Base58Check encode." />
-    <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="base58-decode" category="UTILITY" subcategory="FORMAT (BASE58)">
@@ -73,25 +84,25 @@
   
   <command symbol="bci-fetch-last-height" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
     <option name="help" description="Get the last block height from blockchain.info." />
-    <define name="SX_BCI_FETCH_LAST_HEIGHT_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BCI_FETCH_LAST_HEIGHT_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="bci-history" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
     <option name="help" description="Get the list of outputs, values and spends for an address from blockchain.info." />
     <argument name="ADDRESS" stream="true" type="address" description="The address to query." />
-    <define name="SX_BCI_HISTORY_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BCI_HISTORY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="bci-send-transaction" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN UPDATES (blockchain.info)" stub="true">
     <option name="help" description="Send a transaction to blockchain.info." />
     <option name="FILE" description="The transaction file path and file name. If not specified the transaction is read from STDIN."/>
-    <define name="SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="be-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
     <option name="help" description="Get a transaction from blockexplorer.com." />
     <argument name="HASH" stream="true" type="bitcoin256" description="The transaction hash." />
-    <define name="SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="bitcoin160" category="UTILITY" subcategory="HASHES">
@@ -109,13 +120,13 @@
     <option name="algorithm" description="The algorithm (e.g. slowsha)." />
     <argument name="PASSWORD" required="true" description="The passphrase." />
     <argument name="USERNAME" description="A username." />
-    <define name="SX_BRAINWALLET_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BRAINWALLET_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="btc" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
     <option name="help" description="Convert satoshi to BTC." />
     <argument name="SATOSHI" stream="true" type="uint64_t" description="The number of satoshi to convert."/>
-    <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="ec-add" category="UTILITY" subcategory="EC MATH">
@@ -147,12 +158,6 @@
   <command symbol="ec-to-wif" category="UTILITY" subcategory="FORMAT (WIF)">
     <option name="help" description="Convert an elliptic curve secret to a WIF private key." />
     <argument name="SECRET" stream="true" type="ec_private" description="The value to convert."/>
-  </command>
-  
-  <command symbol="embed-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
-    <option name="help" description="Generate an address used for embedding a record of data into the blockchain." />
-    <argument name="DATA" stream="true" description="The data of which to embed a record."/>
-    <define name="SX_EMBED_ADDR_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
   
   <command symbol="fetch-header-hash" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
@@ -206,14 +211,14 @@
   <command symbol="get-pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
     <option name="help" description="Get the public key of an address." />
     <argument name="ADDRESS" stream="true" type="address" description="The address from which to derive the public key." />
-    <define name="SX_GET_PUBKEY_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_GET_PUBKEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="get-utxo" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" stub="true" obelisk="true">
     <option name="help" description="Get enough unspent transaction outputs from a set of addresses to pay a number of satoshi. Requires a server connection." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The number of satoshi." />
     <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
-    <define name="SX_GET_UXTO_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_GET_UXTO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <!-- BUGBUG: help/hard option conflict, implement alias -->
@@ -290,7 +295,7 @@
     <option name="help" description="Generate a QR code image file for a Bitcoin address." />
     <option name="FILE" type="path" description="The image file path and file name. If not specified the image is written to STDOUT."/>
     <argument name="ADDRESS" stream="true" type="address" description="The address."/>
-    <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="ripemd160" category="UTILITY" subcategory="HASHES">
@@ -301,7 +306,7 @@
   <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
     <option name="help" description="Convert BTC to satoshi." />
     <argument name="BTC" stream="true" description="The value to convert."/>
-    <define name="SX_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="sha1" category="UTILITY" subcategory="HASHES">
@@ -337,7 +342,7 @@
   <command symbol="watchtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN WATCHING" stub="true" obelisk="true">
     <option name="help" description="Watch the network for one or more transactions by hash." />
     <argument name="HASH" limit="-1" type="bitcoin256" description="The set of transaction hashes." />
-    <define name="SX_WATCHTX_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+    <define name="SX_WATCHTX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="wif-to-ec" category="UTILITY" subcategory="FORMAT (WIF)">

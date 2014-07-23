@@ -26,20 +26,28 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(embed_addr__invoke)
+BOOST_AUTO_TEST_SUITE(addr_validate__invoke)
 
-// $ cat my_sculpture.jpg | sx addr-embed
-// 1N9v8AKBqst9MNceV3gLmFKsgkKv1bZcBU
-// Now send some Bitcoin to that address and it will be embedded
-// in the blockchain as a record of the data passed in.
-
-BOOST_AUTO_TEST_CASE(addr_embed__invoke__bogus_data__failure_error)
+BOOST_AUTO_TEST_CASE(addr_validate__invoke__one_address__okay_output)
 {
-    // $ sx addr-embed bogus
-    SX_DECLARE_COMMAND(addr_embed);
-    command.set_data_argument("bogus");
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_ADDR_EMBED_NOT_IMPLEMENTED "\n");
+    // $ sx addr-validate 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
+    SX_DECLARE_COMMAND(addr_validate);
+    command.set_addresss_argument({{ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" }});
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("");
+}
+
+BOOST_AUTO_TEST_CASE(addr_validate__invoke__two_addresses__okay_output)
+{
+    // $ sx addr-validate 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
+    SX_DECLARE_COMMAND(addr_validate);
+    command.set_addresss_argument(
+    { 
+        { "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" },
+        { "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" }
+    });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -17,30 +17,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/addr-validate.hpp>
+
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <sx/command/validaddr.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/serializer/address.hpp>
 
-using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result validaddr::invoke(int argc, const char* argv[])
+// 100% coverage by line, loc ready.
+console_result addr_validate::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 2, 2))
-        return console_result::failure;
+    // Bound parameters.
+    //auto addresses = get_addresss_argument();
 
-    payment_address payaddr;
-    if (!payaddr.set_encoded(argv[1]))
-    {
-        std::cout << "Status: Failed" << std::endl;
-        return console_result::invalid;
-    }
-    else
-    {
-        std::cout << "Status: OK" << std::endl;
-        return console_result::okay;
-    }
+    // If any address is not valid the deserializer will throw.
+    return console_result::okay;
 }
-

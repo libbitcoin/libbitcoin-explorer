@@ -55,7 +55,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_SATOSHI_NOT_IMPLEMENTED \
-    "This command is not yet ported from python."
+    "This command is not yet implemented."
 
 /**
  * Class to implement the sx satoshi command.

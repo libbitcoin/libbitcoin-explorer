@@ -125,6 +125,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\test\addr-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\addr.cpp" />
     <ClCompile Include="..\..\..\..\test\address.cpp" />
     <ClCompile Include="..\..\..\..\test\balance.cpp" />

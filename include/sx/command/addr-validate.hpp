@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_WATCHTX_HPP
-#define SX_WATCHTX_HPP
+#ifndef SX_ADDR_VALIDATE_HPP
+#define SX_ADDR_VALIDATE_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,15 +52,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx addr-validate command.
  */
-#define SX_WATCHTX_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
- * Class to implement the sx watchtx command.
- */
-class watchtx 
+class addr_validate 
     : public command
 {
 public:
@@ -68,14 +62,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "watchtx"; }
+    static const char* symbol() { return "addr-validate"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return watchtx::symbol();
+        return addr_validate::symbol();
     }
 
     /**
@@ -83,7 +77,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
+        return "OFFLINE KEYS AND ADDRESSES";
     }
 
     /**
@@ -91,7 +85,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BLOCKCHAIN WATCHING";
+        return "BASIC";
     }
 
     /**
@@ -103,7 +97,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", -1);
+            .add("ADDRESS", -1);
     }
     
     /**
@@ -128,12 +122,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Watch the network for one or more transactions by hash."
+                "Validate a set of addresses. The result is successful if all addresses are valid."
             )
             (
-                "HASH",
-                value<std::vector<serializer::bitcoin256>>(&argument_.hashs),
-                "The set of transaction hashes."
+                "ADDRESS",
+                value<std::vector<serializer::address>>(&argument_.addresss),
+                "The set of addresses to validate."
             );
 
         return options;
@@ -163,19 +157,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HASH arguments.
+     * Get the value of the ADDRESS arguments.
      */
-    virtual std::vector<serializer::bitcoin256> get_hashs_argument()
+    virtual std::vector<serializer::address> get_addresss_argument()
     {
-        return argument_.hashs;
+        return argument_.addresss;
     }
     
     /**
-     * Set the value of the HASH arguments.
+     * Set the value of the ADDRESS arguments.
      */
-    virtual void set_hashs_argument(std::vector<serializer::bitcoin256> value)
+    virtual void set_addresss_argument(std::vector<serializer::address> value)
     {
-        argument_.hashs = value;
+        argument_.addresss = value;
     }
 
     /**
@@ -204,9 +198,9 @@ private:
     struct argument
     {
         argument()
-          : hashs()
+          : addresss()
             {}
-        std::vector<serializer::bitcoin256> hashs;
+        std::vector<serializer::address> addresss;
     } argument_;
     
     /**

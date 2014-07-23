@@ -38,7 +38,9 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
 {
     func(make_shared<addr>());
     func(make_shared<addr_decode>());
+    func(make_shared<addr_embed>());
     func(make_shared<addr_encode>());
+    func(make_shared<addr_validate>());
     func(make_shared<balance>());
     func(make_shared<base58_decode>());
     func(make_shared<base58_encode>());
@@ -57,7 +59,6 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
     func(make_shared<ec_to_wif>());
-    func(make_shared<embed_addr>());
     func(make_shared<fetch_header_hash>());
     func(make_shared<fetch_header_height>());
     func(make_shared<fetch_last_height>());
@@ -100,8 +101,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<addr>();
     if (symbol == addr_decode::symbol())
         return make_shared<addr_decode>();
+    if (symbol == addr_embed::symbol())
+        return make_shared<addr_embed>();
     if (symbol == addr_encode::symbol())
         return make_shared<addr_encode>();
+    if (symbol == addr_validate::symbol())
+        return make_shared<addr_validate>();
     if (symbol == balance::symbol())
         return make_shared<balance>();
     if (symbol == base58_decode::symbol())
@@ -138,8 +143,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_multiply_secrets>();
     if (symbol == ec_to_wif::symbol())
         return make_shared<ec_to_wif>();
-    if (symbol == embed_addr::symbol())
-        return make_shared<embed_addr>();
     if (symbol == fetch_header_hash::symbol())
         return make_shared<fetch_header_hash>();
     if (symbol == fetch_header_height::symbol())

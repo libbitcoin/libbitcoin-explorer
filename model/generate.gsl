@@ -1246,9 +1246,6 @@ endif
     </ClCompile>
 .   endif
 .endfor
-    <ClCompile Include="..\\..\\..\\..\\src\\validaddr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1361,7 +1358,16 @@ endif
     </Filter>
     <Filter Include="src\\command\\todo\\obelisk">
       <UniqueIdentifier>{bca50241-1338-43f2-be5b-dd5ff643ba99}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
+    <Filter Include="src\\command\\todo\\stealth">
+      <UniqueIdentifier>{ed76315a-9193-4924-a14e-6b6a7628ba86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command\\todo\\satoshi">
+      <UniqueIdentifier>{a83aaa61-784a-44c7-800f-7f95486a8913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\command\\todo\\script">
+      <UniqueIdentifier>{0d051466-4637-46d3-bf36-79744fb7b978}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1507,52 +1513,49 @@ endif
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\mnemonic.cpp">
       <Filter>src\\command\\todo</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\script</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\scripthash.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\script</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showscript.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\script</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showtx.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sign-input.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-initiate.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-newkey.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-show-addr.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover-secret.cpp">
-      <Filter>src\\command\\todo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\validaddr.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
-      <Filter>src\\command\\todo</Filter>
+      <Filter>src\\command\\todo\\satoshi</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\initchain.cpp">
       <Filter>src\\command\\todo\\obsolete</Filter>

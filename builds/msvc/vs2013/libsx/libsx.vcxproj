@@ -109,7 +109,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\addr-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\addr-embed.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\addr-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\addr-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\balance.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58-encode.hpp" />
@@ -128,7 +130,6 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-to-wif.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\embed-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-header-hash.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-header-height.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-last-height.hpp" />
@@ -236,7 +237,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\addr.cpp" />
     <ClCompile Include="..\..\..\..\src\addr-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\addr-embed.cpp" />
     <ClCompile Include="..\..\..\..\src\addr-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\addr-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\balance.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -257,7 +260,6 @@
     <ClCompile Include="..\..\..\..\src\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-to-wif.cpp" />
-    <ClCompile Include="..\..\..\..\src\embed-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\fetch-header-hash.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -308,9 +310,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\wrap.cpp" />
-    <ClCompile Include="..\..\..\..\src\validaddr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\validsig.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>

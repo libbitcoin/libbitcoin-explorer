@@ -25,7 +25,9 @@ libsx_la_SOURCES = \
 libsx_la_SOURCES += \
     addr.cpp \
     addr-decode.cpp \
+    addr-embed.cpp \
     addr-encode.cpp \
+    addr-validate.cpp \
     base58-decode.cpp \
     base58-encode.cpp \
     base58check-decode.cpp \
@@ -43,7 +45,6 @@ libsx_la_SOURCES += \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
     ec-to-wif.cpp \
-    embed-addr.cpp \
     genaddr.cpp \
     genpriv.cpp \
     genpub.cpp \

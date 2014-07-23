@@ -43,7 +43,7 @@ console_result addr::invoke(std::istream& input, std::ostream& output,
     // Get the public key's payment address.
     auto ripemd160 = bitcoin_short_hash(key);
 
-    // WARNING: pubkey_version varies by libbitcoin *compilation*.
+    // WARNING: pubkey_version varies by libbitcoin testnet *compilation* flag.
     // TODO: make libbitcoin testnet dynamic and then do the same here.
     // auto testnet = get_general_testnet_setting();
     version = if_else(versioned, version, payment_address::pubkey_version);

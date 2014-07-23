@@ -37,9 +37,19 @@ BOOST_AUTO_TEST_CASE(generated__find__addr_decode__returns_object)
     BOOST_REQUIRE(find(addr_decode::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__addr_embed__returns_object)
+{
+    BOOST_REQUIRE(find(addr_embed::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__addr_encode__returns_object)
 {
     BOOST_REQUIRE(find(addr_encode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__addr_validate__returns_object)
+{
+    BOOST_REQUIRE(find(addr_validate::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__balance__returns_object)
@@ -130,11 +140,6 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_multiply_secrets__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__ec_to_wif__returns_object)
 {
     BOOST_REQUIRE(find(ec_to_wif::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__embed_addr__returns_object)
-{
-    BOOST_REQUIRE(find(embed_addr::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header_hash__returns_object)

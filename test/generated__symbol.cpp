@@ -37,9 +37,19 @@ BOOST_AUTO_TEST_CASE(generated__symbol__addr_decode__returns_expected_value)
     BOOST_REQUIRE(addr_decode::symbol() == std::string("addr-decode"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__addr_embed__returns_expected_value)
+{
+    BOOST_REQUIRE(addr_embed::symbol() == std::string("addr-embed"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__addr_encode__returns_expected_value)
 {
     BOOST_REQUIRE(addr_encode::symbol() == std::string("addr-encode"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__addr_validate__returns_expected_value)
+{
+    BOOST_REQUIRE(addr_validate::symbol() == std::string("addr-validate"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__balance__returns_expected_value)
@@ -130,11 +140,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply_secrets__returns_expected_va
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_wif__returns_expected_value)
 {
     BOOST_REQUIRE(ec_to_wif::symbol() == std::string("ec-to-wif"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__embed_addr__returns_expected_value)
-{
-    BOOST_REQUIRE(embed_addr::symbol() == std::string("embed-addr"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header_hash__returns_expected_value)
