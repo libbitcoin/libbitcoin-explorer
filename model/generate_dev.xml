@@ -49,13 +49,13 @@
     <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
   </command>
 
-  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE58 CHECK)" stub="true">
+  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)" stub="true">
     <option name="help" description="Convert a Base58Check value to a hex string." />
     <argument name="BASE58CHECK" stream="true" description="The Base58Check encoded value to decode." />
     <define name="SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
-  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE58 CHECK)" stub="true">
+  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)" stub="true">
     <option name="help" description="Convert a hex string to Base58Check." />
     <argument name="HEX" stream="true" type="bytes" description="The hex string to Base58Check encode." />
     <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
@@ -219,7 +219,8 @@
   </command>
 
   <command symbol="hd-seed" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <option name="help" description="Create a HD private key from entropy." />
+    <option name="help" description="Create a HD key from entropy and emit the private part." />
+    <option name="pubkey" description="Emit the public part instead of the private part." />
     <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key. If empty defaults to a random 32 byte value." />
   </command>
 

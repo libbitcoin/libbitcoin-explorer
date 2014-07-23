@@ -36,6 +36,7 @@ console_result hd_seed::invoke(std::istream& input, std::ostream& output,
     const size_t fill_seed_size = 32;
 
     // Bound parameters.
+    auto pubkey = get_pubkey_option();
     data_chunk seed = get_seed_argument();
     const bool testnet = get_general_testnet_setting();
 
@@ -45,9 +46,11 @@ console_result hd_seed::invoke(std::istream& input, std::ostream& output,
         random_fill(seed);
     }
 
-    const hd_private_key private_key(seed, testnet);
+    const hd_private_key new_key(seed, testnet);
+    if (pubkey)
+        output << hd_public(new_key) << std::endl;
+    else
+        output << hd_private(new_key) << std::endl;
 
-    output << hd_private(private_key) << std::endl;
     return console_result::okay;
 }
-

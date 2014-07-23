@@ -122,7 +122,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Create a HD private key from entropy."
+                "Create a HD key from entropy and emit the private part."
+            )
+            (
+                "pubkey,p",
+                value<bool>(&option_.pubkey)->implicit_value(true),
+                "Emit the public part instead of the private part."
             )
             (
                 "SEED",
@@ -191,6 +196,22 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the pubkey option.
+     */
+    virtual bool get_pubkey_option()
+    {
+        return option_.pubkey;
+    }
+    
+    /**
+     * Set the value of the pubkey option.
+     */
+    virtual void set_pubkey_option(bool value)
+    {
+        option_.pubkey = value;
+    }
+
 private:
 
     /**
@@ -214,9 +235,11 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            pubkey()
             {}    
         bool help;
+        bool pubkey;
     } option_;
 };
 

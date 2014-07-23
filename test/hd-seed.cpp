@@ -28,10 +28,13 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(hd_seed__invoke)
 
-BOOST_AUTO_TEST_CASE(hd_seed__invoke__testnet_false__okay_output)
+// private
+
+BOOST_AUTO_TEST_CASE(hd_seed__invoke__default__okay_output)
 {
     // $ sx hd-seed 900df00d
     SX_DECLARE_COMMAND(hd_seed);
+    command.set_pubkey_option(false);
     command.set_seed_argument({ "900df00d" });
     command.set_general_testnet_setting(false);
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
@@ -39,10 +42,11 @@ BOOST_AUTO_TEST_CASE(hd_seed__invoke__testnet_false__okay_output)
 }
 
 // This particular command supports testnet without the need for recompilation.
-BOOST_AUTO_TEST_CASE(hd_seed__invoke__testnet_true__okay_output)
+BOOST_AUTO_TEST_CASE(hd_seed__invoke__testnet__okay_output)
 {
     // $ sx hd-seed 900df00d
     SX_DECLARE_COMMAND(hd_seed);
+    command.set_pubkey_option(false);
     command.set_seed_argument({ "900df00d" });
     command.set_general_testnet_setting(true);
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
@@ -50,19 +54,66 @@ BOOST_AUTO_TEST_CASE(hd_seed__invoke__testnet_true__okay_output)
 }
 
 // Random fill is not currently virtualized so test is limited.
-BOOST_AUTO_TEST_CASE(hd_seed__invoke__random_testnet_true__okay)
+BOOST_AUTO_TEST_CASE(hd_seed__invoke__random_testnet__okay)
 {
     // $ sx hd-seed
     SX_DECLARE_COMMAND(hd_seed);
+    command.set_pubkey_option(false);
     command.set_general_testnet_setting(true);
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
 }
 
 // Random fill is not currently virtualized so test is limited.
-BOOST_AUTO_TEST_CASE(hd_seed__invoke__random_testnet_false__okay)
+BOOST_AUTO_TEST_CASE(hd_seed__invoke__random__okay)
 {
     // $ sx hd-seed
     SX_DECLARE_COMMAND(hd_seed);
+    command.set_pubkey_option(false);
+    command.set_general_testnet_setting(false);
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+}
+
+// public
+
+BOOST_AUTO_TEST_CASE(hd_seed__invoke__pubkey__okay_output)
+{
+    // $ sx hd-seed 900df00d -p
+    SX_DECLARE_COMMAND(hd_seed);
+    command.set_pubkey_option(true);
+    command.set_seed_argument({ "900df00d" });
+    command.set_general_testnet_setting(false);
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("xpub661MyMwAqRbcEbvxpeZ1Bnva81WevaDxXczDRHMTzWb8u38XuzLHLDLj44q4Ssf3DJPC5cUN5ShTzh1o2zUhZwErn1j4HdJvZsQE8iD9vrB\n");
+}
+
+// This particular command supports testnet without the need for recompilation.
+BOOST_AUTO_TEST_CASE(hd_seed__invoke__testnet_pubkey__okay_output)
+{
+    // $ sx hd-seed 900df00d -p
+    SX_DECLARE_COMMAND(hd_seed);
+    command.set_pubkey_option(true);
+    command.set_seed_argument({ "900df00d" });
+    command.set_general_testnet_setting(true);
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("tpubD6NzVbkrYhZ4WQ7pGqY6PiFwT8cJuxj25FaWmqQcLRM2eKoEzDBNUf1ZJ6uqyNcH1Cv6hBzEcYXWgsWQRrKwTNh9qcUMy9yA9pzdtj6wLax\n");
+}
+
+// Random fill is not currently virtualized so test is limited.
+BOOST_AUTO_TEST_CASE(hd_seed__invoke__random_testnet_pubkey__okay)
+{
+    // $ sx hd-seed -p
+    SX_DECLARE_COMMAND(hd_seed);
+    command.set_pubkey_option(true);
+    command.set_general_testnet_setting(true);
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+}
+
+// Random fill is not currently virtualized so test is limited.
+BOOST_AUTO_TEST_CASE(hd_seed__invoke__random_pubkey__okay)
+{
+    // $ sx hd-seed -p
+    SX_DECLARE_COMMAND(hd_seed);
+    command.set_pubkey_option(true);
     command.set_general_testnet_setting(false);
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
 }
