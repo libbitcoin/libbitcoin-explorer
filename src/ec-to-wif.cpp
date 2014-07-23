@@ -26,6 +26,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
+// 100% coverage by line, loc ready.
 console_result ec_to_wif::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {

@@ -53,7 +53,7 @@ static void stealth_fetched(const std::error_code& error,
         for (const blockchain::stealth_row& row : stealth_results)
             std::cout << boost::format(SX_FETCH_STEALTH_OUTPUT) %
             bytes(row.ephemkey) % address(row.address) %
-            bitcoin256(row.transaction_hash);
+            sx::serializer::bitcoin256(row.transaction_hash);
 
     node_stopped = true;
 }

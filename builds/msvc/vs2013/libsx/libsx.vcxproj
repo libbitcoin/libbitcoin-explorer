@@ -119,6 +119,8 @@
     <ClInclude Include="..\..\..\..\include\sx\command\bci-history.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\bci-send-transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\be-fetch-transaction.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\bitcoin160.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\bitcoin256.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add.hpp" />
@@ -149,7 +151,11 @@
     <ClInclude Include="..\..\..\..\include\sx\command\newkey.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\newseed.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\qrcode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\ripemd160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\sha1.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\watchtx.hpp" />
@@ -178,13 +184,7 @@
     <ClCompile Include="..\..\..\..\src\rawscript.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ripemd-hash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\scripthash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\secret-to-wif.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-node.cpp">
@@ -197,9 +197,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\set-input.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sha256.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
@@ -251,6 +248,8 @@
     <ClCompile Include="..\..\..\..\src\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\src\bci-send-transaction.cpp" />
     <ClCompile Include="..\..\..\..\src\be-fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\src\bitcoin160.cpp" />
+    <ClCompile Include="..\..\..\..\src\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\src\brainwallet.cpp" />
     <ClCompile Include="..\..\..\..\src\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-add.cpp" />
@@ -297,7 +296,11 @@
     <ClCompile Include="..\..\..\..\src\newkey.cpp" />
     <ClCompile Include="..\..\..\..\src\newseed.cpp" />
     <ClCompile Include="..\..\..\..\src\qrcode.cpp" />
+    <ClCompile Include="..\..\..\..\src\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\src\sha1.cpp" />
+    <ClCompile Include="..\..\..\..\src\sha256.cpp" />
+    <ClCompile Include="..\..\..\..\src\sha512.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
     <ClCompile Include="..\..\..\..\src\watchtx.cpp">

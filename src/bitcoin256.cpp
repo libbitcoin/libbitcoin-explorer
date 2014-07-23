@@ -17,22 +17,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/wif-to-ec.hpp>
+#include <sx/command/bitcoin256.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
 
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
-using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result wif_to_ec::invoke(std::istream& input, std::ostream& output,
+console_result bitcoin256::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const auto secret = get_wif_argument();
+    const data_chunk hex = get_hex_argument();
 
-    output << ec_private(secret) << std::endl;
+    const auto hash = bitcoin_hash(hex);
+
+    output << sx::serializer::bytes(hash) << std::endl;
     return console_result::okay;
 }

@@ -94,6 +94,16 @@
     <define name="SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
+  <command symbol="bitcoin160" category="UTILITY" subcategory="HASHES">
+    <option name="help" description="Perform a RIPEMD160 hash of a SHA256 hash of data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  </command>
+
+  <command symbol="bitcoin256" category="UTILITY" subcategory="HASHES">
+    <option name="help" description="Perform a SHA256 hash of a SHA256 hash of data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  </command>
+
   <command symbol="brainwallet" category="OFFLINE KEYS AND ADDRESSES" subcategory="BRAIN STORAGE" stub="true">
     <option name="help" description="Make a SHA256 private key from an arbitrary passphrase. Unsafe if passphrase is low in entropy. See diceware and xkcd for advice on entropy and generating a safe brainwallet." />
     <option name="algorithm" description="The algorithm (e.g. slowsha)." />
@@ -283,10 +293,30 @@
     <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
+  <command symbol="ripemd160" category="UTILITY" subcategory="HASHES">
+    <option name="help" description="Perform a simple RIPEMD160 hash of data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  </command>
+
   <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
     <option name="help" description="Convert BTC to satoshi." />
     <argument name="BTC" stream="true" description="The value to convert."/>
     <define name="SX_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
+
+  <command symbol="sha1" category="UTILITY" subcategory="HASHES">
+    <option name="help" description="Perform a simple SHA1 hash of data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  </command>
+
+  <command symbol="sha256" category="UTILITY" subcategory="HASHES">
+    <option name="help" description="Perform a simple SHA256 hash of data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  </command>
+
+  <command symbol="sha512" category="UTILITY" subcategory="HASHES">
+    <option name="help" description="Perform a simple SHA512 hash of data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
   </command>
   
   <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">

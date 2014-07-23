@@ -17,23 +17,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/bitcoin160.hpp>
+
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/ripemd-hash.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result ripemd_hash::invoke(int argc, const char* argv[])
+// 100% coverage by line, loc ready.
+console_result bitcoin160::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 1))
-        return console_result::failure;
+    // Bound parameters.
+    const data_chunk hex = get_hex_argument();
 
-    const auto data = read_stream(std::cin);
-    const auto chunk = data_chunk(data.begin(), data.end());
-    std::cout << bitcoin_short_hash(chunk) << std::endl;
+    const auto hash = bitcoin_short_hash(hex);
+
+    output << sx::serializer::bytes(hash) << std::endl;
     return console_result::okay;
 }
-

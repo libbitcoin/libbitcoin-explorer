@@ -55,6 +55,8 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "bci-history\n" \
         "bci-send-transaction\n" \
         "be-fetch-transaction\n" \
+        "bitcoin160\n" \
+        "bitcoin256\n" \
         "brainwallet\n" \
         "btc\n" \
         "ec-add\n" \
@@ -85,7 +87,11 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "newkey\n" \
         "newseed\n" \
         "qrcode\n" \
+        "ripemd160\n" \
         "satoshi\n" \
+        "sha1\n" \
+        "sha256\n" \
+        "sha512\n" \
         "stealth-addr\n" \
         "unwrap\n" \
         "watchtx\n" \

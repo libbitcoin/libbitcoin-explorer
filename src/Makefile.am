@@ -34,6 +34,8 @@ libsx_la_SOURCES += \
     bci-history.cpp \
     bci-send-transaction.cpp \
     be-fetch-transaction.cpp \
+    bitcoin160.cpp \
+    bitcoin256.cpp \
     brainwallet.cpp \
     btc.cpp \
     ec-add.cpp \
@@ -56,7 +58,11 @@ libsx_la_SOURCES += \
     newkey.cpp \
     newseed.cpp \
     qrcode.cpp \
+    ripemd160.cpp \
     satoshi.cpp \
+    sha1.cpp \
+    sha256.cpp \
+    sha512.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
     wif-to-ec.cpp \

@@ -87,6 +87,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__be_fetch_transaction__returns_expected_v
     BOOST_REQUIRE(be_fetch_transaction::symbol() == std::string("be-fetch-transaction"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__bitcoin160__returns_expected_value)
+{
+    BOOST_REQUIRE(bitcoin160::symbol() == std::string("bitcoin160"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__bitcoin256__returns_expected_value)
+{
+    BOOST_REQUIRE(bitcoin256::symbol() == std::string("bitcoin256"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__brainwallet__returns_expected_value)
 {
     BOOST_REQUIRE(brainwallet::symbol() == std::string("brainwallet"));
@@ -237,9 +247,29 @@ BOOST_AUTO_TEST_CASE(generated__symbol__qrcode__returns_expected_value)
     BOOST_REQUIRE(qrcode::symbol() == std::string("qrcode"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__ripemd160__returns_expected_value)
+{
+    BOOST_REQUIRE(ripemd160::symbol() == std::string("ripemd160"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__satoshi__returns_expected_value)
 {
     BOOST_REQUIRE(satoshi::symbol() == std::string("satoshi"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__sha1__returns_expected_value)
+{
+    BOOST_REQUIRE(sha1::symbol() == std::string("sha1"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__sha256__returns_expected_value)
+{
+    BOOST_REQUIRE(sha256::symbol() == std::string("sha256"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__sha512__returns_expected_value)
+{
+    BOOST_REQUIRE(sha512::symbol() == std::string("sha512"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr__returns_expected_value)

@@ -51,6 +51,8 @@ sx_command_include_HEADERS = \
     command/bci-history.hpp \
     command/bci-send-transaction.hpp \
     command/be-fetch-transaction.hpp \
+    command/bitcoin160.hpp \
+    command/bitcoin256.hpp \
     command/brainwallet.hpp \
     command/btc.hpp \
     command/ec-add.hpp \
@@ -73,7 +75,11 @@ sx_command_include_HEADERS = \
     command/newkey.hpp \
     command/newseed.hpp \
     command/qrcode.hpp \
+    command/ripemd160.hpp \
     command/satoshi.hpp \
+    command/sha1.hpp \
+    command/sha256.hpp \
+    command/sha512.hpp \
     command/stealth-addr.hpp \
     command/unwrap.hpp \
     command/wif-to-ec.hpp \

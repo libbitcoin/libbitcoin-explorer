@@ -36,6 +36,8 @@
 #include <sx/command/bci-history.hpp>
 #include <sx/command/bci-send-transaction.hpp>
 #include <sx/command/be-fetch-transaction.hpp>
+#include <sx/command/bitcoin160.hpp>
+#include <sx/command/bitcoin256.hpp>
 #include <sx/command/brainwallet.hpp>
 #include <sx/command/btc.hpp>
 #include <sx/command/ec-add.hpp>
@@ -66,7 +68,11 @@
 #include <sx/command/newkey.hpp>
 #include <sx/command/newseed.hpp>
 #include <sx/command/qrcode.hpp>
+#include <sx/command/ripemd160.hpp>
 #include <sx/command/satoshi.hpp>
+#include <sx/command/sha1.hpp>
+#include <sx/command/sha256.hpp>
+#include <sx/command/sha512.hpp>
 #include <sx/command/stealth-addr.hpp>
 #include <sx/command/unwrap.hpp>
 #include <sx/command/watchtx.hpp>

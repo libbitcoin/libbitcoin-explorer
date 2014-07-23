@@ -137,6 +137,8 @@
     <ClCompile Include="..\..\..\..\test\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\test\bci-send-transaction.cpp" />
     <ClCompile Include="..\..\..\..\test\be-fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\test\bitcoin160.cpp" />
+    <ClCompile Include="..\..\..\..\test\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\test\brainwallet.cpp" />
     <ClCompile Include="..\..\..\..\test\btc.cpp" />
     <ClCompile Include="..\..\..\..\test\addr-decode.cpp" />
@@ -171,7 +173,11 @@
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />
     <ClCompile Include="..\..\..\..\test\qrcode.cpp" />
+    <ClCompile Include="..\..\..\..\test\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\test\satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\test\sha1.cpp" />
+    <ClCompile Include="..\..\..\..\test\sha256.cpp" />
+    <ClCompile Include="..\..\..\..\test\sha512.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />

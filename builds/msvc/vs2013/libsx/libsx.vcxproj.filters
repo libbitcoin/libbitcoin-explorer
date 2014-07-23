@@ -98,6 +98,12 @@
     <ClInclude Include="..\..\..\..\include\sx\command\be-fetch-transaction.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\bitcoin160.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\bitcoin256.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\brainwallet.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
@@ -188,8 +194,20 @@
     <ClInclude Include="..\..\..\..\include\sx\command\qrcode.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\ripemd160.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp">
       <Filter>include\command\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\sha1.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp">
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp">
       <Filter>include\command</Filter>
@@ -328,6 +346,12 @@
     <ClCompile Include="..\..\..\..\src\be-fetch-transaction.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\bitcoin160.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\bitcoin256.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\brainwallet.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
@@ -418,8 +442,20 @@
     <ClCompile Include="..\..\..\..\src\qrcode.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ripemd160.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\satoshi.cpp">
       <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sha1.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sha256.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sha512.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp">
       <Filter>src\command</Filter>
@@ -475,19 +511,10 @@
     <ClCompile Include="..\..\..\..\src\rawscript.cpp">
       <Filter>src\command\todo</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ripemd-hash.cpp">
-      <Filter>src\command\todo</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\scripthash.cpp">
       <Filter>src\command\todo</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\secret-to-wif.cpp">
-      <Filter>src\command\todo</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\set-input.cpp">
-      <Filter>src\command\todo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sha256.cpp">
       <Filter>src\command\todo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showblkhead.cpp">

@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(unwrap__invoke)
 
 BOOST_AUTO_TEST_CASE(unwrap__invoke__invalid_size_hex__failure_error)
 {
-    // $ sx unwrap 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    // $ sx unwrap 031bab84
     SX_DECLARE_COMMAND(unwrap);
     command.set_hex_argument({ "031bab84" });
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));

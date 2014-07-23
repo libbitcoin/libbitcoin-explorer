@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,22 +17,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/wif-to-ec.hpp>
-
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+SX_USING_NAMESPACES()
 
-// 100% coverage by line, loc ready.
-console_result wif_to_ec::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(sha256__invoke)
+
+BOOST_AUTO_TEST_CASE(sha256__invoke__always__okay_output)
 {
-    // Bound parameters.
-    const auto secret = get_wif_argument();
-
-    output << ec_private(secret) << std::endl;
-    return console_result::okay;
+    // $ sx sha256 900df00d
+    SX_DECLARE_COMMAND(sha256);
+    command.set_hex_argument({ "900df00d" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    auto foo = output.str();
+    SX_REQUIRE_OUTPUT("f0ebe3bd55115e573ba35c2b1b65a923ff64c7a548d0deab73f9314754a9149d\n");
 }
+
+BOOST_AUTO_TEST_SUITE_END()

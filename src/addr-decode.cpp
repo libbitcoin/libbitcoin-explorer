@@ -28,7 +28,6 @@
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
-using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
 console_result addr_decode::invoke(std::istream& input,
@@ -37,7 +36,7 @@ console_result addr_decode::invoke(std::istream& input,
     // Bound parameters.
     const auto address = get_address_argument();
     
-    output << bitcoin160(address) << std::endl;
+    output << sx::serializer::bitcoin160(address) << std::endl;
     return console_result::okay;
 }
 

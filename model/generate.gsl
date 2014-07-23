@@ -1182,13 +1182,7 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\ripemd-hash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\scripthash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\secret-to-wif.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sendtx-node.cpp">
@@ -1201,9 +1195,6 @@ endif
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\sha256.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
@@ -1524,19 +1515,10 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
       <Filter>src\\command\\todo</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\ripemd-hash.cpp">
-      <Filter>src\\command\\todo</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\scripthash.cpp">
       <Filter>src\\command\\todo</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\secret-to-wif.cpp">
-      <Filter>src\\command\\todo</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
-      <Filter>src\\command\\todo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\sha256.cpp">
       <Filter>src\\command\\todo</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
