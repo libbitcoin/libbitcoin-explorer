@@ -34,7 +34,6 @@ BOOST_AUTO_TEST_CASE(sha1__invoke__always__okay_output)
     SX_DECLARE_COMMAND(sha1);
     command.set_hex_argument({ "900df00d" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    auto foo = output.str();
     SX_REQUIRE_OUTPUT("ec5386a03e88b5ac9328f4eabe5103e601906daa\n");
 }
 
