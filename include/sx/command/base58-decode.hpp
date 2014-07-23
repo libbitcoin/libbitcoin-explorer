@@ -85,7 +85,7 @@ public:
      */
     const char* subcategory()
     {
-        return "FORMAT (BASE 58)";
+        return "FORMAT (BASE58)";
     }
 
     /**

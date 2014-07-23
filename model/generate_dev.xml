@@ -49,24 +49,24 @@
     <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
   </command>
 
-  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)" stub="true">
+  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE58 CHECK)" stub="true">
     <option name="help" description="Convert a Base58Check value to a hex string." />
     <argument name="BASE58CHECK" stream="true" description="The Base58Check encoded value to decode." />
     <define name="SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
 
-  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE 58 CHECK)" stub="true">
+  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE58 CHECK)" stub="true">
     <option name="help" description="Convert a hex string to Base58Check." />
     <argument name="HEX" stream="true" type="bytes" description="The hex string to Base58Check encode." />
     <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
   
-  <command symbol="base58-decode" category="UTILITY" subcategory="FORMAT (BASE 58)">
+  <command symbol="base58-decode" category="UTILITY" subcategory="FORMAT (BASE58)">
     <option name="help" description="Convert a Base58 value to a hex string." />
     <argument name="BASE58" stream="true" type="base58" description="The Base58 encoded value to decode." />
   </command>
 
-  <command symbol="base58-encode" category="UTILITY" subcategory="FORMAT (BASE 58)">
+  <command symbol="base58-encode" category="UTILITY" subcategory="FORMAT (BASE58)">
     <option name="help" description="Convert a hex string to Base58." />
     <argument name="HEX" stream="true" type="bytes" description="The hex string to Base58 encode." />
   </command>
@@ -108,7 +108,6 @@
     <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
   
-  <!-- Computes the function a + G*b, where G is the curve's generator point.-->
   <command symbol="ec-add" category="UTILITY" subcategory="EC MATH">
     <option name="help" description="Calculate the elliptic curve function POINT + (SECRET * curve-generator-point)." />
     <argument name="POINT" required="true" type="ec_public" description="The point to add."/>
@@ -116,14 +115,12 @@
     <define name="SX_EC_ADD_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
 
-  <!-- Computes the function (a + b) % n, where n is the curve order. -->
   <command symbol="ec-add-secrets" category="UTILITY" subcategory="EC MATH">
     <option name="help" description="Calculate the elliptic curve function (SECRET + SECRET) % curve-order." />
     <argument name="SECRET" limit="-1" required="true" type="ec_private" description="The hex or WIF encoded secret to add."/>
     <define name="SX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
 
-  <!-- Computes the product a * b. -->
   <command symbol="ec-multiply" category="UTILITY" subcategory="EC MATH">
     <option name="help" description="Calculate the elliptic curve product (POINT * SECRET)." />
     <argument name="POINT" required="true" type="ec_public" description="The point to multiply."/>
@@ -131,18 +128,12 @@
     <define name="SX_EC_MULITPLY_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
   
-  <!-- Computes the function (a * b) % n, where n is the curve order. -->
   <command symbol="ec-multiply-secrets" category="UTILITY" subcategory="EC MATH">
     <option name="help" description="Calculate the elliptic curve function (SECRET * SECRET) % curve-order." />
     <argument name="SECRET" limit="-1" required="true" type="ec_private" description="The hex or WIF encoded secret to multiply."/>
     <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
   
-  <!--
-  <explanation value="$ cat my_sculpture.jpg | sx embed-addr" />
-  <explanation value="1N9v8AKBqst9MNceV3gLmFKsgkKv1bZcBU" />
-  <explanation value="Now send some Bitcoin to that address and it will be embedded in the blockchain as a record of the data passed in." />
-  -->
   <command symbol="embed-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
     <option name="help" description="Generate an address used for embedding a record of data into the blockchain." />
     <argument name="DATA" stream="true" description="The data of which to embed a record."/>
@@ -205,7 +196,7 @@
 
   <command symbol="get-utxo" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" stub="true" obelisk="true">
     <option name="help" description="Get enough unspent transaction outputs from a set of addresses to pay a number of satoshi. Requires a server connection." />
-    <argument name="SATOSHI" stream="true" type="uint64_t" description="The number of satoshi." />
+    <argument name="SATOSHI" type="uint64_t" required="true" description="The number of satoshi." />
     <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
     <define name="SX_GET_UXTO_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
   </command>
@@ -214,16 +205,16 @@
   <command symbol="hd-priv" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
     <option name="help" description="Create a HD private key from another HD private key." />
     <option name="hard" alias="d" description="Signal to create a hardened key." />
+    <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
     <argument name="SECRET" stream="true" type="hd_private" description="The hex encoded HD private key." />
-    <argument name="INDEX" type="uint32_t" description="The HD index, defaults to zero." />
   </command>
 
   <!-- BUGBUG: help/hard option conflict, implement alias -->
   <command symbol="hd-pub" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
     <option name="help" description="Create a HD public key from another HD public or private key." />
     <option name="hard" alias="d" description="Signal to create a hardened key." />
+    <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
     <argument name="KEY" stream="true" type="hd_key" description="The hex encoded HD public or private key." />
-    <argument name="INDEX" type="uint32_t" description="The HD index, defaults to zero." />
     <define name="SX_HD_PUB_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
 
@@ -297,11 +288,5 @@
     <option name="version" type="byte" required="true" description="The desired version number." />
     <argument name="HEX" stream="true" type="bytes" description="The hex string to wrap." />
   </command>
-  
-  <!--<command symbol="stealth-initiate" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
-    <description value="Initiate a new stealth payment." />
-    <example value="sx stealth-initiate EPHEM_SECRET SCAN_PUBKEY SPEND_PUBKEY" />
-    <explanation value="Initiate a new stealth payment." />
-  </command>-->
   
 </generate>

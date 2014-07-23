@@ -133,7 +133,7 @@ public:
             )
             (
                 "SATOSHI",
-                value<uint64_t>(&argument_.satoshi),
+                value<uint64_t>(&argument_.satoshi)->required(),
                 "The number of satoshi."
             )
             (
@@ -153,9 +153,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto satoshi = variables.find("SATOSHI");
-        if (satoshi == variables.end())
-            parse(argument_.satoshi, read_stream(input));
     }
 
     /**

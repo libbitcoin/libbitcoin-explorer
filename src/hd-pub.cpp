@@ -35,8 +35,8 @@ console_result hd_pub::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     const auto hard = get_hard_option();
+    auto index = get_index_option();
     auto key = get_key_argument();
-    auto index = get_index_argument();
 
     hd_public_key child_key;
     const hd_public_key& public_key = key;

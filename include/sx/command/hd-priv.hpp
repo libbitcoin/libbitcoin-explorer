@@ -97,8 +97,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SECRET", 1)
-            .add("INDEX", 1);
+            .add("SECRET", 1);
     }
     
     /**
@@ -131,14 +130,14 @@ public:
                 "Signal to create a hardened key."
             )
             (
+                "index,i",
+                value<uint32_t>(&option_.index),
+                "The HD index, defaults to zero."
+            )
+            (
                 "SECRET",
                 value<serializer::hd_private>(&argument_.secret),
                 "The hex encoded HD private key."
-            )
-            (
-                "INDEX",
-                value<uint32_t>(&argument_.index),
-                "The HD index, defaults to zero."
             );
 
         return options;
@@ -187,22 +186,6 @@ public:
     }
 
     /**
-     * Get the value of the INDEX argument.
-     */
-    virtual uint32_t get_index_argument()
-    {
-        return argument_.index;
-    }
-    
-    /**
-     * Set the value of the INDEX argument.
-     */
-    virtual void set_index_argument(uint32_t value)
-    {
-        argument_.index = value;
-    }
-
-    /**
      * Get the value of the help option.
      */
     virtual bool get_help_option()
@@ -234,6 +217,22 @@ public:
         option_.hard = value;
     }
 
+    /**
+     * Get the value of the index option.
+     */
+    virtual uint32_t get_index_option()
+    {
+        return option_.index;
+    }
+    
+    /**
+     * Set the value of the index option.
+     */
+    virtual void set_index_option(uint32_t value)
+    {
+        option_.index = value;
+    }
+
 private:
 
     /**
@@ -244,11 +243,9 @@ private:
     struct argument
     {
         argument()
-          : secret(),
-            index()
+          : secret()
             {}
         serializer::hd_private secret;
-        uint32_t index;
     } argument_;
     
     /**
@@ -260,10 +257,12 @@ private:
     {
         option()
           : help(),
-            hard()
+            hard(),
+            index()
             {}    
         bool help;
         bool hard;
+        uint32_t index;
     } option_;
 };
 

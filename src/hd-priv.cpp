@@ -33,8 +33,8 @@ console_result hd_priv::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     const auto hard = get_hard_option();
+    auto index = get_index_option();
     auto secret = get_secret_argument();
-    auto index = get_index_argument();
 
     if (hard)
         index += first_hardened_key;

@@ -28,6 +28,11 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(embed_addr__invoke)
 
+// $ cat my_sculpture.jpg | sx embed-addr
+// 1N9v8AKBqst9MNceV3gLmFKsgkKv1bZcBU
+// Now send some Bitcoin to that address and it will be embedded
+// in the blockchain as a record of the data passed in.
+
 BOOST_AUTO_TEST_CASE(embed_addr__invoke__bogus_data__failure_error)
 {
     // $ sx embed-addr bogus
