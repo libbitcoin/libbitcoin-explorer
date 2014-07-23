@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_GENADDR_HPP
-#define SX_GENADDR_HPP
+#ifndef SX_PUBKEY_HPP
+#define SX_PUBKEY_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,15 +52,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx pubkey command.
  */
-#define SX_GENADDR_OBSOLETE \
-    "Electrum style key functions are obsolete. Use HD (BIP32) commands instead."
-
-/**
- * Class to implement the sx genaddr command.
- */
-class genaddr 
+class pubkey 
     : public command
 {
 public:
@@ -68,14 +62,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "genaddr"; }
+    static const char* symbol() { return "pubkey"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return genaddr::symbol();
+        return pubkey::symbol();
     }
 
     /**
@@ -83,7 +77,7 @@ public:
      */
     const char* category()
     {
-        return "OBSOLETE";
+        return "OFFLINE KEYS AND ADDRESSES";
     }
 
     /**
@@ -91,7 +85,7 @@ public:
      */
     const char* subcategory()
     {
-        return "ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES";
+        return "BASIC";
     }
 
     /**
@@ -127,7 +121,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Generate a Bitcoin address deterministically from an Electrum wallet."
+                "Get the public part of a private key."
+            )
+            (
+                "compressed,c",
+                value<bool>(&option_.compressed)->implicit_value(true),
+                "Use compressed public key format."
+            )
+            (
+                "uncompressed,u",
+                value<bool>(&option_.uncompressed)->implicit_value(true),
+                "Use uncompressed public key format."
             );
 
         return options;
@@ -172,6 +176,38 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the compressed option.
+     */
+    virtual bool get_compressed_option()
+    {
+        return option_.compressed;
+    }
+    
+    /**
+     * Set the value of the compressed option.
+     */
+    virtual void set_compressed_option(bool value)
+    {
+        option_.compressed = value;
+    }
+
+    /**
+     * Get the value of the uncompressed option.
+     */
+    virtual bool get_uncompressed_option()
+    {
+        return option_.uncompressed;
+    }
+    
+    /**
+     * Set the value of the uncompressed option.
+     */
+    virtual void set_uncompressed_option(bool value)
+    {
+        option_.uncompressed = value;
+    }
+
 private:
 
     /**
@@ -193,9 +229,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            compressed(),
+            uncompressed()
             {}    
         bool help;
+        bool compressed;
+        bool uncompressed;
     } option_;
 };
 

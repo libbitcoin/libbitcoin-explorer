@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_GENADDR_HPP
-#define SX_GENADDR_HPP
+#ifndef SX_WIF_TO_EC_HPP
+#define SX_WIF_TO_EC_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,15 +52,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx wif-to-ec command.
  */
-#define SX_GENADDR_OBSOLETE \
-    "Electrum style key functions are obsolete. Use HD (BIP32) commands instead."
-
-/**
- * Class to implement the sx genaddr command.
- */
-class genaddr 
+class wif_to_ec 
     : public command
 {
 public:
@@ -68,14 +62,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "genaddr"; }
+    static const char* symbol() { return "wif-to-ec"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return genaddr::symbol();
+        return wif_to_ec::symbol();
     }
 
     /**
@@ -83,7 +77,7 @@ public:
      */
     const char* category()
     {
-        return "OBSOLETE";
+        return "UTILITY";
     }
 
     /**
@@ -91,7 +85,7 @@ public:
      */
     const char* subcategory()
     {
-        return "ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES";
+        return "FORMAT (WIF)";
     }
 
     /**
@@ -102,7 +96,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("WIF", 1);
     }
     
     /**
@@ -127,7 +122,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Generate a Bitcoin address deterministically from an Electrum wallet."
+                "Convert a WIF private key to an elliptic curve secret."
+            )
+            (
+                "WIF",
+                value<serializer::wif>(&argument_.wif),
+                "The value to convert."
             );
 
         return options;
@@ -141,6 +141,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto wif = variables.find("WIF");
+        if (wif == variables.end())
+            parse(argument_.wif, read_stream(input));
     }
 
     /**
@@ -155,6 +158,22 @@ public:
         std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the WIF argument.
+     */
+    virtual serializer::wif get_wif_argument()
+    {
+        return argument_.wif;
+    }
+    
+    /**
+     * Set the value of the WIF argument.
+     */
+    virtual void set_wif_argument(serializer::wif value)
+    {
+        argument_.wif = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -182,7 +201,9 @@ private:
     struct argument
     {
         argument()
+          : wif()
             {}
+        serializer::wif wif;
     } argument_;
     
     /**

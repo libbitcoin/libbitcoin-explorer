@@ -57,6 +57,7 @@ sx_command_include_HEADERS = \
     command/ec-add-secrets.hpp \
     command/ec-multiply.hpp \
     command/ec-multiply-secrets.hpp \
+    command/ec-to-wif.hpp \
     command/embed-addr.hpp \
     command/genaddr.hpp \
     command/genpriv.hpp \
@@ -68,10 +69,14 @@ sx_command_include_HEADERS = \
     command/hd-to-address.hpp \
     command/hd-to-wif.hpp \
     command/help.hpp \
+    command/mpk.hpp \
+    command/newkey.hpp \
+    command/newseed.hpp \
     command/qrcode.hpp \
     command/satoshi.hpp \
     command/stealth-addr.hpp \
     command/unwrap.hpp \
+    command/wif-to-ec.hpp \
     command/wrap.hpp
 
 # Generated from XML data source.

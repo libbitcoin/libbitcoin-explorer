@@ -54,6 +54,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
+    func(make_shared<ec_to_wif>());
     func(make_shared<embed_addr>());
     func(make_shared<fetch_header_hash>());
     func(make_shared<fetch_header_height>());
@@ -73,11 +74,15 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<hd_to_wif>());
     func(make_shared<help>());
     func(make_shared<history>());
+    func(make_shared<mpk>());
+    func(make_shared<newkey>());
+    func(make_shared<newseed>());
     func(make_shared<qrcode>());
     func(make_shared<satoshi>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
     func(make_shared<watchtx>());
+    func(make_shared<wif_to_ec>());
     func(make_shared<wrap>());
 
     return true;
@@ -121,6 +126,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_multiply>();
     if (symbol == ec_multiply_secrets::symbol())
         return make_shared<ec_multiply_secrets>();
+    if (symbol == ec_to_wif::symbol())
+        return make_shared<ec_to_wif>();
     if (symbol == embed_addr::symbol())
         return make_shared<embed_addr>();
     if (symbol == fetch_header_hash::symbol())
@@ -159,6 +166,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<help>();
     if (symbol == history::symbol())
         return make_shared<history>();
+    if (symbol == mpk::symbol())
+        return make_shared<mpk>();
+    if (symbol == newkey::symbol())
+        return make_shared<newkey>();
+    if (symbol == newseed::symbol())
+        return make_shared<newseed>();
     if (symbol == qrcode::symbol())
         return make_shared<qrcode>();
     if (symbol == satoshi::symbol())
@@ -169,6 +182,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<unwrap>();
     if (symbol == watchtx::symbol())
         return make_shared<watchtx>();
+    if (symbol == wif_to_ec::symbol())
+        return make_shared<wif_to_ec>();
     if (symbol == wrap::symbol())
         return make_shared<wrap>();
 

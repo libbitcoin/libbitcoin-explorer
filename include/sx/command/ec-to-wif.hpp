@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_GENADDR_HPP
-#define SX_GENADDR_HPP
+#ifndef SX_EC_TO_WIF_HPP
+#define SX_EC_TO_WIF_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,15 +52,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx ec-to-wif command.
  */
-#define SX_GENADDR_OBSOLETE \
-    "Electrum style key functions are obsolete. Use HD (BIP32) commands instead."
-
-/**
- * Class to implement the sx genaddr command.
- */
-class genaddr 
+class ec_to_wif 
     : public command
 {
 public:
@@ -68,14 +62,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "genaddr"; }
+    static const char* symbol() { return "ec-to-wif"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return genaddr::symbol();
+        return ec_to_wif::symbol();
     }
 
     /**
@@ -83,7 +77,7 @@ public:
      */
     const char* category()
     {
-        return "OBSOLETE";
+        return "UTILITY";
     }
 
     /**
@@ -91,7 +85,7 @@ public:
      */
     const char* subcategory()
     {
-        return "ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES";
+        return "FORMAT (WIF)";
     }
 
     /**
@@ -102,7 +96,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("SECRET", 1);
     }
     
     /**
@@ -127,7 +122,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Generate a Bitcoin address deterministically from an Electrum wallet."
+                "Convert an elliptic curve secret to a WIF private key."
+            )
+            (
+                "SECRET",
+                value<serializer::ec_private>(&argument_.secret),
+                "The value to convert."
             );
 
         return options;
@@ -141,6 +141,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto secret = variables.find("SECRET");
+        if (secret == variables.end())
+            parse(argument_.secret, read_stream(input));
     }
 
     /**
@@ -155,6 +158,22 @@ public:
         std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the SECRET argument.
+     */
+    virtual serializer::ec_private get_secret_argument()
+    {
+        return argument_.secret;
+    }
+    
+    /**
+     * Set the value of the SECRET argument.
+     */
+    virtual void set_secret_argument(serializer::ec_private value)
+    {
+        argument_.secret = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -182,7 +201,9 @@ private:
     struct argument
     {
         argument()
+          : secret()
             {}
+        serializer::ec_private secret;
     } argument_;
     
     /**

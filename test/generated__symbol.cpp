@@ -117,6 +117,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply_secrets__returns_expected_va
     BOOST_REQUIRE(ec_multiply_secrets::symbol() == std::string("ec-multiply-secrets"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_wif__returns_expected_value)
+{
+    BOOST_REQUIRE(ec_to_wif::symbol() == std::string("ec-to-wif"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__embed_addr__returns_expected_value)
 {
     BOOST_REQUIRE(embed_addr::symbol() == std::string("embed-addr"));
@@ -212,6 +217,21 @@ BOOST_AUTO_TEST_CASE(generated__symbol__history__returns_expected_value)
     BOOST_REQUIRE(history::symbol() == std::string("history"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__mpk__returns_expected_value)
+{
+    BOOST_REQUIRE(mpk::symbol() == std::string("mpk"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__newkey__returns_expected_value)
+{
+    BOOST_REQUIRE(newkey::symbol() == std::string("newkey"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__newseed__returns_expected_value)
+{
+    BOOST_REQUIRE(newseed::symbol() == std::string("newseed"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__qrcode__returns_expected_value)
 {
     BOOST_REQUIRE(qrcode::symbol() == std::string("qrcode"));
@@ -235,6 +255,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__unwrap__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__watchtx__returns_expected_value)
 {
     BOOST_REQUIRE(watchtx::symbol() == std::string("watchtx"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__wif_to_ec__returns_expected_value)
+{
+    BOOST_REQUIRE(wif_to_ec::symbol() == std::string("wif-to-ec"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__wrap__returns_expected_value)

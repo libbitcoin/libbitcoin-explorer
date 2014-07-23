@@ -19,7 +19,7 @@
  */
 #include <sx/command/base58check-decode.hpp>
 
-#include <sx/dispatch.hpp>
+#include <iostream>
 #include <sx/utility/console.hpp>
 
 using namespace sx;

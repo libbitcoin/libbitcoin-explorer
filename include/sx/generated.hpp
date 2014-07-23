@@ -42,6 +42,7 @@
 #include <sx/command/ec-add-secrets.hpp>
 #include <sx/command/ec-multiply.hpp>
 #include <sx/command/ec-multiply-secrets.hpp>
+#include <sx/command/ec-to-wif.hpp>
 #include <sx/command/embed-addr.hpp>
 #include <sx/command/fetch-header-hash.hpp>
 #include <sx/command/fetch-header-height.hpp>
@@ -61,11 +62,15 @@
 #include <sx/command/hd-to-wif.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/history.hpp>
+#include <sx/command/mpk.hpp>
+#include <sx/command/newkey.hpp>
+#include <sx/command/newseed.hpp>
 #include <sx/command/qrcode.hpp>
 #include <sx/command/satoshi.hpp>
 #include <sx/command/stealth-addr.hpp>
 #include <sx/command/unwrap.hpp>
 #include <sx/command/watchtx.hpp>
+#include <sx/command/wif-to-ec.hpp>
 #include <sx/command/wrap.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/

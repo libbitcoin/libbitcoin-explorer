@@ -92,6 +92,8 @@
 .       return type_point_sx
 .   elsif my.type = type_string
 .       return type_string_std
+.   elsif my.type = type_wif
+.       return type_wif_sx
 .   endif
 .   return my.type
 .endfunction
@@ -177,6 +179,7 @@
 .type_path = "path"
 .type_point = "point"
 .type_string = "string"
+.type_wif = "wif"
 .
 .type_address_sx = "serializer::address"
 .type_base58_sx = "serializer::base58"
@@ -193,6 +196,7 @@
 .type_path_boost = "boost::filesystem::path"
 .type_point_sx = "serializer::point"
 .type_string_std = "std::string"
+.type_wif_sx = "serializer::wif"
 .
 .xml_false = "false"
 .xml_true = "true"
@@ -1171,21 +1175,9 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\monitor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\mpk.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\newkey.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\newseed.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>    
+    </ClCompile>  
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\pubkey.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -1273,9 +1265,6 @@ endif
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\wallet.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\wif-to-secret.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
@@ -1583,12 +1572,6 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
       <Filter>src\\command\\todo</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\wif-to-secret.cpp">
-      <Filter>src\\command\\todo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\mpk.cpp">
-      <Filter>src\\command\\todo\\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\initchain.cpp">
       <Filter>src\\command\\todo\\obsolete</Filter>
     </ClCompile>
@@ -1597,15 +1580,6 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\wallet.cpp">
       <Filter>src\\command\\todo\\experimental</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\newseed.cpp">
-      <Filter>src\\command\\todo\\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\newkey.cpp">
-      <Filter>src\\command\\todo\\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\pubkey.cpp">
-      <Filter>src\\command\\todo\\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sendtx-p2p.cpp">
       <Filter>src\\command\\todo\\obelisk</Filter>

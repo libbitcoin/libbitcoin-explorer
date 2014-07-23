@@ -19,7 +19,7 @@
  */
 #include <sx/command/embed-addr.hpp>
 
-#include <sx/dispatch.hpp>
+#include <iostream>
 #include <sx/utility/console.hpp>
 
 using namespace sx;

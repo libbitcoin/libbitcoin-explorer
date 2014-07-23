@@ -55,7 +55,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_GENPUB_OBSOLETE \
-    "Electrum style key functions are obsolete."
+    "Electrum style key functions are obsolete. Use HD (BIP32) commands instead."
 
 /**
  * Class to implement the sx genpub command.

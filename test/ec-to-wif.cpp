@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,31 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
-#include <sx/command/wif-to-secret.hpp>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-using namespace bc;
-using namespace libwallet;
-using namespace sx;
-using namespace sx::extensions;
+SX_USING_NAMESPACES()
 
-// TODO: create wif-to-ec and wif-to-hd
-console_result wif_to_secret::invoke(int argc, const char* argv[])
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(ec_to_wif__invoke)
+
+BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__secret_mainnet__okay_output)
 {
-    if (!validate_argument_range(argc, example(), 1, 1))
-        return console_result::failure;
-
-    const auto wif = read_stream(std::cin);
-    const auto secret = libwallet::wif_to_secret(wif);
-    if (secret == null_hash)
-    {
-        std::cerr << "Invalid private key." << std::endl;
-        return console_result::failure;
-    }
-
-    std::cout << secret << std::endl;
-    return console_result::okay;
+    // $ sx ec-to-wif 21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc
+    SX_DECLARE_COMMAND(ec_to_wif);
+    command.set_secret_argument({ "21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()

@@ -17,32 +17,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/qrcode.hpp>
+#include <sx/command/ec-to-wif.hpp>
 
 #include <iostream>
 #include <sx/utility/console.hpp>
 
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result qrcode::invoke(std::istream& input, std::ostream& output,
+console_result ec_to_wif::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto filename = get_file_option();
-    auto satoshi = get_address_argument();
+    const auto secret = get_secret_argument();
 
-    cerr << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    output << wif(secret) << std::endl;
+    return console_result::okay;
 }
-
-//#!/bin/bash
-//if [ $# -ne 2 ]; then
-//    echo "Usage: qrcode ADDRESS FILENAME"
-//    exit 1
-//fi
-//command -v qrencode >/dev/null 2>&1 || { echo >&2 "Please install 'qrencode'."; exit 1; }
-//ADDR=$1
-//FILE=$2
-//qrencode bitcoin:$ADDR -o $FILE -s 10
-//

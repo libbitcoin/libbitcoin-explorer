@@ -134,6 +134,11 @@
     <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
   
+  <command symbol="ec-to-wif" category="UTILITY" subcategory="FORMAT (WIF)">
+    <option name="help" description="Convert an elliptic curve secret to a WIF private key." />
+    <argument name="SECRET" stream="true" type="ec_private" description="The value to convert."/>
+  </command>
+  
   <command symbol="embed-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
     <option name="help" description="Generate an address used for embedding a record of data into the blockchain." />
     <argument name="DATA" stream="true" description="The data of which to embed a record."/>
@@ -175,17 +180,17 @@
 
   <command symbol="genaddr" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
     <option name="help" description="Generate a Bitcoin address deterministically from an Electrum wallet." />
-    <define name="SX_GENADDR_OBSOLETE" value="Electrum style key functions are obsolete." />
+    <define name="SX_GENADDR_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
   
   <command symbol="genpriv" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
     <option name="help" description="Generate a private key deterministically from an Electrum seed." />
-    <define name="SX_GENPRIV_OBSOLETE" value="Electrum style key functions are obsolete." />
+    <define name="SX_GENPRIV_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
   <command symbol="genpub" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES"obsolete="true">
     <option name="help" description="Generate a public key deterministically from an Electrum wallet." />
-    <define name="SX_GENPUB_OBSOLETE" value="Electrum style key functions are obsolete." />
+    <define name="SX_GENPUB_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
   <command symbol="get-pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
@@ -250,6 +255,27 @@
     <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
   </command>
   
+  <command symbol="mpk" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+    <option name="help" description="Extract a master public key from a deterministic wallet seed." />
+    <define name="SX_MPK_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
+  </command>
+
+  <command symbol="newkey" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+    <option name="help" description="Create a new Electrum style private key." />
+    <define name="SX_NEWKEY_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
+  </command>
+
+  <command symbol="newseed" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+    <option name="help" description="Create a new Electrum style deterministic wallet seed." />
+    <define name="SX_NEWSEED_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
+  </command>
+
+  <!--<command symbol="pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
+    <option name="help" description="Get the public part of a private key." />
+    <option name="compressed" description="Use compressed public key format." />
+    <option name="uncompressed" description="Use uncompressed public key format." />
+  </command>-->
+  
   <command symbol="qrcode" category="UTILITY" subcategory="MISC" stub="true">
     <option name="help" description="Generate a QR code image file for a Bitcoin address." />
     <option name="FILE" type="path" description="The image file path and file name. If not specified the image is written to STDOUT."/>
@@ -282,6 +308,11 @@
     <option name="help" description="Watch the network for one or more transactions by hash." />
     <argument name="HASH" limit="-1" type="bitcoin256" description="The set of transaction hashes." />
     <define name="SX_WATCHTX_NOT_IMPLEMENTED" value="This command is not yet ported from python." />
+  </command>
+  
+  <command symbol="wif-to-ec" category="UTILITY" subcategory="FORMAT (WIF)">
+    <option name="help" description="Convert a WIF private key to an elliptic curve secret." />
+    <argument name="WIF" stream="true" type="wif" description="The value to convert."/>
   </command>
 
   <command symbol="wrap" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">

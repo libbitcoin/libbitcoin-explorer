@@ -17,25 +17,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <sx/command/newseed.hpp>
+
+#include <iostream>
 #include <sx/utility/console.hpp>
 
-using namespace bc;
-using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result newseed::invoke(int argc, const char* argv[])
+console_result newseed::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 1))
-        return console_result::failure;
-
-    libwallet::deterministic_wallet wallet;
-    wallet.new_seed();
-    std::cout << wallet.seed() << std::endl;
-    return console_result::okay;
+    cerr << SX_NEWSEED_OBSOLETE << std::endl;
+    return console_result::failure;
 }
-

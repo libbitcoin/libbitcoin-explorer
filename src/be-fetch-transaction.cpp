@@ -19,10 +19,10 @@
  */
 #include <sx/command/be-fetch-transaction.hpp>
 
+#include <iostream>
 //#include <sstream>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
-#include <sx/dispatch.hpp>
 #include <sx/utility/console.hpp>
 
 using namespace sx;

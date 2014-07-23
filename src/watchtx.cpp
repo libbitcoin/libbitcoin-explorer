@@ -19,6 +19,7 @@
  */
 #include <sx/command/watchtx.hpp>
 
+#include <iostream>
 #include <sx/utility/console.hpp>
 
 using namespace sx;

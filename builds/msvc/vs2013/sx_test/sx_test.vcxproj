@@ -145,6 +145,7 @@
     <ClCompile Include="..\..\..\..\test\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\addr-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\ec-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\test\embed-addr.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-header-hash.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-header-height.cpp" />
@@ -164,6 +165,9 @@
     <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\history.cpp" />
+    <ClCompile Include="..\..\..\..\test\mpk.cpp" />
+    <ClCompile Include="..\..\..\..\test\newkey.cpp" />
+    <ClCompile Include="..\..\..\..\test\newseed.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />
     <ClCompile Include="..\..\..\..\test\qrcode.cpp" />
@@ -175,6 +179,7 @@
     <ClCompile Include="..\..\..\..\test\main.cpp" />
     <ClCompile Include="..\..\..\..\test\unwrap.cpp" />
     <ClCompile Include="..\..\..\..\test\watchtx.cpp" />
+    <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\wrap.cpp" />
   </ItemGroup>
   <ItemGroup>

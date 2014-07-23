@@ -54,6 +54,9 @@ sx_test_SOURCES = \
     help.cpp \
     history.cpp \
     main.cpp \
+    mpk.cpp \
+    newkey.cpp \
+    newseed.cpp \
     parameter.cpp \
     printer.cpp \
     qrcode.cpp \
@@ -61,6 +64,7 @@ sx_test_SOURCES = \
     stealth-addr.cpp \
     unwrap.cpp \
     watchtx.cpp \
+    wif-to-ec.cpp \
     wrap.cpp
 
 sx_test_LDADD = \

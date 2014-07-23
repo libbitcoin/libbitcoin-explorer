@@ -61,6 +61,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "ec-add-secrets\n" \
         "ec-multiply\n" \
         "ec-multiply-secrets\n" \
+        "ec-to-wif\n" \
         "embed-addr\n" \
         "fetch-header-hash\n" \
         "fetch-header-height\n" \
@@ -80,11 +81,15 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "hd-to-wif\n" \
         "help\n" \
         "history\n" \
+        "mpk\n" \
+        "newkey\n" \
+        "newseed\n" \
         "qrcode\n" \
         "satoshi\n" \
         "stealth-addr\n" \
         "unwrap\n" \
         "watchtx\n" \
+        "wif-to-ec\n" \
         "wrap\n");
 }
 

@@ -40,6 +40,7 @@ libsx_la_SOURCES += \
     ec-add-secrets.cpp \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
+    ec-to-wif.cpp \
     embed-addr.cpp \
     genaddr.cpp \
     genpriv.cpp \
@@ -51,10 +52,14 @@ libsx_la_SOURCES += \
     hd-to-address.cpp \
     hd-to-wif.cpp \
     help.cpp \
+    mpk.cpp \
+    newkey.cpp \
+    newseed.cpp \
     qrcode.cpp \
     satoshi.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
+    wif-to-ec.cpp \
     wrap.cpp
 
 # Generated from XML data source.

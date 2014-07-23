@@ -116,6 +116,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-wif.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\embed-addr.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
@@ -173,6 +176,15 @@
     <ClInclude Include="..\..\..\..\include\sx\command\history.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\mpk.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\newkey.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\newseed.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\qrcode.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
@@ -187,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\watchtx.hpp">
       <Filter>include\command\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp">
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp">
       <Filter>include\command</Filter>
@@ -331,6 +346,9 @@
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-to-wif.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\embed-addr.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
@@ -388,6 +406,15 @@
     <ClCompile Include="..\..\..\..\src\history.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\mpk.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\newkey.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\newseed.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\qrcode.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
@@ -402,6 +429,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\watchtx.cpp">
       <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wif-to-ec.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wrap.cpp">
       <Filter>src\command</Filter>
@@ -493,12 +523,6 @@
     <ClCompile Include="..\..\..\..\src\validsig.cpp">
       <Filter>src\command\todo</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wif-to-secret.cpp">
-      <Filter>src\command\todo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\mpk.cpp">
-      <Filter>src\command\todo\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\initchain.cpp">
       <Filter>src\command\todo\obsolete</Filter>
     </ClCompile>
@@ -507,15 +531,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wallet.cpp">
       <Filter>src\command\todo\experimental</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\newseed.cpp">
-      <Filter>src\command\todo\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\newkey.cpp">
-      <Filter>src\command\todo\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\pubkey.cpp">
-      <Filter>src\command\todo\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
       <Filter>src\command\todo\obelisk</Filter>

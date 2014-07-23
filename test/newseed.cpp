@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,25 +18,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
-#include <sx/command/secret-to-wif.hpp>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-using namespace bc;
-using namespace libwallet;
-using namespace sx;
-using namespace sx::extensions;
+SX_USING_NAMESPACES()
 
-// TODO: rename to ec-to-wif (see hd-to-wif)
-console_result secret_to_wif::invoke(int argc, const char* argv[])
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(newseed__invoke)
+
+BOOST_AUTO_TEST_CASE(newseed__invoke__always__failure_error)
 {
-    if (!validate_argument_range(argc, example(), 1, 1))
-        return console_result::failure;
-
-    const auto secret_hash = read_stream(std::cin);
-    const auto secret = decode_hash(secret_hash);
-    std::cout << libwallet::secret_to_wif(secret) << std::endl;
-    return console_result::okay;
+    // $ sx newseed ...
+    SX_DECLARE_COMMAND(newseed);
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_NEWSEED_OBSOLETE "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()

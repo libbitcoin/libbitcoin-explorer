@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,32 +17,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/qrcode.hpp>
-
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-using namespace sx;
-using namespace sx::extension;
+SX_USING_NAMESPACES()
 
-console_result qrcode::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(mpk__invoke)
+
+BOOST_AUTO_TEST_CASE(mpk__invoke__always__failure_error)
 {
-    // Bound parameters.
-    auto filename = get_file_option();
-    auto satoshi = get_address_argument();
-
-    cerr << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // $ sx mpk ...
+    SX_DECLARE_COMMAND(mpk);
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_MPK_OBSOLETE "\n");
 }
 
-//#!/bin/bash
-//if [ $# -ne 2 ]; then
-//    echo "Usage: qrcode ADDRESS FILENAME"
-//    exit 1
-//fi
-//command -v qrencode >/dev/null 2>&1 || { echo >&2 "Please install 'qrencode'."; exit 1; }
-//ADDR=$1
-//FILE=$2
-//qrencode bitcoin:$ADDR -o $FILE -s 10
-//
+BOOST_AUTO_TEST_SUITE_END()

@@ -183,6 +183,21 @@
     <ClCompile Include="..\..\..\..\test\watchtx.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\newkey.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\newseed.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\mpk.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-to-wif.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

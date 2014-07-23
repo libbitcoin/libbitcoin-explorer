@@ -117,6 +117,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_multiply_secrets__returns_object)
     BOOST_REQUIRE(find(ec_multiply_secrets::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__ec_to_wif__returns_object)
+{
+    BOOST_REQUIRE(find(ec_to_wif::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__embed_addr__returns_object)
 {
     BOOST_REQUIRE(find(embed_addr::symbol()) != nullptr);
@@ -212,6 +217,21 @@ BOOST_AUTO_TEST_CASE(generated__find__history__returns_object)
     BOOST_REQUIRE(find(history::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__mpk__returns_object)
+{
+    BOOST_REQUIRE(find(mpk::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__newkey__returns_object)
+{
+    BOOST_REQUIRE(find(newkey::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__newseed__returns_object)
+{
+    BOOST_REQUIRE(find(newseed::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__qrcode__returns_object)
 {
     BOOST_REQUIRE(find(qrcode::symbol()) != nullptr);
@@ -235,6 +255,11 @@ BOOST_AUTO_TEST_CASE(generated__find__unwrap__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__watchtx__returns_object)
 {
     BOOST_REQUIRE(find(watchtx::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__wif_to_ec__returns_object)
+{
+    BOOST_REQUIRE(find(wif_to_ec::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wrap__returns_object)
