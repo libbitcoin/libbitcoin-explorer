@@ -41,8 +41,6 @@
     <Linkage-czmq>dynamic</Linkage-czmq>
     <Linkage-libzmq>dynamic</Linkage-libzmq>
     <Linkage-libsodium>dynamic</Linkage-libsodium>
-    <Linkage-libconfig>dynamic</Linkage-libconfig>
-    <Linkage-pdcurses>dynamic</Linkage-pdcurses>
     <Linkage-obelisk>dynamic</Linkage-obelisk>
     <Linkage-libwallet>dynamic</Linkage-libwallet>
     <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
@@ -56,8 +54,6 @@
     <Linkage-czmq>ltcg</Linkage-czmq>
     <Linkage-libzmq>ltcg</Linkage-libzmq>
     <Linkage-libsodium>ltcg</Linkage-libsodium>
-    <Linkage-libconfig>ltcg</Linkage-libconfig>
-    <Linkage-pdcurses>ltcg</Linkage-pdcurses>
     <Linkage-obelisk>ltcg</Linkage-obelisk>
     <Linkage-libwallet>ltcg</Linkage-libwallet>
     <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
@@ -71,8 +67,6 @@
     <Linkage-czmq>static</Linkage-czmq>
     <Linkage-libzmq>static</Linkage-libzmq>
     <Linkage-libsodium>static</Linkage-libsodium>
-    <Linkage-libconfig>static</Linkage-libconfig>
-    <Linkage-pdcurses>static</Linkage-pdcurses>
     <Linkage-obelisk>static</Linkage-obelisk>
     <Linkage-libwallet>static</Linkage-libwallet>
     <Linkage-libbitcoin>static</Linkage-libbitcoin>
@@ -93,8 +87,6 @@
     <Message Text="Linkage-czmq      : $(Linkage-czmq)" Importance="high"/>
     <Message Text="Linkage-libzmq    : $(Linkage-libzmq)" Importance="high"/>
     <Message Text="Linkage-libsodium : $(Linkage-libsodium)" Importance="high"/>
-    <Message Text="Linkage-libconfig : $(Linkage-libconfig)" Importance="high"/>
-    <Message Text="Linkage-pdcurses  : $(Linkage-pdcurses)" Importance="high"/>
     <Message Text="Linkage-obelisk   : $(Linkage-obelisk)" Importance="high"/>
     <Message Text="Linkage-libwallet : $(Linkage-libwallet)" Importance="high"/>
     <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
