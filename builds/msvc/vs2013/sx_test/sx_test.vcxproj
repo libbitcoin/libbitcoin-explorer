@@ -149,7 +149,7 @@
     <ClCompile Include="..\..\..\..\test\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\addr-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-to-wif.cpp" />
-    <ClCompile Include="..\..\..\..\test\embed-addr.cpp" />
+    <ClCompile Include="..\..\..\..\test\addr-embed.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-header-hash.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-header-height.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-last-height.cpp" />
@@ -168,6 +168,8 @@
     <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\history.cpp" />
+    <ClCompile Include="..\..\..\..\test\initchain.cpp" />
+    <ClCompile Include="..\..\..\..\test\monitor.cpp" />
     <ClCompile Include="..\..\..\..\test\mpk.cpp" />
     <ClCompile Include="..\..\..\..\test\newkey.cpp" />
     <ClCompile Include="..\..\..\..\test\newseed.cpp" />
@@ -176,7 +178,7 @@
     <ClCompile Include="..\..\..\..\test\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\test\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\test\satoshi.cpp" />
-    <ClCompile Include="..\..\..\..\test\sha1.cpp" />
+    <ClCompile Include="..\..\..\..\test\sha160.cpp" />
     <ClCompile Include="..\..\..\..\test\sha256.cpp" />
     <ClCompile Include="..\..\..\..\test\sha512.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth-addr.cpp" />
@@ -185,6 +187,7 @@
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
     <ClCompile Include="..\..\..\..\test\unwrap.cpp" />
+    <ClCompile Include="..\..\..\..\test\wallet.cpp" />
     <ClCompile Include="..\..\..\..\test\watchtx.cpp" />
     <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\wrap.cpp" />

@@ -36,6 +36,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__no_command__failure_error)
     SX_REQUIRE_ERROR("");
 }
 
+// TODO: generate this test and use localized symbol.
 BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
 {
     // $ sx help booger
@@ -84,17 +85,20 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "hd-to-wif\n" \
         "help\n" \
         "history\n" \
+        "initchain\n" \
+        "monitor\n" \
         "mpk\n" \
         "newkey\n" \
         "newseed\n" \
         "qrcode\n" \
         "ripemd160\n" \
         "satoshi\n" \
-        "sha1\n" \
+        "sha160\n" \
         "sha256\n" \
         "sha512\n" \
         "stealth-addr\n" \
         "unwrap\n" \
+        "wallet\n" \
         "watchtx\n" \
         "wif-to-ec\n" \
         "wrap\n");

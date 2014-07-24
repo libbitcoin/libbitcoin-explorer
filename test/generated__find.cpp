@@ -232,6 +232,16 @@ BOOST_AUTO_TEST_CASE(generated__find__history__returns_object)
     BOOST_REQUIRE(find(history::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__initchain__returns_object)
+{
+    BOOST_REQUIRE(find(initchain::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__monitor__returns_object)
+{
+    BOOST_REQUIRE(find(monitor::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__mpk__returns_object)
 {
     BOOST_REQUIRE(find(mpk::symbol()) != nullptr);
@@ -262,9 +272,9 @@ BOOST_AUTO_TEST_CASE(generated__find__satoshi__returns_object)
     BOOST_REQUIRE(find(satoshi::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__sha1__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__sha160__returns_object)
 {
-    BOOST_REQUIRE(find(sha1::symbol()) != nullptr);
+    BOOST_REQUIRE(find(sha160::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__sha256__returns_object)
@@ -285,6 +295,11 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_addr__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__unwrap__returns_object)
 {
     BOOST_REQUIRE(find(unwrap::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__wallet__returns_object)
+{
+    BOOST_REQUIRE(find(wallet::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__watchtx__returns_object)

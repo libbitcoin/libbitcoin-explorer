@@ -232,6 +232,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__history__returns_expected_value)
     BOOST_REQUIRE(history::symbol() == std::string("history"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__initchain__returns_expected_value)
+{
+    BOOST_REQUIRE(initchain::symbol() == std::string("initchain"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__monitor__returns_expected_value)
+{
+    BOOST_REQUIRE(monitor::symbol() == std::string("monitor"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__mpk__returns_expected_value)
 {
     BOOST_REQUIRE(mpk::symbol() == std::string("mpk"));
@@ -262,9 +272,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__satoshi__returns_expected_value)
     BOOST_REQUIRE(satoshi::symbol() == std::string("satoshi"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__sha1__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__sha160__returns_expected_value)
 {
-    BOOST_REQUIRE(sha1::symbol() == std::string("sha1"));
+    BOOST_REQUIRE(sha160::symbol() == std::string("sha160"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__sha256__returns_expected_value)
@@ -285,6 +295,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__unwrap__returns_expected_value)
 {
     BOOST_REQUIRE(unwrap::symbol() == std::string("unwrap"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__wallet__returns_expected_value)
+{
+    BOOST_REQUIRE(wallet::symbol() == std::string("wallet"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__watchtx__returns_expected_value)

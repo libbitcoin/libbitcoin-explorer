@@ -133,7 +133,7 @@ public:
             (
                 "COMMAND",
                 value<std::string>(&argument_.command),
-                "The COMMAND."
+                "The command for which help is requested."
             );
 
         return options;

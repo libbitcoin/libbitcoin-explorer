@@ -1164,18 +1164,12 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\initchain.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\mnemonic.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\monitor.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>  
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -1233,13 +1227,10 @@ endif
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-.   if (!is_xml_true(leveldb) & !is_xml_true(obelisk))
+.   if (!is_xml_true(obelisk))
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp" />
 .   else
     <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
-.       if (is_xml_true(leveldb))
-      <ExcludedFromBuild Condition="'$\(Option-leveldb)' != 'true'">true</ExcludedFromBuild>
-.       endif
 .       if (is_xml_true(obelisk))
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
 .       endif
@@ -1250,9 +1241,6 @@ endif
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\validtx.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\wallet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
@@ -1349,12 +1337,6 @@ endif
     </Filter>
     <Filter Include="src\\command\\todo">
       <UniqueIdentifier>{186b583d-9017-424c-8916-26eaa0373abf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\\command\\todo\\experimental">
-      <UniqueIdentifier>{6828e775-f238-4b73-9d18-4c8421cadc8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\\command\\todo\\obsolete">
-      <UniqueIdentifier>{0f120330-c748-4232-b483-e044bec27e39}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\\command\\todo\\obelisk">
       <UniqueIdentifier>{bca50241-1338-43f2-be5b-dd5ff643ba99}</UniqueIdentifier>
@@ -1556,15 +1538,6 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
       <Filter>src\\command\\todo\\satoshi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\initchain.cpp">
-      <Filter>src\\command\\todo\\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\monitor.cpp">
-      <Filter>src\\command\\todo\\experimental</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\wallet.cpp">
-      <Filter>src\\command\\todo\\experimental</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sendtx-p2p.cpp">
       <Filter>src\\command\\todo\\obelisk</Filter>

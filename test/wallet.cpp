@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,26 +17,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/sha1.hpp>
-
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
-using namespace bc;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+SX_USING_NAMESPACES()
 
-// 100% coverage by line, loc ready.
-console_result sha1::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(wallet__invoke)
+
+BOOST_AUTO_TEST_CASE(gwallet__invoke__always__failure_error)
 {
-    // Bound parameters.
-    const data_chunk hex = get_hex_argument();
-
-    const auto hash = sha1_hash(hex);
-
-    output << bytes(hash) << std::endl;
-    return console_result::okay;
+    // $ sx wallet ...
+    SX_DECLARE_COMMAND(wallet);
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_WALLET_OBSOLETE "\n");
 }
+
+BOOST_AUTO_TEST_SUITE_END()

@@ -26,15 +26,14 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(sha1__invoke)
+BOOST_AUTO_TEST_SUITE(monitor__invoke)
 
-BOOST_AUTO_TEST_CASE(sha1__invoke__always__okay_output)
+BOOST_AUTO_TEST_CASE(monitor__invoke__always__failure_error)
 {
-    // $ sx sha1 900df00d
-    SX_DECLARE_COMMAND(sha1);
-    command.set_hex_argument({ "900df00d" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    SX_REQUIRE_OUTPUT("ec5386a03e88b5ac9328f4eabe5103e601906daa\n");
+    // $ sx monitor ...
+    SX_DECLARE_COMMAND(monitor);
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_MONITOR_OBSOLETE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

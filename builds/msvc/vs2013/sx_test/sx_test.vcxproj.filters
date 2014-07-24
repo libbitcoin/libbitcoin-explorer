@@ -37,6 +37,9 @@
     <Filter Include="src\tests\command\key">
       <UniqueIdentifier>{2f4ddd10-a13e-442d-897c-86189cab0184}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\tests\command\stealth">
+      <UniqueIdentifier>{e9f4a201-0e1a-4741-bced-90f025a0f2a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\main.cpp">
@@ -56,15 +59,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\printer.cpp">
       <Filter>src\tests\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wrap.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\unwrap.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-addr.cpp">
-      <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp">
       <Filter>src\tests</Filter>
@@ -156,9 +150,6 @@
     <ClCompile Include="..\..\..\..\test\mpk.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\base58-decode.cpp">
       <Filter>src\tests\command\encoding</Filter>
     </ClCompile>
@@ -172,9 +163,6 @@
       <Filter>src\tests\command\encoding</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\ripemd160.cpp">
-      <Filter>src\tests\command\encoding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\sha1.cpp">
       <Filter>src\tests\command\encoding</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\sha256.cpp">
@@ -222,10 +210,34 @@
     <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp">
       <Filter>src\tests\command\key</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\embed-addr.cpp">
+    <ClCompile Include="..\..\..\..\test\addr-validate.cpp">
+      <Filter>src\tests\command\key</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\addr-embed.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\addr-validate.cpp">
+    <ClCompile Include="..\..\..\..\test\monitor.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\wallet.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\initchain.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\sha160.cpp">
+      <Filter>src\tests\command\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-addr.cpp">
+      <Filter>src\tests\command\stealth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\unwrap.cpp">
+      <Filter>src\tests\command\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\wrap.cpp">
+      <Filter>src\tests\command\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp">
       <Filter>src\tests\command\key</Filter>
     </ClCompile>
   </ItemGroup>

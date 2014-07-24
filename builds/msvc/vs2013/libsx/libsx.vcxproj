@@ -148,17 +148,20 @@
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\history.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\initchain.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\monitor.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\mpk.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\newkey.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\newseed.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\qrcode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ripemd160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\sha1.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\watchtx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp" />
@@ -167,18 +170,12 @@
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />
-    <ClCompile Include="..\..\..\..\src\initchain.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\mktx.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\mnemonic.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\monitor.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>  
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -294,17 +291,20 @@
     <ClCompile Include="..\..\..\..\src\history.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\initchain.cpp" />
+    <ClCompile Include="..\..\..\..\src\monitor.cpp" />
     <ClCompile Include="..\..\..\..\src\mpk.cpp" />
     <ClCompile Include="..\..\..\..\src\newkey.cpp" />
     <ClCompile Include="..\..\..\..\src\newseed.cpp" />
     <ClCompile Include="..\..\..\..\src\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\src\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
-    <ClCompile Include="..\..\..\..\src\sha1.cpp" />
+    <ClCompile Include="..\..\..\..\src\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\sha512.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
+    <ClCompile Include="..\..\..\..\src\wallet.cpp" />
     <ClCompile Include="..\..\..\..\src\watchtx.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -314,9 +314,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validtx.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wallet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>

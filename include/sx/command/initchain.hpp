@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_WIF_TO_HD_HPP
-#define SX_WIF_TO_HD_HPP
+#ifndef SX_INITCHAIN_HPP
+#define SX_INITCHAIN_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,9 +52,15 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx wif-to-hd command.
+ * Various localizable strings.
  */
-class wif_to_hd 
+#define SX_INITCHAIN_OBSOLETE \
+    "Server administration tools are no longer supported."
+
+/**
+ * Class to implement the sx initchain command.
+ */
+class initchain 
     : public command
 {
 public:
@@ -62,14 +68,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "wif-to-hd"; }
+    static const char* symbol() { return "initchain"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return wif_to_hd::symbol();
+        return initchain::symbol();
     }
 
     /**
@@ -77,7 +83,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
+        return "ONLINE (OBELISK)";
     }
 
     /**
@@ -85,7 +91,7 @@ public:
      */
     const char* subcategory()
     {
-        return "FORMAT (WIF)";
+        return "OBELISK ADMIN";
     }
 
     /**
@@ -96,8 +102,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("WIF", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -122,12 +127,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a WIF private key to a HD (BIP32) private key."
-            )
-            (
-                "WIF",
-                value<wif>(&argument_.wif),
-                "The value to convert."
+                "Initialize a new blockchain database."
             );
 
         return options;
@@ -141,9 +141,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto wif = variables.find("WIF");
-        if (wif == variables.end())
-            parse(argument_.wif, read_stream(input));
     }
 
     /**
@@ -158,22 +155,6 @@ public:
         std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the WIF argument.
-     */
-    virtual wif get_wif_argument()
-    {
-        return argument_.wif;
-    }
-    
-    /**
-     * Set the value of the WIF argument.
-     */
-    virtual void set_wif_argument(wif value)
-    {
-        argument_.wif = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -201,9 +182,7 @@ private:
     struct argument
     {
         argument()
-          : wif()
             {}
-        wif wif;
     } argument_;
     
     /**

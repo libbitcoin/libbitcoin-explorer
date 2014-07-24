@@ -77,17 +77,20 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<hd_to_wif>());
     func(make_shared<help>());
     func(make_shared<history>());
+    func(make_shared<initchain>());
+    func(make_shared<monitor>());
     func(make_shared<mpk>());
     func(make_shared<newkey>());
     func(make_shared<newseed>());
     func(make_shared<qrcode>());
     func(make_shared<ripemd160>());
     func(make_shared<satoshi>());
-    func(make_shared<sha1>());
+    func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
+    func(make_shared<wallet>());
     func(make_shared<watchtx>());
     func(make_shared<wif_to_ec>());
     func(make_shared<wrap>());
@@ -179,6 +182,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<help>();
     if (symbol == history::symbol())
         return make_shared<history>();
+    if (symbol == initchain::symbol())
+        return make_shared<initchain>();
+    if (symbol == monitor::symbol())
+        return make_shared<monitor>();
     if (symbol == mpk::symbol())
         return make_shared<mpk>();
     if (symbol == newkey::symbol())
@@ -191,8 +198,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ripemd160>();
     if (symbol == satoshi::symbol())
         return make_shared<satoshi>();
-    if (symbol == sha1::symbol())
-        return make_shared<sha1>();
+    if (symbol == sha160::symbol())
+        return make_shared<sha160>();
     if (symbol == sha256::symbol())
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
@@ -201,6 +208,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<stealth_addr>();
     if (symbol == unwrap::symbol())
         return make_shared<unwrap>();
+    if (symbol == wallet::symbol())
+        return make_shared<wallet>();
     if (symbol == watchtx::symbol())
         return make_shared<watchtx>();
     if (symbol == wif_to_ec::symbol())

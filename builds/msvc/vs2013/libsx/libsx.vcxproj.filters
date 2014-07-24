@@ -51,12 +51,6 @@
     <Filter Include="src\command\todo">
       <UniqueIdentifier>{186b583d-9017-424c-8916-26eaa0373abf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\command\todo\experimental">
-      <UniqueIdentifier>{6828e775-f238-4b73-9d18-4c8421cadc8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\command\todo\obsolete">
-      <UniqueIdentifier>{0f120330-c748-4232-b483-e044bec27e39}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\command\todo\obelisk">
       <UniqueIdentifier>{bca50241-1338-43f2-be5b-dd5ff643ba99}</UniqueIdentifier>
     </Filter>
@@ -194,6 +188,12 @@
     <ClInclude Include="..\..\..\..\include\sx\command\history.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\initchain.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\monitor.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\mpk.hpp">
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
@@ -212,7 +212,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\sha1.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\sha160.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp">
@@ -226,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp">
       <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp">
+      <Filter>include\command\obsolete</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\watchtx.hpp">
       <Filter>include\command\stub</Filter>
@@ -445,6 +448,12 @@
     <ClCompile Include="..\..\..\..\src\history.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\initchain.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\monitor.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\mpk.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
@@ -463,7 +472,7 @@
     <ClCompile Include="..\..\..\..\src\satoshi.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sha1.cpp">
+    <ClCompile Include="..\..\..\..\src\sha160.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sha256.cpp">
@@ -477,6 +486,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\unwrap.cpp">
       <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wallet.cpp">
+      <Filter>src\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\watchtx.cpp">
       <Filter>src\command\stub</Filter>
@@ -561,15 +573,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validsig.cpp">
       <Filter>src\command\todo\satoshi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\initchain.cpp">
-      <Filter>src\command\todo\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\monitor.cpp">
-      <Filter>src\command\todo\experimental</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wallet.cpp">
-      <Filter>src\command\todo\experimental</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
       <Filter>src\command\todo\obelisk</Filter>

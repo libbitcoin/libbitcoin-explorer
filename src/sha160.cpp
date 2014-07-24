@@ -17,17 +17,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/wallet.hpp>
+#include <sx/command/sha160.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/utility/console.hpp>
 
- using namespace sx;
- using namespace sx::extension;
+using namespace bc;
+using namespace sx;
+using namespace sx::extension;
+using namespace sx::serializer;
 
- console_result wallet::invoke(std::istream& input, std::ostream& output,
-     std::ostream& cerr)
- {
-     cerr << SX_WALLET_OBSOLETE << std::endl;
-     return console_result::failure;
- }
+// 100% coverage by line, loc ready.
+console_result sha160::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
+{
+    // Bound parameters.
+    const data_chunk hex = get_hex_argument();
+
+    const auto hash = sha1_hash(hex);
+
+    output << bytes(hash) << std::endl;
+    return console_result::okay;
+}

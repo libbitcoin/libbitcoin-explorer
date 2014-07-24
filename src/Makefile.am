@@ -55,17 +55,20 @@ libsx_la_SOURCES += \
     hd-to-address.cpp \
     hd-to-wif.cpp \
     help.cpp \
+    initchain.cpp \
+    monitor.cpp \
     mpk.cpp \
     newkey.cpp \
     newseed.cpp \
     qrcode.cpp \
     ripemd160.cpp \
     satoshi.cpp \
-    sha1.cpp \
+    sha160.cpp \
     sha256.cpp \
     sha512.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
+    wallet.cpp \
     wif-to-ec.cpp \
     wrap.cpp
 

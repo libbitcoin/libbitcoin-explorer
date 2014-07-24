@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,17 +17,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/wallet.hpp>
-
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test_suite.hpp>
+#include <sx/sx.hpp>
+#include "command.hpp"
 
- using namespace sx;
- using namespace sx::extension;
+SX_USING_NAMESPACES()
 
- console_result wallet::invoke(std::istream& input, std::ostream& output,
-     std::ostream& cerr)
- {
-     cerr << SX_WALLET_OBSOLETE << std::endl;
-     return console_result::failure;
- }
+// This is a namespace for tests by class/file__method/function.
+BOOST_AUTO_TEST_SUITE(initchain__invoke)
+
+BOOST_AUTO_TEST_CASE(initchain__invoke__always__failure_error)
+{
+    // $ sx initchain ...
+    SX_DECLARE_COMMAND(initchain);
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_INITCHAIN_OBSOLETE "\n");
+}
+
+BOOST_AUTO_TEST_SUITE_END()

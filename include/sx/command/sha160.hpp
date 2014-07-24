@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_PUBKEY_HPP
-#define SX_PUBKEY_HPP
+#ifndef SX_SHA160_HPP
+#define SX_SHA160_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,9 +52,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx pubkey command.
+ * Class to implement the sx sha160 command.
  */
-class pubkey 
+class sha160 
     : public command
 {
 public:
@@ -62,14 +62,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "pubkey"; }
+    static const char* symbol() { return "sha160"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return pubkey::symbol();
+        return sha160::symbol();
     }
 
     /**
@@ -77,7 +77,7 @@ public:
      */
     const char* category()
     {
-        return "OFFLINE KEYS AND ADDRESSES";
+        return "UTILITY";
     }
 
     /**
@@ -85,7 +85,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BASIC";
+        return "HASHES";
     }
 
     /**
@@ -96,7 +96,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("HEX", 1);
     }
     
     /**
@@ -121,17 +122,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the public part of a private key."
+                "Perform a SHA160 (also known as SHA-1) hash of data."
             )
             (
-                "compressed,c",
-                value<bool>(&option_.compressed)->implicit_value(true),
-                "Use compressed public key format."
-            )
-            (
-                "uncompressed,u",
-                value<bool>(&option_.uncompressed)->implicit_value(true),
-                "Use uncompressed public key format."
+                "HEX",
+                value<serializer::bytes>(&argument_.hex),
+                "The hex string to hash."
             );
 
         return options;
@@ -145,6 +141,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto hex = variables.find("HEX");
+        if (hex == variables.end())
+            parse(argument_.hex, read_stream(input));
     }
 
     /**
@@ -159,6 +158,22 @@ public:
         std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the HEX argument.
+     */
+    virtual serializer::bytes get_hex_argument()
+    {
+        return argument_.hex;
+    }
+    
+    /**
+     * Set the value of the HEX argument.
+     */
+    virtual void set_hex_argument(serializer::bytes value)
+    {
+        argument_.hex = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -176,38 +191,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the compressed option.
-     */
-    virtual bool get_compressed_option()
-    {
-        return option_.compressed;
-    }
-    
-    /**
-     * Set the value of the compressed option.
-     */
-    virtual void set_compressed_option(bool value)
-    {
-        option_.compressed = value;
-    }
-
-    /**
-     * Get the value of the uncompressed option.
-     */
-    virtual bool get_uncompressed_option()
-    {
-        return option_.uncompressed;
-    }
-    
-    /**
-     * Set the value of the uncompressed option.
-     */
-    virtual void set_uncompressed_option(bool value)
-    {
-        option_.uncompressed = value;
-    }
-
 private:
 
     /**
@@ -218,7 +201,9 @@ private:
     struct argument
     {
         argument()
+          : hex()
             {}
+        serializer::bytes hex;
     } argument_;
     
     /**
@@ -229,13 +214,9 @@ private:
     struct option
     {
         option()
-          : help(),
-            compressed(),
-            uncompressed()
+          : help()
             {}    
         bool help;
-        bool compressed;
-        bool uncompressed;
     } option_;
 };
 

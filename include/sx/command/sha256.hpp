@@ -122,7 +122,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Perform a simple SHA256 hash of data."
+                "Perform a SHA256 hash of data."
             )
             (
                 "HEX",

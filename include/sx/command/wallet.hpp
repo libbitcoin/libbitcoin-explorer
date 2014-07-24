@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_EMBED_ADDR_HPP
-#define SX_EMBED_ADDR_HPP
+#ifndef SX_WALLET_HPP
+#define SX_WALLET_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -54,13 +54,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_EMBED_ADDR_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define SX_WALLET_OBSOLETE \
+    "This experimental command is no longer supported."
 
 /**
- * Class to implement the sx embed-addr command.
+ * Class to implement the sx wallet command.
  */
-class embed_addr 
+class wallet 
     : public command
 {
 public:
@@ -68,14 +68,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "embed-addr"; }
+    static const char* symbol() { return "wallet"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return embed_addr::symbol();
+        return wallet::symbol();
     }
 
     /**
@@ -83,7 +83,7 @@ public:
      */
     const char* category()
     {
-        return "OFFLINE KEYS AND ADDRESSES";
+        return "EXPERIMENTAL";
     }
 
     /**
@@ -91,7 +91,7 @@ public:
      */
     const char* subcategory()
     {
-        return "BASIC";
+        return "APPS";
     }
 
     /**
@@ -102,8 +102,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("DATA", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -128,12 +127,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Generate an address used for embedding a record of data into the blockchain."
-            )
-            (
-                "DATA",
-                value<std::string>(&argument_.data),
-                "The data of which to embed a record."
+                "Experimental command line wallet."
             );
 
         return options;
@@ -147,9 +141,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto data = variables.find("DATA");
-        if (data == variables.end())
-            parse(argument_.data, read_stream(input));
     }
 
     /**
@@ -164,22 +155,6 @@ public:
         std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the DATA argument.
-     */
-    virtual std::string get_data_argument()
-    {
-        return argument_.data;
-    }
-    
-    /**
-     * Set the value of the DATA argument.
-     */
-    virtual void set_data_argument(std::string value)
-    {
-        argument_.data = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -207,9 +182,7 @@ private:
     struct argument
     {
         argument()
-          : data()
             {}
-        std::string data;
     } argument_;
     
     /**

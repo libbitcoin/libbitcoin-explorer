@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_SHA1_HPP
-#define SX_SHA1_HPP
+#ifndef SX_MONITOR_HPP
+#define SX_MONITOR_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -52,9 +52,15 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx sha1 command.
+ * Various localizable strings.
  */
-class sha1 
+#define SX_MONITOR_OBSOLETE \
+    "This experimental command is no longer supported."
+
+/**
+ * Class to implement the sx monitor command.
+ */
+class monitor 
     : public command
 {
 public:
@@ -62,14 +68,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "sha1"; }
+    static const char* symbol() { return "monitor"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return sha1::symbol();
+        return monitor::symbol();
     }
 
     /**
@@ -77,7 +83,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
+        return "ONLINE (OBELISK)";
     }
 
     /**
@@ -85,7 +91,7 @@ public:
      */
     const char* subcategory()
     {
-        return "HASHES";
+        return "BLOCKCHAIN WATCHING";
     }
 
     /**
@@ -96,8 +102,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("HEX", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -122,12 +127,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Perform a simple SHA1 hash of data."
-            )
-            (
-                "HEX",
-                value<serializer::bytes>(&argument_.hex),
-                "The hex string to hash."
+                "Monitor an address prefix."
             );
 
         return options;
@@ -141,9 +141,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto hex = variables.find("HEX");
-        if (hex == variables.end())
-            parse(argument_.hex, read_stream(input));
     }
 
     /**
@@ -158,22 +155,6 @@ public:
         std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the HEX argument.
-     */
-    virtual serializer::bytes get_hex_argument()
-    {
-        return argument_.hex;
-    }
-    
-    /**
-     * Set the value of the HEX argument.
-     */
-    virtual void set_hex_argument(serializer::bytes value)
-    {
-        argument_.hex = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -201,9 +182,7 @@ private:
     struct argument
     {
         argument()
-          : hex()
             {}
-        serializer::bytes hex;
     } argument_;
     
     /**
