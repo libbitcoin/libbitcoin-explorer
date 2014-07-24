@@ -1217,7 +1217,7 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp" />
@@ -1259,7 +1259,6 @@ endif
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.55.0.16\\build\\native\\boost_date_time-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.55.0.16\\build\\native\\boost_date_time-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -1278,7 +1277,6 @@ endif
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.55.0.16\\build\\native\\boost_date_time-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.55.0.16\\build\\native\\boost_date_time-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.55.0.16\\build\\native\\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.55.0.16\\build\\native\\boost_system-vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\pdcurses_vc120.3.4.0.3\\build\\native\\pdcurses_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.55.0.16\\build\\native\\boost_program_options-vc120.targets'))" />
   </Target>
 </Project>
