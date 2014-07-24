@@ -34,11 +34,11 @@
     <Filter Include="src\tests\command\encoding">
       <UniqueIdentifier>{348bf824-7d22-4845-a276-d39986f7e5d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\tests\command\key">
-      <UniqueIdentifier>{2f4ddd10-a13e-442d-897c-86189cab0184}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\tests\command\stealth">
       <UniqueIdentifier>{e9f4a201-0e1a-4741-bced-90f025a0f2a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tests\command\wallet">
+      <UniqueIdentifier>{2f4ddd10-a13e-442d-897c-86189cab0184}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -172,46 +172,46 @@
       <Filter>src\tests\command\encoding</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\addr.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\addr-decode.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\addr-encode.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-add.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-add-secrets.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-multiply.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-multiply-secrets.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-to-wif.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-priv.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-pub.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-seed.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-to-address.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\addr-validate.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\addr-embed.cpp">
       <Filter>src\tests\command\stub</Filter>
@@ -238,7 +238,7 @@
       <Filter>src\tests\command\encoding</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp">
-      <Filter>src\tests\command\key</Filter>
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
