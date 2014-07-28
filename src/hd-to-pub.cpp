@@ -34,7 +34,7 @@ console_result hd_to_pub::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto secret = get_secret_argument();
+    const auto secret = get_secret_argument();
     
     // TODO: verify that all HD public keys are compressed.
 

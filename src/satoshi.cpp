@@ -29,7 +29,7 @@ console_result satoshi::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto btc = get_btc_argument();
+    const auto btc = get_btc_argument();
 
     // TODO: parse and validate input and multiply by 10^8.
     cerr << SX_SATOSHI_NOT_IMPLEMENTED << std::endl;

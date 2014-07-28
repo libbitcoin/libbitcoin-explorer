@@ -57,7 +57,7 @@ console_result fetch_transaction_index::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto hash = get_hash_argument();
+    const auto hash = get_hash_argument();
 
     node_stopped = false;
     result = console_result::okay;

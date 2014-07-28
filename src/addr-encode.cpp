@@ -37,7 +37,8 @@ console_result addr_encode::invoke(std::istream& input,
     const auto ripemd160 = get_ripemd160_argument();
     const auto version = get_version_option();
 
-    auto pay_address = payment_address(version, ripemd160);
+    // TESTNET VERSION MAY REQUIRE RECOMPILE
+    const auto pay_address = payment_address(version, ripemd160);
 
     output << address(pay_address) << std::endl;
     return console_result::okay;

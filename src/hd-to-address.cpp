@@ -33,12 +33,13 @@ console_result hd_to_address::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto key = get_key_argument();
+    const auto key = get_key_argument();
 
     // Get public from private and otherwise get public.
-    auto public_key = key.derived_public_key();
+    const auto public_key = key.derived_public_key();
 
     // RECOMPILE OF LIBBITCOIN REQUIRED FOR TESTNET ADDRESSES.
+
     output << address(public_key) << std::endl;
     return console_result::okay;
 }

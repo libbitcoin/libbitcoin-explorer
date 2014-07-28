@@ -29,7 +29,7 @@ console_result base58check_decode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto base58check = get_base58check_argument();
+    const auto base58check = get_base58check_argument();
 
     // TODO: consider obsoleting this since it can be accessed via
     // wrap/unwrap and base58-encode/base58-decode

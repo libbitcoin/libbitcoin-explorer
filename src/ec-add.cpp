@@ -34,7 +34,7 @@ console_result ec_add::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     auto point = get_point_argument();
-    auto secret = get_secret_argument();
+    const auto secret = get_secret_argument();
 
     // Elliptic curve function POINT + (INTEGER * curve-generator-point).
     if (!bc::ec_add(point.data(), secret))

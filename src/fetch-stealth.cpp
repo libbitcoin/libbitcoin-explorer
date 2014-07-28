@@ -62,8 +62,8 @@ console_result fetch_stealth::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto height = get_height_option();
-    auto prefix = get_prefix_argument();
+    const auto height = get_height_option();
+    const auto prefix = get_prefix_argument();
 
     // TODO: verify that these are equivalent.
     //stealth_prefix bitfield_prefix(prefix_str);

@@ -34,19 +34,13 @@ console_result ec_to_addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto point = get_point_argument();
-    auto version = get_version_option();
-
-    // TODO: generate a flag to indicate whether optional values are set.
-    bool versioned = true;
+    const auto point = get_point_argument();
+    const auto version = get_version_option();
 
     // Get the public key's payment address.
-    auto ripemd160 = bitcoin_short_hash(point);
+    const auto ripemd160 = bitcoin_short_hash(point);
 
-    // WARNING: pubkey_version varies by libbitcoin testnet *compilation* flag.
-    // TODO: make libbitcoin testnet dynamic and then do the same here.
-    // auto testnet = get_general_testnet_setting();
-    version = if_else(versioned, version, payment_address::pubkey_version);
+    // TESTNET VERSION MAY REQUIRE RECOMPILE
     payment_address pay_address(version, ripemd160);
 
     output << address(pay_address) << std::endl;

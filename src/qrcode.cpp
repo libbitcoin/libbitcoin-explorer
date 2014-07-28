@@ -29,8 +29,8 @@ console_result qrcode::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto filename = get_file_option();
-    auto satoshi = get_address_argument();
+    const auto filename = get_file_option();
+    const auto satoshi = get_address_argument();
 
     cerr << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

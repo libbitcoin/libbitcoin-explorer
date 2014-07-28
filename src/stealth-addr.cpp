@@ -39,7 +39,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     auto signatures = get_signatures_option();
-    auto reuse_key = get_reuse_key_option();
+    const auto reuse_key = get_reuse_key_option();
     const ec_point scan_key = get_scan_key_argument();
     const auto spend_keys = get_spend_keys_argument();
 

@@ -31,5 +31,6 @@ console_result ec_new::invoke(std::istream& input, std::ostream& output,
     const auto seed = get_seed_argument();
 
     // TODO
+
     return console_result::failure;
 }

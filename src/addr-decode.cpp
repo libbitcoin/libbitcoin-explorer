@@ -39,4 +39,3 @@ console_result addr_decode::invoke(std::istream& input,
     output << sx::serializer::bitcoin160(address) << std::endl;
     return console_result::okay;
 }
-

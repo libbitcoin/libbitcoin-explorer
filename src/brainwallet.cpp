@@ -29,9 +29,9 @@ console_result brainwallet::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto algorithm = get_algorithm_option();
-    auto password = get_password_argument();
-    auto username = get_username_argument();
+    const auto algorithm = get_algorithm_option();
+    const auto password = get_password_argument();
+    const auto username = get_username_argument();
 
     cerr << SX_BRAINWALLET_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

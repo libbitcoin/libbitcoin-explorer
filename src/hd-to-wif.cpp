@@ -35,7 +35,7 @@ console_result hd_to_wif::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    hd_private_key secret = get_secret_argument();
+    const hd_private_key secret = get_secret_argument();
 
     // TODO: verify that all HD public keys are compressed.
 

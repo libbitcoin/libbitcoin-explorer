@@ -29,7 +29,7 @@ console_result watchtx::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto hashes = get_hashs_argument();
+    const auto hashes = get_hashs_argument();
 
     cerr << SX_WATCHTX_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

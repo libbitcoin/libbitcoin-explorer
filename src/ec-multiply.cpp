@@ -34,7 +34,7 @@ console_result ec_multiply::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     auto point = get_point_argument();
-    auto secret = get_secret_argument();
+    const auto secret = get_secret_argument();
 
     // Elliptic curve product (POINT * INTEGER).
     if (!bc::ec_multiply(point.data(), secret))

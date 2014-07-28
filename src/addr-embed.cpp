@@ -29,7 +29,7 @@ console_result addr_embed::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto data = get_file_argument();
+    const auto data = get_file_argument();
 
     cerr << SX_ADDR_EMBED_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

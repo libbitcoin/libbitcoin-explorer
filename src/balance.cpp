@@ -134,7 +134,7 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
     // Bound parameters.
     // TODO: improve generated property pluralization.
     auto addresses = get_addresss_argument();
-    auto json = get_json_option();
+    const auto json = get_json_option();
 
     // TODO: implement support for defaulting a collection ARG to STDIN.
     if (addresses.empty())

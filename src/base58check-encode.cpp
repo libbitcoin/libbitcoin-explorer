@@ -29,7 +29,7 @@ console_result base58check_encode::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto hex = get_hex_argument();
+    const auto hex = get_hex_argument();
 
     // TODO: consider obsoleting this since it can be accessed via
     // wrap/unwrap and base58-encode/base58-decode

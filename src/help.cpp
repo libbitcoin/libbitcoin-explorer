@@ -46,7 +46,7 @@ console_result help::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto symbol = get_command_argument();
+    const auto symbol = get_command_argument();
 
     // If there is no COMMAND then show usage for this command.
     if (symbol.empty())

@@ -32,7 +32,7 @@ console_result be_fetch_transaction::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto hash = get_hash_argument();
+    const auto hash = get_hash_argument();
 
     cerr << SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

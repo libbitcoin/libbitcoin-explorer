@@ -30,8 +30,8 @@ console_result fetch_utxo::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     // TODO: improve generated property pluralization.
-    auto addresses = get_addresss_argument();
-    auto satoshi = get_satoshi_argument();
+    const auto addresses = get_addresss_argument();
+    const auto satoshi = get_satoshi_argument();
 
     cerr << SX_FETCH_UTXO_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

@@ -35,7 +35,7 @@ console_result ec_add_secrets::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto secrets = get_secrets_argument();
+    const auto secrets = get_secrets_argument();
 
     bool first = true;
     ec_private sum(secrets[0]);

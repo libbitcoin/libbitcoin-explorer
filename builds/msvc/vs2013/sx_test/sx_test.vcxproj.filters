@@ -28,17 +28,20 @@
     <Filter Include="src\tests\serializer">
       <UniqueIdentifier>{14f110d7-6526-4899-bddb-d390b0ca55ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\tests\command\satoshi">
-      <UniqueIdentifier>{ccd16e5f-5d92-4343-ad28-dde00ab5892c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\tests\command\encoding">
-      <UniqueIdentifier>{348bf824-7d22-4845-a276-d39986f7e5d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\tests\command\stealth">
       <UniqueIdentifier>{e9f4a201-0e1a-4741-bced-90f025a0f2a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\tests\command\wallet">
       <UniqueIdentifier>{2f4ddd10-a13e-442d-897c-86189cab0184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tests\command\transaction">
+      <UniqueIdentifier>{ccd16e5f-5d92-4343-ad28-dde00ab5892c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tests\command\script">
+      <UniqueIdentifier>{7eb15954-f5d1-44d3-b4d5-df9a603ec027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tests\command\hash">
+      <UniqueIdentifier>{348bf824-7d22-4845-a276-d39986f7e5d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -130,25 +133,25 @@
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\base58-decode.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\base58-encode.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\bitcoin160.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\bitcoin256.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\ripemd160.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\sha256.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\sha512.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-add.cpp">
       <Filter>src\tests\command\wallet</Filter>
@@ -187,16 +190,16 @@
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\sha160.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\stealth-addr.cpp">
       <Filter>src\tests\command\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\unwrap.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\wrap.cpp">
-      <Filter>src\tests\command\encoding</Filter>
+      <Filter>src\tests\command\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp">
       <Filter>src\tests\command\wallet</Filter>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -57,11 +57,11 @@
     <Filter Include="src\command\todo\stealth">
       <UniqueIdentifier>{ed76315a-9193-4924-a14e-6b6a7628ba86}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\command\todo\satoshi">
-      <UniqueIdentifier>{a83aaa61-784a-44c7-800f-7f95486a8913}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\command\todo\script">
       <UniqueIdentifier>{0d051466-4637-46d3-bf36-79744fb7b978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\command\todo\transaction">
+      <UniqueIdentifier>{a83aaa61-784a-44c7-800f-7f95486a8913}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -463,9 +463,6 @@
     <ClCompile Include="..\..\..\..\src\initchain.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\monitor.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\mpk.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
@@ -539,7 +536,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\mktx.cpp">
-      <Filter>src\command\todo\satoshi</Filter>
+      <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\mnemonic.cpp">
       <Filter>src\command\todo</Filter>
@@ -551,19 +548,19 @@
       <Filter>src\command\todo\script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\set-input.cpp">
-      <Filter>src\command\todo\satoshi</Filter>
+      <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
-      <Filter>src\command\todo\satoshi</Filter>
+      <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showscript.cpp">
       <Filter>src\command\todo\script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showtx.cpp">
-      <Filter>src\command\todo\satoshi</Filter>
+      <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sign-input.cpp">
-      <Filter>src\command\todo\satoshi</Filter>
+      <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp">
       <Filter>src\command\todo\stealth</Filter>
@@ -581,7 +578,7 @@
       <Filter>src\command\todo\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validsig.cpp">
-      <Filter>src\command\todo\satoshi</Filter>
+      <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
       <Filter>src\command\todo\obelisk</Filter>
@@ -594,6 +591,17 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validtx.cpp">
       <Filter>src\command\todo\obelisk</Filter>
-    </ClCompile> 
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.codecvt_error_category.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.operations.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path_traits.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.portability.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.unique_path.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.utf8_codecvt_facet.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.windows_file_codecvt.cpp" />
+    <ClCompile Include="..\..\..\..\src\monitor.cpp">
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

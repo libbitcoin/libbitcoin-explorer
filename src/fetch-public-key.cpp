@@ -29,7 +29,7 @@ console_result fetch_public_key::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    auto address = get_address_argument();
+    const auto address = get_address_argument();
 
     cerr << SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

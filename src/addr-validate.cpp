@@ -31,7 +31,9 @@ console_result addr_validate::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    //auto addresses = get_addresss_argument();
+    const auto addresses = get_addresss_argument();
+
+    // TESTNET VERSION MAY REQUIRE RECOMPILE
 
     // If any address is not valid the deserializer will throw.
     return console_result::okay;

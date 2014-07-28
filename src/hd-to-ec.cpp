@@ -33,7 +33,7 @@ console_result hd_to_ec::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto key = get_key_argument();
+    const auto key = get_key_argument();
 
     // TODO: implement
 
