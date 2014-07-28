@@ -94,7 +94,7 @@ public:
     /**
      * Get the compressed property.
      */
-    bool get_compressed()
+    bool get_compressed() const
     {
         return compressed_;
     }
