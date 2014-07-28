@@ -1467,7 +1467,7 @@ endif
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
-      <Filter>src\\command\\todo\\satoshi</Filter>
+      <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\mnemonic.cpp">
       <Filter>src\\command\\todo</Filter>
@@ -1479,19 +1479,19 @@ endif
       <Filter>src\\command\\todo\\script</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
-      <Filter>src\\command\\todo\\satoshi</Filter>
+      <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
-      <Filter>src\\command\\todo\\satoshi</Filter>
+      <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showscript.cpp">
       <Filter>src\\command\\todo\\script</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showtx.cpp">
-      <Filter>src\\command\\todo\\satoshi</Filter>
+      <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sign-input.cpp">
-      <Filter>src\\command\\todo\\satoshi</Filter>
+      <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-initiate.cpp">
       <Filter>src\\command\\todo\\stealth</Filter>
@@ -1509,7 +1509,7 @@ endif
       <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
-      <Filter>src\\command\\todo\\satoshi</Filter>
+      <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sendtx-p2p.cpp">
       <Filter>src\\command\\todo\\obelisk</Filter>
