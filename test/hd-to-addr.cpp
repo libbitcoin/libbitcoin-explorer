@@ -26,21 +26,21 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(hd_to_address__invoke)
+BOOST_AUTO_TEST_SUITE(hd_to_addr__invoke)
 
-BOOST_AUTO_TEST_CASE(hd_to_address__invoke__mainnet_private_key__okay_output)
+BOOST_AUTO_TEST_CASE(hd_to_addr__invoke__mainnet_private_key__okay_output)
 {
-    // $ sx hd-to-address xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi
-    SX_DECLARE_COMMAND(hd_to_address);
+    // $ sx hd-to-addr xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi
+    SX_DECLARE_COMMAND(hd_to_addr);
     command.set_key_argument({ "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_to_address__invoke__mainnet_public_key__okay_output)
+BOOST_AUTO_TEST_CASE(hd_to_addr__invoke__mainnet_public_key__okay_output)
 {
-    // $ sx hd-to-address xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8
-    SX_DECLARE_COMMAND(hd_to_address);
+    // $ sx hd-to-addr xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8
+    SX_DECLARE_COMMAND(hd_to_addr);
     command.set_key_argument({ "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma\n");

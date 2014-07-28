@@ -74,7 +74,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<hd_new>());
     func(make_shared<hd_priv>());
     func(make_shared<hd_pub>());
-    func(make_shared<hd_to_address>());
+    func(make_shared<hd_to_addr>());
     func(make_shared<hd_to_ec>());
     func(make_shared<hd_to_pub>());
     func(make_shared<hd_to_wif>());
@@ -179,8 +179,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<hd_priv>();
     if (symbol == hd_pub::symbol())
         return make_shared<hd_pub>();
-    if (symbol == hd_to_address::symbol())
-        return make_shared<hd_to_address>();
+    if (symbol == hd_to_addr::symbol())
+        return make_shared<hd_to_addr>();
     if (symbol == hd_to_ec::symbol())
         return make_shared<hd_to_ec>();
     if (symbol == hd_to_pub::symbol())

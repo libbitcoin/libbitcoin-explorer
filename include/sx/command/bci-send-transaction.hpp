@@ -82,7 +82,7 @@ public:
      */
     const char* category()
     {
-        return "BLOCKCHAIN.INFO";
+        return "BONLINE";
     }
 
     /**

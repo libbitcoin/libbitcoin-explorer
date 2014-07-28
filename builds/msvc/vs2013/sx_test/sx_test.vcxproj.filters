@@ -243,14 +243,14 @@
     <ClCompile Include="..\..\..\..\test\ec-new.cpp">
       <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-to-address.cpp">
-      <Filter>src\tests\command\wallet</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-to-ec.cpp">
       <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\monitor.cpp">
       <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-to-addr.cpp">
+      <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

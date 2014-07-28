@@ -88,7 +88,7 @@ public:
      */
     const char* category()
     {
-        return "OBELISK";
+        return "ONLINE";
     }
 
     /**

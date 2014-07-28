@@ -37,7 +37,8 @@ console_result hd_to_pub::invoke(std::istream& input, std::ostream& output,
     const auto secret = get_secret_argument();
     
     // TODO: verify that all HD public keys are compressed.
+    const libwallet::hd_public_key public_key = secret;
 
-    output << hd_public(secret) << std::endl;
+    output << hd_public(public_key) << std::endl;
     return console_result::okay;
 }

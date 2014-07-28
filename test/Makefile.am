@@ -53,7 +53,7 @@ sx_test_SOURCES = \
     hd-priv.cpp \
     hd-pub.cpp \
     hd-seed.cpp \
-    hd-to-address.cpp \
+    hd-to-addr.cpp \
     hd-to-ec.cpp \
     hd-to-pub.cpp \
     hd-to-wif.cpp \

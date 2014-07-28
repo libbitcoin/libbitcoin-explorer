@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/hd-to-address.hpp>
+#include <sx/command/hd-to-addr.hpp>
 
 #include <wallet/wallet.hpp>
 #include <sx/serializer/address.hpp>
@@ -29,7 +29,7 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result hd_to_address::invoke(std::istream& input, std::ostream& output,
+console_result hd_to_addr::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.

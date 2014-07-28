@@ -217,9 +217,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__hd_pub__returns_expected_value)
     BOOST_REQUIRE(hd_pub::symbol() == std::string("hd-pub"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_address__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_addr__returns_expected_value)
 {
-    BOOST_REQUIRE(hd_to_address::symbol() == std::string("hd-to-address"));
+    BOOST_REQUIRE(hd_to_addr::symbol() == std::string("hd-to-addr"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_ec__returns_expected_value)

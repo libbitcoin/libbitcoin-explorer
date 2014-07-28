@@ -82,7 +82,7 @@ public:
      */
     const char* category()
     {
-        return "EXPERIMENTAL";
+        return "WALLET";
     }
 
     /**

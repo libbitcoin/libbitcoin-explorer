@@ -68,13 +68,12 @@ sx_command_include_HEADERS = \
     command/hd-new.hpp \
     command/hd-priv.hpp \
     command/hd-pub.hpp \
-    command/hd-to-address.hpp \
+    command/hd-to-addr.hpp \
     command/hd-to-ec.hpp \
     command/hd-to-pub.hpp \
     command/hd-to-wif.hpp \
     command/help.hpp \
     command/initchain.hpp \
-    command/monitor.hpp \
     command/mpk.hpp \
     command/newseed.hpp \
     command/qrcode.hpp \
@@ -102,5 +101,6 @@ if HAVE_OBELISK
         command/fetch-transaction-index.hpp \
         command/fetch-utxo.hpp \
         command/history.hpp \
+        command/monitor.hpp \
         command/watchtx.hpp
 endif

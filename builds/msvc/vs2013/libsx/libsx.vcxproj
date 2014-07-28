@@ -143,7 +143,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\hd-new.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-priv.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-pub.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-address.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-pub.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp" />
@@ -286,7 +286,7 @@
     <ClCompile Include="..\..\..\..\src\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-priv.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-pub.cpp" />
-    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-to-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-pub.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp" />
@@ -295,7 +295,9 @@
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\initchain.cpp" />
-    <ClCompile Include="..\..\..\..\src\monitor.cpp" />
+    <ClCompile Include="..\..\..\..\src\monitor.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\mpk.cpp" />
     <ClCompile Include="..\..\..\..\src\newseed.cpp" />
     <ClCompile Include="..\..\..\..\src\qrcode.cpp" />

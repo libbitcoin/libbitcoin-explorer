@@ -161,7 +161,7 @@
     <ClCompile Include="..\..\..\..\test\hd-priv.cpp" />
     <ClCompile Include="..\..\..\..\test\hd-pub.cpp" />
     <ClCompile Include="..\..\..\..\test\hd-new.cpp" />
-    <ClCompile Include="..\..\..\..\test\hd-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\hd-to-addr.cpp" />
     <ClCompile Include="..\..\..\..\test\hd-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\hd-to-pub.cpp" />
     <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp" />

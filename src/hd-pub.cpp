@@ -57,13 +57,6 @@ console_result hd_pub::invoke(std::istream& input, std::ostream& output,
     else
         child_key = public_key.generate_public_key(index);
 
-    // This code is unreachable since public_key is always valid.
-    //if (!child_key.valid())
-    //{
-    //    cerr << SX_HD_PUB_DERIVATION_ERROR << std::endl;
-    //    return console_result::failure;
-    //}
-
     output << hd_public(child_key) << std::endl;
     return console_result::okay;
 }

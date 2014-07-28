@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_HD_TO_ADDRESS_HPP
-#define SX_HD_TO_ADDRESS_HPP
+#ifndef SX_HD_TO_ADDR_HPP
+#define SX_HD_TO_ADDR_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -51,9 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx hd-to-address command.
+ * Class to implement the sx hd-to-addr command.
  */
-class hd_to_address 
+class hd_to_addr 
     : public command
 {
 public:
@@ -61,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "hd-to-address"; }
+    static const char* symbol() { return "hd-to-addr"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return hd_to_address::symbol();
+        return hd_to_addr::symbol();
     }
 
     /**

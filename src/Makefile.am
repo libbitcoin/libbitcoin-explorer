@@ -65,13 +65,12 @@ libsx_la_SOURCES += \
     hd-new.cpp \
     hd-priv.cpp \
     hd-pub.cpp \
-    hd-to-address.cpp \
+    hd-to-addr.cpp \
     hd-to-ec.cpp \
     hd-to-pub.cpp \
     hd-to-wif.cpp \
     help.cpp \
     initchain.cpp \
-    monitor.cpp \
     mpk.cpp \
     newseed.cpp \
     qrcode.cpp \
@@ -99,6 +98,7 @@ if HAVE_OBELISK
         fetch-transaction-index.cpp \
         fetch-utxo.cpp \
         history.cpp \
+        monitor.cpp \
         watchtx.cpp \
         obelisk_client.cpp
 

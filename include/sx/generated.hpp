@@ -62,7 +62,7 @@
 #include <sx/command/hd-new.hpp>
 #include <sx/command/hd-priv.hpp>
 #include <sx/command/hd-pub.hpp>
-#include <sx/command/hd-to-address.hpp>
+#include <sx/command/hd-to-addr.hpp>
 #include <sx/command/hd-to-ec.hpp>
 #include <sx/command/hd-to-pub.hpp>
 #include <sx/command/hd-to-wif.hpp>

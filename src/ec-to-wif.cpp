@@ -34,8 +34,6 @@ console_result ec_to_wif::invoke(std::istream& input, std::ostream& output,
     const auto secret = get_secret_argument();
     const auto uncompressed = get_uncompressed_option();
 
-    // NOTE: ec_private deserialization supports WIF!
-
     auto import_format = wif(secret);
     import_format.set_compressed(!uncompressed);
 

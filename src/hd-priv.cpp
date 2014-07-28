@@ -35,22 +35,13 @@ console_result hd_priv::invoke(std::istream& input, std::ostream& output,
     // Bound parameters.
     const auto hard = get_hard_option();
     auto index = get_index_option();
-    const auto secret = get_secret_argument();
+    const hd_private_key secret = get_secret_argument();
 
     if (hard)
         index += first_hardened_key;
 
-    hd_private_key private_key = secret;
-    const auto child_key = private_key.generate_private_key(index);
-
-    // This code is unreachable since private_key is always valid.
-    //if (!child_key.valid())
-    //{
-    //    cerr << SX_HD_PRIV_DERIVATION_ERROR << std::endl;
-    //    return console_result::failure;
-    //}
+    const auto child_key = secret.generate_private_key(index);
 
     output << hd_private(child_key) << std::endl;
     return console_result::okay;
 }
-

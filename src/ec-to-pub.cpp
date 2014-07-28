@@ -31,8 +31,7 @@ console_result ec_to_pub::invoke(std::istream& input, std::ostream& output,
     const auto secret = get_secret_argument();
     const auto uncompressed = get_uncompressed_option();
 
-    // TODO: create and serialize ec (!uncompressed) public key.
-    // NOTE: ec_private deserialization supports WIF!
+    // TODO
 
     return console_result::failure;
 }

@@ -217,9 +217,9 @@ BOOST_AUTO_TEST_CASE(generated__find__hd_pub__returns_object)
     BOOST_REQUIRE(find(hd_pub::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__hd_to_address__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__hd_to_addr__returns_object)
 {
-    BOOST_REQUIRE(find(hd_to_address::symbol()) != nullptr);
+    BOOST_REQUIRE(find(hd_to_addr::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_ec__returns_object)

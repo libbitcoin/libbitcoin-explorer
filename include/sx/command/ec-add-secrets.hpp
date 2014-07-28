@@ -82,7 +82,7 @@ public:
      */
     const char* category()
     {
-        return "ELLIPTIC CURVE MATH";
+        return "MATH";
     }
 
     /**

@@ -248,7 +248,7 @@
     <define name="SX_HD_PUB_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
 
-  <command symbol="hd-to-address" category="WALLET">
+  <command symbol="hd-to-addr" formerly="hd-to-address" category="WALLET">
     <option name="help" description="Convert a HD public or private key to a Bitcoin address." />
     <argument name="KEY" stream="true" type="hd_key" description="The HD public or private key to convert." />
   </command>
@@ -289,7 +289,7 @@
     <define name="SX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
   </command>
 
-  <command symbol="monitor" category="ONLINE" stub="true">
+  <command symbol="monitor" category="ONLINE" obelisk="true">
     <option name="help" description="Monitor an address prefix." />
     <argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to monitor."/>
     <define name="SX_MONITOR_NOT_IMPLEMENTED" value="This experimental command is no longer supported." />
