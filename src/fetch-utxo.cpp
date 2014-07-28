@@ -17,15 +17,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/get-utxo.hpp>
+#include <sx/command/fetch-utxo.hpp>
 
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result get_utxo::invoke(std::istream& input, std::ostream& output,
+console_result fetch_utxo::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
@@ -33,7 +33,7 @@ console_result get_utxo::invoke(std::istream& input, std::ostream& output,
     auto addresses = get_addresss_argument();
     auto satoshi = get_satoshi_argument();
 
-    cerr << SX_GET_UXTO_NOT_IMPLEMENTED << std::endl;
+    cerr << SX_FETCH_UTXO_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

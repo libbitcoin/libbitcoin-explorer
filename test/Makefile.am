@@ -11,10 +11,11 @@ AM_CPPFLAGS = \
      command.hpp
 
 sx_test_SOURCES = \
-    addr.cpp \
-    address.cpp \
     addr-decode.cpp \
+    addr-embed.cpp \
     addr-encode.cpp \
+    addr-validate.cpp \
+    address.cpp \
     balance.cpp \
     base58.cpp \
     base58check-decode.cpp \
@@ -31,40 +32,52 @@ sx_test_SOURCES = \
     ec-add-secrets.cpp \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
-    embed-addr.cpp \
+    ec-new.cpp \
+    ec-to-addr.cpp \
+    ec-to-pub.cpp \
     fetch-header-hash.cpp \
     fetch-header-height.cpp \
     fetch-last-height.cpp \
+    fetch-pubkey.cpp \
     fetch-stealth.cpp \
     fetch-transaction.cpp \
     fetch-transaction-index.cpp \
+    fetch-utxo.cpp \
     genaddr.cpp \
     generated__broadcast.cpp \
     generated__find.cpp \
     generated__symbol.cpp \
     genpriv.cpp \
     genpub.cpp \
-    get-pubkey.cpp \
-    get-utxo.cpp \
+    hd-new.cpp \
     hd-priv.cpp \
     hd-pub.cpp \
     hd-seed.cpp \
     hd-to-address.cpp \
+    hd-to-ec.cpp \
+    hd-to-pub.cpp \
     hd-to-wif.cpp \
     help.cpp \
     history.cpp \
+    initchain.cpp \
     main.cpp \
+    monitor.cpp \
     mpk.cpp \
-    newkey.cpp \
     newseed.cpp \
     parameter.cpp \
     printer.cpp \
     qrcode.cpp \
+    ripemd160.cpp \
     satoshi.cpp \
+    sha160.cpp \
+    sha256.cpp \
+    sha512.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
+    wallet.cpp \
     watchtx.cpp \
     wif-to-ec.cpp \
+    wif-to-pub.cpp \
     wrap.cpp
 
 sx_test_LDADD = \
@@ -83,7 +96,6 @@ if HAVE_OBELISK
         -DBOOST_TEST_DYN_LINK
         
     sx_test_LDADD += \
-        $(libobelisk_LIBS) \
-        -lncurses
+        $(libobelisk_LIBS)
 endif
 

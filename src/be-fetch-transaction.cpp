@@ -23,7 +23,7 @@
 //#include <sstream>
 //#include <boost/property_tree/ptree.hpp>
 //#include <boost/property_tree/json_parser.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace sx;
 using namespace sx::extension;

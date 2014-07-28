@@ -24,7 +24,7 @@
 #include <boost/format.hpp>
 #include <sx/display.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace boost::program_options;
 using namespace sx;

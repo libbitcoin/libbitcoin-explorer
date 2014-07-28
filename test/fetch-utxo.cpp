@@ -26,13 +26,16 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(fetch_header_hash__invoke)
+BOOST_AUTO_TEST_SUITE(fetch_utxo__invoke)
 
-//BOOST_AUTO_TEST_CASE(fetch_header_hash__invoke__always__okay)
-//{
-//    // $ sx fetch-header-hash 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4
-//    SX_DECLARE_COMMAND(fetch_header_hash);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-//}
+BOOST_AUTO_TEST_CASE(fetch_utxo__invoke__zero_satoshi__failure_error)
+{
+    // $ sx fetch-utxo 0 bogus
+    SX_DECLARE_COMMAND(fetch_utxo);
+    command.set_satoshi_argument(0);
+    //command.set_addresss_argument({{ "bogus" }});
+    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_ERROR(SX_FETCH_UTXO_NOT_IMPLEMENTED "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()

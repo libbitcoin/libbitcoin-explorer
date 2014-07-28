@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_GET_PUBKEY_HPP
-#define SX_GET_PUBKEY_HPP
+#ifndef SX_EC_NEW_HPP
+#define SX_EC_NEW_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -52,15 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx ec-new command.
  */
-#define SX_GET_PUBKEY_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
- * Class to implement the sx get-pubkey command.
- */
-class get_pubkey 
+class ec_new 
     : public command
 {
 public:
@@ -68,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "get-pubkey"; }
+    static const char* symbol() { return "ec-new"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return get_pubkey::symbol();
+        return ec_new::symbol();
     }
 
     /**
@@ -83,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "OFFLINE KEYS AND ADDRESSES";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BASIC";
+        return "WALLET";
     }
 
     /**
@@ -103,7 +88,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("ADDRESS", 1);
+            .add("SEED", 1);
     }
     
     /**
@@ -128,12 +113,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the public key of an address."
+                "Create a new EC private key from entropy."
             )
             (
-                "ADDRESS",
-                value<serializer::address>(&argument_.address),
-                "The address from which to derive the public key."
+                "SEED",
+                value<serializer::bytes>(&argument_.seed),
+                "The hex encoded seed for the new key. If empty defaults to a random 32 byte value."
             );
 
         return options;
@@ -147,9 +132,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto address = variables.find("ADDRESS");
-        if (address == variables.end())
-            parse(argument_.address, read_stream(input));
+        auto seed = variables.find("SEED");
+        if (seed == variables.end())
+            parse(argument_.seed, read_stream(input));
     }
 
     /**
@@ -166,19 +151,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the ADDRESS argument.
+     * Get the value of the SEED argument.
      */
-    virtual serializer::address get_address_argument()
+    virtual serializer::bytes get_seed_argument()
     {
-        return argument_.address;
+        return argument_.seed;
     }
     
     /**
-     * Set the value of the ADDRESS argument.
+     * Set the value of the SEED argument.
      */
-    virtual void set_address_argument(serializer::address value)
+    virtual void set_seed_argument(serializer::bytes value)
     {
-        argument_.address = value;
+        argument_.seed = value;
     }
 
     /**
@@ -207,9 +192,9 @@ private:
     struct argument
     {
         argument()
-          : address()
+          : seed()
             {}
-        serializer::address address;
+        serializer::bytes seed;
     } argument_;
     
     /**

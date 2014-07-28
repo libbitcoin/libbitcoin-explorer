@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -83,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "EC MATH";
+        return "ELLIPTIC CURVE MATH";
     }
 
     /**
@@ -128,12 +119,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Calculate the elliptic curve function (SECRET + SECRET) % curve-order."
+                "Calculate the EC function (SECRET + SECRET) % curve-order."
             )
             (
                 "SECRET",
                 value<std::vector<serializer::ec_private>>(&argument_.secrets)->required(),
-                "The hex or WIF encoded secret to add."
+                "The hex encoded secret to add."
             );
 
         return options;

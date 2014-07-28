@@ -27,11 +27,6 @@ using namespace sx::extension;
 
 BOOST_AUTO_TEST_SUITE(generated__find)
 
-BOOST_AUTO_TEST_CASE(generated__find__addr__returns_object)
-{
-    BOOST_REQUIRE(find(addr::symbol()) != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__addr_decode__returns_object)
 {
     BOOST_REQUIRE(find(addr_decode::symbol()) != nullptr);
@@ -137,24 +132,39 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_multiply_secrets__returns_object)
     BOOST_REQUIRE(find(ec_multiply_secrets::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__ec_new__returns_object)
+{
+    BOOST_REQUIRE(find(ec_new::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ec_to_addr__returns_object)
+{
+    BOOST_REQUIRE(find(ec_to_addr::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ec_to_pub__returns_object)
+{
+    BOOST_REQUIRE(find(ec_to_pub::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ec_to_wif__returns_object)
 {
     BOOST_REQUIRE(find(ec_to_wif::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__fetch_header_hash__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_header_hash::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__fetch_header_height__returns_object)
-{
-    BOOST_REQUIRE(find(fetch_header_height::symbol()) != nullptr);
+    BOOST_REQUIRE(find(fetch_header::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_last_height__returns_object)
 {
     BOOST_REQUIRE(find(fetch_last_height::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_public_key__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_public_key::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_stealth__returns_object)
@@ -172,6 +182,11 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_transaction_index__returns_object)
     BOOST_REQUIRE(find(fetch_transaction_index::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__fetch_utxo__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_utxo::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__genaddr__returns_object)
 {
     BOOST_REQUIRE(find(genaddr::symbol()) != nullptr);
@@ -187,14 +202,9 @@ BOOST_AUTO_TEST_CASE(generated__find__genpub__returns_object)
     BOOST_REQUIRE(find(genpub::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__get_pubkey__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__hd_new__returns_object)
 {
-    BOOST_REQUIRE(find(get_pubkey::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__get_utxo__returns_object)
-{
-    BOOST_REQUIRE(find(get_utxo::symbol()) != nullptr);
+    BOOST_REQUIRE(find(hd_new::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_priv__returns_object)
@@ -207,14 +217,19 @@ BOOST_AUTO_TEST_CASE(generated__find__hd_pub__returns_object)
     BOOST_REQUIRE(find(hd_pub::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__hd_seed__returns_object)
-{
-    BOOST_REQUIRE(find(hd_seed::symbol()) != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_address__returns_object)
 {
     BOOST_REQUIRE(find(hd_to_address::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__hd_to_ec__returns_object)
+{
+    BOOST_REQUIRE(find(hd_to_ec::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__hd_to_pub__returns_object)
+{
+    BOOST_REQUIRE(find(hd_to_pub::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_wif__returns_object)
@@ -245,11 +260,6 @@ BOOST_AUTO_TEST_CASE(generated__find__monitor__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__mpk__returns_object)
 {
     BOOST_REQUIRE(find(mpk::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__newkey__returns_object)
-{
-    BOOST_REQUIRE(find(newkey::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__newseed__returns_object)
@@ -310,6 +320,11 @@ BOOST_AUTO_TEST_CASE(generated__find__watchtx__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__wif_to_ec__returns_object)
 {
     BOOST_REQUIRE(find(wif_to_ec::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__wif_to_pub__returns_object)
+{
+    BOOST_REQUIRE(find(wif_to_pub::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wrap__returns_object)

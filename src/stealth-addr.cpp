@@ -22,7 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -40,7 +40,7 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
     // Bound parameters.
     auto signatures = get_signatures_option();
     auto reuse_key = get_reuse_key_option();
-    const auto scan_key = get_scan_key_argument();
+    const ec_point scan_key = get_scan_key_argument();
     const auto spend_keys = get_spend_keys_argument();
 
     // Construct actual address.
@@ -55,13 +55,13 @@ console_result stealth_addr::invoke(std::istream& input, std::ostream& output,
 
     raw_address.push_back(stealth_version);
     raw_address.push_back(options_bitfield);
-    extend_data(raw_address, static_cast<bc::data_chunk>(scan_key));
+    extend_data(raw_address, scan_key);
     raw_address.push_back(number_keys);
 
-    for (const auto& spend_key : spend_keys)
-        extend_data(raw_address, static_cast<bc::data_chunk>(spend_key));
+    for (const ec_point& spend_key: spend_keys)
+        extend_data(raw_address, spend_key);
     
-    // If not configured then set it to the number_keys.
+    // If not specified then set it to the number_keys.
     if (signatures == 0)
         signatures = number_keys;
 

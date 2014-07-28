@@ -19,7 +19,7 @@
  */
 #include <wallet/wallet.hpp>
 #include <sx/command/stealth-newkey.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 #include <sx/utility/curve.hpp>
 
 using namespace libwallet;

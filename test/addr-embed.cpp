@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(addr_embed__invoke__bogus_data__failure_error)
 {
     // $ sx addr-embed bogus
     SX_DECLARE_COMMAND(addr_embed);
-    command.set_data_argument("bogus");
+    command.set_file_argument("bogus");
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
     SX_REQUIRE_ERROR(SX_ADDR_EMBED_NOT_IMPLEMENTED "\n");
 }

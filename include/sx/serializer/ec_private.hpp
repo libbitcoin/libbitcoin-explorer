@@ -114,22 +114,12 @@ public:
     {
         std::string text;
         input >> text;
+        
+        bc::ec_secret secret = bitcoin256(text);
+        if (!bc::verify_private_key(secret))
+            throw po::invalid_option_value(text);
 
-        bc::ec_secret value;
-        try
-        {
-            // First try to read as WIF secret.
-            value = wif(text);
-        }
-        catch (po::invalid_option_value)
-        {
-            // Next try to read as hash secret.
-            value = bitcoin256(text);
-            if (!bc::verify_private_key(value))
-                throw po::invalid_option_value(text);
-        }
-
-        std::copy(value.begin(), value.end(), argument.value_.begin());
+        std::copy(secret.begin(), secret.end(), argument.value_.begin());
         return input;
     }
 

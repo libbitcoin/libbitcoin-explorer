@@ -26,13 +26,15 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(fetch_header_height__invoke)
+BOOST_AUTO_TEST_SUITE(ec_new__invoke)
 
-//BOOST_AUTO_TEST_CASE(fetch_header_height__invoke__always__okay)
-//{
-//    // $ sx fetch-header-height 8bf41c69
-//    SX_DECLARE_COMMAND(fetch_header_height);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-//}
+BOOST_AUTO_TEST_CASE(ec_new__invoke__always__okay_output)
+{
+    // $ sx ec-new seed
+    SX_DECLARE_COMMAND(ec_new);
+    command.set_seed_argument({ "seed" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("");
+}
 
 BOOST_AUTO_TEST_SUITE_END()

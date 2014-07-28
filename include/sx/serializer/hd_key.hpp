@@ -27,7 +27,6 @@
 #include <sx/define.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
-#include <sx/utility/coin.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

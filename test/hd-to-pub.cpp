@@ -26,14 +26,15 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(newkey__invoke)
+BOOST_AUTO_TEST_SUITE(hd_to_pub__invoke)
 
-BOOST_AUTO_TEST_CASE(newkey__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(hd_to_pub__invoke__always__okay_output)
 {
-    // $ sx newkey ...
-    SX_DECLARE_COMMAND(newkey);
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_NEWKEY_OBSOLETE "\n");
+    // $ sx hd-to-pub secret
+    SX_DECLARE_COMMAND(hd_to_pub);
+    command.set_secret_argument({ "secret" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

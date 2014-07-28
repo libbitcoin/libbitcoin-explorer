@@ -27,7 +27,7 @@
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/bitcoin256.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -63,18 +63,18 @@ console_result fetch_stealth::invoke(std::istream& input,
 {
     // Bound parameters.
     auto height = get_height_option();
-    auto bitfield = get_bitfield_argument();
+    auto prefix = get_prefix_argument();
 
     // TODO: verify that these are equivalent.
-    //stealth_prefix prefix(prefix_str);
-    stealth_prefix prefix(bitfield);
+    //stealth_prefix bitfield_prefix(prefix_str);
+    stealth_prefix bitfield_prefix(prefix);
 
     node_stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.blockchain.fetch_stealth(prefix,
+    fullnode.blockchain.fetch_stealth(bitfield_prefix,
         std::bind(stealth_fetched, std::placeholders::_1,
             std::placeholders::_2), height);
     client.poll(node_stopped);

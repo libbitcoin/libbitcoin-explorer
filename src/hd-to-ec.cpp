@@ -17,17 +17,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/newkey.hpp>
+#include <sx/command/hd-to-ec.hpp>
 
-#include <iostream>
-#include <sx/utility/console.hpp>
+#include <wallet/wallet.hpp>
+#include <sx/serializer/address.hpp>
+#include <sx/utility/utility.hpp>
 
+using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result newkey::invoke(std::istream& input, std::ostream& output,
+// 100% coverage by line, loc ready.
+console_result hd_to_ec::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
-    cerr << SX_NEWKEY_OBSOLETE << std::endl;
-    return console_result::failure;
+    // Bound parameters.
+    auto key = get_key_argument();
+
+    // TODO: implement
+
+    return console_result::okay;
 }

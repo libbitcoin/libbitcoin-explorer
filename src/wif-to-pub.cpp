@@ -17,12 +17,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/addr.hpp>
+#include <sx/command/wif-to-pub.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/address.hpp>
+#include <sx/serializer/ec_public.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -30,25 +30,17 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result addr::invoke(std::istream& input, std::ostream& output,
+console_result wif_to_pub::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    auto key = get_key_argument();
-    auto version = get_version_option();
+    const auto secret = get_wif_argument();
 
-    // TODO: generate a flag to indicate whether optional values are set.
-    bool versioned = true;
+    // wif-to-pub is required in order to preserve the WIF compression flag.
+    // Otherwise we would only support transition through a private key.
+    const auto compressed = secret.get_compressed();
+    const auto public_key = secret_to_public_key(secret, compressed);
 
-    // Get the public key's payment address.
-    auto ripemd160 = bitcoin_short_hash(key);
-
-    // WARNING: pubkey_version varies by libbitcoin testnet *compilation* flag.
-    // TODO: make libbitcoin testnet dynamic and then do the same here.
-    // auto testnet = get_general_testnet_setting();
-    version = if_else(versioned, version, payment_address::pubkey_version);
-    payment_address pay_address(version, ripemd160);
-
-    output << address(pay_address) << std::endl;
+    output << ec_public(public_key) << std::endl;
     return console_result::okay;
 }

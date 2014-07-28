@@ -22,7 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -40,8 +40,7 @@ console_result wrap::invoke(std::istream& input, std::ostream& output,
     data_chunk data;
     data.push_back(version);
     extend_data(data, hex);
-    auto checksum = bitcoin_checksum(data);
-    extend_data(data, to_little_endian(checksum));
+    append_checksum(data);
 
     output << bytes(data) << std::endl;
     return console_result::okay;

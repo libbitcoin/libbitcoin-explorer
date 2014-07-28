@@ -23,8 +23,7 @@
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/showtx.hpp>
-#include <sx/utility/coin.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 #include <sx/utility/dispatch.hpp>
 
 using namespace bc;

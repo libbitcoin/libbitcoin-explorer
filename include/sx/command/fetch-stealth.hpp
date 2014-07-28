@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -83,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BLOCKCHAIN QUERIES";
+        return "OBELISK";
     }
 
     /**
@@ -103,7 +94,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("BITFIELD", 1);
+            .add("PREFIX", 1);
     }
     
     /**
@@ -131,14 +122,14 @@ public:
                 "Get the stealth transactions matching the specified filter. Requires a server connection."
             )
             (
-                "height,h",
+                "height,t",
                 value<size_t>(&option_.height),
                 "The minimum height of transactions to include in the search."
             )
             (
-                "BITFIELD",
-                value<uint32_t>(&argument_.bitfield),
-                "The bit field of transactions to include in the search."
+                "PREFIX",
+                value<uint32_t>(&argument_.prefix),
+                "The prefix of transactions to include in the search."
             );
 
         return options;
@@ -152,9 +143,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto bitfield = variables.find("BITFIELD");
-        if (bitfield == variables.end())
-            parse(argument_.bitfield, read_stream(input));
+        auto prefix = variables.find("PREFIX");
+        if (prefix == variables.end())
+            parse(argument_.prefix, read_stream(input));
     }
 
     /**
@@ -171,19 +162,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the BITFIELD argument.
+     * Get the value of the PREFIX argument.
      */
-    virtual uint32_t get_bitfield_argument()
+    virtual uint32_t get_prefix_argument()
     {
-        return argument_.bitfield;
+        return argument_.prefix;
     }
     
     /**
-     * Set the value of the BITFIELD argument.
+     * Set the value of the PREFIX argument.
      */
-    virtual void set_bitfield_argument(uint32_t value)
+    virtual void set_prefix_argument(uint32_t value)
     {
-        argument_.bitfield = value;
+        argument_.prefix = value;
     }
 
     /**
@@ -228,9 +219,9 @@ private:
     struct argument
     {
         argument()
-          : bitfield()
+          : prefix()
             {}
-        uint32_t bitfield;
+        uint32_t prefix;
     } argument_;
     
     /**

@@ -65,9 +65,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\include\sx\command\addr.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\addr-decode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -131,17 +128,26 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-new.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-addr.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-pub.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\ec-to-wif.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-header-hash.hpp">
-      <Filter>include\command\obelisk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-header-height.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-header.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-last-height.hpp">
       <Filter>include\command\obelisk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-public-key.hpp">
+      <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-stealth.hpp">
       <Filter>include\command\obelisk</Filter>
@@ -152,6 +158,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-transaction-index.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-utxo.hpp">
+      <Filter>include\command\stub</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\genaddr.hpp">
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
@@ -161,11 +170,8 @@
     <ClInclude Include="..\..\..\..\include\sx\command\genpub.hpp">
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\get-pubkey.hpp">
-      <Filter>include\command\stub</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\get-utxo.hpp">
-      <Filter>include\command\stub</Filter>
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-new.hpp">
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\hd-priv.hpp">
       <Filter>include\command</Filter>
@@ -173,10 +179,13 @@
     <ClInclude Include="..\..\..\..\include\sx\command\hd-pub.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-seed.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-address.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-address.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-ec.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-pub.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp">
@@ -192,12 +201,9 @@
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\monitor.hpp">
-      <Filter>include\command\obsolete</Filter>
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\mpk.hpp">
-      <Filter>include\command\obsolete</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\newkey.hpp">
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\newseed.hpp">
@@ -236,6 +242,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\wif-to-pub.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -255,9 +264,6 @@
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp">
-      <Filter>include\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\ec_key.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\ec_private.hpp">
@@ -281,16 +287,10 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\coin.hpp">
-      <Filter>include\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp">
-      <Filter>include\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\console.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\environment.hpp">
@@ -300,6 +300,9 @@
       <Filter>include\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\printer.hpp">
+      <Filter>include\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\utility\utility.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command.hpp">
@@ -325,9 +328,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\addr.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\addr-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -391,17 +391,26 @@
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-new.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-to-addr.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\ec-to-pub.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-to-wif.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-header-hash.cpp">
-      <Filter>src\command\obelisk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-header-height.cpp">
+    <ClCompile Include="..\..\..\..\src\fetch-header.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-last-height.cpp">
       <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-public-key.cpp">
+      <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
       <Filter>src\command\obelisk</Filter>
@@ -412,6 +421,9 @@
     <ClCompile Include="..\..\..\..\src\fetch-transaction-index.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-utxo.cpp">
+      <Filter>src\command\stub</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\genaddr.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
@@ -421,11 +433,8 @@
     <ClCompile Include="..\..\..\..\src\genpub.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\get-pubkey.cpp">
-      <Filter>src\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\get-utxo.cpp">
-      <Filter>src\command\stub</Filter>
+    <ClCompile Include="..\..\..\..\src\hd-new.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-priv.cpp">
       <Filter>src\command</Filter>
@@ -433,10 +442,13 @@
     <ClCompile Include="..\..\..\..\src\hd-pub.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-seed.cpp">
+    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
+    <ClCompile Include="..\..\..\..\src\hd-to-ec.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\hd-to-pub.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
@@ -452,12 +464,9 @@
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\monitor.cpp">
-      <Filter>src\command\obsolete</Filter>
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\mpk.cpp">
-      <Filter>src\command\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\newkey.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\newseed.cpp">
@@ -496,16 +505,13 @@
     <ClCompile Include="..\..\..\..\src\wif-to-ec.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\wif-to-pub.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\wrap.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\coin.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\config.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\console.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp">
@@ -515,6 +521,9 @@
       <Filter>src\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\printer.cpp">
+      <Filter>src\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility\utility.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\dispatch.cpp">

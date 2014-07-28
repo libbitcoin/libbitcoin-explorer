@@ -28,10 +28,21 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(ec_to_wif__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__secret_mainnet__okay_output)
+BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__secret_mainnet_compressed__okay_output)
 {
     // $ sx ec-to-wif 21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc
     SX_DECLARE_COMMAND(ec_to_wif);
+    command.set_uncompressed_option(false);
+    command.set_secret_argument({ "21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc" });
+    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OUTPUT("KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__secret_mainnet_uncompressed__okay_output)
+{
+    // $ sx ec-to-wif 21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc -u
+    SX_DECLARE_COMMAND(ec_to_wif);
+    command.set_uncompressed_option(true);
     command.set_secret_argument({ "21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF\n");

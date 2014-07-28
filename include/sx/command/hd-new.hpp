@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_HD_SEED_HPP
-#define SX_HD_SEED_HPP
+#ifndef SX_HD_NEW_HPP
+#define SX_HD_NEW_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -52,9 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx hd-seed command.
+ * Class to implement the sx hd-new command.
  */
-class hd_seed 
+class hd_new 
     : public command
 {
 public:
@@ -62,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "hd-seed"; }
+    static const char* symbol() { return "hd-new"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return hd_seed::symbol();
+        return hd_new::symbol();
     }
 
     /**
@@ -77,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "OFFLINE KEYS AND ADDRESSES";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "HD / BIP32";
+        return "WALLET";
     }
 
     /**
@@ -122,12 +113,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Create a HD key from entropy and emit the private part."
-            )
-            (
-                "pubkey,p",
-                value<bool>(&option_.pubkey)->implicit_value(true),
-                "Emit the public part instead of the private part."
+                "Create a new HD private key from entropy."
             )
             (
                 "SEED",
@@ -196,22 +182,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the pubkey option.
-     */
-    virtual bool get_pubkey_option()
-    {
-        return option_.pubkey;
-    }
-    
-    /**
-     * Set the value of the pubkey option.
-     */
-    virtual void set_pubkey_option(bool value)
-    {
-        option_.pubkey = value;
-    }
-
 private:
 
     /**
@@ -235,11 +205,9 @@ private:
     struct option
     {
         option()
-          : help(),
-            pubkey()
+          : help()
             {}    
         bool help;
-        bool pubkey;
     } option_;
 };
 

@@ -27,7 +27,7 @@
 #include <boost/program_options.hpp>
 #include <sx/define.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -63,16 +63,6 @@ public:
      * @return  Example: "ONLINE (OBELISK)"
      */
     virtual const char* category()
-    {
-        return symbol();
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     *
-     * @return  Example: "BLOCKCHAIN QUERIES"
-     */
-    virtual const char* subcategory()
     {
         return symbol();
     }

@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -83,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (BLOCKEXPLORER.COM)";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BLOCKCHAIN QUERIES (blockexplorer.com)";
+        return "BLOCKEXPLORER.COM";
     }
 
     /**
@@ -128,12 +119,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get a transaction from blockexplorer.com."
+                "Get a Bitcoin transaction from blockexplorer.com."
             )
             (
                 "HASH",
                 value<serializer::bitcoin256>(&argument_.hash),
-                "The transaction hash."
+                "The hex encoded transaction hash."
             );
 
         return options;

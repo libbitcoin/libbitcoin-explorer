@@ -20,8 +20,11 @@
 #include <sx/command/wif-to-ec.hpp>
 
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/utility/utility.hpp>
 
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;

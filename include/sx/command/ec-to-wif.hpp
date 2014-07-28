@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -77,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "FORMAT (WIF)";
+        return "WALLET";
     }
 
     /**
@@ -122,12 +113,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert an elliptic curve secret to a WIF private key."
+                "Convert an EC private key to a WIF private key. The result associates with the compressed public key format by default."
+            )
+            (
+                "uncompressed,u",
+                value<bool>(&option_.uncompressed)->implicit_value(true),
+                "Associate the result with the uncompressed public key format."
             )
             (
                 "SECRET",
                 value<serializer::ec_private>(&argument_.secret),
-                "The value to convert."
+                "The hex encoded EC private key to convert."
             );
 
         return options;
@@ -191,6 +187,22 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the uncompressed option.
+     */
+    virtual bool get_uncompressed_option()
+    {
+        return option_.uncompressed;
+    }
+    
+    /**
+     * Set the value of the uncompressed option.
+     */
+    virtual void set_uncompressed_option(bool value)
+    {
+        option_.uncompressed = value;
+    }
+
 private:
 
     /**
@@ -214,9 +226,11 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            uncompressed()
             {}    
         bool help;
+        bool uncompressed;
     } option_;
 };
 

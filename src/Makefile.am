@@ -14,16 +14,27 @@ libsx_la_SOURCES = \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
-    utility/coin.cpp \
+    serializer/address.cpp \
+    serializer/base58.cpp \
+    serializer/bitcoin160.cpp \
+    serializer/bitcoin256.cpp \
+    serializer/byte.cpp \
+    serializer/bytes.cpp \
+    serializer/ec_private.cpp \
+    serializer/ec_public.cpp \
+    serializer/hd_key.cpp \
+    serializer/hd_private.cpp \
+    serializer/hd_public.cpp \
+    serializer/point.cpp \
+    serializer/wif.cpp \
     utility/config.cpp \
-    utility/console.cpp \
     utility/environment.cpp \
     utility/parameter.cpp \
-    utility/printer.cpp
+    utility/printer.cpp \
+    utility/utility.cpp
 
 # Generated from XML data source.
 libsx_la_SOURCES += \
-    addr.cpp \
     addr-decode.cpp \
     addr-embed.cpp \
     addr-encode.cpp \
@@ -44,21 +55,24 @@ libsx_la_SOURCES += \
     ec-add-secrets.cpp \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
+    ec-new.cpp \
+    ec-to-addr.cpp \
+    ec-to-pub.cpp \
     ec-to-wif.cpp \
     genaddr.cpp \
     genpriv.cpp \
     genpub.cpp \
-    get-pubkey.cpp \
+    hd-new.cpp \
     hd-priv.cpp \
     hd-pub.cpp \
-    hd-seed.cpp \
     hd-to-address.cpp \
+    hd-to-ec.cpp \
+    hd-to-pub.cpp \
     hd-to-wif.cpp \
     help.cpp \
     initchain.cpp \
     monitor.cpp \
     mpk.cpp \
-    newkey.cpp \
     newseed.cpp \
     qrcode.cpp \
     ripemd160.cpp \
@@ -70,19 +84,20 @@ libsx_la_SOURCES += \
     unwrap.cpp \
     wallet.cpp \
     wif-to-ec.cpp \
+    wif-to-pub.cpp \
     wrap.cpp
 
 # Generated from XML data source.
 if HAVE_OBELISK
     libsx_la_SOURCES += \
         balance.cpp \
-        fetch-header-hash.cpp \
-        fetch-header-height.cpp \
+        fetch-header.cpp \
         fetch-last-height.cpp \
+        fetch-public-key.cpp \
         fetch-stealth.cpp \
         fetch-transaction.cpp \
         fetch-transaction-index.cpp \
-        get-utxo.cpp \
+        fetch-utxo.cpp \
         history.cpp \
         watchtx.cpp \
         obelisk_client.cpp
@@ -109,6 +124,5 @@ sx_LDADD = \
 
 if HAVE_OBELISK
     sx_LDADD += \
-        $(libobelisk_LIBS) \
-        -lncurses
+        $(libobelisk_LIBS)
 endif

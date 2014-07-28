@@ -66,21 +66,22 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "ec-add-secrets\n" \
         "ec-multiply\n" \
         "ec-multiply-secrets\n" \
+        "ec-new\n" \
+        "ec-to-pub\n" \
         "ec-to-wif\n" \
-        "fetch-header-hash\n" \
-        "fetch-header-height\n" \
+        "fetch-header\n" \
         "fetch-last-height\n" \
+        "fetch-public-key\n" \
         "fetch-stealth\n" \
         "fetch-transaction\n" \
         "fetch-transaction-index\n" \
+        "fetch-utxo\n" \
         "genaddr\n" \
         "genpriv\n" \
         "genpub\n" \
-        "get-pubkey\n" \
-        "get-utxo\n" \
+        "hd-new\n" \
         "hd-priv\n" \
         "hd-pub\n" \
-        "hd-seed\n" \
         "hd-to-address\n" \
         "hd-to-wif\n" \
         "help\n" \
@@ -88,7 +89,6 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "initchain\n" \
         "monitor\n" \
         "mpk\n" \
-        "newkey\n" \
         "newseed\n" \
         "qrcode\n" \
         "ripemd160\n" \

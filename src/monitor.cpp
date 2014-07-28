@@ -20,7 +20,7 @@
 #include <sx/command/monitor.hpp>
 
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace sx;
 using namespace sx::extension;
@@ -28,6 +28,9 @@ using namespace sx::extension;
 console_result monitor::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
-    cerr << SX_MONITOR_OBSOLETE << std::endl;
+    // Bound parameters.
+    auto prefix = get_prefix_argument();
+
+    cerr << SX_MONITOR_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }

@@ -17,21 +17,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/get-pubkey.hpp>
+#include <sx/command/fetch-public-key.hpp>
 
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result get_pubkey::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result fetch_public_key::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     auto address = get_address_argument();
 
-    cerr << SX_GET_PUBKEY_NOT_IMPLEMENTED << std::endl;
+    cerr << SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

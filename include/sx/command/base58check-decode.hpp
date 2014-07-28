@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -83,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "FORMAT (BASE58CHECK)";
+        return "FORMAT";
     }
 
     /**
@@ -128,11 +119,11 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a Base58Check value to a hex string."
+                "Convert a Base58Check value to hex encoded data."
             )
             (
                 "BASE58CHECK",
-                value<std::string>(&argument_.base58check),
+                value<serializer::base58>(&argument_.base58check),
                 "The Base58Check encoded value to decode."
             );
 
@@ -168,7 +159,7 @@ public:
     /**
      * Get the value of the BASE58CHECK argument.
      */
-    virtual std::string get_base58check_argument()
+    virtual serializer::base58 get_base58check_argument()
     {
         return argument_.base58check;
     }
@@ -176,7 +167,7 @@ public:
     /**
      * Set the value of the BASE58CHECK argument.
      */
-    virtual void set_base58check_argument(std::string value)
+    virtual void set_base58check_argument(serializer::base58 value)
     {
         argument_.base58check = value;
     }
@@ -209,7 +200,7 @@ private:
         argument()
           : base58check()
             {}
-        std::string base58check;
+        serializer::base58 base58check;
     } argument_;
     
     /**

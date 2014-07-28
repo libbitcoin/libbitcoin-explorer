@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -83,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "OFFLINE KEYS AND ADDRESSES";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BASIC";
+        return "WALLET";
     }
 
     /**
@@ -103,7 +94,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("DATA", 1);
+            .add("FILE", 1);
     }
     
     /**
@@ -128,12 +119,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Generate an address used for embedding a record of data into the blockchain."
+                "Generate a Bitcoin address with an embedded record of binary data."
             )
             (
-                "DATA",
-                value<std::string>(&argument_.data),
-                "The data of which to embed a record."
+                "FILE",
+                value<std::string>(&argument_.file),
+                "The binary data of which to embed a record."
             );
 
         return options;
@@ -147,9 +138,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto data = variables.find("DATA");
-        if (data == variables.end())
-            parse(argument_.data, read_stream(input));
+        auto file = variables.find("FILE");
+        if (file == variables.end())
+            parse(argument_.file, read_stream(input));
     }
 
     /**
@@ -166,19 +157,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the DATA argument.
+     * Get the value of the FILE argument.
      */
-    virtual std::string get_data_argument()
+    virtual std::string get_file_argument()
     {
-        return argument_.data;
+        return argument_.file;
     }
     
     /**
-     * Set the value of the DATA argument.
+     * Set the value of the FILE argument.
      */
-    virtual void set_data_argument(std::string value)
+    virtual void set_file_argument(std::string value)
     {
-        argument_.data = value;
+        argument_.file = value;
     }
 
     /**
@@ -207,9 +198,9 @@ private:
     struct argument
     {
         argument()
-          : data()
+          : file()
             {}
-        std::string data;
+        std::string file;
     } argument_;
     
     /**

@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_FETCH_HEADER_HEIGHT_HPP
-#define SX_FETCH_HEADER_HEIGHT_HPP
+#ifndef SX_FETCH_UTXO_HPP
+#define SX_FETCH_UTXO_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -52,9 +51,15 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx fetch-header-height command.
+ * Various localizable strings.
  */
-class fetch_header_height 
+#define SX_FETCH_UTXO_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
+
+/**
+ * Class to implement the sx fetch-utxo command.
+ */
+class fetch_utxo 
     : public command
 {
 public:
@@ -62,14 +67,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "fetch-header-height"; }
+    static const char* symbol() { return "fetch-utxo"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return fetch_header_height::symbol();
+        return fetch_utxo::symbol();
     }
 
     /**
@@ -77,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BLOCKCHAIN QUERIES";
+        return "OBELISK";
     }
 
     /**
@@ -97,7 +94,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HEIGHT", 1);
+            .add("SATOSHI", 1)
+            .add("ADDRESS", -1);
     }
     
     /**
@@ -122,12 +120,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get a raw block header from the specified height. Requires a server connection."
+                "Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires a server connection."
             )
             (
-                "HEIGHT",
-                value<size_t>(&argument_.height),
-                "The block height."
+                "SATOSHI",
+                value<uint64_t>(&argument_.satoshi)->required(),
+                "The whole number of satoshi."
+            )
+            (
+                "ADDRESS",
+                value<std::vector<serializer::address>>(&argument_.addresss),
+                "The set of Bitcoin addresses."
             );
 
         return options;
@@ -141,9 +144,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto height = variables.find("HEIGHT");
-        if (height == variables.end())
-            parse(argument_.height, read_stream(input));
     }
 
     /**
@@ -160,19 +160,35 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HEIGHT argument.
+     * Get the value of the SATOSHI argument.
      */
-    virtual size_t get_height_argument()
+    virtual uint64_t get_satoshi_argument()
     {
-        return argument_.height;
+        return argument_.satoshi;
     }
     
     /**
-     * Set the value of the HEIGHT argument.
+     * Set the value of the SATOSHI argument.
      */
-    virtual void set_height_argument(size_t value)
+    virtual void set_satoshi_argument(uint64_t value)
     {
-        argument_.height = value;
+        argument_.satoshi = value;
+    }
+
+    /**
+     * Get the value of the ADDRESS arguments.
+     */
+    virtual std::vector<serializer::address> get_addresss_argument()
+    {
+        return argument_.addresss;
+    }
+    
+    /**
+     * Set the value of the ADDRESS arguments.
+     */
+    virtual void set_addresss_argument(std::vector<serializer::address> value)
+    {
+        argument_.addresss = value;
     }
 
     /**
@@ -201,9 +217,11 @@ private:
     struct argument
     {
         argument()
-          : height()
+          : satoshi(),
+            addresss()
             {}
-        size_t height;
+        uint64_t satoshi;
+        std::vector<serializer::address> addresss;
     } argument_;
     
     /**

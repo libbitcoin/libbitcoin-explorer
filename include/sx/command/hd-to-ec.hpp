@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_ADDR_HPP
-#define SX_ADDR_HPP
+#ifndef SX_HD_TO_EC_HPP
+#define SX_HD_TO_EC_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -52,9 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx addr command.
+ * Class to implement the sx hd-to-ec command.
  */
-class addr 
+class hd_to_ec 
     : public command
 {
 public:
@@ -62,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "addr"; }
+    static const char* symbol() { return "hd-to-ec"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return addr::symbol();
+        return hd_to_ec::symbol();
     }
 
     /**
@@ -77,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "OFFLINE KEYS AND ADDRESSES";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BASIC";
+        return "WALLET";
     }
 
     /**
@@ -122,17 +113,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a public key (hex bytes) or private key (hash or WIF) to a Bitcoin address."
-            )
-            (
-                "version,v",
-                value<serializer::byte>(&option_.version),
-                "The desired address version."
+                "Convert a HD public or private key to the equivalent EC public or private key."
             )
             (
                 "KEY",
-                value<serializer::ec_key>(&argument_.key),
-                "The public key or hex or WIF encoded private key to convert."
+                value<serializer::hd_key>(&argument_.key),
+                "The HD public or private key to convert."
             );
 
         return options;
@@ -167,7 +153,7 @@ public:
     /**
      * Get the value of the KEY argument.
      */
-    virtual serializer::ec_key get_key_argument()
+    virtual serializer::hd_key get_key_argument()
     {
         return argument_.key;
     }
@@ -175,7 +161,7 @@ public:
     /**
      * Set the value of the KEY argument.
      */
-    virtual void set_key_argument(serializer::ec_key value)
+    virtual void set_key_argument(serializer::hd_key value)
     {
         argument_.key = value;
     }
@@ -196,22 +182,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the version option.
-     */
-    virtual serializer::byte get_version_option()
-    {
-        return option_.version;
-    }
-    
-    /**
-     * Set the value of the version option.
-     */
-    virtual void set_version_option(serializer::byte value)
-    {
-        option_.version = value;
-    }
-
 private:
 
     /**
@@ -224,7 +194,7 @@ private:
         argument()
           : key()
             {}
-        serializer::ec_key key;
+        serializer::hd_key key;
     } argument_;
     
     /**
@@ -235,11 +205,9 @@ private:
     struct option
     {
         option()
-          : help(),
-            version()
+          : help()
             {}    
         bool help;
-        serializer::byte version;
     } option_;
 };
 

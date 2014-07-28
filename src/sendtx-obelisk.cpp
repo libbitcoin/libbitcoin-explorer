@@ -21,9 +21,8 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command/sendtx-obelisk.hpp>
-#include <sx/utility/coin.hpp>
 #include <sx/obelisk.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 #include <sx/utility/config.hpp>
 
 using namespace bc;

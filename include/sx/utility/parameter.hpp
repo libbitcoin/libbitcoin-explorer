@@ -25,7 +25,7 @@
 #include <vector>
 #include <boost/program_options.hpp>
 #include <sx/define.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

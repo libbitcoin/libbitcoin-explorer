@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -54,7 +53,7 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_MONITOR_OBSOLETE \
+#define SX_MONITOR_NOT_IMPLEMENTED \
     "This experimental command is no longer supported."
 
 /**
@@ -83,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BLOCKCHAIN WATCHING";
+        return "EXPERIMENTAL";
     }
 
     /**
@@ -102,7 +93,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("PREFIX", 1);
     }
     
     /**
@@ -128,6 +120,11 @@ public:
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
                 "Monitor an address prefix."
+            )
+            (
+                "PREFIX",
+                value<uint32_t>(&argument_.prefix),
+                "The prefix of transactions to monitor."
             );
 
         return options;
@@ -141,6 +138,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto prefix = variables.find("PREFIX");
+        if (prefix == variables.end())
+            parse(argument_.prefix, read_stream(input));
     }
 
     /**
@@ -155,6 +155,22 @@ public:
         std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the PREFIX argument.
+     */
+    virtual uint32_t get_prefix_argument()
+    {
+        return argument_.prefix;
+    }
+    
+    /**
+     * Set the value of the PREFIX argument.
+     */
+    virtual void set_prefix_argument(uint32_t value)
+    {
+        argument_.prefix = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -182,7 +198,9 @@ private:
     struct argument
     {
         argument()
+          : prefix()
             {}
+        uint32_t prefix;
     } argument_;
     
     /**

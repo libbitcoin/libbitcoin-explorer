@@ -20,7 +20,7 @@
 #include <sx/command/ec-to-wif.hpp>
 
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace sx;
 using namespace sx::extension;
@@ -32,7 +32,13 @@ console_result ec_to_wif::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     const auto secret = get_secret_argument();
+    const auto uncompressed = get_uncompressed_option();
 
-    output << wif(secret) << std::endl;
+    // NOTE: ec_private deserialization supports WIF!
+
+    auto import_format = wif(secret);
+    import_format.set_compressed(!uncompressed);
+
+    output << import_format << std::endl;
     return console_result::okay;
 }

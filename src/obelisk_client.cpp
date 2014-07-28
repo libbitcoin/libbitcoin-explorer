@@ -23,7 +23,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/command.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 namespace sx {
 

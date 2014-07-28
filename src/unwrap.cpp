@@ -23,16 +23,37 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/utility/coin.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// This is potentially localizable.
+// TODO: This is localizable.
 static const char* format = "%1% %2% %3%";
+
+bool split_checksum(const data_chunk& chunk, byte& version, bytes& payload,
+    bytes& checksum)
+{
+    const size_t version_length = 1;
+    const size_t checksum_length = 4;
+
+    // guard against insufficient buffer length
+    if (chunk.size() < version_length + checksum_length)
+        return false;
+
+    if (!verify_checksum(chunk))
+        return false;
+
+    // set return values
+    version = chunk.front();
+    payload = data_chunk(chunk.begin() + version_length, 
+        chunk.end() - checksum_length);
+    checksum = data_chunk(chunk.end() - checksum_length, chunk.end());
+
+    return true;
+}
 
 // 100% coverage by line, loc ready.
 console_result unwrap::invoke(std::istream& input, std::ostream& output,
@@ -41,25 +62,15 @@ console_result unwrap::invoke(std::istream& input, std::ostream& output,
     // Bound parameters.
     const data_chunk hex = get_hex_argument();
 
-    // require at least 1 byte of data with a 4 byte checksum
-    const size_t minimum_size = 5;
-
-    if (hex.size() < minimum_size)
-    {
-        cerr << SX_UNWRAP_INVALID_SIZE << std::endl;
-        return console_result::failure;
-    }
-
-    if (!validate_checksum(hex))
+    byte version;
+    bytes payload, checksum;
+    if (!split_checksum(hex, version, payload, checksum))
     {
         cerr << SX_UNWRAP_INVALID_CHECKSUM << std::endl;
         return console_result::failure;
     }
 
-    byte version(hex.front());
-    bytes data(data_chunk(hex.begin() + 1, hex.end() - 4));
-    bytes checksum(data_chunk(hex.end() - 4, hex.end()));
-
-    output << boost::format(format) % version % data % checksum << std::endl;
+    output << boost::format(format) % version % payload % checksum 
+        << std::endl;
     return console_result::okay;
 }

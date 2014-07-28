@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -77,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "FORMAT (BASE58)";
+        return "FORMAT";
     }
 
     /**
@@ -122,12 +113,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a hex string to Base58."
+                "Convert a hex encoded data to Base58."
             )
             (
                 "HEX",
                 value<serializer::bytes>(&argument_.hex),
-                "The hex string to Base58 encode."
+                "The hex encoded data to Base58 encode."
             );
 
         return options;

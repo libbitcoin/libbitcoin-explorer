@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_FETCH_HEADER_HASH_HPP
-#define SX_FETCH_HEADER_HASH_HPP
+#ifndef SX_HD_TO_PUB_HPP
+#define SX_HD_TO_PUB_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -52,9 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx fetch-header-hash command.
+ * Class to implement the sx hd-to-pub command.
  */
-class fetch_header_hash 
+class hd_to_pub 
     : public command
 {
 public:
@@ -62,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "fetch-header-hash"; }
+    static const char* symbol() { return "hd-to-pub"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return fetch_header_hash::symbol();
+        return hd_to_pub::symbol();
     }
 
     /**
@@ -77,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BLOCKCHAIN QUERIES";
+        return "WALLET";
     }
 
     /**
@@ -97,7 +88,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", 1);
+            .add("SECRET", 1);
     }
     
     /**
@@ -122,12 +113,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the raw block header from the specified hash. Requires a server connection."
+                "Derive the HD public key of a HD private key."
             )
             (
-                "HASH",
-                value<serializer::bitcoin256>(&argument_.hash),
-                "The block hash."
+                "SECRET",
+                value<serializer::hd_private>(&argument_.secret),
+                "The HD private key."
             );
 
         return options;
@@ -141,9 +132,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto hash = variables.find("HASH");
-        if (hash == variables.end())
-            parse(argument_.hash, read_stream(input));
+        auto secret = variables.find("SECRET");
+        if (secret == variables.end())
+            parse(argument_.secret, read_stream(input));
     }
 
     /**
@@ -160,19 +151,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HASH argument.
+     * Get the value of the SECRET argument.
      */
-    virtual serializer::bitcoin256 get_hash_argument()
+    virtual serializer::hd_private get_secret_argument()
     {
-        return argument_.hash;
+        return argument_.secret;
     }
     
     /**
-     * Set the value of the HASH argument.
+     * Set the value of the SECRET argument.
      */
-    virtual void set_hash_argument(serializer::bitcoin256 value)
+    virtual void set_secret_argument(serializer::hd_private value)
     {
-        argument_.hash = value;
+        argument_.secret = value;
     }
 
     /**
@@ -201,9 +192,9 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : secret()
             {}
-        serializer::bitcoin256 hash;
+        serializer::hd_private secret;
     } argument_;
     
     /**

@@ -23,352 +23,363 @@
   </configuration>
 
   <!-- SX Commands -->
-  
-  <command symbol="addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
-    <option name="help" description="Convert a public key (hex bytes) or private key (hash or WIF) to a Bitcoin address." />
-    <option name="version" type="byte" description="The desired address version." />
-    <argument name="KEY" stream="true" type="ec_key" description="The public key or hex or WIF encoded private key to convert." />
-  </command>
 
-  <command symbol="addr-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
-    <option name="help" description="Convert an address from Base58Check to RIPEMD160." />
-    <argument name="ADDRESS" stream="true" type="address" description="The address to convert."/>
+  <command symbol="addr-decode" formerly="decode-addr" category="WALLET">
+    <option name="help" description="Convert a Bitcoin address to RIPEMD160." />
+    <argument name="ADDRESS" stream="true" type="address" description="The Bitcoin address to convert."/>
   </command>
   
-  <command symbol="addr-embed" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
-    <option name="help" description="Generate an address used for embedding a record of data into the blockchain." />
-    <argument name="DATA" stream="true" description="The data of which to embed a record."/>
+  <command symbol="addr-embed" formerly="embed-addr" category="WALLET" stub="true">
+    <option name="help" description="Generate a Bitcoin address with an embedded record of binary data." />
+    <argument name="FILE" stream="true" description="The binary data of which to embed a record."/>
     <define name="SX_ADDR_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="addr-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)">
-    <option name="help" description="Convert an address from RIPEMD160 to Base58Check." />
-    <option name="version" type="byte" description="The desired version number." />
-    <argument name="RIPEMD160" stream="true" type="bitcoin160" description="The hex string to convert."/>
+  <command symbol="addr-encode" formerly="encode-addr" category="WALLET">
+    <option name="help" description="Convert a RIPEMD160 value to a Bitcoin address." />
+    <option name="version" type="byte" description="The desired Bitcoin address version." />
+    <argument name="RIPEMD160" stream="true" type="bitcoin160" description="The hex encoded hash to convert."/>
   </command>
 
-  <command symbol="addr-validate" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
+  <command symbol="addr-validate" formerly="validaddr" category="WALLET">
     <option name="help" description="Validate a set of addresses. The result is successful if all addresses are valid." />
-    <argument name="ADDRESS" type="address" limit="-1" description="The set of addresses to validate." />
+    <argument name="ADDRESS" type="address" limit="-1" description="The set of Bitcoin addresses to validate." />
   </command>
   
-  <command symbol="balance" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+  <command symbol="balance" category="OBELISK" obelisk="true">
     <option name="help" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The set of Bitcoin addresses." />
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
   </command>
 
-  <command symbol="base58check-decode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)" stub="true">
-    <option name="help" description="Convert a Base58Check value to a hex string." />
-    <argument name="BASE58CHECK" stream="true" description="The Base58Check encoded value to decode." />
+  <command symbol="base58check-decode" category="FORMAT" stub="true">
+    <option name="help" description="Convert a Base58Check value to hex encoded data." />
+    <argument name="BASE58CHECK" stream="true" type="base58" description="The Base58Check encoded value to decode." />
     <define name="SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="base58check-encode" category="UTILITY" subcategory="FORMAT (BASE58CHECK)" stub="true">
-    <option name="help" description="Convert a hex string to Base58Check." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to Base58Check encode." />
+  <command symbol="base58check-encode" category="FORMAT" stub="true">
+    <option name="help" description="Convert hex encoded data to Base58Check." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded value to Base58Check encode." />
     <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
-  <command symbol="base58-decode" category="UTILITY" subcategory="FORMAT (BASE58)">
-    <option name="help" description="Convert a Base58 value to a hex string." />
+  <command symbol="base58-decode" category="FORMAT">
+    <option name="help" description="Convert a Base58 value to a hex encoded data." />
     <argument name="BASE58" stream="true" type="base58" description="The Base58 encoded value to decode." />
   </command>
 
-  <command symbol="base58-encode" category="UTILITY" subcategory="FORMAT (BASE58)">
-    <option name="help" description="Convert a hex string to Base58." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to Base58 encode." />
+  <command symbol="base58-encode" category="FORMAT">
+    <option name="help" description="Convert a hex encoded data to Base58." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to Base58 encode." />
   </command>
   
-  <command symbol="bci-fetch-last-height" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
+  <command symbol="bci-fetch-last-height" category="BLOCKCHAIN.INFO" stub="true">
     <option name="help" description="Get the last block height from blockchain.info." />
     <define name="SX_BCI_FETCH_LAST_HEIGHT_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="bci-history" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN QUERIES (blockchain.info)" stub="true">
+  <command symbol="bci-history" category="BLOCKCHAIN.INFO" stub="true">
     <option name="help" description="Get the list of outputs, values and spends for an address from blockchain.info." />
-    <argument name="ADDRESS" stream="true" type="address" description="The address to query." />
+    <argument name="ADDRESS" stream="true" type="address" description="The Bitcoin address to query." />
     <define name="SX_BCI_HISTORY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
-  <command symbol="bci-send-transaction" category="ONLINE (BLOCKCHAIN.INFO)" subcategory="BLOCKCHAIN UPDATES (blockchain.info)" stub="true">
-    <option name="help" description="Send a transaction to blockchain.info." />
+  <command symbol="bci-send-transaction" formerly="sendtx-bci" category="BLOCKCHAIN.INFO" stub="true">
+    <option name="help" description="Send a Bitcoin transaction to blockchain.info." />
     <option name="FILE" description="The transaction file path and file name. If not specified the transaction is read from STDIN."/>
     <define name="SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="be-fetch-transaction" category="ONLINE (BLOCKEXPLORER.COM)" subcategory="BLOCKCHAIN QUERIES (blockexplorer.com)" stub="true">
-    <option name="help" description="Get a transaction from blockexplorer.com." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The transaction hash." />
+  <command symbol="be-fetch-transaction" formerly="blke-fetch-transaction" category="BLOCKEXPLORER.COM" stub="true">
+    <option name="help" description="Get a Bitcoin transaction from blockexplorer.com." />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The hex encoded transaction hash." />
     <define name="SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="bitcoin160" category="UTILITY" subcategory="HASHES">
-    <option name="help" description="Perform a RIPEMD160 hash of a SHA256 hash of data." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  <command symbol="bitcoin160" category="FORMAT">
+    <option name="help" description="Perform a RIPEMD160 hash of a SHA256 hash of hex encoded data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to hash."/>
   </command>
 
-  <command symbol="bitcoin256" category="UTILITY" subcategory="HASHES">
-    <option name="help" description="Perform a SHA256 hash of a SHA256 hash of data." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  <command symbol="bitcoin256" category="FORMAT">
+    <option name="help" description="Perform a SHA256 hash of a SHA256 hash of hex encoded data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to hash."/>
   </command>
 
-  <command symbol="brainwallet" category="OFFLINE KEYS AND ADDRESSES" subcategory="BRAIN STORAGE" stub="true">
-    <option name="help" description="Make a SHA256 private key from an arbitrary passphrase. Unsafe if passphrase is low in entropy. See diceware and xkcd for advice on entropy and generating a safe brainwallet." />
+  <command symbol="brainwallet" category="BRAINWALLET" stub="true">
+    <option name="help" description="Make an EC private key from an arbitrary passphrase. Unsafe if passphrase is low in entropy. See diceware and xkcd for advice on entropy and generating a safe brainwallet." />
     <option name="algorithm" description="The algorithm (e.g. slowsha)." />
     <argument name="PASSWORD" required="true" description="The passphrase." />
     <argument name="USERNAME" description="A username." />
     <define name="SX_BRAINWALLET_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
-  <command symbol="btc" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
+  <command symbol="btc" category="CONVERSION" stub="true">
     <option name="help" description="Convert satoshi to BTC." />
     <argument name="SATOSHI" stream="true" type="uint64_t" description="The number of satoshi to convert."/>
     <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
-  
-  <command symbol="ec-add" category="UTILITY" subcategory="EC MATH">
-    <option name="help" description="Calculate the elliptic curve function POINT + (SECRET * curve-generator-point)." />
-    <argument name="POINT" required="true" type="ec_public" description="The point to add."/>
-    <argument name="SECRET" required="true" type="ec_private" description="The hex or WIF encoded secret to add."/>
+   
+  <command symbol="ec-add" formerly="ec-tweak-add" category="ELLIPTIC CURVE MATH">
+    <option name="help" description="Calculate the EC function POINT + (SECRET * curve-generator-point)." />
+    <argument name="POINT" required="true" type="ec_public" description="The hex encoded EC point to add."/>
+    <argument name="SECRET" required="true" type="ec_private" description="The hex encoded EC secret to add."/>
     <define name="SX_EC_ADD_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
 
-  <command symbol="ec-add-secrets" category="UTILITY" subcategory="EC MATH">
-    <option name="help" description="Calculate the elliptic curve function (SECRET + SECRET) % curve-order." />
-    <argument name="SECRET" limit="-1" required="true" type="ec_private" description="The hex or WIF encoded secret to add."/>
+  <command symbol="ec-add-secrets" formerly="ec-add-modp" category="ELLIPTIC CURVE MATH">
+    <option name="help" description="Calculate the EC function (SECRET + SECRET) % curve-order." />
+    <argument name="SECRET" limit="-1" required="true" type="ec_private" description="The hex encoded secret to add."/>
     <define name="SX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
 
-  <command symbol="ec-multiply" category="UTILITY" subcategory="EC MATH">
-    <option name="help" description="Calculate the elliptic curve product (POINT * SECRET)." />
-    <argument name="POINT" required="true" type="ec_public" description="The point to multiply."/>
-    <argument name="SECRET" required="true" type="ec_private" description="The hex or WIF encoded secret to multiply."/>
+  <command symbol="ec-multiply" category="ELLIPTIC CURVE MATH">
+    <option name="help" description="Calculate the EC product (POINT * SECRET)." />
+    <argument name="POINT" required="true" type="ec_public" description="The hex encoded EC point to multiply."/>
+    <argument name="SECRET" required="true" type="ec_private" description="The hex encoded EC secret to multiply."/>
     <define name="SX_EC_MULITPLY_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
   
-  <command symbol="ec-multiply-secrets" category="UTILITY" subcategory="EC MATH">
-    <option name="help" description="Calculate the elliptic curve function (SECRET * SECRET) % curve-order." />
-    <argument name="SECRET" limit="-1" required="true" type="ec_private" description="The hex or WIF encoded secret to multiply."/>
+  <command symbol="ec-multiply-secrets" formerly="ec-add" category="ELLIPTIC CURVE MATH">
+    <option name="help" description="Calculate the EC function (SECRET * SECRET) % curve-order." />
+    <argument name="SECRET" limit="-1" required="true" type="ec_private" description="The hex encoded EC secret to multiply."/>
     <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
-  
-  <command symbol="ec-to-wif" category="UTILITY" subcategory="FORMAT (WIF)">
-    <option name="help" description="Convert an elliptic curve secret to a WIF private key." />
-    <argument name="SECRET" stream="true" type="ec_private" description="The value to convert."/>
+
+  <command symbol="ec-new" formerly="newkey" category="WALLET">
+    <option name="help" description="Create a new EC private key from entropy." />
+    <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key. If empty defaults to a random 32 byte value." />
   </command>
   
-  <command symbol="fetch-header-hash" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
-    <option name="help" description="Get the raw block header from the specified hash. Requires a server connection." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The block hash."/>
-  </command>
-  
-  <command symbol="fetch-header-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
-    <option name="help" description="Get a raw block header from the specified height. Requires a server connection." />
-    <argument name="HEIGHT" stream="true" type="size_t" description="The block height."/>
+  <command symbol="ec-to-addr" formerly="addr" category="WALLET">
+    <option name="help" description="Convert an EC public key to a Bitcoin address." />
+    <option name="version" type="byte" description="The desired Bitcoin address version." />
+    <argument name="POINT" stream="true" type="ec_public" description="The hex encoded EC public key to convert." />
   </command>
 
-  <command symbol="fetch-last-height" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
-    <option name="help" description="Get the last block height. Requires a server connection." />
+  <!-- This must take ec_private vs. ec_key because of the need to specify the compression state. -->
+  <command symbol="ec-to-pub" formerly="pubkey" category="WALLET">
+    <option name="help" description="Derive the EC public key of an EC private key. Defaults to the compressed public key format." />
+    <option name="uncompressed" description="Derive using the uncompressed public key format." />
+    <argument name="SECRET" stream="true" type="ec_private" description="The hex encoded EC private key."/>
   </command>
   
-  <!-- BUGBUG: help/height option conflict, implement alias -->
-  <command symbol="fetch-stealth" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+  <command symbol="ec-to-wif" category="WALLET">
+    <option name="help" description="Convert an EC private key to a WIF private key. The result associates with the compressed public key format by default." />
+    <option name="uncompressed" description="Associate the result with the uncompressed public key format." />
+    <argument name="SECRET" stream="true" type="ec_private" description="The hex encoded EC private key to convert."/>
+  </command>
+  
+  <command symbol="fetch-header" category="OBELISK" obelisk="true">
+    <option name="help" description="Get the raw block header from the specified hash or height. Requires a server connection." />
+    <option name="hash" shortcut="s" type="bitcoin256" description="The hex encoded block hash."/>
+    <option name="height" shortcut="t" type="size_t" description="The block height."/>
+  </command>
+
+  <command symbol="fetch-last-height" category="OBELISK" obelisk="true">
+    <option name="help" description="Get the last block height. Requires a server connection." />
+  </command>
+
+  <command symbol="fetch-public-key" formerly="get-pubkey" category="OBELISK" stub="true" obelisk="true">
+    <option name="help" description="Get the EC public key of the address, if it exists on the blockchain. Requires a server connection." />
+    <argument name="ADDRESS" stream="true" type="address" description="The Bitcoin address of the public key."/>
+    <define name="SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  </command>
+  
+  <command symbol="fetch-stealth" category="OBELISK" obelisk="true">
     <option name="help" description="Get the stealth transactions matching the specified filter. Requires a server connection." />
-    <option name="height" alias="t" type="size_t" description="The minimum height of transactions to include in the search."/>
-    <argument name="BITFIELD" stream="true" type="uint32_t" description="The bit field of transactions to include in the search."/>
+    <option name="height" shortcut="t" type="size_t" description="The minimum height of transactions to include in the search."/>
+    <argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to include in the search."/>
     <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%\n" />
   </command>
 
-  <command symbol="fetch-transaction" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+  <command symbol="fetch-transaction" category="OBELISK" obelisk="true">
     <option name="help" description="Get a transaction. Requires a server connection." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The transaction hash." />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The hex encoded transaction hash." />
   </command>
 
-  <command symbol="fetch-transaction-index" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+  <command symbol="fetch-transaction-index" category="OBELISK" obelisk="true">
     <option name="help" description="Get the block height and index of a transaction. Requires a server connection." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The transaction hash." />
+    <argument name="HASH" stream="true" type="bitcoin256" description="The hex encoded transaction hash." />
     <define name="SX_FETCH_TRANSACTION_INDEX_OUTPUT" value="Height: %1% Index: %2%\n" />
   </command>
 
-  <command symbol="genaddr" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+  <command symbol="fetch-utxo" formerly="get-utxo" category="OBELISK" stub="true" obelisk="true">
+    <option name="help" description="Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires a server connection." />
+    <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The set of Bitcoin addresses." />
+    <define name="SX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  </command>
+
+  <command symbol="genaddr" category="ELECTRUM" obsolete="true">
     <option name="help" description="Generate a Bitcoin address deterministically from an Electrum wallet." />
     <define name="SX_GENADDR_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
   
-  <command symbol="genpriv" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+  <command symbol="genpriv" category="ELECTRUM" obsolete="true">
     <option name="help" description="Generate a private key deterministically from an Electrum seed." />
     <define name="SX_GENPRIV_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
-  <command symbol="genpub" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES"obsolete="true">
+  <command symbol="genpub" category="ELECTRUM" obsolete="true">
     <option name="help" description="Generate a public key deterministically from an Electrum wallet." />
     <define name="SX_GENPUB_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
-  <command symbol="get-pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC" stub="true">
-    <option name="help" description="Get the public key of an address." />
-    <argument name="ADDRESS" stream="true" type="address" description="The address from which to derive the public key." />
-    <define name="SX_GET_PUBKEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-  </command>
-
-  <command symbol="get-utxo" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" stub="true" obelisk="true">
-    <option name="help" description="Get enough unspent transaction outputs from a set of addresses to pay a number of satoshi. Requires a server connection." />
-    <argument name="SATOSHI" type="uint64_t" required="true" description="The number of satoshi." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
-    <define name="SX_GET_UXTO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-  </command>
-
-  <!-- BUGBUG: help/hard option conflict, implement alias -->
-  <command symbol="hd-priv" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <option name="help" description="Create a HD private key from another HD private key." />
-    <option name="hard" alias="d" description="Signal to create a hardened key." />
-    <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
-    <argument name="SECRET" stream="true" type="hd_private" description="The hex encoded HD private key." />
-  </command>
-
-  <!-- BUGBUG: help/hard option conflict, implement alias -->
-  <command symbol="hd-pub" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <option name="help" description="Create a HD public key from another HD public or private key." />
-    <option name="hard" alias="d" description="Signal to create a hardened key." />
-    <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
-    <argument name="KEY" stream="true" type="hd_key" description="The hex encoded HD public or private key." />
-    <define name="SX_HD_PUB_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
-  </command>
-
-  <command symbol="hd-seed" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <option name="help" description="Create a HD key from entropy and emit the private part." />
-    <option name="pubkey" description="Emit the public part instead of the private part." />
+  <command symbol="hd-new" formerly="hd-seed" category="WALLET">
+    <option name="help" description="Create a new HD private key from entropy." />
     <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key. If empty defaults to a random 32 byte value." />
   </command>
 
-  <command symbol="hd-to-address" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <option name="help" description="Convert a HD public or private key to a Bitcoin address." />
-    <argument name="KEY" stream="true" type="hd_key" description="The hex encoded HD public or private key." />
+  <command symbol="hd-priv" category="WALLET">
+    <option name="help" description="Derive a child HD private key from another HD private key." />
+    <option name="hard" shortcut="d" description="Signal to create a hardened key." />
+    <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
+    <argument name="SECRET" stream="true" type="hd_private" description="The parent HD private key." />
   </command>
 
-  <command symbol="hd-to-wif" category="OFFLINE KEYS AND ADDRESSES" subcategory="HD / BIP32">
-    <option name="help" description="Convert an HD private key to a WIF private key." />
-    <argument name="SECRET" stream="true" type="hd_private" description="The hex encoded HD private key." />
+  <command symbol="hd-pub" category="WALLET">
+    <option name="help" description="Derive a child HD public key from another HD public or private key." />
+    <option name="hard" shortcut="d" description="Signal to create a hardened key." />
+    <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
+    <argument name="KEY" stream="true" type="hd_key" description="The parent HD public or private key." />
+    <define name="SX_HD_PUB_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
+  </command>
+
+  <command symbol="hd-to-address" category="WALLET">
+    <option name="help" description="Convert a HD public or private key to a Bitcoin address." />
+    <argument name="KEY" stream="true" type="hd_key" description="The HD public or private key to convert." />
+  </command>
+
+  <command symbol="hd-to-ec" category="WALLET">
+    <option name="help" description="Convert a HD public or private key to the equivalent EC public or private key." />
+    <argument name="KEY" stream="true" type="hd_key" description="The HD public or private key to convert." />
   </command>
   
-  <command symbol="history" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN QUERIES" obelisk="true">
+  <command symbol="hd-to-pub" category="WALLET">
+    <option name="help" description="Derive the HD public key of a HD private key." />
+    <argument name="SECRET" stream="true" type="hd_private" description="The HD private key." />
+  </command>
+
+  <command symbol="hd-to-wif" category="WALLET">
+    <option name="help" description="Convert a HD private key to a WIF private key." />
+    <argument name="SECRET" stream="true" type="hd_private" description="The HD private key to convert." />
+  </command>
+  
+  <command symbol="history" category="OBELISK" obelisk="true">
     <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The set of addresses." />
+    <argument name="ADDRESS" limit="-1" type="address" description="The set of Bitcoin addresses." />
     <define name="SX_HISTORY_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_HISTORY_PENDING" value="Pending" />
     <define name="SX_HISTORY_UNSPENT" value="Unspent" />
     <define name="SX_HISTORY_OUTPUT" value="Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%\n" />
   </command>
 
-  <command symbol="help" category="SX" subcategory="DOCUMENTATION">
+  <command symbol="help" category="SX">
     <option name="help" description="Get help for any command." />
     <argument name="COMMAND" stream="true" description="The command for which help is requested." />
     <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
   </command>
 
-  <command symbol="initchain" category="ONLINE (OBELISK)" subcategory="OBELISK ADMIN" obsolete="true">
+  <command symbol="initchain" category="OBELISK" obsolete="true">
     <option name="help" description="Initialize a new blockchain database." />
     <define name="SX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
   </command>
 
-  <command symbol="monitor" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN WATCHING" obsolete="true">
+  <command symbol="monitor" category="EXPERIMENTAL">
     <option name="help" description="Monitor an address prefix." />
-    <define name="SX_MONITOR_OBSOLETE" value="This experimental command is no longer supported." />
+    <argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to monitor."/>
+    <define name="SX_MONITOR_NOT_IMPLEMENTED" value="This experimental command is no longer supported." />
   </command>
   
-  <command symbol="mpk" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+  <command symbol="mpk" category="ELECTRUM" obsolete="true">
     <option name="help" description="Extract a master public key from a deterministic wallet seed." />
     <define name="SX_MPK_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
-  <command symbol="newkey" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
-    <option name="help" description="Create a new Electrum style private key." />
-    <define name="SX_NEWKEY_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
-  </command>
-
-  <command symbol="newseed" category="OBSOLETE" subcategory="ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES" obsolete="true">
+  <command symbol="newseed" category="ELECTRUM" obsolete="true">
     <option name="help" description="Create a new Electrum style deterministic wallet seed." />
     <define name="SX_NEWSEED_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
-
-  <!--<command symbol="pubkey" category="OFFLINE KEYS AND ADDRESSES" subcategory="BASIC">
-    <option name="help" description="Get the public part of a private key." />
-    <option name="compressed" description="Use compressed public key format." />
-    <option name="uncompressed" description="Use uncompressed public key format." />
-  </command>-->
   
-  <command symbol="qrcode" category="UTILITY" subcategory="MISC" stub="true">
+  <!-- TODO: parameterize for stealth address. -->
+  <command symbol="qrcode" category="WALLET" stub="true">
     <option name="help" description="Generate a QR code image file for a Bitcoin address." />
     <option name="FILE" type="path" description="The image file path and file name. If not specified the image is written to STDOUT."/>
     <argument name="ADDRESS" stream="true" type="address" description="The address."/>
     <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="ripemd160" category="UTILITY" subcategory="HASHES">
-    <option name="help" description="Perform a RIPEMD160 hash of data." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  <command symbol="ripemd160" formerly="ripemd-hash" category="FORMAT">
+    <option name="help" description="Perform a RIPEMD160 hash of hex encoded data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to hash."/>
   </command>
 
-  <command symbol="satoshi" category="UTILITY" subcategory="SATOSHI MATH" stub="true">
+  <command symbol="satoshi" category="CONVERSION" stub="true">
     <option name="help" description="Convert BTC to satoshi." />
-    <argument name="BTC" stream="true" description="The value to convert."/>
+    <argument name="BTC" stream="true" description="The whole number of BTC to convert."/>
     <define name="SX_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="sha160" category="UTILITY" subcategory="HASHES">
-    <option name="help" description="Perform a SHA160 (also known as SHA-1) hash of data." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  <command symbol="sha160" category="FORMAT">
+    <option name="help" description="Perform a SHA160 (also known as SHA-1) hash of hex encoded data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to hash."/>
   </command>
 
-  <command symbol="sha256" category="UTILITY" subcategory="HASHES">
-    <option name="help" description="Perform a SHA256 hash of data." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  <command symbol="sha256" category="FORMAT">
+    <option name="help" description="Perform a SHA256 hash of hex encoded data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to hash."/>
   </command>
 
-  <command symbol="sha512" category="UTILITY" subcategory="HASHES">
-    <option name="help" description="Perform a SHA512 hash of data." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to hash."/>
+  <command symbol="sha512" category="FORMAT">
+    <option name="help" description="Perform a SHA512 hash of hex encoded data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to hash."/>
   </command>
   
-  <command symbol="stealth-addr" category="OFFLINE KEYS AND ADDRESSES" subcategory="STEALTH">
+  <command symbol="stealth-addr" category="STEALTH">
     <option name="help" description="Generate a stealth address." />
     <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />
     <option name="signatures" type="byte" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
-    <argument name="SCAN_KEY" type="bytes" required="true" description="The public key of the recipient." />
-    <argument name="SPEND_KEY" type="bytes" limit="-1" description="The public key(s) that is/are spent to." />
+    <argument name="SCAN_KEY" type="ec_public" required="true" description="The hex encoded EC public key of the recipient." />
+    <argument name="SPEND_KEY" type="ec_public" limit="-1" description="The hex encoded EC public key(s) that is/are spent to." />
   </command>
 
-  <command symbol="unwrap" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">
-    <option name="help" description="Validate the checksum of a hex string and recover its version byte and data." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to unwrap." />
-    <define name="SX_UNWRAP_INVALID_SIZE" value="The HEX argument size must be at least five bytes." />
+  <command symbol="unwrap" category="FORMAT">
+    <option name="help" description="Validate the checksum of a hex encoded data and recover its version byte and data." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to unwrap." />
     <define name="SX_UNWRAP_INVALID_CHECKSUM" value="The HEX argument checksum is not valid." />
   </command>
 
-  <command symbol="wallet" category="EXPERIMENTAL" subcategory="APPS" obsolete="true">
+  <command symbol="wallet" category="EXPERIMENTAL" obsolete="true">
     <option name="help" description="Experimental command line wallet." />
     <define name="SX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
   </command>
 
-  <command symbol="watchtx" category="ONLINE (OBELISK)" subcategory="BLOCKCHAIN WATCHING" stub="true" obelisk="true">
+  <command symbol="watchtx" category="OBELISK" stub="true" obelisk="true">
     <option name="help" description="Watch the network for one or more transactions by hash." />
-    <argument name="HASH" limit="-1" type="bitcoin256" description="The set of transaction hashes." />
+    <argument name="HASH" limit="-1" type="bitcoin256" description="The set of hex encoded transaction hashes." />
     <define name="SX_WATCHTX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
-  <command symbol="wif-to-ec" category="UTILITY" subcategory="FORMAT (WIF)">
-    <option name="help" description="Convert a WIF private key to an elliptic curve secret." />
+  <command symbol="wif-to-ec" category="WALLET">
+    <option name="help" description="Convert a WIF private key to an EC private key." />
     <argument name="WIF" stream="true" type="wif" description="The value to convert."/>
   </command>
+  
+  <!-- Need this to preserve the compression state from WIF to ec_public. -->
+  <command symbol="wif-to-pub" category="WALLET">
+    <option name="help" description="Derive the EC public key from a WIF private key." />
+    <argument name="WIF" stream="true" type="wif" description="The WIF private key."/>
+  </command>
 
-  <command symbol="wrap" category="OFFLINE TRANSACTIONS" subcategory="SCRIPTING">
-    <option name="help" description="Add a version byte and checksum to a hex string." />
+  <command symbol="wrap" category="FORMAT">
+    <option name="help" description="Add a version byte and checksum to hex encoded data." />
     <option name="version" type="byte" required="true" description="The desired version number." />
-    <argument name="HEX" stream="true" type="bytes" description="The hex string to wrap." />
+    <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to wrap." />
   </command>
   
 </generate>

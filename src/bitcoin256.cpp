@@ -21,21 +21,23 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/serializer/bytes.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result bitcoin256::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result sx::extension::bitcoin256::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const data_chunk hex = get_hex_argument();
 
     const auto hash = bitcoin_hash(hex);
 
-    output << sx::serializer::bytes(hash) << std::endl;
+    output << bytes(hash) << std::endl;
     return console_result::okay;
 }

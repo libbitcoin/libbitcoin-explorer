@@ -26,27 +26,26 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(addr__invoke)
+BOOST_AUTO_TEST_SUITE(ec_to_pub__invoke)
 
-BOOST_AUTO_TEST_CASE(addr__invoke__public_key__okay_output)
+BOOST_AUTO_TEST_CASE(ec_to_pub__invoke__compressed__okay_output)
 {
-    // $ sx addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
-    SX_DECLARE_COMMAND(addr);
-    command.set_key_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
+    // $ sx ec-to-pub secret
+    SX_DECLARE_COMMAND(ec_to_pub);
+    command.set_uncompressed_option(false);
+    command.set_secret_argument({ "secret" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    SX_REQUIRE_OUTPUT("1uUA1tQ3H1moXtxPJvAN1kzmcdu5NCc6d\n");
+    SX_REQUIRE_OUTPUT("");
 }
 
-BOOST_AUTO_TEST_CASE(addr__invoke__public_key_version__okay_output)
+BOOST_AUTO_TEST_CASE(ec_to_pub__invoke__uncompressed__okay_output)
 {
-    // $ sx addr -v 42 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
-    SX_DECLARE_COMMAND(addr);
-    command.set_key_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
-    command.set_version_option(42);
+    // $ sx ec-to-pub secret -u
+    SX_DECLARE_COMMAND(ec_to_pub);
+    command.set_uncompressed_option(true);
+    command.set_secret_argument({ "secret" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
-    SX_REQUIRE_OUTPUT("Hv6oWaQVrrUa9jkbQvuYjHC3CoTWusQz3u\n");
+    SX_REQUIRE_OUTPUT("");
 }
-
-// TODO: test other input key types.
 
 BOOST_AUTO_TEST_SUITE_END()

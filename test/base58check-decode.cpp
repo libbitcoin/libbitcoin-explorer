@@ -28,15 +28,7 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(base58check_decode__invoke)
 
-// TODO: enable once there is base58check deserialization.
-//BOOST_AUTO_TEST_CASE(base58check_decode__invoke__base58_bogus__throws_invalid_option_value)
-//{
-//    // $ sx base58check-decode bogus
-//    SX_DECLARE_COMMAND(base58check_decode);
-//    SX_REQUIRE_INVALID_OPTION_VALUE(command.set_base58check_argument({ "bogus" }));
-//}
-
-BOOST_AUTO_TEST_CASE(base58check_decode__invoke__base58_zero__failure_error)
+BOOST_AUTO_TEST_CASE(base58check_decode__invoke__zero__failure_error)
 {
     // $ sx base58check-decode 00
     SX_DECLARE_COMMAND(base58check_decode);

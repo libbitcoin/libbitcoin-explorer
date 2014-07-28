@@ -17,11 +17,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/hd-to-wif.hpp>
+
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
-#include <sx/command/hd-to-wif.hpp>
 #include <sx/serializer/wif.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace libwallet;
@@ -35,6 +36,8 @@ console_result hd_to_wif::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     hd_private_key secret = get_secret_argument();
+
+    // TODO: verify that all HD public keys are compressed.
 
     output << wif(secret) << std::endl;
     return console_result::okay;

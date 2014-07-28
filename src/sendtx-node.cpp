@@ -21,8 +21,7 @@
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/sendtx-node.hpp>
-#include <sx/utility/coin.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using std::placeholders::_1;

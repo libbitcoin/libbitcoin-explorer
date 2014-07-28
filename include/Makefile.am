@@ -12,13 +12,12 @@ sx_include_HEADERS = \
 
 sx_utility_includedir = $(includedir)/sx/utility
 sx_utility_include_HEADERS += \
-    coin.hpp \
     compat.hpp \
     config.hpp \
-    console.hpp \
     environment.hpp \
     parameter.hpp \
-    printer.hpp
+    printer.hpp \
+    utility.hpp
     
 sx_utility_includedir = $(includedir)/sx/serializer
 sx_utility_include_HEADERS += \
@@ -28,7 +27,6 @@ sx_utility_include_HEADERS += \
     bitcoin256.hpp \
     byte.hpp \
     bytes.hpp \
-    ec_key.hpp \
     ec_private.hpp \
     ec_public.hpp \
     hd_key.hpp \
@@ -40,7 +38,6 @@ sx_utility_include_HEADERS += \
 # Generated from XML data source.
 sx_command_includedir = $(includedir)/sx/command
 sx_command_include_HEADERS = \
-    command/addr.hpp \
     command/addr-decode.hpp \
     command/addr-embed.hpp \
     command/addr-encode.hpp \
@@ -61,21 +58,24 @@ sx_command_include_HEADERS = \
     command/ec-add-secrets.hpp \
     command/ec-multiply.hpp \
     command/ec-multiply-secrets.hpp \
+    command/ec-new.hpp \
+    command/ec-to-addr.hpp \
+    command/ec-to-pub.hpp \
     command/ec-to-wif.hpp \
     command/genaddr.hpp \
     command/genpriv.hpp \
     command/genpub.hpp \
-    command/get-pubkey.hpp \
+    command/hd-new.hpp \
     command/hd-priv.hpp \
     command/hd-pub.hpp \
-    command/hd-seed.hpp \
     command/hd-to-address.hpp \
+    command/hd-to-ec.hpp \
+    command/hd-to-pub.hpp \
     command/hd-to-wif.hpp \
     command/help.hpp \
     command/initchain.hpp \
     command/monitor.hpp \
     command/mpk.hpp \
-    command/newkey.hpp \
     command/newseed.hpp \
     command/qrcode.hpp \
     command/ripemd160.hpp \
@@ -87,19 +87,20 @@ sx_command_include_HEADERS = \
     command/unwrap.hpp \
     command/wallet.hpp \
     command/wif-to-ec.hpp \
+    command/wif-to-pub.hpp \
     command/wrap.hpp
 
 # Generated from XML data source.
 if HAVE_OBELISK
     sx_command_include_HEADERS += \
         command/balance.hpp \
-        command/fetch-header-hash.hpp \
-        command/fetch-header-height.hpp \
+        command/fetch-header.hpp \
         command/fetch-last-height.hpp \
+        command/fetch-public-key.hpp \
         command/fetch-stealth.hpp \
         command/fetch-transaction.hpp \
         command/fetch-transaction-index.hpp \
-        command/get-utxo.hpp \
+        command/fetch-utxo.hpp \
         command/history.hpp \
         command/watchtx.hpp
 endif

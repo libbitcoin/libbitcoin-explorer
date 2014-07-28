@@ -87,14 +87,6 @@ public:
     }
 
     /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "ELECTRUM STYLE DETERMINISTIC KEYS AND ADDRESSES";
-    }
-
-    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      *

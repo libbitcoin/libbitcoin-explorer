@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -76,14 +75,6 @@ public:
      * The localizable command category name, upper case.
      */
     const char* category()
-    {
-        return "OFFLINE KEYS AND ADDRESSES";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
     {
         return "STEALTH";
     }
@@ -137,13 +128,13 @@ public:
             )
             (
                 "SCAN_KEY",
-                value<serializer::bytes>(&argument_.scan_key)->required(),
-                "The public key of the recipient."
+                value<serializer::ec_public>(&argument_.scan_key)->required(),
+                "The hex encoded EC public key of the recipient."
             )
             (
                 "SPEND_KEY",
-                value<std::vector<serializer::bytes>>(&argument_.spend_keys),
-                "The public key(s) that is/are spent to."
+                value<std::vector<serializer::ec_public>>(&argument_.spend_keys),
+                "The hex encoded EC public key(s) that is/are spent to."
             );
 
         return options;
@@ -175,7 +166,7 @@ public:
     /**
      * Get the value of the SCAN_KEY argument.
      */
-    virtual serializer::bytes get_scan_key_argument()
+    virtual serializer::ec_public get_scan_key_argument()
     {
         return argument_.scan_key;
     }
@@ -183,7 +174,7 @@ public:
     /**
      * Set the value of the SCAN_KEY argument.
      */
-    virtual void set_scan_key_argument(serializer::bytes value)
+    virtual void set_scan_key_argument(serializer::ec_public value)
     {
         argument_.scan_key = value;
     }
@@ -191,7 +182,7 @@ public:
     /**
      * Get the value of the SPEND_KEY arguments.
      */
-    virtual std::vector<serializer::bytes> get_spend_keys_argument()
+    virtual std::vector<serializer::ec_public> get_spend_keys_argument()
     {
         return argument_.spend_keys;
     }
@@ -199,7 +190,7 @@ public:
     /**
      * Set the value of the SPEND_KEY arguments.
      */
-    virtual void set_spend_keys_argument(std::vector<serializer::bytes> value)
+    virtual void set_spend_keys_argument(std::vector<serializer::ec_public> value)
     {
         argument_.spend_keys = value;
     }
@@ -265,8 +256,8 @@ private:
           : scan_key(),
             spend_keys()
             {}
-        serializer::bytes scan_key;
-        std::vector<serializer::bytes> spend_keys;
+        serializer::ec_public scan_key;
+        std::vector<serializer::ec_public> spend_keys;
     } argument_;
     
     /**

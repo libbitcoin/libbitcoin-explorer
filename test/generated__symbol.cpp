@@ -27,11 +27,6 @@ using namespace sx::extension;
 
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 
-BOOST_AUTO_TEST_CASE(generated__symbol__addr__returns_expected_value)
-{
-    BOOST_REQUIRE(addr::symbol() == std::string("addr"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__addr_decode__returns_expected_value)
 {
     BOOST_REQUIRE(addr_decode::symbol() == std::string("addr-decode"));
@@ -137,24 +132,39 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply_secrets__returns_expected_va
     BOOST_REQUIRE(ec_multiply_secrets::symbol() == std::string("ec-multiply-secrets"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_new__returns_expected_value)
+{
+    BOOST_REQUIRE(ec_new::symbol() == std::string("ec-new"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_addr__returns_expected_value)
+{
+    BOOST_REQUIRE(ec_to_addr::symbol() == std::string("ec-to-addr"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_pub__returns_expected_value)
+{
+    BOOST_REQUIRE(ec_to_pub::symbol() == std::string("ec-to-pub"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_wif__returns_expected_value)
 {
     BOOST_REQUIRE(ec_to_wif::symbol() == std::string("ec-to-wif"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header_hash__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header__returns_expected_value)
 {
-    BOOST_REQUIRE(fetch_header_hash::symbol() == std::string("fetch-header-hash"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header_height__returns_expected_value)
-{
-    BOOST_REQUIRE(fetch_header_height::symbol() == std::string("fetch-header-height"));
+    BOOST_REQUIRE(fetch_header::symbol() == std::string("fetch-header"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_last_height__returns_expected_value)
 {
     BOOST_REQUIRE(fetch_last_height::symbol() == std::string("fetch-last-height"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_public_key__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_public_key::symbol() == std::string("fetch-public-key"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_stealth__returns_expected_value)
@@ -172,6 +182,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_transaction_index__returns_expecte
     BOOST_REQUIRE(fetch_transaction_index::symbol() == std::string("fetch-transaction-index"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_utxo__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_utxo::symbol() == std::string("fetch-utxo"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__genaddr__returns_expected_value)
 {
     BOOST_REQUIRE(genaddr::symbol() == std::string("genaddr"));
@@ -187,14 +202,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__genpub__returns_expected_value)
     BOOST_REQUIRE(genpub::symbol() == std::string("genpub"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__get_pubkey__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_new__returns_expected_value)
 {
-    BOOST_REQUIRE(get_pubkey::symbol() == std::string("get-pubkey"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__get_utxo__returns_expected_value)
-{
-    BOOST_REQUIRE(get_utxo::symbol() == std::string("get-utxo"));
+    BOOST_REQUIRE(hd_new::symbol() == std::string("hd-new"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__hd_priv__returns_expected_value)
@@ -207,14 +217,19 @@ BOOST_AUTO_TEST_CASE(generated__symbol__hd_pub__returns_expected_value)
     BOOST_REQUIRE(hd_pub::symbol() == std::string("hd-pub"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__hd_seed__returns_expected_value)
-{
-    BOOST_REQUIRE(hd_seed::symbol() == std::string("hd-seed"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_address__returns_expected_value)
 {
     BOOST_REQUIRE(hd_to_address::symbol() == std::string("hd-to-address"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_ec__returns_expected_value)
+{
+    BOOST_REQUIRE(hd_to_ec::symbol() == std::string("hd-to-ec"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_pub__returns_expected_value)
+{
+    BOOST_REQUIRE(hd_to_pub::symbol() == std::string("hd-to-pub"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_wif__returns_expected_value)
@@ -245,11 +260,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__monitor__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__mpk__returns_expected_value)
 {
     BOOST_REQUIRE(mpk::symbol() == std::string("mpk"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__newkey__returns_expected_value)
-{
-    BOOST_REQUIRE(newkey::symbol() == std::string("newkey"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__newseed__returns_expected_value)
@@ -310,6 +320,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__watchtx__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__wif_to_ec__returns_expected_value)
 {
     BOOST_REQUIRE(wif_to_ec::symbol() == std::string("wif-to-ec"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__wif_to_pub__returns_expected_value)
+{
+    BOOST_REQUIRE(wif_to_pub::symbol() == std::string("wif-to-pub"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__wrap__returns_expected_value)

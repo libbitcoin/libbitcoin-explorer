@@ -23,7 +23,7 @@
 // without first testing it.
 #pragma warning(push) 
 #pragma warning(disable : 4996)
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 #include <iomanip>
 #include <iostream>
@@ -65,8 +65,30 @@ void random_fill(bc::data_chunk& chunk)
     std::random_device random;
     std::default_random_engine engine(random());
 
-    for (uint8_t& byte : chunk)
+    for (uint8_t& byte: chunk)
         byte = engine() % std::numeric_limits<uint8_t>::max();
+}
+
+// Not testable due to lack of random engine injection.
+void random_secret(bc::ec_secret& secret)
+{
+    bc::data_chunk chunk(bc::ec_secret_size);
+    random_fill(chunk);
+    std::copy(chunk.begin(), chunk.end(), secret.begin());
+}
+
+bool read_addresses(std::vector<std::string> addresses, payaddr_list& payaddrs)
+{
+    for (const auto& address: addresses)
+    {
+        bc::payment_address payaddr;
+        if (!payaddr.set_encoded(address))
+            return false;
+
+        payaddrs.push_back(payaddr);
+    }
+
+    return true;
 }
 
 // Not unit testable (sleep).

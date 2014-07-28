@@ -20,7 +20,7 @@
 #include <sx/command/bci-send-transaction.hpp>
 
 #include <iostream>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace sx;
 using namespace sx::extension;

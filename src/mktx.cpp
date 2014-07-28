@@ -21,9 +21,8 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/command/mktx.hpp>
-#include <sx/utility/console.hpp>
-#include <sx/utility/curve.hpp>
 #include <sx/utility/dispatch.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace libwallet;

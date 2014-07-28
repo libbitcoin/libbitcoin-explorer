@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -77,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "HASHES";
+        return "FORMAT";
     }
 
     /**
@@ -122,12 +113,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Perform a SHA160 (also known as SHA-1) hash of data."
+                "Perform a SHA160 (also known as SHA-1) hash of hex encoded data."
             )
             (
                 "HEX",
                 value<serializer::bytes>(&argument_.hex),
-                "The hex string to hash."
+                "The hex encoded data to hash."
             );
 
         return options;

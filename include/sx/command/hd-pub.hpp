@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -83,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "OFFLINE KEYS AND ADDRESSES";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "HD / BIP32";
+        return "WALLET";
     }
 
     /**
@@ -128,10 +119,10 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Create a HD public key from another HD public or private key."
+                "Derive a child HD public key from another HD public or private key."
             )
             (
-                "hard,h",
+                "hard,d",
                 value<bool>(&option_.hard)->implicit_value(true),
                 "Signal to create a hardened key."
             )
@@ -143,7 +134,7 @@ public:
             (
                 "KEY",
                 value<serializer::hd_key>(&argument_.key),
-                "The hex encoded HD public or private key."
+                "The parent HD public or private key."
             );
 
         return options;

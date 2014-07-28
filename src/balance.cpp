@@ -33,9 +33,8 @@
 #include <sx/dispatch.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/utility/coin.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;

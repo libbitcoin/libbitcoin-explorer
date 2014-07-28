@@ -74,8 +74,6 @@
 .       return type_byte_sx
 .   elsif my.type = type_bytes
 .       return type_bytes_sx
-.   elsif my.type = type_ec_key
-.       return type_ec_key_sx
 .   elsif my.type = type_ec_private
 .       return type_ec_private_sx
 .   elsif my.type = type_ec_public
@@ -170,7 +168,6 @@
 .type_bitcoin256 = "bitcoin256"
 .type_byte = "byte"
 .type_bytes = "bytes"
-.type_ec_key = "ec_key"
 .type_ec_private = "ec_private"
 .type_ec_public = "ec_public"
 .type_hd_key = "hd_key"
@@ -187,7 +184,6 @@
 .type_bitcoin256_sx = "serializer::bitcoin256"
 .type_byte_sx = "serializer::byte"
 .type_bytes_sx = "serializer::bytes"
-.type_ec_key_sx = "serializer::ec_key"
 .type_ec_private_sx = "serializer::ec_private"
 .type_ec_public_sx = "serializer::ec_public"
 .type_hd_key_sx = "serializer::hd_key"
@@ -296,7 +292,7 @@ shared_ptr<command> find(const string& symbol)
 #include <boost/program_options.hpp>
 #include <sx/define.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -332,16 +328,6 @@ public:
      * @return  Example: "ONLINE (OBELISK)"
      */
     virtual const char* category()
-    {
-        return symbol();
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     *
-     * @return  Example: "BLOCKCHAIN QUERIES"
-     */
-    virtual const char* subcategory()
     {
         return symbol();
     }
@@ -587,7 +573,6 @@ private:
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -597,7 +582,7 @@ private:
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -641,14 +626,6 @@ public:
     const char* category()
     {
         return "$(category:)";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "$(subcategory:)";
     }
 
 .
@@ -940,13 +917,12 @@ sx_include_HEADERS = \\
 
 sx_utility_includedir = $\(includedir)/sx/utility
 sx_utility_include_HEADERS += \\
-    coin.hpp \\
     compat.hpp \\
     config.hpp \\
-    console.hpp \\
     environment.hpp \\
     parameter.hpp \\
-    printer.hpp
+    printer.hpp \\
+    utility.hpp
     
 sx_utility_includedir = $\(includedir)/sx/serializer
 sx_utility_include_HEADERS += \\
@@ -956,7 +932,6 @@ sx_utility_include_HEADERS += \\
     bitcoin256.hpp \\
     byte.hpp \\
     bytes.hpp \\
-    ec_key.hpp \\
     ec_private.hpp \\
     ec_public.hpp \\
     hd_key.hpp \\
@@ -998,12 +973,24 @@ libsx_la_SOURCES = \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
-    utility/coin.cpp \\
+    serializer/address.cpp \\
+    serializer/base58.cpp \\
+    serializer/bitcoin160.cpp \\
+    serializer/bitcoin256.cpp \\
+    serializer/byte.cpp \\
+    serializer/bytes.cpp \\
+    serializer/ec_private.cpp \\
+    serializer/ec_public.cpp \\
+    serializer/hd_key.cpp \\
+    serializer/hd_private.cpp \\
+    serializer/hd_public.cpp \\
+    serializer/point.cpp \\
+    serializer/wif.cpp \\
     utility/config.cpp \\
-    utility/console.cpp \\
     utility/environment.cpp \\
     utility/parameter.cpp \\
-    utility/printer.cpp
+    utility/printer.cpp \\
+    utility/utility.cpp
 
 # Generated from XML data source.
 libsx_la_SOURCES += \\
@@ -1041,8 +1028,7 @@ sx_LDADD = \\
 
 if HAVE_OBELISK
     sx_LDADD += \\
-        $\(libobelisk_LIBS) \\
-        -lncurses
+        $\(libobelisk_LIBS)
 endif
 .##############################################################################
 .echo "Generating builds/msvc/vs2013/libsx/libsx.vcxproj..."
@@ -1139,7 +1125,6 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp" />
@@ -1147,13 +1132,12 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\console.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\parameter.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\printer.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\utility.hpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1218,12 +1202,11 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1339,14 +1322,14 @@ endif
     <Filter Include="src\\command\\todo\\obelisk">
       <UniqueIdentifier>{bca50241-1338-43f2-be5b-dd5ff643ba99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\\command\\todo\\script">
+      <UniqueIdentifier>{0d051466-4637-46d3-bf36-79744fb7b978}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\\command\\todo\\stealth">
       <UniqueIdentifier>{ed76315a-9193-4924-a14e-6b6a7628ba86}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\command\\todo\\satoshi">
+    <Filter Include="src\\command\\todo\\transaction">
       <UniqueIdentifier>{a83aaa61-784a-44c7-800f-7f95486a8913}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\\command\\todo\\script">
-      <UniqueIdentifier>{0d051466-4637-46d3-bf36-79744fb7b978}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1381,9 +1364,6 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_key.hpp">
-      <Filter>include\\serializer</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
@@ -1405,16 +1385,10 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\coin.hpp">
-      <Filter>include\\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp">
-      <Filter>include\\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\console.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp">
@@ -1424,6 +1398,9 @@ endif
       <Filter>include\\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\printer.hpp">
+      <Filter>include\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\utility.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp">
@@ -1462,13 +1439,7 @@ endif
 .   endif
     </ClCompile>
 .endfor
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\coin.cpp">
-      <Filter>src\\utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp">
-      <Filter>src\\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\console.cpp">
       <Filter>src\\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp">
@@ -1478,6 +1449,9 @@ endif
       <Filter>src\\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\utility.cpp">
       <Filter>src\\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp">

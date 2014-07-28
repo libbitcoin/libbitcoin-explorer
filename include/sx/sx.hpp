@@ -37,16 +37,14 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/point.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/wif.hpp>
-#include <sx/utility/coin.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
 #include <sx/utility/environment.hpp>
 #include <sx/utility/parameter.hpp>
 #include <sx/utility/printer.hpp>
+#include <sx/utility/utility.hpp>
 
 #endif

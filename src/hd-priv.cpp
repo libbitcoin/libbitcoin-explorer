@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/hd-priv.hpp>
+
 #include <iostream>
 #include <wallet/wallet.hpp>
-#include <sx/command/hd-priv.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace libwallet;
 using namespace sx;

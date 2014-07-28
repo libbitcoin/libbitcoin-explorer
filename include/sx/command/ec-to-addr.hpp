@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_GET_UTXO_HPP
-#define SX_GET_UTXO_HPP
+#ifndef SX_EC_TO_ADDR_HPP
+#define SX_EC_TO_ADDR_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -52,15 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx ec-to-addr command.
  */
-#define SX_GET_UXTO_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
- * Class to implement the sx get-utxo command.
- */
-class get_utxo 
+class ec_to_addr 
     : public command
 {
 public:
@@ -68,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "get-utxo"; }
+    static const char* symbol() { return "ec-to-addr"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return get_utxo::symbol();
+        return ec_to_addr::symbol();
     }
 
     /**
@@ -83,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "ONLINE (OBELISK)";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "BLOCKCHAIN QUERIES";
+        return "WALLET";
     }
 
     /**
@@ -103,8 +88,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SATOSHI", 1)
-            .add("ADDRESS", -1);
+            .add("POINT", 1);
     }
     
     /**
@@ -129,17 +113,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get enough unspent transaction outputs from a set of addresses to pay a number of satoshi. Requires a server connection."
+                "Convert an EC public key to a Bitcoin address."
             )
             (
-                "SATOSHI",
-                value<uint64_t>(&argument_.satoshi)->required(),
-                "The number of satoshi."
+                "version,v",
+                value<serializer::byte>(&option_.version),
+                "The desired Bitcoin address version."
             )
             (
-                "ADDRESS",
-                value<std::vector<serializer::address>>(&argument_.addresss),
-                "The set of addresses."
+                "POINT",
+                value<serializer::ec_public>(&argument_.point),
+                "The hex encoded EC public key to convert."
             );
 
         return options;
@@ -153,6 +137,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto point = variables.find("POINT");
+        if (point == variables.end())
+            parse(argument_.point, read_stream(input));
     }
 
     /**
@@ -169,35 +156,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SATOSHI argument.
+     * Get the value of the POINT argument.
      */
-    virtual uint64_t get_satoshi_argument()
+    virtual serializer::ec_public get_point_argument()
     {
-        return argument_.satoshi;
+        return argument_.point;
     }
     
     /**
-     * Set the value of the SATOSHI argument.
+     * Set the value of the POINT argument.
      */
-    virtual void set_satoshi_argument(uint64_t value)
+    virtual void set_point_argument(serializer::ec_public value)
     {
-        argument_.satoshi = value;
-    }
-
-    /**
-     * Get the value of the ADDRESS arguments.
-     */
-    virtual std::vector<serializer::address> get_addresss_argument()
-    {
-        return argument_.addresss;
-    }
-    
-    /**
-     * Set the value of the ADDRESS arguments.
-     */
-    virtual void set_addresss_argument(std::vector<serializer::address> value)
-    {
-        argument_.addresss = value;
+        argument_.point = value;
     }
 
     /**
@@ -216,6 +187,22 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the version option.
+     */
+    virtual serializer::byte get_version_option()
+    {
+        return option_.version;
+    }
+    
+    /**
+     * Set the value of the version option.
+     */
+    virtual void set_version_option(serializer::byte value)
+    {
+        option_.version = value;
+    }
+
 private:
 
     /**
@@ -226,11 +213,9 @@ private:
     struct argument
     {
         argument()
-          : satoshi(),
-            addresss()
+          : point()
             {}
-        uint64_t satoshi;
-        std::vector<serializer::address> addresss;
+        serializer::ec_public point;
     } argument_;
     
     /**
@@ -241,9 +226,11 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            version()
             {}    
         bool help;
+        serializer::byte version;
     } option_;
 };
 

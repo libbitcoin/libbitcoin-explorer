@@ -75,26 +75,8 @@
     <ClCompile Include="..\..\..\..\test\btc.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\get-utxo.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\get-pubkey.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\satoshi.cpp">
       <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-header-hash.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-header-height.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\fetch-last-height.cpp">
       <Filter>src\tests\command\obelisk</Filter>
@@ -141,9 +123,6 @@
     <ClCompile Include="..\..\..\..\test\watchtx.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\newkey.cpp">
-      <Filter>src\tests\command\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\newseed.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
@@ -171,15 +150,6 @@
     <ClCompile Include="..\..\..\..\test\sha512.cpp">
       <Filter>src\tests\command\encoding</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\addr.cpp">
-      <Filter>src\tests\command\wallet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\addr-decode.cpp">
-      <Filter>src\tests\command\wallet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\addr-encode.cpp">
-      <Filter>src\tests\command\wallet</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-add.cpp">
       <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
@@ -201,12 +171,6 @@
     <ClCompile Include="..\..\..\..\test\hd-pub.cpp">
       <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-seed.cpp">
-      <Filter>src\tests\command\wallet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-to-address.cpp">
-      <Filter>src\tests\command\wallet</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp">
       <Filter>src\tests\command\wallet</Filter>
     </ClCompile>
@@ -215,9 +179,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\addr-embed.cpp">
       <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\monitor.cpp">
-      <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\wallet.cpp">
       <Filter>src\tests\command\obsolete</Filter>
@@ -239,6 +200,54 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp">
       <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-new.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-to-pub.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\addr-decode.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\addr-encode.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\fetch-header.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\fetch-public-key.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\fetch-utxo.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-to-pub.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\wif-to-pub.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-to-addr.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-new.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-to-address.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-to-ec.cpp">
+      <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\monitor.cpp">
+      <Filter>src\tests\command\stub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

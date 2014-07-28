@@ -21,18 +21,11 @@
 
 #include <iostream>
 #include <sx/dispatch.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 // TODO: once these settle down make testable through stream injection.
 
 namespace sx {
-
-enum tab
-{
-    name = 8,
-    subcategory = 3,
-    description = 35
-};
 
 void display_invalid_command(const std::string& command)
 {

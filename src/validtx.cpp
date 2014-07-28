@@ -23,8 +23,7 @@
 #include <sx/utility/config.hpp>
 #include <sx/command/validtx.hpp>
 #include <sx/obelisk.hpp>
-#include <sx/utility/coin.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;

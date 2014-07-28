@@ -26,8 +26,8 @@
 #include <sx/generated.hpp>
 #include <sx/display.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
 #include <sx/utility/environment.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace po;
 using namespace boost::filesystem;

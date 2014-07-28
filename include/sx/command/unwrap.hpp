@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -54,8 +53,6 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_UNWRAP_INVALID_SIZE \
-    "The HEX argument size must be at least five bytes."
 #define SX_UNWRAP_INVALID_CHECKSUM \
     "The HEX argument checksum is not valid."
 
@@ -85,15 +82,7 @@ public:
      */
     const char* category()
     {
-        return "OFFLINE TRANSACTIONS";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "SCRIPTING";
+        return "FORMAT";
     }
 
     /**
@@ -130,12 +119,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Validate the checksum of a hex string and recover its version byte and data."
+                "Validate the checksum of a hex encoded data and recover its version byte and data."
             )
             (
                 "HEX",
                 value<serializer::bytes>(&argument_.hex),
-                "The hex string to unwrap."
+                "The hex encoded data to unwrap."
             );
 
         return options;

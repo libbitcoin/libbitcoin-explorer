@@ -20,8 +20,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command/sign-input.hpp>
-#include <sx/utility/coin.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;

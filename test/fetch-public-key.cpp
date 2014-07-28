@@ -26,15 +26,14 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(get_pubkey__invoke)
+BOOST_AUTO_TEST_SUITE(fetch_public_key__invoke)
 
-BOOST_AUTO_TEST_CASE(get_pubkey__invoke__bogus_address__failure_error)
+BOOST_AUTO_TEST_CASE(fetch_public_key__invoke__always__failure_error)
 {
-    // $ sx get-pubkey bogus
-    SX_DECLARE_COMMAND(get_pubkey);
-    //command.set_address_argument({ "bogus" });
+    // $ sx fetch-public-key
+    SX_DECLARE_COMMAND(fetch_public_key);
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_BTC_NOT_IMPLEMENTED "\n");
+    SX_REQUIRE_ERROR(SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

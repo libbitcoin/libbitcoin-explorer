@@ -147,6 +147,47 @@ int find_pair_position(const std::vector<Pair>& list, const Key& key)
 }
 
 /**
+ * Type for definiing lists of payment addresses. 
+ */
+typedef std::vector<bc::payment_address> payaddr_list;
+
+/**
+ * Load a satoshi item from the specified file.
+ *
+ * @param      <Item>    The type of the item to load.
+ * @param[out] item      The loaded item.
+ * @param[in]  filename  The path and file name for the transaction file.
+ * @param[in]  stream    The stream to load from, if the file is "-".
+ * @return               True if a transaction was loaded.
+ */
+template <typename Item>
+bool load_satoshi_item(Item& item, const std::string& filename,
+    std::istream& stream)
+{
+    std::ostringstream contents;
+    if (filename == SX_STDIN_PATH_SENTINEL)
+        contents << sx::read_stream(stream);
+    else
+    {
+        std::ifstream infile(filename, std::ifstream::binary);
+        if (!infile)
+            return false;
+
+        contents << infile.rdbuf();
+    }
+    auto raw_tx = bc::decode_hex(contents.str());
+    try
+    {
+        bc::satoshi_load(raw_tx.begin(), raw_tx.end(), item);
+    }
+    catch (bc::end_of_stream)
+    {
+        return false;
+    }
+    return true;
+}
+
+/**
  * Safely convert a text string to the specified type, whitespace ignored.
  *
  * @param      <Value>  The converted type.
@@ -204,13 +245,30 @@ void join(const std::vector<std::string>& words, std::string& sentence,
 void random_fill(bc::data_chunk& chunk);
 
 /**
+ * Generate a random secret.
+ *
+ * @param[in]  secret  The secret to fill with randomness.
+ */
+void random_secret(bc::ec_secret& secret);
+
+/**
+ * Read a set of payment addresses from the specified vector.
+ *
+ * @param[in]  addresses  The payment addresses to read.
+ * @param[out] payaddrs   The payment addresses read.
+ * return                 True if there was no payment address parse error.
+ */
+bool read_addresses(std::vector<std::string> addresses, 
+    payaddr_list& payaddrs);
+
+/**
  * Get a trimmed message from the specified input stream.
  *
  * @param[in]  stream The input stream to read.
- * @param[in]  trim   Trim the input of whitespace, defaults to false.
+ * @param[in]  trim   Trim the input of whitespace, defaults to true.
  * @return            The message read from the input stream.
  */
-std::string read_stream(std::istream& stream, bool trim=false);
+std::string read_stream(std::istream& stream, bool trim=true);
 
 /**
  * Sleep for the specified number of milliseconds.

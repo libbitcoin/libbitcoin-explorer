@@ -24,7 +24,6 @@
 #include <memory>
 #include <string>
 #include <sx/command.hpp>
-#include <sx/command/addr.hpp>
 #include <sx/command/addr-decode.hpp>
 #include <sx/command/addr-embed.hpp>
 #include <sx/command/addr-encode.hpp>
@@ -46,29 +45,32 @@
 #include <sx/command/ec-add-secrets.hpp>
 #include <sx/command/ec-multiply.hpp>
 #include <sx/command/ec-multiply-secrets.hpp>
+#include <sx/command/ec-new.hpp>
+#include <sx/command/ec-to-addr.hpp>
+#include <sx/command/ec-to-pub.hpp>
 #include <sx/command/ec-to-wif.hpp>
-#include <sx/command/fetch-header-hash.hpp>
-#include <sx/command/fetch-header-height.hpp>
+#include <sx/command/fetch-header.hpp>
 #include <sx/command/fetch-last-height.hpp>
+#include <sx/command/fetch-public-key.hpp>
 #include <sx/command/fetch-stealth.hpp>
 #include <sx/command/fetch-transaction.hpp>
 #include <sx/command/fetch-transaction-index.hpp>
+#include <sx/command/fetch-utxo.hpp>
 #include <sx/command/genaddr.hpp>
 #include <sx/command/genpriv.hpp>
 #include <sx/command/genpub.hpp>
-#include <sx/command/get-pubkey.hpp>
-#include <sx/command/get-utxo.hpp>
+#include <sx/command/hd-new.hpp>
 #include <sx/command/hd-priv.hpp>
 #include <sx/command/hd-pub.hpp>
-#include <sx/command/hd-seed.hpp>
 #include <sx/command/hd-to-address.hpp>
+#include <sx/command/hd-to-ec.hpp>
+#include <sx/command/hd-to-pub.hpp>
 #include <sx/command/hd-to-wif.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/history.hpp>
 #include <sx/command/initchain.hpp>
 #include <sx/command/monitor.hpp>
 #include <sx/command/mpk.hpp>
-#include <sx/command/newkey.hpp>
 #include <sx/command/newseed.hpp>
 #include <sx/command/qrcode.hpp>
 #include <sx/command/ripemd160.hpp>
@@ -81,6 +83,7 @@
 #include <sx/command/wallet.hpp>
 #include <sx/command/watchtx.hpp>
 #include <sx/command/wif-to-ec.hpp>
+#include <sx/command/wif-to-pub.hpp>
 #include <sx/command/wrap.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/

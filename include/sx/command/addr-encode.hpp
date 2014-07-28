@@ -34,7 +34,6 @@
 #include <sx/serializer/bitcoin256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/ec_key.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hd_key.hpp>
@@ -44,7 +43,7 @@
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
-#include <sx/utility/console.hpp>
+#include <sx/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -77,15 +76,7 @@ public:
      */
     const char* category()
     {
-        return "UTILITY";
-    }
-
-    /**
-     * The localizable command subcategory name, upper case.
-     */
-    const char* subcategory()
-    {
-        return "FORMAT (BASE58CHECK)";
+        return "WALLET";
     }
 
     /**
@@ -122,17 +113,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert an address from RIPEMD160 to Base58Check."
+                "Convert a RIPEMD160 value to a Bitcoin address."
             )
             (
                 "version,v",
                 value<serializer::byte>(&option_.version),
-                "The desired version number."
+                "The desired Bitcoin address version."
             )
             (
                 "RIPEMD160",
                 value<serializer::bitcoin160>(&argument_.ripemd160),
-                "The hex string to convert."
+                "The hex encoded hash to convert."
             );
 
         return options;
