@@ -51,6 +51,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_EC_NEW_SHORT_SEED \
+    "The seed is less than 128 long."
+
+/**
  * Class to implement the sx ec-new command.
  */
 class ec_new 
@@ -118,7 +124,7 @@ public:
             (
                 "SEED",
                 value<serializer::bytes>(&argument_.seed),
-                "The hex encoded seed for the new key. If empty defaults to a random 32 byte value."
+                "The hex encoded seed for the new key. Must be at least 128 bits in length."
             );
 
         return options;

@@ -72,9 +72,6 @@
     <ClCompile Include="..\..\..\..\test\bci-history.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\brainwallet.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\btc.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
@@ -251,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-to-addr.cpp">
       <Filter>src\tests\command\wallet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-lock.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-unlock.cpp">
+      <Filter>src\tests\command\stub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

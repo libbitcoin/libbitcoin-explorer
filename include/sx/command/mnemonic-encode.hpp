@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_HD_PRIV_HPP
-#define SX_HD_PRIV_HPP
+#ifndef SX_MNEMONIC_ENCODE_HPP
+#define SX_MNEMONIC_ENCODE_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -51,9 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx hd-priv command.
+ * Class to implement the sx mnemonic-encode command.
  */
-class hd_priv 
+class mnemonic_encode 
     : public command
 {
 public:
@@ -61,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "hd-priv"; }
+    static const char* symbol() { return "mnemonic-encode"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return hd_priv::symbol();
+        return mnemonic_encode::symbol();
     }
 
     /**
@@ -88,7 +88,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SECRET", 1);
+            .add("SEED", 1);
     }
     
     /**
@@ -113,22 +113,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Derive a child HD (BIP32) private key from another HD private key."
+                "Convert a seed to its BIP39 mnemonic."
             )
             (
-                "hard,d",
-                value<bool>(&option_.hard)->implicit_value(true),
-                "Signal to create a hardened key."
-            )
-            (
-                "index,i",
-                value<uint32_t>(&option_.index),
-                "The HD index, defaults to zero."
-            )
-            (
-                "SECRET",
-                value<serializer::hd_private>(&argument_.secret),
-                "The parent HD private key."
+                "SEED",
+                value<serializer::bytes>(&argument_.seed),
+                "The hex encoded seed. WARNING: seed should be random and at least 128 bits in length."
             );
 
         return options;
@@ -142,9 +132,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto secret = variables.find("SECRET");
-        if (secret == variables.end())
-            parse(argument_.secret, read_stream(input));
+        auto seed = variables.find("SEED");
+        if (seed == variables.end())
+            parse(argument_.seed, read_stream(input));
     }
 
     /**
@@ -161,19 +151,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SECRET argument.
+     * Get the value of the SEED argument.
      */
-    virtual serializer::hd_private get_secret_argument()
+    virtual serializer::bytes get_seed_argument()
     {
-        return argument_.secret;
+        return argument_.seed;
     }
     
     /**
-     * Set the value of the SECRET argument.
+     * Set the value of the SEED argument.
      */
-    virtual void set_secret_argument(serializer::hd_private value)
+    virtual void set_seed_argument(serializer::bytes value)
     {
-        argument_.secret = value;
+        argument_.seed = value;
     }
 
     /**
@@ -192,38 +182,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the hard option.
-     */
-    virtual bool get_hard_option()
-    {
-        return option_.hard;
-    }
-    
-    /**
-     * Set the value of the hard option.
-     */
-    virtual void set_hard_option(bool value)
-    {
-        option_.hard = value;
-    }
-
-    /**
-     * Get the value of the index option.
-     */
-    virtual uint32_t get_index_option()
-    {
-        return option_.index;
-    }
-    
-    /**
-     * Set the value of the index option.
-     */
-    virtual void set_index_option(uint32_t value)
-    {
-        option_.index = value;
-    }
-
 private:
 
     /**
@@ -234,9 +192,9 @@ private:
     struct argument
     {
         argument()
-          : secret()
+          : seed()
             {}
-        serializer::hd_private secret;
+        serializer::bytes seed;
     } argument_;
     
     /**
@@ -247,13 +205,9 @@ private:
     struct option
     {
         option()
-          : help(),
-            hard(),
-            index()
+          : help()
             {}    
         bool help;
-        bool hard;
-        uint32_t index;
     } option_;
 };
 

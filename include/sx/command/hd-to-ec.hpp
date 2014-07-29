@@ -113,7 +113,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a HD public or private key to the equivalent EC public or private key."
+                "Convert a HD (BIP32) public or private key to the equivalent EC public or private key."
             )
             (
                 "KEY",

@@ -29,21 +29,19 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// 100% coverage by line, loc ready.
 console_result hd_new::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
-    // Arbitrary 256 bit length for generated seeds.
-    constexpr size_t fill_seed_size = 32;
-
     // Bound parameters.
     data_chunk seed = get_seed_argument();
     const bool testnet = get_general_testnet_setting();
 
-    if (seed.size() == 0)
+    // Arbitrary minimum 128 bit length for generated seeds.
+    constexpr size_t minimum_seed_size = 128 / sizeof(uint8_t);
+    if (seed.size() < minimum_seed_size)
     {
-        seed.resize(fill_seed_size);
-        random_fill(seed);
+        cerr << SX_HD_NEW_SHORT_SEED << std::endl;
+        return console_result::failure;
     }
 
     const hd_private_key new_key(seed, testnet);

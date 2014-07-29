@@ -51,16 +51,17 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<be_fetch_transaction>());
     func(make_shared<bitcoin160>());
     func(make_shared<bitcoin256>());
-    func(make_shared<brainwallet>());
     func(make_shared<btc>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
+    func(make_shared<ec_lock>());
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
     func(make_shared<ec_new>());
     func(make_shared<ec_to_addr>());
     func(make_shared<ec_to_pub>());
     func(make_shared<ec_to_wif>());
+    func(make_shared<ec_unlock>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_last_height>());
     func(make_shared<fetch_public_key>());
@@ -81,12 +82,15 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<help>());
     func(make_shared<history>());
     func(make_shared<initchain>());
+    func(make_shared<mnemonic_decode>());
+    func(make_shared<mnemonic_encode>());
     func(make_shared<monitor>());
     func(make_shared<mpk>());
     func(make_shared<newseed>());
     func(make_shared<qrcode>());
     func(make_shared<ripemd160>());
     func(make_shared<satoshi>());
+    func(make_shared<seed>());
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
@@ -134,14 +138,14 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<bitcoin160>();
     if (symbol == bitcoin256::symbol())
         return make_shared<bitcoin256>();
-    if (symbol == brainwallet::symbol())
-        return make_shared<brainwallet>();
     if (symbol == btc::symbol())
         return make_shared<btc>();
     if (symbol == ec_add::symbol())
         return make_shared<ec_add>();
     if (symbol == ec_add_secrets::symbol())
         return make_shared<ec_add_secrets>();
+    if (symbol == ec_lock::symbol())
+        return make_shared<ec_lock>();
     if (symbol == ec_multiply::symbol())
         return make_shared<ec_multiply>();
     if (symbol == ec_multiply_secrets::symbol())
@@ -154,6 +158,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_to_pub>();
     if (symbol == ec_to_wif::symbol())
         return make_shared<ec_to_wif>();
+    if (symbol == ec_unlock::symbol())
+        return make_shared<ec_unlock>();
     if (symbol == fetch_header::symbol())
         return make_shared<fetch_header>();
     if (symbol == fetch_last_height::symbol())
@@ -194,6 +200,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<history>();
     if (symbol == initchain::symbol())
         return make_shared<initchain>();
+    if (symbol == mnemonic_decode::symbol())
+        return make_shared<mnemonic_decode>();
+    if (symbol == mnemonic_encode::symbol())
+        return make_shared<mnemonic_encode>();
     if (symbol == monitor::symbol())
         return make_shared<monitor>();
     if (symbol == mpk::symbol())
@@ -206,6 +216,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ripemd160>();
     if (symbol == satoshi::symbol())
         return make_shared<satoshi>();
+    if (symbol == seed::symbol())
+        return make_shared<seed>();
     if (symbol == sha160::symbol())
         return make_shared<sha160>();
     if (symbol == sha256::symbol())

@@ -113,7 +113,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Derive the HD public key of a HD private key."
+                "Derive the HD (BIP32) public key of a HD private key."
             )
             (
                 "SECRET",

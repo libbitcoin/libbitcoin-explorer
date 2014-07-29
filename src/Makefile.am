@@ -49,16 +49,17 @@ libsx_la_SOURCES += \
     be-fetch-transaction.cpp \
     bitcoin160.cpp \
     bitcoin256.cpp \
-    brainwallet.cpp \
     btc.cpp \
     ec-add.cpp \
     ec-add-secrets.cpp \
+    ec-lock.cpp \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
     ec-new.cpp \
     ec-to-addr.cpp \
     ec-to-pub.cpp \
     ec-to-wif.cpp \
+    ec-unlock.cpp \
     genaddr.cpp \
     genpriv.cpp \
     genpub.cpp \
@@ -71,11 +72,14 @@ libsx_la_SOURCES += \
     hd-to-wif.cpp \
     help.cpp \
     initchain.cpp \
+    mnemonic-decode.cpp \
+    mnemonic-encode.cpp \
     mpk.cpp \
     newseed.cpp \
     qrcode.cpp \
     ripemd160.cpp \
     satoshi.cpp \
+    seed.cpp \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \

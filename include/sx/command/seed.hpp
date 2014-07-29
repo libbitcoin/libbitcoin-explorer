@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_HD_PRIV_HPP
-#define SX_HD_PRIV_HPP
+#ifndef SX_SEED_HPP
+#define SX_SEED_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -51,9 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx hd-priv command.
+ * Class to implement the sx seed command.
  */
-class hd_priv 
+class seed 
     : public command
 {
 public:
@@ -61,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "hd-priv"; }
+    static const char* symbol() { return "seed"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return hd_priv::symbol();
+        return seed::symbol();
     }
 
     /**
@@ -87,8 +87,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("SECRET", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -113,22 +112,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Derive a child HD (BIP32) private key from another HD private key."
-            )
-            (
-                "hard,d",
-                value<bool>(&option_.hard)->implicit_value(true),
-                "Signal to create a hardened key."
-            )
-            (
-                "index,i",
-                value<uint32_t>(&option_.index),
-                "The HD index, defaults to zero."
-            )
-            (
-                "SECRET",
-                value<serializer::hd_private>(&argument_.secret),
-                "The parent HD private key."
+                "Generate a pseudorandom 128 bit seed."
             );
 
         return options;
@@ -142,9 +126,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto secret = variables.find("SECRET");
-        if (secret == variables.end())
-            parse(argument_.secret, read_stream(input));
     }
 
     /**
@@ -159,22 +140,6 @@ public:
         std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the SECRET argument.
-     */
-    virtual serializer::hd_private get_secret_argument()
-    {
-        return argument_.secret;
-    }
-    
-    /**
-     * Set the value of the SECRET argument.
-     */
-    virtual void set_secret_argument(serializer::hd_private value)
-    {
-        argument_.secret = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -192,38 +157,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the hard option.
-     */
-    virtual bool get_hard_option()
-    {
-        return option_.hard;
-    }
-    
-    /**
-     * Set the value of the hard option.
-     */
-    virtual void set_hard_option(bool value)
-    {
-        option_.hard = value;
-    }
-
-    /**
-     * Get the value of the index option.
-     */
-    virtual uint32_t get_index_option()
-    {
-        return option_.index;
-    }
-    
-    /**
-     * Set the value of the index option.
-     */
-    virtual void set_index_option(uint32_t value)
-    {
-        option_.index = value;
-    }
-
 private:
 
     /**
@@ -234,9 +167,7 @@ private:
     struct argument
     {
         argument()
-          : secret()
             {}
-        serializer::hd_private secret;
     } argument_;
     
     /**
@@ -247,13 +178,9 @@ private:
     struct option
     {
         option()
-          : help(),
-            hard(),
-            index()
+          : help()
             {}    
         bool help;
-        bool hard;
-        uint32_t index;
     } option_;
 };
 

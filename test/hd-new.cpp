@@ -49,22 +49,4 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__testnet__okay_output)
     SX_REQUIRE_OUTPUT("tprv8ZgxMBicQKsPcw62PBsVzJbpt76NkdY7VwyjVKNJv9YdoqYUMpMnJAPh7wDgoyUo8tu3nqZ72xoSDfCqmBmSkrXjK7KDCVFWBU38pfSTUZ9\n");
 }
 
-// Random fill is not currently virtualized so test is limited.
-BOOST_AUTO_TEST_CASE(hd_new__invoke__random_testnet__okay)
-{
-    // $ sx hd-new
-    SX_DECLARE_COMMAND(hd_new);
-    command.set_general_testnet_setting(true);
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-}
-
-// Random fill is not currently virtualized so test is limited.
-BOOST_AUTO_TEST_CASE(hd_new__invoke__random__okay)
-{
-    // $ sx hd-new
-    SX_DECLARE_COMMAND(hd_new);
-    command.set_general_testnet_setting(false);
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
-}
-
 BOOST_AUTO_TEST_SUITE_END()

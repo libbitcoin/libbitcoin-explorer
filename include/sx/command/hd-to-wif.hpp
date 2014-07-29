@@ -113,7 +113,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a HD private key to a WIF private key."
+                "Convert a HD (BIP32) private key to a WIF private key."
             )
             (
                 "SECRET",

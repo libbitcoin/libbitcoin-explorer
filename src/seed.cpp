@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,24 +17,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/seed.hpp>
+
 #include <iostream>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/unit_test_suite.hpp>
-#include <sx/sx.hpp>
-#include "command.hpp"
+#include <sx/serializer/bytes.hpp>
+#include <sx/utility/utility.hpp>
 
-SX_USING_NAMESPACES()
+using namespace libwallet;
+using namespace sx;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-// This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(satoshi__invoke)
-
-BOOST_AUTO_TEST_CASE(satoshi__invoke__bogus_saoshi__failure_error)
+console_result seed::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    // $ sx satoshi bogus
-    SX_DECLARE_COMMAND(satoshi);
-    command.set_btc_argument("bogus");
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_SATOSHI_NOT_IMPLEMENTED "\n");
-}
+    // Arbitrary 128 bit length for generated seeds.
+    constexpr size_t fill_seed_size = 128 / sizeof(uint8_t);
 
-BOOST_AUTO_TEST_SUITE_END()
+    // TODO: allow for seed length specification in multiples of 32 bits.
+
+    data_chunk seed(fill_seed_size);
+    random_fill(seed);
+
+    output << bytes(seed) << std::endl;
+    return console_result::okay;
+}

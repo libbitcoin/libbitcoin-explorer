@@ -52,16 +52,17 @@ sx_command_include_HEADERS = \
     command/be-fetch-transaction.hpp \
     command/bitcoin160.hpp \
     command/bitcoin256.hpp \
-    command/brainwallet.hpp \
     command/btc.hpp \
     command/ec-add.hpp \
     command/ec-add-secrets.hpp \
+    command/ec-lock.hpp \
     command/ec-multiply.hpp \
     command/ec-multiply-secrets.hpp \
     command/ec-new.hpp \
     command/ec-to-addr.hpp \
     command/ec-to-pub.hpp \
     command/ec-to-wif.hpp \
+    command/ec-unlock.hpp \
     command/genaddr.hpp \
     command/genpriv.hpp \
     command/genpub.hpp \
@@ -74,11 +75,14 @@ sx_command_include_HEADERS = \
     command/hd-to-wif.hpp \
     command/help.hpp \
     command/initchain.hpp \
+    command/mnemonic-decode.hpp \
+    command/mnemonic-encode.hpp \
     command/mpk.hpp \
     command/newseed.hpp \
     command/qrcode.hpp \
     command/ripemd160.hpp \
     command/satoshi.hpp \
+    command/seed.hpp \
     command/sha160.hpp \
     command/sha256.hpp \
     command/sha512.hpp \

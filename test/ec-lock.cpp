@@ -26,15 +26,14 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(satoshi__invoke)
+BOOST_AUTO_TEST_SUITE(ec_lock__invoke)
 
-BOOST_AUTO_TEST_CASE(satoshi__invoke__bogus_saoshi__failure_error)
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__always__failure_error)
 {
-    // $ sx satoshi bogus
-    SX_DECLARE_COMMAND(satoshi);
-    command.set_btc_argument("bogus");
+    // $ sx ec-lock ...
+    SX_DECLARE_COMMAND(ec_lock);
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_SATOSHI_NOT_IMPLEMENTED "\n");
+    SX_REQUIRE_ERROR(SX_EC_LOCK_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

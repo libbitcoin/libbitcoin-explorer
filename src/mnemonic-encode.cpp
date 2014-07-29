@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,24 +17,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/mnemonic-encode.hpp>
+
 #include <iostream>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/unit_test_suite.hpp>
-#include <sx/sx.hpp>
-#include "command.hpp"
+#include <wallet/wallet.hpp>
+#include <sx/utility/utility.hpp>
 
-SX_USING_NAMESPACES()
+using namespace libwallet;
+using namespace sx;
+using namespace sx::extension;
 
-// This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(satoshi__invoke)
-
-BOOST_AUTO_TEST_CASE(satoshi__invoke__bogus_saoshi__failure_error)
+// $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic
+console_result mnemonic_encode::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    // $ sx satoshi bogus
-    SX_DECLARE_COMMAND(satoshi);
-    command.set_btc_argument("bogus");
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_SATOSHI_NOT_IMPLEMENTED "\n");
+    // Bound parameters.
+    const auto seed = get_seed_argument();
+
+    // TODO: change encode_mnemonic to accept data_chunk for seed.
+    std::stringstream hex;
+    hex << seed;
+    auto text_seed = hex.str();
+
+    // TODO: change implementation from Electrum to BIP39.
+
+    std::string sentence;
+    auto words_list = encode_mnemonic(text_seed);
+    join(words_list, sentence);
+
+    std::cout << sentence << std::endl;
+    return console_result::okay;
 }
 
-BOOST_AUTO_TEST_SUITE_END()

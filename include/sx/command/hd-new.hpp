@@ -51,6 +51,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_HD_NEW_SHORT_SEED \
+    "The seed is less than 128 long."
+
+/**
  * Class to implement the sx hd-new command.
  */
 class hd_new 
@@ -113,12 +119,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Create a new HD private key from entropy."
+                "Create a new HD (BIP32) private key from entropy."
             )
             (
                 "SEED",
                 value<serializer::bytes>(&argument_.seed),
-                "The hex encoded seed for the new key. If empty defaults to a random 32 byte value."
+                "The hex encoded seed for the new key. Must be at least 128 bits in length."
             );
 
         return options;

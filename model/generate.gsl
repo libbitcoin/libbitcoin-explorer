@@ -1151,9 +1151,6 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\mnemonic.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -1468,9 +1465,6 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\mnemonic.cpp">
-      <Filter>src\\command\\todo</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
       <Filter>src\\command\\todo\\script</Filter>

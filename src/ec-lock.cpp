@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/brainwallet.hpp>
+#include <sx/command/ec-lock.hpp>
 
 #include <iostream>
 #include <sx/utility/utility.hpp>
@@ -25,15 +25,16 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result brainwallet::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result ec_lock::invoke(std::istream& input, std::ostream& output, 
+    std::ostream& cerr)
 {
     // Bound parameters.
-    const auto algorithm = get_algorithm_option();
-    const auto password = get_password_argument();
-    const auto username = get_username_argument();
+    const auto secret = get_secret_argument();
+    const auto passphrase = get_passphrase_argument();
 
-    cerr << SX_BRAINWALLET_NOT_IMPLEMENTED << std::endl;
+    // TODO: implement BIP38
+
+    cerr << SX_EC_LOCK_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

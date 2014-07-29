@@ -108,19 +108,19 @@
     <option name="help" description="Perform a SHA256 hash of a SHA256 hash of hex encoded data." />
     <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to hash."/>
   </command>
-
-  <command symbol="brainwallet" category="WALLET" stub="true">
-    <option name="help" description="Make an EC private key from an arbitrary passphrase. Unsafe if passphrase is low in entropy. See diceware and xkcd for advice on entropy and generating a safe brainwallet." />
-    <option name="algorithm" description="The algorithm (e.g. slowsha)." />
-    <argument name="PASSWORD" required="true" description="The passphrase." />
-    <argument name="USERNAME" description="A username." />
-    <define name="SX_BRAINWALLET_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-  </command>
   
   <command symbol="btc" category="MATH" stub="true">
     <option name="help" description="Convert satoshi to BTC." />
     <argument name="SATOSHI" stream="true" type="uint64_t" description="The number of satoshi to convert."/>
     <define name="SX_BTC_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  </command>
+
+  <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
+  <command symbol="ec-lock" formerly="brainwallet" category="WALLET" stub="true">
+    <option name="help" description="Make a passphrase-protected EC private key (BIP38) from an EC private key." />
+    <argument name="SECRET" type="bytes" description="The EC private key." />
+    <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
+    <define name="SX_EC_LOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
    
   <command symbol="ec-add" formerly="ec-tweak-add" category="MATH">
@@ -151,7 +151,8 @@
 
   <command symbol="ec-new" formerly="newkey" category="WALLET">
     <option name="help" description="Create a new EC private key from entropy." />
-    <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key. If empty defaults to a random 32 byte value." />
+    <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key. Must be at least 128 bits in length." />
+    <define name="SX_EC_NEW_SHORT_SEED" value="The seed is less than 128 long." />
   </command>
   
   <command symbol="ec-to-addr" formerly="addr" category="WALLET">
@@ -170,6 +171,13 @@
     <option name="help" description="Convert an EC private key to a WIF private key. The result associates with the compressed public key format by default." />
     <option name="uncompressed" description="Associate the result with the uncompressed public key format." />
     <argument name="SECRET" stream="true" type="ec_private" description="The hex encoded EC private key to convert."/>
+  </command>
+  
+  <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
+  <command symbol="ec-unlock" category="WALLET" stub="true">
+    <option name="help" description="Extract the EC private key from a passphrase-protected (BIP38) EC private key." />
+    <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
+    <define name="SX_EC_UNLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="fetch-header" category="ONLINE" obelisk="true">
@@ -231,19 +239,20 @@
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" category="WALLET">
-    <option name="help" description="Create a new HD private key from entropy." />
-    <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key. If empty defaults to a random 32 byte value." />
+    <option name="help" description="Create a new HD (BIP32) private key from entropy." />
+    <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed for the new key. Must be at least 128 bits in length." />
+    <define name="SX_HD_NEW_SHORT_SEED" value="The seed is less than 128 long." />
   </command>
 
   <command symbol="hd-priv" category="WALLET">
-    <option name="help" description="Derive a child HD private key from another HD private key." />
+    <option name="help" description="Derive a child HD (BIP32) private key from another HD private key." />
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
     <argument name="SECRET" stream="true" type="hd_private" description="The parent HD private key." />
   </command>
 
   <command symbol="hd-pub" category="WALLET">
-    <option name="help" description="Derive a child HD public key from another HD public or private key." />
+    <option name="help" description="Derive a child HD (BIP32) public key from another HD public or private key." />
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
     <argument name="KEY" stream="true" type="hd_key" description="The parent HD public or private key." />
@@ -251,22 +260,22 @@
   </command>
 
   <command symbol="hd-to-addr" formerly="hd-to-address" category="WALLET">
-    <option name="help" description="Convert a HD public or private key to a Bitcoin address." />
+    <option name="help" description="Convert a HD (BIP32) public or private key to a Bitcoin address." />
     <argument name="KEY" stream="true" type="hd_key" description="The HD public or private key to convert." />
   </command>
 
   <command symbol="hd-to-ec" category="WALLET">
-    <option name="help" description="Convert a HD public or private key to the equivalent EC public or private key." />
+    <option name="help" description="Convert a HD (BIP32) public or private key to the equivalent EC public or private key." />
     <argument name="KEY" stream="true" type="hd_key" description="The HD public or private key to convert." />
   </command>
   
   <command symbol="hd-to-pub" category="WALLET">
-    <option name="help" description="Derive the HD public key of a HD private key." />
+    <option name="help" description="Derive the HD (BIP32) public key of a HD private key." />
     <argument name="SECRET" stream="true" type="hd_private" description="The HD private key." />
   </command>
 
   <command symbol="hd-to-wif" category="WALLET">
-    <option name="help" description="Convert a HD private key to a WIF private key." />
+    <option name="help" description="Convert a HD (BIP32) private key to a WIF private key." />
     <argument name="SECRET" stream="true" type="hd_private" description="The HD private key to convert." />
   </command>
   
@@ -290,7 +299,17 @@
     <option name="help" description="Initialize a new blockchain database." />
     <define name="SX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
   </command>
-
+  
+  <command symbol="mnemonic-encode" category="WALLET">
+    <option name="help" description="Convert a seed to its BIP39 mnemonic." />
+    <argument name="SEED" stream="true" type="bytes" description="The hex encoded seed. WARNING: seed should be random and at least 128 bits in length." />
+  </command>
+  
+  <command symbol="mnemonic-decode" category="WALLET">
+    <option name="help" description="Convert a BIP39 mnemonic to its seed. WARNING: mnemonic should be generated from a random seed." />
+    <argument name="WORD" limit="-1" description="A word from the BIP39 word list." />
+  </command>
+  
   <command symbol="monitor" category="ONLINE" obelisk="true">
     <option name="help" description="Monitor an address prefix. WARNING: THIS COMMAND IS EXPERIMENTAL" />
     <!--<argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to monitor."/>-->
@@ -326,6 +345,10 @@
     <argument name="BTC" stream="true" description="The whole number of BTC to convert."/>
     <define name="SX_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
+  
+  <command symbol="seed" category="WALLET">
+    <option name="help" description="Generate a pseudorandom 128 bit seed." />
+  </command>
 
   <command symbol="sha160" category="HASH">
     <option name="help" description="Perform a SHA160 (also known as SHA-1) hash of hex encoded data." />
@@ -346,7 +369,7 @@
     <option name="help"  description="Sign a transaction. Output is suitable for sending to Bitcoin network." />
     <!--<example value="cat unsigned.tx | sx sign-transaction --wallet=sx.wallet.gpg --gpgkey=~/. " />-->
     <define name="SX_SIGNTX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-  </command>-->
+  </command>
   
   <command symbol="stealth-addr" category="STEALTH">
     <option name="help" description="Generate a stealth address." />

@@ -102,11 +102,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__bitcoin256__returns_expected_value)
     BOOST_REQUIRE(bitcoin256::symbol() == std::string("bitcoin256"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__brainwallet__returns_expected_value)
-{
-    BOOST_REQUIRE(brainwallet::symbol() == std::string("brainwallet"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__btc__returns_expected_value)
 {
     BOOST_REQUIRE(btc::symbol() == std::string("btc"));
@@ -120,6 +115,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_add__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_add_secrets__returns_expected_value)
 {
     BOOST_REQUIRE(ec_add_secrets::symbol() == std::string("ec-add-secrets"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_lock__returns_expected_value)
+{
+    BOOST_REQUIRE(ec_lock::symbol() == std::string("ec-lock"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply__returns_expected_value)
@@ -150,6 +150,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_pub__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_wif__returns_expected_value)
 {
     BOOST_REQUIRE(ec_to_wif::symbol() == std::string("ec-to-wif"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_unlock__returns_expected_value)
+{
+    BOOST_REQUIRE(ec_unlock::symbol() == std::string("ec-unlock"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header__returns_expected_value)
@@ -252,6 +257,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__initchain__returns_expected_value)
     BOOST_REQUIRE(initchain::symbol() == std::string("initchain"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_decode__returns_expected_value)
+{
+    BOOST_REQUIRE(mnemonic_decode::symbol() == std::string("mnemonic-decode"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_encode__returns_expected_value)
+{
+    BOOST_REQUIRE(mnemonic_encode::symbol() == std::string("mnemonic-encode"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__monitor__returns_expected_value)
 {
     BOOST_REQUIRE(monitor::symbol() == std::string("monitor"));
@@ -280,6 +295,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ripemd160__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__satoshi__returns_expected_value)
 {
     BOOST_REQUIRE(satoshi::symbol() == std::string("satoshi"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)
+{
+    BOOST_REQUIRE(seed::symbol() == std::string("seed"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__sha160__returns_expected_value)

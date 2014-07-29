@@ -32,17 +32,16 @@ using namespace sx::serializer;
 console_result ec_new::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
-    // Arbitrary 256 bit length for generated seeds.
-    constexpr size_t fill_seed_size = 32;
-
     // Bound parameters.
     data_chunk seed = get_seed_argument();
     const bool testnet = get_general_testnet_setting();
 
-    if (seed.size() == 0)
+    // Arbitrary minimum 128 bit length for generated seeds.
+    constexpr size_t minimum_seed_size = 128 / sizeof(uint8_t);
+    if (seed.size() < minimum_seed_size)
     {
-        seed.resize(fill_seed_size);
-        random_fill(seed);
+        cerr << SX_EC_NEW_SHORT_SEED << std::endl;
+        return console_result::failure;
     }
 
     // Using HD key generation because we edon't have one for EC.

@@ -26,15 +26,14 @@
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(brainwallet__invoke)
+BOOST_AUTO_TEST_SUITE(ec_unlock__invoke)
 
-BOOST_AUTO_TEST_CASE(brainwallet__invoke__bogus_password__failure_error)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__always__failure_error)
 {
-    // $ sx brainwallet bogus
-    SX_DECLARE_COMMAND(brainwallet);
-    command.set_password_argument("bogus");
+    // $ sx ec-unlock ...
+    SX_DECLARE_COMMAND(ec_unlock);
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_BRAINWALLET_NOT_IMPLEMENTED "\n");
+    SX_REQUIRE_ERROR(SX_EC_UNLOCK_NOT_IMPLEMENTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

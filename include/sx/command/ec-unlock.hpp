@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_HD_PRIV_HPP
-#define SX_HD_PRIV_HPP
+#ifndef SX_EC_UNLOCK_HPP
+#define SX_EC_UNLOCK_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -51,9 +51,15 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx hd-priv command.
+ * Various localizable strings.
  */
-class hd_priv 
+#define SX_EC_UNLOCK_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
+
+/**
+ * Class to implement the sx ec-unlock command.
+ */
+class ec_unlock 
     : public command
 {
 public:
@@ -61,14 +67,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "hd-priv"; }
+    static const char* symbol() { return "ec-unlock"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return hd_priv::symbol();
+        return ec_unlock::symbol();
     }
 
     /**
@@ -88,7 +94,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SECRET", 1);
+            .add("PASSPHRASE", 1);
     }
     
     /**
@@ -113,22 +119,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Derive a child HD (BIP32) private key from another HD private key."
+                "Extract the EC private key from a passphrase-protected (BIP38) EC private key."
             )
             (
-                "hard,d",
-                value<bool>(&option_.hard)->implicit_value(true),
-                "Signal to create a hardened key."
-            )
-            (
-                "index,i",
-                value<uint32_t>(&option_.index),
-                "The HD index, defaults to zero."
-            )
-            (
-                "SECRET",
-                value<serializer::hd_private>(&argument_.secret),
-                "The parent HD private key."
+                "PASSPHRASE",
+                value<std::string>(&argument_.passphrase)->required(),
+                "The Unicode passphrase."
             );
 
         return options;
@@ -142,9 +138,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto secret = variables.find("SECRET");
-        if (secret == variables.end())
-            parse(argument_.secret, read_stream(input));
     }
 
     /**
@@ -161,19 +154,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SECRET argument.
+     * Get the value of the PASSPHRASE argument.
      */
-    virtual serializer::hd_private get_secret_argument()
+    virtual std::string get_passphrase_argument()
     {
-        return argument_.secret;
+        return argument_.passphrase;
     }
     
     /**
-     * Set the value of the SECRET argument.
+     * Set the value of the PASSPHRASE argument.
      */
-    virtual void set_secret_argument(serializer::hd_private value)
+    virtual void set_passphrase_argument(std::string value)
     {
-        argument_.secret = value;
+        argument_.passphrase = value;
     }
 
     /**
@@ -192,38 +185,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the hard option.
-     */
-    virtual bool get_hard_option()
-    {
-        return option_.hard;
-    }
-    
-    /**
-     * Set the value of the hard option.
-     */
-    virtual void set_hard_option(bool value)
-    {
-        option_.hard = value;
-    }
-
-    /**
-     * Get the value of the index option.
-     */
-    virtual uint32_t get_index_option()
-    {
-        return option_.index;
-    }
-    
-    /**
-     * Set the value of the index option.
-     */
-    virtual void set_index_option(uint32_t value)
-    {
-        option_.index = value;
-    }
-
 private:
 
     /**
@@ -234,9 +195,9 @@ private:
     struct argument
     {
         argument()
-          : secret()
+          : passphrase()
             {}
-        serializer::hd_private secret;
+        std::string passphrase;
     } argument_;
     
     /**
@@ -247,13 +208,9 @@ private:
     struct option
     {
         option()
-          : help(),
-            hard(),
-            index()
+          : help()
             {}    
         bool help;
-        bool hard;
-        uint32_t index;
     } option_;
 };
 

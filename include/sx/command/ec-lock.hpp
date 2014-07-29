@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_BRAINWALLET_HPP
-#define SX_BRAINWALLET_HPP
+#ifndef SX_EC_LOCK_HPP
+#define SX_EC_LOCK_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -53,13 +53,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_BRAINWALLET_NOT_IMPLEMENTED \
+#define SX_EC_LOCK_NOT_IMPLEMENTED \
     "This command is not yet implemented."
 
 /**
- * Class to implement the sx brainwallet command.
+ * Class to implement the sx ec-lock command.
  */
-class brainwallet 
+class ec_lock 
     : public command
 {
 public:
@@ -67,14 +67,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "brainwallet"; }
+    static const char* symbol() { return "ec-lock"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return brainwallet::symbol();
+        return ec_lock::symbol();
     }
 
     /**
@@ -94,8 +94,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PASSWORD", 1)
-            .add("USERNAME", 1);
+            .add("SECRET", 1)
+            .add("PASSPHRASE", 1);
     }
     
     /**
@@ -120,22 +120,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Make an EC private key from an arbitrary passphrase. Unsafe if passphrase is low in entropy. See diceware and xkcd for advice on entropy and generating a safe brainwallet."
+                "Make a passphrase-protected EC private key (BIP38) from an EC private key."
             )
             (
-                "algorithm,a",
-                value<bool>(&option_.algorithm)->implicit_value(true),
-                "The algorithm (e.g. slowsha)."
+                "SECRET",
+                value<serializer::bytes>(&argument_.secret),
+                "The EC private key."
             )
             (
-                "PASSWORD",
-                value<std::string>(&argument_.password)->required(),
-                "The passphrase."
-            )
-            (
-                "USERNAME",
-                value<std::string>(&argument_.username),
-                "A username."
+                "PASSPHRASE",
+                value<std::string>(&argument_.passphrase)->required(),
+                "The Unicode passphrase."
             );
 
         return options;
@@ -165,35 +160,35 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PASSWORD argument.
+     * Get the value of the SECRET argument.
      */
-    virtual std::string get_password_argument()
+    virtual serializer::bytes get_secret_argument()
     {
-        return argument_.password;
+        return argument_.secret;
     }
     
     /**
-     * Set the value of the PASSWORD argument.
+     * Set the value of the SECRET argument.
      */
-    virtual void set_password_argument(std::string value)
+    virtual void set_secret_argument(serializer::bytes value)
     {
-        argument_.password = value;
+        argument_.secret = value;
     }
 
     /**
-     * Get the value of the USERNAME argument.
+     * Get the value of the PASSPHRASE argument.
      */
-    virtual std::string get_username_argument()
+    virtual std::string get_passphrase_argument()
     {
-        return argument_.username;
+        return argument_.passphrase;
     }
     
     /**
-     * Set the value of the USERNAME argument.
+     * Set the value of the PASSPHRASE argument.
      */
-    virtual void set_username_argument(std::string value)
+    virtual void set_passphrase_argument(std::string value)
     {
-        argument_.username = value;
+        argument_.passphrase = value;
     }
 
     /**
@@ -212,22 +207,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the algorithm option.
-     */
-    virtual bool get_algorithm_option()
-    {
-        return option_.algorithm;
-    }
-    
-    /**
-     * Set the value of the algorithm option.
-     */
-    virtual void set_algorithm_option(bool value)
-    {
-        option_.algorithm = value;
-    }
-
 private:
 
     /**
@@ -238,11 +217,11 @@ private:
     struct argument
     {
         argument()
-          : password(),
-            username()
+          : secret(),
+            passphrase()
             {}
-        std::string password;
-        std::string username;
+        serializer::bytes secret;
+        std::string passphrase;
     } argument_;
     
     /**
@@ -253,11 +232,9 @@ private:
     struct option
     {
         option()
-          : help(),
-            algorithm()
+          : help()
             {}    
         bool help;
-        bool algorithm;
     } option_;
 };
 

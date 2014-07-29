@@ -102,11 +102,6 @@ BOOST_AUTO_TEST_CASE(generated__find__bitcoin256__returns_object)
     BOOST_REQUIRE(find(bitcoin256::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__brainwallet__returns_object)
-{
-    BOOST_REQUIRE(find(brainwallet::symbol()) != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__btc__returns_object)
 {
     BOOST_REQUIRE(find(btc::symbol()) != nullptr);
@@ -120,6 +115,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_add__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__ec_add_secrets__returns_object)
 {
     BOOST_REQUIRE(find(ec_add_secrets::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ec_lock__returns_object)
+{
+    BOOST_REQUIRE(find(ec_lock::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_multiply__returns_object)
@@ -150,6 +150,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_to_pub__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__ec_to_wif__returns_object)
 {
     BOOST_REQUIRE(find(ec_to_wif::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ec_unlock__returns_object)
+{
+    BOOST_REQUIRE(find(ec_unlock::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
@@ -252,6 +257,16 @@ BOOST_AUTO_TEST_CASE(generated__find__initchain__returns_object)
     BOOST_REQUIRE(find(initchain::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__mnemonic_decode__returns_object)
+{
+    BOOST_REQUIRE(find(mnemonic_decode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__mnemonic_encode__returns_object)
+{
+    BOOST_REQUIRE(find(mnemonic_encode::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__monitor__returns_object)
 {
     BOOST_REQUIRE(find(monitor::symbol()) != nullptr);
@@ -280,6 +295,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ripemd160__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__satoshi__returns_object)
 {
     BOOST_REQUIRE(find(satoshi::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
+{
+    BOOST_REQUIRE(find(seed::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__sha160__returns_object)
