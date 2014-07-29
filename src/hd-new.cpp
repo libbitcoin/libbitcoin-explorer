@@ -44,6 +44,7 @@ console_result hd_new::invoke(std::istream& input, std::ostream& output,
         return console_result::failure;
     }
 
+    // TESTNET VERSION MAY REQUIRE RECOMPILE
     const hd_private_key new_key(seed, testnet);
 
     output << hd_private(new_key) << std::endl;

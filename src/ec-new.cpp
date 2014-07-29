@@ -44,6 +44,7 @@ console_result ec_new::invoke(std::istream& input, std::ostream& output,
         return console_result::failure;
     }
 
+    // TESTNET VERSION MAY REQUIRE RECOMPILE
     // Using HD key generation because we edon't have one for EC.
     const hd_private_key hd_key(seed, testnet);
     const ec_secret ec_key = hd_key.private_key();
