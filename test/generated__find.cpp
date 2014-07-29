@@ -297,6 +297,11 @@ BOOST_AUTO_TEST_CASE(generated__find__sha512__returns_object)
     BOOST_REQUIRE(find(sha512::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__signtx__returns_object)
+{
+    BOOST_REQUIRE(find(signtx::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__stealth_addr__returns_object)
 {
     BOOST_REQUIRE(find(stealth_addr::symbol()) != nullptr);

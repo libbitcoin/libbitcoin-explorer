@@ -342,6 +342,12 @@
     <argument name="HEX" stream="true" type="bytes" description="The hex encoded data to hash."/>
   </command>
   
+  <command symbol="signtx" category="TRANSACTION" stub="true">
+    <option name="help"  description="Sign a transaction. Output is suitable for sending to Bitcoin network." />
+    <!--<example value="cat unsigned.tx | sx sign-transaction --wallet=sx.wallet.gpg --gpgkey=~/. " />-->
+    <define name="SX_SIGNTX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  </command>-->
+  
   <command symbol="stealth-addr" category="STEALTH">
     <option name="help" description="Generate a stealth address." />
     <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />

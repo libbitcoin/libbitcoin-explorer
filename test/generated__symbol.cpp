@@ -297,6 +297,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__sha512__returns_expected_value)
     BOOST_REQUIRE(sha512::symbol() == std::string("sha512"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__signtx__returns_expected_value)
+{
+    BOOST_REQUIRE(signtx::symbol() == std::string("signtx"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr__returns_expected_value)
 {
     BOOST_REQUIRE(stealth_addr::symbol() == std::string("stealth-addr"));

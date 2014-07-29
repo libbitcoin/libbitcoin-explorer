@@ -159,6 +159,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\signtx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp" />
@@ -306,6 +307,7 @@
     <ClCompile Include="..\..\..\..\src\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\sha512.cpp" />
+    <ClCompile Include="..\..\..\..\src\signtx.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
     <ClCompile Include="..\..\..\..\src\wallet.cpp" />

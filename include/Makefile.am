@@ -82,6 +82,7 @@ sx_command_include_HEADERS = \
     command/sha160.hpp \
     command/sha256.hpp \
     command/sha512.hpp \
+    command/signtx.hpp \
     command/stealth-addr.hpp \
     command/unwrap.hpp \
     command/wallet.hpp \

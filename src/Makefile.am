@@ -79,6 +79,7 @@ libsx_la_SOURCES += \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \
+    signtx.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
     wallet.cpp \

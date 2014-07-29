@@ -78,6 +78,7 @@
 #include <sx/command/sha160.hpp>
 #include <sx/command/sha256.hpp>
 #include <sx/command/sha512.hpp>
+#include <sx/command/signtx.hpp>
 #include <sx/command/stealth-addr.hpp>
 #include <sx/command/unwrap.hpp>
 #include <sx/command/wallet.hpp>

@@ -90,6 +90,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
+    func(make_shared<signtx>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
     func(make_shared<wallet>());
@@ -211,6 +212,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
         return make_shared<sha512>();
+    if (symbol == signtx::symbol())
+        return make_shared<signtx>();
     if (symbol == stealth_addr::symbol())
         return make_shared<stealth_addr>();
     if (symbol == unwrap::symbol())
