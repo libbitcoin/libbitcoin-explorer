@@ -20,10 +20,13 @@
 #include <sx/command/ec-to-pub.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/utility/utility.hpp>
 
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 console_result ec_to_pub::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
@@ -31,7 +34,8 @@ console_result ec_to_pub::invoke(std::istream& input, std::ostream& output,
     const auto secret = get_secret_argument();
     const auto uncompressed = get_uncompressed_option();
 
-    // TODO
+    const auto public_key = secret_to_public_key(secret, !uncompressed);
 
-    return console_result::failure;
+    output << ec_public(public_key) << std::endl;
+    return console_result::okay;
 }

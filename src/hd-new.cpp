@@ -34,7 +34,7 @@ console_result hd_new::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Arbitrary 256 bit length for generated seeds.
-    const size_t fill_seed_size = 32;
+    constexpr size_t fill_seed_size = 32;
 
     // Bound parameters.
     data_chunk seed = get_seed_argument();

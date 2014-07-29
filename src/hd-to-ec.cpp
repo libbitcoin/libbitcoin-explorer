@@ -28,14 +28,20 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// 100% coverage by line, loc ready.
 console_result hd_to_ec::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
     const auto key = get_key_argument();
 
-    // TODO: implement
+    hd_public_key child_key;
+    const hd_public_key& public_key = key;
+    const hd_private_key& private_key = key;
+
+    if (private_key.valid())
+        output << ec_private(private_key) << std::endl;
+    else
+        output << ec_public(public_key) << std::endl;
 
     return console_result::okay;
 }

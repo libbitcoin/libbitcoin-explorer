@@ -20,17 +20,35 @@
 #include <sx/command/ec-new.hpp>
 
 #include <iostream>
+#include <wallet/wallet.hpp>
+#include <sx/serializer/hd_private.hpp>
 #include <sx/utility/utility.hpp>
 
+using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 console_result ec_new::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
-    const auto seed = get_seed_argument();
+    // Arbitrary 256 bit length for generated seeds.
+    constexpr size_t fill_seed_size = 32;
 
-    // TODO
+    // Bound parameters.
+    data_chunk seed = get_seed_argument();
+    const bool testnet = get_general_testnet_setting();
 
-    return console_result::failure;
+    if (seed.size() == 0)
+    {
+        seed.resize(fill_seed_size);
+        random_fill(seed);
+    }
+
+    // Using HD key generation because we edon't have one for EC.
+    const hd_private_key hd_key(seed, testnet);
+    const ec_secret ec_key = hd_key.private_key();
+
+    output << ec_private(ec_key) << std::endl;
+    return console_result::okay;
 }
