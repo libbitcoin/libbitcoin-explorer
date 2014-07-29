@@ -93,8 +93,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("PREFIX", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -122,14 +121,19 @@ public:
                 "Get the stealth transactions matching the specified filter. Requires a server connection."
             )
             (
-                "height,t",
-                value<size_t>(&option_.height),
-                "The minimum height of transactions to include in the search."
+                "from_height,f",
+                value<size_t>(&option_.from_height),
+                "The minimum block height of transactions to include in the search. Searches all blocks if not set."
             )
             (
-                "PREFIX",
-                value<uint32_t>(&argument_.prefix),
-                "The prefix of transactions to include in the search."
+                "number_bits,n",
+                value<uint32_t>(&option_.number_bits),
+                "The number of bits of the bitfield to include in the search. Defaults to zero."
+            )
+            (
+                "bitfield,b",
+                value<uint32_t>(&option_.bitfield),
+                "The stealth prefix bitfield. Number bits must be greater than zero for this to be used."
             );
 
         return options;
@@ -143,9 +147,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto prefix = variables.find("PREFIX");
-        if (prefix == variables.end())
-            parse(argument_.prefix, read_stream(input));
     }
 
     /**
@@ -160,22 +161,6 @@ public:
         std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the PREFIX argument.
-     */
-    virtual uint32_t get_prefix_argument()
-    {
-        return argument_.prefix;
-    }
-    
-    /**
-     * Set the value of the PREFIX argument.
-     */
-    virtual void set_prefix_argument(uint32_t value)
-    {
-        argument_.prefix = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -194,19 +179,51 @@ public:
     }
 
     /**
-     * Get the value of the height option.
+     * Get the value of the from_height option.
      */
-    virtual size_t get_height_option()
+    virtual size_t get_from_height_option()
     {
-        return option_.height;
+        return option_.from_height;
     }
     
     /**
-     * Set the value of the height option.
+     * Set the value of the from_height option.
      */
-    virtual void set_height_option(size_t value)
+    virtual void set_from_height_option(size_t value)
     {
-        option_.height = value;
+        option_.from_height = value;
+    }
+
+    /**
+     * Get the value of the number_bits option.
+     */
+    virtual uint32_t get_number_bits_option()
+    {
+        return option_.number_bits;
+    }
+    
+    /**
+     * Set the value of the number_bits option.
+     */
+    virtual void set_number_bits_option(uint32_t value)
+    {
+        option_.number_bits = value;
+    }
+
+    /**
+     * Get the value of the bitfield option.
+     */
+    virtual uint32_t get_bitfield_option()
+    {
+        return option_.bitfield;
+    }
+    
+    /**
+     * Set the value of the bitfield option.
+     */
+    virtual void set_bitfield_option(uint32_t value)
+    {
+        option_.bitfield = value;
     }
 
 private:
@@ -219,9 +236,7 @@ private:
     struct argument
     {
         argument()
-          : prefix()
             {}
-        uint32_t prefix;
     } argument_;
     
     /**
@@ -233,10 +248,14 @@ private:
     {
         option()
           : help(),
-            height()
+            from_height(),
+            number_bits(),
+            bitfield()
             {}    
         bool help;
-        size_t height;
+        size_t from_height;
+        uint32_t number_bits;
+        uint32_t bitfield;
     } option_;
 };
 

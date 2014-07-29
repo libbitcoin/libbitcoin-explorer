@@ -23,6 +23,7 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/utility/utility.hpp>
@@ -41,7 +42,7 @@ static console_result result;
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
 static void transaction_fetched(const std::error_code& error, 
-    const transaction_type& tx_type)
+    const transaction_type& tx)
 {
     if (error)
     {
@@ -50,8 +51,8 @@ static void transaction_fetched(const std::error_code& error,
     }
     else
     {
-        data_chunk raw_tx(satoshi_raw_size(tx_type));
-        satoshi_save(tx_type, raw_tx.begin());
+        data_chunk raw_tx(satoshi_raw_size(tx));
+        satoshi_save(tx, raw_tx.begin());
         std::cout << bytes(raw_tx) << std::endl;
     }
 
@@ -81,8 +82,8 @@ console_result fetch_transaction::invoke(std::istream& input,
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.blockchain.fetch_transaction(hash,
-        std::bind(transaction_fetched_wrapper, std::placeholders::_1,
-            std::placeholders::_2, hash, std::ref(fullnode)));
+        std::bind(transaction_fetched_wrapper, ph::_1, ph::_2, hash,
+            std::ref(fullnode)));
     client.poll(node_stopped);
 
     return result;

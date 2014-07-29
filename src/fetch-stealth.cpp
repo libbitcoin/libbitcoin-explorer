@@ -24,6 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/bitcoin256.hpp>
@@ -52,8 +53,8 @@ static void stealth_fetched(const std::error_code& error,
     else
         for (const blockchain::stealth_row& row : stealth_results)
             std::cout << boost::format(SX_FETCH_STEALTH_OUTPUT) %
-            bytes(row.ephemkey) % address(row.address) %
-            sx::serializer::bitcoin256(row.transaction_hash);
+                bytes(row.ephemkey) % address(row.address) %
+                sx::serializer::bitcoin256(row.transaction_hash);
 
     node_stopped = true;
 }
@@ -62,21 +63,28 @@ console_result fetch_stealth::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto height = get_height_option();
-    const auto prefix = get_prefix_argument();
+    const auto bitfield = get_bitfield_option();
+    const auto number_bits = get_number_bits_option();
+    const auto from_height = get_from_height_option();
 
-    // TODO: verify that these are equivalent.
-    //stealth_prefix bitfield_prefix(prefix_str);
-    stealth_prefix bitfield_prefix(prefix);
+    stealth_prefix prefix{ 0, 0 };
+    if (number_bits > 0)
+    {
+        // TODO: set bitfield and number_bits into prefix.
+
+        // NOTE: a later version of SX was updated to use a single
+        // uint32 prefix value but it's not clear to me how this can
+        // accomdate the intent of the bitfield and number of bits
+        // design.
+    }
 
     node_stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.blockchain.fetch_stealth(bitfield_prefix,
-        std::bind(stealth_fetched, std::placeholders::_1,
-            std::placeholders::_2), height);
+    fullnode.blockchain.fetch_stealth(prefix,
+        std::bind(stealth_fetched, ph::_1, ph::_2), from_height);
     client.poll(node_stopped);
 
     return result;

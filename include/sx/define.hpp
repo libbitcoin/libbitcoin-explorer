@@ -38,6 +38,7 @@
     public: virtual void set_##name(type value) { name##_ = value; } \
     private: type name##_
 
+namespace ph = std::placeholders;
 namespace po = boost::program_options;
 
 typedef po::option_description option_metadata;

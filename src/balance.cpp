@@ -30,6 +30,7 @@
 //#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/define.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/address.hpp>
@@ -162,8 +163,7 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
     for (const auto& address: addresses)
     {
         fullnode.address.fetch_history(address,
-            std::bind(balance_fetched, address, std::placeholders::_1, 
-                std::placeholders::_2));
+            std::bind(balance_fetched, address, ph::_1, ph::_2));
     }
 
     bool done = false;

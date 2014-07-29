@@ -19,15 +19,13 @@
  */
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/command/sendtx-p2p.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
-using std::placeholders::_1;
-using std::placeholders::_2;
-using std::placeholders::_3;
 
 // Needed for the C callback capturing the signals.
 static bool stopped = false;
@@ -128,15 +126,17 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
 
     std::ofstream outfile("debug.log"), errfile("error.log");
     log_debug().set_output_function(
-        std::bind(output_to_file, std::ref(outfile), _1, _2, _3));
+        std::bind(output_to_file, std::ref(outfile), ph::_1, ph::_2, ph::_3));
     log_info().set_output_function(
-        std::bind(output_to_file, std::ref(outfile), _1, _2, _3));
+        std::bind(output_to_file, std::ref(outfile), ph::_1, ph::_2, ph::_3));
     log_warning().set_output_function(
-        std::bind(output_to_file, std::ref(errfile), _1, _2, _3));
+        std::bind(output_to_file, std::ref(errfile), ph::_1, ph::_2, ph::_3));
     log_error().set_output_function(
-        std::bind(output_cerr_and_file, std::ref(errfile), _1, _2, _3));
+        std::bind(output_cerr_and_file, std::ref(errfile), ph::_1, ph::_2,
+            ph::_3));
     log_fatal().set_output_function(
-        std::bind(output_cerr_and_file, std::ref(errfile), _1, _2, _3));
+        std::bind(output_cerr_and_file, std::ref(errfile), ph::_1, ph::_2,
+            ph::_3));
 
     threadpool pool(4);
 
@@ -152,7 +152,7 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
     // Perform node discovery if needed and then creating connections.
     prot.start(handle_start);
     prot.subscribe_channel(
-        std::bind(send_tx, _1, _2, std::ref(prot), std::ref(tx)));
+        std::bind(send_tx, ph::_1, ph::_2, std::ref(prot), std::ref(tx)));
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, signal_handler);
@@ -163,7 +163,7 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
     while (!stopped)
     {
         prot.fetch_connection_count(
-            std::bind(check_connection_count, _1, _2, node_count));
+            std::bind(check_connection_count, ph::_1, ph::_2, node_count));
         sleep_ms(2000);
     }
 

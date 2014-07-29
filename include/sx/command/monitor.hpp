@@ -51,12 +51,6 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
- */
-#define SX_MONITOR_NOT_IMPLEMENTED \
-    "This experimental command is no longer supported."
-
-/**
  * Class to implement the sx monitor command.
  */
 class monitor 
@@ -93,8 +87,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("PREFIX", 1);
+        return get_argument_metadata();
     }
     
     /**
@@ -119,12 +112,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Monitor an address prefix."
+                "Monitor an address prefix. WARNING: THIS COMMAND IS EXPERIMENTAL"
             )
             (
-                "PREFIX",
-                value<uint32_t>(&argument_.prefix),
-                "The prefix of transactions to monitor."
+                "bitfield,b",
+                value<uint32_t>(&option_.bitfield),
+                "The stealth prefix bitfield. Number bits must be greater than zero for this to be used."
+            )
+            (
+                "number_bits,n",
+                value<uint32_t>(&option_.number_bits),
+                "The number of bits of the bitfield to include in the search. Defaults to zero."
             );
 
         return options;
@@ -138,9 +136,6 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto prefix = variables.find("PREFIX");
-        if (prefix == variables.end())
-            parse(argument_.prefix, read_stream(input));
     }
 
     /**
@@ -155,22 +150,6 @@ public:
         std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the PREFIX argument.
-     */
-    virtual uint32_t get_prefix_argument()
-    {
-        return argument_.prefix;
-    }
-    
-    /**
-     * Set the value of the PREFIX argument.
-     */
-    virtual void set_prefix_argument(uint32_t value)
-    {
-        argument_.prefix = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -188,6 +167,38 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the bitfield option.
+     */
+    virtual uint32_t get_bitfield_option()
+    {
+        return option_.bitfield;
+    }
+    
+    /**
+     * Set the value of the bitfield option.
+     */
+    virtual void set_bitfield_option(uint32_t value)
+    {
+        option_.bitfield = value;
+    }
+
+    /**
+     * Get the value of the number_bits option.
+     */
+    virtual uint32_t get_number_bits_option()
+    {
+        return option_.number_bits;
+    }
+    
+    /**
+     * Set the value of the number_bits option.
+     */
+    virtual void set_number_bits_option(uint32_t value)
+    {
+        option_.number_bits = value;
+    }
+
 private:
 
     /**
@@ -198,9 +209,7 @@ private:
     struct argument
     {
         argument()
-          : prefix()
             {}
-        uint32_t prefix;
     } argument_;
     
     /**
@@ -211,9 +220,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            bitfield(),
+            number_bits()
             {}    
         bool help;
+        uint32_t bitfield;
+        uint32_t number_bits;
     } option_;
 };
 

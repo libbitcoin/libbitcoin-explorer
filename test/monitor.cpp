@@ -28,13 +28,6 @@ SX_USING_NAMESPACES()
 // This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(monitor__invoke)
 
-BOOST_AUTO_TEST_CASE(monitor__invoke__prefix_42__failure_error)
-{
-    // $ sx monitor ...
-    SX_DECLARE_COMMAND(monitor);
-    command.set_prefix_argument(42);
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
-    SX_REQUIRE_ERROR(SX_MONITOR_NOT_IMPLEMENTED "\n");
-}
+// DISABLED until client-server calls are isolated for test.
 
 BOOST_AUTO_TEST_SUITE_END()

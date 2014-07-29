@@ -20,12 +20,11 @@
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/command/sendtx-node.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
-using std::placeholders::_1;
-using std::placeholders::_2;
 using namespace sx;
 using namespace sx::extensions;
 
@@ -87,7 +86,7 @@ console_result sendtx_node::invoke(int argc, const char* argv[])
     handshake shake(pool);
     network net(pool);
     connect(shake, net, hostname, port, 
-        std::bind(send_tx, _1, _2, std::ref(tx)));
+        std::bind(send_tx, ph::_1, ph::_2, std::ref(tx)));
 
     // Two full seconds.
     while (!node_stopped)

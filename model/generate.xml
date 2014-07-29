@@ -190,8 +190,10 @@
   
   <command symbol="fetch-stealth" category="ONLINE" obelisk="true">
     <option name="help" description="Get the stealth transactions matching the specified filter. Requires a server connection." />
-    <option name="height" shortcut="t" type="size_t" description="The minimum height of transactions to include in the search."/>
-    <argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to include in the search."/>
+    <!--<argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to get."/>-->
+    <option name="from_height" type="size_t" description="The minimum block height of transactions to include in the search. Searches all blocks if not set."/>
+    <option name="number_bits" type="uint32_t" description="The number of bits of the bitfield to include in the search. Defaults to zero."/>
+    <option name="bitfield" type="uint32_t" description="The stealth prefix bitfield. Number bits must be greater than zero for this to be used."/>
     <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%\n" />
   </command>
 
@@ -290,9 +292,10 @@
   </command>
 
   <command symbol="monitor" category="ONLINE" obelisk="true">
-    <option name="help" description="Monitor an address prefix." />
-    <argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to monitor."/>
-    <define name="SX_MONITOR_NOT_IMPLEMENTED" value="This experimental command is no longer supported." />
+    <option name="help" description="Monitor an address prefix. WARNING: THIS COMMAND IS EXPERIMENTAL" />
+    <!--<argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to monitor."/>-->
+    <option name="bitfield" type="uint32_t" description="The stealth prefix bitfield. Number bits must be greater than zero for this to be used."/>
+    <option name="number_bits" type="uint32_t" description="The number of bits of the bitfield to include in the search. Defaults to zero."/>
   </command>
   
   <command symbol="mpk" category="ELECTRUM" obsolete="true">
