@@ -37,7 +37,7 @@ console_result hd_new::invoke(std::istream& input, std::ostream& output,
     const bool testnet = get_general_testnet_setting();
 
     // Arbitrary minimum 128 bit length for generated seeds.
-    constexpr size_t minimum_seed_size = 128 / sizeof(uint8_t);
+    constexpr size_t minimum_seed_size = 128 / byte_bits;
     if (seed.size() < minimum_seed_size)
     {
         cerr << SX_HD_NEW_SHORT_SEED << std::endl;

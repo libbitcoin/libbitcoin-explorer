@@ -32,7 +32,7 @@ console_result seed::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Arbitrary 128 bit length for generated seeds.
-    constexpr size_t fill_seed_size = 128 / sizeof(uint8_t);
+    constexpr size_t fill_seed_size = 128 / byte_bits;
 
     // TODO: allow for seed length specification in multiples of 32 bits.
 

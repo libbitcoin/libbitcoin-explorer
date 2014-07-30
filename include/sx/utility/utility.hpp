@@ -64,6 +64,11 @@ enum console_result : int
 };
 
 /**
+ * The number of bits in a byte.
+ */
+constexpr size_t byte_bits = 8;
+
+/**
  * Avoid the ternary (just for fun). Must precede tempalte usage for gcc build.
  * You should use with expressions as consequent or alternative as they will be
  * executed regardless of the predicate.
