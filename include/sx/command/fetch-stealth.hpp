@@ -56,6 +56,8 @@ namespace extension {
  */
 #define SX_FETCH_STEALTH_OUTPUT \
     "Ephemeral key: %1% Address: %2% Transaction hash: %3%\n"
+#define SX_FETCH_STEALTH_BITFIELD_TOO_LONG \
+    "The bitfield option exceeds 32 bits."
 
 /**
  * Class to implement the sx fetch-stealth command.
@@ -122,19 +124,14 @@ public:
                 "Get the stealth transactions matching the specified filter. Requires a server connection."
             )
             (
-                "from_height,f",
-                value<size_t>(&option_.from_height),
+                "prefix,p",
+                value<std::string>(&option_.prefix),
+                "The binary encoded stealth search prefix. Searches all transactions if not set."
+            )
+            (
+                "height,t",
+                value<size_t>(&option_.height),
                 "The minimum block height of transactions to include in the search. Searches all blocks if not set."
-            )
-            (
-                "number_bits,n",
-                value<uint32_t>(&option_.number_bits),
-                "The number of bits of the bitfield to include in the search. Defaults to zero."
-            )
-            (
-                "bitfield,b",
-                value<uint32_t>(&option_.bitfield),
-                "The stealth prefix bitfield. Number bits must be greater than zero for this to be used."
             );
 
         return options;
@@ -180,51 +177,35 @@ public:
     }
 
     /**
-     * Get the value of the from_height option.
+     * Get the value of the prefix option.
      */
-    virtual size_t get_from_height_option()
+    virtual std::string get_prefix_option()
     {
-        return option_.from_height;
+        return option_.prefix;
     }
     
     /**
-     * Set the value of the from_height option.
+     * Set the value of the prefix option.
      */
-    virtual void set_from_height_option(size_t value)
+    virtual void set_prefix_option(std::string value)
     {
-        option_.from_height = value;
+        option_.prefix = value;
     }
 
     /**
-     * Get the value of the number_bits option.
+     * Get the value of the height option.
      */
-    virtual uint32_t get_number_bits_option()
+    virtual size_t get_height_option()
     {
-        return option_.number_bits;
+        return option_.height;
     }
     
     /**
-     * Set the value of the number_bits option.
+     * Set the value of the height option.
      */
-    virtual void set_number_bits_option(uint32_t value)
+    virtual void set_height_option(size_t value)
     {
-        option_.number_bits = value;
-    }
-
-    /**
-     * Get the value of the bitfield option.
-     */
-    virtual uint32_t get_bitfield_option()
-    {
-        return option_.bitfield;
-    }
-    
-    /**
-     * Set the value of the bitfield option.
-     */
-    virtual void set_bitfield_option(uint32_t value)
-    {
-        option_.bitfield = value;
+        option_.height = value;
     }
 
 private:
@@ -249,14 +230,12 @@ private:
     {
         option()
           : help(),
-            from_height(),
-            number_bits(),
-            bitfield()
+            prefix(),
+            height()
             {}    
         bool help;
-        size_t from_height;
-        uint32_t number_bits;
-        uint32_t bitfield;
+        std::string prefix;
+        size_t height;
     } option_;
 };
 

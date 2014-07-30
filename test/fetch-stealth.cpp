@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 
 //BOOST_AUTO_TEST_CASE(fetch_stealth__invoke__always__okay)
 //{
-//    // $ sx fetch-stealth 2 8bf41c69
+//    // $ sx fetch-stealth 1101
 //    SX_DECLARE_COMMAND(fetch_stealth);
 //    SX_REQUIRE_OKAY(command.invoke(input, output, error));
 //}

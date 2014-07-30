@@ -63,19 +63,17 @@ console_result fetch_stealth::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto bitfield = get_bitfield_option();
-    const auto number_bits = get_number_bits_option();
-    const auto from_height = get_from_height_option();
+    const auto prefix_string = get_prefix_option();
+    const auto height = get_height_option();
 
-    stealth_prefix prefix{ 0, 0 };
-    if (number_bits > 0)
+    // TODO: create serializer.
+    stealth_prefix prefix(prefix_string);
+
+    constexpr size_t max_prefix_bytes = sizeof(uint32_t);
+    if (prefix.size() > max_prefix_bytes * byte_bits)
     {
-        // TODO: set bitfield and number_bits into prefix.
-
-        // NOTE: a later version of SX was updated to use a single
-        // uint32 prefix value but it's not clear to me how this can
-        // accomdate the intent of the bitfield and number of bits
-        // design.
+        cerr << SX_FETCH_STEALTH_BITFIELD_TOO_LONG << std::endl;
+        return console_result::failure;
     }
 
     node_stopped = false;
@@ -84,7 +82,7 @@ console_result fetch_stealth::invoke(std::istream& input,
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.blockchain.fetch_stealth(prefix,
-        std::bind(stealth_fetched, ph::_1, ph::_2), from_height);
+        std::bind(stealth_fetched, ph::_1, ph::_2), height);
     client.poll(node_stopped);
 
     return result;
