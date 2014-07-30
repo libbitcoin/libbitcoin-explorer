@@ -255,6 +255,12 @@
     <ClCompile Include="..\..\..\..\test\ec-unlock.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\sendtx-obelisk.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\sendtx-node.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

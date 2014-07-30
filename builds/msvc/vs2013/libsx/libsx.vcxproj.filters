@@ -230,6 +230,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\seed.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\sendtx-node.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\sendtx-obelisk.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
@@ -517,6 +520,9 @@
     <ClCompile Include="..\..\..\..\src\seed.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\sendtx-node.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
@@ -623,9 +629,6 @@
       <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
-      <Filter>src\command\todo\obelisk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sendtx-node.cpp">
       <Filter>src\command\todo\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\validtx.cpp">

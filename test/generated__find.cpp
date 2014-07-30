@@ -302,6 +302,11 @@ BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
     BOOST_REQUIRE(find(seed::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__sendtx_node__returns_object)
+{
+    BOOST_REQUIRE(find(sendtx_node::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__sendtx_obelisk__returns_object)
 {
     BOOST_REQUIRE(find(sendtx_obelisk::symbol()) != nullptr);

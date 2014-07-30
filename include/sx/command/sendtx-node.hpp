@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_SENDTX_OBELISK_HPP
-#define SX_SENDTX_OBELISK_HPP
+#ifndef SX_SENDTX_NODE_HPP
+#define SX_SENDTX_NODE_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -55,13 +55,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_SENDTX_OBELISK_OUTPUT \
+#define SX_SENDTX_NODE_OUTPUT \
     "Transaction sent at %1%."
 
 /**
- * Class to implement the sx sendtx-obelisk command.
+ * Class to implement the sx sendtx-node command.
  */
-class sendtx_obelisk 
+class sendtx_node 
     : public command
 {
 public:
@@ -69,14 +69,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "sendtx-obelisk"; }
+    static const char* symbol() { return "sendtx-node"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return sendtx_obelisk::symbol();
+        return sendtx_node::symbol();
     }
 
     /**
@@ -121,7 +121,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server."
+                "Send a transaction to a single Bitcoin network node."
+            )
+            (
+                "name,n",
+                value<std::string>(&option_.name)->default_value("localhost"),
+                "The IP address or DNS name of the node. Defaults to localhost."
+            )
+            (
+                "port,p",
+                value<uint16_t>(&option_.port)->default_value(8333),
+                "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
             )
             (
                 "FILE",
@@ -190,6 +200,38 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the name option.
+     */
+    virtual std::string get_name_option()
+    {
+        return option_.name;
+    }
+    
+    /**
+     * Set the value of the name option.
+     */
+    virtual void set_name_option(std::string value)
+    {
+        option_.name = value;
+    }
+
+    /**
+     * Get the value of the port option.
+     */
+    virtual uint16_t get_port_option()
+    {
+        return option_.port;
+    }
+    
+    /**
+     * Set the value of the port option.
+     */
+    virtual void set_port_option(uint16_t value)
+    {
+        option_.port = value;
+    }
+
 private:
 
     /**
@@ -213,9 +255,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            name(),
+            port()
             {}    
         bool help;
+        std::string name;
+        uint16_t port;
     } option_;
 };
 

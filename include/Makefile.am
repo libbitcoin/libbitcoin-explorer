@@ -84,6 +84,7 @@ sx_command_include_HEADERS = \
     command/ripemd160.hpp \
     command/satoshi.hpp \
     command/seed.hpp \
+    command/sendtx-node.hpp \
     command/sha160.hpp \
     command/sha256.hpp \
     command/sha512.hpp \

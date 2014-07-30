@@ -177,6 +177,8 @@
     <ClCompile Include="..\..\..\..\test\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\test\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\test\satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\test\sendtx-node.cpp" />
+    <ClCompile Include="..\..\..\..\test\sendtx-obelisk.cpp" />
     <ClCompile Include="..\..\..\..\test\sha160.cpp" />
     <ClCompile Include="..\..\..\..\test\sha256.cpp" />
     <ClCompile Include="..\..\..\..\test\sha512.cpp" />

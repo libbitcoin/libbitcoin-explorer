@@ -20,6 +20,7 @@
 #include <sx/command/sendtx-obelisk.hpp>
 
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
@@ -39,8 +40,15 @@ static console_result result;
 // or by converting this to a member function.
 static void handle_broadcast(const std::error_code& error)
 {
-    // Output the 'status' regardless of result.
-    std::cout << error << std::endl;
+    if (error)
+    {
+        std::cerr << error << std::endl;
+        result = console_result::failure;
+    }
+    else
+        std::cout << boost::format(SX_SENDTX_OBELISK_OUTPUT) % now()
+            << std::endl;
+
     node_stopped = true;
 }
 
@@ -54,6 +62,7 @@ console_result sendtx_obelisk::invoke(std::istream& input,
     std::string hexadecimal(data.begin(), data.end());
     const auto raw_tx = bc::decode_hex(hexadecimal);
 
+    // TODO: create transaction serializer.
     transaction_type tx;
     if (!parse_satoshi_item<transaction_type>(tx, raw_tx))
         return console_result::failure;
@@ -66,6 +75,6 @@ console_result sendtx_obelisk::invoke(std::istream& input,
     fullnode.protocol.broadcast_transaction(tx, handle_broadcast);
     client.poll(node_stopped);
 
-    return console_result::okay;
+    return result;
 }
 

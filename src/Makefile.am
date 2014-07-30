@@ -67,6 +67,7 @@ libsx_la_SOURCES += \
     ripemd160.cpp \
     satoshi.cpp \
     seed.cpp \
+    sendtx-node.cpp \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \

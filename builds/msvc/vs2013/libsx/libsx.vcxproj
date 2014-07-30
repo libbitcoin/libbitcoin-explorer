@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ripemd160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\seed.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\sendtx-node.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sendtx-obelisk.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp" />
@@ -189,9 +190,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\scripthash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sendtx-node.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\sendtx-p2p.cpp">
@@ -309,6 +307,7 @@
     <ClCompile Include="..\..\..\..\src\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\seed.cpp" />
+    <ClCompile Include="..\..\..\..\src\sendtx-node.cpp" />
     <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>

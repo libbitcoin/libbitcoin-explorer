@@ -349,9 +349,18 @@
     <option name="help" description="Generate a pseudorandom 128 bit seed." />
   </command>
   
+  <command symbol="sendtx-node" category="ONLINE">
+    <option name="help" description="Send a transaction to a single Bitcoin network node." />
+    <option name="name" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
+    <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
+    <argument name="FILE" stream="true" type="file" description="The transaction file path. If not specified the transaction is read from STDIN."/>
+    <define name="SX_SENDTX_NODE_OUTPUT" value="Sent transaction %1% at %2%." />
+  </command>
+  
   <command symbol="sendtx-obelisk" category="ONLINE" obelisk="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server." />
     <argument name="FILE" stream="true" type="file" description="The transaction file path. If not specified the transaction is read from STDIN."/>
+    <define name="SX_SENDTX_OBELISK_OUTPUT" value="Sent transaction at %1%." />
   </command>
 
   <command symbol="sha160" category="HASH">

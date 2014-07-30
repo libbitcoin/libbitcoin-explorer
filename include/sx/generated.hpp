@@ -79,6 +79,7 @@
 #include <sx/command/ripemd160.hpp>
 #include <sx/command/satoshi.hpp>
 #include <sx/command/seed.hpp>
+#include <sx/command/sendtx-node.hpp>
 #include <sx/command/sendtx-obelisk.hpp>
 #include <sx/command/sha160.hpp>
 #include <sx/command/sha256.hpp>
