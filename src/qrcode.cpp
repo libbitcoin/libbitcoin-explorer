@@ -30,7 +30,7 @@ console_result qrcode::invoke(std::istream& input, std::ostream& output,
 {
     // Bound parameters.
     const auto path = get_file_option();
-    const auto satoshi = get_address_argument();
+    const auto address = get_address_argument();
 
     // TODO
     // Create qrcode as binary data.
