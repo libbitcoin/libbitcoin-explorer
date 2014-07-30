@@ -55,7 +55,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_UNWRAP_INVALID_CHECKSUM \
-    "The HEX argument checksum is not valid."
+    "The checksum is not valid."
 #define SX_UNWRAP_OUTPUT \
     "%1% %2% %3%"
 
