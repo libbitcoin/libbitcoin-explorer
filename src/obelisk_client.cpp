@@ -33,6 +33,11 @@ obelisk_client::obelisk_client(sx::command& command, const size_t threads)
     command.get_obelisk_client_certificate_setting().generic_string(),
     command.get_obelisk_server_public_key_setting()) {}
 
+obelisk_client::~obelisk_client()
+{
+    stop();
+}
+
 obelisk::fullnode_interface& obelisk_client::get_fullnode()
 {
     return fullnode_;

@@ -58,6 +58,11 @@ public:
         const size_t threads=default_threadpool_size);
 
     /**
+     * Destructor, calls stop.
+     */
+    ~obelisk_client();
+
+    /**
      * Get the value of the obelisk fullnode interface.
      */
     virtual obelisk::fullnode_interface& get_fullnode();
