@@ -33,6 +33,7 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
@@ -221,6 +222,14 @@ std::string serialize(const Value& value, const std::string& fallback = "")
  */
 void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter=SX_JOIN_DELIMITER);
+
+/**
+ * Get the local time, second level resolution, based on the time zone settings
+ * of the computer.
+ *
+ * @return  The local time.
+ */
+boost::posix_time::ptime now();
 
 /**
  * Fill a buffer with randomness using the default random engine.

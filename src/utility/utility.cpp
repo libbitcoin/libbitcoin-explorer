@@ -33,6 +33,7 @@
 #include <vector>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <bitcoin/bitcoin.hpp>
 #pragma warning(pop)
 
@@ -47,6 +48,13 @@ void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter)
 {
     sentence = boost::join(words, delimiter);
+}
+
+boost::posix_time::ptime now()
+{
+    using namespace boost::posix_time;
+    ptime local_time_in_seconds(second_clock::local_time());
+    return local_time_in_seconds;
 }
 
 std::string read_stream(std::istream& stream, bool trim)
