@@ -48,11 +48,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  base58  The value to initialize with.
      */
-    hd_public(const std::string& hex)
+    hd_public(const std::string& base58)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(base58) >> *this;
     }
 
     /**
@@ -103,11 +103,11 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, hd_public& argument)
     {
-        std::string text;
-        input >> text;
+        std::string base58;
+        input >> base58;
 
-        if (!argument.value_.deserialize(text))
-            throw po::invalid_option_value(text);
+        if (!argument.value_.deserialize(base58))
+            throw po::invalid_option_value(base58);
 
         return input;
     }

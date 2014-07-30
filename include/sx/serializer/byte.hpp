@@ -45,11 +45,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  number  The value to initialize with.
      */
-    byte(const std::string& hex)
+    byte(const std::string& number)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(number) >> *this;
     }
 
     /**

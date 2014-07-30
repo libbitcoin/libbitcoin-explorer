@@ -50,11 +50,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  arg  The value to initialize with.
+     * @param[in]  base58  The value to initialize with.
      */
-    hd_key(const std::string& arg)
+    hd_key(const std::string& base58)
     {
-        std::stringstream(arg) >> *this;
+        std::stringstream(base58) >> *this;
     }
 
     /**
@@ -133,15 +133,15 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, hd_key& argument)
     {
-        std::string text;
-        input >> text;
+        std::string base58;
+        input >> base58;
 
         // First try to read as a private key.
-        if (!argument.private_key_value_.deserialize(text))
+        if (!argument.private_key_value_.deserialize(base58))
         {
             // Otherwise try to read as a public key.
-            if (!argument.public_key_value_.deserialize(text))
-                throw po::invalid_option_value(text);
+            if (!argument.public_key_value_.deserialize(base58))
+                throw po::invalid_option_value(base58);
         }
 
         return input;

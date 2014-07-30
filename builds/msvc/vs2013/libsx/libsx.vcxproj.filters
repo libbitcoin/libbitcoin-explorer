@@ -272,6 +272,9 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\binary.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc160.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>

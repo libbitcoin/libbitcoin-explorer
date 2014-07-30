@@ -198,7 +198,7 @@
   
   <command symbol="fetch-stealth" category="ONLINE" obelisk="true">
     <option name="help" description="Get the stealth transactions matching the specified filter. Requires a server connection." />
-    <option name="prefix" type="string" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
+    <option name="prefix" type="binary" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include in the search. Searches all blocks if not set."/>
     <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%\n" />
     <define name="SX_FETCH_STEALTH_BITFIELD_TOO_LONG" value="The bitfield option exceeds 32 bits." />

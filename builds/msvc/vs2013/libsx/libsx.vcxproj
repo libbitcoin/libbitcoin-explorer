@@ -85,6 +85,7 @@
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\address.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\binary.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc256.hpp" />

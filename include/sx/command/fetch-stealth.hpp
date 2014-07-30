@@ -29,6 +29,7 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
@@ -125,7 +126,7 @@ public:
             )
             (
                 "prefix,p",
-                value<std::string>(&option_.prefix),
+                value<serializer::binary>(&option_.prefix),
                 "The binary encoded stealth search prefix. Searches all transactions if not set."
             )
             (
@@ -179,7 +180,7 @@ public:
     /**
      * Get the value of the prefix option.
      */
-    virtual std::string get_prefix_option()
+    virtual serializer::binary get_prefix_option()
     {
         return option_.prefix;
     }
@@ -187,7 +188,7 @@ public:
     /**
      * Set the value of the prefix option.
      */
-    virtual void set_prefix_option(std::string value)
+    virtual void set_prefix_option(serializer::binary value)
     {
         option_.prefix = value;
     }
@@ -234,7 +235,7 @@ private:
             height()
             {}    
         bool help;
-        std::string prefix;
+        serializer::binary prefix;
         size_t height;
     } option_;
 };

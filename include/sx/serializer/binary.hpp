@@ -17,43 +17,46 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef HD_PRIVATE_HPP
-#define HD_PRIVATE_HPP
+#ifndef BINARY_HPP
+#define BINARY_HPP
 
+#include <array>
 #include <iostream>
+#include <stdint.h>
+#include <vector>
+#include <boost/dynamic_bitset.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/btc256.hpp>
-#include <sx/serializer/wif.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
 
+typedef boost::dynamic_bitset<uint8_t> bitset;
+
 /**
- * Serialization helper to convert between hex string and ec_secret.
+ * Serialization helper to convert between hex string and data_chunk.
  */
-class hd_private
+class binary
 {
 public:
 
     /**
      * Constructor.
      */
-    hd_private()
+    binary() 
         : value_() {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  base58  The value to initialize with.
+     * @param[in]  bin  The value to initialize with.
      */
-    hd_private(const std::string& base58)
+    binary(const std::string& bin)
     {
-        std::stringstream(base58) >> *this;
+        std::stringstream(bin) >> *this;
     }
 
     /**
@@ -61,26 +64,23 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    hd_private(const libwallet::hd_private_key& value)
-    {
-        // hd_private_key doesn't provide a copy constructor.
-        value_.deserialize(value.serialize());
-    }
+    binary(const bitset& value)
+        : value_(value) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    hd_private(const hd_private& other)
-        : hd_private(other.value_) {}
+    binary(const binary& other)
+        : binary(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    libwallet::hd_private_key& data()
+    bitset& data()
     {
         return value_;
     }
@@ -90,26 +90,28 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_private_key&() const
+    operator const bitset&() const
     {
         return value_; 
     }
 
     /**
-     * Overload stream in. Throws if input is invalid.
+     * Overload stream in. If input is invalid sets no bytes in argument.
      *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, hd_private& argument)
+    friend std::istream& operator>>(std::istream& input, binary& argument)
     {
-        std::string base58;
-        input >> base58;
+        std::string bin;
+        input >> bin;
+       
+        bitset value(bin);
+        if (bin.length() != value.size())
+            throw po::invalid_option_value(bin);
 
-        if (!argument.value_.deserialize(base58))
-            throw po::invalid_option_value(base58);
-
+        argument.value_.swap(value);
         return input;
     }
 
@@ -120,10 +122,13 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const hd_private& argument)
+    friend std::ostream& operator<<(std::ostream& output,
+        const binary& argument)
     {
-        output << argument.value_.serialize();
+        std::string bin;
+        boost::to_string(argument.value_, bin);
+
+        output << bin;
         return output;
     }
 
@@ -132,7 +137,7 @@ private:
     /**
      * The state of this object.
      */
-    libwallet::hd_private_key value_;
+    bitset value_;
 };
 
 } // sx

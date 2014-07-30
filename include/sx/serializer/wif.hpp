@@ -47,11 +47,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  text  The value to initialize with.
+     * @param[in]  base58  The value to initialize with.
      */
-    wif(const std::string& text)
+    wif(const std::string& base58)
     {
-        std::stringstream(text) >> *this;
+        std::stringstream(base58) >> *this;
     }
 
     /**
@@ -126,14 +126,14 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, wif& argument)
     {
-        std::string text;
-        input >> text;
+        std::string base58;
+        input >> base58;
 
-        auto value = libwallet::wif_to_secret(text);
+        auto value = libwallet::wif_to_secret(base58);
         if (!bc::verify_private_key(value))
-            throw po::invalid_option_value(text);
+            throw po::invalid_option_value(base58);
 
-        argument.compressed_ = libwallet::is_wif_compressed(text);
+        argument.compressed_ = libwallet::is_wif_compressed(base58);
         std::copy(value.begin(), value.end(), argument.value_.begin());
         return input;
     }

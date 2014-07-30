@@ -29,6 +29,7 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>

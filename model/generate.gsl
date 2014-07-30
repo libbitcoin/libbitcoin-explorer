@@ -66,6 +66,8 @@
 .       return type_address_sx
 .   elsif my.type = type_base58
 .       return type_base58_sx
+.   elsif my.type = type_binary
+.       return type_binary_sx
 .   elsif my.type = type_btc160
 .       return type_btc160_sx
 .   elsif my.type = type_btc256
@@ -163,6 +165,7 @@
 .
 .config_description = resource("sx_config_description")
 .config_option = "config"
+.type_binary = "binary"
 .type_bool = "bool"
 .type_address = "address"
 .type_base58 = "base58"
@@ -182,6 +185,7 @@
 .type_wif = "wif"
 .
 .type_address_sx = "serializer::address"
+.type_binary_sx = "serializer::binary"
 .type_base58_sx = "serializer::base58"
 .type_btc160_sx = "serializer::btc160"
 .type_btc256_sx = "serializer::btc256"
@@ -572,6 +576,7 @@ private:
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
@@ -1113,6 +1118,7 @@ endif
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\binary.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc256.hpp" />
@@ -1338,6 +1344,9 @@ endif
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\binary.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp">

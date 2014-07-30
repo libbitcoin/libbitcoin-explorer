@@ -26,6 +26,7 @@
 #include <sx/obelisk_client.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
@@ -63,11 +64,8 @@ console_result fetch_stealth::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto prefix_string = get_prefix_option();
     const auto height = get_height_option();
-
-    // TODO: create serializer.
-    stealth_prefix prefix(prefix_string);
+    const stealth_prefix prefix = get_prefix_option();
 
     constexpr size_t max_prefix_bytes = sizeof(uint32_t);
     if (prefix.size() > max_prefix_bytes * byte_bits)

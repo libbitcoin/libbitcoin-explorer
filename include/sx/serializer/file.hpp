@@ -56,11 +56,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  text  The value to initialize with.
+     * @param[in]  path  The value to initialize with.
      */
-    file(const std::string& text)
+    file(const std::string& path)
     {
-        std::stringstream(text) >> *this;
+        std::stringstream(path) >> *this;
     }
 
     /**
