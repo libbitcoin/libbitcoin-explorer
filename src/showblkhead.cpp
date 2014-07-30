@@ -31,6 +31,7 @@ console_result showblkhead::invoke(int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 1, 2))
         return console_result::failure;
 
+    // TODO: create headerfile::hexfile serializer.
     block_header_type blk_header;
     std::string filename(get_filename(argc, argv));
     if (!load_satoshi_item<block_header_type>(blk_header, filename, std::cin))

@@ -81,7 +81,7 @@ console_result sendtx_node::invoke(std::istream& input,
     std::string hexadecimal(data.begin(), data.end());
     const auto raw_tx = bc::decode_hex(hexadecimal);
 
-    // TODO: create txfile::hex serializer.
+    // TODO: create txfile::hexfile serializer.
     transaction_type tx;
     if (!parse_satoshi_item<transaction_type>(tx, raw_tx))
         return console_result::failure;
