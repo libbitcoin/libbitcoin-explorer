@@ -34,6 +34,12 @@
 
 namespace sx {
 namespace serializer {
+    
+/**
+ * Conventional command line argument sentinel for indicating that a file
+ * should be read from STDIN.
+ */
+#define SX_STDIN_PATH_SENTINEL "-"
 
 /**
  * Serialization helper to convert between hex string and ec_secret.
@@ -115,11 +121,11 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, file& argument)
     {
-        std::string path;
+        std::string path(SX_STDIN_PATH_SENTINEL);
         input >> path;
         argument.path_ = path;
 
-        if (path.empty() || path == SX_STDIN_PATH_SENTINEL)
+        if (path == SX_STDIN_PATH_SENTINEL)
         {
 #ifdef _WIN32
             // The function sets the _fmode global variable.

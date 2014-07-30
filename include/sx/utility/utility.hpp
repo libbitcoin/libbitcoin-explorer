@@ -52,12 +52,6 @@ namespace sx {
  * Default delimiter for use in sentence splitting operations.
  */
 #define SX_SPLIT_DELIMITER "-"
-    
-/**
- * Conventional command line argument sentinel for indicating that a file
- * should be read from STDIN.
- */
-#define SX_STDIN_PATH_SENTINEL "-"
 
 /**
  * Result codes for int main().
