@@ -27,7 +27,7 @@
 #include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/bytes.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -54,7 +54,7 @@ static void stealth_fetched(const std::error_code& error,
         for (const blockchain::stealth_row& row : stealth_results)
             std::cout << boost::format(SX_FETCH_STEALTH_OUTPUT) %
                 bytes(row.ephemkey) % address(row.address) %
-                sx::serializer::bitcoin256(row.transaction_hash);
+                btc256(row.transaction_hash);
 
     node_stopped = true;
 }

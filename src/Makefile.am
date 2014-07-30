@@ -14,19 +14,6 @@ libsx_la_SOURCES = \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
-    serializer/address.cpp \
-    serializer/base58.cpp \
-    serializer/bitcoin160.cpp \
-    serializer/bitcoin256.cpp \
-    serializer/byte.cpp \
-    serializer/bytes.cpp \
-    serializer/ec_private.cpp \
-    serializer/ec_public.cpp \
-    serializer/hd_key.cpp \
-    serializer/hd_private.cpp \
-    serializer/hd_public.cpp \
-    serializer/point.cpp \
-    serializer/wif.cpp \
     utility/config.cpp \
     utility/environment.cpp \
     utility/parameter.cpp \
@@ -104,6 +91,7 @@ if HAVE_OBELISK
         fetch-utxo.cpp \
         history.cpp \
         monitor.cpp \
+        sendtx-obelisk.cpp \
         watchtx.cpp \
         obelisk_client.cpp
 

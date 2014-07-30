@@ -30,7 +30,7 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result sx::extension::bitcoin256::invoke(std::istream& input,
+console_result bitcoin256::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.

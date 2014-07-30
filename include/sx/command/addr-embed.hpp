@@ -30,8 +30,8 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -123,8 +123,8 @@ public:
             )
             (
                 "FILE",
-                value<std::string>(&argument_.file),
-                "The binary data of which to embed a record."
+                value<boost::filesystem::path>(&argument_.file),
+                "The binary data file path.  If not specified the binary data is read from STDIN."
             );
 
         return options;
@@ -159,7 +159,7 @@ public:
     /**
      * Get the value of the FILE argument.
      */
-    virtual std::string get_file_argument()
+    virtual boost::filesystem::path get_file_argument()
     {
         return argument_.file;
     }
@@ -167,7 +167,7 @@ public:
     /**
      * Set the value of the FILE argument.
      */
-    virtual void set_file_argument(std::string value)
+    virtual void set_file_argument(boost::filesystem::path value)
     {
         argument_.file = value;
     }
@@ -200,7 +200,7 @@ private:
         argument()
           : file()
             {}
-        std::string file;
+        boost::filesystem::path file;
     } argument_;
     
     /**

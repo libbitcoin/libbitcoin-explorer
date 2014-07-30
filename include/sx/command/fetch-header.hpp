@@ -30,8 +30,8 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -116,7 +116,7 @@ public:
             )
             (
                 "hash,s",
-                value<serializer::bitcoin256>(&option_.hash),
+                value<serializer::btc256>(&option_.hash),
                 "The hex encoded block hash."
             )
             (
@@ -170,7 +170,7 @@ public:
     /**
      * Get the value of the hash option.
      */
-    virtual serializer::bitcoin256 get_hash_option()
+    virtual serializer::btc256 get_hash_option()
     {
         return option_.hash;
     }
@@ -178,7 +178,7 @@ public:
     /**
      * Set the value of the hash option.
      */
-    virtual void set_hash_option(serializer::bitcoin256 value)
+    virtual void set_hash_option(serializer::btc256 value)
     {
         option_.hash = value;
     }
@@ -225,7 +225,7 @@ private:
             height()
             {}    
         bool help;
-        serializer::bitcoin256 hash;
+        serializer::btc256 hash;
         size_t height;
     } option_;
 };

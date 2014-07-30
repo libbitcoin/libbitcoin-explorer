@@ -23,8 +23,8 @@ sx_utility_includedir = $(includedir)/sx/serializer
 sx_utility_include_HEADERS += \
     address.hpp \
     base58.hpp \
-    bitcoin160.hpp \
-    bitcoin256.hpp \
+    btc160.hpp \
+    btc256.hpp \
     byte.hpp \
     bytes.hpp \
     ec_private.hpp \
@@ -107,5 +107,6 @@ if HAVE_OBELISK
         command/fetch-utxo.hpp \
         command/history.hpp \
         command/monitor.hpp \
+        command/sendtx-obelisk.hpp \
         command/watchtx.hpp
 endif

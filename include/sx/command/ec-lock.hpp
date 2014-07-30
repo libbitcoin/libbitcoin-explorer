@@ -30,8 +30,8 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -124,7 +124,7 @@ public:
             )
             (
                 "SECRET",
-                value<serializer::bytes>(&argument_.secret),
+                value<serializer::ec_private>(&argument_.secret),
                 "The EC private key."
             )
             (
@@ -162,7 +162,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual serializer::bytes get_secret_argument()
+    virtual serializer::ec_private get_secret_argument()
     {
         return argument_.secret;
     }
@@ -170,7 +170,7 @@ public:
     /**
      * Set the value of the SECRET argument.
      */
-    virtual void set_secret_argument(serializer::bytes value)
+    virtual void set_secret_argument(serializer::ec_private value)
     {
         argument_.secret = value;
     }
@@ -220,7 +220,7 @@ private:
           : secret(),
             passphrase()
             {}
-        serializer::bytes secret;
+        serializer::ec_private secret;
         std::string passphrase;
     } argument_;
     

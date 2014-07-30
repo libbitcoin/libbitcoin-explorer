@@ -30,8 +30,8 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -93,7 +93,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("FILE", 1);
     }
     
     /**
@@ -121,9 +122,9 @@ public:
                 "Send a Bitcoin transaction to blockchain.info."
             )
             (
-                "FILE,F",
-                value<bool>(&option_.file)->implicit_value(true),
-                "The transaction file path and file name. If not specified the transaction is read from STDIN."
+                "FILE",
+                value<boost::filesystem::path>(&argument_.file),
+                "The transaction file path. If not specified the transaction is read from STDIN."
             );
 
         return options;
@@ -137,6 +138,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
+        auto file = variables.find("FILE");
+        if (file == variables.end())
+            parse(argument_.file, read_stream(input));
     }
 
     /**
@@ -151,6 +155,22 @@ public:
         std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the FILE argument.
+     */
+    virtual boost::filesystem::path get_file_argument()
+    {
+        return argument_.file;
+    }
+    
+    /**
+     * Set the value of the FILE argument.
+     */
+    virtual void set_file_argument(boost::filesystem::path value)
+    {
+        argument_.file = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -168,22 +188,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the FILE option.
-     */
-    virtual bool get_file_option()
-    {
-        return option_.file;
-    }
-    
-    /**
-     * Set the value of the FILE option.
-     */
-    virtual void set_file_option(bool value)
-    {
-        option_.file = value;
-    }
-
 private:
 
     /**
@@ -194,7 +198,9 @@ private:
     struct argument
     {
         argument()
+          : file()
             {}
+        boost::filesystem::path file;
     } argument_;
     
     /**
@@ -205,11 +211,9 @@ private:
     struct option
     {
         option()
-          : help(),
-            file()
+          : help()
             {}    
         bool help;
-        bool file;
     } option_;
 };
 

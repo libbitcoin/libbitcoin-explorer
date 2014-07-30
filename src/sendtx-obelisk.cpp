@@ -17,46 +17,54 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/sendtx-obelisk.hpp>
+
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/command/sendtx-obelisk.hpp>
-#include <sx/obelisk.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/obelisk_client.hpp>
 #include <sx/utility/config.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::sendtx_obelisk,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped = false;
+static bool node_stopped;
+static console_result result;
 
 // TODO: node_stopped should be passed here via closure
 // or by converting this to a member function.
-static void handle_broadcast(const std::error_code& ec)
+static void handle_broadcast(const std::error_code& error)
 {
-    std::cout << "Status: " << ec.message() << std::endl;
+    // Output the 'status' regardless of result.
+    std::cout << error << std::endl;
     node_stopped = true;
 }
 
-console_result sendtx_obelisk::invoke(int argc, const char* argv[])
+console_result sendtx_obelisk::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    // Bound parameters.
+    const auto file = get_file_argument();
+
+    node_stopped = false;
+    result = console_result::okay;
+
+    // TODO: move path/stdio into serializer.
+    auto filename = file.generic_string();
 
     transaction_type tx;
-    const std::string filename(get_filename(argc, argv));
-    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
-    {
-        std::cerr << "sx: Deserializing transaction failed." << std::endl;
+    if (!load_satoshi_item<transaction_type>(tx, filename, input))
         return console_result::failure;
-    }
 
-    OBELISK_FULLNODE(pool, fullnode);
+    obelisk_client client(*this);
+    auto& fullnode = client.get_fullnode();
     fullnode.protocol.broadcast_transaction(tx, handle_broadcast);
-    poll(fullnode, pool, node_stopped);
+    client.poll(node_stopped);
+
     return console_result::okay;
 }
 

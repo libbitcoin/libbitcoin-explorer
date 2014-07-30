@@ -66,10 +66,10 @@
 .       return type_address_sx
 .   elsif my.type = type_base58
 .       return type_base58_sx
-.   elsif my.type = type_bitcoin160
-.       return type_bitcoin160_sx
-.   elsif my.type = type_bitcoin256
-.       return type_bitcoin256_sx
+.   elsif my.type = type_btc160
+.       return type_btc160_sx
+.   elsif my.type = type_btc256
+.       return type_btc256_sx
 .   elsif my.type = type_byte
 .       return type_byte_sx
 .   elsif my.type = type_bytes
@@ -164,8 +164,8 @@
 .type_bool = "bool"
 .type_address = "address"
 .type_base58 = "base58"
-.type_bitcoin160 = "bitcoin160"
-.type_bitcoin256 = "bitcoin256"
+.type_btc160 = "btc160"
+.type_btc256 = "btc256"
 .type_byte = "byte"
 .type_bytes = "bytes"
 .type_ec_private = "ec_private"
@@ -180,8 +180,8 @@
 .
 .type_address_sx = "serializer::address"
 .type_base58_sx = "serializer::base58"
-.type_bitcoin160_sx = "serializer::bitcoin160"
-.type_bitcoin256_sx = "serializer::bitcoin256"
+.type_btc160_sx = "serializer::btc160"
+.type_btc256_sx = "serializer::btc256"
 .type_byte_sx = "serializer::byte"
 .type_bytes_sx = "serializer::bytes"
 .type_ec_private_sx = "serializer::ec_private"
@@ -569,8 +569,8 @@ private:
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -928,8 +928,8 @@ sx_utility_includedir = $\(includedir)/sx/serializer
 sx_utility_include_HEADERS += \\
     address.hpp \\
     base58.hpp \\
-    bitcoin160.hpp \\
-    bitcoin256.hpp \\
+    btc160.hpp \\
+    btc256.hpp \\
     byte.hpp \\
     bytes.hpp \\
     ec_private.hpp \\
@@ -973,19 +973,6 @@ libsx_la_SOURCES = \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
-    serializer/address.cpp \\
-    serializer/base58.cpp \\
-    serializer/bitcoin160.cpp \\
-    serializer/bitcoin256.cpp \\
-    serializer/byte.cpp \\
-    serializer/bytes.cpp \\
-    serializer/ec_private.cpp \\
-    serializer/ec_public.cpp \\
-    serializer/hd_key.cpp \\
-    serializer/hd_private.cpp \\
-    serializer/hd_public.cpp \\
-    serializer/point.cpp \\
-    serializer/wif.cpp \\
     utility/config.cpp \\
     utility/environment.cpp \\
     utility/parameter.cpp \\
@@ -1121,8 +1108,8 @@ endif
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin160.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin256.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bytes.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp" />
@@ -1161,9 +1148,6 @@ endif
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sendtx-node.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\sendtx-obelisk.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sendtx-p2p.cpp">
@@ -1349,10 +1333,10 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin160.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\bitcoin256.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc256.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp">
@@ -1506,9 +1490,6 @@ endif
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sendtx-p2p.cpp">
-      <Filter>src\\command\\todo\\obelisk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\sendtx-obelisk.cpp">
       <Filter>src\\command\\todo\\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\sendtx-node.cpp">

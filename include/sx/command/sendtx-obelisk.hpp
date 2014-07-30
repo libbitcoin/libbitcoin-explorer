@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_BE_FETCH_TRANSACTION_HPP
-#define SX_BE_FETCH_TRANSACTION_HPP
+#ifndef SX_SENDTX_OBELISK_HPP
+#define SX_SENDTX_OBELISK_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -51,15 +51,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx sendtx-obelisk command.
  */
-#define SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
- * Class to implement the sx be-fetch-transaction command.
- */
-class be_fetch_transaction 
+class sendtx_obelisk 
     : public command
 {
 public:
@@ -67,14 +61,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "be-fetch-transaction"; }
+    static const char* symbol() { return "sendtx-obelisk"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     const char* name()
     {
-        return be_fetch_transaction::symbol();
+        return sendtx_obelisk::symbol();
     }
 
     /**
@@ -94,7 +88,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", 1);
+            .add("FILE", 1);
     }
     
     /**
@@ -119,12 +113,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get a Bitcoin transaction from blockexplorer.com."
+                "Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server."
             )
             (
-                "HASH",
-                value<serializer::btc256>(&argument_.hash),
-                "The hex encoded transaction hash."
+                "FILE",
+                value<boost::filesystem::path>(&argument_.file),
+                "The transaction file path. If not specified the transaction is read from STDIN."
             );
 
         return options;
@@ -138,9 +132,9 @@ public:
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
-        auto hash = variables.find("HASH");
-        if (hash == variables.end())
-            parse(argument_.hash, read_stream(input));
+        auto file = variables.find("FILE");
+        if (file == variables.end())
+            parse(argument_.file, read_stream(input));
     }
 
     /**
@@ -157,19 +151,19 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HASH argument.
+     * Get the value of the FILE argument.
      */
-    virtual serializer::btc256 get_hash_argument()
+    virtual boost::filesystem::path get_file_argument()
     {
-        return argument_.hash;
+        return argument_.file;
     }
     
     /**
-     * Set the value of the HASH argument.
+     * Set the value of the FILE argument.
      */
-    virtual void set_hash_argument(serializer::btc256 value)
+    virtual void set_file_argument(boost::filesystem::path value)
     {
-        argument_.hash = value;
+        argument_.file = value;
     }
 
     /**
@@ -198,9 +192,9 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : file()
             {}
-        serializer::btc256 hash;
+        boost::filesystem::path file;
     } argument_;
     
     /**

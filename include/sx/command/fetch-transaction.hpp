@@ -30,8 +30,8 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -117,7 +117,7 @@ public:
             )
             (
                 "HASH",
-                value<serializer::bitcoin256>(&argument_.hash),
+                value<serializer::btc256>(&argument_.hash),
                 "The hex encoded transaction hash."
             );
 
@@ -153,7 +153,7 @@ public:
     /**
      * Get the value of the HASH argument.
      */
-    virtual serializer::bitcoin256 get_hash_argument()
+    virtual serializer::btc256 get_hash_argument()
     {
         return argument_.hash;
     }
@@ -161,7 +161,7 @@ public:
     /**
      * Set the value of the HASH argument.
      */
-    virtual void set_hash_argument(serializer::bitcoin256 value)
+    virtual void set_hash_argument(serializer::btc256 value)
     {
         argument_.hash = value;
     }
@@ -194,7 +194,7 @@ private:
         argument()
           : hash()
             {}
-        serializer::bitcoin256 hash;
+        serializer::btc256 hash;
     } argument_;
     
     /**

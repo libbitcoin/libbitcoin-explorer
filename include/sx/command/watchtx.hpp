@@ -30,8 +30,8 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -123,7 +123,7 @@ public:
             )
             (
                 "HASH",
-                value<std::vector<serializer::bitcoin256>>(&argument_.hashs),
+                value<std::vector<serializer::btc256>>(&argument_.hashs),
                 "The set of hex encoded transaction hashes."
             );
 
@@ -156,7 +156,7 @@ public:
     /**
      * Get the value of the HASH arguments.
      */
-    virtual std::vector<serializer::bitcoin256> get_hashs_argument()
+    virtual std::vector<serializer::btc256> get_hashs_argument()
     {
         return argument_.hashs;
     }
@@ -164,7 +164,7 @@ public:
     /**
      * Set the value of the HASH arguments.
      */
-    virtual void set_hashs_argument(std::vector<serializer::bitcoin256> value)
+    virtual void set_hashs_argument(std::vector<serializer::btc256> value)
     {
         argument_.hashs = value;
     }
@@ -197,7 +197,7 @@ private:
         argument()
           : hashs()
             {}
-        std::vector<serializer::bitcoin256> hashs;
+        std::vector<serializer::btc256> hashs;
     } argument_;
     
     /**

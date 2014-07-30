@@ -25,7 +25,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/wif.hpp>
 
@@ -115,7 +115,7 @@ public:
         std::string text;
         input >> text;
         
-        bc::ec_secret secret = bitcoin256(text);
+        bc::ec_secret secret = btc256(text);
         if (!bc::verify_private_key(secret))
             throw po::invalid_option_value(text);
 
@@ -133,7 +133,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const ec_private& argument)
     {
-        output << bitcoin256(argument.value_);
+        output << btc256(argument.value_);
         return output;
     }
 

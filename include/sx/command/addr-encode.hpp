@@ -30,8 +30,8 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -122,7 +122,7 @@ public:
             )
             (
                 "RIPEMD160",
-                value<serializer::bitcoin160>(&argument_.ripemd160),
+                value<serializer::btc160>(&argument_.ripemd160),
                 "The hex encoded hash to convert."
             );
 
@@ -158,7 +158,7 @@ public:
     /**
      * Get the value of the RIPEMD160 argument.
      */
-    virtual serializer::bitcoin160 get_ripemd160_argument()
+    virtual serializer::btc160 get_ripemd160_argument()
     {
         return argument_.ripemd160;
     }
@@ -166,7 +166,7 @@ public:
     /**
      * Set the value of the RIPEMD160 argument.
      */
-    virtual void set_ripemd160_argument(serializer::bitcoin160 value)
+    virtual void set_ripemd160_argument(serializer::btc160 value)
     {
         argument_.ripemd160 = value;
     }
@@ -215,7 +215,7 @@ private:
         argument()
           : ripemd160()
             {}
-        serializer::bitcoin160 ripemd160;
+        serializer::btc160 ripemd160;
     } argument_;
     
     /**

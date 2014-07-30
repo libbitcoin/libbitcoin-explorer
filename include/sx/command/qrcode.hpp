@@ -30,8 +30,8 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/bitcoin160.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc160.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -122,9 +122,9 @@ public:
                 "Generate a QR code image file for a Bitcoin address."
             )
             (
-                "FILE,F",
+                "file,f",
                 value<boost::filesystem::path>(&option_.file),
-                "The image file path and file name. If not specified the image is written to STDOUT."
+                "The image file path. If not specified the image is written to STDOUT."
             )
             (
                 "ADDRESS",
@@ -194,7 +194,7 @@ public:
     }
 
     /**
-     * Get the value of the FILE option.
+     * Get the value of the file option.
      */
     virtual boost::filesystem::path get_file_option()
     {
@@ -202,7 +202,7 @@ public:
     }
     
     /**
-     * Set the value of the FILE option.
+     * Set the value of the file option.
      */
     virtual void set_file_option(boost::filesystem::path value)
     {

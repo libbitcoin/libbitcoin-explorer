@@ -24,7 +24,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/bitcoin256.hpp>
+#include <sx/serializer/btc256.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -115,7 +115,7 @@ public:
             throw po::invalid_option_value(text);
 
         parse(argument.value_.index, tokens[1]);
-        bc::hash_digest hash = bitcoin256(tokens[0]);
+        bc::hash_digest hash = btc256(tokens[0]);
 
         std::copy(hash.begin(), hash.end(), argument.value_.hash.begin());
         return input;
@@ -132,7 +132,7 @@ public:
         const point& argument)
     {
         // See bc::concat_point()
-        output << bitcoin256(argument.value_.hash) <<
+        output << btc256(argument.value_.hash) <<
             SX_SERIALIZER_POINT_DELIMITER << argument.value_.index;
         return output;
     }

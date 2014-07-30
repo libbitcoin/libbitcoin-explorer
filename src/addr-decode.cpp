@@ -21,21 +21,22 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/bitcoin160.hpp>
+#include <sx/serializer/btc160.hpp>
 #include <sx/serializer/bytes.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result addr_decode::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result addr_decode::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
     // Bound parameters.
     const auto address = get_address_argument();
     
-    output << sx::serializer::bitcoin160(address) << std::endl;
+    output << btc160(address) << std::endl;
     return console_result::okay;
 }

@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SHA256_HPP
-#define SHA256_HPP
+#ifndef BTC256_HPP
+#define BTC256_HPP
 
 #include <iostream>
 #include <boost/program_options.hpp>
@@ -34,14 +34,14 @@ namespace serializer {
 /**
  * Serialization helper to convert between hex string and hash_digest.
  */
-class bitcoin256
+class btc256
 {
 public:
 
     /**
      * Constructor.
      */
-    bitcoin256()
+    btc256()
         : value_() {}
 
     /**
@@ -49,7 +49,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    bitcoin256(const std::string& hex)
+    btc256(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -59,7 +59,7 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    bitcoin256(const bc::hash_digest& value)
+    btc256(const bc::hash_digest& value)
     {
         std::copy(value.begin(), value.end(), value_.begin());
     }
@@ -69,8 +69,8 @@ public:
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    bitcoin256(const bitcoin256& other)
-        : bitcoin256(other.value_) {}
+    btc256(const btc256& other)
+        : btc256(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -99,7 +99,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, bitcoin256& argument)
+    friend std::istream& operator>>(std::istream& input, btc256& argument)
     {
         std::string hex;
         input >> hex;
@@ -120,7 +120,7 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const bitcoin256& argument)
+        const btc256& argument)
     {
         output << bytes(argument.value_);
         return output;

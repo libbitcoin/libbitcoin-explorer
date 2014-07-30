@@ -31,14 +31,14 @@
   
   <command symbol="addr-embed" formerly="embed-addr" category="WALLET" stub="true">
     <option name="help" description="Generate a Bitcoin address with an embedded record of binary data." />
-    <argument name="FILE" stream="true" description="The binary data of which to embed a record."/>
+    <argument name="FILE" stream="true" type="path" description="The binary data file path.  If not specified the binary data is read from STDIN."/>
     <define name="SX_ADDR_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="addr-encode" formerly="encode-addr" category="WALLET">
     <option name="help" description="Convert a RIPEMD160 value to a Bitcoin address." />
     <option name="version" type="byte" description="The desired Bitcoin address version." />
-    <argument name="RIPEMD160" stream="true" type="bitcoin160" description="The hex encoded hash to convert."/>
+    <argument name="RIPEMD160" stream="true" type="btc160" description="The hex encoded hash to convert."/>
   </command>
 
   <command symbol="addr-validate" formerly="validaddr" category="WALLET">
@@ -89,13 +89,13 @@
   
   <command symbol="bci-send-transaction" formerly="sendtx-bci" category="BONLINE" stub="true">
     <option name="help" description="Send a Bitcoin transaction to blockchain.info." />
-    <option name="FILE" description="The transaction file path and file name. If not specified the transaction is read from STDIN."/>
+    <argument name="FILE" stream="true" type="path" description="The transaction file path. If not specified the transaction is read from STDIN."/>
     <define name="SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="be-fetch-transaction" formerly="blke-fetch-transaction" category="ONLINE" stub="true">
     <option name="help" description="Get a Bitcoin transaction from blockexplorer.com." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The hex encoded transaction hash." />
+    <argument name="HASH" stream="true" type="btc256" description="The hex encoded transaction hash." />
     <define name="SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
@@ -118,7 +118,7 @@
   <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
   <command symbol="ec-lock" formerly="brainwallet" category="WALLET" stub="true">
     <option name="help" description="Make a passphrase-protected EC private key (BIP38) from an EC private key." />
-    <argument name="SECRET" type="bytes" description="The EC private key." />
+    <argument name="SECRET" type="ec_private" description="The EC private key." />
     <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
     <define name="SX_EC_LOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
@@ -182,7 +182,7 @@
   
   <command symbol="fetch-header" category="ONLINE" obelisk="true">
     <option name="help" description="Get the raw block header from the specified hash or height. Requires a server connection." />
-    <option name="hash" shortcut="s" type="bitcoin256" description="The hex encoded block hash."/>
+    <option name="hash" shortcut="s" type="btc256" description="The hex encoded block hash."/>
     <option name="height" shortcut="t" type="size_t" description="The block height."/>
   </command>
 
@@ -207,12 +207,12 @@
 
   <command symbol="fetch-transaction" category="ONLINE" obelisk="true">
     <option name="help" description="Get a transaction. Requires a server connection." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The hex encoded transaction hash." />
+    <argument name="HASH" stream="true" type="btc256" description="The hex encoded transaction hash." />
   </command>
 
   <command symbol="fetch-transaction-index" category="ONLINE" obelisk="true">
     <option name="help" description="Get the block height and index of a transaction. Requires a server connection." />
-    <argument name="HASH" stream="true" type="bitcoin256" description="The hex encoded transaction hash." />
+    <argument name="HASH" stream="true" type="btc256" description="The hex encoded transaction hash." />
     <define name="SX_FETCH_TRANSACTION_INDEX_OUTPUT" value="Height: %1% Index: %2%\n" />
   </command>
 
@@ -330,7 +330,7 @@
   <!-- TODO: parameterize for stealth address. -->
   <command symbol="qrcode" category="WALLET" stub="true">
     <option name="help" description="Generate a QR code image file for a Bitcoin address." />
-    <option name="FILE" type="path" description="The image file path and file name. If not specified the image is written to STDOUT."/>
+    <option name="file" type="path" description="The image file path. If not specified the image is written to STDOUT."/>
     <argument name="ADDRESS" stream="true" type="address" description="The address."/>
     <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
@@ -348,6 +348,11 @@
   
   <command symbol="seed" category="WALLET">
     <option name="help" description="Generate a pseudorandom 128 bit seed." />
+  </command>
+  
+  <command symbol="sendtx-obelisk" category="ONLINE" obelisk="true">
+    <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server." />
+    <argument name="FILE" stream="true" type="path" description="The transaction file path. If not specified the transaction is read from STDIN."/>
   </command>
 
   <command symbol="sha160" category="HASH">
@@ -392,7 +397,7 @@
 
   <command symbol="watchtx" category="ONLINE" stub="true" obelisk="true">
     <option name="help" description="Watch the network for one or more transactions by hash." />
-    <argument name="HASH" limit="-1" type="bitcoin256" description="The set of hex encoded transaction hashes." />
+    <argument name="HASH" limit="-1" type="btc256" description="The set of hex encoded transaction hashes." />
     <define name="SX_WATCHTX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   

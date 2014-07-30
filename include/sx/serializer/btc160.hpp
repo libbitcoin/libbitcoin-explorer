@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef RIPEMD160_HPP
-#define RIPEMD160_HPP
+#ifndef BTC160_HPP
+#define BTC160_HPP
 
 #include <iostream>
 #include <boost/program_options.hpp>
@@ -34,14 +34,14 @@ namespace serializer {
 /**
  * Serialization helper to convert between hex string and short_hash.
  */
-class bitcoin160
+class btc160
 {
 public:
 
     /**
      * Constructor.
      */
-    bitcoin160()
+    btc160()
         : value_() {}
 
     /**
@@ -49,7 +49,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    bitcoin160(const std::string& hex)
+    btc160(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -59,7 +59,7 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    bitcoin160(const bc::short_hash& value)
+    btc160(const bc::short_hash& value)
     {
         std::copy(value.begin(), value.end(), value_.begin());
     }
@@ -69,16 +69,16 @@ public:
      * 
      * @param[in]  address  The value to initialize with.
      */
-    bitcoin160(const bc::payment_address& address)
-        : bitcoin160(address.hash()) {}
+    btc160(const bc::payment_address& address)
+        : btc160(address.hash()) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    bitcoin160(const bitcoin160& other)
-        : bitcoin160(other.value_) {}
+    btc160(const btc160& other)
+        : btc160(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -107,7 +107,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, bitcoin160& argument)
+    friend std::istream& operator>>(std::istream& input, btc160& argument)
     {
         std::string hex;
         input >> hex;
@@ -128,7 +128,7 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const bitcoin160& argument)
+        const btc160& argument)
     {
         output << bytes(argument.value_);
         return output;

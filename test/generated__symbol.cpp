@@ -302,6 +302,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)
     BOOST_REQUIRE(seed::symbol() == std::string("seed"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__sendtx_obelisk__returns_expected_value)
+{
+    BOOST_REQUIRE(sendtx_obelisk::symbol() == std::string("sendtx-obelisk"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__sha160__returns_expected_value)
 {
     BOOST_REQUIRE(sha160::symbol() == std::string("sha160"));
