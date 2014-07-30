@@ -29,8 +29,13 @@ console_result qrcode::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const auto filename = get_file_option();
+    const auto path = get_file_option();
     const auto satoshi = get_address_argument();
+
+    // TODO
+    // Create qrcode as binary data.
+    // If path is empty or stdio sentinel set write data to output,
+    // otherwise write data to specified path.
 
     cerr << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
