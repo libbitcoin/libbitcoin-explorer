@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -35,6 +35,6 @@ console_result base58_decode::invoke(std::istream& input,
     // Bound parameters.
     const auto base58 = get_base58_argument();
 
-    output << bytes(base58) << std::endl;
+    output << hex(base58) << std::endl;
     return console_result::okay;
 }

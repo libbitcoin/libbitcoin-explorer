@@ -33,12 +33,13 @@
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
-#include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>

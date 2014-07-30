@@ -24,9 +24,9 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/hex.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -117,13 +117,13 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, ec_public& argument)
     {
-        std::string hex;
-        input >> hex;
+        std::string hexadecimal;
+        input >> hexadecimal;
 
-        bc::ec_point point = bytes(hex);
+        bc::ec_point point = hex(hexadecimal);
         if (!bc::verify_public_key_fast(point)
             /*|| !bc::verify_public_key(point)*/)
-            throw po::invalid_option_value(hex);
+            throw po::invalid_option_value(hexadecimal);
         
         argument.value_.assign(point.begin(), point.end());
         return input;
@@ -139,7 +139,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const ec_public& argument)
     {
-        output << bytes(argument.value_);
+        output << hex(argument.value_);
         return output;
     }
 

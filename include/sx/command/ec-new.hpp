@@ -33,12 +33,13 @@
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
-#include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
@@ -123,7 +124,7 @@ public:
             )
             (
                 "SEED",
-                value<serializer::bytes>(&argument_.seed),
+                value<serializer::hex>(&argument_.seed),
                 "The hex encoded seed for the new key. Must be at least 128 bits in length."
             );
 
@@ -159,7 +160,7 @@ public:
     /**
      * Get the value of the SEED argument.
      */
-    virtual serializer::bytes get_seed_argument()
+    virtual serializer::hex get_seed_argument()
     {
         return argument_.seed;
     }
@@ -167,7 +168,7 @@ public:
     /**
      * Set the value of the SEED argument.
      */
-    virtual void set_seed_argument(serializer::bytes value)
+    virtual void set_seed_argument(serializer::hex value)
     {
         argument_.seed = value;
     }
@@ -200,7 +201,7 @@ private:
         argument()
           : seed()
             {}
-        serializer::bytes seed;
+        serializer::hex seed;
     } argument_;
     
     /**

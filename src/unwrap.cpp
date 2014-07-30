@@ -22,7 +22,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -30,11 +30,8 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// TODO: This is localizable.
-static const char* format = "%1% %2% %3%";
-
-bool split_checksum(const data_chunk& chunk, byte& version, bytes& payload,
-    bytes& checksum)
+bool split_checksum(const data_chunk& chunk, byte& version, hex& payload,
+    hex& checksum)
 {
     const size_t version_length = 1;
     const size_t checksum_length = 4;
@@ -60,17 +57,17 @@ console_result unwrap::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const data_chunk hex = get_hex_argument();
+    const data_chunk hexadecimal = get_hex_argument();
 
     byte version;
-    bytes payload, checksum;
-    if (!split_checksum(hex, version, payload, checksum))
+    hex payload, checksum;
+    if (!split_checksum(hexadecimal, version, payload, checksum))
     {
         cerr << SX_UNWRAP_INVALID_CHECKSUM << std::endl;
         return console_result::failure;
     }
 
-    output << boost::format(format) % version % payload % checksum 
+    output << boost::format(SX_UNWRAP_OUTPUT) % version % payload % checksum
         << std::endl;
     return console_result::okay;
 }

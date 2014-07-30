@@ -25,7 +25,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

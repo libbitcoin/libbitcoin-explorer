@@ -152,42 +152,6 @@ int find_pair_position(const std::vector<Pair>& list, const Key& key)
 typedef std::vector<bc::payment_address> payaddr_list;
 
 /**
- * Load a satoshi item from the specified file.
- *
- * @param      <Item>    The type of the item to load.
- * @param[out] item      The loaded item.
- * @param[in]  filename  The path and file name for the transaction file.
- * @param[in]  stream    The stream to load from, if the file is "-".
- * @return               True if a transaction was loaded.
- */
-template <typename Item>
-bool load_satoshi_item(Item& item, const std::string& filename,
-    std::istream& stream)
-{
-    std::ostringstream contents;
-    if (filename == SX_STDIN_PATH_SENTINEL)
-        contents << sx::read_stream(stream);
-    else
-    {
-        std::ifstream infile(filename, std::ifstream::binary);
-        if (!infile)
-            return false;
-
-        contents << infile.rdbuf();
-    }
-    auto raw_tx = bc::decode_hex(contents.str());
-    try
-    {
-        bc::satoshi_load(raw_tx.begin(), raw_tx.end(), item);
-    }
-    catch (bc::end_of_stream)
-    {
-        return false;
-    }
-    return true;
-}
-
-/**
  * Safely convert a text string to the specified type, whitespace ignored.
  *
  * @param      <Value>  The converted type.
@@ -205,6 +169,28 @@ bool parse(Value& value, const std::string& text)
         value = boost::lexical_cast<Value>(serialized);
     }
     catch (const boost::bad_lexical_cast&)
+    {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Parse a satoshi item from the specified binary data.
+ *
+ * @param      <Item>  The type of the item to parse.
+ * @param[out] item    The parsed item.
+ * @param[in]  data    The binary data to parse.
+ * @return             True if a transaction was parsed.
+ */
+template <typename Item>
+bool parse_satoshi_item(Item& item, const bc::data_chunk& data)
+{
+    try
+    {
+        bc::satoshi_load(data.begin(), data.end(), item);
+    }
+    catch (bc::end_of_stream)
     {
         return false;
     }

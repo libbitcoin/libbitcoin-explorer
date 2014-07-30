@@ -281,13 +281,13 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp">
-      <Filter>include\serializer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\ec_private.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\ec_public.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\file.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_key.hpp">
@@ -297,6 +297,9 @@
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_public.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hex.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp">

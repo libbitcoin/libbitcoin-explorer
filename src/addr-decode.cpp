@@ -22,7 +22,6 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/serializer/btc160.hpp>
-#include <sx/serializer/bytes.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;

@@ -48,17 +48,18 @@ console_result sendtx_obelisk::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto file = get_file_argument();
+    const data_chunk& data = get_file_argument();
+
+    // Convert binary file data to hex string and then decode to binary tx.
+    std::string hexadecimal(data.begin(), data.end());
+    const auto raw_tx = bc::decode_hex(hexadecimal);
+
+    transaction_type tx;
+    if (!parse_satoshi_item<transaction_type>(tx, raw_tx))
+        return console_result::failure;
 
     node_stopped = false;
     result = console_result::okay;
-
-    // TODO: move path/stdio into serializer.
-    auto filename = file.generic_string();
-
-    transaction_type tx;
-    if (!load_satoshi_item<transaction_type>(tx, filename, input))
-        return console_result::failure;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();

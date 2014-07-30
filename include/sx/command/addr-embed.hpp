@@ -33,12 +33,13 @@
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
-#include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
@@ -123,7 +124,7 @@ public:
             )
             (
                 "FILE",
-                value<boost::filesystem::path>(&argument_.file),
+                value<serializer::file>(&argument_.file),
                 "The binary data file path.  If not specified the binary data is read from STDIN."
             );
 
@@ -159,7 +160,7 @@ public:
     /**
      * Get the value of the FILE argument.
      */
-    virtual boost::filesystem::path get_file_argument()
+    virtual serializer::file get_file_argument()
     {
         return argument_.file;
     }
@@ -167,7 +168,7 @@ public:
     /**
      * Set the value of the FILE argument.
      */
-    virtual void set_file_argument(boost::filesystem::path value)
+    virtual void set_file_argument(serializer::file value)
     {
         argument_.file = value;
     }
@@ -200,7 +201,7 @@ private:
         argument()
           : file()
             {}
-        boost::filesystem::path file;
+        serializer::file file;
     } argument_;
     
     /**

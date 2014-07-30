@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -34,10 +34,10 @@ console_result sha160::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const data_chunk hex = get_hex_argument();
+    const data_chunk hexadecimal = get_hex_argument();
 
-    const auto hash = sha1_hash(hex);
+    const auto hash = sha1_hash(hexadecimal);
 
-    output << bytes(hash) << std::endl;
+    output << hex(hash) << std::endl;
     return console_result::okay;
 }

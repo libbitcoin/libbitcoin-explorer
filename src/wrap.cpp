@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -34,14 +34,14 @@ console_result wrap::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const data_chunk hex = get_hex_argument();
+    const data_chunk hexadecimal = get_hex_argument();
     const auto version = get_version_option();
     
     data_chunk data;
     data.push_back(version);
-    extend_data(data, hex);
+    extend_data(data, hexadecimal);
     append_checksum(data);
 
-    output << bytes(data) << std::endl;
+    output << hex(data) << std::endl;
     return console_result::okay;
 }

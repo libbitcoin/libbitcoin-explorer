@@ -20,7 +20,7 @@
 #include <sx/command/seed.hpp>
 
 #include <iostream>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace libwallet;
@@ -39,6 +39,6 @@ console_result seed::invoke(std::istream& input, std::ostream& output,
     data_chunk seed(fill_seed_size);
     random_fill(seed);
 
-    output << bytes(seed) << std::endl;
+    output << hex(seed) << std::endl;
     return console_result::okay;
 }

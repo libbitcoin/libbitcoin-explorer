@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BYTES_HPP
-#define BYTES_HPP
+#ifndef HEX_HPP
+#define HEX_HPP
 
 #include <array>
 #include <iostream>
@@ -36,14 +36,14 @@ namespace serializer {
 /**
  * Serialization helper to convert between hex string and data_chunk.
  */
-class bytes
+class hex
 {
 public:
 
     /**
      * Constructor.
      */
-    bytes() 
+    hex() 
         : value_() {}
 
     /**
@@ -51,7 +51,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    bytes(const std::string& hex)
+    hex(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -61,7 +61,7 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    bytes(const bc::data_chunk& value)
+    hex(const bc::data_chunk& value)
         : value_(value.begin(), value.end()) {}
 
     /**
@@ -70,7 +70,7 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     template<size_t Size>
-    bytes(const bc::byte_array<Size>& value)
+    hex(const bc::byte_array<Size>& value)
         : value_(value.begin(), value.end()) {}
 
     /**
@@ -78,8 +78,8 @@ public:
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    bytes(const bytes& other)
-        : bytes(other.value_) {}
+    hex(const hex& other)
+        : hex(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -108,7 +108,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, bytes& argument)
+    friend std::istream& operator>>(std::istream& input, hex& argument)
     {
         std::string hex;
         input >> hex;
@@ -128,8 +128,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const bytes& argument)
+    friend std::ostream& operator<<(std::ostream& output, const hex& argument)
     {
         output << bc::encode_hex(argument.value_);
         return output;

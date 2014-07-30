@@ -23,7 +23,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -50,7 +50,7 @@ static void hash_header_fetched(const std::error_code& error,
     {
         data_chunk raw_block_header(satoshi_raw_size(block_header));
         satoshi_save(block_header, raw_block_header.begin());
-        std::cout << bytes(raw_block_header) << std::endl;
+        std::cout << hex(raw_block_header) << std::endl;
     }
 
     node_stopped = true;
@@ -70,7 +70,7 @@ static void height_header_fetched(const std::error_code& error,
     {
         data_chunk raw_block_header(satoshi_raw_size(block_header));
         satoshi_save(block_header, raw_block_header.begin());
-        std::cout << bytes(raw_block_header) << std::endl;
+        std::cout << hex(raw_block_header) << std::endl;
     }
 
     node_stopped = true;

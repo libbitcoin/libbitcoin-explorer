@@ -25,7 +25,7 @@
 #include <obelisk/obelisk.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -53,7 +53,7 @@ static void transaction_fetched(const std::error_code& error,
     {
         data_chunk raw_tx(satoshi_raw_size(tx));
         satoshi_save(tx, raw_tx.begin());
-        std::cout << bytes(raw_tx) << std::endl;
+        std::cout << hex(raw_tx) << std::endl;
     }
 
     node_stopped = true;

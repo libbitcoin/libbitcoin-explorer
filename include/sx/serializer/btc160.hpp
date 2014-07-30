@@ -24,7 +24,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/bytes.hpp>
+#include <sx/serializer/hex.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -130,7 +130,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const btc160& argument)
     {
-        output << bytes(argument.value_);
+        output << hex(argument.value_);
         return output;
     }
 

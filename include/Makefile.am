@@ -26,12 +26,13 @@ sx_utility_include_HEADERS += \
     btc160.hpp \
     btc256.hpp \
     byte.hpp \
-    bytes.hpp \
     ec_private.hpp \
     ec_public.hpp \
+    file.hpp \
     hd_key.hpp \
     hd_private.hpp \
     hd_public.hpp \
+    hex.hpp \
     point.hpp \
     wif.hpp
 

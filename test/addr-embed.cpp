@@ -33,11 +33,11 @@ BOOST_AUTO_TEST_SUITE(embed_addr__invoke)
 // Now send some Bitcoin to that address and it will be embedded
 // in the blockchain as a record of the data passed in.
 
-BOOST_AUTO_TEST_CASE(addr_embed__invoke__bogus_data__failure_error)
+BOOST_AUTO_TEST_CASE(addr_embed__invoke__zero_data__failure_error)
 {
-    // $ sx addr-embed bogus
+    // $ cat zero.bin | sx addr-embed
     SX_DECLARE_COMMAND(addr_embed);
-    command.set_file_argument("bogus");
+    command.set_file_argument({ 0x00 });
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
     SX_REQUIRE_ERROR(SX_ADDR_EMBED_NOT_IMPLEMENTED "\n");
 }

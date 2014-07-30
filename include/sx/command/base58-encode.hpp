@@ -33,12 +33,13 @@
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
-#include <sx/serializer/bytes.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/serializer/point.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
@@ -117,7 +118,7 @@ public:
             )
             (
                 "HEX",
-                value<serializer::bytes>(&argument_.hex),
+                value<serializer::hex>(&argument_.hex),
                 "The hex encoded data to Base58 encode."
             );
 
@@ -153,7 +154,7 @@ public:
     /**
      * Get the value of the HEX argument.
      */
-    virtual serializer::bytes get_hex_argument()
+    virtual serializer::hex get_hex_argument()
     {
         return argument_.hex;
     }
@@ -161,7 +162,7 @@ public:
     /**
      * Set the value of the HEX argument.
      */
-    virtual void set_hex_argument(serializer::bytes value)
+    virtual void set_hex_argument(serializer::hex value)
     {
         argument_.hex = value;
     }
@@ -194,7 +195,7 @@ private:
         argument()
           : hex()
             {}
-        serializer::bytes hex;
+        serializer::hex hex;
     } argument_;
     
     /**

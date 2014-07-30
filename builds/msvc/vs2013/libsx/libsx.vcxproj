@@ -89,12 +89,13 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc256.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\bytes.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\ec_private.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\ec_public.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\file.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_key.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_private.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_public.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hex.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
