@@ -56,7 +56,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_SENDTX_OBELISK_OUTPUT \
-    "Transaction sent at %1%."
+    "Sent transaction at %1%."
 
 /**
  * Class to implement the sx sendtx-obelisk command.
@@ -74,7 +74,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    const char* name()
+    virtual const char* name()
     {
         return sendtx_obelisk::symbol();
     }
@@ -82,7 +82,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    const char* category()
+    virtual const char* category()
     {
         return "ONLINE";
     }

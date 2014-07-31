@@ -74,7 +74,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    const char* name()
+    virtual const char* name()
     {
         return genaddr::symbol();
     }
@@ -82,7 +82,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    const char* category()
+    virtual const char* category()
     {
         return "ELECTRUM";
     }

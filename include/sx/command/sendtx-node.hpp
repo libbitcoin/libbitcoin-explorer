@@ -56,7 +56,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_SENDTX_NODE_OUTPUT \
-    "Transaction sent at %1%."
+    "Sent transaction %1% at %2%."
 
 /**
  * Class to implement the sx sendtx-node command.
@@ -74,7 +74,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    const char* name()
+    virtual const char* name()
     {
         return sendtx_node::symbol();
     }
@@ -82,7 +82,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    const char* category()
+    virtual const char* category()
     {
         return "ONLINE";
     }
