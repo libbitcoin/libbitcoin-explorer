@@ -19,67 +19,35 @@
  */
 #include <sx/obelisk_client.hpp>
 
+#include <functional>
 #include <stdint.h>
-#include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/async_client.hpp>
 #include <sx/command.hpp>
-#include <sx/utility/utility.hpp>
 
 namespace sx {
 
 obelisk_client::obelisk_client(sx::command& command, const size_t threads)
-    : threadpool_(threads), fullnode_(threadpool_,
+    : async_client(command, threads), fullnode_(get_threadpool(),
     command.get_obelisk_service_setting(),
     command.get_obelisk_client_certificate_setting().generic_string(),
     command.get_obelisk_server_public_key_setting()) {}
-
-obelisk_client::~obelisk_client()
-{
-    stop();
-}
 
 obelisk::fullnode_interface& obelisk_client::get_fullnode()
 {
     return fullnode_;
 }
 
-bc::threadpool& obelisk_client::get_threadpool()
-{
-    return threadpool_;
-}
-
-// Not yet unit testable (nonvirtual pool and fullnode).
-void obelisk_client::detached_poll(bool& done, uint32_t period_ms)
-{
-    auto work = [this, &done, period_ms] { this->work(done, period_ms); };
-    std::thread worker_thread(work);
-    worker_thread.detach();
-}
-
-// Not yet unit testable (nonvirtual pool and fullnode).
-void obelisk_client::poll(bool& done, uint32_t period_ms)
-{
-    work(done, period_ms);
-    stop();
-}
-
-// Test wrapper, not testable.
-void obelisk_client::sleep(uint32_t period_ms)
-{
-    sleep_ms(period_ms);
-}
-
-// Not yet unit testable (nonvirtual pool).
-void obelisk_client::stop()
-{
-    auto& pool = get_threadpool();
-    pool.stop();
-    pool.join();
-}
-
 // Not yet unit testable (nonvirtual fullnode).
-void obelisk_client::work(bool& done, uint32_t period_ms)
+void obelisk_client::work(bool& done, uint32_t period_ms,
+    std::function<void()> action)
 {
+    if (action)
+    {
+        async_client::work(done, period_ms, action);
+        return;
+    }
+
     auto& fullnode = get_fullnode();
     while (!done)
     {

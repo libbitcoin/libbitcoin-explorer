@@ -332,6 +332,9 @@
     <ClInclude Include="..\..\..\..\include\sx\utility\utility.hpp">
       <Filter>include\utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\async_client.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -574,6 +577,9 @@
     <ClCompile Include="..\..\..\..\src\utility\utility.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\async_client.cpp">
+      <Filter>src</Filter>
+    </ClCompile>    
     <ClCompile Include="..\..\..\..\src\dispatch.cpp">
       <Filter>src</Filter>
     </ClCompile>

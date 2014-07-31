@@ -625,7 +625,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    const char* name()
+    virtual const char* name()
     {
         return $(symbol:c)::symbol();
     }
@@ -633,7 +633,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    const char* category()
+    virtual const char* category()
     {
         return "$(category:)";
     }
@@ -917,6 +917,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 sx_includedir = $\(includedir)/sx
 sx_include_HEADERS = \\
+    async_client.hpp \\
     command.hpp \\
     define.hpp \\
     dispatch.hpp \\
@@ -981,6 +982,7 @@ AM_CPPFLAGS = \\
     -I$\(srcdir)/../include
 
 libsx_la_SOURCES = \\
+    async_client.cpp \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
@@ -1109,6 +1111,7 @@ endif
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\async_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\define.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp" />
@@ -1145,6 +1148,7 @@ endif
 .endfor
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\\..\\..\\..\\src\\async_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
@@ -1400,6 +1404,9 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\utility.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\async_client.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -1451,6 +1458,9 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\utility.cpp">
       <Filter>src\\utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\async_client.cpp">
+      <Filter>src</Filter>
+    </ClCompile>    
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp">
       <Filter>src</Filter>
     </ClCompile>

@@ -68,6 +68,11 @@ enum console_result : int
  * The number of bits in a byte.
  */
 constexpr size_t byte_bits = 8;
+    
+/**
+ * The noop void function.
+ */
+static const std::function<void()> noop = [](){};
 
 /**
  * Avoid the ternary (just for fun). Must precede tempalte usage for gcc build.

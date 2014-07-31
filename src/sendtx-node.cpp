@@ -23,7 +23,7 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/obelisk_client.hpp>
+#include <sx/async_client.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -48,13 +48,13 @@ static void send_tx(const std::error_code& error, channel_ptr node,
     }
     else
     {
-        // TODO: create transaction serializer and use below.
         auto handle_send = [node, tx](const std::error_code& error)
         {
             if (error)
                 std::cerr << error << std::endl;
             else
             {
+                // TODO: create transaction serializer and use here.
                 // const auto hash = hash_transaction(tx);
                 std::string hash("TODO");
                 std::cout << boost::format(SX_SENDTX_NODE_OUTPUT) % hash % 
@@ -89,8 +89,8 @@ console_result sendtx_node::invoke(std::istream& input,
     node_stopped = false;
     result = console_result::okay;
 
-    // 4 threads, 2 second wait
-    obelisk_client client(*this, 4);
+    // Is 4 threads and a 2 sec wait necessary here?
+    async_client client(*this, 4);
     handshake shake(client.get_threadpool());
     network net(client.get_threadpool());
     connect(shake, net, host, port,

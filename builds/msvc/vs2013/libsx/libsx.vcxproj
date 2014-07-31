@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\async_client.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\define.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\dispatch.hpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\wrap.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\async_client.cpp" />
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />

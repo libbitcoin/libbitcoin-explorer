@@ -2,6 +2,7 @@
 
 sx_includedir = $(includedir)/sx
 sx_include_HEADERS = \
+    async_client.hpp \
     command.hpp \
     define.hpp \
     dispatch.hpp \

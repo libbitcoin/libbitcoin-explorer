@@ -124,6 +124,7 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
         }
     }
 
+    // Move to local function
     std::ofstream outfile("debug.log"), errfile("error.log");
     log_debug().set_output_function(
         std::bind(output_to_file, std::ref(outfile), ph::_1, ph::_2, ph::_3));
@@ -138,6 +139,7 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
         std::bind(output_cerr_and_file, std::ref(errfile), ph::_1, ph::_2,
             ph::_3));
 
+    // Use thread pool manager.
     threadpool pool(4);
 
     // Create dependencies for our protocol object.
@@ -169,6 +171,7 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
 
     const auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
+
     pool.stop();
     pool.join();
     return console_result::okay;

@@ -20,12 +20,11 @@
 #ifndef SX_OBELISK_CLIENT_HPP
 #define SX_OBELISK_CLIENT_HPP
 
+#include <functional>
 #include <stdint.h>
-#include <thread>
-#include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/async_client.hpp>
 #include <sx/command.hpp>
-#include <sx/utility/config.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -35,18 +34,9 @@ namespace sx {
  * Class to simplify obelisk client usage. 
  */
 class obelisk_client
+    : public async_client
 {
 public:
-
-    /**
-     * The default polling period.
-     */
-    static constexpr uint32_t default_poll_period_ms = 100;
-    
-    /**
-     * The default number of threads.
-     */
-    static constexpr size_t default_threadpool_size = 1;
 
     /**
      * Initialization constructor.
@@ -58,59 +48,21 @@ public:
         const size_t threads=default_threadpool_size);
 
     /**
-     * Destructor, calls stop.
-     */
-    ~obelisk_client();
-
-    /**
      * Get the value of the obelisk fullnode interface.
      */
     virtual obelisk::fullnode_interface& get_fullnode();
 
     /**
-     * Get the value of the threadpool.
-     */
-    virtual bc::threadpool& get_threadpool();
-
-    /**
-     * Poll obelisk for changes on other thread(s) until stopped.
-     *
-     * @param[in]  done       A flag that signals cessation of polling.
-     * @param[in]  period_ms  The polling period in md, defaults to 100.
-     */
-    virtual void detached_poll(bool& done,
-        uint32_t period_ms=default_poll_period_ms);
-
-    /**
-     * Poll obelisk for changes until stopped.
-     *
-     * @param[in]  done       A flag that signals cessation of polling.
-     * @param[in]  period_ms  The polling period in md, defaults to 100.
-     */
-    virtual void poll(bool& done, uint32_t period_ms=default_poll_period_ms);
-
-    /**
-     * Sleep test wrapper.
-     */
-    virtual void sleep(uint32_t period_ms);
-
-    /**
-     * Stop obelisk polling.
-     */
-    virtual void stop();
-
-    /**
      * Polling work.
+     *
+     * @param[in]  done       A flag that signals cessation of polling.
+     * @param[in]  period_ms  The polling period in ms, defaults to 100.
+     * @param[in]  action     The poll function to execute, defaults to noop.
      */
-    virtual void work(bool& done, uint32_t period_ms);
+    virtual void work(bool& done, uint32_t period_ms,
+        std::function<void()> action=noop);
 
 private:
-
-    /**
-     * The threadpool of the obelisk client.
-     * This must be declared here before fullnode_.
-     */
-    bc::threadpool threadpool_;
 
     /**
      * Type to simplify obelisk client setup.

@@ -23,6 +23,7 @@
 // Convenience header that includes everything.
 // Not to be used internally. For API users.
 // This is intended primarily for test.
+#include <sx/async_client.hpp>
 #include <sx/command.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/display.hpp>
@@ -32,13 +33,18 @@
 #endif
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
-#include <sx/serializer/point.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/file.hpp>
+#include <sx/serializer/hd_key.hpp>
+#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/point.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>

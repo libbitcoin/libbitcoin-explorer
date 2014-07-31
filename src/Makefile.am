@@ -11,6 +11,7 @@ AM_CPPFLAGS = \
     -I$(srcdir)/../include
 
 libsx_la_SOURCES = \
+    async_client.cpp \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
