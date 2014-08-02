@@ -74,8 +74,6 @@
 .       return type_btc256_sx
 .   elsif my.type = type_byte
 .       return type_byte_sx
-.   elsif my.type = type_hex
-.       return type_hex_sx
 .   elsif my.type = type_ec_private
 .       return type_ec_private_sx
 .   elsif my.type = type_ec_public
@@ -88,12 +86,20 @@
 .       return type_hd_private_sx
 .   elsif my.type = type_hd_public
 .       return type_hd_public_sx
+.   elsif my.type = type_hex
+.       return type_hex_sx
+.   elsif my.type = type_header
+.       return type_header_sx
 .   elsif my.type = type_path
 .       return type_path_boost
 .   elsif my.type = type_point
 .       return type_point_sx
+.   elsif my.type = type_raw
+.       return type_raw_sx
 .   elsif my.type = type_string
 .       return type_string_std
+.   elsif my.type = type_transaction
+.       return type_transaction_sx
 .   elsif my.type = type_wif
 .       return type_wif_sx
 .   endif
@@ -137,25 +143,26 @@
         type_string))
 .endfunction
 .
-.function global.value_semantic(is_option, type, required, unlimited,\
-    variable, fallback)
+.function global.value_semantic(is_file, is_option, type, required,\
+    unlimited, variable, fallback)
 .
-.   base_type = default_type(my.is_option, my.type)
-.   norm_type = normalize_type(base_type)
+.   def_type = default_type(my.is_option, my.type)
+.   norm_type = if_else(my.is_file, type_string_std, def_type)
 .   implicit_bool = my.is_option & (norm_type = type_bool)
 .   defaulted = !is_empty(my.fallback)
 .   is_text = ((norm_type = type_path_boost) | (norm_type = type_string_std))
 .   quote_default = (defaulted & is_text)
 .
+.   norm_unlimited = my.unlimited & !my.is_file
 .   parameter = if_else_empty(!is_empty(my.variable), "&$(my.variable:)")
-.   binding = pluralize(parameter, my.unlimited)
+.   binding = if_else(my.is_file, "", pluralize(parameter, norm_unlimited))
 .   default_value = quote(if_else_empty(defaulted, my.fallback), quote_default)
 .
-.   expression = "value<$(vectored_type(norm_type, my.unlimited))>($(binding:))"
-.   expression += if_else_empty(my.required, "->required()")
-.   expression += if_else_empty(defaulted, "->default_value($(default_value:))")
-.   expression += if_else_empty(implicit_bool, "->implicit_value(true)")
-.   return expression
+.   expr = "value<$(vectored_type(norm_type, norm_unlimited))>($(binding:))"
+.   expr += if_else_empty(my.required, "->required()")
+.   expr += if_else_empty(defaulted, "->default_value($(default_value:))")
+.   expr += if_else_empty(implicit_bool, "->implicit_value(true)")
+.   return expr
 .
 .endfunction
 .
@@ -178,10 +185,13 @@
 .type_hd_key = "hd_key"
 .type_hd_private = "hd_private"
 .type_hd_public = "hd_public"
+.type_header = "header"
 .type_hex = "hex"
 .type_path = "path"
 .type_point = "point"
+.type_raw = "raw"
 .type_string = "string"
+.type_transaction = "transaction"
 .type_wif = "wif"
 .
 .type_address_sx = "serializer::address"
@@ -196,10 +206,13 @@
 .type_hd_key_sx = "serializer::hd_key"
 .type_hd_private_sx = "serializer::hd_private"
 .type_hd_public_sx = "serializer::hd_public"
+.type_header_sx = "serializer::item<bc::block_header>"
 .type_hex_sx = "serializer::hex"
 .type_path_boost = "boost::filesystem::path"
 .type_point_sx = "serializer::point"
+.type_raw_sx = "serializer::raw"
 .type_string_std = "std::string"
+.type_transaction_sx = "serializer::item<bc::transaction_type>"
 .type_wif_sx = "serializer::wif"
 .
 .xml_false = "false"
@@ -341,17 +354,6 @@ public:
     }
     
     /**
-     * Write the usage help for this command to the specified stream.
-     *
-     * @param[out] stream  The stream of interest.
-     */
-    virtual void write_usage(std::ostream& stream)
-    {
-        auto options = load_options();
-        auto arguments = load_arguments();
-    }
-    
-    /**
      * Invoke the command.
      *
      * @param[in]   input   The input stream for the command execution.
@@ -393,6 +395,17 @@ public:
                 "$(config_description:)"
             );
     }
+    
+    /**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
+    }
 
     /**
      * Load command option definitions.
@@ -424,7 +437,7 @@ public:
 .       identifiers = section + "." + name
 .       variable = "setting_." + pretty(section, "lower,c") + "." +\
             pretty(name, "lower,c")
-.       expression = value_semantic(!true(), type,\
+.       expression = value_semantic(!true(), !true(), type,\
             is_xml_true(required), is_xml_true(multiple), variable, default)
             (
                 "$(identifiers:)",
@@ -438,12 +451,23 @@ public:
 	/**
      * Load streamed value as parameter fallback.
      *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameter.
+     * @param[in]  variables  The loaded variables.
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
 	{
 	}
+    
+    /**
+     * Write the usage help for this command to the specified stream.
+     *
+     * @param[out] stream  The output stream.
+     */
+    virtual void write_usage(std::ostream& stream)
+    {
+        auto options = load_options();
+        auto arguments = load_arguments();
+    }
     
     /* Properties */
     
@@ -494,7 +518,9 @@ protected:
      * This base class is abstract but not pure virtual, so prevent direct 
      * construction here.
      */
-    command() {}
+    command()
+    {
+    }
     
 private:
     
@@ -516,7 +542,9 @@ private:
     struct environment
     {
         environment()
-            {}
+        {
+        }
+        
 .# There is no reason to expose the config path, as the config has been read.
 .#      boost::filesystem::path config;
     } environment_;
@@ -537,7 +565,9 @@ private:
 .       pluralized_name = pluralize(name, is_vector)
               $(if_else(first(), ":", " ")) $(pluralized_name:c)()$(!last() ?? ",")
 .   endfor
-                {}
+            {
+            }
+            
 .   for setting
 .       is_vector = is_xml_true(multiple)
 .       setting_type = default_type(!true(), type)
@@ -552,7 +582,8 @@ private:
 .for configuration
           $(if_else(first(), ":", " ")) $(section:c)()$(!last() ?? ",")
 .endfor
-            {}
+        {
+        }
     } setting_;
 };
 
@@ -572,23 +603,25 @@ private:
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -662,6 +695,43 @@ public:
             .add("$(name:)", $(limit ? "1"))$(last() ?? ";")
 .endfor
     }
+	
+	/**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input  The input stream for loading the parameters.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
+.for argument
+.   is_vector = !is_default(limit, 1)
+.   argument_type = default_type(!true(), type)
+.   pluralized_name = pluralize(name, is_vector)
+.   getter = "get_" + "$(pluralized_name:c)" + "_argument()"
+.#   bool_vector = if_else(is_vector, xml_true, xml_false)
+.   if (is_xml_true(argument.file))
+        load_path($(getter), "$(name:)", variables);
+.   endif
+.   if (is_xml_true(argument.stream))
+        load_input($(getter), "$(name:)", variables, input);
+.   endif
+.endfor
+.for option
+.   is_vector = is_xml_true(multiple)
+.   option_type = default_type(true(), type)
+.   pluralized_name = pluralize(name, is_vector)
+.   getter = "get_" + "$(pluralized_name:c)" + "_option()"
+.#   bool_vector = if_else(is_vector, xml_true, xml_false)
+.   if (is_xml_true(option.file))
+        load_path($(getter), "$(name:)", variables);
+.   endif
+.   if (is_xml_true(option.stream))
+        load_input($(getter), "$(name:)", variables, input);
+.   endif
+.endfor
+    }
     
     /**
      * Load program option definitions.
@@ -688,8 +758,8 @@ public:
 .   identifiers = name
 .   identifiers += if_else(short_name = "", "", "," + short_name)
 .   variable = "option_." + pretty(name, "lower,c")
-.   expression = value_semantic(true(), type,is_xml_true(required),\
-        is_xml_true(multiple), variable, default)
+.   expression = value_semantic(is_xml_true(option.file), true(), type,\
+        is_xml_true(required), is_xml_true(multiple), variable, default)
             (
                 "$(identifiers:)",
                 $(expression:),
@@ -698,8 +768,8 @@ public:
 .endfor
 .for argument
 .   variable = "argument_." + pretty(name, "lower,c")
-.   expression = value_semantic(!true(), type, is_xml_true(required),\
-        !is_default(limit, 1), variable)
+.   expression = value_semantic(is_xml_true(argument.file), !true(), type,\
+        is_xml_true(required), !is_default(limit, 1), variable)
             (
                 "$(name:)",
                 $(expression:),
@@ -708,30 +778,6 @@ public:
 .endfor
 
         return options;
-    }
-	
-	/**
-     * Load streamed value as parameter fallback.
-     *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
-     */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
-    {
-.for argument
-.   if (is_xml_true(stream))
-        auto $(name:c) = variables.find("$(name:)");
-        if ($(name:c) == variables.end())
-            parse(argument_.$(name:c), read_stream(input));
-.   endif
-.endfor
-.for option
-.   if (is_xml_true(stream))
-        auto $(name:c) = variables.find("$(name:)");
-        if ($(name:c) == variables.end())
-            parse(option_.$(name:c), read_stream(input));
-.   endif
-.endfor
     }
 
     /**
@@ -750,13 +796,13 @@ public:
 .for argument
 .   is_vector = !is_default(limit, 1)
 .   argument_type = default_type(!true(), type)
-.   vectored_type = vectored_type(argument_type, is_vector)        
-.   pluralized_name = pluralize(name, is_vector)      
+.   vtype = vectored_type(argument_type, is_vector)
+.   pluralized_name = pluralize(name, is_vector)
 .   pluralized_argument = pluralize("argument", is_vector)
     /**
      * Get the value of the $(name:) $(pluralized_argument:).
      */
-    virtual $(vectored_type:) get_$(pluralized_name:c)_argument()
+    virtual $(vtype:)& get_$(pluralized_name:c)_argument()
     {
         return argument_.$(pluralized_name:c);
     }
@@ -764,7 +810,8 @@ public:
     /**
      * Set the value of the $(name:) $(pluralized_argument:).
      */
-    virtual void set_$(pluralized_name:c)_argument($(vectored_type:) value)
+    virtual void set_$(pluralized_name:c)_argument(
+        const $(vtype:)& value)
     {
         argument_.$(pluralized_name:c) = value;
     }
@@ -773,13 +820,13 @@ public:
 .for option
 .   is_vector = is_xml_true(multiple)
 .   option_type = default_type(true(), type)
-.   vectored_type = vectored_type(option_type, is_vector)
-.   pluralized_name = pluralize(name, is_vector)      
+.   vtype = vectored_type(option_type, is_vector)
+.   pluralized_name = pluralize(name, is_vector)
 .   pluralized_option = pluralize("option", is_vector)
     /**
      * Get the value of the $(name:) $(pluralized_option:).
      */
-    virtual $(vectored_type:) get_$(pluralized_name:c)_option()
+    virtual $(vtype:)& get_$(pluralized_name:c)_option()
     {
         return option_.$(pluralized_name:c);
     }
@@ -787,7 +834,8 @@ public:
     /**
      * Set the value of the $(name:) $(pluralized_option:).
      */
-    virtual void set_$(pluralized_name:c)_option($(vectored_type:) value)
+    virtual void set_$(pluralized_name:c)_option(
+        const $(vtype:)& value)
     {
         option_.$(pluralized_name:c) = value;
     }
@@ -808,13 +856,15 @@ private:
 .   pluralized_name = pluralize(name, is_vector)
           $(if_else(first(), ":", " ")) $(pluralized_name:c)()$(!last() ?? ",")
 .   endfor
-            {}
+        {
+        }
+        
 .for argument
 .   is_vector = !is_default(limit, 1)
 .   argument_type = default_type(!true(), type)
-.   vectored_type = vectored_type(argument_type, is_vector)        
-.   pluralized_name = pluralize(name, is_vector)      
-        $(vectored_type:) $(pluralized_name:c);
+.   vector_type = vectored_type(argument_type, is_vector)        
+.   pluralized_name = pluralize(name, is_vector)
+        $(vector_type:) $(pluralized_name:c);
 .endfor            
     } argument_;
     
@@ -831,13 +881,15 @@ private:
 .   pluralized_name = pluralize(name, is_vector)
           $(if_else(first(), ":", " ")) $(pluralized_name:c)()$(!last() ?? ",")
 .endfor
-            {}    
+        {
+        }
+        
 .for option
 .   is_vector = is_xml_true(multiple)
 .   option_type = default_type(true(), type)
-.   vectored_type = vectored_type(option_type, is_vector)
-.   pluralized_name = pluralize(name, is_vector)      
-        $(vectored_type:) $(pluralized_name:c);
+.   vector_type = vectored_type(option_type, is_vector)
+.   pluralized_name = pluralize(name, is_vector)
+        $(vector_type:) $(pluralized_name:c);
 .endfor
     } option_;
 };
@@ -939,17 +991,20 @@ sx_utility_includedir = $\(includedir)/sx/serializer
 sx_utility_include_HEADERS += \\
     address.hpp \\
     base58.hpp \\
+    binary.hpp \\
     btc160.hpp \\
     btc256.hpp \\
     byte.hpp \\
     ec_private.hpp \\
     ec_public.hpp \\
-    file.hpp \\
     hd_key.hpp \\
     hd_private.hpp \\
     hd_public.hpp \\
     hex.hpp \\
+    item.hpp \\
     point.hpp \\
+    raw.hpp \\
+    satoshi.hpp \\
     wif.hpp
 
 # Generated from XML data source.
@@ -1128,12 +1183,13 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\file.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hex.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\item.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\raw.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
@@ -1365,9 +1421,6 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\file.hpp">
-      <Filter>include\\serializer</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
@@ -1380,7 +1433,13 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hex.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\item.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\raw.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">

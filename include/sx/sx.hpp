@@ -39,12 +39,13 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>

@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(satoshi__invoke)
 BOOST_AUTO_TEST_CASE(satoshi__invoke__bogus_saoshi__failure_error)
 {
     // $ sx satoshi bogus
-    SX_DECLARE_COMMAND(satoshi);
+    SX_DECLARE_COMMAND(sx::extension::satoshi);
     command.set_btc_argument("bogus");
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
     SX_REQUIRE_ERROR(SX_SATOSHI_NOT_IMPLEMENTED "\n");

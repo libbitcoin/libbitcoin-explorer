@@ -60,10 +60,7 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     wif(const bc::ec_secret& value)
-        : compressed_(true)
-    {
-        std::copy(value.begin(), value.end(), value_.begin());
-    }
+        : value_(value), compressed_(true) {}
 
     /**
      * Initialization constructor.

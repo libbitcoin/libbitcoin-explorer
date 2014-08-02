@@ -29,6 +29,7 @@ console_result satoshi::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
+    // TODO: create btc serialzier (fractional).
     const auto btc = get_btc_argument();
 
     // TODO: parse and validate input and multiply by 10^8.

@@ -25,23 +25,25 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -93,6 +95,18 @@ public:
             .add("SCAN_KEY", 1)
             .add("SPEND_KEY", -1);
     }
+	
+	/**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input  The input stream for loading the parameters.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
+        load_input(get_spend_keys_argument(), "SPEND_KEY", variables, input);
+    }
     
     /**
      * Load program option definitions.
@@ -136,20 +150,10 @@ public:
             (
                 "SPEND_KEY",
                 value<std::vector<serializer::ec_public>>(&argument_.spend_keys),
-                "The hex encoded EC public key(s) that is/are spent to."
+                "The set of hex encoded EC public keys that are spent to."
             );
 
         return options;
-    }
-	
-	/**
-     * Load streamed value as parameter fallback.
-     *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
-     */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
-    {
     }
 
     /**
@@ -168,7 +172,7 @@ public:
     /**
      * Get the value of the SCAN_KEY argument.
      */
-    virtual serializer::ec_public get_scan_key_argument()
+    virtual serializer::ec_public& get_scan_key_argument()
     {
         return argument_.scan_key;
     }
@@ -176,7 +180,8 @@ public:
     /**
      * Set the value of the SCAN_KEY argument.
      */
-    virtual void set_scan_key_argument(serializer::ec_public value)
+    virtual void set_scan_key_argument(
+        const serializer::ec_public& value)
     {
         argument_.scan_key = value;
     }
@@ -184,7 +189,7 @@ public:
     /**
      * Get the value of the SPEND_KEY arguments.
      */
-    virtual std::vector<serializer::ec_public> get_spend_keys_argument()
+    virtual std::vector<serializer::ec_public>& get_spend_keys_argument()
     {
         return argument_.spend_keys;
     }
@@ -192,7 +197,8 @@ public:
     /**
      * Set the value of the SPEND_KEY arguments.
      */
-    virtual void set_spend_keys_argument(std::vector<serializer::ec_public> value)
+    virtual void set_spend_keys_argument(
+        const std::vector<serializer::ec_public>& value)
     {
         argument_.spend_keys = value;
     }
@@ -200,7 +206,7 @@ public:
     /**
      * Get the value of the help option.
      */
-    virtual bool get_help_option()
+    virtual bool& get_help_option()
     {
         return option_.help;
     }
@@ -208,7 +214,8 @@ public:
     /**
      * Set the value of the help option.
      */
-    virtual void set_help_option(bool value)
+    virtual void set_help_option(
+        const bool& value)
     {
         option_.help = value;
     }
@@ -216,7 +223,7 @@ public:
     /**
      * Get the value of the reuse-key option.
      */
-    virtual bool get_reuse_key_option()
+    virtual bool& get_reuse_key_option()
     {
         return option_.reuse_key;
     }
@@ -224,7 +231,8 @@ public:
     /**
      * Set the value of the reuse-key option.
      */
-    virtual void set_reuse_key_option(bool value)
+    virtual void set_reuse_key_option(
+        const bool& value)
     {
         option_.reuse_key = value;
     }
@@ -232,7 +240,7 @@ public:
     /**
      * Get the value of the signatures option.
      */
-    virtual serializer::byte get_signatures_option()
+    virtual serializer::byte& get_signatures_option()
     {
         return option_.signatures;
     }
@@ -240,7 +248,8 @@ public:
     /**
      * Set the value of the signatures option.
      */
-    virtual void set_signatures_option(serializer::byte value)
+    virtual void set_signatures_option(
+        const serializer::byte& value)
     {
         option_.signatures = value;
     }
@@ -257,7 +266,9 @@ private:
         argument()
           : scan_key(),
             spend_keys()
-            {}
+        {
+        }
+        
         serializer::ec_public scan_key;
         std::vector<serializer::ec_public> spend_keys;
     } argument_;
@@ -273,7 +284,9 @@ private:
           : help(),
             reuse_key(),
             signatures()
-            {}    
+        {
+        }
+        
         bool help;
         bool reuse_key;
         serializer::byte signatures;

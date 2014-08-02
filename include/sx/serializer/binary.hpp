@@ -37,7 +37,7 @@ namespace serializer {
 typedef boost::dynamic_bitset<uint8_t> bitset;
 
 /**
- * Serialization helper to convert between hex string and data_chunk.
+ * Serialization helper to convert between binary string and data_chunk.
  */
 class binary
 {

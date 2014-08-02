@@ -25,23 +25,25 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -98,6 +100,18 @@ public:
         return get_argument_metadata()
             .add("HEX", 1);
     }
+	
+	/**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input  The input stream for loading the parameters.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
+        load_input(get_hex_argument(), "HEX", variables, input);
+    }
     
     /**
      * Load program option definitions.
@@ -131,19 +145,6 @@ public:
 
         return options;
     }
-	
-	/**
-     * Load streamed value as parameter fallback.
-     *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
-     */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
-    {
-        auto hex = variables.find("HEX");
-        if (hex == variables.end())
-            parse(argument_.hex, read_stream(input));
-    }
 
     /**
      * Invoke the command.
@@ -161,7 +162,7 @@ public:
     /**
      * Get the value of the HEX argument.
      */
-    virtual serializer::hex get_hex_argument()
+    virtual serializer::hex& get_hex_argument()
     {
         return argument_.hex;
     }
@@ -169,7 +170,8 @@ public:
     /**
      * Set the value of the HEX argument.
      */
-    virtual void set_hex_argument(serializer::hex value)
+    virtual void set_hex_argument(
+        const serializer::hex& value)
     {
         argument_.hex = value;
     }
@@ -177,7 +179,7 @@ public:
     /**
      * Get the value of the help option.
      */
-    virtual bool get_help_option()
+    virtual bool& get_help_option()
     {
         return option_.help;
     }
@@ -185,7 +187,8 @@ public:
     /**
      * Set the value of the help option.
      */
-    virtual void set_help_option(bool value)
+    virtual void set_help_option(
+        const bool& value)
     {
         option_.help = value;
     }
@@ -201,7 +204,9 @@ private:
     {
         argument()
           : hex()
-            {}
+        {
+        }
+        
         serializer::hex hex;
     } argument_;
     
@@ -214,7 +219,9 @@ private:
     {
         option()
           : help()
-            {}    
+        {
+        }
+        
         bool help;
     } option_;
 };

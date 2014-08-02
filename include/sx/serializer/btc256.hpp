@@ -60,9 +60,7 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     btc256(const bc::hash_digest& value)
-    {
-        std::copy(value.begin(), value.end(), value_.begin());
-    }
+        : value_(value) {}
 
     /**
      * Copy constructor.

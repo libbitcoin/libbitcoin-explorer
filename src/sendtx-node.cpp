@@ -24,11 +24,13 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/async_client.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 // TODO: this should be a member of sx::extensions::sendtx_node,
 // otherwise concurrent test execution will collide on shared state.
@@ -45,27 +47,24 @@ static void send_tx(const std::error_code& error, channel_ptr node,
         std::cerr << error << std::endl;
         result = console_result::failure;
         node_stopped = true;
+        return;
     }
-    else
+
+    auto handle_send = [node, tx](const std::error_code& error)
     {
-        auto handle_send = [node, tx](const std::error_code& error)
+        if (error)
+            std::cerr << error << std::endl;
+        else
         {
-            if (error)
-                std::cerr << error << std::endl;
-            else
-            {
-                // TODO: create transaction serializer and use here.
-                // const auto hash = hash_transaction(tx);
-                std::string hash("TODO");
-                std::cout << boost::format(SX_SENDTX_NODE_OUTPUT) % hash % 
-                    now() << std::endl;
-            }
+            const auto& hash = item<bc::transaction_type>(tx);
+            std::cout << boost::format(SX_SENDTX_NODE_OUTPUT) % hash % now() 
+                << std::endl;
+        }
 
-            node_stopped = true;
-        };
+        node_stopped = true;
+    };
 
-        node->send(tx, handle_send);
-    }
+    node->send(tx, handle_send);
 }
 
 console_result sendtx_node::invoke(std::istream& input,
@@ -74,17 +73,10 @@ console_result sendtx_node::invoke(std::istream& input,
     // Bound parameters.
     const auto host = get_name_option();
     const auto port = get_port_option();
-    const data_chunk& data = get_file_argument();
+    const auto& transactions = get_transactions_argument();
 
-    // TODO: create hexfile::file serializer.
-    // Convert binary file data to hex string and then decode to binary tx.
-    std::string hexadecimal(data.begin(), data.end());
-    const auto raw_tx = bc::decode_hex(hexadecimal);
-
-    // TODO: create txfile::hexfile serializer.
-    transaction_type tx;
-    if (!parse_satoshi_item<transaction_type>(tx, raw_tx))
-        return console_result::failure;
+    // TODO: remove this hack which requires one element.
+    const bc::transaction_type& tx = transactions.front();
 
     node_stopped = false;
     result = console_result::okay;
@@ -93,8 +85,7 @@ console_result sendtx_node::invoke(std::istream& input,
     async_client client(*this, 4);
     handshake shake(client.get_threadpool());
     network net(client.get_threadpool());
-    connect(shake, net, host, port,
-        std::bind(send_tx, ph::_1, ph::_2, std::ref(tx)));
+    connect(shake, net, host, port, std::bind(send_tx, ph::_1, ph::_2, tx));
     client.poll(node_stopped, 2000);
 
     return result;

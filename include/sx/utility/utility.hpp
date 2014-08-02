@@ -22,7 +22,7 @@
 
 // Suppressing msvc warnings from boost that are heard to deal with
 // because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
-// without testing it first. 
+// without sampling it first. 
 #pragma warning(push)
 #pragma warning(disable : 4996)
 #include <iostream>
@@ -39,6 +39,7 @@
 #include <boost/lexical_cast.hpp>
 #pragma warning(pop)
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -52,7 +53,13 @@ namespace sx {
 /**
  * Default delimiter for use in sentence splitting operations.
  */
-#define SX_SPLIT_DELIMITER "-"
+#define SX_SPLIT_DELIMITER " "
+    
+/**
+ * Conventional command line argument sentinel for indicating that a file
+ * should be read from STDIN or written to STDOUT.
+ */
+#define SX_STDIO_PATH_SENTINEL "-"
 
 /**
  * Result codes for int main().
@@ -117,6 +124,77 @@ bool are_flags_set(const Value value, const Element flags)
 }
 
 /**
+ * Convert a text string to the specified type.
+ *
+ * @param      <Value>  The converted type.
+ * @param[out] value    The parsed value.
+ * @param[in]  text     The text to convert.
+ */
+template <typename Value>
+void deserialize(Value& value, const std::string& text)
+{
+    std::string trimmed(text);
+    trim(trimmed);
+    value = boost::lexical_cast<Value>(trimmed);
+}
+
+/**
+ * Read an input stream to the specified type.
+ *
+ * @param      <Value>  The converted type.
+ * @param[out] value    The parsed value.
+ * @param[in]  input    The stream to convert.
+ */
+template <typename Value>
+void deserialize(Value& value, std::istream& input)
+{
+    deserialize(value, read_stream(input));
+}
+
+/**
+ * Deserialize the tokens of a text string to a vector of the inner type.
+ *
+ * @param      <Value>     The inner type.
+ * @param[out] collection  The parsed vector value.
+ * @param[in]  text        The text to convert.
+ */
+template <typename Value>
+void deserialize(std::vector<Value>& collection, const std::string& text)
+{
+    std::vector<std::string> tokens;
+    split(text, tokens, "\n");
+
+    for (const auto& token: tokens)
+    {
+        Value value;
+        deserialize(value, token);
+        collection.push_back(value);
+    }
+}
+
+/**
+ * Deserialize a satoshi item from the specified binary data.
+ *
+ * @param      <Item>  The type of the item to parse.
+ * @param[out] item    The deserialized item.
+ * @param[in]  data    The binary data.
+ * @return             True if a item was parsed.
+ */
+template <typename Item>
+bool deserialize_satoshi_item(Item& item, const bc::data_chunk& data)
+{
+    try
+    {
+        bc::satoshi_load(data.begin(), data.end(), item);
+    }
+    catch (bc::end_of_stream)
+    {
+        return false;
+    }
+    return true;
+}
+
+/**
  * Find the position of an element in an ordered list.
  *
  * @param      <Element>  The type of list member elements.
@@ -152,54 +230,56 @@ int find_pair_position(const std::vector<Pair>& list, const Key& key)
 }
 
 /**
- * Type for definiing lists of payment addresses. 
- */
-typedef std::vector<bc::payment_address> payaddr_list;
-
-/**
- * Safely convert a text string to the specified type, whitespace ignored.
+ * If it is not yet loaded, load stdin as parameter fallback.
  *
- * @param      <Value>  The converted type.
- * @param[in]  text     The text to convert.
- * @param[out] value    The parsed value.
- * @return              True if successful.
+ * @param      <Value>    The type of the parameter to load.
+ * @param[in]  name       The parameter name.
+ * @param[in]  variables  The loaded variables.
+ * @param[in]  input      The input stream for loading the parameter.
+ * @return                True if loaded.
  */
 template <typename Value>
-bool parse(Value& value, const std::string& text)
+void load_input(Value& parameter, const std::string& name,
+    po::variables_map& variables, std::istream& input)
 {
-    std::string serialized(text);
-    boost::algorithm::trim(serialized);
-    try
-    {
-        value = boost::lexical_cast<Value>(serialized);
-    }
-    catch (const boost::bad_lexical_cast&)
-    {
-        return false;
-    }
-    return true;
+    // The path was not set as an argument so load from stdin.
+    if (variables.find(name) == variables.end())
+        deserialize(parameter, input);
 }
 
 /**
- * Parse a satoshi item from the specified binary data.
+ * Load file contents as parameter fallback. Obtain the path from the parameter
+ * in the variables map.
  *
- * @param      <Item>  The type of the item to parse.
- * @param[out] item    The parsed item.
- * @param[in]  data    The binary data to parse.
- * @return             True if a transaction was parsed.
+ * @param      <Value>    The type of the parameter to load.
+ * @param[in]  name       The parameter name.
+ * @param[in]  variables  The loaded variables.
  */
-template <typename Item>
-bool parse_satoshi_item(Item& item, const bc::data_chunk& data)
+template <typename Value>
+void load_path(Value& parameter, const std::string& name,
+     po::variables_map& variables)
 {
-    try
+    // The path is not set as an argument so we can't load from file.
+    auto variable = variables.find(name);
+    if (variable == variables.end())
+        return;
+
+    // Get the argument value as a string.
+    const auto path = boost::any_cast<std::string>(variable->second.value());
+    
+    // The path is the stdin sentinal, so clear parameter and don't read file.
+    if (path == SX_STDIO_PATH_SENTINEL)
     {
-        bc::satoshi_load(data.begin(), data.end(), item);
+        variables.erase(variable);
+        return;
     }
-    catch (bc::end_of_stream)
-    {
-        return false;
-    }
-    return true;
+
+    // Create a file input stream.
+    std::ifstream file(path, std::ifstream::binary);
+    if (file.fail())
+        throw po::invalid_option_value(path);
+
+    deserialize(parameter, file);
 }
 
 /**
@@ -211,11 +291,24 @@ bool parse_satoshi_item(Item& item, const bc::data_chunk& data)
  * @return               The serialized value.
  */
 template <typename Value>
-std::string serialize(const Value& value, const std::string& fallback = "")
+std::string serialize(const Value& value, const std::string& fallback="")
 {
-    std::string serialized;
-    boost::to_string(value, serialized);
-    return if_else(serialized.empty(), fallback, serialized);
+    std::string text;
+    boost::to_string(value, text);
+    return if_else(text.empty(), fallback, text);
+}
+
+/**
+ * Serialize the specified satoshi item to binary data.
+ *
+ * @param       <Item>  The type of the item.
+ * @param[out] data     The binary data.
+ * @param[in]  item     The satoshi item.
+ */
+template <typename Item>
+void serialize_satoshi_item(bc::data_chunk& data, const Item& item)
+{
+    bc::satoshi_save(item, data.begin());
 }
 
 /**
@@ -251,23 +344,12 @@ void random_fill(bc::data_chunk& chunk);
 void random_secret(bc::ec_secret& secret);
 
 /**
- * Read a set of payment addresses from the specified vector.
- *
- * @param[in]  addresses  The payment addresses to read.
- * @param[out] payaddrs   The payment addresses read.
- * return                 True if there was no payment address parse error.
- */
-bool read_addresses(std::vector<std::string> addresses, 
-    payaddr_list& payaddrs);
-
-/**
- * Get a trimmed message from the specified input stream.
+ * Get a message from the specified input stream.
  *
  * @param[in]  stream The input stream to read.
- * @param[in]  trim   Trim the input of whitespace, defaults to true.
  * @return            The message read from the input stream.
  */
-std::string read_stream(std::istream& stream, bool trim=true);
+std::string read_stream(std::istream& stream);
 
 /**
  * Sleep for the specified number of milliseconds.
@@ -288,19 +370,17 @@ void split(const std::string& sentence, std::vector<std::string>& words,
     const std::string& delimiter=SX_SPLIT_DELIMITER);
 
 /**
- * DANGER: do not call this if anything iteresting is going on,
- * like databases open or file operations in progress!
- * Terminates the console process with main_failure return code.
+ * Trim a string of whitespace.
  *
- * @param[in]  error  The error code to test and log before terminating.
+ * @param[out] value  The string to trim.
  */
-void terminate_process_on_error(const std::error_code& error);
+void trim(std::string& value);
 
 /**
  * Trim the left side of a string of the specified characters.
  *
- * @param[out] value   The string to split.
- * @param[out] value   The characters to trim, defaults to SX_SPLIT_DELIMITER.
+ * @param[out] value  The string to split.
+ * @param[in] value   The characters to trim, defaults to SX_SPLIT_DELIMITER.
  */
 void trim_left(std::string& value, 
     const std::string& chars=SX_SPLIT_DELIMITER);

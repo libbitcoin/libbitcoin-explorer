@@ -25,23 +25,25 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -96,7 +98,20 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("FILE", 1);
+            .add("TRANSACTION", -1);
+    }
+	
+	/**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input  The input stream for loading the parameters.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
+        load_path(get_transactions_argument(), "TRANSACTION", variables);
+        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
     
     /**
@@ -134,25 +149,12 @@ public:
                 "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
             )
             (
-                "FILE",
-                value<serializer::file>(&argument_.file),
-                "The transaction file path. If not specified the transaction is read from STDIN."
+                "TRANSACTION",
+                value<std::string>(),
+                "The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."
             );
 
         return options;
-    }
-	
-	/**
-     * Load streamed value as parameter fallback.
-     *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
-     */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
-    {
-        auto file = variables.find("FILE");
-        if (file == variables.end())
-            parse(argument_.file, read_stream(input));
     }
 
     /**
@@ -169,25 +171,26 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the FILE argument.
+     * Get the value of the TRANSACTION arguments.
      */
-    virtual serializer::file get_file_argument()
+    virtual std::vector<serializer::item<bc::transaction_type>>& get_transactions_argument()
     {
-        return argument_.file;
+        return argument_.transactions;
     }
     
     /**
-     * Set the value of the FILE argument.
+     * Set the value of the TRANSACTION arguments.
      */
-    virtual void set_file_argument(serializer::file value)
+    virtual void set_transactions_argument(
+        const std::vector<serializer::item<bc::transaction_type>>& value)
     {
-        argument_.file = value;
+        argument_.transactions = value;
     }
 
     /**
      * Get the value of the help option.
      */
-    virtual bool get_help_option()
+    virtual bool& get_help_option()
     {
         return option_.help;
     }
@@ -195,7 +198,8 @@ public:
     /**
      * Set the value of the help option.
      */
-    virtual void set_help_option(bool value)
+    virtual void set_help_option(
+        const bool& value)
     {
         option_.help = value;
     }
@@ -203,7 +207,7 @@ public:
     /**
      * Get the value of the name option.
      */
-    virtual std::string get_name_option()
+    virtual std::string& get_name_option()
     {
         return option_.name;
     }
@@ -211,7 +215,8 @@ public:
     /**
      * Set the value of the name option.
      */
-    virtual void set_name_option(std::string value)
+    virtual void set_name_option(
+        const std::string& value)
     {
         option_.name = value;
     }
@@ -219,7 +224,7 @@ public:
     /**
      * Get the value of the port option.
      */
-    virtual uint16_t get_port_option()
+    virtual uint16_t& get_port_option()
     {
         return option_.port;
     }
@@ -227,7 +232,8 @@ public:
     /**
      * Set the value of the port option.
      */
-    virtual void set_port_option(uint16_t value)
+    virtual void set_port_option(
+        const uint16_t& value)
     {
         option_.port = value;
     }
@@ -242,9 +248,11 @@ private:
     struct argument
     {
         argument()
-          : file()
-            {}
-        serializer::file file;
+          : transactions()
+        {
+        }
+        
+        std::vector<serializer::item<bc::transaction_type>> transactions;
     } argument_;
     
     /**
@@ -258,7 +266,9 @@ private:
           : help(),
             name(),
             port()
-            {}    
+        {
+        }
+        
         bool help;
         std::string name;
         uint16_t port;

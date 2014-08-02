@@ -31,7 +31,7 @@
   
   <command symbol="addr-embed" formerly="embed-addr" category="WALLET" stub="true">
     <option name="help" description="Generate a Bitcoin address with an embedded record of binary data." />
-    <argument name="FILE" stream="true" type="file" description="The binary data file path.  If not specified the binary data is read from STDIN."/>
+    <argument name="FILE" file="true" stream="true" type="raw" description="The binary data file path.  If not specified the binary data is read from STDIN."/>
     <define name="SX_ADDR_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
@@ -43,13 +43,13 @@
 
   <command symbol="addr-validate" formerly="validaddr" category="WALLET">
     <option name="help" description="Validate a set of addresses. The result is successful if all addresses are valid." />
-    <argument name="ADDRESS" type="address" limit="-1" description="The set of Bitcoin addresses to validate." />
+    <argument name="ADDRESS" stream="true" type="address" limit="-1" description="The set of Bitcoin addresses to validate." />
   </command>
   
   <command symbol="balance" category="ONLINE" obelisk="true">
     <option name="help" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The set of Bitcoin addresses." />
+    <argument name="ADDRESS" stream="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
   </command>
@@ -89,13 +89,13 @@
   
   <command symbol="bci-send-transaction" formerly="sendtx-bci" category="BONLINE" stub="true">
     <option name="help" description="Send a Bitcoin transaction to blockchain.info." />
-    <argument name="FILE" stream="true" type="file" description="The transaction file path. If not specified the transaction is read from STDIN."/>
+    <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
     <define name="SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="be-fetch-transaction" formerly="blke-fetch-transaction" category="ONLINE" stub="true">
     <option name="help" description="Get a Bitcoin transaction from blockexplorer.com." />
-    <argument name="HASH" stream="true" type="btc256" description="The hex encoded transaction hash." />
+    <argument name="HASH" file="true" stream="true" type="btc256" description="The hex encoded transaction hash." />
     <define name="SX_BE_FETCH_TRANSACTION_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
@@ -132,7 +132,7 @@
 
   <command symbol="ec-add-secrets" formerly="ec-add-modp" category="MATH">
     <option name="help" description="Calculate the EC function (SECRET + SECRET) % curve-order." />
-    <argument name="SECRET" limit="-1" required="true" type="ec_private" description="The hex encoded secret to add."/>
+    <argument name="SECRET" stream="true" limit="-1" type="ec_private" description="The set of hex encoded secrets to add."/>
     <define name="SX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
 
@@ -145,7 +145,7 @@
   
   <command symbol="ec-multiply-secrets" formerly="ec-add" category="MATH">
     <option name="help" description="Calculate the EC function (SECRET * SECRET) % curve-order." />
-    <argument name="SECRET" limit="-1" required="true" type="ec_private" description="The hex encoded EC secret to multiply."/>
+    <argument name="SECRET" stream="true" limit="-1" type="ec_private" description="The set of hex encoded EC secrets to multiply."/>
     <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
 
@@ -218,7 +218,7 @@
   <command symbol="fetch-utxo" formerly="get-utxo" category="ONLINE" stub="true" obelisk="true">
     <option name="help" description="Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires a server connection." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The set of Bitcoin addresses." />
+    <argument name="ADDRESS" stream="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
     <define name="SX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
@@ -281,7 +281,7 @@
   <command symbol="history" category="ONLINE" obelisk="true">
     <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
-    <argument name="ADDRESS" limit="-1" type="address" description="The set of Bitcoin addresses." />
+    <argument name="ADDRESS" stream="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
     <define name="SX_HISTORY_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_HISTORY_PENDING" value="Pending" />
     <define name="SX_HISTORY_UNSPENT" value="Unspent" />
@@ -306,7 +306,7 @@
   
   <command symbol="mnemonic-decode" category="WALLET">
     <option name="help" description="Convert a BIP39 mnemonic to its seed. WARNING: mnemonic should be generated from a random seed." />
-    <argument name="WORD" limit="-1" description="A word from the BIP39 word list." />
+    <argument name="WORD" stream="true" limit="-1" description="The set of words from the BIP39 word list." />
   </command>
   
   <command symbol="monitor" category="ONLINE" obelisk="true">
@@ -329,7 +329,7 @@
   <!-- TODO: parameterize for stealth address. -->
   <command symbol="qrcode" category="WALLET" stub="true">
     <option name="help" description="Generate a QR code image file for a Bitcoin address." />
-    <option name="file" type="path" description="The image file path. If not specified the image is written to STDOUT."/>
+    <option name="file" file="true" type="raw" description="The image file path. If not specified the image is written to STDOUT."/>
     <argument name="ADDRESS" stream="true" type="address" description="The address."/>
     <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
@@ -353,13 +353,13 @@
     <option name="help" description="Send a transaction to a single Bitcoin network node." />
     <option name="name" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <argument name="FILE" stream="true" type="file" description="The transaction file path. If not specified the transaction is read from STDIN."/>
+    <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
     <define name="SX_SENDTX_NODE_OUTPUT" value="Sent transaction %1% at %2%." />
   </command>
   
   <command symbol="sendtx-obelisk" category="ONLINE" obelisk="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server." />
-    <argument name="FILE" stream="true" type="file" description="The transaction file path. If not specified the transaction is read from STDIN."/>
+    <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
     <define name="SX_SENDTX_OBELISK_OUTPUT" value="Sent transaction at %1%." />
   </command>
 
@@ -389,7 +389,7 @@
     <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />
     <option name="signatures" type="byte" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
     <argument name="SCAN_KEY" type="ec_public" required="true" description="The hex encoded EC public key of the recipient." />
-    <argument name="SPEND_KEY" type="ec_public" limit="-1" description="The hex encoded EC public key(s) that is/are spent to." />
+    <argument name="SPEND_KEY" stream="true" limit="-1" type="ec_public" description="The set of hex encoded EC public keys that are spent to." />
   </command>
 
   <command symbol="unwrap" category="HASH">
@@ -406,7 +406,7 @@
 
   <command symbol="watchtx" category="ONLINE" stub="true" obelisk="true">
     <option name="help" description="Watch the network for one or more transactions by hash." />
-    <argument name="HASH" limit="-1" type="btc256" description="The set of hex encoded transaction hashes." />
+    <argument name="HASH" stream="true" limit="-1" type="btc256" description="The set of hex encoded transaction hashes." />
     <define name="SX_WATCHTX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   

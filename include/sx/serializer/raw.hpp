@@ -17,70 +17,47 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef FILE_HPP
-#define FILE_HPP
+#ifndef RAW_HPP
+#define RAW_HPP
 
-#include <io.h>
 #include <iostream>
-#include <stdint.h>
-#include <stdio.h>
-#include <fcntl.h>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
-    
-/**
- * Conventional command line argument sentinel for indicating that a file
- * should be read from STDIN.
- */
-#define SX_STDIN_PATH_SENTINEL "-"
 
 /**
- * Serialization helper to convert between hex string and ec_secret.
+ * Serialization helper to convert between a byte stream and data_chunk.
  */
-class file
+class raw
 {
 public:
 
     /**
      * Constructor.
      */
-    file() {}
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  path  The value to initialize with.
-     */
-    file(const std::string& path)
-    {
-        std::stringstream(path) >> *this;
-    }
+    raw()
+        : value_() {}
 
     /**
      * Initialization constructor.
      * 
      * @param[in]  value  The value to initialize with.
      */
-    file(const bc::data_chunk& value)
-    {
-        std::copy(value.begin(), value.end(), value_.begin());
-    }
+    raw(const bc::data_chunk& value)
+        : value_(value) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    file(const file& other)
-    {
-    }
+    raw(const raw& other)
+        : raw(other.value_) {}
 
     /**
      * Return a reference to the data member.
@@ -90,16 +67,6 @@ public:
     bc::data_chunk& data()
     {
         return value_;
-    }
-
-    /**
-     * Overload cast to internal type.
-     *
-     * @return  This object's value cast to internal type.
-     */
-    operator const std::string&() const
-    {
-        return path_;
     }
 
     /**
@@ -119,38 +86,10 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, file& argument)
+    friend std::istream& operator>>(std::istream& input, raw& argument)
     {
-        std::string path(SX_STDIN_PATH_SENTINEL);
-        input >> path;
-        argument.path_ = path;
-
-        if (path == SX_STDIN_PATH_SENTINEL)
-        {
-#ifdef _WIN32
-            // The function sets the _fmode global variable.
-            // This specifies the default translation mode for 
-            // file I/O operations 
-            _setmode(_fileno(stdin), _O_BINARY);
-#endif
-            std::istreambuf_iterator<char> first(std::cin), last;
-            argument.value_.assign(first, last);
-#ifdef _WIN32
-            // The default setting of _fmode is _O_TEXT.
-            // msdn.microsoft.com/en-us/library/61dstksf.aspx
-            _setmode(_fileno(stdin), _O_TEXT);
-#endif
-        }
-        else
-        {
-            std::ifstream infile(path, std::ifstream::binary);
-            if (infile.fail())
-                throw po::invalid_option_value(path);
-
-            std::istreambuf_iterator<char> first(infile), last;
-            argument.value_.assign(first, last);
-        }
-
+        std::istreambuf_iterator<char> first(input), last;
+        argument.value_.assign(first, last);
         return input;
     }
 
@@ -161,10 +100,10 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const file& argument)
+    friend std::ostream& operator<<(std::ostream& output, const raw& argument)
     {
-        std::ostreambuf_iterator<char> out(output);
-        std::copy(argument.value_.begin(), argument.value_.end(), out);
+        std::ostreambuf_iterator<char> iterator(output);
+        std::copy(argument.value_.begin(), argument.value_.end(), iterator);
         return output;
     }
 
@@ -174,11 +113,6 @@ private:
      * The state of this object's file data.
      */
     bc::data_chunk value_;
-
-    /**
-    * The state of this object's file path.
-    */
-    std::string path_;
 };
 
 } // sx

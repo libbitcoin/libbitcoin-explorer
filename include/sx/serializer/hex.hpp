@@ -62,7 +62,7 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     hex(const bc::data_chunk& value)
-        : value_(value.begin(), value.end()) {}
+        : value_(value) {}
 
     /**
      * Initialization constructor.

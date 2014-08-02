@@ -25,23 +25,25 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -92,6 +94,18 @@ public:
         return get_argument_metadata()
             .add("ADDRESS", -1);
     }
+	
+	/**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input  The input stream for loading the parameters.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
+        load_input(get_addresss_argument(), "ADDRESS", variables, input);
+    }
     
     /**
      * Load program option definitions.
@@ -125,16 +139,6 @@ public:
 
         return options;
     }
-	
-	/**
-     * Load streamed value as parameter fallback.
-     *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
-     */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
-    {
-    }
 
     /**
      * Invoke the command.
@@ -152,7 +156,7 @@ public:
     /**
      * Get the value of the ADDRESS arguments.
      */
-    virtual std::vector<serializer::address> get_addresss_argument()
+    virtual std::vector<serializer::address>& get_addresss_argument()
     {
         return argument_.addresss;
     }
@@ -160,7 +164,8 @@ public:
     /**
      * Set the value of the ADDRESS arguments.
      */
-    virtual void set_addresss_argument(std::vector<serializer::address> value)
+    virtual void set_addresss_argument(
+        const std::vector<serializer::address>& value)
     {
         argument_.addresss = value;
     }
@@ -168,7 +173,7 @@ public:
     /**
      * Get the value of the help option.
      */
-    virtual bool get_help_option()
+    virtual bool& get_help_option()
     {
         return option_.help;
     }
@@ -176,7 +181,8 @@ public:
     /**
      * Set the value of the help option.
      */
-    virtual void set_help_option(bool value)
+    virtual void set_help_option(
+        const bool& value)
     {
         option_.help = value;
     }
@@ -192,7 +198,9 @@ private:
     {
         argument()
           : addresss()
-            {}
+        {
+        }
+        
         std::vector<serializer::address> addresss;
     } argument_;
     
@@ -205,7 +213,9 @@ private:
     {
         option()
           : help()
-            {}    
+        {
+        }
+        
         bool help;
     } option_;
 };

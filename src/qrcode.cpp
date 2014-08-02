@@ -36,6 +36,7 @@ console_result qrcode::invoke(std::istream& input, std::ostream& output,
     // Create qrcode as binary data.
     // If path is empty or SX_STDIN_PATH_SENTINEL, write data to output;
     // Otherwise write data to specified path.
+    // Use file() serializer to write.
 
     cerr << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

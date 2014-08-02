@@ -60,9 +60,7 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     btc160(const bc::short_hash& value)
-    {
-        std::copy(value.begin(), value.end(), value_.begin());
-    }
+        : value_(value) {}
 
     /**
      * Initialization constructor.

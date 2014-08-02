@@ -24,7 +24,11 @@
 #pragma warning(push) 
 #pragma warning(disable : 4996)
 #include <sx/utility/utility.hpp>
-
+#ifdef _MSC_VER
+#include <fcntl.h>
+#include <io.h>
+#include <stdio.h>
+#endif
 #include <iomanip>
 #include <iostream>
 #include <random>
@@ -39,11 +43,6 @@
 
 namespace sx {
 
-//std::string get_filename(int argc, const char* argv[])
-//{
-//    return if_else(argc > 0, argv[0], SX_STDIN_PATH_SENTINEL);
-//}
-
 void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter)
 {
@@ -55,16 +54,6 @@ boost::posix_time::ptime now()
     using namespace boost::posix_time;
     ptime local_time_in_seconds(second_clock::local_time());
     return local_time_in_seconds;
-}
-
-std::string read_stream(std::istream& stream, bool trim)
-{
-    std::istreambuf_iterator<char> first(stream), last;
-    std::string result(first, last);
-    if (trim)
-        boost::algorithm::trim(result);
-
-    return result;
 }
 
 // Not testable due to lack of random engine injection.
@@ -85,18 +74,25 @@ void random_secret(bc::ec_secret& secret)
     std::copy(chunk.begin(), chunk.end(), secret.begin());
 }
 
-bool read_addresses(std::vector<std::string> addresses, payaddr_list& payaddrs)
+std::string read_stream(std::istream& stream)
 {
-    for (const auto& address: addresses)
-    {
-        bc::payment_address payaddr;
-        if (!payaddr.set_encoded(address))
-            return false;
+#ifdef _MSC_VER
+    // The function sets the _fmode global variable.
+    // This specifies the default translation mode for 
+    // file I/O operations 
+    _setmode(_fileno(stdin), _O_BINARY);
+#endif
 
-        payaddrs.push_back(payaddr);
-    }
+    std::istreambuf_iterator<char> first(stream), last;
+    std::string result(first, last);
 
-    return true;
+#ifdef _MSC_VER
+    // The default setting of _fmode is _O_TEXT.
+    // msdn.microsoft.com/en-us/library/61dstksf.aspx
+    _setmode(_fileno(stdin), _O_TEXT);
+#endif
+
+    return result;
 }
 
 // Not unit testable (sleep).
@@ -111,20 +107,14 @@ void split(const std::string& sentence, std::vector<std::string>& words,
     boost::split(words, sentence, boost::is_any_of(delimiter));
 }
 
-// Not unit testable (process termination).
-void terminate_process_on_error(const std::error_code& error)
+void trim(std::string& value)
 {
-    if (!error)
-        return;
-
-    bc::log_fatal() << error.message();
-    exit(console_result::failure);
+    boost::trim(value);
 }
 
 void trim_left(std::string& value, const std::string& chars)
 {
-    using namespace boost::algorithm;
-    trim_left_if(value, is_any_of(chars));
+    boost::trim_left_if(value, boost::is_any_of(chars));
 }
 
 } // sx

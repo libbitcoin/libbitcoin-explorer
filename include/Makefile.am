@@ -24,17 +24,20 @@ sx_utility_includedir = $(includedir)/sx/serializer
 sx_utility_include_HEADERS += \
     address.hpp \
     base58.hpp \
+    binary.hpp \
     btc160.hpp \
     btc256.hpp \
     byte.hpp \
     ec_private.hpp \
     ec_public.hpp \
-    file.hpp \
     hd_key.hpp \
     hd_private.hpp \
     hd_public.hpp \
     hex.hpp \
+    item.hpp \
     point.hpp \
+    raw.hpp \
+    satoshi.hpp \
     wif.hpp
 
 # Generated from XML data source.

@@ -62,7 +62,7 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     ec_public(const bc::ec_point& value)
-        : value_(value.begin(), value.end()) {}
+        : value_(value) {}
 
     /**
      * Copy constructor.

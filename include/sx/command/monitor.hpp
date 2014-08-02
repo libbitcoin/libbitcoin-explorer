@@ -25,23 +25,25 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -91,6 +93,17 @@ public:
     {
         return get_argument_metadata();
     }
+	
+	/**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input  The input stream for loading the parameters.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
+    }
     
     /**
      * Load program option definitions.
@@ -129,16 +142,6 @@ public:
 
         return options;
     }
-	
-	/**
-     * Load streamed value as parameter fallback.
-     *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
-     */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
-    {
-    }
 
     /**
      * Invoke the command.
@@ -156,7 +159,7 @@ public:
     /**
      * Get the value of the help option.
      */
-    virtual bool get_help_option()
+    virtual bool& get_help_option()
     {
         return option_.help;
     }
@@ -164,7 +167,8 @@ public:
     /**
      * Set the value of the help option.
      */
-    virtual void set_help_option(bool value)
+    virtual void set_help_option(
+        const bool& value)
     {
         option_.help = value;
     }
@@ -172,7 +176,7 @@ public:
     /**
      * Get the value of the bitfield option.
      */
-    virtual uint32_t get_bitfield_option()
+    virtual uint32_t& get_bitfield_option()
     {
         return option_.bitfield;
     }
@@ -180,7 +184,8 @@ public:
     /**
      * Set the value of the bitfield option.
      */
-    virtual void set_bitfield_option(uint32_t value)
+    virtual void set_bitfield_option(
+        const uint32_t& value)
     {
         option_.bitfield = value;
     }
@@ -188,7 +193,7 @@ public:
     /**
      * Get the value of the number_bits option.
      */
-    virtual uint32_t get_number_bits_option()
+    virtual uint32_t& get_number_bits_option()
     {
         return option_.number_bits;
     }
@@ -196,7 +201,8 @@ public:
     /**
      * Set the value of the number_bits option.
      */
-    virtual void set_number_bits_option(uint32_t value)
+    virtual void set_number_bits_option(
+        const uint32_t& value)
     {
         option_.number_bits = value;
     }
@@ -211,7 +217,9 @@ private:
     struct argument
     {
         argument()
-            {}
+        {
+        }
+        
     } argument_;
     
     /**
@@ -225,7 +233,9 @@ private:
           : help(),
             bitfield(),
             number_bits()
-            {}    
+        {
+        }
+        
         bool help;
         uint32_t bitfield;
         uint32_t number_bits;

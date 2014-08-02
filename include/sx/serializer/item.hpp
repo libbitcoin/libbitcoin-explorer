@@ -17,17 +17,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef EC_PRIVATE_HPP
-#define EC_PRIVATE_HPP
+#ifndef ITEM_HPP
+#define ITEM_HPP
 
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/btc256.hpp>
-#include <sx/serializer/ec_private.hpp>
-#include <sx/serializer/wif.hpp>
+#include <sx/serializer/hex.hpp>
+#include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -35,16 +33,18 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and ec_secret.
+ * Serialization helper to convert between serialized and deserialized satoshi 
+ * items.
  */
-class ec_private
+template <class SatoshiItem>
+class item
 {
 public:
 
     /**
      * Constructor.
      */
-    ec_private()
+    item()
         : value_() {}
 
     /**
@@ -52,7 +52,7 @@ public:
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    ec_private(const std::string& hex)
+    item(const std::string& hex)
     {
         std::stringstream(hex) >> *this;
     }
@@ -62,31 +62,31 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_private(const bc::ec_secret& value)
-        : value_(value) {}
+    item(const bc::data_chunk& value)
+        : item((const std::string&)hex(value)) {}
 
     /**
      * Initialization constructor.
      * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_private(const libwallet::hd_private_key& value)
-        : ec_private(value.private_key()) {}
+    item(const SatoshiItem& value)
+        : value_(value) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    ec_private(const ec_private& other)
-        : ec_private(other.value_) {}
+    item(const item& other)
+        : item(other.value_) {}
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_secret& data()
+    SatoshiItem& data()
     {
         return value_;
     }
@@ -96,9 +96,9 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_secret&() const
+    operator const SatoshiItem&() const
     {
-        return value_; 
+        return value_;
     }
 
     /**
@@ -108,16 +108,18 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, ec_private& argument)
+    friend std::istream& operator>>(std::istream& input, item& argument)
     {
-        std::string text;
-        input >> text;
-        
-        bc::ec_secret secret = btc256(text);
-        if (!bc::verify_private_key(secret))
-            throw po::invalid_option_value(text);
+       hex hexadecimal;
+       input >> hexadecimal;
 
-        std::copy(secret.begin(), secret.end(), argument.value_.begin());
+       if (!deserialize_satoshi_item<SatoshiItem>(argument.value_, hexadecimal))
+       {
+           std::stringstream text;
+           text << hexadecimal;
+           throw po::invalid_option_value(text.str());
+       }
+
         return input;
     }
 
@@ -128,19 +130,21 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const ec_private& argument)
+    friend std::ostream& operator<<(std::ostream& output, const item& argument)
     {
-        output << btc256(argument.value_);
+        bc::data_chunk bytes;
+        serialize_satoshi_item<SatoshiItem>(bytes, argument.value_);
+
+        output << hex(bytes);
         return output;
     }
 
 private:
 
     /**
-     * The state of this object.
+     * The state of this object's file data.
      */
-    bc::ec_secret value_;
+    SatoshiItem value_;
 };
 
 } // sx

@@ -59,7 +59,7 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     base58(const bc::data_chunk& value)
-        : value_(value.begin(), value.end()) {}
+        : value_(value) {}
 
     /**
      * Copy constructor.

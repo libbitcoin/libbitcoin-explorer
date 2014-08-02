@@ -20,8 +20,10 @@
 #include <sx/command/bci-send-transaction.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/utility/utility.hpp>
 
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
@@ -29,7 +31,7 @@ console_result bci_send_transaction::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto data = get_file_argument();
+    const auto& transactions = get_transactions_argument();
 
     cerr << SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

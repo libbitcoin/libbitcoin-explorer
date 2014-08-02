@@ -68,17 +68,6 @@ public:
     }
     
     /**
-     * Write the usage help for this command to the specified stream.
-     *
-     * @param[out] stream  The stream of interest.
-     */
-    virtual void write_usage(std::ostream& stream)
-    {
-        auto options = load_options();
-        auto arguments = load_arguments();
-    }
-    
-    /**
      * Invoke the command.
      *
      * @param[in]   input   The input stream for the command execution.
@@ -119,6 +108,17 @@ public:
                     ->composing()->default_value(config_default()),
                 "The path and file name for the configuration settings file for this application."
             );
+    }
+    
+    /**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input      The input stream for loading the parameters.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
     }
 
     /**
@@ -169,12 +169,23 @@ public:
 	/**
      * Load streamed value as parameter fallback.
      *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
+     * @param[in]  input      The input stream for loading the parameter.
+     * @param[in]  variables  The loaded variables.
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
 	{
 	}
+    
+    /**
+     * Write the usage help for this command to the specified stream.
+     *
+     * @param[out] stream  The output stream.
+     */
+    virtual void write_usage(std::ostream& stream)
+    {
+        auto options = load_options();
+        auto arguments = load_arguments();
+    }
     
     /* Properties */
     
@@ -264,7 +275,9 @@ protected:
      * This base class is abstract but not pure virtual, so prevent direct 
      * construction here.
      */
-    command() {}
+    command()
+    {
+    }
     
 private:
     
@@ -286,7 +299,9 @@ private:
     struct environment
     {
         environment()
-            {}
+        {
+        }
+        
     } environment_;
 
     /**
@@ -300,7 +315,9 @@ private:
         {
             general()
               : testnet()
-                {}
+            {
+            }
+            
             bool testnet;
         } general;
 
@@ -310,7 +327,9 @@ private:
               : client_certificate(),
                 server_public_key(),
                 service()
-                {}
+            {
+            }
+            
             boost::filesystem::path client_certificate;
             std::string server_public_key;
             std::string service;
@@ -319,7 +338,8 @@ private:
         setting()
           : general(),
             obelisk()
-            {}
+        {
+        }
     } setting_;
 };
 

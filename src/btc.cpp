@@ -32,6 +32,7 @@ console_result btc::invoke(std::istream& input,
     const auto satoshi = get_satoshi_argument();
 
     // TODO: parse and validate input and multiply by 10^-8.
+    // std::string bc::satoshi_to_btc(uint64_t value)
     cerr << SX_BTC_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }

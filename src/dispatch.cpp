@@ -103,8 +103,8 @@ void load_command_variables(variables_map& variables, command& instance,
     // map parsed inputs into variables map
     store(command_parser.run(), variables);
 
-    // For variables with STDIN fallback load the input stream as necessary.
-    instance.load_stream(input, variables);
+    // For variable with stdin or file fallback load the input stream.
+    instance.load_fallbacks(input, variables);
 }
 
 // Not unit testable (without creating actual config files).

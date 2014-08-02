@@ -25,23 +25,25 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/file.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -92,6 +94,18 @@ public:
         return get_argument_metadata()
             .add("SECRET", 1);
     }
+	
+	/**
+     * Load parameter fallbacks from file or input as appropriate.
+     *
+     * @param[in]  input  The input stream for loading the parameters.
+     * @param[in]         The loaded variables.
+     */
+    virtual void load_fallbacks(std::istream& input, 
+        po::variables_map& variables)
+    {
+        load_input(get_secret_argument(), "SECRET", variables, input);
+    }
     
     /**
      * Load program option definitions.
@@ -135,19 +149,6 @@ public:
 
         return options;
     }
-	
-	/**
-     * Load streamed value as parameter fallback.
-     *
-     * @param[in]  input  The input stream for loading the parameter.
-     * @param[in]         The loaded variables.
-     */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
-    {
-        auto secret = variables.find("SECRET");
-        if (secret == variables.end())
-            parse(argument_.secret, read_stream(input));
-    }
 
     /**
      * Invoke the command.
@@ -165,7 +166,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual serializer::hd_private get_secret_argument()
+    virtual serializer::hd_private& get_secret_argument()
     {
         return argument_.secret;
     }
@@ -173,7 +174,8 @@ public:
     /**
      * Set the value of the SECRET argument.
      */
-    virtual void set_secret_argument(serializer::hd_private value)
+    virtual void set_secret_argument(
+        const serializer::hd_private& value)
     {
         argument_.secret = value;
     }
@@ -181,7 +183,7 @@ public:
     /**
      * Get the value of the help option.
      */
-    virtual bool get_help_option()
+    virtual bool& get_help_option()
     {
         return option_.help;
     }
@@ -189,7 +191,8 @@ public:
     /**
      * Set the value of the help option.
      */
-    virtual void set_help_option(bool value)
+    virtual void set_help_option(
+        const bool& value)
     {
         option_.help = value;
     }
@@ -197,7 +200,7 @@ public:
     /**
      * Get the value of the hard option.
      */
-    virtual bool get_hard_option()
+    virtual bool& get_hard_option()
     {
         return option_.hard;
     }
@@ -205,7 +208,8 @@ public:
     /**
      * Set the value of the hard option.
      */
-    virtual void set_hard_option(bool value)
+    virtual void set_hard_option(
+        const bool& value)
     {
         option_.hard = value;
     }
@@ -213,7 +217,7 @@ public:
     /**
      * Get the value of the index option.
      */
-    virtual uint32_t get_index_option()
+    virtual uint32_t& get_index_option()
     {
         return option_.index;
     }
@@ -221,7 +225,8 @@ public:
     /**
      * Set the value of the index option.
      */
-    virtual void set_index_option(uint32_t value)
+    virtual void set_index_option(
+        const uint32_t& value)
     {
         option_.index = value;
     }
@@ -237,7 +242,9 @@ private:
     {
         argument()
           : secret()
-            {}
+        {
+        }
+        
         serializer::hd_private secret;
     } argument_;
     
@@ -252,7 +259,9 @@ private:
           : help(),
             hard(),
             index()
-            {}    
+        {
+        }
+        
         bool help;
         bool hard;
         uint32_t index;

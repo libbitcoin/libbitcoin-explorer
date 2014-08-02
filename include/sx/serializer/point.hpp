@@ -63,8 +63,8 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     point(const bc::output_point& value)
+        : value_(value)
     {
-        std::copy(value.hash.begin(), value.hash.end(), value_.hash.begin());
         value_.index = value.index;
     }
 
@@ -114,7 +114,7 @@ public:
         if (tokens.size() != 2)
             throw po::invalid_option_value(text);
 
-        parse(argument.value_.index, tokens[1]);
+//        parse(argument.value_.index, tokens[1]);
         bc::hash_digest hash = btc256(tokens[0]);
 
         std::copy(hash.begin(), hash.end(), argument.value_.hash.begin());
