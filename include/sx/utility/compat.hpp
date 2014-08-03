@@ -20,18 +20,20 @@
 #ifndef SX_COMPAT_H
 #define SX_COMPAT_H
 
-#include <boost/filesystem.hpp>
+#ifdef _MSC_VER
+    // For SET_BINARY_FILE_MODE
+    #include <fcntl.h>
+    #include <io.h>
+    #include <stdio.h>
+#endif
 
-//#ifdef _WIN32
-//    #define WIDE(s) L#s
-//    typedef wchar_t tchar;
-//    typedef std::wstring tstring;
-//    typedef boost::filesystem::wpath tpath;
-//#else
-//    #define WIDE(s) s
-//    typedef char tchar;
-//    typedef std::string tstring;
-//    typedef boost::filesystem::path tpath;
-//#endif
+// Sets the _fmode global variable, which controls the default translation
+// mode for file I/O operations.
+#ifdef _MSC_VER
+    #define SET_BINARY_FILE_MODE(mode) \
+        _setmode(_fileno(stdin), if_else(mode, _O_BINARY, _O_TEXT))
+#else
+    #define SET_BINARY_FILE_MODE(mode)
+#endif
 
 #endif

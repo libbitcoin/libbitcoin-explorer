@@ -78,14 +78,23 @@ std::string printer::format_usage_arguments()
 // TODO: component test.
 std::string printer::format_usage_options()
 {
-    return join(format_usage_toggle_options(),
-        format_usage_value_options());
+    std::vector<std::string> words;
+    words.push_back(format_usage_toggle_options());
+    words.push_back(format_usage_value_options());
+    std::string sentence;
+    join(words, sentence);
+    return sentence;
 }
 
 // TODO: component test.
 std::string printer::format_usage_parameters()
 {
-    return join(format_usage_options(), format_usage_arguments());
+    std::vector<std::string> words;
+    words.push_back(format_usage_options());
+    words.push_back(format_usage_arguments());
+    std::string sentence;
+    join(words, sentence);
+    return sentence;
 }
 
 // TODO: implement, component test.
@@ -118,17 +127,6 @@ void printer::initialize()
         param.initialize(*option_ptr, argument_names);
         parameters.push_back(param);
     }
-}
-
-// TODO: move to util, test.
-std::string printer::join(const std::string& left, const std::string& right,
-    const std::string& delimiter)
-{
-    if (left.empty())
-        return right;
-    if (right.empty())
-        return left;
-    return left + delimiter + right;
 }
 
 /* Printers */

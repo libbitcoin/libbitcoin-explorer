@@ -43,7 +43,7 @@ console_result mnemonic_encode::invoke(std::istream& input,
 
     std::string sentence;
     auto words_list = encode_mnemonic(text_seed);
-    join(words_list, sentence);
+    join(words_list, sentence, " \n\t");
 
     std::cout << sentence << std::endl;
     return console_result::okay;

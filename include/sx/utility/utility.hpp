@@ -46,14 +46,9 @@
 namespace sx {
 
 /**
- * Default delimiter for use in word joining operations.
+ * Default delimiter for use in word splitting and joining operations.
  */
-#define SX_JOIN_DELIMITER " \n\t"
-
-/**
- * Default delimiter for use in sentence splitting operations.
- */
-#define SX_SPLIT_DELIMITER " "
+#define SX_SENTENCE_DELIMITER " "
     
 /**
  * Conventional command line argument sentinel for indicating that a file
@@ -316,10 +311,10 @@ void serialize_satoshi_item(bc::data_chunk& data, const Item& item)
  *
  * @param[in]  words      The list of strings to join.
  * @param[in]  sentence   The resulting string.
- * @param[in]  delimiter  The delimiter, defaults to SX_JOIN_DELIMITER.
+ * @param[in]  delimiter  The delimiter, defaults to SX_SENTENCE_DELIMITER.
  */
 void join(const std::vector<std::string>& words, std::string& sentence,
-    const std::string& delimiter=SX_JOIN_DELIMITER);
+    const std::string& delimiter=SX_SENTENCE_DELIMITER);
 
 /**
  * Get the local time, second level resolution, based on the time zone settings
@@ -364,10 +359,10 @@ void sleep_ms(uint32_t milliseconds);
  *
  * @param[in]  sentence   The string to split.
  * @param[out] words      The list of resulting strings.
- * @param[in]  delimiter  The delimeter, defaults to SX_SPLIT_DELIMITER.
+ * @param[in]  delimiter  The delimeter, defaults to SX_SENTENCE_DELIMITER.
  */
 void split(const std::string& sentence, std::vector<std::string>& words,
-    const std::string& delimiter=SX_SPLIT_DELIMITER);
+    const std::string& delimiter=SX_SENTENCE_DELIMITER);
 
 /**
  * Trim a string of whitespace.
@@ -380,10 +375,10 @@ void trim(std::string& value);
  * Trim the left side of a string of the specified characters.
  *
  * @param[out] value  The string to split.
- * @param[in] value   The characters to trim, defaults to SX_SPLIT_DELIMITER.
+ * @param[in] value   The characters to trim, defaults to SX_SENTENCE_DELIMITER.
  */
 void trim_left(std::string& value, 
-    const std::string& chars=SX_SPLIT_DELIMITER);
+    const std::string& chars=SX_SENTENCE_DELIMITER);
 
 } // sx
 

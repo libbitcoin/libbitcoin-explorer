@@ -17,43 +17,48 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/unit_test_suite.hpp>
-#include <sx/sx.hpp>
 #include "command.hpp"
+
+#define BASE58_ENCODED_A "vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D"
+#define BASE58_DECODED_A \
+{{ \
+    0x03, 0x1b, 0xab, 0x84, 0xe6, 0x87, 0xe3, 0x65, 0x14, 0xee, 0xaf, 0x5a, \
+    0x01, 0x7c, 0x30, 0xd3, 0x2c, 0x1f, 0x59, 0xdd, 0x4e, 0xa6, 0x62, 0x9d, \
+    0xa7, 0x97, 0x0c, 0xa3, 0x74, 0x51, 0x3d, 0xd0,  0x06 \
+}}
 
 SX_USING_NAMESPACES()
 
 // This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(base58__invoke)
+BOOST_AUTO_TEST_SUITE(base58__serializer)
 
-BOOST_AUTO_TEST_CASE(base58__constructor__bogus_text__throws_invalid_option_exception)
+BOOST_AUTO_TEST_CASE(base58__constructor__default__does_not_throw)
 {
-    SX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(base58("*%^$&#@!"));
+    BOOST_REQUIRE_NO_THROW(base58());
 }
 
-BOOST_AUTO_TEST_CASE(base58__constructor__valid_text__does_not_throw)
+BOOST_AUTO_TEST_CASE(base58__constructor__bogus_string__throws_invalid_option)
 {
-    BOOST_REQUIRE_NO_THROW(base58("vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D"));
+    SX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(base58("bo-gus"));
 }
 
-BOOST_AUTO_TEST_CASE(base58__constructor__valid_text__cast_returns_data)
+BOOST_AUTO_TEST_CASE(base58__constructor__valid_string_cast__decodes)
 {
-    auto test = base58("vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D");
-    auto cast = const_cast<bc::data_chunk&>((const bc::data_chunk&)test);
-    BOOST_REQUIRE(std::equal(cast.begin(), cast.end(), test.data().begin()));
+    const data_chunk original(BASE58_DECODED_A);
+    const data_chunk instance(base58(BASE58_ENCODED_A));
+    BOOST_REQUIRE(original == instance);
 }
 
-BOOST_AUTO_TEST_CASE(base58__constructor__valid_data_chunk__round_trips_data)
+BOOST_AUTO_TEST_CASE(base58__constructor__chunk_data__decodes)
 {
-    auto value = bc::decode_base58("vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D");
-    BOOST_REQUIRE(std::equal(value.begin(), value.end(), base58(value).data().begin()));
+    const data_chunk original(BASE58_DECODED_A);
+    const data_chunk instance = base58(original).data();
+    BOOST_REQUIRE(original == instance);
 }
 
-BOOST_AUTO_TEST_CASE(base58__serializers__valid_value__round_trips)
+BOOST_AUTO_TEST_CASE(base58__constructor__copy_address_serializer__round_trips)
 {
-    SX_SERIALIZE_COPY_ROUND_TRIP(base58, "vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D");
+    SX_SERIALIZE_COPY_ROUND_TRIP(base58, BASE58_ENCODED_A);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

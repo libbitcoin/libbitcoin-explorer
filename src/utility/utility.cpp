@@ -24,11 +24,6 @@
 #pragma warning(push) 
 #pragma warning(disable : 4996)
 #include <sx/utility/utility.hpp>
-#ifdef _MSC_VER
-#include <fcntl.h>
-#include <io.h>
-#include <stdio.h>
-#endif
 #include <iomanip>
 #include <iostream>
 #include <random>
@@ -40,6 +35,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <bitcoin/bitcoin.hpp>
 #pragma warning(pop)
+#include <sx/utility/compat.hpp>
 
 namespace sx {
 
@@ -76,22 +72,10 @@ void random_secret(bc::ec_secret& secret)
 
 std::string read_stream(std::istream& stream)
 {
-#ifdef _MSC_VER
-    // The function sets the _fmode global variable.
-    // This specifies the default translation mode for 
-    // file I/O operations 
-    _setmode(_fileno(stdin), _O_BINARY);
-#endif
-
+    SET_BINARY_FILE_MODE(true);
     std::istreambuf_iterator<char> first(stream), last;
     std::string result(first, last);
-
-#ifdef _MSC_VER
-    // The default setting of _fmode is _O_TEXT.
-    // msdn.microsoft.com/en-us/library/61dstksf.aspx
-    _setmode(_fileno(stdin), _O_TEXT);
-#endif
-
+    SET_BINARY_FILE_MODE(false);
     return result;
 }
 

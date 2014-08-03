@@ -131,18 +131,6 @@ public:
     virtual void initialize();
 
     /**
-     * Join the two arguments with the delimiter unless one is empty.
-     * TODO: move to general utilities.
-     *
-     * @param[in]  left       The left side of the join.
-     * @param[in]  right      The right side of the join.
-     * @param[in]  delimiter  The delimiter between joined arguments.
-     * @return                The join result.
-     */
-    virtual std::string join(const std::string& left, const std::string& right,
-        const std::string& delimiter=" ");
-
-    /**
      * Serialize command line help (full details).
      */
     virtual void print_help();
