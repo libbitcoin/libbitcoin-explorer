@@ -150,6 +150,16 @@ public:
                 "Set to true in order to operate this application using Bitcoin testnet (vs. mainnet) addressing and blockchain data. This option is EXPERIMENTAL because other  libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
             )
             (
+                "logging.debug",
+                value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
+                "The file and path name to the debug log file."
+            )
+            (
+                "logging.error",
+                value<boost::filesystem::path>(&setting_.logging.error)->default_value("error.log"),
+                "The file and path name to the error log file."
+            )
+            (
                 "obelisk.client-certificate",
                 value<boost::filesystem::path>(&setting_.obelisk.client_certificate),
                 "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.sx.cert"
@@ -219,6 +229,38 @@ public:
     virtual void set_general_testnet_setting(bool value)
     {
         setting_.general.testnet = value;
+    }
+    
+    /**
+     * Get the value of the logging.debug setting.
+     */
+    virtual boost::filesystem::path get_logging_debug_setting()
+    {
+        return setting_.logging.debug;
+    }
+
+    /**
+     * Set the value of the logging.debug setting.
+     */
+    virtual void set_logging_debug_setting(boost::filesystem::path value)
+    {
+        setting_.logging.debug = value;
+    }
+    
+    /**
+     * Get the value of the logging.error setting.
+     */
+    virtual boost::filesystem::path get_logging_error_setting()
+    {
+        return setting_.logging.error;
+    }
+
+    /**
+     * Set the value of the logging.error setting.
+     */
+    virtual void set_logging_error_setting(boost::filesystem::path value)
+    {
+        setting_.logging.error = value;
     }
     
     /**
@@ -321,6 +363,18 @@ private:
             bool testnet;
         } general;
 
+        struct logging
+        {
+            logging()
+              : debug(),
+                error()
+            {
+            }
+            
+            boost::filesystem::path debug;
+            boost::filesystem::path error;
+        } logging;
+
         struct obelisk
         {
             obelisk()
@@ -337,6 +391,7 @@ private:
 
         setting()
           : general(),
+            logging(),
             obelisk()
         {
         }

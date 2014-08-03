@@ -312,6 +312,11 @@ BOOST_AUTO_TEST_CASE(generated__find__sendtx_obelisk__returns_object)
     BOOST_REQUIRE(find(sendtx_obelisk::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__sendtx_p2p__returns_object)
+{
+    BOOST_REQUIRE(find(sendtx_p2p::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__sha160__returns_object)
 {
     BOOST_REQUIRE(find(sha160::symbol()) != nullptr);

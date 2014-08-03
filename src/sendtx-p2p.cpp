@@ -17,15 +17,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <sx/define.hpp>
 #include <sx/command/sendtx-p2p.hpp>
+
+#include <iostream>
+#include <boost/filesystem.hpp>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/async_client.hpp>
+#include <sx/define.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 // Needed for the C callback capturing the signals.
 static bool stopped = false;
@@ -37,6 +40,7 @@ static void output_to_file(std::ofstream& file, log_level level,
         return;
 
     file << level_repr(level);
+
     if (!domain.empty())
         file << " [" << domain << "]";
 
@@ -51,6 +55,7 @@ static void output_cerr_and_file(std::ofstream& file, log_level level,
 
     std::ostringstream output;
     output << level_repr(level);
+
     if (!domain.empty())
         output << " [" << domain << "]";
 
@@ -58,16 +63,22 @@ static void output_cerr_and_file(std::ofstream& file, log_level level,
     std::cerr << output.str() << std::endl;
 }
 
-static void signal_handler(int sig)
+static void signal_handler(int signal)
 {
-    log_info() << "Caught signal: " << sig;
+    log_info() << "Caught signal: " << signal;
     stopped = true;
 }
 
 // Started protocol. Node discovery complete.
 static void handle_start(const std::error_code& error)
 {
-    terminate_process_on_error(error);
+    if (error)
+    {
+        log_warning() << "Start failed: " << error.message();
+        stopped = true;
+        return;
+    }
+
     log_debug() << "Started.";
 }
 
@@ -76,9 +87,12 @@ static void handle_start(const std::error_code& error)
 static void check_connection_count(const std::error_code& error, 
     size_t connection_count, size_t node_count)
 {
-    terminate_process_on_error(error);
-    log_debug() << connection_count << " CONNECTIONS";
-    if (connection_count >= node_count)
+    if (error)
+        log_warning() << "Check failed: " << error.message();
+    else
+        log_debug() << connection_count << " CONNECTIONS";
+
+    if (error || connection_count >= node_count)
         stopped = true;
 }
 
@@ -86,63 +100,79 @@ static void check_connection_count(const std::error_code& error,
 static void send_tx(const std::error_code& error, channel_ptr node, 
     protocol& prot, transaction_type& tx)
 {
-    terminate_process_on_error(error);
-    std::cout << "sendtx-p2p: Sending " << hash_transaction(tx) << std::endl;
-    auto handle_send =
-        [](const std::error_code& error)
-        {
-            if (error)
-                log_warning() << "Send failed: " << error.message();
-            else
-                std::cout << "sendtx-p2p: Sent " << time(nullptr) << std::endl;
-        };
+    if (error)
+    {
+        log_warning() << "Setup failed: " << error.message();
+        stopped = true;
+        return;
+    }
+
+    std::cout << "Sending " << hash_transaction(tx) << std::endl;
+
+    auto handle_send = [](const std::error_code& error)
+    {
+        if (error)
+            log_warning() << "Send failed: " << error.message();
+        else
+            std::cout << "Sent " << now() << std::endl;
+    };
+
     node->send(tx, handle_send);
-    prot.subscribe_channel(std::bind(send_tx, _1, _2, std::ref(prot), 
+    prot.subscribe_channel(std::bind(send_tx, ph::_1, ph::_2, std::ref(prot),
         std::ref(tx)));
 }
 
-console_result sendtx_p2p::invoke(int argc, const char* argv[])
+static void bind_logging(const boost::filesystem::path& debug, 
+    const boost::filesystem::path& error)
 {
-    if (!validate_argument_range(argc, example(), 2, 3))
-        return console_result::failure;
-
-    transaction_type tx;
-    const std::string filename(get_filename(argc, argv));
-    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
+    if (!debug.empty())
     {
-        std::cerr << "sx: Deserializing transaction failed." << std::endl;
-        return console_result::failure;
+        std::ofstream debug_file(debug.generic_string());
+        log_debug().set_output_function(
+            std::bind(output_to_file, std::ref(debug_file),
+            ph::_1, ph::_2, ph::_3));
+
+        log_info().set_output_function(
+            std::bind(output_to_file, std::ref(debug_file),
+            ph::_1, ph::_2, ph::_3));
     }
 
-    size_t node_count = 2;
-    if (argc > 2)
+    if (!error.empty())
     {
-        if (!parse(node_count, argv[2]))
-        {
-            std::cerr << "sign-input: Bad N provided" << std::endl;
-            return console_result::failure;
-        }
+        std::ofstream error_file(error.generic_string());
+        log_warning().set_output_function(
+            std::bind(output_to_file, std::ref(error_file),
+            ph::_1, ph::_2, ph::_3));
+
+        log_error().set_output_function(
+            std::bind(output_cerr_and_file, std::ref(error_file),
+            ph::_1, ph::_2, ph::_3));
+
+        log_fatal().set_output_function(
+            std::bind(output_cerr_and_file, std::ref(error_file),
+            ph::_1, ph::_2, ph::_3));
     }
+}
 
-    // Move to local function
-    std::ofstream outfile("debug.log"), errfile("error.log");
-    log_debug().set_output_function(
-        std::bind(output_to_file, std::ref(outfile), ph::_1, ph::_2, ph::_3));
-    log_info().set_output_function(
-        std::bind(output_to_file, std::ref(outfile), ph::_1, ph::_2, ph::_3));
-    log_warning().set_output_function(
-        std::bind(output_to_file, std::ref(errfile), ph::_1, ph::_2, ph::_3));
-    log_error().set_output_function(
-        std::bind(output_cerr_and_file, std::ref(errfile), ph::_1, ph::_2,
-            ph::_3));
-    log_fatal().set_output_function(
-        std::bind(output_cerr_and_file, std::ref(errfile), ph::_1, ph::_2,
-            ph::_3));
+console_result sendtx_p2p::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
+{
+    // Bound parameters.
+    const auto& debug_log = get_logging_debug_setting();
+    const auto& error_log = get_logging_error_setting();
+    const auto& transactions = get_transactions_argument();
+    const auto& node_count = get_nodes_option();
 
-    // Use thread pool manager.
-    threadpool pool(4);
+    // TODO: remove this hack which requires one element.
+    const transaction_type& tx = transactions.front();
+
+    bind_logging(debug_log, error_log);
+
+    // Is 4 threads and a 2 sec wait necessary here?
+    async_client client(*this, 4);
 
     // Create dependencies for our protocol object.
+    auto& pool = client.get_threadpool();
     hosts hst(pool);
     handshake hs(pool);
     network net(pool);
@@ -154,7 +184,7 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
     // Perform node discovery if needed and then creating connections.
     prot.start(handle_start);
     prot.subscribe_channel(
-        std::bind(send_tx, ph::_1, ph::_2, std::ref(prot), std::ref(tx)));
+        std::bind(send_tx, ph::_1, ph::_2, std::ref(prot), tx));
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, signal_handler);
@@ -162,17 +192,15 @@ console_result sendtx_p2p::invoke(int argc, const char* argv[])
     signal(SIGINT, signal_handler);
 
     // Check the connection count every 2 seconds.
-    while (!stopped)
-    {
+    const auto work = [&prot, &node_count]
+    { 
         prot.fetch_connection_count(
             std::bind(check_connection_count, ph::_1, ph::_2, node_count));
-        sleep_ms(2000);
-    }
+    };
 
+    client.poll(stopped, 2000, work);
     const auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
 
-    pool.stop();
-    pool.join();
     return console_result::okay;
 }

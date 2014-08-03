@@ -46,19 +46,22 @@ void async_client::detached_poll(bool& done, uint32_t period_ms,
 {
     auto work = [this, &done, period_ms, action]
     { 
-        this->work(done, period_ms, action); 
+        this->poll(done, period_ms, action);
     };
 
     std::thread worker_thread(work);
     worker_thread.detach();
 }
 
-// Not yet unit testable (nonvirtual pool).
 void async_client::poll(bool& done, uint32_t period_ms,
     std::function<void()> action)
 {
-    work(done, period_ms, action);
-    stop();
+    while (!done)
+    {
+        if (action)
+            action();
+        sleep(period_ms);
+    }
 }
 
 // Test wrapper, not testable.
@@ -73,17 +76,6 @@ void async_client::stop()
     auto& pool = get_threadpool();
     pool.stop();
     pool.join();
-}
-
-void async_client::work(bool& done, uint32_t period_ms, 
-    std::function<void()> action)
-{
-    while (!done)
-    {
-        if (action)
-            action();
-        sleep(period_ms);
-    }
 }
 
 } // sx

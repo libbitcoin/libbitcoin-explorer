@@ -101,6 +101,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "seed\n" \
         "sendtx-node\n" \
         "sendtx-obelisk\n" \
+        "sendtx-p2p\n" \
         "sha160\n" \
         "sha256\n" \
         "sha512\n" \

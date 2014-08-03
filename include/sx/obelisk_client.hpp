@@ -53,14 +53,14 @@ public:
     virtual obelisk::fullnode_interface& get_fullnode();
 
     /**
-     * Polling work.
+     * Poll for changes until stopped.
      *
      * @param[in]  done       A flag that signals cessation of polling.
      * @param[in]  period_ms  The polling period in ms, defaults to 100.
-     * @param[in]  action     The poll function to execute, defaults to noop.
+     * @param[in]  action     The poll function to execute, defaults to null.
      */
-    virtual void work(bool& done, uint32_t period_ms,
-        std::function<void()> action=noop);
+    virtual void poll(bool& done, uint32_t period_ms=default_poll_period_ms,
+        std::function<void()> action=nullptr);
 
 private:
 

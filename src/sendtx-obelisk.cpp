@@ -59,7 +59,7 @@ console_result sendtx_obelisk::invoke(std::istream& input,
     const auto& transactions = get_transactions_argument();
 
     // TODO: remove this hack which requires one element.
-    const bc::transaction_type& tx = transactions.front();
+    const transaction_type& tx = transactions.front();
 
     node_stopped = false;
     result = console_result::okay;

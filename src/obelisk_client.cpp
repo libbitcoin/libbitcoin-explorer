@@ -39,12 +39,12 @@ obelisk::fullnode_interface& obelisk_client::get_fullnode()
 }
 
 // Not yet unit testable (nonvirtual fullnode).
-void obelisk_client::work(bool& done, uint32_t period_ms,
+void obelisk_client::poll(bool& done, uint32_t period_ms,
     std::function<void()> action)
 {
     if (action)
     {
-        async_client::work(done, period_ms, action);
+        async_client::poll(done, period_ms, action);
         return;
     }
 

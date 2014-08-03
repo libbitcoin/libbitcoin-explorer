@@ -15,6 +15,11 @@
     <setting name="testnet" type="bool" description="Set to true in order to operate this application using Bitcoin testnet (vs. mainnet) addressing and blockchain data. This option is EXPERIMENTAL because other  libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
   </configuration>
   
+  <configuration section="logging">
+    <setting name="debug" type="path" default="debug.log" description="The file and path name to the debug log file." />
+    <setting name="error" type="path" default="error.log" description="The file and path name to the error log file." />
+  </configuration>
+  
   <configuration section="obelisk">
     <!-- TODO: create serialized type for URI -->
     <setting name="client-certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.sx.cert" />
@@ -53,6 +58,16 @@
     <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
   </command>
+  
+  <command symbol="base58-decode" category="HASH">
+    <option name="help" description="Convert a Base58 value to a hex encoded data." />
+    <argument name="BASE58" stream="true" type="base58" description="The Base58 encoded value to decode." />
+  </command>
+
+  <command symbol="base58-encode" category="HASH">
+    <option name="help" description="Convert a hex encoded data to Base58." />
+    <argument name="HEX" stream="true" type="hex" description="The hex encoded data to Base58 encode." />
+  </command>
 
   <command symbol="base58check-decode" category="HASH" stub="true">
     <option name="help" description="Convert a Base58Check value to hex encoded data." />
@@ -64,16 +79,6 @@
     <option name="help" description="Convert hex encoded data to Base58Check." />
     <argument name="HEX" stream="true" type="hex" description="The hex encoded value to Base58Check encode." />
     <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-  </command>
-  
-  <command symbol="base58-decode" category="HASH">
-    <option name="help" description="Convert a Base58 value to a hex encoded data." />
-    <argument name="BASE58" stream="true" type="base58" description="The Base58 encoded value to decode." />
-  </command>
-
-  <command symbol="base58-encode" category="HASH">
-    <option name="help" description="Convert a hex encoded data to Base58." />
-    <argument name="HEX" stream="true" type="hex" description="The hex encoded data to Base58 encode." />
   </command>
   
   <command symbol="bci-fetch-last-height" category="ONLINE" stub="true">
@@ -277,6 +282,12 @@
     <option name="help" description="Convert a HD (BIP32) private key to a WIF private key." />
     <argument name="SECRET" stream="true" type="hd_private" description="The HD private key to convert." />
   </command>
+
+  <command symbol="help" category="SX">
+    <option name="help" description="Get help for any command." />
+    <argument name="COMMAND" stream="true" description="The command for which help is requested." />
+    <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
+  </command>
   
   <command symbol="history" category="ONLINE" obelisk="true">
     <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires a server connection." />
@@ -288,25 +299,19 @@
     <define name="SX_HISTORY_OUTPUT" value="Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%\n" />
   </command>
 
-  <command symbol="help" category="SX">
-    <option name="help" description="Get help for any command." />
-    <argument name="COMMAND" stream="true" description="The command for which help is requested." />
-    <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
-  </command>
-
   <command symbol="initchain" category="ONLINE" obsolete="true">
     <option name="help" description="Initialize a new blockchain database." />
     <define name="SX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
   </command>
   
-  <command symbol="mnemonic-encode" category="WALLET">
-    <option name="help" description="Convert a seed to its BIP39 mnemonic." />
-    <argument name="SEED" stream="true" type="hex" description="The hex encoded seed. WARNING: seed should be random and at least 128 bits in length." />
-  </command>
-  
   <command symbol="mnemonic-decode" category="WALLET">
     <option name="help" description="Convert a BIP39 mnemonic to its seed. WARNING: mnemonic should be generated from a random seed." />
     <argument name="WORD" stream="true" limit="-1" description="The set of words from the BIP39 word list." />
+  </command>
+  
+  <command symbol="mnemonic-encode" category="WALLET">
+    <option name="help" description="Convert a seed to its BIP39 mnemonic." />
+    <argument name="SEED" stream="true" type="hex" description="The hex encoded seed. WARNING: seed should be random and at least 128 bits in length." />
   </command>
   
   <command symbol="monitor" category="ONLINE" obelisk="true">
@@ -361,6 +366,12 @@
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server." />
     <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
     <define name="SX_SENDTX_OBELISK_OUTPUT" value="Sent transaction at %1%." />
+  </command>
+
+  <command symbol="sendtx-p2p" category="ONLINE">
+    <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via the Bitcoin peer-to-peer network." />
+    <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to two." />
+    <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
   </command>
 
   <command symbol="sha160" category="HASH">

@@ -76,15 +76,16 @@ console_result sendtx_node::invoke(std::istream& input,
     const auto& transactions = get_transactions_argument();
 
     // TODO: remove this hack which requires one element.
-    const bc::transaction_type& tx = transactions.front();
+    const transaction_type& tx = transactions.front();
 
     node_stopped = false;
     result = console_result::okay;
 
     // Is 4 threads and a 2 sec wait necessary here?
     async_client client(*this, 4);
-    handshake shake(client.get_threadpool());
-    network net(client.get_threadpool());
+    auto& pool = client.get_threadpool();
+    handshake shake(pool);
+    network net(pool);
     connect(shake, net, host, port, std::bind(send_tx, ph::_1, ph::_2, tx));
     client.poll(node_stopped, 2000);
 

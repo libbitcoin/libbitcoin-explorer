@@ -93,6 +93,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<seed>());
     func(make_shared<sendtx_node>());
     func(make_shared<sendtx_obelisk>());
+    func(make_shared<sendtx_p2p>());
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
@@ -224,6 +225,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sendtx_node>();
     if (symbol == sendtx_obelisk::symbol())
         return make_shared<sendtx_obelisk>();
+    if (symbol == sendtx_p2p::symbol())
+        return make_shared<sendtx_p2p>();
     if (symbol == sha160::symbol())
         return make_shared<sha160>();
     if (symbol == sha256::symbol())

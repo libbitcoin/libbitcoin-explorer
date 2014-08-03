@@ -81,6 +81,7 @@
 #include <sx/command/seed.hpp>
 #include <sx/command/sendtx-node.hpp>
 #include <sx/command/sendtx-obelisk.hpp>
+#include <sx/command/sendtx-p2p.hpp>
 #include <sx/command/sha160.hpp>
 #include <sx/command/sha256.hpp>
 #include <sx/command/sha512.hpp>
