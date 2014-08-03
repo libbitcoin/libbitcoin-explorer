@@ -32,13 +32,9 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// TODO: this should be a member of sx::extensions::sendtx_node,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void send_tx(const std::error_code& error, channel_ptr node,
     transaction_type& tx)
 {
@@ -53,13 +49,13 @@ static void send_tx(const std::error_code& error, channel_ptr node,
     auto handle_send = [node, tx](const std::error_code& error)
     {
         if (error)
-            std::cerr << error << std::endl;
-        else
         {
-            const auto& hash = item<bc::transaction_type>(tx);
-            std::cout << boost::format(SX_SENDTX_NODE_OUTPUT) % hash % now() 
-                << std::endl;
+            std::cerr << error << std::endl;
+            result = console_result::failure;
         }
+        else
+            std::cout << boost::format(SX_SENDTX_NODE_OUTPUT) % 
+                item<bc::transaction_type>(tx) % now() << std::endl;
 
         stopped = true;
     };
@@ -80,7 +76,6 @@ console_result sendtx_node::invoke(std::istream& input,
     stopped = false;
     result = console_result::okay;
 
-    // Is 4 threads and a 2 sec wait necessary here?
     async_client client(*this, 4);
     auto& pool = client.get_threadpool();
     handshake shake(pool);

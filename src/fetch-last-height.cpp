@@ -29,13 +29,9 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-// TODO: this should be a member of sx::extensions::fetch_last_height,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void last_height_fetched(const std::error_code& error, size_t height)
 {
     if (error)

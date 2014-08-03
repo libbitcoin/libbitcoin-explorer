@@ -22,17 +22,20 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/serializer/hex.hpp>
+#include <sx/serializer/item.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
-using namespace obelisk;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 static bool stopped;
 static console_result result;
 
-static void subscribed(const std::error_code& error, const worker_uuid& worker)
+static void subscribed(const std::error_code& error, 
+    const obelisk::worker_uuid& worker)
 {
     if (error)
     {
@@ -40,16 +43,12 @@ static void subscribed(const std::error_code& error, const worker_uuid& worker)
         std::cerr << error.message() << std::endl;
         result = console_result::failure;
         stopped = true;
+        return;
     }
-    else
-    {
-        // TODO: localize
-        std::cout << "Waiting for updates..." << std::endl;
-    }
+
+    std::cout << SX_MONITOR_WAITING << std::endl;
 }
 
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void subscription_handler(const std::error_code& error, size_t height,
     const hash_digest& block_hash, const transaction_type& tx)
 {
@@ -59,30 +58,26 @@ static void subscription_handler(const std::error_code& error, size_t height,
         std::cerr << error.message() << std::endl;
         result = console_result::failure;
         stopped = true;
+        return;
     }
-    else
-    {
-        // TODO: localize
-        std::cout << "Update " << hash_transaction(tx)
-            << " [ #" << height << " " << block_hash << " ]" << std::endl;
-    }
+
+    std::cout << boost::format(SX_MONITOR_OUTPUT) % 
+        item<transaction_type>(tx) % height % hex(block_hash) << std::endl;
 }
 
 console_result monitor::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    const auto bitfield = get_bitfield_option();
-    const auto number_bits = get_number_bits_option();
+    //const auto height = get_height_option();
+    const stealth_prefix prefix = get_prefix_option();
 
-    stealth_prefix prefix{ 0, 0 };
-    if (number_bits > 0)
+    // TODO: create stealth prefix serializer and capture this.
+    constexpr size_t max_prefix_bytes = sizeof(uint32_t);
+    if (prefix.size() > max_prefix_bytes * byte_bits)
     {
-        // TODO: set bitfield and number_bits into prefix.
-
-        // NOTE: this defined a single uint32 prefix value but it's 
-        // not clear to me how this can accomdate the intent of the
-        // bitfield and number of bits design.
+        cerr << SX_MONITOR_BITFIELD_TOO_LONG << std::endl;
+        return console_result::failure;
     }
 
     stopped = false;

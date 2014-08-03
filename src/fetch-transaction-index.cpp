@@ -30,14 +30,9 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-// TODO: this should be a member of sx::extensions::fetch_transaction_index,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
-// TODO: abstract formats.
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void index_fetched(const std::error_code& error,
     size_t height, size_t index)
 {
@@ -48,7 +43,7 @@ static void index_fetched(const std::error_code& error,
     }
     else
         std::cout << boost::format(SX_FETCH_TRANSACTION_INDEX_OUTPUT) %
-            height % index;
+            height % index << std::endl;
 
     stopped = true;
 }

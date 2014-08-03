@@ -36,13 +36,9 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// TODO: this should be a member of sx::extensions::fetch_stealth,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void stealth_fetched(const std::error_code& error,
     const blockchain::stealth_list& stealth_results)
 {
@@ -55,7 +51,7 @@ static void stealth_fetched(const std::error_code& error,
         for (const blockchain::stealth_row& row : stealth_results)
             std::cout << boost::format(SX_FETCH_STEALTH_OUTPUT) %
                 hex(row.ephemkey) % address(row.address) %
-                btc256(row.transaction_hash);
+                btc256(row.transaction_hash) << std::endl;
 
     stopped = true;
 }
@@ -67,6 +63,7 @@ console_result fetch_stealth::invoke(std::istream& input,
     const auto height = get_height_option();
     const stealth_prefix prefix = get_prefix_option();
 
+    // TODO: create stealth prefix serializer and capture this.
     constexpr size_t max_prefix_bytes = sizeof(uint32_t);
     if (prefix.size() > max_prefix_bytes * byte_bits)
     {

@@ -20,6 +20,7 @@
 #include <sx/command/validtx.hpp>
 
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/utility/utility.hpp>
@@ -42,9 +43,9 @@ static void valid_tx(const std::error_code& error,
         return;
     }
 
-    std::cout << error.message() << std::endl;
-    for (size_t unconfirmed_index: unconfirmed)
-        std::cout << "  Unconfirmed: " << unconfirmed_index << std::endl;
+    for (const auto unconfirmed_index: unconfirmed)
+        std::cout << boost::format(SX_VALIDTX_OUTPUT) % unconfirmed_index
+            << std::endl;
 }
 
 console_result validtx::invoke(std::istream& input,

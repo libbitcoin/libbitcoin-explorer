@@ -130,7 +130,8 @@ static void history_fetched(const payment_address& pay_address,
             json_output);
 
         std::cout << boost::format(format) % address(pay_address) % 
-            row.output % output_height % row.value %  row_spend % spend_height;
+            row.output % output_height % row.value %  row_spend % spend_height
+            << std::endl;
     }
 
     if (json_output)

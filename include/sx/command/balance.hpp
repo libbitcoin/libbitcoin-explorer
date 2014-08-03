@@ -57,10 +57,8 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_BALANCE_INVALID_ADDRESS \
-    "Invalid address '%1%'."
 #define SX_BALANCE_OUTPUT \
-    "Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n"
+    "Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%"
 
 /**
  * Class to implement the sx balance command.

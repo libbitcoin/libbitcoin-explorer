@@ -55,6 +55,16 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_MONITOR_BITFIELD_TOO_LONG \
+    "The bitfield option exceeds 32 bits."
+#define SX_MONITOR_WAITING \
+    "Waiting for updates..."
+#define SX_MONITOR_OUTPUT \
+    "Update %1% [ #%2% %3% ]"
+
+/**
  * Class to implement the sx monitor command.
  */
 class monitor 
@@ -130,14 +140,9 @@ public:
                 "Monitor an address prefix. WARNING: THIS COMMAND IS EXPERIMENTAL"
             )
             (
-                "bitfield,b",
-                value<uint32_t>(&option_.bitfield),
-                "The stealth prefix bitfield. Number bits must be greater than zero for this to be used."
-            )
-            (
-                "number_bits,n",
-                value<uint32_t>(&option_.number_bits),
-                "The number of bits of the bitfield to include in the search. Defaults to zero."
+                "prefix,p",
+                value<serializer::binary>(&option_.prefix),
+                "The binary encoded stealth search prefix. Searches all transactions if not set."
             );
 
         return options;
@@ -174,37 +179,20 @@ public:
     }
 
     /**
-     * Get the value of the bitfield option.
+     * Get the value of the prefix option.
      */
-    virtual uint32_t& get_bitfield_option()
+    virtual serializer::binary& get_prefix_option()
     {
-        return option_.bitfield;
+        return option_.prefix;
     }
     
     /**
-     * Set the value of the bitfield option.
+     * Set the value of the prefix option.
      */
-    virtual void set_bitfield_option(
-        const uint32_t& value)
+    virtual void set_prefix_option(
+        const serializer::binary& value)
     {
-        option_.bitfield = value;
-    }
-
-    /**
-     * Get the value of the number_bits option.
-     */
-    virtual uint32_t& get_number_bits_option()
-    {
-        return option_.number_bits;
-    }
-    
-    /**
-     * Set the value of the number_bits option.
-     */
-    virtual void set_number_bits_option(
-        const uint32_t& value)
-    {
-        option_.number_bits = value;
+        option_.prefix = value;
     }
 
 private:
@@ -231,14 +219,12 @@ private:
     {
         option()
           : help(),
-            bitfield(),
-            number_bits()
+            prefix()
         {
         }
         
         bool help;
-        uint32_t bitfield;
-        uint32_t number_bits;
+        serializer::binary prefix;
     } option_;
 };
 

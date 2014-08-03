@@ -31,13 +31,9 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// TODO: this should be a member of sx::extensions::fetch_header_hash,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void hash_header_fetched(const std::error_code& error,
     const block_header_type& block_header)
 {
@@ -56,8 +52,6 @@ static void hash_header_fetched(const std::error_code& error,
     stopped = true;
 }
 
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void height_header_fetched(const std::error_code& error,
     const block_header_type& block_header)
 {
@@ -93,7 +87,6 @@ console_result fetch_header::invoke(std::istream& input, std::ostream& output,
         fullnode.blockchain.fetch_block_header(height, height_header_fetched);
     else
         fullnode.blockchain.fetch_block_header(hash, hash_header_fetched);
-
     client.poll(stopped);
 
     return result;

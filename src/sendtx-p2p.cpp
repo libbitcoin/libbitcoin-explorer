@@ -21,17 +21,18 @@
 
 #include <iostream>
 #include <boost/filesystem.hpp>
+#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/async_client.hpp>
 #include <sx/define.hpp>
 #include <sx/utility/utility.hpp>
+#include <sx/serializer/item.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
-// TODO: this should be a member of sx::extensions::monitor,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
@@ -41,12 +42,8 @@ static void output_to_file(std::ofstream& file, log_level level,
     if (body.empty())
         return;
 
-    file << level_repr(level);
-
-    if (!domain.empty())
-        file << " [" << domain << "]";
-
-    file << ": " << body << std::endl;
+    file << boost::format(SX_SENDTX_P2P_OUTPUT) % level_repr(level) % body
+        << std::endl;
 }
 
 static void output_cerr_and_file(std::ofstream& file, log_level level,
@@ -55,19 +52,14 @@ static void output_cerr_and_file(std::ofstream& file, log_level level,
     if (body.empty())
         return;
 
-    std::ostringstream output;
-    output << level_repr(level);
-
-    if (!domain.empty())
-        output << " [" << domain << "]";
-
-    output << ": " << body;
-    std::cerr << output.str() << std::endl;
+    std::cerr << boost::format(SX_SENDTX_P2P_OUTPUT) % level_repr(level) % body
+        << std::endl;
 }
 
 static void signal_handler(int signal)
 {
-    log_info() << "Caught signal: " << signal;
+    log_info() << boost::format(SX_SENDTX_P2P_SIGNAL) % signal 
+        /*<< std::endl*/;
     stopped = true;
 }
 
@@ -76,13 +68,14 @@ static void handle_start(const std::error_code& error)
 {
     if (error)
     {
-        log_warning() << "Start failed: " << error.message();
+        log_warning() << boost::format(SX_SENDTX_P2P_START_FAIL) % 
+            error.message() /*<< std::endl*/;
         result = console_result::failure;
         stopped = true;
         return;
     }
 
-    log_debug() << "Started.";
+    log_debug() << SX_SENDTX_P2P_START_OKAY;
 }
 
 // After number of connections is fetched, this completion handler is called
@@ -92,13 +85,16 @@ static void check_connection_count(const std::error_code& error,
 {
     if (error)
     {
-        log_warning() << "Check failed: " << error.message();
+        log_warning() << boost::format(SX_SENDTX_P2P_CHECK_FAIL) %
+            error.message() /*<< std::endl*/;
         result = console_result::failure;
         stopped = true;
         return;
     }
 
-    log_debug() << connection_count << " CONNECTIONS";
+    log_debug() << boost::format(SX_SENDTX_P2P_CHECK_OKAY) %
+        connection_count /*<< std::endl*/;
+
     if (connection_count >= node_count)
         stopped = true;
 }
@@ -109,22 +105,28 @@ static void send_tx(const std::error_code& error, channel_ptr node,
 {
     if (error)
     {
-        log_warning() << "Setup failed: " << error.message();
+        log_warning() << boost::format(SX_SENDTX_P2P_SETUP_FAIL) %
+            error.message() /*<< std::endl*/;
         result = console_result::failure;
         stopped = true;
         return;
     }
 
-    std::cout << "Sending " << hash_transaction(tx) << std::endl;
+    std::cout << boost::format(SX_SENDTX_P2P_SETUP_OKAY) %
+        item<bc::transaction_type>(tx) << std::endl;
+
     auto handle_send = [](const std::error_code& error)
     {
         if (error)
         {
-            log_warning() << "Send failed: " << error.message();
+            log_warning() << boost::format(SX_SENDTX_P2P_SEND_FAIL) %
+                error.message() /*<< std::endl*/;
             result = console_result::failure;
+            return;
         }
-        else
-            std::cout << "Sent " << now() << std::endl;
+
+        std::cout << boost::format(SX_SENDTX_P2P_SEND_OKAY) % now()
+            << std::endl;
     };
 
     node->send(tx, handle_send);
@@ -132,6 +134,7 @@ static void send_tx(const std::error_code& error, channel_ptr node,
         std::ref(tx)));
 }
 
+// TODO: look into behavior if logging is invoked but log is not initialized.
 static void bind_logging(const boost::filesystem::path& debug, 
     const boost::filesystem::path& error)
 {
@@ -180,7 +183,6 @@ console_result sendtx_p2p::invoke(std::istream& input,
     stopped = false;
     result = console_result::okay;
 
-    // Is 4 threads and a 2 sec wait necessary here?
     async_client client(*this, 4);
 
     // Create dependencies for our protocol object.

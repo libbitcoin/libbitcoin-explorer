@@ -55,6 +55,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_VALIDTX_OUTPUT \
+    "  Unconfirmed: %1%"
+
+/**
  * Class to implement the sx validtx command.
  */
 class validtx 

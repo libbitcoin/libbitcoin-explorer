@@ -58,7 +58,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_FETCH_TRANSACTION_INDEX_OUTPUT \
-    "Height: %1% Index: %2%\n"
+    "Height: %1% Index: %2%"
 
 /**
  * Class to implement the sx fetch-transaction-index command.

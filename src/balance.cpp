@@ -24,10 +24,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <thread>
-//#include <sstream>
 #include <boost/format.hpp>
-//#include <boost/property_tree/ptree.hpp>
-//#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/define.hpp>
@@ -85,8 +82,6 @@ static void parse_balance_history(uint64_t& balance, uint64_t& pending_balance,
     }
 }
 
-// TODO: for testability parameterize STDOUT and STDERR.
-// TODO: use json serializer and generalize to all command outputs.
 static void balance_fetched(const payment_address& pay_address,
     const std::error_code& error, const blockchain::history_list& history)
 {
@@ -114,7 +109,7 @@ static void balance_fetched(const payment_address& pay_address,
     auto format = if_else(json_output, json_format, SX_BALANCE_OUTPUT);
 
     std::cout << boost::format(format) % address(pay_address) % balance %
-        pending_balance % total_recieved;
+        pending_balance % total_recieved << std::endl;
 
     if (json_output)
     {
@@ -133,24 +128,8 @@ console_result balance::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    // TODO: improve generated property pluralization.
     auto addresses = get_addresss_argument();
     const auto json = get_json_option();
-
-    // TODO: implement support for defaulting a collection ARG to STDIN.
-    if (addresses.empty())
-    {
-        address address;
-        std::string raw_address(read_stream(input));
-        if (!address.data().set_encoded(raw_address))
-        {
-            cerr << boost::format(SX_BALANCE_INVALID_ADDRESS) % raw_address
-                << std::endl;
-            return console_result::failure;
-        }
-
-        addresses.push_back(address);
-    }
 
     json_output = json;
     first_address = true;

@@ -55,8 +55,7 @@
     <option name="help" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires a server connection." />
     <option name="json" description="Enable JSON output." />
     <argument name="ADDRESS" stream="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
-    <define name="SX_BALANCE_INVALID_ADDRESS" value="Invalid address '%1%'." />
-    <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%\n" />
+    <define name="SX_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%" />
   </command>
   
   <command symbol="base58-decode" category="HASH">
@@ -205,7 +204,7 @@
     <option name="help" description="Get the stealth transactions matching the specified filter. Requires a server connection." />
     <option name="prefix" type="binary" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include in the search. Searches all blocks if not set."/>
-    <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%\n" />
+    <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%" />
     <define name="SX_FETCH_STEALTH_BITFIELD_TOO_LONG" value="The bitfield option exceeds 32 bits." />
   </command>
 
@@ -217,7 +216,7 @@
   <command symbol="fetch-transaction-index" category="ONLINE" obelisk="true">
     <option name="help" description="Get the block height and index of a transaction. Requires a server connection." />
     <argument name="HASH" stream="true" type="btc256" description="The hex encoded transaction hash." />
-    <define name="SX_FETCH_TRANSACTION_INDEX_OUTPUT" value="Height: %1% Index: %2%\n" />
+    <define name="SX_FETCH_TRANSACTION_INDEX_OUTPUT" value="Height: %1% Index: %2%" />
   </command>
 
   <command symbol="fetch-utxo" formerly="get-utxo" category="ONLINE" stub="true" obelisk="true">
@@ -296,7 +295,7 @@
     <define name="SX_HISTORY_INVALID_ADDRESS" value="Invalid address '%1%'." />
     <define name="SX_HISTORY_PENDING" value="Pending" />
     <define name="SX_HISTORY_UNSPENT" value="Unspent" />
-    <define name="SX_HISTORY_OUTPUT" value="Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%\n" />
+    <define name="SX_HISTORY_OUTPUT" value="Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%" />
   </command>
 
   <command symbol="initchain" category="ONLINE" obsolete="true">
@@ -316,9 +315,11 @@
   
   <command symbol="monitor" category="ONLINE" obelisk="true">
     <option name="help" description="Monitor an address prefix. WARNING: THIS COMMAND IS EXPERIMENTAL" />
-    <!--<argument name="PREFIX" stream="true" type="uint32_t" description="The prefix of transactions to monitor."/>-->
-    <option name="bitfield" type="uint32_t" description="The stealth prefix bitfield. Number bits must be greater than zero for this to be used."/>
-    <option name="number_bits" type="uint32_t" description="The number of bits of the bitfield to include in the search. Defaults to zero."/>
+    <option name="prefix" type="binary" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
+    <!--<option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to monitor. Searches all blocks if not set."/>-->
+    <define name="SX_MONITOR_BITFIELD_TOO_LONG" value="The bitfield option exceeds 32 bits." />
+    <define name="SX_MONITOR_WAITING" value="Waiting for updates..." />
+    <define name="SX_MONITOR_OUTPUT" value="Update %1% [ #%2% %3% ]" />
   </command>
   
   <command symbol="mpk" category="ELECTRUM" obsolete="true">
@@ -372,6 +373,16 @@
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via the Bitcoin peer-to-peer network." />
     <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to two." />
     <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
+    <define name="SX_SENDTX_P2P_OUTPUT" value="%1% [%2%]: %3%" />
+    <define name="SX_SENDTX_P2P_SIGNAL" value="Caught signal: %1%" />
+    <define name="SX_SENDTX_P2P_START_OKAY" value="Started." />
+    <define name="SX_SENDTX_P2P_START_FAIL" value="Start failed: %1%" />
+    <define name="SX_SENDTX_P2P_CHECK_OKAY" value="%1% connections." />
+    <define name="SX_SENDTX_P2P_CHECK_FAIL" value="Check failed: %1%" />
+    <define name="SX_SENDTX_P2P_SETUP_OKAY" value="Sending %1%." />
+    <define name="SX_SENDTX_P2P_SETUP_FAIL" value="Setup failed: %1%" />
+    <define name="SX_SENDTX_P2P_SEND_OKAY" value="Sent at %1%." />
+    <define name="SX_SENDTX_P2P_SEND_FAIL" value="Send failed: %1%" />
   </command>
 
   <command symbol="sha160" category="HASH">
@@ -413,6 +424,7 @@
   <command symbol="validtx" category="ONLINE" obelisk="true">
     <option name="help" description="Validate whether each of a set of transactions has been confirmed." />
     <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
+    <define name="SX_VALIDTX_OUTPUT" value="  Unconfirmed: %1%" />
   </command>
 
   <command symbol="wallet" category="WALLET" obsolete="true">

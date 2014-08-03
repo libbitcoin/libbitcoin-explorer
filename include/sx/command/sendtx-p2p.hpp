@@ -55,6 +55,30 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_SENDTX_P2P_OUTPUT \
+    "%1% [%2%]: %3%"
+#define SX_SENDTX_P2P_SIGNAL \
+    "Caught signal: %1%"
+#define SX_SENDTX_P2P_START_OKAY \
+    "Started."
+#define SX_SENDTX_P2P_START_FAIL \
+    "Start failed: %1%"
+#define SX_SENDTX_P2P_CHECK_OKAY \
+    "%1% connections."
+#define SX_SENDTX_P2P_CHECK_FAIL \
+    "Check failed: %1%"
+#define SX_SENDTX_P2P_SETUP_OKAY \
+    "Sending %1%."
+#define SX_SENDTX_P2P_SETUP_FAIL \
+    "Setup failed: %1%"
+#define SX_SENDTX_P2P_SEND_OKAY \
+    "Sent at %1%."
+#define SX_SENDTX_P2P_SEND_FAIL \
+    "Send failed: %1%"
+
+/**
  * Class to implement the sx sendtx-p2p command.
  */
 class sendtx_p2p 

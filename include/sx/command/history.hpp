@@ -64,7 +64,7 @@ namespace extension {
 #define SX_HISTORY_UNSPENT \
     "Unspent"
 #define SX_HISTORY_OUTPUT \
-    "Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%\n"
+    "Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%"
 
 /**
  * Class to implement the sx history command.

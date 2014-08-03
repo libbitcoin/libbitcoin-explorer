@@ -33,14 +33,9 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-// TODO: this should be a member of sx::extensions::fetch_transaction,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
-// TODO: abstract formats.
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void transaction_fetched(const std::error_code& error, 
     const transaction_type& tx)
 {

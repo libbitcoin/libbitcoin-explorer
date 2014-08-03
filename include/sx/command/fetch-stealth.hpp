@@ -58,7 +58,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_FETCH_STEALTH_OUTPUT \
-    "Ephemeral key: %1% Address: %2% Transaction hash: %3%\n"
+    "Ephemeral key: %1% Address: %2% Transaction hash: %3%"
 #define SX_FETCH_STEALTH_BITFIELD_TOO_LONG \
     "The bitfield option exceeds 32 bits."
 
