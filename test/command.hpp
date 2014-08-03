@@ -23,9 +23,20 @@
 #include <iostream>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
+#include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
+#include <obelisk/obelisk.hpp>
 #include <sx/sx.hpp>
 
+// Related test values
+#define ADDRESS_MAINNET_A "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"
+#define HD_PRIVATE_KEY_MAINNET_A "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi"
+#define HD_PUBLIC_KEY_MAINNET_A "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8"
+
 #define SX_USING_NAMESPACES()
+using namespace libwallet; \
+using namespace bc;
+using namespace obelisk; \
 using namespace std; \
 using namespace sx; \
 using namespace sx::extension; \

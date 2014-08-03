@@ -17,10 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/unit_test_suite.hpp>
-#include <sx/sx.hpp>
 #include "command.hpp"
 
 SX_USING_NAMESPACES()
@@ -32,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(ec_multiply__invoke)
 //BOOST_AUTO_TEST_CASE(ec_multiply__invoke__overflow__failure_error)
 //{
 //    // $ sx ec-multiply 02ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-//    SX_DECLARE_COMMAND(ec_multiply);
+//    SX_DECLARE_COMMAND(sx::extension::ec_multiply);
 //    command.set_point_argument({ "02ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
 //    command.set_secret_argument({ "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
 //    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
@@ -42,7 +38,7 @@ BOOST_AUTO_TEST_SUITE(ec_multiply__invoke)
 BOOST_AUTO_TEST_CASE(ec_multiply__invoke__add_values__okay_output)
 {
     // $ sx ec-multiply 021bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
-    SX_DECLARE_COMMAND(ec_multiply);
+    SX_DECLARE_COMMAND(sx::extension::ec_multiply);
     command.set_point_argument({ "021bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
     command.set_secret_argument({ "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
