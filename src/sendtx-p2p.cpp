@@ -170,10 +170,9 @@ console_result sendtx_p2p::invoke(std::istream& input,
     // Bound parameters.
     const auto& debug_log = get_logging_debug_setting();
     const auto& error_log = get_logging_error_setting();
-    const auto& transactions = get_transactions_argument();
     const auto& node_count = get_nodes_option();
-
-    // TODO: remove this hack which requires one element.
+    const auto& transactions = get_transactions_argument();
+    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
     const transaction_type& tx = transactions.front();
 
     bind_logging(debug_log, error_log);

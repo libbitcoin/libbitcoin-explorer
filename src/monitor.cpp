@@ -29,13 +29,9 @@ using namespace obelisk;
 using namespace sx;
 using namespace sx::extension;
 
-// TODO: this should be a member of sx::extensions::monitor,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void subscribed(const std::error_code& error, const worker_uuid& worker)
 {
     if (error)

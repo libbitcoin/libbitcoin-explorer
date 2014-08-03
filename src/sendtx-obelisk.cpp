@@ -31,13 +31,9 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-// TODO: this should be a member of sx::extensions::sendtx_obelisk,
-// otherwise concurrent test execution will collide on shared state.
 static bool stopped;
 static console_result result;
 
-// TODO: stopped should be passed here via closure
-// or by converting this to a member function.
 static void handle_broadcast(const std::error_code& error)
 {
     if (error)
@@ -57,8 +53,7 @@ console_result sendtx_obelisk::invoke(std::istream& input,
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
-
-    // TODO: remove this hack which requires one element.
+    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
     const transaction_type& tx = transactions.front();
 
     stopped = false;

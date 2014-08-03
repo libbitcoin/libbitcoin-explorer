@@ -37,13 +37,13 @@ console_result ec_add_secrets::invoke(std::istream& input,
     // Bound parameters.
     const auto secrets = get_secrets_argument();
 
-    bool first = true;
-    ec_private sum(secrets[0]);
+    ec_private sum;
+    const auto& null_key = ec_private().data();
     for (auto const& secret: secrets)
     {
-        if (first)
+        if (sum.data() == null_key)
         {
-            first = false;
+            sum.data() = secret;
             continue;
         }
 

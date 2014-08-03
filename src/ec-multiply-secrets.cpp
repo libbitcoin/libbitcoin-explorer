@@ -36,13 +36,13 @@ console_result ec_multiply_secrets::invoke(std::istream& input,
     // Bound parameters.
     const auto secrets = get_secrets_argument();
 
-    bool first = true;
-    ec_private product(secrets[0]);
+    ec_private product;
+    const auto& null_key = ec_private().data();
     for (auto const& secret: secrets)
     {
-        if (first)
+        if (product.data() == null_key)
         {
-            first = false;
+            product.data() = secret;
             continue;
         }
 

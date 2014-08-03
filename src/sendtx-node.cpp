@@ -74,8 +74,7 @@ console_result sendtx_node::invoke(std::istream& input,
     const auto host = get_name_option();
     const auto port = get_port_option();
     const auto& transactions = get_transactions_argument();
-
-    // TODO: remove this hack which requires one element.
+    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
     const transaction_type& tx = transactions.front();
 
     stopped = false;

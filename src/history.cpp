@@ -21,10 +21,7 @@
 #include <condition_variable>
 #include <stdint.h>
 #include <thread>
-//#include <sstream>
 #include <boost/format.hpp>
-//#include <boost/property_tree/ptree.hpp>
-//#include <boost/property_tree/json_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/define.hpp>
@@ -90,7 +87,6 @@ static void parse_history(std::string& output_height, std::string& row_spend,
     spend_height = spend_height_stream.str();
 }
 
-// TODO: for testability parameterize STDOUT and STDERR.
 static void history_fetched(const payment_address& pay_address,
     const std::error_code& error, const blockchain::history_list& history)
 {
@@ -154,24 +150,8 @@ console_result history::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    // TODO: improve generated property pluralization.
     auto addresses = get_addresss_argument();
     auto json = get_json_option();
-
-    // TODO: implement support for defaulting a collection ARG to STDIN.
-    if (addresses.empty())
-    {
-        address address;
-        std::string raw_address(read_stream(input));
-        if (!address.data().set_encoded(raw_address))
-        {
-            cerr << boost::format(SX_HISTORY_INVALID_ADDRESS) % raw_address
-                << std::endl;
-            return console_result::failure;
-        }
-
-        addresses.push_back(address);
-    }
 
     json_output = json;
     first_address = true;

@@ -45,6 +45,13 @@
 
 namespace sx {
 
+#define HANDLE_MULTIPLE_NOT_IMPLEMENTED(collection) \
+    if (collection.size() != 1) \
+    { \
+        cerr << name() << " does not yet support multiple primary inputs" \
+            << std::endl; \
+    }
+
 /**
  * Default delimiter for use in word splitting and joining operations.
  */

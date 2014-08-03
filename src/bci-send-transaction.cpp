@@ -32,6 +32,8 @@ console_result bci_send_transaction::invoke(std::istream& input,
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
+    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
+    const transaction_type& tx = transactions.front();
 
     cerr << SX_BCI_SEND_TRANSACTION_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
