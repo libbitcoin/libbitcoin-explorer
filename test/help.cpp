@@ -44,7 +44,6 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
     command.set_command_argument("booger");
     SX_REQUIRE_FAILURE(command.invoke(input, output, error));
     SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
-        "addr\n" \
         "addr-decode\n" \
         "addr-embed\n" \
         "addr-encode\n" \
@@ -60,15 +59,17 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "be-fetch-transaction\n" \
         "bitcoin160\n" \
         "bitcoin256\n" \
-        "brainwallet\n" \
         "btc\n" \
         "ec-add\n" \
         "ec-add-secrets\n" \
+        "ec-lock\n" \
         "ec-multiply\n" \
         "ec-multiply-secrets\n" \
         "ec-new\n" \
+        "ec-to-addr\n" \
         "ec-to-pub\n" \
         "ec-to-wif\n" \
+        "ec-unlock\n" \
         "fetch-header\n" \
         "fetch-last-height\n" \
         "fetch-public-key\n" \
@@ -82,33 +83,42 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "hd-new\n" \
         "hd-priv\n" \
         "hd-pub\n" \
-        "hd-to-address\n" \
+        "hd-to-addr\n" \
+        "hd-to-ec\n" \
+        "hd-to-pub\n" \
         "hd-to-wif\n" \
         "help\n" \
         "history\n" \
         "initchain\n" \
+        "mnemonic-decode\n" \
+        "mnemonic-encode\n" \
         "monitor\n" \
         "mpk\n" \
         "newseed\n" \
         "qrcode\n" \
         "ripemd160\n" \
         "satoshi\n" \
+        "seed\n" \
+        "sendtx-node\n" \
+        "sendtx-obelisk\n" \
         "sha160\n" \
         "sha256\n" \
         "sha512\n" \
+        "signtx\n" \
         "stealth-addr\n" \
         "unwrap\n" \
         "wallet\n" \
         "watchtx\n" \
         "wif-to-ec\n" \
+        "wif-to-pub\n" \
         "wrap\n");
 }
 
 BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
 {
-    // $ sx help addr
+    // $ sx help wrap
     SX_DECLARE_COMMAND(help);
-    command.set_command_argument("addr");
+    command.set_command_argument("wrap");
     SX_REQUIRE_OKAY(command.invoke(input, output, error));
     SX_REQUIRE_OUTPUT("");
 }
