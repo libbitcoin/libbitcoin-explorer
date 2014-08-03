@@ -115,5 +115,6 @@ if HAVE_OBELISK
         command/history.hpp \
         command/monitor.hpp \
         command/sendtx-obelisk.hpp \
+        command/validtx.hpp \
         command/watchtx.hpp
 endif

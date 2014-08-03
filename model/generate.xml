@@ -410,6 +410,11 @@
     <define name="SX_UNWRAP_OUTPUT" value="%1% %2% %3%" />
   </command>
 
+  <command symbol="validtx" category="ONLINE" obelisk="true">
+    <option name="help" description="Validate whether each of a set of transactions has been confirmed." />
+    <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
+  </command>
+
   <command symbol="wallet" category="WALLET" obsolete="true">
     <option name="help" description="Experimental command line wallet." />
     <define name="SX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />

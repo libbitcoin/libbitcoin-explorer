@@ -347,6 +347,11 @@ BOOST_AUTO_TEST_CASE(generated__find__unwrap__returns_object)
     BOOST_REQUIRE(find(unwrap::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__validtx__returns_object)
+{
+    BOOST_REQUIRE(find(validtx::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__wallet__returns_object)
 {
     BOOST_REQUIRE(find(wallet::symbol()) != nullptr);

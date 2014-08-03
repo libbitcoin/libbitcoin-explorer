@@ -181,7 +181,7 @@ console_result history::invoke(std::istream& input, std::ostream& output,
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
 
-    for (const auto& address : addresses)
+    for (const auto& address: addresses)
     {
         fullnode.address.fetch_history(address,
             std::bind(history_fetched, address, ph::_1, ph::_2));

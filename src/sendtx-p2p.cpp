@@ -30,8 +30,10 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-// Needed for the C callback capturing the signals.
-static bool stopped = false;
+// TODO: this should be a member of sx::extensions::monitor,
+// otherwise concurrent test execution will collide on shared state.
+static bool stopped;
+static console_result result;
 
 static void output_to_file(std::ofstream& file, log_level level,
     const std::string& domain, const std::string& body)
@@ -75,6 +77,7 @@ static void handle_start(const std::error_code& error)
     if (error)
     {
         log_warning() << "Start failed: " << error.message();
+        result = console_result::failure;
         stopped = true;
         return;
     }
@@ -88,11 +91,15 @@ static void check_connection_count(const std::error_code& error,
     size_t connection_count, size_t node_count)
 {
     if (error)
+    {
         log_warning() << "Check failed: " << error.message();
-    else
-        log_debug() << connection_count << " CONNECTIONS";
+        result = console_result::failure;
+        stopped = true;
+        return;
+    }
 
-    if (error || connection_count >= node_count)
+    log_debug() << connection_count << " CONNECTIONS";
+    if (connection_count >= node_count)
         stopped = true;
 }
 
@@ -103,16 +110,19 @@ static void send_tx(const std::error_code& error, channel_ptr node,
     if (error)
     {
         log_warning() << "Setup failed: " << error.message();
+        result = console_result::failure;
         stopped = true;
         return;
     }
 
     std::cout << "Sending " << hash_transaction(tx) << std::endl;
-
     auto handle_send = [](const std::error_code& error)
     {
         if (error)
+        {
             log_warning() << "Send failed: " << error.message();
+            result = console_result::failure;
+        }
         else
             std::cout << "Sent " << now() << std::endl;
     };
@@ -168,6 +178,9 @@ console_result sendtx_p2p::invoke(std::istream& input,
 
     bind_logging(debug_log, error_log);
 
+    stopped = false;
+    result = console_result::okay;
+
     // Is 4 threads and a 2 sec wait necessary here?
     async_client client(*this, 4);
 
@@ -202,5 +215,5 @@ console_result sendtx_p2p::invoke(std::istream& input,
     const auto ignore_stop = [](const std::error_code&) {};
     prot.stop(ignore_stop);
 
-    return console_result::okay;
+    return result;
 }

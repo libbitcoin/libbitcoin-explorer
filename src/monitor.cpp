@@ -31,10 +31,10 @@ using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::monitor,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped;
+static bool stopped;
 static console_result result;
 
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
 static void subscribed(const std::error_code& error, const worker_uuid& worker)
 {
@@ -43,7 +43,7 @@ static void subscribed(const std::error_code& error, const worker_uuid& worker)
         // This command only halts on failure.
         std::cerr << error.message() << std::endl;
         result = console_result::failure;
-        node_stopped = true;
+        stopped = true;
     }
     else
     {
@@ -52,7 +52,7 @@ static void subscribed(const std::error_code& error, const worker_uuid& worker)
     }
 }
 
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
 static void subscription_handler(const std::error_code& error, size_t height,
     const hash_digest& block_hash, const transaction_type& tx)
@@ -62,7 +62,7 @@ static void subscription_handler(const std::error_code& error, size_t height,
         // This command only halts on failure.
         std::cerr << error.message() << std::endl;
         result = console_result::failure;
-        node_stopped = true;
+        stopped = true;
     }
     else
     {
@@ -89,13 +89,13 @@ console_result monitor::invoke(std::istream& input, std::ostream& output,
         // bitfield and number of bits design.
     }
 
-    node_stopped = false;
+    stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.address.subscribe(prefix, subscription_handler, subscribed);
-    client.poll(node_stopped);
+    client.poll(stopped);
 
     return result;
 }

@@ -35,11 +35,11 @@ using namespace sx::serializer;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped;
+static bool stopped;
 static console_result result;
 
 // TODO: abstract formats.
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
 static void transaction_fetched(const std::error_code& error, 
     const transaction_type& tx)
@@ -56,7 +56,7 @@ static void transaction_fetched(const std::error_code& error,
         std::cout << hex(raw_tx) << std::endl;
     }
 
-    node_stopped = true;
+    stopped = true;
 }
 
 // Try the tx memory pool if the transaction is not in the blockchain.
@@ -76,7 +76,7 @@ console_result fetch_transaction::invoke(std::istream& input,
     // Bound parameters.
     const auto hash = get_hash_argument();
 
-    node_stopped = false;
+    stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
@@ -84,7 +84,7 @@ console_result fetch_transaction::invoke(std::istream& input,
     fullnode.blockchain.fetch_transaction(hash,
         std::bind(transaction_fetched_wrapper, ph::_1, ph::_2, hash,
             std::ref(fullnode)));
-    client.poll(node_stopped);
+    client.poll(stopped);
 
     return result;
 }

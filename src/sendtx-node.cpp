@@ -34,10 +34,10 @@ using namespace sx::serializer;
 
 // TODO: this should be a member of sx::extensions::sendtx_node,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped;
+static bool stopped;
 static console_result result;
 
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
 static void send_tx(const std::error_code& error, channel_ptr node,
     transaction_type& tx)
@@ -46,7 +46,7 @@ static void send_tx(const std::error_code& error, channel_ptr node,
     {
         std::cerr << error << std::endl;
         result = console_result::failure;
-        node_stopped = true;
+        stopped = true;
         return;
     }
 
@@ -61,7 +61,7 @@ static void send_tx(const std::error_code& error, channel_ptr node,
                 << std::endl;
         }
 
-        node_stopped = true;
+        stopped = true;
     };
 
     node->send(tx, handle_send);
@@ -78,7 +78,7 @@ console_result sendtx_node::invoke(std::istream& input,
     // TODO: remove this hack which requires one element.
     const transaction_type& tx = transactions.front();
 
-    node_stopped = false;
+    stopped = false;
     result = console_result::okay;
 
     // Is 4 threads and a 2 sec wait necessary here?
@@ -87,7 +87,7 @@ console_result sendtx_node::invoke(std::istream& input,
     handshake shake(pool);
     network net(pool);
     connect(shake, net, host, port, std::bind(send_tx, ph::_1, ph::_2, tx));
-    client.poll(node_stopped, 2000);
+    client.poll(stopped, 2000);
 
     return result;
 }

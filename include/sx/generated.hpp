@@ -88,6 +88,7 @@
 #include <sx/command/signtx.hpp>
 #include <sx/command/stealth-addr.hpp>
 #include <sx/command/unwrap.hpp>
+#include <sx/command/validtx.hpp>
 #include <sx/command/wallet.hpp>
 #include <sx/command/watchtx.hpp>
 #include <sx/command/wif-to-ec.hpp>

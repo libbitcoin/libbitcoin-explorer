@@ -100,6 +100,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<signtx>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
+    func(make_shared<validtx>());
     func(make_shared<wallet>());
     func(make_shared<watchtx>());
     func(make_shared<wif_to_ec>());
@@ -239,6 +240,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<stealth_addr>();
     if (symbol == unwrap::symbol())
         return make_shared<unwrap>();
+    if (symbol == validtx::symbol())
+        return make_shared<validtx>();
     if (symbol == wallet::symbol())
         return make_shared<wallet>();
     if (symbol == watchtx::symbol())

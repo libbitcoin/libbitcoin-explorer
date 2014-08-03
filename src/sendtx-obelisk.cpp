@@ -33,10 +33,10 @@ using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::sendtx_obelisk,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped;
+static bool stopped;
 static console_result result;
 
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
 static void handle_broadcast(const std::error_code& error)
 {
@@ -49,7 +49,7 @@ static void handle_broadcast(const std::error_code& error)
         std::cout << boost::format(SX_SENDTX_OBELISK_OUTPUT) % now()
             << std::endl;
 
-    node_stopped = true;
+    stopped = true;
 }
 
 console_result sendtx_obelisk::invoke(std::istream& input,
@@ -61,13 +61,13 @@ console_result sendtx_obelisk::invoke(std::istream& input,
     // TODO: remove this hack which requires one element.
     const transaction_type& tx = transactions.front();
 
-    node_stopped = false;
+    stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.protocol.broadcast_transaction(tx, handle_broadcast);
-    client.poll(node_stopped);
+    client.poll(stopped);
 
     return result;
 }

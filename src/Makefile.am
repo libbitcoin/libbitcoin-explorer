@@ -95,6 +95,7 @@ if HAVE_OBELISK
         history.cpp \
         monitor.cpp \
         sendtx-obelisk.cpp \
+        validtx.cpp \
         watchtx.cpp \
         obelisk_client.cpp
 

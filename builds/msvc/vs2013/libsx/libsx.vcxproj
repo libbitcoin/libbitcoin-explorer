@@ -173,6 +173,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\signtx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\validtx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\watchtx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp" />
@@ -319,6 +320,9 @@
     <ClCompile Include="..\..\..\..\src\signtx.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />
+    <ClCompile Include="..\..\..\..\src\validtx.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\wallet.cpp" />
     <ClCompile Include="..\..\..\..\src\watchtx.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
@@ -327,9 +331,6 @@
     <ClCompile Include="..\..\..\..\src\wif-to-pub.cpp" />
     <ClCompile Include="..\..\..\..\src\wrap.cpp" />
     <ClCompile Include="..\..\..\..\src\validsig.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\validtx.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>

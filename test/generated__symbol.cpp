@@ -347,6 +347,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__unwrap__returns_expected_value)
     BOOST_REQUIRE(unwrap::symbol() == std::string("unwrap"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__validtx__returns_expected_value)
+{
+    BOOST_REQUIRE(validtx::symbol() == std::string("validtx"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__wallet__returns_expected_value)
 {
     BOOST_REQUIRE(wallet::symbol() == std::string("wallet"));

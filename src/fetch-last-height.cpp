@@ -31,10 +31,10 @@ using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::fetch_last_height,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped;
+static bool stopped;
 static console_result result;
 
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
 static void last_height_fetched(const std::error_code& error, size_t height)
 {
@@ -46,19 +46,19 @@ static void last_height_fetched(const std::error_code& error, size_t height)
     else
         std::cout << height << std::endl;
 
-    node_stopped = true;
+    stopped = true;
 }
 
 console_result fetch_last_height::invoke(std::istream& input,
     std::ostream& output, std::ostream& cerr)
 {
-    node_stopped = false;
+    stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.blockchain.fetch_last_height(last_height_fetched);
-    client.poll(node_stopped);
+    client.poll(stopped);
 
     return result;
 }

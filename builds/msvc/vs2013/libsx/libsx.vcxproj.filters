@@ -51,9 +51,6 @@
     <Filter Include="src\command\todo">
       <UniqueIdentifier>{186b583d-9017-424c-8916-26eaa0373abf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\command\todo\obelisk">
-      <UniqueIdentifier>{bca50241-1338-43f2-be5b-dd5ff643ba99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\command\todo\script">
       <UniqueIdentifier>{0d051466-4637-46d3-bf36-79744fb7b978}</UniqueIdentifier>
     </Filter>
@@ -256,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp">
       <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\validtx.hpp">
+      <Filter>include\command\obelisk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp">
       <Filter>include\command\obsolete</Filter>
@@ -556,6 +556,9 @@
     <ClCompile Include="..\..\..\..\src\unwrap.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\validtx.cpp">
+      <Filter>src\command\obelisk</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\wallet.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
@@ -643,8 +646,5 @@
     <ClCompile Include="..\..\..\..\src\validsig.cpp">
       <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\validtx.cpp">
-      <Filter>src\command\todo\obelisk</Filter>
-    </ClCompile> 
   </ItemGroup>
 </Project>

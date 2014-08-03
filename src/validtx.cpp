@@ -17,49 +17,57 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/validtx.hpp>
+
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/obelisk.hpp>
-#include <sx/utility/config.hpp>
-#include <sx/command/validtx.hpp>
-#include <sx/obelisk.hpp>
+#include <sx/obelisk_client.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-// TODO: this should be a member of sx::extensions::validtx,
+// TODO: this should be a member of sx::extensions::monitor,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped = false;
+static bool stopped;
+static console_result result;
 
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
-static void valid_tx(const std::error_code& ec, const index_list& unconfirmed)
+static void valid_tx(const std::error_code& error, 
+    const index_list& unconfirmed)
 {
-    std::cout << "Status: " << ec.message() << std::endl;
-    for (size_t unconfirmed_index: unconfirmed)
-        std::cout << "  Unconfirmed: " << unconfirmed_index << std::endl;
-
-    node_stopped = true;
-}
-
-console_result validtx::invoke(int argc, const char* argv[])
-{
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
-
-    transaction_type tx;
-    std::string filename(get_filename(argc, argv));
-    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
+    if (error)
     {
-        std::cerr << "sx: Deserializing transaction failed." << std::endl;
-        return console_result::failure;
+        std::cerr << error.message() << std::endl;
+        result = console_result::failure;
+        stopped = true;
+        return;
     }
 
-    OBELISK_FULLNODE(pool, fullnode);
+    std::cout << error.message() << std::endl;
+    for (size_t unconfirmed_index: unconfirmed)
+        std::cout << "  Unconfirmed: " << unconfirmed_index << std::endl;
+}
+
+console_result validtx::invoke(std::istream& input,
+    std::ostream& output, std::ostream& cerr)
+{
+    // Bound parameters.
+    const auto& transactions = get_transactions_argument();
+
+    // TODO: remove this hack which requires one element.
+    const transaction_type& tx = transactions.front();
+
+    stopped = false;
+    result = console_result::okay;
+
+    obelisk_client client(*this);
+    auto& fullnode = client.get_fullnode();
     fullnode.transaction_pool.validate(tx, valid_tx);
-    poll(fullnode, pool, node_stopped);
-    return console_result::okay;
+    client.poll(stopped);
+
+    return result;
 }
 

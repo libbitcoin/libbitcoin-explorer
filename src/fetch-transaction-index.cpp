@@ -32,11 +32,11 @@ using namespace sx::extension;
 
 // TODO: this should be a member of sx::extensions::fetch_transaction_index,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped;
+static bool stopped;
 static console_result result;
 
 // TODO: abstract formats.
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
 static void index_fetched(const std::error_code& error,
     size_t height, size_t index)
@@ -50,7 +50,7 @@ static void index_fetched(const std::error_code& error,
         std::cout << boost::format(SX_FETCH_TRANSACTION_INDEX_OUTPUT) %
             height % index;
 
-    node_stopped = true;
+    stopped = true;
 }
 
 console_result fetch_transaction_index::invoke(std::istream& input,
@@ -59,13 +59,13 @@ console_result fetch_transaction_index::invoke(std::istream& input,
     // Bound parameters.
     const auto hash = get_hash_argument();
 
-    node_stopped = false;
+    stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.blockchain.fetch_transaction_index(hash, index_fetched);
-    client.poll(node_stopped);
+    client.poll(stopped);
 
     return result;
 }

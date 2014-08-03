@@ -38,10 +38,10 @@ using namespace sx::serializer;
 
 // TODO: this should be a member of sx::extensions::fetch_stealth,
 // otherwise concurrent test execution will collide on shared state.
-static bool node_stopped;
+static bool stopped;
 static console_result result;
 
-// TODO: node_stopped should be passed here via closure
+// TODO: stopped should be passed here via closure
 // or by converting this to a member function.
 static void stealth_fetched(const std::error_code& error,
     const blockchain::stealth_list& stealth_results)
@@ -57,7 +57,7 @@ static void stealth_fetched(const std::error_code& error,
                 hex(row.ephemkey) % address(row.address) %
                 btc256(row.transaction_hash);
 
-    node_stopped = true;
+    stopped = true;
 }
 
 console_result fetch_stealth::invoke(std::istream& input,
@@ -74,14 +74,14 @@ console_result fetch_stealth::invoke(std::istream& input,
         return console_result::failure;
     }
 
-    node_stopped = false;
+    stopped = false;
     result = console_result::okay;
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.blockchain.fetch_stealth(prefix,
         std::bind(stealth_fetched, ph::_1, ph::_2), height);
-    client.poll(node_stopped);
+    client.poll(stopped);
 
     return result;
 }
