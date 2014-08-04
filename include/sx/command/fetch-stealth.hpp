@@ -59,8 +59,6 @@ namespace extension {
  */
 #define SX_FETCH_STEALTH_OUTPUT \
     "Ephemeral key: %1% Address: %2% Transaction hash: %3%"
-#define SX_FETCH_STEALTH_PREFIX_TOO_LONG \
-    "The prefix option exceeds 32 bits."
 
 /**
  * Class to implement the sx fetch-stealth command.
@@ -135,7 +133,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the stealth transactions matching the specified filter. Requires a server connection."
+                "Get the stealth transactions matching the specified filter. Requires an Obelisk server connection."
             )
             (
                 "prefix,p",

@@ -55,6 +55,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_STEALTH_ADDR_PREFIX_TOO_LONG \
+    "The prefix option exceeds 32 bits."
+
+/**
  * Class to implement the sx stealth-addr command.
  */
 class stealth_addr 
@@ -131,6 +137,11 @@ public:
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
                 "Generate a stealth address."
+            )
+            (
+                "prefix,p",
+                value<serializer::binary>(&option_.prefix),
+                "The binary encoded stealth search prefix."
             )
             (
                 "reuse-key,r",
@@ -221,6 +232,23 @@ public:
     }
 
     /**
+     * Get the value of the prefix option.
+     */
+    virtual serializer::binary& get_prefix_option()
+    {
+        return option_.prefix;
+    }
+    
+    /**
+     * Set the value of the prefix option.
+     */
+    virtual void set_prefix_option(
+        const serializer::binary& value)
+    {
+        option_.prefix = value;
+    }
+
+    /**
      * Get the value of the reuse-key option.
      */
     virtual bool& get_reuse_key_option()
@@ -282,12 +310,14 @@ private:
     {
         option()
           : help(),
+            prefix(),
             reuse_key(),
             signatures()
         {
         }
         
         bool help;
+        serializer::binary prefix;
         bool reuse_key;
         serializer::byte signatures;
     } option_;

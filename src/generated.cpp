@@ -40,18 +40,13 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<addr_embed>());
     func(make_shared<addr_encode>());
     func(make_shared<addr_validate>());
-    func(make_shared<balance>());
     func(make_shared<base58_decode>());
     func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
     func(make_shared<base58check_encode>());
-    func(make_shared<bci_fetch_last_height>());
-    func(make_shared<bci_history>());
-    func(make_shared<bci_send_transaction>());
-    func(make_shared<be_fetch_transaction>());
     func(make_shared<bitcoin160>());
     func(make_shared<bitcoin256>());
-    func(make_shared<btc>());
+    func(make_shared<btc_to_satoshi>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_lock>());
@@ -62,12 +57,18 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_to_pub>());
     func(make_shared<ec_to_wif>());
     func(make_shared<ec_unlock>());
+    func(make_shared<fetch_balance>());
+    func(make_shared<fetch_confirmed>());
     func(make_shared<fetch_header>());
-    func(make_shared<fetch_last_height>());
+    func(make_shared<fetch_height>());
+    func(make_shared<fetch_height_bci>());
+    func(make_shared<fetch_history>());
+    func(make_shared<fetch_history_bci>());
     func(make_shared<fetch_public_key>());
     func(make_shared<fetch_stealth>());
-    func(make_shared<fetch_transaction>());
-    func(make_shared<fetch_transaction_index>());
+    func(make_shared<fetch_tx>());
+    func(make_shared<fetch_tx_bex>());
+    func(make_shared<fetch_tx_index>());
     func(make_shared<fetch_utxo>());
     func(make_shared<genaddr>());
     func(make_shared<genpriv>());
@@ -80,35 +81,35 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<hd_to_pub>());
     func(make_shared<hd_to_wif>());
     func(make_shared<help>());
-    func(make_shared<history>());
     func(make_shared<initchain>());
     func(make_shared<mnemonic_decode>());
     func(make_shared<mnemonic_encode>());
-    func(make_shared<monitor>());
     func(make_shared<mpk>());
     func(make_shared<newseed>());
     func(make_shared<qrcode>());
-    func(make_shared<rawscript>());
     func(make_shared<ripemd160>());
-    func(make_shared<satoshi>());
-    func(make_shared<scripthash>());
+    func(make_shared<satoshi_to_btc>());
+    func(make_shared<script_decode>());
+    func(make_shared<script_encode>());
+    func(make_shared<script_to_addr>());
     func(make_shared<seed>());
-    func(make_shared<sendtx_node>());
-    func(make_shared<sendtx_obelisk>());
-    func(make_shared<sendtx_p2p>());
+    func(make_shared<send_tx>());
+    func(make_shared<send_tx_bci>());
+    func(make_shared<send_tx_node>());
+    func(make_shared<send_tx_p2p>());
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
-    func(make_shared<showscript>());
-    func(make_shared<signtx>());
-    func(make_shared<stealth_addr>());
-    func(make_shared<unwrap>());
-    func(make_shared<validtx>());
+    func(make_shared<stealth_addr_encode>());
+    func(make_shared<stealth_newkey>());
+    func(make_shared<tx_sign>());
     func(make_shared<wallet>());
-    func(make_shared<watchtx>());
+    func(make_shared<watch_prefix>());
+    func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
     func(make_shared<wif_to_pub>());
-    func(make_shared<wrap>());
+    func(make_shared<wrap_decode>());
+    func(make_shared<wrap_encode>());
 
     return true;
 }
@@ -123,8 +124,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<addr_encode>();
     if (symbol == addr_validate::symbol())
         return make_shared<addr_validate>();
-    if (symbol == balance::symbol())
-        return make_shared<balance>();
     if (symbol == base58_decode::symbol())
         return make_shared<base58_decode>();
     if (symbol == base58_encode::symbol())
@@ -133,20 +132,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base58check_decode>();
     if (symbol == base58check_encode::symbol())
         return make_shared<base58check_encode>();
-    if (symbol == bci_fetch_last_height::symbol())
-        return make_shared<bci_fetch_last_height>();
-    if (symbol == bci_history::symbol())
-        return make_shared<bci_history>();
-    if (symbol == bci_send_transaction::symbol())
-        return make_shared<bci_send_transaction>();
-    if (symbol == be_fetch_transaction::symbol())
-        return make_shared<be_fetch_transaction>();
     if (symbol == bitcoin160::symbol())
         return make_shared<bitcoin160>();
     if (symbol == bitcoin256::symbol())
         return make_shared<bitcoin256>();
-    if (symbol == btc::symbol())
-        return make_shared<btc>();
+    if (symbol == btc_to_satoshi::symbol())
+        return make_shared<btc_to_satoshi>();
     if (symbol == ec_add::symbol())
         return make_shared<ec_add>();
     if (symbol == ec_add_secrets::symbol())
@@ -167,18 +158,30 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_to_wif>();
     if (symbol == ec_unlock::symbol())
         return make_shared<ec_unlock>();
+    if (symbol == fetch_balance::symbol())
+        return make_shared<fetch_balance>();
+    if (symbol == fetch_confirmed::symbol())
+        return make_shared<fetch_confirmed>();
     if (symbol == fetch_header::symbol())
         return make_shared<fetch_header>();
-    if (symbol == fetch_last_height::symbol())
-        return make_shared<fetch_last_height>();
+    if (symbol == fetch_height::symbol())
+        return make_shared<fetch_height>();
+    if (symbol == fetch_height_bci::symbol())
+        return make_shared<fetch_height_bci>();
+    if (symbol == fetch_history::symbol())
+        return make_shared<fetch_history>();
+    if (symbol == fetch_history_bci::symbol())
+        return make_shared<fetch_history_bci>();
     if (symbol == fetch_public_key::symbol())
         return make_shared<fetch_public_key>();
     if (symbol == fetch_stealth::symbol())
         return make_shared<fetch_stealth>();
-    if (symbol == fetch_transaction::symbol())
-        return make_shared<fetch_transaction>();
-    if (symbol == fetch_transaction_index::symbol())
-        return make_shared<fetch_transaction_index>();
+    if (symbol == fetch_tx::symbol())
+        return make_shared<fetch_tx>();
+    if (symbol == fetch_tx_bex::symbol())
+        return make_shared<fetch_tx_bex>();
+    if (symbol == fetch_tx_index::symbol())
+        return make_shared<fetch_tx_index>();
     if (symbol == fetch_utxo::symbol())
         return make_shared<fetch_utxo>();
     if (symbol == genaddr::symbol())
@@ -203,64 +206,64 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<hd_to_wif>();
     if (symbol == help::symbol())
         return make_shared<help>();
-    if (symbol == history::symbol())
-        return make_shared<history>();
     if (symbol == initchain::symbol())
         return make_shared<initchain>();
     if (symbol == mnemonic_decode::symbol())
         return make_shared<mnemonic_decode>();
     if (symbol == mnemonic_encode::symbol())
         return make_shared<mnemonic_encode>();
-    if (symbol == monitor::symbol())
-        return make_shared<monitor>();
     if (symbol == mpk::symbol())
         return make_shared<mpk>();
     if (symbol == newseed::symbol())
         return make_shared<newseed>();
     if (symbol == qrcode::symbol())
         return make_shared<qrcode>();
-    if (symbol == rawscript::symbol())
-        return make_shared<rawscript>();
     if (symbol == ripemd160::symbol())
         return make_shared<ripemd160>();
-    if (symbol == satoshi::symbol())
-        return make_shared<satoshi>();
-    if (symbol == scripthash::symbol())
-        return make_shared<scripthash>();
+    if (symbol == satoshi_to_btc::symbol())
+        return make_shared<satoshi_to_btc>();
+    if (symbol == script_decode::symbol())
+        return make_shared<script_decode>();
+    if (symbol == script_encode::symbol())
+        return make_shared<script_encode>();
+    if (symbol == script_to_addr::symbol())
+        return make_shared<script_to_addr>();
     if (symbol == seed::symbol())
         return make_shared<seed>();
-    if (symbol == sendtx_node::symbol())
-        return make_shared<sendtx_node>();
-    if (symbol == sendtx_obelisk::symbol())
-        return make_shared<sendtx_obelisk>();
-    if (symbol == sendtx_p2p::symbol())
-        return make_shared<sendtx_p2p>();
+    if (symbol == send_tx::symbol())
+        return make_shared<send_tx>();
+    if (symbol == send_tx_bci::symbol())
+        return make_shared<send_tx_bci>();
+    if (symbol == send_tx_node::symbol())
+        return make_shared<send_tx_node>();
+    if (symbol == send_tx_p2p::symbol())
+        return make_shared<send_tx_p2p>();
     if (symbol == sha160::symbol())
         return make_shared<sha160>();
     if (symbol == sha256::symbol())
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
         return make_shared<sha512>();
-    if (symbol == showscript::symbol())
-        return make_shared<showscript>();
-    if (symbol == signtx::symbol())
-        return make_shared<signtx>();
-    if (symbol == stealth_addr::symbol())
-        return make_shared<stealth_addr>();
-    if (symbol == unwrap::symbol())
-        return make_shared<unwrap>();
-    if (symbol == validtx::symbol())
-        return make_shared<validtx>();
+    if (symbol == stealth_addr_encode::symbol())
+        return make_shared<stealth_addr_encode>();
+    if (symbol == stealth_newkey::symbol())
+        return make_shared<stealth_newkey>();
+    if (symbol == tx_sign::symbol())
+        return make_shared<tx_sign>();
     if (symbol == wallet::symbol())
         return make_shared<wallet>();
-    if (symbol == watchtx::symbol())
-        return make_shared<watchtx>();
+    if (symbol == watch_prefix::symbol())
+        return make_shared<watch_prefix>();
+    if (symbol == watch_tx::symbol())
+        return make_shared<watch_tx>();
     if (symbol == wif_to_ec::symbol())
         return make_shared<wif_to_ec>();
     if (symbol == wif_to_pub::symbol())
         return make_shared<wif_to_pub>();
-    if (symbol == wrap::symbol())
-        return make_shared<wrap>();
+    if (symbol == wrap_decode::symbol())
+        return make_shared<wrap_decode>();
+    if (symbol == wrap_encode::symbol())
+        return make_shared<wrap_encode>();
 
     return nullptr;
 }

@@ -29,7 +29,6 @@ console_result fetch_utxo::invoke(std::istream& input, std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.
-    // TODO: improve generated property pluralization.
     const auto addresses = get_addresss_argument();
     const auto satoshi = get_satoshi_argument();
 

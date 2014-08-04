@@ -29,7 +29,6 @@
 
 SX_USING_NAMESPACES()
 
-// This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(base58__serializer)
 
 BOOST_AUTO_TEST_CASE(base58__constructor__default__does_not_throw)

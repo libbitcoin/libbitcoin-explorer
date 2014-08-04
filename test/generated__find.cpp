@@ -47,11 +47,6 @@ BOOST_AUTO_TEST_CASE(generated__find__addr_validate__returns_object)
     BOOST_REQUIRE(find(addr_validate::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__balance__returns_object)
-{
-    BOOST_REQUIRE(find(balance::symbol()) != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__base58_decode__returns_object)
 {
     BOOST_REQUIRE(find(base58_decode::symbol()) != nullptr);
@@ -72,26 +67,6 @@ BOOST_AUTO_TEST_CASE(generated__find__base58check_encode__returns_object)
     BOOST_REQUIRE(find(base58check_encode::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__bci_fetch_last_height__returns_object)
-{
-    BOOST_REQUIRE(find(bci_fetch_last_height::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__bci_history__returns_object)
-{
-    BOOST_REQUIRE(find(bci_history::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__bci_send_transaction__returns_object)
-{
-    BOOST_REQUIRE(find(bci_send_transaction::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__be_fetch_transaction__returns_object)
-{
-    BOOST_REQUIRE(find(be_fetch_transaction::symbol()) != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__bitcoin160__returns_object)
 {
     BOOST_REQUIRE(find(bitcoin160::symbol()) != nullptr);
@@ -102,9 +77,9 @@ BOOST_AUTO_TEST_CASE(generated__find__bitcoin256__returns_object)
     BOOST_REQUIRE(find(bitcoin256::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__btc__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__btc_to_satoshi__returns_object)
 {
-    BOOST_REQUIRE(find(btc::symbol()) != nullptr);
+    BOOST_REQUIRE(find(btc_to_satoshi::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_add__returns_object)
@@ -157,14 +132,39 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_unlock__returns_object)
     BOOST_REQUIRE(find(ec_unlock::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_balance::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_confirmed__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_confirmed::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
 {
     BOOST_REQUIRE(find(fetch_header::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__fetch_last_height__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__fetch_height__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_last_height::symbol()) != nullptr);
+    BOOST_REQUIRE(find(fetch_height::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_height_bci__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_height_bci::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_history__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_history::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_history_bci__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_history_bci::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_public_key__returns_object)
@@ -177,14 +177,19 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_stealth__returns_object)
     BOOST_REQUIRE(find(fetch_stealth::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__fetch_transaction__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__fetch_tx__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_transaction::symbol()) != nullptr);
+    BOOST_REQUIRE(find(fetch_tx::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__fetch_transaction_index__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__fetch_tx_bex__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_transaction_index::symbol()) != nullptr);
+    BOOST_REQUIRE(find(fetch_tx_bex::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_tx_index__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_tx_index::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_utxo__returns_object)
@@ -247,11 +252,6 @@ BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
     BOOST_REQUIRE(find(help::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__history__returns_object)
-{
-    BOOST_REQUIRE(find(history::symbol()) != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__initchain__returns_object)
 {
     BOOST_REQUIRE(find(initchain::symbol()) != nullptr);
@@ -265,11 +265,6 @@ BOOST_AUTO_TEST_CASE(generated__find__mnemonic_decode__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_encode__returns_object)
 {
     BOOST_REQUIRE(find(mnemonic_encode::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__monitor__returns_object)
-{
-    BOOST_REQUIRE(find(monitor::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__mpk__returns_object)
@@ -287,24 +282,29 @@ BOOST_AUTO_TEST_CASE(generated__find__qrcode__returns_object)
     BOOST_REQUIRE(find(qrcode::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__rawscript__returns_object)
-{
-    BOOST_REQUIRE(find(rawscript::symbol()) != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__ripemd160__returns_object)
 {
     BOOST_REQUIRE(find(ripemd160::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__satoshi__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__satoshi_to_btc__returns_object)
 {
-    BOOST_REQUIRE(find(satoshi::symbol()) != nullptr);
+    BOOST_REQUIRE(find(satoshi_to_btc::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__scripthash__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__script_decode__returns_object)
 {
-    BOOST_REQUIRE(find(scripthash::symbol()) != nullptr);
+    BOOST_REQUIRE(find(script_decode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__script_encode__returns_object)
+{
+    BOOST_REQUIRE(find(script_encode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__script_to_addr__returns_object)
+{
+    BOOST_REQUIRE(find(script_to_addr::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
@@ -312,19 +312,24 @@ BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
     BOOST_REQUIRE(find(seed::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__sendtx_node__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__send_tx__returns_object)
 {
-    BOOST_REQUIRE(find(sendtx_node::symbol()) != nullptr);
+    BOOST_REQUIRE(find(send_tx::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__sendtx_obelisk__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__send_tx_bci__returns_object)
 {
-    BOOST_REQUIRE(find(sendtx_obelisk::symbol()) != nullptr);
+    BOOST_REQUIRE(find(send_tx_bci::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__sendtx_p2p__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__send_tx_node__returns_object)
 {
-    BOOST_REQUIRE(find(sendtx_p2p::symbol()) != nullptr);
+    BOOST_REQUIRE(find(send_tx_node::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__send_tx_p2p__returns_object)
+{
+    BOOST_REQUIRE(find(send_tx_p2p::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__sha160__returns_object)
@@ -342,29 +347,19 @@ BOOST_AUTO_TEST_CASE(generated__find__sha512__returns_object)
     BOOST_REQUIRE(find(sha512::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__showscript__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_addr_encode__returns_object)
 {
-    BOOST_REQUIRE(find(showscript::symbol()) != nullptr);
+    BOOST_REQUIRE(find(stealth_addr_encode::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__signtx__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
 {
-    BOOST_REQUIRE(find(signtx::symbol()) != nullptr);
+    BOOST_REQUIRE(find(stealth_newkey::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_addr__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__tx_sign__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_addr::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__unwrap__returns_object)
-{
-    BOOST_REQUIRE(find(unwrap::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__validtx__returns_object)
-{
-    BOOST_REQUIRE(find(validtx::symbol()) != nullptr);
+    BOOST_REQUIRE(find(tx_sign::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wallet__returns_object)
@@ -372,9 +367,14 @@ BOOST_AUTO_TEST_CASE(generated__find__wallet__returns_object)
     BOOST_REQUIRE(find(wallet::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__watchtx__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__watch_prefix__returns_object)
 {
-    BOOST_REQUIRE(find(watchtx::symbol()) != nullptr);
+    BOOST_REQUIRE(find(watch_prefix::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__watch_tx__returns_object)
+{
+    BOOST_REQUIRE(find(watch_tx::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wif_to_ec__returns_object)
@@ -387,9 +387,14 @@ BOOST_AUTO_TEST_CASE(generated__find__wif_to_pub__returns_object)
     BOOST_REQUIRE(find(wif_to_pub::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__wrap__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__wrap_decode__returns_object)
 {
-    BOOST_REQUIRE(find(wrap::symbol()) != nullptr);
+    BOOST_REQUIRE(find(wrap_decode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__wrap_encode__returns_object)
+{
+    BOOST_REQUIRE(find(wrap_encode::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

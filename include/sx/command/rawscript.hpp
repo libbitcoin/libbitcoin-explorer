@@ -135,7 +135,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Encode a script."
+                "Encode a plain text script."
             )
             (
                 "TOKEN",

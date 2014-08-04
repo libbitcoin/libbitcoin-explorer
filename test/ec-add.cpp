@@ -21,7 +21,6 @@
 
 SX_USING_NAMESPACES()
 
-// This is a namespace for tests by class/file__method/function.
 BOOST_AUTO_TEST_SUITE(ec_add__invoke)
 
 // TODO: generate overflow condition

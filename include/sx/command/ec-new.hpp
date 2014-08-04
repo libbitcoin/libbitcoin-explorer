@@ -58,7 +58,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_EC_NEW_SHORT_SEED \
-    "The seed is less than 128 long."
+    "The seed is less than 128 bits long."
 
 /**
  * Class to implement the sx ec-new command.

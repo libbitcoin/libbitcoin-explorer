@@ -1208,44 +1208,48 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\showtx.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\sign-input.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\stealth-initiate.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\stealth-newkey.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\stealth-show-addr.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover-secret.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\utility.cpp" />
+    
+    <ClCompile Include="..\\..\\..\\..\\src\\header-decode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    
+    <ClCompile Include="..\\..\\..\\..\\src\\input-sign.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\input-set.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\input-validate.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-addr-decode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-initiate.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover-secret.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    
+    <ClCompile Include="..\\..\\..\\..\\src\\tx-decode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\tx-encode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1259,9 +1263,6 @@ endif
     </ClCompile>
 .   endif
 .endfor
-    <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
   </ItemGroup>
   <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
@@ -1511,28 +1512,25 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
+    
+    <ClCompile Include="..\\..\\..\\..\\src\\header-decode.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
+    
+    <ClCompile Include="..\\..\\..\\..\\src\\input-set.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
+    <ClCompile Include="..\\..\\..\\..\\src\\input-sign.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\showtx.cpp">
+    <ClCompile Include="..\\..\\..\\..\\src\\input-validate.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\sign-input.cpp">
-      <Filter>src\\command\\todo\\transaction</Filter>
+    
+    <ClCompile Include="..\\..\\..\\..\\src\\stealth-addr-decode.cpp">
+      <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-initiate.cpp">
-      <Filter>src\\command\\todo\\stealth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\stealth-newkey.cpp">
-      <Filter>src\\command\\todo\\stealth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\stealth-show-addr.cpp">
       <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover.cpp">
@@ -1541,7 +1539,11 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover-secret.cpp">
       <Filter>src\\command\\todo\\stealth</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\validsig.cpp">
+    
+    <ClCompile Include="..\\..\\..\\..\\src\\tx-decode.cpp">
+      <Filter>src\\command\\todo\\transaction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\tx-encode.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
   </ItemGroup>

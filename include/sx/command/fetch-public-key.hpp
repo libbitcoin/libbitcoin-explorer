@@ -135,7 +135,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the EC public key of the address, if it exists on the blockchain. Requires a server connection."
+                "Get the EC public key of the address, if it exists on the blockchain. Requires an Obelisk server connection."
             )
             (
                 "ADDRESS",

@@ -31,13 +31,9 @@ libsx_la_SOURCES += \
     base58-encode.cpp \
     base58check-decode.cpp \
     base58check-encode.cpp \
-    bci-fetch-last-height.cpp \
-    bci-history.cpp \
-    bci-send-transaction.cpp \
-    be-fetch-transaction.cpp \
     bitcoin160.cpp \
     bitcoin256.cpp \
-    btc.cpp \
+    btc-to-satoshi.cpp \
     ec-add.cpp \
     ec-add-secrets.cpp \
     ec-lock.cpp \
@@ -48,6 +44,9 @@ libsx_la_SOURCES += \
     ec-to-pub.cpp \
     ec-to-wif.cpp \
     ec-unlock.cpp \
+    fetch-height-bci.cpp \
+    fetch-history-bci.cpp \
+    fetch-tx-bex.cpp \
     genaddr.cpp \
     genpriv.cpp \
     genpub.cpp \
@@ -65,41 +64,43 @@ libsx_la_SOURCES += \
     mpk.cpp \
     newseed.cpp \
     qrcode.cpp \
-    rawscript.cpp \
     ripemd160.cpp \
-    satoshi.cpp \
-    scripthash.cpp \
+    satoshi-to-btc.cpp \
+    script-decode.cpp \
+    script-encode.cpp \
+    script-to-addr.cpp \
     seed.cpp \
-    sendtx-node.cpp \
-    sendtx-p2p.cpp \
+    send-tx-bci.cpp \
+    send-tx-node.cpp \
+    send-tx-p2p.cpp \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \
-    showscript.cpp \
-    signtx.cpp \
-    stealth-addr.cpp \
-    unwrap.cpp \
+    stealth-addr-encode.cpp \
+    stealth-newkey.cpp \
+    tx-sign.cpp \
     wallet.cpp \
     wif-to-ec.cpp \
     wif-to-pub.cpp \
-    wrap.cpp
+    wrap-decode.cpp \
+    wrap-encode.cpp
 
 # Generated from XML data source.
 if HAVE_OBELISK
     libsx_la_SOURCES += \
-        balance.cpp \
+        fetch-balance.cpp \
+        fetch-confirmed.cpp \
         fetch-header.cpp \
-        fetch-last-height.cpp \
+        fetch-height.cpp \
+        fetch-history.cpp \
         fetch-public-key.cpp \
         fetch-stealth.cpp \
-        fetch-transaction.cpp \
-        fetch-transaction-index.cpp \
+        fetch-tx.cpp \
+        fetch-tx-index.cpp \
         fetch-utxo.cpp \
-        history.cpp \
-        monitor.cpp \
-        sendtx-obelisk.cpp \
-        validtx.cpp \
-        watchtx.cpp \
+        send-tx.cpp \
+        watch-prefix.cpp \
+        watch-tx.cpp \
         obelisk_client.cpp
 
     AM_CPPFLAGS += \

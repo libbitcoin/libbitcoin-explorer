@@ -136,7 +136,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires a server connection."
+                "Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires an Obelisk server connection."
             )
             (
                 "SATOSHI",

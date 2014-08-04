@@ -17,33 +17,36 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <wallet/wallet.hpp>
 #include <sx/command/stealth-newkey.hpp>
+
+#include <wallet/wallet.hpp>
 #include <sx/utility/utility.hpp>
-#include <sx/utility/curve.hpp>
 
 using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result stealth_newkey::invoke(int argc, const char* argv[])
+// TODO: move this to obsolete and demo using other commands.
+console_result stealth_newkey::invoke(std::istream& input, 
+    std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1))
-        return console_result::failure;
+    //if (!validate_argument_range(argc, example(), 1))
+    //    return console_result::failure;
 
-    const auto scan_secret = generate_random_secret();
-    const auto spend_secret = generate_random_secret();
-    const auto spend_pubkey = secret_to_public_key(spend_secret);
+    //// TODO: take seed(s).
+    //const auto scan_secret = generate_random_secret();
+    //const auto spend_secret = generate_random_secret();
+    //const auto spend_pubkey = secret_to_public_key(spend_secret);
 
-    stealth_address addr;
-    addr.options = 0;
-    addr.scan_pubkey = secret_to_public_key(scan_secret);
-    addr.spend_pubkeys.push_back(spend_pubkey);
-    addr.number_signatures = 1;
+    //stealth_address addr;
+    //addr.options = 0;
+    //addr.scan_pubkey = secret_to_public_key(scan_secret);
+    //addr.spend_pubkeys.push_back(spend_pubkey);
+    //addr.number_signatures = 1;
 
-    std::cout << "Stealth address: " << addr.encoded() << std::endl;
-    std::cout << "Scan secret: " << scan_secret << std::endl;
-    std::cout << "Spend secret: " << spend_secret << std::endl;
+    //std::cout << "Stealth address: " << addr.encoded() << std::endl;
+    //std::cout << "Scan secret: " << scan_secret << std::endl;
+    //std::cout << "Spend secret: " << spend_secret << std::endl;
     return console_result::okay;
 }
 

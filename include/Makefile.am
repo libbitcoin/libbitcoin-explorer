@@ -51,13 +51,9 @@ sx_command_include_HEADERS = \
     command/base58-encode.hpp \
     command/base58check-decode.hpp \
     command/base58check-encode.hpp \
-    command/bci-fetch-last-height.hpp \
-    command/bci-history.hpp \
-    command/bci-send-transaction.hpp \
-    command/be-fetch-transaction.hpp \
     command/bitcoin160.hpp \
     command/bitcoin256.hpp \
-    command/btc.hpp \
+    command/btc-to-satoshi.hpp \
     command/ec-add.hpp \
     command/ec-add-secrets.hpp \
     command/ec-lock.hpp \
@@ -68,6 +64,9 @@ sx_command_include_HEADERS = \
     command/ec-to-pub.hpp \
     command/ec-to-wif.hpp \
     command/ec-unlock.hpp \
+    command/fetch-height-bci.hpp \
+    command/fetch-history-bci.hpp \
+    command/fetch-tx-bex.hpp \
     command/genaddr.hpp \
     command/genpriv.hpp \
     command/genpub.hpp \
@@ -85,39 +84,41 @@ sx_command_include_HEADERS = \
     command/mpk.hpp \
     command/newseed.hpp \
     command/qrcode.hpp \
-    command/rawscript.hpp \
     command/ripemd160.hpp \
-    command/satoshi.hpp \
-    command/scripthash.hpp \
+    command/satoshi-to-btc.hpp \
+    command/script-decode.hpp \
+    command/script-encode.hpp \
+    command/script-to-addr.hpp \
     command/seed.hpp \
-    command/sendtx-node.hpp \
-    command/sendtx-p2p.hpp \
+    command/send-tx-bci.hpp \
+    command/send-tx-node.hpp \
+    command/send-tx-p2p.hpp \
     command/sha160.hpp \
     command/sha256.hpp \
     command/sha512.hpp \
-    command/showscript.hpp \
-    command/signtx.hpp \
-    command/stealth-addr.hpp \
-    command/unwrap.hpp \
+    command/stealth-addr-encode.hpp \
+    command/stealth-newkey.hpp \
+    command/tx-sign.hpp \
     command/wallet.hpp \
     command/wif-to-ec.hpp \
     command/wif-to-pub.hpp \
-    command/wrap.hpp
+    command/wrap-decode.hpp \
+    command/wrap-encode.hpp
 
 # Generated from XML data source.
 if HAVE_OBELISK
     sx_command_include_HEADERS += \
-        command/balance.hpp \
+        command/fetch-balance.hpp \
+        command/fetch-confirmed.hpp \
         command/fetch-header.hpp \
-        command/fetch-last-height.hpp \
+        command/fetch-height.hpp \
+        command/fetch-history.hpp \
         command/fetch-public-key.hpp \
         command/fetch-stealth.hpp \
-        command/fetch-transaction.hpp \
-        command/fetch-transaction-index.hpp \
+        command/fetch-tx.hpp \
+        command/fetch-tx-index.hpp \
         command/fetch-utxo.hpp \
-        command/history.hpp \
-        command/monitor.hpp \
-        command/sendtx-obelisk.hpp \
-        command/validtx.hpp \
-        command/watchtx.hpp
+        command/send-tx.hpp \
+        command/watch-prefix.hpp \
+        command/watch-tx.hpp
 endif
