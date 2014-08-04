@@ -88,8 +88,10 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<mpk>());
     func(make_shared<newseed>());
     func(make_shared<qrcode>());
+    func(make_shared<rawscript>());
     func(make_shared<ripemd160>());
     func(make_shared<satoshi>());
+    func(make_shared<scripthash>());
     func(make_shared<seed>());
     func(make_shared<sendtx_node>());
     func(make_shared<sendtx_obelisk>());
@@ -97,6 +99,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
+    func(make_shared<showscript>());
     func(make_shared<signtx>());
     func(make_shared<stealth_addr>());
     func(make_shared<unwrap>());
@@ -216,10 +219,14 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<newseed>();
     if (symbol == qrcode::symbol())
         return make_shared<qrcode>();
+    if (symbol == rawscript::symbol())
+        return make_shared<rawscript>();
     if (symbol == ripemd160::symbol())
         return make_shared<ripemd160>();
     if (symbol == satoshi::symbol())
         return make_shared<satoshi>();
+    if (symbol == scripthash::symbol())
+        return make_shared<scripthash>();
     if (symbol == seed::symbol())
         return make_shared<seed>();
     if (symbol == sendtx_node::symbol())
@@ -234,6 +241,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
         return make_shared<sha512>();
+    if (symbol == showscript::symbol())
+        return make_shared<showscript>();
     if (symbol == signtx::symbol())
         return make_shared<signtx>();
     if (symbol == stealth_addr::symbol())

@@ -17,32 +17,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/showscript.hpp>
+
+#include <exception>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/showscript.hpp>
+#include <sx/serializer/address.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result showscript::invoke(int argc, const char* argv[])
+console_result showscript::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 1))
-        return console_result::failure;
+    // Bound parameters.
+    const auto& encoded_script = get_script_argument();
 
-    const auto raw_script = decode_hex(read_stream(std::cin));
+    // TODO: create script serializer and bury this.
     script_type script;
     try
     {
-        script = parse_script(raw_script);
+        script = parse_script(encoded_script);
     }
     catch (end_of_stream)
     {
-        std::cerr << "showscript: Error: Bad script." << std::endl;
+        cerr << "Invalid script input." << std::endl;
         return console_result::failure;
     }
 
-    std::cout << pretty(script) << std::endl;
+    output << pretty(script) << std::endl;
     return console_result::okay;
 }

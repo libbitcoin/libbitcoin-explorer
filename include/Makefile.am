@@ -85,14 +85,17 @@ sx_command_include_HEADERS = \
     command/mpk.hpp \
     command/newseed.hpp \
     command/qrcode.hpp \
+    command/rawscript.hpp \
     command/ripemd160.hpp \
     command/satoshi.hpp \
+    command/scripthash.hpp \
     command/seed.hpp \
     command/sendtx-node.hpp \
     command/sendtx-p2p.hpp \
     command/sha160.hpp \
     command/sha256.hpp \
     command/sha512.hpp \
+    command/showscript.hpp \
     command/signtx.hpp \
     command/stealth-addr.hpp \
     command/unwrap.hpp \

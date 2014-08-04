@@ -287,6 +287,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__qrcode__returns_expected_value)
     BOOST_REQUIRE(qrcode::symbol() == std::string("qrcode"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__rawscript__returns_expected_value)
+{
+    BOOST_REQUIRE(rawscript::symbol() == std::string("rawscript"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__ripemd160__returns_expected_value)
 {
     BOOST_REQUIRE(ripemd160::symbol() == std::string("ripemd160"));
@@ -295,6 +300,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ripemd160__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__satoshi__returns_expected_value)
 {
     BOOST_REQUIRE(satoshi::symbol() == std::string("satoshi"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__scripthash__returns_expected_value)
+{
+    BOOST_REQUIRE(scripthash::symbol() == std::string("scripthash"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)
@@ -330,6 +340,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__sha256__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__sha512__returns_expected_value)
 {
     BOOST_REQUIRE(sha512::symbol() == std::string("sha512"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__showscript__returns_expected_value)
+{
+    BOOST_REQUIRE(showscript::symbol() == std::string("showscript"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__signtx__returns_expected_value)

@@ -65,14 +65,17 @@ libsx_la_SOURCES += \
     mpk.cpp \
     newseed.cpp \
     qrcode.cpp \
+    rawscript.cpp \
     ripemd160.cpp \
     satoshi.cpp \
+    scripthash.cpp \
     seed.cpp \
     sendtx-node.cpp \
     sendtx-p2p.cpp \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \
+    showscript.cpp \
     signtx.cpp \
     stealth-addr.cpp \
     unwrap.cpp \

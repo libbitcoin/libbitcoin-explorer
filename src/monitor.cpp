@@ -76,7 +76,7 @@ console_result monitor::invoke(std::istream& input, std::ostream& output,
     constexpr size_t max_prefix_bytes = sizeof(uint32_t);
     if (prefix.size() > max_prefix_bytes * byte_bits)
     {
-        cerr << SX_MONITOR_BITFIELD_TOO_LONG << std::endl;
+        cerr << SX_MONITOR_PREFIX_TOO_LONG << std::endl;
         return console_result::failure;
     }
 

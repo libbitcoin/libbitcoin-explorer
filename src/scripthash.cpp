@@ -17,25 +17,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <sx/command/scripthash.hpp>
+
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command/scripthash.hpp>
+#include <sx/serializer/address.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result scripthash::invoke(int argc, const char* argv[])
+console_result scripthash::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 1))
-        return console_result::failure;
+    // Bound parameters.
+    const auto& encoded_script = get_script_argument();
 
-    const auto hex_script = read_stream(std::cin);
-    const auto bip16_script = parse_script(decode_hex(hex_script));
-    payment_address payaddr;
-    set_script(payaddr, bip16_script);
-    std::cout << payaddr.encoded() << std::endl;
+    // TODO: create script serializer and bury this.
+    script_type script;
+    try
+    {
+        script = parse_script(encoded_script);
+    }
+    catch (end_of_stream)
+    {
+        cerr << "Invalid script input." << std::endl;
+        return console_result::failure;
+    }
+
+    // TESTNET VERSION REQUIRES RECOMPILE
+    address script_hash_address;
+    set_script(script_hash_address.data(), script);
+
+    output << script_hash_address << std::endl;
     return console_result::okay;
 }
 

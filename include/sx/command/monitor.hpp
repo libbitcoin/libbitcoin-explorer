@@ -57,8 +57,8 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_MONITOR_BITFIELD_TOO_LONG \
-    "The bitfield option exceeds 32 bits."
+#define SX_MONITOR_PREFIX_TOO_LONG \
+    "The prefix option exceeds 32 bits."
 #define SX_MONITOR_WAITING \
     "Waiting for updates..."
 #define SX_MONITOR_OUTPUT \

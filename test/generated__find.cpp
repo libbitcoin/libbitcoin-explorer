@@ -287,6 +287,11 @@ BOOST_AUTO_TEST_CASE(generated__find__qrcode__returns_object)
     BOOST_REQUIRE(find(qrcode::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__rawscript__returns_object)
+{
+    BOOST_REQUIRE(find(rawscript::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ripemd160__returns_object)
 {
     BOOST_REQUIRE(find(ripemd160::symbol()) != nullptr);
@@ -295,6 +300,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ripemd160__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__satoshi__returns_object)
 {
     BOOST_REQUIRE(find(satoshi::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__scripthash__returns_object)
+{
+    BOOST_REQUIRE(find(scripthash::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
@@ -330,6 +340,11 @@ BOOST_AUTO_TEST_CASE(generated__find__sha256__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__sha512__returns_object)
 {
     BOOST_REQUIRE(find(sha512::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__showscript__returns_object)
+{
+    BOOST_REQUIRE(find(showscript::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__signtx__returns_object)

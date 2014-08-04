@@ -76,8 +76,10 @@
 #include <sx/command/mpk.hpp>
 #include <sx/command/newseed.hpp>
 #include <sx/command/qrcode.hpp>
+#include <sx/command/rawscript.hpp>
 #include <sx/command/ripemd160.hpp>
 #include <sx/command/satoshi.hpp>
+#include <sx/command/scripthash.hpp>
 #include <sx/command/seed.hpp>
 #include <sx/command/sendtx-node.hpp>
 #include <sx/command/sendtx-obelisk.hpp>
@@ -85,6 +87,7 @@
 #include <sx/command/sha160.hpp>
 #include <sx/command/sha256.hpp>
 #include <sx/command/sha512.hpp>
+#include <sx/command/showscript.hpp>
 #include <sx/command/signtx.hpp>
 #include <sx/command/stealth-addr.hpp>
 #include <sx/command/unwrap.hpp>

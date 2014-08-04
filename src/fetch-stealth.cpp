@@ -67,7 +67,7 @@ console_result fetch_stealth::invoke(std::istream& input,
     constexpr size_t max_prefix_bytes = sizeof(uint32_t);
     if (prefix.size() > max_prefix_bytes * byte_bits)
     {
-        cerr << SX_FETCH_STEALTH_BITFIELD_TOO_LONG << std::endl;
+        cerr << SX_FETCH_STEALTH_PREFIX_TOO_LONG << std::endl;
         return console_result::failure;
     }
 

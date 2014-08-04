@@ -164,7 +164,7 @@ template <typename Value>
 void deserialize(std::vector<Value>& collection, const std::string& text)
 {
     std::vector<std::string> tokens;
-    split(text, tokens, "\n");
+    split(text, tokens, "\n\r\t ");
 
     for (const auto& token: tokens)
     {

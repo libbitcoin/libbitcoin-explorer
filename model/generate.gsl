@@ -1214,19 +1214,10 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\scripthash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\showscript.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showtx.cpp">
@@ -1363,9 +1354,6 @@ endif
     </Filter>
     <Filter Include="src\\command\\todo">
       <UniqueIdentifier>{186b583d-9017-424c-8916-26eaa0373abf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\\command\\todo\\script">
-      <UniqueIdentifier>{0d051466-4637-46d3-bf36-79744fb7b978}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\\command\\todo\\stealth">
       <UniqueIdentifier>{ed76315a-9193-4924-a14e-6b6a7628ba86}</UniqueIdentifier>
@@ -1526,20 +1514,11 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\mktx.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\rawscript.cpp">
-      <Filter>src\\command\\todo\\script</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\scripthash.cpp">
-      <Filter>src\\command\\todo\\script</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\set-input.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showblkhead.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\showscript.cpp">
-      <Filter>src\\command\\todo\\script</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\showtx.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>

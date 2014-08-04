@@ -156,7 +156,7 @@
   <command symbol="ec-new" formerly="newkey" category="WALLET">
     <option name="help" description="Create a new EC private key from entropy." />
     <argument name="SEED" stream="true" type="hex" description="The hex encoded seed for the new key. Must be at least 128 bits in length." />
-    <define name="SX_EC_NEW_SHORT_SEED" value="The seed is less than 128 long." />
+    <define name="SX_EC_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
   </command>
   
   <command symbol="ec-to-addr" formerly="addr" category="WALLET">
@@ -205,7 +205,7 @@
     <option name="prefix" type="binary" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include in the search. Searches all blocks if not set."/>
     <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%" />
-    <define name="SX_FETCH_STEALTH_BITFIELD_TOO_LONG" value="The bitfield option exceeds 32 bits." />
+    <define name="SX_FETCH_STEALTH_PREFIX_TOO_LONG" value="The prefix option exceeds 32 bits." />
   </command>
 
   <command symbol="fetch-transaction" category="ONLINE" obelisk="true">
@@ -244,7 +244,7 @@
   <command symbol="hd-new" formerly="hd-seed" category="WALLET">
     <option name="help" description="Create a new HD (BIP32) private key from entropy." />
     <argument name="SEED" stream="true" type="hex" description="The hex encoded seed for the new key. Must be at least 128 bits in length." />
-    <define name="SX_HD_NEW_SHORT_SEED" value="The seed is less than 128 long." />
+    <define name="SX_HD_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
   </command>
 
   <command symbol="hd-priv" category="WALLET">
@@ -317,7 +317,7 @@
     <option name="help" description="Monitor an address prefix. WARNING: THIS COMMAND IS EXPERIMENTAL" />
     <option name="prefix" type="binary" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
     <!--<option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to monitor. Searches all blocks if not set."/>-->
-    <define name="SX_MONITOR_BITFIELD_TOO_LONG" value="The bitfield option exceeds 32 bits." />
+    <define name="SX_MONITOR_PREFIX_TOO_LONG" value="The prefix option exceeds 32 bits." />
     <define name="SX_MONITOR_WAITING" value="Waiting for updates..." />
     <define name="SX_MONITOR_OUTPUT" value="Update %1% [ #%2% %3% ]" />
   </command>
@@ -339,6 +339,14 @@
     <argument name="ADDRESS" stream="true" type="address" description="The address."/>
     <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
+  
+  <command symbol="rawscript" category="SCRIPT">
+    <option name="help" description="Encode a script." />
+    <argument name="TOKEN" stream="true" limit="-1" type="string" description="The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."/>
+    <define name="SX_RAWSCRIPT_INVALID" value="Premature end of script." />
+    <!-- translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wik -->
+    <!-- $ sx rawscript dup 76 -->
+  </command>
 
   <command symbol="ripemd160" formerly="ripemd-hash" category="HASH">
     <option name="help" description="Perform a RIPEMD160 hash of hex encoded data." />
@@ -349,6 +357,17 @@
     <option name="help" description="Convert BTC to satoshi." />
     <argument name="BTC" stream="true" description="The whole number of BTC to convert."/>
     <define name="SX_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  </command>  
+  
+  <command symbol="scripthash" category="SCRIPT">
+    <option name="help" description="Create a BIP16 pay-to-script-hash address from an encoded script." />
+    <argument name="SCRIPT" file="true" stream="true" type="hex" description="The hex encoded raw script."/>
+    <!--
+    # generate an address for 2-of-3 multisig transactions
+    for n in 1 2 3; do echo 'b220b5bd2909df1d74b71c9e664233bf' | sx genpriv $n > key${n}; done
+    sx rawscript 2 [ $(cat key1 | sx pubkey) ] [ $(cat key2 | sx pubkey) ] [ $(cat key3 | sx pubkey) ] 3 checkmultisig | sx scripthash
+    33opBmv3oJTXu6rxtzsr571SL2Srtw9Cg8
+    -->
   </command>
   
   <command symbol="seed" category="WALLET">
@@ -400,10 +419,15 @@
     <argument name="HEX" stream="true" type="hex" description="The hex encoded data to hash."/>
   </command>
   
+  <command symbol="showscript" category="SCRIPT">
+    <option name="help" description="Show the details of a script." />
+    <argument name="SCRIPT" file="true" stream="true" type="hex" description="The hex encoded raw script."/>
+  </command>
+  
   <command symbol="signtx" category="TRANSACTION" stub="true">
     <option name="help"  description="Sign a transaction. Output is suitable for sending to Bitcoin network." />
-    <!--<example value="cat unsigned.tx | sx sign-transaction --wallet=sx.wallet.gpg --gpgkey=~/. " />-->
     <define name="SX_SIGNTX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <!-- cat unsigned.tx | sx sign-transaction --wallet=sx.wallet.gpg --gpgkey=~/. -->
   </command>
   
   <command symbol="stealth-addr" category="STEALTH">

@@ -88,7 +88,8 @@ void sleep_ms(uint32_t milliseconds)
 void split(const std::string& sentence, std::vector<std::string>& words,
     const std::string& delimiter)
 {
-    boost::split(words, sentence, boost::is_any_of(delimiter));
+    boost::split(words, sentence, boost::is_any_of(delimiter),
+        boost::token_compress_on);
 }
 
 void trim(std::string& value)

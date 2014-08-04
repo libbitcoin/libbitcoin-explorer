@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_FETCH_STEALTH_HPP
-#define SX_FETCH_STEALTH_HPP
+#ifndef SX_SCRIPTHASH_HPP
+#define SX_SCRIPTHASH_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -55,17 +55,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx scripthash command.
  */
-#define SX_FETCH_STEALTH_OUTPUT \
-    "Ephemeral key: %1% Address: %2% Transaction hash: %3%"
-#define SX_FETCH_STEALTH_PREFIX_TOO_LONG \
-    "The prefix option exceeds 32 bits."
-
-/**
- * Class to implement the sx fetch-stealth command.
- */
-class fetch_stealth 
+class scripthash 
     : public command
 {
 public:
@@ -73,14 +65,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "fetch-stealth"; }
+    static const char* symbol() { return "scripthash"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return fetch_stealth::symbol();
+        return scripthash::symbol();
     }
 
     /**
@@ -88,7 +80,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "SCRIPT";
     }
 
     /**
@@ -99,7 +91,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("SCRIPT", 1);
     }
 	
 	/**
@@ -111,6 +104,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_path(get_script_argument(), "SCRIPT", variables);
+        load_input(get_script_argument(), "SCRIPT", variables, input);
     }
     
     /**
@@ -135,17 +130,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the stealth transactions matching the specified filter. Requires a server connection."
+                "Create a BIP16 pay-to-script-hash address from an encoded script."
             )
             (
-                "prefix,p",
-                value<serializer::binary>(&option_.prefix),
-                "The binary encoded stealth search prefix. Searches all transactions if not set."
-            )
-            (
-                "height,t",
-                value<size_t>(&option_.height),
-                "The minimum block height of transactions to include in the search. Searches all blocks if not set."
+                "SCRIPT",
+                value<std::string>(),
+                "The hex encoded raw script."
             );
 
         return options;
@@ -165,6 +155,23 @@ public:
     /* Properties */
 
     /**
+     * Get the value of the SCRIPT argument.
+     */
+    virtual serializer::hex& get_script_argument()
+    {
+        return argument_.script;
+    }
+    
+    /**
+     * Set the value of the SCRIPT argument.
+     */
+    virtual void set_script_argument(
+        const serializer::hex& value)
+    {
+        argument_.script = value;
+    }
+
+    /**
      * Get the value of the help option.
      */
     virtual bool& get_help_option()
@@ -181,40 +188,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the prefix option.
-     */
-    virtual serializer::binary& get_prefix_option()
-    {
-        return option_.prefix;
-    }
-    
-    /**
-     * Set the value of the prefix option.
-     */
-    virtual void set_prefix_option(
-        const serializer::binary& value)
-    {
-        option_.prefix = value;
-    }
-
-    /**
-     * Get the value of the height option.
-     */
-    virtual size_t& get_height_option()
-    {
-        return option_.height;
-    }
-    
-    /**
-     * Set the value of the height option.
-     */
-    virtual void set_height_option(
-        const size_t& value)
-    {
-        option_.height = value;
-    }
-
 private:
 
     /**
@@ -225,9 +198,11 @@ private:
     struct argument
     {
         argument()
+          : script()
         {
         }
         
+        serializer::hex script;
     } argument_;
     
     /**
@@ -238,15 +213,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            prefix(),
-            height()
+          : help()
         {
         }
         
         bool help;
-        serializer::binary prefix;
-        size_t height;
     } option_;
 };
 

@@ -96,8 +96,10 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
         "mpk\n" \
         "newseed\n" \
         "qrcode\n" \
+        "rawscript\n" \
         "ripemd160\n" \
         "satoshi\n" \
+        "scripthash\n" \
         "seed\n" \
         "sendtx-node\n" \
         "sendtx-obelisk\n" \

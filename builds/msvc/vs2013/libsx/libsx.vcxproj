@@ -161,8 +161,10 @@
     <ClInclude Include="..\..\..\..\include\sx\command\mpk.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\newseed.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\qrcode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\rawscript.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ripemd160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\scripthash.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\seed.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sendtx-node.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sendtx-obelisk.hpp" />
@@ -170,6 +172,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\showscript.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\signtx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\unwrap.hpp" />
@@ -191,19 +194,10 @@
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\rawscript.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\scripthash.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\set-input.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\showscript.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\showtx.cpp">
@@ -306,8 +300,10 @@
     <ClCompile Include="..\..\..\..\src\mpk.cpp" />
     <ClCompile Include="..\..\..\..\src\newseed.cpp" />
     <ClCompile Include="..\..\..\..\src\qrcode.cpp" />
+    <ClCompile Include="..\..\..\..\src\rawscript.cpp" />
     <ClCompile Include="..\..\..\..\src\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\src\satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\src\scripthash.cpp" />
     <ClCompile Include="..\..\..\..\src\seed.cpp" />
     <ClCompile Include="..\..\..\..\src\sendtx-node.cpp" />
     <ClCompile Include="..\..\..\..\src\sendtx-obelisk.cpp">
@@ -317,6 +313,7 @@
     <ClCompile Include="..\..\..\..\src\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\sha512.cpp" />
+    <ClCompile Include="..\..\..\..\src\showscript.cpp" />
     <ClCompile Include="..\..\..\..\src\signtx.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr.cpp" />
     <ClCompile Include="..\..\..\..\src\unwrap.cpp" />

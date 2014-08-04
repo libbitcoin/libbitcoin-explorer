@@ -17,24 +17,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <sx/command/rawscript.hpp>
+
+#include <iostream>
+#include <string>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-static operation create_data_operation(data_chunk& data)
+static void operation_from_data(operation& op, const data_chunk& data)
 {
-    BITCOIN_ASSERT(data.size() < std::numeric_limits<uint32_t>::max());
+    constexpr size_t max_special = 75;
 
-    operation op;
-    op.data = data;
-
-    // Magic Number?
-    if (data.size() <= 75)
+    if (data.size() <= max_special)
         op.code = opcode::special;
     else if (data.size() < std::numeric_limits<uint8_t>::max())
         op.code = opcode::pushdata1;
@@ -42,56 +42,57 @@ static operation create_data_operation(data_chunk& data)
         op.code = opcode::pushdata2;
     else if (data.size() < std::numeric_limits<uint32_t>::max())
         op.code = opcode::pushdata4;
+    else 
+        op.code = opcode::bad_operation;
 
-    return op;
+    if (op.code != opcode::bad_operation)
+        op.data = data;
 }
 
-static script_type script_from_pretty(const std::string& pretty_script)
+static bool script_from_tokens(script_type& script, 
+    const std::vector<std::string>& tokens)
 {
-    script_type script_object;
-    std::stringstream splitter;
-    splitter << pretty_script;
-    std::string token;
-    while (splitter >> token)
+    for (auto& token = tokens.begin(); token != tokens.end(); token++)
     {
         operation op;
-        if (token == "[")
+
+        if (*token == "[")
         {
-            std::string encoded_hex;
-            while ((splitter >> token) && token != "]")
-                encoded_hex += token;
+            std::string encoded;
+            while (++token != tokens.end() && *token != "]")
+                encoded += *token;
 
-            data_chunk data = decode_hex(encoded_hex);
-            if (token != "]")
-            {
-                log_warning() << "Premature end of script.";
-                return script_type();
-            }
+            if (*token != "]")
+                return false;
 
-            op = create_data_operation(data);
+            operation_from_data(op, decode_hex(encoded));
         }
         else
         {
-            op.code = string_to_opcode(token);
+            op.code = string_to_opcode(*token);
         }
 
-        script_object.push_operation(op);
+        script.push_operation(op);
     }
 
-    return script_object;
+    return true;
 }
 
-console_result rawscript::invoke(int argc, const char* argv[])
+console_result rawscript::invoke(std::istream& input, std::ostream& output,
+    std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 2))
-        return console_result::failure;
+    // Bound parameters.
+    const auto& tokens = get_tokens_argument();
 
-    std::vector<std::string> words;
-    get_args(argc, argv, words);
-    std::string sentence;
-    join(words, sentence);
-    const auto parsed_script = script_from_pretty(sentence);
-    std::cout << save_script(parsed_script) << std::endl;
+    // TODO: create script serializer and bury this.
+    script_type script;
+    if (!script_from_tokens(script, tokens))
+    {
+        cerr << SX_RAWSCRIPT_INVALID << std::endl;
+        return console_result::okay;
+    }
+
+    output << hex(save_script(script)) << std::endl;
     return console_result::okay;
 }
 
