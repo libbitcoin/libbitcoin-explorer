@@ -86,7 +86,6 @@
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\address.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\binary.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc256.hpp" />
@@ -97,9 +96,12 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_private.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_public.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\hex.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\input.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\item.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\output.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\prefix.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\raw.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\script.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp" />
@@ -153,6 +155,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-pub.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\header-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\initchain.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\mnemonic-decode.hpp" />
@@ -175,6 +178,8 @@
     <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-newkey.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\tx-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\tx-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\tx-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\watch-prefix.hpp" />
@@ -197,11 +202,7 @@
     <ClCompile Include="..\..\..\..\src\utility\parameter.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\printer.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\utility.cpp" />
-    
-    <ClCompile Include="..\..\..\..\src\header-decode.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    
+       
     <ClCompile Include="..\..\..\..\src\input-sign.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -222,13 +223,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    
-    <ClCompile Include="..\..\..\..\src\tx-decode.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\tx-encode.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
@@ -297,6 +291,7 @@
     <ClCompile Include="..\..\..\..\src\hd-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-pub.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp" />
+    <ClCompile Include="..\..\..\..\src\header-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\initchain.cpp" />
     <ClCompile Include="..\..\..\..\src\mnemonic-decode.cpp" />
@@ -321,6 +316,8 @@
     <ClCompile Include="..\..\..\..\src\sha512.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-addr-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp" />
+    <ClCompile Include="..\..\..\..\src\tx-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\tx-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\tx-sign.cpp" />
     <ClCompile Include="..\..\..\..\src\wallet.cpp" />
     <ClCompile Include="..\..\..\..\src\watch-prefix.cpp">

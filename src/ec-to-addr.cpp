@@ -30,8 +30,7 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result ec_to_addr::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result ec_to_addr::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto point = get_point_argument();

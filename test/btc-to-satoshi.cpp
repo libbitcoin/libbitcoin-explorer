@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(btc_to_satoshi__invoke__bogus_saoshi__failure_error)
     // $ sx btc-to-satoshi bogus
     SX_DECLARE_COMMAND(btc_to_satoshi);
     command.set_btc_argument("bogus");
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_BTC_TO_SATOSHI_NOT_IMPLEMENTED "\n");
 }
 

@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(hd_to_pub__invoke__always__okay_output)
     // $ sx hd-to-pub secret
     SX_DECLARE_COMMAND(hd_to_pub);
     command.set_secret_argument({ "secret" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("");
 }
 

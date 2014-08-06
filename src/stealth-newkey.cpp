@@ -27,13 +27,12 @@ using namespace sx;
 using namespace sx::extension;
 
 // TODO: move this to obsolete and demo using other commands.
-console_result stealth_newkey::invoke(std::istream& input, 
-    std::ostream& output, std::ostream& cerr)
+console_result stealth_newkey::invoke(std::ostream& output, std::ostream& cerr)
 {
     //if (!validate_argument_range(argc, example(), 1))
     //    return console_result::failure;
 
-    //// TODO: take seed(s).
+    //// TODO: take seed(s) and test for key validity.
     //const auto scan_secret = generate_random_secret();
     //const auto spend_secret = generate_random_secret();
     //const auto spend_pubkey = secret_to_public_key(spend_secret);

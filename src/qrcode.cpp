@@ -25,18 +25,23 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result qrcode::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result qrcode::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto path = get_file_option();
     const auto address = get_address_argument();
 
-    // TODO
+    // TODO:
     // Create qrcode as binary data.
-    // If path is empty or SX_STDIN_PATH_SENTINEL, write data to output;
-    // Otherwise write data to specified path.
-    // Use file() serializer to write.
+    const auto qrcode = 42;
+
+    if (path.empty() || path == SX_STDIO_PATH_SENTINEL)
+        output << qrcode;
+    else
+    {
+        std::ofstream outfile(path, std::ofstream::binary);
+        outfile << qrcode;
+    }
 
     cerr << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

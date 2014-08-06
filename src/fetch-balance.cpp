@@ -124,8 +124,7 @@ static void balance_fetched(const payment_address& pay_address,
 }
 
 // Untestable without fullnode virtualization, loc ready.
-console_result fetch_balance::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result fetch_balance::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     auto addresses = get_addresss_argument();

@@ -27,8 +27,7 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-console_result send_tx_bci::invoke(std::istream& input, std::ostream& output, 
-    std::ostream& cerr)
+console_result send_tx_bci::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();

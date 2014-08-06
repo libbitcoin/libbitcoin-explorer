@@ -17,44 +17,70 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef POINT_HPP
-#define POINT_HPP
+#ifndef INPUT_HPP
+#define INPUT_HPP
 
 #include <iostream>
+#include <stdint.h>
+#include <string>
+#include <vector>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/btc256.hpp>
+#include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
+    
+    /**
+     * Parse tokens into the transaction input.
+     * Throws if the hash digest or index is not valid.
+     *
+     * @param[out] input   The transaction input to populate.
+     * @param[in]  tokens  The pre-validated two tokens to parse.
+     */
+    static void parse_input(bc::transaction_input_type& input,
+        const std::vector<std::string>& tokens)
+    {
+        // validate and deserialize the transaction hash
+        const btc256 digest(tokens[0]);
+        const bc::hash_digest& txhash = digest;
 
-#define SX_SERIALIZER_POINT_DELIMITER ":"
+        // copy the input point values
+        auto& point = input.previous_output;
+        std::copy(txhash.begin(), txhash.end(), point.hash.begin());
+        deserialize(point.index, tokens[1]);
+
+        // initialize the input
+        input.sequence = bc::max_sequence;
+        input.script = bc::script_type();
+    }
 
 /**
- * Serialization helper to convert between hex string and input_point and
- * output_point. These points should not be confused with points on a curve.
+ * Serialization helper to convert between a base58-string:number 
+ * and transaction_input_type.
  */
-class point
+class input
 {
 public:
 
     /**
      * Constructor.
      */
-    point()
+    input()
         : value_() {}
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  tuple  The value to initialize with.
      */
-    point(const std::string& hex)
+    input(const std::string& tuple)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(tuple) >> *this;
     }
 
     /**
@@ -62,10 +88,21 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    point(const bc::output_point& value)
+    input(const bc::transaction_input_type& value)
         : value_(value)
     {
-        value_.index = value.index;
+    }
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    input(const bc::input_point& value)
+    {
+        value_.previous_output = value;
+        value_.sequence = bc::max_sequence;
+        value_.script = bc::script_type();
     }
 
     /**
@@ -73,15 +110,17 @@ public:
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    point(const point& other)
-        : point(other.value_) {}
+    input(const input& other)
+        : input(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    bc::output_point& data()
+    bc::transaction_input_type& data()
     {
         return value_;
     }
@@ -91,7 +130,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::output_point&() const
+    operator const bc::transaction_input_type&() const
     {
         return value_; 
     }
@@ -99,26 +138,22 @@ public:
     /**
      * Overload stream in. Throws if input is invalid.
      *
-     * @param[in]   input     The input stream to read the value from.
+     * @param[in]   stream    The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, point& argument)
+    friend std::istream& operator>>(std::istream& stream, input& argument)
     {
-        std::string text;
-        input >> text;
+        std::string tuple;
+        stream >> tuple;
 
-        // Note: there is no bc::uncat_point()
         std::vector<std::string> tokens;
-        split(text, tokens, SX_SERIALIZER_POINT_DELIMITER);
+        split(tuple, tokens, SX_TX_POINT_DELIMITER);
         if (tokens.size() != 2)
-            throw po::invalid_option_value(text);
+            throw po::invalid_option_value(tuple);
 
-//        parse(argument.value_.index, tokens[1]);
-        bc::hash_digest hash = btc256(tokens[0]);
-
-        std::copy(hash.begin(), hash.end(), argument.value_.hash.begin());
-        return input;
+        parse_input(argument.value_, tokens);
+        return stream;
     }
 
     /**
@@ -129,11 +164,11 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const point& argument)
+        const input& argument)
     {
-        // See bc::concat_point()
-        output << btc256(argument.value_.hash) <<
-            SX_SERIALIZER_POINT_DELIMITER << argument.value_.index;
+        // see bc::concat_point()
+        const auto& out = argument.value_.previous_output;
+        output << btc256(out.hash) << SX_TX_POINT_DELIMITER << out.index;
         return output;
     }
 
@@ -142,7 +177,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::output_point value_;
+    bc::transaction_input_type value_;
 };
 
 } // sx

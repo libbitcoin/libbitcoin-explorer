@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BINARY_HPP
-#define BINARY_HPP
+#ifndef PREFIX_HPP
+#define PREFIX_HPP
 
 #include <array>
 #include <iostream>
@@ -34,29 +34,39 @@
 namespace sx {
 namespace serializer {
 
+/**
+ * Type to simplify working with binary digits.
+ */
 typedef boost::dynamic_bitset<uint8_t> bitset;
+
+/**
+ * The max length of the prefix in bits.
+ */
+constexpr size_t max_prefix_bits = sizeof(bc::stealth_bitfield) * byte_bits;
 
 /**
  * Serialization helper to convert between binary string and data_chunk.
  */
-class binary
+class prefix
 {
 public:
 
     /**
      * Constructor.
      */
-    binary() 
-        : value_() {}
+    prefix()
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
      * 
      * @param[in]  bin  The value to initialize with.
      */
-    binary(const std::string& bin)
+    prefix(const std::string& binary)
     {
-        std::stringstream(bin) >> *this;
+        std::stringstream(binary) >> *this;
     }
 
     /**
@@ -64,16 +74,20 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    binary(const bitset& value)
-        : value_(value) {}
+    prefix(const bitset& value)
+        : value_(value)
+    {
+    }
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    binary(const binary& other)
-        : binary(other.value_) {}
+    prefix(const prefix& other)
+        : prefix(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.
@@ -102,16 +116,17 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, binary& argument)
+    friend std::istream& operator>>(std::istream& input, prefix& argument)
     {
-        std::string bin;
-        input >> bin;
-       
-        bitset value(bin);
-        if (bin.length() != value.size())
-            throw po::invalid_option_value(bin);
+        std::string binary;
+        input >> binary;
 
-        argument.value_.swap(value);
+        bitset bits(binary);
+        if (bits.size() > max_prefix_bits ||
+            bits.size() != binary.length())
+            throw po::invalid_option_value(binary);
+
+        argument.value_.swap(bits);
         return input;
     }
 
@@ -123,7 +138,7 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output,
-        const binary& argument)
+        const prefix& argument)
     {
         std::string bin;
         boost::to_string(argument.value_, bin);

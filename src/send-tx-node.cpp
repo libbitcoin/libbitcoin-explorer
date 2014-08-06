@@ -63,8 +63,7 @@ static void tx_send(const std::error_code& error, channel_ptr node,
     node->send(tx, handle_send);
 }
 
-console_result send_tx_node::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result send_tx_node::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto host = get_name_option();

@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(ec_to_pub__invoke__compressed__okay_output)
     SX_DECLARE_COMMAND(ec_to_pub);
     command.set_uncompressed_option(false);
     command.set_secret_argument({ "secret" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("");
 }
 
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(ec_to_pub__invoke__uncompressed__okay_output)
     SX_DECLARE_COMMAND(ec_to_pub);
     command.set_uncompressed_option(true);
     command.set_secret_argument({ "secret" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("");
 }
 

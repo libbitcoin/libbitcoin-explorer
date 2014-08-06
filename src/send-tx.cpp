@@ -48,8 +48,7 @@ static void handle_broadcast(const std::error_code& error)
     stopped = true;
 }
 
-console_result send_tx::invoke(std::istream& input, std::ostream& output, 
-    std::ostream& cerr)
+console_result send_tx::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();

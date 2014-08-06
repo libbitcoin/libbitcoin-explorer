@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 //    // $ sx fetch-balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
 //    SX_DECLARE_COMMAND(fetch_balance);
 //    command.set_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
 //BOOST_AUTO_TEST_CASE(fetch_balance__invoke__address_json__okay)
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 //    SX_DECLARE_COMMAND(fetch_balance);
 //    command.set_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
 //    command.set_json_option(true);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
 BOOST_AUTO_TEST_SUITE_END()

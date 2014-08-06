@@ -247,6 +247,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_wif__returns_expected_value)
     BOOST_REQUIRE(hd_to_wif::symbol() == std::string("hd-to-wif"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__header_decode__returns_expected_value)
+{
+    BOOST_REQUIRE(header_decode::symbol() == std::string("header-decode"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));
@@ -355,6 +360,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr_encode__returns_expected_va
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_newkey__returns_expected_value)
 {
     BOOST_REQUIRE(stealth_newkey::symbol() == std::string("stealth-newkey"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__tx_decode__returns_expected_value)
+{
+    BOOST_REQUIRE(tx_decode::symbol() == std::string("tx-decode"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__tx_encode__returns_expected_value)
+{
+    BOOST_REQUIRE(tx_encode::symbol() == std::string("tx-encode"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__tx_sign__returns_expected_value)

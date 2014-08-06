@@ -33,7 +33,6 @@
 #endif
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
@@ -43,8 +42,10 @@
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/input.hpp>
 #include <sx/serializer/item.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/output.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>

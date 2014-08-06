@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(fetch_history_bci__invoke)
 //    // $ sx fetch-history-bci bogus
 //    SX_DECLARE_COMMAND(fetch_history_bci);
 //    command.set_address_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+//    SX_REQUIRE_FAILURE(command.invoke(output, error));
 //    SX_REQUIRE_ERROR(SX_BCI_HISTORY_NOT_IMPLEMENTED "\n");
 //}
 

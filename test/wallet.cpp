@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(gwallet__invoke__always__failure_error)
 {
     // $ sx wallet ...
     SX_DECLARE_COMMAND(wallet);
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_WALLET_OBSOLETE "\n");
 }
 

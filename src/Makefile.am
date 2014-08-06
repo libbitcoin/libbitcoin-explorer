@@ -57,6 +57,7 @@ libsx_la_SOURCES += \
     hd-to-ec.cpp \
     hd-to-pub.cpp \
     hd-to-wif.cpp \
+    header-decode.cpp \
     help.cpp \
     initchain.cpp \
     mnemonic-decode.cpp \
@@ -78,6 +79,8 @@ libsx_la_SOURCES += \
     sha512.cpp \
     stealth-addr-encode.cpp \
     stealth-newkey.cpp \
+    tx-decode.cpp \
+    tx-encode.cpp \
     tx-sign.cpp \
     wallet.cpp \
     wif-to-ec.cpp \

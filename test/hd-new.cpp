@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__default__okay_output)
     SX_DECLARE_COMMAND(hd_new);
     command.set_seed_argument({ "900df00d" });
     command.set_general_testnet_setting(false);
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("xprv9s21ZrQH143K27rVid1zpeyqZygAX7W7AQ4cctwrSB4A2EoPNT22nR2FCm42oc6UmTNGnjwLscDdkof6dyRVwoG8nU6uY8XTGNHiNzAx3TD\n");
 }
 
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__testnet__okay_output)
     SX_DECLARE_COMMAND(hd_new);
     command.set_seed_argument({ "900df00d" });
     command.set_general_testnet_setting(true);
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("tprv8ZgxMBicQKsPcw62PBsVzJbpt76NkdY7VwyjVKNJv9YdoqYUMpMnJAPh7wDgoyUo8tu3nqZ72xoSDfCqmBmSkrXjK7KDCVFWBU38pfSTUZ9\n");
 }
 

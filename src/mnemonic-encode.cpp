@@ -28,8 +28,8 @@ using namespace sx;
 using namespace sx::extension;
 
 // $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic
-console_result mnemonic_encode::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result mnemonic_encode::invoke(std::ostream& output,
+    std::ostream& cerr)
 {
     // Bound parameters.
     const auto seed = get_seed_argument();

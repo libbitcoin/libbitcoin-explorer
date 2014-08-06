@@ -65,7 +65,7 @@ console_result dispatch_invoke(int argc, const char* argv[])
     }
 
     // Injection of io streams allows for test.
-    return command->invoke(std::cin, std::cout, std::cerr);
+    return command->invoke(std::cout, std::cerr);
 }
 
 // TODO: Update using program_options presentation.

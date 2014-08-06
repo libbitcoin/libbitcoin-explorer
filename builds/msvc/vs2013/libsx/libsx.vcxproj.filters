@@ -191,6 +191,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\header-decode.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -257,6 +260,12 @@
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-newkey.hpp">
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\tx-decode.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\tx-encode.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\tx-sign.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
@@ -287,9 +296,6 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\binary.hpp">
-      <Filter>include\serializer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc160.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
@@ -317,13 +323,22 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\hex.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\input.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\item.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\point.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\serializer\output.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\prefix.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\raw.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\script.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp">
@@ -505,6 +520,9 @@
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\header-decode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -571,6 +589,12 @@
     <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\tx-decode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\tx-encode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\tx-sign.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
@@ -626,10 +650,6 @@
       <Filter>src</Filter>
     </ClCompile>
     
-    <ClCompile Include="..\..\..\..\src\header-decode.cpp">
-      <Filter>src\command\todo\transaction</Filter>
-    </ClCompile>
-    
     <ClCompile Include="..\..\..\..\src\input-set.cpp">
       <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
@@ -651,13 +671,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
       <Filter>src\command\todo\stealth</Filter>
-    </ClCompile>
-    
-    <ClCompile Include="..\..\..\..\src\tx-decode.cpp">
-      <Filter>src\command\todo\transaction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\tx-encode.cpp">
-      <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

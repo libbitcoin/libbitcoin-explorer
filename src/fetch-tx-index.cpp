@@ -48,8 +48,7 @@ static void index_fetched(const std::error_code& error,
     stopped = true;
 }
 
-console_result fetch_tx_index::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto hash = get_hash_argument();

@@ -31,7 +31,6 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
@@ -41,9 +40,12 @@
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/input.hpp>
 #include <sx/serializer/item.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/output.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
+#include <sx/serializer/script.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -59,6 +61,8 @@ namespace extension {
  */
 #define SX_EC_NEW_SHORT_SEED \
     "The seed is less than 128 bits long."
+#define SX_EC_NEW_INVALID_KEY \
+    "The seed produced an invalid key."
 
 /**
  * Class to implement the sx ec-new command.
@@ -140,7 +144,7 @@ public:
             (
                 "SEED",
                 value<serializer::hex>(&argument_.seed),
-                "The hex encoded seed for the new key. Must be at least 128 bits in length."
+                "The hex encoded randomness seed for the new key. Must be at least 128 bits in length."
             );
 
         return options;
@@ -149,13 +153,11 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& cerr);
+    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
 

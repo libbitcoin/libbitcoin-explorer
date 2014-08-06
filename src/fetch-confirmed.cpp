@@ -48,8 +48,8 @@ static void valid_tx(const std::error_code& error,
             % unconfirmed_index << std::endl;
 }
 
-console_result fetch_confirmed::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result fetch_confirmed::invoke(std::ostream& output,
+    std::ostream& cerr)
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();

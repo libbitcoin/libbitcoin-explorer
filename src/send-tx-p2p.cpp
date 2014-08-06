@@ -167,8 +167,7 @@ static void bind_logging(const boost::filesystem::path& debug,
     }
 }
 
-console_result send_tx_p2p::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto& debug_log = get_logging_debug_setting();

@@ -42,8 +42,7 @@ static bool write_all_command_names(std::ostream& stream)
 }
 
 // 100% coverage by line, loc ready.
-console_result help::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result help::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto symbol = get_command_argument();

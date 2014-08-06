@@ -70,13 +70,11 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& error)
+    virtual console_result invoke(std::ostream& output, std::ostream& error)
     {
         return console_result::failure;
     }

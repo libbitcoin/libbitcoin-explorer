@@ -25,8 +25,7 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result ec_lock::invoke(std::istream& input, std::ostream& output, 
-    std::ostream& cerr)
+console_result ec_lock::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto secret = get_secret_argument();

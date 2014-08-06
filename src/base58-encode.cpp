@@ -29,8 +29,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result base58_encode::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result base58_encode::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto hex = get_hex_argument();

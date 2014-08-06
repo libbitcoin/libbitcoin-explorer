@@ -247,6 +247,11 @@ BOOST_AUTO_TEST_CASE(generated__find__hd_to_wif__returns_object)
     BOOST_REQUIRE(find(hd_to_wif::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__header_decode__returns_object)
+{
+    BOOST_REQUIRE(find(header_decode::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find(help::symbol()) != nullptr);
@@ -355,6 +360,16 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_addr_encode__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
 {
     BOOST_REQUIRE(find(stealth_newkey::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__tx_decode__returns_object)
+{
+    BOOST_REQUIRE(find(tx_decode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__tx_encode__returns_object)
+{
+    BOOST_REQUIRE(find(tx_encode::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__tx_sign__returns_object)

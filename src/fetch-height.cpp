@@ -45,8 +45,7 @@ static void last_height_fetched(const std::error_code& error, size_t height)
     stopped = true;
 }
 
-console_result fetch_height::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result fetch_height::invoke(std::ostream& output, std::ostream& cerr)
 {
     stopped = false;
     result = console_result::okay;

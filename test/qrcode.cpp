@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__invoke__always__failure_error)
     // $ sx qrcode
     SX_DECLARE_COMMAND(qrcode);
     //command.set_file_option();
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_QRCODE_NOT_IMPLEMENTED "\n");
 }
 

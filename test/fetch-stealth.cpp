@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 //{
 //    // $ sx fetch-stealth 1101
 //    SX_DECLARE_COMMAND(fetch_stealth);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
 BOOST_AUTO_TEST_SUITE_END()

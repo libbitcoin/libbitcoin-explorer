@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(watch_tx__invoke)
 //    // $ sx watch-tx bogus
 //    SX_DECLARE_COMMAND(watch_tx);
 //    command.set_hash_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+//    SX_REQUIRE_FAILURE(command.invoke(output, error));
 //    SX_REQUIRE_ERROR(SX_WATCH_TX_NOT_IMPLEMENTED "\n");
 //}
 

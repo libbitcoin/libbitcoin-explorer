@@ -34,8 +34,13 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 #pragma warning(pop)
 #include <sx/utility/compat.hpp>
+
+using namespace bc;
+using namespace boost::posix_time;
+using namespace libwallet;
 
 namespace sx {
 
@@ -45,7 +50,29 @@ void join(const std::vector<std::string>& words, std::string& sentence,
     sentence = boost::join(words, delimiter);
 }
 
-boost::posix_time::ptime now()
+// The key may be invalid, caller must test for null secret.
+// Note that random fill of ec_secret could also generate an invalid key,
+// but that would be less easily tested than this result.
+ec_secret new_key(bc::data_chunk& seed)
+{
+    // The testnet value is not relevant to the secret.
+    constexpr bool testnet = false;
+
+    // Using HD key generation because we don't yet have one for EC.
+    const hd_private_key hd_key(seed, testnet);
+    return hd_key.private_key();
+}
+
+// Not testable due to lack of random engine injection.
+data_chunk new_seed(size_t bitlength)
+{
+    size_t fill_seed_size = bitlength / byte_bits;
+    data_chunk seed(fill_seed_size);
+    random_fill(seed);
+    return seed;
+}
+
+ptime now()
 {
     using namespace boost::posix_time;
     ptime local_time_in_seconds(second_clock::local_time());
@@ -53,21 +80,13 @@ boost::posix_time::ptime now()
 }
 
 // Not testable due to lack of random engine injection.
-void random_fill(bc::data_chunk& chunk)
+void random_fill(data_chunk& chunk)
 {
     std::random_device random;
     std::default_random_engine engine(random());
 
     for (uint8_t& byte: chunk)
         byte = engine() % std::numeric_limits<uint8_t>::max();
-}
-
-// Not testable due to lack of random engine injection.
-void random_secret(bc::ec_secret& secret)
-{
-    bc::data_chunk chunk(bc::ec_secret_size);
-    random_fill(chunk);
-    std::copy(chunk.begin(), chunk.end(), secret.begin());
 }
 
 std::string read_stream(std::istream& stream)

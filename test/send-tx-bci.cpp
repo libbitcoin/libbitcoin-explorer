@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(send_tx_bci__invoke)
 //    // $ sx send-tx-bci bogus
 //    SX_DECLARE_COMMAND(end_tx_bci);
 //    command.set_address_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+//    SX_REQUIRE_FAILURE(command.invoke(output, error));
 //    SX_REQUIRE_ERROR(SX_SEND_TX_BCI_NOT_IMPLEMENTED "\n");
 //}
 

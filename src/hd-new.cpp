@@ -29,24 +29,28 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result hd_new::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result hd_new::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     data_chunk seed = get_seed_argument();
     const bool testnet = get_general_testnet_setting();
 
     // Arbitrary minimum 128 bit length for generated seeds.
-    constexpr size_t minimum_seed_size = 128 / byte_bits;
-    if (seed.size() < minimum_seed_size)
+    constexpr size_t minimum_seed_size = 128;
+    if (seed.size() * byte_bits < minimum_seed_size)
     {
         cerr << SX_HD_NEW_SHORT_SEED << std::endl;
         return console_result::failure;
     }
 
-    // TESTNET VERSION MAY REQUIRE RECOMPILE
-    const hd_private_key new_key(seed, testnet);
+    // TESTNET VERSION REQUIRES LIBWALLET/LIBBITCOIN RECOMPILE
+    const hd_private_key key(seed, testnet);
+    if (!key.valid())
+    {
+        cerr << SX_HD_NEW_INVALID_KEY << std::endl;
+        return console_result::failure;
+    }
 
-    output << hd_private(new_key) << std::endl;
+    output << hd_private(key) << std::endl;
     return console_result::okay;
 }

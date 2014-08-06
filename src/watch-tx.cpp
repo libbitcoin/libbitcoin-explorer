@@ -25,8 +25,7 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result watch_tx::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result watch_tx::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto hashes = get_hashs_argument();

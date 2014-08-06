@@ -29,23 +29,10 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result script_to_addr::invoke(std::istream& input, 
-    std::ostream& output, std::ostream& cerr)
+console_result script_to_addr::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto& encoded_script = get_script_argument();
-
-    // TODO: create script serializer and bury this.
-    script_type script;
-    try
-    {
-        script = parse_script(encoded_script);
-    }
-    catch (end_of_stream)
-    {
-        cerr << "Invalid script input." << std::endl;
-        return console_result::failure;
-    }
+    const auto& script = get_script_argument();
 
     // TESTNET VERSION REQUIRES RECOMPILE
     address script_hash_address;

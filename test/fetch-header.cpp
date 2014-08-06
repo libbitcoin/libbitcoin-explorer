@@ -27,21 +27,21 @@ BOOST_AUTO_TEST_SUITE(fetch_header__invoke)
 //{
 //    // $ sx fetch-header --hash 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4
 //    SX_DECLARE_COMMAND(fetch_header);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
 //BOOST_AUTO_TEST_CASE(fetch_header__invoke__height__okay)
 //{
 //    // $ sx fetch-header --height 42
 //    SX_DECLARE_COMMAND(fetch_header);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
 //BOOST_AUTO_TEST_CASE(fetch_header_hash__invoke__height_hash__failure)
 //{
 //    // $ sx fetch-header --height 42 --hash 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4
 //    SX_DECLARE_COMMAND(fetch_header);
-//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+//    SX_REQUIRE_FAILURE(command.invoke(output, error));
 //}
 
 BOOST_AUTO_TEST_SUITE_END()

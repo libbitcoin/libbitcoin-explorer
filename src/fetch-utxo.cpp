@@ -25,8 +25,7 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result fetch_utxo::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result fetch_utxo::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto addresses = get_addresss_argument();

@@ -53,8 +53,7 @@ bool split_checksum(const data_chunk& chunk, byte& version, hex& payload,
 }
 
 // 100% coverage by line, loc ready.
-console_result wrap_decode::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result wrap_decode::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const data_chunk hexadecimal = get_hex_argument();

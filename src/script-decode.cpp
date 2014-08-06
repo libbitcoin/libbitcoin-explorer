@@ -19,35 +19,19 @@
  */
 #include <sx/command/script-decode.hpp>
 
-#include <exception>
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/address.hpp>
+#include <sx/serializer/script.hpp>
 #include <sx/utility/utility.hpp>
 
-using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result script_decode::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result script_decode::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto& encoded_script = get_script_argument();
+    const auto& script = get_script_argument();
 
-    // TODO: create script serializer and bury this.
-    script_type script;
-    try
-    {
-        script = parse_script(encoded_script);
-    }
-    catch (end_of_stream)
-    {
-        cerr << "Invalid script input." << std::endl;
-        return console_result::failure;
-    }
-
-    output << pretty(script) << std::endl;
+    output << script.pretty() << std::endl;
     return console_result::okay;
 }

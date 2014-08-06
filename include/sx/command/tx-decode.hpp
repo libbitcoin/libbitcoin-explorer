@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_SCRIPTHASH_HPP
-#define SX_SCRIPTHASH_HPP
+#ifndef SX_TX_DECODE_HPP
+#define SX_TX_DECODE_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -31,7 +31,6 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
@@ -41,9 +40,12 @@
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/input.hpp>
 #include <sx/serializer/item.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/output.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
+#include <sx/serializer/script.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -55,9 +57,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx scripthash command.
+ * Class to implement the sx tx-decode command.
  */
-class scripthash 
+class tx_decode 
     : public command
 {
 public:
@@ -65,14 +67,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "scripthash"; }
+    static const char* symbol() { return "tx-decode"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return scripthash::symbol();
+        return tx_decode::symbol();
     }
 
     /**
@@ -80,7 +82,7 @@ public:
      */
     virtual const char* category()
     {
-        return "SCRIPT";
+        return "TRANSACTION";
     }
 
     /**
@@ -92,7 +94,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SCRIPT", 1);
+            .add("TRANSACTION", -1);
     }
 	
 	/**
@@ -104,8 +106,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_path(get_script_argument(), "SCRIPT", variables);
-        load_input(get_script_argument(), "SCRIPT", variables, input);
+        load_path(get_transactions_argument(), "TRANSACTION", variables);
+        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
     
     /**
@@ -130,12 +132,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Create a BIP16 pay-to-script-hash address from an encoded script."
+                "Decode a set of transactions."
             )
             (
-                "SCRIPT",
+                "json,j",
+                value<bool>(&option_.json)->implicit_value(true),
+                "Enable JSON output."
+            )
+            (
+                "TRANSACTION",
                 value<std::string>(),
-                "The hex encoded raw script."
+                "The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."
             );
 
         return options;
@@ -144,31 +151,29 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& cerr);
+    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
 
     /**
-     * Get the value of the SCRIPT argument.
+     * Get the value of the TRANSACTION arguments.
      */
-    virtual serializer::hex& get_script_argument()
+    virtual std::vector<serializer::item<bc::transaction_type>>& get_transactions_argument()
     {
-        return argument_.script;
+        return argument_.transactions;
     }
     
     /**
-     * Set the value of the SCRIPT argument.
+     * Set the value of the TRANSACTION arguments.
      */
-    virtual void set_script_argument(
-        const serializer::hex& value)
+    virtual void set_transactions_argument(
+        const std::vector<serializer::item<bc::transaction_type>>& value)
     {
-        argument_.script = value;
+        argument_.transactions = value;
     }
 
     /**
@@ -188,6 +193,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the json option.
+     */
+    virtual bool& get_json_option()
+    {
+        return option_.json;
+    }
+    
+    /**
+     * Set the value of the json option.
+     */
+    virtual void set_json_option(
+        const bool& value)
+    {
+        option_.json = value;
+    }
+
 private:
 
     /**
@@ -198,11 +220,11 @@ private:
     struct argument
     {
         argument()
-          : script()
+          : transactions()
         {
         }
         
-        serializer::hex script;
+        std::vector<serializer::item<bc::transaction_type>> transactions;
     } argument_;
     
     /**
@@ -213,11 +235,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            json()
         {
         }
         
         bool help;
+        bool json;
     } option_;
 };
 

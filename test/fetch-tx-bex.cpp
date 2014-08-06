@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(fetch_tx_bex__invoke)
 //    // $ sx fetch-tx-bex bogus
 //    SX_DECLARE_COMMAND(fetch_tx_bex);
 //    command.set_address_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+//    SX_REQUIRE_FAILURE(command.invoke(output, error));
 //    SX_REQUIRE_ERROR(SX_FETCH_TX_BEX_NOT_IMPLEMENTED "\n");
 //}
 

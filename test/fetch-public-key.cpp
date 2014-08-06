@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(fetch_public_key__invoke__always__failure_error)
 {
     // $ sx fetch-public-key
     SX_DECLARE_COMMAND(fetch_public_key);
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED "\n");
 }
 

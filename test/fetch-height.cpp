@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_SUITE(fetch_height__invoke)
 //{
 //    // $ sx fetch-height
 //    SX_DECLARE_COMMAND(fetch_height);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
 BOOST_AUTO_TEST_SUITE_END()

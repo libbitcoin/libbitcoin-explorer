@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(base58check_encode__invoke__hex_zero__failure_error)
     // $ sx base58check-encode 00
     SX_DECLARE_COMMAND(base58check_encode);
     command.set_hex_argument({ "00" });
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED "\n");
 }
 

@@ -68,6 +68,7 @@
 #include <sx/command/hd-to-ec.hpp>
 #include <sx/command/hd-to-pub.hpp>
 #include <sx/command/hd-to-wif.hpp>
+#include <sx/command/header-decode.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/initchain.hpp>
 #include <sx/command/mnemonic-decode.hpp>
@@ -90,6 +91,8 @@
 #include <sx/command/sha512.hpp>
 #include <sx/command/stealth-addr-encode.hpp>
 #include <sx/command/stealth-newkey.hpp>
+#include <sx/command/tx-decode.hpp>
+#include <sx/command/tx-encode.hpp>
 #include <sx/command/tx-sign.hpp>
 #include <sx/command/wallet.hpp>
 #include <sx/command/watch-prefix.hpp>

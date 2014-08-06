@@ -66,8 +66,6 @@
 .       return type_address_sx
 .   elsif my.type = type_base58
 .       return type_base58_sx
-.   elsif my.type = type_binary
-.       return type_binary_sx
 .   elsif my.type = type_btc160
 .       return type_btc160_sx
 .   elsif my.type = type_btc256
@@ -88,14 +86,20 @@
 .       return type_hd_public_sx
 .   elsif my.type = type_hex
 .       return type_hex_sx
+.   elsif my.type = type_input
+.       return type_input_sx
+.   elsif my.type = type_output
+.       return type_output_sx
 .   elsif my.type = type_header
 .       return type_header_sx
 .   elsif my.type = type_path
 .       return type_path_boost
-.   elsif my.type = type_point
-.       return type_point_sx
+.   elsif my.type = type_prefix
+.       return type_prefix_sx
 .   elsif my.type = type_raw
 .       return type_raw_sx
+.   elsif my.type = type_script
+.       return type_script_sx
 .   elsif my.type = type_string
 .       return type_string_std
 .   elsif my.type = type_transaction
@@ -172,7 +176,6 @@
 .
 .config_description = resource("sx_config_description")
 .config_option = "config"
-.type_binary = "binary"
 .type_bool = "bool"
 .type_address = "address"
 .type_base58 = "base58"
@@ -187,15 +190,17 @@
 .type_hd_public = "hd_public"
 .type_header = "header"
 .type_hex = "hex"
+.type_input = "input"
+.type_output = "output"
 .type_path = "path"
-.type_point = "point"
+.type_prefix = "prefix"
 .type_raw = "raw"
+.type_script = "script"
 .type_string = "string"
 .type_transaction = "transaction"
 .type_wif = "wif"
 .
 .type_address_sx = "serializer::address"
-.type_binary_sx = "serializer::binary"
 .type_base58_sx = "serializer::base58"
 .type_btc160_sx = "serializer::btc160"
 .type_btc256_sx = "serializer::btc256"
@@ -206,11 +211,14 @@
 .type_hd_key_sx = "serializer::hd_key"
 .type_hd_private_sx = "serializer::hd_private"
 .type_hd_public_sx = "serializer::hd_public"
-.type_header_sx = "serializer::item<bc::block_header>"
+.type_header_sx = "serializer::item<bc::block_header_type>"
 .type_hex_sx = "serializer::hex"
+.type_input_sx = "serializer::input"
+.type_output_sx = "serializer::output"
 .type_path_boost = "boost::filesystem::path"
-.type_point_sx = "serializer::point"
+.type_prefix_sx = "serializer::prefix"
 .type_raw_sx = "serializer::raw"
+.type_script_sx = "serializer::script"
 .type_string_std = "std::string"
 .type_transaction_sx = "serializer::item<bc::transaction_type>"
 .type_wif_sx = "serializer::wif"
@@ -356,13 +364,11 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& error)
+    virtual console_result invoke(std::ostream& output, std::ostream& error)
     {
         return console_result::failure;
     }
@@ -609,7 +615,6 @@ private:
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
@@ -619,9 +624,12 @@ private:
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/input.hpp>
 #include <sx/serializer/item.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/output.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
+#include <sx/serializer/script.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -783,13 +791,11 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& cerr);
+    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
 
@@ -991,7 +997,6 @@ sx_utility_includedir = $\(includedir)/sx/serializer
 sx_utility_include_HEADERS += \\
     address.hpp \\
     base58.hpp \\
-    binary.hpp \\
     btc160.hpp \\
     btc256.hpp \\
     byte.hpp \\
@@ -1001,10 +1006,12 @@ sx_utility_include_HEADERS += \\
     hd_private.hpp \\
     hd_public.hpp \\
     hex.hpp \\
+    input.hpp \\
     item.hpp \\
-    point.hpp \\
+    output.hpp \\
+    prefix.hpp \\
     raw.hpp \\
-    satoshi.hpp \\
+    script.hpp \\
     wif.hpp
 
 # Generated from XML data source.
@@ -1176,7 +1183,6 @@ endif
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\binary.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc256.hpp" />
@@ -1187,9 +1193,12 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hex.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\input.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\item.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\output.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\prefix.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\raw.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
@@ -1216,11 +1225,7 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\utility.cpp" />
-    
-    <ClCompile Include="..\\..\\..\\..\\src\\header-decode.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    
+       
     <ClCompile Include="..\\..\\..\\..\\src\\input-sign.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1241,13 +1246,6 @@ endif
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover-secret.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    
-    <ClCompile Include="..\\..\\..\\..\\src\\tx-decode.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\tx-encode.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
@@ -1383,9 +1381,6 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\binary.hpp">
-      <Filter>include\\serializer</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
@@ -1413,13 +1408,22 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hex.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\input.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\item.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\output.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\prefix.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\raw.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">
@@ -1513,10 +1517,6 @@ endif
       <Filter>src</Filter>
     </ClCompile>
     
-    <ClCompile Include="..\\..\\..\\..\\src\\header-decode.cpp">
-      <Filter>src\\command\\todo\\transaction</Filter>
-    </ClCompile>
-    
     <ClCompile Include="..\\..\\..\\..\\src\\input-set.cpp">
       <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
@@ -1538,13 +1538,6 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\stealth-uncover-secret.cpp">
       <Filter>src\\command\\todo\\stealth</Filter>
-    </ClCompile>
-    
-    <ClCompile Include="..\\..\\..\\..\\src\\tx-decode.cpp">
-      <Filter>src\\command\\todo\\transaction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\tx-encode.cpp">
-      <Filter>src\\command\\todo\\transaction</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

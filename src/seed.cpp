@@ -23,21 +23,23 @@
 #include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
-using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result seed::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result seed::invoke(std::ostream& output, std::ostream& cerr)
 {
-    // Arbitrary 128 bit length for generated seeds.
-    constexpr size_t fill_seed_size = 128 / byte_bits;
+    const auto bitlength = get_bitlength_option();
 
-    // TODO: allow for seed length specification in multiples of 32 bits.
+    // This are soft requirements for security and rationality.
+    // We use bit vs. byte length input as the more familiar convention.
+    if (bitlength < 128 || bitlength % 8 != 0)
+    {
+        cerr << SX_SEED_BITLENGTH_UNSUPPORTED << std::endl;
+        return console_result::failure;
+    }
 
-    data_chunk seed(fill_seed_size);
-    random_fill(seed);
+    const auto seed = new_seed(bitlength);
 
     output << hex(seed) << std::endl;
     return console_result::okay;

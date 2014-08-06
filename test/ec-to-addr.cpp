@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(ec_to_addr__invoke__always__okay_output)
     // $ sx ec-to-addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(ec_to_addr);
     command.set_point_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("1uUA1tQ3H1moXtxPJvAN1kzmcdu5NCc6d\n");
 }
 

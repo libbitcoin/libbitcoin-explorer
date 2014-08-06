@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_SUITE(send_tx__invoke)
 //BOOST_AUTO_TEST_CASE(send_tx__invoke__always__okay)
 //{
 //    SX_DECLARE_COMMAND(send_tx);
-//    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
 BOOST_AUTO_TEST_SUITE_END()

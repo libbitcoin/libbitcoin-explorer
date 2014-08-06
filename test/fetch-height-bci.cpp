@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(fetch_height_bci__invoke__always__failure_error)
 {
     // $ sx fetch-height-bci
     SX_DECLARE_COMMAND(fetch_height_bci);
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_FETCH_HEIGHT_BCI_NOT_IMPLEMENTED "\n");
 }
 

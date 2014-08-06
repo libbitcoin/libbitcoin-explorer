@@ -53,10 +53,15 @@ namespace sx {
     }
 
 /**
+ * Delimiter for use in word splitting serialized input and output points.
+ */
+#define SX_TX_POINT_DELIMITER ":"
+    
+/**
  * Default delimiter for use in word splitting and joining operations.
  */
 #define SX_SENTENCE_DELIMITER " "
-    
+
 /**
  * Conventional command line argument sentinel for indicating that a file
  * should be read from STDIN or written to STDOUT.
@@ -81,7 +86,7 @@ constexpr size_t byte_bits = 8;
 /**
  * The noop void function.
  */
-static const std::function<void()> noop = [](){};
+static const std::function<void()> noop = []{};
 
 /**
  * Avoid the ternary (just for fun). Must precede tempalte usage for gcc build.
@@ -324,6 +329,22 @@ void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter=SX_SENTENCE_DELIMITER);
 
 /**
+ * Generate a new ec key from a seed.
+ *
+ * @param[in]  seed  The seed for key randomness.
+ * @return           The new key.
+ */
+bc::ec_secret new_key(bc::data_chunk& seed);
+
+/**
+ * Generate a new pseudorandom seed.
+ *
+ * @param[in]  seed  The seed length in bits. Will be aligned to nearest byte.
+ * @return           The new key.
+ */
+bc::data_chunk new_seed(size_t bitlength=128);
+
+/**
  * Get the local time, second level resolution, based on the time zone settings
  * of the computer.
  *
@@ -337,13 +358,6 @@ boost::posix_time::ptime now();
  * @param[in]  chunk  The buffer to fill with randomness.
  */
 void random_fill(bc::data_chunk& chunk);
-
-/**
- * Generate a random secret.
- *
- * @param[in]  secret  The secret to fill with randomness.
- */
-void random_secret(bc::ec_secret& secret);
 
 /**
  * Get a message from the specified input stream.

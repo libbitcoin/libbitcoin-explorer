@@ -25,8 +25,7 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result btc_to_satoshi::invoke(std::istream& input, 
-    std::ostream& output, std::ostream& cerr)
+console_result btc_to_satoshi::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     // TODO: create fractional serializer.

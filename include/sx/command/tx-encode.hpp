@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_RAWSCRIPT_HPP
-#define SX_RAWSCRIPT_HPP
+#ifndef SX_TX_ENCODE_HPP
+#define SX_TX_ENCODE_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -31,7 +31,6 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
@@ -41,9 +40,12 @@
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/input.hpp>
 #include <sx/serializer/item.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/output.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
+#include <sx/serializer/script.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -55,15 +57,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx tx-encode command.
  */
-#define SX_RAWSCRIPT_INVALID \
-    "Premature end of script."
-
-/**
- * Class to implement the sx rawscript command.
- */
-class rawscript 
+class tx_encode 
     : public command
 {
 public:
@@ -71,14 +67,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "rawscript"; }
+    static const char* symbol() { return "tx-encode"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return rawscript::symbol();
+        return tx_encode::symbol();
     }
 
     /**
@@ -86,7 +82,7 @@ public:
      */
     virtual const char* category()
     {
-        return "SCRIPT";
+        return "TRANSACTION";
     }
 
     /**
@@ -98,7 +94,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("TOKEN", -1);
+            .add("FILE", 1);
     }
 	
 	/**
@@ -110,7 +106,6 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_tokens_argument(), "TOKEN", variables, input);
     }
     
     /**
@@ -135,12 +130,32 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Encode a plain text script."
+                "Encode an unsigned transaction."
             )
             (
-                "TOKEN",
-                value<std::vector<std::string>>(&argument_.tokens),
-                "The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."
+                "locktime,l",
+                value<uint32_t>(&option_.locktime),
+                "The transaction lock time."
+            )
+            (
+                "version,v",
+                value<uint32_t>(&option_.version)->default_value(1),
+                "The transaction version."
+            )
+            (
+                "input,i",
+                value<std::vector<serializer::input>>(&option_.inputs),
+                "The set of transaction inputs encoded as TXHASH:INDEX where TXHASH is a hex encoded transaction hash and INDEX is the input index."
+            )
+            (
+                "output,o",
+                value<std::vector<serializer::output>>(&option_.outputs),
+                "The set of transaction outputs encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a hex encoded script. SATOSHI is the amount in satoshi to be spent. SEED is used and required for stealth outputs only. A seed should NOT be reused across outputs."
+            )
+            (
+                "FILE",
+                value<std::string>(&argument_.file),
+                "The encoded transaction file path. If not specified the transaction is written to STDOUT."
             );
 
         return options;
@@ -149,31 +164,29 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& cerr);
+    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
 
     /**
-     * Get the value of the TOKEN arguments.
+     * Get the value of the FILE argument.
      */
-    virtual std::vector<std::string>& get_tokens_argument()
+    virtual std::string& get_file_argument()
     {
-        return argument_.tokens;
+        return argument_.file;
     }
     
     /**
-     * Set the value of the TOKEN arguments.
+     * Set the value of the FILE argument.
      */
-    virtual void set_tokens_argument(
-        const std::vector<std::string>& value)
+    virtual void set_file_argument(
+        const std::string& value)
     {
-        argument_.tokens = value;
+        argument_.file = value;
     }
 
     /**
@@ -193,6 +206,74 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the locktime option.
+     */
+    virtual uint32_t& get_locktime_option()
+    {
+        return option_.locktime;
+    }
+    
+    /**
+     * Set the value of the locktime option.
+     */
+    virtual void set_locktime_option(
+        const uint32_t& value)
+    {
+        option_.locktime = value;
+    }
+
+    /**
+     * Get the value of the version option.
+     */
+    virtual uint32_t& get_version_option()
+    {
+        return option_.version;
+    }
+    
+    /**
+     * Set the value of the version option.
+     */
+    virtual void set_version_option(
+        const uint32_t& value)
+    {
+        option_.version = value;
+    }
+
+    /**
+     * Get the value of the input options.
+     */
+    virtual std::vector<serializer::input>& get_inputs_option()
+    {
+        return option_.inputs;
+    }
+    
+    /**
+     * Set the value of the input options.
+     */
+    virtual void set_inputs_option(
+        const std::vector<serializer::input>& value)
+    {
+        option_.inputs = value;
+    }
+
+    /**
+     * Get the value of the output options.
+     */
+    virtual std::vector<serializer::output>& get_outputs_option()
+    {
+        return option_.outputs;
+    }
+    
+    /**
+     * Set the value of the output options.
+     */
+    virtual void set_outputs_option(
+        const std::vector<serializer::output>& value)
+    {
+        option_.outputs = value;
+    }
+
 private:
 
     /**
@@ -203,11 +284,11 @@ private:
     struct argument
     {
         argument()
-          : tokens()
+          : file()
         {
         }
         
-        std::vector<std::string> tokens;
+        std::string file;
     } argument_;
     
     /**
@@ -218,11 +299,19 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            locktime(),
+            version(),
+            inputs(),
+            outputs()
         {
         }
         
         bool help;
+        uint32_t locktime;
+        uint32_t version;
+        std::vector<serializer::input> inputs;
+        std::vector<serializer::output> outputs;
     } option_;
 };
 

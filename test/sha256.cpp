@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(sha256__invoke__always__okay_output)
     // $ sx sha256 900df00d
     SX_DECLARE_COMMAND(sha256);
     command.set_hex_argument({ "900df00d" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("f0ebe3bd55115e573ba35c2b1b65a923ff64c7a548d0deab73f9314754a9149d\n");
 }
 

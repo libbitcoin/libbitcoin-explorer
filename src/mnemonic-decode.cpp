@@ -29,8 +29,8 @@ using namespace sx::extension;
 
 // $ echo "people blonde admit dart couple different truth common alas
 //   stumble time cookie" | sx mnemonic-decode
-console_result mnemonic_decode::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result mnemonic_decode::invoke(std::ostream& output,
+    std::ostream& cerr)
 {
     // Bound parameters.
     const auto words = get_words_argument();

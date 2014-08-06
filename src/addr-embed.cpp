@@ -25,8 +25,7 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result addr_embed::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result addr_embed::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto data = get_file_argument();

@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_NEWSEED_HPP
-#define SX_NEWSEED_HPP
+#ifndef SX_HEADER_DECODE_HPP
+#define SX_HEADER_DECODE_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -59,13 +59,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_NEWSEED_OBSOLETE \
-    "Electrum style key functions are obsolete. Use HD (BIP32) commands instead."
+#define SX_HEADER_DECODE_OUTPUT \
+    "Bits:      %1%\nHash:      %2%\nMerkle:    %3%\nNonce:     %4%\nPrevious:  %5%\nTimestamp: %6%\nVersion:   %7%"
 
 /**
- * Class to implement the sx newseed command.
+ * Class to implement the sx header-decode command.
  */
-class newseed 
+class header_decode 
     : public command
 {
 public:
@@ -73,14 +73,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "newseed"; }
+    static const char* symbol() { return "header-decode"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return newseed::symbol();
+        return header_decode::symbol();
     }
 
     /**
@@ -88,7 +88,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ELECTRUM";
+        return "TRANSACTION";
     }
 
     /**
@@ -99,7 +99,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("HEADER", -1);
     }
 	
 	/**
@@ -111,6 +112,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_path(get_headers_argument(), "HEADER", variables);
+        load_input(get_headers_argument(), "HEADER", variables, input);
     }
     
     /**
@@ -135,7 +138,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Create a new Electrum style deterministic wallet seed."
+                "Decode a set of block headers."
+            )
+            (
+                "json,j",
+                value<bool>(&option_.json)->implicit_value(true),
+                "Enable JSON output."
+            )
+            (
+                "HEADER",
+                value<std::string>(),
+                "The file path of the set of hex encoded block headers. If not specified the headers are read from STDIN."
             );
 
         return options;
@@ -151,6 +164,23 @@ public:
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the HEADER arguments.
+     */
+    virtual std::vector<serializer::item<bc::block_header_type>>& get_headers_argument()
+    {
+        return argument_.headers;
+    }
+    
+    /**
+     * Set the value of the HEADER arguments.
+     */
+    virtual void set_headers_argument(
+        const std::vector<serializer::item<bc::block_header_type>>& value)
+    {
+        argument_.headers = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -169,6 +199,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the json option.
+     */
+    virtual bool& get_json_option()
+    {
+        return option_.json;
+    }
+    
+    /**
+     * Set the value of the json option.
+     */
+    virtual void set_json_option(
+        const bool& value)
+    {
+        option_.json = value;
+    }
+
 private:
 
     /**
@@ -179,9 +226,11 @@ private:
     struct argument
     {
         argument()
+          : headers()
         {
         }
         
+        std::vector<serializer::item<bc::block_header_type>> headers;
     } argument_;
     
     /**
@@ -192,11 +241,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            json()
         {
         }
         
         bool help;
+        bool json;
     } option_;
 };
 

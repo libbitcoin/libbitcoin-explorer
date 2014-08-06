@@ -25,8 +25,7 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result base58check_encode::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result base58check_encode::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto hex = get_hex_argument();

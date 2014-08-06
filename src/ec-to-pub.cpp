@@ -28,8 +28,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result ec_to_pub::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result ec_to_pub::invoke(std::ostream& output, std::ostream& cerr)
 {
     const auto secret = get_secret_argument();
     const auto uncompressed = get_uncompressed_option();

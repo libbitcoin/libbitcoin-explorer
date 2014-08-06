@@ -70,8 +70,7 @@ static void height_header_fetched(const std::error_code& error,
     stopped = true;
 }
 
-console_result fetch_header::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result fetch_header::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const size_t height = get_height_option();

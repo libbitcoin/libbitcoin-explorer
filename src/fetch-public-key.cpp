@@ -25,8 +25,8 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result fetch_public_key::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result fetch_public_key::invoke(std::ostream& output,
+    std::ostream& cerr)
 {
     // Bound parameters.
     const auto address = get_address_argument();

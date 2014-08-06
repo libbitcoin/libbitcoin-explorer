@@ -125,8 +125,9 @@
 
   <command symbol="ec-new" formerly="newkey" category="WALLET">
     <option name="help" description="Create a new EC private key from entropy." />
-    <argument name="SEED" stream="true" type="hex" description="The hex encoded seed for the new key. Must be at least 128 bits in length." />
+    <argument name="SEED" stream="true" type="hex" description="The hex encoded randomness seed for the new key. Must be at least 128 bits in length." />
     <define name="SX_EC_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
+    <define name="SX_EC_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
   
   <command symbol="ec-to-addr" formerly="addr" category="WALLET">
@@ -205,7 +206,7 @@
   
   <command symbol="fetch-stealth" category="ONLINE" obelisk="true">
     <option name="help" description="Get the stealth transactions matching the specified filter. Requires an Obelisk server connection." />
-    <option name="prefix" type="binary" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
+    <option name="prefix" type="prefix" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include in the search. Searches all blocks if not set."/>
     <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%" />
   </command>
@@ -251,8 +252,9 @@
 
   <command symbol="hd-new" formerly="hd-seed" category="WALLET">
     <option name="help" description="Create a new HD (BIP32) private key from entropy." />
-    <argument name="SEED" stream="true" type="hex" description="The hex encoded seed for the new key. Must be at least 128 bits in length." />
+    <argument name="SEED" stream="true" type="hex" description="The hex encoded randomness seed for the new key. Must be at least 128 bits in length." />
     <define name="SX_HD_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
+    <define name="SX_HD_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
 
   <command symbol="hd-priv" category="WALLET">
@@ -290,6 +292,13 @@
     <argument name="SECRET" stream="true" type="hd_private" description="The HD private key to convert." />
   </command>
 
+  <command symbol="header-decode" formerly="showblkhead" category="TRANSACTION">
+    <option name="help" description="Decode a set of block headers." />
+    <option name="json" description="Enable JSON output." />
+    <argument name="HEADER" file="true" stream="true" limit="-1" type="header" description="The file path of the set of hex encoded block headers. If not specified the headers are read from STDIN."/>
+    <define name="SX_HEADER_DECODE_OUTPUT" value="Bits:      %1%\nHash:      %2%\nMerkle:    %3%\nNonce:     %4%\nPrevious:  %5%\nTimestamp: %6%\nVersion:   %7%" />
+  </command>
+
   <command symbol="help" category="SX">
     <option name="help" description="Get help for any command." />
     <argument name="COMMAND" stream="true" description="The command for which help is requested." />
@@ -308,7 +317,7 @@
   
   <command symbol="mnemonic-encode" formerly="mnemonic" category="WALLET">
     <option name="help" description="Convert a seed to its BIP39 mnemonic." />
-    <argument name="SEED" stream="true" type="hex" description="The hex encoded seed. WARNING: seed should be random and at least 128 bits in length." />
+    <argument name="SEED" stream="true" type="hex" description="The hex encoded randomness seed. WARNING: seed should be random and at least 128 bits in length." />
   </command>
   
   <command symbol="mpk" category="ELECTRUM" obsolete="true">
@@ -321,10 +330,9 @@
     <define name="SX_NEWSEED_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
   
-  <!-- TODO: parameterize for stealth address. -->
   <command symbol="qrcode" category="WALLET" stub="true">
     <option name="help" description="Generate a QR code image file for a Bitcoin address." />
-    <option name="file" file="true" type="raw" description="The image file path. If not specified the image is written to STDOUT."/>
+    <option name="file" type="string" description="The image file path. If not specified the image is written to STDOUT."/>
     <argument name="ADDRESS" stream="true" type="address" description="The address."/>
     <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
@@ -342,11 +350,11 @@
   
   <command symbol="script-decode" formerly="showscript" category="SCRIPT">
     <option name="help" description="Decode a script to plain text tokens." />
-    <argument name="SCRIPT" file="true" stream="true" type="hex" description="The hex encoded script."/>
+    <argument name="SCRIPT" file="true" stream="true" type="script" description="The hex encoded script."/>
   </command>
   
   <command symbol="script-encode" formerly="rawscript" category="SCRIPT">
-    <option name="help" description="Encode a plain text script." />
+    <option name="help" description="Hex encode a plain text script." />
     <argument name="TOKEN" stream="true" limit="-1" type="string" description="The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."/>
     <!-- translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wik -->
     <!-- $ sx rawscript dup 76 -->
@@ -354,7 +362,7 @@
   
   <command symbol="script-to-addr" formerly="scripthash" category="SCRIPT">
     <option name="help" description="Create a BIP16 pay-to-script-hash address from an encoded script." />
-    <argument name="SCRIPT" file="true" stream="true" type="hex" description="The hex encoded raw script."/>
+    <argument name="SCRIPT" file="true" stream="true" type="script" description="The hex encoded script."/>
     <!--
     # generate an address for 2-of-3 multisig transactions
     for n in 1 2 3; do echo 'b220b5bd2909df1d74b71c9e664233bf' | sx genpriv $n > key${n}; done
@@ -364,7 +372,9 @@
   </command>
   
   <command symbol="seed" category="WALLET">
-    <option name="help" description="Generate a pseudorandom 128 bit seed." />
+    <option name="help" description="Generate a pseudorandom seed." />
+    <option name="bitlength" type="size_t" default="128" description="The length of the seed in bits. Must be divisible by 8 and must not be less than 128." />
+    <define name="SX_SEED_BITLENGTH_UNSUPPORTED" value="The seed value is not supported." />
   </command>
   
   <command symbol="send-tx" formerly="sendtx-obelisk" category="ONLINE" obelisk="true">
@@ -420,7 +430,7 @@
   
   <command symbol="stealth-addr-encode" category="STEALTH">
     <option name="help" description="Encode a stealth address." />
-    <option name="prefix" type="binary" description="The binary encoded stealth search prefix." />
+    <option name="prefix" type="prefix" description="The binary encoded stealth search prefix." />
     <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />
     <option name="signatures" type="byte" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
     <argument name="SCAN_KEY" type="ec_public" required="true" description="The hex encoded EC public key of the recipient." />
@@ -430,6 +440,25 @@
   <command symbol="stealth-newkey" category="STEALTH" obsolete="true">
     <option name="help" description="Generate new keys and the associated stealth address." />
     <define name="SX_STEALTH_NEWKEY_OBSOLETE" value="This command is no longer supported. Use other commands in combination." />
+  </command>
+  
+  <command symbol="tx-decode" category="TRANSACTION">
+    <option name="help" description="Decode a set of transactions." />
+    <option name="json" description="Enable JSON output." />
+    <argument name="TRANSACTION" file="true" stream="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
+  </command>
+
+  <command symbol="tx-encode" category="TRANSACTION">
+    <option name="help" description="Encode an unsigned transaction." />
+    <option name="locktime" type="uint32_t" description="The transaction lock time." />
+    <option name="version" type="uint32_t" default="1" description="The transaction version." />
+    <option name="input" multiple="true" type="input" description="The set of transaction inputs encoded as TXHASH:INDEX where TXHASH is a hex encoded transaction hash and INDEX is the input index." />
+    <option name="output" multiple="true" type="output" description="The set of transaction outputs encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a hex encoded script. SATOSHI is the amount in satoshi to be spent. SEED is used and required for stealth outputs only. A seed should NOT be reused across outputs." />
+    <argument name="FILE" description="The encoded transaction file path. If not specified the transaction is written to STDOUT."/>
+    <!--
+      tx-encode FILE [-i TXHASH:INDEX]... [-o ADDRESS:SATOSHIS] [-o HEXSCRIPT:SATOSHIS]
+      tx-encode txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
+    -->
   </command>
   
   <command symbol="tx-sign" formerly="signtx" category="TRANSACTION" stub="true">
@@ -445,7 +474,7 @@
   
   <command symbol="watch-prefix" formerly="monitor" category="ONLINE" obelisk="true">
     <option name="help" description="Watch the network for transactions by address prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL" />
-    <option name="prefix" type="binary" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
+    <option name="prefix" type="prefix" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
     <!--<option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to monitor. Searches all blocks if not set."/>-->
     <define name="SX_WATCH_PREFIX_WAITING" value="Waiting for updates..." />
     <define name="SX_WATCH_PREFIX_OUTPUT" value="Update %1% [ #%2% %3% ]" />

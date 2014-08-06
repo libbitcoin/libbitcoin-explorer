@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(addr_decode__invoke__valid_value__okay_output)
     // $ sx decode-addr 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
     SX_DECLARE_COMMAND(addr_decode);
     command.set_address_argument({ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n");
 }
 

@@ -21,34 +21,40 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <boost/format.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result header_decode::invoke(int argc, const char* argv[])
+// This is NOT localizable.
+static const char* json_format =
+"{\n"
+"   \"bits\": \"%1%\",\n"
+"   \"hash\": \"%2%\",\n"
+"   \"merkle\": \"%3%\",\n"
+"   \"nonce\": \"%4%\"\n"
+"   \"previous_block_hash\": \"%5%\",\n"
+"   \"timestamp\": \"%6%\"\n"
+"   \"version\": \"%7%\"\n"
+"}";
+
+console_result header_decode::invoke(std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    const auto json = get_json_option();
+    const auto& headers = get_headers_argument();
+    HANDLE_MULTIPLE_NOT_IMPLEMENTED(headers);
+    const block_header_type& header = headers.front();
 
-    // TODO: create headerfile::hexfile serializer.
-    block_header_type blk_header;
-    std::string filename(get_filename(argc, argv));
-    if (!load_satoshi_item<block_header_type>(blk_header, filename, std::cin))
-    {
-        std::cerr << "sx: Deserializing block header failed." << std::endl;
-        return console_result::failure;
-    }
+    const auto& format = if_else(json, json_format, SX_HEADER_DECODE_OUTPUT);
 
-    // Show details.
-    std::cout << "hash: " << hash_block_header(blk_header) << std::endl;
-    std::cout << "version: " << blk_header.version << std::endl;
-    std::cout << "previous_block_hash: "
-        << blk_header.previous_block_hash << std::endl;
-    std::cout << "merkle: " << blk_header.merkle << std::endl;
-    std::cout << "timestamp: " << blk_header.timestamp << std::endl;
-    std::cout << "bits: " << blk_header.bits << std::endl;
-    std::cout << "nonce: " << blk_header.nonce << std::endl;
+    output << boost::format(format) % header.bits %
+        hex(hash_block_header(header)) % hex(header.merkle) % header.nonce %
+        hex(header.previous_block_hash) % header.timestamp % header.version 
+        << std::endl;
+
     return console_result::okay;
 }

@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__no_command__failure_error)
 {
     // $ sx help
     SX_DECLARE_COMMAND(help);
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR("");
 }
 
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure_error)
     // $ sx help booger
     SX_DECLARE_COMMAND(help);
     command.set_command_argument("booger");
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
         "addr-decode\n" \
         "addr-embed\n" \
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
     // $ sx help wrap
     SX_DECLARE_COMMAND(help);
     command.set_command_argument("wrap");
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("");
 }
 

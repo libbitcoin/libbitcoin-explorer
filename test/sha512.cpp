@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(sha1512__invoke__always__okay_output)
     // $ sx sha512 900df00d
     SX_DECLARE_COMMAND(sha512);
     command.set_hex_argument({ "900df00d" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("d1f51c57b00d399be4e708bfd1d76d711bbbdda534383df4f06933187bce41fdfdaa6385cfa960f68abcd33ae0573deb39503f73e8e2b7645845671f11855f8e\n");
 }
 

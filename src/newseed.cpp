@@ -25,8 +25,7 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result newseed::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result newseed::invoke(std::ostream& output, std::ostream& cerr)
 {
     cerr << SX_NEWSEED_OBSOLETE << std::endl;
     return console_result::failure;

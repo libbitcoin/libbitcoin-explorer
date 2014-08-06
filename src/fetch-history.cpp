@@ -29,7 +29,7 @@
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/input.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -75,7 +75,7 @@ static void parse_history(std::string& output_height, std::string& row_spend,
     if (row.spend.hash == null_hash)
         row_spend_stream << unspent;
     else
-        row_spend_stream << point(row.spend);
+        row_spend_stream << input(row.spend);
     row_spend = row_spend_stream.str();
 
     std::stringstream spend_height_stream;
@@ -148,8 +148,7 @@ static void history_fetched(const payment_address& pay_address,
 }
 
 // Untestable without fullnode virtualization, loc ready.
-console_result fetch_history::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result fetch_history::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     auto addresses = get_addresss_argument();

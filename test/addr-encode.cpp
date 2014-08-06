@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(addr_encode__invoke__hex_value__okay_output)
     // $ sx encode-addr b472a266d0bd89c13706a4132ccfb16f7c3b9fcb
     SX_DECLARE_COMMAND(addr_encode);
     command.set_ripemd160_argument({ "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E\n");
 }
 
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(addr_encode__invoke__hex_value_version__okay_output)
     SX_DECLARE_COMMAND(addr_encode);
     command.set_version_option(42);
     command.set_ripemd160_argument({ "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("JBeTK2YUWEFTTQvcqEyQoS3poXKjjc1oEP\n");
 }
 

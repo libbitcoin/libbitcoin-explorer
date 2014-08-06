@@ -25,8 +25,7 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result tx_sign::invoke(std::istream& input, std::ostream& output, 
-    std::ostream& cerr)
+console_result tx_sign::invoke(std::ostream& output, std::ostream& cerr)
 {
     cerr << SX_TX_SIGN_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

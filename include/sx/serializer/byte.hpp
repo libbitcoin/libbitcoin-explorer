@@ -99,6 +99,7 @@ public:
     {
         int number;
         input >> number;
+
         argument.value_ = static_cast<uint8_t>(number);
         return input;
     }

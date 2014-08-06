@@ -25,8 +25,8 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result fetch_height_bci::invoke(std::istream& input,
-    std::ostream& output, std::ostream& cerr)
+console_result fetch_height_bci::invoke(std::ostream& output,
+    std::ostream& cerr)
 {
     // TODO: integrate cpp-netlib (without ssl).
     cerr << SX_FETCH_HEIGHT_BCI_NOT_IMPLEMENTED << std::endl;

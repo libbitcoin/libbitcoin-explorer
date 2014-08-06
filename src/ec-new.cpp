@@ -29,26 +29,27 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result ec_new::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result ec_new::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     data_chunk seed = get_seed_argument();
     const bool testnet = get_general_testnet_setting();
 
     // Arbitrary minimum 128 bit length for generated seeds.
-    constexpr size_t minimum_seed_size = 128 / byte_bits;
-    if (seed.size() < minimum_seed_size)
+    constexpr size_t minimum_seed_size = 128;
+    if (seed.size() * byte_bits < minimum_seed_size)
     {
         cerr << SX_EC_NEW_SHORT_SEED << std::endl;
         return console_result::failure;
     }
 
-    // TESTNET VERSION MAY REQUIRE RECOMPILE
-    // Using HD key generation because we edon't have one for EC.
-    const hd_private_key hd_key(seed, testnet);
-    const ec_secret ec_key = hd_key.private_key();
+    ec_private key(new_key(seed));
+    if ((ec_secret)key == ec_secret())
+    {
+        cerr << SX_EC_NEW_INVALID_KEY << std::endl;
+        return console_result::failure;
+    }
 
-    output << ec_private(ec_key) << std::endl;
+    output << key << std::endl;
     return console_result::okay;
 }

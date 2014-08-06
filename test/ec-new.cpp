@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(ec_new__invoke__always__okay_output)
     // $ sx ec-new seed
     SX_DECLARE_COMMAND(ec_new);
     command.set_seed_argument({ "seed" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("");
 }
 

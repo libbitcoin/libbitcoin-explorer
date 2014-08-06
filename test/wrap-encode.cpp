@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(wrap_encode__invoke__valid_hex_version__okay_output)
     SX_DECLARE_COMMAND(wrap_encode);
     command.set_version_option(42);
     command.set_hex_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("2a031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006298eebe4\n");
 }
 

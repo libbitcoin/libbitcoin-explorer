@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(addr_validate__invoke__one_address__okay_output)
     // $ sx addr-validate 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
     SX_DECLARE_COMMAND(addr_validate);
     command.set_addresss_argument({{ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" }});
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("");
 }
 
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(addr_validate__invoke__two_addresses__okay_output)
         { "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" },
         { "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }
     });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("");
 }
 

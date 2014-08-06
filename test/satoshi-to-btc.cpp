@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__zero_satoshi__failure_error)
     // $ sx satoshi-to-btc 0
     SX_DECLARE_COMMAND(sx::extension::satoshi_to_btc);
     command.set_satoshi_argument(0);
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_SATOSHI_TO_BTC_NOT_IMPLEMENTED "\n");
 }
 

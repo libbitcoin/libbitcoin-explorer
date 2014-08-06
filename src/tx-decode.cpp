@@ -22,11 +22,10 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/utility.hpp>
-#include <sx/utility/dispatch.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
 static void show_tx(const transaction_type& tx)
 {
@@ -123,33 +122,19 @@ static void json_show_tx(const transaction_type& tx)
     std::cout << "}" << std::endl;
 }
 
-console_result tx_decode::invoke(int argc, const char* argv[])
+// TODO: rationalize and localize serializaion.
+console_result tx_decode::invoke(std::ostream& output, std::ostream& cerr)
 {
-    if (!validate_argument_range(argc, example(), 1, 2))
-        return console_result::failure;
+    // Bound parameters.
+    const auto json = get_json_option();
+    const auto& transactions = get_transactions_argument();
+    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
+    const transaction_type& tx = transactions.front();
 
-    std::string filename(SX_STDIN_PATH_SENTINEL);
-    bool json_output = get_option(argc, argv, SX_OPTION_JSON);
-
-    for (int i = 1; i < argc; ++i)
-    {
-        if (is_option_any(argv[i]))
-            continue;
-        filename = argv[i];
-    }
-
-    transaction_type tx;
-    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
-    {
-        std::cerr << "sx: Deserializing transaction failed." << std::endl;
-        return console_result::failure;
-    }
-
-    if (json_output)
+    if (json)
         json_show_tx(tx);
     else
         show_tx(tx);
 
     return console_result::okay;
 }
-

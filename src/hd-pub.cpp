@@ -31,8 +31,7 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result hd_pub::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result hd_pub::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto hard = get_hard_option();

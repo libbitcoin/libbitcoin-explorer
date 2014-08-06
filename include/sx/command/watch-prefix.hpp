@@ -31,7 +31,6 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
@@ -41,9 +40,12 @@
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/serializer/input.hpp>
 #include <sx/serializer/item.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/output.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
+#include <sx/serializer/script.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -139,7 +141,7 @@ public:
             )
             (
                 "prefix,p",
-                value<serializer::binary>(&option_.prefix),
+                value<serializer::prefix>(&option_.prefix),
                 "The binary encoded stealth search prefix. Searches all transactions if not set."
             );
 
@@ -149,13 +151,11 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& cerr);
+    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
 
@@ -179,7 +179,7 @@ public:
     /**
      * Get the value of the prefix option.
      */
-    virtual serializer::binary& get_prefix_option()
+    virtual serializer::prefix& get_prefix_option()
     {
         return option_.prefix;
     }
@@ -188,7 +188,7 @@ public:
      * Set the value of the prefix option.
      */
     virtual void set_prefix_option(
-        const serializer::binary& value)
+        const serializer::prefix& value)
     {
         option_.prefix = value;
     }
@@ -222,7 +222,7 @@ private:
         }
         
         bool help;
-        serializer::binary prefix;
+        serializer::prefix prefix;
     } option_;
 };
 

@@ -24,7 +24,6 @@ sx_utility_includedir = $(includedir)/sx/serializer
 sx_utility_include_HEADERS += \
     address.hpp \
     base58.hpp \
-    binary.hpp \
     btc160.hpp \
     btc256.hpp \
     byte.hpp \
@@ -34,10 +33,12 @@ sx_utility_include_HEADERS += \
     hd_private.hpp \
     hd_public.hpp \
     hex.hpp \
+    input.hpp \
     item.hpp \
-    point.hpp \
+    output.hpp \
+    prefix.hpp \
     raw.hpp \
-    satoshi.hpp \
+    script.hpp \
     wif.hpp
 
 # Generated from XML data source.
@@ -77,6 +78,7 @@ sx_command_include_HEADERS = \
     command/hd-to-ec.hpp \
     command/hd-to-pub.hpp \
     command/hd-to-wif.hpp \
+    command/header-decode.hpp \
     command/help.hpp \
     command/initchain.hpp \
     command/mnemonic-decode.hpp \
@@ -98,6 +100,8 @@ sx_command_include_HEADERS = \
     command/sha512.hpp \
     command/stealth-addr-encode.hpp \
     command/stealth-newkey.hpp \
+    command/tx-decode.hpp \
+    command/tx-encode.hpp \
     command/tx-sign.hpp \
     command/wallet.hpp \
     command/wif-to-ec.hpp \

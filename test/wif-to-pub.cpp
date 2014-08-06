@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(wif_to_pub__invoke__mainnet_wif__okay_output)
     // $ sx wif-to-pub KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF
     SX_DECLARE_COMMAND(wif_to_pub);
     command.set_wif_argument({ "KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc\n");
 }
 

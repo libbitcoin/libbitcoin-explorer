@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(ec_lock__invoke__always__failure_error)
 {
     // $ sx ec-lock ...
     SX_DECLARE_COMMAND(ec_lock);
-    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_EC_LOCK_NOT_IMPLEMENTED "\n");
 }
 

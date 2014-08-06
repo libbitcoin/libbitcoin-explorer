@@ -65,8 +65,7 @@ static void transaction_fetched_wrapper(const std::error_code& ec,
         transaction_fetched(ec, tx_type);
 }
 
-console_result fetch_tx::invoke(std::istream& input, std::ostream& output, 
-    std::ostream& cerr)
+console_result fetch_tx::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto hash = get_hash_argument();

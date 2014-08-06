@@ -65,20 +65,11 @@ static void subscription_handler(const std::error_code& error, size_t height,
         item<transaction_type>(tx) % height % hex(block_hash) << std::endl;
 }
 
-console_result watch_prefix::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result watch_prefix::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     //const auto height = get_height_option();
     const stealth_prefix prefix = get_prefix_option();
-
-    // TODO: create stealth prefix serializer and capture this.
-    constexpr size_t max_prefix_bytes = sizeof(uint32_t);
-    if (prefix.size() > max_prefix_bytes * byte_bits)
-    {
-        cerr << "The prefix option exceeds 32 bits." << std::endl;
-        return console_result::failure;
-    }
 
     stopped = false;
     result = console_result::okay;

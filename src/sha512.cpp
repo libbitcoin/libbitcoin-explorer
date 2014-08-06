@@ -30,8 +30,7 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result sha512::invoke(std::istream& input, std::ostream& output,
-    std::ostream& cerr)
+console_result sha512::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const data_chunk hexadecimal = get_hex_argument();

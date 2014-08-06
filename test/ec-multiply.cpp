@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(ec_multiply__invoke)
 //    SX_DECLARE_COMMAND(sx::extension::ec_multiply);
 //    command.set_point_argument({ "02ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
 //    command.set_secret_argument({ "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" });
-//    SX_REQUIRE_FAILURE(command.invoke(input, output, error));
+//    SX_REQUIRE_FAILURE(command.invoke(output, error));
 //    SX_REQUIRE_ERROR(SX_EC_MULITPLY_OUT_OF_RANGE "\n");
 //}
 
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(ec_multiply__invoke__add_values__okay_output)
     SX_DECLARE_COMMAND(sx::extension::ec_multiply);
     command.set_point_argument({ "021bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
     command.set_secret_argument({ "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
-    SX_REQUIRE_OKAY(command.invoke(input, output, error));
+    SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("02da5629b7902abcfc166b30eda4cc6b2702b5d0bb867217614101caa710f0753b\n");
 }
 
