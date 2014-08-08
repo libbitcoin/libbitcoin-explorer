@@ -23,7 +23,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/hex.hpp>
-#include <sx/serializer/item.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -31,54 +31,47 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static bool stopped;
-static console_result result;
-
-static void subscribed(const std::error_code& error, 
+static void handle_subscribed(callback_args& args, 
     const obelisk::worker_uuid& worker)
 {
-    if (error)
-    {
-        // This command only halts on failure.
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-        stopped = true;
-        return;
-    }
-
-    std::cout << SX_WATCH_PREFIX_WAITING << std::endl;
+    args.output() << SX_WATCH_PREFIX_WAITING << std::endl;
 }
 
-static void subscription_handler(const std::error_code& error, size_t height,
+static void handle_subscription(callback_args& args, size_t height,
     const hash_digest& block_hash, const transaction_type& tx)
 {
-    if (error)
-    {
-        // This command only halts on failure.
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-        stopped = true;
-        return;
-    }
-
-    std::cout << boost::format(SX_WATCH_PREFIX_OUTPUT) %
-        item<transaction_type>(tx) % height % hex(block_hash) << std::endl;
+    args.output() << boost::format(SX_WATCH_PREFIX_OUTPUT) % transaction(tx) %
+        height % hex(block_hash) << std::endl;
 }
 
+// This command only halts on failure.
 console_result watch_prefix::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     //const auto height = get_height_option();
     const stealth_prefix prefix = get_prefix_option();
 
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto subscription_handler = [&args](const std::error_code& error,
+        size_t height, const hash_digest& block_hash, 
+        const transaction_type& tx)
+    {
+        handle_error(args, error);
+        handle_subscription(args, height, block_hash, tx);
+    };
+
+    const auto subscribed_handler = [&args](const std::error_code& error,
+        const obelisk::worker_uuid& worker)
+    {
+        handle_error(args, error);
+        handle_subscribed(args, worker);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.address.subscribe(prefix, subscription_handler, subscribed);
-    client.poll(stopped);
+    fullnode.address.subscribe(prefix, subscription_handler, subscribed_handler);
+    client.poll(args.stopped());
 
-    return result;
+    return args.result();
 }
 

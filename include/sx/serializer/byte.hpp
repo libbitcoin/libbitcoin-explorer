@@ -40,7 +40,9 @@ public:
      * Constructor.
      */
     byte() 
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -58,7 +60,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     byte(const uint8_t& value)
-        : value_(value) {}
+        : value_(value)
+    {
+    }
 
     /**
      * Copy constructor.
@@ -66,7 +70,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     byte(const byte& other)
-        : byte(other.value_) {}
+        : byte(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.

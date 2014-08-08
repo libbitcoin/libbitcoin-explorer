@@ -39,13 +39,14 @@
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/header.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
-#include <sx/serializer/item.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -135,9 +136,19 @@ public:
                 "Decode a set of transactions."
             )
             (
+                "xml,x",
+                value<bool>(&option_.xml)->implicit_value(true),
+                "Enable XML output."
+            )
+            (
                 "json,j",
                 value<bool>(&option_.json)->implicit_value(true),
                 "Enable JSON output."
+            )
+            (
+                "ugly,u",
+                value<bool>(&option_.ugly)->implicit_value(true),
+                "Disable pretty printing of JSON output."
             )
             (
                 "TRANSACTION",
@@ -162,7 +173,7 @@ public:
     /**
      * Get the value of the TRANSACTION arguments.
      */
-    virtual std::vector<serializer::item<bc::transaction_type>>& get_transactions_argument()
+    virtual std::vector<serializer::transaction>& get_transactions_argument()
     {
         return argument_.transactions;
     }
@@ -171,7 +182,7 @@ public:
      * Set the value of the TRANSACTION arguments.
      */
     virtual void set_transactions_argument(
-        const std::vector<serializer::item<bc::transaction_type>>& value)
+        const std::vector<serializer::transaction>& value)
     {
         argument_.transactions = value;
     }
@@ -194,6 +205,23 @@ public:
     }
 
     /**
+     * Get the value of the xml option.
+     */
+    virtual bool& get_xml_option()
+    {
+        return option_.xml;
+    }
+    
+    /**
+     * Set the value of the xml option.
+     */
+    virtual void set_xml_option(
+        const bool& value)
+    {
+        option_.xml = value;
+    }
+
+    /**
      * Get the value of the json option.
      */
     virtual bool& get_json_option()
@@ -210,6 +238,23 @@ public:
         option_.json = value;
     }
 
+    /**
+     * Get the value of the ugly option.
+     */
+    virtual bool& get_ugly_option()
+    {
+        return option_.ugly;
+    }
+    
+    /**
+     * Set the value of the ugly option.
+     */
+    virtual void set_ugly_option(
+        const bool& value)
+    {
+        option_.ugly = value;
+    }
+
 private:
 
     /**
@@ -224,7 +269,7 @@ private:
         {
         }
         
-        std::vector<serializer::item<bc::transaction_type>> transactions;
+        std::vector<serializer::transaction> transactions;
     } argument_;
     
     /**
@@ -236,12 +281,16 @@ private:
     {
         option()
           : help(),
-            json()
+            xml(),
+            json(),
+            ugly()
         {
         }
         
         bool help;
+        bool xml;
         bool json;
+        bool ugly;
     } option_;
 };
 

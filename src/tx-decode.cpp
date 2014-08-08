@@ -20,121 +20,34 @@
 #include <sx/command/tx-decode.hpp>
 
 #include <iostream>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/info_parser.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static void show_tx(const transaction_type& tx)
-{
-    std::cout << "hash: " << hash_transaction(tx) << std::endl;
-    std::cout << "version: " << tx.version <<std::endl;
-    std::cout << "locktime: " << tx.locktime << std::endl;
-    for (const transaction_input_type& input: tx.inputs)
-    {
-        std::cout << "Input:" << std::endl;
-        std::cout << "  previous output: "
-            << input.previous_output.hash << ":"
-            << input.previous_output.index << std::endl;
-        std::cout << "  script: " << pretty(input.script) << std::endl;
-        std::cout << "  sequence: " << input.sequence << std::endl;
-        payment_address addr;
-        if (extract(addr, input.script))
-            std::cout << "  address: " << addr.encoded() << std::endl;
-    }
-
-    for (const transaction_output_type& output: tx.outputs)
-    {
-        std::cout << "Output:" << std::endl;
-        std::cout << "  value: " << output.value << std::endl;
-        std::cout << "  script: " << pretty(output.script) << std::endl;
-        payment_address addr;
-        if (extract(addr, output.script))
-            std::cout << "  address: " << addr.encoded() << std::endl;
-        if (output.script.type() == payment_type::stealth_info)
-        {
-            const data_chunk& data = output.script.operations()[1].data;
-            BITCOIN_ASSERT(data.size() == 1 + 4 + 33);
-            const data_chunk ephemkey(data.begin() + 5, data.end());
-            BITCOIN_ASSERT(ephemkey.size() == 33);
-            std::cout << "  stealth ephemkey: " << ephemkey << std::endl;
-            std::cout << "  stealth bitfield: "
-                << calculate_stealth_bitfield(data) << std::endl;
-        }
-    }
-}
-
-static void json_show_tx(const transaction_type& tx)
-{
-    std::cout << "{" << std::endl;
-    std::cout << "  \"hash\": \"" << hash_transaction(tx)
-        << "\"," << std::endl;
-    std::cout << "  \"version\": " << tx.version << "," << std::endl;
-    std::cout << "  \"locktime\": " << tx.locktime << "," << std::endl;
-    std::cout << "  \"inputs\": [" << std::endl;
-    bool is_first = true;
-    for (const transaction_input_type& input: tx.inputs)
-    {
-        if (is_first)
-            is_first = false;
-        else
-            std::cout << "," << std::endl;
-        std::cout << "   {\"previous_output\": \""
-            << input.previous_output.hash << ":"
-            << input.previous_output.index << "\"," << std::endl;
-        std::cout << "    \"script\": \"" << pretty(input.script)
-            << "\"," << std::endl;
-        std::cout << "    \"sequence\": " << input.sequence
-            << "," << std::endl;
-        std::cout << "    \"address\": ";
-        payment_address addr;
-        if (extract(addr, input.script))
-            std::cout << "\"" << addr.encoded() << "\"";
-        else
-            std::cout << "null";
-        std::cout << "}";
-    }
-
-    std::cout << std::endl << "  ]," << std::endl;
-    std::cout << "  \"outputs\": [" << std::endl;
-    is_first = true;
-    for (const transaction_output_type& output: tx.outputs)
-    {
-        if (is_first)
-            is_first = false;
-        else
-            std::cout << "," << std::endl;
-        std::cout << "   {\"value\": " << output.value << "," << std::endl;
-        std::cout << "    \"script\": \"" << pretty(output.script)
-            << "\"," << std::endl;
-        std::cout << "    \"address\": ";
-        payment_address addr;
-        if (extract(addr, output.script))
-            std::cout << "\"" << addr.encoded() << "\"";
-        else
-            std::cout << "null";
-        std::cout << "}";
-    }
-
-    std::cout << std::endl << "  ]" << std::endl;
-    std::cout << "}" << std::endl;
-}
-
-// TODO: rationalize and localize serializaion.
 console_result tx_decode::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
+    const auto xml = get_xml_option();
     const auto json = get_json_option();
+    const auto ugly = get_ugly_option();
     const auto& transactions = get_transactions_argument();
-    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
-    const transaction_type& tx = transactions.front();
+
+    const pt::ptree tree = property_tree(transactions);
 
     if (json)
-        json_show_tx(tx);
+        pt::write_xml(output, tree);
+    else if (xml)
+        pt::write_json(output, tree, !ugly);
     else
-        show_tx(tx);
+        pt::write_info(output, tree);
 
     return console_result::okay;
 }

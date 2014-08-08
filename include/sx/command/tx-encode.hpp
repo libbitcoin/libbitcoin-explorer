@@ -39,13 +39,14 @@
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/header.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
-#include <sx/serializer/item.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -55,6 +56,12 @@
 
 namespace sx {
 namespace extension {
+
+/**
+ * Various localizable strings.
+ */
+#define SX_TX_ENCODE_LOCKTIME_CONFLICT \
+    "Locktime is ineffective if set but all sequences are set to the maximum value."
 
 /**
  * Class to implement the sx tx-encode command.
@@ -145,12 +152,12 @@ public:
             (
                 "input,i",
                 value<std::vector<serializer::input>>(&option_.inputs),
-                "The set of transaction inputs encoded as TXHASH:INDEX where TXHASH is a hex encoded transaction hash and INDEX is the input index."
+                "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a hex encoded transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE the optional 32 bit input sequence and defaults to the maximum value."
             )
             (
                 "output,o",
                 value<std::vector<serializer::output>>(&option_.outputs),
-                "The set of transaction outputs encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a hex encoded script. SATOSHI is the amount in satoshi to be spent. SEED is used and required for stealth outputs only. A seed should NOT be reused across outputs."
+                "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a hex encoded script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. A seed should NOT be used for multiple outputs."
             )
             (
                 "FILE",

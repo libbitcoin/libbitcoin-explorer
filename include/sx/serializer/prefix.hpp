@@ -42,7 +42,7 @@ typedef boost::dynamic_bitset<uint8_t> bitset;
 /**
  * The max length of the prefix in bits.
  */
-constexpr size_t max_prefix_bits = sizeof(bc::stealth_bitfield) * byte_bits;
+constexpr size_t max_prefix = sizeof(bc::stealth_bitfield) * bc::byte_size;
 
 /**
  * Serialization helper to convert between binary string and data_chunk.
@@ -122,8 +122,7 @@ public:
         input >> binary;
 
         bitset bits(binary);
-        if (bits.size() > max_prefix_bits ||
-            bits.size() != binary.length())
+        if (bits.size() > max_prefix || bits.size() != binary.length())
             throw po::invalid_option_value(binary);
 
         argument.value_.swap(bits);

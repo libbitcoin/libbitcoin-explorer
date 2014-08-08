@@ -42,16 +42,18 @@ public:
      * Constructor.
      */
     btc256()
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  hexcode  The value to initialize with.
      */
-    btc256(const std::string& hex)
+    btc256(const std::string& hexcode)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(hexcode) >> *this;
     }
 
     /**
@@ -60,7 +62,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     btc256(const bc::hash_digest& value)
-        : value_(value) {}
+        : value_(value)
+    {
+    }
 
     /**
      * Copy constructor.
@@ -68,7 +72,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     btc256(const btc256& other)
-        : btc256(other.value_) {}
+        : btc256(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.
@@ -99,12 +105,12 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, btc256& argument)
     {
-        std::string hex;
-        input >> hex;
+        std::string hexcode;
+        input >> hexcode;
 
-        auto hash = bc::decode_hash(hex);
+        auto hash = bc::decode_hash(hexcode);
         if (hash == bc::null_hash)
-            throw po::invalid_option_value(hex);
+            throw po::invalid_option_value(hexcode);
 
         std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;

@@ -24,7 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/async_client.hpp>
-#include <sx/serializer/item.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -32,35 +32,23 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static bool stopped;
-static console_result result;
+static void handle_send(callback_args& args, transaction_type& tx)
+{
+    args.output() << boost::format(SX_SEND_TX_NODE_OUTPUT) % transaction(tx) %
+        now() << std::endl;
+    args.stopped() = true;
+}
 
-static void tx_send(const std::error_code& error, channel_ptr node,
+static void handle_callback(callback_args& args, channel_ptr node,
     transaction_type& tx)
 {
-    if (error)
+    const auto handler = [&args, &tx](const std::error_code& error)
     {
-        std::cerr << error << std::endl;
-        result = console_result::failure;
-        stopped = true;
-        return;
-    }
-
-    auto handle_send = [node, tx](const std::error_code& error)
-    {
-        if (error)
-        {
-            std::cerr << error << std::endl;
-            result = console_result::failure;
-        }
-        else
-            std::cout << boost::format(SX_SEND_TX_NODE_OUTPUT) %
-                item<bc::transaction_type>(tx) % now() << std::endl;
-
-        stopped = true;
+        handle_error(args, error);
+        handle_send(args, tx);
     };
 
-    node->send(tx, handle_send);
+    node->send(tx, handler);
 }
 
 console_result send_tx_node::invoke(std::ostream& output, std::ostream& cerr)
@@ -72,15 +60,20 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& cerr)
     HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
     const transaction_type& tx = transactions.front();
 
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto handler = [&args](const std::error_code& error,
+        channel_ptr node, transaction_type& tx)
+    {
+        handle_error(args, error);
+        handle_callback(args, node, tx);
+    };
 
     async_client client(*this, 4);
     auto& pool = client.get_threadpool();
     handshake shake(pool);
     network net(pool);
-    connect(shake, net, host, port, std::bind(tx_send, ph::_1, ph::_2, tx));
-    client.poll(stopped, 2000);
+    connect(shake, net, host, port, std::bind(handler, ph::_1, ph::_2, tx));
+    client.poll(args.stopped(), 2000);
 
-    return result;
+    return args.result();
 }

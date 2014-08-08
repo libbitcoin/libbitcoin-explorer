@@ -21,7 +21,10 @@
 #define SCRIPT_HPP
 
 #include <iostream>
+#include <string>
+#include <vector>
 #include <boost/program_options.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
@@ -30,54 +33,6 @@
 
 namespace sx {
 namespace serializer {
-
-    static void operation_from_data(bc::operation& op, 
-        const bc::data_chunk& data)
-    {
-        constexpr size_t max_special = 75;
-
-        if (data.size() <= max_special)
-            op.code = bc::opcode::special;
-        else if (data.size() < std::numeric_limits<uint8_t>::max())
-            op.code = bc::opcode::pushdata1;
-        else if (data.size() < std::numeric_limits<uint16_t>::max())
-            op.code = bc::opcode::pushdata2;
-        else if (data.size() < std::numeric_limits<uint32_t>::max())
-            op.code = bc::opcode::pushdata4;
-        else
-            op.code = bc::opcode::bad_operation;
-
-        if (op.code != bc::opcode::bad_operation)
-            op.data = data;
-    }
-
-    // This should be sxs with bc::pretty()
-    static bool script_from_tokens(bc::script_type& script,
-        const std::vector<std::string>& tokens)
-    {
-        for (auto& token = tokens.begin(); token != tokens.end(); token++)
-        {
-            bc::operation op;
-
-            if (*token == "[")
-            {
-                std::string encoded;
-                while (++token != tokens.end() && *token != "]")
-                    encoded += *token;
-
-                if (*token != "]")
-                    return false;
-
-                operation_from_data(op, bc::decode_hex(encoded));
-            }
-            else
-                op.code = bc::string_to_opcode(*token);
-
-            script.push_operation(op);
-        }
-
-        return true;
-    }
 
 /**
  * Serialization helper to convert between hex/raw script and script_type.
@@ -97,11 +52,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  hexcode  The value to initialize with.
      */
-    script(const std::string& hex)
+    script(const std::string& hexcode)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(hexcode) >> *this;
     }
 
     /**
@@ -121,16 +76,16 @@ public:
      * argument. Instead we read a set of string arguments and then explicitly
      * load them here.
      * 
-     * @param[in]  tokens  The value to initialize with.
+     * @param[in]  mnemonics  The mnemonic tokens to initialize with.
      */
-    script(const std::vector<std::string>& tokens)
+    script(const std::vector<std::string>& mnemonics)
     {
-        if (!script_from_tokens(value_, tokens))
-        {
-            std::string sentence;
-            join(tokens, sentence);
-            throw po::invalid_option_value(sentence);
-        }
+        std::string script;
+        join(mnemonics, script);
+
+        value_ = bc::unpretty(script);
+        if (value_.operations().empty())
+            throw po::invalid_option_value(script);
     }
 
     /**
@@ -158,9 +113,9 @@ public:
      * See comments on the tokens constructor. We expose this method here for 
      * symmetry with the construction approach.
      *
-     * @return  A pretty-printed copy of the internal script.
+     * @return  A mnemonic-printed copy of the internal script.
      */
-    const std::string pretty() const
+    const std::string mnemonic() const
     {
         return bc::pretty(value_);
     }
@@ -184,16 +139,16 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, script& argument)
     {
-        std::string hexadecimal;
-        input >> hexadecimal;
+        std::string hexcode;
+        input >> hexcode;
 
         try
         {
-            argument.value_ = bc::parse_script(hex(hexadecimal));
+            argument.value_ = bc::parse_script(hex(hexcode));
         }
         catch (bc::end_of_stream)
         {
-            throw po::invalid_option_value(hexadecimal);
+            throw po::invalid_option_value(hexcode);
         }
 
         return input;

@@ -28,6 +28,7 @@
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -38,22 +39,17 @@ using namespace sx::serializer;
 static bool stopped;
 static console_result result;
 
-static void stealth_fetched(const std::error_code& error,
+static void handle_callback(callback_args& args,
     const blockchain::stealth_list& stealth_results)
 {
-    if (error)
-    {
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-    }
-    else
-        for (const blockchain::stealth_row& row : stealth_results)
-            std::cout << boost::format(SX_FETCH_STEALTH_OUTPUT) %
-                hex(row.ephemkey) % address(row.address) %
-                btc256(row.transaction_hash) << std::endl;
+    for (const auto& row: stealth_results)
+        args.output() << boost::format(SX_FETCH_STEALTH_OUTPUT) %
+            hex(row.ephemkey) % address(row.address) %
+            btc256(row.transaction_hash) << std::endl;
 
-    stopped = true;
+    args.stopped() = true;
 }
+
 
 console_result fetch_stealth::invoke(std::ostream& output, std::ostream& cerr)
 {
@@ -61,14 +57,19 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& cerr)
     const auto height = get_height_option();
     const stealth_prefix prefix = get_prefix_option();
 
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto handler = [&args](const std::error_code& error,
+        const blockchain::stealth_list& stealth_results)
+    {
+        handle_error(args, error);
+        handle_callback(args, stealth_results);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.blockchain.fetch_stealth(prefix,
-        std::bind(stealth_fetched, ph::_1, ph::_2), height);
-    client.poll(stopped);
+        std::bind(handler, ph::_1, ph::_2), height);
+    client.poll(args.stopped());
 
-    return result;
+    return args.result();
 }

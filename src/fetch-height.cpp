@@ -23,38 +23,33 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static bool stopped;
-static console_result result;
-
-static void last_height_fetched(const std::error_code& error, size_t height)
+static void handle_callback(callback_args& args, size_t height)
 {
-    if (error)
-    {
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-    }
-    else
-        std::cout << height << std::endl;
-
-    stopped = true;
+    args.output() << height << std::endl;
+    args.stopped() = true;
 }
 
 console_result fetch_height::invoke(std::ostream& output, std::ostream& cerr)
 {
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto handler = [&args](const std::error_code& error, size_t height)
+    {
+        handle_error(args, error);
+        handle_callback(args, height);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.blockchain.fetch_last_height(last_height_fetched);
-    client.poll(stopped);
+    fullnode.blockchain.fetch_last_height(handler);
+    client.poll(args.stopped());
 
-    return result;
+    return args.result();
 }
 

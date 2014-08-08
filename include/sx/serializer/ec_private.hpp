@@ -45,16 +45,18 @@ public:
      * Constructor.
      */
     ec_private()
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  hexcode  The value to initialize with.
      */
-    ec_private(const std::string& hex)
+    ec_private(const std::string& hexcode)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(hexcode) >> *this;
     }
 
     /**
@@ -63,7 +65,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     ec_private(const bc::ec_secret& value)
-        : value_(value) {}
+        : value_(value)
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -71,7 +75,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     ec_private(const libwallet::hd_private_key& value)
-        : ec_private(value.private_key()) {}
+        : ec_private(value.private_key())
+    {
+    }
 
     /**
      * Copy constructor.
@@ -79,7 +85,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     ec_private(const ec_private& other)
-        : ec_private(other.value_) {}
+        : ec_private(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.
@@ -110,12 +118,12 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, ec_private& argument)
     {
-        std::string text;
-        input >> text;
+        std::string hexcode;
+        input >> hexcode;
         
-        bc::ec_secret secret = btc256(text);
+        bc::ec_secret secret = btc256(hexcode);
         if (!bc::verify_private_key(secret))
-            throw po::invalid_option_value(text);
+            throw po::invalid_option_value(hexcode);
 
         std::copy(secret.begin(), secret.end(), argument.value_.begin());
         return input;

@@ -21,6 +21,7 @@
 #define BASE58_HPP
 
 #include <iostream>
+#include <string>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
@@ -41,7 +42,9 @@ public:
      * Constructor.
      */
     base58()
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -59,7 +62,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     base58(const bc::data_chunk& value)
-        : value_(value) {}
+        : value_(value)
+    {
+    }
 
     /**
      * Copy constructor.
@@ -67,7 +72,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     base58(const base58& other)
-        : base58(other.value_) {}
+        : base58(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.

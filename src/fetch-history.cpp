@@ -163,10 +163,8 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& cerr)
     auto& fullnode = client.get_fullnode();
 
     for (const auto& address: addresses)
-    {
         fullnode.address.fetch_history(address,
             std::bind(history_fetched, address, ph::_1, ph::_2));
-    }
 
     bool done = false;
     client.detached_poll(done);

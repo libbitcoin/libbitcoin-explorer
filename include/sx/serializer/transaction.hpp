@@ -17,12 +17,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ITEM_HPP
-#define ITEM_HPP
+#ifndef TRANSACTION_HPP
+#define TRANSACTION_HPP
 
 #include <iostream>
+#include <string>
 #include <boost/program_options.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
@@ -34,27 +37,28 @@ namespace serializer {
 
 /**
  * Serialization helper to convert between serialized and deserialized satoshi 
- * items.
+ * transaction.
  */
-template <class SatoshiItem>
-class item
+class transaction
 {
 public:
 
     /**
      * Constructor.
      */
-    item()
-        : value_() {}
+    transaction()
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  hexcode  The value to initialize with.
      */
-    item(const std::string& hex)
+    transaction(const std::string& hexcode)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(hexcode) >> *this;
     }
 
     /**
@@ -62,31 +66,37 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    item(const bc::data_chunk& value)
-        : item((const std::string&)hex(value)) {}
+    transaction(const bc::data_chunk& value)
+        : transaction((const std::string&)hex(value))
+    {
+    }
 
     /**
      * Initialization constructor.
      * 
      * @param[in]  value  The value to initialize with.
      */
-    item(const SatoshiItem& value)
-        : value_(value) {}
+    transaction(const bc::transaction_type& value)
+        : value_(value)
+    {
+    }
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    item(const item& other)
-        : item(other.value_) {}
+    transaction(const transaction& other)
+        : transaction(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.
      *
      * @return  A reference to the object's internal data.
      */
-    SatoshiItem& data()
+    bc::transaction_type& data()
     {
         return value_;
     }
@@ -96,7 +106,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const SatoshiItem&() const
+    operator const bc::transaction_type&() const
     {
         return value_;
     }
@@ -108,17 +118,13 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, item& argument)
+    friend std::istream& operator>>(std::istream& input, transaction& argument)
     {
-       hex hexadecimal;
-       input >> hexadecimal;
+        std::string hexcode;
+        input >> hexcode;
 
-       if (!deserialize_satoshi_item<SatoshiItem>(argument.value_, hexadecimal))
-       {
-           std::stringstream text;
-           text << hexadecimal;
-           throw po::invalid_option_value(text.str());
-       }
+        if (!deserialize_satoshi_item(argument.value_, hex(hexcode)))
+            throw po::invalid_option_value(hexcode);
 
         return input;
     }
@@ -130,11 +136,11 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const item& argument)
+    friend std::ostream& operator<<(std::ostream& output, 
+        const transaction& argument)
     {
         bc::data_chunk bytes;
-        serialize_satoshi_item<SatoshiItem>(bytes, argument.value_);
-
+        serialize_satoshi_item(bytes, argument.value_);
         output << hex(bytes);
         return output;
     }
@@ -144,8 +150,42 @@ private:
     /**
      * The state of this object's file data.
      */
-    SatoshiItem value_;
+    bc::transaction_type value_;
 };
+
+/**
+ * Generate a property tree for a transaction.
+ *
+ * @param[in]  transaction  The transaction.
+ * @return                  A property tree.
+ */
+static pt::ptree property_tree(const transaction& transaction)
+{
+    const bc::transaction_type& tx = transaction;
+
+    pt::ptree tree;
+    tree.put("transaction.hash", hex(hash_transaction(tx)));
+    tree.put("transaction.version", tx.version);
+    tree.put("transaction.locktime", tx.locktime);
+    tree.add_child("transaction", property_tree(tx.inputs));
+    tree.add_child("transaction", property_tree(tx.outputs));
+    return tree;
+}
+
+/**
+ * Generate a property tree for a set of transactions.
+ *
+ * @param[in]  transactions  The set of transactions.
+ * @return                   A property tree.
+ */
+static pt::ptree property_tree(const std::vector<transaction>& transactions)
+{
+    pt::ptree tree;
+    for (const auto& transaction: transactions)
+        tree.add_child("transactions", property_tree(transaction));
+
+    return tree;
+}
 
 } // sx
 } // serializer

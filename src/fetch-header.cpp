@@ -24,6 +24,7 @@
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -31,43 +32,12 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static bool stopped;
-static console_result result;
-
-static void hash_header_fetched(const std::error_code& error,
-    const block_header_type& block_header)
+static void handle_callback(callback_args& args, const block_header_type& block_header)
 {
-    if (error)
-    {
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-    }
-    else
-    {
-        data_chunk raw_block_header(satoshi_raw_size(block_header));
-        satoshi_save(block_header, raw_block_header.begin());
-        std::cout << hex(raw_block_header) << std::endl;
-    }
-
-    stopped = true;
-}
-
-static void height_header_fetched(const std::error_code& error,
-    const block_header_type& block_header)
-{
-    if (error)
-    {
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-    }
-    else
-    {
-        data_chunk raw_block_header(satoshi_raw_size(block_header));
-        satoshi_save(block_header, raw_block_header.begin());
-        std::cout << hex(raw_block_header) << std::endl;
-    }
-
-    stopped = true;
+    data_chunk bytes(satoshi_raw_size(block_header));
+    satoshi_save(block_header, bytes.begin());
+    args.output() << hex(bytes) << std::endl;
+    args.stopped() = true;
 }
 
 console_result fetch_header::invoke(std::ostream& output, std::ostream& cerr)
@@ -76,18 +46,22 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& cerr)
     const size_t height = get_height_option();
     const hash_digest hash = get_hash_option();
 
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto handler = [&args](const std::error_code& error,
+        const block_header_type& block_header)
+    {
+        handle_error(args, error);
+        handle_callback(args, block_header);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-
     if (hash == null_hash)
-        fullnode.blockchain.fetch_block_header(height, height_header_fetched);
+        fullnode.blockchain.fetch_block_header(height, handler);
     else
-        fullnode.blockchain.fetch_block_header(hash, hash_header_fetched);
-    client.poll(stopped);
+        fullnode.blockchain.fetch_block_header(hash, handler);
+    client.poll(args.stopped());
 
-    return result;
+    return args.result();
 }
 

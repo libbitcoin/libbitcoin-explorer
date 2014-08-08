@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_CONSOLE_HPP
-#define SX_CONSOLE_HPP
+#ifndef SX_UTILITY_HPP
+#define SX_UTILITY_HPP
 
 // Suppressing msvc warnings from boost that are heard to deal with
 // because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
@@ -40,53 +40,11 @@
 #pragma warning(pop)
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
+#include <sx/utility/callback_args.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
-
-#define HANDLE_MULTIPLE_NOT_IMPLEMENTED(collection) \
-    if (collection.size() != 1) \
-    { \
-        cerr << name() << " does not yet support multiple primary inputs" \
-            << std::endl; \
-    }
-
-/**
- * Delimiter for use in word splitting serialized input and output points.
- */
-#define SX_TX_POINT_DELIMITER ":"
-    
-/**
- * Default delimiter for use in word splitting and joining operations.
- */
-#define SX_SENTENCE_DELIMITER " "
-
-/**
- * Conventional command line argument sentinel for indicating that a file
- * should be read from STDIN or written to STDOUT.
- */
-#define SX_STDIO_PATH_SENTINEL "-"
-
-/**
- * Result codes for int main().
- */
-enum console_result : int
-{
-    failure = -1,
-    okay = 0,
-    invalid = 1
-};
-
-/**
- * The number of bits in a byte.
- */
-constexpr size_t byte_bits = 8;
-    
-/**
- * The noop void function.
- */
-static const std::function<void()> noop = []{};
 
 /**
  * Avoid the ternary (just for fun). Must precede tempalte usage for gcc build.
@@ -237,19 +195,17 @@ int find_pair_position(const std::vector<Pair>& list, const Key& key)
 }
 
 /**
- * If it is not yet loaded, load stdin as parameter fallback.
+ * If the variable is not yet loaded, load from stdin as fallback.
  *
  * @param      <Value>    The type of the parameter to load.
  * @param[in]  name       The parameter name.
  * @param[in]  variables  The loaded variables.
  * @param[in]  input      The input stream for loading the parameter.
- * @return                True if loaded.
  */
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
     po::variables_map& variables, std::istream& input)
 {
-    // The path was not set as an argument so load from stdin.
     if (variables.find(name) == variables.end())
         deserialize(parameter, input);
 }
@@ -274,7 +230,7 @@ void load_path(Value& parameter, const std::string& name,
     // Get the argument value as a string.
     const auto path = boost::any_cast<std::string>(variable->second.value());
     
-    // The path is the stdin sentinal, so clear parameter and don't read file.
+    // The path is the stdio sentinal, so clear parameter and don't read file.
     if (path == SX_STDIO_PATH_SENTINEL)
     {
         variables.erase(variable);
@@ -307,6 +263,7 @@ std::string serialize(const Value& value, const std::string& fallback="")
 
 /**
  * Serialize the specified satoshi item to binary data.
+ * The data will be resized as necessary to fit the item.
  *
  * @param       <Item>  The type of the item.
  * @param[out] data     The binary data.
@@ -315,8 +272,48 @@ std::string serialize(const Value& value, const std::string& fallback="")
 template <typename Item>
 void serialize_satoshi_item(bc::data_chunk& data, const Item& item)
 {
+    data.resize(bc::satoshi_raw_size(item));
     bc::satoshi_save(item, data.begin());
 }
+
+/**
+ * Write a value to a file in the specified path and otherwise to the 
+ * specified stream. Not unit testable due to embedded file i/o.
+ *
+ * @param      Instance   The type of the instance to write.
+ * @param[out] output     The fallback out stream.
+ * @param[in]  path       The file path or stdio sentinel or empty.
+ * @param[in]  terminate  Indicates /n should be added (defaults to true).
+ * @param[in]  instance   The instance to serialize.
+ */
+template <typename Instance>
+void write_output(std::ostream& output, const std::string& path,
+    const Instance& instance, bool terminate=true)
+{        
+    if (path.empty() || path == SX_STDIO_PATH_SENTINEL)
+    {
+        output << instance;
+        if (terminate)
+            output << std::endl;
+    }
+    else
+    {
+        std::ofstream file(path, std::ofstream::binary);
+        file << instance;
+        if (terminate)
+            file << std::endl;
+    }
+}
+
+/**
+ * Handle the callback error with standard behavior.
+ *
+ * @param[in]  args       The arguments for the callback.
+ * @param[in]  error      The callback error result.
+ * @param[in]  format     A single parameter format string or empty/default.
+ */
+void handle_error(callback_args& args, const std::error_code& error,
+    std::string format="%1%");
 
 /**
  * Join a list of strings into a single string, in order.

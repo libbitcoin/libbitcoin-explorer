@@ -42,7 +42,9 @@ public:
      * Constructor.
      */
     wif()
-        : compressed_(true), value_() {}
+        : compressed_(true), value_()
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -60,7 +62,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     wif(const bc::ec_secret& value)
-        : value_(value), compressed_(true) {}
+        : value_(value), compressed_(true)
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -68,7 +72,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     wif(const libwallet::hd_private_key& value)
-        : wif(value.private_key()) {}
+        : wif(value.private_key())
+    {
+    }
 
     /**
      * Copy constructor.
@@ -76,7 +82,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     wif(const wif& other)
-        : wif(other.value_) {}
+        : wif(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.

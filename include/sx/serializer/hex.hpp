@@ -44,16 +44,18 @@ public:
      * Constructor.
      */
     hex() 
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
      * 
      * @param[in]  hex  The value to initialize with.
      */
-    hex(const std::string& hex)
+    hex(const std::string& hexcode)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(hexcode) >> *this;
     }
 
     /**
@@ -62,7 +64,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     hex(const bc::data_chunk& value)
-        : value_(value) {}
+        : value_(value)
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -71,7 +75,9 @@ public:
      */
     template<size_t Size>
     hex(const bc::byte_array<Size>& value)
-        : value_(value.begin(), value.end()) {}
+        : value_(value.begin(), value.end())
+    {
+    }
 
     /**
      * Copy constructor.
@@ -79,7 +85,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     hex(const hex& other)
-        : hex(other.value_) {}
+        : hex(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.
@@ -110,12 +118,12 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, hex& argument)
     {
-        std::string hex;
-        input >> hex;
+        std::string hexcode;
+        input >> hexcode;
 
-        bc::data_chunk chunk = bc::decode_hex(hex);
+        bc::data_chunk chunk = bc::decode_hex(hexcode);
         if (chunk.empty())
-            throw po::invalid_option_value(hex);
+            throw po::invalid_option_value(hexcode);
 
         argument.value_.assign(chunk.begin(), chunk.end());
         return input;

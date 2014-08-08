@@ -32,6 +32,6 @@ console_result script_decode::invoke(std::ostream& output, std::ostream& cerr)
     // Bound parameters.
     const auto& script = get_script_argument();
 
-    output << script.pretty() << std::endl;
+    output << script.mnemonic() << std::endl;
     return console_result::okay;
 }

@@ -26,6 +26,7 @@
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -33,36 +34,31 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static bool stopped;
-static console_result result;
-
-static void transaction_fetched(const std::error_code& error, 
+static void transaction_fetched(callback_args& args, 
     const transaction_type& tx)
 {
-    if (error)
-    {
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-    }
-    else
-    {
-        data_chunk raw_tx(satoshi_raw_size(tx));
-        satoshi_save(tx, raw_tx.begin());
-        std::cout << hex(raw_tx) << std::endl;
-    }
-
-    stopped = true;
+    data_chunk bytes(satoshi_raw_size(tx));
+    satoshi_save(tx, bytes.begin());
+    args.output() << hex(bytes) << std::endl;
+    args.stopped() = true;
 }
 
-// Try the tx memory pool if the transaction is not in the blockchain.
-static void transaction_fetched_wrapper(const std::error_code& ec,
-    const transaction_type& tx_type, const hash_digest& hash,
+static void handle_callback(callback_args& args, const std::error_code& error,
+    const transaction_type& tx, const hash_digest& hash, 
     obelisk::fullnode_interface& fullnode)
 {
-    if (ec == error::not_found)
-        fullnode.transaction_pool.fetch_transaction(hash, transaction_fetched);
+    const auto handler = [&args](const std::error_code& error, 
+        const transaction_type& tx)
+    {
+        handle_error(args, error);
+        transaction_fetched(args, tx);
+    };
+
+    // Try the tx memory pool if the transaction is not in the blockchain.
+    if (error == error::not_found)
+        fullnode.transaction_pool.fetch_transaction(hash, handler);
     else
-        transaction_fetched(ec, tx_type);
+        handler(error, tx);
 }
 
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& cerr)
@@ -70,16 +66,21 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& cerr)
     // Bound parameters.
     const auto hash = get_hash_argument();
 
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto handler = [&args](const std::error_code& error,
+        const transaction_type& tx, const hash_digest& hash,
+        obelisk::fullnode_interface& fullnode)
+    {
+        // Don't handle error here since it's needed by the callback.
+        handle_callback(args, error, tx, hash, fullnode);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     fullnode.blockchain.fetch_transaction(hash,
-        std::bind(transaction_fetched_wrapper, ph::_1, ph::_2, hash,
-            std::ref(fullnode)));
-    client.poll(stopped);
+        std::bind(handler, ph::_1, ph::_2, hash, std::ref(fullnode)));
+    client.poll(args.stopped());
 
-    return result;
+    return args.result();
 }
 

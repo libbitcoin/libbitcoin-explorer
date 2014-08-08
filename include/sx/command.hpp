@@ -41,7 +41,7 @@ namespace sx {
 class command
 {
 public:
-
+    
     /**
      * The symbolic (not localizable) command name, lower case.
      */
@@ -60,7 +60,7 @@ public:
     /**
      * The localizable command category name, upper case.
      *
-     * @return  Example: "ONLINE (OBELISK)"
+     * @return  Example: "ONLINE"
      */
     virtual const char* category()
     {
@@ -193,7 +193,7 @@ public:
     {
         auto options = load_options();
         auto arguments = load_arguments();
-    }
+    } 
     
     /* Properties */
     

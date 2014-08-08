@@ -37,7 +37,7 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& cerr)
 
     // Arbitrary minimum 128 bit length for generated seeds.
     constexpr size_t minimum_seed_size = 128;
-    if (seed.size() * byte_bits < minimum_seed_size)
+    if (seed.size() * byte_size < minimum_seed_size)
     {
         cerr << SX_HD_NEW_SHORT_SEED << std::endl;
         return console_result::failure;

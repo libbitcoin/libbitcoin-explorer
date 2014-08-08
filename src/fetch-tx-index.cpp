@@ -24,28 +24,18 @@
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static bool stopped;
-static console_result result;
-
-static void index_fetched(const std::error_code& error,
-    size_t height, size_t index)
+static void handle_callback(callback_args& args, size_t height, size_t index)
 {
-    if (error)
-    {
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-    }
-    else
-        std::cout << boost::format(SX_FETCH_TX_INDEX_OUTPUT) %
-            height % index << std::endl;
-
-    stopped = true;
+    args.output() << boost::format(SX_FETCH_TX_INDEX_OUTPUT) % height % index 
+        << std::endl;
+    args.stopped() = true;
 }
 
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& cerr)
@@ -53,14 +43,19 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& cerr)
     // Bound parameters.
     const auto hash = get_hash_argument();
 
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto handler = [&args](const std::error_code& error, size_t height, 
+        size_t index)
+    {
+        handle_error(args, error);
+        handle_callback(args, height, index);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.blockchain.fetch_transaction_index(hash, index_fetched);
-    client.poll(stopped);
+    fullnode.blockchain.fetch_transaction_index(hash, handler);
+    client.poll(args.stopped());
 
-    return result;
+    return args.result();
 }
 

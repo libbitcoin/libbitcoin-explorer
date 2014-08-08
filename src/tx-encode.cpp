@@ -22,14 +22,12 @@
 #include <iostream>
 #include <vector>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
-#include <sx/serializer/item.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
@@ -37,34 +35,27 @@ using namespace sx::serializer;
 console_result tx_encode::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto locktime = get_locktime_option();
-    const auto version = get_version_option();
     const auto& inputs = get_inputs_option();
     const auto& outputs = get_outputs_option();
-    const auto& path = get_file_argument();
+    const auto locktime = get_locktime_option();
+    const auto version = get_version_option();
+    const auto& file = get_file_argument();
 
     transaction_type tx;
     tx.version = version;
-
-    // TODO: coordinate input sequence and locktime to enable this feature.
-    // Locktime will not function unless an input sequence is not at max.
     tx.locktime = locktime;
 
-    for (const bc::transaction_input_type& input: inputs)
+    for (const transaction_input_type& input: inputs)
         tx.inputs.push_back(input);
 
-    for (const std::vector<bc::transaction_output_type>& output_sets: outputs)
+    for (const std::vector<transaction_output_type>& output_sets: outputs)
         for (const auto& output: output_sets)
             tx.outputs.push_back(output);
 
-    const auto transaction = item<transaction_type>(tx);
-    if (path.empty() || path == SX_STDIO_PATH_SENTINEL)
-        output << transaction;
-    else
-    {
-        std::ofstream outfile(path, std::ofstream::binary);
-        outfile << transaction;
-    }
+    if (is_locktime_conflict(tx))
+        cerr << SX_TX_ENCODE_LOCKTIME_CONFLICT << std::endl;
+
+    write_output(output, file, transaction(tx));
 
     return console_result::okay;
 }

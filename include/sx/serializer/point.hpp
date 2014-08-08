@@ -17,16 +17,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef EC_PUBLIC_HPP
-#define EC_PUBLIC_HPP
+#ifndef POINT_HPP
+#define POINT_HPP
 
 #include <iostream>
+#include <stdint.h>
+#include <string>
+#include <vector>
 #include <boost/program_options.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/ec_private.hpp>
-#include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/btc256.hpp>
+#include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -34,16 +37,35 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and ec_point.
+ * Parse two tokens into an output point.
+ * Throws if the hash digest or index is not valid.
+ *
+ * @param[out] point   The out point to populate.
+ * @param[in]  tokens  The two tokens to parse.
  */
-class ec_public
+static void parse_point(bc::output_point& point,
+    const std::vector<std::string>& tokens)
+{
+    // validate and deserialize the transaction hash
+    const btc256 digest(tokens[0]);
+    const bc::hash_digest& txhash = digest;
+
+    // copy the input point values
+    std::copy(txhash.begin(), txhash.end(), point.hash.begin());
+    deserialize(point.index, tokens[1]);
+}
+
+/**
+ * Serialization helper to convert between text and an output_point.
+ */
+class point
 {
 public:
 
     /**
      * Constructor.
      */
-    ec_public()
+    point()
         : value_()
     {
     }
@@ -51,11 +73,11 @@ public:
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hexcode  The value to initialize with.
+     * @param[in]  tuple  The value to initialize with.
      */
-    ec_public(const std::string& hexcode)
+    point(const std::string& tuple)
     {
-        std::stringstream(hexcode) >> *this;
+        std::stringstream(tuple) >> *this;
     }
 
     /**
@@ -63,7 +85,7 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const bc::ec_point& value)
+    point(const bc::output_point& value)
         : value_(value)
     {
     }
@@ -73,28 +95,8 @@ public:
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    ec_public(const ec_public& other)
-        : ec_public(other.value_)
-    {
-    }
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  value  The value to initialize with.
-     */
-    ec_public(const libwallet::hd_private_key& value)
-        : ec_public(value.public_key())
-    {
-    }
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  value  The value to initialize with.
-     */
-    ec_public(const libwallet::hd_public_key& value)
-        : ec_public(value.public_key())
+    point(const point& other)
+        : point(other.value_)
     {
     }
 
@@ -103,7 +105,7 @@ public:
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_point& data()
+    bc::output_point& data()
     {
         return value_;
     }
@@ -113,7 +115,7 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_point&() const
+    operator const bc::output_point&() const
     {
         return value_; 
     }
@@ -125,17 +127,17 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, ec_public& argument)
+    friend std::istream& operator>>(std::istream& input, point& argument)
     {
-        std::string hexcode;
-        input >> hexcode;
+        std::string tuple;
+        input >> tuple;
 
-        bc::ec_point point = hex(hexcode);
-        if (!bc::verify_public_key_fast(point)
-            /*|| !bc::verify_public_key(point)*/)
-            throw po::invalid_option_value(hexcode);
-        
-        argument.value_.assign(point.begin(), point.end());
+        std::vector<std::string> tokens;
+        split(tuple, tokens, SX_TX_POINT_DELIMITER);
+        if (tokens.size() != 2)
+            throw po::invalid_option_value(tuple);
+
+        parse_point(argument.value_, tokens);
         return input;
     }
 
@@ -147,9 +149,11 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const ec_public& argument)
+        const point& argument)
     {
-        output << hex(argument.value_);
+        // see bc::concat_point()
+        const auto& out = argument.value_;
+        output << btc256(out.hash) << SX_TX_POINT_DELIMITER << out.index;
         return output;
     }
 
@@ -158,7 +162,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_point value_;
+    bc::output_point value_;
 };
 
 } // sx

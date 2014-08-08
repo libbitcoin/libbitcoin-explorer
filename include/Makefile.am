@@ -13,6 +13,7 @@ sx_include_HEADERS = \
 
 sx_utility_includedir = $(includedir)/sx/utility
 sx_utility_include_HEADERS += \
+    callback_args.hpp \
     compat.hpp \
     config.hpp \
     environment.hpp \
@@ -32,13 +33,15 @@ sx_utility_include_HEADERS += \
     hd_key.hpp \
     hd_private.hpp \
     hd_public.hpp \
+    header.hpp \
     hex.hpp \
     input.hpp \
-    item.hpp \
     output.hpp \
+    point.hpp \
     prefix.hpp \
     raw.hpp \
     script.hpp \
+    transaction.hpp \
     wif.hpp
 
 # Generated from XML data source.

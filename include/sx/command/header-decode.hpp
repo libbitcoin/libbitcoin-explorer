@@ -39,13 +39,14 @@
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/header.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
-#include <sx/serializer/item.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -168,7 +169,7 @@ public:
     /**
      * Get the value of the HEADER arguments.
      */
-    virtual std::vector<serializer::item<bc::block_header_type>>& get_headers_argument()
+    virtual std::vector<serializer::header>& get_headers_argument()
     {
         return argument_.headers;
     }
@@ -177,7 +178,7 @@ public:
      * Set the value of the HEADER arguments.
      */
     virtual void set_headers_argument(
-        const std::vector<serializer::item<bc::block_header_type>>& value)
+        const std::vector<serializer::header>& value)
     {
         argument_.headers = value;
     }
@@ -230,7 +231,7 @@ private:
         {
         }
         
-        std::vector<serializer::item<bc::block_header_type>> headers;
+        std::vector<serializer::header> headers;
     } argument_;
     
     /**

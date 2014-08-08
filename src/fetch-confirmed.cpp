@@ -22,29 +22,19 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <obelisk/obelisk.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static bool stopped;
-static console_result result;
-
-static void valid_tx(const std::error_code& error, 
-    const index_list& unconfirmed)
+static void handle_callback(callback_args& args, const index_list& unconfirmed)
 {
-    if (error)
-    {
-        std::cerr << error.message() << std::endl;
-        result = console_result::failure;
-        stopped = true;
-        return;
-    }
-
-    for (const auto unconfirmed_index: unconfirmed)
-        std::cout << boost::format(SX_FETCH_CONFIRMED_OUTPUT) 
+    for (const auto& unconfirmed_index: unconfirmed)
+        args.output() << boost::format(SX_FETCH_CONFIRMED_OUTPUT)
             % unconfirmed_index << std::endl;
 }
 
@@ -56,14 +46,18 @@ console_result fetch_confirmed::invoke(std::ostream& output,
     HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
     const transaction_type& tx = transactions.front();
 
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto handler = [&args](const std::error_code& error,
+        const index_list& unconfirmed)
+    {
+        handle_error(args, error);
+        handle_callback(args, unconfirmed);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.transaction_pool.validate(tx, valid_tx);
-    client.poll(stopped);
+    fullnode.transaction_pool.validate(tx, handler);
+    client.poll(args.stopped());
 
-    return result;
+    return args.result();
 }
-

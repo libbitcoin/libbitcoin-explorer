@@ -27,15 +27,18 @@
 #include <iomanip>
 #include <iostream>
 #include <random>
+#include <signal.h>
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #pragma warning(pop)
+#include <sx/utility/callback_args.hpp>
 #include <sx/utility/compat.hpp>
 
 using namespace bc;
@@ -43,6 +46,17 @@ using namespace boost::posix_time;
 using namespace libwallet;
 
 namespace sx {
+    
+void handle_error(callback_args& args, const std::error_code& error, 
+    const std::string& format)
+{
+    if (error)
+    {
+        args.error() << boost::format(format) % error.message() << std::endl;
+        args.result() = console_result::failure;
+        args.stopped() = true;
+    }
+}
 
 void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter)
@@ -66,7 +80,7 @@ ec_secret new_key(bc::data_chunk& seed)
 // Not testable due to lack of random engine injection.
 data_chunk new_seed(size_t bitlength)
 {
-    size_t fill_seed_size = bitlength / byte_bits;
+    size_t fill_seed_size = bitlength / byte_size;
     data_chunk seed(fill_seed_size);
     random_fill(seed);
     return seed;

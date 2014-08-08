@@ -43,7 +43,9 @@ public:
      * Constructor.
      */
     address()
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -61,7 +63,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     address(const bc::payment_address& value)
-        : address(value.encoded()) {}
+        : address(value.encoded())
+    {
+    }
 
     /**
      * Copy constructor.
@@ -69,7 +73,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     address(const address& other)
-        : address(other.value_) {}
+        : address(other.value_)
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -77,7 +83,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     address(const libwallet::hd_private_key& value)
-        : address(value.address()) {}
+        : address(value.address())
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -85,7 +93,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     address(const libwallet::hd_public_key& value)
-        : address(value.address()) {}
+        : address(value.address())
+    {
+    }
 
     /**
      * Return a reference to the data member.

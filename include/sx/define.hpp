@@ -22,6 +22,7 @@
 
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 #define REGION
 
@@ -38,11 +39,51 @@
     public: virtual void set_##name(type value) { name##_ = value; } \
     private: type name##_
 
+#define HANDLE_MULTIPLE_NOT_IMPLEMENTED(collection) \
+    if (collection.size() != 1) \
+    { \
+        cerr << name() << " does not yet support multiple primary inputs" \
+            << std::endl; \
+    }
+
+/**
+ * Delimiter for use in word splitting serialized input and output points.
+ */
+#define SX_TX_POINT_DELIMITER ":"
+    
+/**
+ * Default delimiter for use in word splitting and joining operations.
+ */
+#define SX_SENTENCE_DELIMITER " "
+
+/**
+ * Conventional command line argument sentinel for indicating that a file
+ * should be read from STDIN or written to STDOUT.
+ */
+
+#define SX_STDIO_PATH_SENTINEL "-"
+
 namespace ph = std::placeholders;
 namespace po = boost::program_options;
+namespace pt = boost::property_tree;
 
 typedef po::option_description option_metadata;
 typedef po::options_description options_metadata;
 typedef po::positional_options_description arguments_metadata;
+    
+/**
+ * The noop void function.
+ */
+static const std::function<void()> noop = []{};
+
+/**
+* Result codes for int main().
+*/
+enum console_result : int
+{
+    failure = -1,
+    okay = 0,
+    invalid = 1
+};
 
 #endif

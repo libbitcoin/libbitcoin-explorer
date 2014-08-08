@@ -41,7 +41,9 @@ public:
      * Constructor.
      */
     raw()
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -49,7 +51,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     raw(const bc::data_chunk& value)
-        : value_(value) {}
+        : value_(value)
+    {
+    }
 
     /**
      * Copy constructor.
@@ -57,7 +61,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     raw(const raw& other)
-        : raw(other.value_) {}
+        : raw(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.

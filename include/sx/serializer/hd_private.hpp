@@ -44,7 +44,9 @@ public:
      * Constructor.
      */
     hd_private()
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -73,7 +75,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     hd_private(const hd_private& other)
-        : hd_private(other.value_) {}
+        : hd_private(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.

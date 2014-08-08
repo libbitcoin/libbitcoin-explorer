@@ -42,16 +42,18 @@ public:
      * Constructor.
      */
     btc160()
-        : value_() {}
+        : value_()
+    {
+    }
 
     /**
      * Initialization constructor.
      * 
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  hexcode  The value to initialize with.
      */
-    btc160(const std::string& hex)
+    btc160(const std::string& hexcode)
     {
-        std::stringstream(hex) >> *this;
+        std::stringstream(hexcode) >> *this;
     }
 
     /**
@@ -60,7 +62,9 @@ public:
      * @param[in]  value  The value to initialize with.
      */
     btc160(const bc::short_hash& value)
-        : value_(value) {}
+        : value_(value)
+    {
+    }
 
     /**
      * Initialization constructor.
@@ -68,7 +72,9 @@ public:
      * @param[in]  address  The value to initialize with.
      */
     btc160(const bc::payment_address& address)
-        : btc160(address.hash()) {}
+        : btc160(address.hash())
+    {
+    }
 
     /**
      * Copy constructor.
@@ -76,7 +82,9 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     btc160(const btc160& other)
-        : btc160(other.value_) {}
+        : btc160(other.value_)
+    {
+    }
 
     /**
      * Return a reference to the data member.
@@ -107,12 +115,12 @@ public:
      */
     friend std::istream& operator>>(std::istream& input, btc160& argument)
     {
-        std::string hex;
-        input >> hex;
+        std::string hexcode;
+        input >> hexcode;
 
-        auto hash = bc::decode_short_hash(hex);
+        auto hash = bc::decode_short_hash(hexcode);
         if (hash == bc::null_short_hash)
-            throw po::invalid_option_value(hex);
+            throw po::invalid_option_value(hexcode);
 
         std::copy(hash.begin(), hash.end(), argument.value_.begin());
         return input;

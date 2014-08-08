@@ -17,16 +17,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef EC_PUBLIC_HPP
-#define EC_PUBLIC_HPP
+#ifndef HEADER_HPP
+#define HEADER_HPP
 
 #include <iostream>
 #include <boost/program_options.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/ec_private.hpp>
-#include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/hex.hpp>
+#include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -34,16 +34,17 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and ec_point.
+ * Serialization helper to convert between serialized and deserialized satoshi 
+ * header.
  */
-class ec_public
+class header
 {
 public:
 
     /**
      * Constructor.
      */
-    ec_public()
+    header()
         : value_()
     {
     }
@@ -53,7 +54,7 @@ public:
      * 
      * @param[in]  hexcode  The value to initialize with.
      */
-    ec_public(const std::string& hexcode)
+    header(const std::string& hexcode)
     {
         std::stringstream(hexcode) >> *this;
     }
@@ -63,38 +64,26 @@ public:
      * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const bc::ec_point& value)
-        : value_(value)
+    header(const bc::data_chunk& value)
+        : header((const std::string&)hex(value))
     {
     }
+
+    /**
+     * Initialization constructor.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    header(const bc::block_header_type& value)
+        : value_(value) {}
 
     /**
      * Copy constructor.
      *
      * @param[in]  other  The object to copy into self on construct.
      */
-    ec_public(const ec_public& other)
-        : ec_public(other.value_)
-    {
-    }
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  value  The value to initialize with.
-     */
-    ec_public(const libwallet::hd_private_key& value)
-        : ec_public(value.public_key())
-    {
-    }
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  value  The value to initialize with.
-     */
-    ec_public(const libwallet::hd_public_key& value)
-        : ec_public(value.public_key())
+    header(const header& other)
+        : header(other.value_)
     {
     }
 
@@ -103,7 +92,7 @@ public:
      *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_point& data()
+    bc::block_header_type& data()
     {
         return value_;
     }
@@ -113,9 +102,9 @@ public:
      *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_point&() const
+    operator const bc::block_header_type&() const
     {
-        return value_; 
+        return value_;
     }
 
     /**
@@ -125,17 +114,14 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, ec_public& argument)
+    friend std::istream& operator>>(std::istream& input, header& argument)
     {
         std::string hexcode;
         input >> hexcode;
 
-        bc::ec_point point = hex(hexcode);
-        if (!bc::verify_public_key_fast(point)
-            /*|| !bc::verify_public_key(point)*/)
+        if (!deserialize_satoshi_item(argument.value_, hex(hexcode)))
             throw po::invalid_option_value(hexcode);
-        
-        argument.value_.assign(point.begin(), point.end());
+
         return input;
     }
 
@@ -147,18 +133,20 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output, 
-        const ec_public& argument)
+        const header& argument)
     {
-        output << hex(argument.value_);
+        bc::data_chunk bytes;
+        serialize_satoshi_item(bytes, argument.value_);
+        output << hex(bytes);
         return output;
     }
 
 private:
 
     /**
-     * The state of this object.
+     * The state of this object's file data.
      */
-    bc::ec_point value_;
+    bc::block_header_type value_;
 };
 
 } // sx

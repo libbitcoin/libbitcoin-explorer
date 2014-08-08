@@ -25,43 +25,39 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/btc256.hpp>
+#include <sx/serializer/point.hpp>
+#include <sx/serializer/script.hpp>
 #include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace sx {
 namespace serializer {
-    
-    /**
-     * Parse tokens into the transaction input.
-     * Throws if the hash digest or index is not valid.
-     *
-     * @param[out] input   The transaction input to populate.
-     * @param[in]  tokens  The pre-validated two tokens to parse.
-     */
-    static void parse_input(bc::transaction_input_type& input,
-        const std::vector<std::string>& tokens)
-    {
-        // validate and deserialize the transaction hash
-        const btc256 digest(tokens[0]);
-        const bc::hash_digest& txhash = digest;
-
-        // copy the input point values
-        auto& point = input.previous_output;
-        std::copy(txhash.begin(), txhash.end(), point.hash.begin());
-        deserialize(point.index, tokens[1]);
-
-        // initialize the input
-        input.sequence = bc::max_sequence;
-        input.script = bc::script_type();
-    }
 
 /**
- * Serialization helper to convert between a base58-string:number 
- * and transaction_input_type.
+ * Parse two-three tokens into an output point.
+ * Throws if the hash digest or index is not valid.
+ * 
+ * @param[out] input   The out point to populate.
+ * @param[in]  tokens  The two-three tokens to parse.
+ */
+static void parse_input(bc::transaction_input_type& input,
+    const std::vector<std::string>& tokens)
+{
+    input.script = bc::script_type();
+    input.sequence = bc::max_sequence;
+    input.previous_output = point(tokens[0] + ":" + tokens[1]);
+    if (tokens.size() == 3)
+        deserialize(input.sequence, tokens[2]);
+}
+
+static pt::ptree property_tree(const bc::transaction_input_type& tx_input);
+
+/**
+ * Serialization helper stub for transaction_input_type.
  */
 class input
 {
@@ -71,8 +67,10 @@ public:
      * Constructor.
      */
     input()
-        : value_() {}
-
+        : value_()
+    {
+    }
+    
     /**
      * Initialization constructor.
      * 
@@ -84,25 +82,13 @@ public:
     }
 
     /**
-     * Initialization constructor.
+     * Initialization constructor. Only the point is retained.
      * 
      * @param[in]  value  The value to initialize with.
      */
     input(const bc::transaction_input_type& value)
         : value_(value)
     {
-    }
-
-    /**
-     * Initialization constructor.
-     * 
-     * @param[in]  value  The value to initialize with.
-     */
-    input(const bc::input_point& value)
-    {
-        value_.previous_output = value;
-        value_.sequence = bc::max_sequence;
-        value_.script = bc::script_type();
     }
 
     /**
@@ -113,6 +99,19 @@ public:
     input(const input& other)
         : input(other.value_)
     {
+    }
+
+    /**
+     * Initialization constructor. Aspects of the input other than the point
+     * are defaulted.
+     * 
+     * @param[in]  value  The value to initialize with.
+     */
+    input(const bc::input_point& value)
+    {
+        value_.previous_output = value;
+        value_.sequence = bc::max_sequence;
+        value_.script = bc::script_type();
     }
 
     /**
@@ -136,9 +135,19 @@ public:
     }
 
     /**
+     * Overload cast to property tree.
+     *
+     * @return  This object's value cast to a property tree.
+     */
+    operator const pt::ptree() const
+    {
+        return property_tree(value_);
+    }
+
+    /**
      * Overload stream in. Throws if input is invalid.
      *
-     * @param[in]   stream    The input stream to read the value from.
+     * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
@@ -149,7 +158,7 @@ public:
 
         std::vector<std::string> tokens;
         split(tuple, tokens, SX_TX_POINT_DELIMITER);
-        if (tokens.size() != 2)
+        if (tokens.size() != 2 && tokens.size() != 3)
             throw po::invalid_option_value(tuple);
 
         parse_input(argument.value_, tokens);
@@ -166,9 +175,9 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const input& argument)
     {
-        // see bc::concat_point()
-        const auto& out = argument.value_.previous_output;
-        output << btc256(out.hash) << SX_TX_POINT_DELIMITER << out.index;
+        const auto& out = argument.value_;
+        output << point(out.previous_output) << SX_TX_POINT_DELIMITER 
+            << out.sequence;
         return output;
     }
 
@@ -179,6 +188,73 @@ private:
      */
     bc::transaction_input_type value_;
 };
+
+/**
+ * Generate a property tree for a transaction input.
+ *
+ * @param[in]  tx_input  The input.
+ * @return               A property tree of input.
+ */
+static pt::ptree property_tree(const bc::transaction_input_type& tx_input)
+{
+    pt::ptree tree;
+    tree.put("input.previous_output", point(tx_input.previous_output));
+    tree.put("input.script", script(tx_input.script).mnemonic());
+    tree.put("input.sequence", tx_input.sequence);
+
+    bc::payment_address script_address;
+    if (extract(script_address, tx_input.script))
+        tree.put("input.address", address(script_address));
+
+    return tree;
+}
+
+/**
+ * Generate a property tree for a set of transaction inputs.
+ *
+ * @param[in]  tx_inputs  The set of transaction inputs.
+ * @return                A property tree of inputs.
+ */
+static pt::ptree property_tree(
+    const std::vector<bc::transaction_input_type>& tx_inputs)
+{
+    pt::ptree tree;
+    for (const auto& tx_input: tx_inputs)
+        tree.add_child("inputs", property_tree(tx_input));
+
+    return tree;
+}
+
+/**
+ * Generate a property tree for an input.
+ *
+ * @param[in]  input  The input.
+ * @return            A property tree of input.
+ */
+static pt::ptree property_tree(const input& input)
+{
+    const bc::transaction_input_type& tx_input = input;
+
+    pt::ptree tree;
+    tree = property_tree(tx_input);
+    return tree;
+}
+
+/**
+ * Generate a property tree for a set of inputs.
+ *
+ * @param[in]  inputs  The set of inputs.
+ * @return             A property tree of inputs.
+ */
+static pt::ptree property_tree(const std::vector<input>& inputs)
+{
+    pt::ptree tree;
+    for (const auto& input: inputs)
+        tree.add_child("inputs", property_tree(
+            (const bc::transaction_input_type&)input));
+
+    return tree;
+}
 
 } // sx
 } // serializer

@@ -31,21 +31,10 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static bool stopped;
-static console_result result;
-
-static void handle_broadcast(const std::error_code& error)
+static void handle_callback(callback_args& args)
 {
-    if (error)
-    {
-        std::cerr << error << std::endl;
-        result = console_result::failure;
-    }
-    else
-        std::cout << boost::format(SX_SEND_TX_OUTPUT) % now()
-            << std::endl;
-
-    stopped = true;
+    args.output() << boost::format(SX_SEND_TX_OUTPUT) % now() << std::endl;
+    args.stopped() = true;
 }
 
 console_result send_tx::invoke(std::ostream& output, std::ostream& cerr)
@@ -55,14 +44,18 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& cerr)
     HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
     const transaction_type& tx = transactions.front();
 
-    stopped = false;
-    result = console_result::okay;
+    callback_args args(cerr, output);
+    const auto handler = [&args](const std::error_code& error)
+    {
+        handle_error(args, error);
+        handle_callback(args);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.protocol.broadcast_transaction(tx, handle_broadcast);
-    client.poll(stopped);
+    fullnode.protocol.broadcast_transaction(tx, handler);
+    client.poll(args.stopped());
 
-    return result;
+    return args.result();
 }
 

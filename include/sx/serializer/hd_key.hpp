@@ -45,7 +45,9 @@ public:
      * Constructor.
      */
     hd_key()
-        : private_key_value_(), public_key_value_() {}
+        : private_key_value_(), public_key_value_()
+    {
+    }
 
     /**
      * Initialization constructor.

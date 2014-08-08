@@ -84,16 +84,18 @@
 .       return type_hd_private_sx
 .   elsif my.type = type_hd_public
 .       return type_hd_public_sx
+.   elsif my.type = type_header
+.       return type_header_sx
 .   elsif my.type = type_hex
 .       return type_hex_sx
 .   elsif my.type = type_input
 .       return type_input_sx
 .   elsif my.type = type_output
 .       return type_output_sx
-.   elsif my.type = type_header
-.       return type_header_sx
 .   elsif my.type = type_path
 .       return type_path_boost
+.   elsif my.type = type_point
+.       return type_point_sx
 .   elsif my.type = type_prefix
 .       return type_prefix_sx
 .   elsif my.type = type_raw
@@ -192,6 +194,7 @@
 .type_hex = "hex"
 .type_input = "input"
 .type_output = "output"
+.type_point = "point"
 .type_path = "path"
 .type_prefix = "prefix"
 .type_raw = "raw"
@@ -211,16 +214,17 @@
 .type_hd_key_sx = "serializer::hd_key"
 .type_hd_private_sx = "serializer::hd_private"
 .type_hd_public_sx = "serializer::hd_public"
-.type_header_sx = "serializer::item<bc::block_header_type>"
+.type_header_sx = "serializer::header"
 .type_hex_sx = "serializer::hex"
 .type_input_sx = "serializer::input"
 .type_output_sx = "serializer::output"
 .type_path_boost = "boost::filesystem::path"
+.type_point_sx = "serializer::point"
 .type_prefix_sx = "serializer::prefix"
 .type_raw_sx = "serializer::raw"
 .type_script_sx = "serializer::script"
 .type_string_std = "std::string"
-.type_transaction_sx = "serializer::item<bc::transaction_type>"
+.type_transaction_sx = "serializer::transaction"
 .type_wif_sx = "serializer::wif"
 .
 .xml_false = "false"
@@ -335,7 +339,7 @@ namespace sx {
 class command
 {
 public:
-
+    
     /**
      * The symbolic (not localizable) command name, lower case.
      */
@@ -354,7 +358,7 @@ public:
     /**
      * The localizable command category name, upper case.
      *
-     * @return  Example: "ONLINE (OBELISK)"
+     * @return  Example: "ONLINE"
      */
     virtual const char* category()
     {
@@ -473,7 +477,7 @@ public:
     {
         auto options = load_options();
         auto arguments = load_arguments();
-    }
+    } 
     
     /* Properties */
     
@@ -623,13 +627,14 @@ private:
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/header.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
-#include <sx/serializer/item.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -722,7 +727,7 @@ public:
 .   if (is_xml_true(argument.file))
         load_path($(getter), "$(name:)", variables);
 .   endif
-.   if (is_xml_true(argument.stream))
+.   if (is_xml_true(argument.stdin))
         load_input($(getter), "$(name:)", variables, input);
 .   endif
 .endfor
@@ -735,7 +740,7 @@ public:
 .   if (is_xml_true(option.file))
         load_path($(getter), "$(name:)", variables);
 .   endif
-.   if (is_xml_true(option.stream))
+.   if (is_xml_true(option.stdin))
         load_input($(getter), "$(name:)", variables, input);
 .   endif
 .endfor
@@ -986,6 +991,7 @@ sx_include_HEADERS = \\
 
 sx_utility_includedir = $\(includedir)/sx/utility
 sx_utility_include_HEADERS += \\
+    callback_args.hpp \\
     compat.hpp \\
     config.hpp \\
     environment.hpp \\
@@ -1005,13 +1011,15 @@ sx_utility_include_HEADERS += \\
     hd_key.hpp \\
     hd_private.hpp \\
     hd_public.hpp \\
+    header.hpp \\
     hex.hpp \\
     input.hpp \\
-    item.hpp \\
     output.hpp \\
+    point.hpp \\
     prefix.hpp \\
     raw.hpp \\
     script.hpp \\
+    transaction.hpp \\
     wif.hpp
 
 # Generated from XML data source.
@@ -1192,14 +1200,17 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_public.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\header.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hex.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\input.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\item.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\output.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\prefix.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\raw.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\transaction.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\callback_args.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp" />
@@ -1405,16 +1416,19 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_public.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\header.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hex.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\input.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\item.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\output.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\output.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\prefix.hpp">
@@ -1426,8 +1440,14 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\transaction.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">
       <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\callback_args.hpp">
+      <Filter>include\\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp">
       <Filter>include\\utility</Filter>
