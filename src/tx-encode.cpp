@@ -39,7 +39,7 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& cerr)
     const auto& outputs = get_outputs_option();
     const auto locktime = get_locktime_option();
     const auto version = get_version_option();
-    const auto& file = get_file_argument();
+    const auto& file = get_transaction_argument();
 
     transaction_type tx;
     tx.version = version;

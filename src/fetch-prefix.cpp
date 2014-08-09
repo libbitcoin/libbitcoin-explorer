@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/fetch-stealth.hpp>
+#include <sx/command/fetch-prefix.hpp>
 
 #include <iostream>
 #include <boost/format.hpp>
@@ -36,22 +36,20 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static bool stopped;
-static console_result result;
+// TODO: obsolete and merge with fetch-tx.
 
 static void handle_callback(callback_args& args,
     const blockchain::stealth_list& stealth_results)
 {
     for (const auto& row: stealth_results)
-        args.output() << boost::format(SX_FETCH_STEALTH_OUTPUT) %
+        args.output() << boost::format(SX_FETCH_PREFIX_OUTPUT) %
             hex(row.ephemkey) % address(row.address) %
             btc256(row.transaction_hash) << std::endl;
 
     args.stopped() = true;
 }
 
-
-console_result fetch_stealth::invoke(std::ostream& output, std::ostream& cerr)
+console_result fetch_prefix::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
     const auto height = get_height_option();

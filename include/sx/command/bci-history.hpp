@@ -31,7 +31,6 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
@@ -40,10 +39,14 @@
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/header.hpp>
 #include <sx/serializer/hex.hpp>
-#include <sx/serializer/item.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/input.hpp>
+#include <sx/serializer/output.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
+#include <sx/serializer/script.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -57,8 +60,8 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_BCI_HISTORY_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define SX_BCI_HISTORY_OBSOLETE \
+    "This command is no longer supported. Use fetch-history."
 
 /**
  * Class to implement the sx bci-history command.
@@ -97,8 +100,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("ADDRESS", 1);
+        return get_argument_metadata();
     }
 	
 	/**
@@ -110,7 +112,6 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_address_argument(), "ADDRESS", variables, input);
     }
     
     /**
@@ -136,11 +137,6 @@ public:
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
                 "Get the list of outputs, values and spends for an address from blockchain.info."
-            )
-            (
-                "ADDRESS",
-                value<serializer::address>(&argument_.address),
-                "The Bitcoin address to query."
             );
 
         return options;
@@ -149,32 +145,13 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& cerr);
+    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the ADDRESS argument.
-     */
-    virtual serializer::address& get_address_argument()
-    {
-        return argument_.address;
-    }
-    
-    /**
-     * Set the value of the ADDRESS argument.
-     */
-    virtual void set_address_argument(
-        const serializer::address& value)
-    {
-        argument_.address = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -203,11 +180,9 @@ private:
     struct argument
     {
         argument()
-          : address()
         {
         }
         
-        serializer::address address;
     } argument_;
     
     /**

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/fetch-tx-bex.hpp>
+#include <sx/command/blke-fetch-transaction.hpp>
 
 #include <iostream>
 #include <sx/utility/utility.hpp>
@@ -25,12 +25,10 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result fetch_tx_bex::invoke(std::ostream& output, std::ostream& cerr)
+console_result blke_fetch_transaction::invoke(std::ostream& output,
+    std::ostream& cerr)
 {
-    // Bound parameters.
-    const auto hash = get_hash_argument();
-
-    cerr << SX_FETCH_TX_BEX_NOT_IMPLEMENTED << std::endl;
+    cerr << SX_BLKE_FETCH_TRANSACTION_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

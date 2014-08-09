@@ -31,8 +31,11 @@ libsx_la_SOURCES += \
     base58-encode.cpp \
     base58check-decode.cpp \
     base58check-encode.cpp \
+    bci-fetch-last-height.cpp \
+    bci-history.cpp \
     bitcoin160.cpp \
     bitcoin256.cpp \
+    blke-fetch-transaction.cpp \
     btc-to-satoshi.cpp \
     ec-add.cpp \
     ec-add-secrets.cpp \
@@ -44,9 +47,6 @@ libsx_la_SOURCES += \
     ec-to-pub.cpp \
     ec-to-wif.cpp \
     ec-unlock.cpp \
-    fetch-height-bci.cpp \
-    fetch-history-bci.cpp \
-    fetch-tx-bex.cpp \
     genaddr.cpp \
     genpriv.cpp \
     genpub.cpp \
@@ -71,9 +71,9 @@ libsx_la_SOURCES += \
     script-encode.cpp \
     script-to-addr.cpp \
     seed.cpp \
-    send-tx-bci.cpp \
     send-tx-node.cpp \
     send-tx-p2p.cpp \
+    sendtx-bci.cpp \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \
@@ -96,8 +96,8 @@ if HAVE_OBELISK
         fetch-header.cpp \
         fetch-height.cpp \
         fetch-history.cpp \
+        fetch-prefix.cpp \
         fetch-public-key.cpp \
-        fetch-stealth.cpp \
         fetch-tx.cpp \
         fetch-tx-index.cpp \
         fetch-utxo.cpp \

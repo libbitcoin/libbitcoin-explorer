@@ -132,10 +132,10 @@
     <ClCompile Include="..\..\..\..\test\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\fetch-height-bci.cpp" />
-    <ClCompile Include="..\..\..\..\test\fetch-history-bci.cpp" />
-    <ClCompile Include="..\..\..\..\test\send-tx-bci.cpp" />
-    <ClCompile Include="..\..\..\..\test\fetch-tx-bex.cpp" />
+    <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp" />
+    <ClCompile Include="..\..\..\..\test\bci-history.cpp" />
+    <ClCompile Include="..\..\..\..\test\sendtx-bci.cpp" />
+    <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\test\bitcoin160.cpp" />
     <ClCompile Include="..\..\..\..\test\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\test\ec-lock.cpp" />
@@ -155,7 +155,7 @@
     <ClCompile Include="..\..\..\..\test\fetch-header.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-height.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-public-key.cpp" />
-    <ClCompile Include="..\..\..\..\test\fetch-stealth.cpp" />
+    <ClCompile Include="..\..\..\..\test\fetch-prefix.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-tx-index.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\genaddr.cpp" />
@@ -172,6 +172,8 @@
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-history.cpp" />
     <ClCompile Include="..\..\..\..\test\initchain.cpp" />
+    <ClCompile Include="..\..\..\..\test\stealth-newkey.cpp" />
+    <ClCompile Include="..\..\..\..\test\tx-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\watch-prefix.cpp" />
     <ClCompile Include="..\..\..\..\test\mpk.cpp" />
     <ClCompile Include="..\..\..\..\test\newseed.cpp" />

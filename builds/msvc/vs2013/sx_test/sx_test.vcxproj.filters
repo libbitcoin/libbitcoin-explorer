@@ -51,9 +51,6 @@
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp">
       <Filter>src\tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-stealth.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\genaddr.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
@@ -97,9 +94,6 @@
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\fetch-history.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\send-tx-node.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\send-tx.cpp">
@@ -216,12 +210,6 @@
     <ClCompile Include="..\..\..\..\test\satoshi-to-btc.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-height-bci.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-history-bci.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-lock.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
@@ -231,20 +219,38 @@
     <ClCompile Include="..\..\..\..\test\fetch-public-key.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-tx-bex.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\fetch-utxo.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\qrcode.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\send-tx-bci.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\watch-tx.cpp">
       <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\fetch-prefix.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\bci-history.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\sendtx-bci.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-newkey.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\tx-sign.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\send-tx-node.cpp">
+      <Filter>src\tests\command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

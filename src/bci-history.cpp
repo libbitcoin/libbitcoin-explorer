@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/fetch-history-bci.hpp>
+#include <sx/command/bci-history.hpp>
 
 #include <iostream>
 #include <sx/utility/utility.hpp>
@@ -25,13 +25,9 @@
 using namespace sx;
 using namespace sx::extension;
 
-console_result fetch_history_bci::invoke(std::ostream& output,
-    std::ostream& cerr)
+console_result bci_history::invoke(std::ostream& output, std::ostream& cerr)
 {
-    // Bound parameters.
-    const auto address = get_address_argument();
-
-    cerr << SX_FETCH_HISTORY_BCI_NOT_IMPLEMENTED << std::endl;
+    cerr << SX_BCI_HISTORY_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

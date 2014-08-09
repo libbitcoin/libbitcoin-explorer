@@ -313,7 +313,7 @@ void write_output(std::ostream& output, const std::string& path,
  * @param[in]  format     A single parameter format string or empty/default.
  */
 void handle_error(callback_args& args, const std::error_code& error,
-    std::string format="%1%");
+    const std::string& format="%1%");
 
 /**
  * Join a list of strings into a single string, in order.

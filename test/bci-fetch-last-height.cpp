@@ -17,22 +17,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
-#include <boost/test/test_tools.hpp>
-#include <boost/test/unit_test_suite.hpp>
-#include <sx/sx.hpp>
 #include "command.hpp"
 
 SX_USING_NAMESPACES()
 
-// This is a namespace for tests by class/file__method/function.
-BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
+BOOST_AUTO_TEST_SUITE(bci_fetch_last_height__invoke)
 
-//BOOST_AUTO_TEST_CASE(fetch_stealth__invoke__always__okay)
-//{
-//    // $ sx fetch-stealth 1101
-//    SX_DECLARE_COMMAND(fetch_stealth);
-//    SX_REQUIRE_OKAY(command.invoke(output, error));
-//}
+BOOST_AUTO_TEST_CASE(bci_fetch_last_height__invoke__always__failure_error)
+{
+    // $ sx bci-fetch-last-height ...
+    SX_DECLARE_COMMAND(bci_fetch_last_height);
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
+    SX_REQUIRE_ERROR(SX_BCI_FETCH_LAST_HEIGHT_OBSOLETE "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()

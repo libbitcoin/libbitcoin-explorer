@@ -101,7 +101,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("FILE", 1);
+            .add("TRANSACTION", 1);
     }
 	
 	/**
@@ -160,8 +160,8 @@ public:
                 "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a hex encoded script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. A seed should NOT be used for multiple outputs."
             )
             (
-                "FILE",
-                value<std::string>(&argument_.file),
+                "TRANSACTION",
+                value<std::string>(&argument_.transaction),
                 "The encoded transaction file path. If not specified the transaction is written to STDOUT."
             );
 
@@ -180,20 +180,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the FILE argument.
+     * Get the value of the TRANSACTION argument.
      */
-    virtual std::string& get_file_argument()
+    virtual std::string& get_transaction_argument()
     {
-        return argument_.file;
+        return argument_.transaction;
     }
     
     /**
-     * Set the value of the FILE argument.
+     * Set the value of the TRANSACTION argument.
      */
-    virtual void set_file_argument(
+    virtual void set_transaction_argument(
         const std::string& value)
     {
-        argument_.file = value;
+        argument_.transaction = value;
     }
 
     /**
@@ -291,11 +291,11 @@ private:
     struct argument
     {
         argument()
-          : file()
+          : transaction()
         {
         }
         
-        std::string file;
+        std::string transaction;
     } argument_;
     
     /**

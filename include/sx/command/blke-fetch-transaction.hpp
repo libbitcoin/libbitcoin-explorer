@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_TX_SIGN_HPP
-#define SX_TX_SIGN_HPP
+#ifndef SX_BLKE_FETCH_TRANSACTION_HPP
+#define SX_BLKE_FETCH_TRANSACTION_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -60,13 +60,13 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_TX_SIGN_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define SX_BLKE_FETCH_TRANSACTION_OBSOLETE \
+    "This command is no longer supported. Use fetch-tx."
 
 /**
- * Class to implement the sx tx-sign command.
+ * Class to implement the sx blke-fetch-transaction command.
  */
-class tx_sign 
+class blke_fetch_transaction 
     : public command
 {
 public:
@@ -74,14 +74,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "tx-sign"; }
+    static const char* symbol() { return "blke-fetch-transaction"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return tx_sign::symbol();
+        return blke_fetch_transaction::symbol();
     }
 
     /**
@@ -89,7 +89,7 @@ public:
      */
     virtual const char* category()
     {
-        return "TRANSACTION";
+        return "ONLINE";
     }
 
     /**
@@ -100,9 +100,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("secret", 1)
-            .add("TRANSACTION", -1);
+        return get_argument_metadata();
     }
 	
 	/**
@@ -114,8 +112,6 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_path(get_transactions_argument(), "TRANSACTION", variables);
-        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
     
     /**
@@ -140,17 +136,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network."
-            )
-            (
-                "secret",
-                value<serializer::ec_private>(&argument_.secret),
-                "The EC private key to be used for signing."
-            )
-            (
-                "TRANSACTION",
-                value<std::string>(),
-                "The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."
+                "Get a Bitcoin transaction from blockexplorer.com."
             );
 
         return options;
@@ -166,40 +152,6 @@ public:
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the secret argument.
-     */
-    virtual serializer::ec_private& get_secret_argument()
-    {
-        return argument_.secret;
-    }
-    
-    /**
-     * Set the value of the secret argument.
-     */
-    virtual void set_secret_argument(
-        const serializer::ec_private& value)
-    {
-        argument_.secret = value;
-    }
-
-    /**
-     * Get the value of the TRANSACTION arguments.
-     */
-    virtual std::vector<serializer::transaction>& get_transactions_argument()
-    {
-        return argument_.transactions;
-    }
-    
-    /**
-     * Set the value of the TRANSACTION arguments.
-     */
-    virtual void set_transactions_argument(
-        const std::vector<serializer::transaction>& value)
-    {
-        argument_.transactions = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -228,13 +180,9 @@ private:
     struct argument
     {
         argument()
-          : secret(),
-            transactions()
         {
         }
         
-        serializer::ec_private secret;
-        std::vector<serializer::transaction> transactions;
     } argument_;
     
     /**

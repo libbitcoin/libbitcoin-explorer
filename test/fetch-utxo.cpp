@@ -23,12 +23,10 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(fetch_utxo__invoke)
 
-BOOST_AUTO_TEST_CASE(fetch_utxo__invoke__zero_satoshi__failure_error)
+BOOST_AUTO_TEST_CASE(fetch_utxo__invoke__always__failure_error)
 {
-    // $ sx fetch-utxo 0 bogus
+    // $ sx fetch-utxo
     SX_DECLARE_COMMAND(fetch_utxo);
-    command.set_satoshi_argument(0);
-    //command.set_addresss_argument({{ "bogus" }});
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_FETCH_UTXO_NOT_IMPLEMENTED "\n");
 }

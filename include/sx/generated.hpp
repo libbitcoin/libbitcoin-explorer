@@ -32,8 +32,11 @@
 #include <sx/command/base58-encode.hpp>
 #include <sx/command/base58check-decode.hpp>
 #include <sx/command/base58check-encode.hpp>
+#include <sx/command/bci-fetch-last-height.hpp>
+#include <sx/command/bci-history.hpp>
 #include <sx/command/bitcoin160.hpp>
 #include <sx/command/bitcoin256.hpp>
+#include <sx/command/blke-fetch-transaction.hpp>
 #include <sx/command/btc-to-satoshi.hpp>
 #include <sx/command/ec-add.hpp>
 #include <sx/command/ec-add-secrets.hpp>
@@ -49,13 +52,10 @@
 #include <sx/command/fetch-confirmed.hpp>
 #include <sx/command/fetch-header.hpp>
 #include <sx/command/fetch-height.hpp>
-#include <sx/command/fetch-height-bci.hpp>
 #include <sx/command/fetch-history.hpp>
-#include <sx/command/fetch-history-bci.hpp>
+#include <sx/command/fetch-prefix.hpp>
 #include <sx/command/fetch-public-key.hpp>
-#include <sx/command/fetch-stealth.hpp>
 #include <sx/command/fetch-tx.hpp>
-#include <sx/command/fetch-tx-bex.hpp>
 #include <sx/command/fetch-tx-index.hpp>
 #include <sx/command/fetch-utxo.hpp>
 #include <sx/command/genaddr.hpp>
@@ -83,9 +83,9 @@
 #include <sx/command/script-to-addr.hpp>
 #include <sx/command/seed.hpp>
 #include <sx/command/send-tx.hpp>
-#include <sx/command/send-tx-bci.hpp>
 #include <sx/command/send-tx-node.hpp>
 #include <sx/command/send-tx-p2p.hpp>
+#include <sx/command/sendtx-bci.hpp>
 #include <sx/command/sha160.hpp>
 #include <sx/command/sha256.hpp>
 #include <sx/command/sha512.hpp>

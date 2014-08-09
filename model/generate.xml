@@ -72,6 +72,16 @@
     <argument name="HEX" stdin="true" type="hex" description="The hex encoded value to Base58Check encode." />
     <define name="SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
+  
+  <command symbol="bci-fetch-last-height" category="ONLINE" obsolete="true">
+    <option name="help" description="Get the last block height from blockchain.info." />
+    <define name="SX_BCI_FETCH_LAST_HEIGHT_OBSOLETE" value="This command is no longer supported. Use fetch-height." />
+  </command>
+
+  <command symbol="bci-history" category="ONLINE" obsolete="true">
+    <option name="help" description="Get the list of outputs, values and spends for an address from blockchain.info." />
+    <define name="SX_BCI_HISTORY_OBSOLETE" value="This command is no longer supported. Use fetch-history." />
+  </command>
 
   <command symbol="bitcoin160" category="HASH">
     <option name="help" description="Perform a RIPEMD160 hash of a SHA256 hash of hex encoded data." />
@@ -81,6 +91,11 @@
   <command symbol="bitcoin256" category="HASH">
     <option name="help" description="Perform a SHA256 hash of a SHA256 hash of hex encoded data." />
     <argument name="HEX" stdin="true" type="hex" description="The hex encoded data to hash."/>
+  </command>
+
+  <command symbol="blke-fetch-transaction" category="ONLINE" obsolete="true">
+    <option name="help" description="Get a Bitcoin transaction from blockexplorer.com." />
+    <define name="SX_BLKE_FETCH_TRANSACTION_OBSOLETE" value="This command is no longer supported. Use fetch-tx." />
   </command>
 
   <command symbol="btc-to-satoshi" category="MATH" stub="true">
@@ -178,11 +193,6 @@
     <option name="help" description="Get the last block height. Requires an Obelisk server connection." />
   </command>
   
-  <command symbol="fetch-height-bci" formerly="bci-fetch-last-height" category="ONLINE" stub="true">
-    <option name="help" description="Get the last block height from blockchain.info." />
-    <define name="SX_FETCH_HEIGHT_BCI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-  </command>
-  
   <command symbol="fetch-history" category="ONLINE" obelisk="true">
     <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires an Obelisk server connection." />
     <option name="json" description="Enable JSON output." />
@@ -191,12 +201,6 @@
     <define name="SX_FETCH_HISTORY_UNSPENT" value="Unspent" />
     <define name="SX_FETCH_HISTORY_OUTPUT" value="Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n  spend: %5%\n  Spend height: %6%" />
   </command>
-
-  <command symbol="fetch-history-bci" formerly="bci-history" category="ONLINE" stub="true">
-    <option name="help" description="Get the list of outputs, values and spends for an address from blockchain.info." />
-    <argument name="ADDRESS" stdin="true" type="address" description="The Bitcoin address to query." />
-    <define name="SX_FETCH_HISTORY_BCI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-  </command>
   
   <command symbol="fetch-public-key" formerly="get-pubkey" category="ONLINE" stub="true" obelisk="true">
     <option name="help" description="Get the EC public key of the address, if it exists on the blockchain. Requires an Obelisk server connection." />
@@ -204,22 +208,16 @@
     <define name="SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
-  <command symbol="fetch-stealth" category="ONLINE" obelisk="true">
-    <option name="help" description="Get the stealth transactions matching the specified filter. Requires an Obelisk server connection." />
-    <option name="prefix" type="prefix" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
+  <command symbol="fetch-prefix" formerly="fetch-stealth" category="ONLINE" obelisk="true">
+    <option name="help" description="Get the transactions matching the specified filter. Requires an Obelisk server connection." />
+    <option name="prefix" type="prefix" description="The binary encoded search prefix. Searches all transactions if not set." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include in the search. Searches all blocks if not set."/>
-    <define name="SX_FETCH_STEALTH_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%" />
+    <define name="SX_FETCH_PREFIX_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%" />
   </command>
 
   <command symbol="fetch-tx" formerly="fetch-transaction" category="ONLINE" obelisk="true">
     <option name="help" description="Get a transaction. Requires an Obelisk server connection." />
     <argument name="HASH" stdin="true" type="btc256" description="The hex encoded transaction hash." />
-  </command>
-
-  <command symbol="fetch-tx-bex" formerly="blke-fetch-transaction" category="ONLINE" stub="true">
-    <option name="help" description="Get a Bitcoin transaction from blockexplorer.com." />
-    <argument name="HASH" file="true" stdin="true" type="btc256" description="The hex encoded transaction hash." />
-    <define name="SX_FETCH_TX_BEX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="fetch-tx-index" formerly="fetch-transaction-index" category="ONLINE" obelisk="true">
@@ -383,12 +381,6 @@
     <define name="SX_SEND_TX_OUTPUT" value="Sent transaction at %1%." />
   </command>
   
-  <command symbol="send-tx-bci" formerly="sendtx-bci" category="BONLINE" stub="true">
-    <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via blockchain.info." />
-    <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
-    <define name="SX_SEND_TX_BCI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-  </command>
-  
   <command symbol="send-tx-node" formerly="sendtx-node" category="ONLINE">
     <option name="help" description="SBroadcast a transaction to the Bitcoin transaction pool via the a single Bitcoin network node." />
     <option name="name" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
@@ -411,6 +403,11 @@
     <define name="SX_SEND_TX_P2P_SETUP_FAIL" value="Setup failed: %1%" />
     <define name="SX_SEND_TX_P2P_SEND_OKAY" value="Sent at %1%." />
     <define name="SX_SEND_TX_P2P_SEND_FAIL" value="Send failed: %1%" />
+  </command>
+  
+  <command symbol="sendtx-bci" category="ONLINE" obsolete="true">
+    <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via blockchain.info." />
+    <define name="SX_SENDTX_BCI_OBSOLETE" value="This command is no longer supported. Use send-tx, send-tx-node or send-tx-p2p." />
   </command>
 
   <command symbol="sha160" category="HASH">
@@ -456,7 +453,7 @@
     <option name="version" type="uint32_t" default="1" description="The transaction version." />
     <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a hex encoded transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE the optional 32 bit input sequence and defaults to the maximum value." />
     <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a hex encoded script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. A seed should NOT be used for multiple outputs." />
-    <argument name="FILE" description="The encoded transaction file path. If not specified the transaction is written to STDOUT."/>
+    <argument name="TRANSACTION" description="The encoded transaction file path. If not specified the transaction is written to STDOUT."/>
     <define name="SX_TX_ENCODE_LOCKTIME_CONFLICT" value="Locktime is ineffective if set but all sequences are set to the maximum value." />
     <!--
       tx-encode FILE [-i TXHASH:INDEX]... [-o ADDRESS:SATOSHIS] [-o HEXSCRIPT:SATOSHIS]
@@ -464,10 +461,12 @@
     -->
   </command>
   
+  <!-- This was originally designed for PGP signing -->
   <command symbol="tx-sign" formerly="signtx" category="TRANSACTION" stub="true">
-    <option name="help"  description="Sign a transaction. Output is suitable for sending to Bitcoin network." />
+    <option name="help"  description="Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network." />
+    <argument name="secret" type="ec_private" description="The EC private key to be used for signing." />
+    <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
     <define name="SX_TX_SIGN_NOT_IMPLEMENTED" value="This command is not yet implemented." />
-    <!-- cat unsigned.tx | sx sign-transaction --wallet=sx.wallet.gpg --gpgkey=~/. -->
   </command>
 
   <command symbol="wallet" category="WALLET" obsolete="true">
@@ -483,7 +482,7 @@
     <define name="SX_WATCH_PREFIX_OUTPUT" value="Update %1% [ #%2% %3% ]" />
   </command>
 
-  <command symbol="watch-tx" formerly="watchtx" category="ONLINE" stub="true" obelisk="true">
+  <command symbol="watch-tx" formerly="watchtx" category="ONLINE" obelisk="true">
     <option name="help" description="Watch the network for transactions by hash. Requires an Obelisk server connection." />
     <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of hex encoded transaction hashes." />
     <define name="SX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />

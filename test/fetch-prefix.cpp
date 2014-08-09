@@ -21,15 +21,15 @@
 
 SX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(fetch_history_bci__invoke)
+BOOST_AUTO_TEST_SUITE(fetch_prefix__invoke)
 
-//BOOST_AUTO_TEST_CASE(fetch_history_bci__invoke__bogus_address__failure_error)
+// DISABLED until client-server calls are isolated for test.
+
+//BOOST_AUTO_TEST_CASE(fetch_prefix__invoke__always__okay)
 //{
-//    // $ sx fetch-history-bci bogus
-//    SX_DECLARE_COMMAND(fetch_history_bci);
-//    command.set_address_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(output, error));
-//    SX_REQUIRE_ERROR(SX_BCI_HISTORY_NOT_IMPLEMENTED "\n");
+//    // $ sx fetch-prefix 1101
+//    SX_DECLARE_COMMAND(fetch_prefix);
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
 BOOST_AUTO_TEST_SUITE_END()

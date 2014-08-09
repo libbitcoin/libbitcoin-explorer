@@ -67,6 +67,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__base58check_encode__returns_expected_val
     BOOST_REQUIRE(base58check_encode::symbol() == std::string("base58check-encode"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__bci_fetch_last_height__returns_expected_value)
+{
+    BOOST_REQUIRE(bci_fetch_last_height::symbol() == std::string("bci-fetch-last-height"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__bci_history__returns_expected_value)
+{
+    BOOST_REQUIRE(bci_history::symbol() == std::string("bci-history"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__bitcoin160__returns_expected_value)
 {
     BOOST_REQUIRE(bitcoin160::symbol() == std::string("bitcoin160"));
@@ -75,6 +85,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__bitcoin160__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__bitcoin256__returns_expected_value)
 {
     BOOST_REQUIRE(bitcoin256::symbol() == std::string("bitcoin256"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__blke_fetch_transaction__returns_expected_value)
+{
+    BOOST_REQUIRE(blke_fetch_transaction::symbol() == std::string("blke-fetch-transaction"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__btc_to_satoshi__returns_expected_value)
@@ -152,19 +167,14 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_height__returns_expected_value)
     BOOST_REQUIRE(fetch_height::symbol() == std::string("fetch-height"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_height_bci__returns_expected_value)
-{
-    BOOST_REQUIRE(fetch_height_bci::symbol() == std::string("fetch-height-bci"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_history__returns_expected_value)
 {
     BOOST_REQUIRE(fetch_history::symbol() == std::string("fetch-history"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_history_bci__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_prefix__returns_expected_value)
 {
-    BOOST_REQUIRE(fetch_history_bci::symbol() == std::string("fetch-history-bci"));
+    BOOST_REQUIRE(fetch_prefix::symbol() == std::string("fetch-prefix"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_public_key__returns_expected_value)
@@ -172,19 +182,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_public_key__returns_expected_value
     BOOST_REQUIRE(fetch_public_key::symbol() == std::string("fetch-public-key"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_stealth__returns_expected_value)
-{
-    BOOST_REQUIRE(fetch_stealth::symbol() == std::string("fetch-stealth"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_tx__returns_expected_value)
 {
     BOOST_REQUIRE(fetch_tx::symbol() == std::string("fetch-tx"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_tx_bex__returns_expected_value)
-{
-    BOOST_REQUIRE(fetch_tx_bex::symbol() == std::string("fetch-tx-bex"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_tx_index__returns_expected_value)
@@ -322,11 +322,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__send_tx__returns_expected_value)
     BOOST_REQUIRE(send_tx::symbol() == std::string("send-tx"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__send_tx_bci__returns_expected_value)
-{
-    BOOST_REQUIRE(send_tx_bci::symbol() == std::string("send-tx-bci"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__send_tx_node__returns_expected_value)
 {
     BOOST_REQUIRE(send_tx_node::symbol() == std::string("send-tx-node"));
@@ -335,6 +330,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__send_tx_node__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__send_tx_p2p__returns_expected_value)
 {
     BOOST_REQUIRE(send_tx_p2p::symbol() == std::string("send-tx-p2p"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__sendtx_bci__returns_expected_value)
+{
+    BOOST_REQUIRE(sendtx_bci::symbol() == std::string("sendtx-bci"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__sha160__returns_expected_value)

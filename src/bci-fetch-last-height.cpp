@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,19 +17,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "command.hpp"
+#include <sx/command/bci-fetch-last-height.hpp>
 
-SX_USING_NAMESPACES()
+#include <iostream>
+#include <sx/utility/utility.hpp>
 
-BOOST_AUTO_TEST_SUITE(fetch_tx_bex__invoke)
+using namespace sx;
+using namespace sx::extension;
 
-//BOOST_AUTO_TEST_CASE(fetch_tx_bex__invoke__bogus_hash__failure_error)
-//{
-//    // $ sx fetch-tx-bex bogus
-//    SX_DECLARE_COMMAND(fetch_tx_bex);
-//    command.set_address_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(output, error));
-//    SX_REQUIRE_ERROR(SX_FETCH_TX_BEX_NOT_IMPLEMENTED "\n");
-//}
+console_result bci_fetch_last_height::invoke(std::ostream& output,
+    std::ostream& cerr)
+{
+    cerr << SX_BCI_FETCH_LAST_HEIGHT_OBSOLETE << std::endl;
+    return console_result::failure;
+}
 
-BOOST_AUTO_TEST_SUITE_END()
+//#!/usr/bin/python
+//
+//import urllib, urllib2, json, sys, random
+//
+//opener = urllib2.build_opener()
+//opener.addheaders = [('User-agent', 'Mozilla/5.0'+str(random.randrange(1000000)))]
+//
+//text = opener.open('http://blockchain.info/latestblock').read()
+//
+//try:
+//    jsonobj = json.loads(text)
+//    print jsonobj["height"]
+//except:
+//    sys.stderr.write("Bad JSON")
+//    sys.exit(-1)

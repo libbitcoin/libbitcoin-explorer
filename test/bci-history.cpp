@@ -21,15 +21,14 @@
 
 SX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(send_tx_bci__invoke)
+BOOST_AUTO_TEST_SUITE(bci_history__invoke)
 
-//BOOST_AUTO_TEST_CASE(end_tx_bci__invoke__bogus_hash__failure_error)
-//{
-//    // $ sx send-tx-bci bogus
-//    SX_DECLARE_COMMAND(end_tx_bci);
-//    command.set_address_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(output, error));
-//    SX_REQUIRE_ERROR(SX_SEND_TX_BCI_NOT_IMPLEMENTED "\n");
-//}
+BOOST_AUTO_TEST_CASE(bci_history__invoke__always__failure_error)
+{
+    // $ sx bci-history ...
+    SX_DECLARE_COMMAND(bci_history);
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
+    SX_REQUIRE_ERROR(SX_BCI_HISTORY_OBSOLETE "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()

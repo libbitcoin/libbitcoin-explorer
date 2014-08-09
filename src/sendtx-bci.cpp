@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/send-tx-bci.hpp>
+#include <sx/command/sendtx-bci.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
@@ -27,14 +27,9 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-console_result send_tx_bci::invoke(std::ostream& output, std::ostream& cerr)
+console_result sendtx_bci::invoke(std::ostream& output, std::ostream& cerr)
 {
-    // Bound parameters.
-    const auto& transactions = get_transactions_argument();
-    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
-    const transaction_type& tx = transactions.front();
-
-    cerr << SX_SEND_TX_BCI_NOT_IMPLEMENTED << std::endl;
+    cerr << SX_SENDTX_BCI_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

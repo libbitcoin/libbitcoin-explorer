@@ -21,14 +21,14 @@
 
 SX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(fetch_height_bci__invoke)
+BOOST_AUTO_TEST_SUITE(sendtx_bci__invoke)
 
-BOOST_AUTO_TEST_CASE(fetch_height_bci__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(sendtx_bci__invoke__always__failure_error)
 {
-    // $ sx fetch-height-bci
-    SX_DECLARE_COMMAND(fetch_height_bci);
+    // $ sx sendtx-bci ...
+    SX_DECLARE_COMMAND(sendtx_bci);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_FETCH_HEIGHT_BCI_NOT_IMPLEMENTED "\n");
+    SX_REQUIRE_ERROR(SX_SENDTX_BCI_OBSOLETE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -60,7 +60,7 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_FETCH_STEALTH_OUTPUT \
+#define SX_FETCH_PREFIX_OUTPUT \
     "Ephemeral key: %1% Address: %2% Transaction hash: %3%"
 
 /**
@@ -136,12 +136,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the stealth transactions matching the specified filter. Requires an Obelisk server connection."
+                "Get the transactions matching the specified filter. Requires an Obelisk server connection."
             )
             (
                 "prefix,p",
                 value<serializer::prefix>(&option_.prefix),
-                "The binary encoded stealth search prefix. Searches all transactions if not set."
+                "The binary encoded search prefix. Searches all transactions if not set."
             )
             (
                 "height,t",

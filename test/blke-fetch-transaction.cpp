@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,34 +17,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/fetch-height-bci.hpp>
+#include "command.hpp"
 
-#include <iostream>
-#include <sx/utility/utility.hpp>
+SX_USING_NAMESPACES()
 
-using namespace sx;
-using namespace sx::extension;
+BOOST_AUTO_TEST_SUITE(blke_fetch_transaction__invoke)
 
-console_result fetch_height_bci::invoke(std::ostream& output,
-    std::ostream& cerr)
+BOOST_AUTO_TEST_CASE(blke_fetch_transaction__invoke__always__failure_error)
 {
-    // TODO: integrate cpp-netlib (without ssl).
-    cerr << SX_FETCH_HEIGHT_BCI_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // $ sx blke-fetch-transaction ...
+    SX_DECLARE_COMMAND(blke_fetch_transaction);
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
+    SX_REQUIRE_ERROR(SX_BLKE_FETCH_TRANSACTION_OBSOLETE "\n");
 }
 
-//#!/usr/bin/python
-//
-//import urllib, urllib2, json, sys, random
-//
-//opener = urllib2.build_opener()
-//opener.addheaders = [('User-agent', 'Mozilla/5.0'+str(random.randrange(1000000)))]
-//
-//text = opener.open('http://blockchain.info/latestblock').read()
-//
-//try:
-//    jsonobj = json.loads(text)
-//    print jsonobj["height"]
-//except:
-//    sys.stderr.write("Bad JSON")
-//    sys.exit(-1)
+BOOST_AUTO_TEST_SUITE_END()

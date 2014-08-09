@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -122,8 +122,11 @@
     <ClInclude Include="..\..\..\..\include\sx\command\base58-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\bci-fetch-last-height.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\bci-history.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\bitcoin160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\bitcoin256.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\blke-fetch-transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\btc-to-satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add-secrets.hpp" />
@@ -139,13 +142,10 @@
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-confirmed.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-header.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-height.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-height-bci.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-history.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-history-bci.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-prefix.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-public-key.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-stealth.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx-bex.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx-index.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-utxo.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\genaddr.hpp" />
@@ -173,9 +173,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\script-to-addr.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\seed.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\send-tx.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\send-tx-bci.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\send-tx-node.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\send-tx-p2p.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\sendtx-bci.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp" />
@@ -205,6 +205,7 @@
     <ClCompile Include="..\..\..\..\src\utility\parameter.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\printer.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\utility.cpp" />
+       
     <ClCompile Include="..\..\..\..\src\input-sign.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -214,6 +215,7 @@
     <ClCompile Include="..\..\..\..\src\input-validate.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    
     <ClCompile Include="..\..\..\..\src\stealth-addr-decode.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -236,8 +238,11 @@
     <ClCompile Include="..\..\..\..\src\base58-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\base58check-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp" />
+    <ClCompile Include="..\..\..\..\src\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\src\bitcoin160.cpp" />
     <ClCompile Include="..\..\..\..\src\bitcoin256.cpp" />
+    <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\src\btc-to-satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-add-secrets.cpp" />
@@ -261,21 +266,18 @@
     <ClCompile Include="..\..\..\..\src\fetch-height.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-height-bci.cpp" />
     <ClCompile Include="..\..\..\..\src\fetch-history.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-history-bci.cpp" />
-    <ClCompile Include="..\..\..\..\src\fetch-public-key.cpp">
+    <ClCompile Include="..\..\..\..\src\fetch-prefix.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
+    <ClCompile Include="..\..\..\..\src\fetch-public-key.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-tx.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-tx-bex.cpp" />
     <ClCompile Include="..\..\..\..\src\fetch-tx-index.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -309,9 +311,9 @@
     <ClCompile Include="..\..\..\..\src\send-tx.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\send-tx-bci.cpp" />
     <ClCompile Include="..\..\..\..\src\send-tx-node.cpp" />
     <ClCompile Include="..\..\..\..\src\send-tx-p2p.cpp" />
+    <ClCompile Include="..\..\..\..\src\sendtx-bci.cpp" />
     <ClCompile Include="..\..\..\..\src\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\sha512.cpp" />

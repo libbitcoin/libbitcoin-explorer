@@ -23,6 +23,8 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(fetch_height__invoke)
 
+// DISABLED until client-server calls are isolated for test.
+
 //BOOST_AUTO_TEST_CASE(fetch_height__invoke__always__okay)
 //{
 //    // $ sx fetch-height

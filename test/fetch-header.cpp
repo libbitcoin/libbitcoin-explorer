@@ -23,6 +23,8 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(fetch_header__invoke)
 
+// DISABLED until client-server calls are isolated for test.
+
 //BOOST_AUTO_TEST_CASE(fetch_header__invoke__hash__okay)
 //{
 //    // $ sx fetch-header --hash 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4

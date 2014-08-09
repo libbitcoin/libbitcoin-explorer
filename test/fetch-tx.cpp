@@ -23,7 +23,9 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 
-//BOOST_AUTO_TEST_CASE(fetch_trx__invoke__always__okay)
+// DISABLED until client-server calls are isolated for test.
+
+//BOOST_AUTO_TEST_CASE(fetch_tx__invoke__always__okay)
 //{
 //    // $ sx fetch-tx 69735d70ada1be32ff39b49c6fc2390b03e9d5eed8918ed10fe42c8cbabf62d4
 //    SX_DECLARE_COMMAND(fetch_tx);

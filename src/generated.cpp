@@ -44,8 +44,11 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
     func(make_shared<base58check_encode>());
+    func(make_shared<bci_fetch_last_height>());
+    func(make_shared<bci_history>());
     func(make_shared<bitcoin160>());
     func(make_shared<bitcoin256>());
+    func(make_shared<blke_fetch_transaction>());
     func(make_shared<btc_to_satoshi>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
@@ -61,13 +64,10 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_confirmed>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_height>());
-    func(make_shared<fetch_height_bci>());
     func(make_shared<fetch_history>());
-    func(make_shared<fetch_history_bci>());
+    func(make_shared<fetch_prefix>());
     func(make_shared<fetch_public_key>());
-    func(make_shared<fetch_stealth>());
     func(make_shared<fetch_tx>());
-    func(make_shared<fetch_tx_bex>());
     func(make_shared<fetch_tx_index>());
     func(make_shared<fetch_utxo>());
     func(make_shared<genaddr>());
@@ -95,9 +95,9 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<script_to_addr>());
     func(make_shared<seed>());
     func(make_shared<send_tx>());
-    func(make_shared<send_tx_bci>());
     func(make_shared<send_tx_node>());
     func(make_shared<send_tx_p2p>());
+    func(make_shared<sendtx_bci>());
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
@@ -135,10 +135,16 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base58check_decode>();
     if (symbol == base58check_encode::symbol())
         return make_shared<base58check_encode>();
+    if (symbol == bci_fetch_last_height::symbol())
+        return make_shared<bci_fetch_last_height>();
+    if (symbol == bci_history::symbol())
+        return make_shared<bci_history>();
     if (symbol == bitcoin160::symbol())
         return make_shared<bitcoin160>();
     if (symbol == bitcoin256::symbol())
         return make_shared<bitcoin256>();
+    if (symbol == blke_fetch_transaction::symbol())
+        return make_shared<blke_fetch_transaction>();
     if (symbol == btc_to_satoshi::symbol())
         return make_shared<btc_to_satoshi>();
     if (symbol == ec_add::symbol())
@@ -169,20 +175,14 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_header>();
     if (symbol == fetch_height::symbol())
         return make_shared<fetch_height>();
-    if (symbol == fetch_height_bci::symbol())
-        return make_shared<fetch_height_bci>();
     if (symbol == fetch_history::symbol())
         return make_shared<fetch_history>();
-    if (symbol == fetch_history_bci::symbol())
-        return make_shared<fetch_history_bci>();
+    if (symbol == fetch_prefix::symbol())
+        return make_shared<fetch_prefix>();
     if (symbol == fetch_public_key::symbol())
         return make_shared<fetch_public_key>();
-    if (symbol == fetch_stealth::symbol())
-        return make_shared<fetch_stealth>();
     if (symbol == fetch_tx::symbol())
         return make_shared<fetch_tx>();
-    if (symbol == fetch_tx_bex::symbol())
-        return make_shared<fetch_tx_bex>();
     if (symbol == fetch_tx_index::symbol())
         return make_shared<fetch_tx_index>();
     if (symbol == fetch_utxo::symbol())
@@ -237,12 +237,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<seed>();
     if (symbol == send_tx::symbol())
         return make_shared<send_tx>();
-    if (symbol == send_tx_bci::symbol())
-        return make_shared<send_tx_bci>();
     if (symbol == send_tx_node::symbol())
         return make_shared<send_tx_node>();
     if (symbol == send_tx_p2p::symbol())
         return make_shared<send_tx_p2p>();
+    if (symbol == sendtx_bci::symbol())
+        return make_shared<sendtx_bci>();
     if (symbol == sha160::symbol())
         return make_shared<sha160>();
     if (symbol == sha256::symbol())

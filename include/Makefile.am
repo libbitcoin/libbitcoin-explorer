@@ -55,8 +55,11 @@ sx_command_include_HEADERS = \
     command/base58-encode.hpp \
     command/base58check-decode.hpp \
     command/base58check-encode.hpp \
+    command/bci-fetch-last-height.hpp \
+    command/bci-history.hpp \
     command/bitcoin160.hpp \
     command/bitcoin256.hpp \
+    command/blke-fetch-transaction.hpp \
     command/btc-to-satoshi.hpp \
     command/ec-add.hpp \
     command/ec-add-secrets.hpp \
@@ -68,9 +71,6 @@ sx_command_include_HEADERS = \
     command/ec-to-pub.hpp \
     command/ec-to-wif.hpp \
     command/ec-unlock.hpp \
-    command/fetch-height-bci.hpp \
-    command/fetch-history-bci.hpp \
-    command/fetch-tx-bex.hpp \
     command/genaddr.hpp \
     command/genpriv.hpp \
     command/genpub.hpp \
@@ -95,9 +95,9 @@ sx_command_include_HEADERS = \
     command/script-encode.hpp \
     command/script-to-addr.hpp \
     command/seed.hpp \
-    command/send-tx-bci.hpp \
     command/send-tx-node.hpp \
     command/send-tx-p2p.hpp \
+    command/sendtx-bci.hpp \
     command/sha160.hpp \
     command/sha256.hpp \
     command/sha512.hpp \
@@ -120,8 +120,8 @@ if HAVE_OBELISK
         command/fetch-header.hpp \
         command/fetch-height.hpp \
         command/fetch-history.hpp \
+        command/fetch-prefix.hpp \
         command/fetch-public-key.hpp \
-        command/fetch-stealth.hpp \
         command/fetch-tx.hpp \
         command/fetch-tx-index.hpp \
         command/fetch-utxo.hpp \

@@ -23,13 +23,12 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(watch_tx__invoke)
 
-//BOOST_AUTO_TEST_CASE(watchtx__invoke__invoke__always__failure_error)
-//{
-//    // $ sx watch-tx bogus
-//    SX_DECLARE_COMMAND(watch_tx);
-//    command.set_hash_argument({ "bogus" });
-//    SX_REQUIRE_FAILURE(command.invoke(output, error));
-//    SX_REQUIRE_ERROR(SX_WATCH_TX_NOT_IMPLEMENTED "\n");
-//}
+BOOST_AUTO_TEST_CASE(watchtx__invoke__invoke__always__failure_error)
+{
+    // $ sx watch-tx
+    SX_DECLARE_COMMAND(watch_tx);
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
+    SX_REQUIRE_ERROR(SX_WATCH_TX_NOT_IMPLEMENTED "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()

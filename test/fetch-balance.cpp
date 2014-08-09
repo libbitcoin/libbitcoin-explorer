@@ -23,6 +23,8 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
+// DISABLED until client-server calls are isolated for test.
+
 //BOOST_AUTO_TEST_CASE(fetch_balance__invoke__address__okay)
 //{
 //    // $ sx fetch-balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
