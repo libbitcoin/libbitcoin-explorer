@@ -66,7 +66,7 @@ public:
     hd_private(const libwallet::hd_private_key& value)
     {
         // hd_private_key doesn't provide a copy constructor.
-        value_.deserialize(value.serialize());
+        value_.set_encoded(value.encoded());
     }
 
     /**
@@ -111,7 +111,7 @@ public:
         std::string base58;
         input >> base58;
 
-        if (!argument.value_.deserialize(base58))
+        if (!argument.value_.set_encoded(base58))
             throw po::invalid_option_value(base58);
 
         return input;
@@ -127,7 +127,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const hd_private& argument)
     {
-        output << argument.value_.serialize();
+        output << argument.value_.encoded();
         return output;
     }
 

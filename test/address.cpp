@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__bogus_string__throws_invalid_option)
 
 BOOST_AUTO_TEST_CASE(address__constructor__valid_string_cast__round_trips)
 {
-    const payment_address& pay_address = address(ADDRESS_MAINNET_A);
+    const payment_address pay_address = address(ADDRESS_MAINNET_A);
     BOOST_REQUIRE_EQUAL(pay_address.encoded(), ADDRESS_MAINNET_A);
 }
 
@@ -51,23 +51,23 @@ BOOST_AUTO_TEST_CASE(address__constructor__copy_address_serializer__round_trips)
 BOOST_AUTO_TEST_CASE(address__constructor__payment_address_data__round_trips)
 {
     payment_address pay_address(ADDRESS_MAINNET_A);
-    const auto& internal_address = address(pay_address).data();
+    const auto internal_address = address(pay_address).data();
     BOOST_REQUIRE_EQUAL(internal_address.encoded(), ADDRESS_MAINNET_A);
 }
 
 BOOST_AUTO_TEST_CASE(address__constructor__hd_private_key__converts)
 {
     hd_private_key private_key;
-    private_key.deserialize(ADDRESS_HD_PRIVATE_KEY_MAINNET_A);
-    const payment_address& instance = address(private_key);
+    private_key.set_encoded(ADDRESS_HD_PRIVATE_KEY_MAINNET_A);
+    const payment_address instance = address(private_key);
     BOOST_REQUIRE_EQUAL(instance.encoded(), ADDRESS_MAINNET_A);
 }
 
 BOOST_AUTO_TEST_CASE(address__constructor__hd_public_key__converts)
 {
     hd_public_key public_key;
-    public_key.deserialize(ADDRESS_HD_PUBLIC_KEY_MAINNET_A);
-    const payment_address& instance = address(public_key);
+    public_key.set_encoded(ADDRESS_HD_PUBLIC_KEY_MAINNET_A);
+    const payment_address instance = address(public_key);
     BOOST_REQUIRE_EQUAL(instance.encoded(), ADDRESS_MAINNET_A);
 }
 

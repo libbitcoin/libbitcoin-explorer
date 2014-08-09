@@ -67,7 +67,7 @@ public:
     hd_key(const libwallet::hd_private_key& value)
     {
         // hd_public_key doesn't provide a copy constructor.
-        private_key_value_.deserialize(value.serialize());
+        private_key_value_.set_encoded(value.encoded());
     }
 
     /**
@@ -78,7 +78,7 @@ public:
     hd_key(const libwallet::hd_public_key& value)
     {
         // hd_public_key doesn't provide a copy constructor.
-        public_key_value_.deserialize(value.serialize());
+        public_key_value_.set_encoded(value.encoded());
     }
 
     /**
@@ -139,10 +139,10 @@ public:
         input >> base58;
 
         // First try to read as a private key.
-        if (!argument.private_key_value_.deserialize(base58))
+        if (!argument.private_key_value_.set_encoded(base58))
         {
             // Otherwise try to read as a public key.
-            if (!argument.public_key_value_.deserialize(base58))
+            if (!argument.public_key_value_.set_encoded(base58))
                 throw po::invalid_option_value(base58);
         }
 
@@ -160,7 +160,7 @@ public:
         const hd_key& argument)
     {
         const auto& public_key = argument.derived_public_key();
-        output << public_key.serialize();
+        output << public_key.encoded();
         return output;
     }
 

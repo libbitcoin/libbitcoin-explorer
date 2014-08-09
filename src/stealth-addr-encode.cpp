@@ -31,6 +31,8 @@ using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
+using flag = stealth_address::flags;
+using version = stealth_address::versions;
 
 // 100% coverage by line, loc ready.
 console_result stealth_addr_encode::invoke(std::ostream& output,
@@ -44,18 +46,22 @@ console_result stealth_addr_encode::invoke(std::ostream& output,
     const auto& spend_keys = get_spend_keys_argument();
     const auto testnet = get_general_testnet_setting();
 
-    // Construct actual address.
-    // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
-    data_chunk stealth;
-
     // TESTNET WORKS WITHOUT RECOMPILE
-    const uint8_t version = if_else(testnet, 0x2b, 0x2a);
-
-    constexpr uint8_t reuse_flag = stealth_address::flags::reuse_key;
-    const uint8_t options = if_else(reuse_key, reuse_flag, 0);
+    const auto options = if_else(reuse_key, flag::reuse_key, flag::none);
+    const auto version = if_else(testnet, version::testnet, version::mainnet);
     const auto number_keys = static_cast<uint8_t>(spend_keys.size());
     const auto numeric_prefix = static_cast<uint32_t>(prefix.to_ulong());
 
+    // If not specified then set signatures to the number_keys.
+    auto sigs = if_else(signatures == 0, number_keys, signatures);
+
+    // if reusing the address increment the number of signatures.
+    sigs = if_else(reuse_key, sigs + 1, sigs);
+
+    // Construct actual address.
+    // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
+
+    data_chunk stealth;
     stealth.push_back(version);
     stealth.push_back(options);
     extend_data(stealth, scan_key);
@@ -63,12 +69,6 @@ console_result stealth_addr_encode::invoke(std::ostream& output,
 
     for (const ec_point& spend_key: spend_keys)
         extend_data(stealth, spend_key);
-    
-    // If not specified then set signatures to the number_keys.
-    auto sigs = if_else(signatures == 0, number_keys, signatures);
-
-    // if reusing the address increment the number of signatures.
-    sigs = if_else(reuse_key, sigs + 1, sigs);
 
     stealth.push_back(sigs);
     stealth.push_back(numeric_prefix);
