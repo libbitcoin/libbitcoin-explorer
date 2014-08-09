@@ -30,17 +30,17 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result wrap_encode::invoke(std::ostream& output, std::ostream& cerr)
+console_result wrap_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const data_chunk hexadecimal = get_hex_argument();
     const auto version = get_version_option();
+    const data_chunk& data = get_hex_argument();
     
-    data_chunk data;
-    data.push_back(version);
-    extend_data(data, hexadecimal);
-    append_checksum(data);
+    data_chunk chunk;
+    chunk.push_back(version);
+    extend_data(chunk, data);
+    append_checksum(chunk);
 
-    output << hex(data) << std::endl;
+    output << hex(chunk) << std::endl;
     return console_result::okay;
 }

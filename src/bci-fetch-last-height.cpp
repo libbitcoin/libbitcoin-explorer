@@ -20,15 +20,15 @@
 #include <sx/command/bci-fetch-last-height.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
 console_result bci_fetch_last_height::invoke(std::ostream& output,
-    std::ostream& cerr)
+    std::ostream& error)
 {
-    cerr << SX_BCI_FETCH_LAST_HEIGHT_OBSOLETE << std::endl;
+    error << SX_BCI_FETCH_LAST_HEIGHT_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

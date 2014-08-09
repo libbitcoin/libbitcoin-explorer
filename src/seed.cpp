@@ -20,6 +20,7 @@
 #include <sx/command/seed.hpp>
 
 #include <iostream>
+#include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -27,7 +28,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result seed::invoke(std::ostream& output, std::ostream& cerr)
+console_result seed::invoke(std::ostream& output, std::ostream& error)
 {
     const auto bitlength = get_bitlength_option();
 
@@ -35,7 +36,7 @@ console_result seed::invoke(std::ostream& output, std::ostream& cerr)
     // We use bit vs. byte length input as the more familiar convention.
     if (bitlength < 128 || bitlength % 8 != 0)
     {
-        cerr << SX_SEED_BITLENGTH_UNSUPPORTED << std::endl;
+        error << SX_SEED_BITLENGTH_UNSUPPORTED << std::endl;
         return console_result::failure;
     }
 

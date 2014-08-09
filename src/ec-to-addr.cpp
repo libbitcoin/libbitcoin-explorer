@@ -20,8 +20,8 @@
 #include <sx/command/ec-to-addr.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
 
 using namespace bc;
@@ -30,10 +30,10 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result ec_to_addr::invoke(std::ostream& output, std::ostream& cerr)
+console_result ec_to_addr::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto point = get_point_argument();
+    const auto& point = get_point_argument();
     const auto version = get_version_option();
 
     // Get the public key's payment address.

@@ -22,9 +22,8 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/obelisk.hpp>
+#include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -34,26 +33,29 @@ using namespace sx::extension;
 static void handle_callback(callback_args& args)
 {
     args.output() << boost::format(SX_SEND_TX_OUTPUT) % now() << std::endl;
+
+    // BUGBUG: first response terminates.
     args.stopped() = true;
 }
 
-console_result send_tx::invoke(std::ostream& output, std::ostream& cerr)
+console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
-    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
-    const transaction_type& tx = transactions.front();
 
-    callback_args args(cerr, output);
-    const auto handler = [&args](const std::error_code& error)
+    callback_args args(error, output);
+    const auto handler = [&args](const std::error_code& code)
     {
-        handle_error(args, error);
+        handle_error(args, code);
         handle_callback(args);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.protocol.broadcast_transaction(tx, handler);
+
+    for (const transaction_type& tx: transactions)
+        fullnode.protocol.broadcast_transaction(tx, handler);
+
     client.poll(args.stopped());
 
     return args.result();

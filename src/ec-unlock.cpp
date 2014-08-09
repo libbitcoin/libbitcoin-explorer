@@ -20,18 +20,18 @@
 #include <sx/command/ec-unlock.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result ec_unlock::invoke(std::ostream& output, std::ostream& cerr)
+console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto passphrase = get_passphrase_argument();
+    const auto& passphrase = get_passphrase_argument();
     
     // TODO: implement BIP38
 
-    cerr << SX_EC_UNLOCK_NOT_IMPLEMENTED << std::endl;
+    error << SX_EC_UNLOCK_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }

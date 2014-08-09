@@ -32,7 +32,7 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-console_result tx_decode::invoke(std::ostream& output, std::ostream& cerr)
+console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto xml = get_xml_option();

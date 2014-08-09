@@ -21,8 +21,8 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/ec_private.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -30,16 +30,16 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& cerr)
+console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto secrets = get_secrets_argument();
+    const auto& secrets = get_secrets_argument();
 
     ec_private product;
-    const auto& null_key = ec_private().data();
     for (auto const& secret: secrets)
     {
-        if (product.data() == null_key)
+        // Initialize product on first pass.
+        if ((ec_secret)product == null_hash)
         {
             product.data() = secret;
             continue;
@@ -48,7 +48,7 @@ console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& c
         // Elliptic curve function (INTEGER * INTEGER) % curve-order.
         if (!bc::ec_multiply(product.data(), secret))
         {
-            cerr << SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE << std::endl;
+            error << SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }

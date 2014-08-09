@@ -20,8 +20,8 @@
 #include <sx/command/hd-to-wif.hpp>
 
 #include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/wif.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace libwallet;
 using namespace sx;
@@ -29,10 +29,12 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result hd_to_wif::invoke(std::ostream& output, std::ostream& cerr)
+console_result hd_to_wif::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const hd_private_key secret = get_secret_argument();
+
+    // TESTNET OPTION DOES NOT REQUIRE RECOMPILE
 
     output << wif(secret) << std::endl;
     return console_result::okay;

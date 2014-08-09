@@ -20,20 +20,18 @@
 #include <sx/command/wif-to-ec.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/ec_private.hpp>
-#include <sx/utility/utility.hpp>
 
-using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result wif_to_ec::invoke(std::ostream& output, std::ostream& cerr)
+console_result wif_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto secret = get_wif_argument();
+    const auto& secret = get_wif_argument();
 
     output << ec_private(secret) << std::endl;
     return console_result::okay;

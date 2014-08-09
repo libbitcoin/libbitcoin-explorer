@@ -20,30 +20,30 @@
 #include <sx/command/qrcode.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result qrcode::invoke(std::ostream& output, std::ostream& cerr)
+console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto path = get_file_option();
-    const auto address = get_address_argument();
+    const auto& path = get_file_option();
+    const auto& address = get_address_argument();
 
     // TODO:
     // Create qrcode as binary data.
-    const auto qrcode = 42;
+    //const auto qrcode = 42;
 
-    if (path.empty() || path == SX_STDIO_PATH_SENTINEL)
-        output << qrcode;
-    else
-    {
-        std::ofstream outfile(path, std::ofstream::binary);
-        outfile << qrcode;
-    }
+    //if (path.empty() || path == SX_STDIO_PATH_SENTINEL)
+    //    output << qrcode;
+    //else
+    //{
+    //    std::ofstream outfile(path, std::ofstream::binary);
+    //    outfile << qrcode;
+    //}
 
-    cerr << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
+    error << SX_QRCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

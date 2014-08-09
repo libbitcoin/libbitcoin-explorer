@@ -60,9 +60,6 @@ console_result input_set::invoke(int argc, const char* argv[])
     tx.inputs[input_index].script = new_input_script;
 
     // Now re-serialize transaction.
-    data_chunk raw_tx(satoshi_raw_size(tx));
-    satoshi_save(tx, raw_tx.begin());
-    std::cout << raw_tx << std::endl;
+    std::cout << transaction(tx) << std::endl;
     return console_result::okay;
 }
-

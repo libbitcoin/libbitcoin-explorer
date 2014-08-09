@@ -21,8 +21,8 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -30,13 +30,14 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result wif_to_pub::invoke(std::ostream& output, std::ostream& cerr)
+console_result wif_to_pub::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto secret = get_wif_argument();
+    const auto& secret = get_wif_argument();
 
     // wif-to-pub is required in order to preserve the WIF compression flag.
     // Otherwise we would only support transition through a private key.
+
     const auto compressed = secret.get_compressed();
     const auto public_key = secret_to_public_key(secret, compressed);
 

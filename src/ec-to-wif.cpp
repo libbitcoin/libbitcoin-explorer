@@ -20,19 +20,21 @@
 #include <sx/command/ec-to-wif.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/wif.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result ec_to_wif::invoke(std::ostream& output, std::ostream& cerr)
+console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto secret = get_secret_argument();
-    const auto uncompressed = get_uncompressed_option();
+    const auto& secret = get_secret_argument();
+    const auto& uncompressed = get_uncompressed_option();
 
+    // TESTNET REQUIRES RECOMPILE
     auto import_format = wif(secret);
     import_format.set_compressed(!uncompressed);
 

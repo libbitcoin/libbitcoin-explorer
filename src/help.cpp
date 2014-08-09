@@ -20,11 +20,10 @@
 #include <sx/command/help.hpp>
 
 #include <iostream>
-#include <cstdarg>
 #include <boost/format.hpp>
+#include <sx/define.hpp>
 #include <sx/display.hpp>
 #include <sx/generated.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace boost::program_options;
 using namespace sx;
@@ -33,8 +32,9 @@ using namespace sx::extension;
 // 100% coverage by line (as private to invoke())
 static bool write_all_command_names(std::ostream& stream)
 {
-    const auto func = [&](std::shared_ptr<command> sx_command)
+    const auto func = [&stream](std::shared_ptr<command> sx_command)
     {
+        BITCOIN_ASSERT(sx_command != nullptr);
         stream << sx_command->name() << std::endl;
     };
 
@@ -42,15 +42,15 @@ static bool write_all_command_names(std::ostream& stream)
 }
 
 // 100% coverage by line, loc ready.
-console_result help::invoke(std::ostream& output, std::ostream& cerr)
+console_result help::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto symbol = get_command_argument();
+    const auto& symbol = get_command_argument();
 
-    // If there is no COMMAND then show usage for this command.
+    // If there is no COMMAND then show usage for *this* command.
     if (symbol.empty())
     {
-        write_usage(cerr);
+        write_usage(error);
         return console_result::failure;
     }
 
@@ -58,8 +58,8 @@ console_result help::invoke(std::ostream& output, std::ostream& cerr)
     auto command = find(symbol);
     if (command == nullptr)
     {
-        cerr << boost::format(SX_HELP_NOT_COMMAND) % symbol << std::endl;
-        write_all_command_names(cerr);
+        error << boost::format(SX_HELP_NOT_COMMAND) % symbol << std::endl;
+        write_all_command_names(error);
         return console_result::failure;
     }
 

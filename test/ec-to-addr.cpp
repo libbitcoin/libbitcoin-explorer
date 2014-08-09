@@ -23,13 +23,22 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(ec_to_addr__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_to_addr__invoke__always__okay_output)
+BOOST_AUTO_TEST_CASE(ec_to_addr__invoke__compressed_key__okay_output)
 {
-    // $ sx ec-to-addr 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
+    // $ sx ec-to-addr 0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36
     SX_DECLARE_COMMAND(ec_to_addr);
-    command.set_point_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
+    command.set_point_argument({ "0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT("1uUA1tQ3H1moXtxPJvAN1kzmcdu5NCc6d\n");
+    SX_REQUIRE_OUTPUT("1EKJFK8kBmasFRYY3Ay9QjpJLm4vemJtC1\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_to_addr__invoke__uncompressed_key__okay_output)
+{
+    // $ sx ec-to-addr 0447140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36e87bb04f401be3b770a0f3e2267a6c3b14a3074f6b5ce4419f1fcdc1ca4b1cb6
+    SX_DECLARE_COMMAND(ec_to_addr);
+    command.set_point_argument({ "0447140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36e87bb04f401be3b770a0f3e2267a6c3b14a3074f6b5ce4419f1fcdc1ca4b1cb6" });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT("197FLrycah42jKDgfmTaok7b8kNHA7R2ih\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

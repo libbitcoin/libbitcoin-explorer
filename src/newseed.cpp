@@ -20,13 +20,13 @@
 #include <sx/command/newseed.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result newseed::invoke(std::ostream& output, std::ostream& cerr)
+console_result newseed::invoke(std::ostream& output, std::ostream& error)
 {
-    cerr << SX_NEWSEED_OBSOLETE << std::endl;
+    error << SX_NEWSEED_OBSOLETE << std::endl;
     return console_result::failure;
 }

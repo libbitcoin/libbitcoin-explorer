@@ -21,22 +21,25 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
+using namespace obelisk;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
 static void handle_subscribed(callback_args& args, 
-    const obelisk::worker_uuid& worker)
+    const worker_uuid& worker)
 {
     args.output() << SX_WATCH_TX_WAITING << std::endl;
 }
 
+// TODO: use parse tree.
 static void handle_update(callback_args& args, size_t height,
     const hash_digest& block_hash, const transaction_type& tx)
 {
@@ -45,31 +48,37 @@ static void handle_update(callback_args& args, size_t height,
 }
 
 // This command only halts on failure.
-console_result watch_tx::invoke(std::ostream& output, std::ostream& cerr)
+console_result watch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     //const auto height = get_height_option();
-    const auto& prefix = get_prefixs_option();
+    //const auto& hashes = get_hashs_option();
+    //const hash_digest& hash = hashes.front();
+    const auto& prefixes = get_prefixs_option();
 
-    callback_args args(cerr, output);
-    const auto update_handler = [&args](const std::error_code& error,
+    callback_args args(error, output);
+    const auto update_handler = [&args](const std::error_code& code,
         size_t height, const hash_digest& block_hash, 
         const transaction_type& tx)
     {
-        handle_error(args, error);
+        handle_error(args, code);
         handle_update(args, height, block_hash, tx);
     };
 
-    const auto subscribed_handler = [&args](const std::error_code& error,
-        const obelisk::worker_uuid& worker)
+    const auto subscribed_handler = [&args](const std::error_code& code,
+        const worker_uuid& worker)
     {
-        handle_error(args, error);
+        handle_error(args, code);
         handle_subscribed(args, worker);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    ////fullnode.address.subscribe(prefix, update_handler, subscribed_handler);
+
+    // Create a subscription for each prefix.
+    for (const auto& prefix: prefixes)
+        fullnode.address.subscribe(prefix, update_handler, subscribed_handler);
+
     client.poll(args.stopped());
 
     return args.result();

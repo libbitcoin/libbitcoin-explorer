@@ -23,8 +23,8 @@
 #include <stdint.h>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace libwallet;
@@ -32,49 +32,48 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
+// 100% coverage by line, loc ready.
 console_result stealth_addr_encode::invoke(std::ostream& output,
-    std::ostream& cerr)
+    std::ostream& error)
 {
     // Bound parameters.
-    uint8_t signatures = get_signatures_option();
-    const bool reuse_key = get_reuse_key_option();
+    const uint8_t signatures = get_signatures_option();
+    const auto reuse_key = get_reuse_key_option();
     const stealth_prefix& prefix = get_prefix_option();
     const ec_point& scan_key = get_scan_key_argument();
     const auto& spend_keys = get_spend_keys_argument();
+    const auto testnet = get_general_testnet_setting();
 
     // Construct actual address.
     // https://wiki.unsystem.net/index.php/DarkWallet/Stealth#Address_format
-    data_chunk address;
+    data_chunk stealth;
 
-    // TESTNET ISSUES?
-    const uint8_t version = 0x2a;
+    // TESTNET WORKS WITHOUT RECOMPILE
+    const uint8_t version = if_else(testnet, 0x2b, 0x2a);
 
-    const uint8_t reuse_flag = stealth_address::flags::reuse_key;
+    constexpr uint8_t reuse_flag = stealth_address::flags::reuse_key;
     const uint8_t options = if_else(reuse_key, reuse_flag, 0);
-    const uint8_t number_keys = static_cast<uint8_t>(spend_keys.size());
+    const auto number_keys = static_cast<uint8_t>(spend_keys.size());
     const auto numeric_prefix = static_cast<uint32_t>(prefix.to_ulong());
 
-    address.push_back(version);
-    address.push_back(options);
-    extend_data(address, scan_key);
-    address.push_back(number_keys);
+    stealth.push_back(version);
+    stealth.push_back(options);
+    extend_data(stealth, scan_key);
+    stealth.push_back(number_keys);
 
     for (const ec_point& spend_key: spend_keys)
-        extend_data(address, spend_key);
+        extend_data(stealth, spend_key);
     
-    // If not specified then set it to the number_keys.
-    if (signatures == 0)
-        signatures = number_keys;
+    // If not specified then set signatures to the number_keys.
+    auto sigs = if_else(signatures == 0, number_keys, signatures);
 
     // if reusing the address increment the number of signatures.
-    if (reuse_key)
-        ++signatures;
+    sigs = if_else(reuse_key, sigs + 1, sigs);
 
-    address.push_back(signatures);
-    address.push_back(numeric_prefix);
-    append_checksum(address);
+    stealth.push_back(sigs);
+    stealth.push_back(numeric_prefix);
+    append_checksum(stealth);
 
-    // Return the results.
-    output << base58(address) << std::endl;
+    output << base58(stealth) << std::endl;
     return console_result::okay;
 }

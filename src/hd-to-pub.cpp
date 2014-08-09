@@ -21,21 +21,21 @@
 
 #include <iostream>
 #include <wallet/wallet.hpp>
-#include <sx/serializer/hd_private.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/hd_public.hpp>
 
-using namespace bc;
+using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result hd_to_pub::invoke(std::ostream& output, std::ostream& cerr)
+console_result hd_to_pub::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto secret = get_secret_argument();
+    const auto& secret = get_secret_argument();
     
-    const libwallet::hd_public_key public_key = secret;
+    const hd_public_key& public_key = secret;
 
     output << hd_public(public_key) << std::endl;
     return console_result::okay;

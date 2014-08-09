@@ -21,8 +21,8 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -30,12 +30,12 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result sha512::invoke(std::ostream& output, std::ostream& cerr)
+console_result sha512::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const data_chunk hexadecimal = get_hex_argument();
+    const data_chunk& data = get_hex_argument();
 
-    const auto hash = sha512_hash(hexadecimal);
+    const auto hash = sha512_hash(data);
 
     output << hex(hash) << std::endl;
     return console_result::okay;

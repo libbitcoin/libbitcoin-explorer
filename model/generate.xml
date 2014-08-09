@@ -209,7 +209,7 @@
 
   <command symbol="fetch-tx" formerly="fetch-transaction, fetch-stealth" category="ONLINE" obelisk="true">
     <option name="help" description="Get transactions by filter. Requires an Obelisk server connection." />
-    <option name="hash" shortcut="s" multiple="true" type="btc256" description="The set of hex encoded transaction hashes to get." />
+    <option name="hash" shortcut="s" multiple="true" type="btc256" description="The set of hex encoded transaction hashes to get. Overrides prefix and height options." />
     <option name="prefix" type="prefix" multiple="true" description="The set of binary encoded stealth search prefixes of transactions to get." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of prefix transactions to get. Includes all blocks if not set."/>
     <define name="SX_FETCH_TX_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%" />    
@@ -471,9 +471,9 @@
 
   <command symbol="watch-tx" formerly="watchtx, monitor" category="ONLINE" obelisk="true">
     <option name="help" description="Watch the network for transactions by filter. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL" />
-    <option name="hash" shortcut="s" multiple="true" type="btc256" description="The set of hex encoded transaction hashes to watch. Includes all transactions if not set." />
-    <option name="prefix" type="prefix" multiple="true" description="The set of binary encoded stealth search prefixes to watch. Includes all transactions if not set." />
-    <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to watch. Includes all blocks if not set."/>
+    <!--<option name="hash" shortcut="s" multiple="true" type="btc256" description="The set of hex encoded transaction hashes to watch. Includes all transactions if not set." />-->
+    <option name="prefix" type="prefix" multiple="true" required="true" description="The set of binary encoded stealth search prefixes to watch. Includes all transactions if not set." />
+    <!--<option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to watch. Includes all blocks if not set."/>-->
     <define name="SX_WATCH_TX_WAITING" value="Waiting for updates..." />
     <define name="SX_WATCH_TX_OUTPUT" value="Transaction %1% [ #%2% %3% ]" />
   </command>

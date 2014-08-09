@@ -23,25 +23,56 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(hd_new__invoke)
 
-BOOST_AUTO_TEST_CASE(hd_new__invoke__default__okay_output)
+BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_mainnet__okay_output)
 {
-    // $ sx hd-new 900df00d
+    // $ sx hd-new baadf00dbaadf00dbaadf00dbaadf00d
     SX_DECLARE_COMMAND(hd_new);
-    command.set_seed_argument({ "900df00d" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     command.set_general_testnet_setting(false);
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT("xprv9s21ZrQH143K27rVid1zpeyqZygAX7W7AQ4cctwrSB4A2EoPNT22nR2FCm42oc6UmTNGnjwLscDdkof6dyRVwoG8nU6uY8XTGNHiNzAx3TD\n");
+    SX_REQUIRE_OUTPUT("xprv9s21ZrQH143K3bJ7oEuyFtvSpSHmdsmfiPcDXX2RpArAvnuBwcUo8KbeNXLvdbBPgjeFdEpQCAuxLaAP3bJRiiTdw1Kx4chf9zSGp95KBBR\n");
 }
 
 // This particular command supports testnet without the need for recompilation.
-BOOST_AUTO_TEST_CASE(hd_new__invoke__testnet__okay_output)
+BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_testnet__okay_output)
 {
-    // $ sx hd-new 900df00d
+    // $ sx hd-new baadf00dbaadf00dbaadf00dbaadf00d
     SX_DECLARE_COMMAND(hd_new);
-    command.set_seed_argument({ "900df00d" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     command.set_general_testnet_setting(true);
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT("tprv8ZgxMBicQKsPcw62PBsVzJbpt76NkdY7VwyjVKNJv9YdoqYUMpMnJAPh7wDgoyUo8tu3nqZ72xoSDfCqmBmSkrXjK7KDCVFWBU38pfSTUZ9\n");
+    SX_REQUIRE_OUTPUT("tprv8ZgxMBicQKsPeQXeTomURYYS8ZhysPog3wXLPwStJ9LeiPeGvypYe4y6HhWadxZi4BB2dLSAMXVkoRi8AoeNXmjETeYFiyRi56BhFnkm9uh\n");
 }
+
+BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_mainnet__failure_error)
+{
+    // $ sx hd-new baadf00dbaadf00db
+    SX_DECLARE_COMMAND(hd_new);
+    command.set_seed_argument({ "baadf00dbaadf00db" });
+    command.set_general_testnet_setting(false);
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
+    SX_REQUIRE_ERROR(SX_HD_NEW_SHORT_SEED "\n");
+}
+
+// This particular command supports testnet without the need for recompilation.
+BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_testnet__failure_error)
+{
+    // $ sx hd-new baadf00dbaadf00db
+    SX_DECLARE_COMMAND(hd_new);
+    command.set_seed_argument({ "baadf00dbaadf00db" });
+    command.set_general_testnet_setting(true);
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
+    SX_REQUIRE_ERROR(SX_HD_NEW_SHORT_SEED "\n");
+}
+
+// TODO: what seed generates an invalid key so we can cover this code path?
+//BOOST_AUTO_TEST_CASE(hd_new__invoke_128_bit_bad_seed__failure_error)
+//{
+//    // $ sx hd-new ???
+//    SX_DECLARE_COMMAND(hd_new);
+//    command.set_seed_argument({ "00000000000000000000000000000000" });
+//    SX_REQUIRE_FAILURE(command.invoke(output, error));
+//    SX_REQUIRE_ERROR(SX_HD_NEW_INVALID_KEY "\n");
+//}
 
 BOOST_AUTO_TEST_SUITE_END()

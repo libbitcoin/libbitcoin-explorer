@@ -20,14 +20,13 @@
 #include <sx/command/script-decode.hpp>
 
 #include <iostream>
-#include <sx/serializer/script.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result script_decode::invoke(std::ostream& output, std::ostream& cerr)
+console_result script_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& script = get_script_argument();

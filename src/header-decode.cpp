@@ -22,6 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <boost/format.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -30,6 +31,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
+// TODO: use ptree.
 // This is NOT localizable.
 static const char* json_format =
 "{\n"
@@ -42,19 +44,18 @@ static const char* json_format =
 "   \"version\": \"%7%\"\n"
 "}";
 
-console_result header_decode::invoke(std::ostream& output, std::ostream& cerr)
+console_result header_decode::invoke(std::ostream& output, std::ostream& error)
 {
     const auto json = get_json_option();
     const auto& headers = get_headers_argument();
-    HANDLE_MULTIPLE_NOT_IMPLEMENTED(headers);
-    const block_header_type& header = headers.front();
 
-    const auto& format = if_else(json, json_format, SX_HEADER_DECODE_OUTPUT);
+    const auto format = if_else(json, json_format, SX_HEADER_DECODE_OUTPUT);
 
-    output << boost::format(format) % header.bits %
-        hex(hash_block_header(header)) % hex(header.merkle) % header.nonce %
-        hex(header.previous_block_hash) % header.timestamp % header.version 
-        << std::endl;
+    for (const block_header_type& header: headers)
+        output << boost::format(format) % header.bits %
+            hex(hash_block_header(header)) % hex(header.merkle) % header.nonce %
+            hex(header.previous_block_hash) % header.timestamp % header.version 
+            << std::endl;
 
     return console_result::okay;
 }

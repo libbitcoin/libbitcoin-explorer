@@ -20,15 +20,15 @@
 #include <sx/command/blke-fetch-transaction.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
 console_result blke_fetch_transaction::invoke(std::ostream& output,
-    std::ostream& cerr)
+    std::ostream& error)
 {
-    cerr << SX_BLKE_FETCH_TRANSACTION_OBSOLETE << std::endl;
+    error << SX_BLKE_FETCH_TRANSACTION_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

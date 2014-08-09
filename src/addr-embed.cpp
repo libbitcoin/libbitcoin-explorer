@@ -20,17 +20,17 @@
 #include <sx/command/addr-embed.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result addr_embed::invoke(std::ostream& output, std::ostream& cerr)
+console_result addr_embed::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto data = get_file_argument();
+    const auto& data = get_file_argument();
 
-    cerr << SX_ADDR_EMBED_NOT_IMPLEMENTED << std::endl;
+    error << SX_ADDR_EMBED_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

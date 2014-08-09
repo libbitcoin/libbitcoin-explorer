@@ -37,11 +37,11 @@ public:
     /**
      * Constructor.
      *
-     * @param[in]  cerr   The error stream for the callback handler.
-     * @param[in]  output The output stream for the callback handler.
+     * @param[in]  error   The error stream for the callback handler.
+     * @param[in]  output  The output stream for the callback handler.
      */
-    callback_args(std::ostream& cerr, std::ostream& output)
-        : cerr_(cerr), output_(output), stopped_(false),
+    callback_args(std::ostream& error, std::ostream& output)
+        : error_(error), output_(output), stopped_(false),
         result_(console_result::okay)
     {
     }
@@ -51,7 +51,7 @@ public:
      */
     std::ostream& error()
     {
-        return cerr_;
+        return error_;
     }
     
     /**
@@ -81,7 +81,7 @@ public:
 private:
     bool stopped_;
     console_result result_;
-    std::ostream& cerr_;
+    std::ostream& error_;
     std::ostream& output_;
 };
 

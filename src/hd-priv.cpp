@@ -21,7 +21,8 @@
 
 #include <iostream>
 #include <wallet/wallet.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/hd_private.hpp>
 
 using namespace libwallet;
 using namespace sx;
@@ -29,17 +30,15 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result hd_priv::invoke(std::ostream& output, std::ostream& cerr)
+console_result hd_priv::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto hard = get_hard_option();
-    auto index = get_index_option();
-    const hd_private_key secret = get_secret_argument();
+    const auto index = get_index_option();
+    const hd_private_key& secret = get_secret_argument();
 
-    if (hard)
-        index += first_hardened_key;
-
-    const auto child_key = secret.generate_private_key(index);
+    const auto position = if_else(hard, index + first_hardened_key, index);
+    const auto child_key = secret.generate_private_key(position);
 
     output << hd_private(child_key) << std::endl;
     return console_result::okay;

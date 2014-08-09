@@ -20,14 +20,22 @@
 #include <sx/command/tx-sign.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <boost/format.hpp>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-console_result tx_sign::invoke(std::ostream& output, std::ostream& cerr)
+console_result tx_sign::invoke(std::ostream& output, std::ostream& error)
 {
-    cerr << SX_TX_SIGN_NOT_IMPLEMENTED << std::endl;
+    // Bound parameters.
+    const auto& transactions = get_transactions_argument();
+
+    for (const transaction_type& tx: transactions)
+        /* sign */;
+
+    error << SX_TX_SIGN_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
-

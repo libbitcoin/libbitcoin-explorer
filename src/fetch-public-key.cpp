@@ -20,18 +20,18 @@
 #include <sx/command/fetch-public-key.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
 console_result fetch_public_key::invoke(std::ostream& output,
-    std::ostream& cerr)
+    std::ostream& error)
 {
     // Bound parameters.
-    const auto address = get_address_argument();
+    const auto& address = get_address_argument();
 
-    cerr << SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED << std::endl;
+    error << SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

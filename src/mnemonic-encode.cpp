@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <wallet/wallet.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace libwallet;
 using namespace sx;
@@ -29,23 +29,17 @@ using namespace sx::extension;
 
 // $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic
 console_result mnemonic_encode::invoke(std::ostream& output,
-    std::ostream& cerr)
+    std::ostream& error)
 {
     // Bound parameters.
-    const auto seed = get_seed_argument();
-
-    // TODO: change encode_mnemonic to accept data_chunk for seed.
-    std::stringstream hex;
-    hex << seed;
-    auto text_seed = hex.str();
+    const auto& seed = get_seed_argument();
 
     // TODO: change implementation from Electrum to BIP39.
 
     std::string sentence;
-    auto words_list = encode_mnemonic(text_seed);
-    join(words_list, sentence, " \n\t");
+    join(encode_mnemonic(seed), sentence);
 
-    std::cout << sentence << std::endl;
+    output << sentence << std::endl;
     return console_result::okay;
 }
 

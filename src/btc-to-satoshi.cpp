@@ -20,19 +20,19 @@
 #include <sx/command/btc-to-satoshi.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result btc_to_satoshi::invoke(std::ostream& output, std::ostream& cerr)
+console_result btc_to_satoshi::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     // TODO: create fractional serializer.
-    const auto btc = get_btc_argument();
+    const auto& btc = get_btc_argument();
 
     // TODO: parse and validate input and multiply by 10^8.
-    cerr << SX_BTC_TO_SATOSHI_NOT_IMPLEMENTED << std::endl;
+    error << SX_BTC_TO_SATOSHI_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

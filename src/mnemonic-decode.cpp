@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <wallet/wallet.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace libwallet;
 using namespace sx;
@@ -30,17 +30,17 @@ using namespace sx::extension;
 // $ echo "people blonde admit dart couple different truth common alas
 //   stumble time cookie" | sx mnemonic-decode
 console_result mnemonic_decode::invoke(std::ostream& output,
-    std::ostream& cerr)
+    std::ostream& error)
 {
     // Bound parameters.
-    const auto words = get_words_argument();
+    const auto& words = get_words_argument();
 
     // TODO: change implementation from Electrum to BIP39.
 
     // Note that there is no dictionary validation in decode_mnemonic.
     const auto sentence = decode_mnemonic(words);
 
-    std::cout << sentence << std::endl;
+    output << sentence << std::endl;
     return console_result::okay;
 }
 

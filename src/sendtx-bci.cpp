@@ -20,16 +20,14 @@
 #include <sx/command/sendtx-bci.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
-using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-console_result sendtx_bci::invoke(std::ostream& output, std::ostream& cerr)
+console_result sendtx_bci::invoke(std::ostream& output, std::ostream& error)
 {
-    cerr << SX_SENDTX_BCI_OBSOLETE << std::endl;
+    error << SX_SENDTX_BCI_OBSOLETE << std::endl;
     return console_result::failure;
 }
 

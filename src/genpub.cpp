@@ -20,13 +20,13 @@
 #include <sx/command/genpub.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result genpub::invoke(std::ostream& output, std::ostream& cerr)
+console_result genpub::invoke(std::ostream& output, std::ostream& error)
 {
-    cerr << SX_GENPUB_OBSOLETE << std::endl;
+    error << SX_GENPUB_OBSOLETE << std::endl;
     return console_result::failure;
 }

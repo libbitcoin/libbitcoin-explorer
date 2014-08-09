@@ -32,47 +32,49 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void handle_send(callback_args& args, transaction_type& tx)
+static void handle_sent(callback_args& args, transaction_type& tx)
 {
     args.output() << boost::format(SX_SEND_TX_NODE_OUTPUT) % transaction(tx) %
         now() << std::endl;
     args.stopped() = true;
 }
 
-static void handle_callback(callback_args& args, channel_ptr node,
+static void handle_send(callback_args& args, channel_ptr node,
     transaction_type& tx)
 {
-    const auto handler = [&args, &tx](const std::error_code& error)
+    const auto sent_handler = [&args, &tx](const std::error_code& code)
     {
-        handle_error(args, error);
-        handle_send(args, tx);
+        handle_error(args, code);
+        handle_sent(args, tx);
     };
 
-    node->send(tx, handler);
+    node->send(tx, sent_handler);
 }
 
-console_result send_tx_node::invoke(std::ostream& output, std::ostream& cerr)
+console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto host = get_name_option();
-    const auto port = get_port_option();
+    const auto& host = get_name_option();
+    const auto& port = get_port_option();
     const auto& transactions = get_transactions_argument();
-    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
-    const transaction_type& tx = transactions.front();
 
-    callback_args args(cerr, output);
-    const auto handler = [&args](const std::error_code& error,
+    callback_args args(error, output);
+    const auto send_handler = [&args](const std::error_code& code,
         channel_ptr node, transaction_type& tx)
     {
-        handle_error(args, error);
-        handle_callback(args, node, tx);
+        handle_error(args, code);
+        handle_send(args, node, tx);
     };
 
     async_client client(*this, 4);
     auto& pool = client.get_threadpool();
     handshake shake(pool);
     network net(pool);
-    connect(shake, net, host, port, std::bind(handler, ph::_1, ph::_2, tx));
+
+    for (const transaction_type& tx: transactions)
+        connect(shake, net, host, port, 
+            std::bind(send_handler, ph::_1, ph::_2, tx));
+
     client.poll(args.stopped(), 2000);
 
     return args.result();

@@ -47,12 +47,12 @@ using namespace libwallet;
 
 namespace sx {
     
-void handle_error(callback_args& args, const std::error_code& error, 
+void handle_error(callback_args& args, const std::error_code& code, 
     const std::string& format)
 {
-    if (error)
+    if (code)
     {
-        args.error() << boost::format(format) % error.message() << std::endl;
+        args.error() << boost::format(format) % code.message() << std::endl;
         args.result() = console_result::failure;
         args.stopped() = true;
     }
@@ -67,7 +67,7 @@ void join(const std::vector<std::string>& words, std::string& sentence,
 // The key may be invalid, caller must test for null secret.
 // Note that random fill of ec_secret could also generate an invalid key,
 // but that would be less easily tested than this result.
-ec_secret new_key(bc::data_chunk& seed)
+ec_secret new_key(const bc::data_chunk& seed)
 {
     // The testnet value is not relevant to the secret.
     constexpr bool testnet = false;

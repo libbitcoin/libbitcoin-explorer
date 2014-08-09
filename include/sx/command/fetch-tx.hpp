@@ -141,7 +141,7 @@ public:
             (
                 "hash,s",
                 value<std::vector<serializer::btc256>>(&option_.hashs),
-                "The set of hex encoded transaction hashes to get."
+                "The set of hex encoded transaction hashes to get. Overrides prefix and height options."
             )
             (
                 "prefix,p",

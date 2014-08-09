@@ -22,6 +22,7 @@
 #include <iostream>
 #include <vector>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/transaction.hpp>
@@ -32,13 +33,13 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result tx_encode::invoke(std::ostream& output, std::ostream& cerr)
+console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& inputs = get_inputs_option();
-    const auto& outputs = get_outputs_option();
     const auto locktime = get_locktime_option();
     const auto version = get_version_option();
+    const auto& inputs = get_inputs_option();
+    const auto& outputs = get_outputs_option();
     const auto& file = get_transaction_argument();
 
     transaction_type tx;
@@ -53,7 +54,7 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& cerr)
             tx.outputs.push_back(output);
 
     if (is_locktime_conflict(tx))
-        cerr << SX_TX_ENCODE_LOCKTIME_CONFLICT << std::endl;
+        error << SX_TX_ENCODE_LOCKTIME_CONFLICT << std::endl;
 
     write_output(output, file, transaction(tx));
 

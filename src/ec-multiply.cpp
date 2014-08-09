@@ -21,7 +21,8 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/ec_public.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -29,20 +30,21 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result ec_multiply::invoke(std::ostream& output, std::ostream& cerr)
+console_result ec_multiply::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    auto point = get_point_argument();
-    const auto secret = get_secret_argument();
+    const auto& point = get_point_argument();
+    const auto& secret = get_secret_argument();
 
     // Elliptic curve product (POINT * INTEGER).
-    if (!bc::ec_multiply(point.data(), secret))
+    ec_public product(point);
+    if (!bc::ec_multiply(product.data(), secret))
     {
-        cerr << SX_EC_MULITPLY_OUT_OF_RANGE << std::endl;
+        error << SX_EC_MULITPLY_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    output << point << std::endl;
+    output << product << std::endl;
     return console_result::okay;
 }
 

@@ -21,22 +21,21 @@
 
 #include <iostream>
 #include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/hd_public.hpp>
-#include <sx/utility/utility.hpp>
 
-using namespace bc;
 using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result hd_pub::invoke(std::ostream& output, std::ostream& cerr)
+console_result hd_pub::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto hard = get_hard_option();
-    auto index = get_index_option();
-    const auto key = get_key_argument();
+    const auto index = get_index_option();
+    const auto& key = get_key_argument();
 
     hd_public_key child_key;
     const hd_public_key& public_key = key;
@@ -44,17 +43,16 @@ console_result hd_pub::invoke(std::ostream& output, std::ostream& cerr)
 
     if (!private_key.valid() && hard)
     {
-        cerr << SX_HD_PUB_HARD_OPTION_CONFLICT << std::endl;
+        error << SX_HD_PUB_HARD_OPTION_CONFLICT << std::endl;
         return console_result::failure;
     }
 
-    if (hard)
-        index += first_hardened_key;
+    const auto position = if_else(hard, index + first_hardened_key, index);
 
     if (private_key.valid())
-        child_key = private_key.generate_public_key(index);
+        child_key = private_key.generate_public_key(position);
     else
-        child_key = public_key.generate_public_key(index);
+        child_key = public_key.generate_public_key(position);
 
     output << hd_public(child_key) << std::endl;
     return console_result::okay;

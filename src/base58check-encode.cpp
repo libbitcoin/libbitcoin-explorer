@@ -20,21 +20,21 @@
 #include <sx/command/base58check-encode.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result base58check_encode::invoke(std::ostream& output, std::ostream& cerr)
+console_result base58check_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto hex = get_hex_argument();
+    const auto& hex = get_hex_argument();
 
     // TODO: consider obsoleting this since it can be accessed via
     // wrap/unwrap and base58-encode/base58-decode
 
     // TODO: invoke functionality from wrap >> base58-encode.
-    cerr << SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED << std::endl;
+    error << SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

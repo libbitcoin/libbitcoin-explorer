@@ -141,19 +141,9 @@ public:
                 "Watch the network for transactions by filter. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL"
             )
             (
-                "hash,s",
-                value<std::vector<serializer::btc256>>(&option_.hashs),
-                "The set of hex encoded transaction hashes to watch. Includes all transactions if not set."
-            )
-            (
                 "prefix,p",
-                value<std::vector<serializer::prefix>>(&option_.prefixs),
+                value<std::vector<serializer::prefix>>(&option_.prefixs)->required(),
                 "The set of binary encoded stealth search prefixes to watch. Includes all transactions if not set."
-            )
-            (
-                "height,t",
-                value<size_t>(&option_.height),
-                "The minimum block height of transactions to watch. Includes all blocks if not set."
             );
 
         return options;
@@ -188,23 +178,6 @@ public:
     }
 
     /**
-     * Get the value of the hash options.
-     */
-    virtual std::vector<serializer::btc256>& get_hashs_option()
-    {
-        return option_.hashs;
-    }
-    
-    /**
-     * Set the value of the hash options.
-     */
-    virtual void set_hashs_option(
-        const std::vector<serializer::btc256>& value)
-    {
-        option_.hashs = value;
-    }
-
-    /**
      * Get the value of the prefix options.
      */
     virtual std::vector<serializer::prefix>& get_prefixs_option()
@@ -219,23 +192,6 @@ public:
         const std::vector<serializer::prefix>& value)
     {
         option_.prefixs = value;
-    }
-
-    /**
-     * Get the value of the height option.
-     */
-    virtual size_t& get_height_option()
-    {
-        return option_.height;
-    }
-    
-    /**
-     * Set the value of the height option.
-     */
-    virtual void set_height_option(
-        const size_t& value)
-    {
-        option_.height = value;
     }
 
 private:
@@ -262,16 +218,12 @@ private:
     {
         option()
           : help(),
-            hashs(),
-            prefixs(),
-            height()
+            prefixs()
         {
         }
         
         bool help;
-        std::vector<serializer::btc256> hashs;
         std::vector<serializer::prefix> prefixs;
-        size_t height;
     } option_;
 };
 

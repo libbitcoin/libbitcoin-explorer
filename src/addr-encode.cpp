@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -30,13 +31,13 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result addr_encode::invoke(std::ostream& output, std::ostream& cerr)
+console_result addr_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto ripemd160 = get_ripemd160_argument();
-    const auto version = get_version_option();
+    const auto& ripemd160 = get_ripemd160_argument();
+    const auto& version = get_version_option();
 
-    // TESTNET VERSION MAY REQUIRE RECOMPILE
+    // TESTNET VERSION REQUIRES RECOMPILE
     const auto pay_address = payment_address(version, ripemd160);
 
     output << address(pay_address) << std::endl;

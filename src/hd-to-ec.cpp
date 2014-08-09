@@ -20,18 +20,20 @@
 #include <sx/command/hd-to-ec.hpp>
 
 #include <wallet/wallet.hpp>
-#include <sx/serializer/address.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
 
 using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result hd_to_ec::invoke(std::ostream& output, std::ostream& cerr)
+// 100% coverage by line, loc ready.
+console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto key = get_key_argument();
+    const auto& key = get_key_argument();
 
     hd_public_key child_key;
     const hd_public_key& public_key = key;

@@ -20,34 +20,37 @@
 #include <sx/command/hd-new.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/hd_private.hpp>
-#include <sx/utility/utility.hpp>
 
+using namespace bc;
 using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result hd_new::invoke(std::ostream& output, std::ostream& cerr)
+// 83% coverage by line, loc ready. SX_HD_NEW_INVALID_KEY uncovered.
+console_result hd_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    data_chunk seed = get_seed_argument();
+    const data_chunk& seed = get_seed_argument();
     const bool testnet = get_general_testnet_setting();
 
     // Arbitrary minimum 128 bit length for generated seeds.
     constexpr size_t minimum_seed_size = 128;
     if (seed.size() * byte_size < minimum_seed_size)
     {
-        cerr << SX_HD_NEW_SHORT_SEED << std::endl;
+        error << SX_HD_NEW_SHORT_SEED << std::endl;
         return console_result::failure;
     }
 
-    // TESTNET VERSION REQUIRES LIBWALLET/LIBBITCOIN RECOMPILE
+    // TESTNET OPTION DOES NOT REQUIRE RECOMPILE
     const hd_private_key key(seed, testnet);
     if (!key.valid())
     {
-        cerr << SX_HD_NEW_INVALID_KEY << std::endl;
+        error << SX_HD_NEW_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 

@@ -270,10 +270,11 @@ std::string serialize(const Value& value, const std::string& fallback="")
  * @param[in]  item     The satoshi item.
  */
 template <typename Item>
-void serialize_satoshi_item(bc::data_chunk& data, const Item& item)
+bc::data_chunk serialize_satoshi_item(const Item& item)
 {
-    data.resize(bc::satoshi_raw_size(item));
+    bc::data_chunk data(bc::satoshi_raw_size(item));
     bc::satoshi_save(item, data.begin());
+    return data;
 }
 
 /**
@@ -312,7 +313,7 @@ void write_output(std::ostream& output, const std::string& path,
  * @param[in]  error      The callback error result.
  * @param[in]  format     A single parameter format string or empty/default.
  */
-void handle_error(callback_args& args, const std::error_code& error,
+void handle_error(callback_args& args, const std::error_code& code,
     const std::string& format="%1%");
 
 /**
@@ -331,7 +332,7 @@ void join(const std::vector<std::string>& words, std::string& sentence,
  * @param[in]  seed  The seed for key randomness.
  * @return           The new key.
  */
-bc::ec_secret new_key(bc::data_chunk& seed);
+bc::ec_secret new_key(const bc::data_chunk& seed);
 
 /**
  * Generate a new pseudorandom seed.

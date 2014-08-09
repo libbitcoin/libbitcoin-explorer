@@ -20,10 +20,9 @@
 #include <sx/command/ec-add-secrets.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/ec_private.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -31,16 +30,16 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& cerr)
+console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto secrets = get_secrets_argument();
+    const auto& secrets = get_secrets_argument();
 
     ec_private sum;
-    const auto& null_key = ec_private().data();
     for (auto const& secret: secrets)
     {
-        if (sum.data() == null_key)
+        // Initialize sum on first pass.
+        if ((ec_secret)sum == null_hash)
         {
             sum.data() = secret;
             continue;
@@ -49,7 +48,7 @@ console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& cerr)
         // Elliptic curve function (INTEGER + INTEGER) % curve-order.
         if (!bc::ec_add(sum.data(), secret))
         {
-            cerr << SX_EC_ADD_SECRETS_OUT_OF_RANGE << std::endl;
+            error << SX_EC_ADD_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }

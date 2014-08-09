@@ -20,20 +20,20 @@
 #include <sx/command/addr-validate.hpp>
 
 #include <iostream>
-#include <sx/serializer/address.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result addr_validate::invoke(std::ostream& output, std::ostream& cerr)
+console_result addr_validate::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto addresses = get_addresss_argument();
+    const auto& addresses = get_addresss_argument();
 
-    // TESTNET VERSION MAY REQUIRE RECOMPILE
-
+    // TESTNET VERSION REQUIRES RECOMPILE
     // If any address is not valid the deserializer will throw.
+
     return console_result::okay;
 }

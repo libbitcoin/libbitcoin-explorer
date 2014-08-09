@@ -132,12 +132,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a BIP39 mnemonic to its seed. WARNING: mnemonic should be generated from a random seed."
+                "Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39."
             )
             (
                 "WORD",
                 value<std::vector<std::string>>(&argument_.words),
-                "The set of words from the BIP39 word list."
+                "The set of words from the Electrum word list."
             );
 
         return options;

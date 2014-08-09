@@ -22,8 +22,9 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/header.hpp>
 #include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -34,23 +35,21 @@ using namespace sx::serializer;
 
 static void handle_callback(callback_args& args, const block_header_type& block_header)
 {
-    data_chunk bytes(satoshi_raw_size(block_header));
-    satoshi_save(block_header, bytes.begin());
-    args.output() << hex(bytes) << std::endl;
+    args.output() << header(block_header) << std::endl;
     args.stopped() = true;
 }
 
-console_result fetch_header::invoke(std::ostream& output, std::ostream& cerr)
+console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const size_t height = get_height_option();
-    const hash_digest hash = get_hash_option();
+    const hash_digest& hash = get_hash_option();
 
-    callback_args args(cerr, output);
-    const auto handler = [&args](const std::error_code& error,
+    callback_args args(error, output);
+    const auto handler = [&args](const std::error_code& code,
         const block_header_type& block_header)
     {
-        handle_error(args, error);
+        handle_error(args, code);
         handle_callback(args, block_header);
     };
 

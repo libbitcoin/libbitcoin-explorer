@@ -39,10 +39,10 @@
     public: virtual void set_##name(type value) { name##_ = value; } \
     private: type name##_
 
-#define HANDLE_MULTIPLE_NOT_IMPLEMENTED(collection) \
+#define HANDLE_MULTIPLE_NOT_IMPLEMENTED(collection, stream) \
     if (collection.size() != 1) \
     { \
-        cerr << name() << " does not yet support multiple primary inputs" \
+        stream << name() << " does not yet support multiple primary inputs" \
             << std::endl; \
     }
 

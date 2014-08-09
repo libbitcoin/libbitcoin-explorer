@@ -16,7 +16,6 @@ sx_test_SOURCES = \
     addr-encode.cpp \
     addr-validate.cpp \
     address.cpp \
-    balance.cpp \
     base58.cpp \
     base58check-decode.cpp \
     base58check-encode.cpp \
@@ -24,10 +23,9 @@ sx_test_SOURCES = \
     base58-encode.cpp \
     bci-fetch-last-height.cpp \
     bci-history.cpp \
-    bci-send-transaction.cpp \
-    be-fetch-transaction.cpp \
+    blke-fetch-transaction.cpp \
     brainwallet.cpp \
-    btc.cpp \
+    btc-to-satoshi.cpp \
     ec-add.cpp \
     ec-add-secrets.cpp \
     ec-multiply.cpp \
@@ -35,13 +33,14 @@ sx_test_SOURCES = \
     ec-new.cpp \
     ec-to-addr.cpp \
     ec-to-pub.cpp \
-    fetch-header-hash.cpp \
-    fetch-header-height.cpp \
-    fetch-last-height.cpp \
-    fetch-pubkey.cpp \
-    fetch-stealth.cpp \
-    fetch-transaction.cpp \
-    fetch-transaction-index.cpp \
+    fetch-balance.cpp \
+    fetch-confirmations.cpp \
+    fetch-header.cpp \
+    fetch-height.cpp \
+    fetch-history.cpp \
+    fetch-public-key.cpp \
+    fetch-tx.cpp \
+    fetch-tx-index.cpp \
     fetch-utxo.cpp \
     genaddr.cpp \
     generated__broadcast.cpp \
@@ -58,7 +57,6 @@ sx_test_SOURCES = \
     hd-to-pub.cpp \
     hd-to-wif.cpp \
     help.cpp \
-    history.cpp \
     initchain.cpp \
     main.cpp \
     monitor.cpp \
@@ -68,17 +66,19 @@ sx_test_SOURCES = \
     printer.cpp \
     qrcode.cpp \
     ripemd160.cpp \
-    satoshi.cpp \
+    satoshi-to-btc.cpp \
+    sendtx-bci.cpp \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \
     stealth-addr.cpp \
     unwrap.cpp \
     wallet.cpp \
-    watchtx.cpp \
+    watch-tx.cpp \
     wif-to-ec.cpp \
     wif-to-pub.cpp \
-    wrap.cpp
+    wrap-decode.cpp \
+    wrap-encode.cpp
 
 sx_test_LDADD = \
     -L$(srcdir)/../src/ -lsx \

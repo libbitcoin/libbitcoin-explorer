@@ -20,9 +20,8 @@
 #include <sx/command/addr-decode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/btc160.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -30,11 +29,13 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result addr_decode::invoke(std::ostream& output, std::ostream& cerr)
+console_result addr_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto address = get_address_argument();
-    
+    const auto& address = get_address_argument();
+
+    // TESTNET VERSION REQUIRES RECOMPILE
+
     output << btc160(address) << std::endl;
     return console_result::okay;
 }

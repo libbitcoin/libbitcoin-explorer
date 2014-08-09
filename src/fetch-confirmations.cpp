@@ -23,6 +23,7 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
@@ -31,6 +32,7 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
+// TODO: use parse tree?
 static void handle_callback(callback_args& args, const index_list& confirmations)
 {
     for (const auto& confirmation: confirmations)
@@ -38,18 +40,18 @@ static void handle_callback(callback_args& args, const index_list& confirmations
 }
 
 console_result fetch_confirmations::invoke(std::ostream& output,
-    std::ostream& cerr)
+    std::ostream& error)
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
-    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions);
+    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions, error);
     const transaction_type& tx = transactions.front();
 
-    callback_args args(cerr, output);
-    const auto handler = [&args](const std::error_code& error,
+    callback_args args(error, output);
+    const auto handler = [&args](const std::error_code& code,
         const index_list& unconfirmed)
     {
-        handle_error(args, error);
+        handle_error(args, code);
         handle_callback(args, unconfirmed);
     };
 

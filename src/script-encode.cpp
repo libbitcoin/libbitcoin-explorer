@@ -20,16 +20,14 @@
 #include <sx/command/script-encode.hpp>
 
 #include <iostream>
-#include <string>
-#include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result script_encode::invoke(std::ostream& output, std::ostream& cerr)
+console_result script_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& tokens = get_tokens_argument();

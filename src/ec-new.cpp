@@ -20,33 +20,35 @@
 #include <sx/command/ec-new.hpp>
 
 #include <iostream>
-#include <wallet/wallet.hpp>
-#include <sx/serializer/hd_private.hpp>
-#include <sx/utility/utility.hpp>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/ec_private.hpp>
 
-using namespace libwallet;
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result ec_new::invoke(std::ostream& output, std::ostream& cerr)
+// 83% coverage by line, loc ready. SX_EC_NEW_INVALID_KEY uncovered.
+console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    data_chunk seed = get_seed_argument();
-    const bool testnet = get_general_testnet_setting();
+    const data_chunk& seed = get_seed_argument();
+    const auto testnet = get_general_testnet_setting();
 
     // Arbitrary minimum 128 bit length for generated seeds.
     constexpr size_t minimum_seed_size = 128;
+
     if (seed.size() * byte_size < minimum_seed_size)
     {
-        cerr << SX_EC_NEW_SHORT_SEED << std::endl;
+        error << SX_EC_NEW_SHORT_SEED << std::endl;
         return console_result::failure;
     }
 
     ec_private key(new_key(seed));
-    if ((ec_secret)key == ec_secret())
+    if ((ec_secret)key == null_hash)
     {
-        cerr << SX_EC_NEW_INVALID_KEY << std::endl;
+        error << SX_EC_NEW_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 

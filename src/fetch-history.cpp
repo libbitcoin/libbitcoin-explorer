@@ -38,6 +38,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
+// TODO: use parse tree.
 // These are NOT localizable.
 static const char* json_pending = "pending";
 static const char* json_unspent = "unspent";
@@ -89,14 +90,14 @@ static void parse_history(std::string& output_height, std::string& row_spend,
 }
 
 static void history_fetched(const payment_address& pay_address,
-    const std::error_code& error, const blockchain::history_list& history)
+    const std::error_code& code, const blockchain::history_list& history)
 {
     std::lock_guard<std::mutex> lock(mutex);
     BITCOIN_ASSERT(remaining_count > 0);
 
-    if (error)
+    if (code)
     {
-        std::cerr << error.message() << std::endl;
+        std::cerr << code.message() << std::endl;
         result = console_result::failure;
         remaining_count = 0;
         condition.notify_one();
@@ -148,11 +149,11 @@ static void history_fetched(const payment_address& pay_address,
 }
 
 // Untestable without fullnode virtualization, loc ready.
-console_result fetch_history::invoke(std::ostream& output, std::ostream& cerr)
+console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    auto addresses = get_addresss_argument();
-    auto json = get_json_option();
+    const auto json = get_json_option();
+    const auto& addresses = get_addresss_argument();
 
     json_output = json;
     first_address = true;

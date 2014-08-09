@@ -22,6 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/utility/callback_args.hpp>
 #include <sx/utility/utility.hpp>
@@ -36,12 +37,12 @@ static void handle_callback(callback_args& args, size_t height)
     args.stopped() = true;
 }
 
-console_result fetch_height::invoke(std::ostream& output, std::ostream& cerr)
+console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
-    callback_args args(cerr, output);
-    const auto handler = [&args](const std::error_code& error, size_t height)
+    callback_args args(error, output);
+    const auto handler = [&args](const std::error_code& code, size_t height)
     {
-        handle_error(args, error);
+        handle_error(args, code);
         handle_callback(args, height);
     };
 

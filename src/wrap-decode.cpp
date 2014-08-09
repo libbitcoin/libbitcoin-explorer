@@ -22,6 +22,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -53,16 +54,16 @@ bool split_checksum(const data_chunk& chunk, byte& version, hex& payload,
 }
 
 // 100% coverage by line, loc ready.
-console_result wrap_decode::invoke(std::ostream& output, std::ostream& cerr)
+console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const data_chunk hexadecimal = get_hex_argument();
+    const data_chunk& data = get_hex_argument();
 
     byte version;
     hex payload, checksum;
-    if (!split_checksum(hexadecimal, version, payload, checksum))
+    if (!split_checksum(data, version, payload, checksum))
     {
-        cerr << SX_WRAP_DECODE_INVALID_CHECKSUM << std::endl;
+        error << SX_WRAP_DECODE_INVALID_CHECKSUM << std::endl;
         return console_result::failure;
     }
 

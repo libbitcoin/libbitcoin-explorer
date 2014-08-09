@@ -20,18 +20,18 @@
 #include <sx/command/fetch-utxo.hpp>
 
 #include <iostream>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
 
 using namespace sx;
 using namespace sx::extension;
 
-console_result fetch_utxo::invoke(std::ostream& output, std::ostream& cerr)
+console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto addresses = get_addresss_argument();
     const auto satoshi = get_satoshi_argument();
+    const auto& addresses = get_addresss_argument();
 
-    cerr << SX_FETCH_UTXO_NOT_IMPLEMENTED << std::endl;
+    error << SX_FETCH_UTXO_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
 

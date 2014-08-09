@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -194,7 +194,6 @@
     <ClCompile Include="..\..\..\..\src\async_client.cpp" />
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
-    <ClCompile Include="..\..\..\..\src\fetch-prefix.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
@@ -204,6 +203,7 @@
     <ClCompile Include="..\..\..\..\src\utility\parameter.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\printer.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\utility.cpp" />
+       
     <ClCompile Include="..\..\..\..\src\input-sign.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -213,6 +213,7 @@
     <ClCompile Include="..\..\..\..\src\input-validate.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    
     <ClCompile Include="..\..\..\..\src\stealth-addr-decode.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>

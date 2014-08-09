@@ -20,8 +20,8 @@
 #include <sx/command/hd-to-addr.hpp>
 
 #include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace libwallet;
 using namespace sx;
@@ -29,15 +29,15 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result hd_to_addr::invoke(std::ostream& output, std::ostream& cerr)
+console_result hd_to_addr::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto key = get_key_argument();
+    const auto& key = get_key_argument();
 
     // Get public from private and otherwise get public.
     const auto public_key = key.derived_public_key();
 
-    // RECOMPILE OF LIBBITCOIN REQUIRED FOR TESTNET ADDRESSES.
+    // RECOMPILE OF REQUIRED FOR TESTNET.
 
     output << address(public_key) << std::endl;
     return console_result::okay;

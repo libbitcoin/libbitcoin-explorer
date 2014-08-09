@@ -139,8 +139,7 @@ public:
     friend std::ostream& operator<<(std::ostream& output, 
         const transaction& argument)
     {
-        bc::data_chunk bytes;
-        serialize_satoshi_item(bytes, argument.value_);
+        const auto bytes = serialize_satoshi_item(argument.value_);
         output << hex(bytes);
         return output;
     }

@@ -21,17 +21,19 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/ec_public.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result ec_to_pub::invoke(std::ostream& output, std::ostream& cerr)
+// 100% coverage by line, loc ready.
+console_result ec_to_pub::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto secret = get_secret_argument();
-    const auto uncompressed = get_uncompressed_option();
+    const auto& secret = get_secret_argument();
+    const auto& uncompressed = get_uncompressed_option();
 
     const auto public_key = secret_to_public_key(secret, !uncompressed);
 

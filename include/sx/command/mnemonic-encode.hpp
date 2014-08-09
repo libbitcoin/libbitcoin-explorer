@@ -132,12 +132,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a seed to its BIP39 mnemonic."
+                "Convert a seed to its Electrum mnemonic."
             )
             (
                 "SEED",
                 value<serializer::hex>(&argument_.seed),
-                "The hex encoded randomness seed. WARNING: seed should be random and at least 128 bits in length."
+                "The hex encoded randomness seed. WARNING: seed should be random and at least 128 bits in length. WARNING: This implementation is deprecated in favor of BIP39."
             );
 
         return options;
