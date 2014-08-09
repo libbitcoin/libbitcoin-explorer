@@ -33,8 +33,6 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-const static char* endline = "\n";
-
 static void handle_signal(int signal)
 {
     // Can't pass args using lambda capture for a simple function pointer.
@@ -55,7 +53,7 @@ static void handle_check(callback_args& args, size_t connection_count,
     size_t node_count)
 {
     args.output() << boost::format(SX_SEND_TX_P2P_CHECK_OKAY) %
-        connection_count << endline;
+        connection_count << std::endl;
 
     // BUGBUG: potentially multiple subscriptions.
     if (connection_count >= node_count)
