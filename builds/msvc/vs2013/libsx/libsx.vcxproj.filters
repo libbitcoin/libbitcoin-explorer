@@ -646,7 +646,6 @@
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    
     <ClCompile Include="..\..\..\..\src\input-set.cpp">
       <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
@@ -656,7 +655,6 @@
     <ClCompile Include="..\..\..\..\src\input-validate.cpp">
       <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
-    
     <ClCompile Include="..\..\..\..\src\stealth-addr-decode.cpp">
       <Filter>src\command\todo\stealth</Filter>
     </ClCompile>
