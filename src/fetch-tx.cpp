@@ -28,7 +28,7 @@
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/transaction.hpp>
-#include <sx/utility/callback_args.hpp>
+#include <sx/utility/callback_state.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -38,37 +38,34 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // TODO: use parse tree.
-static void handle_prefix_callback(callback_args& args,
+static void handle_prefix_callback(callback_state& state,
     const blockchain::stealth_list& stealth_results)
 {
     for (const auto& row: stealth_results)
-        args.output() << boost::format(SX_FETCH_TX_OUTPUT) %
+        state.output(boost::format(SX_FETCH_TX_OUTPUT) %
             hex(row.ephemkey) % address(row.address) %
-            btc256(row.transaction_hash) << std::endl;
+            btc256(row.transaction_hash));
 
-    // BUGBUG: there is a race condition for termination among callbacks.
-    args.stopped() = true;
+    --state;
 }
 
 // TODO: use parse tree with missing nodes from stealth.
-static void transaction_fetched(callback_args& args, 
+static void transaction_fetched(callback_state& state, 
     const transaction_type& tx)
 {
-    args.output() << transaction(tx) << std::endl;
-
-    // BUGBUG: there is a race condition for termination among callbacks.
-    args.stopped() = true;
+    state.output(transaction(tx));
+    --state;
 }
 
-static void handle_fetch_callback(callback_args& args, 
+static void handle_fetch_callback(callback_state& state, 
     const std::error_code& code, const transaction_type& tx, 
     const hash_digest& hash, fullnode_interface& fullnode)
 {
-    const auto fetched_handler = [&args](const std::error_code& code, 
+    const auto fetched_handler = [&state](const std::error_code& code, 
         const transaction_type& tx)
     {
-        handle_error(args, code);
-        transaction_fetched(args, tx);
+        if (!handle_error(state, code))
+            transaction_fetched(state, tx);
     };
 
     // Try the tx memory pool if the transaction is not in the blockchain.
@@ -85,37 +82,49 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     const auto& hashes = get_hashs_option();
     const auto& prefixes = get_prefixs_option();
 
-    callback_args args(error, output);
+    callback_state state(error, output);
 
-    const auto fetch_handler = [&args](const std::error_code& code,
+    const auto fetch_handler = [&state](const std::error_code& code,
         const transaction_type& tx, const hash_digest& hash, 
         fullnode_interface& fullnode)
     {
         // Don't handle error here since it's needed by the callback.
-        handle_fetch_callback(args, code, tx, hash, fullnode);
+        handle_fetch_callback(state, code, tx, hash, fullnode);
     };
 
-    const auto prefix_handler = [&args](const std::error_code& code,
+    const auto prefix_handler = [&state](const std::error_code& code,
         const blockchain::stealth_list& stealth_results)
     {
-        handle_error(args, code);
-        handle_prefix_callback(args, stealth_results);
+        if (!handle_error(state, code))
+            handle_prefix_callback(state, stealth_results);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
 
     for (const hash_digest& hash: hashes)
+    {
+        ++state;
         fullnode.blockchain.fetch_transaction(hash,
             std::bind(fetch_handler, ph::_1, ph::_2, hash, 
                 std::ref(fullnode)));
 
+        // TODO: need to verify this setup is correct for multiple simo txs.
+        break;
+    }
+
     for (const stealth_prefix& prefix: prefixes)
+    {
+        ++state;
         fullnode.blockchain.fetch_stealth(prefix,
             std::bind(prefix_handler, ph::_1, ph::_2), height);
+        
+        // TODO: need to verify this setup is correct for multiple simo txs.
+        break;
+    }
 
-    client.poll(args.stopped());
+    client.poll(state.stopped());
 
-    return args.result();
+    return state.get_result();
 }
 

@@ -142,7 +142,7 @@ public:
             )
             (
                 "prefix,p",
-                value<std::vector<serializer::prefix>>(&option_.prefixs)->required(),
+                value<std::vector<serializer::prefix>>(&option_.prefixs),
                 "The set of binary encoded stealth search prefixes to watch. Includes all transactions if not set."
             );
 

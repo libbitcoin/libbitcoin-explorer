@@ -51,7 +51,7 @@
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
-#include <sx/utility/callback_args.hpp>
+#include <sx/utility/callback_state.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/environment.hpp>

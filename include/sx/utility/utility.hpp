@@ -25,6 +25,7 @@
 // without sampling it first. 
 #pragma warning(push)
 #pragma warning(disable : 4996)
+#include <cstddef>
 #include <iostream>
 #include <stdint.h>
 #include <string>
@@ -40,7 +41,7 @@
 #pragma warning(pop)
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/utility/callback_args.hpp>
+#include <sx/utility/callback_state.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -309,11 +310,12 @@ void write_output(std::ostream& output, const std::string& path,
 /**
  * Handle the callback error with standard behavior.
  *
- * @param[in]  args       The arguments for the callback.
- * @param[in]  error      The callback error result.
- * @param[in]  format     A single parameter format string or empty/default.
+ * @param[in]  state   The callback shared state.
+ * @param[in]  code    The callback error result.
+ * @param[in]  format  A single parameter format string or empty/default.
+ * @return             True if no error.   
  */
-void handle_error(callback_args& args, const std::error_code& code,
+bool handle_error(callback_state& state, const std::error_code& code,
     const std::string& format="%1%");
 
 /**

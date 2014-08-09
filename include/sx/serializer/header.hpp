@@ -108,6 +108,18 @@ public:
     }
 
     /**
+     * Overload cast to string.
+     *
+     * @return  This object's value converted to string.
+     */
+    operator const std::string() const
+    {
+        std::stringstream result;
+        result << *this;
+        return result.str();
+    }
+
+    /**
      * Overload stream in. Throws if input is invalid.
      *
      * @param[in]   input     The input stream to read the value from.

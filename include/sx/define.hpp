@@ -67,6 +67,7 @@ namespace ph = std::placeholders;
 namespace po = boost::program_options;
 namespace pt = boost::property_tree;
 
+typedef boost::format format;
 typedef po::option_description option_metadata;
 typedef po::options_description options_metadata;
 typedef po::positional_options_description arguments_metadata;

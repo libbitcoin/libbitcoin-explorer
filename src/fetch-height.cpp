@@ -24,33 +24,34 @@
 #include <obelisk/obelisk.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/utility/callback_args.hpp>
+#include <sx/utility/callback_state.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static void handle_callback(callback_args& args, size_t height)
+static void handle_callback(callback_state& state, size_t height)
 {
-    args.output() << height << std::endl;
-    args.stopped() = true;
+    state.output(format("%1%") % height);
+    state.stop();
 }
 
 console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
-    callback_args args(error, output);
-    const auto handler = [&args](const std::error_code& code, size_t height)
+    callback_state state(error, output);
+    const auto handler = [&state](const std::error_code& code, size_t height)
     {
-        handle_error(args, code);
-        handle_callback(args, height);
+        if (!handle_error(state, code))
+            handle_callback(state, height);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
+    state.start();
     fullnode.blockchain.fetch_last_height(handler);
-    client.poll(args.stopped());
+    client.poll(state.stopped());
 
-    return args.result();
+    return state.get_result();
 }
 

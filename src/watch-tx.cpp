@@ -33,18 +33,18 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void handle_subscribed(callback_args& args, 
+static void handle_subscribed(callback_state& state, 
     const worker_uuid& worker)
 {
-    args.output() << SX_WATCH_TX_WAITING << std::endl;
+    state.output(SX_WATCH_TX_WAITING);
 }
 
 // TODO: use parse tree.
-static void handle_update(callback_args& args, size_t height,
+static void handle_update(callback_state& state, size_t height,
     const hash_digest& block_hash, const transaction_type& tx)
 {
-    args.output() << boost::format(SX_WATCH_TX_OUTPUT) % transaction(tx) %
-        height % hex(block_hash) << std::endl;
+    state.output(boost::format(SX_WATCH_TX_OUTPUT) % transaction(tx) %
+        height % hex(block_hash));
 }
 
 // This command only halts on failure.
@@ -56,30 +56,34 @@ console_result watch_tx::invoke(std::ostream& output, std::ostream& error)
     //const hash_digest& hash = hashes.front();
     const auto& prefixes = get_prefixs_option();
 
-    callback_args args(error, output);
-    const auto update_handler = [&args](const std::error_code& code,
+    callback_state state(error, output);
+    const auto update_handler = [&state](const std::error_code& code,
         size_t height, const hash_digest& block_hash, 
         const transaction_type& tx)
     {
-        handle_error(args, code);
-        handle_update(args, height, block_hash, tx);
+        if (!handle_error(state, code))
+            handle_update(state, height, block_hash, tx);
     };
 
-    const auto subscribed_handler = [&args](const std::error_code& code,
+    const auto subscribed_handler = [&state](const std::error_code& code,
         const worker_uuid& worker)
     {
-        handle_error(args, code);
-        handle_subscribed(args, worker);
+        if (!handle_error(state, code))
+            handle_subscribed(state, worker);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-
-    // Create a subscription for each prefix.
     for (const auto& prefix: prefixes)
+    {
+        ++state;
         fullnode.address.subscribe(prefix, update_handler, subscribed_handler);
 
-    client.poll(args.stopped());
+        // TODO: need to verify this setup is correct for multiple simo txs.
+        break;
+    }
 
-    return args.result();
+    client.poll(state.stopped());
+
+    return state.get_result();
 }

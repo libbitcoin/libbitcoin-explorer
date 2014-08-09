@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -106,7 +106,7 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\script.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\utility\callback_args.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\utility\callback_state.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\config.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\environment.hpp" />

@@ -30,12 +30,10 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static void handle_callback(callback_args& args)
+static void handle_callback(callback_state& state)
 {
-    args.output() << boost::format(SX_SEND_TX_OUTPUT) % now() << std::endl;
-
-    // BUGBUG: first response terminates.
-    args.stopped() = true;
+    state.output(boost::format(SX_SEND_TX_OUTPUT) % now());
+    state.stop();
 }
 
 console_result send_tx::invoke(std::ostream& output, std::ostream& error)
@@ -43,21 +41,23 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
 
-    callback_args args(error, output);
-    const auto handler = [&args](const std::error_code& code)
+    callback_state state(error, output);
+    const auto handler = [&state](const std::error_code& code)
     {
-        handle_error(args, code);
-        handle_callback(args);
+        if (!handle_error(state, code))
+            handle_callback(state);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-
     for (const transaction_type& tx: transactions)
+    {
+        ++state;
         fullnode.protocol.broadcast_transaction(tx, handler);
+    }
 
-    client.poll(args.stopped());
+    client.poll(state.stopped());
 
-    return args.result();
+    return state.get_result();
 }
 

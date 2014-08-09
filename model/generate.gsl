@@ -991,7 +991,7 @@ sx_include_HEADERS = \\
 
 sx_utility_includedir = $\(includedir)/sx/utility
 sx_utility_include_HEADERS += \\
-    callback_args.hpp \\
+    callback_state.hpp \\
     compat.hpp \\
     config.hpp \\
     environment.hpp \\
@@ -1211,7 +1211,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\transaction.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\callback_args.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\callback_state.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp" />
@@ -1449,7 +1449,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\callback_args.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\callback_state.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp">

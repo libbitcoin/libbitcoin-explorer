@@ -32,20 +32,19 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void handle_sent(callback_args& args, transaction_type& tx)
+static void handle_sent(callback_state& state, transaction_type& tx)
 {
-    args.output() << boost::format(SX_SEND_TX_NODE_OUTPUT) % transaction(tx) %
-        now() << std::endl;
-    args.stopped() = true;
+    state.output(format(SX_SEND_TX_NODE_OUTPUT) % transaction(tx) % now());
+    --state;
 }
 
-static void handle_send(callback_args& args, channel_ptr node,
+static void handle_send(callback_state& state, channel_ptr node,
     transaction_type& tx)
 {
-    const auto sent_handler = [&args, &tx](const std::error_code& code)
+    const auto sent_handler = [&state, &tx](const std::error_code& code)
     {
-        handle_error(args, code);
-        handle_sent(args, tx);
+        if (!handle_error(state, code))
+            handle_sent(state, tx);
     };
 
     node->send(tx, sent_handler);
@@ -58,24 +57,29 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const auto& port = get_port_option();
     const auto& transactions = get_transactions_argument();
 
-    callback_args args(error, output);
-    const auto send_handler = [&args](const std::error_code& code,
+    callback_state state(error, output);
+    const auto send_handler = [&state](const std::error_code& code,
         channel_ptr node, transaction_type& tx)
     {
-        handle_error(args, code);
-        handle_send(args, node, tx);
+        if (!handle_error(state, code))
+            handle_send(state, node, tx);
     };
 
     async_client client(*this, 4);
     auto& pool = client.get_threadpool();
     handshake shake(pool);
     network net(pool);
-
     for (const transaction_type& tx: transactions)
+    {
+        ++state;
         connect(shake, net, host, port, 
             std::bind(send_handler, ph::_1, ph::_2, tx));
 
-    client.poll(args.stopped(), 2000);
+        // TODO: need to verify this setup is correct for multiple simo txs.
+        break;
+    }
 
-    return args.result();
+    client.poll(state.stopped(), 2000);
+
+    return state.get_result();
 }

@@ -38,7 +38,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #pragma warning(pop)
-#include <sx/utility/callback_args.hpp>
+#include <sx/utility/callback_state.hpp>
 #include <sx/utility/compat.hpp>
 
 using namespace bc;
@@ -47,15 +47,17 @@ using namespace libwallet;
 
 namespace sx {
     
-void handle_error(callback_args& args, const std::error_code& code, 
+bool handle_error(callback_state& state, const std::error_code& code, 
     const std::string& format)
 {
     if (code)
     {
-        args.error() << boost::format(format) % code.message() << std::endl;
-        args.result() = console_result::failure;
-        args.stopped() = true;
+        state.error(boost::format(format) % code.message());
+        state.stop(console_result::failure);
+        return false;
     }
+
+    return true;
 }
 
 void join(const std::vector<std::string>& words, std::string& sentence,

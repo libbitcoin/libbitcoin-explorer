@@ -155,28 +155,26 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     const auto json = get_json_option();
     const auto& addresses = get_addresss_argument();
 
+    // TODO: replace these
     json_output = json;
     first_address = true;
     result = console_result::okay;
     remaining_count = addresses.size();
 
+    // TODO: set up lambdas.
+    callback_state state(error, output);
+
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-
     for (const auto& address: addresses)
+    {
+        ++state;
         fullnode.address.fetch_history(address,
             std::bind(history_fetched, address, ph::_1, ph::_2));
+    }
 
-    bool done = false;
-    client.detached_poll(done);
+    client.poll(state.stopped());
 
-    std::unique_lock<std::mutex> lock(mutex);
-    while (remaining_count > 0)
-        condition.wait(lock);
-
-    client.stop();
-    done = true;
-
-    return result;
+    return state.get_result();
 }
 

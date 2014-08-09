@@ -25,7 +25,7 @@
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/utility/callback_args.hpp>
+#include <sx/utility/callback_state.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -33,10 +33,10 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void handle_callback(callback_args& args, const block_header_type& block_header)
+static void handle_callback(callback_state& state, const block_header_type& block_header)
 {
-    args.output() << header(block_header) << std::endl;
-    args.stopped() = true;
+    state.output(header(block_header));
+    state.stop();
 }
 
 console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
@@ -45,22 +45,23 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const size_t height = get_height_option();
     const hash_digest& hash = get_hash_option();
 
-    callback_args args(error, output);
-    const auto handler = [&args](const std::error_code& code,
+    callback_state state(error, output);
+    const auto handler = [&state](const std::error_code& code,
         const block_header_type& block_header)
     {
-        handle_error(args, code);
-        handle_callback(args, block_header);
+        if (!handle_error(state, code))
+            handle_callback(state, block_header);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
+    state.start();
     if (hash == null_hash)
         fullnode.blockchain.fetch_block_header(height, handler);
     else
         fullnode.blockchain.fetch_block_header(hash, handler);
-    client.poll(args.stopped());
+    client.poll(state.stopped());
 
-    return args.result();
+    return state.get_result();
 }
 

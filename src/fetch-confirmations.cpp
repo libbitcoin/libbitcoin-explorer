@@ -20,12 +20,11 @@
 #include <sx/command/fetch-confirmations.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/utility/callback_args.hpp>
+#include <sx/utility/callback_state.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -33,10 +32,12 @@ using namespace sx;
 using namespace sx::extension;
 
 // TODO: use parse tree?
-static void handle_callback(callback_args& args, const index_list& confirmations)
+static void handle_callback(callback_state& state, const index_list& confirmations)
 {
     for (const auto& confirmation: confirmations)
-        args.output() << confirmation << std::endl;
+        state.output(format("%1%") % confirmation);
+
+    state.stop();
 }
 
 console_result fetch_confirmations::invoke(std::ostream& output,
@@ -47,18 +48,19 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions, error);
     const transaction_type& tx = transactions.front();
 
-    callback_args args(error, output);
-    const auto handler = [&args](const std::error_code& code,
+    callback_state state(error, output);
+    const auto handler = [&state](const std::error_code& code,
         const index_list& unconfirmed)
     {
-        handle_error(args, code);
-        handle_callback(args, unconfirmed);
+        if (!handle_error(state, code))
+            handle_callback(state, unconfirmed);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
+    state.start();
     fullnode.transaction_pool.validate(tx, handler);
-    client.poll(args.stopped());
+    client.poll(state.stopped());
 
-    return args.result();
+    return state.get_result();
 }

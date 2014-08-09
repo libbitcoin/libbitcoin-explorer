@@ -25,18 +25,17 @@
 #include <obelisk/obelisk.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/utility/callback_args.hpp>
+#include <sx/utility/callback_state.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static void handle_callback(callback_args& args, size_t height, size_t index)
+static void handle_callback(callback_state& state, size_t height, size_t index)
 {
-    args.output() << boost::format(SX_FETCH_TX_INDEX_OUTPUT) % height % index 
-        << std::endl;
-    args.stopped() = true;
+    state.output(boost::format(SX_FETCH_TX_INDEX_OUTPUT) % height % index);
+    state.stop();
 }
 
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
@@ -44,19 +43,20 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& hash = get_hash_argument();
 
-    callback_args args(error, output);
-    const auto handler = [&args](const std::error_code& code, size_t height, 
+    callback_state state(error, output);
+    const auto handler = [&state](const std::error_code& code, size_t height, 
         size_t index)
     {
-        handle_error(args, code);
-        handle_callback(args, height, index);
+        if (!handle_error(state, code))
+            handle_callback(state, height, index);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
+    state.start();
     fullnode.blockchain.fetch_transaction_index(hash, handler);
-    client.poll(args.stopped());
+    client.poll(state.stopped());
 
-    return args.result();
+    return state.get_result();
 }
 

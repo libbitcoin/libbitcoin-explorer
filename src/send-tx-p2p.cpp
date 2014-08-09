@@ -43,49 +43,45 @@ static void handle_signal(int signal)
 }
 
 // Started protocol, node discovery complete.
-static void handle_start(callback_args& args)
+static void handle_start(callback_state& state)
 {
-    args.output() << SX_SEND_TX_P2P_START_OKAY;
+    state.output(SX_SEND_TX_P2P_START_OKAY);
 }
 
 // Fetched a number of connections.
-static void handle_check(callback_args& args, size_t connection_count,
+static void handle_check(callback_state& state, size_t connection_count,
     size_t node_count)
 {
-    args.output() << boost::format(SX_SEND_TX_P2P_CHECK_OKAY) %
-        connection_count << std::endl;
-
-    // BUGBUG: potentially multiple subscriptions.
+    state.output(format(SX_SEND_TX_P2P_CHECK_OKAY) % connection_count);
     if (connection_count >= node_count)
-        args.stopped() = true;
+        state.stop();
 }
 
 // Send completed.
-static void handle_sent(callback_args& args)
+static void handle_sent(callback_state& state)
 {
-    args.output() << boost::format(SX_SEND_TX_P2P_SEND_OKAY) % now()
-        << std::endl;
+    state.output(format(SX_SEND_TX_P2P_SEND_OKAY) % now());
 }
 
 // Send tx to another Bitcoin node.
-static void handle_send(callback_args& args, const std::error_code& code, 
+static void handle_send(callback_state& state, const std::error_code& code, 
     channel_ptr node, protocol& prot, transaction_type& tx)
 {
-    const auto sent_handler = [&args](const std::error_code& code)
+    // Set up callback handlers for sent and send.
+    const auto sent_handler = [&state](const std::error_code& code)
     {
-        handle_error(args, code, SX_SEND_TX_P2P_SEND_FAIL);
-        handle_sent(args);
+        handle_error(state, code, SX_SEND_TX_P2P_SEND_FAIL);
+        handle_sent(state);
     };
 
-    const auto send_handler = [&args](const std::error_code& code,
+    const auto send_handler = [&state](const std::error_code& code,
         channel_ptr node, protocol& prot, transaction_type& tx)
     {
-        handle_error(args, code, SX_SEND_TX_P2P_SETUP_FAIL);
-        handle_send(args, code, node, prot, tx);
+        handle_error(state, code, SX_SEND_TX_P2P_SETUP_FAIL);
+        handle_send(state, code, node, prot, tx);
     };
 
-    args.output() << boost::format(SX_SEND_TX_P2P_SETUP_OKAY) % transaction(tx)
-        << std::endl;
+    state.output(format(SX_SEND_TX_P2P_SETUP_OKAY) % transaction(tx));
     node->send(tx, sent_handler);
     prot.subscribe_channel(std::bind(send_handler, ph::_1, ph::_2,
         std::ref(prot), std::ref(tx)));
@@ -94,38 +90,38 @@ static void handle_send(callback_args& args, const std::error_code& code,
 console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    //const auto& debug_log = get_logging_debug_setting();
-    //const auto& error_log = get_logging_error_setting();
     const auto& node_count = get_nodes_option();
     const auto& transactions = get_transactions_argument();
 
-    //bind_logging(debug_log, error_log);
-    callback_args args(error, output);
+    // Set up shared state.
+    callback_state state(error, output);
 
-    const auto start_handler = [&args](const std::error_code& code)
+    // Set up callback handlers for start, connections check, send and stop.
+    const auto start_handler = [&state](const std::error_code& code)
     {
-        handle_error(args, code, SX_SEND_TX_P2P_START_FAIL);
-        handle_start(args);
+        handle_error(state, code, SX_SEND_TX_P2P_START_FAIL);
+        handle_start(state);
     };
 
-    const auto check_handler = [&args](const std::error_code& code,
+    const auto check_handler = [&state](const std::error_code& code,
         size_t connection_count, size_t node_count)
     {
-        handle_error(args, code, SX_SEND_TX_P2P_CHECK_FAIL);
-        handle_check(args, connection_count, node_count);
+        handle_error(state, code, SX_SEND_TX_P2P_CHECK_FAIL);
+        handle_check(state, connection_count, node_count);
     };
 
-    const auto send_handler = [&args](const std::error_code& code,
+    const auto send_handler = [&state](const std::error_code& code,
         channel_ptr node, protocol& prot, transaction_type& tx)
     {
-        handle_error(args, code, SX_SEND_TX_P2P_SETUP_FAIL);
-        handle_send(args, code, node, prot, tx);
+        handle_error(state, code, SX_SEND_TX_P2P_SETUP_FAIL);
+        handle_send(state, code, node, prot, tx);
     };
 
     const auto stop_handler = [](const std::error_code&)
     {
     };
 
+    // Set up connections.
     async_client client(*this, 4);
 
     // Create dependencies for our protocol object.
@@ -134,7 +130,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     handshake hs(pool);
     network net(pool);
 
-    // protocol service.
+    // Set up protocol service.
     protocol prot(pool, hst, hs, net);
     prot.set_max_outbound(node_count * 6);
 
@@ -143,8 +139,14 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Create a subscription for each transaction.
     for (const transaction_type& tx: transactions)
+    {
+        ++state;
         prot.subscribe_channel(
             std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), tx));
+
+        // TODO: need to verify this setup is correct for multiple simo txs.
+        break;
+    }
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, handle_signal);
@@ -153,15 +155,15 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Check the connection count every 2 seconds.
     const auto work = [&prot, &node_count, &check_handler]
-    { 
+    {
         prot.fetch_connection_count(
             std::bind(check_handler, ph::_1, ph::_2, node_count));
     };
 
-    client.poll(args.stopped(), 2000, work);
+    client.poll(state.stopped(), 2000, work);
     prot.stop(stop_handler);
     
-    return args.result();
+    return state.get_result();
 }
 
 //static void output_to_file(std::ofstream& file, log_level level,
