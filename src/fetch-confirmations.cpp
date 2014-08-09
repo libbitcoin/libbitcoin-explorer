@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <sx/command/fetch-confirmed.hpp>
+#include <sx/command/fetch-confirmations.hpp>
 
 #include <iostream>
 #include <boost/format.hpp>
@@ -31,14 +31,13 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-static void handle_callback(callback_args& args, const index_list& unconfirmed)
+static void handle_callback(callback_args& args, const index_list& confirmations)
 {
-    for (const auto& unconfirmed_index: unconfirmed)
-        args.output() << boost::format(SX_FETCH_CONFIRMED_OUTPUT)
-            % unconfirmed_index << std::endl;
+    for (const auto& confirmation: confirmations)
+        args.output() << confirmation << std::endl;
 }
 
-console_result fetch_confirmed::invoke(std::ostream& output,
+console_result fetch_confirmations::invoke(std::ostream& output,
     std::ostream& cerr)
 {
     // Bound parameters.

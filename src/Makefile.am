@@ -92,17 +92,15 @@ libsx_la_SOURCES += \
 if HAVE_OBELISK
     libsx_la_SOURCES += \
         fetch-balance.cpp \
-        fetch-confirmed.cpp \
+        fetch-confirmations.cpp \
         fetch-header.cpp \
         fetch-height.cpp \
         fetch-history.cpp \
-        fetch-prefix.cpp \
         fetch-public-key.cpp \
         fetch-tx.cpp \
         fetch-tx-index.cpp \
         fetch-utxo.cpp \
         send-tx.cpp \
-        watch-prefix.cpp \
         watch-tx.cpp \
         obelisk_client.cpp
 

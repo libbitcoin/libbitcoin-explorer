@@ -177,10 +177,9 @@
     <define name="SX_FETCH_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%" />
   </command>
 
-  <command symbol="fetch-confirmed" formerly="validtx" category="ONLINE" obelisk="true">
+  <command symbol="fetch-confirmations" formerly="validtx" category="ONLINE" obelisk="true">
     <option name="help" description="Get confirmations for a set of transactions. Requires an Obelisk server connection." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
-    <define name="SX_FETCH_CONFIRMED_OUTPUT" value="  Unconfirmed: %1%" />
   </command>
 
   <command symbol="fetch-header" category="ONLINE" obelisk="true">
@@ -207,17 +206,13 @@
     <argument name="ADDRESS" stdin="true" type="address" description="The Bitcoin address of the public key."/>
     <define name="SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
-  
-  <command symbol="fetch-prefix" formerly="fetch-stealth" category="ONLINE" obelisk="true">
-    <option name="help" description="Get the transactions matching the specified filter. Requires an Obelisk server connection." />
-    <option name="prefix" type="prefix" description="The binary encoded search prefix. Searches all transactions if not set." />
-    <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include in the search. Searches all blocks if not set."/>
-    <define name="SX_FETCH_PREFIX_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%" />
-  </command>
 
-  <command symbol="fetch-tx" formerly="fetch-transaction" category="ONLINE" obelisk="true">
-    <option name="help" description="Get a transaction. Requires an Obelisk server connection." />
-    <argument name="HASH" stdin="true" type="btc256" description="The hex encoded transaction hash." />
+  <command symbol="fetch-tx" formerly="fetch-transaction, fetch-stealth" category="ONLINE" obelisk="true">
+    <option name="help" description="Get transactions by filter. Requires an Obelisk server connection." />
+    <option name="hash" shortcut="s" multiple="true" type="btc256" description="The set of hex encoded transaction hashes to get." />
+    <option name="prefix" type="prefix" multiple="true" description="The set of binary encoded stealth search prefixes of transactions to get." />
+    <option name="height" shortcut="t" type="size_t" description="The minimum block height of prefix transactions to get. Includes all blocks if not set."/>
+    <define name="SX_FETCH_TX_OUTPUT" value="Ephemeral key: %1% Address: %2% Transaction hash: %3%" />    
   </command>
 
   <command symbol="fetch-tx-index" formerly="fetch-transaction-index" category="ONLINE" obelisk="true">
@@ -309,13 +304,13 @@
   </command>
   
   <command symbol="mnemonic-decode" formerly="mnemonic" category="WALLET">
-    <option name="help" description="Convert a BIP39 mnemonic to its seed. WARNING: mnemonic should be generated from a random seed." />
-    <argument name="WORD" stdin="true" limit="-1" description="The set of words from the BIP39 word list." />
+    <option name="help" description="Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39." />
+    <argument name="WORD" stdin="true" limit="-1" description="The set of words from the Electrum word list." />
   </command>
   
   <command symbol="mnemonic-encode" formerly="mnemonic" category="WALLET">
-    <option name="help" description="Convert a seed to its BIP39 mnemonic." />
-    <argument name="SEED" stdin="true" type="hex" description="The hex encoded randomness seed. WARNING: seed should be random and at least 128 bits in length." />
+    <option name="help" description="Convert a seed to its Electrum mnemonic." />
+    <argument name="SEED" stdin="true" type="hex" description="The hex encoded randomness seed. WARNING: seed should be random and at least 128 bits in length. WARNING: This implementation is deprecated in favor of BIP39." />
   </command>
   
   <command symbol="mpk" category="ELECTRUM" obsolete="true">
@@ -473,19 +468,14 @@
     <option name="help" description="Experimental command line wallet." />
     <define name="SX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
   </command>
-  
-  <command symbol="watch-prefix" formerly="monitor" category="ONLINE" obelisk="true">
-    <option name="help" description="Watch the network for transactions by address prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL" />
-    <option name="prefix" type="prefix" description="The binary encoded stealth search prefix. Searches all transactions if not set." />
-    <!--<option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to monitor. Searches all blocks if not set."/>-->
-    <define name="SX_WATCH_PREFIX_WAITING" value="Waiting for updates..." />
-    <define name="SX_WATCH_PREFIX_OUTPUT" value="Update %1% [ #%2% %3% ]" />
-  </command>
 
-  <command symbol="watch-tx" formerly="watchtx" category="ONLINE" obelisk="true">
-    <option name="help" description="Watch the network for transactions by hash. Requires an Obelisk server connection." />
-    <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of hex encoded transaction hashes." />
-    <define name="SX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  <command symbol="watch-tx" formerly="watchtx, monitor" category="ONLINE" obelisk="true">
+    <option name="help" description="Watch the network for transactions by filter. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL" />
+    <option name="hash" shortcut="s" multiple="true" type="btc256" description="The set of hex encoded transaction hashes to watch. Includes all transactions if not set." />
+    <option name="prefix" type="prefix" multiple="true" description="The set of binary encoded stealth search prefixes to watch. Includes all transactions if not set." />
+    <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to watch. Includes all blocks if not set."/>
+    <define name="SX_WATCH_TX_WAITING" value="Waiting for updates..." />
+    <define name="SX_WATCH_TX_OUTPUT" value="Transaction %1% [ #%2% %3% ]" />
   </command>
   
   <command symbol="wif-to-ec" category="WALLET">

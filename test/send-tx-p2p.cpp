@@ -21,8 +21,14 @@
 
 SX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(watch_prefix__invoke)
+BOOST_AUTO_TEST_SUITE(send_tx_p2p__invoke)
 
 // DISABLED until client-server calls are isolated for test.
+
+//BOOST_AUTO_TEST_CASE(send_tx_p2p__invoke__always__okay)
+//{
+//    SX_DECLARE_COMMAND(send_tx_p2p);
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
+//}
 
 BOOST_AUTO_TEST_SUITE_END()

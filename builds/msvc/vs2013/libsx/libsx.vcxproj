@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -139,11 +139,10 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec-to-wif.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-unlock.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-balance.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-confirmed.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-confirmations.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-header.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-height.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-history.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-prefix.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-public-key.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx-index.hpp" />
@@ -185,7 +184,6 @@
     <ClInclude Include="..\..\..\..\include\sx\command\tx-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\tx-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\watch-prefix.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-pub.hpp" />
@@ -196,6 +194,7 @@
     <ClCompile Include="..\..\..\..\src\async_client.cpp" />
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
+    <ClCompile Include="..\..\..\..\src\fetch-prefix.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
@@ -205,7 +204,6 @@
     <ClCompile Include="..\..\..\..\src\utility\parameter.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\printer.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\utility.cpp" />
-       
     <ClCompile Include="..\..\..\..\src\input-sign.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -215,7 +213,6 @@
     <ClCompile Include="..\..\..\..\src\input-validate.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    
     <ClCompile Include="..\..\..\..\src\stealth-addr-decode.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -257,7 +254,7 @@
     <ClCompile Include="..\..\..\..\src\fetch-balance.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-confirmed.cpp">
+    <ClCompile Include="..\..\..\..\src\fetch-confirmations.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-header.cpp">
@@ -267,9 +264,6 @@
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-history.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-prefix.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-public-key.cpp">
@@ -323,9 +317,6 @@
     <ClCompile Include="..\..\..\..\src\tx-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\tx-sign.cpp" />
     <ClCompile Include="..\..\..\..\src\wallet.cpp" />
-    <ClCompile Include="..\..\..\..\src\watch-prefix.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\watch-tx.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>

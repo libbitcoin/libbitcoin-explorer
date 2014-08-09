@@ -23,6 +23,8 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(send_tx_node__invoke)
 
+// DISABLED until client-server calls are isolated for test.
+
 //BOOST_AUTO_TEST_CASE(send_tx_node__invoke__always__okay)
 //{
 //    SX_DECLARE_COMMAND(send_tx_node);

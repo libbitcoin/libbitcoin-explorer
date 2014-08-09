@@ -49,11 +49,10 @@
 #include <sx/command/ec-to-wif.hpp>
 #include <sx/command/ec-unlock.hpp>
 #include <sx/command/fetch-balance.hpp>
-#include <sx/command/fetch-confirmed.hpp>
+#include <sx/command/fetch-confirmations.hpp>
 #include <sx/command/fetch-header.hpp>
 #include <sx/command/fetch-height.hpp>
 #include <sx/command/fetch-history.hpp>
-#include <sx/command/fetch-prefix.hpp>
 #include <sx/command/fetch-public-key.hpp>
 #include <sx/command/fetch-tx.hpp>
 #include <sx/command/fetch-tx-index.hpp>
@@ -95,7 +94,6 @@
 #include <sx/command/tx-encode.hpp>
 #include <sx/command/tx-sign.hpp>
 #include <sx/command/wallet.hpp>
-#include <sx/command/watch-prefix.hpp>
 #include <sx/command/watch-tx.hpp>
 #include <sx/command/wif-to-ec.hpp>
 #include <sx/command/wif-to-pub.hpp>

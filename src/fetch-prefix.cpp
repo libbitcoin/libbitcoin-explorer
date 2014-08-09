@@ -23,8 +23,8 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
-#include <sx/obelisk_client.hpp>
 #include <sx/define.hpp>
+#include <sx/obelisk_client.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/hex.hpp>

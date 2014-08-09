@@ -61,11 +61,10 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_to_wif>());
     func(make_shared<ec_unlock>());
     func(make_shared<fetch_balance>());
-    func(make_shared<fetch_confirmed>());
+    func(make_shared<fetch_confirmations>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_height>());
     func(make_shared<fetch_history>());
-    func(make_shared<fetch_prefix>());
     func(make_shared<fetch_public_key>());
     func(make_shared<fetch_tx>());
     func(make_shared<fetch_tx_index>());
@@ -107,7 +106,6 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<tx_encode>());
     func(make_shared<tx_sign>());
     func(make_shared<wallet>());
-    func(make_shared<watch_prefix>());
     func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
     func(make_shared<wif_to_pub>());
@@ -169,16 +167,14 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_unlock>();
     if (symbol == fetch_balance::symbol())
         return make_shared<fetch_balance>();
-    if (symbol == fetch_confirmed::symbol())
-        return make_shared<fetch_confirmed>();
+    if (symbol == fetch_confirmations::symbol())
+        return make_shared<fetch_confirmations>();
     if (symbol == fetch_header::symbol())
         return make_shared<fetch_header>();
     if (symbol == fetch_height::symbol())
         return make_shared<fetch_height>();
     if (symbol == fetch_history::symbol())
         return make_shared<fetch_history>();
-    if (symbol == fetch_prefix::symbol())
-        return make_shared<fetch_prefix>();
     if (symbol == fetch_public_key::symbol())
         return make_shared<fetch_public_key>();
     if (symbol == fetch_tx::symbol())
@@ -261,8 +257,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<tx_sign>();
     if (symbol == wallet::symbol())
         return make_shared<wallet>();
-    if (symbol == watch_prefix::symbol())
-        return make_shared<watch_prefix>();
     if (symbol == watch_tx::symbol())
         return make_shared<watch_tx>();
     if (symbol == wif_to_ec::symbol())

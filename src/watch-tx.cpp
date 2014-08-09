@@ -20,95 +20,57 @@
 #include <sx/command/watch-tx.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
+#include <sx/obelisk_client.hpp>
+#include <sx/serializer/hex.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
 
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
+static void handle_subscribed(callback_args& args, 
+    const obelisk::worker_uuid& worker)
+{
+    args.output() << SX_WATCH_TX_WAITING << std::endl;
+}
+
+static void handle_update(callback_args& args, size_t height,
+    const hash_digest& block_hash, const transaction_type& tx)
+{
+    args.output() << boost::format(SX_WATCH_TX_OUTPUT) % transaction(tx) %
+        height % hex(block_hash) << std::endl;
+}
+
+// This command only halts on failure.
 console_result watch_tx::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto hashes = get_hashs_argument();
+    //const auto height = get_height_option();
+    const auto& prefix = get_prefixs_option();
 
-    cerr << SX_WATCH_TX_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    callback_args args(cerr, output);
+    const auto update_handler = [&args](const std::error_code& error,
+        size_t height, const hash_digest& block_hash, 
+        const transaction_type& tx)
+    {
+        handle_error(args, error);
+        handle_update(args, height, block_hash, tx);
+    };
+
+    const auto subscribed_handler = [&args](const std::error_code& error,
+        const obelisk::worker_uuid& worker)
+    {
+        handle_error(args, error);
+        handle_subscribed(args, worker);
+    };
+
+    obelisk_client client(*this);
+    auto& fullnode = client.get_fullnode();
+    ////fullnode.address.subscribe(prefix, update_handler, subscribed_handler);
+    client.poll(args.stopped());
+
+    return args.result();
 }
-
-//#!/usr/bin/python
-//import hashlib
-//import sys
-//try:
-//    import zmq
-//except ImportError:
-//    print >> sys.stderr, "Please install Python ZeroMQ for this tool to work."
-//    print >> sys.stderr, ""
-//    print >> sys.stderr, "  $ sudo apt-get install python-zmq"
-//    print >> sys.stderr, ""
-//    sys.exit(1)
-//
-//def config_value(filename, option_key, default=""):
-//    try:
-//        rawfile = open(filename).read()
-//    except IOError:
-//        print >> sys.stderr, "Config file '%s' does not exist!" % filename
-//        return default
-//    lines = [line.strip() for line in rawfile.split("\n")]
-//    extract_pair = lambda line: \
-//        [token.strip() for token in line.split("=", 1)]
-//    key_values = [extract_pair(line) for line in lines
-//                  if len(extract_pair(line)) == 2]
-//    key_values = [(key, value.strip('"')) for key, value in key_values]
-//    lookup = dict(key_values)
-//    try:
-//        return lookup[option_key]
-//    except KeyError:
-//        return default
-//
-//def hash_transaction(data):
-//    return hashlib.sha256(hashlib.sha256(data).digest()).digest()[::-1]
-//
-//def watch(connection, watch_hashes):
-//    if not watch_hashes:
-//        print >> sys.stderr, "No valid transaction hashes to watch."
-//        return
-//    context = zmq.Context(1)
-//    socket = context.socket(zmq.SUB)
-//    socket.connect(connection)
-//    socket.setsockopt(zmq.SUBSCRIBE, "")
-//    while watch_hashes:
-//        tx_hash = socket.recv()
-//        tx_data = socket.recv()
-//        assert hash_transaction(tx_data) == tx_hash
-//        print "Transaction (%s bytes): %s" % (
-//            len(tx_data), tx_hash.encode("hex"))
-//        if tx_hash in watch_hashes:
-//            print "***********************"
-//            print "* Transaction Found ! *"
-//            print "***********************"
-//            watch_hashes.remove(tx_hash)
-//        #print tx_data.encode("hex")
-//
-//def convert_hashes(args):
-//    watch_hashes = set()
-//    for tx_hex in sys.argv[1:]:
-//        try:
-//            # decode can raise TypeError
-//            tx_hash = tx_hex.decode("hex")
-//            if len(tx_hash) != 32:
-//                raise TypeError
-//        except TypeError:
-//            print >> sys.stderr, "Skipping invalid hash: %s" % tx_hex
-//        else:
-//            print "Watching: %s" % tx_hex
-//            watch_hashes.add(tx_hash)
-//    return watch_hashes
-//
-//if __name__ == "__main__":
-//    if len(sys.argv) < 2:
-//        print >> sys.stderr, "Usage: watchtx TXHASH1 TXHASH2 ..."
-//    else:
-//        hashes = convert_hashes(sys.argv[1:])
-//        connection = config_value("/etc/sx.cfg", "service",
-//                                  "tcp://localhost:9094")
-//        watch(connection, hashes)
-//

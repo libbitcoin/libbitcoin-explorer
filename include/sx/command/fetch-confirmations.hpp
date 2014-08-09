@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_SENDTX_P2P_HPP
-#define SX_SENDTX_P2P_HPP
+#ifndef SX_FETCH_CONFIRMATIONS_HPP
+#define SX_FETCH_CONFIRMATIONS_HPP
 
 #include <iostream>
 #include <stdint.h>
@@ -31,7 +31,6 @@
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
-#include <sx/serializer/binary.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/byte.hpp>
@@ -40,10 +39,14 @@
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/header.hpp>
 #include <sx/serializer/hex.hpp>
-#include <sx/serializer/item.hpp>
-#include <sx/serializer/point.hpp>
+#include <sx/serializer/input.hpp>
+#include <sx/serializer/output.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
+#include <sx/serializer/script.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
@@ -55,33 +58,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx fetch-confirmations command.
  */
-#define SX_SENDTX_P2P_OUTPUT \
-    "%1% [%2%]: %3%"
-#define SX_SENDTX_P2P_SIGNAL \
-    "Caught signal: %1%"
-#define SX_SENDTX_P2P_START_OKAY \
-    "Started."
-#define SX_SENDTX_P2P_START_FAIL \
-    "Start failed: %1%"
-#define SX_SENDTX_P2P_CHECK_OKAY \
-    "%1% connections."
-#define SX_SENDTX_P2P_CHECK_FAIL \
-    "Check failed: %1%"
-#define SX_SENDTX_P2P_SETUP_OKAY \
-    "Sending %1%."
-#define SX_SENDTX_P2P_SETUP_FAIL \
-    "Setup failed: %1%"
-#define SX_SENDTX_P2P_SEND_OKAY \
-    "Sent at %1%."
-#define SX_SENDTX_P2P_SEND_FAIL \
-    "Send failed: %1%"
-
-/**
- * Class to implement the sx sendtx-p2p command.
- */
-class sendtx_p2p 
+class fetch_confirmations 
     : public command
 {
 public:
@@ -89,14 +68,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "sendtx-p2p"; }
+    static const char* symbol() { return "fetch-confirmations"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return sendtx_p2p::symbol();
+        return fetch_confirmations::symbol();
     }
 
     /**
@@ -154,12 +133,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Broadcast a transaction to the Bitcoin transaction pool via the Bitcoin peer-to-peer network."
-            )
-            (
-                "nodes,n",
-                value<size_t>(&option_.nodes)->default_value(2),
-                "The number of network nodes to send the transaction to, defaults to two."
+                "Get confirmations for a set of transactions. Requires an Obelisk server connection."
             )
             (
                 "TRANSACTION",
@@ -173,20 +147,18 @@ public:
     /**
      * Invoke the command.
      *
-     * @param[in]   input   The input stream for the command execution.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::istream& input, std::ostream& output,
-        std::ostream& cerr);
+    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
 
     /**
      * Get the value of the TRANSACTION arguments.
      */
-    virtual std::vector<serializer::item<bc::transaction_type>>& get_transactions_argument()
+    virtual std::vector<serializer::transaction>& get_transactions_argument()
     {
         return argument_.transactions;
     }
@@ -195,7 +167,7 @@ public:
      * Set the value of the TRANSACTION arguments.
      */
     virtual void set_transactions_argument(
-        const std::vector<serializer::item<bc::transaction_type>>& value)
+        const std::vector<serializer::transaction>& value)
     {
         argument_.transactions = value;
     }
@@ -217,23 +189,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the nodes option.
-     */
-    virtual size_t& get_nodes_option()
-    {
-        return option_.nodes;
-    }
-    
-    /**
-     * Set the value of the nodes option.
-     */
-    virtual void set_nodes_option(
-        const size_t& value)
-    {
-        option_.nodes = value;
-    }
-
 private:
 
     /**
@@ -248,7 +203,7 @@ private:
         {
         }
         
-        std::vector<serializer::item<bc::transaction_type>> transactions;
+        std::vector<serializer::transaction> transactions;
     } argument_;
     
     /**
@@ -259,13 +214,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            nodes()
+          : help()
         {
         }
         
         bool help;
-        size_t nodes;
     } option_;
 };
 

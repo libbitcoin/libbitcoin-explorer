@@ -64,7 +64,7 @@ static void handle_callback(callback_args& args, const std::error_code& error,
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& cerr)
 {
     // Bound parameters.
-    const auto hash = get_hash_argument();
+    const auto hashes = get_hashs_option();
 
     callback_args args(cerr, output);
     const auto handler = [&args](const std::error_code& error,
@@ -77,8 +77,8 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& cerr)
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    fullnode.blockchain.fetch_transaction(hash,
-        std::bind(handler, ph::_1, ph::_2, hash, std::ref(fullnode)));
+    ////fullnode.blockchain.fetch_transaction(hash,
+    ////    std::bind(handler, ph::_1, ph::_2, hash, std::ref(fullnode)));
     client.poll(args.stopped());
 
     return args.result();

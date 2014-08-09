@@ -116,16 +116,14 @@ sx_command_include_HEADERS = \
 if HAVE_OBELISK
     sx_command_include_HEADERS += \
         command/fetch-balance.hpp \
-        command/fetch-confirmed.hpp \
+        command/fetch-confirmations.hpp \
         command/fetch-header.hpp \
         command/fetch-height.hpp \
         command/fetch-history.hpp \
-        command/fetch-prefix.hpp \
         command/fetch-public-key.hpp \
         command/fetch-tx.hpp \
         command/fetch-tx-index.hpp \
         command/fetch-utxo.hpp \
         command/send-tx.hpp \
-        command/watch-prefix.hpp \
         command/watch-tx.hpp
 endif

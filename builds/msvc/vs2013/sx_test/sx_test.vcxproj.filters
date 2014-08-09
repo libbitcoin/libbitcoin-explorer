@@ -90,9 +90,6 @@
     <ClCompile Include="..\..\..\..\test\fetch-tx-index.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-tx.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\fetch-history.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
@@ -159,9 +156,6 @@
     <ClCompile Include="..\..\..\..\test\wif-to-pub.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\watch-prefix.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\stealth-addr-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
@@ -225,12 +219,6 @@
     <ClCompile Include="..\..\..\..\test\qrcode.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\watch-tx.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-prefix.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
@@ -251,6 +239,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\send-tx-node.cpp">
       <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\fetch-confirmations.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\send-tx-p2p.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\watch-tx.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\fetch-tx.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -21,14 +21,24 @@
 
 SX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(fetch_prefix__invoke)
+BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
 // DISABLED until client-server calls are isolated for test.
 
-//BOOST_AUTO_TEST_CASE(fetch_prefix__invoke__always__okay)
+//BOOST_AUTO_TEST_CASE(fetch_balance__invoke__address__okay)
 //{
-//    // $ sx fetch-prefix 1101
-//    SX_DECLARE_COMMAND(fetch_prefix);
+//    // $ sx fetch-balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+//    SX_DECLARE_COMMAND(fetch_balance);
+//    command.set_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
+//    SX_REQUIRE_OKAY(command.invoke(output, error));
+//}
+
+//BOOST_AUTO_TEST_CASE(fetch_balance__invoke__address_json__okay)
+//{
+//    // $ sx fetch-balance -j 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
+//    SX_DECLARE_COMMAND(fetch_balance);
+//    command.set_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
+//    command.set_json_option(true);
 //    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 

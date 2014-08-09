@@ -152,9 +152,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_balance__returns_expected_value)
     BOOST_REQUIRE(fetch_balance::symbol() == std::string("fetch-balance"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_confirmed__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_confirmations__returns_expected_value)
 {
-    BOOST_REQUIRE(fetch_confirmed::symbol() == std::string("fetch-confirmed"));
+    BOOST_REQUIRE(fetch_confirmations::symbol() == std::string("fetch-confirmations"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header__returns_expected_value)
@@ -170,11 +170,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_height__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_history__returns_expected_value)
 {
     BOOST_REQUIRE(fetch_history::symbol() == std::string("fetch-history"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_prefix__returns_expected_value)
-{
-    BOOST_REQUIRE(fetch_prefix::symbol() == std::string("fetch-prefix"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_public_key__returns_expected_value)
@@ -380,11 +375,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__tx_sign__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__wallet__returns_expected_value)
 {
     BOOST_REQUIRE(wallet::symbol() == std::string("wallet"));
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__watch_prefix__returns_expected_value)
-{
-    BOOST_REQUIRE(watch_prefix::symbol() == std::string("watch-prefix"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__watch_tx__returns_expected_value)

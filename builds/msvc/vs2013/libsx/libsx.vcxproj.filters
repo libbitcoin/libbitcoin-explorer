@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -134,7 +134,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-balance.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-confirmed.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-confirmations.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-header.hpp">
@@ -144,9 +144,6 @@
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-history.hpp">
-      <Filter>include\command\obelisk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\fetch-prefix.hpp">
       <Filter>include\command\obelisk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-public-key.hpp">
@@ -271,9 +268,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp">
       <Filter>include\command\obsolete</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\watch-prefix.hpp">
-      <Filter>include\command\obelisk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\watch-tx.hpp">
       <Filter>include\command\obelisk</Filter>
@@ -472,7 +466,7 @@
     <ClCompile Include="..\..\..\..\src\fetch-balance.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-confirmed.cpp">
+    <ClCompile Include="..\..\..\..\src\fetch-confirmations.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-header.cpp">
@@ -482,9 +476,6 @@
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-history.cpp">
-      <Filter>src\command\obelisk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-prefix.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-public-key.cpp">
@@ -610,9 +601,6 @@
     <ClCompile Include="..\..\..\..\src\wallet.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\watch-prefix.cpp">
-      <Filter>src\command\obelisk</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\watch-tx.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
@@ -645,7 +633,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\async_client.cpp">
       <Filter>src</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\dispatch.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -658,7 +646,6 @@
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    
     <ClCompile Include="..\..\..\..\src\input-set.cpp">
       <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
@@ -668,7 +655,6 @@
     <ClCompile Include="..\..\..\..\src\input-validate.cpp">
       <Filter>src\command\todo\transaction</Filter>
     </ClCompile>
-    
     <ClCompile Include="..\..\..\..\src\stealth-addr-decode.cpp">
       <Filter>src\command\todo\stealth</Filter>
     </ClCompile>
@@ -680,6 +666,17 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
       <Filter>src\command\todo\stealth</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.codecvt_error_category.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.operations.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path_traits.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.portability.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.unique_path.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.utf8_codecvt_facet.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.windows_file_codecvt.cpp" />
+    <ClCompile Include="..\..\..\..\src\fetch-prefix.cpp">
+      <Filter>src\command\obelisk</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

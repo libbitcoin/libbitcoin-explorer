@@ -152,9 +152,9 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
     BOOST_REQUIRE(find(fetch_balance::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__fetch_confirmed__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__fetch_confirmations__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_confirmed::symbol()) != nullptr);
+    BOOST_REQUIRE(find(fetch_confirmations::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
@@ -170,11 +170,6 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_height__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__fetch_history__returns_object)
 {
     BOOST_REQUIRE(find(fetch_history::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__fetch_prefix__returns_object)
-{
-    BOOST_REQUIRE(find(fetch_prefix::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_public_key__returns_object)
@@ -380,11 +375,6 @@ BOOST_AUTO_TEST_CASE(generated__find__tx_sign__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__wallet__returns_object)
 {
     BOOST_REQUIRE(find(wallet::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__watch_prefix__returns_object)
-{
-    BOOST_REQUIRE(find(watch_prefix::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__watch_tx__returns_object)

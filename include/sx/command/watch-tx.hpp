@@ -60,8 +60,10 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_WATCH_TX_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define SX_WATCH_TX_WAITING \
+    "Waiting for updates..."
+#define SX_WATCH_TX_OUTPUT \
+    "Transaction %1% [ #%2% %3% ]"
 
 /**
  * Class to implement the sx watch-tx command.
@@ -100,8 +102,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("HASH", -1);
+        return get_argument_metadata();
     }
 	
 	/**
@@ -113,7 +114,6 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_hashs_argument(), "HASH", variables, input);
     }
     
     /**
@@ -138,12 +138,22 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Watch the network for transactions by hash. Requires an Obelisk server connection."
+                "Watch the network for transactions by filter. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL"
             )
             (
-                "HASH",
-                value<std::vector<serializer::btc256>>(&argument_.hashs),
-                "The set of hex encoded transaction hashes."
+                "hash,s",
+                value<std::vector<serializer::btc256>>(&option_.hashs),
+                "The set of hex encoded transaction hashes to watch. Includes all transactions if not set."
+            )
+            (
+                "prefix,p",
+                value<std::vector<serializer::prefix>>(&option_.prefixs),
+                "The set of binary encoded stealth search prefixes to watch. Includes all transactions if not set."
+            )
+            (
+                "height,t",
+                value<size_t>(&option_.height),
+                "The minimum block height of transactions to watch. Includes all blocks if not set."
             );
 
         return options;
@@ -159,23 +169,6 @@ public:
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the HASH arguments.
-     */
-    virtual std::vector<serializer::btc256>& get_hashs_argument()
-    {
-        return argument_.hashs;
-    }
-    
-    /**
-     * Set the value of the HASH arguments.
-     */
-    virtual void set_hashs_argument(
-        const std::vector<serializer::btc256>& value)
-    {
-        argument_.hashs = value;
-    }
 
     /**
      * Get the value of the help option.
@@ -194,6 +187,57 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the hash options.
+     */
+    virtual std::vector<serializer::btc256>& get_hashs_option()
+    {
+        return option_.hashs;
+    }
+    
+    /**
+     * Set the value of the hash options.
+     */
+    virtual void set_hashs_option(
+        const std::vector<serializer::btc256>& value)
+    {
+        option_.hashs = value;
+    }
+
+    /**
+     * Get the value of the prefix options.
+     */
+    virtual std::vector<serializer::prefix>& get_prefixs_option()
+    {
+        return option_.prefixs;
+    }
+    
+    /**
+     * Set the value of the prefix options.
+     */
+    virtual void set_prefixs_option(
+        const std::vector<serializer::prefix>& value)
+    {
+        option_.prefixs = value;
+    }
+
+    /**
+     * Get the value of the height option.
+     */
+    virtual size_t& get_height_option()
+    {
+        return option_.height;
+    }
+    
+    /**
+     * Set the value of the height option.
+     */
+    virtual void set_height_option(
+        const size_t& value)
+    {
+        option_.height = value;
+    }
+
 private:
 
     /**
@@ -204,11 +248,9 @@ private:
     struct argument
     {
         argument()
-          : hashs()
         {
         }
         
-        std::vector<serializer::btc256> hashs;
     } argument_;
     
     /**
@@ -219,11 +261,17 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            hashs(),
+            prefixs(),
+            height()
         {
         }
         
         bool help;
+        std::vector<serializer::btc256> hashs;
+        std::vector<serializer::prefix> prefixs;
+        size_t height;
     } option_;
 };
 
