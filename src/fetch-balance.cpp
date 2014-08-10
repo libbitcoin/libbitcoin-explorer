@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include "precompile.hpp"
 #include <sx/command/fetch-balance.hpp>
 
 #include <atomic>
@@ -40,7 +41,6 @@ using namespace sx::extension;
 using namespace sx::serializer;
 
 // TODO: use parse tree.
-// This is NOT localizable.
 static const char* json_format =
     "{\n"
     "   \"address\": \"%1%\",\n"
@@ -48,25 +48,23 @@ static const char* json_format =
     "   \"pending\": \"%3%\",\n"
     "   \"received\": \"%4%\"\n"
     "}";
+// "Address: %1%\n  Paid balance:    %2%\n  Pending 
+// balance: %3%\n  Total received:  %4%"
 
-static bool json_output;
-static bool first_address;
-static std::mutex mutex;
-static console_result result;
-static size_t remaining_count;
-static std::condition_variable condition;
-
-static void parse_balance_history(uint64_t& balance, uint64_t& pending_balance,
-    uint64_t& total_recieved, const blockchain::history_list& history)
+// Do not assert against server response values.
+//BITCOIN_ASSERT(value >= 0);
+//BITCOIN_ASSERT(balance < total_recieved);
+//BITCOIN_ASSERT(pending_balance < total_recieved);
+static pt::ptree parse_tree(const blockchain::history_list& history)
 {
-    balance = 0;
-    pending_balance = 0;
-    total_recieved = 0;
+    pt::ptree tree;
+
+    // TODO: create history serializer that summarizes rows.
+    uint64_t total_recieved(0), balance(0), pending_balance(0);
 
     for (const auto& row : history)
     {
         auto value = row.value;
-        BITCOIN_ASSERT(value >= 0);
         total_recieved += value;
 
         // Unconfirmed balance.
@@ -77,51 +75,23 @@ static void parse_balance_history(uint64_t& balance, uint64_t& pending_balance,
         if (row.output_height &&
             (row.spend.hash == null_hash || !row.spend_height))
             balance += value;
-
-        BITCOIN_ASSERT(balance < total_recieved);
-        BITCOIN_ASSERT(pending_balance < total_recieved);
     }
+
+    return tree;
 }
 
-static void balance_fetched(const payment_address& pay_address,
-    const std::error_code& code, const blockchain::history_list& history)
+static void handle_callback(callback_state& state, 
+    const payment_address& pay_address,
+    const blockchain::history_list& history, bool json, bool xml)
 {
-    std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count > 0);
+    const auto tree = parse_tree(history);
 
-    if (code)
-    {
-        std::cerr << code.message() << std::endl;
-        result = console_result::failure;
-        remaining_count = 0;
-        condition.notify_one();
-        return;
-    }
-
+    // TODO: serialize parse tree here as json, xml or info.
     uint64_t total_recieved, balance, pending_balance;
-    parse_balance_history(balance, pending_balance, total_recieved, history);
+    state.output(format(json_format) % address(pay_address) % balance %
+        pending_balance % total_recieved);
 
-    if (json_output && first_address)
-        std::cout << "[" << std::endl;
-
-    if (first_address)
-        first_address = false;
-
-    auto format = if_else(json_output, json_format, SX_FETCH_BALANCE_OUTPUT);
-
-    std::cout << boost::format(format) % address(pay_address) % balance %
-        pending_balance % total_recieved << std::endl;
-
-    if (json_output)
-    {
-        if (remaining_count > 0)
-            std::cout << "," << std::endl;
-        else
-            std::cout << "]" << std::endl;
-    }
-
-    --remaining_count;
-    condition.notify_one();
+    --state;
 }
 
 // Untestable without fullnode virtualization, loc ready.
@@ -129,24 +99,26 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto json = get_json_option();
+    const auto xml = false; // get_xml_option();
     const auto& addresses = get_addresss_argument();
 
-    // TODO: replace these
-    json_output = json;
-    first_address = true;
-    result = console_result::okay;
-    remaining_count = addresses.size();
-
-    // TODO: set up lambdas.
     callback_state state(error, output);
+    const auto handler = [&state, &json, &xml](const payment_address& address,
+        const std::error_code& code, const blockchain::history_list& history)
+    {
+        // TODO: move json/xml/info switch into callback_state enum.
+        if (!handle_error(state, code))
+            handle_callback(state, address, history, json, xml);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     for (const auto& address: addresses)
     {
+        // TODO: take external lock and set all callbacks before releasing.
         ++state;
-        fullnode.address.fetch_history(address,
-            std::bind(balance_fetched, address, ph::_1, ph::_2));
+        fullnode.address.fetch_history(address, 
+            std::bind(handler, address, ph::_1, ph::_2));
     }
 
     client.poll(state.stopped());

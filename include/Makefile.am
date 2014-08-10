@@ -13,7 +13,7 @@ sx_include_HEADERS = \
 
 sx_utility_includedir = $(includedir)/sx/utility
 sx_utility_include_HEADERS += \
-    callback_args.hpp \
+    callback_state.hpp \
     compat.hpp \
     config.hpp \
     environment.hpp \

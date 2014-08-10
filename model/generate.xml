@@ -173,6 +173,7 @@
   <command symbol="fetch-balance" category="ONLINE" obelisk="true">
     <option name="help" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires an Obelisk server connection." />
     <option name="json" description="Enable JSON output." />
+    <option name="xml" description="Enable XML output." />
     <argument name="ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
     <define name="SX_FETCH_BALANCE_OUTPUT" value="Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%" />
   </command>

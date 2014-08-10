@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 // Suppressing msvc warnings from boost that are heard to deal with
 // because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
 // without first testing it.
+#include "precompile.hpp"
 #pragma warning(push) 
 #pragma warning(disable : 4996)
 #include <sx/utility/utility.hpp>

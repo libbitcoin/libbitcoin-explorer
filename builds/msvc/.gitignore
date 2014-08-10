@@ -3,4 +3,5 @@
 *.sdf
 *.opensdf
 *.log
+/vs2013/ipch/
 /vs2013/save/

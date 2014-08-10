@@ -257,5 +257,8 @@
     <ClInclude Include="..\..\..\..\test\command.hpp">
       <Filter>src\tests\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\test\precompile.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -17,20 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
-#include <boost/test/unit_test.hpp>
 
-#include <sx/sx.hpp>
-
-/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
-
-BOOST_AUTO_TEST_SUITE(generated__broadcast)
-
-BOOST_AUTO_TEST_CASE(generated__broadcast__always__returns_true)
-{
-    // TODO: mocks and dependency injection required to test proper execution.
-    auto func = [](std::shared_ptr<sx::command> sx_command) -> void {};
-    BOOST_REQUIRE(sx::broadcast(func));
-}
-
-BOOST_AUTO_TEST_SUITE_END()
+// Procompiled header file.
+// http://en.wikipedia.org/wiki/Precompiled_header

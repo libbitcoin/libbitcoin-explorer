@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include "precompile.hpp"
 #include <sx/command/fetch-history.hpp>
 
 #include <atomic>
@@ -51,101 +52,58 @@ static const char* json_format = \
     "   \"spend\": \"%5%\",\n"
     "   \"spend_height\": \"%6%\"\n"
     "}";
+// "Address: %1%\n  Output: %2%\n  Output height: %3%\n  Value: %4%\n
+// spend: %5%\n  Spend height: %6%"
 
-static bool json_output;
-static bool first_address;
-static std::mutex mutex;
-static console_result result;
-static size_t remaining_count;
-static std::condition_variable condition;
-
-static void parse_history(std::string& output_height, std::string& row_spend,
-    std::string& spend_height, const blockchain::history_row& row, bool json)
+static pt::ptree parse_tree(const blockchain::history_row& row)
 {
-    auto pending = if_else(json, json_pending, SX_FETCH_HISTORY_PENDING);
-    auto unspent = if_else(json, json_unspent, SX_FETCH_HISTORY_UNSPENT);
+    pt::ptree tree;
+
+    // TODO: create row serializer.
+    std::string output_height, row_spend, spend_height;
 
     std::stringstream output_height_stream;
     if (row.output_height == 0)
-        output_height_stream << pending;
+        output_height_stream << json_pending;
     else
         output_height_stream << row.output_height;
     output_height = output_height_stream.str();
 
     std::stringstream row_spend_stream;
     if (row.spend.hash == null_hash)
-        row_spend_stream << unspent;
+        row_spend_stream << json_unspent;
     else
         row_spend_stream << input(row.spend);
     row_spend = row_spend_stream.str();
 
     std::stringstream spend_height_stream;
     if (row.spend.hash == null_hash)
-        spend_height_stream << unspent;
+        spend_height_stream << json_unspent;
     else if (row.spend_height == 0)
-        spend_height_stream << pending;
+        spend_height_stream << json_pending;
     else
         spend_height_stream << row.spend_height;
     spend_height = spend_height_stream.str();
+
+    return tree;
 }
 
-static void history_fetched(const payment_address& pay_address,
-    const std::error_code& code, const blockchain::history_list& history)
+static void handle_callback(callback_state& state,
+    const payment_address& pay_address, 
+    const blockchain::history_list& history, bool json, bool xml)
 {
-    std::lock_guard<std::mutex> lock(mutex);
-    BITCOIN_ASSERT(remaining_count > 0);
-
-    if (code)
+    // TODO: to keep rows toghether in output requires an external lock here.
+    for (const auto& row: history)
     {
-        std::cerr << code.message() << std::endl;
-        result = console_result::failure;
-        remaining_count = 0;
-        condition.notify_one();
-        return;
+        const auto tree = parse_tree(row);
+
+        // TODO: serialize parse tree here as json, xml or info.
+        std::string output_height, row_spend, spend_height;
+        state.output(format(json_format) % address(pay_address) % row.output %
+            output_height % row.value %  row_spend % spend_height);
+
+        --state;
     }
-
-    auto format = if_else(json_output, json_format, SX_FETCH_HISTORY_OUTPUT);
-
-    if (json_output)
-    {
-        if (first_address)
-            std::cout << "[" << std::endl;
-        else
-            first_address = false;
-    }
-
-    bool first_row = true;
-    for (const auto& row : history)
-    {
-        if (json_output)
-        {
-            if (first_row)
-                first_row = false;
-            else
-                std::cout << "," << std::endl;
-        }
-
-        std::string output_height;
-        std::string row_spend;
-        std::string spend_height;
-        parse_history(output_height, row_spend, spend_height, row,
-            json_output);
-
-        std::cout << boost::format(format) % address(pay_address) % 
-            row.output % output_height % row.value %  row_spend % spend_height
-            << std::endl;
-    }
-
-    if (json_output)
-    {
-        if (remaining_count > 0)
-            std::cout << "," << std::endl;
-        else
-            std::cout << "]" << std::endl;
-    }
-
-    --remaining_count;
-    condition.notify_one();
 }
 
 // Untestable without fullnode virtualization, loc ready.
@@ -153,24 +111,26 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto json = get_json_option();
+    const auto xml = false; // get_xml_option();
     const auto& addresses = get_addresss_argument();
 
-    // TODO: replace these
-    json_output = json;
-    first_address = true;
-    result = console_result::okay;
-    remaining_count = addresses.size();
-
-    // TODO: set up lambdas.
     callback_state state(error, output);
+    const auto handler = [&state, &json, &xml](const payment_address& address,
+        const std::error_code& code, const blockchain::history_list& history)
+    {
+        // TODO: move json/xml/info switch into callback_state enum.
+        if (!handle_error(state, code))
+            handle_callback(state, address, history, json, xml);
+    };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     for (const auto& address: addresses)
     {
+        // TODO: take external lock and set all callbacks before releasing.
         ++state;
         fullnode.address.fetch_history(address,
-            std::bind(history_fetched, address, ph::_1, ph::_2));
+            std::bind(handler, address, ph::_1, ph::_2));
     }
 
     client.poll(state.stopped());
