@@ -23,11 +23,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -42,32 +39,21 @@ namespace serializer {
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    script()
-        : value_()
-    {
-    }
+    script();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  hexcode  The value to initialize with.
      */
-    script(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+    script(const std::string& hexcode);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    script(const bc::script_type& value)
-        : value_(value)
-    {
-    }
+    script(const bc::script_type& value);
 
     /**
      * Initialization constructor.
@@ -75,98 +61,52 @@ public:
      * we do not use boost program_options to read the words as a single
      * argument. Instead we read a set of string arguments and then explicitly
      * load them here.
-     * 
      * @param[in]  mnemonics  The mnemonic tokens to initialize with.
      */
-    script(const std::vector<std::string>& mnemonics)
-    {
-        std::string script;
-        join(mnemonics, script);
-
-        value_ = bc::unpretty(script);
-        if (value_.operations().empty())
-            throw po::invalid_option_value(script);
-    }
+    script(const std::vector<std::string>& mnemonics);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    script(const script& other)
-        : script(other.value_)
-    {
-    }
+    script(const script& other);
 
     /**
     * Return a reference to the data member.
-    *
     * @return  A reference to the object's internal data.
     */
-    bc::script_type& data()
-    {
-        return value_;
-    }
+    bc::script_type& data();
 
     /**
      * Return a pretty-printed copy of the script.
      * See comments on the tokens constructor. We expose this method here for 
      * symmetry with the construction approach.
-     *
      * @return  A mnemonic-printed copy of the internal script.
      */
-    const std::string mnemonic() const
-    {
-        return bc::pretty(value_);
-    }
+    const std::string mnemonic() const;
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::script_type&() const
-    {
-        return value_; 
-    }
+    operator const bc::script_type&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, script& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
-
-        try
-        {
-            argument.value_ = bc::parse_script(hex(hexcode));
-        }
-        catch (bc::end_of_stream)
-        {
-            throw po::invalid_option_value(hexcode);
-        }
-
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, script& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output,
-        const script& argument)
-    {
-        output << hex(bc::save_script(argument.value_));
-        return output;
-    }
+        const script& argument);
 
 private:
 

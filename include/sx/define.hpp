@@ -20,11 +20,11 @@
 #ifndef DEFINE_HPP
 #define DEFINE_HPP
 
+#include <boost/dynamic_bitset.hpp>
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
-
-#define REGION
+#include <bitcoin/bitcoin.hpp>
 
 #define PROPERTY(type, name) \
     public: virtual type get_##name() { return name##_; } \
@@ -38,13 +38,6 @@
 #define PROPERTY_SET(type, name) \
     public: virtual void set_##name(type value) { name##_ = value; } \
     private: type name##_
-
-#define HANDLE_MULTIPLE_NOT_IMPLEMENTED(collection, stream) \
-    if (collection.size() != 1) \
-    { \
-        stream << name() << " does not yet support multiple primary inputs" \
-            << std::endl; \
-    }
 
 /**
  * Delimiter for use in word splitting serialized input and output points.
@@ -63,14 +56,31 @@
 
 #define SX_STDIO_PATH_SENTINEL "-"
 
+/**
+ * Space-saving namespaces.
+ */
 namespace ph = std::placeholders;
 namespace po = boost::program_options;
 namespace pt = boost::property_tree;
 
+/**
+ * Space-saving, clarifying and/or differentiating external type equivalents.
+ */
+typedef bc::transaction_type tx_type;
+typedef bc::transaction_input_type tx_input_type;
+typedef bc::transaction_output_type tx_output_type;
+typedef bc::blockchain::history_row balance_row;
+typedef bc::blockchain::history_row history_row;
 typedef boost::format format;
+typedef boost::dynamic_bitset<uint8_t> bitset;
 typedef po::option_description option_metadata;
 typedef po::options_description options_metadata;
 typedef po::positional_options_description arguments_metadata;
+
+/**
+ * The max length of the prefix in bits.
+ */
+constexpr size_t max_prefix = sizeof(bc::stealth_bitfield) * bc::byte_size;
     
 /**
  * The noop void function.
@@ -85,6 +95,27 @@ enum console_result : int
     failure = -1,
     okay = 0,
     invalid = 1
+};
+
+/**
+ * Suppported output encoding engines.
+ */
+enum class encoding_engine
+{
+    info,
+    json,
+    xml,
+    native
+};
+
+/**
+ * Definition of the parts of a wrapped payload.
+ */
+struct wrapped_data
+{
+    uint8_t version;
+    uint32_t checksum;
+    bc::data_chunk payload;
 };
 
 #endif

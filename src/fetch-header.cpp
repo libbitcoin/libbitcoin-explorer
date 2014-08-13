@@ -23,10 +23,12 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/prop_tree.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/utility/callback_state.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -34,9 +36,14 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void handle_callback(callback_state& state, const block_header_type& block_header)
+static void handle_callback(callback_state& state, 
+    const block_header_type& block_header)
 {
-    state.output(header(block_header));
+    if (state.get_engine() == encoding_engine::native)
+        state.output(header(block_header));
+    else
+        state.output(prop_tree(block_header));
+
     state.stop();
 }
 
@@ -45,12 +52,13 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const size_t height = get_height_option();
     const hash_digest& hash = get_hash_option();
+    const encoding& encoding = get_format_option();
 
-    callback_state state(error, output);
+    callback_state state(error, output, encoding);
     const auto handler = [&state](const std::error_code& code,
         const block_header_type& block_header)
     {
-        if (!handle_error(state, code))
+        if (!state.handle_error(code))
             handle_callback(state, block_header);
     };
 

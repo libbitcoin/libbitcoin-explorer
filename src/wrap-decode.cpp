@@ -21,54 +21,25 @@
 #include <sx/command/wrap-decode.hpp>
 
 #include <iostream>
-#include <boost/format.hpp>
-#include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/prop_tree.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/utility.hpp>
 
-using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-bool split_checksum(const data_chunk& chunk, byte& version, hex& payload,
-    hex& checksum)
-{
-    const size_t version_length = 1;
-    const size_t checksum_length = 4;
-
-    // guard against insufficient buffer length
-    if (chunk.size() < version_length + checksum_length)
-        return false;
-
-    if (!verify_checksum(chunk))
-        return false;
-
-    // set return values
-    version = chunk.front();
-    payload = data_chunk(chunk.begin() + version_length, 
-        chunk.end() - checksum_length);
-    checksum = data_chunk(chunk.end() - checksum_length, chunk.end());
-
-    return true;
-}
-
+// TODO: update tests for ptree output.
 // 100% coverage by line, loc ready.
 console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const data_chunk& data = get_hex_argument();
+    const auto& wrapped = get_wrapped_argument();
+    const auto& encoding = get_format_option();
 
-    byte version;
-    hex payload, checksum;
-    if (!split_checksum(data, version, payload, checksum))
-    {
-        error << SX_WRAP_DECODE_INVALID_CHECKSUM << std::endl;
-        return console_result::failure;
-    }
+    const auto tree = prop_tree(wrapped);
 
-    output << boost::format(SX_WRAP_DECODE_OUTPUT) % version % payload %
-        checksum << std::endl;
+    write_stream(output, tree, encoding) << std::endl;
     return console_result::okay;
 }

@@ -58,7 +58,6 @@ public:
 
     /*
      * Construct an instance of the printer class.
-     *
      * @param[out] output       Stream that is sink for print output.
      * @param[in]  options      Populated command line options metadata.
      * @param[in]  arguments    Populated command line arguments metadata.
@@ -71,56 +70,48 @@ public:
     
     /**
      * Format the help arguments table.
-     *
      * @return  The formatted help arguments table.
      */
     virtual std::string format_help_arguments();
 
     /**
      * Format the help options table.
-     *
      * @return  The formatted help options table.
      */
     virtual std::string format_help_options();
 
     /**
      * Format the command line usage.
-     *
      * @return  The formatted usage.
      */
     virtual std::string format_usage();
 
     /**
      * Format the command line arguments.
-     *
      * @return  The formatted command line arguments.
      */
     virtual std::string format_usage_arguments();
 
     /**
      * Format the command line options.
-     *
      * @return  The formatted command line options.
      */
     virtual std::string format_usage_options();
 
     /**
      * Format the command line parameters (exclusive of the application).
-     *
      * @return  The formatted command line parameters.
      */
     virtual std::string format_usage_parameters();
 
     /**
      * Format the command line toggle options.
-     *
      * @return  The formatted command line toggle options.
      */
     virtual std::string format_usage_toggle_options();
 
     /**
      * Format the command line value options.
-     *
      * @return  The formatted command line value options.
      */
     virtual std::string format_usage_value_options();

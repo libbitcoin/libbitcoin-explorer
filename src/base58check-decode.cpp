@@ -31,8 +31,7 @@ console_result base58check_decode::invoke(std::ostream& output, std::ostream& er
     // Bound parameters.
     const auto& base58check = get_base58check_argument();
 
-    // TODO: consider obsoleting this since it can be accessed via
-    // wrap/unwrap and base58-encode/base58-decode
+    // TODO: add wrapped property tree.
 
     // TODO: invoke functionality from base58-decode >> unwrap.
     error << SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED << std::endl;

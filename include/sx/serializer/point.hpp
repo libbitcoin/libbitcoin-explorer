@@ -21,11 +21,11 @@
 #define POINT_HPP
 
 #include <iostream>
+#include <sstream>
 #include <stdint.h>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/btc256.hpp>
@@ -43,17 +43,8 @@ namespace serializer {
  * @param[out] point   The out point to populate.
  * @param[in]  tokens  The two tokens to parse.
  */
-static void parse_point(bc::output_point& point,
-    const std::vector<std::string>& tokens)
-{
-    // validate and deserialize the transaction hash
-    const btc256 digest(tokens[0]);
-    const bc::hash_digest& txhash = digest;
-
-    // copy the input point values
-    std::copy(txhash.begin(), txhash.end(), point.hash.begin());
-    deserialize(point.index, tokens[1]);
-}
+    static void parse_point(bc::output_point& point,
+        const std::vector<std::string>& tokens);
 
 /**
  * Serialization helper to convert between text and an output_point.
@@ -63,99 +54,56 @@ class point
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    point()
-        : value_()
-    {
-    }
+    point();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  tuple  The value to initialize with.
      */
-    point(const std::string& tuple)
-    {
-        std::stringstream(tuple) >> *this;
-    }
+    point(const std::string& tuple);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    point(const bc::output_point& value)
-        : value_(value)
-    {
-    }
+    point(const bc::output_point& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    point(const point& other)
-        : point(other.value_)
-    {
-    }
+    point(const point& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::output_point& data()
-    {
-        return value_;
-    }
+    bc::output_point& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::output_point&() const
-    {
-        return value_; 
-    }
+    operator const bc::output_point&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, point& argument)
-    {
-        std::string tuple;
-        input >> tuple;
-
-        std::vector<std::string> tokens;
-        split(tuple, tokens, SX_TX_POINT_DELIMITER);
-        if (tokens.size() != 2)
-            throw po::invalid_option_value(tuple);
-
-        parse_point(argument.value_, tokens);
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, point& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const point& argument)
-    {
-        // see bc::concat_point()
-        const auto& out = argument.value_;
-        output << btc256(out.hash) << SX_TX_POINT_DELIMITER << out.index;
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const point& argument);
 
 private:
 

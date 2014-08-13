@@ -22,9 +22,8 @@
 
 #include <array>
 #include <iostream>
+#include <string>
 #include <stdint.h>
-#include <vector>
-#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 
@@ -41,36 +40,24 @@ class hex
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    hex() 
-        : value_()
-    {
-    }
+    hex();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  hex  The value to initialize with.
      */
-    hex(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+    hex(const std::string& hexcode);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    hex(const bc::data_chunk& value)
-        : value_(value)
-    {
-    }
+    hex(const bc::data_chunk& value);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
     template<size_t Size>
@@ -81,66 +68,37 @@ public:
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    hex(const hex& other)
-        : hex(other.value_)
-    {
-    }
+    hex(const hex& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::data_chunk& data()
-    {
-        return value_;
-    }
+    bc::data_chunk& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::data_chunk&() const
-    {
-        return value_; 
-    }
+    operator const bc::data_chunk&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, hex& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
-
-        bc::data_chunk chunk = bc::decode_hex(hexcode);
-        if (chunk.empty())
-            throw po::invalid_option_value(hexcode);
-
-        argument.value_.assign(chunk.begin(), chunk.end());
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, hex& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const hex& argument)
-    {
-        output << bc::encode_hex(argument.value_);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output, const hex& argument);
 
 private:
 

@@ -22,7 +22,6 @@
 
 #include <iostream>
 #include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 
@@ -39,96 +38,56 @@ class base58
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    base58()
-        : value_()
-    {
-    }
+    base58();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  base58  The value to initialize with.
      */
-    base58(const std::string& base58)
-    {
-        std::stringstream(base58) >> *this;
-    }
+    base58(const std::string& base58);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    base58(const bc::data_chunk& value)
-        : value_(value)
-    {
-    }
+    base58(const bc::data_chunk& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    base58(const base58& other)
-        : base58(other.value_)
-    {
-    }
+    base58(const base58& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::data_chunk& data()
-    {
-        return value_;
-    }
+    bc::data_chunk& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::data_chunk&() const
-    {
-        return value_; 
-    }
+    operator const bc::data_chunk&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, base58& argument)
-    {
-        std::string base58;
-        input >> base58;
-
-        bc::data_chunk chunk = bc::decode_base58(base58);
-        if (chunk.empty())
-            throw po::invalid_option_value(base58);
-
-        argument.value_.assign(chunk.begin(), chunk.end());
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, base58& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const base58& argument)
-    {
-        output << bc::encode_base58(argument.value_);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const base58& argument);
 
 private:
 

@@ -33,9 +33,9 @@ console_result input_set::invoke(int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 4, 4))
         return console_result::failure;
 
-    transaction_type tx;
+    tx_type tx;
     const auto filename(get_filename(argc, argv));
-    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
+    if (!load_satoshi_item<tx_type>(tx, filename, std::cin))
     {
         std::cerr << "sx: Deserializing transaction failed." << std::endl;
         return console_result::failure;

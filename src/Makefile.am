@@ -12,9 +12,33 @@ AM_CPPFLAGS = \
 
 libsx_la_SOURCES = \
     async_client.cpp \
+    callback_state.cpp \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
+    prop_tree.cpp \
+    serializer/address.hpp \
+    serializer/base58.hpp \
+    serializer/btc160.hpp \
+    serializer/btc256.hpp \
+    serializer/byte.hpp \
+    serializer/ec_private.hpp \
+    serializer/ec_public.hpp \
+    serializer/encoding.hpp \
+    serializer/hd_key.hpp \
+    serializer/hd_private.hpp \
+    serializer/hd_public.hpp \
+    serializer/header.hpp \
+    serializer/hex.hpp \
+    serializer/input.hpp \
+    serializer/output.hpp \
+    serializer/point.hpp \
+    serializer/prefix.hpp \
+    serializer/raw.hpp \
+    serializer/script.hpp \
+    serializer/transaction.hpp \
+    serializer/wif.hpp \
+    serializer/wrapper.hpp \
     utility/config.cpp \
     utility/environment.cpp \
     utility/parameter.cpp \
@@ -57,7 +81,6 @@ libsx_la_SOURCES += \
     hd-to-ec.cpp \
     hd-to-pub.cpp \
     hd-to-wif.cpp \
-    header-decode.cpp \
     help.cpp \
     initchain.cpp \
     mnemonic-decode.cpp \
@@ -77,6 +100,7 @@ libsx_la_SOURCES += \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \
+    showblkhead.cpp \
     stealth-addr-encode.cpp \
     stealth-newkey.cpp \
     tx-decode.cpp \

@@ -31,6 +31,7 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto satoshi = get_satoshi_argument();
     const auto& addresses = get_addresss_argument();
+//    const auto& encoding = get_format_option();
 
     error << SX_FETCH_UTXO_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

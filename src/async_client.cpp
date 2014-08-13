@@ -26,32 +26,23 @@
 #include <sx/command.hpp>
 #include <sx/utility/utility.hpp>
 
+using namespace bc;
+
 namespace sx {
 
 async_client::async_client(sx::command& command, const size_t threads)
-    : threadpool_(threads) {}
+    : threadpool_(threads)
+{
+}
 
 async_client::~async_client()
 {
     stop();
 }
 
-bc::threadpool& async_client::get_threadpool()
+threadpool& async_client::get_threadpool()
 {
     return threadpool_;
-}
-
-// Not yet unit testable (nonvirtual pool).
-void async_client::detached_poll(bool& done, uint32_t period_ms,
-    std::function<void()> action)
-{
-    auto work = [this, &done, period_ms, action]
-    { 
-        this->poll(done, period_ms, action);
-    };
-
-    std::thread worker_thread(work);
-    worker_thread.detach();
 }
 
 void async_client::poll(bool& done, uint32_t period_ms,
@@ -65,7 +56,7 @@ void async_client::poll(bool& done, uint32_t period_ms,
     }
 }
 
-// Test wrapper, not testable.
+// Test wrapper (not testable).
 void async_client::sleep(uint32_t period_ms)
 {
     sleep_ms(period_ms);

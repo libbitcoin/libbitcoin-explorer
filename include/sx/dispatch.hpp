@@ -32,7 +32,6 @@ namespace sx {
    
 /**
  * Dispatch the command with the raw arguments as provided on the command line.
- *
  * @param[in]  argc  The number of elements in the argv array.
  * @param[in]  argv  The array of arguments, including the process.
  * @return           The appropriate console return code { -1, 0, 1 }.
@@ -51,14 +50,12 @@ console_result dispatch_invoke(int argc, const char* argv[]);
 
 /**
  * Display usage for all commands.
- *
  * @return  True if displayed successfully.
  */
 bool dispatch_usage();
 
 /**
  * Get the config variable from the variable map.
- *
  * @param[in]  variables  The variable map to read the config from.
  * @return                The read path.
  */
@@ -66,7 +63,6 @@ boost::filesystem::path get_config_variable(po::variables_map& variables);
 
 /**
  * Load command line variables.
- *
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
  * @param[in]  input      The input stream for loading variable fallbacks.
@@ -78,7 +74,6 @@ void load_command_variables(po::variables_map& variables, command& instance,
 
 /**
  * Load configuration file variables.
- *
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
  */
@@ -87,7 +82,6 @@ void load_configuration_variables(po::variables_map& variables,
 
 /**
  * Load environment variables.
- *
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
  */
@@ -96,7 +90,6 @@ void load_environment_variables(po::variables_map& variables,
 
 /**
  * Load command line variables.
- *
  * @param[out] variables  The variable map to populate.
  * @param[out] message    Displayable error message in case of failure.
  * @param[in]  instance   The command instance for the current command.

@@ -41,7 +41,6 @@ namespace sx {
 
 /**
  * Get the default configuration settings file path or return empty.
- *
  * @return  The default configuration settings file path or empty.
  */
 std::string config_default();

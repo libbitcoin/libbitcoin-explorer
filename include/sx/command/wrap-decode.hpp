@@ -36,6 +36,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
@@ -48,6 +49,7 @@
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
@@ -56,14 +58,6 @@
 
 namespace sx {
 namespace extension {
-
-/**
- * Various localizable strings.
- */
-#define SX_WRAP_DECODE_INVALID_CHECKSUM \
-    "The checksum is not valid."
-#define SX_WRAP_DECODE_OUTPUT \
-    "%1% %2% %3%"
 
 /**
  * Class to implement the sx wrap-decode command.
@@ -97,34 +91,30 @@ public:
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HEX", 1);
+            .add("WRAPPED", 1);
     }
 	
 	/**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_hex_argument(), "HEX", variables, input);
+        load_input(get_wrapped_argument(), "WRAPPED", variables, input);
     }
     
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -143,8 +133,13 @@ public:
                 "Validate the checksum of a hex encoded data and recover its version byte and data."
             )
             (
-                "HEX",
-                value<serializer::hex>(&argument_.hex),
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format."
+            )
+            (
+                "WRAPPED",
+                value<serializer::wrapper>(&argument_.wrapped),
                 "The hex encoded data to unwrap."
             );
 
@@ -153,7 +148,6 @@ public:
 
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -163,20 +157,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HEX argument.
+     * Get the value of the WRAPPED argument.
      */
-    virtual serializer::hex& get_hex_argument()
+    virtual serializer::wrapper& get_wrapped_argument()
     {
-        return argument_.hex;
+        return argument_.wrapped;
     }
     
     /**
-     * Set the value of the HEX argument.
+     * Set the value of the WRAPPED argument.
      */
-    virtual void set_hex_argument(
-        const serializer::hex& value)
+    virtual void set_wrapped_argument(
+        const serializer::wrapper& value)
     {
-        argument_.hex = value;
+        argument_.wrapped = value;
     }
 
     /**
@@ -196,6 +190,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the format option.
+     */
+    virtual serializer::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+    
+    /**
+     * Set the value of the format option.
+     */
+    virtual void set_format_option(
+        const serializer::encoding& value)
+    {
+        option_.format = value;
+    }
+
 private:
 
     /**
@@ -206,11 +217,11 @@ private:
     struct argument
     {
         argument()
-          : hex()
+          : wrapped()
         {
         }
         
-        serializer::hex hex;
+        serializer::wrapper wrapped;
     } argument_;
     
     /**
@@ -221,11 +232,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            format()
         {
         }
         
         bool help;
+        serializer::encoding format;
     } option_;
 };
 

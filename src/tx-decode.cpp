@@ -21,34 +21,33 @@
 #include <sx/command/tx-decode.hpp>
 
 #include <iostream>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/info_parser.hpp>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
+#include <sx/prop_tree.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto xml = get_xml_option();
-    const auto json = get_json_option();
-    const auto ugly = get_ugly_option();
+    const auto& encoding = get_format_option();
     const auto& transactions = get_transactions_argument();
 
-    const pt::ptree tree = property_tree(transactions);
-
-    if (json)
-        pt::write_xml(output, tree);
-    else if (xml)
-        pt::write_json(output, tree, !ugly);
+    if (encoding == encoding_engine::native)
+    {
+        for (const auto& tx: transactions)
+            output << transaction(tx) << std::endl;
+    }
     else
-        pt::write_info(output, tree);
+    {
+        const auto tree = prop_tree(transactions);
+        write_stream(output, tree, encoding) << std::endl;
+    }
 
     return console_result::okay;
 }

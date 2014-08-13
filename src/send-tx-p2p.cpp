@@ -24,10 +24,11 @@
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/async_client.hpp>
 #include <sx/define.hpp>
-#include <sx/utility/utility.hpp>
 #include <sx/serializer/transaction.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -66,19 +67,19 @@ static void handle_sent(callback_state& state)
 
 // Send tx to another Bitcoin node.
 static void handle_send(callback_state& state, const std::error_code& code, 
-    channel_ptr node, protocol& prot, transaction_type& tx)
+    channel_ptr node, protocol& prot, tx_type& tx)
 {
     // Set up callback handlers for sent and send.
     const auto sent_handler = [&state](const std::error_code& code)
     {
-        handle_error(state, code, SX_SEND_TX_P2P_SEND_FAIL);
+        state.handle_error(code, SX_SEND_TX_P2P_SEND_FAIL);
         handle_sent(state);
     };
 
     const auto send_handler = [&state](const std::error_code& code,
-        channel_ptr node, protocol& prot, transaction_type& tx)
+        channel_ptr node, protocol& prot, tx_type& tx)
     {
-        handle_error(state, code, SX_SEND_TX_P2P_SETUP_FAIL);
+        state.handle_error(code, SX_SEND_TX_P2P_SETUP_FAIL);
         handle_send(state, code, node, prot, tx);
     };
 
@@ -100,21 +101,21 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Set up callback handlers for start, connections check, send and stop.
     const auto start_handler = [&state](const std::error_code& code)
     {
-        handle_error(state, code, SX_SEND_TX_P2P_START_FAIL);
+        state.handle_error(code, SX_SEND_TX_P2P_START_FAIL);
         handle_start(state);
     };
 
     const auto check_handler = [&state](const std::error_code& code,
         size_t connection_count, size_t node_count)
     {
-        handle_error(state, code, SX_SEND_TX_P2P_CHECK_FAIL);
+        state.handle_error(code, SX_SEND_TX_P2P_CHECK_FAIL);
         handle_check(state, connection_count, node_count);
     };
 
     const auto send_handler = [&state](const std::error_code& code,
-        channel_ptr node, protocol& prot, transaction_type& tx)
+        channel_ptr node, protocol& prot, tx_type& tx)
     {
-        handle_error(state, code, SX_SEND_TX_P2P_SETUP_FAIL);
+        state.handle_error(code, SX_SEND_TX_P2P_SETUP_FAIL);
         handle_send(state, code, node, prot, tx);
     };
 
@@ -139,7 +140,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     prot.start(start_handler);
 
     // Create a subscription for each transaction.
-    for (const transaction_type& tx: transactions)
+    for (const tx_type& tx: transactions)
     {
         ++state;
         prot.subscribe_channel(

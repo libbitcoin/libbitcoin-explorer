@@ -40,7 +40,6 @@ public:
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  command  The command being processed.
      * @param[in]  threads  The number of pool threads to initialize.
      */
@@ -54,7 +53,6 @@ public:
 
     /**
      * Poll for changes until stopped.
-     *
      * @param[in]  done       A flag that signals cessation of polling.
      * @param[in]  period_ms  The polling period in ms, defaults to 100.
      * @param[in]  action     The poll function to execute, defaults to null.
@@ -65,7 +63,7 @@ public:
 private:
 
     /**
-     * Type to simplify obelisk client setup.
+     * Encapsulated full node client instance.
      */
     obelisk::fullnode_interface fullnode_;
 };

@@ -80,7 +80,6 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<hd_to_ec>());
     func(make_shared<hd_to_pub>());
     func(make_shared<hd_to_wif>());
-    func(make_shared<header_decode>());
     func(make_shared<help>());
     func(make_shared<initchain>());
     func(make_shared<mnemonic_decode>());
@@ -101,6 +100,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
+    func(make_shared<showblkhead>());
     func(make_shared<stealth_addr_encode>());
     func(make_shared<stealth_newkey>());
     func(make_shared<tx_decode>());
@@ -204,8 +204,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<hd_to_pub>();
     if (symbol == hd_to_wif::symbol())
         return make_shared<hd_to_wif>();
-    if (symbol == header_decode::symbol())
-        return make_shared<header_decode>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == initchain::symbol())
@@ -246,6 +244,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
         return make_shared<sha512>();
+    if (symbol == showblkhead::symbol())
+        return make_shared<showblkhead>();
     if (symbol == stealth_addr_encode::symbol())
         return make_shared<stealth_addr_encode>();
     if (symbol == stealth_newkey::symbol())

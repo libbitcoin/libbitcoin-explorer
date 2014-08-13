@@ -29,7 +29,6 @@ namespace sx {
 /**
  * Display an error message to the console that the specified sx command does
  * not exist.
- *
  * @param[in]  command  The value that was attempted as a command.
  */
 void display_invalid_command(const std::string& command);
@@ -37,7 +36,6 @@ void display_invalid_command(const std::string& command);
 /**
  * Display an error message to the console that the specified configuration
  * file does not exist.
- *
  * @param[in]  file  The path of a file that was tested.
  */
 void display_invalid_config(const std::string& file);
@@ -45,7 +43,6 @@ void display_invalid_config(const std::string& file);
 /**
  * Display an error message to the console that indicates what is wrong with
  * initialization in terms of command line, config settings file, environment.
- *
  * @param[in]  message  The message to display.
  */
 void display_invalid_variables(const std::string& message);
@@ -57,7 +54,6 @@ void display_line();
 
 /**
  * Display a summary for the specified command.
- *
  * @param[in]  command  Pointer to the command to display.
  * @return              True if displayed successfully.
  */
@@ -70,7 +66,6 @@ void display_usage();
 
 /**
  * Display usage for the specified command.
- *
  * @param[in]  command  Pointer to the command to display.
  * @return              True if displayed successfully.
  */

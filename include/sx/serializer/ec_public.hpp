@@ -21,7 +21,7 @@
 #define EC_PUBLIC_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
+#include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -41,117 +41,68 @@ class ec_public
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    ec_public()
-        : value_()
-    {
-    }
+    ec_public();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  hexcode  The value to initialize with.
      */
-    ec_public(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+    ec_public(const std::string& hexcode);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const bc::ec_point& value)
-        : value_(value)
-    {
-    }
+    ec_public(const bc::ec_point& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    ec_public(const ec_public& other)
-        : ec_public(other.value_)
-    {
-    }
+    ec_public(const ec_public& other);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const libwallet::hd_private_key& value)
-        : ec_public(value.public_key())
-    {
-    }
+    ec_public(const libwallet::hd_private_key& value);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const libwallet::hd_public_key& value)
-        : ec_public(value.public_key())
-    {
-    }
+    ec_public(const libwallet::hd_public_key& value);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_point& data()
-    {
-        return value_;
-    }
+    bc::ec_point& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_point&() const
-    {
-        return value_; 
-    }
+    operator const bc::ec_point&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, ec_public& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
-
-        bc::ec_point point = hex(hexcode);
-        if (!bc::verify_public_key_fast(point)
-            /*|| !bc::verify_public_key(point)*/)
-            throw po::invalid_option_value(hexcode);
-        
-        argument.value_.assign(point.begin(), point.end());
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, ec_public& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const ec_public& argument)
-    {
-        output << hex(argument.value_);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const ec_public& argument);
 
 private:
 

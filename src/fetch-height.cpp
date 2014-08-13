@@ -23,9 +23,9 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/utility/callback_state.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -43,7 +43,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output);
     const auto handler = [&state](const std::error_code& code, size_t height)
     {
-        if (!handle_error(state, code))
+        if (!state.handle_error(code))
             handle_callback(state, height);
     };
 

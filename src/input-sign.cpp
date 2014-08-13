@@ -28,10 +28,10 @@ using namespace bc;
 using namespace sx;
 using namespace sx::extensions;
 
-static bool sign(transaction_type& tx, uint32_t input_index,
+static bool sign(tx_type& tx, uint32_t input_index,
     const elliptic_curve_key& key, const script_type& script_code)
 {
-    transaction_input_type& input = tx.inputs[input_index];
+    tx_input_type& input = tx.inputs[input_index];
     const data_chunk public_key = key.public_key();
     if (public_key.empty())
     {
@@ -62,9 +62,9 @@ console_result input_sign::invoke(int argc, const char* argv[])
     if (!validate_argument_range(argc, example(), 4, 4))
         return console_result::failure;
 
-    transaction_type tx;
+    tx_type tx;
     const auto filename(get_filename(argc, argv));
-    if (!load_satoshi_item<transaction_type>(tx, filename, std::cin))
+    if (!load_satoshi_item<tx_type>(tx, filename, std::cin))
     {
         std::cerr << "sx: Deserializing transaction failed." << std::endl;
         return console_result::failure;

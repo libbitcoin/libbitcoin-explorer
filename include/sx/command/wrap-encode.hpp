@@ -36,6 +36,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
@@ -48,6 +49,7 @@
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
@@ -89,34 +91,30 @@ public:
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HEX", 1);
+            .add("PAYLOAD", 1);
     }
 	
 	/**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_hex_argument(), "HEX", variables, input);
+        load_input(get_payload_argument(), "PAYLOAD", variables, input);
     }
     
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -140,8 +138,8 @@ public:
                 "The desired version number."
             )
             (
-                "HEX",
-                value<serializer::hex>(&argument_.hex),
+                "PAYLOAD",
+                value<serializer::hex>(&argument_.payload),
                 "The hex encoded data to wrap."
             );
 
@@ -150,7 +148,6 @@ public:
 
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -160,20 +157,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HEX argument.
+     * Get the value of the PAYLOAD argument.
      */
-    virtual serializer::hex& get_hex_argument()
+    virtual serializer::hex& get_payload_argument()
     {
-        return argument_.hex;
+        return argument_.payload;
     }
     
     /**
-     * Set the value of the HEX argument.
+     * Set the value of the PAYLOAD argument.
      */
-    virtual void set_hex_argument(
+    virtual void set_payload_argument(
         const serializer::hex& value)
     {
-        argument_.hex = value;
+        argument_.payload = value;
     }
 
     /**
@@ -220,11 +217,11 @@ private:
     struct argument
     {
         argument()
-          : hex()
+          : payload()
         {
         }
         
-        serializer::hex hex;
+        serializer::hex payload;
     } argument_;
     
     /**

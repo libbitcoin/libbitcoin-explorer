@@ -31,9 +31,6 @@ console_result base58check_encode::invoke(std::ostream& output, std::ostream& er
     // Bound parameters.
     const auto& hex = get_hex_argument();
 
-    // TODO: consider obsoleting this since it can be accessed via
-    // wrap/unwrap and base58-encode/base58-decode
-
     // TODO: invoke functionality from wrap >> base58-encode.
     error << SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

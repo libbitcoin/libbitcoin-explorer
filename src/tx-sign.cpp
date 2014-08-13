@@ -34,7 +34,7 @@ console_result tx_sign::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
 
-    for (const transaction_type& tx: transactions)
+    for (const tx_type& tx: transactions)
         /* sign */;
 
     error << SX_TX_SIGN_NOT_IMPLEMENTED << std::endl;

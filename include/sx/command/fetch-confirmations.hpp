@@ -36,6 +36,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
@@ -48,6 +49,7 @@
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
@@ -89,7 +91,6 @@ public:
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
@@ -100,7 +101,6 @@ public:
 	
 	/**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
@@ -115,9 +115,7 @@ public:
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -136,6 +134,11 @@ public:
                 "Get confirmations for a set of transactions. Requires an Obelisk server connection."
             )
             (
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format."
+            )
+            (
                 "TRANSACTION",
                 value<std::string>(),
                 "The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."
@@ -146,7 +149,6 @@ public:
 
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -189,6 +191,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the format option.
+     */
+    virtual serializer::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+    
+    /**
+     * Set the value of the format option.
+     */
+    virtual void set_format_option(
+        const serializer::encoding& value)
+    {
+        option_.format = value;
+    }
+
 private:
 
     /**
@@ -214,11 +233,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            format()
         {
         }
         
         bool help;
+        serializer::encoding format;
     } option_;
 };
 

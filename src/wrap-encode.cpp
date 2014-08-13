@@ -21,11 +21,9 @@
 #include <sx/command/wrap-encode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/hex.hpp>
-#include <sx/utility/utility.hpp>
+#include <sx/define.hpp>
+#include <sx/serializer/wrapper.hpp>
 
-using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
@@ -35,13 +33,8 @@ console_result wrap_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto version = get_version_option();
-    const data_chunk& data = get_hex_argument();
+    const auto& payload = get_payload_argument();
     
-    data_chunk chunk;
-    chunk.push_back(version);
-    extend_data(chunk, data);
-    append_checksum(chunk);
-
-    output << hex(chunk) << std::endl;
+    output << wrapper(version, payload) << std::endl;
     return console_result::okay;
 }

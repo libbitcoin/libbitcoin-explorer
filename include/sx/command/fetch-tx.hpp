@@ -36,6 +36,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
@@ -48,6 +49,7 @@
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
@@ -56,12 +58,6 @@
 
 namespace sx {
 namespace extension {
-
-/**
- * Various localizable strings.
- */
-#define SX_FETCH_TX_OUTPUT \
-    "Ephemeral key: %1% Address: %2% Transaction hash: %3%"
 
 /**
  * Class to implement the sx fetch-tx command.
@@ -95,7 +91,6 @@ public:
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
@@ -105,7 +100,6 @@ public:
 	
 	/**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
@@ -118,9 +112,7 @@ public:
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -139,6 +131,11 @@ public:
                 "Get transactions by filter. Requires an Obelisk server connection."
             )
             (
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format."
+            )
+            (
                 "hash,s",
                 value<std::vector<serializer::btc256>>(&option_.hashs),
                 "The set of hex encoded transaction hashes to get. Overrides prefix and height options."
@@ -152,6 +149,11 @@ public:
                 "height,t",
                 value<size_t>(&option_.height),
                 "The minimum block height of prefix transactions to get. Includes all blocks if not set."
+            )
+            (
+                "secret,s",
+                value<serializer::ec_private>(&option_.secret),
+                "The hex encoded EC private key to use locally in confirming stealth transactions."
             );
 
         return options;
@@ -159,7 +161,6 @@ public:
 
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -183,6 +184,23 @@ public:
         const bool& value)
     {
         option_.help = value;
+    }
+
+    /**
+     * Get the value of the format option.
+     */
+    virtual serializer::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+    
+    /**
+     * Set the value of the format option.
+     */
+    virtual void set_format_option(
+        const serializer::encoding& value)
+    {
+        option_.format = value;
     }
 
     /**
@@ -236,6 +254,23 @@ public:
         option_.height = value;
     }
 
+    /**
+     * Get the value of the secret option.
+     */
+    virtual serializer::ec_private& get_secret_option()
+    {
+        return option_.secret;
+    }
+    
+    /**
+     * Set the value of the secret option.
+     */
+    virtual void set_secret_option(
+        const serializer::ec_private& value)
+    {
+        option_.secret = value;
+    }
+
 private:
 
     /**
@@ -260,16 +295,20 @@ private:
     {
         option()
           : help(),
+            format(),
             hashs(),
             prefixs(),
-            height()
+            height(),
+            secret()
         {
         }
         
         bool help;
+        serializer::encoding format;
         std::vector<serializer::btc256> hashs;
         std::vector<serializer::prefix> prefixs;
         size_t height;
+        serializer::ec_private secret;
     } option_;
 };
 

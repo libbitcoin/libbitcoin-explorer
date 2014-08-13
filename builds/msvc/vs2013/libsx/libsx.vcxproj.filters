@@ -42,6 +42,9 @@
     <Filter Include="src\command">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\serializer">
+      <UniqueIdentifier>{6CE1C682-2E57-4EA8-B819-5C733184121A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\utility">
       <UniqueIdentifier>{c50b43cf-9009-45a6-b813-7a61877602f4}</UniqueIdentifier>
     </Filter>
@@ -188,9 +191,6 @@
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\header-decode.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -251,6 +251,9 @@
     <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\showblkhead.hpp">
+      <Filter>include\command\obsolete</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr-encode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
@@ -308,6 +311,9 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_key.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\encoding.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_private.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
@@ -344,8 +350,8 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\utility\callback_state.hpp">
-      <Filter>include\utility</Filter>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\wrapper.hpp">
+      <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\utility\compat.hpp">
       <Filter>include\utility</Filter>
@@ -368,6 +374,9 @@
     <ClInclude Include="..\..\..\..\include\sx\async_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\callback_state.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -386,12 +395,21 @@
     <ClInclude Include="..\..\..\..\include\sx\obelisk_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\prop_tree.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\precompile.hpp">
       <Filter>src</Filter>
-    </ClInclude>    
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\serializer\precompile.hpp">
+      <Filter>src\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\utility\precompile.hpp">
+      <Filter>src\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\addr-decode.cpp">
@@ -523,9 +541,6 @@
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\header-decode.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\help.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -586,6 +601,9 @@
     <ClCompile Include="..\..\..\..\src\sha512.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
+      <Filter>src\command\obsolete</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-addr-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
@@ -619,6 +637,72 @@
     <ClCompile Include="..\..\..\..\src\wrap-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\address.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\base58.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\btc160.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\btc256.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\byte.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\ec_private.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\ec_public.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\hd_key.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\encoding.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\hd_private.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\hd_public.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\header.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\hex.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\input.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\output.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\point.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\prefix.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\raw.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\script.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\transaction.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\wif.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\wrapper.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\config.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
@@ -636,7 +720,10 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\async_client.cpp">
       <Filter>src</Filter>
-    </ClCompile>    
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\callback_state.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\dispatch.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -647,6 +734,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\prop_tree.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\input-set.cpp">

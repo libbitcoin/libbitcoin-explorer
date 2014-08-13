@@ -36,6 +36,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
@@ -48,6 +49,7 @@
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
@@ -56,12 +58,6 @@
 
 namespace sx {
 namespace extension {
-
-/**
- * Various localizable strings.
- */
-#define SX_FETCH_TX_INDEX_OUTPUT \
-    "Height: %1% Index: %2%"
 
 /**
  * Class to implement the sx fetch-tx-index command.
@@ -95,34 +91,30 @@ public:
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", 1);
+            .add("HASH", -1);
     }
 	
 	/**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_hash_argument(), "HASH", variables, input);
+        load_input(get_hashs_argument(), "HASH", variables, input);
     }
     
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -141,9 +133,14 @@ public:
                 "Get the block height and index of a transaction. Requires an Obelisk server connection."
             )
             (
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format."
+            )
+            (
                 "HASH",
-                value<serializer::btc256>(&argument_.hash),
-                "The hex encoded transaction hash."
+                value<std::vector<serializer::btc256>>(&argument_.hashs),
+                "The set of hex encoded transaction hashes."
             );
 
         return options;
@@ -151,7 +148,6 @@ public:
 
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -161,20 +157,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HASH argument.
+     * Get the value of the HASH arguments.
      */
-    virtual serializer::btc256& get_hash_argument()
+    virtual std::vector<serializer::btc256>& get_hashs_argument()
     {
-        return argument_.hash;
+        return argument_.hashs;
     }
     
     /**
-     * Set the value of the HASH argument.
+     * Set the value of the HASH arguments.
      */
-    virtual void set_hash_argument(
-        const serializer::btc256& value)
+    virtual void set_hashs_argument(
+        const std::vector<serializer::btc256>& value)
     {
-        argument_.hash = value;
+        argument_.hashs = value;
     }
 
     /**
@@ -194,6 +190,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the format option.
+     */
+    virtual serializer::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+    
+    /**
+     * Set the value of the format option.
+     */
+    virtual void set_format_option(
+        const serializer::encoding& value)
+    {
+        option_.format = value;
+    }
+
 private:
 
     /**
@@ -204,11 +217,11 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : hashs()
         {
         }
         
-        serializer::btc256 hash;
+        std::vector<serializer::btc256> hashs;
     } argument_;
     
     /**
@@ -219,11 +232,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            format()
         {
         }
         
         bool help;
+        serializer::encoding format;
     } option_;
 };
 

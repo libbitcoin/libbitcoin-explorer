@@ -244,11 +244,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_wif__returns_expected_value)
     BOOST_REQUIRE(hd_to_wif::symbol() == std::string("hd-to-wif"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__header_decode__returns_expected_value)
-{
-    BOOST_REQUIRE(header_decode::symbol() == std::string("header-decode"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 {
     BOOST_REQUIRE(help::symbol() == std::string("help"));
@@ -347,6 +342,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__sha256__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__sha512__returns_expected_value)
 {
     BOOST_REQUIRE(sha512::symbol() == std::string("sha512"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__showblkhead__returns_expected_value)
+{
+    BOOST_REQUIRE(showblkhead::symbol() == std::string("showblkhead"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr_encode__returns_expected_value)

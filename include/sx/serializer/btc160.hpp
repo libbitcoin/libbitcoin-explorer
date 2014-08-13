@@ -21,7 +21,7 @@
 #define BTC160_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
+#include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
@@ -39,106 +39,62 @@ class btc160
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    btc160()
-        : value_()
-    {
-    }
+    btc160();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  hexcode  The value to initialize with.
      */
-    btc160(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+    btc160(const std::string& hexcode);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    btc160(const bc::short_hash& value)
-        : value_(value)
-    {
-    }
+    btc160(const bc::short_hash& value);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  address  The value to initialize with.
      */
-    btc160(const bc::payment_address& address)
-        : btc160(address.hash())
-    {
-    }
+    btc160(const bc::payment_address& address);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    btc160(const btc160& other)
-        : btc160(other.value_)
-    {
-    }
+    btc160(const btc160& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::short_hash& data()
-    {
-        return value_;
-    }
+    bc::short_hash& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::short_hash&() const
-    {
-        return value_;
-    }
+    operator const bc::short_hash&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, btc160& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
-
-        auto hash = bc::decode_short_hash(hexcode);
-        if (hash == bc::null_short_hash)
-            throw po::invalid_option_value(hexcode);
-
-        std::copy(hash.begin(), hash.end(), argument.value_.begin());
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, btc160& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const btc160& argument)
-    {
-        output << hex(argument.value_);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const btc160& argument);
 
 private:
 

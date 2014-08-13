@@ -76,6 +76,8 @@
 .       return type_ec_private_sx
 .   elsif my.type = type_ec_public
 .       return type_ec_public_sx
+.   elsif my.type = type_encoding
+.       return type_encoding_sx
 .   elsif my.type = type_file
 .       return type_file_sx
 .   elsif my.type = type_hd_key
@@ -108,6 +110,8 @@
 .       return type_transaction_sx
 .   elsif my.type = type_wif
 .       return type_wif_sx
+.   elsif my.type = type_wrapper
+.       return type_wrapper_sx
 .   endif
 .   return my.type
 .endfunction
@@ -186,6 +190,7 @@
 .type_byte = "byte"
 .type_ec_private = "ec_private"
 .type_ec_public = "ec_public"
+.type_encoding = "encoding"
 .type_file = "file"
 .type_hd_key = "hd_key"
 .type_hd_private = "hd_private"
@@ -202,6 +207,7 @@
 .type_string = "string"
 .type_transaction = "transaction"
 .type_wif = "wif"
+.type_wrapper = "wrapper"
 .
 .type_address_sx = "serializer::address"
 .type_base58_sx = "serializer::base58"
@@ -210,6 +216,7 @@
 .type_byte_sx = "serializer::byte"
 .type_ec_private_sx = "serializer::ec_private"
 .type_ec_public_sx = "serializer::ec_public"
+.type_encoding_sx = "serializer::encoding"
 .type_file_sx = "serializer::file"
 .type_hd_key_sx = "serializer::hd_key"
 .type_hd_private_sx = "serializer::hd_private"
@@ -226,6 +233,7 @@
 .type_string_std = "std::string"
 .type_transaction_sx = "serializer::transaction"
 .type_wif_sx = "serializer::wif"
+.type_wrapper_sx = "serializer::wrapper"
 .
 .xml_false = "false"
 .xml_true = "true"
@@ -253,7 +261,6 @@ namespace sx {
 
 /**
  * Invoke a specified function on all commands.
- *
  * @param[in]  func  The function to invoke on all commands.
  * @return           True if invoked successfully.
  */
@@ -261,7 +268,6 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
 /**
  * Find the command identified by the specified symbolic command name.
- *
  * @param[in]  symbol  The symbolic command name.
  * @return             An instance of the command or nullptr if not found.
  */
@@ -348,7 +354,6 @@ public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
-     *
      * @return  Example: "fetch-transaction"
      */
     virtual const char* name()
@@ -358,7 +363,6 @@ public:
 
     /**
      * The localizable command category name, upper case.
-     *
      * @return  Example: "ONLINE"
      */
     virtual const char* category()
@@ -368,7 +372,6 @@ public:
     
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -381,7 +384,6 @@ public:
     /**
      * Load command argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded argument definitions.
      */
     virtual po::positional_options_description& load_arguments()
@@ -391,7 +393,6 @@ public:
 
     /**
      * Load environment variable definitions.
-     *
      * @param[out] definitions  The defined program argument definitions.
      */
     virtual void load_environment(po::options_description& definitions)
@@ -409,7 +410,6 @@ public:
     
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
@@ -422,9 +422,7 @@ public:
      * Load command option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded option definitions.
      */
     virtual po::options_description& load_options()
@@ -434,7 +432,6 @@ public:
     
     /**
      * Load configuration setting definitions.
-     *
      * @param[out] definitions  The defined program argument definitions.
      */
     virtual void load_settings(po::options_description& definitions)
@@ -461,7 +458,6 @@ public:
 	
 	/**
      * Load streamed value as parameter fallback.
-     *
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
@@ -471,7 +467,6 @@ public:
     
     /**
      * Write the usage help for this command to the specified stream.
-     *
      * @param[out] stream  The output stream.
      */
     virtual void write_usage(std::ostream& stream)
@@ -625,6 +620,7 @@ private:
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
@@ -637,6 +633,7 @@ private:
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
@@ -699,7 +696,6 @@ public:
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
@@ -712,7 +708,6 @@ public:
 	
 	/**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
@@ -751,9 +746,7 @@ public:
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -796,7 +789,6 @@ public:
 
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -988,17 +980,18 @@ BOOST_AUTO_TEST_SUITE_END()
 sx_includedir = $\(includedir)/sx
 sx_include_HEADERS = \\
     async_client.hpp \\
+    callback_state.hpp \\
     command.hpp \\
     define.hpp \\
     dispatch.hpp \\
     display.hpp \\
     generated.hpp \\
     obelisk_client.hpp \\
+    prop_tree.hpp \\
     sx.hpp
 
 sx_utility_includedir = $\(includedir)/sx/utility
 sx_utility_include_HEADERS += \\
-    callback_state.hpp \\
     compat.hpp \\
     config.hpp \\
     environment.hpp \\
@@ -1015,11 +1008,13 @@ sx_utility_include_HEADERS += \\
     byte.hpp \\
     ec_private.hpp \\
     ec_public.hpp \\
+    encoding.hpp \\
     hd_key.hpp \\
     hd_private.hpp \\
     hd_public.hpp \\
     header.hpp \\
     hex.hpp \\
+    history.hpp \\
     input.hpp \\
     output.hpp \\
     point.hpp \\
@@ -1027,7 +1022,8 @@ sx_utility_include_HEADERS += \\
     raw.hpp \\
     script.hpp \\
     transaction.hpp \\
-    wif.hpp
+    wif.hpp \\
+    wrapper.hpp
 
 # Generated from XML data source.
 sx_command_includedir = $\(includedir)/sx/command
@@ -1060,9 +1056,33 @@ AM_CPPFLAGS = \\
 
 libsx_la_SOURCES = \\
     async_client.cpp \\
+    callback_state.cpp \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
+    prop_tree.cpp \\
+    serializer/address.hpp \\
+    serializer/base58.hpp \\
+    serializer/btc160.hpp \\
+    serializer/btc256.hpp \\
+    serializer/byte.hpp \\
+    serializer/ec_private.hpp \\
+    serializer/ec_public.hpp \\
+    serializer/encoding.hpp \\
+    serializer/hd_key.hpp \\
+    serializer/hd_private.hpp \\
+    serializer/hd_public.hpp \\
+    serializer/header.hpp \\
+    serializer/hex.hpp \\
+    serializer/input.hpp \\
+    serializer/output.hpp \\
+    serializer/point.hpp \\
+    serializer/prefix.hpp \\
+    serializer/raw.hpp \\
+    serializer/script.hpp \\
+    serializer/transaction.hpp \\
+    serializer/wif.hpp \\
+    serializer/wrapper.hpp \\
     utility/config.cpp \\
     utility/environment.cpp \\
     utility/parameter.cpp \\
@@ -1189,6 +1209,7 @@ endif
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\callback_state.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\async_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\define.hpp" />
@@ -1198,6 +1219,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk_client.hpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\prop_tree.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp" />
@@ -1205,6 +1227,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\encoding.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_public.hpp" />
@@ -1218,7 +1241,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\transaction.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\callback_state.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wrapper.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp" />
@@ -1226,6 +1249,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\printer.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\utility.hpp" />
     <ClInclude Include="..\\..\\..\\..\\src\\precompile.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\src\\serializer\\precompile.hpp" />
     <ClInclude Include="..\\..\\..\\..\\src\\utility\\precompile.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1235,12 +1259,36 @@ endif
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\\..\\..\\..\\src\\async_client.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\callback_state.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
       <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\address.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base58.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc160.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc256.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\byte.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_private.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_public.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\encoding.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_key.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_private.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_public.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\header.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hex.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\input.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\output.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\point.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\prefix.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\raw.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\script.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\transaction.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wif.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wrapper.cpp" />    
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
@@ -1366,6 +1414,9 @@ endif
     <Filter Include="src\\command">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\\serializer">
+      <UniqueIdentifier>{6CE1C682-2E57-4EA8-B819-5C733184121A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\\utility">
       <UniqueIdentifier>{c50b43cf-9009-45a6-b813-7a61877602f4}</UniqueIdentifier>
     </Filter>
@@ -1420,6 +1471,9 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\encoding.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_private.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
@@ -1456,8 +1510,8 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\callback_state.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wrapper.hpp">
+      <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp">
       <Filter>include\\utility</Filter>
@@ -1480,6 +1534,9 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\async_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\callback_state.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -1498,12 +1555,21 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\prop_tree.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\src\\precompile.hpp">
       <Filter>src</Filter>
-    </ClInclude>    
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\src\\serializer\\precompile.hpp">
+      <Filter>src\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\src\\utility\\precompile.hpp">
+      <Filter>src\\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1519,6 +1585,72 @@ endif
 .   endif
     </ClCompile>
 .endfor
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\address.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base58.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc160.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc256.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\byte.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_private.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_public.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_key.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\encoding.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_private.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_public.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\header.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hex.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\input.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\output.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\point.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\prefix.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\raw.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\script.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\transaction.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wif.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wrapper.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp">
       <Filter>src\\utility</Filter>
     </ClCompile>
@@ -1536,7 +1668,10 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\async_client.cpp">
       <Filter>src</Filter>
-    </ClCompile>    
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\callback_state.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -1547,6 +1682,9 @@ endif
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\input-set.cpp">

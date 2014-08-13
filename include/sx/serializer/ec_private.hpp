@@ -21,13 +21,10 @@
 #define EC_PRIVATE_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
+#include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/btc256.hpp>
-#include <sx/serializer/ec_private.hpp>
-#include <sx/serializer/wif.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -42,106 +39,62 @@ class ec_private
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    ec_private()
-        : value_()
-    {
-    }
+    ec_private();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  hexcode  The value to initialize with.
      */
-    ec_private(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+    ec_private(const std::string& hexcode);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_private(const bc::ec_secret& value)
-        : value_(value)
-    {
-    }
+    ec_private(const bc::ec_secret& value);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    ec_private(const libwallet::hd_private_key& value)
-        : ec_private(value.private_key())
-    {
-    }
+    ec_private(const libwallet::hd_private_key& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    ec_private(const ec_private& other)
-        : ec_private(other.value_)
-    {
-    }
+    ec_private(const ec_private& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_secret& data()
-    {
-        return value_;
-    }
+    bc::ec_secret& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_secret&() const
-    {
-        return value_; 
-    }
+    operator const bc::ec_secret&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, ec_private& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
-        
-        bc::ec_secret secret = btc256(hexcode);
-        if (!bc::verify_private_key(secret))
-            throw po::invalid_option_value(hexcode);
-
-        std::copy(secret.begin(), secret.end(), argument.value_.begin());
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, ec_private& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const ec_private& argument)
-    {
-        output << btc256(argument.value_);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const ec_private& argument);
 
 private:
 

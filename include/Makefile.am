@@ -3,17 +3,18 @@
 sx_includedir = $(includedir)/sx
 sx_include_HEADERS = \
     async_client.hpp \
+    callback_state.hpp \
     command.hpp \
     define.hpp \
     dispatch.hpp \
     display.hpp \
     generated.hpp \
     obelisk_client.hpp \
+    prop_tree.hpp \
     sx.hpp
 
 sx_utility_includedir = $(includedir)/sx/utility
 sx_utility_include_HEADERS += \
-    callback_state.hpp \
     compat.hpp \
     config.hpp \
     environment.hpp \
@@ -30,11 +31,13 @@ sx_utility_include_HEADERS += \
     byte.hpp \
     ec_private.hpp \
     ec_public.hpp \
+    encoding.hpp \
     hd_key.hpp \
     hd_private.hpp \
     hd_public.hpp \
     header.hpp \
     hex.hpp \
+    history.hpp \
     input.hpp \
     output.hpp \
     point.hpp \
@@ -42,7 +45,8 @@ sx_utility_include_HEADERS += \
     raw.hpp \
     script.hpp \
     transaction.hpp \
-    wif.hpp
+    wif.hpp \
+    wrapper.hpp
 
 # Generated from XML data source.
 sx_command_includedir = $(includedir)/sx/command
@@ -81,7 +85,6 @@ sx_command_include_HEADERS = \
     command/hd-to-ec.hpp \
     command/hd-to-pub.hpp \
     command/hd-to-wif.hpp \
-    command/header-decode.hpp \
     command/help.hpp \
     command/initchain.hpp \
     command/mnemonic-decode.hpp \
@@ -101,6 +104,7 @@ sx_command_include_HEADERS = \
     command/sha160.hpp \
     command/sha256.hpp \
     command/sha512.hpp \
+    command/showblkhead.hpp \
     command/stealth-addr-encode.hpp \
     command/stealth-newkey.hpp \
     command/tx-decode.hpp \

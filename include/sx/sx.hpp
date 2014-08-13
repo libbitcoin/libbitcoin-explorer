@@ -24,6 +24,7 @@
 // Not to be used internally. For API users.
 // This is intended primarily for test.
 #include <sx/async_client.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/command.hpp>
 #include <sx/dispatch.hpp>
 #include <sx/display.hpp>
@@ -31,6 +32,7 @@
 #ifdef HAVE_OBELISK
     #include <sx/obelisk_client.hpp>
 #endif
+#include <sx/prop_tree.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/btc160.hpp>
@@ -38,6 +40,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
@@ -51,7 +54,7 @@
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
-#include <sx/utility/callback_state.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/environment.hpp>

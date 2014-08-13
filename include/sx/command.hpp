@@ -49,7 +49,6 @@ public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
-     *
      * @return  Example: "fetch-transaction"
      */
     virtual const char* name()
@@ -59,7 +58,6 @@ public:
 
     /**
      * The localizable command category name, upper case.
-     *
      * @return  Example: "ONLINE"
      */
     virtual const char* category()
@@ -69,7 +67,6 @@ public:
     
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -82,7 +79,6 @@ public:
     /**
      * Load command argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded argument definitions.
      */
     virtual po::positional_options_description& load_arguments()
@@ -92,7 +88,6 @@ public:
 
     /**
      * Load environment variable definitions.
-     *
      * @param[out] definitions  The defined program argument definitions.
      */
     virtual void load_environment(po::options_description& definitions)
@@ -110,7 +105,6 @@ public:
     
     /**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
@@ -123,9 +117,7 @@ public:
      * Load command option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded option definitions.
      */
     virtual po::options_description& load_options()
@@ -135,7 +127,6 @@ public:
     
     /**
      * Load configuration setting definitions.
-     *
      * @param[out] definitions  The defined program argument definitions.
      */
     virtual void load_settings(po::options_description& definitions)
@@ -176,7 +167,6 @@ public:
 	
 	/**
      * Load streamed value as parameter fallback.
-     *
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
@@ -186,7 +176,6 @@ public:
     
     /**
      * Write the usage help for this command to the specified stream.
-     *
      * @param[out] stream  The output stream.
      */
     virtual void write_usage(std::ostream& stream)

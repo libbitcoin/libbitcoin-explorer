@@ -21,12 +21,11 @@
 #define HEADER_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
+#include <string>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
-#include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -42,120 +41,79 @@ class header
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    header()
-        : value_()
-    {
-    }
+    header();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  hexcode  The value to initialize with.
      */
-    header(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+    header(const std::string& hexcode);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    header(const bc::data_chunk& value)
-        : header((const std::string&)hex(value))
-    {
-    }
+    header(const bc::data_chunk& value);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    header(const bc::block_header_type& value)
-        : value_(value) {}
+    header(const bc::block_header_type& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    header(const header& other)
-        : header(other.value_)
-    {
-    }
+    header(const header& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::block_header_type& data()
-    {
-        return value_;
-    }
+    bc::block_header_type& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::block_header_type&() const
-    {
-        return value_;
-    }
+    operator const bc::block_header_type&() const;
+
+    ///**
+    // * Overload cast to string.
+    // * @return  This object's value converted to string.
+    // */
+    //operator const std::string() const;
 
     /**
-     * Overload cast to string.
-     *
-     * @return  This object's value converted to string.
+     * Overload cast to property tree.
+     * @return  This object's value cast to a property tree.
      */
-    operator const std::string() const
-    {
-        std::stringstream result;
-        result << *this;
-        return result.str();
-    }
+    operator const pt::ptree() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, header& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
-
-        if (!deserialize_satoshi_item(argument.value_, hex(hexcode)))
-            throw po::invalid_option_value(hexcode);
-
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, header& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const header& argument)
-    {
-        const auto bytes = serialize_satoshi_item(argument.value_);
-        output << hex(bytes);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const header& argument);
 
 private:
 
     /**
-     * The state of this object's file data.
+     * The state of this object's header data.
      */
     bc::block_header_type value_;
 };

@@ -47,8 +47,7 @@ public:
     static constexpr size_t default_threadpool_size = 1;
 
     /**
-     * Initialization constructor.
-     * 
+     * Initialization constructor, establish threadpool (RAII).
      * @param[in]  command  The command being processed.
      * @param[in]  threads  The number of pool threads to initialize.
      */
@@ -56,7 +55,7 @@ public:
         const size_t threads=default_threadpool_size);
 
     /**
-     * Destructor, kill threads.
+     * Destructor, kill threads (RAII).
      */
     ~async_client();
 
@@ -66,19 +65,7 @@ public:
     virtual bc::threadpool& get_threadpool();
 
     /**
-     * Poll for changes on other thread(s) until stopped.
-     *
-     * @param[in]  done       A flag that signals cessation of polling.
-     * @param[in]  period_ms  The polling period in md, defaults to 100.
-     * @param[in]  action     The poll function to execute, defaults to null.
-     */
-    virtual void detached_poll(bool& done,
-        uint32_t period_ms=default_poll_period_ms,
-        std::function<void()> action=nullptr);
-
-    /**
      * Poll for changes until stopped.
-     *
      * @param[in]  done       A flag that signals cessation of polling.
      * @param[in]  period_ms  The polling period in ms, defaults to 100.
      * @param[in]  action     The poll function to execute, defaults to null.

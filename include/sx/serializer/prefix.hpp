@@ -20,14 +20,10 @@
 #ifndef PREFIX_HPP
 #define PREFIX_HPP
 
-#include <array>
 #include <iostream>
-#include <stdint.h>
-#include <vector>
-#include <boost/dynamic_bitset.hpp>
-#include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <string>
 #include <sx/define.hpp>
+#include <sx/utility/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -35,116 +31,62 @@ namespace sx {
 namespace serializer {
 
 /**
- * Type to simplify working with binary digits.
- */
-typedef boost::dynamic_bitset<uint8_t> bitset;
-
-/**
- * The max length of the prefix in bits.
- */
-constexpr size_t max_prefix = sizeof(bc::stealth_bitfield) * bc::byte_size;
-
-/**
- * Serialization helper to convert between binary string and data_chunk.
+ * Serialization helper to convert between binary string and bitset.
  */
 class prefix
 {
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    prefix()
-        : value_()
-    {
-    }
+    prefix();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  bin  The value to initialize with.
      */
-    prefix(const std::string& binary)
-    {
-        std::stringstream(binary) >> *this;
-    }
+    prefix(const std::string& binary);
 
     /**
-     * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    prefix(const bitset& value)
-        : value_(value)
-    {
-    }
+    prefix(const bitset& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    prefix(const prefix& other)
-        : prefix(other.value_)
-    {
-    }
+    prefix(const prefix& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bitset& data()
-    {
-        return value_;
-    }
+    bitset& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bitset&() const
-    {
-        return value_; 
-    }
+    operator const bitset&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, prefix& argument)
-    {
-        std::string binary;
-        input >> binary;
-
-        bitset bits(binary);
-        if (bits.size() > max_prefix || bits.size() != binary.length())
-            throw po::invalid_option_value(binary);
-
-        argument.value_.swap(bits);
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, prefix& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output,
-        const prefix& argument)
-    {
-        std::string bin;
-        boost::to_string(argument.value_, bin);
-
-        output << bin;
-        return output;
-    }
+        const prefix& argument);
 
 private:
 

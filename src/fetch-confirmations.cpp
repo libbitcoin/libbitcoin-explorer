@@ -23,22 +23,25 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/utility/callback_state.hpp>
+#include <sx/prop_tree.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 
-// TODO: use parse tree?
-static void handle_callback(callback_state& state, const index_list& confirmations)
+static void handle_callback(callback_state& state, size_t position,
+    const index_list& confirmations)
 {
+    // TODO: make ptree and use position for correlation.
+    // Why is this a list and why is it not summarized for the transaction?
     for (const auto& confirmation: confirmations)
         state.output(format("%1%") % confirmation);
 
-    state.stop();
+    --state;
 }
 
 console_result fetch_confirmations::invoke(std::ostream& output,
@@ -46,21 +49,26 @@ console_result fetch_confirmations::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
-    HANDLE_MULTIPLE_NOT_IMPLEMENTED(transactions, error);
-    const transaction_type& tx = transactions.front();
-
-    callback_state state(error, output);
-    const auto handler = [&state](const std::error_code& code,
-        const index_list& unconfirmed)
-    {
-        if (!handle_error(state, code))
-            handle_callback(state, unconfirmed);
-    };
+    const auto& encoding = get_format_option();
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    state.start();
-    fullnode.transaction_pool.validate(tx, handler);
+    callback_state state(error, output, encoding);
+
+    // We avoid using the tx hash for confirmations because of malleability.
+    for (const auto& tx: transactions)
+    {
+        const auto handler = [&state, &tx](const std::error_code& code,
+            const index_list& unconfirmed)
+        {
+            if (!state.handle_error(code))
+                handle_callback(state, state, unconfirmed);
+        };
+
+        ++state;
+        fullnode.transaction_pool.validate(tx, handler);
+    }
+
     client.poll(state.stopped());
 
     return state.get_result();

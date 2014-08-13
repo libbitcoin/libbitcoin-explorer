@@ -21,11 +21,9 @@
 #define HD_PUBLIC_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <string>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -33,102 +31,63 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and ec_point.
+ * Serialization helper to convert between hex string and hd_public_key.
  */
 class hd_public
 {
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    hd_public()
-        : value_()
-    {
-    }
+    hd_public();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  base58  The value to initialize with.
      */
-    hd_public(const std::string& base58)
-    {
-        std::stringstream(base58) >> *this;
-    }
+    hd_public(const std::string& base58);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    hd_public(const libwallet::hd_public_key& value)
-    {
-        // hd_public_key doesn't provide a copy constructor.
-        value_.set_encoded(value.encoded());
-    }
+    hd_public(const libwallet::hd_public_key& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    hd_public(const hd_public& other)
-        : hd_public(other.value_)
-    {
-    }
+    hd_public(const hd_public& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    libwallet::hd_public_key& data()
-    {
-        return value_;
-    }
+    libwallet::hd_public_key& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_public_key&() const
-    {
-        return value_; 
-    }
+    operator const libwallet::hd_public_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, hd_public& argument)
-    {
-        std::string base58;
-        input >> base58;
-
-        if (!argument.value_.set_encoded(base58))
-            throw po::invalid_option_value(base58);
-
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, hd_public& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const hd_public& argument)
-    {
-        output << argument.value_.encoded();
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const hd_public& argument);
 
 private:
 

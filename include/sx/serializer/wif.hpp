@@ -21,7 +21,7 @@
 #define WIF_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
+#include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
@@ -39,124 +39,71 @@ class wif
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    wif()
-        : compressed_(true), value_()
-    {
-    }
+    wif();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  base58  The value to initialize with.
      */
-    wif(const std::string& base58)
-    {
-        std::stringstream(base58) >> *this;
-    }
+    wif(const std::string& base58);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    wif(const bc::ec_secret& value)
-        : value_(value), compressed_(true)
-    {
-    }
+    wif(const bc::ec_secret& value);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    wif(const libwallet::hd_private_key& value)
-        : wif(value.private_key())
-    {
-    }
+    wif(const libwallet::hd_private_key& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    wif(const wif& other)
-        : wif(other.value_)
-    {
-    }
+    wif(const wif& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::ec_secret& data()
-    {
-        return value_;
-    }
+    bc::ec_secret& data();
 
     /**
      * Get the compressed property.
      */
-    bool get_compressed() const
-    {
-        return compressed_;
-    }
+    bool get_compressed() const;
 
     /**
      * Set the compressed property.
      */
-    void set_compressed(bool value)
-    {
-        compressed_ = value;
-    }
+    void set_compressed(bool value);
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_secret&() const
-    {
-        return value_; 
-    }
+    operator const bc::ec_secret&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, wif& argument)
-    {
-        std::string base58;
-        input >> base58;
-
-        auto value = libwallet::wif_to_secret(base58);
-        if (!bc::verify_private_key(value))
-            throw po::invalid_option_value(base58);
-
-        argument.compressed_ = libwallet::is_wif_compressed(base58);
-        std::copy(value.begin(), value.end(), argument.value_.begin());
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, wif& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const wif& argument)
-    {
-        // bc::secret_to_public_key(secret, compressed);
-        output << libwallet::secret_to_wif(argument.value_, 
-            argument.compressed_);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output, const wif& argument);
 
 private:
 

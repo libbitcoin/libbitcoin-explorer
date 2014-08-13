@@ -252,6 +252,9 @@
     <ClCompile Include="..\..\..\..\test\fetch-tx.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\showblkhead.cpp">
+      <Filter>src\tests\command\obsolete</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">

@@ -67,7 +67,6 @@
 #include <sx/command/hd-to-ec.hpp>
 #include <sx/command/hd-to-pub.hpp>
 #include <sx/command/hd-to-wif.hpp>
-#include <sx/command/header-decode.hpp>
 #include <sx/command/help.hpp>
 #include <sx/command/initchain.hpp>
 #include <sx/command/mnemonic-decode.hpp>
@@ -88,6 +87,7 @@
 #include <sx/command/sha160.hpp>
 #include <sx/command/sha256.hpp>
 #include <sx/command/sha512.hpp>
+#include <sx/command/showblkhead.hpp>
 #include <sx/command/stealth-addr-encode.hpp>
 #include <sx/command/stealth-newkey.hpp>
 #include <sx/command/tx-decode.hpp>
@@ -108,7 +108,6 @@ namespace sx {
 
 /**
  * Invoke a specified function on all commands.
- *
  * @param[in]  func  The function to invoke on all commands.
  * @return           True if invoked successfully.
  */
@@ -116,7 +115,6 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
 /**
  * Find the command identified by the specified symbolic command name.
- *
  * @param[in]  symbol  The symbolic command name.
  * @return             An instance of the command or nullptr if not found.
  */

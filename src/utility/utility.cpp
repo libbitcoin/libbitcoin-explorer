@@ -35,10 +35,14 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/info_parser.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #pragma warning(pop)
-#include <sx/utility/callback_state.hpp>
+#include <sx/define.hpp>
 #include <sx/utility/compat.hpp>
 
 using namespace bc;
@@ -46,24 +50,24 @@ using namespace boost::posix_time;
 using namespace libwallet;
 
 namespace sx {
-    
-bool handle_error(callback_state& state, const std::error_code& code, 
-    const std::string& format)
-{
-    if (code)
-    {
-        state.error(boost::format(format) % code.message());
-        state.stop(console_result::failure);
-        return false;
-    }
-
-    return true;
-}
 
 void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter)
 {
     sentence = boost::join(words, delimiter);
+}
+
+bool stealth_match(const blockchain::stealth_row& row,
+    const ec_secret& secret)
+{
+    // TODO: implement and move to libwallet.
+    return true;
+}
+
+bool stealth_match(const tx_type& tx, const ec_secret& secret)
+{
+    // TODO: implement and move to libwallet.
+    return true;
 }
 
 // The key may be invalid, caller must test for null secret.
@@ -135,6 +139,71 @@ void trim(std::string& value)
 void trim_left(std::string& value, const std::string& chars)
 {
     boost::trim_left_if(value, boost::is_any_of(chars));
+}
+
+bool unwrap(wrapped_data& data, const data_chunk& wrapped)
+{
+    return unwrap(data.version, data.payload, data.checksum, wrapped);
+}
+
+// TODO: move to libwallet
+bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
+    const data_chunk& wrapped)
+{
+    constexpr size_t version_length = sizeof(version);
+    constexpr size_t checksum_length = sizeof(checksum);
+
+    // guard against insufficient buffer length
+    if (wrapped.size() < version_length + checksum_length)
+        return false;
+
+    if (!verify_checksum(wrapped))
+        return false;
+
+    // set return values
+    version = wrapped.front();
+    payload = data_chunk(wrapped.begin() + version_length,
+        wrapped.end() - checksum_length);
+    const auto checksum_start = wrapped.end() - checksum_length;
+    auto deserial = make_deserializer(checksum_start, wrapped.end());
+    checksum = deserial.read_4_bytes();
+
+    return true;
+}
+
+data_chunk wrap(const wrapped_data& data)
+{
+    return wrap(data.version, data.payload);
+}
+
+// TODO: move to libwallet
+data_chunk wrap(uint8_t version, const data_chunk& payload)
+{
+    data_chunk wrapped;
+    wrapped.push_back(version);
+    extend_data(wrapped, payload);
+    append_checksum(wrapped);
+    return wrapped;
+}
+
+// We aren't yet using a reader, although it is possible using ptree.
+std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
+    encoding_engine engine)
+{
+    switch (engine)
+    {
+        case encoding_engine::json:
+            pt::write_json(output, tree);
+            break;
+        case encoding_engine::xml:
+            pt::write_xml(output, tree);
+            break;
+        default:
+            pt::write_info(output, tree);
+            break;
+    }
+
+    return output;
 }
 
 } // sx

@@ -32,7 +32,9 @@ obelisk_client::obelisk_client(sx::command& command, const size_t threads)
     : async_client(command, threads), fullnode_(get_threadpool(),
     command.get_obelisk_service_setting(),
     command.get_obelisk_client_certificate_setting().generic_string(),
-    command.get_obelisk_server_public_key_setting()) {}
+    command.get_obelisk_server_public_key_setting())
+{
+}
 
 obelisk::fullnode_interface& obelisk_client::get_fullnode()
 {

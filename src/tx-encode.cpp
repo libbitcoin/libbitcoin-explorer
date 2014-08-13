@@ -43,21 +43,21 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
     const auto& outputs = get_outputs_option();
     const auto& file = get_transaction_argument();
 
-    transaction_type tx;
+    tx_type tx;
     tx.version = version;
     tx.locktime = locktime;
 
-    for (const transaction_input_type& input: inputs)
+    for (const tx_input_type& input: inputs)
         tx.inputs.push_back(input);
 
-    for (const std::vector<transaction_output_type>& output_sets: outputs)
+    for (const std::vector<tx_output_type>& output_sets: outputs)
         for (const auto& output: output_sets)
             tx.outputs.push_back(output);
 
     if (is_locktime_conflict(tx))
         error << SX_TX_ENCODE_LOCKTIME_CONFLICT << std::endl;
 
-    write_output(output, file, transaction(tx));
+    write_file(output, file, transaction(tx));
 
     return console_result::okay;
 }

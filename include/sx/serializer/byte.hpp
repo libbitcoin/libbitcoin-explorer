@@ -21,6 +21,7 @@
 #define BYTE_HPP
 
 #include <iostream>
+#include <string>
 #include <stdint.h>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -37,114 +38,79 @@ class byte
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    byte() 
-        : value_()
-    {
-    }
+    byte();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  number  The value to initialize with.
      */
-    byte(const std::string& number)
-    {
-        std::stringstream(number) >> *this;
-    }
+    byte(const std::string& number);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    byte(const uint8_t& value)
-        : value_(value)
-    {
-    }
+    byte(const uint8_t& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    byte(const byte& other)
-        : byte(other.value_)
-    {
-    }
+    byte(const byte& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    uint8_t& data()
-    {
-        return value_;
-    }
+    uint8_t& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const uint8_t&() const
-    {
-        return value_;
-    }
+    operator const uint8_t&() const;
 
     /**
-     * Overload stream in. If input is not a number sets 0x00 in argument.
-     *
+     * Overload prefix increment.
+     * @return  This object referenced, with incremented value.
+     */
+    byte& operator++();
+
+    /**
+     * Overload postfix increment.
+     * @return  This object copied, with incremented value.
+     */
+    byte operator++(int);
+
+    ///**
+    // * Overload prefix decrement.
+    // * @return  This object referenced, with decremented value.
+    // */
+    //byte& operator--();
+
+    ///**
+    // * Overload postfix decrement.
+    // * @return  This object copied, with decremented value.
+    // */
+    //byte operator--(int);
+
+    /**
+     * Overload stream in. If input is not a number sets 0x00 in argument.;
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, byte& argument)
-    {
-        int number;
-        input >> number;
-
-        argument.value_ = static_cast<uint8_t>(number);
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, byte& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const byte& argument)
-    {
-        output << static_cast<int>(argument.value_);
-        return output;
-    }
-
-    /**
-     * Overload prefix increment.
-     *
-     * @return  This object referenced, with incremented value.
-     */
-    byte& operator++()
-    {
-        ++value_;
-        return *this;
-    }
-
-    /**
-     * Overload postfix increment.
-     *
-     * @return  This object copied, with incremented value.
-     */
-    byte operator++(int)
-    {
-        byte temp(*this);
-        operator++();
-        return temp;
-    }
+    friend std::ostream& operator<<(std::ostream& output, const byte& argument);
 
 private:
 

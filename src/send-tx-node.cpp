@@ -23,6 +23,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/async_client.hpp>
 #include <sx/serializer/transaction.hpp>
@@ -33,18 +34,18 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void handle_sent(callback_state& state, transaction_type& tx)
+static void handle_sent(callback_state& state, tx_type& tx)
 {
     state.output(format(SX_SEND_TX_NODE_OUTPUT) % transaction(tx) % now());
     --state;
 }
 
 static void handle_send(callback_state& state, channel_ptr node,
-    transaction_type& tx)
+    tx_type& tx)
 {
     const auto sent_handler = [&state, &tx](const std::error_code& code)
     {
-        if (!handle_error(state, code))
+        if (!state.handle_error(code))
             handle_sent(state, tx);
     };
 
@@ -60,9 +61,9 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
     const auto send_handler = [&state](const std::error_code& code,
-        channel_ptr node, transaction_type& tx)
+        channel_ptr node, tx_type& tx)
     {
-        if (!handle_error(state, code))
+        if (!state.handle_error(code))
             handle_send(state, node, tx);
     };
 
@@ -70,7 +71,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     auto& pool = client.get_threadpool();
     handshake shake(pool);
     network net(pool);
-    for (const transaction_type& tx: transactions)
+    for (const tx_type& tx: transactions)
     {
         ++state;
         connect(shake, net, host, port, 

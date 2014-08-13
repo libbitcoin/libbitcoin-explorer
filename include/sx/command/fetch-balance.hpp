@@ -36,6 +36,7 @@
 #include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_private.hpp>
 #include <sx/serializer/hd_public.hpp>
@@ -48,6 +49,7 @@
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
@@ -56,12 +58,6 @@
 
 namespace sx {
 namespace extension {
-
-/**
- * Various localizable strings.
- */
-#define SX_FETCH_BALANCE_OUTPUT \
-    "Address: %1%\n  Paid balance:    %2%\n  Pending balance: %3%\n  Total received:  %4%"
 
 /**
  * Class to implement the sx fetch-balance command.
@@ -95,7 +91,6 @@ public:
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
@@ -106,7 +101,6 @@ public:
 	
 	/**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
@@ -120,9 +114,7 @@ public:
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -141,9 +133,9 @@ public:
                 "Get the balance in satoshi of one or more Bitcoin addresses. Requires an Obelisk server connection."
             )
             (
-                "json,j",
-                value<bool>(&option_.json)->implicit_value(true),
-                "Enable JSON output."
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format."
             )
             (
                 "ADDRESS",
@@ -156,7 +148,6 @@ public:
 
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -200,20 +191,20 @@ public:
     }
 
     /**
-     * Get the value of the json option.
+     * Get the value of the format option.
      */
-    virtual bool& get_json_option()
+    virtual serializer::encoding& get_format_option()
     {
-        return option_.json;
+        return option_.format;
     }
     
     /**
-     * Set the value of the json option.
+     * Set the value of the format option.
      */
-    virtual void set_json_option(
-        const bool& value)
+    virtual void set_format_option(
+        const serializer::encoding& value)
     {
-        option_.json = value;
+        option_.format = value;
     }
 
 private:
@@ -242,12 +233,12 @@ private:
     {
         option()
           : help(),
-            json()
+            format()
         {
         }
         
         bool help;
-        bool json;
+        serializer::encoding format;
     } option_;
 };
 

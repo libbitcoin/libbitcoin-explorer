@@ -122,6 +122,7 @@
     <ClCompile Include="..\..\..\..\test\help.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-history.cpp" />
     <ClCompile Include="..\..\..\..\test\initchain.cpp" />
+    <ClCompile Include="..\..\..\..\test\showblkhead.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth-newkey.cpp" />
     <ClCompile Include="..\..\..\..\test\tx-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\mpk.cpp" />

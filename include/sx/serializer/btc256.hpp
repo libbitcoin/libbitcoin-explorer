@@ -21,6 +21,8 @@
 #define BTC256_HPP
 
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
@@ -39,96 +41,67 @@ class btc256
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    btc256()
-        : value_()
-    {
-    }
+    btc256();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  hexcode  The value to initialize with.
      */
-    btc256(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+    btc256(const std::string& hexcode);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    btc256(const bc::hash_digest& value)
-        : value_(value)
-    {
-    }
+    btc256(const bc::hash_digest& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    btc256(const btc256& other)
-        : btc256(other.value_)
-    {
-    }
+    btc256(const btc256& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::hash_digest& data()
-    {
-        return value_;
-    }
+    bc::hash_digest& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::hash_digest&() const
-    {
-        return value_; 
-    }
+    operator const bc::hash_digest&() const;
+
+    ///**
+    // * Overload cast to string.
+    // * @return  This object's value converted to string.
+    // */
+    //operator const std::string() const
+    //{
+    //    std::stringstream result;
+    //    result << *this;
+    //    return result.str();
+    //}
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, btc256& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
-
-        auto hash = bc::decode_hash(hexcode);
-        if (hash == bc::null_hash)
-            throw po::invalid_option_value(hexcode);
-
-        std::copy(hash.begin(), hash.end(), argument.value_.begin());
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, btc256& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const btc256& argument)
-    {
-        output << hex(argument.value_);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const btc256& argument);
 
 private:
 

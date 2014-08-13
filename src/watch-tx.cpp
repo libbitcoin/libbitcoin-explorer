@@ -22,8 +22,11 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/prop_tree.hpp>
+#include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
@@ -34,54 +37,64 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void handle_subscribed(callback_state& state, 
+static void handle_subscribed(callback_state& state, const prefix& prefix,
     const worker_uuid& worker)
 {
-    state.output(SX_WATCH_TX_WAITING);
+    //if (state.get_engine() != encoding::engine::native)
+    state.output(format(SX_WATCH_TX_WAITING) % prefix);
 }
 
-// TODO: use parse tree.
-static void handle_update(callback_state& state, size_t height,
-    const hash_digest& block_hash, const transaction_type& tx)
+// The resulting transactions may or may not be stealth.
+// Returning the entire transaction (as opposed to the hash) preserves privacy.
+static void handle_update(callback_state& state, const prefix& prefix,
+    size_t height, const hash_digest& block_hash, const tx_type& tx)
 {
-    state.output(boost::format(SX_WATCH_TX_OUTPUT) % transaction(tx) %
-        height % hex(block_hash));
+    // Since this is a watcher we expose a formatter, but also support native.
+    if (state.get_engine() == encoding_engine::native)
+        state.output(transaction(tx));
+    else
+    {
+        auto& tree = prop_tree(tx);
+        tree.add("transaction.block", hex(block_hash));
+        tree.add("transaction.prefix", prefix);
+        state.output(tree);
+    }
+
+    --state;
 }
 
 // This command only halts on failure.
 console_result watch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    //const auto height = get_height_option();
-    //const auto& hashes = get_hashs_option();
-    //const hash_digest& hash = hashes.front();
     const auto& prefixes = get_prefixs_option();
-
-    callback_state state(error, output);
-    const auto update_handler = [&state](const std::error_code& code,
-        size_t height, const hash_digest& block_hash, 
-        const transaction_type& tx)
-    {
-        if (!handle_error(state, code))
-            handle_update(state, height, block_hash, tx);
-    };
-
-    const auto subscribed_handler = [&state](const std::error_code& code,
-        const worker_uuid& worker)
-    {
-        if (!handle_error(state, code))
-            handle_subscribed(state, worker);
-    };
+    const auto& encoding = get_format_option();
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
+    callback_state state(error, output, encoding);
+
     for (const auto& prefix: prefixes)
     {
+        // Prefix should NOT be a reference here, as it changes.
+        const auto update_handler = [&state, prefix](
+            const std::error_code& code, size_t height, 
+            const hash_digest& block_hash, const tx_type& tx)
+        {
+            if (!state.handle_error(code))
+                handle_update(state, prefix, height, block_hash, tx);
+        };
+
+        // Prefix should NOT be a reference here, as it changes.
+        const auto subscribed_handler = [&state, prefix](
+            const std::error_code& code, const worker_uuid& worker)
+        {
+            if (!state.handle_error(code))
+                handle_subscribed(state, prefix, worker);
+        };
+
         ++state;
         fullnode.address.subscribe(prefix, update_handler, subscribed_handler);
-
-        // TODO: need to verify this setup is correct for multiple simo txs.
-        break;
     }
 
     client.poll(state.stopped());

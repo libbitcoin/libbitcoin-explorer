@@ -21,7 +21,7 @@
 #define ADDRESS_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
+#include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/ec_private.hpp>
@@ -40,114 +40,68 @@ class address
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    address()
-        : value_()
-    {
-    }
+    address();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  base58  The value to initialize with.
      */
-    address(const std::string& base58)
-    {
-        std::stringstream(base58) >> *this;
-    }
+    address(const std::string& base58);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    address(const bc::payment_address& value)
-        : address(value.encoded())
-    {
-    }
+    address(const bc::payment_address& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    address(const address& other)
-        : address(other.value_)
-    {
-    }
+    address(const address& other);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    address(const libwallet::hd_private_key& value)
-        : address(value.address())
-    {
-    }
+    address(const libwallet::hd_private_key& value);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    address(const libwallet::hd_public_key& value)
-        : address(value.address())
-    {
-    }
+    address(const libwallet::hd_public_key& value);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::payment_address& data()
-    {
-        return value_;
-    }
+    bc::payment_address& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::payment_address&() const
-    {
-        return value_; 
-    }
+    operator const bc::payment_address&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, address& argument)
-    {
-        std::string base58;
-        input >> base58;
-
-        if (!argument.value_.set_encoded(base58))
-            throw po::invalid_option_value(base58);
-
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, address& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const address& argument)
-    {
-        output << argument.value_.encoded();
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const address& argument);
 
 private:
 

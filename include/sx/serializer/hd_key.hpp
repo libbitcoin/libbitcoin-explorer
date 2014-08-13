@@ -21,7 +21,7 @@
 #define HD_KEY_HPP
 
 #include <iostream>
-#include <boost/program_options.hpp>
+#include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
@@ -42,127 +42,69 @@ class hd_key
 public:
 
     /**
-     * Constructor.
+     * Default onstructor.
      */
-    hd_key()
-        : private_key_value_(), public_key_value_()
-    {
-    }
+    hd_key();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  base58  The value to initialize with.
      */
-    hd_key(const std::string& base58)
-    {
-        std::stringstream(base58) >> *this;
-    }
+    hd_key(const std::string& base58);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    hd_key(const libwallet::hd_private_key& value)
-    {
-        // hd_public_key doesn't provide a copy constructor.
-        private_key_value_.set_encoded(value.encoded());
-    }
+    hd_key(const libwallet::hd_private_key& value);
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    hd_key(const libwallet::hd_public_key& value)
-    {
-        // hd_public_key doesn't provide a copy constructor.
-        public_key_value_.set_encoded(value.encoded());
-    }
+    hd_key(const libwallet::hd_public_key& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    hd_key(const hd_key& other)
-    {
-        public_key_value_ = other.public_key_value_;
-        private_key_value_ = other.private_key_value_;
-    }
+    hd_key(const hd_key& other);
 
     /**
      * Return a const reference to the public key of the private key if valid 
      * and otherwise return the public key.
-     *
      * @return  A reference to the object's internal data.
      */
-    const libwallet::hd_public_key& derived_public_key() const
-    {
-        if (private_key_value_.valid())
-            return (libwallet::hd_public_key&)private_key_value_;
-        else
-            return public_key_value_;
-    }
+    const libwallet::hd_public_key& derived_public_key() const;
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_private_key&() const
-    {
-        return private_key_value_;
-    }
+    operator const libwallet::hd_private_key&() const;
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_public_key&() const
-    {
-        return public_key_value_;
-    }
+    operator const libwallet::hd_public_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, hd_key& argument)
-    {
-        std::string base58;
-        input >> base58;
-
-        // First try to read as a private key.
-        if (!argument.private_key_value_.set_encoded(base58))
-        {
-            // Otherwise try to read as a public key.
-            if (!argument.public_key_value_.set_encoded(base58))
-                throw po::invalid_option_value(base58);
-        }
-
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, hd_key& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
-        const hd_key& argument)
-    {
-        const auto& public_key = argument.derived_public_key();
-        output << public_key.encoded();
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output,
+        const hd_key& argument);
 
 private:
 

@@ -87,7 +87,6 @@ public:
 
     /**
      * Get the option's canonical name (long then short), with dashes.
-     *
      * @param[in]  option  The metadata of the option to test.
      * @return             The canonical name.
      */
@@ -95,7 +94,6 @@ public:
 
     /**
      * Get the option's canonical name (long then short), without dashes.
-     *
      * @param[in]  option  The metadata of the option to test.
      * @return             The clean canonical name.
      */
@@ -103,7 +101,6 @@ public:
 
     /**
      * Determine if the option has a short name.
-     *
      * @param[in]  option  The metadata of the option to test.
      * @return             True if the option has a short name.
      */
@@ -111,7 +108,6 @@ public:
 
     /**
      * Populate with normalized parameter data.
-     *
      * @param[in]  option     The metadata of the option to test.
      * @param[in]  arguments  The list of supported positional arguments.
      */
@@ -121,7 +117,6 @@ public:
     /**
      * Determine if the option is an argument by testing for it by name in the 
      * positional options collection and if so return the position.
-     *
      * @param[in]  option     The metadata of the option to position.
      * @param[in]  arguments  The list of supported positional arguments.
      * @return                Relative position or -1 if not positional.
@@ -131,7 +126,6 @@ public:
 
     /**
      * Get the option's short name character or zero.
-     *
      * @param[in]  option  The metadata of the option to test.
      * @return             The short name character or null character.
      */

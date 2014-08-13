@@ -24,38 +24,51 @@
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <obelisk/obelisk.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/utility/callback_state.hpp>
+#include <sx/prop_tree.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
-static void handle_callback(callback_state& state, size_t height, size_t index)
+static void handle_callback(callback_state& state, const bc::hash_digest& hash,
+    size_t height, size_t index)
 {
-    state.output(boost::format(SX_FETCH_TX_INDEX_OUTPUT) % height % index);
-    state.stop();
+    // TODO: make ptree.
+    state.output(boost::format("[%1%] Height: %2% Index: %3%") % hex(hash) %
+        height % index);
+
+    --state;
 }
 
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& hash = get_hash_argument();
-
-    callback_state state(error, output);
-    const auto handler = [&state](const std::error_code& code, size_t height, 
-        size_t index)
-    {
-        if (!handle_error(state, code))
-            handle_callback(state, height, index);
-    };
+    const auto& hashes = get_hashs_argument();
+    const auto& encoding = get_format_option();
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    state.start();
-    fullnode.blockchain.fetch_transaction_index(hash, handler);
+    callback_state state(error, output, encoding);
+
+    for (const auto& hash: hashes)
+    {
+        const auto handler = [&state, &hash](
+            const std::error_code& code, size_t height, size_t index)
+        {
+            if (!state.handle_error(code))
+                handle_callback(state, hash, height, index);
+        };
+
+        fullnode.blockchain.fetch_transaction_index(hash, handler);
+        ++state;
+    }
+
     client.poll(state.stopped());
 
     return state.get_result();

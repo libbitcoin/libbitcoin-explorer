@@ -23,6 +23,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/utility/utility.hpp>
@@ -45,13 +46,13 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output);
     const auto handler = [&state](const std::error_code& code)
     {
-        if (!handle_error(state, code))
+        if (!state.handle_error(code))
             handle_callback(state);
     };
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    for (const transaction_type& tx: transactions)
+    for (const tx_type& tx: transactions)
     {
         ++state;
         fullnode.protocol.broadcast_transaction(tx, handler);

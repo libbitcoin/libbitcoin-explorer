@@ -38,85 +38,54 @@ class raw
 public:
 
     /**
-     * Constructor.
+     * Default constructor.
      */
-    raw()
-        : value_()
-    {
-    }
+    raw();
 
     /**
      * Initialization constructor.
-     * 
      * @param[in]  value  The value to initialize with.
      */
-    raw(const bc::data_chunk& value)
-        : value_(value)
-    {
-    }
+    raw(const bc::data_chunk& value);
 
     /**
      * Copy constructor.
-     *
      * @param[in]  other  The object to copy into self on construct.
      */
-    raw(const raw& other)
-        : raw(other.value_)
-    {
-    }
+    raw(const raw& other);
 
     /**
      * Return a reference to the data member.
-     *
      * @return  A reference to the object's internal data.
      */
-    bc::data_chunk& data()
-    {
-        return value_;
-    }
+    bc::data_chunk& data();
 
     /**
      * Overload cast to internal type.
-     *
      * @return  This object's value cast to internal type.
      */
-    operator const bc::data_chunk&() const
-    {
-        return value_;
-    }
+    operator const bc::data_chunk&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
-     *
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, raw& argument)
-    {
-        std::istreambuf_iterator<char> first(input), last;
-        argument.value_.assign(first, last);
-        return input;
-    }
+    friend std::istream& operator>>(std::istream& input, raw& argument);
 
     /**
      * Overload stream out.
-     *
      * @param[in]   output    The output stream to write the value to.
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const raw& argument)
-    {
-        std::ostreambuf_iterator<char> iterator(output);
-        std::copy(argument.value_.begin(), argument.value_.end(), iterator);
-        return output;
-    }
+    friend std::ostream& operator<<(std::ostream& output, const raw& argument);
 
 private:
 
     /**
-     * The state of this object's file data.
+     * The state of this object's raw data.
      */
     bc::data_chunk value_;
 };
