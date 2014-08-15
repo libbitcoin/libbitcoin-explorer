@@ -22,21 +22,21 @@
 
 SX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(wif_to_pub__invoke)
+BOOST_AUTO_TEST_SUITE(wif_to_public__invoke)
 
-BOOST_AUTO_TEST_CASE(wif_to_pub__invoke__mainnet_compressed_wif__okay_output)
+BOOST_AUTO_TEST_CASE(wif_to_public__invoke__mainnet_compressed_wif__okay_output)
 {
-    // $ sx wif-to-pub L21LJEeJwK35wby1BeTjwWssrhrgQE2MZrpTm2zbMC677czAHHu3
-    SX_DECLARE_COMMAND(wif_to_pub);
+    // $ sx wif-to-public L21LJEeJwK35wby1BeTjwWssrhrgQE2MZrpTm2zbMC677czAHHu3
+    SX_DECLARE_COMMAND(wif_to_public);
     command.set_wif_argument({ "L21LJEeJwK35wby1BeTjwWssrhrgQE2MZrpTm2zbMC677czAHHu3" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36\n");
 }
 
-BOOST_AUTO_TEST_CASE(wif_to_pub__invoke__mainnet_uncompressed_wif__okay_output)
+BOOST_AUTO_TEST_CASE(wif_to_public__invoke__mainnet_uncompressed_wif__okay_output)
 {
-    // $ sx wif-to-pub 5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL
-    SX_DECLARE_COMMAND(wif_to_pub);
+    // $ sx wif-to-public 5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL
+    SX_DECLARE_COMMAND(wif_to_public);
     command.set_wif_argument({ "5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("0447140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36e87bb04f401be3b770a0f3e2267a6c3b14a3074f6b5ce4419f1fcdc1ca4b1cb6\n");

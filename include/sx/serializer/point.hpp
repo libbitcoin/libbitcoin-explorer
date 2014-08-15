@@ -22,7 +22,7 @@
 
 #include <iostream>
 #include <sstream>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>

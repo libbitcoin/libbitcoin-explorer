@@ -26,8 +26,8 @@
 #include <boost/program_options.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hd_private.hpp>
-#include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hd_priv.hpp>
+#include <sx/serializer/hd_pub.hpp>
 
 using namespace libwallet;
 using namespace po;

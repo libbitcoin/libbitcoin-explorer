@@ -27,7 +27,7 @@
 #pragma warning(disable : 4996)
 #include <cstddef>
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <system_error>
 #include <tuple>
@@ -67,25 +67,6 @@ Consequent if_else(bool antecedent, const Consequent consequent,
         return consequent;
     else 
         return alternative;
-}
-
-/**
- * Conveniently test a numeric value to see if specified flags are set.
- * Caller should ensure that TValue is the same type as TElement (sorry,
- * but there are no type constraints in c++).
- * @param      <Value>     The type of the value to test.
- * @param      <Element>   The type of the elements of flags' enum.
- * @param[in]  value       The value to test.
- * @param[in]  flags       The flags to test.
- * @return                 True if all specified flags are set.
- */
-template <typename Value, typename Element>
-bool are_flags_set(const Value value, const Element flags)
-{
-    // This simple template precludes the need to explicitly cast the class
-    // enum (with elements already of the proper type) and ensures the flag 
-    // test isn't inadvertently inverted.
-    return (value & static_cast<Value>(flags)) != 0;
 }
 
 /**
@@ -320,8 +301,7 @@ bool stealth_match(const bc::blockchain::stealth_row& row,
  * @param[in]  secret  Theec private key to use in testing for a match.
  * @return             True if matched.
  */
-bool stealth_match(const tx_type& tx,
-    const bc::ec_secret& secret);
+bool stealth_match(const tx_type& tx, const bc::ec_secret& secret);
 
 /**
  * Generate a new ec key from a seed.
@@ -356,6 +336,29 @@ void random_fill(bc::data_chunk& chunk);
  * @return            The message read from the input stream.
  */
 std::string read_stream(std::istream& stream);
+
+/*
+ * Convert any script to an opcode::raw_data script (e.g. for input signing).
+ * @param[in]  script  The script to convert.
+ * @return             The data script.
+ */
+bc::script_type script_to_raw_data_script(const bc::script_type& script);
+
+/*
+ * Create a signature for a single transaction input.
+ * Sign the single input corresponding output to our index.
+ * @param[out] signature    The signature.
+ * @param[in]  transaction  The script to convert.
+ * @param[in]  index        The input ordinal position within the transaction.
+ * @param[in]  script       The previous output (prevout) script.
+ * @param[in]  secret       The secret to use for signing.
+ * @param[in]  nonce        The nonce (use once) random value for signing.
+ * @param[in]  hash_type    Signal which inputs to sign (defaults to single).
+ * @return                  True if successful.
+ */
+bool sign_transaction(bc::data_chunk& signature, const tx_type& transaction,
+    size_t index, const bc::script_type& script, const bc::ec_secret& secret,
+    const bc::data_chunk& nonce, uint32_t hash_type=bc::sighash::single);
 
 /**
  * Sleep for the specified number of milliseconds.
@@ -394,6 +397,20 @@ void trim_left(std::string& value,
  * @return              True if input checksum validates.
  */
 bool unwrap(wrapped_data& data, const bc::data_chunk& wrapped);
+
+/**
+ * Validate a transaction input signature.
+ * @param[in]  tx         The transaction to validate against.
+ * @param[in]  index      The ordinal position of the input in the tx.
+ * @param[in]  pubkey     The public key to validate against.
+ * @param[in]  script     The code script.
+ * @param[in]  signature  Thesignature to validate.
+ * @param[in]  hash_type  The type of signature hash for which to validate.
+ * @return                True if the signature is valid for the context.
+ */
+bool valid_signature(const tx_type& tx, uint32_t index,
+    const bc::ec_point& pubkey, const bc::script_type& script,
+    const bc::data_chunk& signature, uint32_t hash_type=bc::sighash::single);
 
 /**
  * Unwrap a wrapped payload.

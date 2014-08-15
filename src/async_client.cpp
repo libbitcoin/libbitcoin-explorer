@@ -20,8 +20,8 @@
 #include "precompile.hpp"
 #include <sx/async_client.hpp>
 
+#include <cstdint>
 #include <functional>
-#include <stdint.h>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 #include <sx/utility/utility.hpp>

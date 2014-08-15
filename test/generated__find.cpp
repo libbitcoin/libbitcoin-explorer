@@ -29,24 +29,24 @@ using namespace sx::extension;
 
 BOOST_AUTO_TEST_SUITE(generated__find)
 
-BOOST_AUTO_TEST_CASE(generated__find__addr_decode__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__address_decode__returns_object)
 {
-    BOOST_REQUIRE(find(addr_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find(address_decode::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__addr_embed__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__address_embed__returns_object)
 {
-    BOOST_REQUIRE(find(addr_embed::symbol()) != nullptr);
+    BOOST_REQUIRE(find(address_embed::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__addr_encode__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__address_encode__returns_object)
 {
-    BOOST_REQUIRE(find(addr_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find(address_encode::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__addr_validate__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__address_validate__returns_object)
 {
-    BOOST_REQUIRE(find(addr_validate::symbol()) != nullptr);
+    BOOST_REQUIRE(find(address_validate::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__base58_decode__returns_object)
@@ -129,14 +129,14 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_new__returns_object)
     BOOST_REQUIRE(find(ec_new::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__ec_to_addr__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__ec_to_address__returns_object)
 {
-    BOOST_REQUIRE(find(ec_to_addr::symbol()) != nullptr);
+    BOOST_REQUIRE(find(ec_to_address::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__ec_to_pub__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__ec_to_public__returns_object)
 {
-    BOOST_REQUIRE(find(ec_to_pub::symbol()) != nullptr);
+    BOOST_REQUIRE(find(ec_to_public::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_to_wif__returns_object)
@@ -214,19 +214,19 @@ BOOST_AUTO_TEST_CASE(generated__find__hd_new__returns_object)
     BOOST_REQUIRE(find(hd_new::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__hd_priv__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__hd_private__returns_object)
 {
-    BOOST_REQUIRE(find(hd_priv::symbol()) != nullptr);
+    BOOST_REQUIRE(find(hd_private::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__hd_pub__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__hd_public__returns_object)
 {
-    BOOST_REQUIRE(find(hd_pub::symbol()) != nullptr);
+    BOOST_REQUIRE(find(hd_public::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__hd_to_addr__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__hd_to_address__returns_object)
 {
-    BOOST_REQUIRE(find(hd_to_addr::symbol()) != nullptr);
+    BOOST_REQUIRE(find(hd_to_address::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_ec__returns_object)
@@ -234,9 +234,9 @@ BOOST_AUTO_TEST_CASE(generated__find__hd_to_ec__returns_object)
     BOOST_REQUIRE(find(hd_to_ec::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__hd_to_pub__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__hd_to_public__returns_object)
 {
-    BOOST_REQUIRE(find(hd_to_pub::symbol()) != nullptr);
+    BOOST_REQUIRE(find(hd_to_public::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_wif__returns_object)
@@ -252,6 +252,21 @@ BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__initchain__returns_object)
 {
     BOOST_REQUIRE(find(initchain::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__input_set__returns_object)
+{
+    BOOST_REQUIRE(find(input_set::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__input_sign__returns_object)
+{
+    BOOST_REQUIRE(find(input_sign::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__input_validate__returns_object)
+{
+    BOOST_REQUIRE(find(input_validate::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_decode__returns_object)
@@ -299,9 +314,9 @@ BOOST_AUTO_TEST_CASE(generated__find__script_encode__returns_object)
     BOOST_REQUIRE(find(script_encode::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__script_to_addr__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__script_to_address__returns_object)
 {
-    BOOST_REQUIRE(find(script_to_addr::symbol()) != nullptr);
+    BOOST_REQUIRE(find(script_to_address::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
@@ -349,14 +364,34 @@ BOOST_AUTO_TEST_CASE(generated__find__showblkhead__returns_object)
     BOOST_REQUIRE(find(showblkhead::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_addr_encode__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_address_decode__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_addr_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find(stealth_address_decode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__stealth_address_encode__returns_object)
+{
+    BOOST_REQUIRE(find(stealth_address_encode::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__stealth_initiate__returns_object)
+{
+    BOOST_REQUIRE(find(stealth_initiate::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
 {
     BOOST_REQUIRE(find(stealth_newkey::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__stealth_uncover_address__returns_object)
+{
+    BOOST_REQUIRE(find(stealth_uncover_address::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__stealth_uncover_secret__returns_object)
+{
+    BOOST_REQUIRE(find(stealth_uncover_secret::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__tx_decode__returns_object)
@@ -389,9 +424,9 @@ BOOST_AUTO_TEST_CASE(generated__find__wif_to_ec__returns_object)
     BOOST_REQUIRE(find(wif_to_ec::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__wif_to_pub__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__wif_to_public__returns_object)
 {
-    BOOST_REQUIRE(find(wif_to_pub::symbol()) != nullptr);
+    BOOST_REQUIRE(find(wif_to_public::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wrap_decode__returns_object)

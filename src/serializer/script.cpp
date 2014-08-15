@@ -66,11 +66,6 @@ script::script(const script& other)
 {
 }
 
-script_type& script::data()
-{
-    return value_;
-}
-
 const std::string script::mnemonic() const
 {
     return pretty(value_);
@@ -98,8 +93,7 @@ std::istream& operator>>(std::istream& input, script& argument)
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output,
-    const script& argument)
+std::ostream& operator<<(std::ostream& output, const script& argument)
 {
     output << hex(save_script(argument.value_));
     return output;

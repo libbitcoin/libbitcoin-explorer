@@ -51,27 +51,18 @@
     <Filter Include="src">
       <UniqueIdentifier>{6afc4dd0-6330-4dca-b176-cd4887f27b9f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\command\todo">
-      <UniqueIdentifier>{186b583d-9017-424c-8916-26eaa0373abf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\command\todo\stealth">
-      <UniqueIdentifier>{ed76315a-9193-4924-a14e-6b6a7628ba86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\command\todo\transaction">
-      <UniqueIdentifier>{a83aaa61-784a-44c7-800f-7f95486a8913}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\include\sx\command\addr-decode.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\address-decode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\addr-embed.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\address-embed.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\addr-encode.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\address-encode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\addr-validate.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\address-validate.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\base58-decode.hpp">
@@ -122,10 +113,10 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec-new.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-addr.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-address.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-pub.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-public.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\ec-to-wif.hpp">
@@ -173,19 +164,19 @@
     <ClInclude Include="..\..\..\..\include\sx\command\hd-new.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-priv.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-private.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-pub.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-public.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-addr.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-address.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-ec.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-pub.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-public.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp">
@@ -196,6 +187,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\initchain.hpp">
       <Filter>include\command\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\input-set.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\input-sign.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\input-validate.hpp">
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\mnemonic-decode.hpp">
       <Filter>include\command</Filter>
@@ -224,7 +224,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\script-encode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\script-to-addr.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\script-to-address.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\seed.hpp">
@@ -254,11 +254,23 @@
     <ClInclude Include="..\..\..\..\include\sx\command\showblkhead.hpp">
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr-encode.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-address-decode.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-address-encode.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-initiate.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-newkey.hpp">
       <Filter>include\command\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-address.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-secret.hpp">
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\tx-decode.hpp">
       <Filter>include\command</Filter>
@@ -278,7 +290,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\wif-to-pub.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\wif-to-public.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wrap-decode.hpp">
@@ -299,9 +311,6 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc256.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp">
-      <Filter>include\serializer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\ec_private.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
@@ -314,10 +323,10 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\encoding.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_private.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_priv.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_public.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_pub.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\header.hpp">
@@ -342,6 +351,12 @@
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\script.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\signature_hash.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\stealth.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\transaction.hpp">
@@ -401,27 +416,18 @@
     <ClInclude Include="..\..\..\..\include\sx\sx.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\precompile.hpp">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\serializer\precompile.hpp">
-      <Filter>src\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\utility\precompile.hpp">
-      <Filter>src\utility</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\addr-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\address-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\addr-embed.cpp">
+    <ClCompile Include="..\..\..\..\src\address-embed.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\addr-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\address-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\addr-validate.cpp">
+    <ClCompile Include="..\..\..\..\src\address-validate.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58-decode.cpp">
@@ -472,10 +478,10 @@
     <ClCompile Include="..\..\..\..\src\ec-new.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-to-addr.cpp">
+    <ClCompile Include="..\..\..\..\src\ec-to-address.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-to-pub.cpp">
+    <ClCompile Include="..\..\..\..\src\ec-to-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-to-wif.cpp">
@@ -523,19 +529,19 @@
     <ClCompile Include="..\..\..\..\src\hd-new.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-priv.cpp">
+    <ClCompile Include="..\..\..\..\src\hd-private.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-pub.cpp">
+    <ClCompile Include="..\..\..\..\src\hd-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-addr.cpp">
+    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-to-ec.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-pub.cpp">
+    <ClCompile Include="..\..\..\..\src\hd-to-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
@@ -546,6 +552,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\initchain.cpp">
       <Filter>src\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input-set.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input-sign.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\input-validate.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\mnemonic-decode.cpp">
       <Filter>src\command</Filter>
@@ -574,7 +589,7 @@
     <ClCompile Include="..\..\..\..\src\script-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\script-to-addr.cpp">
+    <ClCompile Include="..\..\..\..\src\script-to-address.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\seed.cpp">
@@ -604,11 +619,23 @@
     <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-addr-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\stealth-address-decode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-address-encode.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp">
       <Filter>src\command\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-address.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\tx-decode.cpp">
       <Filter>src\command</Filter>
@@ -628,7 +655,7 @@
     <ClCompile Include="..\..\..\..\src\wif-to-ec.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wif-to-pub.cpp">
+    <ClCompile Include="..\..\..\..\src\wif-to-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wrap-decode.cpp">
@@ -649,9 +676,6 @@
     <ClCompile Include="..\..\..\..\src\serializer\btc256.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\serializer\byte.cpp">
-      <Filter>src\serializer</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\ec_private.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
@@ -664,10 +688,10 @@
     <ClCompile Include="..\..\..\..\src\serializer\encoding.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\serializer\hd_private.cpp">
+    <ClCompile Include="..\..\..\..\src\serializer\hd_priv.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\serializer\hd_public.cpp">
+    <ClCompile Include="..\..\..\..\src\serializer\hd_pub.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\header.cpp">
@@ -692,6 +716,12 @@
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\script.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\signature_hash.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\stealth.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\transaction.cpp">
@@ -738,27 +768,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\prop_tree.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input-set.cpp">
-      <Filter>src\command\todo\transaction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input-sign.cpp">
-      <Filter>src\command\todo\transaction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input-validate.cpp">
-      <Filter>src\command\todo\transaction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-addr-decode.cpp">
-      <Filter>src\command\todo\stealth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp">
-      <Filter>src\command\todo\stealth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-uncover.cpp">
-      <Filter>src\command\todo\stealth</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
-      <Filter>src\command\todo\stealth</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

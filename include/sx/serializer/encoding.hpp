@@ -21,10 +21,8 @@
 #define ENCODING_HPP
 
 #include <iostream>
-#include <map>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/utility/utility.hpp>
 
 namespace sx {
 namespace serializer {
@@ -37,7 +35,7 @@ class encoding
 public:
 
     /**
-     * Default constructor, sets native encoding.
+     * Default constructor, sets encoding_engine::native.
      */
     encoding();
 

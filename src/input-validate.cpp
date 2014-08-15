@@ -21,70 +21,38 @@
 #include <sx/command/input-validate.hpp>
 
 #include <iostream>
+#include <cstdint>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-static bool valid_signature(const tx_type& tx, uint32_t input_index, 
-    elliptic_curve_key& key, const script_type& script_code, 
-    data_chunk signature)
+console_result input_validate::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    const auto hash_type = signature.back();
-    signature.pop_back();
-    auto tx_hash = script_type::generate_signature_hash(
-        tx, input_index, script_code, hash_type);
+    // Bound parameters.
+    const auto index = get_index_option();
+    const auto hash_type = get_sighash_option();
+    const tx_type& tx = get_transaction_argument();
+    const auto& public_key = get_point_argument();
+    const auto& script = get_script_code_argument();
+    const auto& signature = get_signature_argument();
 
-    return key.verify(tx_hash, signature);
-}
-
-console_result input_validate::invoke(int argc, const char* argv[])
-{
-    if (!validate_argument_range(argc, example(), 5, 5))
-        return console_result::failure;
-
-    tx_type tx;
-    const std::string filename(get_filename(argc, argv));
-    if (!load_satoshi_item<tx_type>(tx, filename, std::cin))
+    if (tx.inputs.size() < index)
     {
-        std::cerr << "sx: Deserializing transaction failed." << std::endl;
+        error << SX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    uint32_t input_index;
-    if (!parse(input_index, argv[2]))
+    if (!valid_signature(tx, index, public_key, script, signature, hash_type))
     {
-        std::cerr << "validsig: Bad N provided." << std::endl;
-        return console_result::failure;
-    }
-
-    if (input_index >= tx.inputs.size())
-    {
-        std::cerr << "validsig: N out of range." << std::endl;
-        return console_result::failure;
-    }
-
-    elliptic_curve_key key;
-    if (!read_public_or_private_key(key, std::cin))
-    {
-        std::cerr << "Invalid public or private key." << std::endl;
-        return console_result::failure;
-    }
-
-    const auto script = parse_script(decode_hex(argv[3]));
-    const auto signature = decode_hex(argv[4]);
-
-    if (valid_signature(tx, input_index, key, script, signature))
-    {
-        std::cout << "Status: Failed" << std::endl;
+        output << SX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;
         return console_result::invalid;
     }
-    else
-    {
-        std::cout << "Status: OK" << std::endl;
-        return console_result::okay;
-    }
+
+    output << SX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE << std::endl;
+    return console_result::okay;
 }
 

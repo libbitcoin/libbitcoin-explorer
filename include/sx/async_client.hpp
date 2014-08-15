@@ -21,7 +21,7 @@
 #define SX_ASYNC_CLIENT_HPP
 
 #include <functional>
-#include <stdint.h>
+#include <cstdint>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/command.hpp>
 

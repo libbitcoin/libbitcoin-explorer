@@ -24,6 +24,7 @@
 #include <sstream>
 #include <string>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -62,6 +63,14 @@ prefix::operator const bitset&() const
     return value_; 
 }
 
+prefix::operator const uint32_t() const
+{
+    static_assert(max_prefix == sizeof(uint32_t)* bc::byte_size,
+        "Max stealth prefix length (max_prefix) is expected to be 32.");
+
+    return static_cast<uint32_t>(value_.to_ulong());
+}
+
 std::istream& operator>>(std::istream& input, prefix& argument)
 {
     std::string binary;
@@ -71,12 +80,12 @@ std::istream& operator>>(std::istream& input, prefix& argument)
     if (bits.size() > max_prefix || bits.size() != binary.length())
         throw invalid_option_value(binary);
 
+    // Avoids setting the member value if there is an error.
     argument.value_.swap(bits);
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output,
-    const prefix& argument)
+std::ostream& operator<<(std::ostream& output, const prefix& argument)
 {
     std::string binary;
     boost::to_string(argument.value_, binary);

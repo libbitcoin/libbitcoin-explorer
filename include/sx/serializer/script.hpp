@@ -72,12 +72,6 @@ public:
     script(const script& other);
 
     /**
-    * Return a reference to the data member.
-    * @return  A reference to the object's internal data.
-    */
-    bc::script_type& data();
-
-    /**
      * Return a pretty-printed copy of the script.
      * See comments on the tokens constructor. We expose this method here for 
      * symmetry with the construction approach.

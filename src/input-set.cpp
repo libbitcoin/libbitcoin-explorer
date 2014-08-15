@@ -21,46 +21,35 @@
 #include <sx/command/input-set.hpp>
 
 #include <iostream>
+#include <cstdint>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result input_set::invoke(int argc, const char* argv[])
+console_result input_set::invoke(std::ostream& output, std::ostream& error)
 {
-    if (!validate_argument_range(argc, example(), 4, 4))
-        return console_result::failure;
+    // Bound parameters.
+    const auto index = get_index_option();
+    const auto& transaction_original = get_transaction_argument();
+    const auto& script = get_signature_and_pubkey_script_argument();
 
-    tx_type tx;
-    const auto filename(get_filename(argc, argv));
-    if (!load_satoshi_item<tx_type>(tx, filename, std::cin))
+    // Clone so we can keep arguments const.
+    auto transaction_copy = transaction(transaction_original);
+    auto& tx = transaction_copy.data();
+
+    if (tx.inputs.size() < index)
     {
-        std::cerr << "sx: Deserializing transaction failed." << std::endl;
+        error << SX_INPUT_SET_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    size_t input_index;
-    if (!parse(input_index, argv[2]))
-    {
-        std::cerr << "set-input: Bad N provided." << std::endl;
-        return console_result::failure;
-    }
+    tx.inputs[index].script = script_to_raw_data_script(script);
 
-    if (input_index >= tx.inputs.size())
-    {
-        std::cerr << "set-input: N out of range." << std::endl;
-        return console_result::failure;
-    }
-
-    const auto raw_script = decode_hex(argv[3]);
-    const auto new_input_script = raw_data_script(raw_script);
-
-    // Set input.
-    tx.inputs[input_index].script = new_input_script;
-
-    // Now re-serialize transaction.
-    std::cout << transaction(tx) << std::endl;
+    output << transaction_copy << std::endl;
     return console_result::okay;
 }

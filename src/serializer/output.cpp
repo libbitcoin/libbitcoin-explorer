@@ -124,37 +124,34 @@ static std::string parse_outputs(
     tx_output_type output;
     deserialize(output.value, tokens[1]);
 
-    payment_address pubkey_address;
-    if (pubkey_address.set_encoded(target))
+    payment_address address;
+    if (address.set_encoded(target))
     {
-        if (!build_output_script(output.script, pubkey_address))
+        if (!build_output_script(output.script, address))
             throw invalid_option_value(target);
 
-        return pubkey_address.encoded();
+        return address.encoded();
     }
 
     stealth_address stealth;
     if (stealth.set_encoded(target))
     {
-        bool reuse = are_flags_set(stealth.options,
-            stealth_address::flags::reuse_key);
+        auto scan_pubkey = stealth.get_scan_pubkey();
+        auto spend_pubkeys = stealth.get_spend_pubkeys();
 
         // Prefix not yet supported, exactly one spend key is required.
-        auto keys = if_else(reuse, 1, 0) + stealth.spend_pubkeys.size();
-        if (keys != 1 || stealth.prefix.size() > 0)
+        auto keys = spend_pubkeys.size();
+        if (keys != 1 || stealth.get_prefix().size() > 0)
             throw invalid_option_value(target);
-
-        // Get scan and spend pubkeys.
-        auto spend_pubkey = if_else(reuse, stealth.scan_pubkey,
-            stealth.spend_pubkeys.front());
-
+        
         // Do stealth stuff.
         auto ephemeral_secret = generate_private_key(tokens);
         if (ephemeral_secret == null_hash)
             throw invalid_option_value(target);
 
-        auto public_key = initiate_stealth(ephemeral_secret,
-            stealth.scan_pubkey, spend_pubkey);
+        // We have already ensured there is exactly one spend key.
+        auto public_key = initiate_stealth(ephemeral_secret, scan_pubkey,
+            spend_pubkeys.front());
 
         // Add RETURN meta output.
         auto meta_output = build_stealth_meta_output(ephemeral_secret);

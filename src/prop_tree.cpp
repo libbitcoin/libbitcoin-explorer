@@ -27,10 +27,12 @@
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/header.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/script.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wrapper.hpp>
@@ -51,10 +53,11 @@ ptree prop_tree(const header& header)
     ptree tree;
     tree.put("header.bits", block_header.bits);
     tree.put("header.hash", hex(hash_block_header(block_header)));
-    tree.put("header.merkle", hex(block_header.merkle));
+    tree.put("header.merkle_tree_hash", hex(block_header.merkle));
     tree.put("header.nonce", block_header.nonce);
-    tree.put("header.timestamp", block_header.timestamp);
-    tree.put("header.previous", hex(block_header.previous_block_hash));
+    tree.put("header.previous_block_hash", 
+        hex(block_header.previous_block_hash));
+    tree.put("header.time_stamp", block_header.timestamp);
     tree.put("header.version", block_header.version);
     return tree;
 }
@@ -144,13 +147,13 @@ ptree prop_tree(const std::vector<balance_row>& rows,
 ptree prop_tree(const tx_input_type& tx_input)
 {
     ptree tree;
-    tree.put("input.previous_output", point(tx_input.previous_output));
-    tree.put("input.script", script(tx_input.script).mnemonic());
-    tree.put("input.sequence", tx_input.sequence);
-
     payment_address script_address;
     if (extract(script_address, tx_input.script))
         tree.put("input.address", address(script_address));
+
+    tree.put("input.previous_output", point(tx_input.previous_output));
+    tree.put("input.script", script(tx_input.script).mnemonic());
+    tree.put("input.sequence", tx_input.sequence);
 
     return tree;
 }
@@ -185,25 +188,24 @@ ptree prop_tree(const std::vector<input>& inputs)
 ptree prop_tree(const tx_output_type& tx_output)
 {
     ptree tree;
-    tree.put("output.value", tx_output.value);
-    tree.put("output.script", script(tx_output.script).mnemonic());
-
     payment_address output_address;
     if (extract(output_address, tx_output.script))
         tree.put("output.address", address(output_address));
 
-    // TODO: look into stealth object serialization.
-    // This is redundant with output.script yet provided for convenience.
-    // However discovery of stealth metadata should not be reliable without
-    // a secret key. This impl is based on a too-visible pattern.
+    tree.put("output.script", script(tx_output.script).mnemonic());
+
+    // TODO: consider independent stealth object serialization.
+    // TODO: this will eventually change privacy problems, see:
+    // http://lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
     stealth_info stealth;
     if (extract_stealth_info(stealth, tx_output.script))
     {
-        tree.put("output.stealth.bitfield", stealth.bitfield);
-        tree.put("output.stealth.ephemkey",
+        tree.put("output.stealth.bit_field", stealth.bitfield);
+        tree.put("output.stealth.ephemeral_public_key",
             ec_public(stealth.ephem_pubkey));
     }
 
+    tree.put("output.value", tx_output.value);
     return tree;
 }
 
@@ -221,9 +223,8 @@ ptree prop_tree(const output& output)
     const std::vector<tx_output_type>& tx_outputs = output;
 
     ptree tree;
-    tree.put("payto", output.payto());
+    tree.put("pay_to", output.payto());
     tree.add_child("", prop_tree(tx_outputs));
-
     return tree;
 }
 
@@ -243,9 +244,47 @@ ptree prop_tree(const transaction& transaction)
     ptree tree;
     tree.put("transaction.hash", hex(hash_transaction(tx)));
     tree.put("transaction.version", tx.version);
-    tree.put("transaction.locktime", tx.locktime);
+    tree.put("transaction.lock_time", tx.locktime);
     tree.add_child("transaction", prop_tree(tx.inputs));
     tree.add_child("transaction", prop_tree(tx.outputs));
+    return tree;
+}
+
+pt::ptree prop_tree(const std::vector<ec_point>& public_keys)
+{
+    ptree tree;
+    for (const auto& public_key: public_keys)
+        tree.put("public_key", ec_public(public_key));
+
+    return tree;
+}
+
+pt::ptree prop_tree(const stealth& address)
+{
+    const stealth_address& addr = address;
+
+    // We don't serialize a "reuse key" value as this is strictly an 
+    // optimization for the purpose of serialization and otherwise complicates
+    // understanding of what is actually otherwise very simple behavior.
+    // So instead we emit the reused key as one of the spend keys.
+    // This means that it is typical to see the same key in scan and spend.
+
+    ptree tree;
+    tree.put("address.encoded", addr.encoded());
+    tree.put("address.prefix", prefix(addr.get_prefix()));
+    tree.put("address.scan_public_key", ec_public(addr.get_scan_pubkey()));
+    tree.put("address.signatures", addr.get_signatures());
+    tree.add_child("address.spend", prop_tree(addr.get_spend_pubkeys()));
+    tree.put("address.testnet", addr.get_testnet());
+    return tree;
+}
+
+pt::ptree prop_tree(const std::vector<stealth>& addresses)
+{
+    ptree tree;
+    for (const auto& addr: addresses)
+        tree.add_child("stealth", prop_tree(addr));
+
     return tree;
 }
 

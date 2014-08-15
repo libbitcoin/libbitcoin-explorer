@@ -21,7 +21,7 @@
 #define SX_WRAP_ENCODE_HPP
 
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -33,13 +33,12 @@
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
-#include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
-#include <sx/serializer/hd_private.hpp>
-#include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hd_priv.hpp>
+#include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
@@ -47,6 +46,8 @@
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
+#include <sx/serializer/signature_hash.hpp>
+#include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/serializer/wrapper.hpp>
@@ -134,7 +135,7 @@ public:
             )
             (
                 "version,v",
-                value<serializer::byte>(&option_.version)->required(),
+                value<uint8_t>(&option_.version)->required(),
                 "The desired version number."
             )
             (
@@ -193,7 +194,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    virtual serializer::byte& get_version_option()
+    virtual uint8_t& get_version_option()
     {
         return option_.version;
     }
@@ -202,7 +203,7 @@ public:
      * Set the value of the version option.
      */
     virtual void set_version_option(
-        const serializer::byte& value)
+        const uint8_t& value)
     {
         option_.version = value;
     }
@@ -238,7 +239,7 @@ private:
         }
         
         bool help;
-        serializer::byte version;
+        uint8_t version;
     } option_;
 };
 

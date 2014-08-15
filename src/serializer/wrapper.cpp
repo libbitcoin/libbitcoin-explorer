@@ -29,6 +29,7 @@
 #include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
+using namespace bc;
 using namespace po;
 using namespace pt;
 
@@ -45,7 +46,7 @@ wrapper::wrapper(const std::string& wrapped)
     std::stringstream(wrapped) >> *this;
 }
 
-wrapper::wrapper(const bc::data_chunk& wrapped)
+wrapper::wrapper(const data_chunk& wrapped)
 {
     unwrap(value_, hex(wrapped));
 }
@@ -55,11 +56,11 @@ wrapper::wrapper(const wrapped_data& wrapped)
 {
 }
 
-wrapper::wrapper(uint32_t version, const bc::data_chunk& payload)
+wrapper::wrapper(uint32_t version, const data_chunk& payload)
 {
     value_.version = version;
     value_.payload = payload;
-    value_.checksum = bc::bitcoin_checksum(payload);
+    value_.checksum = bitcoin_checksum(payload);
 }
 
 wrapper::wrapper(const wrapper& other)
@@ -67,7 +68,7 @@ wrapper::wrapper(const wrapper& other)
 {
 }
 
-wrapper::operator const bc::data_chunk() const
+wrapper::operator const data_chunk() const
 {
     return wrap(value_);
 }

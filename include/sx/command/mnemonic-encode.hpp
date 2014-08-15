@@ -21,7 +21,7 @@
 #define SX_MNEMONIC_ENCODE_HPP
 
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -33,13 +33,12 @@
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
-#include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
 #include <sx/serializer/hd_key.hpp>
-#include <sx/serializer/hd_private.hpp>
-#include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hd_priv.hpp>
+#include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
@@ -47,6 +46,8 @@
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
+#include <sx/serializer/signature_hash.hpp>
+#include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/serializer/wrapper.hpp>
@@ -58,6 +59,12 @@
 
 namespace sx {
 namespace extension {
+
+/**
+ * Various localizable strings.
+ */
+#define SX_EC_MNEMONIC_ENCODE_SHORT_SEED \
+    "The seed is less than 128 bits long."
 
 /**
  * Class to implement the sx mnemonic-encode command.
@@ -135,7 +142,7 @@ public:
             (
                 "SEED",
                 value<serializer::hex>(&argument_.seed),
-                "The hex encoded randomness seed. WARNING: seed should be random and at least 128 bits in length. WARNING: This implementation is deprecated in favor of BIP39."
+                "The hex encoded randomness seed.  Must be at least 128 bits in length. WARNING: This implementation is deprecated in favor of BIP39."
             );
 
         return options;

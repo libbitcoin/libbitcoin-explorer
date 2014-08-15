@@ -29,24 +29,24 @@ using namespace sx::extension;
 
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 
-BOOST_AUTO_TEST_CASE(generated__symbol__addr_decode__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__address_decode__returns_expected_value)
 {
-    BOOST_REQUIRE(addr_decode::symbol() == std::string("addr-decode"));
+    BOOST_REQUIRE(address_decode::symbol() == std::string("address-decode"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__addr_embed__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__address_embed__returns_expected_value)
 {
-    BOOST_REQUIRE(addr_embed::symbol() == std::string("addr-embed"));
+    BOOST_REQUIRE(address_embed::symbol() == std::string("address-embed"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__addr_encode__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__address_encode__returns_expected_value)
 {
-    BOOST_REQUIRE(addr_encode::symbol() == std::string("addr-encode"));
+    BOOST_REQUIRE(address_encode::symbol() == std::string("address-encode"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__addr_validate__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__address_validate__returns_expected_value)
 {
-    BOOST_REQUIRE(addr_validate::symbol() == std::string("addr-validate"));
+    BOOST_REQUIRE(address_validate::symbol() == std::string("address-validate"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__base58_decode__returns_expected_value)
@@ -129,14 +129,14 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_new__returns_expected_value)
     BOOST_REQUIRE(ec_new::symbol() == std::string("ec-new"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_addr__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_address__returns_expected_value)
 {
-    BOOST_REQUIRE(ec_to_addr::symbol() == std::string("ec-to-addr"));
+    BOOST_REQUIRE(ec_to_address::symbol() == std::string("ec-to-address"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_pub__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_public__returns_expected_value)
 {
-    BOOST_REQUIRE(ec_to_pub::symbol() == std::string("ec-to-pub"));
+    BOOST_REQUIRE(ec_to_public::symbol() == std::string("ec-to-public"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_wif__returns_expected_value)
@@ -214,19 +214,19 @@ BOOST_AUTO_TEST_CASE(generated__symbol__hd_new__returns_expected_value)
     BOOST_REQUIRE(hd_new::symbol() == std::string("hd-new"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__hd_priv__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_private__returns_expected_value)
 {
-    BOOST_REQUIRE(hd_priv::symbol() == std::string("hd-priv"));
+    BOOST_REQUIRE(hd_private::symbol() == std::string("hd-private"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__hd_pub__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_public__returns_expected_value)
 {
-    BOOST_REQUIRE(hd_pub::symbol() == std::string("hd-pub"));
+    BOOST_REQUIRE(hd_public::symbol() == std::string("hd-public"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_addr__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_address__returns_expected_value)
 {
-    BOOST_REQUIRE(hd_to_addr::symbol() == std::string("hd-to-addr"));
+    BOOST_REQUIRE(hd_to_address::symbol() == std::string("hd-to-address"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_ec__returns_expected_value)
@@ -234,9 +234,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_ec__returns_expected_value)
     BOOST_REQUIRE(hd_to_ec::symbol() == std::string("hd-to-ec"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_pub__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_public__returns_expected_value)
 {
-    BOOST_REQUIRE(hd_to_pub::symbol() == std::string("hd-to-pub"));
+    BOOST_REQUIRE(hd_to_public::symbol() == std::string("hd-to-public"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__hd_to_wif__returns_expected_value)
@@ -252,6 +252,21 @@ BOOST_AUTO_TEST_CASE(generated__symbol__help__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__initchain__returns_expected_value)
 {
     BOOST_REQUIRE(initchain::symbol() == std::string("initchain"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__input_set__returns_expected_value)
+{
+    BOOST_REQUIRE(input_set::symbol() == std::string("input-set"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__input_sign__returns_expected_value)
+{
+    BOOST_REQUIRE(input_sign::symbol() == std::string("input-sign"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__input_validate__returns_expected_value)
+{
+    BOOST_REQUIRE(input_validate::symbol() == std::string("input-validate"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_decode__returns_expected_value)
@@ -299,9 +314,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__script_encode__returns_expected_value)
     BOOST_REQUIRE(script_encode::symbol() == std::string("script-encode"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__script_to_addr__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__script_to_address__returns_expected_value)
 {
-    BOOST_REQUIRE(script_to_addr::symbol() == std::string("script-to-addr"));
+    BOOST_REQUIRE(script_to_address::symbol() == std::string("script-to-address"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__seed__returns_expected_value)
@@ -349,14 +364,34 @@ BOOST_AUTO_TEST_CASE(generated__symbol__showblkhead__returns_expected_value)
     BOOST_REQUIRE(showblkhead::symbol() == std::string("showblkhead"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_addr_encode__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_address_decode__returns_expected_value)
 {
-    BOOST_REQUIRE(stealth_addr_encode::symbol() == std::string("stealth-addr-encode"));
+    BOOST_REQUIRE(stealth_address_decode::symbol() == std::string("stealth-address-decode"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_address_encode__returns_expected_value)
+{
+    BOOST_REQUIRE(stealth_address_encode::symbol() == std::string("stealth-address-encode"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_initiate__returns_expected_value)
+{
+    BOOST_REQUIRE(stealth_initiate::symbol() == std::string("stealth-initiate"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_newkey__returns_expected_value)
 {
     BOOST_REQUIRE(stealth_newkey::symbol() == std::string("stealth-newkey"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_uncover_address__returns_expected_value)
+{
+    BOOST_REQUIRE(stealth_uncover_address::symbol() == std::string("stealth-uncover-address"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_uncover_secret__returns_expected_value)
+{
+    BOOST_REQUIRE(stealth_uncover_secret::symbol() == std::string("stealth-uncover-secret"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__tx_decode__returns_expected_value)
@@ -389,9 +424,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__wif_to_ec__returns_expected_value)
     BOOST_REQUIRE(wif_to_ec::symbol() == std::string("wif-to-ec"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__wif_to_pub__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__wif_to_public__returns_expected_value)
 {
-    BOOST_REQUIRE(wif_to_pub::symbol() == std::string("wif-to-pub"));
+    BOOST_REQUIRE(wif_to_public::symbol() == std::string("wif-to-public"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__wrap_decode__returns_expected_value)

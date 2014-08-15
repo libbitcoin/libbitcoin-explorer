@@ -20,18 +20,18 @@
 #include "precompile.hpp"
 #include <sx/serializer/encoding.hpp>
 
+#include <exception>
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/utility/utility.hpp>
 
 using namespace po;
 
 namespace sx {
 namespace serializer {
 
-// DRY - cheap hash table.
+// DRY
 static const char* encoding_info = "info";
 static const char* encoding_json = "json";
 static const char* encoding_xml = "xml";
@@ -97,9 +97,10 @@ std::ostream& operator<<(std::ostream& output, const encoding& argument)
             value = encoding_xml;
             break;
         case encoding_engine::native:
-        default:
             value = encoding_native;
             break;
+        default:
+            throw std::exception("Unexpected encoding value.");
     }
 
     return output;

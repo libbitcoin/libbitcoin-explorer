@@ -21,10 +21,12 @@
 #include <sx/command/seed.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
@@ -35,7 +37,8 @@ console_result seed::invoke(std::ostream& output, std::ostream& error)
 
     // This are soft requirements for security and rationality.
     // We use bit vs. byte length input as the more familiar convention.
-    if (bitlength < 128 || bitlength % 8 != 0)
+    if (bitlength * byte_size < minimum_seed_size ||
+        bitlength % byte_size != 0)
     {
         error << SX_SEED_BITLENGTH_UNSUPPORTED << std::endl;
         return console_result::failure;

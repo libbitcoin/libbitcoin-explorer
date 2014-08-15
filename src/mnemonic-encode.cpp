@@ -21,19 +21,28 @@
 #include <sx/command/mnemonic-encode.hpp>
 
 #include <iostream>
+#include <string>
+#include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
 
+using namespace bc;
 using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 
-// $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic
+// $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic-encode
 console_result mnemonic_encode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& seed = get_seed_argument();
+    const data_chunk& seed = get_seed_argument();
+
+    if (seed.size() < minimum_seed_size)
+    {
+        error << SX_EC_MNEMONIC_ENCODE_SHORT_SEED << std::endl;
+        return console_result::failure;
+    }
 
     // TODO: change implementation from Electrum to BIP39.
 

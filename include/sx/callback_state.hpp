@@ -21,7 +21,7 @@
 #define SX_CALLBACK_STATE_HPP
 
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>

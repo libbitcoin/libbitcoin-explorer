@@ -23,7 +23,7 @@
 #include <array>
 #include <iostream>
 #include <string>
-#include <stdint.h>
+#include <cstdint>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 

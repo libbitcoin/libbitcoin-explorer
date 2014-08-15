@@ -22,24 +22,27 @@
 
 #include <iostream>
 #include <wallet/wallet.hpp>
+#include <sx/define.hpp>
 
 using namespace libwallet;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
 
-console_result stealth_uncover_secret::invoke(int argc,
-    const char* argv[])
+console_result stealth_uncover_secret::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    if (!validate_argument_range(argc, example(), 4, 4))
-        return console_result::failure;
+    //// Bound parameters.
+    //const auto index = get_index_option();
 
-    const auto ephem_pubkey = decode_hex(argv[1]);
-    const auto scan_secret = decode_hash(argv[2]);
-    const auto spend_secret = decode_hash(argv[3]);
-    const auto secret = uncover_stealth_secret(ephem_pubkey, scan_secret,
-        spend_secret);
+    // 3 args
 
-    std::cout << secret << std::endl;
+    //const auto ephem_pubkey = decode_hex(argv[1]);
+    //const auto scan_secret = decode_hash(argv[2]);
+    //const auto spend_secret = decode_hash(argv[3]);
+    //const auto secret = uncover_stealth_secret(ephem_pubkey, scan_secret,
+    //    spend_secret);
+    //output << secret << std::endl;
+
     return console_result::okay;
 }
 

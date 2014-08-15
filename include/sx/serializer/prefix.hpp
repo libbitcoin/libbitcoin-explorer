@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstdint>
 #include <sx/define.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -70,6 +71,12 @@ public:
      * @return  This object's value cast to internal type.
      */
     operator const bitset&() const;
+
+    /**
+     * Overload cast to unsigned 32 bit value.
+     * @return  This object's value cast to 32 bit value.
+     */
+    operator const uint32_t() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.

@@ -92,13 +92,12 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc160.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc256.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\byte.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\ec_private.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\ec_public.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\encoding.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_key.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_private.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_public.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_priv.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hd_pub.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\header.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\hex.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\input.hpp" />
@@ -107,6 +106,8 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\prefix.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\raw.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\script.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\signature_hash.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\serializer\stealth.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\wif.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\serializer\wrapper.hpp" />
@@ -116,15 +117,12 @@
     <ClInclude Include="..\..\..\..\include\sx\utility\parameter.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\printer.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\utility\utility.hpp" />
-    <ClInclude Include="..\..\..\..\src\precompile.hpp" />
-    <ClInclude Include="..\..\..\..\src\serializer\precompile.hpp" />
-    <ClInclude Include="..\..\..\..\src\utility\precompile.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\include\sx\command\addr-decode.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\addr-embed.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\addr-encode.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\addr-validate.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\address-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\address-embed.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\address-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\address-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-decode.hpp" />
@@ -141,8 +139,8 @@
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-multiply-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-new.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-addr.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-pub.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-address.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\ec-to-public.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-to-wif.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\ec-unlock.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-balance.hpp" />
@@ -158,14 +156,17 @@
     <ClInclude Include="..\..\..\..\include\sx\command\genpriv.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\genpub.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-new.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-priv.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-pub.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-addr.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-private.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-public.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-address.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-ec.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-pub.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\hd-to-public.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\hd-to-wif.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\help.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\initchain.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\input-set.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\input-sign.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\input-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\mnemonic-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\mnemonic-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\mpk.hpp" />
@@ -175,7 +176,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi-to-btc.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\script-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\script-encode.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\script-to-addr.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\script-to-address.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\seed.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\send-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\send-tx-node.hpp" />
@@ -185,15 +186,19 @@
     <ClInclude Include="..\..\..\..\include\sx\command\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\sha512.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\showblkhead.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth-addr-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-address-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-address-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-initiate.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-newkey.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-address.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\tx-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\tx-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\tx-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp" />
-    <ClInclude Include="..\..\..\..\include\sx\command\wif-to-pub.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\wif-to-public.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wrap-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wrap-encode.hpp" />
   </ItemGroup>
@@ -211,13 +216,12 @@
     <ClCompile Include="..\..\..\..\src\serializer\base58.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\btc160.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\btc256.cpp" />
-    <ClCompile Include="..\..\..\..\src\serializer\byte.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\ec_private.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\ec_public.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\encoding.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\hd_key.cpp" />
-    <ClCompile Include="..\..\..\..\src\serializer\hd_private.cpp" />
-    <ClCompile Include="..\..\..\..\src\serializer\hd_public.cpp" />
+    <ClCompile Include="..\..\..\..\src\serializer\hd_priv.cpp" />
+    <ClCompile Include="..\..\..\..\src\serializer\hd_pub.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\header.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\hex.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\input.cpp" />
@@ -226,6 +230,8 @@
     <ClCompile Include="..\..\..\..\src\serializer\prefix.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\raw.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\script.cpp" />
+    <ClCompile Include="..\..\..\..\src\serializer\signature_hash.cpp" />
+    <ClCompile Include="..\..\..\..\src\serializer\stealth.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\transaction.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\wif.cpp" />
     <ClCompile Include="..\..\..\..\src\serializer\wrapper.cpp" />          
@@ -234,33 +240,12 @@
     <ClCompile Include="..\..\..\..\src\utility\parameter.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\printer.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\utility.cpp" />
-    <ClCompile Include="..\..\..\..\src\input-sign.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input-set.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input-validate.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-addr-decode.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-uncover.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\addr-decode.cpp" />
-    <ClCompile Include="..\..\..\..\src\addr-embed.cpp" />
-    <ClCompile Include="..\..\..\..\src\addr-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\addr-validate.cpp" />
+    <ClCompile Include="..\..\..\..\src\address-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\address-embed.cpp" />
+    <ClCompile Include="..\..\..\..\src\address-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\address-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\base58-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\base58-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\base58check-decode.cpp" />
@@ -277,8 +262,8 @@
     <ClCompile Include="..\..\..\..\src\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-new.cpp" />
-    <ClCompile Include="..\..\..\..\src\ec-to-addr.cpp" />
-    <ClCompile Include="..\..\..\..\src\ec-to-pub.cpp" />
+    <ClCompile Include="..\..\..\..\src\ec-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\ec-to-public.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\src\ec-unlock.cpp" />
     <ClCompile Include="..\..\..\..\src\fetch-balance.cpp">
@@ -312,14 +297,17 @@
     <ClCompile Include="..\..\..\..\src\genpriv.cpp" />
     <ClCompile Include="..\..\..\..\src\genpub.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-new.cpp" />
-    <ClCompile Include="..\..\..\..\src\hd-priv.cpp" />
-    <ClCompile Include="..\..\..\..\src\hd-pub.cpp" />
-    <ClCompile Include="..\..\..\..\src\hd-to-addr.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-private.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-public.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-ec.cpp" />
-    <ClCompile Include="..\..\..\..\src\hd-to-pub.cpp" />
+    <ClCompile Include="..\..\..\..\src\hd-to-public.cpp" />
     <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\src\help.cpp" />
     <ClCompile Include="..\..\..\..\src\initchain.cpp" />
+    <ClCompile Include="..\..\..\..\src\input-set.cpp" />
+    <ClCompile Include="..\..\..\..\src\input-sign.cpp" />
+    <ClCompile Include="..\..\..\..\src\input-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\mnemonic-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\mpk.cpp" />
@@ -329,7 +317,7 @@
     <ClCompile Include="..\..\..\..\src\satoshi-to-btc.cpp" />
     <ClCompile Include="..\..\..\..\src\script-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\script-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\script-to-addr.cpp" />
+    <ClCompile Include="..\..\..\..\src\script-to-address.cpp" />
     <ClCompile Include="..\..\..\..\src\seed.cpp" />
     <ClCompile Include="..\..\..\..\src\send-tx.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
@@ -341,8 +329,12 @@
     <ClCompile Include="..\..\..\..\src\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\sha512.cpp" />
     <ClCompile Include="..\..\..\..\src\showblkhead.cpp" />
-    <ClCompile Include="..\..\..\..\src\stealth-addr-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\stealth-address-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\stealth-address-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\stealth-initiate.cpp" />
     <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp" />
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\tx-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\tx-sign.cpp" />
@@ -351,7 +343,7 @@
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wif-to-ec.cpp" />
-    <ClCompile Include="..\..\..\..\src\wif-to-pub.cpp" />
+    <ClCompile Include="..\..\..\..\src\wif-to-public.cpp" />
     <ClCompile Include="..\..\..\..\src\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\wrap-encode.cpp" />
   </ItemGroup>

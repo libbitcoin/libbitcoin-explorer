@@ -21,77 +21,47 @@
 #include <sx/command/input-sign.hpp>
 
 #include <iostream>
+#include <cstdint>
 #include <bitcoin/bitcoin.hpp>
+#include <sx/serializer/hex.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace sx;
-using namespace sx::extensions;
+using namespace sx::extension;
+using namespace sx::serializer;
 
-static bool sign(tx_type& tx, uint32_t input_index,
-    const elliptic_curve_key& key, const script_type& script_code)
+console_result input_sign::invoke(std::ostream& output, std::ostream& error)
 {
-    tx_input_type& input = tx.inputs[input_index];
-    const data_chunk public_key = key.public_key();
-    if (public_key.empty())
+    // Bound parameters.
+    const auto index = get_index_option();
+    const auto hash_type = get_sighash_option();
+    const data_chunk& nonce = get_nonce_argument();
+    const tx_type& tx = get_transaction_argument();
+    const auto& secret = get_secret_argument();
+    const auto& script = get_prevout_script_argument();
+
+    if (nonce.size() < minimum_seed_size)
     {
-        std::cerr << "sign-input: Internal error getting public key."
-            << std::endl;
-        return false;
-    }
-
-    const auto tx_hash = script_type::generate_signature_hash(tx, input_index,
-        script_code, 1);
-    if (tx_hash == null_hash)
-    {
-        std::cerr << "sign-input: Error generating signature hash."
-            << std::endl;
-        return false;
-    }
-
-    auto signature = key.sign(tx_hash);
-
-    // Magic Number?
-    signature.push_back(0x01);
-    std::cout << signature << std::endl;
-    return true;
-}
-
-console_result input_sign::invoke(int argc, const char* argv[])
-{
-    if (!validate_argument_range(argc, example(), 4, 4))
-        return console_result::failure;
-
-    tx_type tx;
-    const auto filename(get_filename(argc, argv));
-    if (!load_satoshi_item<tx_type>(tx, filename, std::cin))
-    {
-        std::cerr << "sx: Deserializing transaction failed." << std::endl;
+        error << SX_INPUT_SIGN_SHORT_NONCE << std::endl;
         return console_result::failure;
     }
 
-    uint32_t input_index;
-    if (!parse(input_index, argv[2]))
+    if (tx.inputs.size() < index)
     {
-        std::cerr << "sign-input: Bad N provided." << std::endl;
+        error << SX_INPUT_SIGN_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    const auto script_code = parse_script(decode_hex(argv[3]));
-    if (input_index >= tx.inputs.size())
+    hex signature;
+    auto& buffer = signature.data();
+    if (!sign_transaction(buffer, tx, index, script, secret, nonce, hash_type))
     {
-        std::cerr << "sign-input: N out of range." << std::endl;
+        error << SX_INPUT_SIGN_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    elliptic_curve_key signing_key;
-    if (!read_private_key(signing_key, std::cin))
-    {
-        std::cerr << "Invalid private key." << std::endl;
-        return console_result::failure;
-    }
-
-    auto okay = sign(tx, input_index, signing_key, script_code);
-    return if_else(okay, console_result::okay, console_result::failure);
+    output << signature << std::endl;
+    return console_result::okay;
 }
 

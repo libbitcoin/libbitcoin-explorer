@@ -21,7 +21,7 @@
 #define SX_OBELISK_CLIENT_HPP
 
 #include <functional>
-#include <stdint.h>
+#include <cstdint>
 #include <obelisk/obelisk.hpp>
 #include <sx/async_client.hpp>
 #include <sx/command.hpp>

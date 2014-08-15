@@ -37,10 +37,10 @@ using namespace extension;
 
 bool broadcast(const function<void(shared_ptr<command>)> func)
 {
-    func(make_shared<addr_decode>());
-    func(make_shared<addr_embed>());
-    func(make_shared<addr_encode>());
-    func(make_shared<addr_validate>());
+    func(make_shared<address_decode>());
+    func(make_shared<address_embed>());
+    func(make_shared<address_encode>());
+    func(make_shared<address_validate>());
     func(make_shared<base58_decode>());
     func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
@@ -57,8 +57,8 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
     func(make_shared<ec_new>());
-    func(make_shared<ec_to_addr>());
-    func(make_shared<ec_to_pub>());
+    func(make_shared<ec_to_address>());
+    func(make_shared<ec_to_public>());
     func(make_shared<ec_to_wif>());
     func(make_shared<ec_unlock>());
     func(make_shared<fetch_balance>());
@@ -74,14 +74,17 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<genpriv>());
     func(make_shared<genpub>());
     func(make_shared<hd_new>());
-    func(make_shared<hd_priv>());
-    func(make_shared<hd_pub>());
-    func(make_shared<hd_to_addr>());
+    func(make_shared<hd_private>());
+    func(make_shared<hd_public>());
+    func(make_shared<hd_to_address>());
     func(make_shared<hd_to_ec>());
-    func(make_shared<hd_to_pub>());
+    func(make_shared<hd_to_public>());
     func(make_shared<hd_to_wif>());
     func(make_shared<help>());
     func(make_shared<initchain>());
+    func(make_shared<input_set>());
+    func(make_shared<input_sign>());
+    func(make_shared<input_validate>());
     func(make_shared<mnemonic_decode>());
     func(make_shared<mnemonic_encode>());
     func(make_shared<mpk>());
@@ -91,7 +94,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<satoshi_to_btc>());
     func(make_shared<script_decode>());
     func(make_shared<script_encode>());
-    func(make_shared<script_to_addr>());
+    func(make_shared<script_to_address>());
     func(make_shared<seed>());
     func(make_shared<send_tx>());
     func(make_shared<send_tx_node>());
@@ -101,15 +104,19 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<sha256>());
     func(make_shared<sha512>());
     func(make_shared<showblkhead>());
-    func(make_shared<stealth_addr_encode>());
+    func(make_shared<stealth_address_decode>());
+    func(make_shared<stealth_address_encode>());
+    func(make_shared<stealth_initiate>());
     func(make_shared<stealth_newkey>());
+    func(make_shared<stealth_uncover_address>());
+    func(make_shared<stealth_uncover_secret>());
     func(make_shared<tx_decode>());
     func(make_shared<tx_encode>());
     func(make_shared<tx_sign>());
     func(make_shared<wallet>());
     func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
-    func(make_shared<wif_to_pub>());
+    func(make_shared<wif_to_public>());
     func(make_shared<wrap_decode>());
     func(make_shared<wrap_encode>());
 
@@ -118,14 +125,14 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
 
 shared_ptr<command> find(const string& symbol)
 {
-    if (symbol == addr_decode::symbol())
-        return make_shared<addr_decode>();
-    if (symbol == addr_embed::symbol())
-        return make_shared<addr_embed>();
-    if (symbol == addr_encode::symbol())
-        return make_shared<addr_encode>();
-    if (symbol == addr_validate::symbol())
-        return make_shared<addr_validate>();
+    if (symbol == address_decode::symbol())
+        return make_shared<address_decode>();
+    if (symbol == address_embed::symbol())
+        return make_shared<address_embed>();
+    if (symbol == address_encode::symbol())
+        return make_shared<address_encode>();
+    if (symbol == address_validate::symbol())
+        return make_shared<address_validate>();
     if (symbol == base58_decode::symbol())
         return make_shared<base58_decode>();
     if (symbol == base58_encode::symbol())
@@ -158,10 +165,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_multiply_secrets>();
     if (symbol == ec_new::symbol())
         return make_shared<ec_new>();
-    if (symbol == ec_to_addr::symbol())
-        return make_shared<ec_to_addr>();
-    if (symbol == ec_to_pub::symbol())
-        return make_shared<ec_to_pub>();
+    if (symbol == ec_to_address::symbol())
+        return make_shared<ec_to_address>();
+    if (symbol == ec_to_public::symbol())
+        return make_shared<ec_to_public>();
     if (symbol == ec_to_wif::symbol())
         return make_shared<ec_to_wif>();
     if (symbol == ec_unlock::symbol())
@@ -192,22 +199,28 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<genpub>();
     if (symbol == hd_new::symbol())
         return make_shared<hd_new>();
-    if (symbol == hd_priv::symbol())
-        return make_shared<hd_priv>();
-    if (symbol == hd_pub::symbol())
-        return make_shared<hd_pub>();
-    if (symbol == hd_to_addr::symbol())
-        return make_shared<hd_to_addr>();
+    if (symbol == hd_private::symbol())
+        return make_shared<hd_private>();
+    if (symbol == hd_public::symbol())
+        return make_shared<hd_public>();
+    if (symbol == hd_to_address::symbol())
+        return make_shared<hd_to_address>();
     if (symbol == hd_to_ec::symbol())
         return make_shared<hd_to_ec>();
-    if (symbol == hd_to_pub::symbol())
-        return make_shared<hd_to_pub>();
+    if (symbol == hd_to_public::symbol())
+        return make_shared<hd_to_public>();
     if (symbol == hd_to_wif::symbol())
         return make_shared<hd_to_wif>();
     if (symbol == help::symbol())
         return make_shared<help>();
     if (symbol == initchain::symbol())
         return make_shared<initchain>();
+    if (symbol == input_set::symbol())
+        return make_shared<input_set>();
+    if (symbol == input_sign::symbol())
+        return make_shared<input_sign>();
+    if (symbol == input_validate::symbol())
+        return make_shared<input_validate>();
     if (symbol == mnemonic_decode::symbol())
         return make_shared<mnemonic_decode>();
     if (symbol == mnemonic_encode::symbol())
@@ -226,8 +239,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<script_decode>();
     if (symbol == script_encode::symbol())
         return make_shared<script_encode>();
-    if (symbol == script_to_addr::symbol())
-        return make_shared<script_to_addr>();
+    if (symbol == script_to_address::symbol())
+        return make_shared<script_to_address>();
     if (symbol == seed::symbol())
         return make_shared<seed>();
     if (symbol == send_tx::symbol())
@@ -246,10 +259,18 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha512>();
     if (symbol == showblkhead::symbol())
         return make_shared<showblkhead>();
-    if (symbol == stealth_addr_encode::symbol())
-        return make_shared<stealth_addr_encode>();
+    if (symbol == stealth_address_decode::symbol())
+        return make_shared<stealth_address_decode>();
+    if (symbol == stealth_address_encode::symbol())
+        return make_shared<stealth_address_encode>();
+    if (symbol == stealth_initiate::symbol())
+        return make_shared<stealth_initiate>();
     if (symbol == stealth_newkey::symbol())
         return make_shared<stealth_newkey>();
+    if (symbol == stealth_uncover_address::symbol())
+        return make_shared<stealth_uncover_address>();
+    if (symbol == stealth_uncover_secret::symbol())
+        return make_shared<stealth_uncover_secret>();
     if (symbol == tx_decode::symbol())
         return make_shared<tx_decode>();
     if (symbol == tx_encode::symbol())
@@ -262,8 +283,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<watch_tx>();
     if (symbol == wif_to_ec::symbol())
         return make_shared<wif_to_ec>();
-    if (symbol == wif_to_pub::symbol())
-        return make_shared<wif_to_pub>();
+    if (symbol == wif_to_public::symbol())
+        return make_shared<wif_to_public>();
     if (symbol == wrap_decode::symbol())
         return make_shared<wrap_decode>();
     if (symbol == wrap_encode::symbol())

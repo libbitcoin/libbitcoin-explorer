@@ -20,7 +20,7 @@
 #ifndef SX_CONFIG_HPP
 #define SX_CONFIG_HPP
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */

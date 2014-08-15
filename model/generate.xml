@@ -29,24 +29,24 @@
 
   <!-- SX Commands -->
 
-  <command symbol="addr-decode" formerly="decode-addr" category="WALLET">
+  <command symbol="address-decode" formerly="decode-addr" category="WALLET">
     <option name="help" description="Convert a Bitcoin address to RIPEMD160." />
     <argument name="ADDRESS" stdin="true" type="address" description="The Bitcoin address to convert."/>
   </command>
   
-  <command symbol="addr-embed" formerly="embed-addr" category="WALLET" stub="true">
+  <command symbol="address-embed" formerly="embed-addr" category="WALLET" stub="true">
     <option name="help" description="Generate a Bitcoin address with an embedded record of binary data." />
     <argument name="FILE" file="true" stdin="true" type="raw" description="The binary data file path.  If not specified the binary data is read from STDIN."/>
-    <define name="SX_ADDR_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="SX_ADDRESS_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="addr-encode" formerly="encode-addr" category="WALLET">
+  <command symbol="address-encode" formerly="encode-addr" category="WALLET">
     <option name="help" description="Convert a RIPEMD160 value to a Bitcoin address." />
-    <option name="version" type="byte" description="The desired Bitcoin address version." />
+    <option name="version" type="uint8_t" description="The desired Bitcoin address version." />
     <argument name="RIPEMD160" stdin="true" type="btc160" description="The hex encoded hash to convert."/>
   </command>
 
-  <command symbol="addr-validate" formerly="validaddr" category="WALLET">
+  <command symbol="address-validate" formerly="validaddr" category="WALLET">
     <option name="help" description="Validate a set of addresses. The result is successful if all addresses are valid." />
     <argument name="ADDRESS" stdin="true" type="address" limit="-1" description="The set of Bitcoin addresses to validate." />
   </command>
@@ -145,13 +145,13 @@
     <define name="SX_EC_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
   
-  <command symbol="ec-to-addr" formerly="addr" category="WALLET">
+  <command symbol="ec-to-address" formerly="addr" category="WALLET">
     <option name="help" description="Convert an EC public key to a Bitcoin address." />
-    <option name="version" type="byte" description="The desired Bitcoin address version." />
+    <option name="version" type="uint8_t" description="The desired Bitcoin address version." />
     <argument name="POINT" stdin="true" type="ec_public" description="The hex encoded EC public key to convert." />
   </command>
 
-  <command symbol="ec-to-pub" formerly="pubkey" category="WALLET">
+  <command symbol="ec-to-public" formerly="pubkey" category="WALLET">
     <option name="help" description="Derive the EC public key of an EC private key. Defaults to the compressed public key format." />
     <option name="uncompressed" description="Derive using the uncompressed public key format." />
     <argument name="SECRET" stdin="true" type="ec_private" description="The hex encoded EC private key."/>
@@ -172,19 +172,19 @@
   
   <command symbol="fetch-balance" category="ONLINE" obelisk="true">
     <option name="help" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires an Obelisk server connection." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
   </command>
 
   <command symbol="fetch-confirmations" formerly="validtx" category="ONLINE" obelisk="true">
     <option name="help" description="Get confirmations for a set of transactions. Requires an Obelisk server connection." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
   </command>
 
   <command symbol="fetch-header" category="ONLINE" obelisk="true">
     <option name="help" description="Get the block header from the specified hash or height. Requires an Obelisk server connection." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <option name="hash" shortcut="s" type="btc256" description="The hex encoded block hash."/>
     <option name="height" shortcut="t" type="size_t" description="The block height."/>
   </command>
@@ -195,7 +195,7 @@
   
   <command symbol="fetch-history" category="ONLINE" obelisk="true">
     <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires an Obelisk server connection." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
     <define name="SX_FETCH_HISTORY_PENDING" value="Pending" />
     <define name="SX_FETCH_HISTORY_UNSPENT" value="Unspent" />
@@ -209,7 +209,7 @@
 
   <command symbol="fetch-tx" formerly="fetch-transaction, fetch-stealth" category="ONLINE" obelisk="true">
     <option name="help" description="Get transactions by filter. Requires an Obelisk server connection." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <option name="hash" shortcut="s" multiple="true" type="btc256" description="The set of hex encoded transaction hashes to get. Overrides prefix and height options." />
     <option name="prefix" type="prefix" multiple="true" description="The set of binary encoded stealth search prefixes of transactions to get." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of prefix transactions to get. Includes all blocks if not set."/>
@@ -218,13 +218,13 @@
 
   <command symbol="fetch-tx-index" formerly="fetch-transaction-index" category="ONLINE" obelisk="true">
     <option name="help" description="Get the block height and index of a transaction. Requires an Obelisk server connection." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of hex encoded transaction hashes." />
   </command>
 
   <command symbol="fetch-utxo" formerly="get-utxo" category="ONLINE" stub="true" obelisk="true">
     <option name="help" description="Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires an Obelisk server connection." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
     <define name="SX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
@@ -252,22 +252,22 @@
     <define name="SX_HD_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
 
-  <command symbol="hd-priv" category="WALLET">
+  <command symbol="hd-private" category="WALLET">
     <option name="help" description="Derive a child HD (BIP32) private key from another HD private key." />
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
     <argument name="SECRET" stdin="true" type="hd_private" description="The parent HD private key." />
   </command>
 
-  <command symbol="hd-pub" category="WALLET">
+  <command symbol="hd-public" category="WALLET">
     <option name="help" description="Derive a child HD (BIP32) public key from another HD public or private key." />
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
     <argument name="KEY" stdin="true" type="hd_key" description="The parent HD public or private key." />
-    <define name="SX_HD_PUB_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
+    <define name="SX_HD_PUBLIC_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
 
-  <command symbol="hd-to-addr" formerly="hd-to-address" category="WALLET">
+  <command symbol="hd-to-address" formerly="hd-to-address" category="WALLET">
     <option name="help" description="Convert a HD (BIP32) public or private key to a Bitcoin address." />
     <argument name="KEY" stdin="true" type="hd_key" description="The HD public or private key to convert." />
   </command>
@@ -277,7 +277,7 @@
     <argument name="KEY" stdin="true" type="hd_key" description="The HD public or private key to convert." />
   </command>
   
-  <command symbol="hd-to-pub" category="WALLET">
+  <command symbol="hd-to-public" category="WALLET">
     <option name="help" description="Derive the HD (BIP32) public key of a HD private key." />
     <argument name="SECRET" stdin="true" type="hd_private" description="The HD private key." />
   </command>
@@ -298,6 +298,84 @@
     <define name="SX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
   </command>
   
+  <command symbol="input-sign" formerly="sign-input" category="OFFLINE">
+    <option name="help" description="Create a signature for a transaction input." />
+    <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <option name="sighash" type="signature_hash" description="A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
+    <argument name="TRANSACTION" file="true" type="transaction" description="The file path of the hex encoded transaction."/>
+    <argument name="SECRET" type="ec_private" description="The hex encoded EC private key to sign with."/>
+    <argument name="NONCE" type="hex" description="The hex encoded random value to be used as the signing nonce. Must be at least 128 bits in length." />
+    <argument name="PREVOUT_SCRIPT" type="script" description="The hex encoded previous output script to use in signing. If not specified the script is read from STDIN." />
+    <define name="SX_INPUT_SIGN_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
+    <define name="SX_INPUT_SIGN_SHORT_NONCE" value="The nonce is less than 128 bits long." />
+    <!--
+    Sign a transaction input.
+
+    Note how the input script in the following transaction is empty.
+      $ sx mktx txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
+      $ sx showtx txfile.tx
+      hash: 4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0
+      version: 1  locktime: 0
+      Input:
+        previous output:
+      97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0
+        script:   sequence: 4294967295
+      Output:
+        value: 90000
+        script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify
+      checksig
+        address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe
+    
+    We will now sign the first input using our private key.
+    
+      $ echo '5KPFsatiYrJcvCSRrDbtx61822vZjeGGGx3wu38pQDHRF8eVJ8H' > private.key
+      $ DECODED_ADDR=$(cat private.key | sx addr | sx decode-addr)
+      $ PREVOUT_SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)
+      $ SIGNATURE=$(cat private.key | sx sign-input txfile.tx 0 $PREVOUT_SCRIPT)
+      $ SIGNATURE_AND_PUBKEY_SCRIPT=$(sx rawscript [ $SIGNATURE ] [ $(cat private.key | sx pubkey) ])
+      $ sx set-input txfile.tx 0 $SIGNATURE_AND_PUBKEY_SCRIPT > txfile.tx.signed  # the first input has index 0
+    
+    Note how the input script in the following transaction is now filled.
+    
+      $ cat txfile.tx.signed | sx showtx
+      hash: cc5650c69173e7607c095200f4ff36265f9fbb45e112b60cd467d696b2724488
+      version: 1
+      locktime: 0
+      Input:
+        previous output: 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0
+        script: [ 3045022100b778f7fb270b751491ba7e935a6978eaea2a44795b3f6636ea583939697b1ca102203ce47d3ecb0b7e832114e88e549fce476d4ea120ca1e60c508fe8083889a9cba01 ] [ 04c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0adb73f303ae1682415253f4411777224ab477ad098347ddb7e0b94d49261e613 ]
+        sequence: 4294967295
+        address: 1MyKMeDsom7rYcp69KpbKn4DcyuvLMkLYJ
+      Output:
+        value: 90000
+        script: dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig
+        address: 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe
+    
+    Now the input script is prepared, and the transaction is signed.
+    -->
+  </command>
+  
+  <command symbol="input-set" formerly="set-input" category="OFFLINE">
+    <option name="help" description="Assign a script to an existing transaction input." />
+    <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <argument name="TRANSACTION" file="true" type="transaction" description="The file path of the hex encoded transaction."/>
+    <argument name="SIGNATURE_AND_PUBKEY_SCRIPT" type="script" description="The hex encoded signature script to assign to the input. If not specified the script is read from STDIN." />
+    <define name="SX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
+  </command>
+  
+  <command symbol="input-validate" formerly="validsig" category="OFFLINE">
+    <option name="help" description="Validate the a transaction input signature." />
+    <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <option name="sighash" type="signature_hash" description="A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
+    <argument name="TRANSACTION" file="true" type="transaction" description="The file path of the hex encoded transaction."/>
+    <argument name="POINT" type="ec_public" description="The hex encoded EC public key to verify against."/>
+    <argument name="SCRIPT_CODE" type="script" description="The hex encoded ... script ..." />
+    <argument name="SIGNATURE" type="hex" description="The hex encoded signature to validate. If not specified the signature is read from STDIN."/>
+    <define name="SX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
+    <define name="SX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
+    <define name="SX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
+  </command>  
+  
   <command symbol="mnemonic-decode" formerly="mnemonic" category="WALLET">
     <option name="help" description="Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39." />
     <argument name="WORD" stdin="true" limit="-1" description="The set of words from the Electrum word list." />
@@ -305,7 +383,8 @@
   
   <command symbol="mnemonic-encode" formerly="mnemonic" category="WALLET">
     <option name="help" description="Convert a seed to its Electrum mnemonic." />
-    <argument name="SEED" stdin="true" type="hex" description="The hex encoded randomness seed. WARNING: seed should be random and at least 128 bits in length. WARNING: This implementation is deprecated in favor of BIP39." />
+    <argument name="SEED" stdin="true" type="hex" description="The hex encoded randomness seed.  Must be at least 128 bits in length. WARNING: This implementation is deprecated in favor of BIP39." />
+    <define name="SX_EC_MNEMONIC_ENCODE_SHORT_SEED" value="The seed is less than 128 bits long." />
   </command>
   
   <command symbol="mpk" category="ELECTRUM" obsolete="true">
@@ -348,7 +427,7 @@
     <!-- $ sx rawscript dup 76 -->
   </command>
   
-  <command symbol="script-to-addr" formerly="scripthash" category="SCRIPT">
+  <command symbol="script-to-address" formerly="scripthash" category="SCRIPT">
     <option name="help" description="Create a BIP16 pay-to-script-hash address from an encoded script." />
     <argument name="SCRIPT" file="true" stdin="true" type="script" description="The hex encoded script."/>
     <!--
@@ -415,32 +494,54 @@
     <argument name="HEX" stdin="true" type="hex" description="The hex encoded data to hash."/>
   </command>
 
-  <command symbol="showblkhead" category="TRANSACTION" obsolete="true">
+  <command symbol="showblkhead" category="OFFLINE" obsolete="true">
     <option name="help" description="Decode a block header." />
     <define name="SX_SHOWBLKHEAD_OBSOLETE" value="This command is obsolete. Use fetch-header formats instead." />
   </command>
+
+  <command symbol="stealth-address-decode" formerly="stealth-show-addr" category="STEALTH">
+    <option name="help" description="Decode a stealth address." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <argument name="STEALTH" type="stealth" required="true" description="The stealth payment address." />
+    <!-- sx stealth-addr-decode STEALTH_ADDRESS -->
+  </command>
   
-  <command symbol="stealth-addr-encode" category="STEALTH">
+  <command symbol="stealth-address-encode" category="STEALTH">
     <option name="help" description="Encode a stealth address." />
     <option name="prefix" type="prefix" description="The binary encoded stealth search prefix." />
     <option name="reuse-key" description="Reuse the SCAN_PUBKEY as a SPEND_PUBKEY." />
-    <option name="signatures" type="byte" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
+    <option name="signatures" type="uint8_t" description="Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided." />
     <argument name="SCAN_KEY" type="ec_public" required="true" description="The hex encoded EC public key of the recipient." />
-    <argument name="SPEND_KEY" stdin="true" limit="-1" type="ec_public" description="The set of hex encoded EC public keys that are spent to." />
+    <argument name="SPEND_KEY" stdin="true" limit="255" type="ec_public" description="The set of hex encoded EC public keys that are spent to." />
+  </command>
+  
+  <command symbol="stealth-initiate" category="STEALTH">
+    <option name="help" description="Initiate a new stealth payment." />
+    <!-- sx stealth-initiate EPHEM_SECRET SCAN_PUBKEY SPEND_PUBKEY -->
   </command>
 
   <command symbol="stealth-newkey" category="STEALTH" obsolete="true">
     <option name="help" description="Generate new keys and the associated stealth address." />
-    <define name="SX_STEALTH_NEWKEY_OBSOLETE" value="This command is no longer supported. Use other commands in combination." />
+    <define name="SX_STEALTH_NEWKEY_OBSOLETE" value="This command is no longer supported. Use stealth-addr-encode." />
+  </command>
+
+  <command symbol="stealth-uncover-address" formerly="stealth-uncover" category="STEALTH">
+    <option name="help" description="Uncover a stealth address." />
+    <!-- sx stealth-uncover EPHEM_PUBKEY SCAN_SECRET SPEND_PUBKEY -->
+  </command>
+
+  <command symbol="stealth-uncover-secret" category="STEALTH">
+    <option name="help" description="Uncover a stealth secret." />
+    <!-- sx stealth-uncover-secret EPHEM_PUBKEY SCAN_SECRET SPEND_SECRET -->
   </command>
   
-  <command symbol="tx-decode" category="TRANSACTION">
+  <command symbol="tx-decode" category="OFFLINE">
     <option name="help" description="Decode a set of transactions." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
   </command>
 
-  <command symbol="tx-encode" category="TRANSACTION">
+  <command symbol="tx-encode" category="OFFLINE">
     <option name="help" description="Encode an unsigned transaction." />
     <option name="locktime" type="uint32_t" description="The transaction lock time." />
     <option name="version" type="uint32_t" default="1" description="The transaction version." />
@@ -455,7 +556,7 @@
   </command>
   
   <!-- This was originally designed for PGP signing -->
-  <command symbol="tx-sign" formerly="signtx" category="TRANSACTION" stub="true">
+  <command symbol="tx-sign" formerly="signtx" category="OFFLINE" stub="true">
     <option name="help"  description="Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network." />
     <argument name="secret" type="ec_private" description="The EC private key to be used for signing." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."/>
@@ -469,7 +570,7 @@
 
   <command symbol="watch-tx" formerly="watchtx, monitor" category="ONLINE" obelisk="true">
     <option name="help" description="Watch the network for future transactions by filter. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL" />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <option name="prefix" type="prefix" multiple="true" description="The set of binary encoded stealth search prefixes to watch. Includes all transactions if not set." />
     <define name="SX_WATCH_TX_WAITING" value="Watching prefix: %1%..." />
   </command>
@@ -479,20 +580,20 @@
     <argument name="WIF" stdin="true" type="wif" description="The value to convert."/>
   </command>
   
-  <command symbol="wif-to-pub" category="WALLET">
+  <command symbol="wif-to-public" category="WALLET">
     <option name="help" description="Derive the EC public key from a WIF private key." />
     <argument name="WIF" stdin="true" type="wif" description="The WIF private key."/>
   </command>
 
   <command symbol="wrap-decode" formerly="unwrap" category="HASH">
     <option name="help" description="Validate the checksum of a hex encoded data and recover its version byte and data." />
-    <option name="format" type="encoding" description="The output format." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="WRAPPED" stdin="true" type="wrapper" description="The hex encoded data to unwrap." />
   </command>
 
   <command symbol="wrap-encode" formerly="wrap" category="HASH">
     <option name="help" description="Add a version byte and checksum to hex encoded data." />
-    <option name="version" type="byte" required="true" description="The desired version number." />
+    <option name="version" type="uint8_t" required="true" description="The desired version number." />
     <argument name="PAYLOAD" stdin="true" type="hex" description="The hex encoded data to wrap." />
   </command>
   

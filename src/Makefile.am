@@ -21,13 +21,12 @@ libsx_la_SOURCES = \
     serializer/base58.hpp \
     serializer/btc160.hpp \
     serializer/btc256.hpp \
-    serializer/byte.hpp \
     serializer/ec_private.hpp \
     serializer/ec_public.hpp \
     serializer/encoding.hpp \
     serializer/hd_key.hpp \
-    serializer/hd_private.hpp \
-    serializer/hd_public.hpp \
+    serializer/hd_priv.hpp \
+    serializer/hd_pub.hpp \
     serializer/header.hpp \
     serializer/hex.hpp \
     serializer/input.hpp \
@@ -36,6 +35,8 @@ libsx_la_SOURCES = \
     serializer/prefix.hpp \
     serializer/raw.hpp \
     serializer/script.hpp \
+    serializer/signature_hash.hpp \
+    serializer/stealth.hpp \
     serializer/transaction.hpp \
     serializer/wif.hpp \
     serializer/wrapper.hpp \
@@ -47,10 +48,10 @@ libsx_la_SOURCES = \
 
 # Generated from XML data source.
 libsx_la_SOURCES += \
-    addr-decode.cpp \
-    addr-embed.cpp \
-    addr-encode.cpp \
-    addr-validate.cpp \
+    address-decode.cpp \
+    address-embed.cpp \
+    address-encode.cpp \
+    address-validate.cpp \
     base58-decode.cpp \
     base58-encode.cpp \
     base58check-decode.cpp \
@@ -67,22 +68,25 @@ libsx_la_SOURCES += \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
     ec-new.cpp \
-    ec-to-addr.cpp \
-    ec-to-pub.cpp \
+    ec-to-address.cpp \
+    ec-to-public.cpp \
     ec-to-wif.cpp \
     ec-unlock.cpp \
     genaddr.cpp \
     genpriv.cpp \
     genpub.cpp \
     hd-new.cpp \
-    hd-priv.cpp \
-    hd-pub.cpp \
-    hd-to-addr.cpp \
+    hd-private.cpp \
+    hd-public.cpp \
+    hd-to-address.cpp \
     hd-to-ec.cpp \
-    hd-to-pub.cpp \
+    hd-to-public.cpp \
     hd-to-wif.cpp \
     help.cpp \
     initchain.cpp \
+    input-set.cpp \
+    input-sign.cpp \
+    input-validate.cpp \
     mnemonic-decode.cpp \
     mnemonic-encode.cpp \
     mpk.cpp \
@@ -92,7 +96,7 @@ libsx_la_SOURCES += \
     satoshi-to-btc.cpp \
     script-decode.cpp \
     script-encode.cpp \
-    script-to-addr.cpp \
+    script-to-address.cpp \
     seed.cpp \
     send-tx-node.cpp \
     send-tx-p2p.cpp \
@@ -101,14 +105,18 @@ libsx_la_SOURCES += \
     sha256.cpp \
     sha512.cpp \
     showblkhead.cpp \
-    stealth-addr-encode.cpp \
+    stealth-address-decode.cpp \
+    stealth-address-encode.cpp \
+    stealth-initiate.cpp \
     stealth-newkey.cpp \
+    stealth-uncover-address.cpp \
+    stealth-uncover-secret.cpp \
     tx-decode.cpp \
     tx-encode.cpp \
     tx-sign.cpp \
     wallet.cpp \
     wif-to-ec.cpp \
-    wif-to-pub.cpp \
+    wif-to-public.cpp \
     wrap-decode.cpp \
     wrap-encode.cpp
 

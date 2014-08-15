@@ -21,7 +21,7 @@
 #include <sx/callback_state.hpp>
 
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>

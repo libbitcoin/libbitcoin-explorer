@@ -25,6 +25,7 @@
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 
 #define PROPERTY(type, name) \
     public: virtual type get_##name() { return name##_; } \
@@ -78,7 +79,12 @@ typedef po::options_description options_metadata;
 typedef po::positional_options_description arguments_metadata;
 
 /**
- * The max length of the prefix in bits.
+ * The minimum safe length of a seed in bytes (16).
+ */
+constexpr size_t minimum_seed_size = 128 / bc::byte_size;
+
+/**
+ * The max length of the prefix in bits (32).
  */
 constexpr size_t max_prefix = sizeof(bc::stealth_bitfield) * bc::byte_size;
     

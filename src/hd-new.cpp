@@ -24,7 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hd_private.hpp>
+#include <sx/serializer/hd_priv.hpp>
 
 using namespace bc;
 using namespace libwallet;
@@ -39,9 +39,7 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
     const data_chunk& seed = get_seed_argument();
     const bool testnet = get_general_testnet_setting();
 
-    // Arbitrary minimum 128 bit length for generated seeds.
-    constexpr size_t minimum_seed_size = 128;
-    if (seed.size() * byte_size < minimum_seed_size)
+    if (seed.size() < minimum_seed_size)
     {
         error << SX_HD_NEW_SHORT_SEED << std::endl;
         return console_result::failure;
@@ -55,6 +53,6 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    output << hd_private(key) << std::endl;
+    output << hd_priv(key) << std::endl;
     return console_result::okay;
 }

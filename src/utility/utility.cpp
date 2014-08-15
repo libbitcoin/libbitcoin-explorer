@@ -28,7 +28,7 @@
 #include <iostream>
 #include <random>
 #include <signal.h>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <boost/format.hpp>
@@ -118,6 +118,24 @@ std::string read_stream(std::istream& stream)
     return result;
 }
 
+// TODO: move to libwallet
+script_type script_to_raw_data_script(const script_type& script)
+{
+    auto data = save_script(script);
+    return raw_data_script(data);
+}
+
+// TODO: move to libwallet
+bool sign_transaction(data_chunk& signature, const tx_type& transaction,
+    size_t index, const script_type& script, const ec_secret& secret,
+    const data_chunk& nonce, uint32_t hash_type)
+{
+    const auto sighash = script_type::generate_signature_hash(transaction,
+        index, script, hash_type);
+    signature = sign(secret, sighash, new_key(nonce));
+    return !signature.empty();
+}
+
 // Not unit testable (sleep).
 void sleep_ms(uint32_t milliseconds)
 {
@@ -169,6 +187,15 @@ bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
     checksum = deserial.read_4_bytes();
 
     return true;
+}
+
+bool valid_signature(const tx_type& tx, uint32_t index, const ec_point& pubkey,
+    const script_type& script, const data_chunk& signature,
+    uint32_t hash_type)
+{
+    auto sighash = script_type::generate_signature_hash(tx, index, script,
+        hash_type);
+    return verify_signature(pubkey, sighash, signature);
 }
 
 data_chunk wrap(const wrapped_data& data)

@@ -96,15 +96,6 @@
     <ClCompile Include="..\..\..\..\test\send-tx.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\addr-decode.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\addr-encode.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\addr-validate.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-add.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
@@ -120,31 +111,13 @@
     <ClCompile Include="..\..\..\..\test\ec-new.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-to-addr.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-to-pub.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-to-wif.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-new.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-priv.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-pub.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-to-addr.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-to-ec.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-to-pub.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp">
@@ -154,9 +127,6 @@
       <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\wif-to-pub.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-addr-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\base58-decode.cpp">
@@ -188,9 +158,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\wrap-encode.cpp">
       <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\addr-embed.cpp">
-      <Filter>src\tests\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\base58check-decode.cpp">
       <Filter>src\tests\command\stub</Filter>
@@ -255,13 +222,85 @@
     <ClCompile Include="..\..\..\..\test\showblkhead.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\tx-decode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\tx-encode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\script-encode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\script-decode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\mnemonic-decode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\mnemonic-encode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\input-sign.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\input-validate.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\input-set.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-initiate.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-uncover-secret.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-uncover-address.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\address-embed.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\address-decode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\address-encode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\address-validate.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-to-address.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\ec-to-public.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-private.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-public.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-to-address.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\hd-to-public.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\script-to-address.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-address-decode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-address-encode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\command.hpp">
       <Filter>src\tests\command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\test\precompile.hpp">
-      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

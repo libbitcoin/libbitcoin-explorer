@@ -96,8 +96,7 @@ std::istream& operator>>(std::istream& input, transaction& argument)
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, 
-    const transaction& argument)
+std::ostream& operator<<(std::ostream& output, const transaction& argument)
 {
     const auto bytes = serialize_satoshi_item(argument.value_);
     output << hex(bytes);
