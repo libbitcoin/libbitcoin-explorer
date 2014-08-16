@@ -34,6 +34,7 @@
 #endif
 #include <sx/prop_tree.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
@@ -46,7 +47,6 @@
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/base16.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/point.hpp>
