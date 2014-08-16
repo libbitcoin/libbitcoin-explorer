@@ -24,12 +24,33 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(satoshi_to_btc__invoke)
 
-BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__0_satoshi__okay_output)
 {
     // $ sx satoshi-to-btc
     SX_DECLARE_COMMAND(sx::extension::satoshi_to_btc);
-    SX_REQUIRE_FAILURE(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_SATOSHI_TO_BTC_NOT_IMPLEMENTED "\n");
+    command.set_satoshi_argument(0);
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT("0\n");
+}
+
+BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__4200000000_satoshi__okay_output)
+{
+    // $ sx satoshi-to-btc
+    SX_DECLARE_COMMAND(sx::extension::satoshi_to_btc);
+    auto satoshi = 42 * coin_price(1);
+    command.set_satoshi_argument(satoshi);
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT("42\n");
+}
+
+BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_money_satoshi__okay_output)
+{
+    // $ sx satoshi-to-btc
+    SX_DECLARE_COMMAND(sx::extension::satoshi_to_btc);
+    auto satoshi = max_money();
+    command.set_satoshi_argument(satoshi);
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT("20999999.9769\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

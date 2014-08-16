@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,30 +18,30 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/command/stealth-uncover-secret.hpp>
+#include <sx/command/stealth-ephemeral-pubkey.hpp>
 
 #include <iostream>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/ec_private.hpp>
+#include <sx/serializer/ec_public.hpp>
 
 using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result stealth_uncover_secret::invoke(std::ostream& output,
+console_result stealth_ephemeral_pubkey::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& scan_secret = get_scan_ec_private_key_argument();
-    const auto& spend_secret = get_spend_ec_private_key_argument();
-    const auto& ephemeral_pubkey = get_ephemeral_ec_public_key_argument();
+    const auto& scan_pubkey = get_scan_pubkey_argument();
+    const auto& spend_pubkey = get_spend_pubkey_argument();
+    const auto& ephemeral_secret = get_ephemeral_secret_argument();
 
-    auto private_key = uncover_stealth_secret(ephemeral_pubkey, scan_secret,
-        spend_secret);
+    auto ephemeral_pubkey = initiate_stealth(ephemeral_secret, scan_pubkey,
+        spend_pubkey);
 
-    output << ec_private(private_key) << std::endl;
+    output << ec_public(ephemeral_pubkey) << std::endl;
     return console_result::okay;
 }
 

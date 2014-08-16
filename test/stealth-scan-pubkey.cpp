@@ -22,14 +22,13 @@
 
 SX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(stealth_uncover_secret__invoke)
+BOOST_AUTO_TEST_SUITE(stealth_scan_pubkey__invoke)
 
-BOOST_AUTO_TEST_CASE(stealth_uncover_secret__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(stealth_scan_pubkey__invoke__always__failure_error)
 {
-    //// $ sx stealth-uncover-secret ...
-    //SX_DECLARE_COMMAND(stealth_uncover_secret);
+    //// $ sx stealth-scan-pubkey ...
+    //SX_DECLARE_COMMAND(stealth_scan_pubkey);
     //SX_REQUIRE_FAILURE(command.invoke(output, error));
-    //SX_REQUIRE_ERROR(SX_STEALTH_NEWKEY_OBSOLETE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

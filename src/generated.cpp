@@ -106,10 +106,11 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<showblkhead>());
     func(make_shared<stealth_address_decode>());
     func(make_shared<stealth_address_encode>());
-    func(make_shared<stealth_initiate>());
+    func(make_shared<stealth_ephemeral_pubkey>());
+    func(make_shared<stealth_ephemeral_secret>());
     func(make_shared<stealth_newkey>());
-    func(make_shared<stealth_uncover_address>());
-    func(make_shared<stealth_uncover_secret>());
+    func(make_shared<stealth_scan_pubkey>());
+    func(make_shared<stealth_shared_secret>());
     func(make_shared<tx_decode>());
     func(make_shared<tx_encode>());
     func(make_shared<tx_sign>());
@@ -263,14 +264,16 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<stealth_address_decode>();
     if (symbol == stealth_address_encode::symbol())
         return make_shared<stealth_address_encode>();
-    if (symbol == stealth_initiate::symbol())
-        return make_shared<stealth_initiate>();
+    if (symbol == stealth_ephemeral_pubkey::symbol())
+        return make_shared<stealth_ephemeral_pubkey>();
+    if (symbol == stealth_ephemeral_secret::symbol())
+        return make_shared<stealth_ephemeral_secret>();
     if (symbol == stealth_newkey::symbol())
         return make_shared<stealth_newkey>();
-    if (symbol == stealth_uncover_address::symbol())
-        return make_shared<stealth_uncover_address>();
-    if (symbol == stealth_uncover_secret::symbol())
-        return make_shared<stealth_uncover_secret>();
+    if (symbol == stealth_scan_pubkey::symbol())
+        return make_shared<stealth_scan_pubkey>();
+    if (symbol == stealth_shared_secret::symbol())
+        return make_shared<stealth_shared_secret>();
     if (symbol == tx_decode::symbol())
         return make_shared<tx_decode>();
     if (symbol == tx_encode::symbol())

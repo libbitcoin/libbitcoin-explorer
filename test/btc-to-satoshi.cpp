@@ -24,12 +24,31 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(btc_to_satoshi__invoke)
 
-BOOST_AUTO_TEST_CASE(btc_to_satoshi__invoke__bogus_saoshi__failure_error)
+BOOST_AUTO_TEST_CASE(btc_to_satoshi__invoke__0_btc__okay_output)
 {
     // $ sx btc-to-satoshi
-    SX_DECLARE_COMMAND(btc_to_satoshi);
-    SX_REQUIRE_FAILURE(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_BTC_TO_SATOSHI_NOT_IMPLEMENTED "\n");
+    SX_DECLARE_COMMAND(sx::extension::btc_to_satoshi);
+    command.set_btc_argument({ "0" });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT("0\n");
+}
+
+BOOST_AUTO_TEST_CASE(btc_to_satoshi__invoke__42_btc__okay_output)
+{
+    // $ sx btc-to-satoshi
+    SX_DECLARE_COMMAND(sx::extension::btc_to_satoshi);
+    command.set_btc_argument({ "42" });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT("4200000000\n");
+}
+
+BOOST_AUTO_TEST_CASE(btc_to_satoshi__invoke__max_money_btc__okay_output)
+{
+    // $ sx btc-to-satoshi
+    SX_DECLARE_COMMAND(sx::extension::btc_to_satoshi);
+    command.set_btc_argument({ "20999999.9769" });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT("2099999997690000\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

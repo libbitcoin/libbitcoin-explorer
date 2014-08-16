@@ -62,6 +62,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW \
+    "The number of signatures is greater than the number of SPEND_PUBKEYs."
+
+/**
  * Class to implement the sx stealth-address-encode command.
  */
 class stealth_address_encode 
@@ -98,8 +104,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SCAN_EC_PUBLIC_KEY", 1)
-            .add("SPEND_EC_PUBLIC_KEY", -1);
+            .add("SCAN_PUBKEY", 1)
+            .add("SPEND_PUBKEY", -1);
     }
 	
 	/**
@@ -110,7 +116,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_spend_ec_public_keys_argument(), "SPEND_EC_PUBLIC_KEY", variables, input);
+        load_input(get_spend_pubkeys_argument(), "SPEND_PUBKEY", variables, input);
     }
     
     /**
@@ -143,16 +149,16 @@ public:
             (
                 "signatures,s",
                 value<uint8_t>(&option_.signatures),
-                "Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_EC_PUBLIC_KEYs."
+                "Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
             )
             (
-                "SCAN_EC_PUBLIC_KEY",
-                value<serializer::ec_public>(&argument_.scan_ec_public_key)->required(),
+                "SCAN_PUBKEY",
+                value<serializer::ec_public>(&argument_.scan_pubkey)->required(),
                 "The Base16 EC public key required to generate a payment."
             )
             (
-                "SPEND_EC_PUBLIC_KEY",
-                value<std::vector<serializer::ec_public>>(&argument_.spend_ec_public_keys),
+                "SPEND_PUBKEY",
+                value<std::vector<serializer::ec_public>>(&argument_.spend_pubkeys),
                 "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_EC_PUBLIC_KEY."
             );
 
@@ -170,37 +176,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SCAN_EC_PUBLIC_KEY argument.
+     * Get the value of the SCAN_PUBKEY argument.
      */
-    virtual serializer::ec_public& get_scan_ec_public_key_argument()
+    virtual serializer::ec_public& get_scan_pubkey_argument()
     {
-        return argument_.scan_ec_public_key;
+        return argument_.scan_pubkey;
     }
     
     /**
-     * Set the value of the SCAN_EC_PUBLIC_KEY argument.
+     * Set the value of the SCAN_PUBKEY argument.
      */
-    virtual void set_scan_ec_public_key_argument(
+    virtual void set_scan_pubkey_argument(
         const serializer::ec_public& value)
     {
-        argument_.scan_ec_public_key = value;
+        argument_.scan_pubkey = value;
     }
 
     /**
-     * Get the value of the SPEND_EC_PUBLIC_KEY arguments.
+     * Get the value of the SPEND_PUBKEY arguments.
      */
-    virtual std::vector<serializer::ec_public>& get_spend_ec_public_keys_argument()
+    virtual std::vector<serializer::ec_public>& get_spend_pubkeys_argument()
     {
-        return argument_.spend_ec_public_keys;
+        return argument_.spend_pubkeys;
     }
     
     /**
-     * Set the value of the SPEND_EC_PUBLIC_KEY arguments.
+     * Set the value of the SPEND_PUBKEY arguments.
      */
-    virtual void set_spend_ec_public_keys_argument(
+    virtual void set_spend_pubkeys_argument(
         const std::vector<serializer::ec_public>& value)
     {
-        argument_.spend_ec_public_keys = value;
+        argument_.spend_pubkeys = value;
     }
 
     /**
@@ -264,13 +270,13 @@ private:
     struct argument
     {
         argument()
-          : scan_ec_public_key(),
-            spend_ec_public_keys()
+          : scan_pubkey(),
+            spend_pubkeys()
         {
         }
         
-        serializer::ec_public scan_ec_public_key;
-        std::vector<serializer::ec_public> spend_ec_public_keys;
+        serializer::ec_public scan_pubkey;
+        std::vector<serializer::ec_public> spend_pubkeys;
     } argument_;
     
     /**

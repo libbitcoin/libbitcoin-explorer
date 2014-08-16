@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_STEALTH_UNCOVER_SECRET_HPP
-#define SX_STEALTH_UNCOVER_SECRET_HPP
+#ifndef SX_STEALTH_SHARED_SECRET_HPP
+#define SX_STEALTH_SHARED_SECRET_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -62,9 +62,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx stealth-uncover-secret command.
+ * Class to implement the sx stealth-shared-secret command.
  */
-class stealth_uncover_secret 
+class stealth_shared_secret 
     : public command
 {
 public:
@@ -72,14 +72,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "stealth-uncover-secret"; }
+    static const char* symbol() { return "stealth-shared-secret"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return stealth_uncover_secret::symbol();
+        return stealth_shared_secret::symbol();
     }
 
     /**
@@ -98,9 +98,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SCAN_EC_PRIVATE_KEY", 1)
-            .add("SPEND_EC_PRIVATE_KEY", 1)
-            .add("EPHEMERAL_EC_PUBLIC_KEY", 1);
+            .add("SECRET", 1)
+            .add("PUBKEY", 1);
     }
 	
 	/**
@@ -111,7 +110,6 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_ephemeral_ec_public_key_argument(), "EPHEMERAL_EC_PUBLIC_KEY", variables, input);
     }
     
     /**
@@ -134,22 +132,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Using stealth payment metadata uncover the private key necessary to spend a payment."
+                "Generate the stealth secret shared between a stealth payment and the stealth address of the payment. Provide scan secret and ephemeral public key or ephemeral secret and scan public key"
             )
             (
-                "SCAN_EC_PRIVATE_KEY",
-                value<serializer::ec_private>(&argument_.scan_ec_private_key)->required(),
-                "The Base16 EC private key corresponding to the public key required to generate a stealth payment."
+                "SECRET",
+                value<serializer::ec_private>(&argument_.secret)->required(),
+                "A Base16 EC private key."
             )
             (
-                "SPEND_EC_PRIVATE_KEY",
-                value<serializer::ec_private>(&argument_.spend_ec_private_key)->required(),
-                "A Base16 EC private key that can spend payments to the stealth address."
-            )
-            (
-                "EPHEMERAL_EC_PUBLIC_KEY",
-                value<serializer::ec_public>(&argument_.ephemeral_ec_public_key),
-                "The Base16 ephemeral EC public key retrieved from the stealth payment metadata."
+                "PUBKEY",
+                value<serializer::ec_public>(&argument_.pubkey)->required(),
+                "A Base16 EC public key."
             );
 
         return options;
@@ -166,54 +159,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SCAN_EC_PRIVATE_KEY argument.
+     * Get the value of the SECRET argument.
      */
-    virtual serializer::ec_private& get_scan_ec_private_key_argument()
+    virtual serializer::ec_private& get_secret_argument()
     {
-        return argument_.scan_ec_private_key;
+        return argument_.secret;
     }
     
     /**
-     * Set the value of the SCAN_EC_PRIVATE_KEY argument.
+     * Set the value of the SECRET argument.
      */
-    virtual void set_scan_ec_private_key_argument(
+    virtual void set_secret_argument(
         const serializer::ec_private& value)
     {
-        argument_.scan_ec_private_key = value;
+        argument_.secret = value;
     }
 
     /**
-     * Get the value of the SPEND_EC_PRIVATE_KEY argument.
+     * Get the value of the PUBKEY argument.
      */
-    virtual serializer::ec_private& get_spend_ec_private_key_argument()
+    virtual serializer::ec_public& get_pubkey_argument()
     {
-        return argument_.spend_ec_private_key;
+        return argument_.pubkey;
     }
     
     /**
-     * Set the value of the SPEND_EC_PRIVATE_KEY argument.
+     * Set the value of the PUBKEY argument.
      */
-    virtual void set_spend_ec_private_key_argument(
-        const serializer::ec_private& value)
-    {
-        argument_.spend_ec_private_key = value;
-    }
-
-    /**
-     * Get the value of the EPHEMERAL_EC_PUBLIC_KEY argument.
-     */
-    virtual serializer::ec_public& get_ephemeral_ec_public_key_argument()
-    {
-        return argument_.ephemeral_ec_public_key;
-    }
-    
-    /**
-     * Set the value of the EPHEMERAL_EC_PUBLIC_KEY argument.
-     */
-    virtual void set_ephemeral_ec_public_key_argument(
+    virtual void set_pubkey_argument(
         const serializer::ec_public& value)
     {
-        argument_.ephemeral_ec_public_key = value;
+        argument_.pubkey = value;
     }
 
     /**
@@ -243,15 +219,13 @@ private:
     struct argument
     {
         argument()
-          : scan_ec_private_key(),
-            spend_ec_private_key(),
-            ephemeral_ec_public_key()
+          : secret(),
+            pubkey()
         {
         }
         
-        serializer::ec_private scan_ec_private_key;
-        serializer::ec_private spend_ec_private_key;
-        serializer::ec_public ephemeral_ec_public_key;
+        serializer::ec_private secret;
+        serializer::ec_public pubkey;
     } argument_;
     
     /**

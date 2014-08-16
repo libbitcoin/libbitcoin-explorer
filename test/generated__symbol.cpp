@@ -374,9 +374,14 @@ BOOST_AUTO_TEST_CASE(generated__symbol__stealth_address_encode__returns_expected
     BOOST_REQUIRE(stealth_address_encode::symbol() == std::string("stealth-address-encode"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_initiate__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_ephemeral_pubkey__returns_expected_value)
 {
-    BOOST_REQUIRE(stealth_initiate::symbol() == std::string("stealth-initiate"));
+    BOOST_REQUIRE(stealth_ephemeral_pubkey::symbol() == std::string("stealth-ephemeral-pubkey"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_ephemeral_secret__returns_expected_value)
+{
+    BOOST_REQUIRE(stealth_ephemeral_secret::symbol() == std::string("stealth-ephemeral-secret"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_newkey__returns_expected_value)
@@ -384,14 +389,14 @@ BOOST_AUTO_TEST_CASE(generated__symbol__stealth_newkey__returns_expected_value)
     BOOST_REQUIRE(stealth_newkey::symbol() == std::string("stealth-newkey"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_uncover_address__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_scan_pubkey__returns_expected_value)
 {
-    BOOST_REQUIRE(stealth_uncover_address::symbol() == std::string("stealth-uncover-address"));
+    BOOST_REQUIRE(stealth_scan_pubkey::symbol() == std::string("stealth-scan-pubkey"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_uncover_secret__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_shared_secret__returns_expected_value)
 {
-    BOOST_REQUIRE(stealth_uncover_secret::symbol() == std::string("stealth-uncover-secret"));
+    BOOST_REQUIRE(stealth_shared_secret::symbol() == std::string("stealth-shared-secret"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__tx_decode__returns_expected_value)

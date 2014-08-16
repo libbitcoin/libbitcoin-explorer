@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/command/stealth-uncover-address.hpp>
+#include <sx/command/stealth-scan-pubkey.hpp>
 
 #include <iostream>
 #include <wallet/wallet.hpp>
@@ -30,17 +30,17 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result stealth_uncover_address::invoke(std::ostream& output,
+console_result stealth_scan_pubkey::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& scan_secret = get_scan_ec_private_key_argument();
-    const auto& spend_pubkey = get_spend_ec_public_key_argument();
-    const auto& ephemeral_pubkey = get_ephemeral_ec_public_key_argument();
+    const auto& scan_secret = get_scan_secret_argument();
+    const auto& spend_pubkey = get_spend_pubkey_argument();
+    const auto& ephemeral_pubkey = get_ephemeral_pubkey_argument();
 
-    auto public_key = uncover_stealth(ephemeral_pubkey, scan_secret, 
+    auto scan_pubkey = uncover_stealth(ephemeral_pubkey, scan_secret,
         spend_pubkey);
 
-    output << ec_public(public_key) << std::endl;
+    output << ec_public(scan_pubkey) << std::endl;
     return console_result::okay;
 }

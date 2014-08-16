@@ -22,14 +22,13 @@
 
 SX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(stealth_uncover_address__invoke)
+BOOST_AUTO_TEST_SUITE(stealth_ephemeral_secret__invoke)
 
-BOOST_AUTO_TEST_CASE(stealth_uncover_address__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(stealth_ephemeral_secret__invoke__always__failure_error)
 {
-    //// $ sx stealth-uncover-address ...
-    //SX_DECLARE_COMMAND(stealth_uncover_address);
+    //// $ sx stealth-ephemeral-secret ...
+    //SX_DECLARE_COMMAND(stealth_ephemeral_secret);
     //SX_REQUIRE_FAILURE(command.invoke(output, error));
-    //SX_REQUIRE_ERROR(SX_STEALTH_NEWKEY_OBSOLETE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

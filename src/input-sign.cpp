@@ -53,15 +53,14 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    base16 signature;
-    auto& buffer = signature.data();
-    if (!sign_transaction(buffer, tx, index, script, secret, nonce, hash_type))
+    data_chunk signature;
+    if (!sign_transaction(signature, tx, index, script, secret, nonce, hash_type))
     {
-        error << SX_INPUT_SIGN_INDEX_OUT_OF_RANGE << std::endl;
+        error << SX_INPUT_SIGN_FAILED << std::endl;
         return console_result::failure;
     }
 
-    output << signature << std::endl;
+    output << base16(signature) << std::endl;
     return console_result::okay;
 }
 

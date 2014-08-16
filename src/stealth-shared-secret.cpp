@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 sx developers (see AUTHORS)
  *
  * This file is part of sx.
@@ -18,37 +18,29 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/command/stealth-address-encode.hpp>
+#include <sx/command/stealth-shared-secret.hpp>
 
 #include <iostream>
+#include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/stealth.hpp>
+#include <sx/serializer/ec_private.hpp>
 
+using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result stealth_address_encode::invoke(std::ostream& output,
+console_result stealth_shared_secret::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& prefix = get_prefix_option();
-    const auto& scan_pubkey = get_scan_pubkey_argument();
-    const auto& spend_pubkeys = get_spend_pubkeys_argument();
-    const auto& signatures = get_signatures_option();
-    const auto testnet = get_general_testnet_setting();
+    const auto& secret = get_secret_argument();
+    const auto& pubkey = get_pubkey_argument();
 
-    // The implementation is safe for any value, but provide user feedback here.
-    const auto max = if_else(spend_pubkeys.empty(), 1, spend_pubkeys.size());
-    if (signatures > max)
-    {
-        error << SX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW << std::endl;
-        return console_result::failure;
-    }
+    // Pass either (ephem_secret, scan_pubkey) or (scan_secret, ephem_pubkey).
+    auto shared = shared_secret(secret, pubkey);
 
-    // TESTNET WORKS WITHOUT RECOMPILE
-    stealth address(prefix, scan_pubkey, spend_pubkeys, signatures, testnet);
-
-    output << address << std::endl;
+    output << ec_private(shared) << std::endl;
     return console_result::okay;
 }
+

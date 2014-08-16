@@ -58,16 +58,20 @@ stealth::stealth(const stealth_address& address)
 stealth::stealth(const stealth_prefix& prefix, const ec_public& scan_key,
     const std::vector<ec_public>& spend_keys, uint8_t signatures, bool testnet)
 {
-    // Cast the serializer vector to a point vector and apply reuse.
-    const auto size = spend_keys.size() + if_else(spend_keys.empty(), 1, 0);
+    // normalize signatures between 1 and 
+    const auto size = if_else(spend_keys.empty(), 1, spend_keys.size());
+    auto sigs = if_else(signatures == 0, size, signatures);
+    sigs = if_else(sigs > size, size, sigs);
+
+    // Convert the serializer vector to a point vector and apple 'reuse'.
     std::vector<ec_point> spend_points(size);
-    spend_points.assign(spend_keys.begin(), spend_keys.end());
-    if (spend_points.empty())
+    if (spend_keys.empty())
         spend_points.push_back(scan_key);
+    else
+        spend_points.assign(spend_keys.begin(), spend_keys.end());
 
     // Persist the value as an address object.
-    value_ = stealth_address(prefix, scan_key, spend_points, signatures,
-        testnet);
+    value_ = stealth_address(prefix, scan_key, spend_points, sigs, testnet);
 }
 
 stealth::stealth(const stealth& other)

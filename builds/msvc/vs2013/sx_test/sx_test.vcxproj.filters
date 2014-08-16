@@ -165,12 +165,6 @@
     <ClCompile Include="..\..\..\..\test\base58check-encode.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\btc-to-satoshi.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\satoshi-to-btc.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-lock.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
@@ -249,15 +243,6 @@
     <ClCompile Include="..\..\..\..\test\input-set.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-initiate.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-uncover-secret.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-uncover-address.cpp">
-      <Filter>src\tests\command</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\address-embed.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
@@ -295,6 +280,24 @@
       <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\stealth-address-encode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\btc-to-satoshi.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\satoshi-to-btc.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-ephemeral-pubkey.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-ephemeral-secret.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-scan-pubkey.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\stealth-shared-secret.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
   </ItemGroup>

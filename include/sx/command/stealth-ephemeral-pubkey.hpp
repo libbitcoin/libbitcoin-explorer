@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_INPUT_SIGN_HPP
-#define SX_INPUT_SIGN_HPP
+#ifndef SX_STEALTH_EPHEMERAL_PUBKEY_HPP
+#define SX_STEALTH_EPHEMERAL_PUBKEY_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -62,19 +62,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx stealth-ephemeral-pubkey command.
  */
-#define SX_INPUT_SIGN_SHORT_NONCE \
-    "The nonce is less than 128 bits long."
-#define SX_INPUT_SIGN_INDEX_OUT_OF_RANGE \
-    "The index does not refer to an existing input."
-#define SX_INPUT_SIGN_FAILED \
-    "The signing operation failed."
-
-/**
- * Class to implement the sx input-sign command.
- */
-class input_sign 
+class stealth_ephemeral_pubkey 
     : public command
 {
 public:
@@ -82,14 +72,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "input-sign"; }
+    static const char* symbol() { return "stealth-ephemeral-pubkey"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return input_sign::symbol();
+        return stealth_ephemeral_pubkey::symbol();
     }
 
     /**
@@ -97,7 +87,7 @@ public:
      */
     virtual const char* category()
     {
-        return "OFFLINE";
+        return "STEALTH";
     }
 
     /**
@@ -108,10 +98,9 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("TRANSACTION", 1)
-            .add("EC_PRIVATE_KEY", 1)
-            .add("NONCE", 1)
-            .add("PREVOUT_SCRIPT", 1);
+            .add("SCAN_PUBKEY", 1)
+            .add("SPEND_PUBKEY", 1)
+            .add("EPHEMERAL_SECRET", 1);
     }
 	
 	/**
@@ -122,7 +111,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_path(get_transaction_argument(), "TRANSACTION", variables);
+        load_input(get_ephemeral_secret_argument(), "EPHEMERAL_SECRET", variables, input);
     }
     
     /**
@@ -145,37 +134,22 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Create a signature for a transaction input."
+                "Create an ephemeral public key for inclusion as stealth payment metadata (necessary to send a payment)."
             )
             (
-                "index,i",
-                value<size_t>(&option_.index),
-                "The ordinal position of the input within the transaction, defaults to zero."
+                "SCAN_PUBKEY",
+                value<serializer::ec_public>(&argument_.scan_pubkey)->required(),
+                "The Base16 EC public key required to generate a stealth payment."
             )
             (
-                "sighash,s",
-                value<serializer::hashtype>(&option_.sighash),
-                "A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
+                "SPEND_PUBKEY",
+                value<serializer::ec_public>(&argument_.spend_pubkey)->required(),
+                "A Base16 EC public key corresponding to a private key that can spend payments to the stealth address."
             )
             (
-                "TRANSACTION",
-                value<std::string>()->required(),
-                "The file path of the Base16 transaction."
-            )
-            (
-                "EC_PRIVATE_KEY",
-                value<serializer::ec_private>(&argument_.ec_private_key)->required(),
-                "The Base16 EC private key to sign with."
-            )
-            (
-                "NONCE",
-                value<serializer::base16>(&argument_.nonce)->required(),
-                "The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length."
-            )
-            (
-                "PREVOUT_SCRIPT",
-                value<serializer::script>(&argument_.prevout_script),
-                "The Base16 previous output script to use in signing. If not specified the script is read from STDIN."
+                "EPHEMERAL_SECRET",
+                value<serializer::ec_private>(&argument_.ephemeral_secret),
+                "The Base16 ephemeral EC private key used to generate stealth payment metadata."
             );
 
         return options;
@@ -192,71 +166,54 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the TRANSACTION argument.
+     * Get the value of the SCAN_PUBKEY argument.
      */
-    virtual serializer::transaction& get_transaction_argument()
+    virtual serializer::ec_public& get_scan_pubkey_argument()
     {
-        return argument_.transaction;
+        return argument_.scan_pubkey;
     }
     
     /**
-     * Set the value of the TRANSACTION argument.
+     * Set the value of the SCAN_PUBKEY argument.
      */
-    virtual void set_transaction_argument(
-        const serializer::transaction& value)
+    virtual void set_scan_pubkey_argument(
+        const serializer::ec_public& value)
     {
-        argument_.transaction = value;
+        argument_.scan_pubkey = value;
     }
 
     /**
-     * Get the value of the EC_PRIVATE_KEY argument.
+     * Get the value of the SPEND_PUBKEY argument.
      */
-    virtual serializer::ec_private& get_ec_private_key_argument()
+    virtual serializer::ec_public& get_spend_pubkey_argument()
     {
-        return argument_.ec_private_key;
+        return argument_.spend_pubkey;
     }
     
     /**
-     * Set the value of the EC_PRIVATE_KEY argument.
+     * Set the value of the SPEND_PUBKEY argument.
      */
-    virtual void set_ec_private_key_argument(
+    virtual void set_spend_pubkey_argument(
+        const serializer::ec_public& value)
+    {
+        argument_.spend_pubkey = value;
+    }
+
+    /**
+     * Get the value of the EPHEMERAL_SECRET argument.
+     */
+    virtual serializer::ec_private& get_ephemeral_secret_argument()
+    {
+        return argument_.ephemeral_secret;
+    }
+    
+    /**
+     * Set the value of the EPHEMERAL_SECRET argument.
+     */
+    virtual void set_ephemeral_secret_argument(
         const serializer::ec_private& value)
     {
-        argument_.ec_private_key = value;
-    }
-
-    /**
-     * Get the value of the NONCE argument.
-     */
-    virtual serializer::base16& get_nonce_argument()
-    {
-        return argument_.nonce;
-    }
-    
-    /**
-     * Set the value of the NONCE argument.
-     */
-    virtual void set_nonce_argument(
-        const serializer::base16& value)
-    {
-        argument_.nonce = value;
-    }
-
-    /**
-     * Get the value of the PREVOUT_SCRIPT argument.
-     */
-    virtual serializer::script& get_prevout_script_argument()
-    {
-        return argument_.prevout_script;
-    }
-    
-    /**
-     * Set the value of the PREVOUT_SCRIPT argument.
-     */
-    virtual void set_prevout_script_argument(
-        const serializer::script& value)
-    {
-        argument_.prevout_script = value;
+        argument_.ephemeral_secret = value;
     }
 
     /**
@@ -276,40 +233,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the index option.
-     */
-    virtual size_t& get_index_option()
-    {
-        return option_.index;
-    }
-    
-    /**
-     * Set the value of the index option.
-     */
-    virtual void set_index_option(
-        const size_t& value)
-    {
-        option_.index = value;
-    }
-
-    /**
-     * Get the value of the sighash option.
-     */
-    virtual serializer::hashtype& get_sighash_option()
-    {
-        return option_.sighash;
-    }
-    
-    /**
-     * Set the value of the sighash option.
-     */
-    virtual void set_sighash_option(
-        const serializer::hashtype& value)
-    {
-        option_.sighash = value;
-    }
-
 private:
 
     /**
@@ -320,17 +243,15 @@ private:
     struct argument
     {
         argument()
-          : transaction(),
-            ec_private_key(),
-            nonce(),
-            prevout_script()
+          : scan_pubkey(),
+            spend_pubkey(),
+            ephemeral_secret()
         {
         }
         
-        serializer::transaction transaction;
-        serializer::ec_private ec_private_key;
-        serializer::base16 nonce;
-        serializer::script prevout_script;
+        serializer::ec_public scan_pubkey;
+        serializer::ec_public spend_pubkey;
+        serializer::ec_private ephemeral_secret;
     } argument_;
     
     /**
@@ -341,15 +262,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            index(),
-            sighash()
+          : help()
         {
         }
         
         bool help;
-        size_t index;
-        serializer::hashtype sighash;
     } option_;
 };
 
