@@ -109,7 +109,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     const auto height = get_height_option();
     const auto& hashes = get_hashs_option();
     const auto& prefixes = get_prefixs_option();
-    const auto& secret = get_secret_option();
+    const auto& secret = get_ec_private_key_argument();
     const auto& encoding = get_format_option();
 
     obelisk_client client(*this);

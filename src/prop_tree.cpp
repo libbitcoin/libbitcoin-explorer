@@ -52,11 +52,11 @@ ptree prop_tree(const header& header)
 
     ptree tree;
     tree.put("header.bits", block_header.bits);
-    tree.put("header.hash", hex(hash_block_header(block_header)));
-    tree.put("header.merkle_tree_hash", hex(block_header.merkle));
+    tree.put("header.hash", base16(hash_block_header(block_header)));
+    tree.put("header.merkle_tree_hash", base16(block_header.merkle));
     tree.put("header.nonce", block_header.nonce);
     tree.put("header.previous_block_hash", 
-        hex(block_header.previous_block_hash));
+        base16(block_header.previous_block_hash));
     tree.put("header.time_stamp", block_header.timestamp);
     tree.put("header.version", block_header.version);
     return tree;
@@ -242,7 +242,7 @@ ptree prop_tree(const transaction& transaction)
     const tx_type& tx = transaction;
 
     ptree tree;
-    tree.put("transaction.hash", hex(hash_transaction(tx)));
+    tree.put("transaction.hash", base16(hash_transaction(tx)));
     tree.put("transaction.version", tx.version);
     tree.put("transaction.lock_time", tx.locktime);
     tree.add_child("transaction", prop_tree(tx.inputs));
@@ -301,7 +301,7 @@ ptree prop_tree(const wrapped_data& wrapped)
 {
     ptree tree;
     tree.put("wrapper.version", wrapped.version);
-    tree.put("wrapper.payload", hex(wrapped.payload));
+    tree.put("wrapper.payload", base16(wrapped.payload));
     tree.put("wrapper.checksum", wrapped.checksum);
     return tree;
 }

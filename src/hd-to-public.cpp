@@ -34,7 +34,7 @@ using namespace sx::serializer;
 console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& secret = get_secret_argument();
+    const auto& secret = get_hd_private_key_argument();
     
     const hd_public_key& public_key = secret;
 

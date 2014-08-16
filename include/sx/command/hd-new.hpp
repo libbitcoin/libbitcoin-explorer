@@ -20,8 +20,8 @@
 #ifndef SX_HD_NEW_HPP
 #define SX_HD_NEW_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -143,8 +144,8 @@ public:
             )
             (
                 "SEED",
-                value<serializer::hex>(&argument_.seed),
-                "The hex encoded randomness seed for the new key. Must be at least 128 bits in length."
+                value<serializer::base16>(&argument_.seed),
+                "The Base16 randomness seed for the new key. Must be at least 128 bits in length."
             );
 
         return options;
@@ -163,7 +164,7 @@ public:
     /**
      * Get the value of the SEED argument.
      */
-    virtual serializer::hex& get_seed_argument()
+    virtual serializer::base16& get_seed_argument()
     {
         return argument_.seed;
     }
@@ -172,7 +173,7 @@ public:
      * Set the value of the SEED argument.
      */
     virtual void set_seed_argument(
-        const serializer::hex& value)
+        const serializer::base16& value)
     {
         argument_.seed = value;
     }
@@ -208,7 +209,7 @@ private:
         {
         }
         
-        serializer::hex seed;
+        serializer::base16 seed;
     } argument_;
     
     /**

@@ -27,7 +27,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -83,7 +83,7 @@ std::istream& operator>>(std::istream& input, script& argument)
 
     try
     {
-        argument.value_ = parse_script(hex(hexcode));
+        argument.value_ = parse_script(base16(hexcode));
     }
     catch (end_of_stream)
     {
@@ -95,7 +95,7 @@ std::istream& operator>>(std::istream& input, script& argument)
 
 std::ostream& operator<<(std::ostream& output, const script& argument)
 {
-    output << hex(save_script(argument.value_));
+    output << base16(save_script(argument.value_));
     return output;
 }
 

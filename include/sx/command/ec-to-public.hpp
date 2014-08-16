@@ -20,8 +20,8 @@
 #ifndef SX_EC_TO_PUBLIC_HPP
 #define SX_EC_TO_PUBLIC_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -97,7 +98,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SECRET", 1);
+            .add("EC_PRIVATE_KEY", 1);
     }
 	
 	/**
@@ -108,7 +109,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_secret_argument(), "SECRET", variables, input);
+        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input);
     }
     
     /**
@@ -139,9 +140,9 @@ public:
                 "Derive using the uncompressed public key format."
             )
             (
-                "SECRET",
-                value<serializer::ec_private>(&argument_.secret),
-                "The hex encoded EC private key."
+                "EC_PRIVATE_KEY",
+                value<serializer::ec_private>(&argument_.ec_private_key),
+                "The Base16 EC private key."
             );
 
         return options;
@@ -158,20 +159,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SECRET argument.
+     * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual serializer::ec_private& get_secret_argument()
+    virtual serializer::ec_private& get_ec_private_key_argument()
     {
-        return argument_.secret;
+        return argument_.ec_private_key;
     }
     
     /**
-     * Set the value of the SECRET argument.
+     * Set the value of the EC_PRIVATE_KEY argument.
      */
-    virtual void set_secret_argument(
+    virtual void set_ec_private_key_argument(
         const serializer::ec_private& value)
     {
-        argument_.secret = value;
+        argument_.ec_private_key = value;
     }
 
     /**
@@ -218,11 +219,11 @@ private:
     struct argument
     {
         argument()
-          : secret()
+          : ec_private_key()
         {
         }
         
-        serializer::ec_private secret;
+        serializer::ec_private ec_private_key;
     } argument_;
     
     /**

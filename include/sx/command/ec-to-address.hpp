@@ -20,8 +20,8 @@
 #ifndef SX_EC_TO_ADDRESS_HPP
 #define SX_EC_TO_ADDRESS_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -97,7 +98,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("POINT", 1);
+            .add("EC_PUBLIC_KEY", 1);
     }
 	
 	/**
@@ -108,7 +109,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_point_argument(), "POINT", variables, input);
+        load_input(get_ec_public_key_argument(), "EC_PUBLIC_KEY", variables, input);
     }
     
     /**
@@ -139,9 +140,9 @@ public:
                 "The desired Bitcoin address version."
             )
             (
-                "POINT",
-                value<serializer::ec_public>(&argument_.point),
-                "The hex encoded EC public key to convert."
+                "EC_PUBLIC_KEY",
+                value<serializer::ec_public>(&argument_.ec_public_key),
+                "The Base16 EC public key to convert."
             );
 
         return options;
@@ -158,20 +159,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the POINT argument.
+     * Get the value of the EC_PUBLIC_KEY argument.
      */
-    virtual serializer::ec_public& get_point_argument()
+    virtual serializer::ec_public& get_ec_public_key_argument()
     {
-        return argument_.point;
+        return argument_.ec_public_key;
     }
     
     /**
-     * Set the value of the POINT argument.
+     * Set the value of the EC_PUBLIC_KEY argument.
      */
-    virtual void set_point_argument(
+    virtual void set_ec_public_key_argument(
         const serializer::ec_public& value)
     {
-        argument_.point = value;
+        argument_.ec_public_key = value;
     }
 
     /**
@@ -218,11 +219,11 @@ private:
     struct argument
     {
         argument()
-          : point()
+          : ec_public_key()
         {
         }
         
-        serializer::ec_public point;
+        serializer::ec_public ec_public_key;
     } argument_;
     
     /**

@@ -22,7 +22,7 @@
 
 #include <iostream>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 
 using namespace sx;
 using namespace sx::extension;
@@ -33,6 +33,6 @@ console_result base58_decode::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& base58 = get_base58_argument();
 
-    output << hex(base58) << std::endl;
+    output << base16(base58) << std::endl;
     return console_result::okay;
 }

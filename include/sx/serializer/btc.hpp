@@ -17,92 +17,60 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BYTE_HPP
-#define BYTE_HPP
+#ifndef BTC_HPP
+#define BTC_HPP
 
+#include <cstdint>
 #include <iostream>
-#include <string>
-#include <stdint.h>
-
-/* NOTE: don't declare 'using namespace foo' in headers. */
+#include <sx/define.hpp>
 
 namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper for numeric byte, because byte-sized integral types 
- * stream as characters.
+ * Serialization helper to convert between text and signature hash type.
  */
-class byte
+class btc
 {
 public:
 
     /**
      * Default constructor.
      */
-    byte();
+    btc();
 
     /**
      * Initialization constructor.
-     * @param[in]  number  The value to initialize with.
+     * @param[in]  btc  The number of btc to initialize with.
      */
-    byte(const std::string& number);
+    btc(const std::string& btc);
 
     /**
      * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
+     * @param[in]  satoshi  The number of satoshi to initialize with.
      */
-    byte(const uint8_t& value);
+    btc(uint64_t satoshi);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    byte(const byte& other);
+    btc(const btc& other);
 
     /**
-     * Return a reference to the data member.
+     * Return a reference to the data member cast as satoshi.
      * @return  A reference to the object's internal data.
      */
-    uint8_t& data();
+    operator const uint64_t() const;
 
     /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    operator const uint8_t&() const;
-
-    /**
-     * Overload prefix increment.
-     * @return  This object referenced, with incremented value.
-     */
-    byte& operator++();
-
-    /**
-     * Overload postfix increment.
-     * @return  This object copied, with incremented value.
-     */
-    byte operator++(int);
-
-    ///**
-    // * Overload prefix decrement.
-    // * @return  This object referenced, with decremented value.
-    // */
-    //byte& operator--();
-
-    ///**
-    // * Overload postfix decrement.
-    // * @return  This object copied, with decremented value.
-    // */
-    //byte operator--(int);
-
-    /**
-     * Overload stream in. If input is not a number sets 0x00 in argument.;
+     * Overload stream in. Throws if input is invalid.
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, byte& argument);
+    friend std::istream& operator>>(std::istream& input, 
+        btc& argument);
 
     /**
      * Overload stream out.
@@ -110,14 +78,15 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const byte& argument);
+    friend std::ostream& operator<<(std::ostream& output,
+        const btc& argument);
 
 private:
 
     /**
-     * The state of this object.
+     * The state of this object's number of satoshis.
      */
-    uint8_t value_;
+    uint64_t value_;
 };
 
 } // sx

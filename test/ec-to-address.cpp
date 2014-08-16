@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(ec_to_address__invoke__compressed_key__okay_output)
 {
     // $ sx ec-to-address 0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36
     SX_DECLARE_COMMAND(ec_to_address);
-    command.set_point_argument({ "0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36" });
+    command.set_ec_public_key_argument({ "0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("1EKJFK8kBmasFRYY3Ay9QjpJLm4vemJtC1\n");
 }
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(ec_to_address__invoke__uncompressed_key__okay_output)
 {
     // $ sx ec-to-address 0447140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36e87bb04f401be3b770a0f3e2267a6c3b14a3074f6b5ce4419f1fcdc1ca4b1cb6
     SX_DECLARE_COMMAND(ec_to_address);
-    command.set_point_argument({ "0447140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36e87bb04f401be3b770a0f3e2267a6c3b14a3074f6b5ce4419f1fcdc1ca4b1cb6" });
+    command.set_ec_public_key_argument({ "0447140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36e87bb04f401be3b770a0f3e2267a6c3b14a3074f6b5ce4419f1fcdc1ca4b1cb6" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("197FLrycah42jKDgfmTaok7b8kNHA7R2ih\n");
 }

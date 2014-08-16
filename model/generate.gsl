@@ -64,8 +64,12 @@
 .function global.normalize_type(type)
 .   if my.type = type_address
 .       return type_address_sx
+.   elsif my.type = type_base16
+.       return type_base16_sx
 .   elsif my.type = type_base58
 .       return type_base58_sx
+.   elsif my.type = type_btc
+.       return type_btc_sx
 .   elsif my.type = type_btc160
 .       return type_btc160_sx
 .   elsif my.type = type_btc256
@@ -78,6 +82,8 @@
 .       return type_encoding_sx
 .   elsif my.type = type_file
 .       return type_file_sx
+.   elsif my.type = type_hashtype
+.       return type_hashtype_sx
 .   elsif my.type = type_hd_key
 .       return type_hd_key_sx
 .   elsif my.type = type_hd_private
@@ -86,8 +92,6 @@
 .       return type_hd_public_sx
 .   elsif my.type = type_header
 .       return type_header_sx
-.   elsif my.type = type_hex
-.       return type_hex_sx
 .   elsif my.type = type_input
 .       return type_input_sx
 .   elsif my.type = type_output
@@ -102,8 +106,6 @@
 .       return type_raw_sx
 .   elsif my.type = type_script
 .       return type_script_sx
-.   elsif my.type = type_signature_hash
-.       return type_signature_hash_sx
 .   elsif my.type = type_stealth
 .       return type_stealth_sx
 .   elsif my.type = type_string
@@ -186,18 +188,20 @@
 .config_option = "config"
 .type_bool = "bool"
 .type_address = "address"
+.type_base16 = "base16"
 .type_base58 = "base58"
+.type_btc = "btc"
 .type_btc160 = "btc160"
 .type_btc256 = "btc256"
 .type_ec_private = "ec_private"
 .type_ec_public = "ec_public"
 .type_encoding = "encoding"
 .type_file = "file"
+.type_hashtype = "hashtype"
 .type_hd_key = "hd_key"
 .type_hd_private = "hd_private"
 .type_hd_public = "hd_public"
 .type_header = "header"
-.type_hex = "hex"
 .type_input = "input"
 .type_output = "output"
 .type_point = "point"
@@ -205,7 +209,6 @@
 .type_prefix = "prefix"
 .type_raw = "raw"
 .type_script = "script"
-.type_signature_hash = "signature_hash"
 .type_stealth = "stealth"
 .type_string = "string"
 .type_transaction = "transaction"
@@ -213,18 +216,20 @@
 .type_wrapper = "wrapper"
 .
 .type_address_sx = "serializer::address"
+.type_base16_sx = "serializer::base16"
 .type_base58_sx = "serializer::base58"
+.type_btc_sx = "serializer::btc"
 .type_btc160_sx = "serializer::btc160"
 .type_btc256_sx = "serializer::btc256"
 .type_ec_private_sx = "serializer::ec_private"
 .type_ec_public_sx = "serializer::ec_public"
 .type_encoding_sx = "serializer::encoding"
 .type_file_sx = "serializer::file"
+.type_hashtype_sx = "serializer::hashtype"
 .type_hd_key_sx = "serializer::hd_key"
 .type_hd_private_sx = "serializer::hd_priv"
 .type_hd_public_sx = "serializer::hd_pub"
 .type_header_sx = "serializer::header"
-.type_hex_sx = "serializer::hex"
 .type_input_sx = "serializer::input"
 .type_output_sx = "serializer::output"
 .type_path_boost = "boost::filesystem::path"
@@ -232,7 +237,6 @@
 .type_prefix_sx = "serializer::prefix"
 .type_raw_sx = "serializer::raw"
 .type_script_sx = "serializer::script"
-.type_signature_hash_sx = "serializer::signature_hash"
 .type_stealth_sx = "serializer::stealth"
 .type_string_std = "std::string"
 .type_transaction_sx = "serializer::transaction"
@@ -608,8 +612,8 @@ private:
 #ifndef SX_$(SYMBOL:c)_HPP
 #define SX_$(SYMBOL:c)_HPP
 
+#include <cstdint>
 #include <iostream>
-#include <stdint.h>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -618,23 +622,24 @@ private:
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -1007,17 +1012,19 @@ sx_utility_include_HEADERS += \\
 sx_utility_includedir = $\(includedir)/sx/serializer
 sx_utility_include_HEADERS += \\
     address.hpp \\
+    base16.hpp \\
     base58.hpp \\
+    btc.hpp \\
     btc160.hpp \\
     btc256.hpp \\
     ec_private.hpp \\
     ec_public.hpp \\
     encoding.hpp \\
+    hashtype.hpp \\
     hd_key.hpp \\
     hd_priv.hpp \\
     hd_pub.hpp \\
     header.hpp \\
-    hex.hpp \\
     history.hpp \\
     input.hpp \\
     output.hpp \\
@@ -1025,7 +1032,6 @@ sx_utility_include_HEADERS += \\
     prefix.hpp \\
     raw.hpp \\
     script.hpp \\
-    signature_hash.hpp \\
     stealth.hpp \\
     transaction.hpp \\
     wif.hpp \\
@@ -1068,24 +1074,25 @@ libsx_la_SOURCES = \\
     generated.cpp \\
     prop_tree.cpp \\
     serializer/address.hpp \\
+    serializer/base16.hpp \\
     serializer/base58.hpp \\
+    serializer/btc.hpp \\
     serializer/btc160.hpp \\
     serializer/btc256.hpp \\
     serializer/ec_private.hpp \\
     serializer/ec_public.hpp \\
     serializer/encoding.hpp \\
+    serializer/hashtype.hpp \\
     serializer/hd_key.hpp \\
     serializer/hd_priv.hpp \\
     serializer/hd_pub.hpp \\
     serializer/header.hpp \\
-    serializer/hex.hpp \\
     serializer/input.hpp \\
     serializer/output.hpp \\
     serializer/point.hpp \\
     serializer/prefix.hpp \\
     serializer/raw.hpp \\
     serializer/script.hpp \\
-    serializer/signature_hash.hpp \\
     serializer/stealth.hpp \\
     serializer/transaction.hpp \\
     serializer/wif.hpp \\
@@ -1228,24 +1235,25 @@ endif
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\prop_tree.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base16.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\encoding.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hashtype.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_priv.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_pub.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\header.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hex.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\input.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\output.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\prefix.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\raw.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\signature_hash.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\stealth.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\transaction.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
@@ -1273,24 +1281,25 @@ endif
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\address.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base16.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base58.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc160.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc256.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_private.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_public.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\encoding.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hashtype.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_key.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_priv.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_pub.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\header.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hex.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\input.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\output.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\point.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\prefix.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\raw.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\script.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\signature_hash.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\stealth.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\transaction.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wif.cpp" />
@@ -1426,7 +1435,13 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base16.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp">
@@ -1447,6 +1462,9 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\encoding.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hashtype.hpp">
+      <Filter>include\\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_priv.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
@@ -1454,9 +1472,6 @@ endif
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\header.hpp">
-      <Filter>include\\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hex.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\input.hpp">
@@ -1475,9 +1490,6 @@ endif
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp">
-      <Filter>include\\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\signature_hash.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\stealth.hpp">
@@ -1558,7 +1570,13 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\address.cpp">
       <Filter>src\\serializer</Filter>
     </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base16.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base58.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc.cpp">
       <Filter>src\\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc160.cpp">
@@ -1571,6 +1589,9 @@ endif
       <Filter>src\\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_public.cpp">
+      <Filter>src\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hashtype.cpp">
       <Filter>src\\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_key.cpp">
@@ -1586,9 +1607,6 @@ endif
       <Filter>src\\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\header.cpp">
-      <Filter>src\\serializer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hex.cpp">
       <Filter>src\\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\input.cpp">
@@ -1607,9 +1625,6 @@ endif
       <Filter>src\\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\script.cpp">
-      <Filter>src\\serializer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\signature_hash.cpp">
       <Filter>src\\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\stealth.cpp">

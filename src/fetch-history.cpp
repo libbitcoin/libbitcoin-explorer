@@ -44,7 +44,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& addresses = get_addresss_argument();
+    const auto& addresses = get_bitcoin_addresss_argument();
 
     callback_state state(error, output, encoding);
     const auto handler = [&state](const payment_address& address,

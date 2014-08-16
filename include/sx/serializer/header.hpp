@@ -25,7 +25,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

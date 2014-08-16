@@ -20,8 +20,8 @@
 #ifndef SX_STEALTH_ADDRESS_DECODE_HPP
 #define SX_STEALTH_ADDRESS_DECODE_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -97,7 +98,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("STEALTH", 1);
+            .add("STEALTH_ADDRESS", 1);
     }
 	
 	/**
@@ -138,8 +139,8 @@ public:
                 "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
             )
             (
-                "STEALTH",
-                value<serializer::stealth>(&argument_.stealth)->required(),
+                "STEALTH_ADDRESS",
+                value<serializer::stealth>(&argument_.stealth_address)->required(),
                 "The stealth payment address."
             );
 
@@ -157,20 +158,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the STEALTH argument.
+     * Get the value of the STEALTH_ADDRESS argument.
      */
-    virtual serializer::stealth& get_stealth_argument()
+    virtual serializer::stealth& get_stealth_address_argument()
     {
-        return argument_.stealth;
+        return argument_.stealth_address;
     }
     
     /**
-     * Set the value of the STEALTH argument.
+     * Set the value of the STEALTH_ADDRESS argument.
      */
-    virtual void set_stealth_argument(
+    virtual void set_stealth_address_argument(
         const serializer::stealth& value)
     {
-        argument_.stealth = value;
+        argument_.stealth_address = value;
     }
 
     /**
@@ -217,11 +218,11 @@ private:
     struct argument
     {
         argument()
-          : stealth()
+          : stealth_address()
         {
         }
         
-        serializer::stealth stealth;
+        serializer::stealth stealth_address;
     } argument_;
     
     /**

@@ -32,7 +32,7 @@ using namespace sx::serializer;
 console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& secret = get_secret_argument();
+    const auto& secret = get_ec_private_key_argument();
     const auto& uncompressed = get_uncompressed_option();
 
     // TESTNET REQUIRES RECOMPILE

@@ -31,8 +31,8 @@ using namespace sx::serializer;
 console_result base58_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& hex = get_hex_argument();
+    const auto& base16 = get_base16_argument();
     
-    output << base58(hex) << std::endl;
+    output << base58(base16) << std::endl;
     return console_result::okay;
 }

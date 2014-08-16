@@ -23,7 +23,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -33,19 +33,19 @@ using namespace sx::serializer;
 
 console_result seed::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto bitlength = get_bitlength_option();
+    const auto bit_length = get_bit_length_option();
 
     // This are soft requirements for security and rationality.
     // We use bit vs. byte length input as the more familiar convention.
-    if (bitlength * byte_size < minimum_seed_size ||
-        bitlength % byte_size != 0)
+    if (bit_length * byte_size < minimum_seed_size ||
+        bit_length % byte_size != 0)
     {
-        error << SX_SEED_BITLENGTH_UNSUPPORTED << std::endl;
+        error << SX_SEED_BIT_LENGTH_UNSUPPORTED << std::endl;
         return console_result::failure;
     }
 
-    const auto seed = new_seed(bitlength);
+    const auto seed = new_seed(bit_length);
 
-    output << hex(seed) << std::endl;
+    output << base16(seed) << std::endl;
     return console_result::okay;
 }

@@ -26,7 +26,7 @@
 #include <sx/define.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -34,7 +34,7 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and ec_point.
+ * Serialization helper to convert between base16 string and ec_point.
  */
 class ec_public
 {

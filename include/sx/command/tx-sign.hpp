@@ -20,8 +20,8 @@
 #ifndef SX_TX_SIGN_HPP
 #define SX_TX_SIGN_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -103,7 +104,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("secret", 1)
+            .add("EC_PRIVATE_KEY", 1)
             .add("TRANSACTION", -1);
     }
 	
@@ -142,14 +143,14 @@ public:
                 "Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network."
             )
             (
-                "secret",
-                value<serializer::ec_private>(&argument_.secret),
+                "EC_PRIVATE_KEY",
+                value<serializer::ec_private>(&argument_.ec_private_key)->required(),
                 "The EC private key to be used for signing."
             )
             (
                 "TRANSACTION",
                 value<std::string>(),
-                "The file path of the set of hex encoded transactions. If not specified the transactions are read from STDIN."
+                "The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."
             );
 
         return options;
@@ -166,20 +167,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the secret argument.
+     * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual serializer::ec_private& get_secret_argument()
+    virtual serializer::ec_private& get_ec_private_key_argument()
     {
-        return argument_.secret;
+        return argument_.ec_private_key;
     }
     
     /**
-     * Set the value of the secret argument.
+     * Set the value of the EC_PRIVATE_KEY argument.
      */
-    virtual void set_secret_argument(
+    virtual void set_ec_private_key_argument(
         const serializer::ec_private& value)
     {
-        argument_.secret = value;
+        argument_.ec_private_key = value;
     }
 
     /**
@@ -226,12 +227,12 @@ private:
     struct argument
     {
         argument()
-          : secret(),
+          : ec_private_key(),
             transactions()
         {
         }
         
-        serializer::ec_private secret;
+        serializer::ec_private ec_private_key;
         std::vector<serializer::transaction> transactions;
     } argument_;
     

@@ -8,14 +8,15 @@ AM_CPPFLAGS = \
     -I$(srcdir)/../include
 
 #sx_test_HEADERS = \
-     command.hpp
+    command.hpp \
+    precompile.hpp
 
 sx_test_SOURCES = \
-    addr-decode.cpp \
-    addr-embed.cpp \
-    addr-encode.cpp \
-    addr-validate.cpp \
     address.cpp \
+    address-decode.cpp \
+    address-embed.cpp \
+    address-encode.cpp \
+    address-validate.cpp \
     base58.cpp \
     base58check-decode.cpp \
     base58check-encode.cpp \
@@ -23,16 +24,20 @@ sx_test_SOURCES = \
     base58-encode.cpp \
     bci-fetch-last-height.cpp \
     bci-history.cpp \
+    bitcoin160.cpp \
+    bitcoin256.cpp \
     blke-fetch-transaction.cpp \
-    brainwallet.cpp \
     btc-to-satoshi.cpp \
     ec-add.cpp \
     ec-add-secrets.cpp \
+    ec-lock.cpp \
     ec-multiply.cpp \
     ec-multiply-secrets.cpp \
     ec-new.cpp \
-    ec-to-addr.cpp \
-    ec-to-pub.cpp \
+    ec-to-address.cpp \
+    ec-to-public.cpp \
+    ec-to-wif.cpp \
+    ec-unlock.cpp \
     fetch-balance.cpp \
     fetch-confirmations.cpp \
     fetch-header.cpp \
@@ -49,17 +54,20 @@ sx_test_SOURCES = \
     genpriv.cpp \
     genpub.cpp \
     hd-new.cpp \
-    hd-priv.cpp \
-    hd-pub.cpp \
-    hd-seed.cpp \
-    hd-to-addr.cpp \
+    hd-private.cpp \
+    hd-public.cpp \
+    hd-to-address.cpp \
     hd-to-ec.cpp \
-    hd-to-pub.cpp \
+    hd-to-public.cpp \
     hd-to-wif.cpp \
     help.cpp \
     initchain.cpp \
+    input-set.cpp \
+    input-sign.cpp \
+    input-validate.cpp \
     main.cpp \
-    monitor.cpp \
+    mnemonic-decode.cpp \
+    mnemonic-encode.cpp \
     mpk.cpp \
     newseed.cpp \
     parameter.cpp \
@@ -67,18 +75,34 @@ sx_test_SOURCES = \
     qrcode.cpp \
     ripemd160.cpp \
     satoshi-to-btc.cpp \
+    script-decode.cpp \
+    script-encode.cpp \
+    script-to-address.cpp \
+    send-tx.cpp \
     sendtx-bci.cpp \
+    send-tx-node.cpp \
+    send-tx-p2p.cpp \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \
-    stealth-addr.cpp \
-    unwrap.cpp \
+    showblkhead.cpp \
+    stealth-address-decode.cpp \
+    stealth-address-encode.cpp \
+    stealth-initiate.cpp \
+    stealth-newkey.cpp \
+    stealth-uncover-address.cpp \
+    stealth-uncover-secret.cpp \
+    tx-decode.cpp \
+    tx-encode.cpp \
+    tx-sign.cpp \
     wallet.cpp \
     watch-tx.cpp \
     wif-to-ec.cpp \
     wif-to-pub.cpp \
     wrap-decode.cpp \
     wrap-encode.cpp
+
+C:\Source\evoskuil\sx\test>
 
 sx_test_LDADD = \
     -L$(srcdir)/../src/ -lsx \

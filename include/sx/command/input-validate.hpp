@@ -20,8 +20,8 @@
 #ifndef SX_INPUT_VALIDATE_HPP
 #define SX_INPUT_VALIDATE_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -108,7 +109,7 @@ public:
     {
         return get_argument_metadata()
             .add("TRANSACTION", 1)
-            .add("POINT", 1)
+            .add("EC_PUBLIC_KEY", 1)
             .add("SCRIPT_CODE", 1)
             .add("SIGNATURE", 1);
     }
@@ -153,28 +154,28 @@ public:
             )
             (
                 "sighash,s",
-                value<serializer::signature_hash>(&option_.sighash),
+                value<serializer::hashtype>(&option_.sighash),
                 "A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
             )
             (
                 "TRANSACTION",
-                value<std::string>(),
-                "The file path of the hex encoded transaction."
+                value<std::string>()->required(),
+                "The file path of the Base16 transaction."
             )
             (
-                "POINT",
-                value<serializer::ec_public>(&argument_.point),
-                "The hex encoded EC public key to verify against."
+                "EC_PUBLIC_KEY",
+                value<serializer::ec_public>(&argument_.ec_public_key)->required(),
+                "The Base16 EC public key to verify against."
             )
             (
                 "SCRIPT_CODE",
-                value<serializer::script>(&argument_.script_code),
-                "The hex encoded ... script ..."
+                value<serializer::script>(&argument_.script_code)->required(),
+                "The Base16 ... script ..."
             )
             (
                 "SIGNATURE",
-                value<serializer::hex>(&argument_.signature),
-                "The hex encoded signature to validate. If not specified the signature is read from STDIN."
+                value<serializer::base16>(&argument_.signature),
+                "The Base16 signature to validate. If not specified the signature is read from STDIN."
             );
 
         return options;
@@ -208,20 +209,20 @@ public:
     }
 
     /**
-     * Get the value of the POINT argument.
+     * Get the value of the EC_PUBLIC_KEY argument.
      */
-    virtual serializer::ec_public& get_point_argument()
+    virtual serializer::ec_public& get_ec_public_key_argument()
     {
-        return argument_.point;
+        return argument_.ec_public_key;
     }
     
     /**
-     * Set the value of the POINT argument.
+     * Set the value of the EC_PUBLIC_KEY argument.
      */
-    virtual void set_point_argument(
+    virtual void set_ec_public_key_argument(
         const serializer::ec_public& value)
     {
-        argument_.point = value;
+        argument_.ec_public_key = value;
     }
 
     /**
@@ -244,7 +245,7 @@ public:
     /**
      * Get the value of the SIGNATURE argument.
      */
-    virtual serializer::hex& get_signature_argument()
+    virtual serializer::base16& get_signature_argument()
     {
         return argument_.signature;
     }
@@ -253,7 +254,7 @@ public:
      * Set the value of the SIGNATURE argument.
      */
     virtual void set_signature_argument(
-        const serializer::hex& value)
+        const serializer::base16& value)
     {
         argument_.signature = value;
     }
@@ -295,7 +296,7 @@ public:
     /**
      * Get the value of the sighash option.
      */
-    virtual serializer::signature_hash& get_sighash_option()
+    virtual serializer::hashtype& get_sighash_option()
     {
         return option_.sighash;
     }
@@ -304,7 +305,7 @@ public:
      * Set the value of the sighash option.
      */
     virtual void set_sighash_option(
-        const serializer::signature_hash& value)
+        const serializer::hashtype& value)
     {
         option_.sighash = value;
     }
@@ -320,16 +321,16 @@ private:
     {
         argument()
           : transaction(),
-            point(),
+            ec_public_key(),
             script_code(),
             signature()
         {
         }
         
         serializer::transaction transaction;
-        serializer::ec_public point;
+        serializer::ec_public ec_public_key;
         serializer::script script_code;
-        serializer::hex signature;
+        serializer::base16 signature;
     } argument_;
     
     /**
@@ -348,7 +349,7 @@ private:
         
         bool help;
         size_t index;
-        serializer::signature_hash sighash;
+        serializer::hashtype sighash;
     } option_;
 };
 

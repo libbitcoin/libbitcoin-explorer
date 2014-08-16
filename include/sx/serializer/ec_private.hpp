@@ -32,7 +32,7 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and ec_secret.
+ * Serialization helper to convert between base16 string and ec_secret.
  */
 class ec_private
 {

@@ -24,7 +24,7 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(address_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(address_encode__invoke__hex_value__okay_output)
+BOOST_AUTO_TEST_CASE(address_encode__invoke__base16_value__okay_output)
 {
     // $ sx encode-address b472a266d0bd89c13706a4132ccfb16f7c3b9fcb
     SX_DECLARE_COMMAND(address_encode);
@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE(address_encode__invoke__hex_value__okay_output)
     SX_REQUIRE_OUTPUT("1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E\n");
 }
 
-BOOST_AUTO_TEST_CASE(address_encode__invoke__hex_value_version__okay_output)
+BOOST_AUTO_TEST_CASE(address_encode__invoke__base16_value_version__okay_output)
 {
     // $ sx encode-address -v 42 b472a266d0bd89c13706a4132ccfb16f7c3b9fcb
     SX_DECLARE_COMMAND(address_encode);

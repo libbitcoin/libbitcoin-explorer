@@ -20,8 +20,8 @@
 #ifndef SX_FETCH_PUBLIC_KEY_HPP
 #define SX_FETCH_PUBLIC_KEY_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -103,7 +104,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("ADDRESS", 1);
+            .add("BITCOIN_ADDRESS", 1);
     }
 	
 	/**
@@ -114,7 +115,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_address_argument(), "ADDRESS", variables, input);
+        load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input);
     }
     
     /**
@@ -140,8 +141,8 @@ public:
                 "Get the EC public key of the address, if it exists on the blockchain. Requires an Obelisk server connection."
             )
             (
-                "ADDRESS",
-                value<serializer::address>(&argument_.address),
+                "BITCOIN_ADDRESS",
+                value<serializer::address>(&argument_.bitcoin_address),
                 "The Bitcoin address of the public key."
             );
 
@@ -159,20 +160,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the ADDRESS argument.
+     * Get the value of the BITCOIN_ADDRESS argument.
      */
-    virtual serializer::address& get_address_argument()
+    virtual serializer::address& get_bitcoin_address_argument()
     {
-        return argument_.address;
+        return argument_.bitcoin_address;
     }
     
     /**
-     * Set the value of the ADDRESS argument.
+     * Set the value of the BITCOIN_ADDRESS argument.
      */
-    virtual void set_address_argument(
+    virtual void set_bitcoin_address_argument(
         const serializer::address& value)
     {
-        argument_.address = value;
+        argument_.bitcoin_address = value;
     }
 
     /**
@@ -202,11 +203,11 @@ private:
     struct argument
     {
         argument()
-          : address()
+          : bitcoin_address()
         {
         }
         
-        serializer::address address;
+        serializer::address bitcoin_address;
     } argument_;
     
     /**

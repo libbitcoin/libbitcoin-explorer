@@ -18,15 +18,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/serializer/btc256.hpp>
+#include <sx/serializer/base16.hpp>
 
+#include <array>
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <cstdint>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/base16.hpp>
 
 using namespace bc;
 using namespace po;
@@ -34,61 +35,54 @@ using namespace po;
 namespace sx {
 namespace serializer {
 
-btc256::btc256()
-    : value_()
-{
-}
+    base16::base16()
+        : value_()
+    {
+    }
 
-btc256::btc256(const std::string& hexcode)
-{
-    std::stringstream(hexcode) >> *this;
-}
+    base16::base16(const std::string& hexcode)
+    {
+        std::stringstream(hexcode) >> *this;
+    }
 
-btc256::btc256(const hash_digest& value)
-    : value_(value)
-{
-}
+    base16::base16(const data_chunk& value)
+        : value_(value)
+    {
+    }
 
-btc256::btc256(const btc256& other)
-    : btc256(other.value_)
-{
-}
+    base16::base16(const base16& other)
+        : base16(other.value_)
+    {
+    }
 
-hash_digest& btc256::data()
-{
-    return value_;
-}
+    data_chunk& base16::data()
+    {
+        return value_;
+    }
 
-btc256::operator const hash_digest&() const
-{
-    return value_; 
-}
+    base16::operator const data_chunk&() const
+    {
+        return value_; 
+    }
 
-//btc256::operator const std::string() const
-//{
-//    std::stringstream result;
-//    result << *this;
-//    return result.str();
-//}
+    std::istream& operator>>(std::istream& input, base16& argument)
+    {
+        std::string hexcode;
+        input >> hexcode;
 
-std::istream& operator>>(std::istream& input, btc256& argument)
-{
-    std::string hexcode;
-    input >> hexcode;
+        data_chunk chunk = decode_hex(hexcode);
+        if (chunk.empty())
+            throw invalid_option_value(hexcode);
 
-    auto hash = decode_hash(hexcode);
-    if (hash == null_hash)
-        throw invalid_option_value(hexcode);
+        argument.value_.assign(chunk.begin(), chunk.end());
+        return input;
+    }
 
-    std::copy(hash.begin(), hash.end(), argument.value_.begin());
-    return input;
-}
-
-std::ostream& operator<<(std::ostream& output, const btc256& argument)
-{
-    output << base16(argument.value_);
-    return output;
-}
+    std::ostream& operator<<(std::ostream& output, const base16& argument)
+    {
+        output << encode_hex(argument.value_);
+        return output;
+    }
 
 } // sx
 } // serializer

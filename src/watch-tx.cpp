@@ -27,7 +27,7 @@
 #include <sx/obelisk_client.hpp>
 #include <sx/prop_tree.hpp>
 #include <sx/serializer/encoding.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/utility/utility.hpp>
 
@@ -55,7 +55,7 @@ static void handle_update(callback_state& state, const prefix& prefix,
     else
     {
         auto& tree = prop_tree(tx);
-        tree.add("transaction.block", hex(block_hash));
+        tree.add("transaction.block", base16(block_hash));
         tree.add("transaction.prefix", prefix);
         state.output(tree);
     }

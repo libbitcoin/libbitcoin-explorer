@@ -23,7 +23,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 
 using namespace bc;
 using namespace sx;
@@ -34,10 +34,10 @@ using namespace sx::serializer;
 console_result bitcoin256::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& data = get_hex_argument();
+    const auto& data = get_base16_argument();
 
     const auto hash = bitcoin_hash(data);
 
-    output << hex(hash) << std::endl;
+    output << base16(hash) << std::endl;
     return console_result::okay;
 }

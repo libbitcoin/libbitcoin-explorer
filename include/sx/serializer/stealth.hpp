@@ -34,7 +34,7 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between a stealth address and a hex string.
+ * Serialization helper to convert between a stealth address and a base16 string.
  */
 class stealth
 {
@@ -62,15 +62,16 @@ public:
      * Initialization constructor.
      * @param[in]  prefix      The stealth prefix (bitfield and number_bits).
      * @param[in]  scan_key    The stealth scan public key.
-     * @param[in]  spend_keys  The set of spend keys (limited to 255).
+     * @param[in]  spend_keys  The set of spend keys (limited to 255). Defaults
+                               To the value of the scan key (otherwise the scan
+                               key must be added explicitly).
      * @param[in]  signatures  The number of signatures required to spend. 
-     *                         If zero spend will require all spend keys.
-     * @param[in]  reuse_key   The scan key is a spend key.
+     *                         If zero spend will require all spend keys sign.
      * @param[in]  testnet     The stealth address will be for testnet.
      */
     stealth(const bc::stealth_prefix& prefix, const ec_public& scan_key,
-        const std::vector<ec_public>& spend_keys, uint8_t signatures,
-        bool reuse_key, bool testnet);
+        const std::vector<ec_public>& spend_keys, uint8_t signatures, 
+        bool testnet);
 
     /**
      * Copy constructor.

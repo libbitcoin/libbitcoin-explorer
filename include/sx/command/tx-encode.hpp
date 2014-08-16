@@ -20,8 +20,8 @@
 #ifndef SX_TX_ENCODE_HPP
 #define SX_TX_ENCODE_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -139,8 +140,8 @@ public:
                 "Encode an unsigned transaction."
             )
             (
-                "locktime,l",
-                value<uint32_t>(&option_.locktime),
+                "lock_time,l",
+                value<uint32_t>(&option_.lock_time),
                 "The transaction lock time."
             )
             (
@@ -151,12 +152,12 @@ public:
             (
                 "input,i",
                 value<std::vector<serializer::input>>(&option_.inputs),
-                "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a hex encoded transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE the optional 32 bit input sequence and defaults to the maximum value."
+                "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE the optional 32 bit input sequence and defaults to the maximum value."
             )
             (
                 "output,o",
                 value<std::vector<serializer::output>>(&option_.outputs),
-                "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a hex encoded script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. A seed should NOT be used for multiple outputs."
+                "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. A seed should NOT be used for multiple outputs."
             )
             (
                 "TRANSACTION",
@@ -212,20 +213,20 @@ public:
     }
 
     /**
-     * Get the value of the locktime option.
+     * Get the value of the lock_time option.
      */
-    virtual uint32_t& get_locktime_option()
+    virtual uint32_t& get_lock_time_option()
     {
-        return option_.locktime;
+        return option_.lock_time;
     }
     
     /**
-     * Set the value of the locktime option.
+     * Set the value of the lock_time option.
      */
-    virtual void set_locktime_option(
+    virtual void set_lock_time_option(
         const uint32_t& value)
     {
-        option_.locktime = value;
+        option_.lock_time = value;
     }
 
     /**
@@ -305,7 +306,7 @@ private:
     {
         option()
           : help(),
-            locktime(),
+            lock_time(),
             version(),
             inputs(),
             outputs()
@@ -313,7 +314,7 @@ private:
         }
         
         bool help;
-        uint32_t locktime;
+        uint32_t lock_time;
         uint32_t version;
         std::vector<serializer::input> inputs;
         std::vector<serializer::output> outputs;

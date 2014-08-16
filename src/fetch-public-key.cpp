@@ -30,7 +30,7 @@ console_result fetch_public_key::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& address = get_address_argument();
+    const auto& address = get_bitcoin_address_argument();
 
     error << SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

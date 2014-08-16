@@ -21,30 +21,14 @@
 #include <sx/command/stealth-newkey.hpp>
 
 #include <iostream>
-//#include <bitcoin/bitcoin.hpp>
-//#include <wallet/wallet.hpp>
 #include <sx/define.hpp>
-//#include <sx/serializer/ec_private.hpp>
-
-//using namespace bc;
-//using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
-//using namespace sx::serializer;
 
-// Obsoleted because internal key generation is bad practice, and redundant.
 console_result stealth_newkey::invoke(std::ostream& output, std::ostream& error)
 {
-    //const auto& scan_secret = generate_random_secret();
-    //const auto& spend_secret = generate_random_secret();
-    //const auto& spend_pubkey = secret_to_public_key(spend_secret);
-
-    //stealth_address stealth;
-    //stealth.options = 0;
-    //stealth.scan_pubkey = secret_to_public_key(scan_secret);
-    //stealth.spend_pubkeys.push_back(spend_pubkey);
-    //stealth.number_signatures = 1;
-
+    // Obsoleted because internal key generation is bad practice, 
+    // and the feature is redundant with the combination of others.
     error << SX_STEALTH_NEWKEY_OBSOLETE << std::endl;
-    return console_result::okay;
+    return console_result::failure;
 }

@@ -20,8 +20,8 @@
 #ifndef SX_SEED_HPP
 #define SX_SEED_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -63,7 +64,7 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_SEED_BITLENGTH_UNSUPPORTED \
+#define SX_SEED_BIT_LENGTH_UNSUPPORTED \
     "The seed value is not supported."
 
 /**
@@ -138,8 +139,8 @@ public:
                 "Generate a pseudorandom seed."
             )
             (
-                "bitlength,b",
-                value<size_t>(&option_.bitlength)->default_value(128),
+                "bit_length,b",
+                value<size_t>(&option_.bit_length)->default_value(128),
                 "The length of the seed in bits. Must be divisible by 8 and must not be less than 128."
             );
 
@@ -174,20 +175,20 @@ public:
     }
 
     /**
-     * Get the value of the bitlength option.
+     * Get the value of the bit_length option.
      */
-    virtual size_t& get_bitlength_option()
+    virtual size_t& get_bit_length_option()
     {
-        return option_.bitlength;
+        return option_.bit_length;
     }
     
     /**
-     * Set the value of the bitlength option.
+     * Set the value of the bit_length option.
      */
-    virtual void set_bitlength_option(
+    virtual void set_bit_length_option(
         const size_t& value)
     {
-        option_.bitlength = value;
+        option_.bit_length = value;
     }
 
 private:
@@ -214,12 +215,12 @@ private:
     {
         option()
           : help(),
-            bitlength()
+            bit_length()
         {
         }
         
         bool help;
-        size_t bitlength;
+        size_t bit_length;
     } option_;
 };
 

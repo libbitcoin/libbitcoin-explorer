@@ -24,7 +24,7 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(wrap_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(wrap_encode__invoke__valid_hex_version__okay_output)
+BOOST_AUTO_TEST_CASE(wrap_encode__invoke__valid_base16_version__okay_output)
 {
     // $ sx wrap-encode 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(wrap_encode);

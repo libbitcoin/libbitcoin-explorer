@@ -37,7 +37,7 @@ using namespace sx::serializer;
 console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto locktime = get_locktime_option();
+    const auto locktime = get_lock_time_option();
     const auto version = get_version_option();
     const auto& inputs = get_inputs_option();
     const auto& outputs = get_outputs_option();

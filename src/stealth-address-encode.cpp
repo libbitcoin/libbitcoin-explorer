@@ -33,14 +33,13 @@ console_result stealth_address_encode::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto& prefix = get_prefix_option();
-    const auto& scan_key = get_scan_key_argument();
-    const auto& spend_keys = get_spend_keys_argument();
+    const auto& scan_key = get_scan_ec_public_key_argument();
+    const auto& spend_keys = get_spend_ec_public_keys_argument();
     const auto& signatures = get_signatures_option();
-    const auto& reuse = get_reuse_key_option();
     const auto testnet = get_general_testnet_setting();
 
     // TESTNET WORKS WITHOUT RECOMPILE
-    stealth address(prefix, scan_key, spend_keys, signatures, reuse, testnet);
+    stealth address(prefix, scan_key, spend_keys, signatures, testnet);
 
     output << address << std::endl;
     return console_result::okay;

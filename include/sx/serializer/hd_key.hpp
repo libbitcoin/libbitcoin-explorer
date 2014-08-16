@@ -34,7 +34,7 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and ec_point.
+ * Serialization helper to convert between base16 string and ec_point.
  * Reads public or private key and writes corresponding public key.
  */
 class hd_key

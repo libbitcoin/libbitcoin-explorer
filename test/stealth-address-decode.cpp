@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__mainnet__okay_output)
 {
     // $ sx stealth-address-decode hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU8ys8T1tX7
     SX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_argument({ "hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU8ys8T1tX7" });
+    command.set_stealth_address_argument({ "hf2YiTUPjjFRvDw98ksxEgU7s8o8aDYsKuehLL68FsmnoQnU8ys8T1tX7" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n");
 }
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__testnet__okay_output)
 {
     // $ sx stealth-address-decode idAsD84ZtoQdgfgDVmSitbYsJjrfUH4hB8j1ZMLvu2SeaLY4GDbAWrz9f
     SX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_argument({ "idAsD84ZtoQdgfgDVmSitbYsJjrfUH4hB8j1ZMLvu2SeaLY4GDbAWrz9f" });
+    command.set_stealth_address_argument({ "idAsD84ZtoQdgfgDVmSitbYsJjrfUH4hB8j1ZMLvu2SeaLY4GDbAWrz9f" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n");
 }

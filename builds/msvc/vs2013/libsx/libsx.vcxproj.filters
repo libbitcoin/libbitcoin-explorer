@@ -93,7 +93,7 @@
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\btc-to-satoshi.hpp">
-      <Filter>include\command\stub</Filter>
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\ec-add.hpp">
       <Filter>include\command</Filter>
@@ -216,7 +216,7 @@
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\satoshi-to-btc.hpp">
-      <Filter>include\command\stub</Filter>
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\script-decode.hpp">
       <Filter>include\command</Filter>
@@ -302,7 +302,13 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\address.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\base16.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\base58.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\btc.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\btc160.hpp">
@@ -323,6 +329,9 @@
     <ClInclude Include="..\..\..\..\include\sx\serializer\encoding.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\serializer\hashtype.hpp">
+      <Filter>include\serializer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\hd_priv.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
@@ -330,9 +339,6 @@
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\header.hpp">
-      <Filter>include\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\hex.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\input.hpp">
@@ -351,9 +357,6 @@
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\script.hpp">
-      <Filter>include\serializer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\serializer\signature_hash.hpp">
       <Filter>include\serializer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\stealth.hpp">
@@ -458,7 +461,7 @@
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\btc-to-satoshi.cpp">
-      <Filter>src\command\stub</Filter>
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\ec-add.cpp">
       <Filter>src\command</Filter>
@@ -581,7 +584,7 @@
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\satoshi-to-btc.cpp">
-      <Filter>src\command\stub</Filter>
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\script-decode.cpp">
       <Filter>src\command</Filter>
@@ -667,7 +670,13 @@
     <ClCompile Include="..\..\..\..\src\serializer\address.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\base16.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\base58.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\btc.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\btc160.cpp">
@@ -680,6 +689,9 @@
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\ec_public.cpp">
+      <Filter>src\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\serializer\hashtype.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\hd_key.cpp">
@@ -695,9 +707,6 @@
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\header.cpp">
-      <Filter>src\serializer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\serializer\hex.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\input.cpp">
@@ -716,9 +725,6 @@
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\script.cpp">
-      <Filter>src\serializer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\serializer\signature_hash.cpp">
       <Filter>src\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\stealth.cpp">

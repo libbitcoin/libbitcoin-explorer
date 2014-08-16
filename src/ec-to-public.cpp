@@ -33,7 +33,7 @@ using namespace sx::serializer;
 // 100% coverage by line, loc ready.
 console_result ec_to_public::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto& secret = get_secret_argument();
+    const auto& secret = get_ec_private_key_argument();
     const auto& uncompressed = get_uncompressed_option();
 
     const auto public_key = secret_to_public_key(secret, !uncompressed);

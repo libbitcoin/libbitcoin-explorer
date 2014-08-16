@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SIGHASH_HPP
-#define SIGHASH_HPP
+#ifndef HASHTYPE_HPP
+#define HASHTYPE_HPP
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
@@ -28,34 +28,34 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between text and sighash.
+ * Serialization helper to convert between text and signature hash type.
  */
-class signature_hash
+class hashtype
 {
 public:
 
     /**
      * Default constructor, sets sighash::single.
      */
-    signature_hash();
+    hashtype();
 
     /**
      * Initialization constructor.
      * @param[in]  token  The value to initialize with.
      */
-    signature_hash(const std::string& token);
+    hashtype(const std::string& token);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    signature_hash(const bc::sighash& value);
+    hashtype(const bc::sighash& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    signature_hash(const signature_hash& other);
+    hashtype(const hashtype& other);
 
     /**
      * Return a reference to the data member.
@@ -70,7 +70,7 @@ public:
      * @return                The input stream reference.
      */
     friend std::istream& operator>>(std::istream& input, 
-        signature_hash& argument);
+        hashtype& argument);
 
     /**
      * Overload stream out.
@@ -79,7 +79,7 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output,
-        const signature_hash& argument);
+        const hashtype& argument);
 
 private:
 

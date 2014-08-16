@@ -24,11 +24,11 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(base58_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(base58_encode__invoke__hex_value__okay_output)
+BOOST_AUTO_TEST_CASE(base58_encode__invoke__base16_value__okay_output)
 {
     // $ sx base58-encode 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(base58_encode);
-    command.set_hex_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
+    command.set_base16_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D\n");
 }

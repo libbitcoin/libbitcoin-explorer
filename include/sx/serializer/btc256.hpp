@@ -26,7 +26,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -34,7 +34,7 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and hash_digest.
+ * Serialization helper to convert between base16 string and hash_digest.
  */
 class btc256
 {

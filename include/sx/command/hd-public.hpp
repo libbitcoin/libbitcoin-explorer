@@ -20,8 +20,8 @@
 #ifndef SX_HD_PUBLIC_HPP
 #define SX_HD_PUBLIC_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -103,7 +104,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("KEY", 1);
+            .add("HD_PUBLIC_KEY", 1);
     }
 	
 	/**
@@ -114,7 +115,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_key_argument(), "KEY", variables, input);
+        load_input(get_hd_public_key_argument(), "HD_PUBLIC_KEY", variables, input);
     }
     
     /**
@@ -150,8 +151,8 @@ public:
                 "The HD index, defaults to zero."
             )
             (
-                "KEY",
-                value<serializer::hd_key>(&argument_.key),
+                "HD_PUBLIC_KEY",
+                value<serializer::hd_key>(&argument_.hd_public_key),
                 "The parent HD public or private key."
             );
 
@@ -169,20 +170,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the KEY argument.
+     * Get the value of the HD_PUBLIC_KEY argument.
      */
-    virtual serializer::hd_key& get_key_argument()
+    virtual serializer::hd_key& get_hd_public_key_argument()
     {
-        return argument_.key;
+        return argument_.hd_public_key;
     }
     
     /**
-     * Set the value of the KEY argument.
+     * Set the value of the HD_PUBLIC_KEY argument.
      */
-    virtual void set_key_argument(
+    virtual void set_hd_public_key_argument(
         const serializer::hd_key& value)
     {
-        argument_.key = value;
+        argument_.hd_public_key = value;
     }
 
     /**
@@ -246,11 +247,11 @@ private:
     struct argument
     {
         argument()
-          : key()
+          : hd_public_key()
         {
         }
         
-        serializer::hd_key key;
+        serializer::hd_key hd_public_key;
     } argument_;
     
     /**

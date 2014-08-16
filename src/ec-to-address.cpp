@@ -34,7 +34,7 @@ using namespace sx::serializer;
 console_result ec_to_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& point = get_point_argument();
+    const auto& point = get_ec_public_key_argument();
     const auto version = get_version_option();
 
     // Get the public key's payment address.

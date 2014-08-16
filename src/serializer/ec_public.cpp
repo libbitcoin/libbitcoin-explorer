@@ -27,7 +27,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/ec_private.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 
 using namespace bc;
 using namespace libwallet;
@@ -81,7 +81,7 @@ std::istream& operator>>(std::istream& input, ec_public& argument)
     std::string hexcode;
     input >> hexcode;
 
-    ec_point point = hex(hexcode);
+    ec_point point = base16(hexcode);
     if (!verify_public_key_fast(point) /*|| !verify_public_key(point)*/)
         throw invalid_option_value(hexcode);
         
@@ -91,7 +91,7 @@ std::istream& operator>>(std::istream& input, ec_public& argument)
 
 std::ostream& operator<<(std::ostream& output, const ec_public& argument)
 {
-    output << hex(argument.value_);
+    output << base16(argument.value_);
     return output;
 }
 

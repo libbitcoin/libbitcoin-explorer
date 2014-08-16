@@ -31,7 +31,7 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and hd_public_key.
+ * Serialization helper to convert between base16 string and hd_public_key.
  */
 class hd_pub
 {

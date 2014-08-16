@@ -33,7 +33,7 @@ using namespace sx::serializer;
 console_result hd_to_wif::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const hd_private_key secret = get_secret_argument();
+    const hd_private_key& secret = get_hd_private_key_argument();
 
     // TESTNET OPTION DOES NOT REQUIRE RECOMPILE
 

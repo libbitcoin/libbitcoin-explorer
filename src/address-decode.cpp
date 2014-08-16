@@ -33,7 +33,7 @@ using namespace sx::serializer;
 console_result address_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& address = get_address_argument();
+    const auto& address = get_bitcoin_address_argument();
 
     // TESTNET VERSION REQUIRES RECOMPILE
 

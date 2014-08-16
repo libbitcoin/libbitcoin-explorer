@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(sha160__invoke__always__okay_output)
 {
     // $ sx sha160 900df00d
     SX_DECLARE_COMMAND(sha160);
-    command.set_hex_argument({ "900df00d" });
+    command.set_base16_argument({ "900df00d" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("ec5386a03e88b5ac9328f4eabe5103e601906daa\n");
 }

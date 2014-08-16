@@ -18,24 +18,25 @@ libsx_la_SOURCES = \
     generated.cpp \
     prop_tree.cpp \
     serializer/address.hpp \
+    serializer/base16.hpp \
     serializer/base58.hpp \
+    serializer/btc.hpp \
     serializer/btc160.hpp \
     serializer/btc256.hpp \
     serializer/ec_private.hpp \
     serializer/ec_public.hpp \
     serializer/encoding.hpp \
+    serializer/hashtype.hpp \
     serializer/hd_key.hpp \
     serializer/hd_priv.hpp \
     serializer/hd_pub.hpp \
     serializer/header.hpp \
-    serializer/hex.hpp \
     serializer/input.hpp \
     serializer/output.hpp \
     serializer/point.hpp \
     serializer/prefix.hpp \
     serializer/raw.hpp \
     serializer/script.hpp \
-    serializer/signature_hash.hpp \
     serializer/stealth.hpp \
     serializer/transaction.hpp \
     serializer/wif.hpp \

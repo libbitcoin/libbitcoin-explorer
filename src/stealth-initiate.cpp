@@ -23,25 +23,25 @@
 #include <iostream>
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
+#include <sx/serializer/ec_public.hpp>
 
 using namespace libwallet;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
 console_result stealth_initiate::invoke(std::ostream& output,
     std::ostream& error)
 {
-    //// Bound parameters.
-    //const auto index = get_index_option();
+    // Bound parameters.
+    const auto& scan_pubkey = get_scan_ec_public_key_argument();
+    const auto& spend_pubkey = get_spend_ec_public_key_argument();
+    const auto& ephemeral_secret = get_ephemeral_ec_private_key_argument();
 
-    // 3 args
+    auto public_key = initiate_stealth(ephemeral_secret, scan_pubkey,
+        spend_pubkey);
 
-    //ec_secret ephem_secret = decode_hash(argv[1]);
-    //ec_point scan_pubkey = decode_hex(argv[2]);
-    //ec_point spend_pubkey = decode_hex(argv[3]);
-    //ec_point pubkey = initiate_stealth(ephem_secret, scan_pubkey, spend_pubkey);
-    //output << pubkey << std::endl;
-
+    output << ec_public(public_key) << std::endl;
     return console_result::okay;
 }
 

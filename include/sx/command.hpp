@@ -162,6 +162,11 @@ public:
                 "obelisk.service",
                 value<std::string>(&setting_.obelisk.service)->default_value("tcp://obelisk.unsystem.net:8081"),
                 "The URI of the server to which this application may connect."
+            )
+            (
+                "obelisk.socks-proxy",
+                value<std::string>(&setting_.obelisk.socks_proxy)->default_value("localhost:1080"),
+                "The host name and port number of a SOCKS 4a or SOCKS 5 proxy server."
             );
     }
 	
@@ -298,6 +303,22 @@ public:
         setting_.obelisk.service = value;
     }
     
+    /**
+     * Get the value of the obelisk.socks-proxy setting.
+     */
+    virtual std::string get_obelisk_socks_proxy_setting()
+    {
+        return setting_.obelisk.socks_proxy;
+    }
+
+    /**
+     * Set the value of the obelisk.socks-proxy setting.
+     */
+    virtual void set_obelisk_socks_proxy_setting(std::string value)
+    {
+        setting_.obelisk.socks_proxy = value;
+    }
+    
 protected:
 
     /**
@@ -367,13 +388,15 @@ private:
             obelisk()
               : client_certificate(),
                 server_public_key(),
-                service()
+                service(),
+                socks_proxy()
             {
             }
             
             boost::filesystem::path client_certificate;
             std::string server_public_key;
             std::string service;
+            std::string socks_proxy;
         } obelisk;
 
         setting()

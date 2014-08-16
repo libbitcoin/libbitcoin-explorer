@@ -20,8 +20,8 @@
 #ifndef SX_SHA512_HPP
 #define SX_SHA512_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -97,7 +98,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HEX", 1);
+            .add("BASE16", 1);
     }
 	
 	/**
@@ -108,7 +109,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_hex_argument(), "HEX", variables, input);
+        load_input(get_base16_argument(), "BASE16", variables, input);
     }
     
     /**
@@ -131,12 +132,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Perform a SHA512 hash of hex encoded data."
+                "Perform a SHA512 hash of Base16 data."
             )
             (
-                "HEX",
-                value<serializer::hex>(&argument_.hex),
-                "The hex encoded data to hash."
+                "BASE16",
+                value<serializer::base16>(&argument_.base16),
+                "The Base16 data to hash."
             );
 
         return options;
@@ -153,20 +154,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HEX argument.
+     * Get the value of the BASE16 argument.
      */
-    virtual serializer::hex& get_hex_argument()
+    virtual serializer::base16& get_base16_argument()
     {
-        return argument_.hex;
+        return argument_.base16;
     }
     
     /**
-     * Set the value of the HEX argument.
+     * Set the value of the BASE16 argument.
      */
-    virtual void set_hex_argument(
-        const serializer::hex& value)
+    virtual void set_base16_argument(
+        const serializer::base16& value)
     {
-        argument_.hex = value;
+        argument_.base16 = value;
     }
 
     /**
@@ -196,11 +197,11 @@ private:
     struct argument
     {
         argument()
-          : hex()
+          : base16()
         {
         }
         
-        serializer::hex hex;
+        serializer::base16 base16;
     } argument_;
     
     /**

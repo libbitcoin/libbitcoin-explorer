@@ -28,7 +28,7 @@
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
 #include <sx/prop_tree.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -40,7 +40,7 @@ static void handle_callback(callback_state& state, const bc::hash_digest& hash,
     size_t height, size_t index)
 {
     // TODO: make ptree.
-    state.output(boost::format("[%1%] Height: %2% Index: %3%") % hex(hash) %
+    state.output(boost::format("[%1%] Height: %2% Index: %3%") % base16(hash) %
         height % index);
 
     --state;

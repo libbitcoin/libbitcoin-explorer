@@ -166,7 +166,7 @@ static std::string parse_outputs(
         return pay_address.encoded();
     }
 
-    // Otherwise the token is assumed to be a hex-encoded script.
+    // Otherwise the token is assumed to be a base16-encoded script.
     output.script = script(target);
 
     outputs.push_back(output);
@@ -226,7 +226,7 @@ std::istream& operator>>(std::istream& input, output& argument)
 std::ostream& operator<<(std::ostream& stream, const output& argument)
 {
     // This does not retain the original serialized form.
-    // Instead this serializes the last output, as hex encoded script.
+    // Instead this serializes the last output, as base16 encoded script.
     const auto& last = argument.value_.back();
     stream << script(last.script) << SX_TX_POINT_DELIMITER << last.value;
     return stream;

@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef HEX_HPP
-#define HEX_HPP
+#ifndef BASE16_HPP
+#define BASE16_HPP
 
 #include <array>
 #include <iostream>
@@ -33,35 +33,35 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex string and data_chunk.
+ * Serialization helper to convert between base16 string and data_chunk.
  */
-class hex
+class base16
 {
 public:
 
     /**
      * Default constructor.
      */
-    hex();
+    base16();
 
     /**
      * Initialization constructor.
-     * @param[in]  hex  The value to initialize with.
+     * @param[in]  base16  The value to initialize with.
      */
-    hex(const std::string& hexcode);
+    base16(const std::string& hexcode);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hex(const bc::data_chunk& value);
+    base16(const bc::data_chunk& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
     template<size_t Size>
-    hex(const bc::byte_array<Size>& value)
+    base16(const bc::byte_array<Size>& value)
         : value_(value.begin(), value.end())
     {
     }
@@ -70,7 +70,7 @@ public:
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    hex(const hex& other);
+    base16(const base16& other);
 
     /**
      * Return a reference to the data member.
@@ -90,7 +90,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, hex& argument);
+    friend std::istream& operator>>(std::istream& input, base16& argument);
 
     /**
      * Overload stream out.
@@ -98,7 +98,8 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const hex& argument);
+    friend std::ostream& operator<<(std::ostream& output, 
+        const base16& argument);
 
 private:
 

@@ -20,8 +20,8 @@
 #ifndef SX_INPUT_SET_HPP
 #define SX_INPUT_SET_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -147,13 +148,13 @@ public:
             )
             (
                 "TRANSACTION",
-                value<std::string>(),
-                "The file path of the hex encoded transaction."
+                value<std::string>()->required(),
+                "The file path of the Base16 transaction."
             )
             (
                 "SIGNATURE_AND_PUBKEY_SCRIPT",
                 value<serializer::script>(&argument_.signature_and_pubkey_script),
-                "The hex encoded signature script to assign to the input. If not specified the script is read from STDIN."
+                "The Base16 signature script to assign to the input. If not specified the script is read from STDIN."
             );
 
         return options;

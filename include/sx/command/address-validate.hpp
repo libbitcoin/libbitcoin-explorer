@@ -20,8 +20,8 @@
 #ifndef SX_ADDRESS_VALIDATE_HPP
 #define SX_ADDRESS_VALIDATE_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -97,7 +98,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("ADDRESS", -1);
+            .add("BITCOIN_ADDRESS", -1);
     }
 	
 	/**
@@ -108,7 +109,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_addresss_argument(), "ADDRESS", variables, input);
+        load_input(get_bitcoin_addresss_argument(), "BITCOIN_ADDRESS", variables, input);
     }
     
     /**
@@ -134,8 +135,8 @@ public:
                 "Validate a set of addresses. The result is successful if all addresses are valid."
             )
             (
-                "ADDRESS",
-                value<std::vector<serializer::address>>(&argument_.addresss),
+                "BITCOIN_ADDRESS",
+                value<std::vector<serializer::address>>(&argument_.bitcoin_addresss),
                 "The set of Bitcoin addresses to validate."
             );
 
@@ -153,20 +154,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the ADDRESS arguments.
+     * Get the value of the BITCOIN_ADDRESS arguments.
      */
-    virtual std::vector<serializer::address>& get_addresss_argument()
+    virtual std::vector<serializer::address>& get_bitcoin_addresss_argument()
     {
-        return argument_.addresss;
+        return argument_.bitcoin_addresss;
     }
     
     /**
-     * Set the value of the ADDRESS arguments.
+     * Set the value of the BITCOIN_ADDRESS arguments.
      */
-    virtual void set_addresss_argument(
+    virtual void set_bitcoin_addresss_argument(
         const std::vector<serializer::address>& value)
     {
-        argument_.addresss = value;
+        argument_.bitcoin_addresss = value;
     }
 
     /**
@@ -196,11 +197,11 @@ private:
     struct argument
     {
         argument()
-          : addresss()
+          : bitcoin_addresss()
         {
         }
         
-        std::vector<serializer::address> addresss;
+        std::vector<serializer::address> bitcoin_addresss;
     } argument_;
     
     /**

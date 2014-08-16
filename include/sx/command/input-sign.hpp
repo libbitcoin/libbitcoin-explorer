@@ -20,8 +20,8 @@
 #ifndef SX_INPUT_SIGN_HPP
 #define SX_INPUT_SIGN_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -106,7 +107,7 @@ public:
     {
         return get_argument_metadata()
             .add("TRANSACTION", 1)
-            .add("SECRET", 1)
+            .add("EC_PRIVATE_KEY", 1)
             .add("NONCE", 1)
             .add("PREVOUT_SCRIPT", 1);
     }
@@ -151,28 +152,28 @@ public:
             )
             (
                 "sighash,s",
-                value<serializer::signature_hash>(&option_.sighash),
+                value<serializer::hashtype>(&option_.sighash),
                 "A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
             )
             (
                 "TRANSACTION",
-                value<std::string>(),
-                "The file path of the hex encoded transaction."
+                value<std::string>()->required(),
+                "The file path of the Base16 transaction."
             )
             (
-                "SECRET",
-                value<serializer::ec_private>(&argument_.secret),
-                "The hex encoded EC private key to sign with."
+                "EC_PRIVATE_KEY",
+                value<serializer::ec_private>(&argument_.ec_private_key)->required(),
+                "The Base16 EC private key to sign with."
             )
             (
                 "NONCE",
-                value<serializer::hex>(&argument_.nonce),
-                "The hex encoded random value to be used as the signing nonce. Must be at least 128 bits in length."
+                value<serializer::base16>(&argument_.nonce)->required(),
+                "The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length."
             )
             (
                 "PREVOUT_SCRIPT",
                 value<serializer::script>(&argument_.prevout_script),
-                "The hex encoded previous output script to use in signing. If not specified the script is read from STDIN."
+                "The Base16 previous output script to use in signing. If not specified the script is read from STDIN."
             );
 
         return options;
@@ -206,26 +207,26 @@ public:
     }
 
     /**
-     * Get the value of the SECRET argument.
+     * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual serializer::ec_private& get_secret_argument()
+    virtual serializer::ec_private& get_ec_private_key_argument()
     {
-        return argument_.secret;
+        return argument_.ec_private_key;
     }
     
     /**
-     * Set the value of the SECRET argument.
+     * Set the value of the EC_PRIVATE_KEY argument.
      */
-    virtual void set_secret_argument(
+    virtual void set_ec_private_key_argument(
         const serializer::ec_private& value)
     {
-        argument_.secret = value;
+        argument_.ec_private_key = value;
     }
 
     /**
      * Get the value of the NONCE argument.
      */
-    virtual serializer::hex& get_nonce_argument()
+    virtual serializer::base16& get_nonce_argument()
     {
         return argument_.nonce;
     }
@@ -234,7 +235,7 @@ public:
      * Set the value of the NONCE argument.
      */
     virtual void set_nonce_argument(
-        const serializer::hex& value)
+        const serializer::base16& value)
     {
         argument_.nonce = value;
     }
@@ -293,7 +294,7 @@ public:
     /**
      * Get the value of the sighash option.
      */
-    virtual serializer::signature_hash& get_sighash_option()
+    virtual serializer::hashtype& get_sighash_option()
     {
         return option_.sighash;
     }
@@ -302,7 +303,7 @@ public:
      * Set the value of the sighash option.
      */
     virtual void set_sighash_option(
-        const serializer::signature_hash& value)
+        const serializer::hashtype& value)
     {
         option_.sighash = value;
     }
@@ -318,15 +319,15 @@ private:
     {
         argument()
           : transaction(),
-            secret(),
+            ec_private_key(),
             nonce(),
             prevout_script()
         {
         }
         
         serializer::transaction transaction;
-        serializer::ec_private secret;
-        serializer::hex nonce;
+        serializer::ec_private ec_private_key;
+        serializer::base16 nonce;
         serializer::script prevout_script;
     } argument_;
     
@@ -346,7 +347,7 @@ private:
         
         bool help;
         size_t index;
-        serializer::signature_hash sighash;
+        serializer::hashtype sighash;
     } option_;
 };
 

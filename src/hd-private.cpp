@@ -36,7 +36,7 @@ console_result hd_private::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto hard = get_hard_option();
     const auto index = get_index_option();
-    const hd_private_key& secret = get_secret_argument();
+    const hd_private_key& secret = get_hd_private_key_argument();
 
     const auto position = if_else(hard, index + first_hardened_key, index);
     const auto child_key = secret.generate_private_key(position);

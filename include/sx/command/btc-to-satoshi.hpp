@@ -20,8 +20,8 @@
 #ifndef SX_BTC_TO_SATOSHI_HPP
 #define SX_BTC_TO_SATOSHI_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -141,8 +142,8 @@ public:
             )
             (
                 "BTC",
-                value<std::string>(&argument_.btc),
-                "The whole number of BTC to convert."
+                value<serializer::btc>(&argument_.btc),
+                "The number of BTC to convert."
             );
 
         return options;
@@ -161,7 +162,7 @@ public:
     /**
      * Get the value of the BTC argument.
      */
-    virtual std::string& get_btc_argument()
+    virtual serializer::btc& get_btc_argument()
     {
         return argument_.btc;
     }
@@ -170,7 +171,7 @@ public:
      * Set the value of the BTC argument.
      */
     virtual void set_btc_argument(
-        const std::string& value)
+        const serializer::btc& value)
     {
         argument_.btc = value;
     }
@@ -206,7 +207,7 @@ private:
         {
         }
         
-        std::string btc;
+        serializer::btc btc;
     } argument_;
     
     /**

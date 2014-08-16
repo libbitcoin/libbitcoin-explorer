@@ -20,8 +20,8 @@
 #ifndef SX_HD_TO_WIF_HPP
 #define SX_HD_TO_WIF_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -97,7 +98,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SECRET", 1);
+            .add("HD_PRIVATE_KEY", 1);
     }
 	
 	/**
@@ -108,7 +109,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_secret_argument(), "SECRET", variables, input);
+        load_input(get_hd_private_key_argument(), "HD_PRIVATE_KEY", variables, input);
     }
     
     /**
@@ -134,8 +135,8 @@ public:
                 "Convert a HD (BIP32) private key to a WIF private key."
             )
             (
-                "SECRET",
-                value<serializer::hd_priv>(&argument_.secret),
+                "HD_PRIVATE_KEY",
+                value<serializer::hd_priv>(&argument_.hd_private_key),
                 "The HD private key to convert."
             );
 
@@ -153,20 +154,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SECRET argument.
+     * Get the value of the HD_PRIVATE_KEY argument.
      */
-    virtual serializer::hd_priv& get_secret_argument()
+    virtual serializer::hd_priv& get_hd_private_key_argument()
     {
-        return argument_.secret;
+        return argument_.hd_private_key;
     }
     
     /**
-     * Set the value of the SECRET argument.
+     * Set the value of the HD_PRIVATE_KEY argument.
      */
-    virtual void set_secret_argument(
+    virtual void set_hd_private_key_argument(
         const serializer::hd_priv& value)
     {
-        argument_.secret = value;
+        argument_.hd_private_key = value;
     }
 
     /**
@@ -196,11 +197,11 @@ private:
     struct argument
     {
         argument()
-          : secret()
+          : hd_private_key()
         {
         }
         
-        serializer::hd_priv secret;
+        serializer::hd_priv hd_private_key;
     } argument_;
     
     /**

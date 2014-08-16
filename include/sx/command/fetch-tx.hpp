@@ -20,8 +20,8 @@
 #ifndef SX_FETCH_TX_HPP
 #define SX_FETCH_TX_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -96,7 +97,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("EC_PRIVATE_KEY", 1);
     }
 	
 	/**
@@ -139,7 +141,7 @@ public:
             (
                 "hash,s",
                 value<std::vector<serializer::btc256>>(&option_.hashs),
-                "The set of hex encoded transaction hashes to get. Overrides prefix and height options."
+                "The set of Base16 transaction hashes to get. Overrides prefix and height options."
             )
             (
                 "prefix,p",
@@ -152,9 +154,9 @@ public:
                 "The minimum block height of prefix transactions to get. Includes all blocks if not set."
             )
             (
-                "secret,s",
-                value<serializer::ec_private>(&option_.secret),
-                "The hex encoded EC private key to use locally in confirming stealth transactions."
+                "EC_PRIVATE_KEY",
+                value<serializer::ec_private>(&argument_.ec_private_key),
+                "The Base16 EC private key to use locally in confirming stealth transactions."
             );
 
         return options;
@@ -169,6 +171,23 @@ public:
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the EC_PRIVATE_KEY argument.
+     */
+    virtual serializer::ec_private& get_ec_private_key_argument()
+    {
+        return argument_.ec_private_key;
+    }
+    
+    /**
+     * Set the value of the EC_PRIVATE_KEY argument.
+     */
+    virtual void set_ec_private_key_argument(
+        const serializer::ec_private& value)
+    {
+        argument_.ec_private_key = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -255,23 +274,6 @@ public:
         option_.height = value;
     }
 
-    /**
-     * Get the value of the secret option.
-     */
-    virtual serializer::ec_private& get_secret_option()
-    {
-        return option_.secret;
-    }
-    
-    /**
-     * Set the value of the secret option.
-     */
-    virtual void set_secret_option(
-        const serializer::ec_private& value)
-    {
-        option_.secret = value;
-    }
-
 private:
 
     /**
@@ -282,9 +284,11 @@ private:
     struct argument
     {
         argument()
+          : ec_private_key()
         {
         }
         
+        serializer::ec_private ec_private_key;
     } argument_;
     
     /**
@@ -299,8 +303,7 @@ private:
             format(),
             hashs(),
             prefixs(),
-            height(),
-            secret()
+            height()
         {
         }
         
@@ -309,7 +312,6 @@ private:
         std::vector<serializer::btc256> hashs;
         std::vector<serializer::prefix> prefixs;
         size_t height;
-        serializer::ec_private secret;
     } option_;
 };
 

@@ -25,17 +25,19 @@ sx_utility_include_HEADERS += \
 sx_utility_includedir = $(includedir)/sx/serializer
 sx_utility_include_HEADERS += \
     address.hpp \
+    base16.hpp \
     base58.hpp \
+    btc.hpp \
     btc160.hpp \
     btc256.hpp \
     ec_private.hpp \
     ec_public.hpp \
     encoding.hpp \
+    hashtype.hpp \
     hd_key.hpp \
     hd_priv.hpp \
     hd_pub.hpp \
     header.hpp \
-    hex.hpp \
     history.hpp \
     input.hpp \
     output.hpp \
@@ -43,7 +45,6 @@ sx_utility_include_HEADERS += \
     prefix.hpp \
     raw.hpp \
     script.hpp \
-    signature_hash.hpp \
     stealth.hpp \
     transaction.hpp \
     wif.hpp \

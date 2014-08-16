@@ -29,7 +29,7 @@ using namespace sx::extension;
 console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& secret = get_secret_argument();
+    const auto& secret = get_ec_private_key_argument();
     const auto& passphrase = get_passphrase_argument();
 
     // TODO: implement BIP38
@@ -60,14 +60,14 @@ console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
 //elif len(args) == 1: seed = args[0]
 //else: seed = args[0] + ':' + args[1]
 //
-//def bitcoin256(x): return hashlib.bitcoin256(x).hexdigest()
+//def bitcoin256(x): return hashlib.bitcoin256(x).base16digest()
 //
 //def slowsha(x,rounds=1000):
 //    old, new = x, ''
 //    for i in range(rounds):
 //        new = hashlib.bitcoin256(old).digest()
 //        old = new+x
-//    return new.encode('hex')
+//    return new.encode('base16')
 //
 //if opts.get('algo','') == 'slowsha': algo = slowsha
 //elif opts.get('rounds',None): algo = lambda x: slowsha(x,int(opts['rounds']))

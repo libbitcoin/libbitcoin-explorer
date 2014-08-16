@@ -26,7 +26,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 
 using namespace bc;
 using namespace po;
@@ -84,7 +84,7 @@ std::istream& operator>>(std::istream& input, btc160& argument)
 
 std::ostream& operator<<(std::ostream& output, const btc160& argument)
 {
-    output << hex(argument.value_);
+    output << base16(argument.value_);
     return output;
 }
 

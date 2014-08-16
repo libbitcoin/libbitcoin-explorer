@@ -26,7 +26,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/prop_tree.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -48,7 +48,7 @@ wrapper::wrapper(const std::string& wrapped)
 
 wrapper::wrapper(const data_chunk& wrapped)
 {
-    unwrap(value_, hex(wrapped));
+    unwrap(value_, base16(wrapped));
 }
 
 wrapper::wrapper(const wrapped_data& wrapped)
@@ -88,7 +88,7 @@ std::istream& operator>>(std::istream& input, wrapper& argument)
     std::string hexcode;
     input >> hexcode;
 
-    if (!unwrap(argument.value_, hex(hexcode)))
+    if (!unwrap(argument.value_, base16(hexcode)))
         throw invalid_option_value(hexcode);
 
     return input;
@@ -97,7 +97,7 @@ std::istream& operator>>(std::istream& input, wrapper& argument)
 std::ostream& operator<<(std::ostream& output, const wrapper& argument)
 {
     const auto wrapped = wrap(argument.value_);
-    output << hex(wrapped);
+    output << base16(wrapped);
     return output;
 }
 

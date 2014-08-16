@@ -31,7 +31,7 @@ using namespace sx::serializer;
 console_result address_validate::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& addresses = get_addresss_argument();
+    const auto& addresses = get_bitcoin_addresss_argument();
 
     // TESTNET VERSION REQUIRES RECOMPILE
     // If any address is not valid the deserializer will throw.

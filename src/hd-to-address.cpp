@@ -33,7 +33,7 @@ using namespace sx::serializer;
 console_result hd_to_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& key = get_key_argument();
+    const auto& key = get_hd_key_argument();
 
     // Get public from private and otherwise get public.
     const auto public_key = key.derived_public_key();

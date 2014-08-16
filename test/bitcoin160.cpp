@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(bitcoin160__invoke__always__okay_output)
 {
     // $ sx bitcoin160 900df00d
     SX_DECLARE_COMMAND(bitcoin160);
-    command.set_hex_argument({ "900df00d" });
+    command.set_base16_argument({ "900df00d" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("49f180cdaa4c6564f74a0b0321633bbcba4ef9c5\n");
 }

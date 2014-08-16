@@ -18,13 +18,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/btc.hpp>
 
-#include <array>
-#include <iostream>
-#include <sstream>
-#include <string>
 #include <cstdint>
+#include <iostream>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
@@ -35,54 +32,48 @@ using namespace po;
 namespace sx {
 namespace serializer {
 
-    hex::hex()
-        : value_()
-    {
-    }
+btc::btc()
+{
+}
 
-    hex::hex(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+btc::btc(const std::string& btc)
+{
+    std::stringstream(btc) >> *this;
+}
 
-    hex::hex(const data_chunk& value)
-        : value_(value)
-    {
-    }
+btc::btc(uint64_t satoshi)
+    : value_(satoshi)
+{
+}
 
-    hex::hex(const hex& other)
-        : hex(other.value_)
-    {
-    }
+btc::btc(const btc& other)
+    : value_(other.value_)
+{
+}
 
-    data_chunk& hex::data()
-    {
-        return value_;
-    }
+btc::operator const uint64_t() const
+{
+    return value_;
+}
 
-    hex::operator const data_chunk&() const
-    {
-        return value_; 
-    }
+std::istream& operator>>(std::istream& input, btc& argument)
+{
+    std::string bitcoins;
+    input >> bitcoins;
 
-    std::istream& operator>>(std::istream& input, hex& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
+    if (!btc_to_satoshi(argument.value_, bitcoins))
+        throw invalid_option_value(bitcoins);
 
-        data_chunk chunk = decode_hex(hexcode);
-        if (chunk.empty())
-            throw invalid_option_value(hexcode);
+    return input;
+}
 
-        argument.value_.assign(chunk.begin(), chunk.end());
-        return input;
-    }
-
-    std::ostream& operator<<(std::ostream& output, const hex& argument)
-    {
-        output << encode_hex(argument.value_);
-        return output;
-    }
+std::ostream& operator<<(std::ostream& output, const btc& argument)
+{
+    std::string bitcoins;
+    bitcoins = satoshi_to_btc(argument.value_);
+    output << bitcoins;
+    return output;
+}
 
 } // sx
 } // serializer

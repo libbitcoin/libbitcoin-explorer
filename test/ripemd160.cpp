@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(ripemd160__invoke__always__okay_output)
 {
     // $ sx ripemd160 900df00d
     SX_DECLARE_COMMAND(ripemd160);
-    command.set_hex_argument({ "900df00d" });
+    command.set_base16_argument({ "900df00d" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("31589998e7e92e769bfd5d453d12fbfa17c86297\n");
 }

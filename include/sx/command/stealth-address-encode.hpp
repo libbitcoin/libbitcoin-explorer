@@ -20,8 +20,8 @@
 #ifndef SX_STEALTH_ADDRESS_ENCODE_HPP
 #define SX_STEALTH_ADDRESS_ENCODE_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -97,8 +98,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SCAN_KEY", 1)
-            .add("SPEND_KEY", 255);
+            .add("SCAN_EC_PUBLIC_KEY", 1)
+            .add("SPEND_EC_PUBLIC_KEY", -1);
     }
 	
 	/**
@@ -109,7 +110,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_spend_keys_argument(), "SPEND_KEY", variables, input);
+        load_input(get_spend_ec_public_keys_argument(), "SPEND_EC_PUBLIC_KEY", variables, input);
     }
     
     /**
@@ -132,32 +133,27 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Encode a stealth address."
+                "Encode a stealth payment address."
             )
             (
                 "prefix,p",
                 value<serializer::prefix>(&option_.prefix),
-                "The binary encoded stealth search prefix."
-            )
-            (
-                "reuse-key,r",
-                value<bool>(&option_.reuse_key)->implicit_value(true),
-                "Reuse the SCAN_PUBKEY as a SPEND_PUBKEY."
+                "The binary encoded stealth payment search prefix."
             )
             (
                 "signatures,s",
                 value<uint8_t>(&option_.signatures),
-                "Specify the number of signatures needed. Defaults to the number of SPEND_PUBKEYs provided."
+                "Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_EC_PUBLIC_KEYs."
             )
             (
-                "SCAN_KEY",
-                value<serializer::ec_public>(&argument_.scan_key)->required(),
-                "The hex encoded EC public key of the recipient."
+                "SCAN_EC_PUBLIC_KEY",
+                value<serializer::ec_public>(&argument_.scan_ec_public_key)->required(),
+                "The Base16 EC public key required to generate a payment."
             )
             (
-                "SPEND_KEY",
-                value<std::vector<serializer::ec_public>>(&argument_.spend_keys),
-                "The set of hex encoded EC public keys that are spent to."
+                "SPEND_EC_PUBLIC_KEY",
+                value<std::vector<serializer::ec_public>>(&argument_.spend_ec_public_keys),
+                "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_EC_PUBLIC_KEY."
             );
 
         return options;
@@ -174,37 +170,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SCAN_KEY argument.
+     * Get the value of the SCAN_EC_PUBLIC_KEY argument.
      */
-    virtual serializer::ec_public& get_scan_key_argument()
+    virtual serializer::ec_public& get_scan_ec_public_key_argument()
     {
-        return argument_.scan_key;
+        return argument_.scan_ec_public_key;
     }
     
     /**
-     * Set the value of the SCAN_KEY argument.
+     * Set the value of the SCAN_EC_PUBLIC_KEY argument.
      */
-    virtual void set_scan_key_argument(
+    virtual void set_scan_ec_public_key_argument(
         const serializer::ec_public& value)
     {
-        argument_.scan_key = value;
+        argument_.scan_ec_public_key = value;
     }
 
     /**
-     * Get the value of the SPEND_KEY arguments.
+     * Get the value of the SPEND_EC_PUBLIC_KEY arguments.
      */
-    virtual std::vector<serializer::ec_public>& get_spend_keys_argument()
+    virtual std::vector<serializer::ec_public>& get_spend_ec_public_keys_argument()
     {
-        return argument_.spend_keys;
+        return argument_.spend_ec_public_keys;
     }
     
     /**
-     * Set the value of the SPEND_KEY arguments.
+     * Set the value of the SPEND_EC_PUBLIC_KEY arguments.
      */
-    virtual void set_spend_keys_argument(
+    virtual void set_spend_ec_public_keys_argument(
         const std::vector<serializer::ec_public>& value)
     {
-        argument_.spend_keys = value;
+        argument_.spend_ec_public_keys = value;
     }
 
     /**
@@ -242,23 +238,6 @@ public:
     }
 
     /**
-     * Get the value of the reuse-key option.
-     */
-    virtual bool& get_reuse_key_option()
-    {
-        return option_.reuse_key;
-    }
-    
-    /**
-     * Set the value of the reuse-key option.
-     */
-    virtual void set_reuse_key_option(
-        const bool& value)
-    {
-        option_.reuse_key = value;
-    }
-
-    /**
      * Get the value of the signatures option.
      */
     virtual uint8_t& get_signatures_option()
@@ -285,13 +264,13 @@ private:
     struct argument
     {
         argument()
-          : scan_key(),
-            spend_keys()
+          : scan_ec_public_key(),
+            spend_ec_public_keys()
         {
         }
         
-        serializer::ec_public scan_key;
-        std::vector<serializer::ec_public> spend_keys;
+        serializer::ec_public scan_ec_public_key;
+        std::vector<serializer::ec_public> spend_ec_public_keys;
     } argument_;
     
     /**
@@ -304,14 +283,12 @@ private:
         option()
           : help(),
             prefix(),
-            reuse_key(),
             signatures()
         {
         }
         
         bool help;
         serializer::prefix prefix;
-        bool reuse_key;
         uint8_t signatures;
     } option_;
 };

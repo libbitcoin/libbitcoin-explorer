@@ -20,8 +20,8 @@
 #ifndef SX_WRAP_ENCODE_HPP
 #define SX_WRAP_ENCODE_HPP
 
-#include <iostream>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,23 +30,24 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
 #include <sx/serializer/hd_priv.hpp>
 #include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
@@ -131,7 +132,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Add a version byte and checksum to hex encoded data."
+                "Add a version byte and checksum to Base16 data."
             )
             (
                 "version,v",
@@ -140,8 +141,8 @@ public:
             )
             (
                 "PAYLOAD",
-                value<serializer::hex>(&argument_.payload),
-                "The hex encoded data to wrap."
+                value<serializer::base16>(&argument_.payload),
+                "The Base16 data to wrap."
             );
 
         return options;
@@ -160,7 +161,7 @@ public:
     /**
      * Get the value of the PAYLOAD argument.
      */
-    virtual serializer::hex& get_payload_argument()
+    virtual serializer::base16& get_payload_argument()
     {
         return argument_.payload;
     }
@@ -169,7 +170,7 @@ public:
      * Set the value of the PAYLOAD argument.
      */
     virtual void set_payload_argument(
-        const serializer::hex& value)
+        const serializer::base16& value)
     {
         argument_.payload = value;
     }
@@ -222,7 +223,7 @@ private:
         {
         }
         
-        serializer::hex payload;
+        serializer::base16 payload;
     } argument_;
     
     /**

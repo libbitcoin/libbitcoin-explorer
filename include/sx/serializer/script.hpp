@@ -32,7 +32,7 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between hex/raw script and script_type.
+ * Serialization helper to convert between base16/raw script and script_type.
  */
     class script
 {

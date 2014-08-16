@@ -23,7 +23,7 @@
 #include <iostream>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -38,7 +38,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     const auto hash_type = get_sighash_option();
     const data_chunk& nonce = get_nonce_argument();
     const tx_type& tx = get_transaction_argument();
-    const auto& secret = get_secret_argument();
+    const auto& secret = get_ec_private_key_argument();
     const auto& script = get_prevout_script_argument();
 
     if (nonce.size() < minimum_seed_size)
@@ -53,7 +53,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    hex signature;
+    base16 signature;
     auto& buffer = signature.data();
     if (!sign_transaction(buffer, tx, index, script, secret, nonce, hash_type))
     {

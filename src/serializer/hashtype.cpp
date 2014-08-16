@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/serializer/signature_hash.hpp>
+#include <sx/serializer/hashtype.hpp>
 
 #include <exception>
 #include <iostream>
@@ -33,48 +33,48 @@ namespace sx {
 namespace serializer {
 
 // DRY
-static const char* signature_hash_all = "all";
-static const char* signature_hash_none = "none";
-static const char* signature_hash_single = "single";
-static const char* signature_hash_anyone_can_pay = "anyone_can_pay";
+static const char* hashtype_all = "all";
+static const char* hashtype_none = "none";
+static const char* hashtype_single = "single";
+static const char* hashtype_anyone_can_pay = "anyone_can_pay";
 
-signature_hash::signature_hash()
-    : signature_hash(sighash::single)
+hashtype::hashtype()
+    : hashtype(sighash::single)
 {
 }
 
-signature_hash::signature_hash(const std::string& token)
+hashtype::hashtype(const std::string& token)
 {
     std::stringstream(token) >> *this;
 }
 
-signature_hash::signature_hash(const sighash& value)
+hashtype::hashtype(const sighash& value)
     : value_(value)
 {
 }
 
-signature_hash::signature_hash(const signature_hash& other)
+hashtype::hashtype(const hashtype& other)
     : value_(other.value_)
 {
 }
 
-signature_hash::operator const sighash() const
+hashtype::operator const sighash() const
 {
     return value_;
 }
 
-std::istream& operator>>(std::istream& input, signature_hash& argument)
+std::istream& operator>>(std::istream& input, hashtype& argument)
 {
     std::string text;
     input >> text;
 
-    if (text == signature_hash_all)
+    if (text == hashtype_all)
         argument.value_ = sighash::all;
-    else if (text == signature_hash_none)
+    else if (text == hashtype_none)
         argument.value_ = sighash::none;
-    else if (text == signature_hash_single)
+    else if (text == hashtype_single)
         argument.value_ = sighash::single;
-    else if (text == signature_hash_anyone_can_pay)
+    else if (text == hashtype_anyone_can_pay)
         argument.value_ = sighash::anyone_can_pay;
     else
         throw invalid_option_value(text);
@@ -82,23 +82,23 @@ std::istream& operator>>(std::istream& input, signature_hash& argument)
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const signature_hash& argument)
+std::ostream& operator<<(std::ostream& output, const hashtype& argument)
 {
     std::string value;
 
     switch (argument.value_)
     {
         case sighash::all:
-            value = signature_hash_all;
+            value = hashtype_all;
             break;
         case sighash::none:
-            value = signature_hash_none;
+            value = hashtype_none;
             break;
         case sighash::single:
-            value = signature_hash_single;
+            value = hashtype_single;
             break;
         case sighash::anyone_can_pay:
-            value = signature_hash_anyone_can_pay;
+            value = hashtype_anyone_can_pay;
             break;
         default:
             throw std::exception("Unexpected signature hash type value.");

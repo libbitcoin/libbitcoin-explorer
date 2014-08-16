@@ -36,7 +36,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto hard = get_hard_option();
     const auto index = get_index_option();
-    const auto& key = get_key_argument();
+    const auto& key = get_hd_public_key_argument();
 
     hd_public_key child_key;
     const hd_public_key& public_key = key;

@@ -28,7 +28,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/prop_tree.hpp>
-#include <sx/serializer/hex.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -49,7 +49,7 @@ transaction::transaction(const std::string& hexcode)
 }
 
 transaction::transaction(const data_chunk& value)
-    : transaction((const std::string&)hex(value))
+    : transaction((const std::string&)base16(value))
 {
 }
 
@@ -90,7 +90,7 @@ std::istream& operator>>(std::istream& input, transaction& argument)
     std::string hexcode;
     input >> hexcode;
 
-    if (!deserialize_satoshi_item(argument.value_, hex(hexcode)))
+    if (!deserialize_satoshi_item(argument.value_, base16(hexcode)))
         throw invalid_option_value(hexcode);
 
     return input;
@@ -99,7 +99,7 @@ std::istream& operator>>(std::istream& input, transaction& argument)
 std::ostream& operator<<(std::ostream& output, const transaction& argument)
 {
     const auto bytes = serialize_satoshi_item(argument.value_);
-    output << hex(bytes);
+    output << base16(bytes);
     return output;
 }
 

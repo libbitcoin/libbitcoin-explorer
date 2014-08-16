@@ -21,29 +21,20 @@
 #include <sx/command/satoshi-to-btc.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
+#include <sx/serializer/btc.hpp>
 
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result satoshi_to_btc::invoke(std::ostream& output, std::ostream& error)
+console_result satoshi_to_btc::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
     const auto satoshi = get_satoshi_argument();
 
-    // TODO: parse and validate input and multiply by 10^-8.
-    // std::string bc::satoshi_to_btc(uint64_t value)
-    error << SX_SATOSHI_TO_BTC_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    output << btc(satoshi) << std::endl;
+    return console_result::okay;
 }
-
-//#!/usr/bin/python
-//import sys
-//from decimal import Decimal as D
-//
-//if len(sys.argv) != 2:
-//    print >> sys.stderr, "Usage: sx btc SATOSHIS"
-//    sys.exit(-1)
-//print "%.8f" % (D(sys.argv[1]) * D(10)**-8)
-//sys.exit(0)
-//
