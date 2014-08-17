@@ -49,6 +49,21 @@
 namespace sx {
 
 /**
+ * Cast vector/enumerable elements into a new vector.
+ * @param      <Source>  The source element type.
+ * @param      <Target>  The target element type.
+ * @param[in]  source    The enumeration of Source elements to cast.
+ * @returns              A new enumeration with elements cast to Target.
+ */
+template <typename Source, typename Target>
+std::vector<Target> cast(const std::vector<Source> source)
+{
+    std::vector<Target> target(source.size());
+    target.assign(source.begin(), source.end());
+    return target;
+}
+
+/**
  * Avoid the ternary (just for fun). Must precede tempalte usage for gcc build.
  * You should use with expressions as consequent or alternative as they will be
  * executed regardless of the predicate.

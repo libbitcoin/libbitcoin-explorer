@@ -31,6 +31,7 @@
 #include <sx/prop_tree.hpp>
 #include <sx/serializer/base58.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/utility/utility.hpp>
 
 using namespace bc;
 using namespace libwallet;
@@ -58,17 +59,15 @@ stealth::stealth(const stealth_address& address)
 stealth::stealth(const stealth_prefix& prefix, const ec_public& scan_key,
     const std::vector<ec_public>& spend_keys, uint8_t signatures, bool testnet)
 {
-    // normalize signatures between 1 and 
+    // Normalize signatures between 1 and spend_keys.size().
     const auto size = if_else(spend_keys.empty(), 1, spend_keys.size());
     auto sigs = if_else(signatures == 0, size, signatures);
     sigs = if_else(sigs > size, size, sigs);
 
-    // Convert the serializer vector to a point vector and apple 'reuse'.
-    std::vector<ec_point> spend_points(size);
-    if (spend_keys.empty())
+    // Convert the serializer vector to a point vector and apply 'reuse'.
+    auto spend_points = cast<ec_public, ec_point>(spend_keys);
+    if (spend_points.empty())
         spend_points.push_back(scan_key);
-    else
-        spend_points.assign(spend_keys.begin(), spend_keys.end());
 
     // Persist the value as an address object.
     value_ = stealth_address(prefix, scan_key, spend_points, sigs, testnet);

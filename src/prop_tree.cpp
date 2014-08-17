@@ -51,44 +51,39 @@ ptree prop_tree(const header& header)
     const block_header_type& block_header = header;
 
     ptree tree;
-    tree.put("header.bits", block_header.bits);
-    tree.put("header.hash", base16(hash_block_header(block_header)));
-    tree.put("header.merkle_tree_hash", base16(block_header.merkle));
-    tree.put("header.nonce", block_header.nonce);
-    tree.put("header.previous_block_hash", 
-        base16(block_header.previous_block_hash));
-    tree.put("header.time_stamp", block_header.timestamp);
-    tree.put("header.version", block_header.version);
+    tree.put("bits", block_header.bits);
+    tree.put("hash", base16(hash_block_header(block_header)));
+    tree.put("merkle_tree_hash", base16(block_header.merkle));
+    tree.put("nonce", block_header.nonce);
+    tree.put("previous_block_hash", base16(block_header.previous_block_hash));
+    tree.put("time_stamp", block_header.timestamp);
+    tree.put("version", block_header.version);
     return tree;
 }
 
 ptree prop_tree(const std::vector<header>& headers)
 {
-    ptree tree;
-    for (const auto& header: headers)
-        tree.add_child("headers", prop_tree(header));
-
-    return tree;
+    return prop_tree_list("header", headers);
 }
 
 ptree prop_tree(const history_row& row)
 {
     ptree tree;
-    tree.put("history.value", row.value);
-    tree.put("history.output.point", point(row.output));
+    tree.put("value", row.value);
+    tree.put("output.point", point(row.output));
 
     // missing => pending
     if (row.output_height != 0)
-        tree.put("history.output.height", row.output_height);
+        tree.put("output.height", row.output_height);
 
     // missing => unspent
     if (row.spend.hash != null_hash)
     {
-        tree.put("history.input.point", point(row.spend));
+        tree.put("input.point", point(row.spend));
 
         // missing => pending
         if (row.spend_height != 0)
-            tree.put("history.input.height", row.spend_height);
+            tree.put("input.height", row.spend_height);
     }
 
     return tree;
@@ -96,21 +91,15 @@ ptree prop_tree(const history_row& row)
 
 ptree prop_tree(const std::vector<history_row>& rows)
 {
-    ptree tree;
-    for (const auto& row: rows)
-        tree.add_child("histories", prop_tree(row));
-
-    return tree;
+    return prop_tree_list("history", rows);
 }
 
 ptree prop_tree(const payment_address& history_address,
     const std::vector<history_row>& rows)
 {
     ptree tree;
-    tree.put("histories.address", address(history_address));
-    for (const auto& row: rows)
-        tree.add_child("histories", prop_tree(row));
-
+    tree.put("address", address(history_address));
+    tree.add_child("histories", prop_tree(rows));
     return tree;
 }
 
@@ -136,11 +125,10 @@ ptree prop_tree(const std::vector<balance_row>& rows,
             received_balance += row.value;
     }
 
-    tree.put("balance.address", address(balance_address));
-    tree.put("balance.paid", total_recieved);
-    tree.put("balance.pending", pending_balance);
-    tree.put("balance.received", received_balance);
-
+    tree.put("address", address(balance_address));
+    tree.put("paid", total_recieved);
+    tree.put("pending", pending_balance);
+    tree.put("received", received_balance);
     return tree;
 }
 
@@ -149,40 +137,28 @@ ptree prop_tree(const tx_input_type& tx_input)
     ptree tree;
     payment_address script_address;
     if (extract(script_address, tx_input.script))
-        tree.put("input.address", address(script_address));
+        tree.put("address", address(script_address));
 
-    tree.put("input.previous_output", point(tx_input.previous_output));
-    tree.put("input.script", script(tx_input.script).mnemonic());
-    tree.put("input.sequence", tx_input.sequence);
-
+    tree.put("previous_output", point(tx_input.previous_output));
+    tree.put("script", script(tx_input.script).mnemonic());
+    tree.put("sequence", tx_input.sequence);
     return tree;
 }
 
 ptree prop_tree(const std::vector<tx_input_type>& tx_inputs)
 {
-    ptree tree;
-    for (const auto& tx_input: tx_inputs)
-        tree.add_child("inputs", prop_tree(tx_input));
-
-    return tree;
+    return prop_tree_list("input", tx_inputs);
 }
 
 ptree prop_tree(const input& input)
 {
     const tx_input_type& tx_input = input;
-
-    ptree tree;
-    tree = prop_tree(tx_input);
-    return tree;
+    return prop_tree(tx_input);
 }
 
 ptree prop_tree(const std::vector<input>& inputs)
 {
-    ptree tree;
-    for (const tx_input_type& tx_input: inputs)
-        tree.add_child("inputs", prop_tree(tx_input));
-
-    return tree;
+    return prop_tree_list("input", cast<input, tx_input_type>(inputs));
 }
 
 ptree prop_tree(const tx_output_type& tx_output)
@@ -190,32 +166,28 @@ ptree prop_tree(const tx_output_type& tx_output)
     ptree tree;
     payment_address output_address;
     if (extract(output_address, tx_output.script))
-        tree.put("output.address", address(output_address));
+        tree.put("address", address(output_address));
 
-    tree.put("output.script", script(tx_output.script).mnemonic());
+    tree.put("script", script(tx_output.script).mnemonic());
 
     // TODO: consider independent stealth object serialization.
     // TODO: this will eventually change privacy problems, see:
-    // http://lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
+    // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
     stealth_info stealth;
     if (extract_stealth_info(stealth, tx_output.script))
     {
-        tree.put("output.stealth.bit_field", stealth.bitfield);
-        tree.put("output.stealth.ephemeral_public_key",
+        tree.put("stealth.bit_field", stealth.bitfield);
+        tree.put("stealth.ephemeral_public_key",
             ec_public(stealth.ephem_pubkey));
     }
 
-    tree.put("output.value", tx_output.value);
+    tree.put("value", tx_output.value);
     return tree;
 }
 
 ptree prop_tree(const std::vector<tx_output_type>& tx_outputs)
 {
-    ptree tree;
-    for (const tx_output_type& tx_output: tx_outputs)
-        tree.add_child("outputs", prop_tree(tx_output));
-
-    return tree;
+    return prop_tree_list("output", tx_outputs);
 }
 
 ptree prop_tree(const output& output)
@@ -224,17 +196,13 @@ ptree prop_tree(const output& output)
 
     ptree tree;
     tree.put("pay_to", output.payto());
-    tree.add_child("", prop_tree(tx_outputs));
+    tree.add_child("outputs", prop_tree(tx_outputs));
     return tree;
 }
 
 ptree prop_tree(const std::vector<output>& outputs)
 {
-    ptree tree;
-    for (const auto& output: outputs)
-        tree.add_child("outputs", prop_tree(output));
-
-    return tree;
+    return prop_tree_list("output", outputs);
 }
 
 ptree prop_tree(const transaction& transaction)
@@ -242,24 +210,26 @@ ptree prop_tree(const transaction& transaction)
     const tx_type& tx = transaction;
 
     ptree tree;
-    tree.put("transaction.hash", base16(hash_transaction(tx)));
-    tree.put("transaction.version", tx.version);
-    tree.put("transaction.lock_time", tx.locktime);
-    tree.add_child("transaction", prop_tree(tx.inputs));
-    tree.add_child("transaction", prop_tree(tx.outputs));
+    tree.put("hash", base16(hash_transaction(tx)));
+    tree.put("version", tx.version);
+    tree.put("lock_time", tx.locktime);
+    tree.add_child("inputs", prop_tree(tx.inputs));
+    tree.add_child("outputs", prop_tree(tx.outputs));
     return tree;
 }
 
-pt::ptree prop_tree(const std::vector<ec_point>& public_keys)
+ptree prop_tree(const std::vector<transaction>& transactions)
 {
-    ptree tree;
-    for (const auto& public_key: public_keys)
-        tree.put("public_key", ec_public(public_key));
-
-    return tree;
+    return prop_tree_list("transaction", transactions);
 }
 
-pt::ptree prop_tree(const stealth& address)
+ptree prop_tree(const std::vector<ec_point>& public_keys)
+{
+    return prop_value_list("public_key", 
+        cast<ec_point, ec_public>(public_keys));
+}
+
+ptree prop_tree(const stealth& address)
 {
     const stealth_address& addr = address;
 
@@ -268,6 +238,8 @@ pt::ptree prop_tree(const stealth& address)
     // understanding of what is actually otherwise very simple behavior.
     // So instead we emit the reused key as one of the spend keys.
     // This means that it is typical to see the same key in scan and spend.
+
+    auto spend_keys = cast<ec_point, ec_public>(addr.get_spend_pubkeys());
 
     ptree tree;
     tree.put("address.encoded", addr.encoded());
@@ -279,22 +251,9 @@ pt::ptree prop_tree(const stealth& address)
     return tree;
 }
 
-pt::ptree prop_tree(const std::vector<stealth>& addresses)
+ptree prop_tree(const std::vector<stealth>& addresses)
 {
-    ptree tree;
-    for (const auto& addr: addresses)
-        tree.add_child("stealth", prop_tree(addr));
-
-    return tree;
-}
-
-ptree prop_tree(const std::vector<transaction>& transactions)
-{
-    ptree tree;
-    for (const auto& transaction: transactions)
-        tree.add_child("transactions", prop_tree(transaction));
-
-    return tree;
+    return prop_tree_list("stealth", addresses);
 }
 
 ptree prop_tree(const wrapped_data& wrapped)

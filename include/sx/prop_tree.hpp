@@ -47,6 +47,47 @@ class transaction;
 class wrapper;
 
 /**
+ * Create a property tree array of property tree elements.
+ * @param      <Values>  The array element type.
+ * @param[in]  name      The name of the list elements.
+ * @param[in]  values    The enumerable with elements of type Values.
+ * @returns              A new property tree containing the list.
+ */
+template <typename Values>
+pt::ptree prop_tree_list(const std::string& name, Values& values)
+{
+    ptree list;
+    ptree element;
+    for (const auto& value: values)
+    {
+        list.push_back(std::make_pair(name, prop_tree(value)));
+    }
+
+    return list;
+}
+
+/**
+ * Create a property tree array of value elements.
+ * @param      <Values>  The array element type.
+ * @param[in]  name      The name of the list elements.
+ * @param[in]  values    The enumerable with elements of type Values.
+ * @returns              A new property tree containing the list.
+ */
+template <typename Values>
+pt::ptree prop_value_list(const std::string& name, Values& values)
+{
+    ptree list;
+    ptree element;
+    for (const auto& value: values)
+    {
+        element.put_value(value);
+        list.push_back(std::make_pair(name, element));
+    }
+
+    return list;
+}
+
+/**
  * Generate a property tree for a block header.
  * @param[in]  header  The header.
  * @return             A property tree.
