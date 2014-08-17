@@ -97,7 +97,7 @@ public:
      */
     virtual const char* category()
     {
-        return "OFFLINE";
+        return "TRANSACTION";
     }
 
     /**

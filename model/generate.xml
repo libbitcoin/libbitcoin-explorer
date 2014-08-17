@@ -314,7 +314,7 @@
     <define name="SX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
   </command>
   
-  <command symbol="input-sign" formerly="sign-input" category="OFFLINE">
+  <command symbol="input-sign" formerly="sign-input" category="TRANSACTION">
     <option name="help" description="Create a signature for a transaction input." />
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="sighash" type="hashtype" description="A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
@@ -372,7 +372,7 @@
     -->
   </command>
   
-  <command symbol="input-set" formerly="set-input" category="OFFLINE">
+  <command symbol="input-set" formerly="set-input" category="TRANSACTION">
     <option name="help" description="Assign a script to an existing transaction input." />
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <argument name="TRANSACTION" file="true" required="true" type="transaction" description="The file path of the Base16 transaction."/>
@@ -380,7 +380,7 @@
     <define name="SX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
   </command>
   
-  <command symbol="input-validate" formerly="validsig" category="OFFLINE">
+  <command symbol="input-validate" formerly="validsig" category="TRANSACTION">
     <option name="help" description="Validate the a transaction input signature." />
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="sighash" type="hashtype" description="A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
@@ -511,7 +511,7 @@
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash."/>
   </command>
 
-  <command symbol="showblkhead" category="OFFLINE" obsolete="true">
+  <command symbol="showblkhead" category="TRANSACTION" obsolete="true">
     <option name="help" description="Decode a block header." />
     <define name="SX_SHOWBLKHEAD_OBSOLETE" value="This command is obsolete. Use fetch-header with formatting instead." />
   </command>
@@ -563,13 +563,13 @@
     <argument name="PUBKEY" required="true" type="ec_public" description="A Base16 EC public key." />
   </command>
   
-  <command symbol="tx-decode" category="OFFLINE">
+  <command symbol="tx-decode" category="TRANSACTION">
     <option name="help" description="Decode a set of transactions." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
   </command>
 
-  <command symbol="tx-encode" category="OFFLINE">
+  <command symbol="tx-encode" category="TRANSACTION">
     <option name="help" description="Encode an unsigned transaction." />
     <option name="lock_time" type="uint32_t" description="The transaction lock time." />
     <option name="version" type="uint32_t" default="1" description="The transaction version." />
@@ -584,7 +584,7 @@
   </command>
   
   <!-- This was originally designed for PGP signing -->
-  <command symbol="tx-sign" formerly="signtx" category="OFFLINE" stub="true">
+  <command symbol="tx-sign" formerly="signtx" category="TRANSACTION" stub="true">
     <option name="help"  description="Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The EC private key to be used for signing." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
