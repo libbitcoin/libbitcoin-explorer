@@ -155,7 +155,6 @@ BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_two_spend_keys_reu
     SX_DECLARE_COMMAND(stealth_address_decode);
     command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_AAB1P });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    auto foo = output.str();
     SX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AAB1P "\n");
 }
 
@@ -164,7 +163,6 @@ BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_two_spend_keys_reu
     SX_DECLARE_COMMAND(stealth_address_decode);
     command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_AAB1PT });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    auto foo = output.str();
     SX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AAB1PT "\n");
 }
 
