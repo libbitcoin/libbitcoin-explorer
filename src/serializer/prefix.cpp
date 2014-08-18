@@ -25,9 +25,12 @@
 #include <string>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <wallet/wallet.hpp>
 #include <sx/define.hpp>
 #include <sx/utility/utility.hpp>
 
+using namespace bc;
+using namespace libwallet;
 using namespace po;
 
 namespace sx {
@@ -44,18 +47,20 @@ prefix::prefix(const std::string& binary)
 }
 
 prefix::prefix(const bitset& value)
-    : value_(value)
 {
+    if (value.size() > stealth_address::max_prefix_bits)
+    {
+        std::string binary;
+        boost::to_string(value, binary);
+        throw invalid_option_value(binary);
+    }
+
+    value_ = value;
 }
 
 prefix::prefix(const prefix& other)
     : prefix(other.value_)
 {
-}
-
-bitset& prefix::data()
-{
-    return value_;
 }
 
 prefix::operator const bitset&() const
@@ -65,9 +70,9 @@ prefix::operator const bitset&() const
 
 prefix::operator const uint32_t() const
 {
-    static_assert(max_prefix == sizeof(uint32_t)* bc::byte_size,
-        "Max stealth prefix length (max_prefix) is expected to be 32.");
-
+    // to_ulong throws std::overflow_error if that value is too large to be
+    // represented in an unsigned long (ignoring leading zero bits).
+    // That situation is guarded against in construction.
     return static_cast<uint32_t>(value_.to_ulong());
 }
 
@@ -76,8 +81,10 @@ std::istream& operator>>(std::istream& input, prefix& argument)
     std::string binary;
     input >> binary;
 
+    // TODO: test non-binary characters in input.
+
     bitset bits(binary);
-    if (bits.size() > max_prefix || bits.size() != binary.length())
+    if (bits.size() > stealth_address::max_prefix_bits)
         throw invalid_option_value(binary);
 
     // Avoids setting the member value if there is an error.

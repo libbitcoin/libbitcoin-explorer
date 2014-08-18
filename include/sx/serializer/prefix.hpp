@@ -61,12 +61,6 @@ public:
     prefix(const prefix& other);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    bitset& data();
-
-    /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */

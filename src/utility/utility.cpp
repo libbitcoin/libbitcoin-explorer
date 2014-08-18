@@ -86,7 +86,7 @@ ec_secret new_key(const bc::data_chunk& seed)
 // Not testable due to lack of random engine injection.
 data_chunk new_seed(size_t bitlength)
 {
-    size_t fill_seed_size = bitlength / byte_size;
+    size_t fill_seed_size = bitlength / byte_bits;
     data_chunk seed(fill_seed_size);
     random_fill(seed);
     return seed;
