@@ -34,7 +34,7 @@ console_result stealth_address_decode::invoke(std::ostream& output,
     const auto& encoding = get_format_option();
     const auto& address = get_stealth_address_argument();
 
-    write_stream(output, address, encoding) << std::endl;
+    write_stream(output, address, encoding);
     return console_result::okay;
 }
 

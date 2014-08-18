@@ -69,7 +69,6 @@ void callback_state::error(const ptree tree)
 {
     state_locker guard(*this);
     write_stream(error_, tree, engine_);
-    error_ << std::endl;
 }
 
 // std::endl adds "/n" and flushes the stream.
@@ -89,7 +88,6 @@ void callback_state::output(const pt::ptree tree)
 {
     state_locker guard(*this);
     write_stream(error_, tree, engine_);
-    output_ << std::endl;
 }
 
 // std::endl adds "/n" and flushes the stream.
