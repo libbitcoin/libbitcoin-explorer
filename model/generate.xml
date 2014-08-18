@@ -1,26 +1,24 @@
 <?xml version = "1.0" ?>
 <generate script="generate.gsl" language="en-us">
-
-  <!-- Resource strings for use by GSL template -->
   
-  <resource>
-    <string name="sx_config_description" value="The path and file name for the configuration settings file for this application." />
-  </resource>
+  <!-- Help resources. -->
   
-  <acronyms>
-    <acronym name="BTC" description="Bitcoins" />
-    <acronym name="EC" description="Elliptic Curve" />
-    <acronym name="HD" description="Hierarchical Deterministic" />
-    <acronym name="PUBKEY" description="EC Public Key" />
-    <acronym name="RACE" description="Research and development in Advanced Communications tEchnologies" />
-    <acronym name="RIPEMD" description="RACE Integrity Primitives Evaluation Message Digest" />
-    <acronym name="SHA" description="Secure Hash Algorithm" />
-    <acronym name="SIGHASH" description="Signature Hash" /> 
-    <acronym name="SX" description="Stealth Explorer" />
-    <acronym name="TX" description="Transaction" />
-    <acronym name="UTXO" description="Unspent Transaction Output" />
-    <acronym name="WIF" description="Wallet Import Format" />
-  </acronyms>
+  <help>
+    <shorthand name="BTC" description="Bitcoin Denomination" />
+    <shorthand name="EC" description="Elliptic Curve" />
+    <shorthand name="HD" description="Hierarchical Deterministic" />
+    <shorthand name="PUBKEY" description="EC Public Key" />
+    <shorthand name="QRCODE" description="Quick Response Code" />
+    <shorthand name="RACE" description="Research and development in Advanced Communications Technologies" />
+    <shorthand name="RIPEMD" description="RACE Integrity Primitives Evaluation Message Digest" />
+    <shorthand name="SHA" description="Secure Hash Algorithm" />
+    <shorthand name="SIGHASH" description="Signature Hash" />
+    <shorthand name="SOCKS" description="Socket Secure" />
+    <shorthand name="SX" description="Stealth Explorer" />
+    <shorthand name="TX" description="Transaction" />
+    <shorthand name="UTXO" description="Unspent Transaction Output" />
+    <shorthand name="WIF" description="Wallet Import Format" />
+  </help>
   
   <!-- Configuration file sections -->
   
@@ -42,6 +40,10 @@
     <setting name="service" default="tcp://obelisk.unsystem.net:8081" description="The URI of the server to which this application may connect." />
     <setting name="socks-proxy" default="localhost:1080" description="The host name and port number of a SOCKS 4a or SOCKS 5 proxy server." />
   </configuration>
+  
+  <resource>
+    <string name="sx_config_description" value="The path and file name for the configuration settings file for this application." />
+  </resource>
 
   <!-- SX Commands -->
 
@@ -576,7 +578,7 @@
     <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE the optional 32 bit input sequence and defaults to the maximum value." />
     <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. A seed should NOT be used for multiple outputs." />
     <argument name="TRANSACTION" description="The encoded transaction file path. If not specified the transaction is written to STDOUT."/>
-    <define name="SX_TX_ENCODE_LOCKTIME_CONFLICT" value="Locktime is ineffective if set but all sequences are set to the maximum value." />
+    <define name="SX_TX_ENCODE_LOCKTIME_CONFLICT" value="Lock time is ineffective if set but all sequences are set to the maximum value." />
     <!--
       tx-encode FILE [-i TXHASH:INDEX]... [-o ADDRESS:SATOSHIS] [-o HEXSCRIPT:SATOSHIS]
       tx-encode txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000

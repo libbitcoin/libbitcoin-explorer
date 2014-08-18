@@ -30,6 +30,12 @@
  */
 .endmacro
 .
+.function global.default_type(is_option, type)
+.   bool_default = my.is_option & is_empty(my.type)
+.   return normalize_type(if_else(bool_default, type_bool, my.type ? \
+        type_string))
+.endfunction
+.
 .function global.first_char(value)
 .   return string.substr(my.value, 0, 0)
 .endfunction
@@ -149,12 +155,6 @@
 .
 .function global.true()
 .   return 0 = 0
-.endfunction
-.
-.function global.default_type(is_option, type)
-.   bool_default = my.is_option & is_empty(my.type)
-.   return normalize_type(if_else(bool_default, type_bool, my.type ? \
-        type_string))
 .endfunction
 .
 .function global.value_semantic(is_file, is_option, type, required,\

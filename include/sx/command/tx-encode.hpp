@@ -65,7 +65,7 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_TX_ENCODE_LOCKTIME_CONFLICT \
-    "Locktime is ineffective if set but all sequences are set to the maximum value."
+    "Lock time is ineffective if set but all sequences are set to the maximum value."
 
 /**
  * Class to implement the sx tx-encode command.

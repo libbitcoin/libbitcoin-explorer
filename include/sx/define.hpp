@@ -81,12 +81,7 @@ typedef po::positional_options_description arguments_metadata;
 /**
  * The minimum safe length of a seed in bytes (16).
  */
-constexpr size_t minimum_seed_size = 128 / bc::byte_size;
-
-/**
- * The max length of the prefix in bits (32).
- */
-constexpr size_t max_prefix = sizeof(bc::stealth_bitfield) * bc::byte_size;
+constexpr size_t minimum_seed_size = 128 / bc::byte_bits;
     
 /**
  * The noop void function.
