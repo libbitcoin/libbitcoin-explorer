@@ -132,10 +132,10 @@
     <ClCompile Include="..\..\..\..\test\initchain.cpp" />
     <ClCompile Include="..\..\..\..\test\showblkhead.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth-address-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-ephemeral-pubkey.cpp" />
+    <ClCompile Include="..\..\..\..\test\stealth-new.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth-newkey.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-scan-pubkey.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-ephemeral-secret.cpp" />
+    <ClCompile Include="..\..\..\..\test\stealth-uncover-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\stealth-uncover-secret.cpp" />
     <ClCompile Include="..\..\..\..\test\stealth-shared-secret.cpp" />
     <ClCompile Include="..\..\..\..\test\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\tx-encode.cpp" />
@@ -161,7 +161,7 @@
     <ClCompile Include="..\..\..\..\test\wallet.cpp" />
     <ClCompile Include="..\..\..\..\test\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp" />
-    <ClCompile Include="..\..\..\..\test\wif-to-pub.cpp" />
+    <ClCompile Include="..\..\..\..\test\wif-to-public.cpp" />
     <ClCompile Include="..\..\..\..\test\wrap-encode.cpp" />
   </ItemGroup>
   <ItemGroup>

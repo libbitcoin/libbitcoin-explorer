@@ -54,7 +54,7 @@ using namespace sx::serializer;
     input >> original; \
     serializer copy(original); \
     output << copy; \
-    BOOST_REQUIRE_EQUAL(value, output.str())
+    BOOST_REQUIRE_EQUAL(output.str(), value)
 
 // console results
 #define SX_REQUIRE_OKAY(value) \
@@ -67,10 +67,10 @@ using namespace sx::serializer;
 // stream results (assume mutual exclusivity)
 #define SX_REQUIRE_ERROR(value) \
     BOOST_REQUIRE(output.str().empty()); \
-    BOOST_REQUIRE_EQUAL(value, error.str())
+    BOOST_REQUIRE_EQUAL(error.str(), value)
 #define SX_REQUIRE_OUTPUT(value) \
     BOOST_REQUIRE(error.str().empty()); \
-    BOOST_REQUIRE_EQUAL(value, output.str())
+    BOOST_REQUIRE_EQUAL(output.str(), value)
 
 // exceptions
 #define SX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(expression) \

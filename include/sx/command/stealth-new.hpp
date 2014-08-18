@@ -20,8 +20,8 @@
 #ifndef SX_STEALTH_NEW_HPP
 #define SX_STEALTH_NEW_HPP
 
+#include <cstdint>
 #include <iostream>
-#include <stdint.h>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,24 +30,25 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
-#include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
-#include <sx/serializer/hd_private.hpp>
-#include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hd_priv.hpp>
+#include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
-#include <sx/serializer/signature_hash.hpp>
+#include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
 #include <sx/serializer/wrapper.hpp>
@@ -59,12 +60,6 @@
 
 namespace sx {
 namespace extension {
-
-/**
- * Various localizable strings.
- */
-#define SX_STEALTH_NEWKEY_OBSOLETE \
-    "This command is no longer supported. Use other commands in combination."
 
 /**
  * Class to implement the sx stealth-new command.
@@ -102,7 +97,10 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("EPHEMERAL_SECRET", 1)
+            .add("SCAN_PUBKEY", 1)
+            .add("SPEND_PUBKEY", 1);
     }
 	
 	/**
@@ -135,7 +133,22 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Generate new keys and the associated stealth address."
+                "Create a new stealth public key from which a payment address can be generated. A unique ephemeral secret should be used for each stealth payment."
+            )
+            (
+                "EPHEMERAL_SECRET",
+                value<serializer::ec_private>(&argument_.ephemeral_secret)->required(),
+                "The Base16 ephemeral EC private key used to generate stealth payment metadata."
+            )
+            (
+                "SCAN_PUBKEY",
+                value<serializer::ec_public>(&argument_.scan_pubkey)->required(),
+                "The Base16 EC public key required to generate a stealth address."
+            )
+            (
+                "SPEND_PUBKEY",
+                value<serializer::ec_public>(&argument_.spend_pubkey)->required(),
+                "A Base16 EC public key corresponding to a private key that can spend payments to the stealth address."
             );
 
         return options;
@@ -150,6 +163,57 @@ public:
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the EPHEMERAL_SECRET argument.
+     */
+    virtual serializer::ec_private& get_ephemeral_secret_argument()
+    {
+        return argument_.ephemeral_secret;
+    }
+    
+    /**
+     * Set the value of the EPHEMERAL_SECRET argument.
+     */
+    virtual void set_ephemeral_secret_argument(
+        const serializer::ec_private& value)
+    {
+        argument_.ephemeral_secret = value;
+    }
+
+    /**
+     * Get the value of the SCAN_PUBKEY argument.
+     */
+    virtual serializer::ec_public& get_scan_pubkey_argument()
+    {
+        return argument_.scan_pubkey;
+    }
+    
+    /**
+     * Set the value of the SCAN_PUBKEY argument.
+     */
+    virtual void set_scan_pubkey_argument(
+        const serializer::ec_public& value)
+    {
+        argument_.scan_pubkey = value;
+    }
+
+    /**
+     * Get the value of the SPEND_PUBKEY argument.
+     */
+    virtual serializer::ec_public& get_spend_pubkey_argument()
+    {
+        return argument_.spend_pubkey;
+    }
+    
+    /**
+     * Set the value of the SPEND_PUBKEY argument.
+     */
+    virtual void set_spend_pubkey_argument(
+        const serializer::ec_public& value)
+    {
+        argument_.spend_pubkey = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -178,9 +242,15 @@ private:
     struct argument
     {
         argument()
+          : ephemeral_secret(),
+            scan_pubkey(),
+            spend_pubkey()
         {
         }
         
+        serializer::ec_private ephemeral_secret;
+        serializer::ec_public scan_pubkey;
+        serializer::ec_public spend_pubkey;
     } argument_;
     
     /**

@@ -112,11 +112,11 @@ sx_command_include_HEADERS = \
     command/showblkhead.hpp \
     command/stealth-address-decode.hpp \
     command/stealth-address-encode.hpp \
-    command/stealth-ephemeral-pubkey.hpp \
-    command/stealth-ephemeral-secret.hpp \
+    command/stealth-new.hpp \
     command/stealth-newkey.hpp \
-    command/stealth-scan-pubkey.hpp \
     command/stealth-shared-secret.hpp \
+    command/stealth-uncover-public.hpp \
+    command/stealth-uncover-secret.hpp \
     command/tx-decode.hpp \
     command/tx-encode.hpp \
     command/tx-sign.hpp \

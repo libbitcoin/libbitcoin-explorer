@@ -132,7 +132,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Generate the stealth secret shared between a stealth payment and the stealth address of the payment. Provide scan secret and ephemeral public key or ephemeral secret and scan public key"
+                "Derive the secret shared between an ephemeral key pair and a scan key pair. Provide scan secret and ephemeral public key or ephemeral secret and scan public key"
             )
             (
                 "SECRET",

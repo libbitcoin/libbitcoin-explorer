@@ -374,14 +374,9 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_address_encode__returns_object)
     BOOST_REQUIRE(find(stealth_address_encode::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_ephemeral_pubkey__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_new__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_ephemeral_pubkey::symbol()) != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__stealth_ephemeral_secret__returns_object)
-{
-    BOOST_REQUIRE(find(stealth_ephemeral_secret::symbol()) != nullptr);
+    BOOST_REQUIRE(find(stealth_new::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
@@ -389,14 +384,19 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
     BOOST_REQUIRE(find(stealth_newkey::symbol()) != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_scan_pubkey__returns_object)
-{
-    BOOST_REQUIRE(find(stealth_scan_pubkey::symbol()) != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__stealth_shared_secret__returns_object)
 {
     BOOST_REQUIRE(find(stealth_shared_secret::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__stealth_uncover_public__returns_object)
+{
+    BOOST_REQUIRE(find(stealth_uncover_public::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__stealth_uncover_secret__returns_object)
+{
+    BOOST_REQUIRE(find(stealth_uncover_secret::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__tx_decode__returns_object)

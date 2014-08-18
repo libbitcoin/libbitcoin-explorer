@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/command/stealth-scan-pubkey.hpp>
+#include <sx/command/stealth-uncover-public.hpp>
 
 #include <iostream>
 #include <wallet/wallet.hpp>
@@ -30,7 +30,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result stealth_scan_pubkey::invoke(std::ostream& output,
+console_result stealth_uncover_public::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.

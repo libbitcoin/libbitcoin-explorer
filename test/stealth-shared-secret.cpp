@@ -24,11 +24,33 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(stealth_shared_secret__invoke)
 
-BOOST_AUTO_TEST_CASE(stealth_shared_secret__invoke__always__failure_error)
+// vectors
+#define SX_STEALTH_SHARED_SECRET_SCAN_SECRET "af4afaeb40810e5f8abdbb177c31a2d310913f91cf556f5350bca10cbfe8b9ec"
+#define SX_STEALTH_SHARED_SECRET_SCAN_PUBKEY "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"
+#define SX_STEALTH_SHARED_SECRET_EPHEMERAL_SECRET "8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8"
+#define SX_STEALTH_SHARED_SECRET_EPHEMERAL_PUBKEY "0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36"
+
+// expectations
+// SHARED_SECRET = sha256(SCAN_SECRET * EPHEM_PUBKEY)
+// SHARED_SECRET = sha256(EPHEM_SECRET * SCAN_PUBKEY)
+#define SX_STEALTH_SHARED_SECRET_SHARED_SECRET "78dac4cad97b62efc67aff4890c3bc799815d144c5f93b171f559b43bca52590"
+
+BOOST_AUTO_TEST_CASE(stealth_shared_secret__invoke__scan_secret_ephem_pubkey__okay_output)
 {
-    //// $ sx stealth-shared-secret ...
-    //SX_DECLARE_COMMAND(stealth_shared_secret);
-    //SX_REQUIRE_FAILURE(command.invoke(output, error));
+    SX_DECLARE_COMMAND(stealth_shared_secret);
+    command.set_secret_argument({ SX_STEALTH_SHARED_SECRET_SCAN_SECRET });
+    command.set_pubkey_argument({ SX_STEALTH_SHARED_SECRET_EPHEMERAL_PUBKEY });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT(SX_STEALTH_SHARED_SECRET_SHARED_SECRET "\n");
+}
+
+BOOST_AUTO_TEST_CASE(stealth_shared_secret__invoke__ephem_secret_scan_pubkey__okay_output)
+{
+    SX_DECLARE_COMMAND(stealth_shared_secret);
+    command.set_secret_argument({ SX_STEALTH_SHARED_SECRET_EPHEMERAL_SECRET });
+    command.set_pubkey_argument({ SX_STEALTH_SHARED_SECRET_SCAN_PUBKEY });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT(SX_STEALTH_SHARED_SECRET_SHARED_SECRET "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

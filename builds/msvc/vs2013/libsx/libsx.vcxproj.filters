@@ -260,19 +260,19 @@
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-address-encode.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth-ephemeral-pubkey.hpp">
-      <Filter>include\command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth-ephemeral-secret.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-new.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\stealth-newkey.hpp">
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth-scan-pubkey.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-shared-secret.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\stealth-shared-secret.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-public.hpp">
+      <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\stealth-uncover-secret.hpp">
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\tx-decode.hpp">
@@ -631,19 +631,19 @@
     <ClCompile Include="..\..\..\..\src\stealth-address-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-ephemeral-pubkey.cpp">
-      <Filter>src\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-ephemeral-secret.cpp">
+    <ClCompile Include="..\..\..\..\src\stealth-new.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-scan-pubkey.cpp">
+    <ClCompile Include="..\..\..\..\src\stealth-shared-secret.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-shared-secret.cpp">
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-public.cpp">
+      <Filter>src\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\tx-decode.cpp">

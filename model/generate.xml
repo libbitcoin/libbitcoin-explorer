@@ -537,30 +537,30 @@
     <option name="help" description="Generate new keys and the associated stealth address." />
     <define name="SX_STEALTH_NEWKEY_OBSOLETE" value="This command is no longer supported. Use stealth-address-encode." />
   </command>
-
-  <command symbol="stealth-ephemeral-secret" formerly="stealth-uncover-secret" category="STEALTH">
-    <option name="help" description="Using stealth payment metadata uncover the ephemeral private key (necessary to spend the payment)." />
-    <argument name="SCAN_SECRET" required="true" type="ec_private" description="The Base16 EC private key corresponding to the public key required to generate a stealth payment." />
-    <argument name="SPEND_SECRET" required="true" type="ec_private" description="A Base16 EC private key that can spend payments to the stealth address." />
-    <argument name="EPHEMERAL_PUBKEY" stdin="true" type="ec_public" description="The Base16 ephemeral EC public key retrieved from the stealth payment metadata." />
-  </command>
   
-  <command symbol="stealth-ephemeral-pubkey" formerly="stealth-initiate" category="STEALTH">
-    <option name="help" description="Create an ephemeral public key for inclusion as stealth payment metadata (necessary to send a payment)." />
-    <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a stealth payment." />
+  <command symbol="stealth-new" formerly="stealth-initiate" category="STEALTH">
+    <option name="help" description="Create a new stealth public key from which a payment address can be generated. A unique ephemeral secret should be used for each stealth payment." />
+    <argument name="EPHEMERAL_SECRET" required="true" type="ec_private" description="The Base16 ephemeral EC private key used to generate stealth payment metadata." />
+    <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a stealth address." />
     <argument name="SPEND_PUBKEY" required="true" type="ec_public" description="A Base16 EC public key corresponding to a private key that can spend payments to the stealth address." />
-    <argument name="EPHEMERAL_SECRET" stdin="true" type="ec_private" description="The Base16 ephemeral EC private key used to generate stealth payment metadata." />
   </command>
 
-  <command symbol="stealth-scan-pubkey" formerly="stealth-uncover" category="STEALTH">
-    <option name="help" description="Using stealth payment metadata uncover the scan public key (necessary to identify a payment)." />
+  <command symbol="stealth-uncover-secret" category="STEALTH">
+    <option name="help" description="Derive the stealth private key necessary to spend a stealth payment." />
+    <argument name="EPHEMERAL_PUBKEY" required="true" type="ec_public" description="The Base16 ephemeral EC public key retrieved from the stealth payment metadata." />
+    <argument name="SCAN_SECRET" required="true" type="ec_private" description="The Base16 EC private key corresponding to the public key required to generate a stealth address." />
+    <argument name="SPEND_SECRET" required="true" type="ec_private" description="A Base16 EC private key that can spend payments to the stealth address." />
+  </command>
+
+  <command symbol="stealth-uncover-public" formerly="stealth-uncover" category="STEALTH">
+    <option name="help" description="Derive the stealth public key necessary to identify a stealth payment." />
+    <argument name="EPHEMERAL_PUBKEY" required="true" type="ec_public" description="The Base16 ephemeral EC public key retrieved from the stealth payment metadata." />
     <argument name="SCAN_SECRET" required="true" type="ec_private" description="The Base16 EC private key corresponding to the public key required to generate a stealth payment." />
     <argument name="SPEND_PUBKEY" required="true" type="ec_public" description="A Base16 EC public key corresponding to a private key that can spend payments to the stealth address." />
-    <argument name="EPHEMERAL_PUBKEY" stdin="true" type="ec_public" description="The Base16 ephemeral EC public key retrieved from the stealth payment metadata." />
   </command>
 
   <command symbol="stealth-shared-secret" category="STEALTH">
-    <option name="help" description="Generate the stealth secret shared between a stealth payment and the stealth address of the payment. Provide scan secret and ephemeral public key or ephemeral secret and scan public key" />
+    <option name="help" description="Derive the secret shared between an ephemeral key pair and a scan key pair. Provide scan secret and ephemeral public key or ephemeral secret and scan public key" />
     <argument name="SECRET" required="true" type="ec_private" description="A Base16 EC private key." />
     <argument name="PUBKEY" required="true" type="ec_public" description="A Base16 EC public key." />
   </command>

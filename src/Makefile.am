@@ -108,11 +108,11 @@ libsx_la_SOURCES += \
     showblkhead.cpp \
     stealth-address-decode.cpp \
     stealth-address-encode.cpp \
-    stealth-ephemeral-pubkey.cpp \
-    stealth-ephemeral-secret.cpp \
+    stealth-new.cpp \
     stealth-newkey.cpp \
-    stealth-scan-pubkey.cpp \
     stealth-shared-secret.cpp \
+    stealth-uncover-public.cpp \
+    stealth-uncover-secret.cpp \
     tx-decode.cpp \
     tx-encode.cpp \
     tx-sign.cpp \

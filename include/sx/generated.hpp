@@ -93,11 +93,11 @@
 #include <sx/command/showblkhead.hpp>
 #include <sx/command/stealth-address-decode.hpp>
 #include <sx/command/stealth-address-encode.hpp>
-#include <sx/command/stealth-ephemeral-pubkey.hpp>
-#include <sx/command/stealth-ephemeral-secret.hpp>
+#include <sx/command/stealth-new.hpp>
 #include <sx/command/stealth-newkey.hpp>
-#include <sx/command/stealth-scan-pubkey.hpp>
 #include <sx/command/stealth-shared-secret.hpp>
+#include <sx/command/stealth-uncover-public.hpp>
+#include <sx/command/stealth-uncover-secret.hpp>
 #include <sx/command/tx-decode.hpp>
 #include <sx/command/tx-encode.hpp>
 #include <sx/command/tx-sign.hpp>

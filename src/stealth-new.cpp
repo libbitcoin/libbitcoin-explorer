@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/command/stealth-ephemeral-pubkey.hpp>
+#include <sx/command/stealth-new.hpp>
 
 #include <iostream>
 #include <wallet/wallet.hpp>
@@ -30,8 +30,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-console_result stealth_ephemeral_pubkey::invoke(std::ostream& output,
-    std::ostream& error)
+console_result stealth_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& scan_pubkey = get_scan_pubkey_argument();

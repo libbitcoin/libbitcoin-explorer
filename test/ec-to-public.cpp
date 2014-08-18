@@ -24,9 +24,20 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(ec_to_public__invoke)
 
+// The keys are derived in the stealth scenario, confirm here that they are properly related.
+#define SX_STEALTH_SCENARIO_PRIVATE_KEY "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475"
+#define SX_STEALTH_SCENARIO_PUBLIC_KEY "03ac9e60013853128b42a1324609bac2ccff6a0b4844b6301f1f552e15ee14c7a5"
+
+BOOST_AUTO_TEST_CASE(ec_to_public__invoke__stealth_scenario__okay_output)
+{
+    SX_DECLARE_COMMAND(ec_to_public);
+    command.set_ec_private_key_argument({ SX_STEALTH_SCENARIO_PRIVATE_KEY });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT(SX_STEALTH_SCENARIO_PUBLIC_KEY "\n");
+}
+
 BOOST_AUTO_TEST_CASE(ec_to_public__invoke__compressed__okay_output)
 {
-    // $ sx ec-to-public 8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8
     SX_DECLARE_COMMAND(ec_to_public);
     command.set_uncompressed_option(false);
     command.set_ec_private_key_argument({ "8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8" });
@@ -36,7 +47,6 @@ BOOST_AUTO_TEST_CASE(ec_to_public__invoke__compressed__okay_output)
 
 BOOST_AUTO_TEST_CASE(ec_to_public__invoke__uncompressed__okay_output)
 {
-    // $ sx ec-to-public 8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8 -u
     SX_DECLARE_COMMAND(ec_to_public);
     command.set_uncompressed_option(true);
     command.set_ec_private_key_argument({ "8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8" });
