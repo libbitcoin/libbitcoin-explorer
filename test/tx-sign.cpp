@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(tx_sign__invoke)
 
 BOOST_AUTO_TEST_CASE(tx_sign__invoke__invoke__invoke__always__failure_error)
 {
-    // $ sx tx-sign
     SX_DECLARE_COMMAND(tx_sign);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_TX_SIGN_NOT_IMPLEMENTED "\n");

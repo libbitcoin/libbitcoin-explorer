@@ -24,23 +24,28 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(address_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(address_encode__invoke__base16_value__okay_output)
+// vectors
+#define SX_ADDRESS_ENCODE_RIPEMD160_A "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb"
+
+// expectations
+#define SX_ADDRESS_ENCODE_ADDRESS_A_V0 "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E"
+#define SX_ADDRESS_ENCODE_ADDRESS_A_V42 "JBeTK2YUWEFTTQvcqEyQoS3poXKjjc1oEP"
+
+BOOST_AUTO_TEST_CASE(address_encode__invoke_version_0__okay_output)
 {
-    // $ sx encode-address b472a266d0bd89c13706a4132ccfb16f7c3b9fcb
     SX_DECLARE_COMMAND(address_encode);
-    command.set_ripemd160_argument({ "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb" });
+    command.set_ripemd160_argument({ SX_ADDRESS_ENCODE_RIPEMD160_A });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT("1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E\n");
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_ENCODE_ADDRESS_A_V0 "\n");
 }
 
-BOOST_AUTO_TEST_CASE(address_encode__invoke__base16_value_version__okay_output)
+BOOST_AUTO_TEST_CASE(address_encode__invoke__version_42__okay_output)
 {
-    // $ sx encode-address -v 42 b472a266d0bd89c13706a4132ccfb16f7c3b9fcb
     SX_DECLARE_COMMAND(address_encode);
     command.set_version_option(42);
-    command.set_ripemd160_argument({ "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb" });
+    command.set_ripemd160_argument({ SX_ADDRESS_ENCODE_RIPEMD160_A });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT("JBeTK2YUWEFTTQvcqEyQoS3poXKjjc1oEP\n");
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_ENCODE_ADDRESS_A_V42 "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

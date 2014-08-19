@@ -25,9 +25,9 @@ SX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(ec_add_secrets__invoke)
 
 // TODO: generate overflow condition
+
 //BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__overflow__failure_error)
 //{
-//    // $ sx ec-add-secrets ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 //    SX_DECLARE_COMMAND(ec_add_secrets);
 //    command.set_secrets_argument(
 //    {
@@ -40,7 +40,6 @@ BOOST_AUTO_TEST_SUITE(ec_add_secrets__invoke)
 
 BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__no_value__okay_output)
 {
-    // $ sx ec-add-secrets
     SX_DECLARE_COMMAND(ec_add_secrets);
     SX_REQUIRE_OKAY(command.invoke(output, error));
     SX_REQUIRE_OUTPUT("0000000000000000000000000000000000000000000000000000000000000000\n");
@@ -48,7 +47,6 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__no_value__okay_output)
 
 BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__one_value__okay_output)
 {
-    // $ sx ec-add-secrets 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(ec_add_secrets);
     command.set_secrets_argument(
     {
@@ -60,7 +58,6 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__one_value__okay_output)
 
 BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__two_same_values__okay_output)
 {
-    // $ sx ec-add-secrets 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(ec_add_secrets);
     command.set_secrets_argument(
     {
@@ -73,7 +70,6 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__two_same_values__okay_output)
 
 BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__three_same_values__okay_output)
 {
-    // $ sx ec-add-secrets 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006 1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(ec_add_secrets);
     command.set_secrets_argument(
     {
@@ -87,7 +83,6 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__three_same_values__okay_output)
 
 BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__two_unique_values__okay_output)
 {
-    // $ sx ec-add-secrets 4242424242424242424242424242424242424242424242424242424242424242 0000000000000000000000000000000000000000000000000000000000000001
     SX_DECLARE_COMMAND(ec_add_secrets);
     command.set_secrets_argument(
     {

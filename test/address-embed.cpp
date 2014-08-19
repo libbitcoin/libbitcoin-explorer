@@ -31,7 +31,6 @@ BOOST_AUTO_TEST_SUITE(embed_address__invoke)
 
 BOOST_AUTO_TEST_CASE(address_embed__invoke__always__failure_error)
 {
-    // sx address-embed
     SX_DECLARE_COMMAND(address_embed);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_ADDRESS_EMBED_NOT_IMPLEMENTED "\n");

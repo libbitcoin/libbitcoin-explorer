@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(hd_to_public__invoke)
 
 BOOST_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_private_key__okay_output)
 {
-    // $ sx hd-to-public secret
     SX_DECLARE_COMMAND(hd_to_public);
     command.set_hd_private_key_argument({ "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi" });
     SX_REQUIRE_OKAY(command.invoke(output, error));

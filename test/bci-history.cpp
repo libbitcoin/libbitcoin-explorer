@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(bci_history__invoke)
 
 BOOST_AUTO_TEST_CASE(bci_history__invoke__always__failure_error)
 {
-    // $ sx bci-history ...
     SX_DECLARE_COMMAND(bci_history);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_BCI_HISTORY_OBSOLETE "\n");

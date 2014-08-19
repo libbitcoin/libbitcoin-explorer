@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(mpk__invoke)
 
 BOOST_AUTO_TEST_CASE(mpk__invoke__always__failure_error)
 {
-    // $ sx mpk ...
     SX_DECLARE_COMMAND(mpk);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_MPK_OBSOLETE "\n");

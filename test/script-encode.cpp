@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(script_encode__invoke)
 
 BOOST_AUTO_TEST_CASE(script_encode__invoke__always__failure_error)
 {
-    //// $ sx script-encode ...
     //SX_DECLARE_COMMAND(script_encode);
     //SX_REQUIRE_FAILURE(command.invoke(output, error));
     //SX_REQUIRE_ERROR(SX_SHOWBLKHEAD_OBSOLETE "\n");

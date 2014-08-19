@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(blke_fetch_transaction__invoke)
 
 BOOST_AUTO_TEST_CASE(blke_fetch_transaction__invoke__always__failure_error)
 {
-    // $ sx blke-fetch-transaction ...
     SX_DECLARE_COMMAND(blke_fetch_transaction);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_BLKE_FETCH_TRANSACTION_OBSOLETE "\n");

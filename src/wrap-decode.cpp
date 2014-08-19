@@ -40,6 +40,6 @@ console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
 
     const auto tree = prop_tree(wrapped);
 
-    write_stream(output, tree, encoding) << std::endl;
+    write_stream(output, tree, encoding);
     return console_result::okay;
 }

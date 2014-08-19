@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(initchain__invoke)
 
 BOOST_AUTO_TEST_CASE(initchain__invoke__always__failure_error)
 {
-    // $ sx initchain ...
     SX_DECLARE_COMMAND(initchain);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_INITCHAIN_OBSOLETE "\n");

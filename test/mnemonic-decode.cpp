@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(mnemonic_decode__invoke)
 
 BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__always__failure_error)
 {
-    //// $ sx mnemonic-decode ...
     //SX_DECLARE_COMMAND(mnemonic_decode);
     //SX_REQUIRE_FAILURE(command.invoke(output, error));
     //SX_REQUIRE_ERROR(SX_EC_LOCK_NOT_IMPLEMENTED "\n");

@@ -29,6 +29,7 @@
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/point.hpp>
+#include <sx/serializer/prefix.hpp>
 #include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wrapper.hpp>
@@ -42,6 +43,7 @@ class header;
 class input;
 class output;
 class point;
+class prefix;
 class stealth;
 class transaction;
 class wrapper;
@@ -207,6 +209,16 @@ pt::ptree prop_tree(const transaction& transaction);
  * @return                   A property tree.
  */
 pt::ptree prop_tree(const std::vector<transaction>& transactions);
+
+/**
+ * Generate a property tree for transaction with extended data.
+ * @param[in]  tx          The transaction.
+ * @param[in]  block_hash  Theblock_hash of the transaction.
+ * @param[in]  prefix      The prefix used to locate the transaction.
+ * @return                 A property tree.
+ */
+pt::ptree prop_tree(const tx_type& tx, const bc::hash_digest& block_hash,
+    const prefix& prefix);
 
 /**
  * Generate a property tree for a stealth address.

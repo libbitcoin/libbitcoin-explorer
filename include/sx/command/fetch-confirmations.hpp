@@ -62,6 +62,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_FETCH_CONFIRMATIONS_OUTPUT \
+    "[%1%] Confirmations: %2%"
+
+/**
  * Class to implement the sx fetch-confirmations command.
  */
 class fetch_confirmations 

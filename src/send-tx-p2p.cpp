@@ -136,6 +136,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     protocol prot(pool, hst, hs, net);
     prot.set_max_outbound(node_count * 6);
 
+
     // Perform node discovery if needed and then creating connections.
     prot.start(start_handler);
 
@@ -145,9 +146,6 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         ++state;
         prot.subscribe_channel(
             std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), tx));
-
-        // TODO: need to verify this setup is correct for multiple simo txs.
-        break;
     }
 
     // Catch C signals for stopping the program.
@@ -168,6 +166,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     return state.get_result();
 }
 
+// <define name="SX_SEND_TX_P2P_OUTPUT" value="%1% [%2%]: %3%" />
 //static void output_to_file(std::ofstream& file, log_level level,
 //    const std::string& domain, const std::string& body)
 //{

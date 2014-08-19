@@ -35,8 +35,7 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void transaction_fetched(callback_state& state,
-    const tx_type& tx)
+static void transaction_fetched(callback_state& state, const tx_type& tx)
 {
     if (state.get_engine() == encoding_engine::native)
         state.output(transaction(tx));

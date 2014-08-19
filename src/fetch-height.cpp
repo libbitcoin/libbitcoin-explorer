@@ -34,7 +34,7 @@ using namespace sx::extension;
 
 static void handle_callback(callback_state& state, size_t height)
 {
-    state.output(format("%1%") % height);
+    state.output(height);
     state.stop();
 }
 

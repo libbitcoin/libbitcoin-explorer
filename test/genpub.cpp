@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(genpub__invoke)
 
 BOOST_AUTO_TEST_CASE(genpub__invoke__always__failure_error)
 {
-    // $ sx genpub ...
     SX_DECLARE_COMMAND(genpub);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_GENPUB_OBSOLETE "\n");

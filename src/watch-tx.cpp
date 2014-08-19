@@ -53,12 +53,7 @@ static void handle_update(callback_state& state, const prefix& prefix,
     if (state.get_engine() == encoding_engine::native)
         state.output(transaction(tx));
     else
-    {
-        auto& tree = prop_tree(tx);
-        tree.add("transaction.block", base16(block_hash));
-        tree.add("transaction.prefix", prefix);
-        state.output(tree);
-    }
+        state.output(prop_tree(tx, block_hash, prefix));
 
     --state;
 }

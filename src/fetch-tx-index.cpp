@@ -36,11 +36,10 @@ using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
-static void handle_callback(callback_state& state, const bc::hash_digest& hash,
+static void handle_callback(callback_state& state, const hash_digest& hash,
     size_t height, size_t index)
 {
-    // TODO: make ptree.
-    state.output(boost::format("[%1%] Height: %2% Index: %3%") % base16(hash) %
+    state.output(boost::format(SX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
         height % index);
 
     --state;

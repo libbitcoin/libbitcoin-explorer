@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(sendtx_bci__invoke)
 
 BOOST_AUTO_TEST_CASE(sendtx_bci__invoke__always__failure_error)
 {
-    // $ sx sendtx-bci ...
     SX_DECLARE_COMMAND(sendtx_bci);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_SENDTX_BCI_OBSOLETE "\n");

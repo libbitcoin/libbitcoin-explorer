@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(showblkhead__invoke)
 
 BOOST_AUTO_TEST_CASE(showblkhead__invoke__always__failure_error)
 {
-    // $ sx showblkhead ...
     SX_DECLARE_COMMAND(showblkhead);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_SHOWBLKHEAD_OBSOLETE "\n");

@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(wif_to_ec__invoke)
 
 BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_wif__okay_output)
 {
-    // $ sx wif-to-ec KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF
     SX_DECLARE_COMMAND(wif_to_ec);
     command.set_wif_argument({ "KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF" });
     SX_REQUIRE_OKAY(command.invoke(output, error));

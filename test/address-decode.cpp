@@ -24,13 +24,28 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(address_decode__invoke)
 
-BOOST_AUTO_TEST_CASE(address_decode__invoke__valid_value__okay_output)
+// vectors
+#define SX_ADDRESS_DECODE_ADDRESS_A_V0 "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E"
+#define SX_ADDRESS_DECODE_ADDRESS_A_v42 "JBeTK2YUWEFTTQvcqEyQoS3poXKjjc1oEP"
+
+// expectations
+// the version of the address is dropped and both vectors produce this hash.
+#define SX_ADDRESS_DECODE_RIPEMD160_A "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb"
+
+BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0__okay_output)
 {
-    // $ sx address-decode 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
     SX_DECLARE_COMMAND(address_decode);
-    command.set_bitcoin_address_argument({ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" });
+    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_A_V0 });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT("b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n");
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_RIPEMD160_A "\n");
+}
+
+BOOST_AUTO_TEST_CASE(address_decode__invoke__version_42__okay_output)
+{
+    SX_DECLARE_COMMAND(address_decode);
+    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_A_v42 });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_RIPEMD160_A "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

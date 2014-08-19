@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(wrap_encode__invoke)
 
 BOOST_AUTO_TEST_CASE(wrap_encode__invoke__valid_base16_version__okay_output)
 {
-    // $ sx wrap-encode 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006
     SX_DECLARE_COMMAND(wrap_encode);
     command.set_version_option(42);
     command.set_payload_argument({ "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" });

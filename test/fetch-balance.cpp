@@ -28,18 +28,8 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
 //BOOST_AUTO_TEST_CASE(fetch_balance__invoke__address__okay)
 //{
-//    // $ sx fetch-balance 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
 //    SX_DECLARE_COMMAND(fetch_balance);
 //    command.set_bitcoin_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
-//    SX_REQUIRE_OKAY(command.invoke(output, error));
-//}
-
-//BOOST_AUTO_TEST_CASE(fetch_balance__invoke__address_json__okay)
-//{
-//    // $ sx fetch-balance -j 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
-//    SX_DECLARE_COMMAND(fetch_balance);
-//    command.set_bitcoin_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
-//    command.set_json_option(true);
 //    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 

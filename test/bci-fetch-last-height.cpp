@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(bci_fetch_last_height__invoke)
 
 BOOST_AUTO_TEST_CASE(bci_fetch_last_height__invoke__always__failure_error)
 {
-    // $ sx bci-fetch-last-height ...
     SX_DECLARE_COMMAND(bci_fetch_last_height);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_BCI_FETCH_LAST_HEIGHT_OBSOLETE "\n");

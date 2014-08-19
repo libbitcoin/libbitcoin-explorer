@@ -64,8 +64,6 @@ namespace extension {
 /**
  * Various localizable strings.
  */
-#define SX_SEND_TX_P2P_OUTPUT \
-    "%1% [%2%]: %3%"
 #define SX_SEND_TX_P2P_SIGNAL \
     "Caught signal: %1%"
 #define SX_SEND_TX_P2P_START_OKAY \

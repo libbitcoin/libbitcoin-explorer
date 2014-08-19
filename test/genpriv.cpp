@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(genpriv__invoke)
 
 BOOST_AUTO_TEST_CASE(genpriv__invoke__always__failure_error)
 {
-    // $ sx genpriv ...
     SX_DECLARE_COMMAND(genpriv);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_GENPRIV_OBSOLETE "\n");

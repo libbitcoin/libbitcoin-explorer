@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(base58check_decode__invoke)
 
 BOOST_AUTO_TEST_CASE(base58check_decode__invoke__always__failure_error)
 {
-    // $ sx base58check-decode
     SX_DECLARE_COMMAND(base58check_decode);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED "\n");

@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(newseed__invoke)
 
 BOOST_AUTO_TEST_CASE(newseed__invoke__always__failure_error)
 {
-    // $ sx newseed ...
     SX_DECLARE_COMMAND(newseed);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_NEWSEED_OBSOLETE "\n");

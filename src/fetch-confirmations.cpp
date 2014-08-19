@@ -26,7 +26,6 @@
 #include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
-#include <sx/prop_tree.hpp>
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
@@ -36,10 +35,10 @@ using namespace sx::extension;
 static void handle_callback(callback_state& state, size_t position,
     const index_list& confirmations)
 {
-    // TODO: make ptree and use position for correlation.
-    // Why is this a list and why is it not summarized for the transaction?
+    // Why is this a list and why is it not summarized by transaction?
     for (const auto& confirmation: confirmations)
-        state.output(format("%1%") % confirmation);
+        state.output(format(SX_FETCH_CONFIRMATIONS_OUTPUT) % position %
+            confirmation);
 
     --state;
 }

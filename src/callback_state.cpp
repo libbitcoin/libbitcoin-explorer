@@ -102,6 +102,11 @@ void callback_state::output(const std::string& message)
     output(format(message));
 }
 
+void callback_state::output(uint64_t value)
+{
+    output(format("%1%") % value);
+}
+
 void callback_state::start()
 {
     state_locker guard(*this);

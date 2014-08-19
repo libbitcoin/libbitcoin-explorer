@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(hd_to_wif__invoke)
 
 BOOST_AUTO_TEST_CASE(hd_to_wif__invoke__mainnet_key__okay_output)
 {
-    // $ sx hd-to-wif xprv9s21ZrQH143K27rVid1zpeyqZygAX7W7AQ4cctwrSB4A2EoPNT22nR2FCm42oc6UmTNGnjwLscDdkof6dyRVwoG8nU6uY8XTGNHiNzAx3TD
     SX_DECLARE_COMMAND(hd_to_wif);
     command.set_hd_private_key_argument({ "xprv9s21ZrQH143K27rVid1zpeyqZygAX7W7AQ4cctwrSB4A2EoPNT22nR2FCm42oc6UmTNGnjwLscDdkof6dyRVwoG8nU6uY8XTGNHiNzAx3TD" });
     SX_REQUIRE_OKAY(command.invoke(output, error));

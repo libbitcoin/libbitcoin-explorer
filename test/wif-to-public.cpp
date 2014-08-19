@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(wif_to_public__invoke)
 
 BOOST_AUTO_TEST_CASE(wif_to_public__invoke__mainnet_compressed_wif__okay_output)
 {
-    // $ sx wif-to-public L21LJEeJwK35wby1BeTjwWssrhrgQE2MZrpTm2zbMC677czAHHu3
     SX_DECLARE_COMMAND(wif_to_public);
     command.set_wif_argument({ "L21LJEeJwK35wby1BeTjwWssrhrgQE2MZrpTm2zbMC677czAHHu3" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
@@ -35,7 +34,6 @@ BOOST_AUTO_TEST_CASE(wif_to_public__invoke__mainnet_compressed_wif__okay_output)
 
 BOOST_AUTO_TEST_CASE(wif_to_public__invoke__mainnet_uncompressed_wif__okay_output)
 {
-    // $ sx wif-to-public 5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL
     SX_DECLARE_COMMAND(wif_to_public);
     command.set_wif_argument({ "5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL" });
     SX_REQUIRE_OKAY(command.invoke(output, error));

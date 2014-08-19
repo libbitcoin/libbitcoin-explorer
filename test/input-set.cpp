@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(input_set__invoke)
 
 BOOST_AUTO_TEST_CASE(input_set__invoke__always__failure_error)
 {
-    //// $ sx input-set ...
     //SX_DECLARE_COMMAND(input_set);
     //SX_REQUIRE_FAILURE(command.invoke(output, error));
     //SX_REQUIRE_ERROR(SX_EC_LOCK_NOT_IMPLEMENTED "\n");

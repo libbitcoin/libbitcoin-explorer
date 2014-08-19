@@ -81,45 +81,52 @@ public:
 
     /**
      * Serialize a property tree to output. The stream must be flushed before 
-     * returning on order to prevent interleaving on the shared stream.
+     * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
      */
     virtual void error(const pt::ptree tree);
 
     /**
      * Write a line to the error stream. The stream must be flushed before 
-     * returning on order to prevent interleaving on the shared stream.
+     * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated error message to write.
      */
     virtual void error(const format& message);
    
     /**
      * Write a line to the error stream. The stream must be flushed before 
-     * returning on order to prevent interleaving on the shared stream.
+     * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated error message to write.
      */
     virtual void error(const std::string& message);
 
     /**
      * Serialize a property tree to output. The stream must be flushed before 
-     * returning on order to prevent interleaving on the shared stream.
+     * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
      */
     virtual void output(const pt::ptree tree);
 
     /**
      * Write a line to the output stream. The stream must be flushed before 
-     * returning on order to prevent interleaving on the shared stream.
+     * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated output message to write.
      */
     virtual void output(const format& message);
 
     /**
      * Write a line to the output stream. The stream must be flushed before 
-     * returning on order to prevent interleaving on the shared stream.
+     * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated output message to write.
      */
     virtual void output(const std::string& message);
+
+    /**
+     * Write a number to the output stream. The stream must be flushed before 
+     * returning in order to prevent interleaving on the shared stream.
+     * @param[in]  value  The numeric value to write.
+     */
+    virtual void output(uint64_t value);
 
     /**
      * Set the callback refcount to one and reset result to okay.

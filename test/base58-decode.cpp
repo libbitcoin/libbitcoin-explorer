@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(base58_decode__invoke)
 
 BOOST_AUTO_TEST_CASE(base58_decode__invoke__valid_value__okay_output)
 {
-    // $ sx base58-decode vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D
     SX_DECLARE_COMMAND(base58_decode);
     command.set_base58_argument({ "vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D" });
     SX_REQUIRE_OKAY(command.invoke(output, error));

@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 
 BOOST_AUTO_TEST_CASE(input_validate__invoke__always__failure_error)
 {
-    //// $ sx input-validate ...
     //SX_DECLARE_COMMAND(input_validate);
     //SX_REQUIRE_FAILURE(command.invoke(output, error));
     //SX_REQUIRE_ERROR(SX_EC_LOCK_NOT_IMPLEMENTED "\n");

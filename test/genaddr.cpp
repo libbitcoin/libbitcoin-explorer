@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(genaddr__invoke)
 
 BOOST_AUTO_TEST_CASE(genaddr__invoke__always__failure_error)
 {
-    // $ sx genaddr ...
     SX_DECLARE_COMMAND(genaddr);
     SX_REQUIRE_FAILURE(command.invoke(output, error));
     SX_REQUIRE_ERROR(SX_GENADDR_OBSOLETE "\n");

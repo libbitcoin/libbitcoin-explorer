@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(ec_new__invoke)
 
 BOOST_AUTO_TEST_CASE(ec_new__invoke_128_bit_seed__okay_output)
 {
-    // $ sx ec-new baadf00dbaadf00dbaadf00dbaadf00d
     SX_DECLARE_COMMAND(ec_new);
     command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     SX_REQUIRE_OKAY(command.invoke(output, error));
@@ -35,7 +34,6 @@ BOOST_AUTO_TEST_CASE(ec_new__invoke_128_bit_seed__okay_output)
 
 BOOST_AUTO_TEST_CASE(ec_new__invoke_64_bit_seed__failure_error)
 {
-    // $ sx ec-new baadf00dbaadf00d
     SX_DECLARE_COMMAND(ec_new);
     command.set_seed_argument({ "baadf00dbaadf00d" });
     SX_REQUIRE_FAILURE(command.invoke(output, error));
@@ -43,9 +41,9 @@ BOOST_AUTO_TEST_CASE(ec_new__invoke_64_bit_seed__failure_error)
 }
 
 // TODO: what seed generates an invalid key so we can cover this code path?
+
 //BOOST_AUTO_TEST_CASE(ec_new__invoke_128_bit_bad_seed__failure_error)
 //{
-//    // $ sx ec-new ???
 //    SX_DECLARE_COMMAND(ec_new);
 //    command.set_seed_argument({ "00000000000000000000000000000000" });
 //    SX_REQUIRE_FAILURE(command.invoke(output, error));

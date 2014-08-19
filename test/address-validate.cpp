@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(address_validate__invoke)
 
 BOOST_AUTO_TEST_CASE(address_validate__invoke__one_address__okay_output)
 {
-    // $ sx address-validate 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
     SX_DECLARE_COMMAND(address_validate);
     command.set_bitcoin_addresss_argument({{ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" }});
     SX_REQUIRE_OKAY(command.invoke(output, error));
@@ -35,7 +34,6 @@ BOOST_AUTO_TEST_CASE(address_validate__invoke__one_address__okay_output)
 
 BOOST_AUTO_TEST_CASE(address_validate__invoke__two_addresses__okay_output)
 {
-    // $ sx address-validate 3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz
     SX_DECLARE_COMMAND(address_validate);
     command.set_bitcoin_addresss_argument(
     { 

@@ -46,7 +46,7 @@ console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
     else
     {
         const auto tree = prop_tree(transactions);
-        write_stream(output, tree, encoding) << std::endl;
+        write_stream(output, tree, encoding);
     }
 
     return console_result::okay;

@@ -62,6 +62,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_FETCH_TX_INDEX_OUTPUT \
+    "[%1%] Height: %2% Index: %3%"
+
+/**
  * Class to implement the sx fetch-tx-index command.
  */
 class fetch_tx_index 

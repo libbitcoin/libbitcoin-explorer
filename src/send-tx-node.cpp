@@ -71,14 +71,12 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     auto& pool = client.get_threadpool();
     handshake shake(pool);
     network net(pool);
+
     for (const tx_type& tx: transactions)
     {
         ++state;
-        connect(shake, net, host, port, 
+        connect(shake, net, host, port,
             std::bind(send_handler, ph::_1, ph::_2, tx));
-
-        // TODO: need to verify this setup is correct for multiple simo txs.
-        break;
     }
 
     client.poll(state.stopped(), 2000);

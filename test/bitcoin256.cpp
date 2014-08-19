@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(bitcoin256__invoke)
 
 BOOST_AUTO_TEST_CASE(bitcoin256__invoke__always__okay_output)
 {
-    // $ sx bitcoin256 900df00d
     SX_DECLARE_COMMAND(bitcoin256);
     command.set_base16_argument({ "900df00d" });
     SX_REQUIRE_OKAY(command.invoke(output, error));

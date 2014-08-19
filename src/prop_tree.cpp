@@ -223,6 +223,16 @@ ptree prop_tree(const std::vector<transaction>& transactions)
     return prop_tree_list("transaction", transactions);
 }
 
+ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
+    const prefix& prefix)
+{
+    ptree tree;
+    tree.add_child("watch.transaction", prop_tree(tx));
+    tree.add("watch.block", base16(block_hash));
+    tree.add("watch.prefix", prefix);
+    return tree;
+}
+
 ptree prop_tree(const std::vector<ec_point>& public_keys)
 {
     return prop_value_list("public_key", 

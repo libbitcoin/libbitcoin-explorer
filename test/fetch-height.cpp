@@ -28,7 +28,6 @@ BOOST_AUTO_TEST_SUITE(fetch_height__invoke)
 
 //BOOST_AUTO_TEST_CASE(fetch_height__invoke__always__okay)
 //{
-//    // $ sx fetch-height
 //    SX_DECLARE_COMMAND(fetch_height);
 //    SX_REQUIRE_OKAY(command.invoke(output, error));
 //}
