@@ -37,15 +37,9 @@ using namespace sx; \
 using namespace sx::extension; \
 using namespace sx::serializer;
 
-#define _SX_DECLARE_COMMAND(extension) \
+#define SX_DECLARE_COMMAND(extension) \
     stringstream output, error; \
     extension command
-#define SX_DECLARE_COMMAND(extension) \
-    stringstream input; \
-    _SX_DECLARE_COMMAND(extension)
-#define SX_DECLARE_COMMAND_INPUT(extension, value) \
-    stringstream input(value); \
-    _SX_DECLARE_COMMAND(extension)
 
 // serializer results
 #define SX_SERIALIZE_COPY_ROUND_TRIP(serializer, value) \
