@@ -136,7 +136,7 @@ public:
             )
             (
                 "SECRET",
-                value<serializer::ec_private>(&argument_.secret)->required(),
+                value<serializer::ec_private>(&argument_.secret),
                 "A Base16 EC private key."
             )
             (

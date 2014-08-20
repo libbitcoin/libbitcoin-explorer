@@ -135,9 +135,11 @@ if HAVE_OBELISK
         command/fetch-height.hpp \
         command/fetch-history.hpp \
         command/fetch-public-key.hpp \
+        command/fetch-stealth.hpp \
         command/fetch-tx.hpp \
         command/fetch-tx-index.hpp \
         command/fetch-utxo.hpp \
         command/send-tx.hpp \
+        command/watch-stealth.hpp \
         command/watch-tx.hpp
 endif

@@ -62,12 +62,6 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
- */
-#define SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
  * Class to implement the sx base58check-encode command.
  */
 class base58check_encode 
@@ -141,6 +135,11 @@ public:
                 "Convert Base16 data to Base58Check."
             )
             (
+                "version,v",
+                value<uint8_t>(&option_.version),
+                "The desired version number."
+            )
+            (
                 "BASE16",
                 value<serializer::base16>(&argument_.base16),
                 "The Base16 value to Base58Check encode."
@@ -193,6 +192,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the version option.
+     */
+    virtual uint8_t& get_version_option()
+    {
+        return option_.version;
+    }
+    
+    /**
+     * Set the value of the version option.
+     */
+    virtual void set_version_option(
+        const uint8_t& value)
+    {
+        option_.version = value;
+    }
+
 private:
 
     /**
@@ -218,11 +234,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            version()
         {
         }
         
         bool help;
+        uint8_t version;
     } option_;
 };
 

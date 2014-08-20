@@ -150,6 +150,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-height.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-history.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-public-key.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-stealth.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx-index.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-utxo.hpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="..\..\..\..\include\sx\command\tx-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\tx-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp" />
+    <ClInclude Include="..\..\..\..\include\sx\command\watch-stealth.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-public.hpp" />
@@ -287,6 +289,9 @@
     <ClCompile Include="..\..\..\..\src\fetch-public-key.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-tx.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -343,6 +348,9 @@
     <ClCompile Include="..\..\..\..\src\tx-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\tx-sign.cpp" />
     <ClCompile Include="..\..\..\..\src\wallet.cpp" />
+    <ClCompile Include="..\..\..\..\src\watch-stealth.cpp">
+      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\watch-tx.cpp">
       <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>

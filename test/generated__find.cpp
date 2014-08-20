@@ -179,6 +179,11 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_public_key__returns_object)
     BOOST_REQUIRE(find(fetch_public_key::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__fetch_stealth__returns_object)
+{
+    BOOST_REQUIRE(find(fetch_stealth::symbol()) != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__fetch_tx__returns_object)
 {
     BOOST_REQUIRE(find(fetch_tx::symbol()) != nullptr);
@@ -417,6 +422,11 @@ BOOST_AUTO_TEST_CASE(generated__find__tx_sign__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__wallet__returns_object)
 {
     BOOST_REQUIRE(find(wallet::symbol()) != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__watch_stealth__returns_object)
+{
+    BOOST_REQUIRE(find(watch_stealth::symbol()) != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__watch_tx__returns_object)

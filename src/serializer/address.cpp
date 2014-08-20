@@ -20,6 +20,7 @@
 #include "precompile.hpp"
 #include <sx/serializer/address.hpp>
 
+#include <cstdint>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -53,6 +54,11 @@ address::address(const payment_address& value)
 
 address::address(const address& other)
     : address(other.value_)
+{
+}
+
+address::address(uint8_t version, const short_hash& hash)
+    : address(payment_address(version, hash))
 {
 }
 

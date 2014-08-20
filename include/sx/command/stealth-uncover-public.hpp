@@ -137,12 +137,12 @@ public:
             )
             (
                 "EPHEMERAL_PUBKEY",
-                value<serializer::ec_public>(&argument_.ephemeral_pubkey)->required(),
+                value<serializer::ec_public>(&argument_.ephemeral_pubkey),
                 "The Base16 ephemeral EC public key retrieved from the stealth payment metadata."
             )
             (
                 "SCAN_SECRET",
-                value<serializer::ec_private>(&argument_.scan_secret)->required(),
+                value<serializer::ec_private>(&argument_.scan_secret),
                 "The Base16 EC private key corresponding to the public key required to generate a stealth payment."
             )
             (

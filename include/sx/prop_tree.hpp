@@ -39,6 +39,7 @@
 namespace sx {
 namespace serializer {
     
+class address;
 class header;
 class input;
 class output;
@@ -233,6 +234,29 @@ pt::ptree prop_tree(const stealth& address);
  * @return                A property tree.
  */
 pt::ptree prop_tree(const std::vector<stealth>& addresses);
+
+/**
+ * Generate a property tree for a stealth metadata row.
+ * @param[in]  rows  The stealth row.
+ * @return           A property tree.
+ */
+pt::ptree prop_tree(const bc::blockchain::stealth_row& row);
+
+/**
+ * Generate a property tree from stealth metadata rows.
+ * @param[in]  rows    The set of stealth rows.
+ * @return             A property tree.
+ */
+pt::ptree prop_tree(const std::vector<bc::blockchain::stealth_row>& rows);
+
+/**
+ * Generate a property tree from stealth metadata rows for a prefix.
+ * @param[in]  rows    The set of stealth rows.
+ * @param[in]  prefix  The stealth prefix.
+ * @return             A property tree.
+ */
+pt::ptree prop_tree(const bc::stealth_prefix& prefix, 
+    const std::vector<bc::blockchain::stealth_row>& rows);
 
 /**
  * Generate a property tree for a wrapper.

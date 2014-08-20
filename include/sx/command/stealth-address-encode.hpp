@@ -66,6 +66,10 @@ namespace extension {
  */
 #define SX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW \
     "The number of signatures is greater than the number of SPEND_PUBKEYs."
+#define SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED \
+    "WARNING: prefix search is not yet fully supported."
+#define SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED \
+    "WARNING: multiple signature stealth transactions are not yet fully supported."
 
 /**
  * Class to implement the sx stealth-address-encode command.
@@ -144,7 +148,7 @@ public:
             (
                 "prefix,p",
                 value<serializer::prefix>(&option_.prefix),
-                "The binary encoded stealth payment search prefix."
+                "The Base2 stealth prefix that will be used to locate payments."
             )
             (
                 "signatures,s",

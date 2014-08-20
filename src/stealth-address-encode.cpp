@@ -21,9 +21,11 @@
 #include <sx/command/stealth-address-encode.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/stealth.hpp>
 
+using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
@@ -32,7 +34,7 @@ console_result stealth_address_encode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& prefix = get_prefix_option();
+    const stealth_prefix& prefix = get_prefix_option();
     const auto& scan_pubkey = get_scan_pubkey_argument();
     const auto& spend_pubkeys = get_spend_pubkeys_argument();
     const auto& signatures = get_signatures_option();
@@ -45,6 +47,14 @@ console_result stealth_address_encode::invoke(std::ostream& output,
         error << SX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW << std::endl;
         return console_result::failure;
     }
+
+    // Issue a warning but don't prevent experimentation.
+    if (spend_pubkeys.size() > 1)
+        error << SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED << std::endl;
+
+    // Issue a warning but don't prevent experimentation.
+    if (prefix.size() > 0)
+        error << SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED << std::endl;
 
     // TESTNET WORKS WITHOUT RECOMPILE
     stealth address(prefix, scan_pubkey, spend_pubkeys, signatures, testnet);

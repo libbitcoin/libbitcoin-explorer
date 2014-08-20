@@ -65,7 +65,9 @@ namespace extension {
  * Various localizable strings.
  */
 #define SX_WATCH_TX_WAITING \
-    "Watching prefix: %1%..."
+    "Watching transaction: %1%..."
+#define SX_WATCH_TX_NOT_IMPLEMENTED \
+    "This command is not yet implemented."
 
 /**
  * Class to implement the sx watch-tx command.
@@ -103,7 +105,8 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("HASH", -1);
     }
 	
 	/**
@@ -114,6 +117,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_hashs_argument(), "HASH", variables, input);
     }
     
     /**
@@ -136,7 +140,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Watch the network for future transactions by filter. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL"
+                "Watch the network for transactions by transaction hash. Requires an Obelisk server connection."
             )
             (
                 "format,f",
@@ -144,9 +148,9 @@ public:
                 "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
             )
             (
-                "prefix,p",
-                value<std::vector<serializer::prefix>>(&option_.prefixs),
-                "The set of binary encoded stealth search prefixes to watch. Includes all transactions if not set."
+                "HASH",
+                value<std::vector<serializer::btc256>>(&argument_.hashs),
+                "The set of Base16 transaction hashes to watch."
             );
 
         return options;
@@ -161,6 +165,23 @@ public:
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the HASH arguments.
+     */
+    virtual std::vector<serializer::btc256>& get_hashs_argument()
+    {
+        return argument_.hashs;
+    }
+    
+    /**
+     * Set the value of the HASH arguments.
+     */
+    virtual void set_hashs_argument(
+        const std::vector<serializer::btc256>& value)
+    {
+        argument_.hashs = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -196,23 +217,6 @@ public:
         option_.format = value;
     }
 
-    /**
-     * Get the value of the prefix options.
-     */
-    virtual std::vector<serializer::prefix>& get_prefixs_option()
-    {
-        return option_.prefixs;
-    }
-    
-    /**
-     * Set the value of the prefix options.
-     */
-    virtual void set_prefixs_option(
-        const std::vector<serializer::prefix>& value)
-    {
-        option_.prefixs = value;
-    }
-
 private:
 
     /**
@@ -223,9 +227,11 @@ private:
     struct argument
     {
         argument()
+          : hashs()
         {
         }
         
+        std::vector<serializer::btc256> hashs;
     } argument_;
     
     /**
@@ -237,14 +243,12 @@ private:
     {
         option()
           : help(),
-            format(),
-            prefixs()
+            format()
         {
         }
         
         bool help;
         serializer::encoding format;
-        std::vector<serializer::prefix> prefixs;
     } option_;
 };
 

@@ -27,6 +27,7 @@
 #include <wallet/wallet.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/btc256.hpp>
 #include <sx/serializer/ec_public.hpp>
 #include <sx/serializer/header.hpp>
 #include <sx/serializer/input.hpp>
@@ -43,8 +44,9 @@ using namespace pt;
 
 namespace sx {
 namespace serializer {
-
+    
 // Edit with care - text property names trade DRY for readability.
+// Edit with care - tests are affected by property ORDER (keep alphabetical).
 
 ptree prop_tree(const header& header)
 {
@@ -70,20 +72,21 @@ ptree prop_tree(const history_row& row)
 {
     ptree tree;
     tree.put("value", row.value);
-    tree.put("output.point", point(row.output));
 
-    // missing => pending
+    // missing implies pending
     if (row.output_height != 0)
         tree.put("output.height", row.output_height);
 
-    // missing => unspent
+    tree.put("output.point", point(row.output));
+
+    // missing implies unspent
     if (row.spend.hash != null_hash)
     {
-        tree.put("input.point", point(row.spend));
-
-        // missing => pending
+        // missing implies pending
         if (row.spend_height != 0)
             tree.put("input.height", row.spend_height);
+
+        tree.put("input.point", point(row.spend));
     }
 
     return tree;
@@ -195,8 +198,8 @@ ptree prop_tree(const output& output)
     const std::vector<tx_output_type>& tx_outputs = output;
 
     ptree tree;
-    tree.put("pay_to", output.payto());
     tree.add_child("outputs", prop_tree(tx_outputs));
+    tree.put("pay_to", output.payto());
     return tree;
 }
 
@@ -211,10 +214,10 @@ ptree prop_tree(const transaction& transaction)
 
     ptree tree;
     tree.put("hash", base16(hash_transaction(tx)));
-    tree.put("version", tx.version);
-    tree.put("lock_time", tx.locktime);
     tree.add_child("inputs", prop_tree(tx.inputs));
+    tree.put("lock_time", tx.locktime);
     tree.add_child("outputs", prop_tree(tx.outputs));
+    tree.put("version", tx.version);
     return tree;
 }
 
@@ -227,9 +230,9 @@ ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
     const prefix& prefix)
 {
     ptree tree;
-    tree.add_child("watch.transaction", prop_tree(tx));
     tree.add("watch.block", base16(block_hash));
     tree.add("watch.prefix", prefix);
+    tree.add_child("watch.transaction", prop_tree(tx));
     return tree;
 }
 
@@ -252,7 +255,7 @@ ptree prop_tree(const stealth& address)
     auto spend_keys = cast<ec_point, ec_public>(addr.get_spend_pubkeys());
 
     ptree tree;
-    tree.put("address.encoded", addr.encoded());
+    tree.put("address.encoded", address);
     tree.put("address.prefix", prefix(addr.get_prefix()));
     tree.put("address.scan_public_key", ec_public(addr.get_scan_pubkey()));
     tree.put("address.signatures", addr.get_signatures());
@@ -266,12 +269,35 @@ ptree prop_tree(const std::vector<stealth>& addresses)
     return prop_tree_list("stealth", addresses);
 }
 
+ptree prop_tree(const blockchain::stealth_row& row)
+{
+    ptree tree;
+    tree.put("ephemeral_public_key", ec_public(row.ephemkey));
+    tree.put("paid_address", address(row.address));
+    tree.put("transaction_hash", btc256(row.transaction_hash));
+    return tree;
+}
+
+ptree prop_tree(const std::vector<blockchain::stealth_row>& rows)
+{
+    return prop_tree_list("metadata", rows);
+}
+
+ptree prop_tree(const stealth_prefix& prefix,
+    const std::vector<blockchain::stealth_row>& rows)
+{
+    ptree tree;
+    tree.add_child("stealth", prop_tree(rows));
+    tree.put("stealth.prefix", sx::serializer::prefix(prefix));
+    return tree;
+}
+
 ptree prop_tree(const wrapped_data& wrapped)
 {
     ptree tree;
-    tree.put("wrapper.version", wrapped.version);
-    tree.put("wrapper.payload", base16(wrapped.payload));
     tree.put("wrapper.checksum", wrapped.checksum);
+    tree.put("wrapper.payload", base16(wrapped.payload));
+    tree.put("wrapper.version", wrapped.version);
     return tree;
 }
 

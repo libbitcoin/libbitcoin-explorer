@@ -137,7 +137,7 @@ public:
             (
                 "BASE16",
                 value<serializer::base16>(&argument_.base16),
-                "The Base16 data to Base58 encode."
+                "The Base16 data to encode as Base58."
             );
 
         return options;

@@ -132,7 +132,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert a Bitcoin address to RIPEMD160."
+                "Convert a Bitcoin address to RIPEMD160, dropping the version."
+            )
+            (
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
             )
             (
                 "BITCOIN_ADDRESS",
@@ -187,6 +192,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the format option.
+     */
+    virtual serializer::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+    
+    /**
+     * Set the value of the format option.
+     */
+    virtual void set_format_option(
+        const serializer::encoding& value)
+    {
+        option_.format = value;
+    }
+
 private:
 
     /**
@@ -212,11 +234,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            format()
         {
         }
         
         bool help;
+        serializer::encoding format;
     } option_;
 };
 

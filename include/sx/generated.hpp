@@ -54,6 +54,7 @@
 #include <sx/command/fetch-height.hpp>
 #include <sx/command/fetch-history.hpp>
 #include <sx/command/fetch-public-key.hpp>
+#include <sx/command/fetch-stealth.hpp>
 #include <sx/command/fetch-tx.hpp>
 #include <sx/command/fetch-tx-index.hpp>
 #include <sx/command/fetch-utxo.hpp>
@@ -102,6 +103,7 @@
 #include <sx/command/tx-encode.hpp>
 #include <sx/command/tx-sign.hpp>
 #include <sx/command/wallet.hpp>
+#include <sx/command/watch-stealth.hpp>
 #include <sx/command/watch-tx.hpp>
 #include <sx/command/wif-to-ec.hpp>
 #include <sx/command/wif-to-public.hpp>

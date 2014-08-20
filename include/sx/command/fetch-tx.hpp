@@ -98,7 +98,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("EC_PRIVATE_KEY", 1);
+            .add("HASH", -1);
     }
 	
 	/**
@@ -109,6 +109,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_hashs_argument(), "HASH", variables, input);
     }
     
     /**
@@ -139,24 +140,14 @@ public:
                 "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
             )
             (
-                "hash,s",
-                value<std::vector<serializer::btc256>>(&option_.hashs),
-                "The set of Base16 transaction hashes to get. Overrides prefix and height options."
-            )
-            (
-                "prefix,p",
-                value<std::vector<serializer::prefix>>(&option_.prefixs),
-                "The set of binary encoded stealth search prefixes of transactions to get."
-            )
-            (
                 "height,t",
                 value<size_t>(&option_.height),
-                "The minimum block height of prefix transactions to get. Includes all blocks if not set."
+                "The minimum block height of prefix transactions to get."
             )
             (
-                "EC_PRIVATE_KEY",
-                value<serializer::ec_private>(&argument_.ec_private_key),
-                "The Base16 EC private key to use locally in confirming stealth transactions."
+                "HASH",
+                value<std::vector<serializer::btc256>>(&argument_.hashs),
+                "The set of Base16 transaction hashes of transactions to get."
             );
 
         return options;
@@ -173,20 +164,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the EC_PRIVATE_KEY argument.
+     * Get the value of the HASH arguments.
      */
-    virtual serializer::ec_private& get_ec_private_key_argument()
+    virtual std::vector<serializer::btc256>& get_hashs_argument()
     {
-        return argument_.ec_private_key;
+        return argument_.hashs;
     }
     
     /**
-     * Set the value of the EC_PRIVATE_KEY argument.
+     * Set the value of the HASH arguments.
      */
-    virtual void set_ec_private_key_argument(
-        const serializer::ec_private& value)
+    virtual void set_hashs_argument(
+        const std::vector<serializer::btc256>& value)
     {
-        argument_.ec_private_key = value;
+        argument_.hashs = value;
     }
 
     /**
@@ -224,40 +215,6 @@ public:
     }
 
     /**
-     * Get the value of the hash options.
-     */
-    virtual std::vector<serializer::btc256>& get_hashs_option()
-    {
-        return option_.hashs;
-    }
-    
-    /**
-     * Set the value of the hash options.
-     */
-    virtual void set_hashs_option(
-        const std::vector<serializer::btc256>& value)
-    {
-        option_.hashs = value;
-    }
-
-    /**
-     * Get the value of the prefix options.
-     */
-    virtual std::vector<serializer::prefix>& get_prefixs_option()
-    {
-        return option_.prefixs;
-    }
-    
-    /**
-     * Set the value of the prefix options.
-     */
-    virtual void set_prefixs_option(
-        const std::vector<serializer::prefix>& value)
-    {
-        option_.prefixs = value;
-    }
-
-    /**
      * Get the value of the height option.
      */
     virtual size_t& get_height_option()
@@ -284,11 +241,11 @@ private:
     struct argument
     {
         argument()
-          : ec_private_key()
+          : hashs()
         {
         }
         
-        serializer::ec_private ec_private_key;
+        std::vector<serializer::btc256> hashs;
     } argument_;
     
     /**
@@ -301,16 +258,12 @@ private:
         option()
           : help(),
             format(),
-            hashs(),
-            prefixs(),
             height()
         {
         }
         
         bool help;
         serializer::encoding format;
-        std::vector<serializer::btc256> hashs;
-        std::vector<serializer::prefix> prefixs;
         size_t height;
     } option_;
 };

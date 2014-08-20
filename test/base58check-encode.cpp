@@ -24,11 +24,28 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(base58check_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(base58check_encode__invoke__always__failure_error)
+// vectors
+#define SX_BASE58CHECK_ENCODE_PAYLOAD "031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006"
+
+// expectations
+#define SX_BASE58CHECK_ENCODE_ENCODED_V0 "173RKgkk7fMbYUYBGyyAHeZ6rwfKRMn17h7DtGsmpEdab8TV6UB"
+#define SX_BASE58CHECK_ENCODE_ENCODED_V42 "7DTXS6pY6a98XH2oQTZUbbd1Z7P4NzkJqfraixprPutXQVTkwBGw"
+
+BOOST_AUTO_TEST_CASE(base58check_encode__invoke__version_0__okay_output)
 {
     SX_DECLARE_COMMAND(base58check_encode);
-    SX_REQUIRE_FAILURE(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED "\n");
+    command.set_base16_argument({ SX_BASE58CHECK_ENCODE_PAYLOAD });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT(SX_BASE58CHECK_ENCODE_ENCODED_V0 "\n");
+}
+
+BOOST_AUTO_TEST_CASE(base58check_encode__invoke__version_42__okay_output)
+{
+    SX_DECLARE_COMMAND(base58check_encode);
+    command.set_version_option(42);
+    command.set_base16_argument({ SX_BASE58CHECK_ENCODE_PAYLOAD });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT(SX_BASE58CHECK_ENCODE_ENCODED_V42 "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -40,6 +40,13 @@ static void handle_callback(callback_state& state,
     --state;
 }
 
+// When you restore your wallet, you should use fetch_history(). 
+// But for updating the wallet, use the [new] scan() method- 
+// which is faster because you avoid pulling the entire history.
+// We can eventually increase privacy and performance (fewer calls to scan())
+// by 'mining' addresses with the same prefix, allowing us to fetch the 
+// prefix group. Obelisk will eventually support privacy enhanced history for 
+// address scan by prefix.
 console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.

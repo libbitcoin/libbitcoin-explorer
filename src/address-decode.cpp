@@ -22,21 +22,25 @@
 
 #include <iostream>
 #include <sx/define.hpp>
-#include <sx/serializer/btc160.hpp>
+#include <sx/prop_tree.hpp>
+#include <sx/serializer/wrapper.hpp>
 
-using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
 
 // 100% coverage by line, loc ready.
-console_result address_decode::invoke(std::ostream& output, std::ostream& error)
+console_result address_decode::invoke(std::ostream& output, 
+    std::ostream& error)
 {
     // Bound parameters.
-    const auto& address = get_bitcoin_address_argument();
+    const auto& bitcoin_address = get_bitcoin_address_argument();
+    const auto& encoding = get_format_option();
 
     // TESTNET VERSION REQUIRES RECOMPILE
+    const wrapper wrapped(bitcoin_address);
+    const auto tree = prop_tree(wrapped);
 
-    output << btc160(address) << std::endl;
+    write_stream(output, tree, encoding);
     return console_result::okay;
 }

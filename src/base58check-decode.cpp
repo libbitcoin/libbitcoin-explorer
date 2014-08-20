@@ -22,26 +22,23 @@
 
 #include <iostream>
 #include <sx/define.hpp>
+#include <sx/prop_tree.hpp>
+#include <sx/serializer/wrapper.hpp>
 
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result base58check_decode::invoke(std::ostream& output, std::ostream& error)
+console_result base58check_decode::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
     const auto& base58check = get_base58check_argument();
+    const auto& encoding = get_format_option();
 
-    // TODO: add wrapped property tree.
+    const wrapper wrapped(base58check);
+    const auto tree = prop_tree(wrapped);
 
-    // TODO: invoke functionality from base58-decode >> unwrap.
-    error << SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    write_stream(output, tree, encoding);
+    return console_result::okay;
 }
-
-//#!/usr/bin/python
-//import subprocess, sys
-//PIPE = subprocess.PIPE
-//p = subprocess.Popen(['sx','base58-decode']+sys.argv[1:], stdout=PIPE, stdin=PIPE, stderr=PIPE)
-//med = p.communicate(input=sys.stdin.read() if len(sys.argv) == 1 else '')[0]
-//p2 = subprocess.Popen(['sx','unwrap',med], stdout=PIPE, stdin=PIPE, stderr=PIPE)
-//print p2.communicate(input='')[0].strip()

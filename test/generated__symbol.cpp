@@ -179,6 +179,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_public_key__returns_expected_value
     BOOST_REQUIRE(fetch_public_key::symbol() == std::string("fetch-public-key"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_stealth__returns_expected_value)
+{
+    BOOST_REQUIRE(fetch_stealth::symbol() == std::string("fetch-stealth"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_tx__returns_expected_value)
 {
     BOOST_REQUIRE(fetch_tx::symbol() == std::string("fetch-tx"));
@@ -417,6 +422,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__tx_sign__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__wallet__returns_expected_value)
 {
     BOOST_REQUIRE(wallet::symbol() == std::string("wallet"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__watch_stealth__returns_expected_value)
+{
+    BOOST_REQUIRE(watch_stealth::symbol() == std::string("watch-stealth"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__watch_tx__returns_expected_value)

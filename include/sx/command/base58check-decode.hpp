@@ -62,12 +62,6 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
- */
-#define SX_BASE58CHECK_DECODE_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
  * Class to implement the sx base58check-decode command.
  */
 class base58check_decode 
@@ -141,9 +135,14 @@ public:
                 "Convert a Base58Check value to Base16 data."
             )
             (
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+            )
+            (
                 "BASE58CHECK",
                 value<serializer::base58>(&argument_.base58check),
-                "The Base58Check encoded value to decode."
+                "The Base58Check value to decode."
             );
 
         return options;
@@ -193,6 +192,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the format option.
+     */
+    virtual serializer::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+    
+    /**
+     * Set the value of the format option.
+     */
+    virtual void set_format_option(
+        const serializer::encoding& value)
+    {
+        option_.format = value;
+    }
+
 private:
 
     /**
@@ -218,11 +234,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            format()
         {
         }
         
         bool help;
+        serializer::encoding format;
     } option_;
 };
 

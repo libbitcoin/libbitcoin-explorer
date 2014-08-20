@@ -22,24 +22,23 @@
 
 #include <iostream>
 #include <sx/define.hpp>
+#include <sx/serializer/base58.hpp>
+#include <sx/serializer/wrapper.hpp>
 
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
-console_result base58check_encode::invoke(std::ostream& output, std::ostream& error)
+console_result base58check_encode::invoke(std::ostream& output, 
+    std::ostream& error)
 {
     // Bound parameters.
-    const auto& base16 = get_base16_argument();
+    const auto version = get_version_option();
+    const auto& payload = get_base16_argument();
 
-    // TODO: invoke functionality from wrap >> base58-encode.
-    error << SX_BASE58CHECK_ENCODE_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    const wrapper wrapped(version, payload);
+    const base58 base58check(wrapped);
+
+    output << base58check << std::endl;
+    return console_result::okay;
 }
-
-//#!/usr/bin/python
-//import subprocess, sys
-//PIPE = subprocess.PIPE
-//p = subprocess.Popen(['sx','wrap']+sys.argv[1:], stdout=PIPE, stdin=PIPE, stderr=PIPE)
-//med = p.communicate(input=sys.stdin.read() if len(sys.argv) < 3 else '')[0]
-//p2 = subprocess.Popen(['sx','base58-encode',med], stdout=PIPE, stdin=PIPE, stderr=PIPE)
-//print p2.communicate(input='')[0].strip()

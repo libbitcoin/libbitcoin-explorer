@@ -28,7 +28,7 @@ namespace sx {
 namespace serializer {
 
 /**
- * Serialization helper to convert between text and signature hash type.
+ * Serialization helper to convert between text, btc and satoshi.
  */
 class btc
 {

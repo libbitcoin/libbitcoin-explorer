@@ -63,6 +63,12 @@ public:
 
     /**
      * Initialization constructor.
+     * @param[in]  address  The payment address to initialize with.
+     */
+    wrapper(const bc::payment_address& address);
+
+    /**
+     * Initialization constructor.
      * @param[in]  version  The version for the new wrapped value.
      * @param[in]  payload  The payload for the new wrapped value.
      */

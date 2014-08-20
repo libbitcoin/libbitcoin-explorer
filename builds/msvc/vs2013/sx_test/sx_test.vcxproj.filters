@@ -156,12 +156,6 @@
     <ClCompile Include="..\..\..\..\test\wrap-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp">
-      <Filter>src\tests\command\stub</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\ec-lock.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
@@ -203,9 +197,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\send-tx-p2p.cpp">
       <Filter>src\tests\command</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\watch-tx.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\fetch-tx.cpp">
       <Filter>src\tests\command\obelisk</Filter>
@@ -298,6 +289,21 @@
       <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\stealth-new.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\watch-stealth.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\fetch-stealth.cpp">
+      <Filter>src\tests\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\watch-tx.cpp">
+      <Filter>src\tests\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp">
+      <Filter>src\tests\command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
   </ItemGroup>

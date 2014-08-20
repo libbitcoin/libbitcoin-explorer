@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_STEALTH_UNCOVER_SECRET_HPP
-#define SX_STEALTH_UNCOVER_SECRET_HPP
+#ifndef SX_WATCH_STEALTH_HPP
+#define SX_WATCH_STEALTH_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -62,9 +62,15 @@ namespace sx {
 namespace extension {
 
 /**
- * Class to implement the sx stealth-uncover-secret command.
+ * Various localizable strings.
  */
-class stealth_uncover_secret 
+#define SX_WATCH_PREFIX_WAITING \
+    "Watching prefix: %1%..."
+
+/**
+ * Class to implement the sx watch-stealth command.
+ */
+class watch_stealth 
     : public command
 {
 public:
@@ -72,14 +78,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "stealth-uncover-secret"; }
+    static const char* symbol() { return "watch-stealth"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return stealth_uncover_secret::symbol();
+        return watch_stealth::symbol();
     }
 
     /**
@@ -87,7 +93,7 @@ public:
      */
     virtual const char* category()
     {
-        return "STEALTH";
+        return "ONLINE";
     }
 
     /**
@@ -98,9 +104,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("EPHEMERAL_PUBKEY", 1)
-            .add("SCAN_SECRET", 1)
-            .add("SPEND_SECRET", 1);
+            .add("PREFIX", -1);
     }
 	
 	/**
@@ -111,6 +115,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_prefixs_argument(), "PREFIX", variables, input);
     }
     
     /**
@@ -133,22 +138,17 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Derive the stealth private key necessary to spend a stealth payment."
+                "Watch the network for transactions by stealth prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL."
             )
             (
-                "EPHEMERAL_PUBKEY",
-                value<serializer::ec_public>(&argument_.ephemeral_pubkey),
-                "The Base16 ephemeral EC public key retrieved from the stealth payment metadata."
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
             )
             (
-                "SCAN_SECRET",
-                value<serializer::ec_private>(&argument_.scan_secret),
-                "The Base16 EC private key corresponding to the public key required to generate a stealth address."
-            )
-            (
-                "SPEND_SECRET",
-                value<serializer::ec_private>(&argument_.spend_secret)->required(),
-                "A Base16 EC private key that can spend payments to the stealth address."
+                "PREFIX",
+                value<std::vector<serializer::prefix>>(&argument_.prefixs),
+                "The set of Base2 stealth prefixes to watch."
             );
 
         return options;
@@ -165,54 +165,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the EPHEMERAL_PUBKEY argument.
+     * Get the value of the PREFIX arguments.
      */
-    virtual serializer::ec_public& get_ephemeral_pubkey_argument()
+    virtual std::vector<serializer::prefix>& get_prefixs_argument()
     {
-        return argument_.ephemeral_pubkey;
+        return argument_.prefixs;
     }
     
     /**
-     * Set the value of the EPHEMERAL_PUBKEY argument.
+     * Set the value of the PREFIX arguments.
      */
-    virtual void set_ephemeral_pubkey_argument(
-        const serializer::ec_public& value)
+    virtual void set_prefixs_argument(
+        const std::vector<serializer::prefix>& value)
     {
-        argument_.ephemeral_pubkey = value;
-    }
-
-    /**
-     * Get the value of the SCAN_SECRET argument.
-     */
-    virtual serializer::ec_private& get_scan_secret_argument()
-    {
-        return argument_.scan_secret;
-    }
-    
-    /**
-     * Set the value of the SCAN_SECRET argument.
-     */
-    virtual void set_scan_secret_argument(
-        const serializer::ec_private& value)
-    {
-        argument_.scan_secret = value;
-    }
-
-    /**
-     * Get the value of the SPEND_SECRET argument.
-     */
-    virtual serializer::ec_private& get_spend_secret_argument()
-    {
-        return argument_.spend_secret;
-    }
-    
-    /**
-     * Set the value of the SPEND_SECRET argument.
-     */
-    virtual void set_spend_secret_argument(
-        const serializer::ec_private& value)
-    {
-        argument_.spend_secret = value;
+        argument_.prefixs = value;
     }
 
     /**
@@ -232,6 +198,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the format option.
+     */
+    virtual serializer::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+    
+    /**
+     * Set the value of the format option.
+     */
+    virtual void set_format_option(
+        const serializer::encoding& value)
+    {
+        option_.format = value;
+    }
+
 private:
 
     /**
@@ -242,15 +225,11 @@ private:
     struct argument
     {
         argument()
-          : ephemeral_pubkey(),
-            scan_secret(),
-            spend_secret()
+          : prefixs()
         {
         }
         
-        serializer::ec_public ephemeral_pubkey;
-        serializer::ec_private scan_secret;
-        serializer::ec_private spend_secret;
+        std::vector<serializer::prefix> prefixs;
     } argument_;
     
     /**
@@ -261,11 +240,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            format()
         {
         }
         
         bool help;
+        serializer::encoding format;
     } option_;
 };
 

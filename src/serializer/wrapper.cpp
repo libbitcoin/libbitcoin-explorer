@@ -56,6 +56,12 @@ wrapper::wrapper(const wrapped_data& wrapped)
 {
 }
 
+wrapper::wrapper(const payment_address& address)
+    : wrapper(address.version(), 
+    data_chunk(address.hash().begin(), address.hash().end()))
+{
+}
+
 wrapper::wrapper(uint32_t version, const data_chunk& payload)
 {
     value_.version = version;

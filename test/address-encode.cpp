@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(address_encode__invoke)
 #define SX_ADDRESS_ENCODE_ADDRESS_A_V0 "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E"
 #define SX_ADDRESS_ENCODE_ADDRESS_A_V42 "JBeTK2YUWEFTTQvcqEyQoS3poXKjjc1oEP"
 
-BOOST_AUTO_TEST_CASE(address_encode__invoke_version_0__okay_output)
+BOOST_AUTO_TEST_CASE(address_encode__invoke__version_0__okay_output)
 {
     SX_DECLARE_COMMAND(address_encode);
     command.set_ripemd160_argument({ SX_ADDRESS_ENCODE_RIPEMD160_A });

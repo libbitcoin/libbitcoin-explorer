@@ -131,10 +131,12 @@ if HAVE_OBELISK
         fetch-height.cpp \
         fetch-history.cpp \
         fetch-public-key.cpp \
+        fetch-stealth.cpp \
         fetch-tx.cpp \
         fetch-tx-index.cpp \
         fetch-utxo.cpp \
         send-tx.cpp \
+        watch-stealth.cpp \
         watch-tx.cpp \
         obelisk_client.cpp
 

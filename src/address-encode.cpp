@@ -21,12 +21,10 @@
 #include <sx/command/address-encode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/utility/utility.hpp>
 
-using namespace bc;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
@@ -39,8 +37,8 @@ console_result address_encode::invoke(std::ostream& output, std::ostream& error)
     const auto& version = get_version_option();
 
     // TESTNET VERSION REQUIRES RECOMPILE
-    const auto pay_address = payment_address(version, ripemd160);
+    const address pay_address(version, ripemd160);
 
-    output << address(pay_address) << std::endl;
+    output << pay_address << std::endl;
     return console_result::okay;
 }

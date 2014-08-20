@@ -25,27 +25,94 @@ SX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(address_decode__invoke)
 
 // vectors
-#define SX_ADDRESS_DECODE_ADDRESS_A_V0 "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E"
-#define SX_ADDRESS_DECODE_ADDRESS_A_v42 "JBeTK2YUWEFTTQvcqEyQoS3poXKjjc1oEP"
+#define SX_ADDRESS_DECODE_ADDRESS_V0 "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E"
+#define SX_ADDRESS_DECODE_ADDRESS_V42 "JBeTK2YUWEFTTQvcqEyQoS3poXKjjc1oEP"
 
 // expectations
-// the version of the address is dropped and both vectors produce this hash.
-#define SX_ADDRESS_DECODE_RIPEMD160_A "b472a266d0bd89c13706a4132ccfb16f7c3b9fcb"
+#define SX_ADDRESS_DECODE_V0_NATIVE \
+    "wrapper\n" \
+    "{\n" \
+    "    version 0\n" \
+    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
+    "    checksum 1476364070\n" \
+    "}\n"
+#define SX_ADDRESS_DECODE_V0_INFO \
+    "wrapper\n" \
+    "{\n" \
+    "    version 0\n" \
+    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
+    "    checksum 1476364070\n" \
+    "}\n"
+#define SX_ADDRESS_DECODE_V0_JSON \
+    "{\n" \
+    "    \"wrapper\": {\n" \
+    "        \"version\": \"0\",\n" \
+    "        \"payload\": \"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\n" \
+    "        \"checksum\": \"1476364070\"\n" \
+    "    }\n" \
+    "}\n"
+#define SX_ADDRESS_DECODE_V0_XML \
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
+    "<wrapper>" \
+        "<version>0</version>" \
+        "<payload>b472a266d0bd89c13706a4132ccfb16f7c3b9fcb</payload>" \
+        "<checksum>1476364070</checksum>" \
+    "</wrapper>"
+#define SX_ADDRESS_DECODE_V42_DEFAULT \
+    "wrapper\n" \
+    "{\n" \
+    "    version 42\n" \
+    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
+    "    checksum 1476364070\n" \
+    "}\n"
 
-BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0__okay_output)
+BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_native__okay_output)
 {
     SX_DECLARE_COMMAND(address_decode);
-    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_A_V0 });
+    command.set_format_option({ encoding_engine::native });
+    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_V0 });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_RIPEMD160_A "\n");
+    auto foo = output.str();
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_V0_NATIVE);
 }
 
-BOOST_AUTO_TEST_CASE(address_decode__invoke__version_42__okay_output)
+BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_info__okay_output)
 {
     SX_DECLARE_COMMAND(address_decode);
-    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_A_v42 });
+    command.set_format_option({ encoding_engine::info });
+    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_V0 });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_RIPEMD160_A "\n");
+    auto foo = output.str();
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_V0_INFO);
+}
+
+BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_json__okay_output)
+{
+    SX_DECLARE_COMMAND(address_decode);
+    command.set_format_option({ encoding_engine::json });
+    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_V0 });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    auto foo = output.str();
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_V0_JSON);
+}
+
+BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_xml__okay_output)
+{
+    SX_DECLARE_COMMAND(address_decode);
+    command.set_format_option({ encoding_engine::xml });
+    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_V0 });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    auto foo = output.str();
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_V0_XML);
+}
+
+BOOST_AUTO_TEST_CASE(address_decode__invoke__version_42_default__okay_output)
+{
+    SX_DECLARE_COMMAND(address_decode);
+    command.set_bitcoin_address_argument({ SX_ADDRESS_DECODE_ADDRESS_V42 });
+    SX_REQUIRE_OKAY(command.invoke(output, error));
+    auto foo = output.str();
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_DECODE_V42_DEFAULT);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

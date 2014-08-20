@@ -66,11 +66,11 @@ public:
      */
     operator const bitset&() const;
 
-    /**
-     * Overload cast to unsigned 32 bit value.
-     * @return  This object's value cast to 32 bit value.
-     */
-    operator const uint32_t() const;
+    ///**
+    // * Overload cast to unsigned 32 bit value.
+    // * @return  This object's value cast to 32 bit value.
+    // */
+    //operator const uint32_t() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.

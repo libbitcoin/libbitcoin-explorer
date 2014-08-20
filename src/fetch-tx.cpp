@@ -46,7 +46,7 @@ static void transaction_fetched(callback_state& state, const tx_type& tx)
     --state;
 }
 
-static void handle_fetch_callback(callback_state& state, 
+static void handle_callback(callback_state& state,
     const std::error_code& code, const tx_type& tx, 
     const hash_digest& hash, fullnode_interface& fullnode)
 {
@@ -65,85 +65,30 @@ static void handle_fetch_callback(callback_state& state,
         fetched_handler(code, tx);
 }
 
-// We only serialize a transaction, stealth is relayed if confirmed.
-static void handle_prefix_callback(callback_state& state,
-    const blockchain::stealth_list& row_list, const ec_secret& secret,
-    fullnode_interface& fullnode)
-{
-    for (const auto& row: row_list)
-    {
-        const auto& hash = row.transaction_hash;
-
-        // Write out the transaction hashes of *potential* matches.
-        // state.output(btc256(row.transaction_hash));
-
-        if (stealth_match(row, secret))
-        {
-            // Write out the transaction hashes of *actual* matches.
-            // state.output(btc256(row.transaction_hash));
-
-            // Hash should not be a reference here, since it changes.
-            const auto fetch_handler = [&state, hash, &fullnode](
-                const std::error_code& code, const tx_type& tx)
-            {
-                // Don't handle error here since it's needed by the callback.
-                handle_fetch_callback(state, code, tx, hash, fullnode);
-            };
-
-            // As we are fanning out against the list we increment for each.
-            ++state;
-
-            // If a filtered row matches then chase down the transaction.
-            fullnode.transaction_pool.fetch_transaction(hash, fetch_handler);
-        }
-    }
-
-    // This call has been handled.
-    --state;
-}
-
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto height = get_height_option();
-    const auto& hashes = get_hashs_option();
-    const auto& prefixes = get_prefixs_option();
-    const auto& secret = get_ec_private_key_argument();
+    const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
     callback_state state(error, output, encoding);
 
-    const auto fetch_handler = [&state](const std::error_code& code,
+    const auto handler = [&state](const std::error_code& code,
         const tx_type& tx, const hash_digest& hash,
         fullnode_interface& fullnode)
     {
         // Don't handle error here since it's needed by the callback.
-        handle_fetch_callback(state, code, tx, hash, fullnode);
-    };
-
-    const auto prefix_handler = [&state, &secret, &fullnode](
-        const std::error_code& code,
-        const blockchain::stealth_list& stealth_results)
-    {
-        if (!state.handle_error(code))
-            handle_prefix_callback(state, stealth_results, secret, fullnode);
+        handle_callback(state, code, tx, hash, fullnode);
     };
 
     for (const hash_digest& hash: hashes)
     {
         ++state;
         fullnode.blockchain.fetch_transaction(hash,
-            std::bind(fetch_handler, ph::_1, ph::_2, hash, 
-                std::ref(fullnode)));
-    }
-
-    for (const stealth_prefix& prefix: prefixes)
-    {
-        ++state;
-        fullnode.blockchain.fetch_stealth(prefix,
-            std::bind(prefix_handler, ph::_1, ph::_2), height);
+            std::bind(handler, ph::_1, ph::_2, hash, std::ref(fullnode)));
     }
 
     client.poll(state.stopped());

@@ -18,38 +18,56 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/command/fetch-height.hpp>
+#include <sx/command/fetch-stealth.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/obelisk.hpp>
 #include <sx/callback_state.hpp>
 #include <sx/define.hpp>
 #include <sx/obelisk_client.hpp>
+#include <sx/prop_tree.hpp>
 
 using namespace bc;
 using namespace sx;
 using namespace sx::extension;
+using namespace sx::serializer;
 
-static void handle_callback(callback_state& state, size_t height)
+// Write out the transaction hashes of *potential* matches.
+static void handle_prefix_callback(callback_state& state, 
+    const stealth_prefix& prefix, const blockchain::stealth_list& row_list)
 {
-    state.output(height);
-    state.stop();
+    state.output(prop_tree(prefix, row_list));
+
+    // This call has been handled.
+    --state;
 }
 
-console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
+console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
-    callback_state state(error, output);
-    const auto handler = [&state](const std::error_code& code, size_t height)
-    {
-        if (!state.handle_error(code))
-            handle_callback(state, height);
-    };
+    // Bound parameters.
+    const auto height = get_height_option();
+    const auto& prefixes = get_prefixs_argument();
+    const auto& encoding = get_format_option();
 
     obelisk_client client(*this);
     auto& fullnode = client.get_fullnode();
-    state.start();
-    fullnode.blockchain.fetch_last_height(handler);
+    callback_state state(error, output, encoding);
+
+    for (const stealth_prefix& prefix: prefixes)
+    {
+        const auto prefix_handler = [&state, &prefix](
+            const std::error_code& code,
+            const blockchain::stealth_list& stealth_results)
+        {
+            if (!state.handle_error(code))
+                handle_prefix_callback(state, prefix, stealth_results);
+        };
+
+        ++state;
+        fullnode.blockchain.fetch_stealth(prefix,
+            std::bind(prefix_handler, ph::_1, ph::_2), height);
+    }
+
     client.poll(state.stopped());
 
     return state.get_result();

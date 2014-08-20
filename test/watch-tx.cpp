@@ -26,11 +26,11 @@ BOOST_AUTO_TEST_SUITE(watch_tx__invoke)
 
 // DISABLED until client-server calls are isolated for test.
 
-//BOOST_AUTO_TEST_CASE(watchtx__invoke__invoke__always__failure_error)
-//{
-//    SX_DECLARE_COMMAND(watch_tx);
-//    SX_REQUIRE_FAILURE(command.invoke(output, error));
-//    SX_REQUIRE_ERROR(SX_WATCH_TX_NOT_IMPLEMENTED "\n");
-//}
+BOOST_AUTO_TEST_CASE(watch_tx__invoke__invoke__always__failure_error)
+{
+    SX_DECLARE_COMMAND(watch_tx);
+    SX_REQUIRE_FAILURE(command.invoke(output, error));
+    SX_REQUIRE_ERROR(SX_WATCH_TX_NOT_IMPLEMENTED "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -72,10 +72,10 @@
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-decode.hpp">
-      <Filter>include\command\stub</Filter>
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\base58check-encode.hpp">
-      <Filter>include\command\stub</Filter>
+      <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\bci-fetch-last-height.hpp">
       <Filter>include\command\obsolete</Filter>
@@ -142,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-public-key.hpp">
       <Filter>include\command\stub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\fetch-stealth.hpp">
+      <Filter>include\command\obelisk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx.hpp">
       <Filter>include\command\obelisk</Filter>
@@ -287,8 +290,11 @@
     <ClInclude Include="..\..\..\..\include\sx\command\wallet.hpp">
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\sx\command\watch-tx.hpp">
+    <ClInclude Include="..\..\..\..\include\sx\command\watch-stealth.hpp">
       <Filter>include\command\obelisk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\command\watch-tx.hpp">
+      <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wif-to-ec.hpp">
       <Filter>include\command</Filter>
@@ -443,10 +449,10 @@
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58check-decode.cpp">
-      <Filter>src\command\stub</Filter>
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\base58check-encode.cpp">
-      <Filter>src\command\stub</Filter>
+      <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp">
       <Filter>src\command\obsolete</Filter>
@@ -513,6 +519,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-public-key.cpp">
       <Filter>src\command\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
+      <Filter>src\command\obelisk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\fetch-tx.cpp">
       <Filter>src\command\obelisk</Filter>
@@ -658,8 +667,11 @@
     <ClCompile Include="..\..\..\..\src\wallet.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\watch-tx.cpp">
+    <ClCompile Include="..\..\..\..\src\watch-stealth.cpp">
       <Filter>src\command\obelisk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\watch-tx.cpp">
+      <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\wif-to-ec.cpp">
       <Filter>src\command</Filter>

@@ -67,6 +67,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_height>());
     func(make_shared<fetch_history>());
     func(make_shared<fetch_public_key>());
+    func(make_shared<fetch_stealth>());
     func(make_shared<fetch_tx>());
     func(make_shared<fetch_tx_index>());
     func(make_shared<fetch_utxo>());
@@ -115,6 +116,7 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<tx_encode>());
     func(make_shared<tx_sign>());
     func(make_shared<wallet>());
+    func(make_shared<watch_stealth>());
     func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
     func(make_shared<wif_to_public>());
@@ -186,6 +188,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_history>();
     if (symbol == fetch_public_key::symbol())
         return make_shared<fetch_public_key>();
+    if (symbol == fetch_stealth::symbol())
+        return make_shared<fetch_stealth>();
     if (symbol == fetch_tx::symbol())
         return make_shared<fetch_tx>();
     if (symbol == fetch_tx_index::symbol())
@@ -282,6 +286,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<tx_sign>();
     if (symbol == wallet::symbol())
         return make_shared<wallet>();
+    if (symbol == watch_stealth::symbol())
+        return make_shared<watch_stealth>();
     if (symbol == watch_tx::symbol())
         return make_shared<watch_tx>();
     if (symbol == wif_to_ec::symbol())

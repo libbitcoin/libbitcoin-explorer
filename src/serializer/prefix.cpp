@@ -68,13 +68,13 @@ prefix::operator const bitset&() const
     return value_; 
 }
 
-prefix::operator const uint32_t() const
-{
-    // to_ulong throws std::overflow_error if that value is too large to be
-    // represented in an unsigned long (ignoring leading zero bits).
-    // That situation is guarded against in construction.
-    return static_cast<uint32_t>(value_.to_ulong());
-}
+//prefix::operator const uint32_t() const
+//{
+//    // to_ulong throws std::overflow_error if that value is too large to be
+//    // represented in an unsigned long (ignoring leading zero bits).
+//    // That situation is guarded against in construction.
+//    return static_cast<uint32_t>(value_.to_ulong());
+//}
 
 std::istream& operator>>(std::istream& input, prefix& argument)
 {

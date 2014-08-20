@@ -20,6 +20,7 @@
 #ifndef ADDRESS_HPP
 #define ADDRESS_HPP
 
+#include <cstdint>
 #include <iostream>
 #include <string>
 #include <bitcoin/bitcoin.hpp>
@@ -61,6 +62,13 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     address(const address& other);
+
+    /**
+     * Initialization constructor.
+     * @param[in]  version  The bitcoin address version.
+     * @param[in]  hash     The ripemd160 value of the address.
+     */
+    address(uint8_t version, const bc::short_hash& hash);
 
     /**
      * Initialization constructor.

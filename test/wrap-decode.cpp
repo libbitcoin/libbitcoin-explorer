@@ -25,47 +25,39 @@ SX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(wrap_decode__invoke)
 
 // vectors
-#define WRAP_DECODE_WRAPPED_DATA "2a031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006298eebe4"
+#define SX_WRAP_DECODE_WRAPPED_V0 "00031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd0065b09d03c"
+#define SX_WRAP_DECODE_WRAPPED_V42 "2a031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006298eebe4"
 
 // expectations
-#define WRAP_DECODE_NATIVE "wrapper\n{\n    version 42\n    payload 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n    checksum 3840642601\n}\n"
-#define WRAP_DECODE_JSON "{\n    \"wrapper\": {\n        \"version\": \"42\",\n        \"payload\": \"031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\",\n        \"checksum\": \"3840642601\"\n    }\n}\n"
-#define WRAP_DECODE_XML "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<wrapper><version>42</version><payload>031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006</payload><checksum>3840642601</checksum></wrapper>"
+#define SX_WRAP_DECODE_UNWRAPPED_V0 \
+    "wrapper\n" \
+    "{\n" \
+    "    version 0\n" \
+    "    payload 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
+    "    checksum 1020266843\n" \
+    "}\n"
+#define SX_WRAP_DECODE_UNWRAPPED_V42 \
+    "wrapper\n" \
+    "{\n" \
+    "    version 42\n" \
+    "    payload 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
+    "    checksum 3840642601\n" \
+    "}\n"
 
-BOOST_AUTO_TEST_CASE(wrap_decode__invoke__native__okay_output)
+BOOST_AUTO_TEST_CASE(wrap_decode__invoke__version_0__okay_output)
 {
     SX_DECLARE_COMMAND(wrap_decode);
-    command.set_format_option({ encoding_engine::native });
-    command.set_wrapped_argument({ WRAP_DECODE_WRAPPED_DATA });
+    command.set_wrapped_argument({ SX_WRAP_DECODE_WRAPPED_V0 });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT(WRAP_DECODE_NATIVE);
+    SX_REQUIRE_OUTPUT(SX_WRAP_DECODE_UNWRAPPED_V0);
 }
 
-BOOST_AUTO_TEST_CASE(wrap_decode__invoke__info__okay_output)
+BOOST_AUTO_TEST_CASE(wrap_decode__invoke__version_42__okay_output)
 {
     SX_DECLARE_COMMAND(wrap_decode);
-    command.set_format_option({ encoding_engine::info });
-    command.set_wrapped_argument({ WRAP_DECODE_WRAPPED_DATA });
+    command.set_wrapped_argument({ SX_WRAP_DECODE_WRAPPED_V42 });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT(WRAP_DECODE_NATIVE);
-}
-
-BOOST_AUTO_TEST_CASE(wrap_decode__invoke__json__okay_output)
-{
-    SX_DECLARE_COMMAND(wrap_decode);
-    command.set_format_option({ encoding_engine::json });
-    command.set_wrapped_argument({ WRAP_DECODE_WRAPPED_DATA });
-    SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT(WRAP_DECODE_JSON);
-}
-
-BOOST_AUTO_TEST_CASE(wrap_decode__invoke__xml__okay_output)
-{
-    SX_DECLARE_COMMAND(wrap_decode);
-    command.set_format_option({ encoding_engine::xml });
-    command.set_wrapped_argument({ WRAP_DECODE_WRAPPED_DATA });
-    SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT(WRAP_DECODE_XML);
+    SX_REQUIRE_OUTPUT(SX_WRAP_DECODE_UNWRAPPED_V42);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

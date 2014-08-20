@@ -17,11 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SX_WATCH_PREFIX_HPP
-#define SX_WATCH_PREFIX_HPP
+#ifndef SX_FETCH_STEALTH_HPP
+#define SX_FETCH_STEALTH_HPP
 
+#include <cstdint>
 #include <iostream>
-#include <stdint.h>
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
@@ -30,24 +30,28 @@
 #include <sx/define.hpp>
 #include <sx/generated.hpp>
 #include <sx/serializer/address.hpp>
+#include <sx/serializer/base16.hpp>
 #include <sx/serializer/base58.hpp>
+#include <sx/serializer/btc.hpp>
 #include <sx/serializer/btc160.hpp>
 #include <sx/serializer/btc256.hpp>
-#include <sx/serializer/byte.hpp>
 #include <sx/serializer/ec_private.hpp>
 #include <sx/serializer/ec_public.hpp>
+#include <sx/serializer/encoding.hpp>
+#include <sx/serializer/hashtype.hpp>
 #include <sx/serializer/hd_key.hpp>
-#include <sx/serializer/hd_private.hpp>
-#include <sx/serializer/hd_public.hpp>
+#include <sx/serializer/hd_priv.hpp>
+#include <sx/serializer/hd_pub.hpp>
 #include <sx/serializer/header.hpp>
-#include <sx/serializer/hex.hpp>
 #include <sx/serializer/input.hpp>
 #include <sx/serializer/output.hpp>
 #include <sx/serializer/prefix.hpp>
 #include <sx/serializer/raw.hpp>
 #include <sx/serializer/script.hpp>
+#include <sx/serializer/stealth.hpp>
 #include <sx/serializer/transaction.hpp>
 #include <sx/serializer/wif.hpp>
+#include <sx/serializer/wrapper.hpp>
 #include <sx/utility/compat.hpp>
 #include <sx/utility/config.hpp>
 #include <sx/utility/utility.hpp>
@@ -58,17 +62,9 @@ namespace sx {
 namespace extension {
 
 /**
- * Various localizable strings.
+ * Class to implement the sx fetch-stealth command.
  */
-#define SX_WATCH_PREFIX_WAITING \
-    "Waiting for updates..."
-#define SX_WATCH_PREFIX_OUTPUT \
-    "Update %1% [ #%2% %3% ]"
-
-/**
- * Class to implement the sx watch-prefix command.
- */
-class watch_prefix 
+class fetch_stealth 
     : public command
 {
 public:
@@ -76,14 +72,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "watch-prefix"; }
+    static const char* symbol() { return "fetch-stealth"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return watch_prefix::symbol();
+        return fetch_stealth::symbol();
     }
 
     /**
@@ -97,32 +93,30 @@ public:
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
-     *
      * @return  The loaded program argument definitions.
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("PREFIX", -1);
     }
 	
 	/**
      * Load parameter fallbacks from file or input as appropriate.
-     *
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_prefixs_argument(), "PREFIX", variables, input);
     }
     
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
      * allowing but not requiring a value on the command line for the option.
-     *
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
-     *
      * @return  The loaded program option definitions.
      */
     virtual options_metadata& load_options()
@@ -138,12 +132,22 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Watch the network for transactions by address prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL"
+                "Get metadata on potential payment transactions by stealth prefix. Requires an Obelisk server connection."
             )
             (
-                "prefix,p",
-                value<serializer::prefix>(&option_.prefix),
-                "The binary encoded stealth search prefix. Searches all transactions if not set."
+                "format,f",
+                value<serializer::encoding>(&option_.format),
+                "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+            )
+            (
+                "height,t",
+                value<size_t>(&option_.height),
+                "The minimum block height of transactions to include."
+            )
+            (
+                "PREFIX",
+                value<std::vector<serializer::prefix>>(&argument_.prefixs),
+                "The set of  Base2 stealth prefixes used to locate transactions."
             );
 
         return options;
@@ -151,7 +155,6 @@ public:
 
     /**
      * Invoke the command.
-     *
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
@@ -159,6 +162,23 @@ public:
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
+
+    /**
+     * Get the value of the PREFIX arguments.
+     */
+    virtual std::vector<serializer::prefix>& get_prefixs_argument()
+    {
+        return argument_.prefixs;
+    }
+    
+    /**
+     * Set the value of the PREFIX arguments.
+     */
+    virtual void set_prefixs_argument(
+        const std::vector<serializer::prefix>& value)
+    {
+        argument_.prefixs = value;
+    }
 
     /**
      * Get the value of the help option.
@@ -178,20 +198,37 @@ public:
     }
 
     /**
-     * Get the value of the prefix option.
+     * Get the value of the format option.
      */
-    virtual serializer::prefix& get_prefix_option()
+    virtual serializer::encoding& get_format_option()
     {
-        return option_.prefix;
+        return option_.format;
     }
     
     /**
-     * Set the value of the prefix option.
+     * Set the value of the format option.
      */
-    virtual void set_prefix_option(
-        const serializer::prefix& value)
+    virtual void set_format_option(
+        const serializer::encoding& value)
     {
-        option_.prefix = value;
+        option_.format = value;
+    }
+
+    /**
+     * Get the value of the height option.
+     */
+    virtual size_t& get_height_option()
+    {
+        return option_.height;
+    }
+    
+    /**
+     * Set the value of the height option.
+     */
+    virtual void set_height_option(
+        const size_t& value)
+    {
+        option_.height = value;
     }
 
 private:
@@ -204,9 +241,11 @@ private:
     struct argument
     {
         argument()
+          : prefixs()
         {
         }
         
+        std::vector<serializer::prefix> prefixs;
     } argument_;
     
     /**
@@ -218,12 +257,14 @@ private:
     {
         option()
           : help(),
-            prefix()
+            format(),
+            height()
         {
         }
         
         bool help;
-        serializer::prefix prefix;
+        serializer::encoding format;
+        size_t height;
     } option_;
 };
 

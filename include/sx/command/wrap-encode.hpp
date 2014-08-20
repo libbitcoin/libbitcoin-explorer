@@ -136,7 +136,7 @@ public:
             )
             (
                 "version,v",
-                value<uint8_t>(&option_.version)->required(),
+                value<uint8_t>(&option_.version),
                 "The desired version number."
             )
             (

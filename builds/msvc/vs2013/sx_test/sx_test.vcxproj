@@ -75,15 +75,16 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\address-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\address.cpp" />
+    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\test\base58.cpp" />
-    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\base58-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp" />
     <ClCompile Include="..\..\..\..\test\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-confirmations.cpp" />
+    <ClCompile Include="..\..\..\..\test\fetch-stealth.cpp" />
     <ClCompile Include="..\..\..\..\test\fetch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\input-set.cpp" />
     <ClCompile Include="..\..\..\..\test\input-sign.cpp" />
@@ -157,9 +158,10 @@
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
+    <ClCompile Include="..\..\..\..\test\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\wallet.cpp" />
-    <ClCompile Include="..\..\..\..\test\watch-tx.cpp" />
+    <ClCompile Include="..\..\..\..\test\watch-stealth.cpp" />
     <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\wif-to-public.cpp" />
     <ClCompile Include="..\..\..\..\test\wrap-encode.cpp" />
