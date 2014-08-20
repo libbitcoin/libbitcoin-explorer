@@ -37,7 +37,7 @@ console_result seed::invoke(std::ostream& output, std::ostream& error)
 
     // This are soft requirements for security and rationality.
     // We use bit vs. byte length input as the more familiar convention.
-    if (bit_length * byte_bits < minimum_seed_size ||
+    if (bit_length < minimum_seed_size * byte_bits ||
         bit_length % byte_bits != 0)
     {
         error << SX_SEED_BIT_LENGTH_UNSUPPORTED << std::endl;
