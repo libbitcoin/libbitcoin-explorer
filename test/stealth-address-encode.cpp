@@ -68,14 +68,14 @@ BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key__okay_
     SX_REQUIRE_OUTPUT(STEALTH_ADDRESS_ENCODE_ADDRESS_AAB "\n");
 }
 
-BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_signatures_overflow__failure_errors)
+BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_signatures_overflow__failure_error)
 {
     SX_DECLARE_COMMAND(stealth_address_encode);
     command.set_signatures_option(42);
     command.set_scan_pubkey_argument({ STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ADDRESS_ENCODE_SPEND_PUBKEY_B } });
     SX_REQUIRE_FAILURE(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n" SX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW "\n");
+    SX_REQUIRE_ERROR(SX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW "\n");
 }
 
 BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_1_signature__okay_output_error)

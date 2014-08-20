@@ -32,16 +32,16 @@ BOOST_AUTO_TEST_SUITE(wrap_decode__invoke)
 #define SX_WRAP_DECODE_UNWRAPPED_V0 \
     "wrapper\n" \
     "{\n" \
-    "    version 0\n" \
-    "    payload 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    checksum 1020266843\n" \
+    "    payload 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
+    "    version 0\n" \
     "}\n"
 #define SX_WRAP_DECODE_UNWRAPPED_V42 \
     "wrapper\n" \
     "{\n" \
-    "    version 42\n" \
-    "    payload 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    checksum 3840642601\n" \
+    "    payload 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
+    "    version 42\n" \
     "}\n"
 
 BOOST_AUTO_TEST_CASE(wrap_decode__invoke__version_0__okay_output)

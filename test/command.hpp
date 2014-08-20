@@ -64,12 +64,10 @@ using namespace sx::serializer;
 #define SX_REQUIRE_INVALID(value) \
     BOOST_REQUIRE_EQUAL(value, console_result::invalid)
 
-// stream results (assume mutual exclusivity)
+// stream results
 #define SX_REQUIRE_ERROR(value) \
-    BOOST_REQUIRE(output.str().empty()); \
     BOOST_REQUIRE_EQUAL(error.str(), value)
 #define SX_REQUIRE_OUTPUT(value) \
-    BOOST_REQUIRE(error.str().empty()); \
     BOOST_REQUIRE_EQUAL(output.str(), value)
 
 // exceptions

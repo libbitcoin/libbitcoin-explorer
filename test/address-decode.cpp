@@ -32,38 +32,38 @@ BOOST_AUTO_TEST_SUITE(address_decode__invoke)
 #define SX_ADDRESS_DECODE_V0_NATIVE \
     "wrapper\n" \
     "{\n" \
-    "    version 0\n" \
-    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
     "    checksum 1476364070\n" \
+    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
+    "    version 0\n" \
     "}\n"
 #define SX_ADDRESS_DECODE_V0_INFO \
     "wrapper\n" \
     "{\n" \
-    "    version 0\n" \
-    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
     "    checksum 1476364070\n" \
+    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
+    "    version 0\n" \
     "}\n"
 #define SX_ADDRESS_DECODE_V0_JSON \
     "{\n" \
     "    \"wrapper\": {\n" \
-    "        \"version\": \"0\",\n" \
+    "        \"checksum\": \"1476364070\",\n" \
     "        \"payload\": \"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\n" \
-    "        \"checksum\": \"1476364070\"\n" \
+    "        \"version\": \"0\"\n" \
     "    }\n" \
     "}\n"
 #define SX_ADDRESS_DECODE_V0_XML \
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
     "<wrapper>" \
-        "<version>0</version>" \
-        "<payload>b472a266d0bd89c13706a4132ccfb16f7c3b9fcb</payload>" \
         "<checksum>1476364070</checksum>" \
+        "<payload>b472a266d0bd89c13706a4132ccfb16f7c3b9fcb</payload>" \
+        "<version>0</version>" \
     "</wrapper>"
 #define SX_ADDRESS_DECODE_V42_DEFAULT \
     "wrapper\n" \
     "{\n" \
-    "    version 42\n" \
-    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
     "    checksum 1476364070\n" \
+    "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
+    "    version 42\n" \
     "}\n"
 
 BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_native__okay_output)
