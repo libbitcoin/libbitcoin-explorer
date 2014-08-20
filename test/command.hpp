@@ -60,9 +60,11 @@ using namespace sx::serializer;
 
 // stream results
 #define SX_REQUIRE_ERROR(value) \
-    BOOST_REQUIRE_EQUAL(error.str(), value)
+    BOOST_REQUIRE_EQUAL(error.str(), value); \
+    BOOST_REQUIRE_EQUAL(output.str(), "")
 #define SX_REQUIRE_OUTPUT(value) \
-    BOOST_REQUIRE_EQUAL(output.str(), value)
+    BOOST_REQUIRE_EQUAL(output.str(), value); \
+    BOOST_REQUIRE_EQUAL(error.str(), "")
 
 // exceptions
 #define SX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(expression) \

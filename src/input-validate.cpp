@@ -48,6 +48,7 @@ console_result input_validate::invoke(std::ostream& output,
 
     if (!valid_signature(tx, index, public_key, script, signature, hash_type))
     {
+        // We do not return a failure here, as this is a validity test.
         output << SX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;
         return console_result::invalid;
     }

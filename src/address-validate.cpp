@@ -21,8 +21,11 @@
 #include <sx/command/address-validate.hpp>
 
 #include <iostream>
+#include <boost/program_options.hpp>
 #include <sx/define.hpp>
+#include <sx/serializer/address.hpp>
 
+using namespace po;
 using namespace sx;
 using namespace sx::extension;
 using namespace sx::serializer;
@@ -31,14 +34,23 @@ using namespace sx::serializer;
 console_result address_validate::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& addresses = get_bitcoin_addresss_argument();
+    const auto& token = get_bitcoin_address_argument();
 
     // TESTNET VERSION REQUIRES RECOMPILE
-    // If any address is not valid the deserializer will throw.
-    // TODO: read as hexcode, validate here and provide localized message
-    // for each address. See:
-    // SX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE
-    // SX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE
 
-    return console_result::okay;
+    // The value is bound to a string so that we can handle validation here
+    // instead of in the deserializer.
+
+    try
+    {
+        const address bitcoin_address(token);
+        output << bitcoin_address << std::endl;
+        return console_result::okay;
+    }
+    catch (invalid_option_value&)
+    {
+        // We do not return a failure here, as this is a validity test.
+        output << SX_ADDRESS_VALIDATE_INVALID_ADDRESS << std::endl;
+        return console_result::invalid;
+    }
 }

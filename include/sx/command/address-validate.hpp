@@ -62,6 +62,12 @@ namespace sx {
 namespace extension {
 
 /**
+ * Various localizable strings.
+ */
+#define SX_ADDRESS_VALIDATE_INVALID_ADDRESS \
+    "The signature is not invalid."
+
+/**
  * Class to implement the sx address-validate command.
  */
 class address_validate 
@@ -98,7 +104,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("BITCOIN_ADDRESS", -1);
+            .add("BITCOIN_ADDRESS", 1);
     }
 	
 	/**
@@ -109,7 +115,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_bitcoin_addresss_argument(), "BITCOIN_ADDRESS", variables, input);
+        load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input);
     }
     
     /**
@@ -132,12 +138,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Validate a set of addresses. The result is successful if all addresses are valid."
+                "Validate an address. Returns the address if is valid."
             )
             (
                 "BITCOIN_ADDRESS",
-                value<std::vector<serializer::address>>(&argument_.bitcoin_addresss),
-                "The set of Bitcoin addresses to validate."
+                value<std::string>(&argument_.bitcoin_address),
+                "The Bitcoin address to validate."
             );
 
         return options;
@@ -154,20 +160,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the BITCOIN_ADDRESS arguments.
+     * Get the value of the BITCOIN_ADDRESS argument.
      */
-    virtual std::vector<serializer::address>& get_bitcoin_addresss_argument()
+    virtual std::string& get_bitcoin_address_argument()
     {
-        return argument_.bitcoin_addresss;
+        return argument_.bitcoin_address;
     }
     
     /**
-     * Set the value of the BITCOIN_ADDRESS arguments.
+     * Set the value of the BITCOIN_ADDRESS argument.
      */
-    virtual void set_bitcoin_addresss_argument(
-        const std::vector<serializer::address>& value)
+    virtual void set_bitcoin_address_argument(
+        const std::string& value)
     {
-        argument_.bitcoin_addresss = value;
+        argument_.bitcoin_address = value;
     }
 
     /**
@@ -197,11 +203,11 @@ private:
     struct argument
     {
         argument()
-          : bitcoin_addresss()
+          : bitcoin_address()
         {
         }
         
-        std::vector<serializer::address> bitcoin_addresss;
+        std::string bitcoin_address;
     } argument_;
     
     /**

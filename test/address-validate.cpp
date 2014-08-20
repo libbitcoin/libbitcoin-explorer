@@ -24,24 +24,23 @@ SX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(address_validate__invoke)
 
-BOOST_AUTO_TEST_CASE(address_validate__invoke__one_address__okay_output)
+#define ADDRESS_VALIDATE_VALID_ADDRESS "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy"
+#define ADDRESS_VALIDATE_INVALID_ADDRESS "@#$%^&*())(*&^%$%^&*()(*&^%$"
+
+BOOST_AUTO_TEST_CASE(address_validate__invoke__valid__okay_output)
 {
     SX_DECLARE_COMMAND(address_validate);
-    command.set_bitcoin_addresss_argument({{ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" }});
+    command.set_bitcoin_address_argument({ ADDRESS_VALIDATE_VALID_ADDRESS });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT("");
+    SX_REQUIRE_OUTPUT(ADDRESS_VALIDATE_VALID_ADDRESS "\n");
 }
 
-BOOST_AUTO_TEST_CASE(address_validate__invoke__two_addresses__okay_output)
+BOOST_AUTO_TEST_CASE(address_validate__invoke__invalid__invalid_output)
 {
     SX_DECLARE_COMMAND(address_validate);
-    command.set_bitcoin_addresss_argument(
-    { 
-        { "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" },
-        { "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }
-    });
-    SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_OUTPUT("");
+    command.set_bitcoin_address_argument({ ADDRESS_VALIDATE_INVALID_ADDRESS });
+    SX_REQUIRE_INVALID(command.invoke(output, error));
+    SX_REQUIRE_OUTPUT(SX_ADDRESS_VALIDATE_INVALID_ADDRESS "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

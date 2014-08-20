@@ -64,8 +64,8 @@ BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key__okay_
     command.set_scan_pubkey_argument({ STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ADDRESS_ENCODE_SPEND_PUBKEY_B } });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n");
-    SX_REQUIRE_OUTPUT(STEALTH_ADDRESS_ENCODE_ADDRESS_AAB "\n");
+    BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ADDRESS_ENCODE_ADDRESS_AAB "\n");
+    BOOST_REQUIRE_EQUAL(error.str(), SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_signatures_overflow__failure_error)
@@ -85,8 +85,8 @@ BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_1_sign
     command.set_scan_pubkey_argument({ STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ADDRESS_ENCODE_SPEND_PUBKEY_B } });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n");
-    SX_REQUIRE_OUTPUT(STEALTH_ADDRESS_ENCODE_ADDRESS_AAB1 "\n");
+    BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ADDRESS_ENCODE_ADDRESS_AAB1 "\n");
+    BOOST_REQUIRE_EQUAL(error.str(), SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_1_signature_leading_0_prefix__okay_output_errors)
@@ -97,8 +97,8 @@ BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_1_sign
     command.set_scan_pubkey_argument({ STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ADDRESS_ENCODE_SPEND_PUBKEY_B } });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n" SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED "\n");
-    SX_REQUIRE_OUTPUT(STEALTH_ADDRESS_ENCODE_ADDRESS_AAB10 "\n");
+    BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ADDRESS_ENCODE_ADDRESS_AAB10 "\n");
+    BOOST_REQUIRE_EQUAL(error.str(), SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n" SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_1_signaturebaadf00d_prefix__okay_output_errors)
@@ -109,8 +109,8 @@ BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_1_sign
     command.set_scan_pubkey_argument({ STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ADDRESS_ENCODE_SPEND_PUBKEY_B } });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n" SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED "\n");
-    SX_REQUIRE_OUTPUT(STEALTH_ADDRESS_ENCODE_ADDRESS_AAB1P "\n");
+    BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ADDRESS_ENCODE_ADDRESS_AAB1P "\n");
+    BOOST_REQUIRE_EQUAL(error.str(), SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n" SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_1_signature_baadf00d_prefix_testnet__okay_output_errors)
@@ -122,8 +122,8 @@ BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_2_spend_key_1_sign
     command.set_scan_pubkey_argument({ STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ADDRESS_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ADDRESS_ENCODE_SPEND_PUBKEY_B } });
     SX_REQUIRE_OKAY(command.invoke(output, error));
-    SX_REQUIRE_ERROR(SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n" SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED "\n");
-    SX_REQUIRE_OUTPUT(STEALTH_ADDRESS_ENCODE_ADDRESS_AAB1PT "\n");
+    BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ADDRESS_ENCODE_ADDRESS_AAB1PT "\n");
+    BOOST_REQUIRE_EQUAL(error.str(), SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED "\n" SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
