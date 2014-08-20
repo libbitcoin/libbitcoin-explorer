@@ -65,9 +65,10 @@
     <argument name="RIPEMD160" stdin="true" type="btc160" description="The Base16 hash to convert."/>
   </command>
 
-  <command symbol="address-validate" formerly="validaddr" typeX="string" multipleX="true" category="WALLET">
-    <option name="help" description="Validate a set of addresses. The result is successful if all addresses are valid." />
-    <argument name="BITCOIN_ADDRESS" stdin="true" type="address" limit="-1" description="The set of Bitcoin addresses to validate." />
+  <command symbol="address-validate" formerly="validaddr" typeX="address" multipleX="true" category="WALLET">
+    <option name="help" description="Validate an address. Returns the address if is valid." />
+    <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The Bitcoin address to validate." />
+    <define name="SX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The signature is not invalid." />
   </command>
 
   <command symbol="base58check-decode" typeX="wrapper" category="HASH">

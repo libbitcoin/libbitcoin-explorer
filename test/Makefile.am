@@ -1,3 +1,5 @@
+# ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
+
 AUTOMAKE_OPTIONS = subdir-objects
 
 noinst_PROGRAMS = sx_test
@@ -13,15 +15,24 @@ AM_CPPFLAGS = \
 
 sx_test_SOURCES = \
     address.cpp \
+    base58.cpp \
+    generated__broadcast.cpp \
+    generated__find.cpp \
+    generated__symbol.cpp \
+    main.cpp \
+    parameter.cpp \
+    printer.cpp
+
+# Generated from XML data source.
+sx_test_SOURCES += \
     address-decode.cpp \
     address-embed.cpp \
     address-encode.cpp \
     address-validate.cpp \
-    base58.cpp \
-    base58check-decode.cpp \
-    base58check-encode.cpp \
     base58-decode.cpp \
     base58-encode.cpp \
+    base58check-decode.cpp \
+    base58check-encode.cpp \
     bci-fetch-last-height.cpp \
     bci-history.cpp \
     bitcoin160.cpp \
@@ -38,19 +49,7 @@ sx_test_SOURCES = \
     ec-to-public.cpp \
     ec-to-wif.cpp \
     ec-unlock.cpp \
-    fetch-balance.cpp \
-    fetch-confirmations.cpp \
-    fetch-header.cpp \
-    fetch-height.cpp \
-    fetch-history.cpp \
-    fetch-public-key.cpp \
-    fetch-tx.cpp \
-    fetch-tx-index.cpp \
-    fetch-utxo.cpp \
     genaddr.cpp \
-    generated__broadcast.cpp \
-    generated__find.cpp \
-    generated__symbol.cpp \
     genpriv.cpp \
     genpub.cpp \
     hd-new.cpp \
@@ -65,44 +64,39 @@ sx_test_SOURCES = \
     input-set.cpp \
     input-sign.cpp \
     input-validate.cpp \
-    main.cpp \
     mnemonic-decode.cpp \
     mnemonic-encode.cpp \
     mpk.cpp \
     newseed.cpp \
-    parameter.cpp \
-    printer.cpp \
     qrcode.cpp \
     ripemd160.cpp \
     satoshi-to-btc.cpp \
     script-decode.cpp \
     script-encode.cpp \
     script-to-address.cpp \
-    send-tx.cpp \
-    sendtx-bci.cpp \
+    seed.cpp \
     send-tx-node.cpp \
     send-tx-p2p.cpp \
+    sendtx-bci.cpp \
     sha160.cpp \
     sha256.cpp \
     sha512.cpp \
     showblkhead.cpp \
     stealth-address-decode.cpp \
     stealth-address-encode.cpp \
-    stealth-initiate.cpp \
+    stealth-new.cpp \
     stealth-newkey.cpp \
-    stealth-uncover-address.cpp \
+    stealth-shared-secret.cpp \
+    stealth-uncover-public.cpp \
     stealth-uncover-secret.cpp \
     tx-decode.cpp \
     tx-encode.cpp \
     tx-sign.cpp \
     wallet.cpp \
-    watch-tx.cpp \
     wif-to-ec.cpp \
-    wif-to-pub.cpp \
+    wif-to-public.cpp \
     wrap-decode.cpp \
     wrap-encode.cpp
-
-C:\Source\evoskuil\sx\test>
 
 sx_test_LDADD = \
     -L$(srcdir)/../src/ -lsx \
@@ -115,6 +109,22 @@ sx_test_LDADD = \
     -lboost_unit_test_framework
     
 if HAVE_OBELISK
+    sx_test_SOURCES += \
+        fetch-balance.cpp \
+        fetch-confirmations.cpp \
+        fetch-header.cpp \
+        fetch-height.cpp \
+        fetch-history.cpp \
+        fetch-public-key.cpp \
+        fetch-stealth.cpp \
+        fetch-tx.cpp \
+        fetch-tx-index.cpp \
+        fetch-utxo.cpp \
+        send-tx.cpp \
+        watch-stealth.cpp \
+        watch-tx.cpp \
+        obelisk_client.cpp
+        
     AM_CPPFLAGS += \
         ${libobelisk_CFLAGS} \
         -DBOOST_TEST_DYN_LINK
@@ -122,4 +132,3 @@ if HAVE_OBELISK
     sx_test_LDADD += \
         $(libobelisk_LIBS)
 endif
-
