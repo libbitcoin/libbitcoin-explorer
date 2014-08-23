@@ -149,23 +149,23 @@ public:
                 "The file and path name to the error log file."
             )
             (
-                "obelisk.client-certificate",
-                value<boost::filesystem::path>(&setting_.obelisk.client_certificate),
+                "server.client-certificate",
+                value<boost::filesystem::path>(&setting_.server.client_certificate),
                 "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.sx.cert"
             )
             (
-                "obelisk.server-public-key",
-                value<std::string>(&setting_.obelisk.server_public_key),
+                "server.server-public-key",
+                value<std::string>(&setting_.server.server_public_key),
                 "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
             )
             (
-                "obelisk.service",
-                value<std::string>(&setting_.obelisk.service)->default_value("tcp://obelisk.unsystem.net:8081"),
+                "server.service",
+                value<std::string>(&setting_.server.service)->default_value("tcp://obelisk.unsystem.net:8081"),
                 "The URI of the server to which this application may connect."
             )
             (
-                "obelisk.socks-proxy",
-                value<std::string>(&setting_.obelisk.socks_proxy)->default_value("localhost:1080"),
+                "server.socks-proxy",
+                value<std::string>(&setting_.server.socks_proxy)->default_value("localhost:1080"),
                 "The host name and port number of a SOCKS 4a or SOCKS 5 proxy server."
             );
     }
@@ -256,67 +256,67 @@ public:
     }
     
     /**
-     * Get the value of the obelisk.client-certificate setting.
+     * Get the value of the server.client-certificate setting.
      */
-    virtual boost::filesystem::path get_obelisk_client_certificate_setting()
+    virtual boost::filesystem::path get_server_client_certificate_setting()
     {
-        return setting_.obelisk.client_certificate;
+        return setting_.server.client_certificate;
     }
 
     /**
-     * Set the value of the obelisk.client-certificate setting.
+     * Set the value of the server.client-certificate setting.
      */
-    virtual void set_obelisk_client_certificate_setting(boost::filesystem::path value)
+    virtual void set_server_client_certificate_setting(boost::filesystem::path value)
     {
-        setting_.obelisk.client_certificate = value;
+        setting_.server.client_certificate = value;
     }
     
     /**
-     * Get the value of the obelisk.server-public-key setting.
+     * Get the value of the server.server-public-key setting.
      */
-    virtual std::string get_obelisk_server_public_key_setting()
+    virtual std::string get_server_server_public_key_setting()
     {
-        return setting_.obelisk.server_public_key;
+        return setting_.server.server_public_key;
     }
 
     /**
-     * Set the value of the obelisk.server-public-key setting.
+     * Set the value of the server.server-public-key setting.
      */
-    virtual void set_obelisk_server_public_key_setting(std::string value)
+    virtual void set_server_server_public_key_setting(std::string value)
     {
-        setting_.obelisk.server_public_key = value;
+        setting_.server.server_public_key = value;
     }
     
     /**
-     * Get the value of the obelisk.service setting.
+     * Get the value of the server.service setting.
      */
-    virtual std::string get_obelisk_service_setting()
+    virtual std::string get_server_service_setting()
     {
-        return setting_.obelisk.service;
+        return setting_.server.service;
     }
 
     /**
-     * Set the value of the obelisk.service setting.
+     * Set the value of the server.service setting.
      */
-    virtual void set_obelisk_service_setting(std::string value)
+    virtual void set_server_service_setting(std::string value)
     {
-        setting_.obelisk.service = value;
+        setting_.server.service = value;
     }
     
     /**
-     * Get the value of the obelisk.socks-proxy setting.
+     * Get the value of the server.socks-proxy setting.
      */
-    virtual std::string get_obelisk_socks_proxy_setting()
+    virtual std::string get_server_socks_proxy_setting()
     {
-        return setting_.obelisk.socks_proxy;
+        return setting_.server.socks_proxy;
     }
 
     /**
-     * Set the value of the obelisk.socks-proxy setting.
+     * Set the value of the server.socks-proxy setting.
      */
-    virtual void set_obelisk_socks_proxy_setting(std::string value)
+    virtual void set_server_socks_proxy_setting(std::string value)
     {
-        setting_.obelisk.socks_proxy = value;
+        setting_.server.socks_proxy = value;
     }
     
 protected:
@@ -383,9 +383,9 @@ private:
             boost::filesystem::path error;
         } logging;
 
-        struct obelisk
+        struct server
         {
-            obelisk()
+            server()
               : client_certificate(),
                 server_public_key(),
                 service(),
@@ -397,12 +397,12 @@ private:
             std::string server_public_key;
             std::string service;
             std::string socks_proxy;
-        } obelisk;
+        } server;
 
         setting()
           : general(),
             logging(),
-            obelisk()
+            server()
         {
         }
     } setting_;
