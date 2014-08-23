@@ -115,8 +115,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_path(get_file_argument(), "FILE", variables);
-        load_input(get_file_argument(), "FILE", variables, input);
+        //load_path(get_file_argument(), "FILE", variables);
+        //load_input(get_file_argument(), "FILE", variables, input);
     }
     
     /**

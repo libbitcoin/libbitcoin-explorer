@@ -731,10 +731,10 @@ public:
 .   getter = "get_" + "$(pluralized_name:c)" + "_argument()"
 .#   bool_vector = if_else(is_vector, xml_true, xml_false)
 .   if (is_xml_true(argument.file))
-        load_path($(getter), "$(name:)", variables);
+        //load_path($(getter), "$(name:)", variables);
 .   endif
 .   if (is_xml_true(argument.stdin))
-        load_input($(getter), "$(name:)", variables, input);
+        //load_input($(getter), "$(name:)", variables, input);
 .   endif
 .endfor
 .for option
@@ -744,10 +744,10 @@ public:
 .   getter = "get_" + "$(pluralized_name:c)" + "_option()"
 .#   bool_vector = if_else(is_vector, xml_true, xml_false)
 .   if (is_xml_true(option.file))
-        load_path($(getter), "$(name:)", variables);
+        //load_path($(getter), "$(name:)", variables);
 .   endif
 .   if (is_xml_true(option.stdin))
-        load_input($(getter), "$(name:)", variables, input);
+        //load_input($(getter), "$(name:)", variables, input);
 .   endif
 .endfor
     }
@@ -1000,6 +1000,11 @@ sx_include_HEADERS = \\
     prop_tree.hpp \\
     sx.hpp
 
+sx_utility_includedir = $\(includedir)/sx/impl
+sx_utility_include_HEADERS += \\
+    prop_tree.ipp \\
+    utility.ipp
+    
 sx_utility_includedir = $\(includedir)/sx/utility
 sx_utility_include_HEADERS += \\
     compat.hpp \\
@@ -1025,7 +1030,6 @@ sx_utility_include_HEADERS += \\
     hd_priv.hpp \\
     hd_pub.hpp \\
     header.hpp \\
-    history.hpp \\
     input.hpp \\
     output.hpp \\
     point.hpp \\
@@ -1036,7 +1040,7 @@ sx_utility_include_HEADERS += \\
     transaction.hpp \\
     wif.hpp \\
     wrapper.hpp
-
+    
 # Generated from XML data source.
 sx_command_includedir = $\(includedir)/sx/command
 sx_command_include_HEADERS = \\
@@ -1073,30 +1077,30 @@ libsx_la_SOURCES = \\
     display.cpp \\
     generated.cpp \\
     prop_tree.cpp \\
-    serializer/address.hpp \\
-    serializer/base16.hpp \\
-    serializer/base58.hpp \\
-    serializer/btc.hpp \\
-    serializer/btc160.hpp \\
-    serializer/btc256.hpp \\
-    serializer/ec_private.hpp \\
-    serializer/ec_public.hpp \\
-    serializer/encoding.hpp \\
-    serializer/hashtype.hpp \\
-    serializer/hd_key.hpp \\
-    serializer/hd_priv.hpp \\
-    serializer/hd_pub.hpp \\
-    serializer/header.hpp \\
-    serializer/input.hpp \\
-    serializer/output.hpp \\
-    serializer/point.hpp \\
-    serializer/prefix.hpp \\
-    serializer/raw.hpp \\
-    serializer/script.hpp \\
-    serializer/stealth.hpp \\
-    serializer/transaction.hpp \\
-    serializer/wif.hpp \\
-    serializer/wrapper.hpp \\
+    serializer/address.cpp \\
+    serializer/base16.cpp \\
+    serializer/base58.cpp \\
+    serializer/btc.cpp \\
+    serializer/btc160.cpp \\
+    serializer/btc256.cpp \\
+    serializer/ec_private.cpp \\
+    serializer/ec_public.cpp \\
+    serializer/encoding.cpp \\
+    serializer/hashtype.cpp \\
+    serializer/hd_key.cpp \\
+    serializer/hd_priv.cpp \\
+    serializer/hd_pub.cpp \\
+    serializer/header.cpp \\
+    serializer/input.cpp \\
+    serializer/output.cpp \\
+    serializer/point.cpp \\
+    serializer/prefix.cpp \\
+    serializer/raw.cpp \\
+    serializer/script.cpp \\
+    serializer/stealth.cpp \\
+    serializer/transaction.cpp \\
+    serializer/wif.cpp \\
+    serializer/wrapper.cpp \\
     utility/config.cpp \\
     utility/environment.cpp \\
     utility/parameter.cpp \\
@@ -1280,6 +1284,8 @@ endif
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\impl\\prop_tree.ipp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\impl\\utility.ipp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\callback_state.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\async_client.hpp" />
@@ -1361,7 +1367,7 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\stealth.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\transaction.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wif.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wrapper.cpp" />    
+    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wrapper.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
@@ -1445,6 +1451,9 @@ endif
     <Filter Include="include\\command\\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\\impl">
+      <UniqueIdentifier>{d34fd634-a274-4629-8a8f-c588117d9733}</UniqueIdentifier>
+    </Filter>    
     <Filter Include="include\\serializer">
       <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
     </Filter>
@@ -1490,6 +1499,12 @@ endif
 .   endif
     </ClInclude>
 .endfor
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\impl\\utility.ipp">
+      <Filter>include\\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\impl\\prop_tree.ipp">
+      <Filter>include\\impl</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp">
       <Filter>include\\serializer</Filter>
     </ClInclude>

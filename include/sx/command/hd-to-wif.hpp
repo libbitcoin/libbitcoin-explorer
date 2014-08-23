@@ -109,7 +109,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_hd_private_key_argument(), "HD_PRIVATE_KEY", variables, input);
+        //load_input(get_hd_private_key_argument(), "HD_PRIVATE_KEY", variables, input);
     }
     
     /**

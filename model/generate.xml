@@ -481,7 +481,7 @@
   </command>
   
   <command symbol="send-tx-node" formerly="sendtx-node" typeX="string" category="ONLINE">
-    <option name="help" description="SBroadcast a transaction to the Bitcoin transaction pool via the a single Bitcoin network node." />
+    <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via a single Bitcoin network node." />
     <option name="name" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>

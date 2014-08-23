@@ -109,7 +109,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input);
+        //load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input);
     }
     
     /**

@@ -57,17 +57,7 @@ class wrapper;
  * @returns              A new property tree containing the list.
  */
 template <typename Values>
-pt::ptree prop_tree_list(const std::string& name, Values& values)
-{
-    ptree list;
-    ptree element;
-    for (const auto& value: values)
-    {
-        list.push_back(std::make_pair(name, prop_tree(value)));
-    }
-
-    return list;
-}
+pt::ptree prop_tree_list(const std::string& name, Values& values);
 
 /**
  * Create a property tree array of value elements.
@@ -77,18 +67,7 @@ pt::ptree prop_tree_list(const std::string& name, Values& values)
  * @returns              A new property tree containing the list.
  */
 template <typename Values>
-pt::ptree prop_value_list(const std::string& name, Values& values)
-{
-    ptree list;
-    ptree element;
-    for (const auto& value: values)
-    {
-        element.put_value(value);
-        list.push_back(std::make_pair(name, element));
-    }
-
-    return list;
-}
+pt::ptree prop_value_list(const std::string& name, Values& values);
 
 /**
  * Generate a property tree for a block header.
@@ -267,5 +246,7 @@ pt::ptree prop_tree(const wrapped_data& wrapped);
 
 } // serializer
 } // sx
+
+#include <sx/impl/prop_tree.ipp>
 
 #endif

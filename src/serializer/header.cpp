@@ -48,10 +48,10 @@ header::header(const std::string& hexcode)
     std::stringstream(hexcode) >> *this;
 }
 
-header::header(const data_chunk& value)
-    : header((const std::string&)base16(value))
-{
-}
+//header::header(const data_chunk& value)
+//    : header((const std::string&)base16(value))
+//{
+//}
 
 header::header(const block_header_type& value)
     : value_(value)
@@ -72,13 +72,6 @@ header::operator const block_header_type&() const
 {
     return value_;
 }
-
-//header::operator const std::string() const
-//{
-//    std::stringstream result;
-//    result << *this;
-//    return result.str();
-//}
 
 header::operator const ptree() const
 {

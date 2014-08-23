@@ -53,11 +53,11 @@ public:
      */
     transaction(const std::string& hexcode);
 
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    transaction(const bc::data_chunk& value);
+    ///**
+    // * Initialization constructor.
+    // * @param[in]  value  The value to initialize with.
+    // */
+    //transaction(const bc::data_chunk& value);
 
     /**
      * Initialization constructor.
@@ -82,12 +82,6 @@ public:
      * @return  This object's value cast to internal type.
      */
     operator const tx_type&() const;
-
-    ///**
-    // * Overload cast to string.
-    // * @return  This object's value converted to string.
-    // */
-    //operator const std::string() const;
 
     /**
      * Overload cast to property tree.

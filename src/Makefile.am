@@ -17,30 +17,30 @@ libsx_la_SOURCES = \
     display.cpp \
     generated.cpp \
     prop_tree.cpp \
-    serializer/address.hpp \
-    serializer/base16.hpp \
-    serializer/base58.hpp \
-    serializer/btc.hpp \
-    serializer/btc160.hpp \
-    serializer/btc256.hpp \
-    serializer/ec_private.hpp \
-    serializer/ec_public.hpp \
-    serializer/encoding.hpp \
-    serializer/hashtype.hpp \
-    serializer/hd_key.hpp \
-    serializer/hd_priv.hpp \
-    serializer/hd_pub.hpp \
-    serializer/header.hpp \
-    serializer/input.hpp \
-    serializer/output.hpp \
-    serializer/point.hpp \
-    serializer/prefix.hpp \
-    serializer/raw.hpp \
-    serializer/script.hpp \
-    serializer/stealth.hpp \
-    serializer/transaction.hpp \
-    serializer/wif.hpp \
-    serializer/wrapper.hpp \
+    serializer/address.cpp \
+    serializer/base16.cpp \
+    serializer/base58.cpp \
+    serializer/btc.cpp \
+    serializer/btc160.cpp \
+    serializer/btc256.cpp \
+    serializer/ec_private.cpp \
+    serializer/ec_public.cpp \
+    serializer/encoding.cpp \
+    serializer/hashtype.cpp \
+    serializer/hd_key.cpp \
+    serializer/hd_priv.cpp \
+    serializer/hd_pub.cpp \
+    serializer/header.cpp \
+    serializer/input.cpp \
+    serializer/output.cpp \
+    serializer/point.cpp \
+    serializer/prefix.cpp \
+    serializer/raw.cpp \
+    serializer/script.cpp \
+    serializer/stealth.cpp \
+    serializer/transaction.cpp \
+    serializer/wif.cpp \
+    serializer/wrapper.cpp \
     utility/config.cpp \
     utility/environment.cpp \
     utility/parameter.cpp \

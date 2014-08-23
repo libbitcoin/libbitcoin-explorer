@@ -109,8 +109,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_path(get_script_argument(), "SCRIPT", variables);
-        load_input(get_script_argument(), "SCRIPT", variables, input);
+        //load_path(get_script_argument(), "SCRIPT", variables);
+        //load_input(get_script_argument(), "SCRIPT", variables, input);
     }
     
     /**

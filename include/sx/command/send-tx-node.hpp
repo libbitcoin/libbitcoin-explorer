@@ -115,8 +115,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_path(get_transactions_argument(), "TRANSACTION", variables);
-        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
+        //load_path(get_transactions_argument(), "TRANSACTION", variables);
+        //load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
     
     /**
@@ -139,7 +139,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "SBroadcast a transaction to the Bitcoin transaction pool via the a single Bitcoin network node."
+                "Broadcast a transaction to the Bitcoin transaction pool via a single Bitcoin network node."
             )
             (
                 "name,n",

@@ -64,13 +64,6 @@ btc256::operator const hash_digest&() const
     return value_; 
 }
 
-//btc256::operator const std::string() const
-//{
-//    std::stringstream result;
-//    result << *this;
-//    return result.str();
-//}
-
 std::istream& operator>>(std::istream& input, btc256& argument)
 {
     std::string hexcode;

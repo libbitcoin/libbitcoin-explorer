@@ -48,10 +48,10 @@ transaction::transaction(const std::string& hexcode)
     std::stringstream(hexcode) >> *this;
 }
 
-transaction::transaction(const data_chunk& value)
-    : transaction((const std::string&)base16(value))
-{
-}
+//transaction::transaction(const data_chunk& value)
+//    : transaction((const std::string&)base16(value))
+//{
+//}
 
 transaction::transaction(const tx_type& value)
     : value_(value)
@@ -72,13 +72,6 @@ transaction::operator const tx_type&() const
 {
     return value_;
 }
-
-//transaction::operator const std::string() const
-//{
-//    std::stringstream result;
-//    result << *this;
-//    return result.str();
-//}
 
 transaction::operator const ptree() const
 {

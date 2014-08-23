@@ -116,7 +116,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_path(get_transaction_argument(), "TRANSACTION", variables);
+        //load_path(get_transaction_argument(), "TRANSACTION", variables);
     }
     
     /**

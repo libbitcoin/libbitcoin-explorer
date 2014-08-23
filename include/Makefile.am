@@ -13,6 +13,11 @@ sx_include_HEADERS = \
     prop_tree.hpp \
     sx.hpp
 
+sx_utility_includedir = $(includedir)/sx/impl
+sx_utility_include_HEADERS += \
+    prop_tree.ipp \
+    utility.ipp
+    
 sx_utility_includedir = $(includedir)/sx/utility
 sx_utility_include_HEADERS += \
     compat.hpp \
@@ -38,7 +43,6 @@ sx_utility_include_HEADERS += \
     hd_priv.hpp \
     hd_pub.hpp \
     header.hpp \
-    history.hpp \
     input.hpp \
     output.hpp \
     point.hpp \
@@ -49,7 +53,7 @@ sx_utility_include_HEADERS += \
     transaction.hpp \
     wif.hpp \
     wrapper.hpp
-
+    
 # Generated from XML data source.
 sx_command_includedir = $(includedir)/sx/command
 sx_command_include_HEADERS = \

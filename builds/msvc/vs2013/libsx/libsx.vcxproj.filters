@@ -21,6 +21,9 @@
     <Filter Include="include\command\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\impl">
+      <UniqueIdentifier>{d34fd634-a274-4629-8a8f-c588117d9733}</UniqueIdentifier>
+    </Filter>    
     <Filter Include="include\serializer">
       <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
     </Filter>
@@ -307,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\wrap-encode.hpp">
       <Filter>include\command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\impl\utility.ipp">
+      <Filter>include\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\sx\impl\prop_tree.ipp">
+      <Filter>include\impl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\serializer\address.hpp">
       <Filter>include\serializer</Filter>

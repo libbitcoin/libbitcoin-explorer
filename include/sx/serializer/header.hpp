@@ -51,11 +51,11 @@ public:
      */
     header(const std::string& hexcode);
 
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    header(const bc::data_chunk& value);
+    ///**
+    // * Initialization constructor.
+    // * @param[in]  value  The value to initialize with.
+    // */
+    //header(const bc::data_chunk& value);
 
     /**
      * Initialization constructor.
@@ -80,12 +80,6 @@ public:
      * @return  This object's value cast to internal type.
      */
     operator const bc::block_header_type&() const;
-
-    ///**
-    // * Overload cast to string.
-    // * @return  This object's value converted to string.
-    // */
-    //operator const std::string() const;
 
     /**
      * Overload cast to property tree.
