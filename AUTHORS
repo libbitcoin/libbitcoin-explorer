@@ -22,7 +22,9 @@ Authors:
    washington.sanchez@gmail.com
    
  * Eric Voskuil <evoskuil>
-   Windows build and single binary port.
+   Windows build, single binary builds, unit tests, code-gen extension model,
+   argument/config processing, serializers, remove all global state, new client
+   API integration, obsolete old and add new commands.
    eric@voskuil.org
 
 Special thanks to Andrew Day for the early inspiration.
