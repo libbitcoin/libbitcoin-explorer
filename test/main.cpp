@@ -18,5 +18,5 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#define BOOST_TEST_MODULE sx_tests
+#define BOOST_TEST_MODULE libbitcoin_explorer_tests
 #include <boost/test/unit_test.hpp>
