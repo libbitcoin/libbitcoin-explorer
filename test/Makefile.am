@@ -2,29 +2,30 @@
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-noinst_PROGRAMS = sx_test
+noinst_PROGRAMS = libbitcoin_explorer_test
 
 AM_CPPFLAGS = \
     ${libbitcoin_CFLAGS} \
     ${libwallet_CFLAGS} \
     -I$(srcdir)/../include
 
-#sx_test_HEADERS = \
+#libbitcoin_explorer_test_HEADERS = \
     command.hpp \
     precompile.hpp
 
-sx_test_SOURCES = \
+libbitcoin_explorer_test_SOURCES = \
     address.cpp \
     base58.cpp \
     generated__broadcast.cpp \
     generated__find.cpp \
     generated__symbol.cpp \
     main.cpp \
+    obelisk_client.cpp \
     parameter.cpp \
     printer.cpp
 
 # Generated from XML data source.
-sx_test_SOURCES += \
+libbitcoin_explorer_test_SOURCES += \
     address-decode.cpp \
     address-embed.cpp \
     address-encode.cpp \
@@ -49,6 +50,16 @@ sx_test_SOURCES += \
     ec-to-public.cpp \
     ec-to-wif.cpp \
     ec-unlock.cpp \
+    fetch-balance.cpp \
+    fetch-confirmations.cpp \
+    fetch-header.cpp \
+    fetch-height.cpp \
+    fetch-history.cpp \
+    fetch-public-key.cpp \
+    fetch-stealth.cpp \
+    fetch-tx.cpp \
+    fetch-tx-index.cpp \
+    fetch-utxo.cpp \
     genaddr.cpp \
     genpriv.cpp \
     genpub.cpp \
@@ -75,6 +86,7 @@ sx_test_SOURCES += \
     script-encode.cpp \
     script-to-address.cpp \
     seed.cpp \
+    send-tx.cpp \
     send-tx-node.cpp \
     send-tx-p2p.cpp \
     sendtx-bci.cpp \
@@ -93,42 +105,25 @@ sx_test_SOURCES += \
     tx-encode.cpp \
     tx-sign.cpp \
     wallet.cpp \
+    watch-stealth.cpp \
+    watch-tx.cpp \
     wif-to-ec.cpp \
     wif-to-public.cpp \
     wrap-decode.cpp \
     wrap-encode.cpp
 
-sx_test_LDADD = \
+libbitcoin_explorer_test_LDADD = \
     -L$(srcdir)/../src/ -lsx \
     $(libbitcoin_LIBS) \
     $(libwallet_LIBS) \
+    $(libobelisk_LIBS) \
     -lboost_filesystem \
     -lboost_program_options \
     -lboost_regex \
     -lboost_system \
     -lboost_unit_test_framework
-    
-if HAVE_OBELISK
-    sx_test_SOURCES += \
-        fetch-balance.cpp \
-        fetch-confirmations.cpp \
-        fetch-header.cpp \
-        fetch-height.cpp \
-        fetch-history.cpp \
-        fetch-public-key.cpp \
-        fetch-stealth.cpp \
-        fetch-tx.cpp \
-        fetch-tx-index.cpp \
-        fetch-utxo.cpp \
-        send-tx.cpp \
-        watch-stealth.cpp \
-        watch-tx.cpp \
-        obelisk_client.cpp
-        
-    AM_CPPFLAGS += \
-        ${libobelisk_CFLAGS} \
-        -DBOOST_TEST_DYN_LINK
-        
-    sx_test_LDADD += \
-        $(libobelisk_LIBS)
-endif
+      
+AM_CPPFLAGS += \
+    ${libobelisk_CFLAGS} \
+    -DBOOST_TEST_DYN_LINK
+

@@ -2,49 +2,43 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_PropertySheetDisplayName>SX Library Common Settings</_PropertySheetDisplayName>
+    <_PropertySheetDisplayName>Libbitcoin Explorer Test Common Settings</_PropertySheetDisplayName>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
-  
-  <!-- User Interface -->
-  
-  <ItemGroup Label="BuildOptionsExtension">
-    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)$(ProjectName).xml" />
-  </ItemGroup>
 
-  <PropertyGroup>
-    <Option-obelisk>true</Option-obelisk>
-  </PropertyGroup>  
-  
   <!-- Configuration -->
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <!-- 4503: http://bit.ly/1nOftf3 -->
-      <DisableSpecificWarnings>4290;4503;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4503;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Option-obelisk)' == 'true'">HAVE_OBELISK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(DebugOrRelease)' == 'Release'">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!-- These go together in support of precompiled headers. -->
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>precompile.hpp</PrecompiledHeaderFile>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>      
     </ClCompile>
+    <Link>
+      <AdditionalOptions>/OPT:NOLBR /IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)" --run_test=* --random=1 --show_progress=yes --result_code=no --detect_memory_leak=0 --report_level=no --build_info=yes</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
 
-  <!-- Dependencies -->
+  <!-- Extensions -->
   
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)obelisk.import.props" />
     <Import Project="$(SolutionDir)libwallet.import.props" />
     <Import Project="$(SolutionDir)libbitcoin.import.props" />
-  </ImportGroup>  
+    <Import Project="$(SolutionDir)libbitcoin_explorer.import.props" />
+  </ImportGroup>
 
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
-    <Linkage-openssl>dynamic</Linkage-openssl>
     <Linkage-secp256k1>static</Linkage-secp256k1>
     <Linkage-mpir>static</Linkage-mpir>
     <Linkage-czmqpp>dynamic</Linkage-czmqpp>
@@ -54,9 +48,9 @@
     <Linkage-obelisk>dynamic</Linkage-obelisk>
     <Linkage-libwallet>dynamic</Linkage-libwallet>
     <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
+    <Linkage-libbitcoin_explorer>dynamic</Linkage-libbitcoin_explorer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
-    <Linkage-openssl>static</Linkage-openssl>
     <Linkage-secp256k1>static</Linkage-secp256k1>
     <Linkage-mpir>static</Linkage-mpir>
     <Linkage-czmqpp>ltcg</Linkage-czmqpp>
@@ -66,9 +60,9 @@
     <Linkage-obelisk>ltcg</Linkage-obelisk>
     <Linkage-libwallet>ltcg</Linkage-libwallet>
     <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
+    <Linkage-libbitcoin_explorer>ltcg</Linkage-libbitcoin_explorer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
-    <Linkage-openssl>static</Linkage-openssl>
     <Linkage-secp256k1>static</Linkage-secp256k1>
     <Linkage-mpir>static</Linkage-mpir>
     <Linkage-czmqpp>static</Linkage-czmqpp>
@@ -78,16 +72,12 @@
     <Linkage-obelisk>static</Linkage-obelisk>
     <Linkage-libwallet>static</Linkage-libwallet>
     <Linkage-libbitcoin>static</Linkage-libbitcoin>
+    <Linkage-libbitcoin_explorer>static</Linkage-libbitcoin_explorer>
   </PropertyGroup>
 
   <!-- Messages -->
   
-  <Target Name="OptionInfo" BeforeTargets="PrepareForBuild">
-    <Message Text="Option-obelisk    : $(Option-obelisk)" Importance="high"/>
-  </Target>
-
   <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
-    <Message Text="Linkage-openssl   : $(Linkage-openssl)" Importance="high"/>
     <Message Text="Linkage-secp256k1 : $(Linkage-secp256k1)" Importance="high"/>
     <Message Text="Linkage-mpir      : $(Linkage-mpir)" Importance="high"/>
     <Message Text="Linkage-czmqpp    : $(Linkage-czmqpp)" Importance="high"/>
@@ -97,6 +87,10 @@
     <Message Text="Linkage-obelisk   : $(Linkage-obelisk)" Importance="high"/>
     <Message Text="Linkage-libwallet : $(Linkage-libwallet)" Importance="high"/>
     <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
+    <Message Text="Linkage-_explorer : $(Linkage-libbitcoin_explorer)" Importance="high"/>
   </Target>
 
 </Project>
+
+
+

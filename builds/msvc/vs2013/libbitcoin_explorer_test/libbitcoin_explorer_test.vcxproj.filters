@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -35,263 +35,266 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\test\address-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\address-decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\address-embed.cpp">
+    <ClCompile Include="..\..\..\..\test\command\address-embed.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\address-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\address-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\address-validate.cpp">
+    <ClCompile Include="..\..\..\..\test\command\address-validate.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\base58-decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\base58-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\base58check-decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\base58check-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp">
+    <ClCompile Include="..\..\..\..\test\command\bci-fetch-last-height.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\bci-history.cpp">
+    <ClCompile Include="..\..\..\..\test\command\bci-history.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\bitcoin160.cpp">
+    <ClCompile Include="..\..\..\..\test\command\bitcoin160.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\bitcoin256.cpp">
+    <ClCompile Include="..\..\..\..\test\command\bitcoin256.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp">
+    <ClCompile Include="..\..\..\..\test\command\blke-fetch-transaction.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\btc-to-satoshi.cpp">
+    <ClCompile Include="..\..\..\..\test\command\btc-to-satoshi.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-add.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-add.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-add-secrets.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-add-secrets.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-lock.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-lock.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-multiply.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-multiply.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-multiply-secrets.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-multiply-secrets.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-new.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-new.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-to-address.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-to-address.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-to-public.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-to-public.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-to-wif.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-to-wif.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ec-unlock.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ec-unlock.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-balance.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-balance.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-confirmations.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-confirmations.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-header.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-header.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-height.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-height.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-history.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-history.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-public-key.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-public-key.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-stealth.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-stealth.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-tx.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-tx.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-tx-index.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-tx-index.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-utxo.cpp">
+    <ClCompile Include="..\..\..\..\test\command\fetch-utxo.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\genaddr.cpp">
+    <ClCompile Include="..\..\..\..\test\command\genaddr.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\genpriv.cpp">
+    <ClCompile Include="..\..\..\..\test\command\genpriv.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\genpub.cpp">
+    <ClCompile Include="..\..\..\..\test\command\genpub.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-new.cpp">
+    <ClCompile Include="..\..\..\..\test\command\hd-new.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-private.cpp">
+    <ClCompile Include="..\..\..\..\test\command\hd-private.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-public.cpp">
+    <ClCompile Include="..\..\..\..\test\command\hd-public.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-to-address.cpp">
+    <ClCompile Include="..\..\..\..\test\command\hd-to-address.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-to-ec.cpp">
+    <ClCompile Include="..\..\..\..\test\command\hd-to-ec.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-to-public.cpp">
+    <ClCompile Include="..\..\..\..\test\command\hd-to-public.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp">
+    <ClCompile Include="..\..\..\..\test\command\hd-to-wif.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\help.cpp">
+    <ClCompile Include="..\..\..\..\test\command\help.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\initchain.cpp">
+    <ClCompile Include="..\..\..\..\test\command\initchain.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\input-set.cpp">
+    <ClCompile Include="..\..\..\..\test\command\input-set.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\input-sign.cpp">
+    <ClCompile Include="..\..\..\..\test\command\input-sign.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\input-validate.cpp">
+    <ClCompile Include="..\..\..\..\test\command\input-validate.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\mnemonic-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\mnemonic-decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\mnemonic-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\mnemonic-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\mpk.cpp">
+    <ClCompile Include="..\..\..\..\test\command\mpk.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\newseed.cpp">
+    <ClCompile Include="..\..\..\..\test\command\newseed.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\qrcode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\qrcode.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\ripemd160.cpp">
+    <ClCompile Include="..\..\..\..\test\command\ripemd160.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\satoshi-to-btc.cpp">
+    <ClCompile Include="..\..\..\..\test\command\satoshi-to-btc.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\script-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\script-decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\script-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\script-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\script-to-address.cpp">
+    <ClCompile Include="..\..\..\..\test\command\script-to-address.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\seed.cpp">
+    <ClCompile Include="..\..\..\..\test\command\seed.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\send-tx.cpp">
+    <ClCompile Include="..\..\..\..\test\command\send-tx.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\send-tx-node.cpp">
+    <ClCompile Include="..\..\..\..\test\command\send-tx-node.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\send-tx-p2p.cpp">
+    <ClCompile Include="..\..\..\..\test\command\send-tx-p2p.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\sendtx-bci.cpp">
+    <ClCompile Include="..\..\..\..\test\command\sendtx-bci.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\sha160.cpp">
+    <ClCompile Include="..\..\..\..\test\command\sha160.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\sha256.cpp">
+    <ClCompile Include="..\..\..\..\test\command\sha256.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\sha512.cpp">
+    <ClCompile Include="..\..\..\..\test\command\sha512.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\showblkhead.cpp">
+    <ClCompile Include="..\..\..\..\test\command\showblkhead.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-address-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\stealth-address-decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-address-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\stealth-address-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-new.cpp">
+    <ClCompile Include="..\..\..\..\test\command\stealth-new.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-newkey.cpp">
+    <ClCompile Include="..\..\..\..\test\command\stealth-newkey.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-shared-secret.cpp">
+    <ClCompile Include="..\..\..\..\test\command\stealth-shared-secret.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-uncover-public.cpp">
+    <ClCompile Include="..\..\..\..\test\command\stealth-uncover-public.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\stealth-uncover-secret.cpp">
+    <ClCompile Include="..\..\..\..\test\command\stealth-uncover-secret.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\tx-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\tx-decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\tx-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\tx-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\tx-sign.cpp">
+    <ClCompile Include="..\..\..\..\test\command\tx-sign.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wallet.cpp">
+    <ClCompile Include="..\..\..\..\test\command\wallet.cpp">
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\watch-stealth.cpp">
+    <ClCompile Include="..\..\..\..\test\command\watch-stealth.cpp">
       <Filter>src\tests\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\watch-tx.cpp">
+    <ClCompile Include="..\..\..\..\test\command\watch-tx.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp">
+    <ClCompile Include="..\..\..\..\test\command\wif-to-ec.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wif-to-public.cpp">
+    <ClCompile Include="..\..\..\..\test\command\wif-to-public.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wrap-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\wrap-decode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wrap-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\command\wrap-encode.cpp">
       <Filter>src\tests\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\main.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\..\..\test\address.cpp">
+      <Filter>src\tests\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\base58.cpp">
+      <Filter>src\tests\serializer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp">
       <Filter>src\tests</Filter>
@@ -302,21 +305,21 @@
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp">
       <Filter>src\tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\parameter.cpp">
       <Filter>src\tests\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\printer.cpp">
       <Filter>src\tests\utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\address.cpp">
-      <Filter>src\tests\serializer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\base58.cpp">
-      <Filter>src\tests\serializer</Filter>
+    <ClCompile Include="..\..\..\..\test\obelisk_client.cpp">
+      <Filter>src\tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\test\command.hpp">
+    <ClInclude Include="..\..\..\..\test\command\command.hpp">
       <Filter>src\tests\command</Filter>
     </ClInclude>
   </ItemGroup>

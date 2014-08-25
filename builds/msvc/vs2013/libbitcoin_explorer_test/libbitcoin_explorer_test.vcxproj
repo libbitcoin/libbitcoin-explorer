@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -10,7 +10,7 @@
     <NuGetPackageImportStamp>5e4dc238</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
-    <ProjectName>sx_test</ProjectName>
+    <ProjectName>libbitcoin_explorer_test</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDEXE|Win32">
@@ -72,127 +72,100 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\address.cpp" />
     <ClCompile Include="..\..\..\..\test\base58.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
+    <ClCompile Include="..\..\..\..\test\obelisk_client.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\test\address-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\address-embed.cpp" />
-    <ClCompile Include="..\..\..\..\test\address-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\address-validate.cpp" />
-    <ClCompile Include="..\..\..\..\test\base58-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\base58-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\base58check-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\base58check-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\bci-fetch-last-height.cpp" />
-    <ClCompile Include="..\..\..\..\test\bci-history.cpp" />
-    <ClCompile Include="..\..\..\..\test\bitcoin160.cpp" />
-    <ClCompile Include="..\..\..\..\test\bitcoin256.cpp" />
-    <ClCompile Include="..\..\..\..\test\blke-fetch-transaction.cpp" />
-    <ClCompile Include="..\..\..\..\test\btc-to-satoshi.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-add.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-add-secrets.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-lock.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-multiply.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-multiply-secrets.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-new.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-to-address.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-to-public.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-to-wif.cpp" />
-    <ClCompile Include="..\..\..\..\test\ec-unlock.cpp" />
-    <ClCompile Include="..\..\..\..\test\fetch-balance.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-confirmations.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-header.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-height.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-history.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-public-key.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-stealth.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-tx.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-tx-index.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\fetch-utxo.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\genaddr.cpp" />
-    <ClCompile Include="..\..\..\..\test\genpriv.cpp" />
-    <ClCompile Include="..\..\..\..\test\genpub.cpp" />
-    <ClCompile Include="..\..\..\..\test\hd-new.cpp" />
-    <ClCompile Include="..\..\..\..\test\hd-private.cpp" />
-    <ClCompile Include="..\..\..\..\test\hd-public.cpp" />
-    <ClCompile Include="..\..\..\..\test\hd-to-address.cpp" />
-    <ClCompile Include="..\..\..\..\test\hd-to-ec.cpp" />
-    <ClCompile Include="..\..\..\..\test\hd-to-public.cpp" />
-    <ClCompile Include="..\..\..\..\test\hd-to-wif.cpp" />
-    <ClCompile Include="..\..\..\..\test\help.cpp" />
-    <ClCompile Include="..\..\..\..\test\initchain.cpp" />
-    <ClCompile Include="..\..\..\..\test\input-set.cpp" />
-    <ClCompile Include="..\..\..\..\test\input-sign.cpp" />
-    <ClCompile Include="..\..\..\..\test\input-validate.cpp" />
-    <ClCompile Include="..\..\..\..\test\mnemonic-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\mnemonic-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\mpk.cpp" />
-    <ClCompile Include="..\..\..\..\test\newseed.cpp" />
-    <ClCompile Include="..\..\..\..\test\qrcode.cpp" />
-    <ClCompile Include="..\..\..\..\test\ripemd160.cpp" />
-    <ClCompile Include="..\..\..\..\test\satoshi-to-btc.cpp" />
-    <ClCompile Include="..\..\..\..\test\script-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\script-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\script-to-address.cpp" />
-    <ClCompile Include="..\..\..\..\test\seed.cpp" />
-    <ClCompile Include="..\..\..\..\test\send-tx.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\send-tx-node.cpp" />
-    <ClCompile Include="..\..\..\..\test\send-tx-p2p.cpp" />
-    <ClCompile Include="..\..\..\..\test\sendtx-bci.cpp" />
-    <ClCompile Include="..\..\..\..\test\sha160.cpp" />
-    <ClCompile Include="..\..\..\..\test\sha256.cpp" />
-    <ClCompile Include="..\..\..\..\test\sha512.cpp" />
-    <ClCompile Include="..\..\..\..\test\showblkhead.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-address-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-address-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-new.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-newkey.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-shared-secret.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-uncover-public.cpp" />
-    <ClCompile Include="..\..\..\..\test\stealth-uncover-secret.cpp" />
-    <ClCompile Include="..\..\..\..\test\tx-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\tx-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\tx-sign.cpp" />
-    <ClCompile Include="..\..\..\..\test\wallet.cpp" />
-    <ClCompile Include="..\..\..\..\test\watch-stealth.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\watch-tx.cpp">
-      <ExcludedFromBuild Condition="'$(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\wif-to-ec.cpp" />
-    <ClCompile Include="..\..\..\..\test\wif-to-public.cpp" />
-    <ClCompile Include="..\..\..\..\test\wrap-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\wrap-encode.cpp" />
-  </ItemGroup>  
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\test\command.hpp" />
+    <ClCompile Include="..\..\..\..\test\command\address-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\address-embed.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\address-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\address-validate.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\base58-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\base58-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\base58check-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\base58check-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\bci-fetch-last-height.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\bci-history.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\bitcoin160.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\bitcoin256.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\blke-fetch-transaction.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\btc-to-satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-add.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-add-secrets.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-lock.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-multiply.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-multiply-secrets.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-new.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-to-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-to-wif.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ec-unlock.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-balance.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-confirmations.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-header.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-height.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-history.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-public-key.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-stealth.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-tx.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-tx-index.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\fetch-utxo.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\genaddr.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\genpriv.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\genpub.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\hd-new.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\hd-private.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\hd-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\hd-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\hd-to-ec.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\hd-to-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\hd-to-wif.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\help.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\initchain.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\input-set.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\input-sign.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\input-validate.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\mnemonic-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\mnemonic-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\mpk.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\newseed.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\qrcode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\ripemd160.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\satoshi-to-btc.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\script-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\script-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\script-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\seed.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\send-tx.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\send-tx-node.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\send-tx-p2p.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\sendtx-bci.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\sha160.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\sha256.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\sha512.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\showblkhead.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\stealth-address-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\stealth-address-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\stealth-new.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\stealth-newkey.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\stealth-shared-secret.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\stealth-uncover-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\stealth-uncover-secret.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\tx-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\tx-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\tx-sign.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\wallet.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\watch-stealth.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\watch-tx.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\wif-to-ec.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\wif-to-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\wrap-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\command\wrap-encode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -211,7 +184,6 @@
     <Import Project="..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\libsodium_vc120.0.6.0.1\build\native\libsodium_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libsodium_vc120.0.6.0.1\build\native\libsodium_vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\openssl_no-asm_vc120.1.0.1.800\build\native\openssl_no-asm_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\openssl_no-asm_vc120.1.0.1.800\build\native\openssl_no-asm_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_thread-vc120.1.56.0.0\build\native\boost_thread-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_thread-vc120.1.56.0.0\build\native\boost_thread-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_date_time-vc120.1.56.0.0\build\native\boost_date_time-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_date_time-vc120.1.56.0.0\build\native\boost_date_time-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_chrono-vc120.1.56.0.0\build\native\boost_chrono-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_chrono-vc120.1.56.0.0\build\native\boost_chrono-vc120.targets')" />
@@ -232,15 +204,17 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\libsodium_vc120.0.6.0.1\build\native\libsodium_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libsodium_vc120.0.6.0.1\build\native\libsodium_vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\openssl_no-asm_vc120.1.0.1.800\build\native\openssl_no-asm_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\openssl_no-asm_vc120.1.0.1.800\build\native\openssl_no-asm_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_thread-vc120.1.56.0.0\build\native\boost_thread-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_thread-vc120.1.56.0.0\build\native\boost_thread-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_date_time-vc120.1.56.0.0\build\native\boost_date_time-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_date_time-vc120.1.56.0.0\build\native\boost_date_time-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_chrono-vc120.1.56.0.0\build\native\boost_chrono-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_chrono-vc120.1.56.0.0\build\native\boost_chrono-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets'))" />
   </Target>
   <ItemGroup>
-    <ProjectReference Include="..\libsx\libsx.vcxproj">
+    <ProjectReference Include="..\libbitcoin_explorer\libbitcoin_explorer.vcxproj">
       <Project>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\test\command\command.hpp" />
   </ItemGroup>
 </Project>

@@ -987,8 +987,8 @@ BOOST_AUTO_TEST_SUITE_END()
 .output "../include/Makefile.am"
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-sx_includedir = $\(includedir)/sx
-sx_include_HEADERS = \\
+libbitcoin_explorer_includedir = $\(includedir)/sx
+libbitcoin_explorer_include_HEADERS = \\
     async_client.hpp \\
     callback_state.hpp \\
     command.hpp \\
@@ -1000,13 +1000,13 @@ sx_include_HEADERS = \\
     prop_tree.hpp \\
     sx.hpp
 
-sx_utility_includedir = $\(includedir)/sx/impl
-sx_utility_include_HEADERS += \\
+libbitcoin_explorer_utility_includedir = $\(includedir)/sx/impl
+libbitcoin_explorer_utility_include_HEADERS += \\
     prop_tree.ipp \\
     utility.ipp
     
-sx_utility_includedir = $\(includedir)/sx/utility
-sx_utility_include_HEADERS += \\
+libbitcoin_explorer_utility_includedir = $\(includedir)/sx/utility
+libbitcoin_explorer_utility_include_HEADERS += \\
     compat.hpp \\
     config.hpp \\
     environment.hpp \\
@@ -1014,8 +1014,8 @@ sx_utility_include_HEADERS += \\
     printer.hpp \\
     utility.hpp
     
-sx_utility_includedir = $\(includedir)/sx/serializer
-sx_utility_include_HEADERS += \\
+libbitcoin_explorer_utility_includedir = $\(includedir)/sx/serializer
+libbitcoin_explorer_utility_include_HEADERS += \\
     address.hpp \\
     base16.hpp \\
     base58.hpp \\
@@ -1042,19 +1042,12 @@ sx_utility_include_HEADERS += \\
     wrapper.hpp
     
 # Generated from XML data source.
-sx_command_includedir = $\(includedir)/sx/command
-sx_command_include_HEADERS = \\
-.for command by symbol where !is_xml_true(obelisk)
+libbitcoin_explorer_command_includedir = $\(includedir)/sx/command
+libbitcoin_explorer_command_include_HEADERS = \\
+.for command by symbol
     command/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
 
-# Generated from XML data source.
-if HAVE_OBELISK
-    sx_command_include_HEADERS += \\
-.for command by symbol where is_xml_true(obelisk)
-        command/$(symbol:).hpp$(!last() ?? " \\")
-.endfor
-endif
 .##############################################################################
 .echo "Generating src/Makefile.am..."
 .output "../src/Makefile.am"
@@ -1063,19 +1056,20 @@ endif
 AUTOMAKE_OPTIONS = subdir-objects
 
 # Library
-noinst_LTLIBRARIES = libsx.la
+noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 AM_CPPFLAGS = \\
     ${libbitcoin_CFLAGS} \\
     ${libwallet_CFLAGS} \\
     -I$\(srcdir)/../include
 
-libsx_la_SOURCES = \\
+libbitcoin_explorer_la_SOURCES = \\
     async_client.cpp \\
     callback_state.cpp \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
+    obelisk_client.cpp \\
     prop_tree.cpp \\
     serializer/address.cpp \\
     serializer/base16.cpp \\
@@ -1108,23 +1102,14 @@ libsx_la_SOURCES = \\
     utility/utility.cpp
 
 # Generated from XML data source.
-libsx_la_SOURCES += \\
-.for command by symbol where !is_xml_true(obelisk)
-    $(symbol:).cpp$(!last() ?? " \\")
+libbitcoin_explorer_la_SOURCES += \\
+.for command by symbol
+    command/$(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
-# Generated from XML data source.
-if HAVE_OBELISK
-    libsx_la_SOURCES += \\
-.for command by symbol where is_xml_true(obelisk)
-        $(symbol:).cpp \\
-.endfor
-        obelisk_client.cpp
-
-    AM_CPPFLAGS += \\
-        ${libobelisk_CFLAGS} \\
-        -DSYSCONFDIR=\"${sysconfdir}\"
-endif
+AM_CPPFLAGS += \\
+    ${libobelisk_CFLAGS} \\
+    -DSYSCONFDIR=\"${sysconfdir}\"
 
 # Console Application
 bin_PROGRAMS = sx
@@ -1133,18 +1118,15 @@ sx_SOURCES = \\
     console/main.cpp
 
 sx_LDADD = \\
-    -L$\(srcdir) -lsx \\
+    -L$\(srcdir) -llibbitcoin_explorer \\
     $\(libbitcoin_LIBS) \\
     $\(libwallet_LIBS) \\
+    $\(libobelisk_LIBS) \\
     -lboost_filesystem \\
     -lboost_program_options \\
     -lboost_regex \\
     -lboost_system
 
-if HAVE_OBELISK
-    sx_LDADD += \\
-        $\(libobelisk_LIBS)
-endif
 .##############################################################################
 .echo "Generating test/Makefile.am..."
 .output "../test/Makefile.am"
@@ -1152,60 +1134,52 @@ endif
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-noinst_PROGRAMS = sx_test
+noinst_PROGRAMS = libbitcoin_explorer_test
 
 AM_CPPFLAGS = \\
     ${libbitcoin_CFLAGS} \\
     ${libwallet_CFLAGS} \\
     -I$\(srcdir)/../include
 
-#sx_test_HEADERS = \\
+#libbitcoin_explorer_test_HEADERS = \\
     command.hpp \\
     precompile.hpp
 
-sx_test_SOURCES = \\
+libbitcoin_explorer_test_SOURCES = \\
     address.cpp \\
     base58.cpp \\
     generated__broadcast.cpp \\
     generated__find.cpp \\
     generated__symbol.cpp \\
     main.cpp \\
+    obelisk_client.cpp \\
     parameter.cpp \\
     printer.cpp
 
 # Generated from XML data source.
-sx_test_SOURCES += \\
-.for command by symbol where !is_xml_true(obelisk)
+libbitcoin_explorer_test_SOURCES += \\
+.for command by symbol
     $(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
-sx_test_LDADD = \\
+libbitcoin_explorer_test_LDADD = \\
     -L$\(srcdir)/../src/ -lsx \\
     $\(libbitcoin_LIBS) \\
     $\(libwallet_LIBS) \\
+    $\(libobelisk_LIBS) \\
     -lboost_filesystem \\
     -lboost_program_options \\
     -lboost_regex \\
     -lboost_system \\
     -lboost_unit_test_framework
-    
-if HAVE_OBELISK
-    sx_test_SOURCES += \\
-.for command by symbol where is_xml_true(obelisk)
-        $(symbol:).cpp \\
-.endfor
-        obelisk_client.cpp
-        
-    AM_CPPFLAGS += \\
-        ${libobelisk_CFLAGS} \\
-        -DBOOST_TEST_DYN_LINK
-        
-    sx_test_LDADD += \\
-        $\(libobelisk_LIBS)
-endif
+      
+AM_CPPFLAGS += \\
+    ${libobelisk_CFLAGS} \\
+    -DBOOST_TEST_DYN_LINK
+
 .##############################################################################
-.echo "Generating builds/msvc/vs2013/libsx/libsx.vcxproj..."
-.output "../builds/msvc/vs2013/libsx/libsx.vcxproj"
+.echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj..."
+.output "../builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj"
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
@@ -1217,7 +1191,7 @@ endif
     <NuGetPackageImportStamp>82a52cd0</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
-    <ProjectName>libsx</ProjectName>
+    <ProjectName>libbitcoin_explorer</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDLL|Win32">
@@ -1294,9 +1268,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk_client.hpp">
-      <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\prop_tree.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base16.hpp" />
@@ -1340,9 +1312,7 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
-      <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\address.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base16.cpp" />
@@ -1376,15 +1346,7 @@ endif
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-.   if (!is_xml_true(obelisk))
-    <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp" />
-.   else
-    <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
-.       if (is_xml_true(obelisk))
-      <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-.       endif
-    </ClCompile>
-.   endif
+    <ClCompile Include="..\\..\\..\\..\\src\\command\\$(symbol:).cpp" />
 .endfor
   </ItemGroup>
   <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
@@ -1402,7 +1364,6 @@ endif
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.800\\build\\native\\openssl_no-asm_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.800\\build\\native\\openssl_no-asm_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -1421,13 +1382,12 @@ endif
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.800\\build\\native\\openssl_no-asm_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.800\\build\\native\\openssl_no-asm_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets'))" />
   </Target>
 </Project>
 .##############################################################################
-.echo "Generating builds/msvc/vs2013/libsx/libsx.vcxproj.filter..."
-.output "../builds/msvc/vs2013/libsx/libsx.vcxproj.filters"
+.echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj.filter..."
+.output "../builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj.filters"
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
@@ -1628,7 +1588,7 @@ endif
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClCompile Include="..\\..\\..\\..\\src\\$(symbol:).cpp">
+    <ClCompile Include="..\\..\\..\\..\\src\\command\\$(symbol:).cpp">
 .   if (is_xml_true(stub))
       <Filter>src\\command\\stub</Filter>
 .   elsif (is_xml_true(obelisk))
@@ -1752,8 +1712,8 @@ endif
 </Project>
 .##############################################################################
 .##############################################################################
-.echo "Generating builds/msvc/vs2013/sx_test/sx_test.vcxproj..."
-.output "../builds/msvc/vs2013/sx_test/sx_test.vcxproj"
+.echo "Generating builds/msvc/vs2013/libbitcoin_explorer_test/libbitcoin_explorer_test.vcxproj..."
+.output "../builds/msvc/vs2013/libbitcoin_explorer_test/libbitcoin_explorer_test.vcxproj"
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
@@ -1766,7 +1726,7 @@ endif
     <NuGetPackageImportStamp>5e4dc238</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
-    <ProjectName>sx_test</ProjectName>
+    <ProjectName>libbitcoin_explorer_test</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDEXE|Win32">
@@ -1828,27 +1788,21 @@ endif
   <ItemGroup>
     <ClCompile Include="..\\..\\..\\..\\test\\address.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\base58.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\test\\generated__broadcast.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__find.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\main.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-.   if (!is_xml_true(obelisk))
-    <ClCompile Include="..\\..\\..\\..\\test\\$(symbol:).cpp" />
-.   else
-    <ClCompile Include="..\\..\\..\\..\\test\\$(symbol:).cpp">
-.       if (is_xml_true(obelisk))
-      <ExcludedFromBuild Condition="'$\(Option-obelisk)' != 'true'">true</ExcludedFromBuild>
-.       endif
-    </ClCompile>
-.   endif
+    <ClCompile Include="..\\..\\..\\..\\test\\command\\$(symbol:).cpp" />
 .endfor
   </ItemGroup>  
   <ItemGroup>
-    <ClInclude Include="..\\..\\..\\..\\test\\command.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\test\\command\\command.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1867,7 +1821,6 @@ endif
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.800\\build\\native\\openssl_no-asm_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.800\\build\\native\\openssl_no-asm_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets')" />
@@ -1888,21 +1841,20 @@ endif
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.800\\build\\native\\openssl_no-asm_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\openssl_no-asm_vc120.1.0.1.800\\build\\native\\openssl_no-asm_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets'))" />
   </Target>
   <ItemGroup>
-    <ProjectReference Include="..\\libsx\\libsx.vcxproj">
+    <ProjectReference Include="..\\libbitcoin_explorer\\libbitcoin_explorer.vcxproj">
       <Project>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</Project>
     </ProjectReference>
   </ItemGroup>
 </Project>
 .##############################################################################
-.echo "Generating builds/msvc/vs2013/sx_test/sx_test.vcxproj.filter..."
-.output "../builds/msvc/vs2013/sx_test/sx_test.vcxproj.filters"
+.echo "Generating builds/msvc/vs2013/libbitcoin_explorer_test/libbitcoin_explorer_test.vcxproj.filter..."
+.output "../builds/msvc/vs2013/libbitcoin_explorer_test/libbitcoin_explorer_test.vcxproj.filters"
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
@@ -1941,7 +1893,7 @@ endif
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClCompile Include="..\\..\\..\\..\\test\\$(symbol:).cpp">
+    <ClCompile Include="..\\..\\..\\..\\test\\command\\$(symbol:).cpp">
 .   if (is_xml_true(stub))
       <Filter>src\\tests\\command\\stub</Filter>
 .   elsif (is_xml_true(obelisk))
@@ -1952,9 +1904,18 @@ endif
       <Filter>src\\tests\\command</Filter>
 .   endif
     </ClCompile>
-.endfor 
-    <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
-      <Filter>src</Filter>
+.endfor
+    <ClCompile Include="..\\..\\..\\..\\test\\address.cpp">
+      <Filter>src\\tests\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\base58.cpp">
+      <Filter>src\\tests\\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp">
+      <Filter>src\\tests\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp">
+      <Filter>src\\tests\\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\test\\generated__broadcast.cpp">
       <Filter>src\\tests</Filter>
@@ -1965,21 +1926,15 @@ endif
     <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp">
       <Filter>src\\tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp">
-      <Filter>src\\tests\\utility</Filter>
+    <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
+      <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp">
-      <Filter>src\\tests\\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\test\\address.cpp">
-      <Filter>src\\tests\\serializer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\test\\base58.cpp">
-      <Filter>src\\tests\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp">
+      <Filter>src\\tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\\..\\..\\..\\test\\command.hpp">
+    <ClInclude Include="..\\..\\..\\..\\test\\command\\command.hpp">
       <Filter>src\\tests\\command</Filter>
     </ClInclude>
   </ItemGroup>

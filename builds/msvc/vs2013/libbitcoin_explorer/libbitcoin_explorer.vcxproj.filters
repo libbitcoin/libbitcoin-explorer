@@ -439,259 +439,259 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\address-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\address-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\address-embed.cpp">
+    <ClCompile Include="..\..\..\..\src\command\address-embed.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\address-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\address-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\address-validate.cpp">
+    <ClCompile Include="..\..\..\..\src\command\address-validate.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\base58-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\base58-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\base58-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\base58-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\base58check-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\base58check-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\base58check-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\base58check-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\bci-fetch-last-height.cpp">
+    <ClCompile Include="..\..\..\..\src\command\bci-fetch-last-height.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\bci-history.cpp">
+    <ClCompile Include="..\..\..\..\src\command\bci-history.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\bitcoin160.cpp">
+    <ClCompile Include="..\..\..\..\src\command\bitcoin160.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\bitcoin256.cpp">
+    <ClCompile Include="..\..\..\..\src\command\bitcoin256.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\blke-fetch-transaction.cpp">
+    <ClCompile Include="..\..\..\..\src\command\blke-fetch-transaction.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\btc-to-satoshi.cpp">
+    <ClCompile Include="..\..\..\..\src\command\btc-to-satoshi.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-add.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-add.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-add-secrets.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-add-secrets.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-lock.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-lock.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-multiply.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-multiply.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-multiply-secrets.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-multiply-secrets.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-new.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-new.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-to-address.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-to-address.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-to-public.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-to-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-to-wif.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-to-wif.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ec-unlock.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ec-unlock.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-balance.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-balance.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-confirmations.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-confirmations.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-header.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-header.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-height.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-height.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-history.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-history.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-public-key.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-public-key.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-stealth.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-stealth.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-tx.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-tx.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-tx-index.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-tx-index.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\fetch-utxo.cpp">
+    <ClCompile Include="..\..\..\..\src\command\fetch-utxo.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\genaddr.cpp">
+    <ClCompile Include="..\..\..\..\src\command\genaddr.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\genpriv.cpp">
+    <ClCompile Include="..\..\..\..\src\command\genpriv.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\genpub.cpp">
+    <ClCompile Include="..\..\..\..\src\command\genpub.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-new.cpp">
+    <ClCompile Include="..\..\..\..\src\command\hd-new.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-private.cpp">
+    <ClCompile Include="..\..\..\..\src\command\hd-private.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-public.cpp">
+    <ClCompile Include="..\..\..\..\src\command\hd-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-address.cpp">
+    <ClCompile Include="..\..\..\..\src\command\hd-to-address.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-ec.cpp">
+    <ClCompile Include="..\..\..\..\src\command\hd-to-ec.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-public.cpp">
+    <ClCompile Include="..\..\..\..\src\command\hd-to-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\hd-to-wif.cpp">
+    <ClCompile Include="..\..\..\..\src\command\hd-to-wif.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\help.cpp">
+    <ClCompile Include="..\..\..\..\src\command\help.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\initchain.cpp">
+    <ClCompile Include="..\..\..\..\src\command\initchain.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input-set.cpp">
+    <ClCompile Include="..\..\..\..\src\command\input-set.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input-sign.cpp">
+    <ClCompile Include="..\..\..\..\src\command\input-sign.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\input-validate.cpp">
+    <ClCompile Include="..\..\..\..\src\command\input-validate.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\mnemonic-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\mnemonic-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\mnemonic-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\mnemonic-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\mpk.cpp">
+    <ClCompile Include="..\..\..\..\src\command\mpk.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\newseed.cpp">
+    <ClCompile Include="..\..\..\..\src\command\newseed.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\qrcode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\qrcode.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\ripemd160.cpp">
+    <ClCompile Include="..\..\..\..\src\command\ripemd160.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\satoshi-to-btc.cpp">
+    <ClCompile Include="..\..\..\..\src\command\satoshi-to-btc.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\script-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\script-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\script-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\script-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\script-to-address.cpp">
+    <ClCompile Include="..\..\..\..\src\command\script-to-address.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\seed.cpp">
+    <ClCompile Include="..\..\..\..\src\command\seed.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\send-tx.cpp">
+    <ClCompile Include="..\..\..\..\src\command\send-tx.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\send-tx-node.cpp">
+    <ClCompile Include="..\..\..\..\src\command\send-tx-node.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\send-tx-p2p.cpp">
+    <ClCompile Include="..\..\..\..\src\command\send-tx-p2p.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sendtx-bci.cpp">
+    <ClCompile Include="..\..\..\..\src\command\sendtx-bci.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sha160.cpp">
+    <ClCompile Include="..\..\..\..\src\command\sha160.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sha256.cpp">
+    <ClCompile Include="..\..\..\..\src\command\sha256.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\sha512.cpp">
+    <ClCompile Include="..\..\..\..\src\command\sha512.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\showblkhead.cpp">
+    <ClCompile Include="..\..\..\..\src\command\showblkhead.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-address-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\stealth-address-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-address-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\stealth-address-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-new.cpp">
+    <ClCompile Include="..\..\..\..\src\command\stealth-new.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-newkey.cpp">
+    <ClCompile Include="..\..\..\..\src\command\stealth-newkey.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-shared-secret.cpp">
+    <ClCompile Include="..\..\..\..\src\command\stealth-shared-secret.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-uncover-public.cpp">
+    <ClCompile Include="..\..\..\..\src\command\stealth-uncover-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\stealth-uncover-secret.cpp">
+    <ClCompile Include="..\..\..\..\src\command\stealth-uncover-secret.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\tx-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\tx-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\tx-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\tx-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\tx-sign.cpp">
+    <ClCompile Include="..\..\..\..\src\command\tx-sign.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wallet.cpp">
+    <ClCompile Include="..\..\..\..\src\command\wallet.cpp">
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\watch-stealth.cpp">
+    <ClCompile Include="..\..\..\..\src\command\watch-stealth.cpp">
       <Filter>src\command\obelisk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\watch-tx.cpp">
+    <ClCompile Include="..\..\..\..\src\command\watch-tx.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wif-to-ec.cpp">
+    <ClCompile Include="..\..\..\..\src\command\wif-to-ec.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wif-to-public.cpp">
+    <ClCompile Include="..\..\..\..\src\command\wif-to-public.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wrap-decode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\wrap-decode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\wrap-encode.cpp">
+    <ClCompile Include="..\..\..\..\src\command\wrap-encode.cpp">
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\serializer\address.cpp">

@@ -32,15 +32,10 @@
     <Import Project="$(SolutionDir)obelisk.import.props" />
     <Import Project="$(SolutionDir)libwallet.import.props" />
     <Import Project="$(SolutionDir)libbitcoin.import.props" />
-    <Import Project="$(SolutionDir)libsx.import.props" />
+    <Import Project="$(SolutionDir)libbitcoin_explorer.import.props" />
   </ImportGroup>
   
-  <PropertyGroup>
-    <Option-obelisk>true</Option-obelisk>
-  </PropertyGroup>    
-
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
-    <Linkage-openssl>dynamic</Linkage-openssl>
     <Linkage-secp256k1>static</Linkage-secp256k1>
     <Linkage-mpir>static</Linkage-mpir>
     <Linkage-czmqpp>dynamic</Linkage-czmqpp>
@@ -50,10 +45,9 @@
     <Linkage-obelisk>dynamic</Linkage-obelisk>
     <Linkage-libwallet>dynamic</Linkage-libwallet>
     <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
-    <Linkage-libsx>dynamic</Linkage-libsx>
+    <Linkage-libbitcoin_explorer>dynamic</Linkage-libbitcoin_explorer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
-    <Linkage-openssl>static</Linkage-openssl>
     <Linkage-secp256k1>static</Linkage-secp256k1>
     <Linkage-mpir>static</Linkage-mpir>
     <Linkage-czmqpp>ltcg</Linkage-czmqpp>
@@ -63,10 +57,9 @@
     <Linkage-obelisk>ltcg</Linkage-obelisk>
     <Linkage-libwallet>ltcg</Linkage-libwallet>
     <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
-    <Linkage-libsx>ltcg</Linkage-libsx>
+    <Linkage-libbitcoin_explorer>ltcg</Linkage-libbitcoin_explorer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
-    <Linkage-openssl>static</Linkage-openssl>
     <Linkage-secp256k1>static</Linkage-secp256k1>
     <Linkage-mpir>static</Linkage-mpir>
     <Linkage-czmqpp>static</Linkage-czmqpp>
@@ -76,17 +69,12 @@
     <Linkage-obelisk>static</Linkage-obelisk>
     <Linkage-libwallet>static</Linkage-libwallet>
     <Linkage-libbitcoin>static</Linkage-libbitcoin>
-    <Linkage-libsx>static</Linkage-libsx>
+    <Linkage-libbitcoin_explorer>static</Linkage-libbitcoin_explorer>
   </PropertyGroup>
 
   <!-- Messages -->
 
-  <Target Name="OptionInfo" BeforeTargets="PrepareForBuild">
-    <Message Text="Option-obelisk    : $(Option-obelisk)" Importance="high"/>
-  </Target>
-
   <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
-    <Message Text="Linkage-openssl   : $(Linkage-openssl)" Importance="high"/>
     <Message Text="Linkage-secp256k1 : $(Linkage-secp256k1)" Importance="high"/>
     <Message Text="Linkage-mpir      : $(Linkage-mpir)" Importance="high"/>
     <Message Text="Linkage-czmqpp    : $(Linkage-czmqpp)" Importance="high"/>
@@ -96,7 +84,7 @@
     <Message Text="Linkage-obelisk   : $(Linkage-obelisk)" Importance="high"/>
     <Message Text="Linkage-libwallet : $(Linkage-libwallet)" Importance="high"/>
     <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
-    <Message Text="Linkage-libsx     : $(Linkage-libsx)" Importance="high"/>
+    <Message Text="Linkage-_explorer : $(Linkage-libbitcoin_explorer)" Importance="high"/>
   </Target>
 
 </Project>

@@ -1,7 +1,7 @@
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-sx_includedir = $(includedir)/sx
-sx_include_HEADERS = \
+libbitcoin_explorer_includedir = $(includedir)/sx
+libbitcoin_explorer_include_HEADERS = \
     async_client.hpp \
     callback_state.hpp \
     command.hpp \
@@ -13,13 +13,13 @@ sx_include_HEADERS = \
     prop_tree.hpp \
     sx.hpp
 
-sx_utility_includedir = $(includedir)/sx/impl
-sx_utility_include_HEADERS += \
+libbitcoin_explorer_utility_includedir = $(includedir)/sx/impl
+libbitcoin_explorer_utility_include_HEADERS += \
     prop_tree.ipp \
     utility.ipp
     
-sx_utility_includedir = $(includedir)/sx/utility
-sx_utility_include_HEADERS += \
+libbitcoin_explorer_utility_includedir = $(includedir)/sx/utility
+libbitcoin_explorer_utility_include_HEADERS += \
     compat.hpp \
     config.hpp \
     environment.hpp \
@@ -27,8 +27,8 @@ sx_utility_include_HEADERS += \
     printer.hpp \
     utility.hpp
     
-sx_utility_includedir = $(includedir)/sx/serializer
-sx_utility_include_HEADERS += \
+libbitcoin_explorer_utility_includedir = $(includedir)/sx/serializer
+libbitcoin_explorer_utility_include_HEADERS += \
     address.hpp \
     base16.hpp \
     base58.hpp \
@@ -55,8 +55,8 @@ sx_utility_include_HEADERS += \
     wrapper.hpp
     
 # Generated from XML data source.
-sx_command_includedir = $(includedir)/sx/command
-sx_command_include_HEADERS = \
+libbitcoin_explorer_command_includedir = $(includedir)/sx/command
+libbitcoin_explorer_command_include_HEADERS = \
     command/address-decode.hpp \
     command/address-embed.hpp \
     command/address-encode.hpp \
@@ -81,6 +81,16 @@ sx_command_include_HEADERS = \
     command/ec-to-public.hpp \
     command/ec-to-wif.hpp \
     command/ec-unlock.hpp \
+    command/fetch-balance.hpp \
+    command/fetch-confirmations.hpp \
+    command/fetch-header.hpp \
+    command/fetch-height.hpp \
+    command/fetch-history.hpp \
+    command/fetch-public-key.hpp \
+    command/fetch-stealth.hpp \
+    command/fetch-tx.hpp \
+    command/fetch-tx-index.hpp \
+    command/fetch-utxo.hpp \
     command/genaddr.hpp \
     command/genpriv.hpp \
     command/genpub.hpp \
@@ -107,6 +117,7 @@ sx_command_include_HEADERS = \
     command/script-encode.hpp \
     command/script-to-address.hpp \
     command/seed.hpp \
+    command/send-tx.hpp \
     command/send-tx-node.hpp \
     command/send-tx-p2p.hpp \
     command/sendtx-bci.hpp \
@@ -125,25 +136,10 @@ sx_command_include_HEADERS = \
     command/tx-encode.hpp \
     command/tx-sign.hpp \
     command/wallet.hpp \
+    command/watch-stealth.hpp \
+    command/watch-tx.hpp \
     command/wif-to-ec.hpp \
     command/wif-to-public.hpp \
     command/wrap-decode.hpp \
     command/wrap-encode.hpp
 
-# Generated from XML data source.
-if HAVE_OBELISK
-    sx_command_include_HEADERS += \
-        command/fetch-balance.hpp \
-        command/fetch-confirmations.hpp \
-        command/fetch-header.hpp \
-        command/fetch-height.hpp \
-        command/fetch-history.hpp \
-        command/fetch-public-key.hpp \
-        command/fetch-stealth.hpp \
-        command/fetch-tx.hpp \
-        command/fetch-tx-index.hpp \
-        command/fetch-utxo.hpp \
-        command/send-tx.hpp \
-        command/watch-stealth.hpp \
-        command/watch-tx.hpp
-endif

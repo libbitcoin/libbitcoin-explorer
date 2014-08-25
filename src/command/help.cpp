@@ -18,7 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include "precompile.hpp"
 #include <sx/command/help.hpp>
 
 #include <iostream>

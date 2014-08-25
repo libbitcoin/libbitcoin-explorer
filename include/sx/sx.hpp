@@ -29,9 +29,7 @@
 #include <sx/dispatch.hpp>
 #include <sx/display.hpp>
 #include <sx/generated.hpp>
-#ifdef HAVE_OBELISK
-    #include <sx/obelisk_client.hpp>
-#endif
+#include <sx/obelisk_client.hpp>
 #include <sx/prop_tree.hpp>
 #include <sx/serializer/address.hpp>
 #include <sx/serializer/base16.hpp>

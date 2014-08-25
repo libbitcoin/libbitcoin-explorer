@@ -30,7 +30,7 @@
 
 #define SX_USING_NAMESPACES()
 using namespace libwallet; \
-using namespace bc;
+using namespace bc; \
 using namespace obelisk; \
 using namespace std; \
 using namespace sx; \
