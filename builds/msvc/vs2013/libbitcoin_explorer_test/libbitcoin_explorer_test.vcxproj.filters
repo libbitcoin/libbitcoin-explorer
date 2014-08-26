@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -18,7 +18,7 @@
     <Filter Include="src\tests\command">
       <UniqueIdentifier>{854c3ba2-ea3e-45ba-a329-75b1c9545712}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\tests\command\obelisk">
+    <Filter Include="src\tests\command\network">
       <UniqueIdentifier>{30ec4ed5-e76c-45cd-a4c1-2da55271a06b}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\tests\command\obsolete">
@@ -108,31 +108,31 @@
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-balance.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-confirmations.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-header.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-height.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-history.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-public-key.cpp">
       <Filter>src\tests\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-stealth.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-tx.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-tx-index.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\fetch-utxo.cpp">
       <Filter>src\tests\command\stub</Filter>
@@ -216,13 +216,13 @@
       <Filter>src\tests\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\send-tx.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\send-tx-node.cpp">
-      <Filter>src\tests\command</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\send-tx-p2p.cpp">
-      <Filter>src\tests\command</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\sendtx-bci.cpp">
       <Filter>src\tests\command\obsolete</Filter>
@@ -273,7 +273,7 @@
       <Filter>src\tests\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\watch-stealth.cpp">
-      <Filter>src\tests\command\obelisk</Filter>
+      <Filter>src\tests\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\command\watch-tx.cpp">
       <Filter>src\tests\command\stub</Filter>
@@ -296,6 +296,12 @@
     <ClCompile Include="..\..\..\..\test\base58.cpp">
       <Filter>src\tests\serializer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\parameter.cpp">
+      <Filter>src\tests\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\printer.cpp">
+      <Filter>src\tests\utility</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp">
       <Filter>src\tests</Filter>
     </ClCompile>
@@ -307,12 +313,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\main.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\parameter.cpp">
-      <Filter>src\tests\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\printer.cpp">
-      <Filter>src\tests\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\obelisk_client.cpp">
       <Filter>src\tests</Filter>

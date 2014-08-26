@@ -12,7 +12,7 @@
     <Filter Include="include\command">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\command\obelisk">
+    <Filter Include="include\command\network">
       <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\command\obsolete">
@@ -33,7 +33,7 @@
     <Filter Include="include">
       <UniqueIdentifier>{f75d4585-8ee2-45e8-96ec-880c63fc243e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\command\obelisk">
+    <Filter Include="src\command\network">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\command\obsolete">
@@ -129,31 +129,31 @@
       <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-balance.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-confirmations.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-header.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-height.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-history.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-public-key.hpp">
       <Filter>include\command\stub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-stealth.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-tx-index.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\fetch-utxo.hpp">
       <Filter>include\command\stub</Filter>
@@ -237,13 +237,13 @@
       <Filter>include\command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\send-tx.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\send-tx-node.hpp">
-      <Filter>include\command</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\send-tx-p2p.hpp">
-      <Filter>include\command</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\sendtx-bci.hpp">
       <Filter>include\command\obsolete</Filter>
@@ -294,7 +294,7 @@
       <Filter>include\command\obsolete</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\watch-stealth.hpp">
-      <Filter>include\command\obelisk</Filter>
+      <Filter>include\command\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\sx\command\watch-tx.hpp">
       <Filter>include\command\stub</Filter>
@@ -512,31 +512,31 @@
       <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-balance.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-confirmations.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-header.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-height.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-history.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-public-key.cpp">
       <Filter>src\command\stub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-stealth.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-tx.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-tx-index.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\fetch-utxo.cpp">
       <Filter>src\command\stub</Filter>
@@ -620,13 +620,13 @@
       <Filter>src\command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\send-tx.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\send-tx-node.cpp">
-      <Filter>src\command</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\send-tx-p2p.cpp">
-      <Filter>src\command</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\sendtx-bci.cpp">
       <Filter>src\command\obsolete</Filter>
@@ -677,7 +677,7 @@
       <Filter>src\command\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\watch-stealth.cpp">
-      <Filter>src\command\obelisk</Filter>
+      <Filter>src\command\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\command\watch-tx.cpp">
       <Filter>src\command\stub</Filter>

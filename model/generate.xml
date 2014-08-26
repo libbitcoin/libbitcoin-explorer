@@ -190,31 +190,31 @@
     <define name="SX_EC_UNLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
-  <command symbol="fetch-balance" typeX="balance_row" multipleX="true" category="ONLINE" obelisk="true">
+  <command symbol="fetch-balance" typeX="balance_row" multipleX="true" category="ONLINE" network="true">
     <option name="help" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
   </command>
 
-  <command symbol="fetch-confirmations" formerly="validtx" typeX="string" multipleX="true" category="ONLINE" obelisk="true">
+  <command symbol="fetch-confirmations" formerly="validtx" typeX="string" multipleX="true" category="ONLINE" network="true">
     <option name="help" description="Get confirmations for a set of transactions. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
     <define name="SX_FETCH_CONFIRMATIONS_OUTPUT" value="[%1%] Confirmations: %2%" />    
   </command>
 
-  <command symbol="fetch-header" category="ONLINE" typeX="header" obelisk="true">
+  <command symbol="fetch-header" category="ONLINE" typeX="header" network="true">
     <option name="help" description="Get the block header from the specified hash or height. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <option name="hash" shortcut="s" type="btc256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="size_t" description="The block height."/>
   </command>
 
-  <command symbol="fetch-height" formerly="fetch-last-height" typeX="size_t" category="ONLINE" obelisk="true">
+  <command symbol="fetch-height" formerly="fetch-last-height" typeX="size_t" category="ONLINE" network="true">
     <option name="help" description="Get the last block height. Requires an Obelisk server connection." />
   </command>
   
-  <command symbol="fetch-history" typeX="history_row" multipleX="true" category="ONLINE" obelisk="true">
+  <command symbol="fetch-history" typeX="history_row" multipleX="true" category="ONLINE" network="true">
     <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
@@ -222,13 +222,13 @@
     <define name="SX_FETCH_HISTORY_UNSPENT" value="Unspent" />
   </command>
   
-  <command symbol="fetch-public-key" formerly="get-pubkey" typeX="ec_public" category="ONLINE" stub="true" obelisk="true">
+  <command symbol="fetch-public-key" formerly="get-pubkey" typeX="ec_public" category="ONLINE" stub="true" network="true">
     <option name="help" description="Get the EC public key of the address, if it exists on the blockchain. Requires an Obelisk server connection." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address of the public key."/>
     <define name="SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-stealth" typeX="stealth_row" multipleX="true" category="ONLINE" obelisk="true">
+  <command symbol="fetch-stealth" typeX="stealth_row" multipleX="true" category="ONLINE" network="true">
     <option name="help" description="Get metadata on potential payment transactions by stealth prefix. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include."/>
@@ -237,21 +237,21 @@
     <argument name="PREFIX" stdin="true" limit="-1" type="prefix" description="The set of  Base2 stealth prefixes used to locate transactions." />
   </command>
 
-  <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" multipleX="true" category="ONLINE" obelisk="true">
+  <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" multipleX="true" category="ONLINE" network="true">
     <option name="help" description="Get transactions by filter. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of prefix transactions to get."/>
     <argument name="HASH" stdin="true" limit="-1"  type="btc256" description="The set of Base16 transaction hashes of transactions to get." />
   </command>
 
-  <command symbol="fetch-tx-index" formerly="fetch-transaction-index" typeX="string" multipleX="true" category="ONLINE" obelisk="true">
+  <command symbol="fetch-tx-index" formerly="fetch-transaction-index" typeX="string" multipleX="true" category="ONLINE" network="true">
     <option name="help" description="Get the block height and index of a transaction. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes." />
       <define name="SX_FETCH_TX_INDEX_OUTPUT" value="[%1%] Height: %2% Index: %3%" /> 
   </command>
 
-  <command symbol="fetch-utxo" formerly="get-utxo" typeX="output" multipleX="true" category="ONLINE" stub="true" obelisk="true">
+  <command symbol="fetch-utxo" formerly="get-utxo" typeX="output" multipleX="true" category="ONLINE" stub="true" network="true">
     <option name="help" description="Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
@@ -474,13 +474,13 @@
     <define name="SX_SEED_BIT_LENGTH_UNSUPPORTED" value="The seed value is not supported." />
   </command>
   
-  <command symbol="send-tx" formerly="sendtx-obelisk" typeX="string" category="ONLINE" obelisk="true">
+  <command symbol="send-tx" formerly="sendtx-obelisk" typeX="string" category="ONLINE" network="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
     <define name="SX_SEND_TX_OUTPUT" value="Sent transaction at %1%." />
   </command>
   
-  <command symbol="send-tx-node" formerly="sendtx-node" typeX="string" category="ONLINE">
+  <command symbol="send-tx-node" formerly="sendtx-node" typeX="string" category="ONLINE" network="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via a single Bitcoin network node." />
     <option name="name" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
@@ -488,7 +488,7 @@
     <define name="SX_SEND_TX_NODE_OUTPUT" value="Sent transaction %1% at %2%." />
   </command>
 
-  <command symbol="send-tx-p2p" formerly="sendtx-p2p" typeX="string" category="ONLINE">
+  <command symbol="send-tx-p2p" formerly="sendtx-p2p" typeX="string" category="ONLINE" network="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via the Bitcoin peer-to-peer network." />
     <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to two." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
@@ -610,7 +610,7 @@
     <define name="SX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
   </command>
 
-  <command symbol="watch-stealth" formerly="monitor" typeX="transaction" category="ONLINE" obelisk="true">
+  <command symbol="watch-stealth" formerly="monitor" typeX="transaction" category="ONLINE" network="true">
     <option name="help" description="Watch the network for transactions by stealth prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>
@@ -619,7 +619,7 @@
     <define name="SX_WATCH_PREFIX_WAITING" value="Watching prefix: %1%..." />
   </command>
 
-  <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" obelisk="true" stub="true">
+  <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true">
     <option name="help" description="Watch the network for transactions by transaction hash. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes to watch." />

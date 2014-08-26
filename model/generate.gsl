@@ -1402,7 +1402,7 @@ AM_CPPFLAGS += \\
     <Filter Include="include\\command">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\command\\obelisk">
+    <Filter Include="include\\command\\network">
       <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\\command\\obsolete">
@@ -1423,7 +1423,7 @@ AM_CPPFLAGS += \\
     <Filter Include="include">
       <UniqueIdentifier>{f75d4585-8ee2-45e8-96ec-880c63fc243e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\command\\obelisk">
+    <Filter Include="src\\command\\network">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\\command\\obsolete">
@@ -1450,8 +1450,8 @@ AM_CPPFLAGS += \\
     <ClInclude Include="..\\..\\..\\..\\include\\sx\\command\\$(symbol:).hpp">
 .   if (is_xml_true(stub))
       <Filter>include\\command\\stub</Filter>
-.   elsif (is_xml_true(obelisk))
-      <Filter>include\\command\\obelisk</Filter>
+.   elsif (is_xml_true(network))
+      <Filter>include\\command\\network</Filter>
 .   elsif (is_xml_true(obsolete))
       <Filter>include\\command\\obsolete</Filter>
 .   else
@@ -1591,8 +1591,8 @@ AM_CPPFLAGS += \\
     <ClCompile Include="..\\..\\..\\..\\src\\command\\$(symbol:).cpp">
 .   if (is_xml_true(stub))
       <Filter>src\\command\\stub</Filter>
-.   elsif (is_xml_true(obelisk))
-      <Filter>src\\command\\obelisk</Filter>
+.   elsif (is_xml_true(network))
+      <Filter>src\\command\\network</Filter>
 .   elsif (is_xml_true(obsolete))
       <Filter>src\\command\\obsolete</Filter>
 .   else
@@ -1875,7 +1875,7 @@ AM_CPPFLAGS += \\
     <Filter Include="src\\tests\\command">
       <UniqueIdentifier>{854c3ba2-ea3e-45ba-a329-75b1c9545712}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\tests\\command\\obelisk">
+    <Filter Include="src\\tests\\command\\network">
       <UniqueIdentifier>{30ec4ed5-e76c-45cd-a4c1-2da55271a06b}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\\tests\\command\\obsolete">
@@ -1896,8 +1896,8 @@ AM_CPPFLAGS += \\
     <ClCompile Include="..\\..\\..\\..\\test\\command\\$(symbol:).cpp">
 .   if (is_xml_true(stub))
       <Filter>src\\tests\\command\\stub</Filter>
-.   elsif (is_xml_true(obelisk))
-      <Filter>src\\tests\\command\\obelisk</Filter>
+.   elsif (is_xml_true(network))
+      <Filter>src\\tests\\command\\network</Filter>
 .   elsif (is_xml_true(obsolete))
       <Filter>src\\tests\\command\\obsolete</Filter>
 .   else
