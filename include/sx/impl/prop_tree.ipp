@@ -32,8 +32,8 @@ namespace serializer {
 template <typename Values>
 pt::ptree prop_tree_list(const std::string& name, Values& values)
 {
-    ptree list;
-    ptree element;
+    pt::ptree list;
+    pt::ptree element;
     for (const auto& value: values)
     {
         list.push_back(std::make_pair(name, prop_tree(value)));
@@ -45,8 +45,8 @@ pt::ptree prop_tree_list(const std::string& name, Values& values)
 template <typename Values>
 pt::ptree prop_value_list(const std::string& name, Values& values)
 {
-    ptree list;
-    ptree element;
+    pt::ptree list;
+    pt::ptree element;
     for (const auto& value: values)
     {
         element.put_value(value);
