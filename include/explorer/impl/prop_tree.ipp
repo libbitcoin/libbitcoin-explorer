@@ -30,7 +30,7 @@ namespace explorer {
 namespace primitives {
 
 template <typename Values>
-pt::ptree prop_tree_list(const std::string& name, Values& values)
+pt::ptree prop_tree_list(const std::string& name, const Values& values)
 {
     pt::ptree list;
     pt::ptree element;
@@ -43,7 +43,7 @@ pt::ptree prop_tree_list(const std::string& name, Values& values)
 }
 
 template <typename Values>
-pt::ptree prop_value_list(const std::string& name, Values& values)
+pt::ptree prop_value_list(const std::string& name, const Values& values)
 {
     pt::ptree list;
     pt::ptree element;

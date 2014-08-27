@@ -57,7 +57,7 @@ class wrapper;
  * @returns              A new property tree containing the list.
  */
 template <typename Values>
-pt::ptree prop_tree_list(const std::string& name, Values& values);
+pt::ptree prop_tree_list(const std::string& name, const Values& values);
 
 /**
  * Create a property tree array of value elements.
@@ -67,7 +67,7 @@ pt::ptree prop_tree_list(const std::string& name, Values& values);
  * @returns              A new property tree containing the list.
  */
 template <typename Values>
-pt::ptree prop_value_list(const std::string& name, Values& values);
+pt::ptree prop_value_list(const std::string& name, const Values& values);
 
 /**
  * Generate a property tree for a block header.
@@ -96,7 +96,7 @@ pt::ptree prop_tree(const history_row& row);
  * @param[in]  rows  The set of history rows.
  * @return           A property tree.
  */
-pt::ptree prop_tree(std::vector<history_row>& rows);
+pt::ptree prop_tree(const std::vector<history_row>& rows);
 
 /**
  * Generate a property tree from history rows for an address.
