@@ -32,7 +32,7 @@ using namespace bc;
 using namespace libwallet;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 wif::wif()
@@ -101,5 +101,5 @@ std::ostream& operator<<(std::ostream& output, const wif& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

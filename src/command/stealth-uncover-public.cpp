@@ -26,9 +26,9 @@
 #include <sx/serializer/ec_public.hpp>
 
 using namespace libwallet;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 console_result stealth_uncover_public::invoke(std::ostream& output,
     std::ostream& error)

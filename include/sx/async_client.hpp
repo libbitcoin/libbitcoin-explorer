@@ -27,7 +27,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 
 /**
  * Class to simplify async client usage. 
@@ -51,7 +51,7 @@ public:
      * @param[in]  command  The command being processed.
      * @param[in]  threads  The number of pool threads to initialize.
      */
-    async_client(sx::command& command,
+    async_client(explorer::command& command,
         const size_t threads=default_threadpool_size);
 
     /**
@@ -91,6 +91,6 @@ private:
     bc::threadpool threadpool_;
 };
 
-} // sx
+} // explorer
 
 #endif

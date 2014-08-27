@@ -31,9 +31,9 @@
 
 using namespace bc;
 using namespace obelisk;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 static void transaction_fetched(callback_state& state, const tx_type& tx)
 {

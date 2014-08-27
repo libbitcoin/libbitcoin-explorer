@@ -37,7 +37,7 @@ using namespace bc;
 using namespace po;
 using namespace pt;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 static void parse_input(tx_input_type& input,
@@ -114,5 +114,5 @@ std::ostream& operator<<(std::ostream& output, const input& argument)
     return output;
 }
      
-} // sx
+} // explorer
 } // serializer

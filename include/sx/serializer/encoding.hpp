@@ -24,7 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 /**
@@ -88,7 +88,7 @@ private:
     encoding_engine value_;
 };
 
-} // sx
+} // explorer
 } // serializer
 
 #endif

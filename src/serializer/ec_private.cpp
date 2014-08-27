@@ -34,7 +34,7 @@ using namespace bc;
 using namespace libwallet;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 ec_private::ec_private()
@@ -91,5 +91,5 @@ std::ostream& operator<<(std::ostream& output, const ec_private& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

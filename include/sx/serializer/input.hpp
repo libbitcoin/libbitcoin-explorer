@@ -29,7 +29,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 /**
@@ -122,7 +122,7 @@ private:
     tx_input_type value_;
 };
 
-} // sx
+} // explorer
 } // serializer
 
 #endif

@@ -28,7 +28,7 @@
 
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 // DRY
@@ -106,5 +106,5 @@ std::ostream& operator<<(std::ostream& output, const encoding& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

@@ -26,9 +26,9 @@
 #include <sx/serializer/hd_pub.hpp>
 
 using namespace libwallet;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 // 100% coverage by line, loc ready.
 console_result hd_public::invoke(std::ostream& output, std::ostream& error)

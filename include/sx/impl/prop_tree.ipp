@@ -26,7 +26,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 template <typename Values>
@@ -57,6 +57,6 @@ pt::ptree prop_value_list(const std::string& name, Values& values)
 }
 
 } // serializer
-} // sx
+} // explorer
 
 #endif

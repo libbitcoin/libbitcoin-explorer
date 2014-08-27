@@ -49,7 +49,7 @@ using namespace bc;
 using namespace boost::posix_time;
 using namespace libwallet;
 
-namespace sx {
+namespace explorer {
 
 void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter)
@@ -233,4 +233,4 @@ std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
     return output;
 }
 
-} // sx
+} // explorer

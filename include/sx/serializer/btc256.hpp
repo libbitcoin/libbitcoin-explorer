@@ -30,7 +30,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 /**
@@ -100,7 +100,7 @@ private:
     bc::hash_digest value_;
 };
 
-} // sx
+} // explorer
 } // serializer
 
 #endif

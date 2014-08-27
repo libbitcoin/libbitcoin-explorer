@@ -33,7 +33,7 @@
 using namespace bc;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 script::script()
@@ -99,5 +99,5 @@ std::ostream& operator<<(std::ostream& output, const script& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

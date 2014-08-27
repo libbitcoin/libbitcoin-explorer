@@ -1,4 +1,4 @@
-.#  Generate C++ source and make files for SX
+.#  Generate C++ source and make files for libbitcoin_explorer
 .#
 .#  This is a code generator built using the iMatix GSL code generation
 .#  language. See https://github.com/imatix/gsl for details.
@@ -10,12 +10,12 @@
 .
 .macro global.copyleft
 /**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -69,59 +69,59 @@
 .# TODO: hash table
 .function global.normalize_type(type)
 .   if my.type = type_address
-.       return type_address_sx
+.       return type_address_bx
 .   elsif my.type = type_base16
-.       return type_base16_sx
+.       return type_base16_bx
 .   elsif my.type = type_base58
-.       return type_base58_sx
+.       return type_base58_bx
 .   elsif my.type = type_btc
-.       return type_btc_sx
+.       return type_btc_bx
 .   elsif my.type = type_btc160
-.       return type_btc160_sx
+.       return type_btc160_bx
 .   elsif my.type = type_btc256
-.       return type_btc256_sx
+.       return type_btc256_bx
 .   elsif my.type = type_ec_private
-.       return type_ec_private_sx
+.       return type_ec_private_bx
 .   elsif my.type = type_ec_public
-.       return type_ec_public_sx
+.       return type_ec_public_bx
 .   elsif my.type = type_encoding
-.       return type_encoding_sx
+.       return type_encoding_bx
 .   elsif my.type = type_file
-.       return type_file_sx
+.       return type_file_bx
 .   elsif my.type = type_hashtype
-.       return type_hashtype_sx
+.       return type_hashtype_bx
 .   elsif my.type = type_hd_key
-.       return type_hd_key_sx
+.       return type_hd_key_bx
 .   elsif my.type = type_hd_private
-.       return type_hd_private_sx
+.       return type_hd_private_bx
 .   elsif my.type = type_hd_public
-.       return type_hd_public_sx
+.       return type_hd_public_bx
 .   elsif my.type = type_header
-.       return type_header_sx
+.       return type_header_bx
 .   elsif my.type = type_input
-.       return type_input_sx
+.       return type_input_bx
 .   elsif my.type = type_output
-.       return type_output_sx
+.       return type_output_bx
 .   elsif my.type = type_path
 .       return type_path_boost
 .   elsif my.type = type_point
-.       return type_point_sx
+.       return type_point_bx
 .   elsif my.type = type_prefix
-.       return type_prefix_sx
+.       return type_prefix_bx
 .   elsif my.type = type_raw
-.       return type_raw_sx
+.       return type_raw_bx
 .   elsif my.type = type_script
-.       return type_script_sx
+.       return type_script_bx
 .   elsif my.type = type_stealth
-.       return type_stealth_sx
+.       return type_stealth_bx
 .   elsif my.type = type_string
 .       return type_string_std
 .   elsif my.type = type_transaction
-.       return type_transaction_sx
+.       return type_transaction_bx
 .   elsif my.type = type_wif
-.       return type_wif_sx
+.       return type_wif_bx
 .   elsif my.type = type_wrapper
-.       return type_wrapper_sx
+.       return type_wrapper_bx
 .   endif
 .   return my.type
 .endfunction
@@ -184,7 +184,7 @@
 .   return if_else(my.is_vector, "std::vector<$(my.type:)>", my.type)
 .endfunction
 .
-.config_description = resource("sx_config_description")
+.config_description = resource("config_description")
 .config_option = "config"
 .type_bool = "bool"
 .type_address = "address"
@@ -215,33 +215,33 @@
 .type_wif = "wif"
 .type_wrapper = "wrapper"
 .
-.type_address_sx = "serializer::address"
-.type_base16_sx = "serializer::base16"
-.type_base58_sx = "serializer::base58"
-.type_btc_sx = "serializer::btc"
-.type_btc160_sx = "serializer::btc160"
-.type_btc256_sx = "serializer::btc256"
-.type_ec_private_sx = "serializer::ec_private"
-.type_ec_public_sx = "serializer::ec_public"
-.type_encoding_sx = "serializer::encoding"
-.type_file_sx = "serializer::file"
-.type_hashtype_sx = "serializer::hashtype"
-.type_hd_key_sx = "serializer::hd_key"
-.type_hd_private_sx = "serializer::hd_priv"
-.type_hd_public_sx = "serializer::hd_pub"
-.type_header_sx = "serializer::header"
-.type_input_sx = "serializer::input"
-.type_output_sx = "serializer::output"
+.type_address_bx = "serializer::address"
+.type_base16_bx = "serializer::base16"
+.type_base58_bx = "serializer::base58"
+.type_btc_bx = "serializer::btc"
+.type_btc160_bx = "serializer::btc160"
+.type_btc256_bx = "serializer::btc256"
+.type_ec_private_bx = "serializer::ec_private"
+.type_ec_public_bx = "serializer::ec_public"
+.type_encoding_bx = "serializer::encoding"
+.type_file_bx = "serializer::file"
+.type_hashtype_bx = "serializer::hashtype"
+.type_hd_key_bx = "serializer::hd_key"
+.type_hd_private_bx = "serializer::hd_priv"
+.type_hd_public_bx = "serializer::hd_pub"
+.type_header_bx = "serializer::header"
+.type_input_bx = "serializer::input"
+.type_output_bx = "serializer::output"
 .type_path_boost = "boost::filesystem::path"
-.type_point_sx = "serializer::point"
-.type_prefix_sx = "serializer::prefix"
-.type_raw_sx = "serializer::raw"
-.type_script_sx = "serializer::script"
-.type_stealth_sx = "serializer::stealth"
+.type_point_bx = "serializer::point"
+.type_prefix_bx = "serializer::prefix"
+.type_raw_bx = "serializer::raw"
+.type_script_bx = "serializer::script"
+.type_stealth_bx = "serializer::stealth"
 .type_string_std = "std::string"
-.type_transaction_sx = "serializer::transaction"
-.type_wif_sx = "serializer::wif"
-.type_wrapper_sx = "serializer::wrapper"
+.type_transaction_bx = "serializer::transaction"
+.type_wif_bx = "serializer::wif"
+.type_wrapper_bx = "serializer::wrapper"
 .
 .xml_false = "false"
 .xml_true = "true"
@@ -265,7 +265,7 @@
 
 #define SX_VARIABLE_CONFIG "$(config_option:)"
 
-namespace sx {
+namespace explorer {
 
 /**
  * Invoke a specified function on all commands.
@@ -281,7 +281,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
  */
 std::shared_ptr<command> find(const std::string& symbol);
 
-} // sx
+} // explorer
 
 #endif
 .##############################################################################
@@ -303,8 +303,8 @@ using namespace po;
 using namespace std;
 using namespace boost::filesystem;
     
-namespace sx {
-using namespace extension;
+namespace explorer {
+using namespace commands;
 
 bool broadcast(const function<void(shared_ptr<command>)> func)
 {
@@ -325,7 +325,7 @@ shared_ptr<command> find(const string& symbol)
     return nullptr;
 }
 
-} // sx
+} // explorer
 .##############################################################################
 .echo "Generating include/sx/command.hpp..."
 .output "../include/sx/command.hpp"
@@ -344,7 +344,7 @@ shared_ptr<command> find(const string& symbol)
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-namespace sx {
+namespace explorer {
 
 #define SX_VARIABLE_CONFIG "config"
 
@@ -601,7 +601,7 @@ private:
     } setting_;
 };
 
-} // sx
+} // explorer
 
 #endif
 .##############################################################################
@@ -650,8 +650,8 @@ private:
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-namespace sx {
-namespace extension {
+namespace explorer {
+namespace commands {
 .for define
 .   if first()
 
@@ -664,7 +664,7 @@ namespace extension {
 .endfor
 
 /**
- * Class to implement the sx $(symbol:) command.
+ * Class to implement the $(symbol:) command.
  */
 class $(symbol:c) 
     : public command
@@ -908,8 +908,8 @@ private:
     } option_;
 };
 
-} // extension
-} // sx
+} // commands
+} // explorer
 
 #endif
 .endfor
@@ -929,8 +929,8 @@ BOOST_AUTO_TEST_SUITE(generated__broadcast)
 BOOST_AUTO_TEST_CASE(generated__broadcast__always__returns_true)
 {
     // TODO: mocks and dependency injection required to test proper execution.
-    auto func = [](std::shared_ptr<sx::command> sx_command) -> void {};
-    BOOST_REQUIRE(sx::broadcast(func));
+    auto func = [](std::shared_ptr<explorer::command> command) -> void {};
+    BOOST_REQUIRE(explorer::broadcast(func));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -945,8 +945,8 @@ BOOST_AUTO_TEST_SUITE_END()
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-using namespace sx;
-using namespace sx::extension;
+using namespace explorer;
+using namespace explorer::command;
 
 BOOST_AUTO_TEST_SUITE(generated__find)
 .for command by symbol
@@ -969,8 +969,8 @@ BOOST_AUTO_TEST_SUITE_END()
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-using namespace sx;
-using namespace sx::extension;
+using namespace explorer;
+using namespace explorer::command;
 
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 .for command by symbol
@@ -1117,11 +1117,12 @@ bin_PROGRAMS = sx
 sx_SOURCES = \\
     console/main.cpp
 
+#    -L$\(srcdir) -llibbitcoin_explorer
 sx_LDADD = \\
-    -L$\(srcdir) -llibbitcoin_explorer \\
     $\(libbitcoin_LIBS) \\
     $\(libwallet_LIBS) \\
     $\(libobelisk_LIBS) \\
+    $\(llibbitcoin_explorer_LIBS) \\
     -lboost_filesystem \\
     -lboost_program_options \\
     -lboost_regex \\
@@ -1162,11 +1163,12 @@ libbitcoin_explorer_test_SOURCES += \\
     $(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
+#    -L$\(srcdir)/../src/ -llibbitcoin_explorer
 libbitcoin_explorer_test_LDADD = \\
-    -L$\(srcdir)/../src/ -lsx \\
     $\(libbitcoin_LIBS) \\
     $\(libwallet_LIBS) \\
     $\(libobelisk_LIBS) \\
+    $\(llibbitcoin_explorer_LIBS) \\
     -lboost_filesystem \\
     -lboost_program_options \\
     -lboost_regex \\

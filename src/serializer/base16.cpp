@@ -32,7 +32,7 @@
 using namespace bc;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
     base16::base16()
@@ -84,5 +84,5 @@ namespace serializer {
         return output;
     }
 
-} // sx
+} // explorer
 } // serializer

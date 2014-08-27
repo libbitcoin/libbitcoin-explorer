@@ -35,7 +35,7 @@ using namespace bc;
 using namespace po;
 using namespace pt;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 transaction::transaction()
@@ -96,5 +96,5 @@ std::ostream& operator<<(std::ostream& output, const transaction& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

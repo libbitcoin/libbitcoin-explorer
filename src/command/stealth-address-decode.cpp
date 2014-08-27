@@ -24,8 +24,8 @@
 #include <sx/define.hpp>
 #include <sx/utility/utility.hpp>
 
-using namespace sx;
-using namespace sx::extension;
+using namespace explorer;
+using namespace explorer::commands;
 
 console_result stealth_address_decode::invoke(std::ostream& output,
     std::ostream& error)

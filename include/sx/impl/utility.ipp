@@ -46,7 +46,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 
 template <typename Source, typename Target>
 std::vector<Target> cast(const std::vector<Source> source)
@@ -197,6 +197,6 @@ void write_file(std::ostream& output, const std::string& path,
     }
 }
 
-} // sx
+} // explorer
 
 #endif

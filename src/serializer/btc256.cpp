@@ -31,7 +31,7 @@
 using namespace bc;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 btc256::btc256()
@@ -83,5 +83,5 @@ std::ostream& operator<<(std::ostream& output, const btc256& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

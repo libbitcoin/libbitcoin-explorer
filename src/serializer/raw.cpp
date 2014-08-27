@@ -26,7 +26,7 @@
 
 using namespace bc;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 raw::raw()
@@ -68,5 +68,5 @@ std::ostream& operator<<(std::ostream& output, const raw& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

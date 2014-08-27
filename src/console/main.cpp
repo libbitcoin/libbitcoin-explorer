@@ -29,5 +29,5 @@
  */
 int main(int argc, char* argv[])
 {
-    return sx::dispatch(argc, const_cast<const char**>(argv));
+    return explorer::dispatch(argc, const_cast<const char**>(argv));
 }

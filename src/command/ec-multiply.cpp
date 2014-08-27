@@ -26,9 +26,9 @@
 #include <sx/serializer/ec_public.hpp>
 
 using namespace bc;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 // 100% coverage by line, loc ready.
 console_result ec_multiply::invoke(std::ostream& output, std::ostream& error)

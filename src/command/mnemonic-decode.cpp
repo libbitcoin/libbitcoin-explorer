@@ -25,8 +25,8 @@
 #include <sx/define.hpp>
 
 using namespace libwallet;
-using namespace sx;
-using namespace sx::extension;
+using namespace explorer;
+using namespace explorer::commands;
 
 // $ echo "people blonde admit dart couple different truth common alas
 //   stumble time cookie" | sx mnemonic-decode

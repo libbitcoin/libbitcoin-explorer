@@ -36,7 +36,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 namespace serializer {
     
 class address;
@@ -135,14 +135,14 @@ pt::ptree prop_tree(const std::vector<tx_input_type>& tx_inputs);
  * @param[in]  input  The input.
  * @return            A property tree.
  */
-pt::ptree prop_tree(const sx::serializer::input& input);
+pt::ptree prop_tree(const explorer::serializer::input& input);
 
 /**
  * Generate a property tree for a set of inputs.
  * @param[in]  inputs  The set of inputs.
  * @return             A property tree.
  */
-pt::ptree prop_tree(const std::vector<sx::serializer::input>& inputs);
+pt::ptree prop_tree(const std::vector<explorer::serializer::input>& inputs);
 
 /**
  * Generate a property tree for a transaction output.
@@ -245,7 +245,7 @@ pt::ptree prop_tree(const bc::stealth_prefix& prefix,
 pt::ptree prop_tree(const wrapped_data& wrapped);
 
 } // serializer
-} // sx
+} // explorer
 
 #include <sx/impl/prop_tree.ipp>
 

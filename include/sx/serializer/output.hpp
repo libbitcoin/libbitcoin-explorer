@@ -32,7 +32,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 /**
@@ -169,7 +169,7 @@ private:
     std::string pay_to_;
 };
 
-} // sx
+} // explorer
 } // serializer
 
 #endif

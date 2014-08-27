@@ -33,7 +33,7 @@
 using namespace bc;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 static void parse_point(output_point& point,
@@ -100,5 +100,5 @@ std::ostream& operator<<(std::ostream& output, const point& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

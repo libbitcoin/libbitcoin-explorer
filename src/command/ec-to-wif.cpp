@@ -24,9 +24,9 @@
 #include <sx/define.hpp>
 #include <sx/serializer/wif.hpp>
 
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 // 100% coverage by line, loc ready.
 console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)

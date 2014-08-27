@@ -24,7 +24,7 @@
 #include <iostream>
 #include <sx/define.hpp>
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 /**
@@ -89,7 +89,7 @@ private:
     uint64_t value_;
 };
 
-} // sx
+} // explorer
 } // serializer
 
 #endif

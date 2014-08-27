@@ -29,7 +29,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 /**
@@ -112,7 +112,7 @@ private:
     bc::block_header_type value_;
 };
 
-} // sx
+} // explorer
 } // serializer
 
 #endif

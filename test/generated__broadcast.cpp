@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -29,8 +29,8 @@ BOOST_AUTO_TEST_SUITE(generated__broadcast)
 BOOST_AUTO_TEST_CASE(generated__broadcast__always__returns_true)
 {
     // TODO: mocks and dependency injection required to test proper execution.
-    auto func = [](std::shared_ptr<sx::command> sx_command) -> void {};
-    BOOST_REQUIRE(sx::broadcast(func));
+    auto func = [](std::shared_ptr<explorer::command> command) -> void {};
+    BOOST_REQUIRE(explorer::broadcast(func));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

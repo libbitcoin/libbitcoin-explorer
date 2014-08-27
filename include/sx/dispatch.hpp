@@ -28,7 +28,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
    
 /**
  * Dispatch the command with the raw arguments as provided on the command line.
@@ -101,6 +101,6 @@ void load_environment_variables(po::variables_map& variables,
 bool load_variables(po::variables_map& variables, std::string& message,
     command& instance, std::istream& input, int argc, const char* argv[]);
 
-} // sx
+} // explorer
 
 #endif

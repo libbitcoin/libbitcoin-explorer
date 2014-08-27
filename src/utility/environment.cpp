@@ -29,7 +29,7 @@
 #endif
 #include <string>
 
-namespace sx {
+namespace explorer {
 
 std::string home_directory()
 {
@@ -48,4 +48,4 @@ std::string home_directory()
 #endif
 }
 
-} // sx
+} // explorer

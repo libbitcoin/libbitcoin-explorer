@@ -24,9 +24,9 @@
 #include <sx/define.hpp>
 #include <sx/serializer/wrapper.hpp>
 
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 // 100% coverage by line, loc ready.
 console_result wrap_encode::invoke(std::ostream& output, std::ostream& error)

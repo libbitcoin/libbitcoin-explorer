@@ -29,7 +29,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 /**
  * A type to represent the list of distinct positional argument names counts.
  */
@@ -144,6 +144,6 @@ public:
     PROPERTY(std::string, format_parameter);
 };
 
-} // sx
+} // explorer
 
 #endif

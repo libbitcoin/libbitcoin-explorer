@@ -26,9 +26,9 @@
 #include <sx/serializer/wrapper.hpp>
 #include <sx/utility/utility.hpp>
 
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 // TODO: update tests for ptree output.
 // 100% coverage by line, loc ready.

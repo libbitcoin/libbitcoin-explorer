@@ -34,7 +34,7 @@ using namespace bc;
 using namespace libwallet;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 address::address()
@@ -99,5 +99,5 @@ std::ostream& operator<<(std::ostream& output, const address& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

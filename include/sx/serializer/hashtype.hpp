@@ -24,7 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <sx/define.hpp>
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 /**
@@ -89,7 +89,7 @@ private:
     bc::sighash value_;
 };
 
-} // sx
+} // explorer
 } // serializer
 
 #endif

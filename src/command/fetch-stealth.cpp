@@ -28,9 +28,9 @@
 #include <sx/prop_tree.hpp>
 
 using namespace bc;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 // Write out the transaction hashes of *potential* matches.
 static void handle_prefix_callback(callback_state& state, 

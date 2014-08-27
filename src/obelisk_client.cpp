@@ -26,9 +26,9 @@
 #include <sx/async_client.hpp>
 #include <sx/command.hpp>
 
-namespace sx {
+namespace explorer {
 
-obelisk_client::obelisk_client(sx::command& command, const size_t threads)
+obelisk_client::obelisk_client(explorer::command& command, const size_t threads)
     : async_client(command, threads), fullnode_(get_threadpool(),
     command.get_server_service_setting(),
     command.get_server_client_certificate_setting().generic_string(),
@@ -59,4 +59,4 @@ void obelisk_client::poll(bool& done, uint32_t period_ms,
     }
 }
 
-} // sx
+} // explorer

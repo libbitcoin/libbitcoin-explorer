@@ -28,7 +28,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 
 /**
  * Class to simplify obelisk client usage. 
@@ -43,7 +43,7 @@ public:
      * @param[in]  command  The command being processed.
      * @param[in]  threads  The number of pool threads to initialize.
      */
-    obelisk_client(sx::command& command,
+    obelisk_client(explorer::command& command,
         const size_t threads=default_threadpool_size);
 
     /**
@@ -68,6 +68,6 @@ private:
     obelisk::fullnode_interface fullnode_;
 };
 
-} // sx
+} // explorer
 
 #endif

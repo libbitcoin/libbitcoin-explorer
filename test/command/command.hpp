@@ -33,9 +33,9 @@ using namespace libwallet; \
 using namespace bc; \
 using namespace obelisk; \
 using namespace std; \
-using namespace sx; \
-using namespace sx::extension; \
-using namespace sx::serializer;
+using namespace explorer; \
+using namespace explorer::commands; \
+using namespace explorer::serializer;
 
 #define SX_DECLARE_COMMAND(extension) \
     stringstream output, error; \

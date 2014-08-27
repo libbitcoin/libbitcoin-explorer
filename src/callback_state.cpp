@@ -36,7 +36,7 @@
 using namespace bc;
 using namespace pt;
 
-namespace sx {
+namespace explorer {
     
 callback_state::callback_state(std::ostream& error, std::ostream& output,
     const encoding_engine engine)
@@ -181,4 +181,4 @@ callback_state& callback_state::operator--()
     return *this;
 }
 
-} // sx
+} // explorer

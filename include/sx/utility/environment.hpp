@@ -24,7 +24,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 
 /**
  * Naming convention prefix for SX environment variables.
@@ -43,6 +43,6 @@ namespace sx {
  */
     std::string home_directory();
 
-} // sx
+} // explorer
 
 #endif

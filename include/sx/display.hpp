@@ -24,7 +24,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 
 /**
  * Display an error message to the console that the specified sx command does
@@ -71,6 +71,6 @@ void display_usage();
  */
 bool display_usage(const std::shared_ptr<command> command);
 
-} // sx
+} // explorer
 
 #endif

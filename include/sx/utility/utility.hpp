@@ -46,7 +46,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 
 /**
  * Cast vector/enumerable elements into a new vector.
@@ -358,7 +358,7 @@ bc::data_chunk wrap(uint8_t version, const bc::data_chunk& payload);
 std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
     encoding_engine engine=encoding_engine::info);
 
-} // sx
+} // explorer
 
 #include <sx/impl/utility.ipp>
 

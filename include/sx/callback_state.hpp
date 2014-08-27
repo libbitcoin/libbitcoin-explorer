@@ -33,7 +33,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 
 /**
  * Convenience type definition.
@@ -197,6 +197,6 @@ private:
     std::ostream& output_;
 };
 
-} // sx
+} // explorer
 
 #endif

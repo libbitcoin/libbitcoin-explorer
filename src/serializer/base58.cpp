@@ -30,7 +30,7 @@
 using namespace bc;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 base58::base58()
@@ -82,5 +82,5 @@ std::ostream& operator<<(std::ostream& output, const base58& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

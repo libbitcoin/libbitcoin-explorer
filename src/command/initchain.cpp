@@ -23,8 +23,8 @@
 #include <iostream>
 #include <sx/define.hpp>
 
-using namespace sx;
-using namespace sx::extension;
+using namespace explorer;
+using namespace explorer::commands;
 
 console_result initchain::invoke(std::ostream& output, std::ostream& error)
 {

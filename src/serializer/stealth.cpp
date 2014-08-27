@@ -38,7 +38,7 @@ using namespace libwallet;
 using namespace po;
 using namespace pt;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 stealth::stealth()
@@ -105,5 +105,5 @@ std::ostream& operator<<(std::ostream& output, const stealth& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

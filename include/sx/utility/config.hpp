@@ -25,7 +25,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 
 /**
  * The default configuration file name to use when the path/file has not been
@@ -45,6 +45,6 @@ namespace sx {
  */
 std::string config_default();
 
-} // sx
+} // explorer
 
 #endif

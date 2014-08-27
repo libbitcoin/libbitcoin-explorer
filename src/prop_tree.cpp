@@ -42,7 +42,7 @@ using namespace bc;
 using namespace libwallet;
 using namespace pt;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
     
 // Edit with care - text property names trade DRY for readability.
@@ -288,7 +288,7 @@ ptree prop_tree(const stealth_prefix& prefix,
 {
     ptree tree;
     tree.add_child("stealth", prop_tree(rows));
-    tree.put("stealth.prefix", sx::serializer::prefix(prefix));
+    tree.put("stealth.prefix", explorer::serializer::prefix(prefix));
     return tree;
 }
 
@@ -302,4 +302,4 @@ ptree prop_tree(const wrapped_data& wrapped)
 }
 
 } // serializer
-} // sx
+} // explorer

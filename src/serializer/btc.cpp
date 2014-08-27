@@ -29,7 +29,7 @@
 using namespace bc;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 btc::btc()
@@ -75,5 +75,5 @@ std::ostream& operator<<(std::ostream& output, const btc& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

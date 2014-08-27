@@ -33,7 +33,7 @@
 using namespace po;
 using namespace boost::filesystem;
 
-namespace sx {
+namespace explorer {
 
 console_result dispatch(int argc, const char* argv[])
 {
@@ -93,7 +93,7 @@ path get_config_variable(variables_map& variables)
 void load_command_variables(variables_map& variables, command& instance,
     std::istream& input, int argc, const char* argv[]) throw()
 {
-    // command metadata is preserved on members for later usage presentation
+    // commands metadata is preserved on members for later usage presentation
     auto options = instance.load_options();
     auto arguments = instance.load_arguments();
 
@@ -171,4 +171,4 @@ bool load_variables(variables_map& variables, std::string& message,
     return true;
 }
 
-} // sx
+} // explorer

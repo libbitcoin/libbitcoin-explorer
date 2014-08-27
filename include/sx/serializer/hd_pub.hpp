@@ -27,7 +27,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 /**
@@ -97,7 +97,7 @@ private:
     libwallet::hd_public_key value_;
 };
 
-} // sx
+} // explorer
 } // serializer
 
 #endif

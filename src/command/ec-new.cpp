@@ -26,9 +26,9 @@
 #include <sx/serializer/ec_private.hpp>
 
 using namespace bc;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 // 83% coverage by line, loc ready. SX_EC_NEW_INVALID_KEY uncovered.
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)

@@ -30,7 +30,7 @@
 using namespace libwallet;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 hd_priv::hd_priv()
@@ -81,5 +81,5 @@ std::ostream& operator<<(std::ostream& output, const hd_priv& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

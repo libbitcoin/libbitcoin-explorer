@@ -30,9 +30,9 @@
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 static void handle_sent(callback_state& state, tx_type& tx)
 {

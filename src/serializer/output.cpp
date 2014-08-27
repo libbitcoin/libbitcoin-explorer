@@ -39,7 +39,7 @@ using namespace libwallet;
 using namespace po;
 using namespace pt;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 static script_type build_pubkey_hash_script(
@@ -232,5 +232,5 @@ std::ostream& operator<<(std::ostream& stream, const output& argument)
     return stream;
 }
 
-} // sx
+} // explorer
 } // serializer

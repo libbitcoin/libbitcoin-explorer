@@ -29,7 +29,7 @@
 using namespace bc;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 // DRY
@@ -107,5 +107,5 @@ std::ostream& operator<<(std::ostream& output, const hashtype& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

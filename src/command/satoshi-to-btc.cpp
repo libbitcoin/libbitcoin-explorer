@@ -25,9 +25,9 @@
 #include <sx/define.hpp>
 #include <sx/serializer/btc.hpp>
 
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 console_result satoshi_to_btc::invoke(std::ostream& output,
     std::ostream& error)

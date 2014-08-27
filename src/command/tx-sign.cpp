@@ -26,8 +26,8 @@
 #include <sx/define.hpp>
 
 using namespace bc;
-using namespace sx;
-using namespace sx::extension;
+using namespace explorer;
+using namespace explorer::commands;
 
 console_result tx_sign::invoke(std::ostream& output, std::ostream& error)
 {

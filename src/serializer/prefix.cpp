@@ -33,7 +33,7 @@ using namespace bc;
 using namespace libwallet;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 prefix::prefix()
@@ -92,5 +92,5 @@ std::ostream& operator<<(std::ostream& output, const prefix& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

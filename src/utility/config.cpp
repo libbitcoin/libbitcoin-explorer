@@ -24,7 +24,7 @@
 #include <boost/filesystem.hpp>
 #include <sx/utility/environment.hpp>
 
-namespace sx {
+namespace explorer {
 
 std::string config_default()
 {
@@ -34,4 +34,4 @@ std::string config_default()
     return (home / SX_DEFAULT_CONFIG_FILE_NAME).generic_string();
 }
 
-} // sx
+} // explorer

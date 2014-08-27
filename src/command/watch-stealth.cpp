@@ -33,9 +33,9 @@
 
 using namespace bc;
 using namespace obelisk;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 static void handle_subscribed(callback_state& state, const prefix& prefix,
     const worker_uuid& worker)

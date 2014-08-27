@@ -32,7 +32,7 @@
 using namespace libwallet;
 using namespace po;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 hd_key::hd_key()
@@ -104,5 +104,5 @@ std::ostream& operator<<(std::ostream& output, const hd_key& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

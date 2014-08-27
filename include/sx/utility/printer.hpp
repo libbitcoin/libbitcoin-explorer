@@ -47,7 +47,7 @@
     -m [--manual] Extract value manually
 */
 
-namespace sx {
+namespace explorer {
     
 /**
  * Class for managing the serialization of command line options and arguments.

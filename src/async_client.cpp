@@ -28,9 +28,9 @@
 
 using namespace bc;
 
-namespace sx {
+namespace explorer {
 
-async_client::async_client(sx::command& command, const size_t threads)
+async_client::async_client(explorer::command& command, const size_t threads)
     : threadpool_(threads)
 {
 }
@@ -70,4 +70,4 @@ void async_client::stop()
     pool.join();
 }
 
-} // sx
+} // explorer

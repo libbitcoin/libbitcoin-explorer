@@ -26,7 +26,7 @@
 #include <sx/define.hpp>
 #include <sx/utility/utility.hpp>
 
-using namespace sx;
+using namespace explorer;
 
 // 100% unit coverage, all three scenarios (long, short, both)
 const std::string parameter::canonical(const option_metadata& option)

@@ -42,7 +42,7 @@
   </configuration>
   
   <resource>
-    <string name="sx_config_description" value="The path and file name for the configuration settings file for this application." />
+    <string name="config_description" value="The path and file name for the configuration settings file for this application." />
   </resource>
 
   <!-- SX Commands -->

@@ -33,7 +33,7 @@ using namespace bc;
 using namespace po;
 using namespace pt;
 
-namespace sx {
+namespace explorer {
 namespace serializer {
 
 wrapper::wrapper()
@@ -107,5 +107,5 @@ std::ostream& operator<<(std::ostream& output, const wrapper& argument)
     return output;
 }
 
-} // sx
+} // explorer
 } // serializer

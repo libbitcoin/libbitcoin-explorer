@@ -32,9 +32,9 @@
 #include <sx/utility/utility.hpp>
 
 using namespace bc;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 static void handle_callback(callback_state& state, 
     const block_header_type& block_header)

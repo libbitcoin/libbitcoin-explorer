@@ -29,7 +29,7 @@
 
 namespace parameter {
 
-using namespace sx;
+using namespace explorer;
 
 enum opt
 {
@@ -76,13 +76,13 @@ static void load_test_arguments(argument_list& arguments)
     argument_list names; \
     load_test_arguments(names); \
     auto option = *(options.options()[index]); \
-    sx::parameter parameter
+    explorer::parameter parameter
 
 #define SX_TEST_PARAMETER_OPTIONS_SETUP(index) \
     options_metadata options; \
     load_test_options(options); \
     auto option = *(options.options()[index]); \
-    sx::parameter parameter
+    explorer::parameter parameter
 
 // ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(parameter__position)

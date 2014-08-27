@@ -28,9 +28,9 @@
 
 using namespace bc;
 using namespace libwallet;
-using namespace sx;
-using namespace sx::extension;
-using namespace sx::serializer;
+using namespace explorer;
+using namespace explorer::commands;
+using namespace explorer::serializer;
 
 // 83% coverage by line, loc ready. SX_HD_NEW_INVALID_KEY uncovered.
 console_result hd_new::invoke(std::ostream& output, std::ostream& error)

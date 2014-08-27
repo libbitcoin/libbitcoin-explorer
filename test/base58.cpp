@@ -24,7 +24,7 @@
 #include "precompile.hpp"
 
 using namespace bc;
-using namespace sx::serializer;
+using namespace explorer::serializer;
 
 #define BASE58_ENCODED_A "vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D"
 #define BASE58_DECODED_A \

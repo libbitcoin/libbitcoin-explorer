@@ -28,8 +28,8 @@
 
 using namespace bc;
 using namespace libwallet;
-using namespace sx;
-using namespace sx::extension;
+using namespace explorer;
+using namespace explorer::commands;
 
 // $ echo 148f0a1d77e20dbaee3ff920ca40240d | sx mnemonic-encode
 console_result mnemonic_encode::invoke(std::ostream& output,

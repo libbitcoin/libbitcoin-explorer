@@ -46,7 +46,7 @@
 #define SX_PRINTER_OPTION_SHORT_LONG_FORMAT "-%1% [ --%2% ] %3\n"
 
 
-using namespace sx;
+using namespace explorer;
 
 /* Formatters */
 
