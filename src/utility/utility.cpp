@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -23,7 +23,7 @@
 #include "precompile.hpp"
 #pragma warning(push) 
 #pragma warning(disable : 4996)
-#include <sx/utility/utility.hpp>
+#include <explorer/utility/utility.hpp>
 #include <iomanip>
 #include <iostream>
 #include <random>
@@ -42,8 +42,8 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #pragma warning(pop)
-#include <sx/define.hpp>
-#include <sx/utility/compat.hpp>
+#include <explorer/define.hpp>
+#include <explorer/utility/compat.hpp>
 
 using namespace bc;
 using namespace boost::posix_time;

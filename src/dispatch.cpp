@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -18,17 +18,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/dispatch.hpp>
+#include <explorer/dispatch.hpp>
 
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
-#include <sx/generated.hpp>
-#include <sx/display.hpp>
-#include <sx/utility/config.hpp>
-#include <sx/utility/environment.hpp>
-#include <sx/utility/utility.hpp>
+#include <explorer/generated.hpp>
+#include <explorer/display.hpp>
+#include <explorer/utility/config.hpp>
+#include <explorer/utility/environment.hpp>
+#include <explorer/utility/utility.hpp>
 
 using namespace po;
 using namespace boost::filesystem;
@@ -72,9 +72,9 @@ console_result dispatch_invoke(int argc, const char* argv[])
 // TODO: Update using program_options presentation.
 bool dispatch_usage()
 {
-    const auto func = [](std::shared_ptr<command> sx_command) -> void
+    const auto func = [](std::shared_ptr<command> explorer_command) -> void
     {
-        display_usage(sx_command);
+        display_usage(explorer_command);
         display_line();
     };
 
@@ -84,7 +84,7 @@ bool dispatch_usage()
 path get_config_variable(variables_map& variables)
 {
     // Read config from the map so we don't require an early notify call.
-    const auto config = variables[SX_VARIABLE_CONFIG];
+    const auto config = variables[BX_VARIABLE_CONFIG];
 
     // prevent exception in the case where the config variable is not set.
     return if_else(config.empty(), path(), config.as<path>());
@@ -138,7 +138,7 @@ void load_environment_variables(variables_map& variables, command& instance)
 
     // parse inputs
     auto environment = parse_environment(environment_variables,
-        SX_ENVIRONMENT_VARIABLE_PREFIX);
+        BX_ENVIRONMENT_VARIABLE_PREFIX);
 
     store(environment, variables);
 }

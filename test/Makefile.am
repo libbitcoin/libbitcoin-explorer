@@ -112,12 +112,11 @@ libbitcoin_explorer_test_SOURCES += \
     wrap-decode.cpp \
     wrap-encode.cpp
 
-#    -L$(srcdir)/../src/ -llibbitcoin_explorer
 libbitcoin_explorer_test_LDADD = \
+    -L$(srcdir)/../src/ -llibbitcoin_explorer \
     $(libbitcoin_LIBS) \
     $(libwallet_LIBS) \
     $(libobelisk_LIBS) \
-    $(llibbitcoin_explorer_LIBS) \
     -lboost_filesystem \
     -lboost_program_options \
     -lboost_regex \

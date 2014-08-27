@@ -18,30 +18,30 @@ libbitcoin_explorer_la_SOURCES = \
     generated.cpp \
     obelisk_client.cpp \
     prop_tree.cpp \
-    serializer/address.cpp \
-    serializer/base16.cpp \
-    serializer/base58.cpp \
-    serializer/btc.cpp \
-    serializer/btc160.cpp \
-    serializer/btc256.cpp \
-    serializer/ec_private.cpp \
-    serializer/ec_public.cpp \
-    serializer/encoding.cpp \
-    serializer/hashtype.cpp \
-    serializer/hd_key.cpp \
-    serializer/hd_priv.cpp \
-    serializer/hd_pub.cpp \
-    serializer/header.cpp \
-    serializer/input.cpp \
-    serializer/output.cpp \
-    serializer/point.cpp \
-    serializer/prefix.cpp \
-    serializer/raw.cpp \
-    serializer/script.cpp \
-    serializer/stealth.cpp \
-    serializer/transaction.cpp \
-    serializer/wif.cpp \
-    serializer/wrapper.cpp \
+    primitives/address.cpp \
+    primitives/base16.cpp \
+    primitives/base58.cpp \
+    primitives/btc.cpp \
+    primitives/btc160.cpp \
+    primitives/btc256.cpp \
+    primitives/ec_private.cpp \
+    primitives/ec_public.cpp \
+    primitives/encoding.cpp \
+    primitives/hashtype.cpp \
+    primitives/hd_key.cpp \
+    primitives/hd_priv.cpp \
+    primitives/hd_pub.cpp \
+    primitives/header.cpp \
+    primitives/input.cpp \
+    primitives/output.cpp \
+    primitives/point.cpp \
+    primitives/prefix.cpp \
+    primitives/raw.cpp \
+    primitives/script.cpp \
+    primitives/stealth.cpp \
+    primitives/transaction.cpp \
+    primitives/wif.cpp \
+    primitives/wrapper.cpp \
     utility/config.cpp \
     utility/environment.cpp \
     utility/parameter.cpp \
@@ -50,91 +50,91 @@ libbitcoin_explorer_la_SOURCES = \
 
 # Generated from XML data source.
 libbitcoin_explorer_la_SOURCES += \
-    command/address-decode.cpp \
-    command/address-embed.cpp \
-    command/address-encode.cpp \
-    command/address-validate.cpp \
-    command/base58-decode.cpp \
-    command/base58-encode.cpp \
-    command/base58check-decode.cpp \
-    command/base58check-encode.cpp \
-    command/bci-fetch-last-height.cpp \
-    command/bci-history.cpp \
-    command/bitcoin160.cpp \
-    command/bitcoin256.cpp \
-    command/blke-fetch-transaction.cpp \
-    command/btc-to-satoshi.cpp \
-    command/ec-add.cpp \
-    command/ec-add-secrets.cpp \
-    command/ec-lock.cpp \
-    command/ec-multiply.cpp \
-    command/ec-multiply-secrets.cpp \
-    command/ec-new.cpp \
-    command/ec-to-address.cpp \
-    command/ec-to-public.cpp \
-    command/ec-to-wif.cpp \
-    command/ec-unlock.cpp \
-    command/fetch-balance.cpp \
-    command/fetch-confirmations.cpp \
-    command/fetch-header.cpp \
-    command/fetch-height.cpp \
-    command/fetch-history.cpp \
-    command/fetch-public-key.cpp \
-    command/fetch-stealth.cpp \
-    command/fetch-tx.cpp \
-    command/fetch-tx-index.cpp \
-    command/fetch-utxo.cpp \
-    command/genaddr.cpp \
-    command/genpriv.cpp \
-    command/genpub.cpp \
-    command/hd-new.cpp \
-    command/hd-private.cpp \
-    command/hd-public.cpp \
-    command/hd-to-address.cpp \
-    command/hd-to-ec.cpp \
-    command/hd-to-public.cpp \
-    command/hd-to-wif.cpp \
-    command/help.cpp \
-    command/initchain.cpp \
-    command/input-set.cpp \
-    command/input-sign.cpp \
-    command/input-validate.cpp \
-    command/mnemonic-decode.cpp \
-    command/mnemonic-encode.cpp \
-    command/mpk.cpp \
-    command/newseed.cpp \
-    command/qrcode.cpp \
-    command/ripemd160.cpp \
-    command/satoshi-to-btc.cpp \
-    command/script-decode.cpp \
-    command/script-encode.cpp \
-    command/script-to-address.cpp \
-    command/seed.cpp \
-    command/send-tx.cpp \
-    command/send-tx-node.cpp \
-    command/send-tx-p2p.cpp \
-    command/sendtx-bci.cpp \
-    command/sha160.cpp \
-    command/sha256.cpp \
-    command/sha512.cpp \
-    command/showblkhead.cpp \
-    command/stealth-address-decode.cpp \
-    command/stealth-address-encode.cpp \
-    command/stealth-new.cpp \
-    command/stealth-newkey.cpp \
-    command/stealth-shared-secret.cpp \
-    command/stealth-uncover-public.cpp \
-    command/stealth-uncover-secret.cpp \
-    command/tx-decode.cpp \
-    command/tx-encode.cpp \
-    command/tx-sign.cpp \
-    command/wallet.cpp \
-    command/watch-stealth.cpp \
-    command/watch-tx.cpp \
-    command/wif-to-ec.cpp \
-    command/wif-to-public.cpp \
-    command/wrap-decode.cpp \
-    command/wrap-encode.cpp
+    commands/address-decode.cpp \
+    commands/address-embed.cpp \
+    commands/address-encode.cpp \
+    commands/address-validate.cpp \
+    commands/base58-decode.cpp \
+    commands/base58-encode.cpp \
+    commands/base58check-decode.cpp \
+    commands/base58check-encode.cpp \
+    commands/bci-fetch-last-height.cpp \
+    commands/bci-history.cpp \
+    commands/bitcoin160.cpp \
+    commands/bitcoin256.cpp \
+    commands/blke-fetch-transaction.cpp \
+    commands/btc-to-satoshi.cpp \
+    commands/ec-add.cpp \
+    commands/ec-add-secrets.cpp \
+    commands/ec-lock.cpp \
+    commands/ec-multiply.cpp \
+    commands/ec-multiply-secrets.cpp \
+    commands/ec-new.cpp \
+    commands/ec-to-address.cpp \
+    commands/ec-to-public.cpp \
+    commands/ec-to-wif.cpp \
+    commands/ec-unlock.cpp \
+    commands/fetch-balance.cpp \
+    commands/fetch-confirmations.cpp \
+    commands/fetch-header.cpp \
+    commands/fetch-height.cpp \
+    commands/fetch-history.cpp \
+    commands/fetch-public-key.cpp \
+    commands/fetch-stealth.cpp \
+    commands/fetch-tx.cpp \
+    commands/fetch-tx-index.cpp \
+    commands/fetch-utxo.cpp \
+    commands/genaddr.cpp \
+    commands/genpriv.cpp \
+    commands/genpub.cpp \
+    commands/hd-new.cpp \
+    commands/hd-private.cpp \
+    commands/hd-public.cpp \
+    commands/hd-to-address.cpp \
+    commands/hd-to-ec.cpp \
+    commands/hd-to-public.cpp \
+    commands/hd-to-wif.cpp \
+    commands/help.cpp \
+    commands/initchain.cpp \
+    commands/input-set.cpp \
+    commands/input-sign.cpp \
+    commands/input-validate.cpp \
+    commands/mnemonic-decode.cpp \
+    commands/mnemonic-encode.cpp \
+    commands/mpk.cpp \
+    commands/newseed.cpp \
+    commands/qrcode.cpp \
+    commands/ripemd160.cpp \
+    commands/satoshi-to-btc.cpp \
+    commands/script-decode.cpp \
+    commands/script-encode.cpp \
+    commands/script-to-address.cpp \
+    commands/seed.cpp \
+    commands/send-tx.cpp \
+    commands/send-tx-node.cpp \
+    commands/send-tx-p2p.cpp \
+    commands/sendtx-bci.cpp \
+    commands/sha160.cpp \
+    commands/sha256.cpp \
+    commands/sha512.cpp \
+    commands/showblkhead.cpp \
+    commands/stealth-address-decode.cpp \
+    commands/stealth-address-encode.cpp \
+    commands/stealth-new.cpp \
+    commands/stealth-newkey.cpp \
+    commands/stealth-shared-secret.cpp \
+    commands/stealth-uncover-public.cpp \
+    commands/stealth-uncover-secret.cpp \
+    commands/tx-decode.cpp \
+    commands/tx-encode.cpp \
+    commands/tx-sign.cpp \
+    commands/wallet.cpp \
+    commands/watch-stealth.cpp \
+    commands/watch-tx.cpp \
+    commands/wif-to-ec.cpp \
+    commands/wif-to-public.cpp \
+    commands/wrap-decode.cpp \
+    commands/wrap-encode.cpp
 
 AM_CPPFLAGS += \
     ${libobelisk_CFLAGS} \
@@ -146,12 +146,11 @@ bin_PROGRAMS = sx
 sx_SOURCES = \
     console/main.cpp
 
-#    -L$(srcdir) -llibbitcoin_explorer
 sx_LDADD = \
+    -L$(srcdir) -llibbitcoin_explorer \
     $(libbitcoin_LIBS) \
     $(libwallet_LIBS) \
     $(libobelisk_LIBS) \
-    $(llibbitcoin_explorer_LIBS) \
     -lboost_filesystem \
     -lboost_program_options \
     -lboost_regex \

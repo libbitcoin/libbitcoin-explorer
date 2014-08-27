@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -18,32 +18,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/utility/printer.hpp>
+#include <explorer/utility/printer.hpp>
 
 #include <iostream>
 #include <boost/program_options.hpp>
-#include <sx/define.hpp>
+#include <explorer/define.hpp>
 
 // TODO: obtain from XML resource as localized text.
-// NOTE: in the usage format "sx command" is the first parameter.
-#define SX_PRINTER_USAGE_FORMAT "\nUSAGE: %1% %2%\n"
-#define SX_PRINTER_USAGE_OPTION_OPTIONAL_TOGGLE_FORMAT "[-%1%]"
-#define SX_PRINTER_USAGE_OPTION_REQUIRED_VALUE_FORMAT "-%1% ARG"
-#define SX_PRINTER_USAGE_OPTION_OPTIONAL_VALUE_FORMAT "[-%1% ARG]"
-#define SX_PRINTER_USAGE_OPTION_OPTIONAL_VALUE_VARIABLE_FORMAT "[-%1% ARG]..."
-#define SX_PRINTER_USAGE_ARGUMENT_REQUIRED_FORMAT "%1%"
-#define SX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT "[%1%]"
-#define SX_PRINTER_USAGE_ARGUMENT_OPTIONAL_VARIABLE_FORMAT "[%1%]..."
+// NOTE: in the usage format "bx command" is the first parameter.
+#define BX_PRINTER_USAGE_FORMAT "\nUSAGE: %1% %2%\n"
+#define BX_PRINTER_USAGE_OPTION_OPTIONAL_TOGGLE_FORMAT "[-%1%]"
+#define BX_PRINTER_USAGE_OPTION_REQUIRED_VALUE_FORMAT "-%1% ARG"
+#define BX_PRINTER_USAGE_OPTION_OPTIONAL_VALUE_FORMAT "[-%1% ARG]"
+#define BX_PRINTER_USAGE_OPTION_OPTIONAL_VALUE_VARIABLE_FORMAT "[-%1% ARG]..."
+#define BX_PRINTER_USAGE_ARGUMENT_REQUIRED_FORMAT "%1%"
+#define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT "[%1%]"
+#define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_VARIABLE_FORMAT "[%1%]..."
 
-#define SX_PRINTER_SUMMARY_HEADER "\n-- Option Descriptions --\n"
+#define BX_PRINTER_SUMMARY_HEADER "\n-- Option Descriptions --\n"
 
-#define SX_PRINTER_ARGUMENTS_HEADER "\nPositional Arguments:\n"
-#define SX_PRINTER_ARGUMENT_FORMAT "%1% \"%2%\"\n"
+#define BX_PRINTER_ARGUMENTS_HEADER "\nPositional Arguments:\n"
+#define BX_PRINTER_ARGUMENT_FORMAT "%1% \"%2%\"\n"
 
-#define SX_PRINTER_OPTIONS_HEADER "\nOption Arguments:\n"
-#define SX_PRINTER_OPTION_SHORT_FORMAT "-%1% %2\n"
-#define SX_PRINTER_OPTION_LONG_FORMAT "--%1% %2\n"
-#define SX_PRINTER_OPTION_SHORT_LONG_FORMAT "-%1% [ --%2% ] %3\n"
+#define BX_PRINTER_OPTIONS_HEADER "\nOption Arguments:\n"
+#define BX_PRINTER_OPTION_SHORT_FORMAT "-%1% %2\n"
+#define BX_PRINTER_OPTION_LONG_FORMAT "--%1% %2\n"
+#define BX_PRINTER_OPTION_SHORT_LONG_FORMAT "-%1% [ --%2% ] %3\n"
 
 
 using namespace explorer;
@@ -65,7 +65,7 @@ std::string printer::format_help_options()
 // TODO: component test.
 std::string printer::format_usage()
 {
-    auto usage = boost::format(SX_PRINTER_USAGE_FORMAT) %
+    auto usage = boost::format(BX_PRINTER_USAGE_FORMAT) %
         get_application() % format_usage_parameters();
     return usage.str();
 }
@@ -138,16 +138,16 @@ void printer::print_help()
     // --Option Descriptions --
     // ...
     get_output()
-        << SX_PRINTER_SUMMARY_HEADER
-        << SX_PRINTER_ARGUMENTS_HEADER
+        << BX_PRINTER_SUMMARY_HEADER
+        << BX_PRINTER_ARGUMENTS_HEADER
         << format_help_arguments()
-        << SX_PRINTER_OPTIONS_HEADER
+        << BX_PRINTER_OPTIONS_HEADER
         << format_help_options();
 }
 
 // TODO: component test.
 void printer::print_usage()
 {
-    // USAGE: sx command [-hvt] [-w ARG]... [-m ARG] - n ARG ADD [LIKE]...
+    // USAGE: bx command [-hvt] [-w ARG]... [-m ARG] - n ARG ADD [LIKE]...
     get_output() << format_usage();
 }

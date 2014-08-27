@@ -5,6 +5,7 @@
   
   <help>
     <shorthand name="BTC" description="Bitcoin Denomination" />
+    <shorthand name="BX" description="Bitcoin Explorer" />
     <shorthand name="EC" description="Elliptic Curve" />
     <shorthand name="HD" description="Hierarchical Deterministic" />
     <shorthand name="PUBKEY" description="EC Public Key" />
@@ -14,7 +15,7 @@
     <shorthand name="SHA" description="Secure Hash Algorithm" />
     <shorthand name="SIGHASH" description="Signature Hash" />
     <shorthand name="SOCKS" description="Socket Secure" />
-    <shorthand name="SX" description="Stealth Explorer" />
+    <shorthand name="SX" description="Spesmilo Exchanger (the original version of Bitcoin Explorer)" />
     <shorthand name="TX" description="Transaction" />
     <shorthand name="UTXO" description="Unspent Transaction Output" />
     <shorthand name="WIF" description="Wallet Import Format" />
@@ -35,7 +36,7 @@
   
   <configuration section="server">
     <!-- TODO: create serialized type for URI -->
-    <setting name="client-certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.sx.cert" />
+    <setting name="client-certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert" />
     <setting name="server-public-key" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
     <setting name="service" default="tcp://obelisk.unsystem.net:8081" description="The URI of the server to which this application may connect." />
     <setting name="socks-proxy" default="localhost:1080" description="The host name and port number of a SOCKS 4a or SOCKS 5 proxy server." />
@@ -45,7 +46,7 @@
     <string name="config_description" value="The path and file name for the configuration settings file for this application." />
   </resource>
 
-  <!-- SX Commands -->
+  <!-- Bitcoin Explorer Commands -->
 
   <command symbol="address-decode" formerly="decode-addr" typeX="wrapper" category="WALLET">
     <option name="help" description="Convert a Bitcoin address to RIPEMD160, dropping the version." />
@@ -56,7 +57,7 @@
   <command symbol="address-embed" formerly="embed-addr" typeX="address" category="WALLET" stub="true">
     <option name="help" description="Generate a Bitcoin address with an embedded record of binary data." />
     <argument name="FILE" file="true" stdin="true" type="raw" description="The binary data file path.  If not specified the binary data is read from STDIN."/>
-    <define name="SX_ADDRESS_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_ADDRESS_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="address-encode" formerly="encode-addr" typeX="address" category="WALLET">
@@ -68,7 +69,7 @@
   <command symbol="address-validate" formerly="validaddr" typeX="address" multipleX="true" category="WALLET">
     <option name="help" description="Validate an address. Returns the address if is valid." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The Bitcoin address to validate." />
-    <define name="SX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The signature is not invalid." />
+    <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The signature is not invalid." />
   </command>
 
   <command symbol="base58check-decode" typeX="wrapper" category="HASH">
@@ -95,12 +96,12 @@
   
   <command symbol="bci-fetch-last-height" category="ONLINE" obsolete="true">
     <option name="help" description="Get the last block height from blockchain.info." />
-    <define name="SX_BCI_FETCH_LAST_HEIGHT_OBSOLETE" value="This command is no longer supported. Use fetch-height." />
+    <define name="BX_BCI_FETCH_LAST_HEIGHT_OBSOLETE" value="This command is no longer supported. Use fetch-height." />
   </command>
 
   <command symbol="bci-history" category="ONLINE" obsolete="true">
     <option name="help" description="Get the list of outputs, values and spends for an address from blockchain.info." />
-    <define name="SX_BCI_HISTORY_OBSOLETE" value="This command is no longer supported. Use fetch-history." />
+    <define name="BX_BCI_HISTORY_OBSOLETE" value="This command is no longer supported. Use fetch-history." />
   </command>
 
   <command symbol="bitcoin160" typeX="base16" category="HASH">
@@ -115,13 +116,13 @@
 
   <command symbol="blke-fetch-transaction" category="ONLINE" obsolete="true">
     <option name="help" description="Get a Bitcoin transaction from blockexplorer.com." />
-    <define name="SX_BLKE_FETCH_TRANSACTION_OBSOLETE" value="This command is no longer supported. Use fetch-tx." />
+    <define name="BX_BLKE_FETCH_TRANSACTION_OBSOLETE" value="This command is no longer supported. Use fetch-tx." />
   </command>
 
   <command symbol="btc-to-satoshi" typeX="uint64_t" category="MATH">
     <option name="help" description="Convert BTC to satoshi." />
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert."/>
-    <define name="SX_BTC_TO_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_BTC_TO_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
@@ -129,40 +130,40 @@
     <option name="help" description="Make a passphrase-protected EC private key (BIP38) from an EC private key." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The EC private key." />
     <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
-    <define name="SX_EC_LOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_EC_LOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
    
   <command symbol="ec-add" formerly="ec-tweak-add" typeX="ec_public" category="MATH">
     <option name="help" description="Calculate the EC function POINT + (SECRET * curve-generator-point)." />
     <argument name="POINT" required="true" type="ec_public" description="The Base16 EC point to add."/>
     <argument name="SECRET" required="true" type="ec_private" description="The Base16 EC secret to add."/>
-    <define name="SX_EC_ADD_OUT_OF_RANGE" value="Function exceeds valid range." />
+    <define name="BX_EC_ADD_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
 
   <command symbol="ec-add-secrets" formerly="ec-add-modp" typeX="ec_private" category="MATH">
     <option name="help" description="Calculate the EC function (SECRET + SECRET) % curve-order." />
     <argument name="SECRET" stdin="true" limit="-1" type="ec_private" description="The set of Base16 secrets to add."/>
-    <define name="SX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
+    <define name="BX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
 
   <command symbol="ec-multiply" typeX="ec_public" category="MATH">
     <option name="help" description="Calculate the EC product (POINT * SECRET)." />
     <argument name="POINT" required="true" type="ec_public" description="The Base16 EC point to multiply."/>
     <argument name="SECRET" required="true" type="ec_private" description="The Base16 EC secret to multiply."/>
-    <define name="SX_EC_MULITPLY_OUT_OF_RANGE" value="Product exceeds valid range." />
+    <define name="BX_EC_MULITPLY_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
   
   <command symbol="ec-multiply-secrets" formerly="ec-add" typeX="ec_private" category="MATH">
     <option name="help" description="Calculate the EC function (SECRET * SECRET) % curve-order." />
     <argument name="SECRET" stdin="true" limit="-1" type="ec_private" description="The set of Base16 EC secrets to multiply."/>
-    <define name="SX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
+    <define name="BX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
 
   <command symbol="ec-new" formerly="newkey" typeX="ec_private" category="WALLET">
     <option name="help" description="Create a new EC private key from entropy." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed for the new key. Must be at least 128 bits in length." />
-    <define name="SX_EC_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
-    <define name="SX_EC_NEW_INVALID_KEY" value="The seed produced an invalid key." />
+    <define name="BX_EC_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
+    <define name="BX_EC_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
   
   <command symbol="ec-to-address" formerly="addr" typeX="address" category="WALLET">
@@ -187,7 +188,7 @@
   <command symbol="ec-unlock" typeX="ec_private" category="WALLET" stub="true">
     <option name="help" description="Extract the EC private key from a passphrase-protected (BIP38) EC private key." />
     <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
-    <define name="SX_EC_UNLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_EC_UNLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="fetch-balance" typeX="balance_row" multipleX="true" category="ONLINE" network="true">
@@ -200,7 +201,7 @@
     <option name="help" description="Get confirmations for a set of transactions. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
-    <define name="SX_FETCH_CONFIRMATIONS_OUTPUT" value="[%1%] Confirmations: %2%" />    
+    <define name="BX_FETCH_CONFIRMATIONS_OUTPUT" value="[%1%] Confirmations: %2%" />    
   </command>
 
   <command symbol="fetch-header" category="ONLINE" typeX="header" network="true">
@@ -218,14 +219,14 @@
     <option name="help" description="Get list of output points, values, and spends for one or more Bitcoin addresses. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
-    <define name="SX_FETCH_HISTORY_PENDING" value="Pending" />
-    <define name="SX_FETCH_HISTORY_UNSPENT" value="Unspent" />
+    <define name="BX_FETCH_HISTORY_PENDING" value="Pending" />
+    <define name="BX_FETCH_HISTORY_UNSPENT" value="Unspent" />
   </command>
   
   <command symbol="fetch-public-key" formerly="get-pubkey" typeX="ec_public" category="ONLINE" stub="true" network="true">
     <option name="help" description="Get the EC public key of the address, if it exists on the blockchain. Requires an Obelisk server connection." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address of the public key."/>
-    <define name="SX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="fetch-stealth" typeX="stealth_row" multipleX="true" category="ONLINE" network="true">
@@ -248,7 +249,7 @@
     <option name="help" description="Get the block height and index of a transaction. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes." />
-      <define name="SX_FETCH_TX_INDEX_OUTPUT" value="[%1%] Height: %2% Index: %3%" /> 
+      <define name="BX_FETCH_TX_INDEX_OUTPUT" value="[%1%] Height: %2% Index: %3%" /> 
   </command>
 
   <command symbol="fetch-utxo" formerly="get-utxo" typeX="output" multipleX="true" category="ONLINE" stub="true" network="true">
@@ -256,29 +257,29 @@
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
-    <define name="SX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="genaddr" category="ELECTRUM" obsolete="true">
     <option name="help" description="Generate a Bitcoin address deterministically from an Electrum wallet." />
-    <define name="SX_GENADDR_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
+    <define name="BX_GENADDR_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
   
   <command symbol="genpriv" category="ELECTRUM" obsolete="true">
     <option name="help" description="Generate a private key deterministically from an Electrum seed." />
-    <define name="SX_GENPRIV_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
+    <define name="BX_GENPRIV_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
   <command symbol="genpub" category="ELECTRUM" obsolete="true">
     <option name="help" description="Generate a public key deterministically from an Electrum wallet." />
-    <define name="SX_GENPUB_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
+    <define name="BX_GENPUB_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" typeX="hd_private" category="WALLET">
     <option name="help" description="Create a new HD (BIP32) private key from entropy." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed for the new key. Must be at least 128 bits in length." />
-    <define name="SX_HD_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
-    <define name="SX_HD_NEW_INVALID_KEY" value="The seed produced an invalid key." />
+    <define name="BX_HD_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
+    <define name="BX_HD_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
 
   <command symbol="hd-private" typeX="hd_private" category="WALLET">
@@ -293,7 +294,7 @@
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
     <argument name="HD_PUBLIC_KEY" stdin="true" type="hd_key" description="The parent HD public or private key." />
-    <define name="SX_HD_PUBLIC_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
+    <define name="BX_HD_PUBLIC_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
 
   <command symbol="hd-to-address" typeX="address" formerly="hd-to-address" category="WALLET">
@@ -316,15 +317,15 @@
     <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The HD private key to convert." />
   </command>
 
-  <command symbol="help" typeX="string" category="SX">
+  <command symbol="help" typeX="string" category="BX">
     <option name="help" description="Get help for any command." />
     <argument name="COMMAND" stdin="true" description="The command for which help is requested." />
-    <define name="SX_HELP_NOT_COMMAND" value="The word '%1%' is not a sx command. All commands:" />
+    <define name="BX_HELP_NOT_COMMAND" value="The word '%1%' is not a Bitcoin Explorer command. All commands:" />
   </command>
 
   <command symbol="initchain" category="ONLINE" obsolete="true">
     <option name="help" description="Initialize a new blockchain database." />
-    <define name="SX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
+    <define name="BX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
   </command>
   
   <command symbol="input-sign" formerly="sign-input" typeX="base16" category="TRANSACTION">
@@ -335,9 +336,9 @@
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="NONCE" required="true" type="base16" description="The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length." />
     <argument name="PREVOUT_SCRIPT" type="script" description="The Base16 previous output script to use in signing. If not specified the script is read from STDIN." />
-    <define name="SX_INPUT_SIGN_SHORT_NONCE" value="The nonce is less than 128 bits long." />
-    <define name="SX_INPUT_SIGN_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
-    <define name="SX_INPUT_SIGN_FAILED" value="The signing operation failed." />
+    <define name="BX_INPUT_SIGN_SHORT_NONCE" value="The nonce is less than 128 bits long." />
+    <define name="BX_INPUT_SIGN_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
+    <define name="BX_INPUT_SIGN_FAILED" value="The signing operation failed." />
     <!--
     Sign a transaction input.
 
@@ -390,7 +391,7 @@
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <argument name="TRANSACTION" file="true" required="true" type="transaction" description="The file path of the Base16 transaction."/>
     <argument name="SIGNATURE_AND_PUBKEY_SCRIPT" type="script" description="The Base16 signature script to assign to the input. If not specified the script is read from STDIN." />
-    <define name="SX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
+    <define name="BX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
   </command>
   
   <command symbol="input-validate" formerly="validsig" typeX="string" category="TRANSACTION">
@@ -401,9 +402,9 @@
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
     <argument name="SCRIPT_CODE" required="true" type="script" description="The Base16 ... script ..." />
     <argument name="SIGNATURE" type="base16" description="The Base16 signature to validate. If not specified the signature is read from STDIN."/>
-    <define name="SX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
-    <define name="SX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
-    <define name="SX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
+    <define name="BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
+    <define name="BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
+    <define name="BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
   </command>  
   
   <command symbol="mnemonic-decode" formerly="mnemonic" typeX="base16" category="WALLET">
@@ -414,24 +415,24 @@
   <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="WALLET">
     <option name="help" description="Convert a seed to its Electrum mnemonic." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed.  Must be at least 128 bits in length. WARNING: This implementation is deprecated in favor of BIP39." />
-    <define name="SX_EC_MNEMONIC_ENCODE_SHORT_SEED" value="The seed is less than 128 bits long." />
+    <define name="BX_EC_MNEMONIC_ENCODE_SHORT_SEED" value="The seed is less than 128 bits long." />
   </command>
   
   <command symbol="mpk" category="ELECTRUM" obsolete="true">
     <option name="help" description="Extract a master public key from a deterministic wallet seed." />
-    <define name="SX_MPK_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
+    <define name="BX_MPK_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
   <command symbol="newseed" category="ELECTRUM" obsolete="true">
     <option name="help" description="Create a new Electrum style deterministic wallet seed." />
-    <define name="SX_NEWSEED_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
+    <define name="BX_NEWSEED_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
   
   <command symbol="qrcode" category="WALLET" typeX="raw" stub="true">
     <option name="help" description="Generate a QR code image file for a Bitcoin address." />
     <option name="file" type="string" description="The image file path. If not specified the image is written to STDOUT."/>
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address."/>
-    <define name="SX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="ripemd160" formerly="ripemd-hash" typeX="base16" category="HASH">
@@ -442,7 +443,7 @@
   <command symbol="satoshi-to-btc" typeX="btc" category="MATH">
     <option name="help" description="Convert satoshi to BTC." />
     <argument name="SATOSHI" stdin="true" type="uint64_t" description="The whole number of satoshi to convert."/>
-    <define name="SX_SATOSHI_TO_BTC_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_SATOSHI_TO_BTC_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="script-decode" formerly="showscript" typeX="script" category="SCRIPT">
@@ -471,13 +472,13 @@
   <command symbol="seed" typeX="base16" category="WALLET">
     <option name="help" description="Generate a pseudorandom seed." />
     <option name="bit_length" type="size_t" default="128" description="The length of the seed in bits. Must be divisible by 8 and must not be less than 128." />
-    <define name="SX_SEED_BIT_LENGTH_UNSUPPORTED" value="The seed value is not supported." />
+    <define name="BX_SEED_BIT_LENGTH_UNSUPPORTED" value="The seed value is not supported." />
   </command>
   
   <command symbol="send-tx" formerly="sendtx-obelisk" typeX="string" category="ONLINE" network="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
-    <define name="SX_SEND_TX_OUTPUT" value="Sent transaction at %1%." />
+    <define name="BX_SEND_TX_OUTPUT" value="Sent transaction at %1%." />
   </command>
   
   <command symbol="send-tx-node" formerly="sendtx-node" typeX="string" category="ONLINE" network="true">
@@ -485,27 +486,27 @@
     <option name="name" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
-    <define name="SX_SEND_TX_NODE_OUTPUT" value="Sent transaction %1% at %2%." />
+    <define name="BX_SEND_TX_NODE_OUTPUT" value="Sent transaction %1% at %2%." />
   </command>
 
   <command symbol="send-tx-p2p" formerly="sendtx-p2p" typeX="string" category="ONLINE" network="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via the Bitcoin peer-to-peer network." />
     <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to two." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
-    <define name="SX_SEND_TX_P2P_SIGNAL" value="Caught signal: %1%" />
-    <define name="SX_SEND_TX_P2P_START_OKAY" value="Started." />
-    <define name="SX_SEND_TX_P2P_START_FAIL" value="Start failed: %1%" />
-    <define name="SX_SEND_TX_P2P_CHECK_OKAY" value="%1% connections." />
-    <define name="SX_SEND_TX_P2P_CHECK_FAIL" value="Check failed: %1%" />
-    <define name="SX_SEND_TX_P2P_SETUP_OKAY" value="Sending %1%." />
-    <define name="SX_SEND_TX_P2P_SETUP_FAIL" value="Setup failed: %1%" />
-    <define name="SX_SEND_TX_P2P_SEND_OKAY" value="Sent at %1%." />
-    <define name="SX_SEND_TX_P2P_SEND_FAIL" value="Send failed: %1%" />
+    <define name="BX_SEND_TX_P2P_SIGNAL" value="Caught signal: %1%" />
+    <define name="BX_SEND_TX_P2P_START_OKAY" value="Started." />
+    <define name="BX_SEND_TX_P2P_START_FAIL" value="Start failed: %1%" />
+    <define name="BX_SEND_TX_P2P_CHECK_OKAY" value="%1% connections." />
+    <define name="BX_SEND_TX_P2P_CHECK_FAIL" value="Check failed: %1%" />
+    <define name="BX_SEND_TX_P2P_SETUP_OKAY" value="Sending %1%." />
+    <define name="BX_SEND_TX_P2P_SETUP_FAIL" value="Setup failed: %1%" />
+    <define name="BX_SEND_TX_P2P_SEND_OKAY" value="Sent at %1%." />
+    <define name="BX_SEND_TX_P2P_SEND_FAIL" value="Send failed: %1%" />
   </command>
   
   <command symbol="sendtx-bci" category="ONLINE" obsolete="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via blockchain.info." />
-    <define name="SX_SENDTX_BCI_OBSOLETE" value="This command is no longer supported. Use send-tx, send-tx-node or send-tx-p2p." />
+    <define name="BX_SENDTX_BCI_OBSOLETE" value="This command is no longer supported. Use send-tx, send-tx-node or send-tx-p2p." />
   </command>
 
   <command symbol="sha160" typeX="base16" category="HASH">
@@ -525,7 +526,7 @@
 
   <command symbol="showblkhead" category="TRANSACTION" obsolete="true">
     <option name="help" description="Decode a block header." />
-    <define name="SX_SHOWBLKHEAD_OBSOLETE" value="This command is obsolete. Use fetch-header with formatting instead." />
+    <define name="BX_SHOWBLKHEAD_OBSOLETE" value="This command is obsolete. Use fetch-header with formatting instead." />
   </command>
 
   <command symbol="stealth-address-decode" formerly="stealth-show-addr" typeX="stealth" category="STEALTH">
@@ -540,14 +541,14 @@
     <option name="signatures" type="uint8_t" description="Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a payment." />
     <argument name="SPEND_PUBKEY" stdin="true" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_EC_PUBLIC_KEY." />
-    <define name="SX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />
-    <define name="SX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED" value="WARNING: prefix search is not yet fully supported." />
-    <define name="SX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED" value="WARNING: multiple signature stealth transactions are not yet fully supported." />
+    <define name="BX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />
+    <define name="BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED" value="WARNING: prefix search is not yet fully supported." />
+    <define name="BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED" value="WARNING: multiple signature stealth transactions are not yet fully supported." />
   </command>
 
   <command symbol="stealth-newkey" category="STEALTH" obsolete="true">
     <option name="help" description="Generate new keys and the associated stealth address." />
-    <define name="SX_STEALTH_NEWKEY_OBSOLETE" value="This command is no longer supported. Use stealth-address-encode." />
+    <define name="BX_STEALTH_NEWKEY_OBSOLETE" value="This command is no longer supported. Use stealth-address-encode." />
   </command>
   
   <command symbol="stealth-new" formerly="stealth-initiate" typeX="ec_public" category="STEALTH">
@@ -590,7 +591,7 @@
     <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE the optional 32 bit input sequence and defaults to the maximum value." />
     <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. A seed should NOT be used for multiple outputs." />
     <argument name="TRANSACTION" description="The encoded transaction file path. If not specified the transaction is written to STDOUT."/>
-    <define name="SX_TX_ENCODE_LOCKTIME_CONFLICT" value="Lock time is ineffective if set but all sequences are set to the maximum value." />
+    <define name="BX_TX_ENCODE_LOCKTIME_CONFLICT" value="Lock time is ineffective if set but all sequences are set to the maximum value." />
     <!--
       tx-encode FILE [-i TXHASH:INDEX]... [-o ADDRESS:SATOSHIS] [-o HEXSCRIPT:SATOSHIS]
       tx-encode txfile.tx -i 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1 -o 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe:90000
@@ -602,12 +603,12 @@
     <option name="help"  description="Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The EC private key to be used for signing." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
-    <define name="SX_TX_SIGN_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_TX_SIGN_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <command symbol="wallet" category="WALLET" obsolete="true">
     <option name="help" description="Experimental command line wallet." />
-    <define name="SX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
+    <define name="BX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
   </command>
 
   <command symbol="watch-stealth" formerly="monitor" typeX="transaction" category="ONLINE" network="true">
@@ -616,15 +617,15 @@
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>
     <option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
     <argument name="PREFIX" stdin="true" limit="-1" type="prefix" description="The set of Base2 stealth prefixes to watch." />
-    <define name="SX_WATCH_PREFIX_WAITING" value="Watching prefix: %1%..." />
+    <define name="BX_WATCH_PREFIX_WAITING" value="Watching prefix: %1%..." />
   </command>
 
   <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true">
     <option name="help" description="Watch the network for transactions by transaction hash. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes to watch." />
-    <define name="SX_WATCH_TX_WAITING" value="Watching transaction: %1%..." />
-    <define name="SX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <define name="BX_WATCH_TX_WAITING" value="Watching transaction: %1%..." />
+    <define name="BX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="wif-to-ec" typeX="ec_private" category="WALLET">

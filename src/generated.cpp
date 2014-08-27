@@ -18,13 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/generated.hpp>
+#include <explorer/generated.hpp>
 
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
-#include <sx/command.hpp>
+#include <explorer/command.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 

@@ -215,55 +215,55 @@
 .type_wif = "wif"
 .type_wrapper = "wrapper"
 .
-.type_address_bx = "serializer::address"
-.type_base16_bx = "serializer::base16"
-.type_base58_bx = "serializer::base58"
-.type_btc_bx = "serializer::btc"
-.type_btc160_bx = "serializer::btc160"
-.type_btc256_bx = "serializer::btc256"
-.type_ec_private_bx = "serializer::ec_private"
-.type_ec_public_bx = "serializer::ec_public"
-.type_encoding_bx = "serializer::encoding"
-.type_file_bx = "serializer::file"
-.type_hashtype_bx = "serializer::hashtype"
-.type_hd_key_bx = "serializer::hd_key"
-.type_hd_private_bx = "serializer::hd_priv"
-.type_hd_public_bx = "serializer::hd_pub"
-.type_header_bx = "serializer::header"
-.type_input_bx = "serializer::input"
-.type_output_bx = "serializer::output"
+.type_address_bx = "primitives::address"
+.type_base16_bx = "primitives::base16"
+.type_base58_bx = "primitives::base58"
+.type_btc_bx = "primitives::btc"
+.type_btc160_bx = "primitives::btc160"
+.type_btc256_bx = "primitives::btc256"
+.type_ec_private_bx = "primitives::ec_private"
+.type_ec_public_bx = "primitives::ec_public"
+.type_encoding_bx = "primitives::encoding"
+.type_file_bx = "primitives::file"
+.type_hashtype_bx = "primitives::hashtype"
+.type_hd_key_bx = "primitives::hd_key"
+.type_hd_private_bx = "primitives::hd_priv"
+.type_hd_public_bx = "primitives::hd_pub"
+.type_header_bx = "primitives::header"
+.type_input_bx = "primitives::input"
+.type_output_bx = "primitives::output"
 .type_path_boost = "boost::filesystem::path"
-.type_point_bx = "serializer::point"
-.type_prefix_bx = "serializer::prefix"
-.type_raw_bx = "serializer::raw"
-.type_script_bx = "serializer::script"
-.type_stealth_bx = "serializer::stealth"
+.type_point_bx = "primitives::point"
+.type_prefix_bx = "primitives::prefix"
+.type_raw_bx = "primitives::raw"
+.type_script_bx = "primitives::script"
+.type_stealth_bx = "primitives::stealth"
 .type_string_std = "std::string"
-.type_transaction_bx = "serializer::transaction"
-.type_wif_bx = "serializer::wif"
-.type_wrapper_bx = "serializer::wrapper"
+.type_transaction_bx = "primitives::transaction"
+.type_wif_bx = "primitives::wif"
+.type_wrapper_bx = "primitives::wrapper"
 .
 .xml_false = "false"
 .xml_true = "true"
 .
 .##############################################################################
-.echo "Generating include/sx/generated.hpp..."
-.output "../include/sx/generated.hpp"
+.echo "Generating include/explorer/generated.hpp..."
+.output "../include/explorer/generated.hpp"
 .copyleft()
-#ifndef SX_GENERATED_HPP
-#define SX_GENERATED_HPP
+#ifndef BX_GENERATED_HPP
+#define BX_GENERATED_HPP
 
 #include <functional>
 #include <memory>
 #include <string>
-#include <sx/command.hpp>
+#include <explorer/command.hpp>
 .for command by symbol
-#include <sx/command/$(symbol).hpp>
+#include <explorer/commands/$(symbol).hpp>
 .endfor
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-#define SX_VARIABLE_CONFIG "$(config_option:)"
+#define BX_VARIABLE_CONFIG "$(config_option:)"
 
 namespace explorer {
 
@@ -289,13 +289,13 @@ std::shared_ptr<command> find(const std::string& symbol);
 .output "../src/generated.cpp"
 .copyleft()
 #include "precompile.hpp"
-#include <sx/generated.hpp>
+#include <explorer/generated.hpp>
 
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
-#include <sx/command.hpp>
+#include <explorer/command.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -327,29 +327,29 @@ shared_ptr<command> find(const string& symbol)
 
 } // explorer
 .##############################################################################
-.echo "Generating include/sx/command.hpp..."
-.output "../include/sx/command.hpp"
+.echo "Generating include/explorer/command.hpp..."
+.output "../include/explorer/command.hpp"
 .copyleft()
-#ifndef SX_COMMAND_HPP
-#define SX_COMMAND_HPP
+#ifndef BX_COMMAND_HPP
+#define BX_COMMAND_HPP
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include <sx/define.hpp>
-#include <sx/utility/config.hpp>
-#include <sx/utility/utility.hpp>
+#include <explorer/define.hpp>
+#include <explorer/utility/config.hpp>
+#include <explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 namespace explorer {
 
-#define SX_VARIABLE_CONFIG "config"
+#define BX_VARIABLE_CONFIG "config"
 
 /**
- * Abstract base class for definition of each SX command.
+ * Abstract base class for definition of each Bitcoin Explorer command.
  */
 class command
 {
@@ -409,7 +409,7 @@ public:
         definitions.add_options()
             /* This composes with the command line options. */
             (
-                SX_VARIABLE_CONFIG, 
+                BX_VARIABLE_CONFIG, 
                 value<boost::filesystem::path>()
                     ->composing()->default_value(config_default()),
                 "$(config_description:)"
@@ -606,11 +606,11 @@ private:
 #endif
 .##############################################################################
 .for command by symbol
-.echo "Generating include/sx/command/$(symbol).hpp..."
-.output "../include/sx/command/$(symbol).hpp"
+.echo "Generating include/explorer/commands/$(symbol).hpp..."
+.output "../include/explorer/commands/$(symbol).hpp"
 .copyleft()
-#ifndef SX_$(SYMBOL:c)_HPP
-#define SX_$(SYMBOL:c)_HPP
+#ifndef BX_$(SYMBOL:c)_HPP
+#define BX_$(SYMBOL:c)_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -618,35 +618,35 @@ private:
 #include <vector>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/command.hpp>
-#include <sx/define.hpp>
-#include <sx/generated.hpp>
-#include <sx/serializer/address.hpp>
-#include <sx/serializer/base16.hpp>
-#include <sx/serializer/base58.hpp>
-#include <sx/serializer/btc.hpp>
-#include <sx/serializer/btc160.hpp>
-#include <sx/serializer/btc256.hpp>
-#include <sx/serializer/ec_private.hpp>
-#include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/encoding.hpp>
-#include <sx/serializer/hashtype.hpp>
-#include <sx/serializer/hd_key.hpp>
-#include <sx/serializer/hd_priv.hpp>
-#include <sx/serializer/hd_pub.hpp>
-#include <sx/serializer/header.hpp>
-#include <sx/serializer/input.hpp>
-#include <sx/serializer/output.hpp>
-#include <sx/serializer/prefix.hpp>
-#include <sx/serializer/raw.hpp>
-#include <sx/serializer/script.hpp>
-#include <sx/serializer/stealth.hpp>
-#include <sx/serializer/transaction.hpp>
-#include <sx/serializer/wif.hpp>
-#include <sx/serializer/wrapper.hpp>
-#include <sx/utility/compat.hpp>
-#include <sx/utility/config.hpp>
-#include <sx/utility/utility.hpp>
+#include <explorer/command.hpp>
+#include <explorer/define.hpp>
+#include <explorer/generated.hpp>
+#include <explorer/primitives/address.hpp>
+#include <explorer/primitives/base16.hpp>
+#include <explorer/primitives/base58.hpp>
+#include <explorer/primitives/btc.hpp>
+#include <explorer/primitives/btc160.hpp>
+#include <explorer/primitives/btc256.hpp>
+#include <explorer/primitives/ec_private.hpp>
+#include <explorer/primitives/ec_public.hpp>
+#include <explorer/primitives/encoding.hpp>
+#include <explorer/primitives/hashtype.hpp>
+#include <explorer/primitives/hd_key.hpp>
+#include <explorer/primitives/hd_priv.hpp>
+#include <explorer/primitives/hd_pub.hpp>
+#include <explorer/primitives/header.hpp>
+#include <explorer/primitives/input.hpp>
+#include <explorer/primitives/output.hpp>
+#include <explorer/primitives/prefix.hpp>
+#include <explorer/primitives/raw.hpp>
+#include <explorer/primitives/script.hpp>
+#include <explorer/primitives/stealth.hpp>
+#include <explorer/primitives/transaction.hpp>
+#include <explorer/primitives/wif.hpp>
+#include <explorer/primitives/wrapper.hpp>
+#include <explorer/utility/compat.hpp>
+#include <explorer/utility/config.hpp>
+#include <explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -765,7 +765,7 @@ public:
         options_description& options = get_option_metadata();
         options.add_options()
             (
-                SX_VARIABLE_CONFIG ",c",
+                BX_VARIABLE_CONFIG ",c",
                 value<boost::filesystem::path>(),                 
                 "$(config_description:)"
             )
@@ -920,7 +920,7 @@ private:
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <sx/sx.hpp>
+#include <explorer/libbitcoin_explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -941,12 +941,12 @@ BOOST_AUTO_TEST_SUITE_END()
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <sx/sx.hpp>
+#include <explorer/libbitcoin_explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace explorer;
-using namespace explorer::command;
+using namespace explorer::commands;
 
 BOOST_AUTO_TEST_SUITE(generated__find)
 .for command by symbol
@@ -965,12 +965,12 @@ BOOST_AUTO_TEST_SUITE_END()
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <sx/sx.hpp>
+#include <explorer/libbitcoin_explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
 using namespace explorer;
-using namespace explorer::command;
+using namespace explorer::commands;
 
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 .for command by symbol
@@ -987,7 +987,7 @@ BOOST_AUTO_TEST_SUITE_END()
 .output "../include/Makefile.am"
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-libbitcoin_explorer_includedir = $\(includedir)/sx
+libbitcoin_explorer_includedir = $\(includedir)/explorer
 libbitcoin_explorer_include_HEADERS = \\
     async_client.hpp \\
     callback_state.hpp \\
@@ -998,14 +998,14 @@ libbitcoin_explorer_include_HEADERS = \\
     generated.hpp \\
     obelisk_client.hpp \\
     prop_tree.hpp \\
-    sx.hpp
+    libbitcoin_explorer.hpp
 
-libbitcoin_explorer_utility_includedir = $\(includedir)/sx/impl
+libbitcoin_explorer_utility_includedir = $\(includedir)/explorer/impl
 libbitcoin_explorer_utility_include_HEADERS += \\
     prop_tree.ipp \\
     utility.ipp
     
-libbitcoin_explorer_utility_includedir = $\(includedir)/sx/utility
+libbitcoin_explorer_utility_includedir = $\(includedir)/explorer/utility
 libbitcoin_explorer_utility_include_HEADERS += \\
     compat.hpp \\
     config.hpp \\
@@ -1014,7 +1014,7 @@ libbitcoin_explorer_utility_include_HEADERS += \\
     printer.hpp \\
     utility.hpp
     
-libbitcoin_explorer_utility_includedir = $\(includedir)/sx/serializer
+libbitcoin_explorer_utility_includedir = $\(includedir)/explorer/primitives
 libbitcoin_explorer_utility_include_HEADERS += \\
     address.hpp \\
     base16.hpp \\
@@ -1042,10 +1042,10 @@ libbitcoin_explorer_utility_include_HEADERS += \\
     wrapper.hpp
     
 # Generated from XML data source.
-libbitcoin_explorer_command_includedir = $\(includedir)/sx/command
+libbitcoin_explorer_command_includedir = $\(includedir)/explorer/commands
 libbitcoin_explorer_command_include_HEADERS = \\
 .for command by symbol
-    command/$(symbol:).hpp$(!last() ?? " \\")
+    commands/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
 
 .##############################################################################
@@ -1071,30 +1071,30 @@ libbitcoin_explorer_la_SOURCES = \\
     generated.cpp \\
     obelisk_client.cpp \\
     prop_tree.cpp \\
-    serializer/address.cpp \\
-    serializer/base16.cpp \\
-    serializer/base58.cpp \\
-    serializer/btc.cpp \\
-    serializer/btc160.cpp \\
-    serializer/btc256.cpp \\
-    serializer/ec_private.cpp \\
-    serializer/ec_public.cpp \\
-    serializer/encoding.cpp \\
-    serializer/hashtype.cpp \\
-    serializer/hd_key.cpp \\
-    serializer/hd_priv.cpp \\
-    serializer/hd_pub.cpp \\
-    serializer/header.cpp \\
-    serializer/input.cpp \\
-    serializer/output.cpp \\
-    serializer/point.cpp \\
-    serializer/prefix.cpp \\
-    serializer/raw.cpp \\
-    serializer/script.cpp \\
-    serializer/stealth.cpp \\
-    serializer/transaction.cpp \\
-    serializer/wif.cpp \\
-    serializer/wrapper.cpp \\
+    primitives/address.cpp \\
+    primitives/base16.cpp \\
+    primitives/base58.cpp \\
+    primitives/btc.cpp \\
+    primitives/btc160.cpp \\
+    primitives/btc256.cpp \\
+    primitives/ec_private.cpp \\
+    primitives/ec_public.cpp \\
+    primitives/encoding.cpp \\
+    primitives/hashtype.cpp \\
+    primitives/hd_key.cpp \\
+    primitives/hd_priv.cpp \\
+    primitives/hd_pub.cpp \\
+    primitives/header.cpp \\
+    primitives/input.cpp \\
+    primitives/output.cpp \\
+    primitives/point.cpp \\
+    primitives/prefix.cpp \\
+    primitives/raw.cpp \\
+    primitives/script.cpp \\
+    primitives/stealth.cpp \\
+    primitives/transaction.cpp \\
+    primitives/wif.cpp \\
+    primitives/wrapper.cpp \\
     utility/config.cpp \\
     utility/environment.cpp \\
     utility/parameter.cpp \\
@@ -1104,7 +1104,7 @@ libbitcoin_explorer_la_SOURCES = \\
 # Generated from XML data source.
 libbitcoin_explorer_la_SOURCES += \\
 .for command by symbol
-    command/$(symbol:).cpp$(!last() ?? " \\")
+    commands/$(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
 AM_CPPFLAGS += \\
@@ -1117,12 +1117,11 @@ bin_PROGRAMS = sx
 sx_SOURCES = \\
     console/main.cpp
 
-#    -L$\(srcdir) -llibbitcoin_explorer
 sx_LDADD = \\
+    -L$\(srcdir) -llibbitcoin_explorer \\
     $\(libbitcoin_LIBS) \\
     $\(libwallet_LIBS) \\
     $\(libobelisk_LIBS) \\
-    $\(llibbitcoin_explorer_LIBS) \\
     -lboost_filesystem \\
     -lboost_program_options \\
     -lboost_regex \\
@@ -1163,12 +1162,11 @@ libbitcoin_explorer_test_SOURCES += \\
     $(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
-#    -L$\(srcdir)/../src/ -llibbitcoin_explorer
 libbitcoin_explorer_test_LDADD = \\
+    -L$\(srcdir)/../src/ -llibbitcoin_explorer \\
     $\(libbitcoin_LIBS) \\
     $\(libwallet_LIBS) \\
     $\(libobelisk_LIBS) \\
-    $\(llibbitcoin_explorer_LIBS) \\
     -lboost_filesystem \\
     -lboost_program_options \\
     -lboost_regex \\
@@ -1260,52 +1258,52 @@ AM_CPPFLAGS += \\
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\impl\\prop_tree.ipp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\impl\\utility.ipp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\callback_state.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\async_client.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\define.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk_client.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\prop_tree.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base16.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc256.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\encoding.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hashtype.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_priv.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_pub.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\header.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\input.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\output.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\prefix.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\raw.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\stealth.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\transaction.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wrapper.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\parameter.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\printer.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\utility.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\prop_tree.ipp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\utility.ipp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\libbitcoin_explorer.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\callback_state.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\async_client.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\command.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\define.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\dispatch.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\display.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\generated.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\obelisk_client.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\prop_tree.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\address.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base16.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base58.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc160.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc256.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\ec_private.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\ec_public.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\encoding.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hashtype.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_key.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_priv.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_pub.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\header.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\input.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\output.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\point.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\prefix.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\raw.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\script.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\stealth.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\transaction.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\wif.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\wrapper.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\compat.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\config.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\environment.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\parameter.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\printer.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\utility.hpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\command\\$(symbol:).hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\commands\\$(symbol:).hpp" />
 .endfor
   </ItemGroup>
   <ItemGroup>
@@ -1316,30 +1314,30 @@ AM_CPPFLAGS += \\
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\address.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base16.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base58.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc160.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc256.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_private.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_public.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\encoding.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hashtype.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_key.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_priv.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_pub.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\header.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\input.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\output.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\point.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\prefix.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\raw.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\script.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\stealth.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\transaction.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wif.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wrapper.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc256.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_key.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_priv.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_pub.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\header.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\input.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\output.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\point.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\prefix.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\raw.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\transaction.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wif.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wrapper.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
@@ -1348,7 +1346,7 @@ AM_CPPFLAGS += \\
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClCompile Include="..\\..\\..\\..\\src\\command\\$(symbol:).cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\commands\\$(symbol:).cpp" />
 .endfor
   </ItemGroup>
   <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
@@ -1401,22 +1399,22 @@ AM_CPPFLAGS += \\
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="include\\command">
+    <Filter Include="include\\commands">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\command\\network">
+    <Filter Include="include\\commands\\network">
       <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\command\\obsolete">
+    <Filter Include="include\\commands\\obsolete">
       <UniqueIdentifier>{268700C7-1C9D-44FF-B1CE-3104893288A4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\command\\stub">
+    <Filter Include="include\\commands\\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\\impl">
       <UniqueIdentifier>{d34fd634-a274-4629-8a8f-c588117d9733}</UniqueIdentifier>
     </Filter>    
-    <Filter Include="include\\serializer">
+    <Filter Include="include\\primitives">
       <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\\utility">
@@ -1425,19 +1423,19 @@ AM_CPPFLAGS += \\
     <Filter Include="include">
       <UniqueIdentifier>{f75d4585-8ee2-45e8-96ec-880c63fc243e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\command\\network">
+    <Filter Include="src\\commands\\network">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\command\\obsolete">
+    <Filter Include="src\\commands\\obsolete">
       <UniqueIdentifier>{DF81EBEE-BB03-406B-B4C5-1D9FD2964E97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\command\\stub">
+    <Filter Include="src\\commands\\stub">
       <UniqueIdentifier>{e96f4bef-2d18-4897-9078-a8c17783ee65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\command">
+    <Filter Include="src\\commands">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\serializer">
+    <Filter Include="src\\primitives">
       <UniqueIdentifier>{6CE1C682-2E57-4EA8-B819-5C733184121A}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\\utility">
@@ -1449,230 +1447,230 @@ AM_CPPFLAGS += \\
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\command\\$(symbol:).hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\commands\\$(symbol:).hpp">
 .   if (is_xml_true(stub))
-      <Filter>include\\command\\stub</Filter>
+      <Filter>include\\commands\\stub</Filter>
 .   elsif (is_xml_true(network))
-      <Filter>include\\command\\network</Filter>
+      <Filter>include\\commands\\network</Filter>
 .   elsif (is_xml_true(obsolete))
-      <Filter>include\\command\\obsolete</Filter>
+      <Filter>include\\commands\\obsolete</Filter>
 .   else
-      <Filter>include\\command</Filter>
+      <Filter>include\\commands</Filter>
 .   endif
     </ClInclude>
 .endfor
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\impl\\utility.ipp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\utility.ipp">
       <Filter>include\\impl</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\impl\\prop_tree.ipp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\prop_tree.ipp">
       <Filter>include\\impl</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\address.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\address.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base16.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base16.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\base58.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base58.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc160.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc160.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\btc256.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc256.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_private.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\ec_private.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\ec_public.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\ec_public.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_key.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_key.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\encoding.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\encoding.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hashtype.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hashtype.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_priv.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_priv.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\hd_pub.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_pub.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\header.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\header.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\input.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\input.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\output.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\output.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\point.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\point.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\prefix.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\prefix.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\raw.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\raw.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\script.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\script.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\stealth.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\stealth.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\transaction.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\transaction.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wif.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\wif.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\serializer\\wrapper.hpp">
-      <Filter>include\\serializer</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\wrapper.hpp">
+      <Filter>include\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\compat.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\compat.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\config.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\config.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\environment.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\environment.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\parameter.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\parameter.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\printer.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\printer.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\utility\\utility.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\utility.hpp">
       <Filter>include\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\async_client.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\async_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\callback_state.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\callback_state.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\command.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\command.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\define.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\define.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\dispatch.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\dispatch.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\display.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\display.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\generated.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\generated.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\obelisk_client.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\obelisk_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\prop_tree.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\prop_tree.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\sx\\sx.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\libbitcoin_explorer.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClCompile Include="..\\..\\..\\..\\src\\command\\$(symbol:).cpp">
+    <ClCompile Include="..\\..\\..\\..\\src\\commands\\$(symbol:).cpp">
 .   if (is_xml_true(stub))
-      <Filter>src\\command\\stub</Filter>
+      <Filter>src\\commands\\stub</Filter>
 .   elsif (is_xml_true(network))
-      <Filter>src\\command\\network</Filter>
+      <Filter>src\\commands\\network</Filter>
 .   elsif (is_xml_true(obsolete))
-      <Filter>src\\command\\obsolete</Filter>
+      <Filter>src\\commands\\obsolete</Filter>
 .   else
-      <Filter>src\\command</Filter>
+      <Filter>src\\commands</Filter>
 .   endif
     </ClCompile>
 .endfor
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\address.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base16.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\base58.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc160.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\btc256.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc256.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_private.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\ec_public.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hashtype.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_key.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_key.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\encoding.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_priv.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_priv.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\hd_pub.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_pub.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\header.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\header.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\input.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\input.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\output.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\output.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\point.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\point.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\prefix.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\prefix.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\raw.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\raw.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\script.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\stealth.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\transaction.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\transaction.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wif.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wif.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\serializer\\wrapper.cpp">
-      <Filter>src\\serializer</Filter>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wrapper.cpp">
+      <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp">
       <Filter>src\\utility</Filter>
@@ -1800,11 +1798,11 @@ AM_CPPFLAGS += \\
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClCompile Include="..\\..\\..\\..\\test\\command\\$(symbol:).cpp" />
+    <ClCompile Include="..\\..\\..\\..\\test\\commands\\$(symbol:).cpp" />
 .endfor
   </ItemGroup>  
   <ItemGroup>
-    <ClInclude Include="..\\..\\..\\..\\test\\command\\command.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\test\\commands\\command.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1874,19 +1872,19 @@ AM_CPPFLAGS += \\
     <Filter Include="src\\tests">
       <UniqueIdentifier>{272f2634-0335-488d-8741-271dd38c6092}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\tests\\command">
+    <Filter Include="src\\tests\\commands">
       <UniqueIdentifier>{854c3ba2-ea3e-45ba-a329-75b1c9545712}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\tests\\command\\network">
+    <Filter Include="src\\tests\\commands\\network">
       <UniqueIdentifier>{30ec4ed5-e76c-45cd-a4c1-2da55271a06b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\tests\\command\\obsolete">
+    <Filter Include="src\\tests\\commands\\obsolete">
       <UniqueIdentifier>{930d925a-aab0-4934-96a2-3766c01a2793}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\tests\\command\\stub">
+    <Filter Include="src\\tests\\commands\\stub">
       <UniqueIdentifier>{44ca92b4-d241-4677-aac2-0bb85bd9a990}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\tests\\serializer">
+    <Filter Include="src\\tests\\primitives">
       <UniqueIdentifier>{14f110d7-6526-4899-bddb-d390b0ca55ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\\tests\\utility">
@@ -1895,23 +1893,23 @@ AM_CPPFLAGS += \\
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClCompile Include="..\\..\\..\\..\\test\\command\\$(symbol:).cpp">
+    <ClCompile Include="..\\..\\..\\..\\test\\commands\\$(symbol:).cpp">
 .   if (is_xml_true(stub))
-      <Filter>src\\tests\\command\\stub</Filter>
+      <Filter>src\\tests\\commands\\stub</Filter>
 .   elsif (is_xml_true(network))
-      <Filter>src\\tests\\command\\network</Filter>
+      <Filter>src\\tests\\commands\\network</Filter>
 .   elsif (is_xml_true(obsolete))
-      <Filter>src\\tests\\command\\obsolete</Filter>
+      <Filter>src\\tests\\commands\\obsolete</Filter>
 .   else
-      <Filter>src\\tests\\command</Filter>
+      <Filter>src\\tests\\commands</Filter>
 .   endif
     </ClCompile>
 .endfor
     <ClCompile Include="..\\..\\..\\..\\test\\address.cpp">
-      <Filter>src\\tests\\serializer</Filter>
+      <Filter>src\\tests\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\test\\base58.cpp">
-      <Filter>src\\tests\\serializer</Filter>
+      <Filter>src\\tests\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp">
       <Filter>src\\tests\\utility</Filter>
@@ -1936,7 +1934,7 @@ AM_CPPFLAGS += \\
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\\..\\..\\..\\test\\command\\command.hpp">
+    <ClInclude Include="..\\..\\..\\..\\test\\commands\\command.hpp">
       <Filter>src\\tests\\command</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -18,13 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/utility/parameter.hpp>
+#include <explorer/utility/parameter.hpp>
 
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
-#include <sx/define.hpp>
-#include <sx/utility/utility.hpp>
+#include <explorer/define.hpp>
+#include <explorer/utility/utility.hpp>
 
 using namespace explorer;
 

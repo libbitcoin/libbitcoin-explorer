@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -18,32 +18,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <sx/prop_tree.hpp>
+#include <explorer/prop_tree.hpp>
 
 #include <string>
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
-#include <sx/define.hpp>
-#include <sx/serializer/address.hpp>
-#include <sx/serializer/btc256.hpp>
-#include <sx/serializer/ec_public.hpp>
-#include <sx/serializer/header.hpp>
-#include <sx/serializer/input.hpp>
-#include <sx/serializer/output.hpp>
-#include <sx/serializer/point.hpp>
-#include <sx/serializer/prefix.hpp>
-#include <sx/serializer/script.hpp>
-#include <sx/serializer/transaction.hpp>
-#include <sx/serializer/wrapper.hpp>
+#include <explorer/define.hpp>
+#include <explorer/primitives/address.hpp>
+#include <explorer/primitives/btc256.hpp>
+#include <explorer/primitives/ec_public.hpp>
+#include <explorer/primitives/header.hpp>
+#include <explorer/primitives/input.hpp>
+#include <explorer/primitives/output.hpp>
+#include <explorer/primitives/point.hpp>
+#include <explorer/primitives/prefix.hpp>
+#include <explorer/primitives/script.hpp>
+#include <explorer/primitives/transaction.hpp>
+#include <explorer/primitives/wrapper.hpp>
 
 using namespace bc;
 using namespace libwallet;
 using namespace pt;
 
 namespace explorer {
-namespace serializer {
+namespace primitives {
     
 // Edit with care - text property names trade DRY for readability.
 // Edit with care - tests are affected by property ORDER (keep alphabetical).
@@ -288,7 +288,7 @@ ptree prop_tree(const stealth_prefix& prefix,
 {
     ptree tree;
     tree.add_child("stealth", prop_tree(rows));
-    tree.put("stealth.prefix", explorer::serializer::prefix(prefix));
+    tree.put("stealth.prefix", explorer::primitives::prefix(prefix));
     return tree;
 }
 
@@ -301,5 +301,5 @@ ptree prop_tree(const wrapped_data& wrapped)
     return tree;
 }
 
-} // serializer
+} // primitives
 } // explorer

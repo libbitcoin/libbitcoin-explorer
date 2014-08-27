@@ -1,6 +1,6 @@
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-libbitcoin_explorer_includedir = $(includedir)/sx
+libbitcoin_explorer_includedir = $(includedir)/explorer
 libbitcoin_explorer_include_HEADERS = \
     async_client.hpp \
     callback_state.hpp \
@@ -11,14 +11,14 @@ libbitcoin_explorer_include_HEADERS = \
     generated.hpp \
     obelisk_client.hpp \
     prop_tree.hpp \
-    sx.hpp
+    libbitcoin_explorer.hpp
 
-libbitcoin_explorer_utility_includedir = $(includedir)/sx/impl
+libbitcoin_explorer_utility_includedir = $(includedir)/explorer/impl
 libbitcoin_explorer_utility_include_HEADERS += \
     prop_tree.ipp \
     utility.ipp
     
-libbitcoin_explorer_utility_includedir = $(includedir)/sx/utility
+libbitcoin_explorer_utility_includedir = $(includedir)/explorer/utility
 libbitcoin_explorer_utility_include_HEADERS += \
     compat.hpp \
     config.hpp \
@@ -27,7 +27,7 @@ libbitcoin_explorer_utility_include_HEADERS += \
     printer.hpp \
     utility.hpp
     
-libbitcoin_explorer_utility_includedir = $(includedir)/sx/serializer
+libbitcoin_explorer_utility_includedir = $(includedir)/explorer/primitives
 libbitcoin_explorer_utility_include_HEADERS += \
     address.hpp \
     base16.hpp \
@@ -55,91 +55,91 @@ libbitcoin_explorer_utility_include_HEADERS += \
     wrapper.hpp
     
 # Generated from XML data source.
-libbitcoin_explorer_command_includedir = $(includedir)/sx/command
+libbitcoin_explorer_command_includedir = $(includedir)/explorer/commands
 libbitcoin_explorer_command_include_HEADERS = \
-    command/address-decode.hpp \
-    command/address-embed.hpp \
-    command/address-encode.hpp \
-    command/address-validate.hpp \
-    command/base58-decode.hpp \
-    command/base58-encode.hpp \
-    command/base58check-decode.hpp \
-    command/base58check-encode.hpp \
-    command/bci-fetch-last-height.hpp \
-    command/bci-history.hpp \
-    command/bitcoin160.hpp \
-    command/bitcoin256.hpp \
-    command/blke-fetch-transaction.hpp \
-    command/btc-to-satoshi.hpp \
-    command/ec-add.hpp \
-    command/ec-add-secrets.hpp \
-    command/ec-lock.hpp \
-    command/ec-multiply.hpp \
-    command/ec-multiply-secrets.hpp \
-    command/ec-new.hpp \
-    command/ec-to-address.hpp \
-    command/ec-to-public.hpp \
-    command/ec-to-wif.hpp \
-    command/ec-unlock.hpp \
-    command/fetch-balance.hpp \
-    command/fetch-confirmations.hpp \
-    command/fetch-header.hpp \
-    command/fetch-height.hpp \
-    command/fetch-history.hpp \
-    command/fetch-public-key.hpp \
-    command/fetch-stealth.hpp \
-    command/fetch-tx.hpp \
-    command/fetch-tx-index.hpp \
-    command/fetch-utxo.hpp \
-    command/genaddr.hpp \
-    command/genpriv.hpp \
-    command/genpub.hpp \
-    command/hd-new.hpp \
-    command/hd-private.hpp \
-    command/hd-public.hpp \
-    command/hd-to-address.hpp \
-    command/hd-to-ec.hpp \
-    command/hd-to-public.hpp \
-    command/hd-to-wif.hpp \
-    command/help.hpp \
-    command/initchain.hpp \
-    command/input-set.hpp \
-    command/input-sign.hpp \
-    command/input-validate.hpp \
-    command/mnemonic-decode.hpp \
-    command/mnemonic-encode.hpp \
-    command/mpk.hpp \
-    command/newseed.hpp \
-    command/qrcode.hpp \
-    command/ripemd160.hpp \
-    command/satoshi-to-btc.hpp \
-    command/script-decode.hpp \
-    command/script-encode.hpp \
-    command/script-to-address.hpp \
-    command/seed.hpp \
-    command/send-tx.hpp \
-    command/send-tx-node.hpp \
-    command/send-tx-p2p.hpp \
-    command/sendtx-bci.hpp \
-    command/sha160.hpp \
-    command/sha256.hpp \
-    command/sha512.hpp \
-    command/showblkhead.hpp \
-    command/stealth-address-decode.hpp \
-    command/stealth-address-encode.hpp \
-    command/stealth-new.hpp \
-    command/stealth-newkey.hpp \
-    command/stealth-shared-secret.hpp \
-    command/stealth-uncover-public.hpp \
-    command/stealth-uncover-secret.hpp \
-    command/tx-decode.hpp \
-    command/tx-encode.hpp \
-    command/tx-sign.hpp \
-    command/wallet.hpp \
-    command/watch-stealth.hpp \
-    command/watch-tx.hpp \
-    command/wif-to-ec.hpp \
-    command/wif-to-public.hpp \
-    command/wrap-decode.hpp \
-    command/wrap-encode.hpp
+    commands/address-decode.hpp \
+    commands/address-embed.hpp \
+    commands/address-encode.hpp \
+    commands/address-validate.hpp \
+    commands/base58-decode.hpp \
+    commands/base58-encode.hpp \
+    commands/base58check-decode.hpp \
+    commands/base58check-encode.hpp \
+    commands/bci-fetch-last-height.hpp \
+    commands/bci-history.hpp \
+    commands/bitcoin160.hpp \
+    commands/bitcoin256.hpp \
+    commands/blke-fetch-transaction.hpp \
+    commands/btc-to-satoshi.hpp \
+    commands/ec-add.hpp \
+    commands/ec-add-secrets.hpp \
+    commands/ec-lock.hpp \
+    commands/ec-multiply.hpp \
+    commands/ec-multiply-secrets.hpp \
+    commands/ec-new.hpp \
+    commands/ec-to-address.hpp \
+    commands/ec-to-public.hpp \
+    commands/ec-to-wif.hpp \
+    commands/ec-unlock.hpp \
+    commands/fetch-balance.hpp \
+    commands/fetch-confirmations.hpp \
+    commands/fetch-header.hpp \
+    commands/fetch-height.hpp \
+    commands/fetch-history.hpp \
+    commands/fetch-public-key.hpp \
+    commands/fetch-stealth.hpp \
+    commands/fetch-tx.hpp \
+    commands/fetch-tx-index.hpp \
+    commands/fetch-utxo.hpp \
+    commands/genaddr.hpp \
+    commands/genpriv.hpp \
+    commands/genpub.hpp \
+    commands/hd-new.hpp \
+    commands/hd-private.hpp \
+    commands/hd-public.hpp \
+    commands/hd-to-address.hpp \
+    commands/hd-to-ec.hpp \
+    commands/hd-to-public.hpp \
+    commands/hd-to-wif.hpp \
+    commands/help.hpp \
+    commands/initchain.hpp \
+    commands/input-set.hpp \
+    commands/input-sign.hpp \
+    commands/input-validate.hpp \
+    commands/mnemonic-decode.hpp \
+    commands/mnemonic-encode.hpp \
+    commands/mpk.hpp \
+    commands/newseed.hpp \
+    commands/qrcode.hpp \
+    commands/ripemd160.hpp \
+    commands/satoshi-to-btc.hpp \
+    commands/script-decode.hpp \
+    commands/script-encode.hpp \
+    commands/script-to-address.hpp \
+    commands/seed.hpp \
+    commands/send-tx.hpp \
+    commands/send-tx-node.hpp \
+    commands/send-tx-p2p.hpp \
+    commands/sendtx-bci.hpp \
+    commands/sha160.hpp \
+    commands/sha256.hpp \
+    commands/sha512.hpp \
+    commands/showblkhead.hpp \
+    commands/stealth-address-decode.hpp \
+    commands/stealth-address-encode.hpp \
+    commands/stealth-new.hpp \
+    commands/stealth-newkey.hpp \
+    commands/stealth-shared-secret.hpp \
+    commands/stealth-uncover-public.hpp \
+    commands/stealth-uncover-secret.hpp \
+    commands/tx-decode.hpp \
+    commands/tx-encode.hpp \
+    commands/tx-sign.hpp \
+    commands/wallet.hpp \
+    commands/watch-stealth.hpp \
+    commands/watch-tx.hpp \
+    commands/wif-to-ec.hpp \
+    commands/wif-to-public.hpp \
+    commands/wrap-decode.hpp \
+    commands/wrap-encode.hpp
 

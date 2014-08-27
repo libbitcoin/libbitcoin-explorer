@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -20,11 +20,11 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <sx/sx.hpp>
+#include <explorer/libbitcoin_explorer.hpp>
 #include "precompile.hpp"
 
 using namespace bc;
-using namespace explorer::serializer;
+using namespace explorer::primitives;
 
 #define BASE58_ENCODED_A "vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D"
 #define BASE58_DECODED_A \
@@ -34,7 +34,7 @@ using namespace explorer::serializer;
     0xa7, 0x97, 0x0c, 0xa3, 0x74, 0x51, 0x3d, 0xd0,  0x06 \
 }}
 
-BOOST_AUTO_TEST_SUITE(base58__serializer)
+BOOST_AUTO_TEST_SUITE(base58__primitives)
 
 BOOST_AUTO_TEST_CASE(base58__constructor__default__does_not_throw)
 {
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(base58__constructor__default__does_not_throw)
 
 BOOST_AUTO_TEST_CASE(base58__constructor__bogus_string__throws_invalid_option)
 {
-    //SX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(base58("bo-gus"));
+    //BX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(base58("bo-gus"));
 }
 
 BOOST_AUTO_TEST_CASE(base58__constructor__valid_string_cast__decodes)
@@ -60,9 +60,9 @@ BOOST_AUTO_TEST_CASE(base58__constructor__chunk_data__decodes)
     BOOST_REQUIRE(original == instance);
 }
 
-BOOST_AUTO_TEST_CASE(base58__constructor__copy_address_serializer__round_trips)
+BOOST_AUTO_TEST_CASE(base58__constructor__copy_address_primitives__round_trips)
 {
-    //SX_SERIALIZE_COPY_ROUND_TRIP(base58, BASE58_ENCODED_A);
+    //BX_SERIALIZE_COPY_ROUND_TRIP(base58, BASE58_ENCODED_A);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

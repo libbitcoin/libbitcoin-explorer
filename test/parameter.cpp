@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin_explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin_explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -25,7 +25,7 @@
 #include <boost/program_options.hpp>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
-#include <sx/sx.hpp>
+#include <explorer/libbitcoin_explorer.hpp>
 
 namespace parameter {
 
@@ -70,7 +70,7 @@ static void load_test_arguments(argument_list& arguments)
     arguments.push_back(argument_pair("multitoken", -1));
 }
 
-#define SX_TEST_PARAMETER_SETUP(index) \
+#define BX_TEST_PARAMETER_SETUP(index) \
     options_metadata options; \
     load_test_options(options); \
     argument_list names; \
@@ -78,7 +78,7 @@ static void load_test_arguments(argument_list& arguments)
     auto option = *(options.options()[index]); \
     explorer::parameter parameter
 
-#define SX_TEST_PARAMETER_OPTIONS_SETUP(index) \
+#define BX_TEST_PARAMETER_OPTIONS_SETUP(index) \
     options_metadata options; \
     load_test_options(options); \
     auto option = *(options.options()[index]); \
@@ -89,56 +89,56 @@ BOOST_AUTO_TEST_SUITE(parameter__position)
 
 BOOST_AUTO_TEST_CASE(parameter__position__short_and_long__returns_not)
 {
-    SX_TEST_PARAMETER_SETUP(opt::short_long);
+    BX_TEST_PARAMETER_SETUP(opt::short_long);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == -1);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__short_only__returns_not)
 {
-    SX_TEST_PARAMETER_SETUP(opt::shorty);
+    BX_TEST_PARAMETER_SETUP(opt::shorty);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == -1);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__long_only__returns_expeced_position)
 {
-    SX_TEST_PARAMETER_SETUP(opt::longy);
+    BX_TEST_PARAMETER_SETUP(opt::longy);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 0);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__simple__returns_expeced_position)
 {
-    SX_TEST_PARAMETER_SETUP(opt::simple);
+    BX_TEST_PARAMETER_SETUP(opt::simple);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 1);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__defaulty__returns_expeced_position)
 {
-    SX_TEST_PARAMETER_SETUP(opt::defaulty);
+    BX_TEST_PARAMETER_SETUP(opt::defaulty);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 2);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__required__returns_expeced_position)
 {
-    SX_TEST_PARAMETER_SETUP(opt::required);
+    BX_TEST_PARAMETER_SETUP(opt::required);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 3);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__vector__returns_expeced_position)
 {
-    SX_TEST_PARAMETER_SETUP(opt::vector);
+    BX_TEST_PARAMETER_SETUP(opt::vector);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 4);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__multitoken__returns_expeced_position)
 {
-    SX_TEST_PARAMETER_SETUP(opt::multitoken);
+    BX_TEST_PARAMETER_SETUP(opt::multitoken);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 5);
 }
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_SUITE(parameter__initialize)
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__short_long__sets_limit_0)
 {
-    SX_TEST_PARAMETER_SETUP(opt::short_long);
+    BX_TEST_PARAMETER_SETUP(opt::short_long);
     parameter.initialize(option, names);
     BOOST_REQUIRE(parameter.get_position() == -1);
     BOOST_REQUIRE(parameter.get_args_limit() == 0);
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__short_long__sets_limit_0)
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__short_only__sets_limit_0)
 {
-    SX_TEST_PARAMETER_SETUP(opt::shorty);
+    BX_TEST_PARAMETER_SETUP(opt::shorty);
     parameter.initialize(option, names);
     BOOST_REQUIRE(parameter.get_position() == -1);
     BOOST_REQUIRE(parameter.get_args_limit() == 0);
@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__short_only__sets_limit_0)
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__long_only__sets_limit_0)
 {
-    SX_TEST_PARAMETER_SETUP(opt::longy);
+    BX_TEST_PARAMETER_SETUP(opt::longy);
     parameter.initialize(option, names);
     BOOST_REQUIRE(parameter.get_position() == 0);
     BOOST_REQUIRE(parameter.get_args_limit() == 0);
@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__long_only__sets_limit_0)
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__simple__sets_limit_1)
 {
-    SX_TEST_PARAMETER_SETUP(opt::simple);
+    BX_TEST_PARAMETER_SETUP(opt::simple);
     parameter.initialize(option, names);
     BOOST_REQUIRE(parameter.get_position() == 1);
     BOOST_REQUIRE(parameter.get_args_limit() == 1);
@@ -206,7 +206,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__simple__sets_limit_1)
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__defaulted__sets_limit_1)
 {
-    SX_TEST_PARAMETER_SETUP(opt::defaulty);
+    BX_TEST_PARAMETER_SETUP(opt::defaulty);
     parameter.initialize(option, names);
     BOOST_REQUIRE(parameter.get_position() == 2);
     BOOST_REQUIRE(parameter.get_args_limit() == 1);
@@ -221,7 +221,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__defaulted__sets_limit_1)
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__required__sets_limit_1)
 {
-    SX_TEST_PARAMETER_SETUP(opt::required);
+    BX_TEST_PARAMETER_SETUP(opt::required);
     parameter.initialize(option, names);
     BOOST_REQUIRE(parameter.get_position() == 3);
     BOOST_REQUIRE(parameter.get_args_limit() == 1);
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__required__sets_limit_1)
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__vector__sets_limit_1)
 {
-    SX_TEST_PARAMETER_SETUP(opt::vector);
+    BX_TEST_PARAMETER_SETUP(opt::vector);
     parameter.initialize(option, names);
     BOOST_REQUIRE(parameter.get_position() == 4);
     BOOST_REQUIRE(parameter.get_args_limit() == 1);
@@ -249,7 +249,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__vector__sets_limit_1)
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__multitoken__sets_unlimited)
 {
-    SX_TEST_PARAMETER_SETUP(opt::multitoken);
+    BX_TEST_PARAMETER_SETUP(opt::multitoken);
     parameter.initialize(option, names);
     BOOST_REQUIRE(parameter.get_position() == 5);
     BOOST_REQUIRE(parameter.get_args_limit() == 0x7d00);
@@ -268,21 +268,21 @@ BOOST_AUTO_TEST_SUITE(parameter__canonical)
 
 BOOST_AUTO_TEST_CASE(parameter__canonical__short_and_long__matches_dash_long)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
     auto result = parameter.canonical(option);
     BOOST_REQUIRE(result == "--short_long");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__canonical__short_only__matches_dash_short)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
     auto result = parameter.canonical(option);
     BOOST_REQUIRE(result == "-m");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__canonical__long_only__matches_dash_long)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
     auto result = parameter.canonical(option);
     BOOST_REQUIRE(result == "--longy");
 }
@@ -294,21 +294,21 @@ BOOST_AUTO_TEST_SUITE(parameter__clean_canonical)
 
 BOOST_AUTO_TEST_CASE(parameter__clean_canonical__short_and_long__matches_long)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
     auto result = parameter.clean_canonical(option);
     BOOST_REQUIRE(result == "short_long");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__clean_canonical__short_only__matches_short)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
     auto result = parameter.clean_canonical(option);
     BOOST_REQUIRE(result == "m");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__clean_canonical__long_only__matches_long)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
     auto result = parameter.clean_canonical(option);
     BOOST_REQUIRE(result == "longy");
 }
@@ -320,21 +320,21 @@ BOOST_AUTO_TEST_SUITE(parameter__has_short_name)
 
 BOOST_AUTO_TEST_CASE(parameter__has_short_name__short_and_long__returns_true)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
     auto result = parameter.has_short_name(option);
     BOOST_REQUIRE(result);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__has_short_name__short_only__returns_true)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
     auto result = parameter.has_short_name(option);
     BOOST_REQUIRE(result);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__has_short_name__long_only__returns_false)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
     auto result = parameter.has_short_name(option);
     BOOST_REQUIRE(!result);
 }
@@ -346,21 +346,21 @@ BOOST_AUTO_TEST_SUITE(parameter__short_name)
 
 BOOST_AUTO_TEST_CASE(parameter__short_name__short_and_long__returns_short)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
     auto result = parameter.short_name(option);
     BOOST_REQUIRE(result = 's');
 }
 
 BOOST_AUTO_TEST_CASE(parameter__short_name__short_only__returns_short)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
     auto result = parameter.short_name(option);
     BOOST_REQUIRE(result = 'm');
 }
 
 BOOST_AUTO_TEST_CASE(parameter__short_name__long_only__returns_null)
 {
-    SX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
+    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
     auto result = parameter.short_name(option);
     BOOST_REQUIRE(result == 0x00);
 }
