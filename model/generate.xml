@@ -14,7 +14,7 @@
     <shorthand name="RIPEMD" description="RACE Integrity Primitives Evaluation Message Digest" />
     <shorthand name="SHA" description="Secure Hash Algorithm" />
     <shorthand name="SIGHASH" description="Signature Hash" />
-    <shorthand name="SOCKS" description="Socket Secure" />
+    <shorthand name="SOCKS" description="Socket Secure (proxy protocol)" />
     <shorthand name="SX" description="Spesmilo Exchanger (the original version of Bitcoin Explorer)" />
     <shorthand name="TX" description="Transaction" />
     <shorthand name="UTXO" description="Unspent Transaction Output" />
