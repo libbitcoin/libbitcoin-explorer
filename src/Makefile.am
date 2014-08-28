@@ -147,7 +147,7 @@ sx_SOURCES = \
     console/main.cpp
 
 sx_LDADD = \
-    -L$(srcdir) -llibbitcoin_explorer \
+    -L$(srcdir) -lbitcoin_explorer \
     $(libbitcoin_LIBS) \
     $(libwallet_LIBS) \
     $(libobelisk_LIBS) \
