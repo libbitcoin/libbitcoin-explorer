@@ -101,7 +101,7 @@ std::ostream& operator<<(std::ostream& output, const hashtype& argument)
             value = hashtype_anyone_can_pay;
             break;
         default:
-            throw std::exception("Unexpected signature hash type value.");
+            throw std::exception(/*"Unexpected signature hash type value."*/);
     }
 
     return output;

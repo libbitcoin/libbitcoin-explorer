@@ -100,7 +100,7 @@ std::ostream& operator<<(std::ostream& output, const encoding& argument)
             value = encoding_native;
             break;
         default:
-            throw std::exception("Unexpected encoding value.");
+            throw std::exception(/*"Unexpected encoding value."*/);
     }
 
     return output;
