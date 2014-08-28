@@ -1118,7 +1118,7 @@ sx_SOURCES = \\
     console/main.cpp
 
 sx_LDADD = \\
-    -L$\(srcdir) -llibbitcoin_explorer \\
+    -L$\(srcdir) -lbitcoin_explorer \\
     $\(libbitcoin_LIBS) \\
     $\(libwallet_LIBS) \\
     $\(libobelisk_LIBS) \\
@@ -1159,11 +1159,11 @@ libbitcoin_explorer_test_SOURCES = \\
 # Generated from XML data source.
 libbitcoin_explorer_test_SOURCES += \\
 .for command by symbol
-    $(symbol:).cpp$(!last() ?? " \\")
+    commands/$(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
 libbitcoin_explorer_test_LDADD = \\
-    -L$\(srcdir)/../src/ -llibbitcoin_explorer \\
+    -L$\(srcdir)/../src/ -lbitcoin_explorer \\
     $\(libbitcoin_LIBS) \\
     $\(libwallet_LIBS) \\
     $\(libobelisk_LIBS) \\
