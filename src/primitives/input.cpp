@@ -40,7 +40,7 @@ using namespace pt;
 namespace explorer {
 namespace primitives {
 
-static void parse_input(tx_input_type& input,
+void parse_input(tx_input_type& input,
     const std::vector<std::string>& tokens)
 {
     input.script = script_type();
