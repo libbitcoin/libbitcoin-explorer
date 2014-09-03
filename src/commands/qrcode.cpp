@@ -29,8 +29,8 @@ using namespace explorer::commands;
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& path = get_file_option();
-    const auto& address = get_bitcoin_address_argument();
+    //const auto& path = get_file_option();
+    //const auto& address = get_bitcoin_address_argument();
 
     // TODO:
     // Create qrcode as binary data.

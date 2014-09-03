@@ -63,10 +63,12 @@ public:
      * @param[in]  arguments    Populated command line arguments metadata.
      * @param[in]  application  This application [and command (e.g. 'bx btc')].
      */
-    printer(std::ostream& output, options_metadata& options, 
+    printer(std::ostream& output, options_metadata& options,
         arguments_metadata& arguments, const std::string& application)
-        : output_(output), options_(options), arguments_(arguments), 
-        application_(application) {}
+        : application_(application), arguments_(arguments), options_(options),
+        output_(output)
+    {
+    }
     
     /**
      * Format the help arguments table.
@@ -135,11 +137,11 @@ public:
      * Virtual property declarations.
      */
     PROPERTY_GET(std::string, application);
+    PROPERTY_GET(argument_list, argument_names);
     PROPERTY_GET(arguments_metadata&, arguments);
     PROPERTY_GET(options_metadata&, options);
     PROPERTY_GET(std::ostream&, output);
     PROPERTY_GET(parameter_list, parameters);
-    PROPERTY_GET(argument_list, argument_names);
 };
 
 } // explorer

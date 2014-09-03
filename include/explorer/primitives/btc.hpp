@@ -61,7 +61,7 @@ public:
      * Return a reference to the data member cast as satoshi.
      * @return  A reference to the object's internal data.
      */
-    operator const uint64_t() const;
+    operator uint64_t() const;
 
     /**
      * Overload stream in. Throws if input is invalid.

@@ -29,7 +29,7 @@ using namespace explorer::commands;
 console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& passphrase = get_passphrase_argument();
+    //const auto& passphrase = get_passphrase_argument();
     
     // TODO: implement BIP38
 

@@ -35,7 +35,7 @@ console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const data_chunk& seed = get_seed_argument();
-    const auto testnet = get_general_testnet_setting();
+    //const auto testnet = get_general_testnet_setting();
 
     if (seed.size() < minimum_seed_size)
     {

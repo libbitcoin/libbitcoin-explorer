@@ -20,11 +20,13 @@
 #ifndef BX_UTILITY_HPP
 #define BX_UTILITY_HPP
 
+#ifdef _MSC_VER
 // Suppressing msvc warnings from boost that are heard to deal with
 // because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
 // without sampling it first. 
 #pragma warning(push)
 #pragma warning(disable : 4996)
+#endif
 #include <cstddef>
 #include <iostream>
 #include <cstdint>
@@ -40,7 +42,9 @@
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 #include <bitcoin/bitcoin.hpp>
 #include <explorer/define.hpp>
 

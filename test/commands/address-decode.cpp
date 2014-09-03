@@ -43,14 +43,16 @@ BOOST_AUTO_TEST_SUITE(address_decode__invoke)
     "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
     "    version 0\n" \
     "}\n"
-//#define BX_ADDRESS_DECODE_V0_JSON \
-//    "{\n" \
-//    "    \"wrapper\": {\n" \
-//    "        \"checksum\": \"1476364070\",\n" \
-//    "        \"payload\": \"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\n" \
-//    "        \"version\": \"0\"\n" \
-//    "    }\n" \
-//    "}\n"
+/*
+#define BX_ADDRESS_DECODE_V0_JSON \
+    "{\n" \
+    "    \"wrapper\": {\n" \
+    "        \"checksum\": \"1476364070\",\n" \
+    "        \"payload\": \"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\n" \
+    "        \"version\": \"0\"\n" \
+    "    }\n" \
+    "}\n"
+*/
 #define BX_ADDRESS_DECODE_V0_XML \
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
     "<wrapper>" \

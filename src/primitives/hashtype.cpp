@@ -58,7 +58,7 @@ hashtype::hashtype(const hashtype& other)
 {
 }
 
-hashtype::operator const sighash() const
+hashtype::operator sighash() const
 {
     return value_;
 }
