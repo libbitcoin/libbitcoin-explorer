@@ -1,6 +1,6 @@
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-libbitcoin_explorer_includedir = $(includedir)/explorer
+libbitcoin_explorer_includedir = $(includedir)
 libbitcoin_explorer_include_HEADERS = \
     async_client.hpp \
     callback_state.hpp \
@@ -13,50 +13,50 @@ libbitcoin_explorer_include_HEADERS = \
     prop_tree.hpp \
     libbitcoin_explorer.hpp
 
-libbitcoin_explorer_utility_includedir = $(includedir)/explorer/impl
-libbitcoin_explorer_utility_include_HEADERS += \
-    prop_tree.ipp \
-    utility.ipp
-    
-libbitcoin_explorer_utility_includedir = $(includedir)/explorer/utility
-libbitcoin_explorer_utility_include_HEADERS += \
-    compat.hpp \
-    config.hpp \
-    environment.hpp \
-    parameter.hpp \
-    printer.hpp \
-    utility.hpp
-    
-libbitcoin_explorer_utility_includedir = $(includedir)/explorer/primitives
-libbitcoin_explorer_utility_include_HEADERS += \
-    address.hpp \
-    base16.hpp \
-    base58.hpp \
-    btc.hpp \
-    btc160.hpp \
-    btc256.hpp \
-    ec_private.hpp \
-    ec_public.hpp \
-    encoding.hpp \
-    hashtype.hpp \
-    hd_key.hpp \
-    hd_priv.hpp \
-    hd_pub.hpp \
-    header.hpp \
-    input.hpp \
-    output.hpp \
-    point.hpp \
-    prefix.hpp \
-    raw.hpp \
-    script.hpp \
-    stealth.hpp \
-    transaction.hpp \
-    wif.hpp \
-    wrapper.hpp
-    
+libbitcoin_explorer_impl_includedir = $(includedir)/impl
+libbitcoin_explorer_impl_include_HEADERS = \
+    impl/prop_tree.ipp \
+    impl/utility.ipp
+
+libbitcoin_explorer_utility_includedir = $(includedir)/utility
+libbitcoin_explorer_utility_include_HEADERS = \
+    utility/compat.hpp \
+    utility/config.hpp \
+    utility/environment.hpp \
+    utility/parameter.hpp \
+    utility/printer.hpp \
+    utility/utility.hpp
+
+libbitcoin_explorer_primitives_includedir = $(includedir)/primitives
+libbitcoin_explorer_primitives_include_HEADERS = \
+    primitives/address.hpp \
+    primitives/base16.hpp \
+    primitives/base58.hpp \
+    primitives/btc.hpp \
+    primitives/btc160.hpp \
+    primitives/btc256.hpp \
+    primitives/ec_private.hpp \
+    primitives/ec_public.hpp \
+    primitives/encoding.hpp \
+    primitives/hashtype.hpp \
+    primitives/hd_key.hpp \
+    primitives/hd_priv.hpp \
+    primitives/hd_pub.hpp \
+    primitives/header.hpp \
+    primitives/input.hpp \
+    primitives/output.hpp \
+    primitives/point.hpp \
+    primitives/prefix.hpp \
+    primitives/raw.hpp \
+    primitives/script.hpp \
+    primitives/stealth.hpp \
+    primitives/transaction.hpp \
+    primitives/wif.hpp \
+    primitives/wrapper.hpp
+
 # Generated from XML data source.
-libbitcoin_explorer_command_includedir = $(includedir)/explorer/commands
-libbitcoin_explorer_command_include_HEADERS = \
+libbitcoin_explorer_commands_includedir = $(includedir)/commands
+libbitcoin_explorer_commands_include_HEADERS = \
     commands/address-decode.hpp \
     commands/address-embed.hpp \
     commands/address-encode.hpp \
@@ -142,4 +142,3 @@ libbitcoin_explorer_command_include_HEADERS = \
     commands/wif-to-public.hpp \
     commands/wrap-decode.hpp \
     commands/wrap-encode.hpp
-
