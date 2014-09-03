@@ -65,7 +65,7 @@ build_explorer()
 {
     # Initialize git repository at the root of the build directory.
     git init
-    git config --global user.name anonymous
+    git config user.name anonymous
 
     # Download, build and install all unpackaged dependencies.
     # This script args are passed to configure of each build.
