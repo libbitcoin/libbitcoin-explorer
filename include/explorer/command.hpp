@@ -170,15 +170,15 @@ public:
             );
     }
 	
-	/**
+    /**
      * Load streamed value as parameter fallback.
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
-	{
-	}
-    
+    {
+    }
+
     /**
      * Write the usage help for this command to the specified stream.
      * @param[out] stream  The output stream.

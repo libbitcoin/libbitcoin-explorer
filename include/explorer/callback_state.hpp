@@ -25,9 +25,9 @@
 #include <string>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/thread/lockable_adapter.hpp>
-#include <boost/thread/recursive_mutex.hpp>
-#include <boost/thread/strict_lock.hpp>
+//#include <boost/thread/lockable_adapter.hpp>
+//#include <boost/thread/recursive_mutex.hpp>
+//#include <boost/thread/strict_lock.hpp>
 #include <explorer/primitives/encoding.hpp>
 #include <explorer/define.hpp>
 
@@ -38,8 +38,8 @@ namespace explorer {
 /**
  * Convenience type definition.
  */
-class callback_state;
-typedef boost::strict_lock<callback_state> state_locker;
+/*class callback_state;
+typedef boost::strict_lock<callback_state> state_locker;*/
     
 /**
  * Shared state wrapper to manage reentrant thread-safe and non-global shared 
@@ -47,7 +47,7 @@ typedef boost::strict_lock<callback_state> state_locker;
  * this class is internally locking.
  */
 class callback_state
-    : public boost::lockable_adapter<boost::recursive_mutex>
+    /*: public boost::lockable_adapter<boost::recursive_mutex>*/
 {
 public:
 
@@ -149,12 +149,12 @@ public:
     /**
      * Get the engine enumeration value.
      */
-    virtual const encoding_engine get_engine();
+    virtual encoding_engine get_engine();
 
     /**
      * Get the callback result code.
      */
-    virtual const console_result get_result();
+    virtual console_result get_result();
 
     /**
      * Set the callback result code.

@@ -17,12 +17,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include "precompile.hpp"
+#ifdef _MSC_VER
 // Suppressing msvc warnings from boost that are heard to deal with
 // because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
 // without first testing it.
-#include "precompile.hpp"
 #pragma warning(push) 
 #pragma warning(disable : 4996)
+#endif
 #include <explorer/utility/utility.hpp>
 #include <iomanip>
 #include <iostream>
@@ -41,7 +43,9 @@
 #include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 #include <explorer/define.hpp>
 #include <explorer/utility/compat.hpp>
 

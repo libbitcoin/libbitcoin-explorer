@@ -320,7 +320,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\commands\command.hpp">
-      <Filter>src\tests\command</Filter>
+      <Filter>src\tests\commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

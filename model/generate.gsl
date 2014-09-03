@@ -464,15 +464,15 @@ public:
 .endfor
     }
 	
-	/**
+    /**
      * Load streamed value as parameter fallback.
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
     virtual void load_stream(std::istream& input, po::variables_map& variables)
-	{
-	}
-    
+    {
+    }
+
     /**
      * Write the usage help for this command to the specified stream.
      * @param[out] stream  The output stream.
@@ -983,11 +983,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__$(symbol:c)__returns_expected_value)
 
 BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
-.echo "Generating include/Makefile.am..."
-.output "../include/Makefile.am"
+.echo "Generating include/explorer/Makefile.am..."
+.output "../include/explorer/Makefile.am"
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-libbitcoin_explorer_includedir = $\(includedir)/explorer
+libbitcoin_explorer_includedir = $\(includedir)
 libbitcoin_explorer_include_HEADERS = \\
     async_client.hpp \\
     callback_state.hpp \\
@@ -1000,54 +1000,53 @@ libbitcoin_explorer_include_HEADERS = \\
     prop_tree.hpp \\
     libbitcoin_explorer.hpp
 
-libbitcoin_explorer_utility_includedir = $\(includedir)/explorer/impl
-libbitcoin_explorer_utility_include_HEADERS += \\
-    prop_tree.ipp \\
-    utility.ipp
-    
-libbitcoin_explorer_utility_includedir = $\(includedir)/explorer/utility
-libbitcoin_explorer_utility_include_HEADERS += \\
-    compat.hpp \\
-    config.hpp \\
-    environment.hpp \\
-    parameter.hpp \\
-    printer.hpp \\
-    utility.hpp
-    
-libbitcoin_explorer_utility_includedir = $\(includedir)/explorer/primitives
-libbitcoin_explorer_utility_include_HEADERS += \\
-    address.hpp \\
-    base16.hpp \\
-    base58.hpp \\
-    btc.hpp \\
-    btc160.hpp \\
-    btc256.hpp \\
-    ec_private.hpp \\
-    ec_public.hpp \\
-    encoding.hpp \\
-    hashtype.hpp \\
-    hd_key.hpp \\
-    hd_priv.hpp \\
-    hd_pub.hpp \\
-    header.hpp \\
-    input.hpp \\
-    output.hpp \\
-    point.hpp \\
-    prefix.hpp \\
-    raw.hpp \\
-    script.hpp \\
-    stealth.hpp \\
-    transaction.hpp \\
-    wif.hpp \\
-    wrapper.hpp
-    
+libbitcoin_explorer_impl_includedir = $\(includedir)/impl
+libbitcoin_explorer_impl_include_HEADERS = \\
+    impl/prop_tree.ipp \\
+    impl/utility.ipp
+
+libbitcoin_explorer_utility_includedir = $\(includedir)/utility
+libbitcoin_explorer_utility_include_HEADERS = \\
+    utility/compat.hpp \\
+    utility/config.hpp \\
+    utility/environment.hpp \\
+    utility/parameter.hpp \\
+    utility/printer.hpp \\
+    utility/utility.hpp
+
+libbitcoin_explorer_primitives_includedir = $\(includedir)/primitives
+libbitcoin_explorer_primitives_include_HEADERS = \\
+    primitives/address.hpp \\
+    primitives/base16.hpp \\
+    primitives/base58.hpp \\
+    primitives/btc.hpp \\
+    primitives/btc160.hpp \\
+    primitives/btc256.hpp \\
+    primitives/ec_private.hpp \\
+    primitives/ec_public.hpp \\
+    primitives/encoding.hpp \\
+    primitives/hashtype.hpp \\
+    primitives/hd_key.hpp \\
+    primitives/hd_priv.hpp \\
+    primitives/hd_pub.hpp \\
+    primitives/header.hpp \\
+    primitives/input.hpp \\
+    primitives/output.hpp \\
+    primitives/point.hpp \\
+    primitives/prefix.hpp \\
+    primitives/raw.hpp \\
+    primitives/script.hpp \\
+    primitives/stealth.hpp \\
+    primitives/transaction.hpp \\
+    primitives/wif.hpp \\
+    primitives/wrapper.hpp
+
 # Generated from XML data source.
-libbitcoin_explorer_command_includedir = $\(includedir)/explorer/commands
-libbitcoin_explorer_command_include_HEADERS = \\
+libbitcoin_explorer_commands_includedir = $\(includedir)/commands
+libbitcoin_explorer_commands_include_HEADERS = \\
 .for command by symbol
     commands/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
-
 .##############################################################################
 .echo "Generating src/Makefile.am..."
 .output "../src/Makefile.am"
@@ -1059,9 +1058,9 @@ AUTOMAKE_OPTIONS = subdir-objects
 noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 AM_CPPFLAGS = \\
-    ${libbitcoin_CFLAGS} \\
-    ${libwallet_CFLAGS} \\
-    -I$\(srcdir)/../include
+    -I$\(srcdir)/../include \\
+    ${obelisk_CFLAGS} \\
+    ${wallet_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \\
     async_client.cpp \\
@@ -1106,27 +1105,24 @@ libbitcoin_explorer_la_SOURCES += \\
 .for command by symbol
     commands/$(symbol:).cpp$(!last() ?? " \\")
 .endfor
-
-AM_CPPFLAGS += \\
-    ${libobelisk_CFLAGS} \\
-    -DSYSCONFDIR=\"${sysconfdir}\"
+    
+libbitcoin_explorer_la_LIBADD = \\
+    ${obelisk_LIBS} \\
+    ${wallet_LIBS}
 
 # Console Application
-bin_PROGRAMS = sx
+bin_PROGRAMS = explorer
 
-sx_SOURCES = \\
+explorer_SOURCES = \\
     console/main.cpp
 
-sx_LDADD = \\
-    -L$\(srcdir) -lbitcoin_explorer \\
-    $\(libbitcoin_LIBS) \\
-    $\(libwallet_LIBS) \\
-    $\(libobelisk_LIBS) \\
-    -lboost_filesystem \\
+explorer_LDADD = \\
+    -L$\(srcdir)/../src/ \\
+    -lbitcoin_explorer \\
+    -lboost_chrono \\
     -lboost_program_options \\
-    -lboost_regex \\
-    -lboost_system
-
+    ${obelisk_LIBS} \\
+    ${wallet_LIBS}
 .##############################################################################
 .echo "Generating test/Makefile.am..."
 .output "../test/Makefile.am"
@@ -1134,18 +1130,15 @@ sx_LDADD = \\
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-noinst_PROGRAMS = libbitcoin_explorer_test
+noinst_PROGRAMS = explorer_test
 
 AM_CPPFLAGS = \\
-    ${libbitcoin_CFLAGS} \\
-    ${libwallet_CFLAGS} \\
-    -I$\(srcdir)/../include
+    -I$\(srcdir)/../include \\
+    ${obelisk_CFLAGS} \\
+    ${wallet_CFLAGS} \\
+    -DBOOST_TEST_DYN_LINK
 
-#libbitcoin_explorer_test_HEADERS = \\
-    command.hpp \\
-    precompile.hpp
-
-libbitcoin_explorer_test_SOURCES = \\
+explorer_test_SOURCES = \\
     address.cpp \\
     base58.cpp \\
     generated__broadcast.cpp \\
@@ -1157,26 +1150,18 @@ libbitcoin_explorer_test_SOURCES = \\
     printer.cpp
 
 # Generated from XML data source.
-libbitcoin_explorer_test_SOURCES += \\
+explorer_test_SOURCES += \\
 .for command by symbol
     commands/$(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
-libbitcoin_explorer_test_LDADD = \\
-    -L$\(srcdir)/../src/ -lbitcoin_explorer \\
-    $\(libbitcoin_LIBS) \\
-    $\(libwallet_LIBS) \\
-    $\(libobelisk_LIBS) \\
-    -lboost_filesystem \\
+explorer_test_LDADD = \\
+    -L$\(srcdir)/../src/ \\
+    -lbitcoin_explorer \\
+    -lboost_chrono \\
     -lboost_program_options \\
-    -lboost_regex \\
-    -lboost_system \\
-    -lboost_unit_test_framework
-      
-AM_CPPFLAGS += \\
-    ${libobelisk_CFLAGS} \\
-    -DBOOST_TEST_DYN_LINK
-
+    ${obelisk_LIBS} \\
+    ${wallet_LIBS}
 .##############################################################################
 .echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj..."
 .output "../builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj"
@@ -1362,7 +1347,6 @@ AM_CPPFLAGS += \\
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" />
   </ImportGroup>
@@ -1380,7 +1364,6 @@ AM_CPPFLAGS += \\
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets'))" />
   </Target>
@@ -1413,7 +1396,7 @@ AM_CPPFLAGS += \\
     </Filter>
     <Filter Include="include\\impl">
       <UniqueIdentifier>{d34fd634-a274-4629-8a8f-c588117d9733}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="include\\primitives">
       <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
     </Filter>
@@ -1791,7 +1774,9 @@ AM_CPPFLAGS += \\
     <ClCompile Include="..\\..\\..\\..\\test\\generated__broadcast.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__find.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\test\\main.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>    
     <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp" />
@@ -1821,7 +1806,6 @@ AM_CPPFLAGS += \\
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" />
@@ -1841,7 +1825,6 @@ AM_CPPFLAGS += \\
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_thread-vc120.1.56.0.0\\build\\native\\boost_thread-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets'))" />
@@ -1935,7 +1918,7 @@ AM_CPPFLAGS += \\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\test\\commands\\command.hpp">
-      <Filter>src\\tests\\command</Filter>
+      <Filter>src\\tests\\commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

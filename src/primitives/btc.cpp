@@ -51,7 +51,7 @@ btc::btc(const btc& other)
 {
 }
 
-btc::operator const uint64_t() const
+btc::operator uint64_t() const
 {
     return value_;
 }

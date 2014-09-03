@@ -29,7 +29,7 @@ using namespace explorer::commands;
 console_result address_embed::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& data = get_file_argument();
+    //const auto& data = get_file_argument();
 
     error << BX_ADDRESS_EMBED_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

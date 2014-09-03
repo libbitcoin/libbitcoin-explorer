@@ -68,7 +68,7 @@ static void handle_callback(callback_state& state,
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto height = get_height_option();
+    //const auto height = get_height_option();
     const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
 

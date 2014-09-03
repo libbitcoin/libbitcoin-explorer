@@ -6,9 +6,9 @@ AUTOMAKE_OPTIONS = subdir-objects
 noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 AM_CPPFLAGS = \
-    ${libbitcoin_CFLAGS} \
-    ${libwallet_CFLAGS} \
-    -I$(srcdir)/../include
+    -I$(srcdir)/../include \
+    ${obelisk_CFLAGS} \
+    ${wallet_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \
     async_client.cpp \
@@ -135,24 +135,21 @@ libbitcoin_explorer_la_SOURCES += \
     commands/wif-to-public.cpp \
     commands/wrap-decode.cpp \
     commands/wrap-encode.cpp
-
-AM_CPPFLAGS += \
-    ${libobelisk_CFLAGS} \
-    -DSYSCONFDIR="${sysconfdir}"
+    
+libbitcoin_explorer_la_LIBADD = \
+    ${obelisk_LIBS} \
+    ${wallet_LIBS}
 
 # Console Application
-bin_PROGRAMS = sx
+bin_PROGRAMS = explorer
 
-sx_SOURCES = \
+explorer_SOURCES = \
     console/main.cpp
 
-sx_LDADD = \
-    -L$(srcdir) -lbitcoin_explorer \
-    $(libbitcoin_LIBS) \
-    $(libwallet_LIBS) \
-    $(libobelisk_LIBS) \
-    -lboost_filesystem \
+explorer_LDADD = \
+    -L$(srcdir)/../src/ \
+    -lbitcoin_explorer \
+    -lboost_chrono \
     -lboost_program_options \
-    -lboost_regex \
-    -lboost_system
-
+    ${obelisk_LIBS} \
+    ${wallet_LIBS}

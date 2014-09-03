@@ -27,6 +27,22 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 
+// We use the generic helper definitions in libbitcoin to define BCX_API 
+// and BCX_INTERNAL. BCX_API is used for the public API symbols. It either DLL
+// imports or DLL exports (or does nothing for static build) BCX_INTERNAL is 
+// used for non-api symbols.
+
+#if defined BCX_STATIC
+#define BCX_API
+#define BCX_INTERNAL
+#elif defined BCS_DLL
+#define BCX_API      BC_HELPER_DLL_EXPORT
+#define BCX_INTERNAL BC_HELPER_DLL_LOCAL
+#else
+#define BCX_API      BC_HELPER_DLL_IMPORT
+#define BCX_INTERNAL BC_HELPER_DLL_LOCAL
+#endif
+
 #define PROPERTY(type, name) \
     public: virtual type get_##name() { return name##_; } \
     public: virtual void set_##name(type value) { name##_ = value; } \

@@ -61,7 +61,7 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    operator const bc::sighash() const;
+    operator bc::sighash() const;
 
     /**
      * Overload stream in. Throws if input is invalid.

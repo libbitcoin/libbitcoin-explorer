@@ -36,79 +36,8 @@ BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure)
     BX_DECLARE_COMMAND(help);
     command.set_command_argument("booger");
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    //BX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n" \
-    //    "addr-decode\n" \
-    //    "addr-embed\n" \
-    //    "addr-encode\n" \
-    //    "addr-validate\n" \
-    //    "balance\n" \
-    //    "base58-decode\n" \
-    //    "base58-encode\n" \
-    //    "base58check-decode\n" \
-    //    "base58check-encode\n" \
-    //    "bci-fetch-last-height\n" \
-    //    "bci-history\n" \
-    //    "bci-send-transaction\n" \
-    //    "be-fetch-transaction\n" \
-    //    "bitcoin160\n" \
-    //    "bitcoin256\n" \
-    //    "btc\n" \
-    //    "ec-add\n" \
-    //    "ec-add-secrets\n" \
-    //    "ec-lock\n" \
-    //    "ec-multiply\n" \
-    //    "ec-multiply-secrets\n" \
-    //    "ec-new\n" \
-    //    "ec-to-addr\n" \
-    //    "ec-to-pub\n" \
-    //    "ec-to-wif\n" \
-    //    "ec-unlock\n" \
-    //    "fetch-header\n" \
-    //    "fetch-last-height\n" \
-    //    "fetch-public-key\n" \
-    //    "fetch-stealth\n" \
-    //    "fetch-transaction\n" \
-    //    "fetch-transaction-index\n" \
-    //    "fetch-utxo\n" \
-    //    "genaddr\n" \
-    //    "genpriv\n" \
-    //    "genpub\n" \
-    //    "hd-new\n" \
-    //    "hd-priv\n" \
-    //    "hd-pub\n" \
-    //    "hd-to-addr\n" \
-    //    "hd-to-ec\n" \
-    //    "hd-to-pub\n" \
-    //    "hd-to-wif\n" \
-    //    "help\n" \
-    //    "history\n" \
-    //    "initchain\n" \
-    //    "mnemonic-decode\n" \
-    //    "mnemonic-encode\n" \
-    //    "monitor\n" \
-    //    "mpk\n" \
-    //    "newseed\n" \
-    //    "qrcode\n" \
-    //    "rawscript\n" \
-    //    "ripemd160\n" \
-    //    "satoshi\n" \
-    //    "scripthash\n" \
-    //    "seed\n" \
-    //    "sendtx-node\n" \
-    //    "sendtx-obelisk\n" \
-    //    "sendtx-p2p\n" \
-    //    "sha160\n" \
-    //    "sha256\n" \
-    //    "sha512\n" \
-    //    "signtx\n" \
-    //    "stealth-addr\n" \
-    //    "unwrap\n" \
-    //    "validtx\n" \
-    //    "wallet\n" \
-    //    "watchtx\n" \
-    //    "wif-to-ec\n" \
-    //    "wif-to-pub\n" \
-    //    "wrap\n");
+    //BX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n");
+
 }
 
 BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)

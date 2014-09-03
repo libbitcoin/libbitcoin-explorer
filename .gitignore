@@ -1,6 +1,7 @@
 .deps
 .libs
 *.am~
+*.sh~
 *.la
 *.lo
 *.o
@@ -22,6 +23,6 @@ Makefile.in
 
 /obj/
 /bin/
-
 /src/sx
 /test/libbitcoin_explorer_test
+/BUILD/

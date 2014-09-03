@@ -2,18 +2,15 @@
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-noinst_PROGRAMS = libbitcoin_explorer_test
+noinst_PROGRAMS = explorer_test
 
 AM_CPPFLAGS = \
-    ${libbitcoin_CFLAGS} \
-    ${libwallet_CFLAGS} \
-    -I$(srcdir)/../include
+    -I$(srcdir)/../include \
+    ${obelisk_CFLAGS} \
+    ${wallet_CFLAGS} \
+    -DBOOST_TEST_DYN_LINK
 
-#libbitcoin_explorer_test_HEADERS = \
-    command.hpp \
-    precompile.hpp
-
-libbitcoin_explorer_test_SOURCES = \
+explorer_test_SOURCES = \
     address.cpp \
     base58.cpp \
     generated__broadcast.cpp \
@@ -25,7 +22,7 @@ libbitcoin_explorer_test_SOURCES = \
     printer.cpp
 
 # Generated from XML data source.
-libbitcoin_explorer_test_SOURCES += \
+explorer_test_SOURCES += \
     commands/address-decode.cpp \
     commands/address-embed.cpp \
     commands/address-encode.cpp \
@@ -112,18 +109,10 @@ libbitcoin_explorer_test_SOURCES += \
     commands/wrap-decode.cpp \
     commands/wrap-encode.cpp
 
-libbitcoin_explorer_test_LDADD = \
-    -L$(srcdir)/../src/ -lbitcoin_explorer \
-    $(libbitcoin_LIBS) \
-    $(libwallet_LIBS) \
-    $(libobelisk_LIBS) \
-    -lboost_filesystem \
+explorer_test_LDADD = \
+    -L$(srcdir)/../src/ \
+    -lbitcoin_explorer \
+    -lboost_chrono \
     -lboost_program_options \
-    -lboost_regex \
-    -lboost_system \
-    -lboost_unit_test_framework
-      
-AM_CPPFLAGS += \
-    ${libobelisk_CFLAGS} \
-    -DBOOST_TEST_DYN_LINK
-
+    ${obelisk_LIBS} \
+    ${wallet_LIBS}

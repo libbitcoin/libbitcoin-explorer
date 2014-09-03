@@ -23,7 +23,7 @@
     </Filter>
     <Filter Include="include\impl">
       <UniqueIdentifier>{d34fd634-a274-4629-8a8f-c588117d9733}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="include\primitives">
       <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
     </Filter>

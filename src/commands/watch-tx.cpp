@@ -29,8 +29,8 @@ using namespace explorer::commands;
 console_result watch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& hashes = get_hashs_argument();
-    const auto& encoding = get_format_option();
+    //const auto& hashes = get_hashs_argument();
+    //const auto& encoding = get_format_option();
 
     error << BX_WATCH_TX_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

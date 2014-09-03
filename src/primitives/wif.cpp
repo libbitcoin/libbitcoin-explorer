@@ -46,7 +46,7 @@ wif::wif(const std::string& base58)
 }
 
 wif::wif(const ec_secret& value)
-    : value_(value), compressed_(true)
+    : compressed_(true), value_(value)
 {
 }
 

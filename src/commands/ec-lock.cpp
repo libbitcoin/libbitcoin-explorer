@@ -29,8 +29,8 @@ using namespace explorer::commands;
 console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& secret = get_ec_private_key_argument();
-    const auto& passphrase = get_passphrase_argument();
+    //const auto& secret = get_ec_private_key_argument();
+    //const auto& passphrase = get_passphrase_argument();
 
     // TODO: implement BIP38
 

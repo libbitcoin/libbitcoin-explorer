@@ -57,7 +57,7 @@ encoding::encoding(const encoding& other)
 {
 }
 
-encoding::operator const encoding_engine() const
+encoding::operator encoding_engine() const
 {
     return value_;
 }
