@@ -25,9 +25,9 @@
 #include <string>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/thread/strict_lock.hpp>
-#include <boost/thread/lockable_adapter.hpp>
-#include <boost/thread/recursive_mutex.hpp>
+//#include <boost/thread/strict_lock.hpp>
+//#include <boost/thread/lockable_adapter.hpp>
+//#include <boost/thread/recursive_mutex.hpp>
 #include <explorer/primitives/encoding.hpp>
 #include <explorer/define.hpp>
 #include <explorer/prop_tree.hpp>
@@ -40,8 +40,9 @@ namespace explorer {
     
 callback_state::callback_state(std::ostream& error, std::ostream& output,
     const encoding_engine engine)
-    : error_(error), output_(output), refcount_(0), stopped_(true),
-    engine_(engine), result_(console_result::okay)
+    : stopped_(true), refcount_(0), result_(console_result::okay), 
+    engine_(engine), error_(error), output_(output)
+    
 {
 }
 
@@ -67,14 +68,14 @@ bool callback_state::handle_error(const std::error_code& code,
 // std::endl adds "/n" and flushes the stream.
 void callback_state::error(const ptree tree)
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     write_stream(error_, tree, engine_);
 }
 
 // std::endl adds "/n" and flushes the stream.
 void callback_state::error(const format& message)
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     error_ << message << std::endl;
 }
 
@@ -86,14 +87,14 @@ void callback_state::error(const std::string& message)
 // std::endl adds "/n" and flushes the stream.
 void callback_state::output(const pt::ptree tree)
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     write_stream(error_, tree, engine_);
 }
 
 // std::endl adds "/n" and flushes the stream.
 void callback_state::output(const format& message)
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     output_ << message  << std::endl;
 }
 
@@ -109,7 +110,7 @@ void callback_state::output(uint64_t value)
 
 void callback_state::start()
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     refcount_ = 1;
     stopped_ = false;
     result_ = console_result::okay;
@@ -117,7 +118,7 @@ void callback_state::start()
 
 void callback_state::stop(console_result result)
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     refcount_ = 0;
     stopped_ = true;
     result_ = result;
@@ -128,25 +129,25 @@ bool& callback_state::stopped()
     return stopped_;
 }
 
-const encoding_engine callback_state::get_engine()
+encoding_engine callback_state::get_engine()
 {
     return engine_;
 }
 
-const console_result callback_state::get_result()
+console_result callback_state::get_result()
 {
     return result_;
 }
 
 void callback_state::set_result(console_result result)
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     result_ = result;
 }
 
 size_t callback_state::increment()
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     if (++refcount_ != 0)
         stopped_ = false;
 
@@ -155,7 +156,7 @@ size_t callback_state::increment()
 
 size_t callback_state::decrement()
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     if (--refcount_ == 0)
         stopped_ = true;
 
@@ -169,14 +170,14 @@ callback_state::operator size_t() const
 
 callback_state& callback_state::operator++()
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     increment();
     return *this;
 }
 
 callback_state& callback_state::operator--()
 {
-    state_locker guard(*this);
+    /*state_locker guard(*this);*/
     decrement();
     return *this;
 }
