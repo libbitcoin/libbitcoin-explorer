@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libbitcoin_explorer
+Description: Command line for Bitcoin queries and local operations.
+URL: https://github.com/evoskuil/libbitcoin_explorer
+Version: @PACKAGE_VERSION@
+Cflags: -I${includedir} -std=c++11
+Requires: libobelisk >= 0.1.1 libwallet >= 1.0.11
+Libs: -L${libdir} -lbitcoin_explorer -lboost_chrono -lboost_program_options
