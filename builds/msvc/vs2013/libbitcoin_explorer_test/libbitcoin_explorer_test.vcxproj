@@ -75,7 +75,9 @@
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
-    <ClCompile Include="..\..\..\..\test\main.cpp" />
+    <ClCompile Include="..\..\..\..\test\main.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>    
     <ClCompile Include="..\..\..\..\test\obelisk_client.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />
@@ -187,7 +189,6 @@
     <Import Project="..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\libsodium_vc120.0.6.0.1\build\native\libsodium_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libsodium_vc120.0.6.0.1\build\native\libsodium_vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\boost_thread-vc120.1.56.0.0\build\native\boost_thread-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_thread-vc120.1.56.0.0\build\native\boost_thread-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_date_time-vc120.1.56.0.0\build\native\boost_date_time-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_date_time-vc120.1.56.0.0\build\native\boost_date_time-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_chrono-vc120.1.56.0.0\build\native\boost_chrono-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_chrono-vc120.1.56.0.0\build\native\boost_chrono-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" />
@@ -207,7 +208,6 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\libsodium_vc120.0.6.0.1\build\native\libsodium_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libsodium_vc120.0.6.0.1\build\native\libsodium_vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_thread-vc120.1.56.0.0\build\native\boost_thread-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_thread-vc120.1.56.0.0\build\native\boost_thread-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_date_time-vc120.1.56.0.0\build\native\boost_date_time-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_date_time-vc120.1.56.0.0\build\native\boost_date_time-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_chrono-vc120.1.56.0.0\build\native\boost_chrono-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_chrono-vc120.1.56.0.0\build\native\boost_chrono-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets'))" />
