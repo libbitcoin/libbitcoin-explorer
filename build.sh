@@ -78,7 +78,7 @@ build_explorer()
     github_build evoskuil libwallet develop "$@"
     github_build evoskuil obelisk develop "$@"
     
-    # BUild only master and the above dependencies as necessary.
+    # Build only master and the above dependencies as necessary.
     github_build libbitcoin libbitcoin_explorer master "$@"
     
     # Run unit tests.
