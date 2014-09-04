@@ -30,6 +30,7 @@
 #include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/prop_tree.hpp>
+#include <explorer/primitives/base16.hpp>
 #include <explorer/primitives/point.hpp>
 #include <explorer/primitives/script.hpp>
 #include <explorer/utility/utility.hpp>
@@ -107,9 +108,9 @@ static ec_secret generate_private_key(
 {
     if (tokens.size() == 3)
     {
-        size_t bitlength;
-        deserialize(bitlength, tokens[2]);
-        return new_key(new_seed(bitlength));
+        data_chunk seed = base16(tokens[2]);
+        if (seed.size() >= minimum_seed_size)
+            return new_key(seed);
     }
 
     return null_hash;
