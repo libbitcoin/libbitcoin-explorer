@@ -2,6 +2,10 @@ language: cpp
 
 compiler: gcc
 
+branches:
+  # Build only from master, when master changes.
+  only: master
+    
 before_install:
   # Set package repoository.
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
@@ -18,7 +22,10 @@ install:
   # Get GMP (GNU Multiprecision Arithmetic Library)
   # Get LibConfig (for Obelisk until swtich to boost::program_options)
   - sudo apt-get -qq install libgmp-dev libconfig++-dev
-  
-script: 
+
+  # Install required boost components at the minimum version required.
   - ./boost.sh
+
+script:
+  # Build the master branch and all locally-built dependencies.
   - ./build.sh CFLAGS="-s"
