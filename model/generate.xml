@@ -122,7 +122,6 @@
   <command symbol="btc-to-satoshi" typeX="uint64_t" category="MATH">
     <option name="help" description="Convert BTC to satoshi." />
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert."/>
-    <define name="BX_BTC_TO_SATOSHI_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
   <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
@@ -443,7 +442,6 @@
   <command symbol="satoshi-to-btc" typeX="btc" category="MATH">
     <option name="help" description="Convert satoshi to BTC." />
     <argument name="SATOSHI" stdin="true" type="uint64_t" description="The whole number of satoshi to convert."/>
-    <define name="BX_SATOSHI_TO_BTC_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
   <command symbol="script-decode" formerly="showscript" typeX="script" category="SCRIPT">
