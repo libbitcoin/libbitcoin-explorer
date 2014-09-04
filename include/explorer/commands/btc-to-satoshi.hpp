@@ -62,12 +62,6 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
- */
-#define BX_BTC_TO_SATOSHI_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
  * Class to implement the btc-to-satoshi command.
  */
 class btc_to_satoshi 

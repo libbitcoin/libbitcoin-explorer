@@ -18,7 +18,6 @@ before_install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
   
 install:
-  
   # Get GMP (GNU Multiprecision Arithmetic Library)
   # Get LibConfig (for Obelisk until swtich to boost::program_options)
   - sudo apt-get -qq install libgmp-dev libconfig++-dev
