@@ -206,21 +206,15 @@ Input processing is handled in shared code and generated headers. All values are
 
 #### Configuration Settings
 
-BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind configuration settings to strongly-typed application level properties. The implementation supports a two level hierarchy of settings using "sections" to group settings. The path to the configuration settings file is determined in the following manner.
+BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind configuration settings to strongly-typed application level properties. The implementation supports a two level hierarchy of settings using "sections" to group settings. The path to the configuration settings file is specified by the `--config` command line option or `BX_CONFIG` environment variable, and if not specified defaults as follows.
 
-The value of the `config` command line option or environment variable. Otherwise:
+##### Linux/Unix/OSX
+The current user's home directory, as defined by the `HOME` environment variable or by the call `getpwuid(getuid())->pw_dir`. A typical path is `/home/username`.
 
-**Linux/Unix/OSX**
-The path to the configuration settings file is the current user's home directory, as defined by the `HOME` environment variable or by the call `getpwuid(getuid())->pw_dir`.
+#####Windows
+The path defined by [CSIDL_LOCAL_APPDATA](http://msdn.microsoft.com/en-us/library/windows/desktop/bb762494(v=vs.85).aspx) for the current user. A typical path is `C:\Documents and Settings\username\Local Settings\Application Data`.
 
-**Windows**
-The path defined by [CSIDL_LOCAL_APPDATA](http://msdn.microsoft.com/en-us/library/windows/desktop/bb762494(v=vs.85).aspx). A typical path is `C:\Documents and Settings\username\Local Settings\Application Data`.
-
-If no configuration settings file is found default values generated from metadata are populated.
-
-[TODO: EXAMPLE HERE]
-
-Configuration settings are generated from metadata during development. The metadata includes full definition for all settings, including section, name, data type, default value and help description.
+Configuration settings are generated from metadata during development. The metadata includes full definition for all settings, including section, name, data type, default value and help description. If there is no configuration settings file, or if individual settings are not specified in the file, then default values are populated to bound properties.
 
 [TODO: EXAMPLE HERE]
 
@@ -228,7 +222,7 @@ Configuration settings are generated from metadata during development. The metad
 
 BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind environment variables. All BX environment variables are prefixed with `BX_`. Currently environment variables are bound explicitly (i.e. bindings are not generated from metadata).
 
-Currently `BX_CONFIG` is the only bound environment variable. BX uses a Boost feature to tie the environment variable and the command line option of the same identity (i.e. `--config`). The command line option value takes precedence if it is set.
+Currently `BX_CONFIG` is the only bound environment variable. BX uses a Boost feature to tie the environment variable and the command line option of the same identity (i.e. `--config`). The command line option takes precedence.
 
 [TODO: EXAMPLE HERE]
 
