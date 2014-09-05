@@ -52,7 +52,7 @@ console_result help::invoke(std::ostream& output, std::ostream& error)
     if (symbol.empty())
     {
         write_usage(error);
-        return console_result::failure;
+        return console_result::okay;
     }
 
     // If the COMMAND is not a command, say so and list all commands.
