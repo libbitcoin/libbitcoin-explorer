@@ -51,7 +51,7 @@ console_result help::invoke(std::ostream& output, std::ostream& error)
     // If there is no COMMAND then show usage for *this* command.
     if (symbol.empty())
     {
-        write_usage(error);
+        write_usage(output);
         return console_result::okay;
     }
 

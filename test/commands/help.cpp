@@ -24,28 +24,26 @@ BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(help__invoke)
 
-BOOST_AUTO_TEST_CASE(help__invoke__no_command__failure_error)
-{
-    BX_DECLARE_COMMAND(help);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR("");
-}
-
 BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure)
 {
     BX_DECLARE_COMMAND(help);
     command.set_command_argument("booger");
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    //BX_REQUIRE_ERROR("The word 'booger' is not a sx command. All commands:\n");
-
+    //BX_REQUIRE_ERROR("TODO");
 }
 
+BOOST_AUTO_TEST_CASE(help__invoke__no_command__okay_output)
+{
+    BX_DECLARE_COMMAND(help);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    //BX_REQUIRE_OUTPUT("TODO");
+}
 BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
 {
     BX_DECLARE_COMMAND(help);
     command.set_command_argument("help");
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("");
+    //BX_REQUIRE_OUTPUT("TODO");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
