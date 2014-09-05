@@ -110,7 +110,7 @@ explorer_test_SOURCES += \
     commands/wrap-encode.cpp
 
 explorer_test_LDADD = \
-    -L$../src/ \
+    -L$(srcdir)/../src/ \
     -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
