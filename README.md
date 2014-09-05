@@ -71,9 +71,9 @@ Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the 
 
 #### Notes
 
-You can run the script from any directory on your system. This will build and install Bitcoin Explorer in a new subdirectory named BUILD. If you are missing dependencies the build will terminate and you will be shown what is missing.
+You can run the script from any directory on your system. This will build Bitcoin Explorer from a new subdirectory named BUILD and install it to `/usr/local/`. If you are missing dependencies the build will terminate and you will be shown what is missing. Once the installation is complete you can safely delete the BUILD subdirectory. 
 
-It should not normally be executed using sudo. It will immediately prompt you for a super user password if required. This ensures that only the necessary installation steps are executed as a super user, as opposed to the entire build process.
+The build script should not normally be executed using sudo. Instead it will immediately prompt you for a super user password if required. This ensures that only the necessary installation steps are executed as a super user, as opposed to the entire build process.
 
 **The build can take well over an hour to complete.** In addition to the packaged dependencies above, the build script clones, builds and installs nine repositories, namely:
 
