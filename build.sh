@@ -90,10 +90,6 @@ build_explorer()
     cd libbitcoin_explorer/src
     ./explorer help
     cd ../..
-
-    # Allow the user to invoke by typing BX or SX.
-    sudo ln --symbolic --force /usr/local/bin/explorer /usr/local/bin/bx
-    sudo ln --symbolic --force /usr/local/bin/explorer /usr/local/bin/sx
 }
 
 # Exit this script on the first error (any statement returns non-true value).
