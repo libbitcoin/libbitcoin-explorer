@@ -20,7 +20,7 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/libbitcoin_explorer.hpp>
+#include <explorer/explorer.hpp>
 #include "precompile.hpp"
 
 using namespace bc;

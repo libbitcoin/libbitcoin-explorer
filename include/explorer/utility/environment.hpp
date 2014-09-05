@@ -29,7 +29,7 @@ namespace explorer {
 /**
  * Naming convention prefix for Bitcoin Explorer environment variables.
  */
-#define BX_ENVIRONMENT_VARIABLE_PREFIX "SX_"
+#define BX_ENVIRONMENT_VARIABLE_PREFIX "BX_"
 
 /**
  * The name of the linux environment variable that defines the home directory.

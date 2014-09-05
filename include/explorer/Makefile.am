@@ -11,7 +11,7 @@ libbitcoin_explorer_include_HEADERS = \
     generated.hpp \
     obelisk_client.hpp \
     prop_tree.hpp \
-    libbitcoin_explorer.hpp
+    explorer.hpp
 
 libbitcoin_explorer_impl_includedir = $(includedir)/impl
 libbitcoin_explorer_impl_include_HEADERS = \

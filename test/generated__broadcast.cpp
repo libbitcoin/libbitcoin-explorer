@@ -20,7 +20,7 @@
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <explorer/libbitcoin_explorer.hpp>
+#include <explorer/explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 

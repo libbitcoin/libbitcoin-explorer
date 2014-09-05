@@ -434,7 +434,7 @@
     <ClInclude Include="..\..\..\..\include\explorer\prop_tree.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\explorer\libbitcoin_explorer.hpp">
+    <ClInclude Include="..\..\..\..\include\explorer\explorer.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
