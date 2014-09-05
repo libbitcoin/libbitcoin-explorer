@@ -11,6 +11,7 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
+      <AdditionalOptions>/Zm1000 %(AdditionalOptions)</AdditionalOptions>
       <!-- 4503: http://bit.ly/1nOftf3 -->
       <DisableSpecificWarnings>4503;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
@@ -19,7 +20,7 @@
       <!-- These go together in support of precompiled headers. -->
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>precompile.hpp</PrecompiledHeaderFile>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>      
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalOptions>/OPT:NOLBR /IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
