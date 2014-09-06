@@ -21,7 +21,7 @@
     <shorthand name="WIF" description="Wallet Import Format" />
   </help>
   
-  <!-- Configuration file sections -->
+  <!-- Configuration file sections. -->
   
   <configuration section="general">
     <!-- NOTE: we could move this into the obelisk section if it was dynamic. -->
@@ -35,12 +35,14 @@
   </configuration>
   
   <configuration section="server">
-    <!-- TODO: create serialized type for URI -->
+    <!-- TODO: create serialized type for URI. -->
     <setting name="client-certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert" />
     <setting name="server-public-key" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
     <setting name="service" default="tcp://obelisk.unsystem.net:8081" description="The URI of the server to which this application may connect." />
     <setting name="socks-proxy" default="localhost:1080" description="The host name and port number of a SOCKS 4a or SOCKS 5 proxy server." />
   </configuration>
+  
+  <!-- General resources. -->
   
   <resource>
     <string name="config_description" value="The path and file name for the configuration settings file for this application." />
