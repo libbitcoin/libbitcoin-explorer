@@ -38,33 +38,41 @@ All files in this repository fall under the license specified in [COPYING](https
 
 Bitcoin Explorer is a fork of the popular [SX command line tool](https://sx.dyne.org/index.html). Many of the commands and their parameters are identical to SX although many have changed, some have been obsoleted and others have been added.
 
-Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or libbitcoin\_server (Obelisk), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
+Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [libbitcoin_server](https://github.com/libbitcoin/obelisk) (Obelisk), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
 
-Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name in this fork is **libbitcoin_explorer**. Therefore the program is called **explorer** and is referred to as **BX** as a convenience and out of respect for its groundbreaking predecessor.
+Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin_explorer**. Therefore the program is called **explorer** and is referred to as **BX** as a convenience and out of respect for its groundbreaking predecessor.
 
 ## Installation
 
 ### Debian/Ubuntu
 
-Libbitcoin requires a modern C++ compiler, **GCC 4.7.0** minimum. For this reason **Ubuntu is not supported prior to version 12.04**. To see your compiler version:
+Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.org/projects/cxx0x.html) minimum.
+
+> For this reason Ubuntu is not supported prior to version 12.04. 
+
+To see your GCC version:
+
 ```
   $ gcc --version
 ```
+
 If necessary, upgrade your compiler [as follows](http://bit.ly/1vXaaQL):
 ```
   $ sudo apt-get install g++-4.8
   $ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
   $ sudo update-alternatives --config g++
 ```
-Next install the [build system](http://en.wikipedia.org/wiki/GNU_build_system):
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```
   $ sudo apt-get install build-essential autoconf automake libtool pkg-config
 ```
-Next install [Boost](http://www.boost.org) (1.50.0 or newer), [GMP](https://gmplib.org) (5.0.0 or newer), and [LibConfig++](http://www.hyperrealm.com/libconfig) (1.3.2 or newer) development packages:
+Next install [Boost](http://www.boost.org) (1.50.0 or newer), [GMP](https://gmplib.org) (5.0.0 or newer), and [Libconfig++](http://www.hyperrealm.com/libconfig) (1.3.2 or newer) development packages:
 ```
   $ sudo apt-get install libboost-all-dev libgmp-dev libconfig++-dev
 ```
-Next execute the [build script](https://raw.githubusercontent.com/libbitcoin/libbitcoin_explorer/develop/build.sh).
+> *The Libconfig++ dependency is deprecated and will be removed in a future version*
+
+Next execute the [build script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/build.sh).
 ```
 $ ./build.sh
 ```
@@ -72,23 +80,27 @@ Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the 
 
 #### Notes
 
-You can run the build script from any directory on your system. This will build Bitcoin Explorer in a new subdirectory named BUILD and install it to `/usr/local/`. If you are missing dependencies the build will terminate and you will be shown what is missing. Once the installation is complete you can safely delete the BUILD subdirectory. 
+If you intend to inspect and/or modify source code you should [git clone](http://git-scm.com/docs/git-clone) each dependency and build each manually. The build script itself is simple and commented so that the manual build steps for each dependency can be easily inferred by a developer.
+
+Libbitcoin and many of its dependenices do not yet supply [packages](http://wikipedia.org/wiki/Package_(package_management_system)). The build script exists to provide a level of convenience similar to a package, but against current sources. In order to ensure the quality of the build script it includes no conditional instructions and is [executed automatically](tps://travis-ci.org/libbitcoin/libbitcoin_explorer) each time a [pull request](http://git-scm.com/docs/git-request-pull) is made against the libbitcoin_explorer GitHub repository.
+
+You can run the build script from any directory on your system. This will build BX in a subdirectory named `libbitcoin_explorer_build` and install it to `/usr/local/`. The build subdirectory is automatically deleted after the build completes successfully.
 
 The build script should not normally be executed using sudo. Instead it will immediately prompt you for a super user password if required. This ensures that only the necessary installation steps are executed as a super user, as opposed to the entire build process.
 
 **The build can take well over an hour to complete.** In addition to the packaged dependencies above, the build script clones, builds and installs nine repositories, namely:
 
-- [jedisct1/libsodium](https://github.com/jedisct1/libsodium)
-- [zeromq/libzmq](https://github.com/zeromq/libzmq)
-- [zeromq/czmq](https://github.com/zeromq/czmq)
-- [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
-- [bitcoin/secp256k1](https://github.com/bitcoin/secp256k1)
-- [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-- [libbitcoin/libwallet](https://github.com/libbitcoin/libwallet)
-- [libbitcoin/obelisk](https://github.com/libbitcoin/obelisk)
-- [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
+* [jedisct1/libsodium](https://github.com/jedisct1/libsodium)
+* [zeromq/libzmq](https://github.com/zeromq/libzmq)
+* [zeromq/czmq](https://github.com/zeromq/czmq)
+* [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
+* [bitcoin/secp256k1](https://github.com/bitcoin/secp256k1)
+* [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
+* [libbitcoin/libwallet](https://github.com/libbitcoin/libwallet)
+* [libbitcoin/obelisk](https://github.com/libbitcoin/obelisk)
+* [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
-Of these libraries, only libzmq is packaged. However we require a more recent version of the library in order to take advantage of new features (e.g. SOCKS5).
+Of these libraries, only libzmq is packaged. However we require a more recent version of the library in order to take advantage of new features such as the [SOCKS](http://wikipedia.org/wiki/SOCKS) proxy.
 
 #### Build Options
 
@@ -128,14 +140,60 @@ Finally, invoke the installation script:
 
 ### Windows
 
-Visual Studio solutions are provided for all libbitcoin libraries and dependencies. Because libbitcoin requires a `C++11` compiler, **Visual Studio 2013** is the most recent supported version and requires a modified pre-release compiler. The execution environment requires `Windows XP Service Pack 2` or newer.
+Visual Studio solutions are provided for all libbitcoin libraries and dependencies. Because libbitcoin requires a C++11 compiler, **Visual Studio 2013** is the oldest supported version and requires a modified pre-release compiler. The execution environment requires `Windows XP Service Pack 2` or newer.
 
 * [Visual Studio 2013 Express](http://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx) is available for [download](http://www.microsoft.com/en-us/download/details.aspx?id=40787) and is free of charge.
 * The [November 2013 CTP Compiler](http://blogs.msdn.com/b/vcblog/archive/2013/11/18/announcing-the-visual-c-compiler-november-2013-ctp.aspx) must be [downloaded](http://www.microsoft.com/en-us/download/details.aspx?id=41151) and installed as well.
 
-Dependencies apart from the libbitcoin repos are [available on NuGet](https://www.nuget.org/packages?q=evoskuil). Eventually the libbitcoin libraries and tools will be published as well. The solution files are already configured with references to the NuGet packages and expect a [central NuGet repo](http://docs.nuget.org/docs/release-notes/nuget-2.1). You should be able to restore the packages to the repo once it is properly configured.
+Dependencies apart from the libbitcoin repos are available as [NuGet packages](https://www.nuget.org/packages?q=evoskuil). The libbitcoin solution files are configured with references to these packages. To avoid package redundancies these references expect a [NuGet.config](http://docs.nuget.org/docs/release-notes/nuget-2.1) in a [specific relative location](NUGET.md).
 
-Once the dependencies have been downloaded select a **statically-linked build** and build the solution. **The non-static (DLL) build configurations do not compile, as the exports have not yet been completed.**
+The required set of NuGet packages can be viewed using the [NuGet package manager](http://docs.nuget.org/docs/start-here/managing-nuget-packages-using-the-dialog) from the BX solution.
+
+* Packages maintained by [sergey.shandar](http://www.nuget.org/profiles/sergey.shandar)
+ * [boost](http://www.nuget.org/packages/boost)
+ * [boost\_chrono-vc120](http://www.nuget.org/packages/boost_chrono-vc120)
+ * [boost\_date\_time-vc120](http://www.nuget.org/packages/boost_date_time-vc120)
+ * [boost\_filesystem](http://www.nuget.org/packages/boost_filesystem)
+ * [boost\_filesystem-vc120](http://www.nuget.org/packages/boost_filesystem-vc120)
+ * [boost\_program\_options-vc120](http://www.nuget.org/packages/boost_program_options-vc120)
+ * [boost\_regex-vc120](http://www.nuget.org/packages/boost_regex-vc120)
+ * [boost\_system-vc120](http://www.nuget.org/packages/boost_system-vc120)
+ * [boost\_unit\_test\_framework-vc120](http://www.nuget.org/packages/boost_unit_test_framework-vc120)
+
+* Packages maintained by [evoskuil](http://www.nuget.org/profiles/evoskuil)
+ * [czmq\_vc120](http://www.nuget.org/packages/czmq_vc120)
+ * [czmqpp\_vc120](http://www.nuget.org/packages/czmqpp_vc120)
+ * [libgmp\_vc120](http://www.nuget.org/packages/libgmp_vc120) (GMP is referred to as MPIR on Windows)
+ * [libsodium\_vc120](http://www.nuget.org/packages/libsodium_vc120)
+ * [libzmq\_vc120](http://www.nuget.org/packages/libzmq_vc120)
+ * [secp256k1\_gmp\_vc120](http://www.nuget.org/packages/secp256k1_gmp_vc120)
+
+To build BX you must first download and build its libbitcoin dependencies, as these are not yet packaged. The builds can be performed manually from within Visual Studio or using the `buildall.bat` script provided in the `builds\msvc\build\` subdirectory of each repository. The scripts automatically download the required NuGet packages and build all valid configurations.
+
+> Tip: The build time can be significantly reduced by disabling all but the desired configuration in each script.
+
+The set of solutions that must be built and the build order are as follows:
+
+1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
+2. [libbitcoin/libwallet](https://github.com/libbitcoin/libwallet)
+3. [libbitcoin/obelisk](https://github.com/libbitcoin/obelisk)
+4. [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
+
+> The dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currrently disabled in the build scripts.
+
+#### Building All Dependencies
+The non-boost packages above are all sourced from GitHub repositories maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as the libbitcoin libraries. If so desired each of these can be built locally, in the same manner as the libbitcoin libraries, and linked in place of the above packages. The repositories for each dependency are as follows:
+
+* Zero Message Queue
+ * [jedisct1/libsodium](https://github.com/jedisct1/libsodium)
+ * [zeromq/libzmq](https://github.com/zeromq/libzmq)
+ * [zeromq/czmq](https://github.com/zeromq/czmq)
+ * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
+* Bitcoin Elliptic Curve
+ * [evoskuil/mpir](https://github.com/evoskuil/mpir)
+ * [evoskuil/secp256k1](https://github.com/evoskuil/secp256k1)
+
+This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface for each libbitcoin project and then importing the `*.import.props` file(s) for the corresponding dependencies.
 
 ## Design Overview
 
@@ -198,11 +256,11 @@ BX uses source code generation and Boost's [program_options](http://www.boost.or
 
 Command headers are generated from metadata during development. The metadata includes full definition for all command parameters, including name, data type, order, cardinality, optionality, default value and help description, as well as fallbacks to STDIN and file input.
 
-[TODO: EXAMPLE HERE]
+> TODO: EXAMPLE HERE
 
 Input processing is handled in shared code and generated headers. All values are available to command implementation via strongly-typed getters on the command class. Corresponding setters enable library consumers to execute BX methods directly. This is the access technique used by all tests.
 
-[TODO: EXAMPLE HERE]
+> TODO: EXAMPLE HERE
 
 #### Configuration Settings
 
@@ -216,7 +274,7 @@ The path defined by [CSIDL_LOCAL_APPDATA](http://msdn.microsoft.com/en-us/librar
 
 Configuration settings are generated from metadata during development. The metadata includes full definition for all settings, including section, name, data type, default value and help description. If there is no configuration settings file, or if individual settings are not specified in the file, then default values are populated to bound properties.
 
-[TODO: EXAMPLE HERE]
+> TODO: EXAMPLE HERE
 
 #### Environment Variables
 
@@ -224,31 +282,35 @@ BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/
 
 Currently `BX_CONFIG` is the only bound environment variable. BX uses a Boost feature to tie the environment variable and the command line option of the same identity (i.e. `--config`). The command line option takes precedence.
 
-[TODO: EXAMPLE HERE]
+> TODO: EXAMPLE HERE
 
 #### Standard and File Input
 
-In most commands the option is available to load the primary input parameter via [STDIN](http://en.wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29). In certain cases, such as for transactions, the input value can optionally be loaded from a file by specifying the path on the command line. In such cases, when the path is missing or set to  `-`, the input will instead be read from STDIN. Multi-valued inputs are supported in file formats and STDIN by treating any whitespace as a separator.
+In most commands the option is available to load the primary input parameter via [STDIN](http://wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29). In certain cases, such as for transactions, the input value can optionally be loaded from a file by specifying the path on the command line. In such cases, when the path is missing or set to  `-`, the input will instead be read from STDIN. Multi-valued inputs are supported in file formats and STDIN by treating any whitespace as a separator.
 
 ### Output Processing
 
-Command line, [STDERR](http://en.wikipedia.org/wiki/Standard_streams#Standard_error_.28stderr.29), [STDOUT](http://en.wikipedia.org/wiki/Standard_streams#Standard_output_.28stdout.29), files, multiples, native/info/XML/JSON, asymmetr
+> [STDOUT](http://wikipedia.org/wiki/Standard_streams#Standard_output_.28stdout.29)
 
-[Error Messages, return codes, deserialization exceptions, command line]
+> [STDERR](http://wikipedia.org/wiki/Standard_streams#Standard_error_.28stderr.29)
+
+> command line, error messages, return codes, command line, files, multiples, native/info/XML/JSON, asymmetry
 
 ### Help Integration
 
+> Scenarios: no command, invalid command, help command, <command> --help
+
 ## Test Methodology
 
-[Unit, component, functional, virtual, naming/individual, continuous against install script]
+> Unit, component, functional, virtual, naming/individual, continuous against install script.
 
-[All handled in the application framework, help command, no command, command help options]
+> All handled in the application framework, help command, no command, command help options.
 
 ## Explorer Library
 
 The `libbitcoin_explorer` build produces static and dynamic libraries that each implement all of the functionality of the `explorer` executable. Tests are implemented in a distinct executable called `explorer_test` which also links `libbitcoin_explorer`. BX is an alias for `explorer`.
 
-Command parameterization is isolated so that each command unit test bypasses command line and [STDIO](http://en.wikipedia.org/wiki/Standard_streams) processing. This design also ensures that `libbitcoin_explorer` remains useful as a library for building other applications.
+Command parameterization is isolated so that each command unit test bypasses command line and [STDIO](http://wikipedia.org/wiki/Standard_streams) processing. This design also ensures that `libbitcoin_explorer` remains useful as a library for building other applications.
 
 In other words another applcation can link to `libbitcoin_explorer` and immediately take advantage of the full set of tested commands, as simple methods with no relation to the command line or STDIO. Such applications can even avoid a dependency on Boost program\_options and `libbitcoin_explorer` code that performs I/O processing.
 
@@ -259,12 +321,12 @@ library: libbitcoin_explorer
 ```
 ## Random Numbers
 
-In SX it was common for a command to invoke an internal [Pseudo Random Number Generator](http://en.wikipedia.org/wiki/Pseudorandom_number_generator). As a weak random number generator can introduce cryptographic weakness this technique has been obsoleted. Any BX command that requires a random number obtains that value as an argument. This places the responsibility of ensuring random number strength on the end-user and also helps them understand the potential for problems.
+In SX it was common for a command to invoke an internal [Pseudo Random Number Generator](http://wikipedia.org/wiki/Pseudorandom_number_generator). As a weak random number generator can introduce cryptographic weakness this technique has been obsoleted. Any BX command that requires a random number obtains that value as an argument. This places the responsibility of ensuring random number strength on the end-user and also helps them understand the potential for problems.
 
 The "seed" command is provided as a convenience as the only command that generates randomness. The `seed` command accepts a bit length argument, and has default and minimum value of 128. The output can be passed as an argument to other commands that require randomness.
-```
-[TODO: EXAMPLE HERE]
-```
+
+> TODO: EXAMPLE HERE
+
 ## Acronyms
 
 BX command names, help and parameterization utilize the following set of acronyms utilized.
