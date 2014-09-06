@@ -26,7 +26,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <wallet/wallet.hpp>
 #include <obelisk/obelisk.hpp>
-#include <explorer/libbitcoin_explorer.hpp>
+#include <explorer/explorer.hpp>
 
 #define BX_USING_NAMESPACES()
 using namespace libwallet; \

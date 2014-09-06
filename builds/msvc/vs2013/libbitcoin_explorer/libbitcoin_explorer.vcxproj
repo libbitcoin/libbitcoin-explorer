@@ -78,7 +78,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\explorer\impl\prop_tree.ipp" />
     <ClInclude Include="..\..\..\..\include\explorer\impl\utility.ipp" />
-    <ClInclude Include="..\..\..\..\include\explorer\libbitcoin_explorer.hpp" />
+    <ClInclude Include="..\..\..\..\include\explorer\explorer.hpp" />
     <ClInclude Include="..\..\..\..\include\explorer\callback_state.hpp" />
     <ClInclude Include="..\..\..\..\include\explorer\async_client.hpp" />
     <ClInclude Include="..\..\..\..\include\explorer\command.hpp" />

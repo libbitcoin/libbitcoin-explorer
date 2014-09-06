@@ -77,7 +77,7 @@
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\obelisk_client.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />
@@ -168,7 +168,7 @@
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wrap-encode.cpp" />
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test\commands\command.hpp" />
   </ItemGroup>

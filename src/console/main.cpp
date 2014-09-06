@@ -19,7 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/libbitcoin_explorer.hpp>
+#include <explorer/explorer.hpp>
 
 /**
  * Invoke this program with the raw arguments provided on the command line.

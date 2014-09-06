@@ -920,7 +920,7 @@ private:
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <explorer/libbitcoin_explorer.hpp>
+#include <explorer/explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -941,7 +941,7 @@ BOOST_AUTO_TEST_SUITE_END()
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <explorer/libbitcoin_explorer.hpp>
+#include <explorer/explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -965,7 +965,7 @@ BOOST_AUTO_TEST_SUITE_END()
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <explorer/libbitcoin_explorer.hpp>
+#include <explorer/explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -998,7 +998,7 @@ libbitcoin_explorer_include_HEADERS = \\
     generated.hpp \\
     obelisk_client.hpp \\
     prop_tree.hpp \\
-    libbitcoin_explorer.hpp
+    explorer.hpp
 
 libbitcoin_explorer_impl_includedir = $\(includedir)/impl
 libbitcoin_explorer_impl_include_HEADERS = \\
@@ -1245,7 +1245,7 @@ explorer_test_LDADD = \\
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\prop_tree.ipp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\utility.ipp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\libbitcoin_explorer.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\explorer.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\callback_state.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\async_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\command.hpp" />
@@ -1565,7 +1565,7 @@ explorer_test_LDADD = \\
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\prop_tree.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\libbitcoin_explorer.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\explorer.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1776,7 +1776,7 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp" />
@@ -1785,7 +1785,7 @@ explorer_test_LDADD = \\
 .for command by symbol
     <ClCompile Include="..\\..\\..\\..\\test\\commands\\$(symbol:).cpp" />
 .endfor
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\\..\\..\\..\\test\\commands\\command.hpp" />
   </ItemGroup>
