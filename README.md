@@ -48,7 +48,7 @@ Because of this significant interface change and out of a desire to provide cons
 
 Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.org/projects/cxx0x.html) minimum.
 
-> For this reason Ubuntu is not supported prior to version 12.04. 
+> For this reason Ubuntu is not supported prior to version 12.04.
 
 To see your GCC version:
 
@@ -140,14 +140,22 @@ Finally, invoke the installation script:
 
 ### Windows
 
-Visual Studio solutions are provided for all libbitcoin libraries and dependencies. Because libbitcoin requires a C++11 compiler, **Visual Studio 2013** is the oldest supported version and requires a modified pre-release compiler. The execution environment requires `Windows XP Service Pack 2` or newer.
+Visual Studio solutions are maintained for all libbitcoin libraries and dependencies.
 
-* [Visual Studio 2013 Express](http://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx) is available for [download](http://www.microsoft.com/en-us/download/details.aspx?id=40787) and is free of charge.
-* The [November 2013 CTP Compiler](http://blogs.msdn.com/b/vcblog/archive/2013/11/18/announcing-the-visual-c-compiler-november-2013-ctp.aspx) must be [downloaded](http://www.microsoft.com/en-us/download/details.aspx?id=41151) and installed as well.
+> The libbitcoin execution environment supports `Windows XP Service Pack 2` and newer.
 
-Dependencies apart from the libbitcoin repos are available as [NuGet packages](https://www.nuget.org/packages?q=evoskuil). The libbitcoin solution files are configured with references to these packages. To avoid package redundancies these references expect a [NuGet.config](http://docs.nuget.org/docs/release-notes/nuget-2.1) in a [specific relative location](NUGET.md).
+#### Upgrade Compiler
+Libbitcoin requires a C++11 compiler, which means **Visual Studio 2013** minimum. Additionally a pre-release compiler must be installed as an update to Visual Studio. Download and install the following toos as necessary. Both are avaliable free of charge:
 
-The required set of NuGet packages can be viewed using the [NuGet package manager](http://docs.nuget.org/docs/start-here/managing-nuget-packages-using-the-dialog) from the BX solution.
+* [Visual Studio 2013 Express](http://www.microsoft.com/en-us/download/details.aspx?id=40787)
+* [November 2013 CTP Compiler](http://www.microsoft.com/en-us/download/details.aspx?id=41151)
+
+#### Create Local NuGet Repository
+Dependencies apart from the libbitcoin libraries are available as [NuGet packages](https://www.nuget.org/packages?q=evoskuil). The libbitcoin solution files are configured with references to these packages. To avoid redundancies these references expect a [NuGet.config](http://docs.nuget.org/docs/release-notes/nuget-2.1) in a [specific relative location](NUGET.md).
+
+> TODO: UPDATE NUGET.MD
+
+The required set of NuGet packages can be viewed using the [NuGet package manager](http://docs.nuget.org/docs/start-here/managing-nuget-packages-using-the-dialog) from the BX solution. The NuGet package manager will automatically download missing packages, either from the build scripts or after prompting you in the Visual Studio environment. For your reference these are the required packages:
 
 * Packages maintained by [sergey.shandar](http://www.nuget.org/profiles/sergey.shandar)
  * [boost](http://www.nuget.org/packages/boost)
@@ -159,30 +167,32 @@ The required set of NuGet packages can be viewed using the [NuGet package manage
  * [boost\_regex-vc120](http://www.nuget.org/packages/boost_regex-vc120)
  * [boost\_system-vc120](http://www.nuget.org/packages/boost_system-vc120)
  * [boost\_unit\_test\_framework-vc120](http://www.nuget.org/packages/boost_unit_test_framework-vc120)
-
 * Packages maintained by [evoskuil](http://www.nuget.org/profiles/evoskuil)
  * [czmq\_vc120](http://www.nuget.org/packages/czmq_vc120)
  * [czmqpp\_vc120](http://www.nuget.org/packages/czmqpp_vc120)
- * [libgmp\_vc120](http://www.nuget.org/packages/libgmp_vc120) (GMP is referred to as MPIR on Windows)
+ * [libgmp\_vc120](http://www.nuget.org/packages/libgmp_vc120)
  * [libsodium\_vc120](http://www.nuget.org/packages/libsodium_vc120)
  * [libzmq\_vc120](http://www.nuget.org/packages/libzmq_vc120)
  * [secp256k1\_gmp\_vc120](http://www.nuget.org/packages/secp256k1_gmp_vc120)
 
-To build BX you must first download and build its libbitcoin dependencies, as these are not yet packaged. The builds can be performed manually from within Visual Studio or using the `buildall.bat` script provided in the `builds\msvc\build\` subdirectory of each repository. The scripts automatically download the required NuGet packages and build all valid configurations.
+> The GMP for Windows project is called [MPIR](http://www.mpir.org/) and has binary compatibility with GMP.
 
-> Tip: The build time can be significantly reduced by disabling all but the desired configuration in each script.
+#### Build Libbitcoin Projects
+To build BX you must also download and build its **libbitcoin dependencies**, as these are not yet packaged. The builds can be performed manually (from within Visual Studio) or using the `buildall.bat` script provided in the `builds\msvc\build\` subdirectory of each repository. The scripts automatically download the required NuGet packages.
 
-The set of solutions that must be built and the build order are as follows:
+> Tip: The `buildall.bat` scripts build all valid configurations. The build time can be significantly reduced by disabling all but the desired configuration in each script.
+
+Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
 2. [libbitcoin/libwallet](https://github.com/libbitcoin/libwallet)
 3. [libbitcoin/obelisk](https://github.com/libbitcoin/obelisk)
 4. [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
-> The dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currrently disabled in the build scripts.
+> The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currrently disabled in the build scripts but you will encounter numerous errors if you build then manually.
 
-#### Building All Dependencies
-The non-boost packages above are all sourced from GitHub repositories maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as the libbitcoin libraries. If so desired each of these can be built locally, in the same manner as the libbitcoin libraries, and linked in place of the above packages. The repositories for each dependency are as follows:
+#### Optional: Build Everything
+The non-boost packages above are all sourced from GitHub repositories maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as the libbitcoin libraries. If so desired each of these can be built locally, in the same manner as the libbitcoin libraries above. This allows you to avoid using the pre-built NuGet packages. The repositories for each dependency are as follows:
 
 * Zero Message Queue
  * [jedisct1/libsodium](https://github.com/jedisct1/libsodium)
@@ -193,7 +203,9 @@ The non-boost packages above are all sourced from GitHub repositories maintained
  * [evoskuil/mpir](https://github.com/evoskuil/mpir)
  * [evoskuil/secp256k1](https://github.com/evoskuil/secp256k1)
 
-This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface for each libbitcoin project and then importing the `*.import.props` file(s) for the corresponding dependencies.
+This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface for each libbitcoin project and then importing the `.import.props` file(s) for the corresponding dependencies.
+
+> TODO: Update all libbitcoin libs with the .import.props files in a disabled configuration. This will allow this transition to be made entirely in the Visual Studio user interface. Then clarify the above explanation.
 
 ## Design Overview
 
