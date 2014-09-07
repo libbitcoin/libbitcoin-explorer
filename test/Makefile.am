@@ -7,7 +7,6 @@ noinst_PROGRAMS = explorer_test
 AM_CPPFLAGS = \
     -I$(srcdir)/../include \
     ${obelisk_CFLAGS} \
-    ${wallet_CFLAGS} \
     -DBOOST_TEST_DYN_LINK
 
 explorer_test_SOURCES = \
@@ -114,5 +113,5 @@ explorer_test_LDADD = \
     -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
-    ${obelisk_LIBS} \
-    ${wallet_LIBS}
+    ${obelisk_LIBS}
+

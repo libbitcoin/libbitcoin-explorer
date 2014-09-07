@@ -80,7 +80,6 @@ build_explorer()
     github_build zeromq czmqpp master "$@"
     github_build bitcoin secp256k1 master "$@" $SECP256K1_OPTIONS
     github_build libbitcoin libbitcoin develop "$@"
-    github_build libbitcoin libwallet develop "$@"
     github_build libbitcoin obelisk develop "$@"
     
     # Build only master and the above dependencies as necessary.
