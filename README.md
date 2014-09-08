@@ -111,7 +111,7 @@ Any set of `./configure` options can be passed via the build script, for example
 
 #### Compiling for Testnet
 
-Currently certain commands cannot work with both the **Test Network** (testnet) and mainnet. This is a libbitcoin that restriction will be lifted in a future version. In order to work with testnet in the interim the libraries must be recompiled with the testnet option.:
+Currently certain commands cannot work with both the **Test Network** (testnet) and mainnet. This is a libbitcoin that restriction will be lifted in a future version. In order to work with testnet in the interim the libraries must be recompiled with the testnet option:
 ```
   $ ./build.sh --enable-testnet
 ```
@@ -300,21 +300,18 @@ In most commands the option is available to load the primary input parameter via
 
 ### Output Processing
 
-> [STDOUT](http://wikipedia.org/wiki/Standard_streams#Standard_output_.28stdout.29)
-
-> [STDERR](http://wikipedia.org/wiki/Standard_streams#Standard_error_.28stderr.29)
-
+> TODO: 
+> [STDOUT](http://wikipedia.org/wiki/Standard_streams#Standard_output_.28stdout.29),
+> [STDERR](http://wikipedia.org/wiki/Standard_streams#Standard_error_.28stderr.29),
 > command line, error messages, return codes, command line, files, multiples, native/info/XML/JSON, asymmetry
 
 ### Help Integration
 
-> Scenarios: no command, invalid command, help command, <command> --help
+> TODO: scenarios: no command, invalid command, help command, <command> --help
 
 ## Test Methodology
 
-> Unit, component, functional, virtual, naming/individual, continuous against install script.
-
-> All handled in the application framework, help command, no command, command help options.
+> TODO: unit, component, functional, virtual, naming/individual, continuous against install script. All handled in the application framework, help command, no command, command help options.
 
 ## Explorer Library
 
@@ -339,7 +336,7 @@ The "seed" command is provided as a convenience as the only command that generat
 
 ## Acronyms
 
-BX command names, help and parametrization utilize the following set of acronyms utilized.
+BX command names, help and parametrization utilize the following set of acronyms.
 
     BTC     Bitcoin Denomination
     BX      Bitcoin Explorer
