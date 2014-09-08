@@ -150,4 +150,3 @@ explorer_LDADD = \
     -lboost_chrono \
     -lboost_program_options \
     ${obelisk_LIBS}
-
