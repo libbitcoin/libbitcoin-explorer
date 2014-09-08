@@ -82,7 +82,7 @@ github_build()
     cd ..
 }
 
-build_explorer()
+build_library()
 {
     # Modify $BUILD_ACCOUNT $BUILD_REPO $BUILD_BRANCH if running in Travis.
     check_travis
@@ -130,7 +130,7 @@ mkdir $BUILD_DIRECTORY
 cd $BUILD_DIRECTORY
 
 # Build explorer.
-build_explorer "$@"
+build_library "$@"
 
 # If we succeed clean up the build directory.
 # This precludes use of 'make uninstall' however that would need to be applied
