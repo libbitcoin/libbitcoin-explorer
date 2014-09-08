@@ -1,4 +1,4 @@
-AC_INIT([libitcoin_explorer], [0.1], [genjix@riseup.net])
+AC_INIT([libitcoin_explorer], [0.1.0], [genjix@riseup.net])
 AC_USE_SYSTEM_EXTENSIONS
 AC_LANG(C++)
 AC_CONFIG_AUX_DIR([build-aux])
@@ -37,7 +37,7 @@ AC_CHECK_LIB(gmp,__gmpz_init,,
 
 # TODO: We require secp256k1 to require GMP (over OpenSSL).
 PKG_CHECK_MODULES([secp256k1], [libsecp256k1 >= 0.0.1])
-PKG_CHECK_MODULES([bitcoin], [libbitcoin >= 2.0.1])
+PKG_CHECK_MODULES([bitcoin], [libbitcoin >= 2.1.0])
 PKG_CHECK_MODULES([obelisk], [libobelisk >= 0.1.1])
 PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
 PKG_CHECK_MODULES([zmq], [libzmq >= 4.0.0])

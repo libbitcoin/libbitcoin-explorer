@@ -23,11 +23,9 @@
 #include <iostream>
 #include <string>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace explorer;
 using namespace explorer::commands;
 

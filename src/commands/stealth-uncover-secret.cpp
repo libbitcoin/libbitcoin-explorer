@@ -21,11 +21,11 @@
 #include <explorer/commands/stealth-uncover-secret.hpp>
 
 #include <iostream>
-#include <wallet/wallet.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/ec_private.hpp>
 
-using namespace libwallet;
+using namespace bc;
 using namespace explorer;
 using namespace explorer::commands;
 using namespace explorer::primitives;
