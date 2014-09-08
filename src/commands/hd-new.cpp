@@ -22,12 +22,10 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/hd_priv.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace explorer;
 using namespace explorer::commands;
 using namespace explorer::primitives;

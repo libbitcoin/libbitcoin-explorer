@@ -25,7 +25,6 @@
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 
 // We use the generic helper definitions in libbitcoin to define BCX_API 
 // and BCX_INTERNAL. BCX_API is used for the public API symbols. It either DLL

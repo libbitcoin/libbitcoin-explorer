@@ -23,7 +23,6 @@
 #include <iostream>
 #include <string>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -59,7 +58,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_private(const libwallet::hd_private_key& value);
+    ec_private(const bc::hd_private_key& value);
 
     /**
      * Copy constructor.

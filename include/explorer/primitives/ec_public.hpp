@@ -67,13 +67,13 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const libwallet::hd_private_key& value);
+    ec_public(const bc::hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const libwallet::hd_public_key& value);
+    ec_public(const bc::hd_public_key& value);
 
     /**
      * Return a reference to the data member.

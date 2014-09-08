@@ -21,10 +21,10 @@
 #include <explorer/commands/mnemonic-decode.hpp>
 
 #include <iostream>
-#include <wallet/wallet.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <explorer/define.hpp>
 
-using namespace libwallet;
+using namespace bc;
 using namespace explorer;
 using namespace explorer::commands;
 

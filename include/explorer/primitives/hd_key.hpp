@@ -23,7 +23,6 @@
 #include <iostream>
 #include <string>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/hd_priv.hpp>
 #include <explorer/primitives/hd_pub.hpp>
@@ -56,13 +55,13 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hd_key(const libwallet::hd_private_key& value);
+    hd_key(const bc::hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hd_key(const libwallet::hd_public_key& value);
+    hd_key(const bc::hd_public_key& value);
 
     /**
      * Copy constructor.
@@ -75,19 +74,19 @@ public:
      * and otherwise return the public key.
      * @return  A reference to the object's internal data.
      */
-    const libwallet::hd_public_key& derived_public_key() const;
+    const bc::hd_public_key& derived_public_key() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_private_key&() const;
+    operator const bc::hd_private_key&() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_public_key&() const;
+    operator const bc::hd_public_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -111,12 +110,12 @@ private:
     /**
      * The private key state of this object.
      */
-    libwallet::hd_private_key private_key_value_;
+    bc::hd_private_key private_key_value_;
 
     /**
     * The public key state of this object.
     */
-    libwallet::hd_public_key public_key_value_;
+    bc::hd_public_key public_key_value_;
 };
 
 } // explorer

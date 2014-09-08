@@ -20,12 +20,12 @@
 #include "precompile.hpp"
 #include <explorer/commands/hd-to-ec.hpp>
 
-#include <wallet/wallet.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/ec_private.hpp>
 #include <explorer/primitives/ec_public.hpp>
 
-using namespace libwallet;
+using namespace bc;
 using namespace explorer;
 using namespace explorer::commands;
 using namespace explorer::primitives;

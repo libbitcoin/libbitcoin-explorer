@@ -24,7 +24,6 @@
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/address.hpp>
 #include <explorer/primitives/btc256.hpp>
@@ -39,7 +38,6 @@
 #include <explorer/primitives/wrapper.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace pt;
 
 namespace explorer {

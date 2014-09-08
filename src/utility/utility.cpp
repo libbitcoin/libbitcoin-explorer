@@ -42,7 +42,6 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
@@ -51,7 +50,6 @@
 
 using namespace bc;
 using namespace boost::posix_time;
-using namespace libwallet;
 
 namespace explorer {
 
@@ -64,13 +62,13 @@ void join(const std::vector<std::string>& words, std::string& sentence,
 bool stealth_match(const blockchain::stealth_row& row,
     const ec_secret& secret)
 {
-    // TODO: implement and move to libwallet.
+    // TODO: implement and move to libbitcoin.
     return true;
 }
 
 bool stealth_match(const tx_type& tx, const ec_secret& secret)
 {
-    // TODO: implement and move to libwallet.
+    // TODO: implement and move to libbitcoin.
     return true;
 }
 
@@ -122,14 +120,14 @@ std::string read_stream(std::istream& stream)
     return result;
 }
 
-// TODO: move to libwallet
+// TODO: move to libbitcoin
 script_type script_to_raw_data_script(const script_type& script)
 {
     auto data = save_script(script);
     return raw_data_script(data);
 }
 
-// TODO: move to libwallet
+// TODO: move to libbitcoin
 bool sign_transaction(data_chunk& signature, const tx_type& transaction,
     size_t index, const script_type& script, const ec_secret& secret,
     const data_chunk& nonce, uint32_t hash_type)
@@ -168,7 +166,7 @@ bool unwrap(wrapped_data& data, const data_chunk& wrapped)
     return unwrap(data.version, data.payload, data.checksum, wrapped);
 }
 
-// TODO: move to libwallet
+// TODO: move to libbitcoin
 bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
     const data_chunk& wrapped)
 {
@@ -207,7 +205,7 @@ data_chunk wrap(const wrapped_data& data)
     return wrap(data.version, data.payload);
 }
 
-// TODO: move to libwallet
+// TODO: move to libbitcoin
 data_chunk wrap(uint8_t version, const data_chunk& payload)
 {
     data_chunk wrapped;
