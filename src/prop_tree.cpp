@@ -172,7 +172,7 @@ ptree prop_tree(const tx_output_type& tx_output)
     tree.put("script", script(tx_output.script).mnemonic());
 
     // TODO: consider independent stealth object serialization.
-    // TODO: this will eventually change privacy problems, see:
+    // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
     stealth_info stealth;
     if (extract_stealth_info(stealth, tx_output.script))
