@@ -20,11 +20,9 @@
 #include "precompile.hpp"
 #include <explorer/commands/hd-to-address.hpp>
 
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/address.hpp>
 
-using namespace libwallet;
 using namespace explorer;
 using namespace explorer::commands;
 using namespace explorer::primitives;

@@ -31,7 +31,6 @@
 #include <explorer/primitives/ec_public.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace po;
 
 namespace explorer {

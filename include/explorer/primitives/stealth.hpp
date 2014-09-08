@@ -24,7 +24,6 @@
 #include <cstdint>
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/ec_public.hpp>
 
@@ -56,7 +55,7 @@ public:
      * Initialization constructor.
      * @param[in]  address  The value to initialize with.
      */
-    stealth(const libwallet::stealth_address& address);
+    stealth(const bc::stealth_address& address);
 
     /**
      * Initialization constructor.
@@ -83,7 +82,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::stealth_address&() const;
+    operator const bc::stealth_address&() const;
 
     /**
      * Overload cast to property tree.
@@ -113,7 +112,7 @@ private:
     /**
      * The state of this object's data.
      */
-    libwallet::stealth_address value_;
+    bc::stealth_address value_;
 };
 
 } // explorer

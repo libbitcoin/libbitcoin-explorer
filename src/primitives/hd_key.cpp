@@ -24,12 +24,12 @@
 #include <sstream>
 #include <string>
 #include <boost/program_options.hpp>
-#include <wallet/wallet.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/hd_priv.hpp>
 #include <explorer/primitives/hd_pub.hpp>
 
-using namespace libwallet;
+using namespace bc;
 using namespace po;
 
 namespace explorer {

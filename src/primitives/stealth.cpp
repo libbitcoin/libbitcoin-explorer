@@ -26,7 +26,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/prop_tree.hpp>
 #include <explorer/primitives/base58.hpp>
@@ -34,7 +33,6 @@
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace po;
 using namespace pt;
 

@@ -30,7 +30,6 @@
 #include <explorer/primitives/base16.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace po;
 
 namespace explorer {

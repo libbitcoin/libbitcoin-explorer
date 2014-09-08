@@ -24,12 +24,10 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <obelisk/obelisk.hpp>
 #include <explorer/explorer.hpp>
 
 #define BX_USING_NAMESPACES()
-using namespace libwallet; \
 using namespace bc; \
 using namespace obelisk; \
 using namespace std; \
@@ -67,7 +65,7 @@ using namespace explorer::primitives;
     BOOST_REQUIRE_EQUAL(error.str(), "")
 
 // exceptions
-#define BX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(expression) \
+#define BX_REQUIRE_THROW_INVALID_OPTION_VALUE(expression) \
     BOOST_REQUIRE_THROW(expression, po::invalid_option_value)
 
 #endif

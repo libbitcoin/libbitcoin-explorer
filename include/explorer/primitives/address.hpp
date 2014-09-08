@@ -74,13 +74,13 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    address(const libwallet::hd_private_key& value);
+    address(const bc::hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    address(const libwallet::hd_public_key& value);
+    address(const bc::hd_public_key& value);
 
     /**
      * Return a reference to the data member.
