@@ -1,5 +1,5 @@
 /**
- * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin_explorer.
  *
@@ -31,7 +31,6 @@
 #include <explorer/primitives/ec_public.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace po;
 
 namespace explorer {

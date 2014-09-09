@@ -1,5 +1,5 @@
 /**
- * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin_explorer.
  *
@@ -24,7 +24,6 @@
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/address.hpp>
 #include <explorer/primitives/btc256.hpp>
@@ -39,7 +38,6 @@
 #include <explorer/primitives/wrapper.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace pt;
 
 namespace explorer {
@@ -174,7 +172,7 @@ ptree prop_tree(const tx_output_type& tx_output)
     tree.put("script", script(tx_output.script).mnemonic());
 
     // TODO: consider independent stealth object serialization.
-    // TODO: this will eventually change privacy problems, see:
+    // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
     stealth_info stealth;
     if (extract_stealth_info(stealth, tx_output.script))

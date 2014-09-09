@@ -1,5 +1,5 @@
 /*
- * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin_explorer.
  *
@@ -20,11 +20,9 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/explorer.hpp>
 #include "precompile.hpp"
 
-using namespace libwallet;
 using namespace bc;
 using namespace explorer::primitives;
 
@@ -41,7 +39,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__default__does_not_throw)
 
 BOOST_AUTO_TEST_CASE(address__constructor__bogus_string__throws_invalid_option)
 {
-    //BX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(address("bogus"));
+    //BX_REQUIRE_THROW_INVALID_OPTION_VALUE(address("bogus"));
 }
 
 BOOST_AUTO_TEST_CASE(address__constructor__valid_string_cast__round_trips)

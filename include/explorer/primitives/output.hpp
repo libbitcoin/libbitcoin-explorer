@@ -1,5 +1,5 @@
 /**
- * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin_explorer.
  *
@@ -27,7 +27,6 @@
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */

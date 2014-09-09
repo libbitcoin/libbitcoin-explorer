@@ -1,5 +1,5 @@
 /**
- * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin_explorer.
  *
@@ -22,7 +22,6 @@
 
 #include <iostream>
 #include <string>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -52,7 +51,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hd_pub(const libwallet::hd_public_key& value);
+    hd_pub(const bc::hd_public_key& value);
 
     /**
      * Copy constructor.
@@ -64,13 +63,13 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    libwallet::hd_public_key& data();
+    bc::hd_public_key& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const libwallet::hd_public_key&() const;
+    operator const bc::hd_public_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -94,7 +93,7 @@ private:
     /**
      * The state of this object.
      */
-    libwallet::hd_public_key value_;
+    bc::hd_public_key value_;
 };
 
 } // explorer

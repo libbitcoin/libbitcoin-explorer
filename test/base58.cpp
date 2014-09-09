@@ -1,5 +1,5 @@
 /*
- * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin_explorer.
  *
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(base58__constructor__default__does_not_throw)
 
 BOOST_AUTO_TEST_CASE(base58__constructor__bogus_string__throws_invalid_option)
 {
-    //BX_REQUIRE_INVALID_OPTION_VALUE_EXCEPTION(base58("bo-gus"));
+    //BX_REQUIRE_THROW_INVALID_OPTION_VALUE(base58("bo-gus"));
 }
 
 BOOST_AUTO_TEST_CASE(base58__constructor__valid_string_cast__decodes)

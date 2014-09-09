@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProjectSchemaDefinitions xmlns="clr-namespace:Microsoft.Build.Framework.XamlTypes;assembly=Microsoft.Build.Framework">
-  <Rule Name="libwallet-linkage-uiextension" PageTemplate="tool" DisplayName="Local Dependencies" SwitchPrefix="/" Order="1">
+  <Rule Name="libbitcoin_client-linkage-uiextension" PageTemplate="tool" DisplayName="Local Dependencies" SwitchPrefix="/" Order="1">
     <Rule.Categories>
-      <Category Name="libwallet" DisplayName="libwallet" />
+      <Category Name="libbitcoin_client" DisplayName="libbitcoin_client" />
     </Rule.Categories>
     <Rule.DataSource>
       <DataSource Persistence="ProjectFile" ItemType="" />
     </Rule.DataSource>
-    <EnumProperty Name="Linkage-libwallet" DisplayName="Linkage" Description="How libwallet will be linked into the output of this project" Category="libwallet">
+    <EnumProperty Name="Linkage-libbitcoin_client" DisplayName="Linkage" Description="How Libbitcoin Client will be linked into the output of this project" Category="libbitcoin_client">
       <EnumValue Name="" DisplayName="Not linked" />
       <EnumValue Name="dynamic" DisplayName="Dynamic (DLL)" />
       <EnumValue Name="static" DisplayName="Static (LIB)" />

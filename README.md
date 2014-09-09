@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/libbitcoin/libbitcoin_explorer.svg?branch=master)](https://travis-ci.org/libbitcoin/libbitcoin_explorer)
 
-*The automated build is failing because it exceeds the current Travis timeout limit of 50 minutes.*
+*The automated build is failing because it exceeds the current Travis time-out limit of 50 minutes.*
 
 # Bitcoin Explorer
 
@@ -10,7 +10,7 @@
 
 **License Overview**
 
-All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published online. Source code for this library must always remain free for everybody to access.
+All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
 
 **Table of Contents**
 
@@ -40,7 +40,7 @@ Bitcoin Explorer is a fork of the popular [SX command line tool](https://sx.dyne
 
 Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [libbitcoin_server](https://github.com/libbitcoin/obelisk) (Obelisk), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
 
-Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin_explorer**. Therefore the program is called **explorer** and is referred to as **BX** as a convenience and out of respect for its groundbreaking predecessor.
+Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin_explorer**. Therefore the program is called **explorer** and is referred to as **BX** as a convenience and out of respect for its ground-breaking predecessor.
 
 ## Installation
 
@@ -70,7 +70,7 @@ Next install [Boost](http://www.boost.org) (1.50.0 or newer), [GMP](https://gmpl
 ```
   $ sudo apt-get install libboost-all-dev libgmp-dev libconfig++-dev
 ```
-> *The Libconfig++ dependency is deprecated and will be removed in a future version*
+> The libconfig++ dependency is deprecated and will be removed in a future version.
 
 Next execute the [build script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/build.sh).
 ```
@@ -82,7 +82,7 @@ Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the 
 
 If you intend to inspect and/or modify source code you should [git clone](http://git-scm.com/docs/git-clone) each dependency and build each manually. The build script itself is simple and commented so that the manual build steps for each dependency can be easily inferred by a developer.
 
-Libbitcoin and many of its dependenices do not yet supply [packages](http://wikipedia.org/wiki/Package_(package_management_system)). The build script exists to provide a level of convenience similar to a package, but against current sources. In order to ensure the quality of the build script it includes no conditional instructions and is [executed automatically](tps://travis-ci.org/libbitcoin/libbitcoin_explorer) each time a [pull request](http://git-scm.com/docs/git-request-pull) is made against the libbitcoin_explorer GitHub repository.
+Libbitcoin and many of its dependencies do not yet supply [packages](http://wikipedia.org/wiki/Package_(package_management_system)). The build script exists to provide a level of convenience similar to a package, but against current sources. In order to ensure the quality of the build script it includes no conditional instructions and is [executed automatically](tps://travis-ci.org/libbitcoin/libbitcoin_explorer) each time a [pull request](http://git-scm.com/docs/git-request-pull) is made against the libbitcoin_explorer GitHub repository.
 
 You can run the build script from any directory on your system. This will build BX in a subdirectory named `libbitcoin_explorer_build` and install it to `/usr/local/`. The build subdirectory is automatically deleted after the build completes successfully.
 
@@ -96,7 +96,6 @@ The build script should not normally be executed using sudo. Instead it will imm
 * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
 * [bitcoin/secp256k1](https://github.com/bitcoin/secp256k1)
 * [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-* [libbitcoin/libwallet](https://github.com/libbitcoin/libwallet)
 * [libbitcoin/obelisk](https://github.com/libbitcoin/obelisk)
 * [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
@@ -112,7 +111,7 @@ Any set of `./configure` options can be passed via the build script, for example
 
 #### Compiling for Testnet
 
-Currently certain commands cannot work with both the **Test Network** (testnet) and mainnet. This is a libbitcoin that restriction will be lifted in a future version. In order to work with testnet in the interim the libraries must be recompiled with the testnet option.:
+Currently certain commands cannot work with both the **Test Network** (testnet) and mainnet. This is a libbitcoin that restriction will be lifted in a future version. In order to work with testnet in the interim the libraries must be recompiled with the testnet option:
 ```
   $ ./build.sh --enable-testnet
 ```
@@ -121,7 +120,7 @@ Currently certain commands cannot work with both the **Test Network** (testnet) 
 
 The OSX installation differs from Linux in the installation of the compiler and packaged dependencies.
 
-To upgrade GCC first set the folloing environment variables:
+To upgrade GCC first set the following environment variables:
 ```
   CC=/usr/local/bin/gcc-4.8
   CXX=/usr/local/bin/g++-4.8
@@ -145,7 +144,7 @@ Visual Studio solutions are maintained for all libbitcoin libraries and dependen
 > The libbitcoin execution environment supports `Windows XP Service Pack 2` and newer.
 
 #### Upgrade Compiler
-Libbitcoin requires a C++11 compiler, which means **Visual Studio 2013** minimum. Additionally a pre-release compiler must be installed as an update to Visual Studio. Download and install the following toos as necessary. Both are avaliable free of charge:
+Libbitcoin requires a C++11 compiler, which means **Visual Studio 2013** minimum. Additionally a pre-release compiler must be installed as an update to Visual Studio. Download and install the following tools as necessary. Both are available free of charge:
 
 * [Visual Studio 2013 Express](http://www.microsoft.com/en-us/download/details.aspx?id=40787)
 * [November 2013 CTP Compiler](http://www.microsoft.com/en-us/download/details.aspx?id=41151)
@@ -185,11 +184,10 @@ To build BX you must also download and build its **libbitcoin dependencies**, as
 Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-2. [libbitcoin/libwallet](https://github.com/libbitcoin/libwallet)
 3. [libbitcoin/obelisk](https://github.com/libbitcoin/obelisk)
 4. [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
-> The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currrently disabled in the build scripts but you will encounter numerous errors if you build then manually.
+> The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
 
 #### Optional: Build Everything
 The non-boost packages above are all sourced from GitHub repositories maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as the libbitcoin libraries. If so desired each of these can be built locally, in the same manner as the libbitcoin libraries above. This allows you to avoid using the pre-built NuGet packages. The repositories for each dependency are as follows:
@@ -217,7 +215,7 @@ The primary objective in the evolution to BX was the desire to produce a single 
 
 With over 70 commands (85 including obsoleted stubs) and growing, BX requires an extensibility model that eliminates redundant code across commands. Ad-hoc evolution without such a model led to significant maintenance difficulty and increasing fragility. In keeping with the single file requirement the extensions had to be incorporated at compile time.
 
-As such code generation is now used to produce headers, AutoMake files, MSVC project files, component tests, and shared source code from a single [XML metadata document](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/model/generate.xml). The [open source tool GSL](https://github.com/imatix/gsl) is used to push command metadata through a [GSL template](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/model/generate.gsl), producing the necessary artifacts. To implement a new command required creating an XML element, running the code generator, and overriding a single invoke method. A stub for unit/component test execution is automatically defined as well.
+As such code generation is now used to produce headers, AutoMake files, MSVC project files, component tests, and shared source code from a single [XML metadata document](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/model/generate.xml). The [open source tool GSL](https://github.com/imatix/gsl) is used to push command metadata through a [GSL template](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/model/generate.gsl), producing the necessary artefacts. To implement a new command required creating an XML element, running the code generator, and overriding a single invoke method. A stub for unit/component test execution is automatically defined as well.
 
 ### Localization Model
 
@@ -302,21 +300,18 @@ In most commands the option is available to load the primary input parameter via
 
 ### Output Processing
 
-> [STDOUT](http://wikipedia.org/wiki/Standard_streams#Standard_output_.28stdout.29)
-
-> [STDERR](http://wikipedia.org/wiki/Standard_streams#Standard_error_.28stderr.29)
-
+> TODO: 
+> [STDOUT](http://wikipedia.org/wiki/Standard_streams#Standard_output_.28stdout.29),
+> [STDERR](http://wikipedia.org/wiki/Standard_streams#Standard_error_.28stderr.29),
 > command line, error messages, return codes, command line, files, multiples, native/info/XML/JSON, asymmetry
 
 ### Help Integration
 
-> Scenarios: no command, invalid command, help command, <command> --help
+> TODO: scenarios: no command, invalid command, help command, <command> --help
 
 ## Test Methodology
 
-> Unit, component, functional, virtual, naming/individual, continuous against install script.
-
-> All handled in the application framework, help command, no command, command help options.
+> TODO: unit, component, functional, virtual, naming/individual, continuous against install script. All handled in the application framework, help command, no command, command help options.
 
 ## Explorer Library
 
@@ -341,7 +336,7 @@ The "seed" command is provided as a convenience as the only command that generat
 
 ## Acronyms
 
-BX command names, help and parameterization utilize the following set of acronyms utilized.
+BX command names, help and parametrization utilize the following set of acronyms.
 
     BTC     Bitcoin Denomination
     BX      Bitcoin Explorer
@@ -463,4 +458,4 @@ BX defines the following set of commands with corresponding names in the `bx::co
     wif-to-ec
     wif-to-public
     wrap-decode
-    wrap-encode.cpp
+    wrap-encode

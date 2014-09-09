@@ -1,5 +1,5 @@
 /**
- * Copyright (c)2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin_explorer.
  *
@@ -25,13 +25,11 @@
 #include <string>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <wallet/wallet.hpp>
 #include <explorer/define.hpp>
 #include <explorer/primitives/btc256.hpp>
 #include <explorer/primitives/wif.hpp>
 
 using namespace bc;
-using namespace libwallet;
 using namespace po;
 
 namespace explorer {
