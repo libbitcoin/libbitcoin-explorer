@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Globals">
+    <_PropertySheetDisplayName>Libbitcoin Client Import Settings</_PropertySheetDisplayName>
+  </PropertyGroup>
+  
+  <!-- User Interface -->
+
+  <ItemGroup Label="BuildOptionsExtension">
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)libbitcoin_client.import.xml" />
+  </ItemGroup>
+
+  <!-- Linkage -->
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin_client\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Linkage-libbitcoin_client)' == 'static' Or '$(Linkage-libbitcoin_client)' == 'ltcg'">BCC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>      
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies Condition="'$(Linkage-libbitcoin_client)' != ''">libbitcoin_client.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin_client\bin\$(PlatformName)\Debug\$(PlatformToolset)\$(Linkage-libbitcoin_client)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin_client\bin\$(PlatformName)\Release\$(PlatformToolset)\$(Linkage-libbitcoin_client)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
+    </Link>      
+  </ItemDefinitionGroup>
+
+  <!-- Copy -->
+
+  <Target Name="Linkage-libbitcoin_client-dynamic" AfterTargets="AfterBuild" Condition="'$(Linkage-libbitcoin_client)' == 'dynamic'">
+    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin_client\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libbitcoin_client.dll"
+          DestinationFiles="$(TargetDir)libbitcoin_client.dll"
+          SkipUnchangedFiles="true" />
+    <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin_client\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libbitcoin_client.pdb"
+          DestinationFiles="$(TargetDir)libbitcoin_client.pdb"
+          SkipUnchangedFiles="true" />
+    <Copy Condition="$(Configuration.IndexOf('Release')) != -1"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin_client\bin\$(PlatformName)\Release\$(PlatformToolset)\dynamic\libbitcoin_client.dll"
+          DestinationFiles="$(TargetDir)libbitcoin_client.dll"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <!-- Messages -->
+
+  <Target Name="libbitcoin_client-info" BeforeTargets="AfterBuild" Condition="'$(Linkage-libbitcoin_client)' == 'dynamic'">
+    <Message Text="Copying libbitcoin_client.dll -&gt; $(TargetDir)libbitcoin_client.dll" Importance="high"/>
+    <Message Text="Copying libbitcoin_client.pdb -&gt; $(TargetDir)libbitcoin_client.pdb" Importance="high" Condition="$(Configuration.IndexOf('Debug')) != -1" />
+  </Target>
+
+</Project>
