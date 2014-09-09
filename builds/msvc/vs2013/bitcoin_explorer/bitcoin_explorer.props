@@ -31,6 +31,7 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)obelisk.import.props" />
     <Import Project="$(SolutionDir)libbitcoin.import.props" />
+    <Import Project="$(SolutionDir)libbitcoin_client.import.props" />
     <Import Project="$(SolutionDir)libbitcoin_explorer.import.props" />
   </ImportGroup>
   
@@ -43,6 +44,7 @@
     <Linkage-libsodium>dynamic</Linkage-libsodium>
     <Linkage-obelisk>dynamic</Linkage-obelisk>
     <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
+    <Linkage-libbitcoin_client>dynamic</Linkage-libbitcoin_client>
     <Linkage-libbitcoin_explorer>dynamic</Linkage-libbitcoin_explorer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
@@ -54,6 +56,7 @@
     <Linkage-libsodium>ltcg</Linkage-libsodium>
     <Linkage-obelisk>ltcg</Linkage-obelisk>
     <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
+    <Linkage-libbitcoin_client>ltcg</Linkage-libbitcoin_client>
     <Linkage-libbitcoin_explorer>ltcg</Linkage-libbitcoin_explorer>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
@@ -65,6 +68,7 @@
     <Linkage-libsodium>static</Linkage-libsodium>
     <Linkage-obelisk>static</Linkage-obelisk>
     <Linkage-libbitcoin>static</Linkage-libbitcoin>
+    <Linkage-libbitcoin_client>static</Linkage-libbitcoin_client>
     <Linkage-libbitcoin_explorer>static</Linkage-libbitcoin_explorer>
   </PropertyGroup>
 
@@ -79,6 +83,7 @@
     <Message Text="Linkage-libsodium : $(Linkage-libsodium)" Importance="high"/>
     <Message Text="Linkage-obelisk   : $(Linkage-obelisk)" Importance="high"/>
     <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
+    <Message Text="Linkage-_client   : $(Linkage-libbitcoin_client)" Importance="high"/>
     <Message Text="Linkage-_explorer : $(Linkage-libbitcoin_explorer)" Importance="high"/>
   </Target>
 

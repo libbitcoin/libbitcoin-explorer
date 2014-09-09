@@ -1059,6 +1059,7 @@ noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 AM_CPPFLAGS = \\
     -I$\(srcdir)/../include \\
+    ${bitcoin_client_CFLAGS} \\
     ${obelisk_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \\
@@ -1106,6 +1107,7 @@ libbitcoin_explorer_la_SOURCES += \\
 .endfor
     
 libbitcoin_explorer_la_LIBADD = \\
+    ${bitcoin_client_LIBS} \\
     ${obelisk_LIBS}
 
 # Console Application
@@ -1119,6 +1121,7 @@ explorer_LDADD = \\
     -lbitcoin_explorer \\
     -lboost_chrono \\
     -lboost_program_options \\
+    ${bitcoin_client_LIBS} \\
     ${obelisk_LIBS}
 .##############################################################################
 .echo "Generating test/Makefile.am..."
@@ -1131,6 +1134,7 @@ noinst_PROGRAMS = explorer_test
 
 AM_CPPFLAGS = \\
     -I$\(srcdir)/../include \\
+    ${bitcoin_client_CFLAGS} \\
     ${obelisk_CFLAGS} \\
     -DBOOST_TEST_DYN_LINK
 
@@ -1156,6 +1160,7 @@ explorer_test_LDADD = \\
     -lbitcoin_explorer \\
     -lboost_chrono \\
     -lboost_program_options \\
+    ${bitcoin_client_LIBS} \\
     ${obelisk_LIBS}
 .##############################################################################
 .echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj..."
