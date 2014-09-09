@@ -26,6 +26,7 @@
 #include <explorer/async_client.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/command.hpp>
+#include <explorer/define.hpp>
 #include <explorer/dispatch.hpp>
 #include <explorer/display.hpp>
 #include <explorer/generated.hpp>

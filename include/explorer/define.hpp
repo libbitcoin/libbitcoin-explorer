@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DEFINE_HPP
-#define DEFINE_HPP
+#ifndef BX_DEFINE_HPP
+#define BX_DEFINE_HPP
 
 #include <boost/dynamic_bitset.hpp>
 #include <boost/format.hpp>
