@@ -987,7 +987,7 @@ BOOST_AUTO_TEST_SUITE_END()
 .output "../include/explorer/Makefile.am"
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-libbitcoin_explorer_includedir = $\(includedir)
+libbitcoin_explorer_includedir = $\(includedir)/explorer
 libbitcoin_explorer_include_HEADERS = \\
     async_client.hpp \\
     callback_state.hpp \\
@@ -1000,12 +1000,12 @@ libbitcoin_explorer_include_HEADERS = \\
     prop_tree.hpp \\
     explorer.hpp
 
-libbitcoin_explorer_impl_includedir = $\(includedir)/impl
+libbitcoin_explorer_impl_includedir = $\(includedir)/explorer/impl
 libbitcoin_explorer_impl_include_HEADERS = \\
     impl/prop_tree.ipp \\
     impl/utility.ipp
 
-libbitcoin_explorer_utility_includedir = $\(includedir)/utility
+libbitcoin_explorer_utility_includedir = $\(includedir)/explorer/utility
 libbitcoin_explorer_utility_include_HEADERS = \\
     utility/compat.hpp \\
     utility/config.hpp \\
@@ -1014,7 +1014,7 @@ libbitcoin_explorer_utility_include_HEADERS = \\
     utility/printer.hpp \\
     utility/utility.hpp
 
-libbitcoin_explorer_primitives_includedir = $\(includedir)/primitives
+libbitcoin_explorer_primitives_includedir = $\(includedir)/explorer/primitives
 libbitcoin_explorer_primitives_include_HEADERS = \\
     primitives/address.hpp \\
     primitives/base16.hpp \\
@@ -1042,7 +1042,7 @@ libbitcoin_explorer_primitives_include_HEADERS = \\
     primitives/wrapper.hpp
 
 # Generated from XML data source.
-libbitcoin_explorer_commands_includedir = $\(includedir)/commands
+libbitcoin_explorer_commands_includedir = $\(includedir)/explorer/commands
 libbitcoin_explorer_commands_include_HEADERS = \\
 .for command by symbol
     commands/$(symbol:).hpp$(!last() ?? " \\")
