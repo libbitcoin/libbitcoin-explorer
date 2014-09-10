@@ -7,8 +7,7 @@ noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 AM_CPPFLAGS = \
     -I$(srcdir)/../include \
-    ${bitcoin_client_CFLAGS} \
-    ${obelisk_CFLAGS}
+    ${bitcoin_client_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \
     async_client.cpp \
@@ -16,8 +15,8 @@ libbitcoin_explorer_la_SOURCES = \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
-    obelisk_client.cpp \
     prop_tree.cpp \
+    server_client.cpp \
     primitives/address.cpp \
     primitives/base16.cpp \
     primitives/base58.cpp \
@@ -137,8 +136,7 @@ libbitcoin_explorer_la_SOURCES += \
     commands/wrap-encode.cpp
     
 libbitcoin_explorer_la_LIBADD = \
-    ${bitcoin_client_LIBS} \
-    ${obelisk_LIBS}
+    ${bitcoin_client_LIBS}
 
 # Console Application
 bin_PROGRAMS = explorer
@@ -151,5 +149,4 @@ explorer_LDADD = \
     -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
-    ${bitcoin_client_LIBS} \
-    ${obelisk_LIBS}
+    ${bitcoin_client_LIBS}

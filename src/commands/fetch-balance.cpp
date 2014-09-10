@@ -24,8 +24,8 @@
 #include <bitcoin/bitcoin.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
-#include <explorer/obelisk_client.hpp>
 #include <explorer/prop_tree.hpp>
+#include <explorer/server_client.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -54,14 +54,14 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
             handle_callback(state, address, history);
     };
 
-    obelisk_client client(*this);
-    auto& fullnode = client.get_fullnode();
-    for (const auto& address: addresses)
-    {
-        ++state;
-        fullnode.address.fetch_history(address, 
-            std::bind(handler, address, ph::_1, ph::_2));
-    }
+    server_client client(*this);
+    //auto& fullnode = client.get_fullnode();
+    //for (const auto& address: addresses)
+    //{
+    //    ++state;
+    //    fullnode.address.fetch_history(address, 
+    //        std::bind(handler, address, ph::_1, ph::_2));
+    //}
 
     client.poll(state.stopped());
 

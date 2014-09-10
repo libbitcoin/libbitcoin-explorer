@@ -22,13 +22,12 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/obelisk.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
-#include <explorer/obelisk_client.hpp>
 #include <explorer/prop_tree.hpp>
 #include <explorer/primitives/encoding.hpp>
 #include <explorer/primitives/header.hpp>
+#include <explorer/server_client.hpp>
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -62,14 +61,14 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
             handle_callback(state, block_header);
     };
 
-    obelisk_client client(*this);
-    auto& fullnode = client.get_fullnode();
-    state.start();
-    if (hash == null_hash)
-        fullnode.blockchain.fetch_block_header(height, handler);
-    else
-        fullnode.blockchain.fetch_block_header(hash, handler);
-    client.poll(state.stopped());
+    server_client client(*this);
+    //auto& fullnode = client.get_fullnode();
+    //state.start();
+    //if (hash == null_hash)
+    //    fullnode.blockchain.fetch_block_header(height, handler);
+    //else
+    //    fullnode.blockchain.fetch_block_header(hash, handler);
+    //client.poll(state.stopped());
 
     return state.get_result();
 }

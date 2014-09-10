@@ -25,7 +25,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
-#include <explorer/obelisk_client.hpp>
+#include <explorer/server_client.hpp>
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -50,13 +50,13 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
             handle_callback(state);
     };
 
-    obelisk_client client(*this);
-    auto& fullnode = client.get_fullnode();
-    for (const tx_type& tx: transactions)
-    {
-        ++state;
-        fullnode.protocol.broadcast_transaction(tx, handler);
-    }
+    server_client client(*this);
+    //auto& fullnode = client.get_fullnode();
+    //for (const tx_type& tx: transactions)
+    //{
+    //    ++state;
+    //    fullnode.protocol.broadcast_transaction(tx, handler);
+    //}
 
     client.poll(state.stopped());
 

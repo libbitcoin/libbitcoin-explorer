@@ -24,8 +24,8 @@
 #include <bitcoin/bitcoin.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
-#include <explorer/obelisk_client.hpp>
 #include <explorer/prop_tree.hpp>
+#include <explorer/server_client.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -49,24 +49,24 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto& prefixes = get_prefixs_argument();
     const auto& encoding = get_format_option();
 
-    obelisk_client client(*this);
-    auto& fullnode = client.get_fullnode();
+    server_client client(*this);
     callback_state state(error, output, encoding);
 
-    for (const stealth_prefix& prefix: prefixes)
-    {
-        const auto prefix_handler = [&state, &prefix](
-            const std::error_code& code,
-            const blockchain::stealth_list& stealth_results)
-        {
-            if (!state.handle_error(code))
-                handle_prefix_callback(state, prefix, stealth_results);
-        };
+    //auto& fullnode = client.get_fullnode();
+    //for (const stealth_prefix& prefix: prefixes)
+    //{
+    //    const auto prefix_handler = [&state, &prefix](
+    //        const std::error_code& code,
+    //        const blockchain::stealth_list& stealth_results)
+    //    {
+    //        if (!state.handle_error(code))
+    //            handle_prefix_callback(state, prefix, stealth_results);
+    //    };
 
-        ++state;
-        fullnode.blockchain.fetch_stealth(prefix,
-            std::bind(prefix_handler, ph::_1, ph::_2), height);
-    }
+    //    ++state;
+    //    fullnode.blockchain.fetch_stealth(prefix,
+    //        std::bind(prefix_handler, ph::_1, ph::_2), height);
+    //}
 
     client.poll(state.stopped());
 

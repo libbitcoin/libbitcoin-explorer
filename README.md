@@ -38,7 +38,7 @@ All files in this repository fall under the license specified in [COPYING](https
 
 Bitcoin Explorer is a fork of the popular [SX command line tool](https://sx.dyne.org/index.html). Many of the commands and their parameters are identical to SX although many have changed, some have been obsoleted and others have been added.
 
-Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [libbitcoin_server](https://github.com/libbitcoin/obelisk) (Obelisk), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
+Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [libbitcoin_server](https://github.com/libbitcoin/libbitcoin_server), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
 
 Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin_explorer**. Therefore the program is called **explorer** and is referred to as **BX** as a convenience and out of respect for its ground-breaking predecessor.
 
@@ -96,7 +96,7 @@ The build script should not normally be executed using sudo. Instead it will imm
 * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
 * [bitcoin/secp256k1](https://github.com/bitcoin/secp256k1)
 * [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-* [libbitcoin/obelisk](https://github.com/libbitcoin/obelisk)
+* [libbitcoin/libbitcoin_client](https://github.com/libbitcoin/libbitcoin_client)
 * [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
 Of these libraries, only libzmq is packaged. However we require a more recent version of the library in order to take advantage of new features such as the [SOCKS](http://wikipedia.org/wiki/SOCKS) proxy.
@@ -184,7 +184,7 @@ To build BX you must also download and build its **libbitcoin dependencies**, as
 Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-3. [libbitcoin/obelisk](https://github.com/libbitcoin/obelisk)
+3. [libbitcoin/libbitcoin_client](https://github.com/libbitcoin/libbitcoin_client)
 4. [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
 > The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.

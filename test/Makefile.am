@@ -7,7 +7,6 @@ noinst_PROGRAMS = explorer_test
 AM_CPPFLAGS = \
     -I$(srcdir)/../include \
     ${bitcoin_client_CFLAGS} \
-    ${obelisk_CFLAGS} \
     -DBOOST_TEST_DYN_LINK
 
 explorer_test_SOURCES = \
@@ -17,9 +16,9 @@ explorer_test_SOURCES = \
     generated__find.cpp \
     generated__symbol.cpp \
     main.cpp \
-    obelisk_client.cpp \
     parameter.cpp \
-    printer.cpp
+    printer.cpp \
+    server_client.cpp
 
 # Generated from XML data source.
 explorer_test_SOURCES += \
@@ -114,5 +113,4 @@ explorer_test_LDADD = \
     -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
-    ${bitcoin_client_LIBS} \
-    ${obelisk_LIBS}
+    ${bitcoin_client_LIBS}

@@ -1003,10 +1003,10 @@ libbitcoin_explorer_include_HEADERS = \\
     define.hpp \\
     dispatch.hpp \\
     display.hpp \\
+    explorer.hpp \\
     generated.hpp \\
-    obelisk_client.hpp \\
     prop_tree.hpp \\
-    explorer.hpp
+    server_client.hpp
 
 libbitcoin_explorer_impl_includedir = $\(includedir)/explorer/impl
 libbitcoin_explorer_impl_include_HEADERS = \\
@@ -1067,8 +1067,7 @@ noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 AM_CPPFLAGS = \\
     -I$\(srcdir)/../include \\
-    ${bitcoin_client_CFLAGS} \\
-    ${obelisk_CFLAGS}
+    ${bitcoin_client_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \\
     async_client.cpp \\
@@ -1076,8 +1075,8 @@ libbitcoin_explorer_la_SOURCES = \\
     dispatch.cpp \\
     display.cpp \\
     generated.cpp \\
-    obelisk_client.cpp \\
     prop_tree.cpp \\
+    server_client.cpp \\
     primitives/address.cpp \\
     primitives/base16.cpp \\
     primitives/base58.cpp \\
@@ -1115,8 +1114,7 @@ libbitcoin_explorer_la_SOURCES += \\
 .endfor
     
 libbitcoin_explorer_la_LIBADD = \\
-    ${bitcoin_client_LIBS} \\
-    ${obelisk_LIBS}
+    ${bitcoin_client_LIBS}
 
 # Console Application
 bin_PROGRAMS = explorer
@@ -1129,8 +1127,7 @@ explorer_LDADD = \\
     -lbitcoin_explorer \\
     -lboost_chrono \\
     -lboost_program_options \\
-    ${bitcoin_client_LIBS} \\
-    ${obelisk_LIBS}
+    ${bitcoin_client_LIBS}
 .##############################################################################
 .echo "Generating test/Makefile.am..."
 .output "../test/Makefile.am"
@@ -1143,7 +1140,6 @@ noinst_PROGRAMS = explorer_test
 AM_CPPFLAGS = \\
     -I$\(srcdir)/../include \\
     ${bitcoin_client_CFLAGS} \\
-    ${obelisk_CFLAGS} \\
     -DBOOST_TEST_DYN_LINK
 
 explorer_test_SOURCES = \\
@@ -1153,9 +1149,9 @@ explorer_test_SOURCES = \\
     generated__find.cpp \\
     generated__symbol.cpp \\
     main.cpp \\
-    obelisk_client.cpp \\
     parameter.cpp \\
-    printer.cpp
+    printer.cpp \\
+    server_client.cpp
 
 # Generated from XML data source.
 explorer_test_SOURCES += \\
@@ -1168,8 +1164,7 @@ explorer_test_LDADD = \\
     -lbitcoin_explorer \\
     -lboost_chrono \\
     -lboost_program_options \\
-    ${bitcoin_client_LIBS} \\
-    ${obelisk_LIBS}
+    ${bitcoin_client_LIBS}
 .##############################################################################
 .echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj..."
 .output "../builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj"
@@ -1261,8 +1256,8 @@ explorer_test_LDADD = \\
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\dispatch.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\display.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\generated.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\obelisk_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\prop_tree.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\server_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\address.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base16.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base58.hpp" />
@@ -1305,8 +1300,8 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\server_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp" />
@@ -1567,13 +1562,13 @@ explorer_test_LDADD = \\
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\generated.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\obelisk_client.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\prop_tree.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\explorer\\explorer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\server_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1693,10 +1688,10 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
+    <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp">
+    <ClCompile Include="..\\..\\..\\..\\src\\server_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1785,9 +1780,9 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\test\\server_client.cpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -1920,7 +1915,7 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp">
+    <ClCompile Include="..\\..\\..\\..\\test\\server_client.cpp">
       <Filter>src\\tests</Filter>
     </ClCompile>
   </ItemGroup>

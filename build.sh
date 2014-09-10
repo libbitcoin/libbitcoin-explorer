@@ -100,7 +100,6 @@ build_library()
     github_build bitcoin secp256k1 master "$@" $SECP256K1_OPTIONS
     github_build libbitcoin libbitcoin develop "$@"
     github_build libbitcoin libbitcoin_client develop "$@"
-    github_build libbitcoin obelisk develop "$@"
     github_build $BUILD_ACCOUNT $BUILD_REPO $BUILD_BRANCH "$@"
     
     # Run unit tests.

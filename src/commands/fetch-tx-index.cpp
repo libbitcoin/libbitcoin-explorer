@@ -23,12 +23,11 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/obelisk.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
-#include <explorer/obelisk_client.hpp>
 #include <explorer/prop_tree.hpp>
 #include <explorer/primitives/base16.hpp>
+#include <explorer/server_client.hpp>
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -51,22 +50,22 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
 
-    obelisk_client client(*this);
-    auto& fullnode = client.get_fullnode();
+    server_client client(*this);
     callback_state state(error, output, encoding);
 
-    for (const auto& hash: hashes)
-    {
-        const auto handler = [&state, &hash](
-            const std::error_code& code, size_t height, size_t index)
-        {
-            if (!state.handle_error(code))
-                handle_callback(state, hash, height, index);
-        };
+    //auto& fullnode = client.get_fullnode();
+    //for (const auto& hash: hashes)
+    //{
+    //    const auto handler = [&state, &hash](
+    //        const std::error_code& code, size_t height, size_t index)
+    //    {
+    //        if (!state.handle_error(code))
+    //            handle_callback(state, hash, height, index);
+    //    };
 
-        fullnode.blockchain.fetch_transaction_index(hash, handler);
-        ++state;
-    }
+    //    fullnode.blockchain.fetch_transaction_index(hash, handler);
+    //    ++state;
+    //}
 
     client.poll(state.stopped());
 

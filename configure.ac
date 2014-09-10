@@ -39,7 +39,6 @@ AC_CHECK_LIB(gmp,__gmpz_init,,
 PKG_CHECK_MODULES([secp256k1], [libsecp256k1 >= 0.0.1])
 PKG_CHECK_MODULES([bitcoin], [libbitcoin >= 2.1.0])
 PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 0.0.2])
-PKG_CHECK_MODULES([obelisk], [libobelisk >= 0.1.1])
 PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
 PKG_CHECK_MODULES([zmq], [libzmq >= 4.0.0])
 PKG_CHECK_MODULES([czmq], [libczmq >= 2.2.0])

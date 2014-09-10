@@ -22,10 +22,9 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <client/client.hpp>
-#include <obelisk/obelisk.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
+#include <explorer/server_client.hpp>
 
 using namespace bc;
 using namespace bc::client;
@@ -100,7 +99,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 //            handle_callback(state, height);
 //    };
 //
-//    obelisk_client client(*this);
+//    server_client client(*this);
 //    auto& fullnode = client.get_fullnode();
 //    state.start();
 //    fullnode.blockchain.fetch_last_height(handler);
