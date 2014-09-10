@@ -18,14 +18,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/tx-decode.hpp>
+#include <bitcoin/explorer/commands/tx-decode.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/define.hpp>
-#include <explorer/prop_tree.hpp>
-#include <explorer/primitives/transaction.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
+#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

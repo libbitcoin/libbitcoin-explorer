@@ -18,11 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/display.hpp>
+#include <bitcoin/explorer/display.hpp>
 
 #include <iostream>
-#include <explorer/dispatch.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/dispatch.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 // TODO: once these settle down make testable through stream injection.
 

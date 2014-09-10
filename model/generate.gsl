@@ -247,8 +247,8 @@
 .xml_true = "true"
 .
 .##############################################################################
-.echo "Generating include/explorer/generated.hpp..."
-.output "../include/explorer/generated.hpp"
+.echo "Generating include/bitcoin/explorer/generated.hpp..."
+.output "../include/bitcoin/explorer/generated.hpp"
 .copyleft()
 #ifndef BX_GENERATED_HPP
 #define BX_GENERATED_HPP
@@ -256,9 +256,9 @@
 #include <functional>
 #include <memory>
 #include <string>
-#include <explorer/command.hpp>
+#include <bitcoin/explorer/command.hpp>
 .for command by symbol
-#include <explorer/commands/$(symbol).hpp>
+#include <bitcoin/explorer/commands/$(symbol).hpp>
 .endfor
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -291,13 +291,13 @@ std::shared_ptr<command> find(const std::string& symbol);
 .output "../src/generated.cpp"
 .copyleft()
 #include "precompile.hpp"
-#include <explorer/generated.hpp>
+#include <bitcoin/explorer/generated.hpp>
 
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
-#include <explorer/command.hpp>
+#include <bitcoin/explorer/command.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -331,8 +331,8 @@ shared_ptr<command> find(const string& symbol)
 } // namespace explorer
 } // namespace libbitcoin
 .##############################################################################
-.echo "Generating include/explorer/command.hpp..."
-.output "../include/explorer/command.hpp"
+.echo "Generating include/bitcoin/explorer/command.hpp..."
+.output "../include/bitcoin/explorer/command.hpp"
 .copyleft()
 #ifndef BX_COMMAND_HPP
 #define BX_COMMAND_HPP
@@ -342,9 +342,9 @@ shared_ptr<command> find(const string& symbol)
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include <explorer/define.hpp>
-#include <explorer/utility/config.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility/config.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -612,8 +612,8 @@ private:
 #endif
 .##############################################################################
 .for command by symbol
-.echo "Generating include/explorer/commands/$(symbol).hpp..."
-.output "../include/explorer/commands/$(symbol).hpp"
+.echo "Generating include/bitcoin/explorer/commands/$(symbol).hpp..."
+.output "../include/bitcoin/explorer/commands/$(symbol).hpp"
 .copyleft()
 #ifndef BX_$(SYMBOL:c)_HPP
 #define BX_$(SYMBOL:c)_HPP
@@ -624,35 +624,35 @@ private:
 #include <vector>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/command.hpp>
-#include <explorer/define.hpp>
-#include <explorer/generated.hpp>
-#include <explorer/primitives/address.hpp>
-#include <explorer/primitives/base16.hpp>
-#include <explorer/primitives/base58.hpp>
-#include <explorer/primitives/btc.hpp>
-#include <explorer/primitives/btc160.hpp>
-#include <explorer/primitives/btc256.hpp>
-#include <explorer/primitives/ec_private.hpp>
-#include <explorer/primitives/ec_public.hpp>
-#include <explorer/primitives/encoding.hpp>
-#include <explorer/primitives/hashtype.hpp>
-#include <explorer/primitives/hd_key.hpp>
-#include <explorer/primitives/hd_priv.hpp>
-#include <explorer/primitives/hd_pub.hpp>
-#include <explorer/primitives/header.hpp>
-#include <explorer/primitives/input.hpp>
-#include <explorer/primitives/output.hpp>
-#include <explorer/primitives/prefix.hpp>
-#include <explorer/primitives/raw.hpp>
-#include <explorer/primitives/script.hpp>
-#include <explorer/primitives/stealth.hpp>
-#include <explorer/primitives/transaction.hpp>
-#include <explorer/primitives/wif.hpp>
-#include <explorer/primitives/wrapper.hpp>
-#include <explorer/utility/compat.hpp>
-#include <explorer/utility/config.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/generated.hpp>
+#include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/base58.hpp>
+#include <bitcoin/explorer/primitives/btc.hpp>
+#include <bitcoin/explorer/primitives/btc160.hpp>
+#include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/primitives/hashtype.hpp>
+#include <bitcoin/explorer/primitives/hd_key.hpp>
+#include <bitcoin/explorer/primitives/hd_priv.hpp>
+#include <bitcoin/explorer/primitives/hd_pub.hpp>
+#include <bitcoin/explorer/primitives/header.hpp>
+#include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/output.hpp>
+#include <bitcoin/explorer/primitives/prefix.hpp>
+#include <bitcoin/explorer/primitives/raw.hpp>
+#include <bitcoin/explorer/primitives/script.hpp>
+#include <bitcoin/explorer/primitives/stealth.hpp>
+#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/primitives/wif.hpp>
+#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/utility/compat.hpp>
+#include <bitcoin/explorer/utility/config.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -928,7 +928,7 @@ private:
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <explorer/explorer.hpp>
+#include <bitcoin/explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -949,7 +949,7 @@ BOOST_AUTO_TEST_SUITE_END()
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <explorer/explorer.hpp>
+#include <bitcoin/explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -973,7 +973,7 @@ BOOST_AUTO_TEST_SUITE_END()
 #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
-#include <explorer/explorer.hpp>
+#include <bitcoin/explorer.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -991,69 +991,72 @@ BOOST_AUTO_TEST_CASE(generated__symbol__$(symbol:c)__returns_expected_value)
 
 BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
-.echo "Generating include/explorer/Makefile.am..."
-.output "../include/explorer/Makefile.am"
+.echo "Generating include/bitcoin/explorer/Makefile.am..."
+.output "../include/bitcoin/explorer/Makefile.am"
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-libbitcoin_explorer_includedir = $\(includedir)/explorer
-libbitcoin_explorer_include_HEADERS = \\
-    async_client.hpp \\
-    callback_state.hpp \\
-    command.hpp \\
-    define.hpp \\
-    dispatch.hpp \\
-    display.hpp \\
-    explorer.hpp \\
-    generated.hpp \\
-    prop_tree.hpp \\
-    server_client.hpp
+bitcoin_includedir = $\(includedir)/bitcoin
+bitcoin_include_HEADERS = \\
+    explorer.hpp
+    
+bitcoin_explorer_includedir = $\(includedir)/bitcoin/explorer
+bitcoin_explorer_include_HEADERS = \\
+    explorer/async_client.hpp \\
+    explorer/callback_state.hpp \\
+    explorer/command.hpp \\
+    explorer/define.hpp \\
+    explorer/dispatch.hpp \\
+    explorer/display.hpp \\
+    explorer/generated.hpp \\
+    explorer/prop_tree.hpp \\
+    explorer/server_client.hpp
 
-libbitcoin_explorer_impl_includedir = $\(includedir)/explorer/impl
-libbitcoin_explorer_impl_include_HEADERS = \\
-    impl/prop_tree.ipp \\
-    impl/utility.ipp
+bitcoin_explorer_impl_includedir = $\(includedir)/bitcoin/explorer/impl
+bitcoin_explorer_impl_include_HEADERS = \\
+    explorer/impl/prop_tree.ipp \\
+    explorer/impl/utility.ipp
 
-libbitcoin_explorer_utility_includedir = $\(includedir)/explorer/utility
-libbitcoin_explorer_utility_include_HEADERS = \\
-    utility/compat.hpp \\
-    utility/config.hpp \\
-    utility/environment.hpp \\
-    utility/parameter.hpp \\
-    utility/printer.hpp \\
-    utility/utility.hpp
+bitcoin_explorer_utility_includedir = $\(includedir)/bitcoin/explorer/utility
+bitcoin_explorer_utility_include_HEADERS = \\
+    explorer/utility/compat.hpp \\
+    explorer/utility/config.hpp \\
+    explorer/utility/environment.hpp \\
+    explorer/utility/parameter.hpp \\
+    explorer/utility/printer.hpp \\
+    explorer/utility/utility.hpp
 
-libbitcoin_explorer_primitives_includedir = $\(includedir)/explorer/primitives
-libbitcoin_explorer_primitives_include_HEADERS = \\
-    primitives/address.hpp \\
-    primitives/base16.hpp \\
-    primitives/base58.hpp \\
-    primitives/btc.hpp \\
-    primitives/btc160.hpp \\
-    primitives/btc256.hpp \\
-    primitives/ec_private.hpp \\
-    primitives/ec_public.hpp \\
-    primitives/encoding.hpp \\
-    primitives/hashtype.hpp \\
-    primitives/hd_key.hpp \\
-    primitives/hd_priv.hpp \\
-    primitives/hd_pub.hpp \\
-    primitives/header.hpp \\
-    primitives/input.hpp \\
-    primitives/output.hpp \\
-    primitives/point.hpp \\
-    primitives/prefix.hpp \\
-    primitives/raw.hpp \\
-    primitives/script.hpp \\
-    primitives/stealth.hpp \\
-    primitives/transaction.hpp \\
-    primitives/wif.hpp \\
-    primitives/wrapper.hpp
+bitcoin_explorer_primitives_includedir = $\(includedir)/bitcoin/explorer/primitives
+bitcoin_explorer_primitives_include_HEADERS = \\
+    explorer/primitives/address.hpp \\
+    explorer/primitives/base16.hpp \\
+    explorer/primitives/base58.hpp \\
+    explorer/primitives/btc.hpp \\
+    explorer/primitives/btc160.hpp \\
+    explorer/primitives/btc256.hpp \\
+    explorer/primitives/ec_private.hpp \\
+    explorer/primitives/ec_public.hpp \\
+    explorer/primitives/encoding.hpp \\
+    explorer/primitives/hashtype.hpp \\
+    explorer/primitives/hd_key.hpp \\
+    explorer/primitives/hd_priv.hpp \\
+    explorer/primitives/hd_pub.hpp \\
+    explorer/primitives/header.hpp \\
+    explorer/primitives/input.hpp \\
+    explorer/primitives/output.hpp \\
+    explorer/primitives/point.hpp \\
+    explorer/primitives/prefix.hpp \\
+    explorer/primitives/raw.hpp \\
+    explorer/primitives/script.hpp \\
+    explorer/primitives/stealth.hpp \\
+    explorer/primitives/transaction.hpp \\
+    explorer/primitives/wif.hpp \\
+    explorer/primitives/wrapper.hpp
 
 # Generated from XML data source.
-libbitcoin_explorer_commands_includedir = $\(includedir)/explorer/commands
-libbitcoin_explorer_commands_include_HEADERS = \\
+bitcoin_explorer_commands_includedir = $\(includedir)/bitcoin/explorer/commands
+bitcoin_explorer_commands_include_HEADERS = \\
 .for command by symbol
-    commands/$(symbol:).hpp$(!last() ?? " \\")
+    explorer/commands/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
 .##############################################################################
 .echo "Generating src/Makefile.am..."
@@ -1246,52 +1249,52 @@ explorer_test_LDADD = \\
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\prop_tree.ipp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\utility.ipp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\explorer.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\callback_state.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\async_client.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\command.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\define.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\dispatch.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\display.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\generated.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\prop_tree.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\server_client.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\address.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base16.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base58.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc160.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc256.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\ec_private.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\ec_public.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\encoding.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hashtype.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_key.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_priv.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_pub.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\header.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\input.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\output.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\point.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\prefix.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\raw.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\script.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\stealth.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\transaction.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\wif.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\wrapper.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\compat.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\config.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\environment.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\parameter.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\printer.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\utility.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\prop_tree.ipp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\utility.ipp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\callback_state.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\async_client.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\command.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\define.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\dispatch.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\display.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\generated.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\prop_tree.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\server_client.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\address.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base58.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc256.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hashtype.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_key.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_priv.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_pub.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\header.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\input.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\output.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\point.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\prefix.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\raw.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\transaction.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\compat.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\config.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\environment.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\parameter.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\printer.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\utility.hpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\commands\\$(symbol:).hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\commands\\$(symbol:).hpp" />
 .endfor
   </ItemGroup>
   <ItemGroup>
@@ -1385,29 +1388,35 @@ explorer_test_LDADD = \\
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="include\\commands">
+    <Filter Include="include\\bitcoin\\explorer\\commands">
       <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\commands\\network">
+    <Filter Include="include\\bitcoin\\explorer\\commands\\network">
       <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\commands\\obsolete">
+    <Filter Include="include\\bitcoin\\explorer\\commands\\obsolete">
       <UniqueIdentifier>{268700C7-1C9D-44FF-B1CE-3104893288A4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\commands\\stub">
+    <Filter Include="include\\bitcoin\\explorer\\commands\\stub">
       <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\impl">
+    <Filter Include="include\\bitcoin\\explorer\\impl">
       <UniqueIdentifier>{d34fd634-a274-4629-8a8f-c588117d9733}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\primitives">
+    <Filter Include="include\\bitcoin\\explorer\\primitives">
       <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\\utility">
+    <Filter Include="include\\bitcoin\\explorer\\utility">
       <UniqueIdentifier>{dc28e2c9-d07d-4242-8007-e44440c133a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include">
+    <Filter Include="include\\bitcoin\\explorer">
+      <UniqueIdentifier>{31B4AAFD-BE8B-45EF-BCDC-B696C320F9F5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin">
       <UniqueIdentifier>{f75d4585-8ee2-45e8-96ec-880c63fc243e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{86400492-13FA-494A-87E4-1E33C7EB2476}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\\commands\\network">
       <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
@@ -1433,143 +1442,143 @@ explorer_test_LDADD = \\
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\commands\\$(symbol:).hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\commands\\$(symbol:).hpp">
 .   if (is_xml_true(stub))
-      <Filter>include\\commands\\stub</Filter>
+      <Filter>include\\bitcoin\\explorer\\commands\\stub</Filter>
 .   elsif (is_xml_true(network))
-      <Filter>include\\commands\\network</Filter>
+      <Filter>include\\bitcoin\\explorer\\commands\\network</Filter>
 .   elsif (is_xml_true(obsolete))
-      <Filter>include\\commands\\obsolete</Filter>
+      <Filter>include\\bitcoin\\explorer\\commands\\obsolete</Filter>
 .   else
-      <Filter>include\\commands</Filter>
+      <Filter>include\\bitcoin\\explorer\\commands</Filter>
 .   endif
     </ClInclude>
 .endfor
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\utility.ipp">
-      <Filter>include\\impl</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\utility.ipp">
+      <Filter>include\\bitcoin\\explorer\\impl</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\impl\\prop_tree.ipp">
-      <Filter>include\\impl</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\prop_tree.ipp">
+      <Filter>include\\bitcoin\\explorer\\impl</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\address.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\address.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base16.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\base58.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base58.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc160.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\btc256.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc256.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\ec_private.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\ec_public.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_key.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_key.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\encoding.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hashtype.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hashtype.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_priv.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_priv.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\hd_pub.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_pub.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\header.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\header.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\input.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\input.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\output.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\output.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\point.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\point.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\prefix.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\prefix.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\raw.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\raw.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\script.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\stealth.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\transaction.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\transaction.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\wif.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\primitives\\wrapper.hpp">
-      <Filter>include\\primitives</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\compat.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\compat.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\config.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\config.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\environment.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\environment.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\parameter.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\parameter.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\printer.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\printer.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\utility\\utility.hpp">
-      <Filter>include\\utility</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\utility.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\async_client.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\async_client.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\callback_state.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\callback_state.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\command.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\command.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\define.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\define.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\dispatch.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\dispatch.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\display.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\display.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\generated.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\generated.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\prop_tree.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\prop_tree.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\explorer.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\server_client.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\explorer\\server_client.hpp">
-      <Filter>include</Filter>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer.hpp">
+      <Filter>include\\bitcoin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

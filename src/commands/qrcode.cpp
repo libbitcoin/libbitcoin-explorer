@@ -18,10 +18,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/qrcode.hpp>
+#include <bitcoin/explorer/commands/qrcode.hpp>
 
 #include <iostream>
-#include <explorer/define.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;

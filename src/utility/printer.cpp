@@ -18,11 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/utility/printer.hpp>
+#include <bitcoin/explorer/utility/printer.hpp>
 
 #include <iostream>
 #include <boost/program_options.hpp>
-#include <explorer/define.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 // TODO: obtain from XML resource as localized text.
 // NOTE: in the usage format "bx command" is the first parameter.

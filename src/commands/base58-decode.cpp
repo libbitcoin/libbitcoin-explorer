@@ -18,11 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/base58-decode.hpp>
+#include <bitcoin/explorer/commands/base58-decode.hpp>
 
 #include <iostream>
-#include <explorer/define.hpp>
-#include <explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;

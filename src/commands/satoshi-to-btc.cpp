@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/satoshi-to-btc.hpp>
+#include <bitcoin/explorer/commands/satoshi-to-btc.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/define.hpp>
-#include <explorer/primitives/btc.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/btc.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;

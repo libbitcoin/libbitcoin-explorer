@@ -18,11 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/utility/config.hpp>
+#include <bitcoin/explorer/utility/config.hpp>
 
 #include <string>
 #include <boost/filesystem.hpp>
-#include <explorer/utility/environment.hpp>
+#include <bitcoin/explorer/utility/environment.hpp>
 
 namespace libbitcoin {
 namespace explorer {

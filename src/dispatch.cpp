@@ -18,17 +18,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/dispatch.hpp>
+#include <bitcoin/explorer/dispatch.hpp>
 
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
-#include <explorer/generated.hpp>
-#include <explorer/display.hpp>
-#include <explorer/utility/config.hpp>
-#include <explorer/utility/environment.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/generated.hpp>
+#include <bitcoin/explorer/display.hpp>
+#include <bitcoin/explorer/utility/config.hpp>
+#include <bitcoin/explorer/utility/environment.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace po;
 using namespace boost::filesystem;

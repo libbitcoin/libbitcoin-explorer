@@ -18,18 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/watch-stealth.hpp>
+#include <bitcoin/explorer/commands/watch-stealth.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/callback_state.hpp>
-#include <explorer/define.hpp>
-#include <explorer/prop_tree.hpp>
-#include <explorer/primitives/encoding.hpp>
-#include <explorer/primitives/base16.hpp>
-#include <explorer/primitives/transaction.hpp>
-#include <explorer/server_client.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
+#include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/server_client.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

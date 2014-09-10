@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/primitives/transaction.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -26,10 +26,10 @@
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/define.hpp>
-#include <explorer/prop_tree.hpp>
-#include <explorer/primitives/base16.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace po;
 using namespace pt;

@@ -25,7 +25,7 @@
 #pragma warning(push) 
 #pragma warning(disable : 4996)
 #endif
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 #include <iomanip>
 #include <iostream>
 #include <random>
@@ -45,8 +45,8 @@
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
-#include <explorer/define.hpp>
-#include <explorer/utility/compat.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility/compat.hpp>
 
 using namespace boost::posix_time;
 

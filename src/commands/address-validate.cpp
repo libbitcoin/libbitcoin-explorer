@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/address-validate.hpp>
+#include <bitcoin/explorer/commands/address-validate.hpp>
 
 #include <iostream>
 #include <boost/program_options.hpp>
-#include <explorer/define.hpp>
-#include <explorer/primitives/address.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/address.hpp>
 
 using namespace po;
 using namespace bc::explorer;

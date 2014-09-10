@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/address-encode.hpp>
+#include <bitcoin/explorer/commands/address-encode.hpp>
 
 #include <iostream>
-#include <explorer/define.hpp>
-#include <explorer/primitives/address.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
