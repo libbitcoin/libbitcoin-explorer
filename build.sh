@@ -79,9 +79,9 @@ clean_usr_local()
     sudo rm --force /usr/local/lib/libbitcoin-explorer.so
     sudo rm --force /usr/local/lib/libbitcoin-explorer.so.*
 
-    # Symbolic Links
-    sudo unlink /usr/local/bin/bx
-    sudo unlink /usr/local/bin/sx
+    # Symbolic Links (error if link does not exist)
+    # sudo unlink --force /usr/local/bin/bx
+    # sudo unlink --force /usr/local/bin/sx
 }
 
 github_build()
