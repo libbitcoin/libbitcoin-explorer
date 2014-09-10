@@ -29,8 +29,8 @@
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 static void handle_callback(callback_state& state, size_t position,
     const index_list& confirmations)

@@ -32,9 +32,9 @@
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 static void handle_callback(callback_state& state, const hash_digest& hash,
     size_t height, size_t index)

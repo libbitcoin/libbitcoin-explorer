@@ -27,6 +27,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -52,13 +53,13 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    wif(const bc::ec_secret& value);
+    wif(const ec_secret& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    wif(const bc::hd_private_key& value);
+    wif(const hd_private_key& value);
 
     /**
      * Copy constructor.
@@ -70,7 +71,7 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    bc::ec_secret& data();
+    ec_secret& data();
 
     /**
      * Get the compressed property.
@@ -86,7 +87,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_secret&() const;
+    operator const ec_secret&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -117,10 +118,11 @@ private:
     /**
      * The state of this object's secret.
      */
-    bc::ec_secret value_;
+    ec_secret value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

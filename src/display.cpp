@@ -26,6 +26,7 @@
 
 // TODO: once these settle down make testable through stream injection.
 
+namespace libbitcoin {
 namespace explorer {
 
 void display_invalid_command(const std::string& command)
@@ -76,4 +77,6 @@ bool display_usage(const std::shared_ptr<command> command)
     return true;
 }
 
-} // explorer
+
+} // namespace explorer
+} // namespace libbitcoin

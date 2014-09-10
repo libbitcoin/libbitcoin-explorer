@@ -25,9 +25,9 @@
 #include <explorer/primitives/address.hpp>
 #include <explorer/utility/utility.hpp>
 
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 // 100% coverage by line, loc ready.
 console_result address_encode::invoke(std::ostream& output, std::ostream& error)

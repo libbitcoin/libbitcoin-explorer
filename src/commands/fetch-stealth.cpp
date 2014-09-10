@@ -28,9 +28,9 @@
 #include <explorer/prop_tree.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 // Write out the transaction hashes of *potential* matches.
 static void handle_prefix_callback(callback_state& state, 

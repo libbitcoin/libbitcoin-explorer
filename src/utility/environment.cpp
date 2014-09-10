@@ -29,6 +29,7 @@
 #endif
 #include <string>
 
+namespace libbitcoin {
 namespace explorer {
 
 std::string home_directory()
@@ -48,4 +49,5 @@ std::string home_directory()
 #endif
 }
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin

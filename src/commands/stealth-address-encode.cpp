@@ -26,9 +26,9 @@
 #include <explorer/primitives/stealth.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 console_result stealth_address_encode::invoke(std::ostream& output,
     std::ostream& error)

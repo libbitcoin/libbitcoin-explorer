@@ -265,6 +265,7 @@
 
 #define BX_VARIABLE_CONFIG "$(config_option:)"
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
@@ -281,7 +282,8 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
  */
 std::shared_ptr<command> find(const std::string& symbol);
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif
 .##############################################################################
@@ -303,6 +305,7 @@ using namespace po;
 using namespace std;
 using namespace boost::filesystem;
     
+namespace libbitcoin {
 namespace explorer {
 using namespace commands;
 
@@ -325,7 +328,8 @@ shared_ptr<command> find(const string& symbol)
     return nullptr;
 }
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 .##############################################################################
 .echo "Generating include/explorer/command.hpp..."
 .output "../include/explorer/command.hpp"
@@ -344,6 +348,7 @@ shared_ptr<command> find(const string& symbol)
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+namespace libbitcoin {
 namespace explorer {
 
 #define BX_VARIABLE_CONFIG "config"
@@ -601,7 +606,8 @@ private:
     } setting_;
 };
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif
 .##############################################################################
@@ -650,6 +656,7 @@ private:
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+namespace libbitcoin {
 namespace explorer {
 namespace commands {
 .for define
@@ -908,8 +915,9 @@ private:
     } option_;
 };
 
-} // commands
-} // explorer
+} // namespace commands
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif
 .endfor
@@ -929,8 +937,8 @@ BOOST_AUTO_TEST_SUITE(generated__broadcast)
 BOOST_AUTO_TEST_CASE(generated__broadcast__always__returns_true)
 {
     // TODO: mocks and dependency injection required to test proper execution.
-    auto func = [](std::shared_ptr<explorer::command> command) -> void {};
-    BOOST_REQUIRE(explorer::broadcast(func));
+    auto func = [](std::shared_ptr<bc::explorer::command> command) -> void {};
+    BOOST_REQUIRE(bc::explorer::broadcast(func));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -945,8 +953,8 @@ BOOST_AUTO_TEST_SUITE_END()
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 BOOST_AUTO_TEST_SUITE(generated__find)
 .for command by symbol
@@ -969,8 +977,8 @@ BOOST_AUTO_TEST_SUITE_END()
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 .for command by symbol

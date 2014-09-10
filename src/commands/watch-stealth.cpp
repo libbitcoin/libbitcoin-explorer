@@ -33,9 +33,9 @@
 
 using namespace bc;
 using namespace obelisk;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 static void handle_subscribed(callback_state& state, const prefix& prefix,
     const worker_uuid& worker)

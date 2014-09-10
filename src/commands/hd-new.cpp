@@ -26,9 +26,9 @@
 #include <explorer/primitives/hd_priv.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 // 83% coverage by line, loc ready. BX_HD_NEW_INVALID_KEY uncovered.
 console_result hd_new::invoke(std::ostream& output, std::ostream& error)

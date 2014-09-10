@@ -114,6 +114,7 @@
 
 #define BX_VARIABLE_CONFIG "config"
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
@@ -130,6 +131,7 @@ bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
  */
 std::shared_ptr<command> find(const std::string& symbol);
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

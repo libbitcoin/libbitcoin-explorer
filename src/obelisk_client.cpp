@@ -26,11 +26,13 @@
 #include <explorer/async_client.hpp>
 #include <explorer/command.hpp>
 
+namespace libbitcoin {
 namespace explorer {
 
-obelisk_client::obelisk_client(explorer::command& command, const size_t threads)
+obelisk_client::obelisk_client(bc::explorer::command& command, 
+    const size_t threads)
     : async_client(command, threads), fullnode_(get_threadpool(),
-    command.get_server_service_setting(),
+    command.get_server_address_setting(),
     command.get_server_client_certificate_setting().generic_string(),
     command.get_server_server_public_key_setting())
 {
@@ -59,4 +61,5 @@ void obelisk_client::poll(bool& done, uint32_t period_ms,
     }
 }
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin

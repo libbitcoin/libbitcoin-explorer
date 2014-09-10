@@ -30,6 +30,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -55,7 +56,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    address(const bc::payment_address& value);
+    address(const payment_address& value);
 
     /**
      * Copy constructor.
@@ -68,31 +69,31 @@ public:
      * @param[in]  version  The bitcoin address version.
      * @param[in]  hash     The ripemd160 value of the address.
      */
-    address(uint8_t version, const bc::short_hash& hash);
+    address(uint8_t version, const short_hash& hash);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    address(const bc::hd_private_key& value);
+    address(const hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    address(const bc::hd_public_key& value);
+    address(const hd_public_key& value);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    bc::payment_address& data();
+    payment_address& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::payment_address&() const;
+    operator const payment_address&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -116,10 +117,11 @@ private:
     /**
      * The state of this object.
      */
-    bc::payment_address value_;
+    payment_address value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

@@ -26,8 +26,8 @@
 #include <explorer/define.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 // $ echo 148f0a1d77e20dbaee3ff920ca40240d | bx mnemonic-encode
 console_result mnemonic_encode::invoke(std::ostream& output,

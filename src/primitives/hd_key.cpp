@@ -29,9 +29,9 @@
 #include <explorer/primitives/hd_priv.hpp>
 #include <explorer/primitives/hd_pub.hpp>
 
-using namespace bc;
 using namespace po;
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -104,5 +104,6 @@ std::ostream& operator<<(std::ostream& output, const hd_key& argument)
     return output;
 }
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin

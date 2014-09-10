@@ -48,9 +48,9 @@
 #include <explorer/define.hpp>
 #include <explorer/utility/compat.hpp>
 
-using namespace bc;
 using namespace boost::posix_time;
 
+namespace libbitcoin {
 namespace explorer {
 
 void join(const std::vector<std::string>& words, std::string& sentence,
@@ -235,4 +235,5 @@ std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
     return output;
 }
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin

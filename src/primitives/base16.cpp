@@ -29,9 +29,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <explorer/define.hpp>
 
-using namespace bc;
 using namespace po;
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -84,5 +84,6 @@ namespace primitives {
         return output;
     }
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin

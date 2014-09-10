@@ -28,6 +28,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
    
 /**
@@ -101,6 +102,7 @@ void load_environment_variables(po::variables_map& variables,
 bool load_variables(po::variables_map& variables, std::string& message,
     command& instance, std::istream& input, int argc, const char* argv[]);
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

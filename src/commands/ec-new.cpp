@@ -26,9 +26,9 @@
 #include <explorer/primitives/ec_private.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 // 83% coverage by line, loc ready. BX_EC_NEW_INVALID_KEY uncovered.
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)

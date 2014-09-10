@@ -36,6 +36,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
     
@@ -104,7 +105,7 @@ pt::ptree prop_tree(const std::vector<history_row>& rows);
  * @param[in]  rows             The set of history rows.
  * @return                      A property tree.
  */
-pt::ptree prop_tree(const bc::payment_address& history_address,
+pt::ptree prop_tree(const payment_address& history_address,
     const std::vector<history_row>& rows);
 
 /**
@@ -114,7 +115,7 @@ pt::ptree prop_tree(const bc::payment_address& history_address,
  * @return                      A property tree.
  */
 pt::ptree prop_tree(const std::vector<balance_row>& rows,
-    const bc::payment_address& balance_address);
+    const payment_address& balance_address);
 
 /**
  * Generate a property tree for a transaction input.
@@ -197,7 +198,7 @@ pt::ptree prop_tree(const std::vector<transaction>& transactions);
  * @param[in]  prefix      The prefix used to locate the transaction.
  * @return                 A property tree.
  */
-pt::ptree prop_tree(const tx_type& tx, const bc::hash_digest& block_hash,
+pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
     const prefix& prefix);
 
 /**
@@ -219,14 +220,14 @@ pt::ptree prop_tree(const std::vector<stealth>& addresses);
  * @param[in]  rows  The stealth row.
  * @return           A property tree.
  */
-pt::ptree prop_tree(const bc::blockchain::stealth_row& row);
+pt::ptree prop_tree(const blockchain::stealth_row& row);
 
 /**
  * Generate a property tree from stealth metadata rows.
  * @param[in]  rows    The set of stealth rows.
  * @return             A property tree.
  */
-pt::ptree prop_tree(const std::vector<bc::blockchain::stealth_row>& rows);
+pt::ptree prop_tree(const std::vector<blockchain::stealth_row>& rows);
 
 /**
  * Generate a property tree from stealth metadata rows for a prefix.
@@ -234,8 +235,8 @@ pt::ptree prop_tree(const std::vector<bc::blockchain::stealth_row>& rows);
  * @param[in]  prefix  The stealth prefix.
  * @return             A property tree.
  */
-pt::ptree prop_tree(const bc::stealth_prefix& prefix, 
-    const std::vector<bc::blockchain::stealth_row>& rows);
+pt::ptree prop_tree(const stealth_prefix& prefix, 
+    const std::vector<blockchain::stealth_row>& rows);
 
 /**
  * Generate a property tree for a wrapper.
@@ -244,8 +245,9 @@ pt::ptree prop_tree(const bc::stealth_prefix& prefix,
  */
 pt::ptree prop_tree(const wrapped_data& wrapped);
 
-} // primitives
-} // explorer
+} // namespace primitives
+} // namespace explorer
+} // namespace libbitcoin
 
 #include <explorer/impl/prop_tree.ipp>
 

@@ -30,9 +30,9 @@
 #include <explorer/primitives/ec_private.hpp>
 #include <explorer/primitives/ec_public.hpp>
 
-using namespace bc;
 using namespace po;
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -98,5 +98,6 @@ std::ostream& operator<<(std::ostream& output, const address& argument)
     return output;
 }
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin

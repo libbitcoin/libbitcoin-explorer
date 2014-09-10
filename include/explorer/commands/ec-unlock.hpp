@@ -58,6 +58,7 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
@@ -225,7 +226,8 @@ private:
     } option_;
 };
 
-} // commands
-} // explorer
+} // namespace commands
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

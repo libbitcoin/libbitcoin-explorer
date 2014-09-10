@@ -31,9 +31,9 @@
 
 using namespace bc;
 using namespace obelisk;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 static void transaction_fetched(callback_state& state, const tx_type& tx)
 {

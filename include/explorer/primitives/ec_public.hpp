@@ -30,6 +30,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -55,7 +56,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const bc::ec_point& value);
+    ec_public(const ec_point& value);
 
     /**
      * Copy constructor.
@@ -67,25 +68,25 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const bc::hd_private_key& value);
+    ec_public(const hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const bc::hd_public_key& value);
+    ec_public(const hd_public_key& value);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    bc::ec_point& data();
+    ec_point& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::ec_point&() const;
+    operator const ec_point&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -109,10 +110,11 @@ private:
     /**
      * The state of this object.
      */
-    bc::ec_point value_;
+    ec_point value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

@@ -24,7 +24,7 @@
 #include "precompile.hpp"
 
 using namespace bc;
-using namespace explorer::primitives;
+using namespace bc::explorer::primitives;
 
 #define ADDRESS_MAINNET_A "15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma"
 #define ADDRESS_HD_PRIVATE_KEY_MAINNET_A "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi"

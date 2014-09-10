@@ -33,6 +33,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -43,7 +44,7 @@ namespace primitives {
  * @param[out] point   The out point to populate.
  * @param[in]  tokens  The two tokens to parse.
  */
-    static void parse_point(bc::output_point& point,
+    static void parse_point(output_point& point,
         const std::vector<std::string>& tokens);
 
 /**
@@ -68,7 +69,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    point(const bc::output_point& value);
+    point(const output_point& value);
 
     /**
      * Copy constructor.
@@ -80,13 +81,13 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    bc::output_point& data();
+    output_point& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::output_point&() const;
+    operator const output_point&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -110,10 +111,11 @@ private:
     /**
      * The state of this object.
      */
-    bc::output_point value_;
+    output_point value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

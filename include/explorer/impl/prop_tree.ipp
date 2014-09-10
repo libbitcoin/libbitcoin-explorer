@@ -26,6 +26,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -56,7 +57,8 @@ pt::ptree prop_value_list(const std::string& name, const Values& values)
     return list;
 }
 
-} // primitives
-} // explorer
+} // namespace primitives
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

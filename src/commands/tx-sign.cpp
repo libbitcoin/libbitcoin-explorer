@@ -26,8 +26,8 @@
 #include <explorer/define.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 console_result tx_sign::invoke(std::ostream& output, std::ostream& error)
 {

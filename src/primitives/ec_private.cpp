@@ -29,9 +29,9 @@
 #include <explorer/primitives/btc256.hpp>
 #include <explorer/primitives/wif.hpp>
 
-using namespace bc;
 using namespace po;
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -89,5 +89,6 @@ std::ostream& operator<<(std::ostream& output, const ec_private& argument)
     return output;
 }
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin

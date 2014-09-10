@@ -31,6 +31,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -39,16 +40,16 @@ namespace primitives {
  * @param[in]  pubkey_hash  The pubkey hash used to generate the script.
  * @return                  The resulting script.
  */
-static bc::script_type build_pubkey_hash_script(
-    const bc::short_hash& pubkey_hash);
+static script_type build_pubkey_hash_script(
+    const short_hash& pubkey_hash);
 
 /**
  * Build the output script for the specified script hash.
  * @param[in]  script_hash  The script hash used to generate the script.
  * @return                  The resulting script.
  */
-static bc::script_type build_script_hash_script(
-    const bc::short_hash& script_hash);
+static script_type build_script_hash_script(
+    const short_hash& script_hash);
 
 /**
  * Build the output script for the specified address.
@@ -58,8 +59,8 @@ static bc::script_type build_script_hash_script(
  * @param[in]  address  The address from which the script is generated.
  * @return              True if successful.
  */
-static bool build_output_script(bc::script_type& script,
-    const bc::payment_address& address);
+static bool build_output_script(script_type& script,
+    const payment_address& address);
 
 /**
  * Build the stealth metadata output.
@@ -67,14 +68,14 @@ static bool build_output_script(bc::script_type& script,
  * @return                       The stealth metadata output.
  */
 static tx_output_type build_stealth_meta_output(
-    const bc::ec_secret& ephemeral_secret);
+    const ec_secret& ephemeral_secret);
 
 /**
  * Generate a new secret from the third token (seed).
  * @param[in]  tokens   The tokens to parse (at least two).
  * @return              The new elliptic curve secret or null_hash.
  */
-static bc::ec_secret generate_private_key(
+static ec_secret generate_private_key(
     const std::vector<std::string>& tokens);
 
 /**
@@ -168,7 +169,8 @@ private:
     std::string pay_to_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

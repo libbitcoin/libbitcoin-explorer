@@ -29,6 +29,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -55,7 +56,7 @@ public:
      * Initialization constructor.
      * @param[in]  address  The value to initialize with.
      */
-    stealth(const bc::stealth_address& address);
+    stealth(const stealth_address& address);
 
     /**
      * Initialization constructor.
@@ -68,7 +69,7 @@ public:
      *                         If zero spend will require all spend keys sign.
      * @param[in]  testnet     The stealth address will be for testnet.
      */
-    stealth(const bc::stealth_prefix& prefix, const ec_public& scan_key,
+    stealth(const stealth_prefix& prefix, const ec_public& scan_key,
         const std::vector<ec_public>& spend_keys, uint8_t signatures, 
         bool testnet);
 
@@ -82,7 +83,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::stealth_address&() const;
+    operator const stealth_address&() const;
 
     /**
      * Overload cast to property tree.
@@ -112,10 +113,11 @@ private:
     /**
      * The state of this object's data.
      */
-    bc::stealth_address value_;
+    stealth_address value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

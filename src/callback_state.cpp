@@ -33,9 +33,9 @@
 #include <explorer/prop_tree.hpp>
 #include <explorer/utility/utility.hpp>
 
-using namespace bc;
 using namespace pt;
 
+namespace libbitcoin {
 namespace explorer {
     
 callback_state::callback_state(std::ostream& error, std::ostream& output,
@@ -182,4 +182,6 @@ callback_state& callback_state::operator--()
     return *this;
 }
 
-} // explorer
+
+} // namespace explorer
+} // namespace libbitcoin

@@ -24,8 +24,8 @@
 #include <explorer/define.hpp>
 #include <explorer/utility/utility.hpp>
 
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 console_result stealth_address_decode::invoke(std::ostream& output,
     std::ostream& error)

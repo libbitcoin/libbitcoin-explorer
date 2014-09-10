@@ -30,6 +30,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -56,7 +57,7 @@ public:
     // * Initialization constructor.
     // * @param[in]  value  The value to initialize with.
     // */
-    //transaction(const bc::data_chunk& value);
+    //transaction(const data_chunk& value);
 
     /**
      * Initialization constructor.
@@ -114,7 +115,8 @@ private:
     tx_type value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

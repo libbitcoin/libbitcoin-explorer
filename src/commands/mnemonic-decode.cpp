@@ -25,8 +25,8 @@
 #include <explorer/define.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 // $ echo "people blonde admit dart couple different truth common alas
 //   stumble time cookie" | bx mnemonic-decode

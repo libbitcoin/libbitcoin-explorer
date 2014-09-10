@@ -37,9 +37,9 @@
 #include <explorer/primitives/transaction.hpp>
 #include <explorer/primitives/wrapper.hpp>
 
-using namespace bc;
 using namespace pt;
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
     
@@ -286,7 +286,7 @@ ptree prop_tree(const stealth_prefix& prefix,
 {
     ptree tree;
     tree.add_child("stealth", prop_tree(rows));
-    tree.put("stealth.prefix", explorer::primitives::prefix(prefix));
+    tree.put("stealth.prefix", bc::explorer::primitives::prefix(prefix));
     return tree;
 }
 
@@ -299,5 +299,6 @@ ptree prop_tree(const wrapped_data& wrapped)
     return tree;
 }
 
-} // primitives
-} // explorer
+} // namespace primitives
+} // namespace explorer
+} // namespace libbitcoin

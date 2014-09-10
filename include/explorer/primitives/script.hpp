@@ -28,6 +28,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -53,7 +54,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    script(const bc::script_type& value);
+    script(const script_type& value);
 
     /**
      * Initialization constructor.
@@ -83,7 +84,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::script_type&() const;
+    operator const script_type&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -107,10 +108,11 @@ private:
     /**
      * The state of this object.
      */
-    bc::script_type value_;
+    script_type value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif
