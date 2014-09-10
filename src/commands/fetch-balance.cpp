@@ -24,13 +24,13 @@
 #include <bitcoin/bitcoin.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
-#include <explorer/obelisk_client.hpp>
 #include <explorer/prop_tree.hpp>
+#include <explorer/server_client.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 static void handle_callback(callback_state& state,
     const payment_address& address, const std::vector<balance_row>& histories)
@@ -54,14 +54,14 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
             handle_callback(state, address, history);
     };
 
-    obelisk_client client(*this);
-    auto& fullnode = client.get_fullnode();
-    for (const auto& address: addresses)
-    {
-        ++state;
-        fullnode.address.fetch_history(address, 
-            std::bind(handler, address, ph::_1, ph::_2));
-    }
+    server_client client(*this);
+    //auto& fullnode = client.get_fullnode();
+    //for (const auto& address: addresses)
+    //{
+    //    ++state;
+    //    fullnode.address.fetch_history(address, 
+    //        std::bind(handler, address, ph::_1, ph::_2));
+    //}
 
     client.poll(state.stopped());
 

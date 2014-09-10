@@ -23,8 +23,8 @@
 #include <iostream>
 #include <explorer/define.hpp>
 
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 console_result bci_history::invoke(std::ostream& output, std::ostream& error)
 {

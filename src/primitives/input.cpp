@@ -33,10 +33,10 @@
 #include <explorer/primitives/script.hpp>
 #include <explorer/utility/utility.hpp>
 
-using namespace bc;
 using namespace po;
 using namespace pt;
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -113,6 +113,7 @@ std::ostream& operator<<(std::ostream& output, const input& argument)
         << out.sequence;
     return output;
 }
-     
-} // explorer
-} // primitives
+
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin

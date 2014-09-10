@@ -24,7 +24,7 @@
 #include "precompile.hpp"
 
 using namespace bc;
-using namespace explorer::primitives;
+using namespace bc::explorer::primitives;
 
 #define BASE58_ENCODED_A "vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D"
 #define BASE58_DECODED_A \

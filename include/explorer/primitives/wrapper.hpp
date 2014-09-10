@@ -27,6 +27,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -53,7 +54,7 @@ public:
      * Initialization constructor.
      * @param[in]  wrapped  The wrapped value to initialize with.
      */
-    wrapper(const bc::data_chunk& wrapped);
+    wrapper(const data_chunk& wrapped);
 
     /**
      * Initialization constructor.
@@ -65,14 +66,14 @@ public:
      * Initialization constructor.
      * @param[in]  address  The payment address to initialize with.
      */
-    wrapper(const bc::payment_address& address);
+    wrapper(const payment_address& address);
 
     /**
      * Initialization constructor.
      * @param[in]  version  The version for the new wrapped value.
      * @param[in]  payload  The payload for the new wrapped value.
      */
-    wrapper(uint32_t version, const bc::data_chunk& payload);
+    wrapper(uint32_t version, const data_chunk& payload);
 
     /**
      * Copy constructor.
@@ -84,7 +85,7 @@ public:
      * Overload cast to the wrapped value.
      * @return  This object's wrapped data cast to data chunk.
      */
-    operator const bc::data_chunk() const;
+    operator const data_chunk() const;
 
     /**
      * Overload cast to internal type.
@@ -123,7 +124,8 @@ private:
     wrapped_data value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

@@ -20,20 +20,21 @@
 #ifndef BX_OBELISK_CLIENT_HPP
 #define BX_OBELISK_CLIENT_HPP
 
-#include <functional>
 #include <cstdint>
-#include <obelisk/obelisk.hpp>
+#include <functional>
+#include <client/client.hpp>
 #include <explorer/async_client.hpp>
 #include <explorer/command.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
- * Class to simplify obelisk client usage. 
+ * Class to simplify libbitcoin server usage. 
  */
-class obelisk_client
+class server_client
     : public async_client
 {
 public:
@@ -43,13 +44,13 @@ public:
      * @param[in]  command  The command being processed.
      * @param[in]  threads  The number of pool threads to initialize.
      */
-    obelisk_client(explorer::command& command,
+    server_client(explorer::command& command,
         const size_t threads=default_threadpool_size);
 
-    /**
-     * Get the value of the obelisk fullnode interface.
-     */
-    virtual obelisk::fullnode_interface& get_fullnode();
+    ///**
+    // * Get the value of the obelisk fullnode interface.
+    // */
+    //virtual obelisk::fullnode_interface& get_fullnode();
 
     /**
      * Poll for changes until stopped.
@@ -62,12 +63,13 @@ public:
 
 private:
 
-    /**
-     * Encapsulated full node client instance.
-     */
-    obelisk::fullnode_interface fullnode_;
+    ///**
+    // * Encapsulated full node client instance.
+    // */
+    //obelisk::fullnode_interface fullnode_;
 };
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

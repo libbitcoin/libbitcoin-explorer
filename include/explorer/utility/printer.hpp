@@ -47,6 +47,7 @@
     -m [--manual] Extract value manually
 */
 
+namespace libbitcoin {
 namespace explorer {
     
 /**
@@ -144,6 +145,7 @@ public:
     PROPERTY_GET(parameter_list, parameters);
 };
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

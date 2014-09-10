@@ -24,6 +24,7 @@
 #include <iostream>
 #include <explorer/define.hpp>
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -89,7 +90,8 @@ private:
     uint64_t value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

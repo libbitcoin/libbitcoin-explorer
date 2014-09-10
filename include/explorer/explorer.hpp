@@ -26,11 +26,12 @@
 #include <explorer/async_client.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/command.hpp>
+#include <explorer/define.hpp>
 #include <explorer/dispatch.hpp>
 #include <explorer/display.hpp>
 #include <explorer/generated.hpp>
-#include <explorer/obelisk_client.hpp>
 #include <explorer/prop_tree.hpp>
+#include <explorer/server_client.hpp>
 #include <explorer/primitives/address.hpp>
 #include <explorer/primitives/base16.hpp>
 #include <explorer/primitives/base58.hpp>

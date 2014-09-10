@@ -28,9 +28,9 @@
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
 {

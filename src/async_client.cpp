@@ -26,11 +26,11 @@
 #include <explorer/command.hpp>
 #include <explorer/utility/utility.hpp>
 
-using namespace bc;
-
+namespace libbitcoin {
 namespace explorer {
 
-async_client::async_client(explorer::command& command, const size_t threads)
+async_client::async_client(bc::explorer::command& command, 
+    const size_t threads)
     : threadpool_(threads)
 {
 }
@@ -70,4 +70,5 @@ void async_client::stop()
     pool.join();
 }
 
-} // explorer
+} // namepsace explorer
+} // namepsace libbitcoin

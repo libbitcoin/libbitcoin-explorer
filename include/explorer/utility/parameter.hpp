@@ -29,6 +29,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 /**
  * A type to represent the list of distinct positional argument names counts.
@@ -144,6 +145,7 @@ public:
     PROPERTY(std::string, format_parameter);
 };
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

@@ -33,6 +33,7 @@
 using namespace po;
 using namespace boost::filesystem;
 
+namespace libbitcoin {
 namespace explorer {
 
 console_result dispatch(int argc, const char* argv[])
@@ -171,4 +172,6 @@ bool load_variables(variables_map& variables, std::string& message,
     return true;
 }
 
-} // explorer
+
+} // namespace explorer
+} // namespace libbitcoin

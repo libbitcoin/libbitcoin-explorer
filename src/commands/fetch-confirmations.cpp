@@ -22,15 +22,14 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/obelisk.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
-#include <explorer/obelisk_client.hpp>
+#include <explorer/server_client.hpp>
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 static void handle_callback(callback_state& state, size_t position,
     const index_list& confirmations)
@@ -50,23 +49,23 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     const auto& transactions = get_transactions_argument();
     const auto& encoding = get_format_option();
 
-    obelisk_client client(*this);
-    auto& fullnode = client.get_fullnode();
+    server_client client(*this);
+    //auto& fullnode = client.get_fullnode();
     callback_state state(error, output, encoding);
 
     // We avoid using the tx hash for confirmations because of malleability.
-    for (const auto& tx: transactions)
-    {
-        const auto handler = [&state, &tx](const std::error_code& code,
-            const index_list& unconfirmed)
-        {
-            if (!state.handle_error(code))
-                handle_callback(state, state, unconfirmed);
-        };
+    //for (const auto& tx: transactions)
+    //{
+    //    const auto handler = [&state, &tx](const std::error_code& code,
+    //        const index_list& unconfirmed)
+    //    {
+    //        if (!state.handle_error(code))
+    //            handle_callback(state, state, unconfirmed);
+    //    };
 
-        ++state;
-        fullnode.transaction_pool.validate(tx, handler);
-    }
+    //    ++state;
+    //    fullnode.transaction_pool.validate(tx, handler);
+    //}
 
     client.poll(state.stopped());
 

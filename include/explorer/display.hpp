@@ -24,6 +24,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
@@ -71,6 +72,7 @@ void display_usage();
  */
 bool display_usage(const std::shared_ptr<command> command);
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

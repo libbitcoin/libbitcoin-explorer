@@ -29,6 +29,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -77,7 +78,7 @@ public:
      * are defaulted.
      * @param[in]  value  The value to initialize with.
      */
-    input(const bc::input_point& value);
+    input(const input_point& value);
 
     /**
      * Return a reference to the data member.
@@ -122,7 +123,8 @@ private:
     tx_input_type value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

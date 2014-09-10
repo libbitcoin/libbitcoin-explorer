@@ -29,6 +29,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -55,13 +56,13 @@ public:
     // * Initialization constructor.
     // * @param[in]  value  The value to initialize with.
     // */
-    //header(const bc::data_chunk& value);
+    //header(const data_chunk& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    header(const bc::block_header_type& value);
+    header(const block_header_type& value);
 
     /**
      * Copy constructor.
@@ -73,13 +74,13 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    bc::block_header_type& data();
+    block_header_type& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::block_header_type&() const;
+    operator const block_header_type&() const;
 
     /**
      * Overload cast to property tree.
@@ -109,10 +110,11 @@ private:
     /**
      * The state of this object's header data.
      */
-    bc::block_header_type value_;
+    block_header_type value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

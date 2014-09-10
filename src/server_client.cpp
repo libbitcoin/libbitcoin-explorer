@@ -18,31 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/obelisk_client.hpp>
+#include <explorer/server_client.hpp>
 
-#include <functional>
 #include <cstdint>
-#include <obelisk/obelisk.hpp>
+#include <functional>
 #include <explorer/async_client.hpp>
 #include <explorer/command.hpp>
 
+namespace libbitcoin {
 namespace explorer {
 
-obelisk_client::obelisk_client(explorer::command& command, const size_t threads)
-    : async_client(command, threads), fullnode_(get_threadpool(),
-    command.get_server_service_setting(),
+server_client::server_client(explorer::command& command, const size_t threads)
+    : async_client(command, threads) /*, fullnode_(get_threadpool(),
+    command.get_server_address_setting(),
     command.get_server_client_certificate_setting().generic_string(),
-    command.get_server_server_public_key_setting())
+    command.get_server_server_public_key_setting())*/
 {
 }
 
-obelisk::fullnode_interface& obelisk_client::get_fullnode()
-{
-    return fullnode_;
-}
+//obelisk::fullnode_interface& server_client::get_fullnode()
+//{
+//    return fullnode_;
+//}
 
 // Not yet unit testable (nonvirtual fullnode).
-void obelisk_client::poll(bool& done, uint32_t period_ms,
+void server_client::poll(bool& done, uint32_t period_ms,
     std::function<void()> action)
 {
     if (action)
@@ -51,12 +51,13 @@ void obelisk_client::poll(bool& done, uint32_t period_ms,
         return;
     }
 
-    auto& fullnode = get_fullnode();
-    while (!done)
-    {
-        fullnode.update();
-        sleep(period_ms);
-    }
+    //auto& fullnode = get_fullnode();
+    //while (!done)
+    //{
+    //    fullnode.update();
+    //    sleep(period_ms);
+    //}
 }
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin

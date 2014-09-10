@@ -8,10 +8,10 @@ libbitcoin_explorer_include_HEADERS = \
     define.hpp \
     dispatch.hpp \
     display.hpp \
+    explorer.hpp \
     generated.hpp \
-    obelisk_client.hpp \
     prop_tree.hpp \
-    explorer.hpp
+    server_client.hpp
 
 libbitcoin_explorer_impl_includedir = $(includedir)/explorer/impl
 libbitcoin_explorer_impl_include_HEADERS = \

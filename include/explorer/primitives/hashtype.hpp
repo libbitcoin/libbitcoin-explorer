@@ -24,6 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <explorer/define.hpp>
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -49,7 +50,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hashtype(const bc::sighash& value);
+    hashtype(const sighash& value);
 
     /**
      * Copy constructor.
@@ -61,7 +62,7 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    operator bc::sighash() const;
+    operator sighash() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -86,10 +87,11 @@ private:
     /**
      * The state of this object's sighash engine data.
      */
-    bc::sighash value_;
+    sighash value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

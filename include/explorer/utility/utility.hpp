@@ -50,6 +50,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
@@ -112,7 +113,7 @@ void deserialize(std::vector<Value>& collection, const std::string& text);
  * @return             True if a item was parsed.
  */
 template <typename Item>
-bool deserialize_satoshi_item(Item& item, const bc::data_chunk& data);
+bool deserialize_satoshi_item(Item& item, const data_chunk& data);
 
 /**
  * Find the position of an element in an ordered list.
@@ -174,7 +175,7 @@ std::string serialize(const Value& value, const std::string& fallback="");
  * @param[in]  item     The satoshi item.
  */
 template <typename Item>
-bc::data_chunk serialize_satoshi_item(const Item& item);
+data_chunk serialize_satoshi_item(const Item& item);
 
 /**
  * Write a value to a file in the specified path and otherwise to the 
@@ -204,8 +205,8 @@ void join(const std::vector<std::string>& words, std::string& sentence,
  * @param[in]  secret  Theec private key to use in testing for a match.
  * @return             True if matched.
  */
-bool stealth_match(const bc::blockchain::stealth_row& row,
-    const bc::ec_secret& secret);
+bool stealth_match(const blockchain::stealth_row& row,
+    const ec_secret& secret);
 
 /**
  * Determine if the information in the tx contains stealth payments with at 
@@ -214,21 +215,21 @@ bool stealth_match(const bc::blockchain::stealth_row& row,
  * @param[in]  secret  Theec private key to use in testing for a match.
  * @return             True if matched.
  */
-bool stealth_match(const tx_type& tx, const bc::ec_secret& secret);
+bool stealth_match(const tx_type& tx, const ec_secret& secret);
 
 /**
  * Generate a new ec key from a seed.
  * @param[in]  seed  The seed for key randomness.
  * @return           The new key.
  */
-bc::ec_secret new_key(const bc::data_chunk& seed);
+ec_secret new_key(const data_chunk& seed);
 
 /**
  * Generate a new pseudorandom seed.
  * @param[in]  seed  The seed length in bits. Will be aligned to nearest byte.
  * @return           The new key.
  */
-bc::data_chunk new_seed(size_t bitlength=128);
+data_chunk new_seed(size_t bitlength=128);
 
 /**
  * Get the local time, second level resolution, based on the time zone settings
@@ -241,7 +242,7 @@ boost::posix_time::ptime now();
  * Fill a buffer with randomness using the default random engine.
  * @param[in]  chunk  The buffer to fill with randomness.
  */
-void random_fill(bc::data_chunk& chunk);
+void random_fill(data_chunk& chunk);
 
 /**
  * Get a message from the specified input stream.
@@ -255,7 +256,7 @@ std::string read_stream(std::istream& stream);
  * @param[in]  script  The script to convert.
  * @return             The data script.
  */
-bc::script_type script_to_raw_data_script(const bc::script_type& script);
+script_type script_to_raw_data_script(const script_type& script);
 
 /*
  * Create a signature for a single transaction input.
@@ -269,9 +270,9 @@ bc::script_type script_to_raw_data_script(const bc::script_type& script);
  * @param[in]  hash_type    Signal which inputs to sign (defaults to single).
  * @return                  True if successful.
  */
-bool sign_transaction(bc::data_chunk& signature, const tx_type& transaction,
-    size_t index, const bc::script_type& script, const bc::ec_secret& secret,
-    const bc::data_chunk& nonce, uint32_t hash_type=bc::sighash::single);
+bool sign_transaction(data_chunk& signature, const tx_type& transaction,
+    size_t index, const script_type& script, const ec_secret& secret,
+    const data_chunk& nonce, uint32_t hash_type=sighash::single);
 
 /**
  * Sleep for the specified number of milliseconds.
@@ -309,7 +310,7 @@ void trim_left(std::string& value,
  * @param[in]  wrapped  The wrapped data to unwrap.
  * @return              True if input checksum validates.
  */
-bool unwrap(wrapped_data& data, const bc::data_chunk& wrapped);
+bool unwrap(wrapped_data& data, const data_chunk& wrapped);
 
 /**
  * Validate a transaction input signature.
@@ -322,8 +323,8 @@ bool unwrap(wrapped_data& data, const bc::data_chunk& wrapped);
  * @return                True if the signature is valid for the context.
  */
 bool valid_signature(const tx_type& tx, uint32_t index,
-    const bc::ec_point& pubkey, const bc::script_type& script,
-    const bc::data_chunk& signature, uint32_t hash_type=bc::sighash::single);
+    const ec_point& pubkey, const script_type& script,
+    const data_chunk& signature, uint32_t hash_type=sighash::single);
 
 /**
  * Unwrap a wrapped payload.
@@ -333,15 +334,15 @@ bool valid_signature(const tx_type& tx, uint32_t index,
  * @param[in]  wrapped   The wrapped data to unwrap.
  * @return               True if input checksum validates.
  */
-bool unwrap(uint8_t& version, bc::data_chunk& payload, uint32_t& checksum,
-    const bc::data_chunk& wrapped);
+bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
+    const data_chunk& wrapped);
 
 /**
  * Wrap arbitrary data.
  * @param[in]  data  The data structure to wrap.
  * @return           The wrapped data.
  */
-bc::data_chunk wrap(const wrapped_data& data);
+data_chunk wrap(const wrapped_data& data);
 
 /**
  * Wrap arbitrary data.
@@ -349,7 +350,7 @@ bc::data_chunk wrap(const wrapped_data& data);
  * @param[out] payload  The payload to wrap.
  * @return              The wrapped data.
  */
-bc::data_chunk wrap(uint8_t version, const bc::data_chunk& payload);
+data_chunk wrap(uint8_t version, const data_chunk& payload);
 
 /**
  * Serialize a property tree using a specified encoding.
@@ -362,7 +363,8 @@ bc::data_chunk wrap(uint8_t version, const bc::data_chunk& payload);
 std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
     encoding_engine engine=encoding_engine::info);
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #include <explorer/impl/utility.ipp>
 

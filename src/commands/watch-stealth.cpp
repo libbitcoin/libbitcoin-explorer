@@ -24,25 +24,24 @@
 #include <bitcoin/bitcoin.hpp>
 #include <explorer/callback_state.hpp>
 #include <explorer/define.hpp>
-#include <explorer/obelisk_client.hpp>
 #include <explorer/prop_tree.hpp>
 #include <explorer/primitives/encoding.hpp>
 #include <explorer/primitives/base16.hpp>
 #include <explorer/primitives/transaction.hpp>
+#include <explorer/server_client.hpp>
 #include <explorer/utility/utility.hpp>
 
 using namespace bc;
-using namespace obelisk;
-using namespace explorer;
-using namespace explorer::commands;
-using namespace explorer::primitives;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
-static void handle_subscribed(callback_state& state, const prefix& prefix,
-    const worker_uuid& worker)
-{
-    //if (state.get_engine() != encoding::engine::native)
-    state.output(format(BX_WATCH_PREFIX_WAITING) % prefix);
-}
+//static void handle_subscribed(callback_state& state, const prefix& prefix,
+//    const worker_uuid& worker)
+//{
+//    //if (state.get_engine() != encoding::engine::native)
+//    state.output(format(BX_WATCH_PREFIX_WAITING) % prefix);
+//}
 
 // This returns the entire transaction as opposed to just metadata!
 static void handle_update(callback_state& state, const prefix& prefix,
@@ -61,30 +60,30 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto& prefixes = get_prefixs_argument();
     const auto& encoding = get_format_option();
 
-    obelisk_client client(*this);
-    auto& fullnode = client.get_fullnode();
+    server_client client(*this);
     callback_state state(error, output, encoding);
 
-    for (const auto& prefix: prefixes)
-    {
-        const auto update_handler = [&state, &prefix](
-            const std::error_code& code, size_t height, 
-            const hash_digest& block_hash, const tx_type& tx)
-        {
-            if (!state.handle_error(code))
-                handle_update(state, prefix, height, block_hash, tx);
-        };
+    //auto& fullnode = client.get_fullnode();
+    //for (const auto& prefix: prefixes)
+    //{
+    //    const auto update_handler = [&state, &prefix](
+    //        const std::error_code& code, size_t height, 
+    //        const hash_digest& block_hash, const tx_type& tx)
+    //    {
+    //        if (!state.handle_error(code))
+    //            handle_update(state, prefix, height, block_hash, tx);
+    //    };
 
-        const auto subscribed_handler = [&state, &prefix](
-            const std::error_code& code, const worker_uuid& worker)
-        {
-            if (!state.handle_error(code))
-                handle_subscribed(state, prefix, worker);
-        };
+    //    const auto subscribed_handler = [&state, &prefix](
+    //        const std::error_code& code, const worker_uuid& worker)
+    //    {
+    //        if (!state.handle_error(code))
+    //            handle_subscribed(state, prefix, worker);
+    //    };
 
-        ++state;
-        fullnode.address.subscribe(prefix, update_handler, subscribed_handler);
-    }
+    //    ++state;
+    //    fullnode.address.subscribe(prefix, update_handler, subscribed_handler);
+    //}
 
     client.poll(state.stopped());
 

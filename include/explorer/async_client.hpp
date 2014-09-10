@@ -27,6 +27,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
@@ -62,7 +63,7 @@ public:
     /**
      * Get the value of the threadpool.
      */
-    virtual bc::threadpool& get_threadpool();
+    virtual threadpool& get_threadpool();
 
     /**
      * Poll for changes until stopped.
@@ -88,9 +89,10 @@ private:
     /**
      * The threadpool of the client.
      */
-    bc::threadpool threadpool_;
+    threadpool threadpool_;
 };
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

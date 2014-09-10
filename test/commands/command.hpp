@@ -24,16 +24,16 @@
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <obelisk/obelisk.hpp>
+#include <client/client.hpp>
 #include <explorer/explorer.hpp>
 
 #define BX_USING_NAMESPACES()
 using namespace bc; \
-using namespace obelisk; \
-using namespace std; \
-using namespace explorer; \
-using namespace explorer::commands; \
-using namespace explorer::primitives;
+using namespace bc::client; \
+using namespace bc::explorer; \
+using namespace bc::explorer::commands; \
+using namespace bc::explorer::primitives; \
+using namespace std;
 
 #define BX_DECLARE_COMMAND(extension) \
     stringstream output, error; \

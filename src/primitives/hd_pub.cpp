@@ -28,9 +28,9 @@
 #include <explorer/define.hpp>
 #include <explorer/primitives/base16.hpp>
 
-using namespace bc;
 using namespace po;
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -82,5 +82,6 @@ std::ostream& operator<<(std::ostream& output, const hd_pub& argument)
     return output;
 }
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin

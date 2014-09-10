@@ -33,6 +33,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
@@ -197,6 +198,7 @@ private:
     std::ostream& output_;
 };
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

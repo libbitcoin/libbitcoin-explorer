@@ -30,9 +30,9 @@
 #include <explorer/primitives/btc256.hpp>
 #include <explorer/utility/utility.hpp>
 
-using namespace bc;
 using namespace po;
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -100,5 +100,6 @@ std::ostream& operator<<(std::ostream& output, const point& argument)
     return output;
 }
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin

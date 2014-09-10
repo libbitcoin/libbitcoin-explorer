@@ -428,13 +428,13 @@
     <ClInclude Include="..\..\..\..\include\explorer\generated.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\explorer\obelisk_client.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\explorer\prop_tree.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\explorer\explorer.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\explorer\server_client.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -796,10 +796,10 @@
     <ClCompile Include="..\..\..\..\src\generated.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
+    <ClCompile Include="..\..\..\..\src\prop_tree.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\prop_tree.cpp">
+    <ClCompile Include="..\..\..\..\src\server_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

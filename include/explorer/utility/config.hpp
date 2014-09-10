@@ -25,6 +25,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
@@ -45,6 +46,7 @@ namespace explorer {
  */
 std::string config_default();
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

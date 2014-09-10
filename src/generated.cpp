@@ -32,6 +32,7 @@ using namespace po;
 using namespace std;
 using namespace boost::filesystem;
     
+namespace libbitcoin {
 namespace explorer {
 using namespace commands;
 
@@ -302,4 +303,5 @@ shared_ptr<command> find(const string& symbol)
     return nullptr;
 }
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin

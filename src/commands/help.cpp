@@ -27,8 +27,8 @@
 #include <explorer/generated.hpp>
 
 using namespace boost::program_options;
-using namespace explorer;
-using namespace explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
 // 100% coverage by line (as private to invoke())
 static bool write_all_command_names(std::ostream& stream)

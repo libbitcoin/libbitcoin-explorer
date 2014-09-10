@@ -30,5 +30,5 @@
  */
 int main(int argc, char* argv[])
 {
-    return explorer::dispatch(argc, const_cast<const char**>(argv));
+    return bc::explorer::dispatch(argc, const_cast<const char**>(argv));
 }

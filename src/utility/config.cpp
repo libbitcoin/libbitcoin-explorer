@@ -24,6 +24,7 @@
 #include <boost/filesystem.hpp>
 #include <explorer/utility/environment.hpp>
 
+namespace libbitcoin {
 namespace explorer {
 
 std::string config_default()
@@ -34,4 +35,5 @@ std::string config_default()
     return (home / BX_DEFAULT_CONFIG_FILE_NAME).generic_string();
 }
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin

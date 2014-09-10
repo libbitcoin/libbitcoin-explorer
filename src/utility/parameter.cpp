@@ -26,7 +26,7 @@
 #include <explorer/define.hpp>
 #include <explorer/utility/utility.hpp>
 
-using namespace explorer;
+using namespace bc::explorer;
 
 // 100% unit coverage, all three scenarios (long, short, both)
 const std::string parameter::canonical(const option_metadata& option)

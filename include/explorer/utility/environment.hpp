@@ -24,6 +24,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 
 /**
@@ -41,8 +42,9 @@ namespace explorer {
  *
  * @return  The user's home directory.
  */
-    std::string home_directory();
+std::string home_directory();
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

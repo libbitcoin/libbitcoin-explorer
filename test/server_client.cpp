@@ -24,9 +24,9 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <explorer/explorer.hpp>
 
-BOOST_AUTO_TEST_SUITE(obelisk_client)
+BOOST_AUTO_TEST_SUITE(server_client)
 
-BOOST_AUTO_TEST_CASE(obelisk_client__constructor)
+BOOST_AUTO_TEST_CASE(server_client__constructor)
 {
     // TODO
 }

@@ -50,6 +50,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 
 template <typename Source, typename Target>
@@ -99,13 +100,13 @@ void deserialize(std::vector<Value>& collection, const std::string& text)
 }
 
 template <typename Item>
-bool deserialize_satoshi_item(Item& item, const bc::data_chunk& data)
+bool deserialize_satoshi_item(Item& item, const data_chunk& data)
 {
     try
     {
-        bc::satoshi_load(data.begin(), data.end(), item);
+        satoshi_load(data.begin(), data.end(), item);
     }
-    catch (bc::end_of_stream)
+    catch (end_of_stream)
     {
         return false;
     }
@@ -175,10 +176,10 @@ std::string serialize(const Value& value, const std::string& fallback)
 }
 
 template <typename Item>
-bc::data_chunk serialize_satoshi_item(const Item& item)
+data_chunk serialize_satoshi_item(const Item& item)
 {
-    bc::data_chunk data(bc::satoshi_raw_size(item));
-    bc::satoshi_save(item, data.begin());
+    data_chunk data(satoshi_raw_size(item));
+    satoshi_save(item, data.begin());
     return data;
 }
 
@@ -201,6 +202,7 @@ void write_file(std::ostream& output, const std::string& path,
     }
 }
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

@@ -31,6 +31,7 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+namespace libbitcoin {
 namespace explorer {
 
 #define BX_VARIABLE_CONFIG "config"
@@ -159,8 +160,8 @@ public:
                 "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
             )
             (
-                "server.service",
-                value<std::string>(&setting_.server.service)->default_value("tcp://obelisk.unsystem.net:8081"),
+                "server.address",
+                value<std::string>(&setting_.server.address)->default_value("tcp://obelisk-testnet2.airbitz.co:9091"),
                 "The URI of the server to which this application may connect."
             )
             (
@@ -288,19 +289,19 @@ public:
     }
     
     /**
-     * Get the value of the server.service setting.
+     * Get the value of the server.address setting.
      */
-    virtual std::string get_server_service_setting()
+    virtual std::string get_server_address_setting()
     {
-        return setting_.server.service;
+        return setting_.server.address;
     }
 
     /**
-     * Set the value of the server.service setting.
+     * Set the value of the server.address setting.
      */
-    virtual void set_server_service_setting(std::string value)
+    virtual void set_server_address_setting(std::string value)
     {
-        setting_.server.service = value;
+        setting_.server.address = value;
     }
     
     /**
@@ -388,14 +389,14 @@ private:
             server()
               : client_certificate(),
                 server_public_key(),
-                service(),
+                address(),
                 socks_proxy()
             {
             }
             
             boost::filesystem::path client_certificate;
             std::string server_public_key;
-            std::string service;
+            std::string address;
             std::string socks_proxy;
         } server;
 
@@ -408,6 +409,7 @@ private:
     } setting_;
 };
 
-} // explorer
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

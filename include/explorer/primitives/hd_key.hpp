@@ -29,6 +29,7 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
+namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
@@ -55,13 +56,13 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hd_key(const bc::hd_private_key& value);
+    hd_key(const hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hd_key(const bc::hd_public_key& value);
+    hd_key(const hd_public_key& value);
 
     /**
      * Copy constructor.
@@ -74,19 +75,19 @@ public:
      * and otherwise return the public key.
      * @return  A reference to the object's internal data.
      */
-    const bc::hd_public_key& derived_public_key() const;
+    const hd_public_key& derived_public_key() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::hd_private_key&() const;
+    operator const hd_private_key&() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::hd_public_key&() const;
+    operator const hd_public_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -110,15 +111,16 @@ private:
     /**
      * The private key state of this object.
      */
-    bc::hd_private_key private_key_value_;
+    hd_private_key private_key_value_;
 
     /**
     * The public key state of this object.
     */
-    bc::hd_public_key public_key_value_;
+    hd_public_key public_key_value_;
 };
 
-} // explorer
-} // primitives
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin
 
 #endif

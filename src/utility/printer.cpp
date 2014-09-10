@@ -45,8 +45,7 @@
 #define BX_PRINTER_OPTION_LONG_FORMAT "--%1% %2\n"
 #define BX_PRINTER_OPTION_SHORT_LONG_FORMAT "-%1% [ --%2% ] %3\n"
 
-
-using namespace explorer;
+using namespace bc::explorer;
 
 /* Formatters */
 
