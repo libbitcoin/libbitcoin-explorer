@@ -22,7 +22,7 @@
 
 #include <cstdint>
 #include <functional>
-#include <client/client.hpp>
+#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/command.hpp>
 
