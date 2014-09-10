@@ -6,6 +6,7 @@ noinst_PROGRAMS = explorer_test
 
 AM_CPPFLAGS = \
     -I$(srcdir)/../include \
+    ${bitcoin_client_CFLAGS} \
     ${obelisk_CFLAGS} \
     -DBOOST_TEST_DYN_LINK
 
@@ -113,4 +114,5 @@ explorer_test_LDADD = \
     -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
+    ${bitcoin_client_LIBS} \
     ${obelisk_LIBS}
