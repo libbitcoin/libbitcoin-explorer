@@ -33,6 +33,7 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::network;
 
 static void handle_sent(callback_state& state, tx_type& tx)
 {
