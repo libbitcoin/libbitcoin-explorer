@@ -34,7 +34,7 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
-using namespace bc::network;
+//using namespace bc::network;
 
 static void handle_signal(int signal)
 {
@@ -68,7 +68,7 @@ static void handle_sent(callback_state& state)
 
 // Send tx to another Bitcoin node.
 static void handle_send(callback_state& state, const std::error_code& code, 
-    channel_ptr node, protocol& prot, tx_type& tx)
+    bc::network::channel_ptr node, bc::network::protocol& prot, tx_type& tx)
 {
     // Set up callback handlers for sent and send.
     const auto sent_handler = [&state](const std::error_code& code)
@@ -78,7 +78,8 @@ static void handle_send(callback_state& state, const std::error_code& code,
     };
 
     const auto send_handler = [&state](const std::error_code& code,
-        channel_ptr node, protocol& prot, tx_type& tx)
+        bc::network::channel_ptr node, bc::network::protocol& prot, 
+        tx_type& tx)
     {
         state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
         handle_send(state, code, node, prot, tx);
@@ -114,7 +115,8 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     };
 
     const auto send_handler = [&state](const std::error_code& code,
-        channel_ptr node, protocol& prot, tx_type& tx)
+        bc::network::channel_ptr node, bc::network::protocol& prot,
+        tx_type& tx)
     {
         state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
         handle_send(state, code, node, prot, tx);
@@ -129,12 +131,12 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Create dependencies for our protocol object.
     auto& pool = client.get_threadpool();
-    hosts hst(pool);
-    handshake hs(pool);
+    bc::network::hosts hst(pool);
+    bc::network::handshake hs(pool);
     bc::network::network net(pool);
 
     // Set up protocol service.
-    protocol prot(pool, hst, hs, net);
+    bc::network::protocol prot(pool, hst, hs, net);
     prot.set_max_outbound(node_count * 6);
 
 

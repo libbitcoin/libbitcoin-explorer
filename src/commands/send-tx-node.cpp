@@ -33,7 +33,7 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
-using namespace bc::network;
+//using namespace bc::network;
 
 static void handle_sent(callback_state& state, tx_type& tx)
 {
@@ -41,7 +41,7 @@ static void handle_sent(callback_state& state, tx_type& tx)
     --state;
 }
 
-static void handle_send(callback_state& state, channel_ptr node,
+static void handle_send(callback_state& state, bc::network::channel_ptr node,
     tx_type& tx)
 {
     const auto sent_handler = [&state, &tx](const std::error_code& code)
@@ -62,7 +62,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
     const auto send_handler = [&state](const std::error_code& code,
-        channel_ptr node, tx_type& tx)
+        bc::network::channel_ptr node, tx_type& tx)
     {
         if (!state.handle_error(code))
             handle_send(state, node, tx);
@@ -70,7 +70,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     async_client client(*this, 4);
     auto& pool = client.get_threadpool();
-    handshake shake(pool);
+    bc::network::handshake shake(pool);
     bc::network::network net(pool);
 
     for (const tx_type& tx: transactions)
