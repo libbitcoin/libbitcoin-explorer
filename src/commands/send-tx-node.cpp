@@ -71,7 +71,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     async_client client(*this, 4);
     auto& pool = client.get_threadpool();
     handshake shake(pool);
-    network net(pool);
+    bc::network::network net(pool);
 
     for (const tx_type& tx: transactions)
     {

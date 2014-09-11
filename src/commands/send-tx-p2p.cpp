@@ -131,7 +131,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     auto& pool = client.get_threadpool();
     hosts hst(pool);
     handshake hs(pool);
-    network net(pool);
+    bc::network::network net(pool);
 
     // Set up protocol service.
     protocol prot(pool, hst, hs, net);
