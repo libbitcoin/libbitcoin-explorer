@@ -72,9 +72,9 @@ Next install [Boost](http://www.boost.org) (1.50.0 or newer), [GMP](https://gmpl
 ```
 > The libconfig++ dependency is deprecated and will be removed in a future version.
 
-Next execute the [build script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/build.sh).
+Next execute the [build script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/install-bx.sh).
 ```
-$ ./build.sh
+$ ./install-bx.sh
 ```
 Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the `$ bx` (or `$ sx`) alias.
 
@@ -106,14 +106,14 @@ Of these libraries, only libzmq is packaged. However we require a more recent ve
 Any set of `./configure` options can be passed via the build script, for example:
 
 ```
-  $ ./build.sh CPPFLAGS=-DDEBUG CFLAGS="-Og -g"
+  $ ./install-bx.sh CPPFLAGS=-DDEBUG CFLAGS="-Og -g"
 ```
 
 #### Compiling for Testnet
 
 Currently certain commands cannot work with both the **Test Network** (testnet) and mainnet. This is a libbitcoin that restriction will be lifted in a future version. In order to work with testnet in the interim the libraries must be recompiled with the testnet option:
 ```
-  $ ./build.sh --enable-testnet
+  $ ./install-bx.sh --enable-testnet
 ```
 
 ### Macintosh
@@ -134,7 +134,7 @@ Next execute the following commands:
 ```
 Finally, invoke the installation script:
 ```
-  $ ./build.sh
+  $ ./install-bx.sh
 ```
 
 ### Windows
