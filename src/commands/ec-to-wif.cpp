@@ -18,11 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/ec-to-wif.hpp>
+#include <bitcoin/explorer/commands/ec-to-wif.hpp>
 
 #include <iostream>
-#include <explorer/define.hpp>
-#include <explorer/primitives/wif.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/wif.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;

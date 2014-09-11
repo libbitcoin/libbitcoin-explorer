@@ -18,13 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/generated.hpp>
+#include <bitcoin/explorer/generated.hpp>
 
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
-#include <explorer/command.hpp>
+#include <bitcoin/explorer/command.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 

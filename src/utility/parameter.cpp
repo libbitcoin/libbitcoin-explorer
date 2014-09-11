@@ -18,13 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/utility/parameter.hpp>
+#include <bitcoin/explorer/utility/parameter.hpp>
 
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
-#include <explorer/define.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc::explorer;
 

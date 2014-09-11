@@ -18,13 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/wrap-decode.hpp>
+#include <bitcoin/explorer/commands/wrap-decode.hpp>
 
 #include <iostream>
-#include <explorer/define.hpp>
-#include <explorer/prop_tree.hpp>
-#include <explorer/primitives/wrapper.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
+#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;

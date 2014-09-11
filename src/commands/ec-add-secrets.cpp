@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/ec-add-secrets.hpp>
+#include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/define.hpp>
-#include <explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

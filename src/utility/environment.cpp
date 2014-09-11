@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/utility/environment.hpp>
+#include <bitcoin/explorer/utility/environment.hpp>
 
 #ifdef _WIN32
     #include <shlobj.h>

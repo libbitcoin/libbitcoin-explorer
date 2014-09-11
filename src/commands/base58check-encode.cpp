@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/base58check-encode.hpp>
+#include <bitcoin/explorer/commands/base58check-encode.hpp>
 
 #include <iostream>
-#include <explorer/define.hpp>
-#include <explorer/primitives/base58.hpp>
-#include <explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/base58.hpp>
+#include <bitcoin/explorer/primitives/wrapper.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;

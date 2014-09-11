@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/mnemonic-encode.hpp>
+#include <bitcoin/explorer/commands/mnemonic-encode.hpp>
 
 #include <iostream>
 #include <string>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/define.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

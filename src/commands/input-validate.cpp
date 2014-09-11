@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/input-validate.hpp>
+#include <bitcoin/explorer/commands/input-validate.hpp>
 
 #include <iostream>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

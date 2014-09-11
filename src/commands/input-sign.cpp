@@ -18,13 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/input-sign.hpp>
+#include <bitcoin/explorer/commands/input-sign.hpp>
 
 #include <iostream>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/primitives/base16.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

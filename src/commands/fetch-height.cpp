@@ -18,13 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/fetch-height.hpp>
+#include <bitcoin/explorer/commands/fetch-height.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/callback_state.hpp>
-#include <explorer/define.hpp>
-#include <explorer/server_client.hpp>
+#include <bitcoin/explorer/callback_state.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/server_client.hpp>
 
 using namespace bc;
 using namespace bc::client;

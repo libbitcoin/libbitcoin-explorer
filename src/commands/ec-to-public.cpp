@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/commands/ec-to-public.hpp>
+#include <bitcoin/explorer/commands/ec-to-public.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/define.hpp>
-#include <explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

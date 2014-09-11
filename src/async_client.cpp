@@ -18,13 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/async_client.hpp>
+#include <bitcoin/explorer/async_client.hpp>
 
 #include <cstdint>
 #include <functional>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/command.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {

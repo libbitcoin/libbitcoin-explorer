@@ -18,15 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "precompile.hpp"
-#include <explorer/primitives/prefix.hpp>
+#include <bitcoin/explorer/primitives/prefix.hpp>
 
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <explorer/define.hpp>
-#include <explorer/utility/utility.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace po;
 
