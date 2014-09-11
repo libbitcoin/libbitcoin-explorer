@@ -36,60 +36,60 @@ using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 //using namespace bc::network;
 
-static void handle_signal(int signal)
-{
-    // Can't pass args using lambda capture for a simple function pointer.
-    // This means there's no way to terminate without using a global variable
-    // or process termination. Since the variable would screw with testing all 
-    // other methods we opt for process termination here.
-    exit(console_result::failure);
-}
-
-// Started protocol, node discovery complete.
-static void handle_start(callback_state& state)
-{
-    state.output(BX_SEND_TX_P2P_START_OKAY);
-}
-
-// Fetched a number of connections.
-static void handle_check(callback_state& state, size_t connection_count,
-    size_t node_count)
-{
-    state.output(format(BX_SEND_TX_P2P_CHECK_OKAY) % connection_count);
-    if (connection_count >= node_count)
-        state.stop();
-}
-
-// Send completed.
-static void handle_sent(callback_state& state)
-{
-    state.output(format(BX_SEND_TX_P2P_SEND_OKAY) % now());
-}
-
-// Send tx to another Bitcoin node.
-static void handle_send(callback_state& state, const std::error_code& code, 
-    bc::network::channel_ptr node, bc::network::protocol& prot, tx_type& tx)
-{
-    // Set up callback handlers for sent and send.
-    const auto sent_handler = [&state](const std::error_code& code)
-    {
-        state.handle_error(code, BX_SEND_TX_P2P_SEND_FAIL);
-        handle_sent(state);
-    };
-
-    const auto send_handler = [&state](const std::error_code& code,
-        bc::network::channel_ptr node, bc::network::protocol& prot, 
-        tx_type& tx)
-    {
-        state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
-        handle_send(state, code, node, prot, tx);
-    };
-
-    state.output(format(BX_SEND_TX_P2P_SETUP_OKAY) % transaction(tx));
-    node->send(tx, sent_handler);
-    prot.subscribe_channel(std::bind(send_handler, ph::_1, ph::_2,
-        std::ref(prot), std::ref(tx)));
-}
+//static void handle_signal(int signal)
+//{
+//    // Can't pass args using lambda capture for a simple function pointer.
+//    // This means there's no way to terminate without using a global variable
+//    // or process termination. Since the variable would screw with testing all 
+//    // other methods we opt for process termination here.
+//    exit(console_result::failure);
+//}
+//
+//// Started protocol, node discovery complete.
+//static void handle_start(callback_state& state)
+//{
+//    state.output(BX_SEND_TX_P2P_START_OKAY);
+//}
+//
+//// Fetched a number of connections.
+//static void handle_check(callback_state& state, size_t connection_count,
+//    size_t node_count)
+//{
+//    state.output(format(BX_SEND_TX_P2P_CHECK_OKAY) % connection_count);
+//    if (connection_count >= node_count)
+//        state.stop();
+//}
+//
+//// Send completed.
+//static void handle_sent(callback_state& state)
+//{
+//    state.output(format(BX_SEND_TX_P2P_SEND_OKAY) % now());
+//}
+//
+//// Send tx to another Bitcoin node.
+//static void handle_send(callback_state& state, const std::error_code& code, 
+//    bc::network::channel_ptr node, bc::network::protocol& prot, tx_type& tx)
+//{
+//    // Set up callback handlers for sent and send.
+//    const auto sent_handler = [&state](const std::error_code& code)
+//    {
+//        state.handle_error(code, BX_SEND_TX_P2P_SEND_FAIL);
+//        handle_sent(state);
+//    };
+//
+//    const auto send_handler = [&state](const std::error_code& code,
+//        bc::network::channel_ptr node, bc::network::protocol& prot, 
+//        tx_type& tx)
+//    {
+//        state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
+//        handle_send(state, code, node, prot, tx);
+//    };
+//
+//    state.output(format(BX_SEND_TX_P2P_SETUP_OKAY) % transaction(tx));
+//    node->send(tx, sent_handler);
+//    prot.subscribe_channel(std::bind(send_handler, ph::_1, ph::_2,
+//        std::ref(prot), std::ref(tx)));
+//}
 
 console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 {
@@ -100,71 +100,71 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Set up shared state.
     callback_state state(error, output);
 
-    // Set up callback handlers for start, connections check, send and stop.
-    const auto start_handler = [&state](const std::error_code& code)
-    {
-        state.handle_error(code, BX_SEND_TX_P2P_START_FAIL);
-        handle_start(state);
-    };
+    //// Set up callback handlers for start, connections check, send and stop.
+    //const auto start_handler = [&state](const std::error_code& code)
+    //{
+    //    state.handle_error(code, BX_SEND_TX_P2P_START_FAIL);
+    //    handle_start(state);
+    //};
 
-    const auto check_handler = [&state](const std::error_code& code,
-        size_t connection_count, size_t node_count)
-    {
-        state.handle_error(code, BX_SEND_TX_P2P_CHECK_FAIL);
-        handle_check(state, connection_count, node_count);
-    };
+    //const auto check_handler = [&state](const std::error_code& code,
+    //    size_t connection_count, size_t node_count)
+    //{
+    //    state.handle_error(code, BX_SEND_TX_P2P_CHECK_FAIL);
+    //    handle_check(state, connection_count, node_count);
+    //};
 
-    const auto send_handler = [&state](const std::error_code& code,
-        bc::network::channel_ptr node, bc::network::protocol& prot,
-        tx_type& tx)
-    {
-        state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
-        handle_send(state, code, node, prot, tx);
-    };
+    //const auto send_handler = [&state](const std::error_code& code,
+    //    bc::network::channel_ptr node, bc::network::protocol& prot,
+    //    tx_type& tx)
+    //{
+    //    state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
+    //    handle_send(state, code, node, prot, tx);
+    //};
 
-    const auto stop_handler = [](const std::error_code&)
-    {
-    };
+    //const auto stop_handler = [](const std::error_code&)
+    //{
+    //};
 
-    // Set up connections.
-    async_client client(*this, 4);
+    //// Set up connections.
+    //async_client client(*this, 4);
 
-    // Create dependencies for our protocol object.
-    auto& pool = client.get_threadpool();
-    bc::network::hosts hst(pool);
-    bc::network::handshake hs(pool);
-    bc::network::network net(pool);
+    //// Create dependencies for our protocol object.
+    //auto& pool = client.get_threadpool();
+    //bc::network::hosts hst(pool);
+    //bc::network::handshake hs(pool);
+    //bc::network::network net(pool);
 
-    // Set up protocol service.
-    bc::network::protocol prot(pool, hst, hs, net);
-    prot.set_max_outbound(node_count * 6);
+    //// Set up protocol service.
+    //bc::network::protocol prot(pool, hst, hs, net);
+    //prot.set_max_outbound(node_count * 6);
 
 
-    // Perform node discovery if needed and then creating connections.
-    prot.start(start_handler);
+    //// Perform node discovery if needed and then creating connections.
+    //prot.start(start_handler);
 
-    // Create a subscription for each transaction.
-    for (const tx_type& tx: transactions)
-    {
-        ++state;
-        prot.subscribe_channel(
-            std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), tx));
-    }
+    //// Create a subscription for each transaction.
+    //for (const tx_type& tx: transactions)
+    //{
+    //    ++state;
+    //    prot.subscribe_channel(
+    //        std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), tx));
+    //}
 
-    // Catch C signals for stopping the program.
-    signal(SIGABRT, handle_signal);
-    signal(SIGTERM, handle_signal);
-    signal(SIGINT, handle_signal);
+    //// Catch C signals for stopping the program.
+    //signal(SIGABRT, handle_signal);
+    //signal(SIGTERM, handle_signal);
+    //signal(SIGINT, handle_signal);
 
-    // Check the connection count every 2 seconds.
-    const auto work = [&prot, &node_count, &check_handler]
-    {
-        prot.fetch_connection_count(
-            std::bind(check_handler, ph::_1, ph::_2, node_count));
-    };
+    //// Check the connection count every 2 seconds.
+    //const auto work = [&prot, &node_count, &check_handler]
+    //{
+    //    prot.fetch_connection_count(
+    //        std::bind(check_handler, ph::_1, ph::_2, node_count));
+    //};
 
-    client.poll(state.stopped(), 2000, work);
-    prot.stop(stop_handler);
+    //client.poll(state.stopped(), 2000, work);
+    //prot.stop(stop_handler);
     
     return state.get_result();
 }
