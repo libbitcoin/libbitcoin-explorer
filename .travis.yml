@@ -15,8 +15,7 @@ before_install:
   
 install:
   # Get GMP (GNU Multiprecision Arithmetic Library)
-  # Get Libconfig (for Obelisk until switch to boost::program_options)
-  - sudo apt-get -qq install libgmp-dev libconfig++-dev
+  - sudo apt-get -qq install libgmp-dev
 
   # Download and install boost components at the minimum version required.
   - ./install-boost.sh
