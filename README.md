@@ -6,8 +6,6 @@
 
 *The Bitcoin Command Line Tool*
 
-<!--<img src="/img/wallet-commands.png" width="75%" height="75%"></img>-->
-
 **License Overview**
 
 All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
@@ -75,7 +73,7 @@ Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://g
   $ sudo apt-get install libboost-all-dev libgmp-dev
 ```
 
-Next execute the [install script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/install-bx.sh).
+Finally, execute the [install script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/install-bx.sh).
 ```
 $ ./install-bx.sh
 ```
@@ -85,7 +83,7 @@ Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the 
 
 If you intend to inspect and/or modify source code you should [git clone](http://git-scm.com/docs/git-clone) BX and each unpackaged dependency and build them manually. The install script itself is commented so that the manual build steps for each dependency can be inferred by a developer.
 
-You can run the install script from any directory on your system. This will build BX in a subdirectory named `bx_build` and install it to `/usr/local/`. When the build completes successfully the 'bx_build' directory is deleted.
+You can run the install script from any directory on your system. This will build BX in a subdirectory named `bx_build` and install it to `/usr/local/`. When the build completes successfully the `bx_build` directory is deleted.
 
 The install script should not normally be executed using sudo. Instead it will immediately prompt you for a super user password if required. This ensures that only the necessary installation steps are executed as a super user, as opposed to the entire build process.
 
@@ -112,7 +110,7 @@ Any set of `./configure` options can be passed via the build script, for example
 
 #### Compiling for Testnet
 
-Currently certain commands cannot work with both [testnet](https://en.bitcoin.it/wiki/Testnet) and mainnet. This is a libbitcoin restriction that will be lifted in a future version. In order to work with testnet in the interim the libraries must be recompiled with the testnet option:
+Currently certain commands cannot work with both [testnet](https://en.bitcoin.it/wiki/Testnet) and mainnet. This is a libbitcoin restriction that will be lifted in a future version. In order to work with testnet in the interim the libbitcoin libraries must be recompiled with the testnet option:
 ```
   $ ./install-bx.sh --enable-testnet
 ```
@@ -148,7 +146,7 @@ Visual Studio solutions are maintained for all libbitcoin libraries and dependen
 
 Libbitcoin requires a C++11 compiler, which means **Visual Studio 2013** minimum. Additionally a pre-release compiler must be installed as an update to Visual Studio. Download and install the following tools as necessary. Both are available free of charge:
 
-* [Visual Studio 2013 Express](http://www.microsoft.com/en-us/download/details.aspx?id=40787)
+* [Visual Studio 2013 Express](http://www.microsoft.com/en-us/download/details.aspx?id=43733)
 * [November 2013 CTP Compiler](http://www.microsoft.com/en-us/download/details.aspx?id=41151)
 
 #### Create Local NuGet Repository
@@ -218,7 +216,7 @@ The primary objective in the evolution to BX was the desire to produce a single 
 
 ### Extensibility Model
 
-With over 70 commands (85 including obsoleted stubs) and growing, BX requires an extensibility model that eliminates redundant code across commands. Ad-hoc evolution without such a model led to significant maintenance difficulty and increasing fragility. In keeping with the single file requirement the extensions had to be incorporated at compile time.
+With approximately 75 commands and growing, BX requires an extensibility model that eliminates redundant code across commands. Ad-hoc evolution without such a model led to significant maintenance difficulty and increasing fragility. In keeping with the single file requirement the extensions had to be incorporated at compile time.
 
 As such code generation is now used to produce headers, AutoMake files, MSVC project files, component tests, and shared source code from a single [XML metadata document](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/model/generate.xml). The [open source tool GSL](https://github.com/imatix/gsl) is used to push command metadata through a [GSL template](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/model/generate.gsl), producing the necessary artefacts. To implement a new command required creating an XML element, running the code generator, and overriding a single invoke method. A stub for unit/component test execution is automatically defined as well.
 
@@ -388,6 +386,44 @@ Commands suffixed with `-validate` have a third result code state: **invalid** (
 #### Other
 
 Commands suffixed with `-new` create a new instance of whatever type is specified in the command. Other command actions (e.g. `-set`, `-sign`, `-add`, `-multiply`, `-uncover`) are unique to the contexts in which they are defined.
+
+## Command Map
+
+##### Wallet Commands
+```
+Commands pertaining to bitcoin keys and payment addresses.
+```
+<img src="/img/wallet-commands.png" width="30%" height="30%"></img>
+
+##### Stealth Commands
+```
+Commands pertaining to stealth payments and addresses.
+```
+<img src="/img/stealth-commands.png" width="30%" height="30%"></img>
+
+##### Transaction Commands
+```
+Commands pertaining to manipulation of transactions, excluding network calls.
+```
+<img src="/img/transaction-commands.png" width="30%" height="30%"></img>
+
+##### Online Commands
+```
+Commands that communicate on the bitcoin network.
+```
+<img src="/img/online-commands.png" width="30%" height="30%"></img>
+
+##### Hash Commands
+```
+Commands pertaining to hashing and ancoding data in the various bitcoin formats.
+```
+<img src="/img/hash-commands.png" width="30%" height="30%"></img>
+
+##### Math Commands
+```
+Coin conversion and commands that perform secp256k1 elliptic curve math.
+```
+<img src="/img/math-commands.png" width="25%" height="25%"></img>
 
 ## Command List
 
