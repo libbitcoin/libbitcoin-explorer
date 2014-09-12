@@ -16,7 +16,7 @@
 
 # This script will build libbitcoin using this relative directory.
 # This is meant to be temporary, just to facilitate the install.
-BUILD_DIRECTORY="libbitcoin_explorer_build"
+BUILD_DIRECTORY="bx_build"
 
 # The source repository for the primary build (when not running in Travis).
 BUILD_ACCOUNT="libbitcoin"
@@ -104,14 +104,12 @@ build_primary()
 build_tests()
 {
     # Build and run unit tests relative to the primary directory.
-    pushd libbitcoin_explorer/test
+    pushd test
     ./explorer_test $BOOST_UNIT_TEST_PARAMETERS
     popd
 
     # Verify execution (note that 'help' currently returns empty with success).
-    pushd libbitcoin_explorer/src
-    ./explorer help
-    popd
+    bx help
 }
 
 clean_usr_local()
