@@ -491,7 +491,6 @@ BX defines the following set of commands with corresponding names in the `bx::co
     stealth-address-decode
     stealth-address-encode
     stealth-new
-    stealth-newkey
     stealth-shared-secret
     stealth-uncover-public
     stealth-uncover-secret
