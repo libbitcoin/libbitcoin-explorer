@@ -17,23 +17,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
+// #include "precompile.hpp"
 #include "command.hpp"
 
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(embed_address__invoke)
 
-// $ cat my_sculpture.jpg | bx address-embed
-// 1N9v8AKBqst9MNceV3gLmFKsgkKv1bZcBU
-// Now send some Bitcoin to that address and it will be embedded
-// in the blockchain as a record of the data passed in.
+// vectors
+#define BX_ADDRESS_EMBED_A "Sataoshi Nakamoto"
 
-BOOST_AUTO_TEST_CASE(address_embed__invoke__always__failure_error)
+// expectations
+#define BX_ADDRESS_EMBED_A_V0 "1D4ovciLtDDCRAnbQV2uerN8W5YoD7gYkN"
+#define BX_ADDRESS_EMBED_A_V42 "J7G9HBEShnfzmNeES72J27oAwGNR4HdLrF"
+
+BOOST_AUTO_TEST_CASE(address_embed__invoke__version_0__okay_output)
 {
     BX_DECLARE_COMMAND(address_embed);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_ADDRESS_EMBED_NOT_IMPLEMENTED "\n");
+    command.set_data_argument({ BX_ADDRESS_EMBED_A });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_ADDRESS_EMBED_A_V0 "\n");
+}
+
+BOOST_AUTO_TEST_CASE(aaddress_embed__invoke__version_42__okay_output)
+{
+    BX_DECLARE_COMMAND(address_embed);
+    command.set_version_option(42);
+    command.set_data_argument({ BX_ADDRESS_EMBED_A });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_ADDRESS_EMBED_A_V42 "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

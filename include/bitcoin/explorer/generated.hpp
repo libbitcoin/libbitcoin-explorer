@@ -28,6 +28,8 @@
 #include <bitcoin/explorer/commands/address-embed.hpp>
 #include <bitcoin/explorer/commands/address-encode.hpp>
 #include <bitcoin/explorer/commands/address-validate.hpp>
+#include <bitcoin/explorer/commands/base16-decode.hpp>
+#include <bitcoin/explorer/commands/base16-encode.hpp>
 #include <bitcoin/explorer/commands/base58-decode.hpp>
 #include <bitcoin/explorer/commands/base58-encode.hpp>
 #include <bitcoin/explorer/commands/base58check-decode.hpp>

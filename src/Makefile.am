@@ -53,6 +53,8 @@ libbitcoin_explorer_la_SOURCES += \
     commands/address-embed.cpp \
     commands/address-encode.cpp \
     commands/address-validate.cpp \
+    commands/base16-decode.cpp \
+    commands/base16-encode.cpp \
     commands/base58-decode.cpp \
     commands/base58-encode.cpp \
     commands/base58check-decode.cpp \

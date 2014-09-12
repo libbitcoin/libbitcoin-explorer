@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
+// #include "precompile.hpp"
 #include <bitcoin/explorer/primitives/raw.hpp>
 
 #include <iostream>
+#include <sstream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -31,6 +32,11 @@ namespace primitives {
 raw::raw()
     : value_()
 {
+}
+
+raw::raw(const std::string& hexcode)
+{
+    std::stringstream(hexcode) >> *this;
 }
 
 raw::raw(const data_chunk& value)

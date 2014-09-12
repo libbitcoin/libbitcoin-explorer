@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
+// #include "precompile.hpp"
 #include <bitcoin/explorer/primitives/input.hpp>
 
 #include <iostream>
@@ -97,8 +97,7 @@ std::istream& operator>>(std::istream& stream, input& argument)
     std::string tuple;
     stream >> tuple;
 
-    std::vector<std::string> tokens;
-    split(tuple, tokens, BX_TX_POINT_DELIMITER);
+    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
     if (tokens.size() != 2 && tokens.size() != 3)
         throw invalid_option_value(tuple);
 

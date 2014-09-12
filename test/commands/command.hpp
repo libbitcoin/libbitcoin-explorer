@@ -21,6 +21,8 @@
 #define SETUP_HPP
 
 #include <iostream>
+#include <locale>
+#include <string>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/explorer.hpp>
@@ -31,10 +33,9 @@ using namespace bc::client; \
 using namespace bc::explorer; \
 using namespace bc::explorer::commands; \
 using namespace bc::explorer::primitives; \
-using namespace std;
 
 #define BX_DECLARE_COMMAND(extension) \
-    stringstream output, error; \
+    std::stringstream output, error; \
     extension command
 
 // serializer results

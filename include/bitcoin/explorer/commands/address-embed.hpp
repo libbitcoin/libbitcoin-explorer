@@ -63,12 +63,6 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
- */
-#define BX_ADDRESS_EMBED_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
  * Class to implement the address-embed command.
  */
 class address_embed 
@@ -105,7 +99,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("FILE", 1);
+            .add("DATA", 1);
     }
 	
 	/**
@@ -116,8 +110,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        //load_path(get_file_argument(), "FILE", variables);
-        //load_input(get_file_argument(), "FILE", variables, input);
+        //load_input(get_data_argument(), "DATA", variables, input);
     }
     
     /**
@@ -143,9 +136,14 @@ public:
                 "Generate a Bitcoin address with an embedded record of binary data."
             )
             (
-                "FILE",
-                value<std::string>(),
-                "The binary data file path.  If not specified the binary data is read from STDIN."
+                "version,v",
+                value<uint8_t>(&option_.version),
+                "The desired Bitcoin address version."
+            )
+            (
+                "DATA",
+                value<primitives::raw>(&argument_.data),
+                "The binary data to encode as Base16. This can be text or any other data."
             );
 
         return options;
@@ -162,20 +160,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the FILE argument.
+     * Get the value of the DATA argument.
      */
-    virtual primitives::raw& get_file_argument()
+    virtual primitives::raw& get_data_argument()
     {
-        return argument_.file;
+        return argument_.data;
     }
     
     /**
-     * Set the value of the FILE argument.
+     * Set the value of the DATA argument.
      */
-    virtual void set_file_argument(
+    virtual void set_data_argument(
         const primitives::raw& value)
     {
-        argument_.file = value;
+        argument_.data = value;
     }
 
     /**
@@ -195,6 +193,23 @@ public:
         option_.help = value;
     }
 
+    /**
+     * Get the value of the version option.
+     */
+    virtual uint8_t& get_version_option()
+    {
+        return option_.version;
+    }
+    
+    /**
+     * Set the value of the version option.
+     */
+    virtual void set_version_option(
+        const uint8_t& value)
+    {
+        option_.version = value;
+    }
+
 private:
 
     /**
@@ -205,11 +220,11 @@ private:
     struct argument
     {
         argument()
-          : file()
+          : data()
         {
         }
         
-        primitives::raw file;
+        primitives::raw data;
     } argument_;
     
     /**
@@ -220,11 +235,13 @@ private:
     struct option
     {
         option()
-          : help()
+          : help(),
+            version()
         {
         }
         
         bool help;
+        uint8_t version;
     } option_;
 };
 

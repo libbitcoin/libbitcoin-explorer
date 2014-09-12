@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
+// #include "precompile.hpp"
 #ifdef _MSC_VER
 // Suppressing msvc warnings from boost that are heard to deal with
 // because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
@@ -57,19 +57,6 @@ void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter)
 {
     sentence = boost::join(words, delimiter);
-}
-
-bool stealth_match(const blockchain::stealth_row& row,
-    const ec_secret& secret)
-{
-    // TODO: implement and move to libbitcoin.
-    return true;
-}
-
-bool stealth_match(const tx_type& tx, const ec_secret& secret)
-{
-    // TODO: implement and move to libbitcoin.
-    return true;
 }
 
 // The key may be invalid, caller must test for null secret.
@@ -144,11 +131,26 @@ void sleep_ms(uint32_t milliseconds)
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
-void split(const std::string& sentence, std::vector<std::string>& words,
+std::vector<std::string> split(const std::string& sentence,
     const std::string& delimiter)
 {
+    std::vector<std::string> words;
     boost::split(words, sentence, boost::is_any_of(delimiter),
         boost::token_compress_on);
+    return words;
+}
+
+bool stealth_match(const blockchain::stealth_row& row,
+    const ec_secret& secret)
+{
+    // TODO: implement and move to libbitcoin.
+    return true;
+}
+
+bool stealth_match(const tx_type& tx, const ec_secret& secret)
+{
+    // TODO: implement and move to libbitcoin.
+    return true;
 }
 
 void trim(std::string& value)

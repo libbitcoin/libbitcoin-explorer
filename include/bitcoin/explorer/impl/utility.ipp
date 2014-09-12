@@ -88,8 +88,7 @@ void deserialize(Value& value, std::istream& input)
 template <typename Value>
 void deserialize(std::vector<Value>& collection, const std::string& text)
 {
-    std::vector<std::string> tokens;
-    split(text, tokens, "\n\r\t ");
+    const auto tokens = split(text, "\n\r\t ");
 
     for (const auto& token: tokens)
     {

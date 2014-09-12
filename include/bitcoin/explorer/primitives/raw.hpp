@@ -45,6 +45,12 @@ public:
 
     /**
      * Initialization constructor.
+     * @param[in]  text  The value to initialize with.
+     */
+    raw(const std::string& text);
+
+    /**
+     * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
     raw(const data_chunk& value);

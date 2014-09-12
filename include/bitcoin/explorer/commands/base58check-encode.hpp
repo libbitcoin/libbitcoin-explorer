@@ -133,7 +133,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert Base16 data to Base58Check."
+                "Convert a Base16 value to Base58Check."
             )
             (
                 "version,v",

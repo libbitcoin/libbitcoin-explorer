@@ -17,22 +17,43 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
+// #include "precompile.hpp"
 #include <bitcoin/explorer/commands/address-embed.hpp>
 
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/script.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
+
+#define ADDRESS_EMBED_SCRIPT "dup hash160 [ %1% ] equalverify checksig"
 
 console_result address_embed::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    //const auto& data = get_file_argument();
+    const auto& data = get_data_argument();
+    const auto& version = get_version_option();
 
-    error << BX_ADDRESS_EMBED_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    // Create script from hash of data.
+    auto tokens = format(ADDRESS_EMBED_SCRIPT) % base16(ripemd160_hash(data));
+    const script embeded_script(split(tokens.str()));
+
+    // Make ripemd hash of serialized script.
+    const auto serialized_script = save_script(embeded_script);
+    const auto ripemd160 = ripemd160_hash(serialized_script);
+
+    // RECOMPILE OF REQUIRED FOR TESTNET
+    const address pay_address(version, ripemd160);
+
+    output << pay_address << std::endl;
+    return console_result::okay;
 }
 
 //#!/bin/bash

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
+// #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
 #include <bitcoin/explorer.hpp>
@@ -47,6 +47,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__address_encode__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__address_validate__returns_expected_value)
 {
     BOOST_REQUIRE(address_validate::symbol() == std::string("address-validate"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__base16_decode__returns_expected_value)
+{
+    BOOST_REQUIRE(base16_decode::symbol() == std::string("base16-decode"));
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__base16_encode__returns_expected_value)
+{
+    BOOST_REQUIRE(base16_encode::symbol() == std::string("base16-encode"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__base58_decode__returns_expected_value)

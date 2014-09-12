@@ -133,12 +133,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Convert Base16 data to Base58."
+                "Convert a Base16 value to Base58."
             )
             (
                 "BASE16",
                 value<primitives::base16>(&argument_.base16),
-                "The Base16 data to encode as Base58."
+                "The Base16 value to encode as Base58."
             );
 
         return options;

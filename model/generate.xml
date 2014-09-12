@@ -56,10 +56,10 @@
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address to convert."/>
   </command>
   
-  <command symbol="address-embed" formerly="embed-addr" typeX="address" category="WALLET" stub="true">
+  <command symbol="address-embed" formerly="embed-addr" typeX="address" category="WALLET">
     <option name="help" description="Generate a Bitcoin address with an embedded record of binary data." />
-    <argument name="FILE" file="true" stdin="true" type="raw" description="The binary data file path.  If not specified the binary data is read from STDIN."/>
-    <define name="BX_ADDRESS_EMBED_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <option name="version" type="uint8_t" description="The desired Bitcoin address version." />
+    <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base16. This can be text or any other data." />
   </command>
 
   <command symbol="address-encode" formerly="encode-addr" typeX="address" category="WALLET">
@@ -75,25 +75,35 @@
   </command>
 
   <command symbol="base58check-decode" typeX="wrapper" category="HASH">
-    <option name="help" description="Convert a Base58Check value to Base16 data." />
+    <option name="help" description="Convert a Base58Check value to Base16." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="BASE58CHECK" stdin="true" type="base58" description="The Base58Check value to decode." />
   </command>
+  
+  <command symbol="base16-decode" typeX="raw" category="HASH">
+    <option name="help" description="Convert a Base16 value to binary data." />
+    <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to decode as binary data." />
+  </command>
+
+  <command symbol="base16-encode" typeX="base16" category="HASH">
+    <option name="help" description="Convert binary data to Base16." />
+    <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base16. This can be text or any other data." />
+  </command>
 
   <command symbol="base58check-encode" typeX="base58" category="HASH">
-    <option name="help" description="Convert Base16 data to Base58Check." />
+    <option name="help" description="Convert a Base16 value to Base58Check." />
     <option name="version" type="uint8_t" description="The desired version number." />
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to Base58Check encode." />
   </command>
   
   <command symbol="base58-decode" typeX="base16" category="HASH">
-    <option name="help" description="Convert a Base58 value to a Base16 data." />
+    <option name="help" description="Convert a Base58 value to Base16." />
     <argument name="BASE58" stdin="true" type="base58" description="The Base58 value to decode as Base16." />
   </command>
 
   <command symbol="base58-encode" typeX="base58" category="HASH">
-    <option name="help" description="Convert Base16 data to Base58." />
-    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to encode as Base58." />
+    <option name="help" description="Convert a Base16 value to Base58." />
+    <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to encode as Base58." />
   </command>
   
   <command symbol="bci-fetch-last-height" category="ONLINE" obsolete="true">

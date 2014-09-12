@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
+// #include "precompile.hpp"
 #include <bitcoin/explorer/generated.hpp>
 
 #include <functional>
@@ -42,6 +42,8 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<address_embed>());
     func(make_shared<address_encode>());
     func(make_shared<address_validate>());
+    func(make_shared<base16_decode>());
+    func(make_shared<base16_encode>());
     func(make_shared<base58_decode>());
     func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
@@ -137,6 +139,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<address_encode>();
     if (symbol == address_validate::symbol())
         return make_shared<address_validate>();
+    if (symbol == base16_decode::symbol())
+        return make_shared<base16_decode>();
+    if (symbol == base16_encode::symbol())
+        return make_shared<base16_encode>();
     if (symbol == base58_decode::symbol())
         return make_shared<base58_decode>();
     if (symbol == base58_encode::symbol())

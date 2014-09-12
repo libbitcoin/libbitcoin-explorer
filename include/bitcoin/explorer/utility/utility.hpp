@@ -200,24 +200,6 @@ void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter=BX_SENTENCE_DELIMITER);
 
 /**
- * Determine if the information in the stealth row is a match to the secret.
- * @param[in]  row     The stealth row to test.
- * @param[in]  secret  Theec private key to use in testing for a match.
- * @return             True if matched.
- */
-bool stealth_match(const blockchain::stealth_row& row,
-    const ec_secret& secret);
-
-/**
- * Determine if the information in the tx contains stealth payments with at 
- * least one matched to the secret.
- * @param[in]  tx      The potential stealth tx to test.
- * @param[in]  secret  Theec private key to use in testing for a match.
- * @return             True if matched.
- */
-bool stealth_match(const tx_type& tx, const ec_secret& secret);
-
-/**
  * Generate a new ec key from a seed.
  * @param[in]  seed  The seed for key randomness.
  * @return           The new key.
@@ -284,11 +266,29 @@ void sleep_ms(uint32_t milliseconds);
  * Split a list of strings into a string vector string, in order, white space
  * delimited.
  * @param[in]  sentence   The string to split.
- * @param[out] words      The list of resulting strings.
  * @param[in]  delimiter  The delimeter, defaults to BX_SENTENCE_DELIMITER.
+ * @return                The list of resulting strings.
  */
-void split(const std::string& sentence, std::vector<std::string>& words,
+std::vector<std::string> split(const std::string& sentence,
     const std::string& delimiter=BX_SENTENCE_DELIMITER);
+
+/**
+ * Determine if the information in the stealth row is a match to the secret.
+ * @param[in]  row     The stealth row to test.
+ * @param[in]  secret  Theec private key to use in testing for a match.
+ * @return             True if matched.
+ */
+bool stealth_match(const blockchain::stealth_row& row,
+    const ec_secret& secret);
+
+/**
+ * Determine if the information in the tx contains stealth payments with at 
+ * least one matched to the secret.
+ * @param[in]  tx      The potential stealth tx to test.
+ * @param[in]  secret  Theec private key to use in testing for a match.
+ * @return             True if matched.
+ */
+bool stealth_match(const tx_type& tx, const ec_secret& secret);
 
 /**
  * Trim a string of whitespace.

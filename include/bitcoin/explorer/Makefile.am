@@ -64,6 +64,8 @@ bitcoin_explorer_commands_include_HEADERS = \
     explorer/commands/address-embed.hpp \
     explorer/commands/address-encode.hpp \
     explorer/commands/address-validate.hpp \
+    explorer/commands/base16-decode.hpp \
+    explorer/commands/base16-encode.hpp \
     explorer/commands/base58-decode.hpp \
     explorer/commands/base58-encode.hpp \
     explorer/commands/base58check-decode.hpp \

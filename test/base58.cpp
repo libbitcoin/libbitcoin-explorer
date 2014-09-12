@@ -21,7 +21,7 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer.hpp>
-#include "precompile.hpp"
+// #include "precompile.hpp"
 
 using namespace bc;
 using namespace bc::explorer::primitives;
