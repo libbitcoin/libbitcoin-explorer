@@ -12,6 +12,10 @@
 
 All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
 
+**About Libbitcoin**
+
+The libbitcoin toolkit is a set of cross platform C++ libraries for building bitcoin applications. The toolkit consists of several libraries, most of which depend on the foundational [libbitcoin](https://github.com/libbitcoin/libbitcoin) library. Each library's repository can be cloned and built using common [automake](http://www.gnu.org/software/automake) instructions. There are no packages yet in distribution however each library includes an installation script (described below) which is regularly verified in the automated build.
+
 **Table of Contents**
 
 * [Background](#background)
@@ -66,29 +70,26 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```
   $ sudo apt-get install build-essential autoconf automake libtool pkg-config
 ```
-Next install [Boost](http://www.boost.org) (1.50.0 or newer), [GMP](https://gmplib.org) (5.0.0 or newer), and [Libconfig++](http://www.hyperrealm.com/libconfig) (1.3.2 or newer) development packages:
+Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
 ```
-  $ sudo apt-get install libboost-all-dev libgmp-dev libconfig++-dev
+  $ sudo apt-get install libboost-all-dev libgmp-dev
 ```
-> The libconfig++ dependency is deprecated and will be removed in a future version.
 
-Next execute the [build script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/install-bx.sh).
+Next execute the [install script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/install-bx.sh).
 ```
 $ ./install-bx.sh
 ```
-Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the `$ bx` (or `$ sx`) alias.
+Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the `$ bx` or original `$ sx` alias.
 
 #### Notes
 
-If you intend to inspect and/or modify source code you should [git clone](http://git-scm.com/docs/git-clone) each dependency and build each manually. The build script itself is simple and commented so that the manual build steps for each dependency can be easily inferred by a developer.
+If you intend to inspect and/or modify source code you should [git clone](http://git-scm.com/docs/git-clone) BX and each unpackaged dependency and build them manually. The install script itself is commented so that the manual build steps for each dependency can be inferred by a developer.
 
-Libbitcoin and many of its dependencies do not yet supply [packages](http://wikipedia.org/wiki/Package_(package_management_system)). The build script exists to provide a level of convenience similar to a package, but against current sources. In order to ensure the quality of the build script it includes no conditional instructions and is [executed automatically](tps://travis-ci.org/libbitcoin/libbitcoin_explorer) each time a [pull request](http://git-scm.com/docs/git-request-pull) is made against the libbitcoin_explorer GitHub repository.
+You can run the install script from any directory on your system. This will build BX in a subdirectory named `bx_build` and install it to `/usr/local/`. When the build completes successfully the 'bx_build' directory is deleted.
 
-You can run the build script from any directory on your system. This will build BX in a subdirectory named `libbitcoin_explorer_build` and install it to `/usr/local/`. The build subdirectory is automatically deleted after the build completes successfully.
+The install script should not normally be executed using sudo. Instead it will immediately prompt you for a super user password if required. This ensures that only the necessary installation steps are executed as a super user, as opposed to the entire build process.
 
-The build script should not normally be executed using sudo. Instead it will immediately prompt you for a super user password if required. This ensures that only the necessary installation steps are executed as a super user, as opposed to the entire build process.
-
-**The build can take well over an hour to complete.** In addition to the packaged dependencies above, the build script clones, builds and installs nine repositories, namely:
+**The install can take well over an hour to complete.** The install script clones, builds and installs nine unpackaged repositories, namely:
 
 * [jedisct1/libsodium](https://github.com/jedisct1/libsodium)
 * [zeromq/libzmq](https://github.com/zeromq/libzmq)
@@ -99,7 +100,7 @@ The build script should not normally be executed using sudo. Instead it will imm
 * [libbitcoin/libbitcoin_client](https://github.com/libbitcoin/libbitcoin_client)
 * [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
-Of these libraries, only libzmq is packaged. However we require a more recent version of the library in order to take advantage of new features such as the [SOCKS](http://wikipedia.org/wiki/SOCKS) proxy.
+Of these libraries, only libzmq is packaged. However we require a more recent version of the library in order to take advantage of new features such as the [SOCKS](http://wikipedia.org/wiki/SOCKS) proxy, so we build it as well.
 
 #### Build Options
 
@@ -111,7 +112,7 @@ Any set of `./configure` options can be passed via the build script, for example
 
 #### Compiling for Testnet
 
-Currently certain commands cannot work with both the **Test Network** (testnet) and mainnet. This is a libbitcoin that restriction will be lifted in a future version. In order to work with testnet in the interim the libraries must be recompiled with the testnet option:
+Currently certain commands cannot work with both [testnet](https://en.bitcoin.it/wiki/Testnet) and mainnet. This is a libbitcoin restriction that will be lifted in a future version. In order to work with testnet in the interim the libraries must be recompiled with the testnet option:
 ```
   $ ./install-bx.sh --enable-testnet
 ```
@@ -132,7 +133,7 @@ Next execute the following commands:
   $ brew install gcc48
   $ sudo ln -sf /usr/local/bin/g++-4.8 /usr/bin/g++
 ```
-Finally, invoke the installation script:
+Finally, invoke the install script:
 ```
   $ ./install-bx.sh
 ```
@@ -144,15 +145,17 @@ Visual Studio solutions are maintained for all libbitcoin libraries and dependen
 > The libbitcoin execution environment supports `Windows XP Service Pack 2` and newer.
 
 #### Upgrade Compiler
+
 Libbitcoin requires a C++11 compiler, which means **Visual Studio 2013** minimum. Additionally a pre-release compiler must be installed as an update to Visual Studio. Download and install the following tools as necessary. Both are available free of charge:
 
 * [Visual Studio 2013 Express](http://www.microsoft.com/en-us/download/details.aspx?id=40787)
 * [November 2013 CTP Compiler](http://www.microsoft.com/en-us/download/details.aspx?id=41151)
 
 #### Create Local NuGet Repository
-Dependencies apart from the libbitcoin libraries are available as [NuGet packages](https://www.nuget.org/packages?q=evoskuil). The libbitcoin solution files are configured with references to these packages. To avoid redundancies these references expect a [NuGet.config](http://docs.nuget.org/docs/release-notes/nuget-2.1) in a [specific relative location](NUGET.md).
 
-> TODO: UPDATE NUGET.MD
+Dependencies apart from the libbitcoin libraries are available as [NuGet packages](https://www.nuget.org/packages?q=evoskuil). The libbitcoin solution files are configured with references to these packages. To avoid redundancies these references expect a [NuGet.config](http://docs.nuget.org/docs/release-notes/nuget-2.1) in a central location.
+
+> TODO: provide instructions for creation of the central NuGet repository.
 
 The required set of NuGet packages can be viewed using the [NuGet package manager](http://docs.nuget.org/docs/start-here/managing-nuget-packages-using-the-dialog) from the BX solution. The NuGet package manager will automatically download missing packages, either from the build scripts or after prompting you in the Visual Studio environment. For your reference these are the required packages:
 
@@ -174,12 +177,13 @@ The required set of NuGet packages can be viewed using the [NuGet package manage
  * [libzmq\_vc120](http://www.nuget.org/packages/libzmq_vc120)
  * [secp256k1\_gmp\_vc120](http://www.nuget.org/packages/secp256k1_gmp_vc120)
 
-> The GMP for Windows project is called [MPIR](http://www.mpir.org/) and has binary compatibility with GMP.
+> The GMP for Windows project is called [MPIR](http://www.mpir.org) and has binary compatibility with GMP.
 
 #### Build Libbitcoin Projects
+
 To build BX you must also download and build its **libbitcoin dependencies**, as these are not yet packaged. The builds can be performed manually (from within Visual Studio) or using the `buildall.bat` script provided in the `builds\msvc\build\` subdirectory of each repository. The scripts automatically download the required NuGet packages.
 
-> Tip: The `buildall.bat` scripts build all valid configurations. The build time can be significantly reduced by disabling all but the desired configuration in each script.
+> Tip: The `buildall.bat` scripts build *all* valid configurations. The build time can be significantly reduced by disabling all but the desired configuration in the `buildbase.bat` of each project.
 
 Build these solutions in order:
 
@@ -190,6 +194,7 @@ Build these solutions in order:
 > The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
 
 #### Optional: Build Everything
+
 The non-boost packages above are all sourced from GitHub repositories maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as the libbitcoin libraries. If so desired each of these can be built locally, in the same manner as the libbitcoin libraries above. This allows you to avoid using the pre-built NuGet packages. The repositories for each dependency are as follows:
 
 * Zero Message Queue
@@ -277,9 +282,11 @@ Input processing is handled in shared code and generated headers. All values are
 BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind configuration settings to strongly-typed application level properties. The implementation supports a two level hierarchy of settings using "sections" to group settings. The path to the configuration settings file is specified by the `--config` command line option or `BX_CONFIG` environment variable, and if not specified defaults as follows.
 
 ##### Linux/Unix/OSX
+
 The current user's home directory, as defined by the `HOME` environment variable or by the call `getpwuid(getuid())->pw_dir`. A typical path is `/home/username`.
 
 #####Windows
+
 The path defined by [CSIDL_LOCAL_APPDATA](http://msdn.microsoft.com/en-us/library/windows/desktop/bb762494(v=vs.85).aspx) for the current user. A typical path is `C:\Documents and Settings\username\Local Settings\Application Data`.
 
 Configuration settings are generated from metadata during development. The metadata includes full definition for all settings, including section, name, data type, default value and help description. If there is no configuration settings file, or if individual settings are not specified in the file, then default values are populated to bound properties.
@@ -390,6 +397,8 @@ BX defines the following set of commands with corresponding names in the `bx::co
     address-embed
     address-encode
     address-validate
+    base16-decode
+    base16-encode    
     base58-decode
     base58-encode
     base58check-decode
