@@ -24,86 +24,54 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/server_client.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 
 using namespace bc;
 using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-//static void fetch_height_error(callback_state& state, const std::error_code& code)
-//{
-//    state.handle_error(code);
-//}
-//
-//static void fetch_height_done(callback_state& state, size_t height)
-//{
-//    state.output(height);
-//    state.stop();
-//}
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
+static void handle_callback(callback_state& state, size_t height)
+{
+    state.output(height);
+}
 
 console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
-    //auto& address = get_server_address_setting();
+    callback_state state(error, output);
 
-    //callback_state state(error, output);
-    //auto on_done = [&state](size_t height) 
-    //{
-    //    fetch_height_done(state, height);
-    //};
-    //auto on_error = [&state](const std::error_code& error)
-    //{
-    //    fetch_height_error(state, error);
-    //};
+    czmqpp::context context;
 
-    //zmq::context_t context;
-    //client::zeromq_socket socket(context);
-    //if (!socket.connect(address))
-    //{
-    //    // TODO: format a connection error.
-    //    std::cout << "fail" << std::endl;
-    //    return console_result::failure;
-    //}
+    obelisk_client client(context);
 
-    //client::obelisk_codec codec(socket, obelisk_codec::on_update_nop,
-    //    obelisk_codec::on_unknown_nop, std::chrono::seconds(5));
+    if (client.connect() >= 0)
+    {
+        auto on_done = [&state](size_t height)
+        {
+            handle_callback(state, height);
+        };
 
-    //state.start();
-    //codec.fetch_last_height(on_error, on_done);
+        auto on_error = [&state](const std::error_code& error)
+        {
+            handle_error(state, error);
+        };
 
-    //while (true)
-    //{
-    //    auto poll_item = socket.pollitem();
-    //    auto next_wakeup = codec.wakeup();
-    //    auto count = next_wakeup.count();
+        client.get_codec().fetch_last_height(on_error, on_done);
 
-    //    if (count == 0)
-    //        break;
+        client.resolve_callbacks();
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
-    //    zmq::poll(&poll_item, 1, static_cast<long>(count));
-    //    if (poll_item.revents)
-    //        socket.forward(codec);
-    //}
-
-    //return state.get_result();
-
-    return console_result::failure;
+    return state.get_result();
 }
-
-//console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
-//{
-//    callback_state state(error, output);
-//    const auto handler = [&state](const std::error_code& code, size_t height)
-//    {
-//        if (!state.handle_error(code))
-//            handle_callback(state, height);
-//    };
-//
-//    server_client client(*this);
-//    auto& fullnode = client.get_fullnode();
-//    state.start();
-//    fullnode.blockchain.fetch_last_height(handler);
-//    client.poll(state.stopped());
-//
-//    return state.get_result();
-//}

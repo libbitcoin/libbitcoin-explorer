@@ -38,7 +38,7 @@ AC_CHECK_LIB(gmp,__gmpz_init,,
 # TODO: We require secp256k1 to require GMP (over OpenSSL).
 PKG_CHECK_MODULES([secp256k1], [libsecp256k1 >= 0.0.1])
 PKG_CHECK_MODULES([bitcoin], [libbitcoin >= 2.2.0])
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 0.0.2])
+PKG_CHECK_MODULES([bitcoin_client], [libbitcoin_client >= 0.0.3])
 PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
 PKG_CHECK_MODULES([zmq], [libzmq >= 4.0.0])
 PKG_CHECK_MODULES([czmq], [libczmq >= 2.2.0])

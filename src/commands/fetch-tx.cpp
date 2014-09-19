@@ -24,9 +24,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/server_client.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -34,63 +34,65 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void transaction_fetched(callback_state& state, const tx_type& tx)
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
+static void handle_callback(callback_state& state, const tx_type& tx)
 {
     if (state.get_engine() == encoding_engine::native)
         state.output(transaction(tx));
     else
         state.output(prop_tree(tx));
-
-    // This is always the termination of a call, so decrement.
-    --state;
 }
 
-//static void handle_callback(callback_state& state,
-//    const std::error_code& code, const tx_type& tx, 
-//    const hash_digest& hash, fullnode_interface& fullnode)
-//{
-//    const auto fetched_handler = [&state](const std::error_code& code, 
-//        const tx_type& tx)
-//    {
-//        if (!state.handle_error(code))
-//            transaction_fetched(state, tx);
-//    };
-//
-//    // No state decrement here since we are always forwarding the call.
-//    // If the transaction is not in the blockchain try the tx memory pool.
-//    if (code == error::not_found)
-//        fullnode.transaction_pool.fetch_transaction(hash, fetched_handler);
-//    else
-//        fetched_handler(code, tx);
-//}
+static void fetch_tx_from_hash(
+    obelisk_client& client,
+    callback_state& state,
+    primitives::btc256 hash)
+{
+    auto on_done = [&state](const tx_type& tx)
+    {
+        handle_callback(state, tx);
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
+
+    client.get_codec().fetch_transaction(on_error, on_done, hash);
+}
 
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    //const auto height = get_height_option();
     const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
 
-    server_client client(*this);
     callback_state state(error, output, encoding);
 
-    //auto& fullnode = client.get_fullnode();
-    //const auto handler = [&state](const std::error_code& code,
-    //    const tx_type& tx, const hash_digest& hash,
-    //    fullnode_interface& fullnode)
-    //{
-    //    // Don't handle error here since it's needed by the callback.
-    //    handle_callback(state, code, tx, hash, fullnode);
-    //};
+    czmqpp::context context;
 
-    //for (const hash_digest& hash: hashes)
-    //{
-    //    ++state;
-    //    fullnode.blockchain.fetch_transaction(hash,
-    //        std::bind(handler, ph::_1, ph::_2, hash, std::ref(fullnode)));
-    //}
+    obelisk_client client(context);
 
-    client.poll(state.stopped());
+    if (client.connect() >= 0)
+    {
+        for (auto hash: hashes)
+        {
+            fetch_tx_from_hash(client, state, hash);
+        }
+
+        client.resolve_callbacks();
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
     return state.get_result();
 }

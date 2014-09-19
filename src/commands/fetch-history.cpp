@@ -24,20 +24,46 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
-#include <bitcoin/explorer/server_client.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_callback(callback_state& state,
-    const payment_address& address, const std::vector<history_row>& histories)
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
+static void handle_callback(
+    callback_state& state,
+    const payment_address& address,
+    const std::vector<history_row>& histories)
 {
     const auto tree = prop_tree(address, histories);
     state.output(tree);
-    --state;
+}
+
+static void fetch_history_from_address(
+    obelisk_client& client,
+    callback_state& state,
+    primitives::address address)
+{
+    auto on_done = [&state, &address](const blockchain::history_list& list)
+    {
+        handle_callback(state, address, list);
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
+
+    client.get_codec().fetch_history(on_error, on_done, address);
 }
 
 // When you restore your wallet, you should use fetch_history(). 
@@ -54,23 +80,25 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     const auto& addresses = get_bitcoin_addresss_argument();
 
     callback_state state(error, output, encoding);
-    const auto handler = [&state](const payment_address& address,
-        const std::error_code& code, const std::vector<history_row>& history)
+
+    czmqpp::context context;
+
+    obelisk_client client(context);
+
+    if (client.connect() >= 0)
     {
-        if (!state.handle_error(code))
-            handle_callback(state, address, history);
-    };
+        for (auto address: addresses)
+        {
+            fetch_history_from_address(client, state, address);
+        }
 
-    server_client client(*this);
-    //auto& fullnode = client.get_fullnode();
-    //for (const auto& address: addresses)
-    //{
-    //    ++state;
-    //    fullnode.address.fetch_history(address,
-    //        std::bind(handler, address, ph::_1, ph::_2));
-    //}
-
-    client.poll(state.stopped());
+        client.resolve_callbacks();
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
     return state.get_result();
 }

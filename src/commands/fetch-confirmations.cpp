@@ -24,22 +24,47 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/server_client.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-static void handle_callback(callback_state& state, size_t position,
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
+static void handle_callback(
+    callback_state& state,
+    size_t position,
     const index_list& confirmations)
 {
     // Why is this a list and why is it not summarized by transaction?
     for (const auto& confirmation: confirmations)
         state.output(format(BX_FETCH_CONFIRMATIONS_OUTPUT) % position %
             confirmation);
+}
 
-    --state;
+static void fetch_confirmations_from_transaction(
+    obelisk_client& client,
+    callback_state& state,
+    primitives::transaction transaction)
+{
+    auto on_done = [&state](const index_list& unconfirmed)
+    {
+        handle_callback(state, state, unconfirmed);
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
+
+    client.get_codec().validate(on_error, on_done, transaction);
 }
 
 console_result fetch_confirmations::invoke(std::ostream& output,
@@ -49,25 +74,26 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     const auto& transactions = get_transactions_argument();
     const auto& encoding = get_format_option();
 
-    server_client client(*this);
-    //auto& fullnode = client.get_fullnode();
     callback_state state(error, output, encoding);
 
-    // We avoid using the tx hash for confirmations because of malleability.
-    //for (const auto& tx: transactions)
-    //{
-    //    const auto handler = [&state, &tx](const std::error_code& code,
-    //        const index_list& unconfirmed)
-    //    {
-    //        if (!state.handle_error(code))
-    //            handle_callback(state, state, unconfirmed);
-    //    };
+    czmqpp::context context;
 
-    //    ++state;
-    //    fullnode.transaction_pool.validate(tx, handler);
-    //}
+    obelisk_client client(context);
 
-    client.poll(state.stopped());
+    if (client.connect() >= 0)
+    {
+        for (auto tx: transactions)
+        {
+            fetch_confirmations_from_transaction(client, state, tx);
+        }
+
+        client.resolve_callbacks();
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
     return state.get_result();
 }
