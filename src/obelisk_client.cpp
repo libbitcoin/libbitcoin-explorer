@@ -58,13 +58,11 @@ bool obelisk_client::resolve_callbacks()
 
     long delay = static_cast<long>(codec_.wakeup().count());
     czmqpp::poller poller;
-    stream_.add(poller);
+    poller.add(stream_.get_socket());
 
     while (delay > 0)
     {
-        bool processed_message = false;
-
-        czmqpp::socket which = poller.wait(delay);
+        poller.wait(delay);
 
         if (poller.terminated())
         {
@@ -72,17 +70,19 @@ bool obelisk_client::resolve_callbacks()
             break;
         }
 
-        if (stream_.matches(poller, which))
+        if (!poller.expired())
         {
             stream_.forward(codec_);
-            processed_message = true;
-        }
 
-        // avoid resetting the delay if a message was processed and there 
-        // exists additional outstanding calls - wakeup() runs the risk of
-        // expiring outstanding calls when messages are queued on the socket.
-        if (!(processed_message && (codec_.outstanding_call_count() > 0)))
+            if (codec_.outstanding_call_count() == 0)
+            {
+                delay = 0;
+            }
+        }
+        else
         {
+            // recompute the delay and signal the appropriate error callbacks
+            // due to the timeout.
             delay = static_cast<long>(codec_.wakeup().count());
         }
     }
@@ -93,18 +93,18 @@ bool obelisk_client::resolve_callbacks()
 void obelisk_client::poll_until_termination(long delay)
 {
     czmqpp::poller poller;
-    stream_.add(poller);
+    poller.add(stream_.get_socket());
 
     while (true)
     {
-        czmqpp::socket which = poller.wait(delay);
+        poller.wait(delay);
 
         if (poller.terminated())
         {
             break;
         }
 
-        if (stream_.matches(poller, which))
+        if (!poller.expired())
         {
             stream_.forward(codec_);
         }
