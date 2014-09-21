@@ -46,12 +46,12 @@ static void handle_error(
 
 static void handle_update(
     callback_state& state,
+    primitives::prefix prefix,
     const payment_address& address,
     size_t, const hash_digest& block_hash,
     const transaction_type& tx)
 {
-    // TODO: substitute with working output
-//    state.output(prop_tree(tx, block_hash, address));
+    state.output(prop_tree(tx, block_hash, prefix));
 }
 
 //static void handle_subscribed(callback_state& state, const prefix& prefix,
@@ -105,13 +105,19 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_update = [&state](
+    auto on_update = [&state, &prefixes](
         const payment_address& address,
         size_t height,
         const hash_digest& block_hash,
         const transaction_type& tx)
     {
-        handle_update(state, address, height, block_hash, tx);
+        for (auto prefix: prefixes)
+        {
+            if (bc::stealth_match(prefix, address.hash().data()))
+            {
+                handle_update(state, prefix, address, height, block_hash, tx);
+            }
+        }
     };
 
     czmqpp::context context;
