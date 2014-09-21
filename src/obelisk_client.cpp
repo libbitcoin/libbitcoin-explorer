@@ -52,8 +52,10 @@ bc::client::obelisk_codec& obelisk_client::get_codec()
 }
 
 // Not yet unit testable (nonvirtual fullnode).
-void obelisk_client::resolve_callbacks()
+bool obelisk_client::resolve_callbacks()
 {
+    bool success = true;
+
     long delay = static_cast<long>(codec_.wakeup().count());
     czmqpp::poller poller;
     stream_.add(poller);
@@ -63,6 +65,12 @@ void obelisk_client::resolve_callbacks()
         bool processed_message = false;
 
         czmqpp::socket which = poller.wait(delay);
+
+        if (poller.terminated())
+        {
+            success = false;
+            break;
+        }
 
         if (stream_.matches(poller, which))
         {
@@ -76,6 +84,29 @@ void obelisk_client::resolve_callbacks()
         if (!(processed_message && (codec_.outstanding_call_count() > 0)))
         {
             delay = static_cast<long>(codec_.wakeup().count());
+        }
+    }
+
+    return success;
+}
+
+void obelisk_client::poll_until_termination(long delay)
+{
+    czmqpp::poller poller;
+    stream_.add(poller);
+
+    while (true)
+    {
+        czmqpp::socket which = poller.wait(delay);
+
+        if (poller.terminated())
+        {
+            break;
+        }
+
+        if (stream_.matches(poller, which))
+        {
+            stream_.forward(codec_);
         }
     }
 }

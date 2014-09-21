@@ -53,7 +53,9 @@ public:
     // */
     virtual bc::client::obelisk_codec& get_codec();
 
-    virtual void resolve_callbacks();
+    virtual bool resolve_callbacks();
+
+    virtual void poll_until_termination(long delay = 0);
 
 private:
 
