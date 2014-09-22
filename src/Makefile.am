@@ -15,9 +15,8 @@ libbitcoin_explorer_la_SOURCES = \
     dispatch.cpp \
     display.cpp \
     generated.cpp \
-    prop_tree.cpp \
-    server_client.cpp \
     obelisk_client.cpp \
+    prop_tree.cpp \
     primitives/address.cpp \
     primitives/base16.cpp \
     primitives/base58.cpp \
