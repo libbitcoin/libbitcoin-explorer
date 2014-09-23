@@ -30,6 +30,32 @@
  */
 .endmacro
 .
+.macro global.primitives
+#include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/base58.hpp>
+#include <bitcoin/explorer/primitives/btc.hpp>
+#include <bitcoin/explorer/primitives/btc160.hpp>
+#include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/primitives/hashtype.hpp>
+#include <bitcoin/explorer/primitives/hd_key.hpp>
+#include <bitcoin/explorer/primitives/hd_priv.hpp>
+#include <bitcoin/explorer/primitives/hd_pub.hpp>
+#include <bitcoin/explorer/primitives/header.hpp>
+#include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/output.hpp>
+#include <bitcoin/explorer/primitives/prefix.hpp>
+#include <bitcoin/explorer/primitives/raw.hpp>
+#include <bitcoin/explorer/primitives/script.hpp>
+#include <bitcoin/explorer/primitives/stealth.hpp>
+#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/primitives/wif.hpp>
+#include <bitcoin/explorer/primitives/wrapper.hpp>
+.endmacro
+.
 .function global.default_type(is_option, type)
 .   bool_default = my.is_option & is_empty(my.type)
 .   return normalize_type(if_else(bool_default, type_bool, my.type ? \
@@ -343,6 +369,7 @@ shared_ptr<command> find(const string& symbol)
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
+.primitives()
 #include <bitcoin/explorer/utility/config.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
@@ -627,29 +654,7 @@ private:
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/prefix.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+.primitives()
 #include <bitcoin/explorer/utility/compat.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>

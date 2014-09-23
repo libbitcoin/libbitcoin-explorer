@@ -26,7 +26,7 @@
   <configuration section="general">
     <!-- NOTE: we could move this into the obelisk section if it was dynamic. -->
     <!-- NOTE: we probably shouldn't use this setting since the fact is compiled into dependencies. -->
-    <setting name="testnet" type="bool" description="Set to true in order to operate this application using Bitcoin testnet (vs. mainnet) addressing and blockchain data. This option is EXPERIMENTAL because other  libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
+    <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
   </configuration>
   
   <configuration section="logging">
@@ -35,11 +35,11 @@
   </configuration>
   
   <configuration section="server">
-    <!-- TODO: create serialized type for URI. -->
-    <setting name="client-certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert" />
-    <setting name="server-public-key" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
-    <setting name="address" default="tcp://obelisk-testnet2.airbitz.co:9091" description="The URI of the server to which this application may connect." />
-    <setting name="socks-proxy" default="localhost:1080" description="The host name and port number of a SOCKS 4a or SOCKS 5 proxy server." />
+    <!-- TODO: create primitive for URI and use for socks-proxy and address. -->
+    <setting name="certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert" />
+    <setting name="public-key" type="base16" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
+    <setting name="address" default="tcp://obelisk.unsystem.net:8081" description="The URI of the server to which this application may connect." />
+    <setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />
   </configuration>
   
   <!-- General resources. -->
@@ -260,7 +260,7 @@
     <option name="help" description="Get the block height and index of a transaction. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes." />
-      <define name="BX_FETCH_TX_INDEX_OUTPUT" value="[%1%] Height: %2% Index: %3%" /> 
+    <define name="BX_FETCH_TX_INDEX_OUTPUT" value="[%1%] Height: %2% Index: %3%" /> 
   </command>
 
   <command symbol="fetch-utxo" formerly="get-utxo" typeX="output" multipleX="true" category="ONLINE" stub="true" network="true">
