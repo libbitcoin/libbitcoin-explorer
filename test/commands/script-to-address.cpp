@@ -25,7 +25,7 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(script_to_address__invoke)
 
 // Vector: www.reddit.com/r/Bitcoin/comments/2h4ic8/why_dont_rbitcoin_community_donate_towards/
-BOOST_AUTO_TEST_CASE(script_to_address__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__okay_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
     command.set_script_argument(

@@ -24,7 +24,7 @@ BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(script_decode__invoke)
 
-BOOST_AUTO_TEST_CASE(script_decode__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(script_decode__invoke__basic__okay_output)
 {
     BX_DECLARE_COMMAND(script_decode);
     command.set_script_argument({ "76a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac" });
