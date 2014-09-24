@@ -31,6 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
@@ -45,7 +46,6 @@
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/prefix.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
@@ -66,7 +66,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_TX_ENCODE_LOCKTIME_CONFLICT \
-    "Lock time is ineffective if set but all sequences are set to the maximum value."
+    "The specified lock time is ineffective because all sequences are set to the maximum value."
 
 /**
  * Class to implement the tx-encode command.
@@ -153,12 +153,12 @@ public:
             (
                 "input,i",
                 value<std::vector<primitives::input>>(&option_.inputs),
-                "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE the optional 32 bit input sequence and defaults to the maximum value."
+                "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
             )
             (
                 "output,o",
                 value<std::vector<primitives::output>>(&option_.outputs),
-                "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. A seed should NOT be used for multiple outputs."
+                "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs."
             )
             (
                 "TRANSACTION",

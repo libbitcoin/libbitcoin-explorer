@@ -35,6 +35,7 @@ bitcoin_explorer_primitives_includedir = $(includedir)/bitcoin/explorer/primitiv
 bitcoin_explorer_primitives_include_HEADERS = \
     explorer/primitives/address.hpp \
     explorer/primitives/base16.hpp \
+    explorer/primitives/base2.hpp \
     explorer/primitives/base58.hpp \
     explorer/primitives/btc.hpp \
     explorer/primitives/btc160.hpp \
@@ -50,7 +51,6 @@ bitcoin_explorer_primitives_include_HEADERS = \
     explorer/primitives/input.hpp \
     explorer/primitives/output.hpp \
     explorer/primitives/point.hpp \
-    explorer/primitives/prefix.hpp \
     explorer/primitives/raw.hpp \
     explorer/primitives/script.hpp \
     explorer/primitives/stealth.hpp \

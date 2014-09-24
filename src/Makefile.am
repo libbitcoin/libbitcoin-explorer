@@ -19,6 +19,7 @@ libbitcoin_explorer_la_SOURCES = \
     prop_tree.cpp \
     primitives/address.cpp \
     primitives/base16.cpp \
+    primitives/base2.cpp \
     primitives/base58.cpp \
     primitives/btc.cpp \
     primitives/btc160.cpp \
@@ -34,7 +35,6 @@ libbitcoin_explorer_la_SOURCES = \
     primitives/input.cpp \
     primitives/output.cpp \
     primitives/point.cpp \
-    primitives/prefix.cpp \
     primitives/raw.cpp \
     primitives/script.cpp \
     primitives/stealth.cpp \

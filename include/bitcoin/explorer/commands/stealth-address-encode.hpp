@@ -31,6 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
@@ -45,7 +46,6 @@
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/prefix.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
@@ -69,6 +69,8 @@ namespace commands {
     "The number of signatures is greater than the number of SPEND_PUBKEYs."
 #define BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED \
     "WARNING: prefix search is not yet fully supported."
+#define BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG \
+    "WARNING: prefix is limited to 32 bits."
 #define BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED \
     "WARNING: multiple signature stealth transactions are not yet fully supported."
 
@@ -148,7 +150,7 @@ public:
             )
             (
                 "prefix,p",
-                value<primitives::prefix>(&option_.prefix),
+                value<primitives::base2>(&option_.prefix),
                 "The Base2 stealth prefix that will be used to locate payments."
             )
             (
@@ -234,7 +236,7 @@ public:
     /**
      * Get the value of the prefix option.
      */
-    virtual primitives::prefix& get_prefix_option()
+    virtual primitives::base2& get_prefix_option()
     {
         return option_.prefix;
     }
@@ -243,7 +245,7 @@ public:
      * Set the value of the prefix option.
      */
     virtual void set_prefix_option(
-        const primitives::prefix& value)
+        const primitives::base2& value)
     {
         option_.prefix = value;
     }
@@ -299,7 +301,7 @@ private:
         }
         
         bool help;
-        primitives::prefix prefix;
+        primitives::base2 prefix;
         uint8_t signatures;
     } option_;
 };

@@ -31,6 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
@@ -45,7 +46,6 @@
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/prefix.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
@@ -65,8 +65,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_WATCH_PREFIX_WAITING \
+#define BX_WATCH_STEALTH_PREFIX_WAITING \
     "Watching prefix: %1%..."
+#define BX_WATCH_STEALTH_PREFIX_TOO_LONG \
+    "WARNING: prefix is limited to 32 bits."
 
 /**
  * Class to implement the watch-stealth command.
@@ -148,7 +150,7 @@ public:
             )
             (
                 "PREFIX",
-                value<std::vector<primitives::prefix>>(&argument_.prefixs),
+                value<std::vector<primitives::base2>>(&argument_.prefixs),
                 "The set of Base2 stealth prefixes to watch."
             );
 
@@ -168,7 +170,7 @@ public:
     /**
      * Get the value of the PREFIX arguments.
      */
-    virtual std::vector<primitives::prefix>& get_prefixs_argument()
+    virtual std::vector<primitives::base2>& get_prefixs_argument()
     {
         return argument_.prefixs;
     }
@@ -177,7 +179,7 @@ public:
      * Set the value of the PREFIX arguments.
      */
     virtual void set_prefixs_argument(
-        const std::vector<primitives::prefix>& value)
+        const std::vector<primitives::base2>& value)
     {
         argument_.prefixs = value;
     }
@@ -230,7 +232,7 @@ private:
         {
         }
         
-        std::vector<primitives::prefix> prefixs;
+        std::vector<primitives::base2> prefixs;
     } argument_;
     
     /**

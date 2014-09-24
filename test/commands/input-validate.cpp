@@ -26,9 +26,8 @@ BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 
 BOOST_AUTO_TEST_CASE(input_validate__invoke__always__failure_error)
 {
-    //BX_DECLARE_COMMAND(input_validate);
-    //BX_REQUIRE_FAILURE(command.invoke(output, error));
-    //BX_REQUIRE_ERROR(BX_EC_LOCK_NOT_IMPLEMENTED "\n");
+    BX_DECLARE_COMMAND(input_validate);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

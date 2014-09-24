@@ -26,13 +26,13 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/point.hpp>
-#include <bitcoin/explorer/primitives/prefix.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
@@ -225,7 +225,7 @@ ptree prop_tree(const std::vector<transaction>& transactions)
 }
 
 ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const prefix& prefix)
+    const base2& prefix)
 {
     ptree tree;
     tree.add("watch.block", base16(block_hash));
@@ -254,7 +254,7 @@ ptree prop_tree(const stealth& address)
 
     ptree tree;
     tree.put("address.encoded", address);
-    tree.put("address.prefix", prefix(addr.get_prefix()));
+    tree.put("address.prefix", base2(addr.get_prefix()));
     tree.put("address.scan_public_key", ec_public(addr.get_scan_pubkey()));
     tree.put("address.signatures", addr.get_signatures());
     tree.add_child("address.spend", prop_tree(addr.get_spend_pubkeys()));
@@ -286,7 +286,7 @@ ptree prop_tree(const stealth_prefix& prefix,
 {
     ptree tree;
     tree.add_child("stealth", prop_tree(rows));
-    tree.put("stealth.prefix", bc::explorer::primitives::prefix(prefix));
+    tree.put("stealth.prefix", base2(prefix));
     return tree;
 }
 

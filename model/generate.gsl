@@ -33,6 +33,7 @@
 .macro global.primitives
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
@@ -47,7 +48,6 @@
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/prefix.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
@@ -98,6 +98,8 @@
 .       return type_address_bx
 .   elsif my.type = type_base16
 .       return type_base16_bx
+.   elsif my.type = type_base2
+.       return type_base2_bx
 .   elsif my.type = type_base58
 .       return type_base58_bx
 .   elsif my.type = type_btc
@@ -132,8 +134,6 @@
 .       return type_path_boost
 .   elsif my.type = type_point
 .       return type_point_bx
-.   elsif my.type = type_prefix
-.       return type_prefix_bx
 .   elsif my.type = type_raw
 .       return type_raw_bx
 .   elsif my.type = type_script
@@ -215,6 +215,7 @@
 .type_bool = "bool"
 .type_address = "address"
 .type_base16 = "base16"
+.type_base2 = "base2"
 .type_base58 = "base58"
 .type_btc = "btc"
 .type_btc160 = "btc160"
@@ -232,7 +233,6 @@
 .type_output = "output"
 .type_point = "point"
 .type_path = "path"
-.type_prefix = "prefix"
 .type_raw = "raw"
 .type_script = "script"
 .type_stealth = "stealth"
@@ -243,6 +243,7 @@
 .
 .type_address_bx = "primitives::address"
 .type_base16_bx = "primitives::base16"
+.type_base2_bx = "primitives::base2"
 .type_base58_bx = "primitives::base58"
 .type_btc_bx = "primitives::btc"
 .type_btc160_bx = "primitives::btc160"
@@ -260,7 +261,6 @@
 .type_output_bx = "primitives::output"
 .type_path_boost = "boost::filesystem::path"
 .type_point_bx = "primitives::point"
-.type_prefix_bx = "primitives::prefix"
 .type_raw_bx = "primitives::raw"
 .type_script_bx = "primitives::script"
 .type_stealth_bx = "primitives::stealth"
@@ -1034,6 +1034,7 @@ bitcoin_explorer_primitives_includedir = $\(includedir)/bitcoin/explorer/primiti
 bitcoin_explorer_primitives_include_HEADERS = \\
     explorer/primitives/address.hpp \\
     explorer/primitives/base16.hpp \\
+    explorer/primitives/base2.hpp \\
     explorer/primitives/base58.hpp \\
     explorer/primitives/btc.hpp \\
     explorer/primitives/btc160.hpp \\
@@ -1049,7 +1050,6 @@ bitcoin_explorer_primitives_include_HEADERS = \\
     explorer/primitives/input.hpp \\
     explorer/primitives/output.hpp \\
     explorer/primitives/point.hpp \\
-    explorer/primitives/prefix.hpp \\
     explorer/primitives/raw.hpp \\
     explorer/primitives/script.hpp \\
     explorer/primitives/stealth.hpp \\
@@ -1087,6 +1087,7 @@ libbitcoin_explorer_la_SOURCES = \\
     server_client.cpp \\
     primitives/address.cpp \\
     primitives/base16.cpp \\
+    primitives/base2.cpp \\
     primitives/base58.cpp \\
     primitives/btc.cpp \\
     primitives/btc160.cpp \\
@@ -1102,7 +1103,6 @@ libbitcoin_explorer_la_SOURCES = \\
     primitives/input.cpp \\
     primitives/output.cpp \\
     primitives/point.cpp \\
-    primitives/prefix.cpp \\
     primitives/raw.cpp \\
     primitives/script.cpp \\
     primitives/stealth.cpp \\
@@ -1268,6 +1268,7 @@ explorer_test_LDADD = \\
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\server_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\address.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base2.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base58.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp" />
@@ -1283,7 +1284,6 @@ explorer_test_LDADD = \\
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\input.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\output.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\point.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\prefix.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\raw.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp" />
@@ -1312,6 +1312,7 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\src\\server_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base2.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp" />
@@ -1327,7 +1328,6 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\input.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\output.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\point.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\prefix.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\raw.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp" />
@@ -1348,9 +1348,6 @@ explorer_test_LDADD = \\
   <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.6\\build\\native\\libzmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.6\\build\\native\\libzmq_vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.56.0.0\\build\\native\\boost_filesystem.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.56.0.0\\build\\native\\boost_filesystem.targets')" />
@@ -1358,16 +1355,16 @@ explorer_test_LDADD = \\
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.6\\build\\native\\libzmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.6\\build\\native\\libzmq_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.56.0.0\\build\\native\\boost_filesystem.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.56.0.0\\build\\native\\boost_filesystem.targets'))" />
@@ -1375,8 +1372,11 @@ explorer_test_LDADD = \\
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
   </Target>
 </Project>
 .##############################################################################
@@ -1471,6 +1471,9 @@ explorer_test_LDADD = \\
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base2.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base58.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
@@ -1514,9 +1517,6 @@ explorer_test_LDADD = \\
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\point.hpp">
-      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\prefix.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\raw.hpp">
@@ -1606,6 +1606,9 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base2.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
@@ -1649,9 +1652,6 @@ explorer_test_LDADD = \\
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\point.cpp">
-      <Filter>src\\primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\prefix.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\raw.cpp">
@@ -1812,9 +1812,6 @@ explorer_test_LDADD = \\
   <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.6\\build\\native\\libzmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.6\\build\\native\\libzmq_vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem-vc120.1.56.0.0\\build\\native\\boost_filesystem-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem-vc120.1.56.0.0\\build\\native\\boost_filesystem-vc120.targets')" />
@@ -1822,18 +1819,18 @@ explorer_test_LDADD = \\
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.6\\build\\native\\libzmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.6\\build\\native\\libzmq_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.7\\build\\native\\czmq_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.7\\build\\native\\czmqpp_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.1\\build\\native\\secp256k1_gmp_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem-vc120.1.56.0.0\\build\\native\\boost_filesystem-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem-vc120.1.56.0.0\\build\\native\\boost_filesystem-vc120.targets'))" />
@@ -1841,10 +1838,13 @@ explorer_test_LDADD = \\
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_unit_test_framework-vc120.1.56.0.0\\build\\native\\boost_unit_test_framework-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_date_time-vc120.1.56.0.0\\build\\native\\boost_date_time-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_chrono-vc120.1.56.0.0\\build\\native\\boost_chrono-vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\\libbitcoin_explorer\\libbitcoin_explorer.vcxproj">
