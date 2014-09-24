@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PREFIX_HPP
-#define PREFIX_HPP
+#ifndef BASE3_HPP
+#define BASE3_HPP
 
 #include <iostream>
 #include <string>
@@ -35,31 +35,31 @@ namespace primitives {
 /**
  * Serialization helper to convert between binary string and bitset.
  */
-class prefix
+class base2
 {
 public:
 
     /**
      * Default constructor.
      */
-    prefix();
+    base2();
 
     /**
      * Initialization constructor.
      * @param[in]  bin  The value to initialize with.
      */
-    prefix(const std::string& binary);
+    base2(const std::string& binary);
 
     /**
      * @param[in]  value  The value to initialize with.
      */
-    prefix(const bitset& value);
+    base2(const bitset& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    prefix(const prefix& other);
+    base2(const base2& other);
 
     /**
      * Overload cast to internal type.
@@ -73,7 +73,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, prefix& argument);
+    friend std::istream& operator>>(std::istream& input, base2& argument);
 
     /**
      * Overload stream out.
@@ -82,7 +82,7 @@ public:
      * @return                The output stream reference.
      */
     friend std::ostream& operator<<(std::ostream& output,
-        const prefix& argument);
+        const base2& argument);
 
 private:
 

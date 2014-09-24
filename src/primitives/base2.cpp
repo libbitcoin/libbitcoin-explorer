@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 // #include "precompile.hpp"
-#include <bitcoin/explorer/primitives/prefix.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -34,17 +34,17 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-prefix::prefix()
+base2::base2()
     : value_()
 {
 }
 
-prefix::prefix(const std::string& binary)
+base2::base2(const std::string& binary)
 {
     std::stringstream(binary) >> *this;
 }
 
-prefix::prefix(const bitset& value)
+base2::base2(const bitset& value)
 {
     if (value.size() > stealth_address::max_prefix_bits)
     {
@@ -56,33 +56,30 @@ prefix::prefix(const bitset& value)
     value_ = value;
 }
 
-prefix::prefix(const prefix& other)
-    : prefix(other.value_)
+base2::base2(const base2& other)
+    : base2(other.value_)
 {
 }
 
-prefix::operator const bitset&() const
+base2::operator const bitset&() const
 {
     return value_; 
 }
 
-std::istream& operator>>(std::istream& input, prefix& argument)
+std::istream& operator>>(std::istream& input, base2& argument)
 {
     std::string binary;
     input >> binary;
 
     // TODO: test non-binary characters in input.
-
     bitset bits(binary);
-    if (bits.size() > stealth_address::max_prefix_bits)
-        throw invalid_option_value(binary);
 
     // Avoids setting the member value if there is an error.
     argument.value_.swap(bits);
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const prefix& argument)
+std::ostream& operator<<(std::ostream& output, const base2& argument)
 {
     std::string binary;
     boost::to_string(argument.value_, binary);
