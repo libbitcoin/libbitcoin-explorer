@@ -49,7 +49,7 @@ console_result address_embed::invoke(std::ostream& output, std::ostream& error)
     const auto serialized_script = save_script(embeded_script);
     const auto ripemd160 = ripemd160_hash(serialized_script);
 
-    // RECOMPILE OF REQUIRED FOR TESTNET
+    // RECOMPILE REQUIRED FOR TESTNET
     const address pay_address(version, ripemd160);
 
     output << pay_address << std::endl;

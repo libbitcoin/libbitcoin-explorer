@@ -33,8 +33,6 @@ console_result script_decode::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& script = get_script_argument();
 
-    // TODO: add property tree to primitive.
-
     output << script.mnemonic() << std::endl;
     return console_result::okay;
 }
