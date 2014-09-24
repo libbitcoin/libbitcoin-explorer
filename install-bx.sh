@@ -173,8 +173,8 @@ build_library()
     build_from_github zeromq czmq master "$@"
     build_from_github evoskuil czmqpp master "$@"
     build_from_github bitcoin secp256k1 master "$@" $SECP256K1_OPTIONS
-    build_from_github libbitcoin libbitcoin master "$@"
-    build_from_github libbitcoin libbitcoin_client develop "$@"
+    build_from_github libbitcoin libbitcoin develop "$@"
+    build_from_github libbitcoin libbitcoin_client master "$@"
 
     # The primary build is not downloaded if we are running in Travis.
     build_primary "$@"
