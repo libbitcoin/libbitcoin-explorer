@@ -25,9 +25,6 @@
 #include <string>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>
-//#include <boost/thread/lockable_adapter.hpp>
-//#include <boost/thread/recursive_mutex.hpp>
-//#include <boost/thread/strict_lock.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -37,18 +34,9 @@ namespace libbitcoin {
 namespace explorer {
 
 /**
- * Convenience type definition.
- */
-/*class callback_state;
-typedef boost::strict_lock<callback_state> state_locker;*/
-    
-/**
- * Shared state wrapper to manage reentrant thread-safe and non-global shared 
- * call state. This is essentially a per command container. Each instance of 
- * this class is internally locking.
+ * Shared state wrapper to manage non-global shared call state.
  */
 class callback_state
-    /*: public boost::lockable_adapter<boost::recursive_mutex>*/
 {
 public:
 

@@ -35,27 +35,20 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(
-    callback_state& state,
-    const std::error_code& error)
+static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
 }
 
-static void handle_callback(
-    callback_state& state,
-    const hash_digest& hash,
-    size_t height,
-    size_t index)
+static void handle_callback(callback_state& state, const hash_digest& hash,
+    size_t height, size_t index)
 {
     state.output(boost::format(BX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
         height % index);
 }
 
-static void fetch_tx_index_from_hash(
-    obelisk_client& client,
-    callback_state& state,
-    primitives::btc256 hash)
+static void fetch_tx_index_from_hash(obelisk_client& client,
+    callback_state& state, primitives::btc256 hash)
 {
     auto on_done = [&state, &hash](size_t block_height, size_t index)
     {
@@ -75,27 +68,22 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
+    const auto& server = get_server_address_setting();
+
+    czmqpp::context context;
+    obelisk_client client(context);
+
+    if (client.connect(server) < 0)
+        return console_result::failure;
 
     callback_state state(error, output, encoding);
 
-    czmqpp::context context;
-
-    obelisk_client client(context);
-
-    if (client.connect() >= 0)
+    for (auto hash: hashes)
     {
-        for (auto hash: hashes)
-        {
-            fetch_tx_index_from_hash(client, state, hash);
-        }
+        fetch_tx_index_from_hash(client, state, hash);
+    }
 
-        client.resolve_callbacks();
-    }
-    else
-    {
-        // TODO: replace with correct state error signal
-        return console_result::failure;
-    }
+    client.resolve_callbacks();
 
     return state.get_result();
 }

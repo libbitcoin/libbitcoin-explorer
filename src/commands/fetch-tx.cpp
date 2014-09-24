@@ -26,6 +26,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
+#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
@@ -34,9 +35,7 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(
-    callback_state& state,
-    const std::error_code& error)
+static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
 }
@@ -49,10 +48,8 @@ static void handle_callback(callback_state& state, const tx_type& tx)
         state.output(prop_tree(tx));
 }
 
-static void fetch_tx_from_hash(
-    obelisk_client& client,
-    callback_state& state,
-    primitives::btc256 hash)
+static void fetch_tx_from_hash(obelisk_client& client, callback_state& state,
+    btc256 hash)
 {
     auto on_done = [&state](const tx_type& tx)
     {
@@ -72,27 +69,22 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
+    const auto& server = get_server_address_setting();
+
+    czmqpp::context context;
+    obelisk_client client(context);
+
+    if (client.connect(server) < 0)
+        return console_result::failure;
 
     callback_state state(error, output, encoding);
 
-    czmqpp::context context;
-
-    obelisk_client client(context);
-
-    if (client.connect() >= 0)
+    for (auto hash: hashes)
     {
-        for (auto hash: hashes)
-        {
-            fetch_tx_from_hash(client, state, hash);
-        }
+        fetch_tx_from_hash(client, state, hash);
+    }
 
-        client.resolve_callbacks();
-    }
-    else
-    {
-        // TODO: replace with correct state error signal
-        return console_result::failure;
-    }
+    client.resolve_callbacks();
 
     return state.get_result();
 }

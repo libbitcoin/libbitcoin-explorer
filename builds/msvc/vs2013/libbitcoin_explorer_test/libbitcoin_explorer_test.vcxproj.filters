@@ -320,7 +320,7 @@
     <ClCompile Include="..\..\..\..\test\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\server_client.cpp">
+    <ClCompile Include="..\..\..\..\test\obelisk_client.cpp">
       <Filter>src\tests</Filter>
     </ClCompile>
   </ItemGroup>
