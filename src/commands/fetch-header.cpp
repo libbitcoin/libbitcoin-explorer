@@ -35,15 +35,12 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(
-    callback_state& state,
-    const std::error_code& error)
+static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
 }
 
-static void handle_callback(
-    callback_state& state, 
+static void handle_callback(callback_state& state, 
     const block_header_type& block_header)
 {
     if (state.get_engine() == encoding_engine::native)
@@ -58,42 +55,33 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const size_t height = get_height_option();
     const hash_digest& hash = get_hash_option();
     const encoding& encoding = get_format_option();
+    const auto& server = get_server_address_setting();
+
+    czmqpp::context context;
+    obelisk_client client(context);
+
+    if (client.connect(server) < 0)
+        return console_result::failure;
 
     callback_state state(error, output, encoding);
 
-    czmqpp::context context;
-
-    obelisk_client client(context);
-
-    if (client.connect() >= 0)
+    auto on_done = [&state](const block_header_type& header)
     {
-        auto on_done = [&state](const block_header_type& header)
-        {
-            handle_callback(state, header);
-        };
+        handle_callback(state, header);
+    };
 
-        auto on_error = [&state](const std::error_code& error)
-        {
-            handle_error(state, error);
-        };
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
 
-        // Use the null_hash as sentinel to determine whether to use height or hash.
-        if (hash == null_hash)
-        {
-            client.get_codec().fetch_block_header(on_error, on_done, height);
-        }
-        else
-        {
-            client.get_codec().fetch_block_header(on_error, on_done, hash);
-        }
-
-        client.resolve_callbacks();
-    }
+    // Use the null_hash as sentinel to determine whether to use height or hash.
+    if (hash == null_hash)
+        client.get_codec().fetch_block_header(on_error, on_done, height);
     else
-    {
-        // TODO: replace with correct state error signal
-        return console_result::failure;
-    }
+        client.get_codec().fetch_block_header(on_error, on_done, hash);
+
+    client.resolve_callbacks();
 
     return state.get_result();
 }

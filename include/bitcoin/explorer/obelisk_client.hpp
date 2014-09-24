@@ -20,12 +20,8 @@
 #ifndef BX_OBELISK_CLIENT_HPP
 #define BX_OBELISK_CLIENT_HPP
 
-#include <cstdint>
-#include <functional>
+#include <czmq++/czmqpp.hpp>
 #include <bitcoin/client.hpp>
-#include <bitcoin/explorer/async_client.hpp>
-#include <bitcoin/explorer/command.hpp>
-#include <czmq++/czmq.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -41,32 +37,44 @@ public:
 
     /**
      * Initialization constructor.
-     * @param[in]  command  The command being processed.
-     * @param[in]  threads  The number of pool threads to initialize.
+     * @param[in]  context  The zmq context.
+     * @param[in]  timeout  The call timeout, defaults to zero.
+     * @param[in]  retries  The number of retries allowed, defaults to zero.
      */
-    obelisk_client(czmqpp::context& context);
+    obelisk_client(czmqpp::context& context, 
+        const client::sleep_time& timeout=client::sleep_time(0), 
+        uint8_t retries=0);
 
-    virtual int connect();
+    /**
+     * Connect to the specified server address.
+     * @param[in]  address  The server address.
+     * @return              The connection status, negative for failure.
+     */
+    virtual int connect(const std::string& address);
 
-    ///**
-    // * Get the value of the obelisk fullnode interface.
-    // */
-    virtual bc::client::obelisk_codec& get_codec();
-
+    /**
+     * Get the value of the codec property.
+     * @return The codec.
+     */
+    virtual client::obelisk_codec& get_codec();
+    
+    /**
+     * Resolve callback functions.
+     * @return True if not terminated before completion.
+     */
     virtual bool resolve_callbacks();
 
-    virtual void poll_until_termination(long delay = 0);
+    /**
+     * Poll the connection until the request times out or terminates.
+     * @param[in]  timeout  The poll timeout.
+     */
+    virtual void poll_until_termination(const client::sleep_time& timeout);
 
 private:
 
     czmqpp::socket socket_;
-
-    bc::client::socket_message_stream stream_;
-
-    ///**
-    // * Encapsulated full node client instance.
-    // */
-    bc::client::obelisk_codec codec_;
+    client::socket_message_stream stream_;
+    client::obelisk_codec codec_;
 };
 
 } // namespace explorer

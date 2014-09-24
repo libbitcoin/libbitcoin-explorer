@@ -13,8 +13,8 @@ bitcoin_explorer_include_HEADERS = \
     explorer/dispatch.hpp \
     explorer/display.hpp \
     explorer/generated.hpp \
-    explorer/prop_tree.hpp \
-    explorer/obelisk_client.hpp
+    explorer/obelisk_client.hpp \
+    explorer/prop_tree.hpp
 
 bitcoin_explorer_impl_includedir = $(includedir)/bitcoin/explorer/impl
 bitcoin_explorer_impl_include_HEADERS = \
@@ -34,6 +34,7 @@ bitcoin_explorer_primitives_includedir = $(includedir)/bitcoin/explorer/primitiv
 bitcoin_explorer_primitives_include_HEADERS = \
     explorer/primitives/address.hpp \
     explorer/primitives/base16.hpp \
+    explorer/primitives/base2.hpp \
     explorer/primitives/base58.hpp \
     explorer/primitives/btc.hpp \
     explorer/primitives/btc160.hpp \
@@ -49,7 +50,6 @@ bitcoin_explorer_primitives_include_HEADERS = \
     explorer/primitives/input.hpp \
     explorer/primitives/output.hpp \
     explorer/primitives/point.hpp \
-    explorer/primitives/prefix.hpp \
     explorer/primitives/raw.hpp \
     explorer/primitives/script.hpp \
     explorer/primitives/stealth.hpp \
@@ -64,6 +64,8 @@ bitcoin_explorer_commands_include_HEADERS = \
     explorer/commands/address-embed.hpp \
     explorer/commands/address-encode.hpp \
     explorer/commands/address-validate.hpp \
+    explorer/commands/base16-decode.hpp \
+    explorer/commands/base16-encode.hpp \
     explorer/commands/base58-decode.hpp \
     explorer/commands/base58-encode.hpp \
     explorer/commands/base58check-decode.hpp \

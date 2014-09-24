@@ -78,9 +78,9 @@
     <ClCompile Include="..\..\..\..\test\main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\obelisk_client.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />
-    <ClCompile Include="..\..\..\..\test\server_client.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\commands\address-decode.cpp" />

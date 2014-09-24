@@ -25,9 +25,6 @@
 #include <string>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>
-//#include <boost/thread/strict_lock.hpp>
-//#include <boost/thread/lockable_adapter.hpp>
-//#include <boost/thread/recursive_mutex.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
@@ -68,14 +65,12 @@ bool callback_state::handle_error(const std::error_code& code,
 // std::endl adds "/n" and flushes the stream.
 void callback_state::error(const ptree tree)
 {
-    /*state_locker guard(*this);*/
     write_stream(error_, tree, engine_);
 }
 
 // std::endl adds "/n" and flushes the stream.
 void callback_state::error(const format& message)
 {
-    /*state_locker guard(*this);*/
     error_ << message << std::endl;
 }
 
@@ -87,14 +82,12 @@ void callback_state::error(const std::string& message)
 // std::endl adds "/n" and flushes the stream.
 void callback_state::output(const pt::ptree tree)
 {
-    /*state_locker guard(*this);*/
     write_stream(error_, tree, engine_);
 }
 
 // std::endl adds "/n" and flushes the stream.
 void callback_state::output(const format& message)
 {
-    /*state_locker guard(*this);*/
     output_ << message  << std::endl;
 }
 
@@ -110,7 +103,6 @@ void callback_state::output(uint64_t value)
 
 void callback_state::start()
 {
-    /*state_locker guard(*this);*/
     refcount_ = 1;
     stopped_ = false;
     result_ = console_result::okay;
@@ -118,7 +110,6 @@ void callback_state::start()
 
 void callback_state::stop(console_result result)
 {
-    /*state_locker guard(*this);*/
     refcount_ = 0;
     stopped_ = true;
     result_ = result;
@@ -141,13 +132,11 @@ console_result callback_state::get_result()
 
 void callback_state::set_result(console_result result)
 {
-    /*state_locker guard(*this);*/
     result_ = result;
 }
 
 size_t callback_state::increment()
 {
-    /*state_locker guard(*this);*/
     if (++refcount_ != 0)
         stopped_ = false;
 
@@ -156,7 +145,6 @@ size_t callback_state::increment()
 
 size_t callback_state::decrement()
 {
-    /*state_locker guard(*this);*/
     if (--refcount_ == 0)
         stopped_ = true;
 
@@ -170,18 +158,15 @@ callback_state::operator size_t() const
 
 callback_state& callback_state::operator++()
 {
-    /*state_locker guard(*this);*/
     increment();
     return *this;
 }
 
 callback_state& callback_state::operator--()
 {
-    /*state_locker guard(*this);*/
     decrement();
     return *this;
 }
-
 
 } // namespace explorer
 } // namespace libbitcoin
