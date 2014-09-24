@@ -16,9 +16,9 @@ explorer_test_SOURCES = \
     generated__find.cpp \
     generated__symbol.cpp \
     main.cpp \
+    obelisk_client.cpp \
     parameter.cpp \
-    printer.cpp \
-    server_client.cpp
+    printer.cpp
 
 # Generated from XML data source.
 explorer_test_SOURCES += \
@@ -111,7 +111,8 @@ explorer_test_SOURCES += \
     commands/wrap-encode.cpp
 
 explorer_test_LDADD = \
-    -L../src/ -lbitcoin_explorer \
+    -L$(srcdir)/../src/ \
+    -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
     ${bitcoin_client_LIBS}

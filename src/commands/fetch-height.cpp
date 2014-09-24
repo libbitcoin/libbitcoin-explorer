@@ -31,9 +31,7 @@ using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-static void handle_error(
-    callback_state& state,
-    const std::error_code& error)
+static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
 }
@@ -45,33 +43,29 @@ static void handle_callback(callback_state& state, size_t height)
 
 console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
-    callback_state state(error, output);
+    // Bound parameters.
+    const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-
     obelisk_client client(context);
 
-    if (client.connect() >= 0)
-    {
-        auto on_done = [&state](size_t height)
-        {
-            handle_callback(state, height);
-        };
-
-        auto on_error = [&state](const std::error_code& error)
-        {
-            handle_error(state, error);
-        };
-
-        client.get_codec().fetch_last_height(on_error, on_done);
-
-        client.resolve_callbacks();
-    }
-    else
-    {
-        // TODO: replace with correct state error signal
+    if (client.connect(server) < 0)
         return console_result::failure;
-    }
+
+    callback_state state(error, output);
+
+    auto on_done = [&state](size_t height)
+    {
+        handle_callback(state, height);
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
+
+    client.get_codec().fetch_last_height(on_error, on_done);
+    client.resolve_callbacks();
 
     return state.get_result();
 }

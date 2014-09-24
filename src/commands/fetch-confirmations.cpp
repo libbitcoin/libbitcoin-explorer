@@ -31,16 +31,12 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-static void handle_error(
-    callback_state& state,
-    const std::error_code& error)
+static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
 }
 
-static void handle_callback(
-    callback_state& state,
-    size_t position,
+static void handle_callback(callback_state& state, size_t position,
     const index_list& confirmations)
 {
     // Why is this a list and why is it not summarized by transaction?
@@ -49,10 +45,8 @@ static void handle_callback(
             confirmation);
 }
 
-static void fetch_confirmations_from_transaction(
-    obelisk_client& client,
-    callback_state& state,
-    primitives::transaction transaction)
+static void fetch_confirmations_from_transaction(obelisk_client& client,
+    callback_state& state, primitives::transaction transaction)
 {
     auto on_done = [&state](const index_list& unconfirmed)
     {
@@ -73,27 +67,22 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
     const auto& encoding = get_format_option();
+    const auto& server = get_server_address_setting();
+
+    czmqpp::context context;
+    obelisk_client client(context);
+
+    if (client.connect(server) < 0)
+        return console_result::failure;
 
     callback_state state(error, output, encoding);
 
-    czmqpp::context context;
-
-    obelisk_client client(context);
-
-    if (client.connect() >= 0)
+    for (auto tx: transactions)
     {
-        for (auto tx: transactions)
-        {
-            fetch_confirmations_from_transaction(client, state, tx);
-        }
+        fetch_confirmations_from_transaction(client, state, tx);
+    }
 
-        client.resolve_callbacks();
-    }
-    else
-    {
-        // TODO: replace with correct state error signal
-        return console_result::failure;
-    }
+    client.resolve_callbacks();
 
     return state.get_result();
 }

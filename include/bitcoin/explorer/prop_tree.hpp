@@ -41,11 +41,11 @@ namespace explorer {
 namespace primitives {
     
 class address;
+class base2;
 class header;
 class input;
 class output;
 class point;
-class prefix;
 class stealth;
 class transaction;
 class wrapper;
@@ -199,7 +199,7 @@ pt::ptree prop_tree(const std::vector<transaction>& transactions);
  * @return                 A property tree.
  */
 pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const prefix& prefix);
+    const base2& prefix);
 
 /**
  * Generate a property tree for a stealth address.

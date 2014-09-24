@@ -40,9 +40,7 @@ static void handle_sent(callback_state& state, tx_type& tx)
     --state;
 }
 
-static void handle_send(
-    callback_state& state,
-    bc::network::channel_ptr node,
+static void handle_send(callback_state& state, bc::network::channel_ptr node,
     tx_type& tx)
 {
     const auto sent_handler = [&state, &tx](const std::error_code& code)

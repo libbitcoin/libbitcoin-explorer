@@ -25,6 +25,7 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 
 using namespace bc;
@@ -32,27 +33,20 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(
-    callback_state& state,
-    const std::error_code& error)
+static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
 }
 
 // Write out the transaction hashes of *potential* matches.
-static void handle_callback(
-    callback_state& state, 
-    const stealth_prefix& prefix,
-    const blockchain::stealth_list& row_list)
+static void handle_callback(callback_state& state, 
+    const stealth_prefix& prefix, const blockchain::stealth_list& row_list)
 {
     state.output(prop_tree(prefix, row_list));
 }
 
-static void fetch_stealth_from_prefix(
-    obelisk_client& client,
-    callback_state& state,
-    primitives::prefix prefix,
-    size_t from_height)
+static void fetch_stealth_from_prefix(obelisk_client& client,
+    callback_state& state, base2 prefix, size_t from_height)
 {
     auto on_done = [&state, &prefix](const blockchain::stealth_list& list)
     {
@@ -74,27 +68,22 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto height = get_height_option();
     const auto& prefixes = get_prefixs_argument();
     const auto& encoding = get_format_option();
+    const auto& server = get_server_address_setting();
+
+    czmqpp::context context;
+    obelisk_client client(context);
+
+    if (client.connect(server) < 0)
+        return console_result::failure;
 
     callback_state state(error, output, encoding);
 
-    czmqpp::context context;
-
-    obelisk_client client(context);
-
-    if (client.connect() >= 0)
+    for (auto prefix: prefixes)
     {
-        for (auto prefix: prefixes)
-        {
-            fetch_stealth_from_prefix(client, state, prefix, height);
-        }
+        fetch_stealth_from_prefix(client, state, prefix, height);
+    }
 
-        client.resolve_callbacks();
-    }
-    else
-    {
-        // TODO: replace with correct state error signal
-        return console_result::failure;
-    }
+    client.resolve_callbacks();
 
     return state.get_result();
 }

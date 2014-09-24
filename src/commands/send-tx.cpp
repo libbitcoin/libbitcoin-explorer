@@ -32,9 +32,7 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-static void handle_error(
-    callback_state& state,
-    const std::error_code& error)
+static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
 }
@@ -45,10 +43,8 @@ static void handle_callback(callback_state& state)
     state.stop();
 }
 
-static void broadcast_transaction(
-    obelisk_client& client,
-    callback_state& state,
-    primitives::transaction& tx)
+static void broadcast_transaction(obelisk_client& client,
+    callback_state& state, primitives::transaction& tx)
 {
     auto on_done = [&state]()
     {
@@ -68,27 +64,22 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& transactions = get_transactions_argument();
+    const auto& server = get_server_address_setting();
+
+    czmqpp::context context;
+    obelisk_client client(context);
+
+    if (client.connect(server) < 0)
+        return console_result::failure;
 
     callback_state state(error, output);
 
-    czmqpp::context context;
-
-    obelisk_client client(context);
-
-    if (client.connect() >= 0)
+    for (auto tx: transactions)
     {
-        for (auto tx: transactions)
-        {
-            broadcast_transaction(client, state, tx);
-        }
+        broadcast_transaction(client, state, tx);
+    }
 
-        client.resolve_callbacks();
-    }
-    else
-    {
-        // TODO: replace with correct state error signal
-        return console_result::failure;
-    }
+    client.resolve_callbacks();
 
     return state.get_result();
 }

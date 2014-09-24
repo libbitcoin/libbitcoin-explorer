@@ -440,10 +440,10 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\generated.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\prop_tree.hpp">
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\obelisk_client.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\server_client.hpp">
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\prop_tree.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp">
@@ -814,10 +814,10 @@
     <ClCompile Include="..\..\..\..\src\generated.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\prop_tree.cpp">
+    <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\server_client.cpp">
+    <ClCompile Include="..\..\..\..\src\prop_tree.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -56,7 +56,6 @@ console_result stealth_address_encode::invoke(std::ostream& output,
     if (prefix.size() > 0)
         error << BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED << std::endl;
 
-    // TODO: test
     if (prefix.size() > stealth_address::max_prefix_bits)
     {
         error << BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG << std::endl;

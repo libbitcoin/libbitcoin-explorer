@@ -32,26 +32,20 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(
-    callback_state& state,
-    const std::error_code& error)
+static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
 }
 
-static void handle_callback(
-    callback_state& state,
-    const payment_address& address,
-    const std::vector<history_row>& histories)
+static void handle_callback(callback_state& state,
+    const payment_address& address, const std::vector<history_row>& histories)
 {
     const auto tree = prop_tree(address, histories);
     state.output(tree);
 }
 
-static void fetch_history_from_address(
-    obelisk_client& client,
-    callback_state& state,
-    primitives::address address)
+static void fetch_history_from_address(obelisk_client& client,
+    callback_state& state, primitives::address address)
 {
     auto on_done = [&state, &address](const blockchain::history_list& list)
     {
@@ -78,27 +72,22 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& encoding = get_format_option();
     const auto& addresses = get_bitcoin_addresss_argument();
+    const auto& server = get_server_address_setting();
+
+    czmqpp::context context;
+    obelisk_client client(context);
+
+    if (client.connect(server) < 0)
+        return console_result::failure;
 
     callback_state state(error, output, encoding);
 
-    czmqpp::context context;
-
-    obelisk_client client(context);
-
-    if (client.connect() >= 0)
+    for (auto address: addresses)
     {
-        for (auto address: addresses)
-        {
-            fetch_history_from_address(client, state, address);
-        }
+        fetch_history_from_address(client, state, address);
+    }
 
-        client.resolve_callbacks();
-    }
-    else
-    {
-        // TODO: replace with correct state error signal
-        return console_result::failure;
-    }
+    client.resolve_callbacks();
 
     return state.get_result();
 }

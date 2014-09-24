@@ -20,43 +20,37 @@
 // #include "precompile.hpp"
 #include <bitcoin/explorer/obelisk_client.hpp>
 
-#include <cstdint>
-#include <functional>
 #include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/command.hpp>
+
+using namespace bc::client;
 
 namespace libbitcoin {
 namespace explorer {
 
-obelisk_client::obelisk_client(czmqpp::context& context)
- : socket_(context, ZMQ_DEALER),
-    stream_(socket_),
-    codec_(stream_,
-        bc::client::obelisk_codec::on_update_nop,
-        bc::client::obelisk_codec::on_unknown_nop,
-        std::chrono::seconds(2),
-        0)
+obelisk_client::obelisk_client(czmqpp::context& context, 
+    const sleep_time& timeout, uint8_t retries)
+  : socket_(context, ZMQ_DEALER), stream_(socket_), codec_(stream_,
+    obelisk_codec::on_update_nop, obelisk_codec::on_unknown_nop, timeout,
+    retries)
 {
 }
 
-int obelisk_client::connect()
+int obelisk_client::connect(const std::string& address)
 {
-    std::string address = "tcp://obelisk-testnet2.airbitz.co:9091";
-
     return socket_.connect(address);
 }
 
-bc::client::obelisk_codec& obelisk_client::get_codec()
+obelisk_codec& obelisk_client::get_codec()
 {
     return codec_;
 }
 
-// Not yet unit testable (nonvirtual fullnode).
 bool obelisk_client::resolve_callbacks()
 {
     bool success = true;
 
-    long delay = static_cast<long>(codec_.wakeup().count());
+    auto delay = static_cast<int>(codec_.wakeup().count());
     czmqpp::poller poller;
     poller.add(stream_.get_socket());
 
@@ -83,21 +77,21 @@ bool obelisk_client::resolve_callbacks()
         {
             // recompute the delay and signal the appropriate error callbacks
             // due to the timeout.
-            delay = static_cast<long>(codec_.wakeup().count());
+            delay = static_cast<int>(codec_.wakeup().count());
         }
     }
 
     return success;
 }
 
-void obelisk_client::poll_until_termination(long delay)
+void obelisk_client::poll_until_termination(const sleep_time& timeout)
 {
     czmqpp::poller poller;
     poller.add(stream_.get_socket());
 
     while (true)
     {
-        poller.wait(delay);
+        poller.wait(static_cast<int>(timeout.count()));
 
         if (poller.terminated())
         {
