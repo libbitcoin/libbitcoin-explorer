@@ -130,14 +130,14 @@ clean_usr_local()
     sudo rm --force /usr/local/lib/libbitcoin.la
     sudo rm --force /usr/local/lib/libbitcoin.so
     sudo rm --force /usr/local/lib/libbitcoin.so.*
-    sudo rm --force /usr/local/lib/libbitcoin-client.a
-    sudo rm --force /usr/local/lib/libbitcoin-client.la
-    sudo rm --force /usr/local/lib/libbitcoin-client.so
-    sudo rm --force /usr/local/lib/libbitcoin-client.so.*
-    sudo rm --force /usr/local/lib/libbitcoin-explorer.a
-    sudo rm --force /usr/local/lib/libbitcoin-explorer.la
-    sudo rm --force /usr/local/lib/libbitcoin-explorer.so
-    sudo rm --force /usr/local/lib/libbitcoin-explorer.so.*
+    sudo rm --force /usr/local/lib/libbitcoin_client.a
+    sudo rm --force /usr/local/lib/libbitcoin_client.la
+    sudo rm --force /usr/local/lib/libbitcoin_client.so
+    sudo rm --force /usr/local/lib/libbitcoin_client.so.*
+    sudo rm --force /usr/local/lib/libbitcoin_explorer.a
+    sudo rm --force /usr/local/lib/libbitcoin_explorer.la
+    sudo rm --force /usr/local/lib/libbitcoin_explorer.so
+    sudo rm --force /usr/local/lib/libbitcoin_explorer.so.*
 
     # Symbolic Links (these produce error if link does not exist).
     # sudo unlink --force /usr/local/bin/bx
@@ -171,7 +171,7 @@ build_library()
     build_from_github jedisct1 libsodium master "$@"
     build_from_github zeromq libzmq master "$@"
     build_from_github zeromq czmq master "$@"
-    build_from_github evoskuil czmqpp master "$@"
+    build_from_github zeromq czmqpp master "$@"
     build_from_github bitcoin secp256k1 master "$@" $SECP256K1_OPTIONS
     build_from_github libbitcoin libbitcoin develop "$@"
     build_from_github libbitcoin libbitcoin_client master "$@"
