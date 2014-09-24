@@ -66,9 +66,10 @@ public:
 
     /**
      * Poll the connection until the request times out or terminates.
-     * @param[in]  timeout  The poll timeout.
+     * @param[in]  timeout  The poll timeout, defaults to zero.
      */
-    virtual void poll_until_termination(const client::sleep_time& timeout);
+    virtual void poll_until_termination(
+        const client::sleep_time& timeout=client::sleep_time(0));
 
 private:
 
