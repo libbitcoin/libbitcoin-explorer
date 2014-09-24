@@ -25,6 +25,7 @@
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/command.hpp>
+#include <czmq++/czmq.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -34,8 +35,7 @@ namespace explorer {
 /**
  * Class to simplify libbitcoin server usage. 
  */
-class server_client
-    : public async_client
+class obelisk_client
 {
 public:
 
@@ -44,29 +44,29 @@ public:
      * @param[in]  command  The command being processed.
      * @param[in]  threads  The number of pool threads to initialize.
      */
-    server_client(explorer::command& command,
-        const size_t threads=default_threadpool_size);
+    obelisk_client(czmqpp::context& context);
+
+    virtual int connect();
 
     ///**
     // * Get the value of the obelisk fullnode interface.
     // */
-    //virtual obelisk::fullnode_interface& get_fullnode();
+    virtual bc::client::obelisk_codec& get_codec();
 
-    /**
-     * Poll for changes until stopped.
-     * @param[in]  done       A flag that signals cessation of polling.
-     * @param[in]  period_ms  The polling period in ms, defaults to 100.
-     * @param[in]  action     The poll function to execute, defaults to null.
-     */
-    virtual void poll(bool& done, uint32_t period_ms=default_poll_period_ms,
-        std::function<void()> action=nullptr);
+    virtual bool resolve_callbacks();
+
+    virtual void poll_until_termination(long delay = 0);
 
 private:
+
+    czmqpp::socket socket_;
+
+    bc::client::socket_message_stream stream_;
 
     ///**
     // * Encapsulated full node client instance.
     // */
-    //obelisk::fullnode_interface fullnode_;
+    bc::client::obelisk_codec codec_;
 };
 
 } // namespace explorer

@@ -14,7 +14,8 @@ bitcoin_explorer_include_HEADERS = \
     explorer/display.hpp \
     explorer/generated.hpp \
     explorer/prop_tree.hpp \
-    explorer/server_client.hpp
+    explorer/server_client.hpp \
+    explorer/obelisk_client.hpp
 
 bitcoin_explorer_impl_includedir = $(includedir)/bitcoin/explorer/impl
 bitcoin_explorer_impl_include_HEADERS = \

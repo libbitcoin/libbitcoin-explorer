@@ -24,17 +24,35 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/server_client.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
+#include <czmq++/czmq.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
+static void handle_update(
+    callback_state& state,
+    primitives::prefix prefix,
+    const payment_address& address,
+    size_t, const hash_digest& block_hash,
+    const transaction_type& tx)
+{
+    state.output(prop_tree(tx, block_hash, prefix));
+}
 
 //static void handle_subscribed(callback_state& state, const prefix& prefix,
 //    const worker_uuid& worker)
@@ -43,14 +61,39 @@ using namespace bc::explorer::primitives;
 //    state.output(format(BX_WATCH_PREFIX_WAITING) % prefix);
 //}
 
-// This returns the entire transaction as opposed to just metadata!
-static void handle_update(callback_state& state, const prefix& prefix,
-    size_t height, const hash_digest& block_hash, const tx_type& tx)
-{
-    // Since this is a watcher we expose a formatter only (no base16).
-    state.output(prop_tree(tx, block_hash, prefix));
 
-    --state;
+// This returns the entire transaction as opposed to just metadata!
+//static void handle_update(callback_state& state, const prefix& prefix,
+//    size_t height, const hash_digest& block_hash, const tx_type& tx)
+//{
+//    // Since this is a watcher we expose a formatter only (no base16).
+//    state.output(prop_tree(tx, block_hash, prefix));
+//
+//    --state;
+//}
+
+static void subscribe_from_prefix(
+    obelisk_client& client,
+    callback_state& state,
+    primitives::prefix prefix,
+    bool& success_indicator)
+{
+    auto on_done = [&state, &prefix, &success_indicator]()
+    {
+        if (state.get_engine() != encoding_engine::native)
+        {
+            state.output(format(BX_WATCH_PREFIX_WAITING) % prefix);
+        }
+
+        success_indicator = true;
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
+
+    client.get_codec().subscribe(on_error, on_done, prefix);
 }
 
 // This command only halts on failure.
@@ -60,8 +103,53 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto& prefixes = get_prefixs_argument();
     const auto& encoding = get_format_option();
 
-    server_client client(*this);
     callback_state state(error, output, encoding);
+
+    auto on_update = [&state, &prefixes](
+        const payment_address& address,
+        size_t height,
+        const hash_digest& block_hash,
+        const transaction_type& tx)
+    {
+        for (auto prefix: prefixes)
+        {
+            if (bc::stealth_match(prefix, address.hash().data()))
+            {
+                handle_update(state, prefix, address, height, block_hash, tx);
+            }
+        }
+    };
+
+    czmqpp::context context;
+    obelisk_client client(context);
+
+    client.get_codec().set_on_update(on_update);
+
+    if (client.connect() >= 0)
+    {
+        bool has_subscribed = false;
+
+        for (auto prefix: prefixes)
+        {
+            subscribe_from_prefix(client, state, prefix, has_subscribed);
+        }
+
+        // poll for subscribe callbacks
+        if (client.resolve_callbacks())
+        {
+            if (has_subscribed)
+            {
+                // keep polling for updates if any subscriptions
+                // were established.
+                client.poll_until_termination();
+            }
+        }
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
     //auto& fullnode = client.get_fullnode();
     //for (const auto& prefix: prefixes)
@@ -84,8 +172,6 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     //    ++state;
     //    fullnode.address.subscribe(prefix, update_handler, subscribed_handler);
     //}
-
-    client.poll(state.stopped());
 
     return state.get_result();
 }

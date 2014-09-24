@@ -25,17 +25,43 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/server_client.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
 static void handle_callback(callback_state& state)
 {
     state.output(boost::format(BX_SEND_TX_OUTPUT) % now());
     state.stop();
+}
+
+static void broadcast_transaction(
+    obelisk_client& client,
+    callback_state& state,
+    primitives::transaction& tx)
+{
+    auto on_done = [&state]()
+    {
+        handle_callback(state);
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
+
+    client.get_codec().broadcast_transaction(on_error, on_done, tx);
+
 }
 
 console_result send_tx::invoke(std::ostream& output, std::ostream& error)
@@ -44,21 +70,25 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
     const auto& transactions = get_transactions_argument();
 
     callback_state state(error, output);
-    const auto handler = [&state](const std::error_code& code)
+
+    czmqpp::context context;
+
+    obelisk_client client(context);
+
+    if (client.connect() >= 0)
     {
-        if (!state.handle_error(code))
-            handle_callback(state);
-    };
+        for (auto tx: transactions)
+        {
+            broadcast_transaction(client, state, tx);
+        }
 
-    server_client client(*this);
-    //auto& fullnode = client.get_fullnode();
-    //for (const tx_type& tx: transactions)
-    //{
-    //    ++state;
-    //    fullnode.protocol.broadcast_transaction(tx, handler);
-    //}
-
-    client.poll(state.stopped());
+        client.resolve_callbacks();
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
     return state.get_result();
 }
