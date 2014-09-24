@@ -24,23 +24,49 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
-#include <bitcoin/explorer/server_client.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
 // Write out the transaction hashes of *potential* matches.
-static void handle_prefix_callback(callback_state& state, 
-    const stealth_prefix& prefix, const blockchain::stealth_list& row_list)
+static void handle_callback(
+    callback_state& state, 
+    const stealth_prefix& prefix,
+    const blockchain::stealth_list& row_list)
 {
     state.output(prop_tree(prefix, row_list));
-
-    // This call has been handled.
-    --state;
 }
+
+static void fetch_stealth_from_prefix(
+    obelisk_client& client,
+    callback_state& state,
+    primitives::prefix prefix,
+    size_t from_height)
+{
+    auto on_done = [&state, &prefix](const blockchain::stealth_list& list)
+    {
+        handle_callback(state, prefix, list);
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
+
+    client.get_codec().fetch_stealth(on_error, on_done, prefix, from_height);
+}
+
 
 console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
@@ -49,26 +75,26 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto& prefixes = get_prefixs_argument();
     const auto& encoding = get_format_option();
 
-    server_client client(*this);
     callback_state state(error, output, encoding);
 
-    //auto& fullnode = client.get_fullnode();
-    //for (const stealth_prefix& prefix: prefixes)
-    //{
-    //    const auto prefix_handler = [&state, &prefix](
-    //        const std::error_code& code,
-    //        const blockchain::stealth_list& stealth_results)
-    //    {
-    //        if (!state.handle_error(code))
-    //            handle_prefix_callback(state, prefix, stealth_results);
-    //    };
+    czmqpp::context context;
 
-    //    ++state;
-    //    fullnode.blockchain.fetch_stealth(prefix,
-    //        std::bind(prefix_handler, ph::_1, ph::_2), height);
-    //}
+    obelisk_client client(context);
 
-    client.poll(state.stopped());
+    if (client.connect() >= 0)
+    {
+        for (auto prefix: prefixes)
+        {
+            fetch_stealth_from_prefix(client, state, prefix, height);
+        }
+
+        client.resolve_callbacks();
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
     return state.get_result();
 }

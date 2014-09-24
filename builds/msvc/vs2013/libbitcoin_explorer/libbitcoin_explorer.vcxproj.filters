@@ -335,6 +335,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\base16.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\base2.hpp">
+      <Filter>include\bitcoin\explorer\primitives</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\base58.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
@@ -378,9 +381,6 @@
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\point.hpp">
-      <Filter>include\bitcoin\explorer\primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\prefix.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\raw.hpp">
@@ -718,6 +718,9 @@
     <ClCompile Include="..\..\..\..\src\primitives\base16.cpp">
       <Filter>src\primitives</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\primitives\base2.cpp">
+      <Filter>src\primitives</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\base58.cpp">
       <Filter>src\primitives</Filter>
     </ClCompile>
@@ -761,9 +764,6 @@
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\point.cpp">
-      <Filter>src\primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\primitives\prefix.cpp">
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\raw.cpp">

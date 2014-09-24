@@ -36,7 +36,7 @@ console_result hd_to_address::invoke(std::ostream& output, std::ostream& error)
     // Get public from private and otherwise get public.
     const auto public_key = key.derived_public_key();
 
-    // RECOMPILE OF REQUIRED FOR TESTNET.
+    // RECOMPILE REQUIRED FOR TESTNET.
 
     output << address(public_key) << std::endl;
     return console_result::okay;

@@ -24,10 +24,10 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/server_client.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -35,15 +35,21 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_callback(callback_state& state, 
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
+static void handle_callback(
+    callback_state& state, 
     const block_header_type& block_header)
 {
     if (state.get_engine() == encoding_engine::native)
         state.output(header(block_header));
     else
         state.output(prop_tree(block_header));
-
-    state.stop();
 }
 
 console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
@@ -54,21 +60,40 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const encoding& encoding = get_format_option();
 
     callback_state state(error, output, encoding);
-    const auto handler = [&state](const std::error_code& code,
-        const block_header_type& block_header)
-    {
-        if (!state.handle_error(code))
-            handle_callback(state, block_header);
-    };
 
-    server_client client(*this);
-    //auto& fullnode = client.get_fullnode();
-    //state.start();
-    //if (hash == null_hash)
-    //    fullnode.blockchain.fetch_block_header(height, handler);
-    //else
-    //    fullnode.blockchain.fetch_block_header(hash, handler);
-    //client.poll(state.stopped());
+    czmqpp::context context;
+
+    obelisk_client client(context);
+
+    if (client.connect() >= 0)
+    {
+        auto on_done = [&state](const block_header_type& header)
+        {
+            handle_callback(state, header);
+        };
+
+        auto on_error = [&state](const std::error_code& error)
+        {
+            handle_error(state, error);
+        };
+
+        // Use the null_hash as sentinel to determine whether to use height or hash.
+        if (hash == null_hash)
+        {
+            client.get_codec().fetch_block_header(on_error, on_done, height);
+        }
+        else
+        {
+            client.get_codec().fetch_block_header(on_error, on_done, hash);
+        }
+
+        client.resolve_callbacks();
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
     return state.get_result();
 }

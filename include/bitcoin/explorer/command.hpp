@@ -26,6 +26,29 @@
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
+#include <bitcoin/explorer/primitives/base58.hpp>
+#include <bitcoin/explorer/primitives/btc.hpp>
+#include <bitcoin/explorer/primitives/btc160.hpp>
+#include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/primitives/hashtype.hpp>
+#include <bitcoin/explorer/primitives/hd_key.hpp>
+#include <bitcoin/explorer/primitives/hd_priv.hpp>
+#include <bitcoin/explorer/primitives/hd_pub.hpp>
+#include <bitcoin/explorer/primitives/header.hpp>
+#include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/output.hpp>
+#include <bitcoin/explorer/primitives/raw.hpp>
+#include <bitcoin/explorer/primitives/script.hpp>
+#include <bitcoin/explorer/primitives/stealth.hpp>
+#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/primitives/wif.hpp>
+#include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
@@ -136,8 +159,8 @@ public:
         definitions.add_options()
             (
                 "general.testnet",
-                value<bool>(&setting_.general.testnet),
-                "Set to true in order to operate this application using Bitcoin testnet (vs. mainnet) addressing and blockchain data. This option is EXPERIMENTAL because other  libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
+                value<bool>(&setting_.general.testnet)->default_value(false),
+                "Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
             )
             (
                 "logging.debug",
@@ -150,24 +173,24 @@ public:
                 "The file and path name to the error log file."
             )
             (
-                "server.client-certificate",
-                value<boost::filesystem::path>(&setting_.server.client_certificate),
+                "server.certificate",
+                value<boost::filesystem::path>(&setting_.server.certificate),
                 "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert"
             )
             (
-                "server.server-public-key",
-                value<std::string>(&setting_.server.server_public_key),
+                "server.public-key",
+                value<primitives::base16>(&setting_.server.public_key),
                 "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
             )
             (
                 "server.address",
-                value<std::string>(&setting_.server.address)->default_value("tcp://obelisk-testnet2.airbitz.co:9091"),
+                value<std::string>(&setting_.server.address)->default_value("tcp://obelisk.unsystem.net:8081"),
                 "The URI of the server to which this application may connect."
             )
             (
                 "server.socks-proxy",
-                value<std::string>(&setting_.server.socks_proxy)->default_value("localhost:1080"),
-                "The host name and port number of a SOCKS 4a or SOCKS 5 proxy server."
+                value<std::string>(&setting_.server.socks_proxy),
+                "The host name and port number of a Socks5 proxy server."
             );
     }
 	
@@ -257,35 +280,35 @@ public:
     }
     
     /**
-     * Get the value of the server.client-certificate setting.
+     * Get the value of the server.certificate setting.
      */
-    virtual boost::filesystem::path get_server_client_certificate_setting()
+    virtual boost::filesystem::path get_server_certificate_setting()
     {
-        return setting_.server.client_certificate;
+        return setting_.server.certificate;
     }
 
     /**
-     * Set the value of the server.client-certificate setting.
+     * Set the value of the server.certificate setting.
      */
-    virtual void set_server_client_certificate_setting(boost::filesystem::path value)
+    virtual void set_server_certificate_setting(boost::filesystem::path value)
     {
-        setting_.server.client_certificate = value;
+        setting_.server.certificate = value;
     }
     
     /**
-     * Get the value of the server.server-public-key setting.
+     * Get the value of the server.public-key setting.
      */
-    virtual std::string get_server_server_public_key_setting()
+    virtual primitives::base16 get_server_public_key_setting()
     {
-        return setting_.server.server_public_key;
+        return setting_.server.public_key;
     }
 
     /**
-     * Set the value of the server.server-public-key setting.
+     * Set the value of the server.public-key setting.
      */
-    virtual void set_server_server_public_key_setting(std::string value)
+    virtual void set_server_public_key_setting(primitives::base16 value)
     {
-        setting_.server.server_public_key = value;
+        setting_.server.public_key = value;
     }
     
     /**
@@ -387,15 +410,15 @@ private:
         struct server
         {
             server()
-              : client_certificate(),
-                server_public_key(),
+              : certificate(),
+                public_key(),
                 address(),
                 socks_proxy()
             {
             }
             
-            boost::filesystem::path client_certificate;
-            std::string server_public_key;
+            boost::filesystem::path certificate;
+            primitives::base16 public_key;
             std::string address;
             std::string socks_proxy;
         } server;

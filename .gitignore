@@ -9,6 +9,7 @@
 *.swp
 Makefile
 Makefile.in
+libbitcoin_explorer.pc
 
 /aclocal.m4
 /autom4te.cache
@@ -23,6 +24,6 @@ Makefile.in
 
 /obj/
 /bin/
-/src/sx
-/test/libbitcoin_explorer_test
+/src/explorer
+/test/explorer_test
 /BUILD/

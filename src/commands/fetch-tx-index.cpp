@@ -25,9 +25,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/server_client.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -35,13 +35,39 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_callback(callback_state& state, const hash_digest& hash,
-    size_t height, size_t index)
+static void handle_error(
+    callback_state& state,
+    const std::error_code& error)
+{
+    state.handle_error(error);
+}
+
+static void handle_callback(
+    callback_state& state,
+    const hash_digest& hash,
+    size_t height,
+    size_t index)
 {
     state.output(boost::format(BX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
         height % index);
+}
 
-    --state;
+static void fetch_tx_index_from_hash(
+    obelisk_client& client,
+    callback_state& state,
+    primitives::btc256 hash)
+{
+    auto on_done = [&state, &hash](size_t block_height, size_t index)
+    {
+        handle_callback(state, hash, block_height, index);
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        handle_error(state, error);
+    };
+
+    client.get_codec().fetch_transaction_index(on_error, on_done, hash);
 }
 
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
@@ -50,24 +76,26 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
 
-    server_client client(*this);
     callback_state state(error, output, encoding);
 
-    //auto& fullnode = client.get_fullnode();
-    //for (const auto& hash: hashes)
-    //{
-    //    const auto handler = [&state, &hash](
-    //        const std::error_code& code, size_t height, size_t index)
-    //    {
-    //        if (!state.handle_error(code))
-    //            handle_callback(state, hash, height, index);
-    //    };
+    czmqpp::context context;
 
-    //    fullnode.blockchain.fetch_transaction_index(hash, handler);
-    //    ++state;
-    //}
+    obelisk_client client(context);
 
-    client.poll(state.stopped());
+    if (client.connect() >= 0)
+    {
+        for (auto hash: hashes)
+        {
+            fetch_tx_index_from_hash(client, state, hash);
+        }
+
+        client.resolve_callbacks();
+    }
+    else
+    {
+        // TODO: replace with correct state error signal
+        return console_result::failure;
+    }
 
     return state.get_result();
 }
