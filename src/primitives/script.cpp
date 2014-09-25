@@ -41,9 +41,9 @@ script::script()
 {
 }
 
-script::script(const std::string& hexcode)
+script::script(const std::string& mnemonic)
 {
-    std::stringstream(hexcode) >> *this;
+    std::stringstream(mnemonic) >> *this;
 }
 
 script::script(const script_type& value)
@@ -51,14 +51,16 @@ script::script(const script_type& value)
 {
 }
 
-script::script(const std::vector<std::string>& mnemonics)
+script::script(const data_chunk& value)
+    : value_(parse_script(value))
 {
-    std::string script;
-    join(mnemonics, script);
+}
 
-    value_ = unpretty(script);
-    if (value_.operations().empty())
-        throw invalid_option_value(script);
+script::script(const std::vector<std::string>& tokens)
+{
+    std::string mnemonic;
+    join(tokens, mnemonic);
+    std::stringstream(mnemonic) >> *this;
 }
 
 script::script(const script& other)
@@ -76,18 +78,23 @@ script::operator const script_type&() const
     return value_; 
 }
 
+script::operator const data_chunk() const
+{
+    return base16(save_script(value_));
+}
+
 std::istream& operator>>(std::istream& input, script& argument)
 {
-    std::string hexcode;
-    input >> hexcode;
+    std::istreambuf_iterator<char> eos;
+    std::string mnemonic(std::istreambuf_iterator<char>(input), eos);
 
     try
     {
-        argument.value_ = parse_script(base16(hexcode));
+        argument.value_ = unpretty(mnemonic);
     }
     catch (end_of_stream)
     {
-        throw invalid_option_value(hexcode);
+        throw invalid_option_value(mnemonic);
     }
 
     return input;
@@ -95,7 +102,7 @@ std::istream& operator>>(std::istream& input, script& argument)
 
 std::ostream& operator<<(std::ostream& output, const script& argument)
 {
-    output << base16(save_script(argument.value_));
+    output << pretty(argument.value_);
     return output;
 }
 

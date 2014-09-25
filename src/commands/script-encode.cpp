@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 
 using namespace bc::explorer;
@@ -33,7 +34,7 @@ console_result script_encode::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& tokens = get_tokens_argument();
 
-    output << script(tokens) << std::endl;
+    output << base16(script(tokens)) << std::endl;
     return console_result::okay;
 }
 

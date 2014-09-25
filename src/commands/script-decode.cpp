@@ -31,8 +31,10 @@ using namespace bc::explorer::primitives;
 console_result script_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& script = get_script_argument();
+    const auto& encoded_script = get_script_argument();
 
-    output << script.mnemonic() << std::endl;
+    script decoder(encoded_script);
+
+    output << decoder << std::endl;
     return console_result::okay;
 }
