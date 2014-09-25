@@ -37,4 +37,3 @@ console_result script_encode::invoke(std::ostream& output, std::ostream& error)
     output << base16(script(tokens)) << std::endl;
     return console_result::okay;
 }
-
