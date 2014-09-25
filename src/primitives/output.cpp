@@ -41,27 +41,25 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-static script_type build_pubkey_hash_script(
-    const short_hash& pubkey_hash)
+static script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
 {
     script_type script;
-    script.push_operation({ opcode::dup, data_chunk() });
-    script.push_operation({ opcode::hash160, data_chunk() });
-    script.push_operation({ opcode::special, data_chunk(
-        pubkey_hash.begin(), pubkey_hash.end()) });
-    script.push_operation({ opcode::equalverify, data_chunk() });
-    script.push_operation({ opcode::checksig, data_chunk() });
+    script.push_operation({ opcode::dup });
+    script.push_operation({ opcode::hash160 });
+    script.push_operation({ opcode::special, 
+        data_chunk(pubkey_hash.begin(), pubkey_hash.end()) });
+    script.push_operation({ opcode::equalverify });
+    script.push_operation({ opcode::checksig });
     return script;
 }
 
-static script_type build_script_hash_script(
-    const short_hash& script_hash)
+static script_type build_script_hash_script(const short_hash& script_hash)
 {
     script_type script;
-    script.push_operation({ opcode::hash160, data_chunk() });
-    script.push_operation({ opcode::special, data_chunk(
-        script_hash.begin(), script_hash.end()) });
-    script.push_operation({ opcode::equal, data_chunk() });
+    script.push_operation({ opcode::hash160 });
+    script.push_operation({ opcode::special, 
+        data_chunk(script_hash.begin(), script_hash.end()) });
+    script.push_operation({ opcode::equal });
     return script;
 }
 
@@ -101,8 +99,7 @@ static tx_output_type build_stealth_meta_output(
     return out;
 }
 
-static ec_secret generate_private_key(
-    const std::vector<std::string>& tokens)
+static ec_secret generate_private_key(const std::vector<std::string>& tokens)
 {
     if (tokens.size() == 3)
     {
@@ -114,8 +111,7 @@ static ec_secret generate_private_key(
     return null_hash;
 }
 
-static std::string parse_outputs(
-    std::vector<tx_output_type>& outputs,
+static std::string parse_outputs(std::vector<tx_output_type>& outputs,
     const std::vector<std::string>& tokens)
 {
     outputs.clear();
@@ -129,6 +125,7 @@ static std::string parse_outputs(
         if (!build_output_script(output.script, address))
             throw invalid_option_value(target);
 
+        outputs.push_back(output);
         return address.encoded();
     }
 
@@ -162,6 +159,7 @@ static std::string parse_outputs(
         if (!build_output_script(output.script, pay_address))
             throw invalid_option_value(target);
 
+        outputs.push_back(output);
         return pay_address.encoded();
     }
 
