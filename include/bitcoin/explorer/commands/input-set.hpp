@@ -155,7 +155,7 @@ public:
             (
                 "SIGNATURE_AND_PUBKEY_SCRIPT",
                 value<primitives::script>(&argument_.signature_and_pubkey_script),
-                "The Base16 signature script to assign to the input. If not specified the script is read from STDIN."
+                "The signature script to assign to the input. If not specified the script is read from STDIN."
             );
 
         return options;

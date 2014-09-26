@@ -171,7 +171,7 @@ public:
             (
                 "SCRIPT_CODE",
                 value<primitives::script>(&argument_.script_code)->required(),
-                "The Base16 ... script ..."
+                "The script ..."
             )
             (
                 "SIGNATURE",

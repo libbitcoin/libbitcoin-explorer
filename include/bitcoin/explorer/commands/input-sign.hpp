@@ -176,7 +176,7 @@ public:
             (
                 "PREVOUT_SCRIPT",
                 value<primitives::script>(&argument_.prevout_script),
-                "The Base16 previous output script to use in signing. If not specified the script is read from STDIN."
+                "The previous output script to use in signing. If not specified the script is read from STDIN."
             );
 
         return options;
