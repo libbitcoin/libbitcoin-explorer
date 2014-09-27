@@ -139,7 +139,7 @@ public:
             (
                 "SCRIPT",
                 value<std::string>(),
-                "The Base16 script."
+                "The script."
             );
 
         return options;

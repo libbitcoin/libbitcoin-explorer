@@ -35,21 +35,21 @@ console_result input_set::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto index = get_index_option();
-    const auto& transaction_original = get_transaction_argument();
-    const auto& script = get_signature_and_pubkey_script_argument();
+    const auto& tx_in = get_transaction_argument();
+    const auto& script = get_signature_script_argument();
 
     // Clone so we can keep arguments const.
-    auto transaction_copy = transaction(transaction_original);
-    auto& tx = transaction_copy.data();
+    auto tx_copy = transaction(tx_in);
+    auto& tx_out = tx_copy.data();
 
-    if (tx.inputs.size() < index)
+    if (tx_out.inputs.size() <= index)
     {
         error << BX_INPUT_SET_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    tx.inputs[index].script = script_to_raw_data_script(script);
+    tx_out.inputs[index].script = script_to_raw_data_script(script);
 
-    output << transaction_copy << std::endl;
+    output << tx_copy << std::endl;
     return console_result::okay;
 }

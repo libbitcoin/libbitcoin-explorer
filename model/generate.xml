@@ -346,7 +346,7 @@
     <argument name="TRANSACTION" file="true" required="true" type="transaction" description="The file path of the Base16 transaction."/>
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="NONCE" required="true" type="base16" description="The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length." />
-    <argument name="PREVOUT_SCRIPT" type="script" description="The Base16 previous output script to use in signing. If not specified the script is read from STDIN." />
+    <argument name="PREVOUT_SCRIPT" type="script" description="The previous output script to use in signing. If not specified the script is read from STDIN." />
     <define name="BX_INPUT_SIGN_SHORT_NONCE" value="The nonce is less than 128 bits long." />
     <define name="BX_INPUT_SIGN_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
     <define name="BX_INPUT_SIGN_FAILED" value="The signing operation failed." />
@@ -374,6 +374,7 @@
       $ DECODED_ADDR=$(cat private.key | sx addr | sx decode-addr)
       $ PREVOUT_SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)
       $ SIGNATURE=$(cat private.key | sx sign-input txfile.tx 0 $PREVOUT_SCRIPT)
+      
       $ SIGNATURE_AND_PUBKEY_SCRIPT=$(sx rawscript [ $SIGNATURE ] [ $(cat private.key | sx pubkey) ])
       $ sx set-input txfile.tx 0 $SIGNATURE_AND_PUBKEY_SCRIPT > txfile.tx.signed  # the first input has index 0
     
@@ -401,7 +402,7 @@
     <option name="help" description="Assign a script to an existing transaction input." />
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <argument name="TRANSACTION" file="true" required="true" type="transaction" description="The file path of the Base16 transaction."/>
-    <argument name="SIGNATURE_AND_PUBKEY_SCRIPT" type="script" description="The Base16 signature script to assign to the input. If not specified the script is read from STDIN." />
+    <argument name="SIGNATURE_SCRIPT" type="script" description="The signature script to assign to the input. If not specified the script is read from STDIN." />
     <define name="BX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
   </command>
   
@@ -411,7 +412,7 @@
     <option name="sighash" type="hashtype" description="A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
     <argument name="TRANSACTION" file="true" required="true" type="transaction" description="The file path of the Base16 transaction."/>
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
-    <argument name="SCRIPT_CODE" required="true" type="script" description="The Base16 ... script ..." />
+    <argument name="SIGNATURE_SCRIPT" required="true" type="script" description="The signature script for the specified index." />
     <argument name="SIGNATURE" type="base16" description="The Base16 signature to validate. If not specified the signature is read from STDIN."/>
     <define name="BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
     <define name="BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
@@ -456,27 +457,19 @@
     <argument name="SATOSHI" stdin="true" type="uint64_t" description="The whole number of satoshi to convert."/>
   </command>
   
-  <command symbol="script-decode" formerly="showscript" typeX="script" category="SCRIPT">
+  <command symbol="script-decode" formerly="showscript" typeX="string" multipleX="true" category="SCRIPT">
     <option name="help" description="Decode a script to plain text tokens." />
-    <argument name="SCRIPT" file="true" stdin="true" type="script" description="The Base16 script."/>
+    <argument name="SCRIPT" file="true" stdin="true" type="base16" description="The Base16 script."/>
   </command>
   
   <command symbol="script-encode" formerly="rawscript" typeX="base16" category="SCRIPT">
     <option name="help" description="Base16 encode a plain text script." />
     <argument name="TOKEN" stdin="true" limit="-1" type="string" description="The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."/>
-    <!-- translate a single opcode just for demonstration, see OP_DUP in https://en.bitcoin.it/wik -->
-    <!-- $ sx rawscript dup 76 -->
   </command>
   
   <command symbol="script-to-address" formerly="scripthash" typeX="address" category="SCRIPT">
     <option name="help" description="Create a BIP16 pay-to-script-hash address from an encoded script." />
-    <argument name="SCRIPT" file="true" stdin="true" type="script" description="The Base16 script."/>
-    <!--
-    # generate an address for 2-of-3 multisig transactions
-    for n in 1 2 3; do echo 'b220b5bd2909df1d74b71c9e664233bf' | sx genpriv $n > key${n}; done
-    sx script-encode 2 [ $(cat key1 | sx pubkey) ] [ $(cat key2 | sx pubkey) ] [ $(cat key3 | sx pubkey) ] 3 checkmultisig | sx script-to-addr
-    33opBmv3oJTXu6rxtzsr571SL2Srtw9Cg8
-    -->
+    <argument name="SCRIPT" file="true" stdin="true" type="script" description="The script."/>
   </command>
   
   <command symbol="seed" typeX="base16" category="WALLET">
@@ -551,9 +544,9 @@
     <option name="signatures" type="uint8_t" description="Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a payment." />
     <argument name="SPEND_PUBKEY" stdin="true" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_EC_PUBLIC_KEY." />
+    <define name="BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG" value="The prefix is limited to 32 bits." />
     <define name="BX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />
     <define name="BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED" value="WARNING: prefix search is not yet fully supported." />
-    <define name="BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG" value="WARNING: prefix is limited to 32 bits." />
     <define name="BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED" value="WARNING: multiple signature stealth transactions are not yet fully supported." />
   </command>
 
@@ -591,7 +584,8 @@
   
   <command symbol="tx-decode" typeX="transaction" multipleX="true" category="TRANSACTION">
     <option name="help" description="Decode a set of transactions." />
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <!-- The code generator does not yet have the ability to set default values requiring quotes, so native is currently the default. -->
+    <option name="format" type="encoding" defaultX="info" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
   </command>
 

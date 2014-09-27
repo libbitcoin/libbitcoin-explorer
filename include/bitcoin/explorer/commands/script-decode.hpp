@@ -158,7 +158,7 @@ public:
     /**
      * Get the value of the SCRIPT argument.
      */
-    virtual primitives::script& get_script_argument()
+    virtual primitives::base16& get_script_argument()
     {
         return argument_.script;
     }
@@ -167,7 +167,7 @@ public:
      * Set the value of the SCRIPT argument.
      */
     virtual void set_script_argument(
-        const primitives::script& value)
+        const primitives::base16& value)
     {
         argument_.script = value;
     }
@@ -203,7 +203,7 @@ private:
         {
         }
         
-        primitives::script script;
+        primitives::base16 script;
     } argument_;
     
     /**
