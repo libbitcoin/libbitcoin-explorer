@@ -24,10 +24,16 @@ BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 
-// TODO: Need valid test vector.
+// The public key of the signer, who is also the owner of the output, derived from INPUT_SIGN_PRIVATE_KEY_A.
 #define INPUT_VALIDATE_PUBLIC_KEY_A "03c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0"
+
+// This is the signature INPUT_SIGN_SIGNATURE_A for the input signed by INPUT_SIGN_PRIVATE_KEY_A.
 #define INPUT_VALIDATE_SIGNATURE_A "3045022100d303bbe206ef6bc5c1033044a36145aac642600dbe9e0f1b725cd9f16c719bfe022045c57877f5242e0311c705713cffec6eb372949970b066988756bca30b7c6755"
-#define INPUT_VALIDATE_SIGNATURE_SCRIPT_A "[ 3045022100d303bbe206ef6bc5c1033044a36145aac642600dbe9e0f1b725cd9f16c719bfe022045c57877f5242e0311c705713cffec6eb372949970b066988756bca30b7c6755 ] [ 03c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0 ]"
+
+// This is the previous output which was signed as the new tx input.
+#define INPUT_VALIDATE_PREVOUT_SCRIPT_A "dup hash160 [ 88350574280395ad2c3e2ee20e322073d94e5e40 ] equalverify checksig"
+
+// This is the new transaction which inclues the previous output reference (as input) and the new outputs, all of which which were signed.
 #define INPUT_VALIDATE_TX_A "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee097000000006a473045022100d303bbe206ef6bc5c1033044a36145aac642600dbe9e0f1b725cd9f16c719bfe022045c57877f5242e0311c705713cffec6eb372949970b066988756bca30b7c67552103c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000"
 
 BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input__okay_output)
@@ -37,7 +43,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input__okay_output)
     command.set_sighash_option({ "single" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
-    command.set_signature_script_argument({ INPUT_VALIDATE_SIGNATURE_SCRIPT_A });
+    command.set_previous_output_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE "\n");

@@ -111,7 +111,7 @@ public:
         return get_argument_metadata()
             .add("TRANSACTION", 1)
             .add("EC_PUBLIC_KEY", 1)
-            .add("SIGNATURE_SCRIPT", 1)
+            .add("PREVIOUS_OUTPUT_SCRIPT", 1)
             .add("SIGNATURE", 1);
     }
 	
@@ -169,9 +169,9 @@ public:
                 "The Base16 EC public key to verify against."
             )
             (
-                "SIGNATURE_SCRIPT",
-                value<primitives::script>(&argument_.signature_script)->required(),
-                "The signature script for the specified index."
+                "PREVIOUS_OUTPUT_SCRIPT",
+                value<primitives::script>(&argument_.previous_output_script)->required(),
+                "The previous output script used in signing."
             )
             (
                 "SIGNATURE",
@@ -227,20 +227,20 @@ public:
     }
 
     /**
-     * Get the value of the SIGNATURE_SCRIPT argument.
+     * Get the value of the PREVIOUS_OUTPUT_SCRIPT argument.
      */
-    virtual primitives::script& get_signature_script_argument()
+    virtual primitives::script& get_previous_output_script_argument()
     {
-        return argument_.signature_script;
+        return argument_.previous_output_script;
     }
     
     /**
-     * Set the value of the SIGNATURE_SCRIPT argument.
+     * Set the value of the PREVIOUS_OUTPUT_SCRIPT argument.
      */
-    virtual void set_signature_script_argument(
+    virtual void set_previous_output_script_argument(
         const primitives::script& value)
     {
-        argument_.signature_script = value;
+        argument_.previous_output_script = value;
     }
 
     /**
@@ -323,14 +323,14 @@ private:
         argument()
           : transaction(),
             ec_public_key(),
-            signature_script(),
+            previous_output_script(),
             signature()
         {
         }
         
         primitives::transaction transaction;
         primitives::ec_public ec_public_key;
-        primitives::script signature_script;
+        primitives::script previous_output_script;
         primitives::base16 signature;
     } argument_;
     

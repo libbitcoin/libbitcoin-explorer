@@ -112,7 +112,7 @@ public:
             .add("TRANSACTION", 1)
             .add("EC_PRIVATE_KEY", 1)
             .add("NONCE", 1)
-            .add("PREVOUT_SCRIPT", 1);
+            .add("PREVIOUS_OUTPUT_SCRIPT", 1);
     }
 	
 	/**
@@ -174,8 +174,8 @@ public:
                 "The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length."
             )
             (
-                "PREVOUT_SCRIPT",
-                value<primitives::script>(&argument_.prevout_script),
+                "PREVIOUS_OUTPUT_SCRIPT",
+                value<primitives::script>(&argument_.previous_output_script),
                 "The previous output script to use in signing. If not specified the script is read from STDIN."
             );
 
@@ -244,20 +244,20 @@ public:
     }
 
     /**
-     * Get the value of the PREVOUT_SCRIPT argument.
+     * Get the value of the PREVIOUS_OUTPUT_SCRIPT argument.
      */
-    virtual primitives::script& get_prevout_script_argument()
+    virtual primitives::script& get_previous_output_script_argument()
     {
-        return argument_.prevout_script;
+        return argument_.previous_output_script;
     }
     
     /**
-     * Set the value of the PREVOUT_SCRIPT argument.
+     * Set the value of the PREVIOUS_OUTPUT_SCRIPT argument.
      */
-    virtual void set_prevout_script_argument(
+    virtual void set_previous_output_script_argument(
         const primitives::script& value)
     {
-        argument_.prevout_script = value;
+        argument_.previous_output_script = value;
     }
 
     /**
@@ -324,14 +324,14 @@ private:
           : transaction(),
             ec_private_key(),
             nonce(),
-            prevout_script()
+            previous_output_script()
         {
         }
         
         primitives::transaction transaction;
         primitives::ec_private ec_private_key;
         primitives::base16 nonce;
-        primitives::script prevout_script;
+        primitives::script previous_output_script;
     } argument_;
     
     /**

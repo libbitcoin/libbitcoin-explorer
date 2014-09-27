@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_SUITE(input_sign__invoke)
 // was internal (not exposed) to the sx implementation.
 #define INPUT_SIGN_NONCE_A "000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"
 #define INPUT_SIGN_PRIVATE_KEY_A "ce8f4b713ffdd2658900845251890f30371856be201cd1f5b3d970f793634333"
-#define INPUT_SIGN_INPUT_A "dup hash160 [ 88350574280395ad2c3e2ee20e322073d94e5e40 ] equalverify checksig"
+#define INPUT_SIGN_PREVOUT_A "dup hash160 [ 88350574280395ad2c3e2ee20e322073d94e5e40 ] equalverify checksig"
 #define INPUT_SIGN_TX_A "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970000000000ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000"
 #define INPUT_SIGN_SIGNATURE_A "3045022100d303bbe206ef6bc5c1033044a36145aac642600dbe9e0f1b725cd9f16c719bfe022045c57877f5242e0311c705713cffec6eb372949970b066988756bca30b7c6755"
 
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input__okay_output)
     command.set_sighash_option({ "single" });
     command.set_nonce_argument({ INPUT_SIGN_NONCE_A });
     command.set_transaction_argument({ INPUT_SIGN_TX_A });
-    command.set_prevout_script_argument({ INPUT_SIGN_INPUT_A });
+    command.set_previous_output_script_argument({ INPUT_SIGN_PREVOUT_A });
     command.set_ec_private_key_argument({ INPUT_SIGN_PRIVATE_KEY_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(INPUT_SIGN_SIGNATURE_A "\n");

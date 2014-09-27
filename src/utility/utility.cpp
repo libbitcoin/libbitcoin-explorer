@@ -199,6 +199,11 @@ bool valid_signature(const tx_type& tx, uint32_t index, const ec_point& pubkey,
 {
     auto sighash = script_type::generate_signature_hash(tx, index, script,
         hash_type);
+
+    // This will effectively be dealt with in verify_signature. 
+    //if (sighash == one_hash())
+    //    return false;
+
     return verify_signature(pubkey, sighash, signature);
 }
 
