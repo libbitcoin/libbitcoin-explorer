@@ -42,7 +42,7 @@ console_result input_set::invoke(std::ostream& output, std::ostream& error)
     auto transaction_copy = transaction(transaction_original);
     auto& tx = transaction_copy.data();
 
-    if (tx.inputs.size() < index)
+    if (tx.inputs.size() <= index)
     {
         error << BX_INPUT_SET_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
