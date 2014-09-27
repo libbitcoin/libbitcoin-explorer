@@ -30,7 +30,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-// 100% coverage by line, loc ready.
 console_result ec_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     const auto& secret = get_ec_private_key_argument();

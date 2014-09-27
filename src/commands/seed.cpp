@@ -35,7 +35,7 @@ console_result seed::invoke(std::ostream& output, std::ostream& error)
 {
     const auto bit_length = get_bit_length_option();
 
-    // This are soft requirements for security and rationality.
+    // These are soft requirements for security and rationality.
     // We use bit vs. byte length input as the more familiar convention.
     if (bit_length < minimum_seed_size * byte_bits ||
         bit_length % byte_bits != 0)

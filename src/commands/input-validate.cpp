@@ -29,6 +29,8 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
+// The BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE condition is uncovered by test.
+// The BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE condition is uncovered by test.
 console_result input_validate::invoke(std::ostream& output,
     std::ostream& error)
 {

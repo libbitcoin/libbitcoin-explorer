@@ -31,6 +31,7 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+// The BX_INPUT_SET_INDEX_OUT_OF_RANGE condition is uncovered by test.
 console_result input_set::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
