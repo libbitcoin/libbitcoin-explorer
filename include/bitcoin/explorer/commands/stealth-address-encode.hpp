@@ -65,12 +65,12 @@ namespace commands {
 /**
  * Various localizable strings.
  */
+#define BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG \
+    "The prefix is limited to 32 bits."
 #define BX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW \
     "The number of signatures is greater than the number of SPEND_PUBKEYs."
 #define BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED \
     "WARNING: prefix search is not yet fully supported."
-#define BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG \
-    "WARNING: prefix is limited to 32 bits."
 #define BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED \
     "WARNING: multiple signature stealth transactions are not yet fully supported."
 

@@ -111,7 +111,7 @@ public:
         return get_argument_metadata()
             .add("TRANSACTION", 1)
             .add("EC_PUBLIC_KEY", 1)
-            .add("SCRIPT_CODE", 1)
+            .add("SIGNATURE_SCRIPT", 1)
             .add("SIGNATURE", 1);
     }
 	
@@ -169,9 +169,9 @@ public:
                 "The Base16 EC public key to verify against."
             )
             (
-                "SCRIPT_CODE",
-                value<primitives::script>(&argument_.script_code)->required(),
-                "The script ..."
+                "SIGNATURE_SCRIPT",
+                value<primitives::script>(&argument_.signature_script)->required(),
+                "The signature script for the specified index."
             )
             (
                 "SIGNATURE",
@@ -227,20 +227,20 @@ public:
     }
 
     /**
-     * Get the value of the SCRIPT_CODE argument.
+     * Get the value of the SIGNATURE_SCRIPT argument.
      */
-    virtual primitives::script& get_script_code_argument()
+    virtual primitives::script& get_signature_script_argument()
     {
-        return argument_.script_code;
+        return argument_.signature_script;
     }
     
     /**
-     * Set the value of the SCRIPT_CODE argument.
+     * Set the value of the SIGNATURE_SCRIPT argument.
      */
-    virtual void set_script_code_argument(
+    virtual void set_signature_script_argument(
         const primitives::script& value)
     {
-        argument_.script_code = value;
+        argument_.signature_script = value;
     }
 
     /**
@@ -323,14 +323,14 @@ private:
         argument()
           : transaction(),
             ec_public_key(),
-            script_code(),
+            signature_script(),
             signature()
         {
         }
         
         primitives::transaction transaction;
         primitives::ec_public ec_public_key;
-        primitives::script script_code;
+        primitives::script signature_script;
         primitives::base16 signature;
     } argument_;
     

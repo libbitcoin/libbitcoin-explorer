@@ -106,7 +106,7 @@ public:
     {
         return get_argument_metadata()
             .add("TRANSACTION", 1)
-            .add("SIGNATURE_AND_PUBKEY_SCRIPT", 1);
+            .add("SIGNATURE_SCRIPT", 1);
     }
 	
 	/**
@@ -153,8 +153,8 @@ public:
                 "The file path of the Base16 transaction."
             )
             (
-                "SIGNATURE_AND_PUBKEY_SCRIPT",
-                value<primitives::script>(&argument_.signature_and_pubkey_script),
+                "SIGNATURE_SCRIPT",
+                value<primitives::script>(&argument_.signature_script),
                 "The signature script to assign to the input. If not specified the script is read from STDIN."
             );
 
@@ -189,20 +189,20 @@ public:
     }
 
     /**
-     * Get the value of the SIGNATURE_AND_PUBKEY_SCRIPT argument.
+     * Get the value of the SIGNATURE_SCRIPT argument.
      */
-    virtual primitives::script& get_signature_and_pubkey_script_argument()
+    virtual primitives::script& get_signature_script_argument()
     {
-        return argument_.signature_and_pubkey_script;
+        return argument_.signature_script;
     }
     
     /**
-     * Set the value of the SIGNATURE_AND_PUBKEY_SCRIPT argument.
+     * Set the value of the SIGNATURE_SCRIPT argument.
      */
-    virtual void set_signature_and_pubkey_script_argument(
+    virtual void set_signature_script_argument(
         const primitives::script& value)
     {
-        argument_.signature_and_pubkey_script = value;
+        argument_.signature_script = value;
     }
 
     /**
@@ -250,12 +250,12 @@ private:
     {
         argument()
           : transaction(),
-            signature_and_pubkey_script()
+            signature_script()
         {
         }
         
         primitives::transaction transaction;
-        primitives::script signature_and_pubkey_script;
+        primitives::script signature_script;
     } argument_;
     
     /**

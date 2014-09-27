@@ -37,10 +37,10 @@ console_result input_validate::invoke(std::ostream& output,
     const auto hash_type = get_sighash_option();
     const tx_type& tx = get_transaction_argument();
     const auto& public_key = get_ec_public_key_argument();
-    const auto& script = get_script_code_argument();
+    const auto& script = get_signature_script_argument();
     const auto& signature = get_signature_argument();
 
-    if (tx.inputs.size() < index)
+    if (tx.inputs.size() <= index)
     {
         error << BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
