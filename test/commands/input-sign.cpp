@@ -41,8 +41,10 @@ BOOST_AUTO_TEST_SUITE(input_sign__invoke)
 // Less than nonce minimum length of 16 bytes / 128 bits.
 #define INPUT_SIGN_NONCE_B "000102030405060708090a0b0c0d0e"
 
-// One input no output, for reaching BX_INPUT_SIGN_FAILED.
+// One input no output.
+// This is pathological case where a bitcoind bug is intentionally perpetuated.
 #define INPUT_SIGN_TX_B "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970000000000ffffffff0000000000"
+#define INPUT_SIGN_SIGNATURE_B "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c20220568f95b2e4d497b7972a3420dc53601e8b1035b3f1023d521ddcfdefa25c2ba7"
 
 BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output)
 {
@@ -56,7 +58,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output
     BX_REQUIRE_OUTPUT(INPUT_SIGN_SIGNATURE_A "\n");
 }
 
-BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_no_output__failure_error)
+BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_no_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_sign);
     command.set_signature_type_option({ "single" });
@@ -64,8 +66,8 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_no_output__failure_error)
     command.set_transaction_argument({ INPUT_SIGN_TX_B });
     command.set_previous_output_script_argument({ INPUT_SIGN_PREVOUT_A });
     command.set_ec_private_key_argument({ INPUT_SIGN_PRIVATE_KEY_A });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_INPUT_SIGN_FAILED "\n");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(INPUT_SIGN_SIGNATURE_B "\n");
 }
 
 BOOST_AUTO_TEST_CASE(input_sign__invoke__short_nonce__failure_error)

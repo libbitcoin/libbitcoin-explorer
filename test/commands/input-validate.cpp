@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 // This is the new transaction which inclues the previous output reference (as input) and the new outputs, all of which which were signed.
 #define INPUT_VALIDATE_TX_A "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970000000069463044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2022026f5c7a938bb1e925482f1d8bff3b3d07a264d060d0dd0f0a665eeb16ec38bfb2103c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000"
 
-// One input no output, for reaching BX_INPUT_SIGN_FAILED.
+// One input no output.
 #define INPUT_VALIDATE_TX_B "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970000000000ffffffff0000000000"
 
 BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_output)
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_out
     command.set_previous_output_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_B });
     BX_REQUIRE_INVALID(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE "\n");
+    BX_REQUIRE_ERROR(BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -31,6 +31,8 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+// The BX_INPUT_SIGN_FAILED condition uncovered by test.
+// This is because a vector to produce the failure is not known.
 console_result input_sign::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
