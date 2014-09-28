@@ -38,7 +38,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto index = get_index_option();
-    const auto hash_type = get_sighash_option();
+    const auto hash_type = get_signature_type_option();
     const data_chunk& nonce = get_nonce_argument();
     const tx_type& tx = get_transaction_argument();
     const auto& secret = get_ec_private_key_argument();

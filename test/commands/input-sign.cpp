@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input__okay_output)
 {
     BX_DECLARE_COMMAND(input_sign);
     command.set_index_option(0);
-    command.set_sighash_option({ "single" });
+    command.set_signature_type_option({ "single" });
     command.set_nonce_argument({ INPUT_SIGN_NONCE_A });
     command.set_transaction_argument({ INPUT_SIGN_TX_A });
     command.set_previous_output_script_argument({ INPUT_SIGN_PREVOUT_A });

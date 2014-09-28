@@ -36,7 +36,7 @@ console_result input_validate::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto index = get_index_option();
-    const auto hash_type = get_sighash_option();
+    const auto hash_type = get_signature_type_option();
     const tx_type& tx = get_transaction_argument();
     const auto& public_key = get_ec_public_key_argument();
     const auto& script = get_previous_output_script_argument();

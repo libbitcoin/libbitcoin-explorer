@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input__okay_output)
 {
     BX_DECLARE_COMMAND(input_validate);
     command.set_index_option(0);
-    command.set_sighash_option({ "single" });
+    command.set_signature_type_option({ "single" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
     command.set_previous_output_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
