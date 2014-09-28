@@ -116,11 +116,9 @@ bool sign_transaction(data_chunk& signature, const tx_type& transaction,
     size_t index, const script_type& script, const ec_secret& secret,
     const data_chunk& nonce, uint32_t hash_type)
 {
+    // This always produces a valid signature hash. See libbitcoin comments.
     const auto signature_hash = script_type::generate_signature_hash(
         transaction, index, script, hash_type);
-
-    if (signature_hash == null_hash)
-        return false;
 
     signature = sign(secret, signature_hash, new_key(nonce));
     return !signature.empty();
@@ -139,19 +137,6 @@ std::vector<std::string> split(const std::string& sentence,
     boost::split(words, sentence, boost::is_any_of(delimiter),
         boost::token_compress_on);
     return words;
-}
-
-bool stealth_match(const blockchain::stealth_row& row,
-    const ec_secret& secret)
-{
-    // TODO: implement and move to libbitcoin.
-    return true;
-}
-
-bool stealth_match(const tx_type& tx, const ec_secret& secret)
-{
-    // TODO: implement and move to libbitcoin.
-    return true;
 }
 
 void trim(std::string& value)
@@ -198,11 +183,9 @@ bool valid_signature(const tx_type& tx, uint32_t index, const ec_point& pubkey,
     const script_type& script, const data_chunk& signature,
     uint32_t hash_type)
 {
+    // This always produces a valid signature hash. See libbitcoin comments.
     const auto signature_hash = script_type::generate_signature_hash(tx, index,
         script, hash_type);
-
-    if (signature_hash == null_hash)
-        return false;
 
     return verify_signature(pubkey, signature_hash, signature);
 }
