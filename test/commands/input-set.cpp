@@ -38,4 +38,14 @@ BOOST_AUTO_TEST_CASE(input_set__invoke__single_input__okay_output)
     BX_REQUIRE_OUTPUT(INPUT_SET_TX_OUT_A "\n");
 }
 
+BOOST_AUTO_TEST_CASE(input_set__invoke__single_input_invalid_index__failure_error)
+{
+    BX_DECLARE_COMMAND(input_set);
+    command.set_index_option(1);
+    command.set_transaction_argument({ INPUT_SET_TX_IN_A });
+    command.set_signature_script_argument({ INPUT_SIGNATURE_SCRIPT_A });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_INPUT_SET_INDEX_OUT_OF_RANGE "\n");
+}
+
 BOOST_AUTO_TEST_SUITE_END()

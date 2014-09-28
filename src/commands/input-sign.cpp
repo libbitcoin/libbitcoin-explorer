@@ -50,7 +50,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    if (tx.inputs.size() <= index)
+    if (index >= tx.inputs.size())
     {
         error << BX_INPUT_SIGN_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;

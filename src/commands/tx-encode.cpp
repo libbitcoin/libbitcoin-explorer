@@ -34,7 +34,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-// The BX_TX_ENCODE_LOCKTIME_CONFLICT condition is uncovered by test.
 console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -56,7 +55,10 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
             tx.outputs.push_back(output);
 
     if (is_locktime_conflict(tx))
+    {
         error << BX_TX_ENCODE_LOCKTIME_CONFLICT << std::endl;
+        return console_result::failure;
+    }
 
     write_file(output, file, transaction(tx));
 

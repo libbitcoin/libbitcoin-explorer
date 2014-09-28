@@ -42,7 +42,7 @@ console_result input_validate::invoke(std::ostream& output,
     const auto& script = get_previous_output_script_argument();
     const auto& signature = get_signature_argument();
 
-    if (tx.inputs.size() <= index)
+    if (index >= tx.inputs.size())
     {
         error << BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
