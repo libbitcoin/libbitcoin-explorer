@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_out
     command.set_previous_output_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_B });
     BX_REQUIRE_INVALID(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE "\n");
+    BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
