@@ -107,21 +107,22 @@ std::string read_stream(std::istream& stream)
     return result;
 }
 
-// TODO: move to libbitcoin
 script_type script_to_raw_data_script(const script_type& script)
 {
-    auto data = save_script(script);
-    return raw_data_script(data);
+    return raw_data_script(save_script(script));
 }
 
-// TODO: move to libbitcoin
 bool sign_transaction(data_chunk& signature, const tx_type& transaction,
     size_t index, const script_type& script, const ec_secret& secret,
     const data_chunk& nonce, uint32_t hash_type)
 {
-    const auto sighash = script_type::generate_signature_hash(transaction,
-        index, script, hash_type);
-    signature = sign(secret, sighash, new_key(nonce));
+    const auto signature_hash = script_type::generate_signature_hash(
+        transaction, index, script, hash_type);
+
+    if (signature_hash == null_hash)
+        return false;
+
+    signature = sign(secret, signature_hash, new_key(nonce));
     return !signature.empty();
 }
 
@@ -197,14 +198,13 @@ bool valid_signature(const tx_type& tx, uint32_t index, const ec_point& pubkey,
     const script_type& script, const data_chunk& signature,
     uint32_t hash_type)
 {
-    auto sighash = script_type::generate_signature_hash(tx, index, script,
-        hash_type);
+    const auto signature_hash = script_type::generate_signature_hash(tx, index,
+        script, hash_type);
 
-    // This will effectively be dealt with in verify_signature. 
-    //if (sighash == one_hash())
-    //    return false;
+    if (signature_hash == null_hash)
+        return false;
 
-    return verify_signature(pubkey, sighash, signature);
+    return verify_signature(pubkey, signature_hash, signature);
 }
 
 data_chunk wrap(const wrapped_data& data)
