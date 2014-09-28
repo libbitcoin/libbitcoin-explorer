@@ -146,7 +146,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Validate the a transaction input signature."
+                "Validate a transaction signature."
             )
             (
                 "index,i",
