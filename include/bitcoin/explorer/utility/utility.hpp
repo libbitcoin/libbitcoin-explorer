@@ -273,24 +273,6 @@ std::vector<std::string> split(const std::string& sentence,
     const std::string& delimiter=BX_SENTENCE_DELIMITER);
 
 /**
- * Determine if the information in the stealth row is a match to the secret.
- * @param[in]  row     The stealth row to test.
- * @param[in]  secret  Theec private key to use in testing for a match.
- * @return             True if matched.
- */
-bool stealth_match(const blockchain::stealth_row& row,
-    const ec_secret& secret);
-
-/**
- * Determine if the information in the tx contains stealth payments with at 
- * least one matched to the secret.
- * @param[in]  tx      The potential stealth tx to test.
- * @param[in]  secret  Theec private key to use in testing for a match.
- * @return             True if matched.
- */
-bool stealth_match(const tx_type& tx, const ec_secret& secret);
-
-/**
  * Trim a string of whitespace.
  * @param[out] value  The string to trim.
  */
