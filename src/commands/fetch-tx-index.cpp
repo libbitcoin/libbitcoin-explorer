@@ -79,9 +79,7 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output, encoding);
 
     for (auto hash: hashes)
-    {
         fetch_tx_index_from_hash(client, state, hash);
-    }
 
     client.resolve_callbacks();
 
