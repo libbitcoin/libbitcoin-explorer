@@ -30,7 +30,8 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-// 83% coverage by line, loc ready. BX_EC_NEW_INVALID_KEY uncovered.
+// The BX_EC_NEW_INVALID_KEY condition uncovered by test.
+// This is because is not known what seed will produce an invalid key.
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.

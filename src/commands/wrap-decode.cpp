@@ -30,8 +30,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-// TODO: update tests for ptree output.
-// 100% coverage by line, loc ready.
 console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.

@@ -46,9 +46,9 @@ public:
 
     /**
      * Initialization constructor.
-     * @param[in]  hexcode  The value to initialize with.
+     * @param[in]  mnemonic  The value to initialize with.
      */
-    script(const std::string& hexcode);
+    script(const std::string& mnemonic);
 
     /**
      * Initialization constructor.
@@ -58,13 +58,19 @@ public:
 
     /**
      * Initialization constructor.
+     * @param[in]  value  The value to initialize with.
+     */
+    script(const data_chunk& value);
+
+    /**
+     * Initialization constructor.
      * We handle pretty printing internal to the script primitives because
      * we do not use boost program_options to read the words as a single
      * argument. Instead we read a set of string arguments and then explicitly
      * load them here.
-     * @param[in]  mnemonics  The mnemonic tokens to initialize with.
+     * @param[in]  tokens  The mnemonic tokens to initialize with.
      */
-    script(const std::vector<std::string>& mnemonics);
+    script(const std::vector<std::string>& tokens);
 
     /**
      * Copy constructor.
@@ -85,6 +91,12 @@ public:
      * @return  This object's value cast to internal type.
      */
     operator const script_type&() const;
+
+    /**
+     * Overload cast to data chunk.
+     * @return  This object's value cast to data chunk.
+     */
+    operator const data_chunk() const;
 
     /**
      * Overload stream in. Throws if input is invalid.

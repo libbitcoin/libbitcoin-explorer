@@ -107,21 +107,20 @@ std::string read_stream(std::istream& stream)
     return result;
 }
 
-// TODO: move to libbitcoin
 script_type script_to_raw_data_script(const script_type& script)
 {
-    auto data = save_script(script);
-    return raw_data_script(data);
+    return raw_data_script(save_script(script));
 }
 
-// TODO: move to libbitcoin
 bool sign_transaction(data_chunk& signature, const tx_type& transaction,
     size_t index, const script_type& script, const ec_secret& secret,
     const data_chunk& nonce, uint32_t hash_type)
 {
-    const auto sighash = script_type::generate_signature_hash(transaction,
-        index, script, hash_type);
-    signature = sign(secret, sighash, new_key(nonce));
+    // This always produces a valid signature hash. See libbitcoin comments.
+    const auto signature_hash = script_type::generate_signature_hash(
+        transaction, index, script, hash_type);
+
+    signature = sign(secret, signature_hash, new_key(nonce));
     return !signature.empty();
 }
 
@@ -138,19 +137,6 @@ std::vector<std::string> split(const std::string& sentence,
     boost::split(words, sentence, boost::is_any_of(delimiter),
         boost::token_compress_on);
     return words;
-}
-
-bool stealth_match(const blockchain::stealth_row& row,
-    const ec_secret& secret)
-{
-    // TODO: implement and move to libbitcoin.
-    return true;
-}
-
-bool stealth_match(const tx_type& tx, const ec_secret& secret)
-{
-    // TODO: implement and move to libbitcoin.
-    return true;
 }
 
 void trim(std::string& value)
@@ -197,9 +183,11 @@ bool valid_signature(const tx_type& tx, uint32_t index, const ec_point& pubkey,
     const script_type& script, const data_chunk& signature,
     uint32_t hash_type)
 {
-    auto sighash = script_type::generate_signature_hash(tx, index, script,
-        hash_type);
-    return verify_signature(pubkey, sighash, signature);
+    // This always produces a valid signature hash. See libbitcoin comments.
+    const auto signature_hash = script_type::generate_signature_hash(tx, index,
+        script, hash_type);
+
+    return verify_signature(pubkey, signature_hash, signature);
 }
 
 data_chunk wrap(const wrapped_data& data)

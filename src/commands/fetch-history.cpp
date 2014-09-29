@@ -83,9 +83,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output, encoding);
 
     for (auto address: addresses)
-    {
         fetch_history_from_address(client, state, address);
-    }
 
     client.resolve_callbacks();
 

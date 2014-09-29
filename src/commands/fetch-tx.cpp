@@ -80,9 +80,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output, encoding);
 
     for (auto hash: hashes)
-    {
         fetch_tx_from_hash(client, state, hash);
-    }
 
     client.resolve_callbacks();
 

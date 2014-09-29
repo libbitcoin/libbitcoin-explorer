@@ -112,7 +112,7 @@ public:
             .add("TRANSACTION", 1)
             .add("EC_PRIVATE_KEY", 1)
             .add("NONCE", 1)
-            .add("PREVOUT_SCRIPT", 1);
+            .add("PREVIOUS_OUTPUT_SCRIPT", 1);
     }
 	
 	/**
@@ -154,9 +154,9 @@ public:
                 "The ordinal position of the input within the transaction, defaults to zero."
             )
             (
-                "sighash,s",
-                value<primitives::hashtype>(&option_.sighash),
-                "A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
+                "signature_type,s",
+                value<primitives::hashtype>(&option_.signature_type),
+                "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
             )
             (
                 "TRANSACTION",
@@ -174,9 +174,9 @@ public:
                 "The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length."
             )
             (
-                "PREVOUT_SCRIPT",
-                value<primitives::script>(&argument_.prevout_script),
-                "The Base16 previous output script to use in signing. If not specified the script is read from STDIN."
+                "PREVIOUS_OUTPUT_SCRIPT",
+                value<primitives::script>(&argument_.previous_output_script),
+                "The previous output script to use in signing. If not specified the script is read from STDIN."
             );
 
         return options;
@@ -244,20 +244,20 @@ public:
     }
 
     /**
-     * Get the value of the PREVOUT_SCRIPT argument.
+     * Get the value of the PREVIOUS_OUTPUT_SCRIPT argument.
      */
-    virtual primitives::script& get_prevout_script_argument()
+    virtual primitives::script& get_previous_output_script_argument()
     {
-        return argument_.prevout_script;
+        return argument_.previous_output_script;
     }
     
     /**
-     * Set the value of the PREVOUT_SCRIPT argument.
+     * Set the value of the PREVIOUS_OUTPUT_SCRIPT argument.
      */
-    virtual void set_prevout_script_argument(
+    virtual void set_previous_output_script_argument(
         const primitives::script& value)
     {
-        argument_.prevout_script = value;
+        argument_.previous_output_script = value;
     }
 
     /**
@@ -295,20 +295,20 @@ public:
     }
 
     /**
-     * Get the value of the sighash option.
+     * Get the value of the signature_type option.
      */
-    virtual primitives::hashtype& get_sighash_option()
+    virtual primitives::hashtype& get_signature_type_option()
     {
-        return option_.sighash;
+        return option_.signature_type;
     }
     
     /**
-     * Set the value of the sighash option.
+     * Set the value of the signature_type option.
      */
-    virtual void set_sighash_option(
+    virtual void set_signature_type_option(
         const primitives::hashtype& value)
     {
-        option_.sighash = value;
+        option_.signature_type = value;
     }
 
 private:
@@ -324,14 +324,14 @@ private:
           : transaction(),
             ec_private_key(),
             nonce(),
-            prevout_script()
+            previous_output_script()
         {
         }
         
         primitives::transaction transaction;
         primitives::ec_private ec_private_key;
         primitives::base16 nonce;
-        primitives::script prevout_script;
+        primitives::script previous_output_script;
     } argument_;
     
     /**
@@ -344,13 +344,13 @@ private:
         option()
           : help(),
             index(),
-            sighash()
+            signature_type()
         {
         }
         
         bool help;
         size_t index;
-        primitives::hashtype sighash;
+        primitives::hashtype signature_type;
     } option_;
 };
 

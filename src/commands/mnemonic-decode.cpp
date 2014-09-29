@@ -28,15 +28,12 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-// $ echo "people blonde admit dart couple different truth common alas
-//   stumble time cookie" | bx mnemonic-decode
+// TODO: change implementation from Electrum to BIP39.
 console_result mnemonic_decode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
     const auto& words = get_words_argument();
-
-    // TODO: change implementation from Electrum to BIP39.
 
     // Note that there is no dictionary validation in decode_mnemonic.
     const auto sentence = decode_mnemonic(words);
