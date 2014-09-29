@@ -78,9 +78,7 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     callback_state state(error, output, encoding);
 
     for (auto tx: transactions)
-    {
         fetch_confirmations_from_transaction(client, state, tx);
-    }
 
     client.resolve_callbacks();
 

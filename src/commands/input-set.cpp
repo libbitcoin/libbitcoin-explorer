@@ -38,11 +38,11 @@ console_result input_set::invoke(std::ostream& output, std::ostream& error)
     const auto& tx_in = get_transaction_argument();
     const auto& script = get_signature_script_argument();
 
-    // Clone so we can keep arguments const.
+    // Clone so we keep arguments const.
     auto tx_copy = transaction(tx_in);
     auto& tx_out = tx_copy.data();
 
-    if (tx_out.inputs.size() <= index)
+    if (index >= tx_out.inputs.size())
     {
         error << BX_INPUT_SET_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;

@@ -30,7 +30,6 @@ using namespace boost::program_options;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-// 100% coverage by line (as private to invoke())
 static bool write_all_command_names(std::ostream& stream)
 {
     const auto func = [&stream](std::shared_ptr<command> explorer_command)
@@ -42,7 +41,6 @@ static bool write_all_command_names(std::ostream& stream)
     return broadcast(func);
 }
 
-// 100% coverage by line, loc ready.
 console_result help::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.

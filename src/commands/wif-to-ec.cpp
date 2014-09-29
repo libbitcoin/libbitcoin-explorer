@@ -28,7 +28,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-// 100% coverage by line, loc ready.
 console_result wif_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.

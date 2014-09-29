@@ -31,15 +31,17 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+// The BX_INPUT_SIGN_FAILED condition uncovered by test.
+// This is because a vector to produce the failure is not known.
 console_result input_sign::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto index = get_index_option();
-    const auto hash_type = get_sighash_option();
+    const auto hash_type = get_signature_type_option();
     const data_chunk& nonce = get_nonce_argument();
     const tx_type& tx = get_transaction_argument();
     const auto& secret = get_ec_private_key_argument();
-    const auto& script = get_prevout_script_argument();
+    const auto& script = get_previous_output_script_argument();
 
     if (nonce.size() < minimum_seed_size)
     {
@@ -47,7 +49,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    if (tx.inputs.size() <= index)
+    if (index >= tx.inputs.size())
     {
         error << BX_INPUT_SIGN_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;

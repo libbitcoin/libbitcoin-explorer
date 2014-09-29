@@ -75,9 +75,7 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output);
 
     for (auto tx: transactions)
-    {
         broadcast_transaction(client, state, tx);
-    }
 
     client.resolve_callbacks();
 

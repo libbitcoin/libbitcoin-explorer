@@ -87,15 +87,13 @@ std::istream& operator>>(std::istream& input, script& argument)
 {
     std::istreambuf_iterator<char> eos;
     std::string mnemonic(std::istreambuf_iterator<char>(input), eos);
+    trim(mnemonic);
 
-    try
-    {
-        argument.value_ = unpretty(mnemonic);
-    }
-    catch (end_of_stream)
-    {
+    argument.value_ = unpretty(mnemonic);
+
+    // Test for invalid result sentinel.
+    if (argument.value_.operations().size() == 0 && mnemonic.length() > 0)
         throw invalid_option_value(mnemonic);
-    }
 
     return input;
 }

@@ -29,7 +29,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-// 100% coverage by line, loc ready.
 console_result address_decode::invoke(std::ostream& output, 
     std::ostream& error)
 {

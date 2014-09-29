@@ -34,13 +34,13 @@ console_result input_validate::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto index = get_index_option();
-    const auto hash_type = get_sighash_option();
+    const auto hash_type = get_signature_type_option();
     const tx_type& tx = get_transaction_argument();
     const auto& public_key = get_ec_public_key_argument();
-    const auto& script = get_signature_script_argument();
+    const auto& script = get_previous_output_script_argument();
     const auto& signature = get_signature_argument();
 
-    if (tx.inputs.size() <= index)
+    if (index >= tx.inputs.size())
     {
         error << BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
@@ -48,7 +48,6 @@ console_result input_validate::invoke(std::ostream& output,
 
     if (!valid_signature(tx, index, public_key, script, signature, hash_type))
     {
-        // We do not return a failure here, as this is a validity test.
         output << BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;
         return console_result::invalid;
     }

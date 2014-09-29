@@ -55,7 +55,10 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
             tx.outputs.push_back(output);
 
     if (is_locktime_conflict(tx))
+    {
         error << BX_TX_ENCODE_LOCKTIME_CONFLICT << std::endl;
+        return console_result::failure;
+    }
 
     write_file(output, file, transaction(tx));
 

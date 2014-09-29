@@ -111,7 +111,7 @@ public:
         return get_argument_metadata()
             .add("TRANSACTION", 1)
             .add("EC_PUBLIC_KEY", 1)
-            .add("SIGNATURE_SCRIPT", 1)
+            .add("PREVIOUS_OUTPUT_SCRIPT", 1)
             .add("SIGNATURE", 1);
     }
 	
@@ -146,7 +146,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Validate the a transaction input signature."
+                "Validate a transaction signature."
             )
             (
                 "index,i",
@@ -154,9 +154,9 @@ public:
                 "The ordinal position of the input within the transaction, defaults to zero."
             )
             (
-                "sighash,s",
-                value<primitives::hashtype>(&option_.sighash),
-                "A token that indicates how the transaction should be signed. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
+                "signature_type,s",
+                value<primitives::hashtype>(&option_.signature_type),
+                "A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
             )
             (
                 "TRANSACTION",
@@ -169,9 +169,9 @@ public:
                 "The Base16 EC public key to verify against."
             )
             (
-                "SIGNATURE_SCRIPT",
-                value<primitives::script>(&argument_.signature_script)->required(),
-                "The signature script for the specified index."
+                "PREVIOUS_OUTPUT_SCRIPT",
+                value<primitives::script>(&argument_.previous_output_script)->required(),
+                "The previous output script used in signing."
             )
             (
                 "SIGNATURE",
@@ -227,20 +227,20 @@ public:
     }
 
     /**
-     * Get the value of the SIGNATURE_SCRIPT argument.
+     * Get the value of the PREVIOUS_OUTPUT_SCRIPT argument.
      */
-    virtual primitives::script& get_signature_script_argument()
+    virtual primitives::script& get_previous_output_script_argument()
     {
-        return argument_.signature_script;
+        return argument_.previous_output_script;
     }
     
     /**
-     * Set the value of the SIGNATURE_SCRIPT argument.
+     * Set the value of the PREVIOUS_OUTPUT_SCRIPT argument.
      */
-    virtual void set_signature_script_argument(
+    virtual void set_previous_output_script_argument(
         const primitives::script& value)
     {
-        argument_.signature_script = value;
+        argument_.previous_output_script = value;
     }
 
     /**
@@ -295,20 +295,20 @@ public:
     }
 
     /**
-     * Get the value of the sighash option.
+     * Get the value of the signature_type option.
      */
-    virtual primitives::hashtype& get_sighash_option()
+    virtual primitives::hashtype& get_signature_type_option()
     {
-        return option_.sighash;
+        return option_.signature_type;
     }
     
     /**
-     * Set the value of the sighash option.
+     * Set the value of the signature_type option.
      */
-    virtual void set_sighash_option(
+    virtual void set_signature_type_option(
         const primitives::hashtype& value)
     {
-        option_.sighash = value;
+        option_.signature_type = value;
     }
 
 private:
@@ -323,14 +323,14 @@ private:
         argument()
           : transaction(),
             ec_public_key(),
-            signature_script(),
+            previous_output_script(),
             signature()
         {
         }
         
         primitives::transaction transaction;
         primitives::ec_public ec_public_key;
-        primitives::script signature_script;
+        primitives::script previous_output_script;
         primitives::base16 signature;
     } argument_;
     
@@ -344,13 +344,13 @@ private:
         option()
           : help(),
             index(),
-            sighash()
+            signature_type()
         {
         }
         
         bool help;
         size_t index;
-        primitives::hashtype sighash;
+        primitives::hashtype signature_type;
     } option_;
 };
 
