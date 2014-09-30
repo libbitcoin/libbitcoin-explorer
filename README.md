@@ -420,11 +420,14 @@ There is a command named `help` which lists the set of commands in alphabetical 
 $ bx
 $ bx help
 ```
-Each command defines a `--help` option which is trapped and handled by shared code. Applied to any BX command line, the help option causes BX to emit the command's help to STDOUT. Command help includes the command's description and full parameterization, including arguments and options with their descriptions and constraints.
+Each command defines a `--help` option (which is implemented in shared code). Applied to any BX command, the help option causes BX to emit the command's help to STDOUT. Command help includes the command's description and full parameterization, including arguments and options with their descriptions and constraints. Similarly, the help command emits help for a specified command.
+
+These command lines are equivalent:
 ```sh
 $ bx address-decode --help
+$ bx help address-decode
 ```
-> It is somewhat idiosyncratic that the help `description` attribute defines command help content as opposed to a description of the help option. 
+> It is somewhat idiosyncratic that in metadata the help `description` attribute defines command help content as opposed to a description of the help option. 
 
 The help command also supports the `--help` option:
 ```sh
@@ -493,7 +496,7 @@ All tests should be able to run concurrently and in any order. Global and static
 
 All code paths within a library under test should be covered. In other words the library should provide 100% non-functional test coverage by line. Coverage metrics should be published from regular test execution. External libraries are presumed to be tested independently.
 
-> BX is planning to implement automated code coverage metrics tooling as soon as it is available as a GitHub service for C++ projects. At this point we will have better visibility into actual test coverage. This objective is not yet achieved as converage is known to be less than complete.
+> BX is planning to implement automated code coverage metrics tooling as soon as it is available as a GitHub service for C++ projects. At this point we will have better visibility into actual test coverage. This objective is not yet achieved as coverage is known to be less than complete.
 
 #### Quality Gate
 
