@@ -53,7 +53,7 @@ automake_current_directory()
 {
     ./autogen.sh
     ./configure "$@"
-    make
+    make -j7
     sudo make install
     sudo ldconfig
 }
