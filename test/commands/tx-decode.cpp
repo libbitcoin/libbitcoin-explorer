@@ -56,28 +56,30 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "    version 1\n" \
 "}\n"
 
-//#define TX_DECODE_TX_A_JSON \
-//"{\n" \
-//"    \"transaction\": {\n" \
-//"        \"hash\": \"4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0\",\n" \
-//"        \"inputs\": {\n" \
-//"            \"input\": {\n" \
-//"                \"previous_output\": \"97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0\",\n" \
-//"                \"script\": \"\",\n" \
-//"                \"sequence\": \"4294967295\"\n" \
-//"            }\n" \
-//"        },\n" \
-//"        \"lock_time\": \"0\",\n" \
-//"        \"outputs\": {\n" \
-//"            \"output\": {\n" \
-//"                \"address\": \"13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe\",\n" \
-//"                \"script\": \"dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig\",\n" \
-//"                \"value\": \"90000\"\n" \
-//"            }\n" \
-//"        },\n" \
-//"        \"version\": \"1\"\n" \
-//"    }\n" \
-//"}\n"
+/*
+#define TX_DECODE_TX_A_JSON \
+"{\n" \
+"    \"transaction\": {\n" \
+"        \"hash\": \"4d25b18ed094ad68f75f21692d8540f45ceb90b240a521b8f191e95d8b6b8bb0\",\n" \
+"        \"inputs\": {\n" \
+"            \"input\": {\n" \
+"                \"previous_output\": \"97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:0\",\n" \
+"                \"script\": \"\",\n" \
+"                \"sequence\": \"4294967295\"\n" \
+"            }\n" \
+"        },\n" \
+"        \"lock_time\": \"0\",\n" \
+"        \"outputs\": {\n" \
+"            \"output\": {\n" \
+"                \"address\": \"13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe\",\n" \
+"                \"script\": \"dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig\",\n" \
+"                \"value\": \"90000\"\n" \
+"            }\n" \
+"        },\n" \
+"        \"version\": \"1\"\n" \
+"    }\n" \
+"}\n"
+*/
 
 #define TX_DECODE_TX_A_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
