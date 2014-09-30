@@ -32,8 +32,9 @@ SECP256K1_OPTIONS=\
 "--enable-endomorphism=no"
 
 # http://bit.ly/1pKbuFP
+# Run all unit and component tests (excludes 'network' group).
 BOOST_UNIT_TEST_PARAMETERS=\
-"--run_test=* "\
+"--run_test=utility,primitives,obelisk,generated,offline,stub,obsolete "\
 "--random=1 "\
 "--show_progress=yes "\
 "--result_code=no "\
