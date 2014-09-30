@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_add_secrets__invoke)
 
 // TODO: generate overflow condition
@@ -93,4 +94,5 @@ BOOST_AUTO_TEST_CASE(ec_add_secrets__invoke__two_unique_values__okay_output)
     BX_REQUIRE_OUTPUT("1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd007\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

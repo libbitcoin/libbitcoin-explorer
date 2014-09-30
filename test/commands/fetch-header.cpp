@@ -22,11 +22,9 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_header__invoke)
-/*
-// DISABLED until client-server calls are isolated for test.
 
-#define BX_FETCH_HEADER_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
 #define BX_FETCH_HEADER_GENESIS_HASH "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
 #define BX_FETCH_HEADER_GENESIS_INFO \
 "bits 486604799\n" \
@@ -44,10 +42,10 @@ BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_0_native__okay_o
 {
     BX_DECLARE_COMMAND(fetch_header);
     command.set_height_option(0);
-    command.set_retries_option(0);
-    command.set_wait_option(2000);
+    command.set_general_retries_setting(0);
+    command.set_general_wait_setting(2000);
     command.set_format_option({ "native" });
-    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    command.set_server_address_setting(BX_MAINNET_SERVER);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_HEADER_GENESIS_INFO);
 }
@@ -56,9 +54,9 @@ BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_2_xml__okay_outp
 {
     BX_DECLARE_COMMAND(fetch_header);
     command.set_height_option(1);
-    command.set_wait_option(2000);
+    command.set_general_wait_setting(2000);
     command.set_format_option({ "xml" });
-    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    command.set_server_address_setting(BX_MAINNET_SERVER);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_HEADER_SECOND_XML);
 }
@@ -67,9 +65,9 @@ BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_hash_genesis_info__okay
 {
     BX_DECLARE_COMMAND(fetch_header);
     command.set_hash_option({ BX_FETCH_HEADER_GENESIS_HASH });
-    command.set_wait_option(2000);
+    command.set_general_wait_setting(2000);
     command.set_format_option({ "info" });
-    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    command.set_server_address_setting(BX_MAINNET_SERVER);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_HEADER_GENESIS_INFO);
 }
@@ -79,11 +77,12 @@ BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_42_block_hash_ge
     BX_DECLARE_COMMAND(fetch_header);
     command.set_height_option(42);
     command.set_hash_option({ BX_FETCH_HEADER_GENESIS_HASH });
-    command.set_wait_option(2000);
+    command.set_general_wait_setting(2000);
     command.set_format_option({ "info" });
-    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    command.set_server_address_setting(BX_MAINNET_SERVER);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_HEADER_GENESIS_INFO);
 }
-*/
+
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_to_address__invoke)
 
 BOOST_AUTO_TEST_CASE(ec_to_address__invoke__compressed_key__okay_output)
@@ -40,4 +41,5 @@ BOOST_AUTO_TEST_CASE(ec_to_address__invoke__uncompressed_key__okay_output)
     BX_REQUIRE_OUTPUT("197FLrycah42jKDgfmTaok7b8kNHA7R2ih\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

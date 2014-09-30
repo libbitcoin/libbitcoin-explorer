@@ -24,6 +24,7 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/explorer.hpp>
 
+BOOST_AUTO_TEST_SUITE(obelisk)
 BOOST_AUTO_TEST_SUITE(obelisk_client)
 
 BOOST_AUTO_TEST_CASE(obelisk_client__constructor)
@@ -31,4 +32,5 @@ BOOST_AUTO_TEST_CASE(obelisk_client__constructor)
     // TODO
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

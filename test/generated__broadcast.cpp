@@ -24,6 +24,7 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+BOOST_AUTO_TEST_SUITE(generated)
 BOOST_AUTO_TEST_SUITE(generated__broadcast)
 
 BOOST_AUTO_TEST_CASE(generated__broadcast__always__does_not_throw)
@@ -33,4 +34,5 @@ BOOST_AUTO_TEST_CASE(generated__broadcast__always__does_not_throw)
     bc::explorer::broadcast(func);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

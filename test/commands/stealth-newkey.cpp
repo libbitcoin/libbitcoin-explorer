@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(obsolete)
 BOOST_AUTO_TEST_SUITE(stealth_newkey__invoke)
 
 BOOST_AUTO_TEST_CASE(stealth_newkey__invoke__always__failure_error)
@@ -31,4 +32,5 @@ BOOST_AUTO_TEST_CASE(stealth_newkey__invoke__always__failure_error)
     BX_REQUIRE_ERROR(BX_STEALTH_NEWKEY_OBSOLETE "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
 
 // vectors
@@ -188,4 +189,5 @@ BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_2_spend_keys_reuse
     BX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AAB1PT);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

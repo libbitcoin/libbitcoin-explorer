@@ -27,6 +27,7 @@
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
+BOOST_AUTO_TEST_SUITE(generated)
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 
 BOOST_AUTO_TEST_CASE(generated__symbol__address_decode__returns_expected_value)
@@ -464,4 +465,5 @@ BOOST_AUTO_TEST_CASE(generated__symbol__wrap_encode__returns_expected_value)
     BOOST_REQUIRE(wrap_encode::symbol() == std::string("wrap-encode"));
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

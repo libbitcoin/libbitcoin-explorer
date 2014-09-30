@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(stub)
 BOOST_AUTO_TEST_SUITE(qrcode__invoke)
 
 BOOST_AUTO_TEST_CASE(qrcode__invoke__always__failure_error)
@@ -31,4 +32,5 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__always__failure_error)
     BX_REQUIRE_ERROR(BX_QRCODE_NOT_IMPLEMENTED "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

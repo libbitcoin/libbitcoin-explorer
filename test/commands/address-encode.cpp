@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(address_encode__invoke)
 
 // vectors
@@ -48,4 +49,5 @@ BOOST_AUTO_TEST_CASE(address_encode__invoke__version_42__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_ENCODE_ADDRESS_A_V42 "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

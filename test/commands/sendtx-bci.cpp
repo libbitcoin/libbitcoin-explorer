@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(obsolete)
 BOOST_AUTO_TEST_SUITE(sendtx_bci__invoke)
 
 BOOST_AUTO_TEST_CASE(sendtx_bci__invoke__always__failure_error)
@@ -31,4 +32,5 @@ BOOST_AUTO_TEST_CASE(sendtx_bci__invoke__always__failure_error)
     BX_REQUIRE_ERROR(BX_SENDTX_BCI_OBSOLETE "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

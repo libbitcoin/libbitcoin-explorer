@@ -29,7 +29,8 @@ using namespace bc::explorer::primitives;
 #define ADDRESS_HD_PRIVATE_KEY_MAINNET_A "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi"
 #define ADDRESS_HD_PUBLIC_KEY_MAINNET_A "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8"
 
-BOOST_AUTO_TEST_SUITE(address__primitives)
+BOOST_AUTO_TEST_SUITE(primitives)
+BOOST_AUTO_TEST_SUITE(primitives__address)
 
 BOOST_AUTO_TEST_CASE(address__constructor__default__does_not_throw)
 {
@@ -75,4 +76,5 @@ BOOST_AUTO_TEST_CASE(address__constructor__hd_public_key__converts)
     BOOST_REQUIRE_EQUAL(instance.encoded(), ADDRESS_MAINNET_A);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

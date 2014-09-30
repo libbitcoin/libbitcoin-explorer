@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(input_sign__invoke)
 
 // Vector A from sx.dyne.org/offlinetx.html
@@ -93,4 +94,5 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__invalid_index__failure_error)
     BX_REQUIRE_ERROR(BX_INPUT_SIGN_INDEX_OUT_OF_RANGE "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

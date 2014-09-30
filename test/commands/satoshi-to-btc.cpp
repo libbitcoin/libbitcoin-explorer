@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(satoshi_to_btc__invoke)
 
 BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__0_satoshi__okay_output)
@@ -50,4 +51,5 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_money_satoshi__okay_output)
     BX_REQUIRE_OUTPUT("20999999.9769\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

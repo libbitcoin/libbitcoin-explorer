@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(wif_to_ec__invoke)
 
 BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_wif__okay_output)
@@ -32,4 +33,5 @@ BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_wif__okay_output)
     BX_REQUIRE_OUTPUT("21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
