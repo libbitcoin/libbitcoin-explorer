@@ -30,39 +30,24 @@ using namespace boost::program_options;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-static bool write_all_command_names(std::ostream& stream)
-{
-    const auto func = [&stream](std::shared_ptr<command> explorer_command)
-    {
-        BITCOIN_ASSERT(explorer_command != nullptr);
-        stream << explorer_command->name() << std::endl;
-    };
-
-    return broadcast(func);
-}
-
 console_result help::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& symbol = get_command_argument();
 
-    // If there is no COMMAND then show usage for *this* command.
     if (symbol.empty())
     {
-        write_usage(output);
+        display_usage(output);
         return console_result::okay;
     }
 
-    // If the COMMAND is not a command, say so and list all commands.
-    auto explorer_command = find(symbol);
-    if (explorer_command == nullptr)
+    auto command = find(symbol);
+    if (!command)
     {
-        error << boost::format(BX_HELP_NOT_COMMAND) % symbol << std::endl;
-        write_all_command_names(error);
+        display_invalid_command(error, symbol);
         return console_result::failure;
     }
 
-    // The COMMAND is valid so show its usage.
-    explorer_command->write_usage(output);
+    command->write_usage(output);
     return console_result::okay;
 }

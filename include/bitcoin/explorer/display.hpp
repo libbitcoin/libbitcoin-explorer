@@ -20,6 +20,7 @@
 #ifndef BX_DISPLAY_HPP
 #define BX_DISPLAY_HPP
 
+#include <iostream>
 #include <bitcoin/explorer/command.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -28,49 +29,33 @@ namespace libbitcoin {
 namespace explorer {
 
 /**
- * Display an error message to the console that the specified exlorer command
+ * Write the list of all command names to a stream.
+ * @param[in]  stream   The stream to write into.
+ */
+void display_command_names(std::ostream& stream);
+
+/**
+ * Write an error message to a stream that the specified explorer command
  * does not exist.
+ * @param[in]  stream   The stream to write into.
  * @param[in]  command  The value that was attempted as a command.
  */
-void display_invalid_command(const std::string& command);
+void display_invalid_command(std::ostream& stream, const std::string& command);
 
 /**
- * Display an error message to the console that the specified configuration
- * file does not exist.
- * @param[in]  file  The path of a file that was tested.
- */
-void display_invalid_config(const std::string& file);
-
-/**
- * Display an error message to the console that indicates what is wrong with
+ * Write an error message to a stream that indicates what is wrong with
  * initialization in terms of command line, config settings file, environment.
- * @param[in]  message  The message to display.
+ * @param[in]  stream   The stream to write into.
+ * @param[in]  message  The message to write.
  */
-void display_invalid_variables(const std::string& message);
+void display_invalid_parameter(std::ostream& stream,
+    const std::string& message);
 
 /**
- * Display a blank line.
+ * Write usage instructions (help) to a tream for the explorer command line.
+ * @param[in]  stream   The stream to write into.
  */
-void display_line();
-
-/**
- * Display a summary for the specified command.
- * @param[in]  command  Pointer to the command to display.
- * @return              True if displayed successfully.
- */
-bool display_summary(const std::shared_ptr<command> command);
-
-/**
- * Display usage instructions (help) for the explorer command line.
- */
-void display_usage();
-
-/**
- * Display usage for the specified command.
- * @param[in]  command  Pointer to the command to display.
- * @return              True if displayed successfully.
- */
-bool display_usage(const std::shared_ptr<command> command);
+void display_usage(std::ostream& stream);
 
 } // namespace explorer
 } // namespace libbitcoin

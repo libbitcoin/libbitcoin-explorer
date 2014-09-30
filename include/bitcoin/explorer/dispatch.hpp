@@ -33,34 +33,42 @@ namespace explorer {
    
 /**
  * Dispatch the command with the raw arguments as provided on the command line.
- * @param[in]  argc  The number of elements in the argv array.
- * @param[in]  argv  The array of arguments, including the process.
- * @return           The appropriate console return code { -1, 0, 1 }.
+ * @param[in]  argc    The number of elements in the argv array.
+ * @param[in]  argv    The array of arguments, including the process.
+ * @param[in]  input   The input stream (e.g. STDIO).
+ * @param[in]  output  The output stream (e.g. STDOUT).
+ * @param[in]  error   The error stream (e.g. STDERR).
+ * @return             The appropriate console return code { -1, 0, 1 }.
  */
-console_result dispatch(int argc, const char* argv[]);
+console_result dispatch(int argc, const char* argv[],
+    std::istream& input, std::ostream& output, std::ostream& error);
 
 /**
  * Invoke the command identified by the specified arguments.
  * The first argument in the array is the command symbolic name.
- *
  * @param[in]  argc   The number of elements in the argv parameter.
  * @param[in]  argv   Array of command line arguments excluding the process.
+ * @param[in]  input   The input stream (e.g. STDIO).
+ * @param[in]  output  The output stream (e.g. STDOUT).
+ * @param[in]  error   The error stream (e.g. STDERR).
  * @return            The appropriate console return code { -1, 0, 1 }.
  */
-console_result dispatch_invoke(int argc, const char* argv[]);
+console_result dispatch_invoke(int argc, const char* argv[],
+    std::istream& input, std::ostream& output, std::ostream& error);
 
 /**
- * Display usage for all commands.
- * @return  True if displayed successfully.
- */
-bool dispatch_usage();
-
-/**
- * Get the config variable from the variable map.
- * @param[in]  variables  The variable map to read the config from.
+ * Get the config option value from the variable map.
+ * @param[in]  variables  The variable map to read the config option from.
  * @return                The read path.
  */
-boost::filesystem::path get_config_variable(po::variables_map& variables);
+boost::filesystem::path get_config_option(po::variables_map& variables);
+
+/**
+ * Get the help option value from the variable map.
+ * @param[in]  variables  The variable map to read the help option from.
+ * @return                True if the help option is set.
+ */
+bool get_help_option(po::variables_map& variables);
 
 /**
  * Load command line variables.

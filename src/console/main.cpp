@@ -19,16 +19,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 // #include "precompile.hpp"
+#include <iostream>
 #include <bitcoin/explorer.hpp>
 
 /**
  * Invoke this program with the raw arguments provided on the command line.
- *
+ * All console input and output streams for the application originate here.
  * @param argc  The number of elements in the argv array.
  * @param argv  The array of arguments, including the process.
  * @return      The numeric result to return via console exit.
  */
 int main(int argc, char* argv[])
 {
-    return bc::explorer::dispatch(argc, const_cast<const char**>(argv));
+    return bc::explorer::dispatch(argc, const_cast<const char**>(argv),
+        std::cin, std::cout, std::cerr);
 }

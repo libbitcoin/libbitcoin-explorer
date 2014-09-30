@@ -24,8 +24,9 @@
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
-#include <bitcoin/explorer/generated.hpp>
+#include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/display.hpp>
+#include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
 #include <bitcoin/explorer/utility/environment.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
@@ -36,59 +37,72 @@ using namespace boost::filesystem;
 namespace libbitcoin {
 namespace explorer {
 
-console_result dispatch(int argc, const char* argv[])
+// Not unit testable (reliance on untestable function).
+console_result dispatch(int argc, const char* argv[], 
+    std::istream& input, std::ostream& output, std::ostream& error)
 {
     if (argc == 1)
     {
-        display_usage();
+        display_usage(output);
         return console_result::okay;
     }
 
-    return dispatch_invoke(argc - 1, &argv[1]);
+    return dispatch_invoke(argc - 1, &argv[1], input, output, error);
 }
 
-// Not unit testable (reliance on untestable functions and embeded io).
-console_result dispatch_invoke(int argc, const char* argv[])
+// Not unit testable (reliance on untestable functions).
+console_result dispatch_invoke(int argc, const char* argv[],
+    std::istream& input, std::ostream& output, std::ostream& error)
 {
     const std::string target(argv[0]);
     const auto command = find(target);
-    if (command == nullptr)
+
+    if (!command)
     {
-        display_invalid_command(target);
+        display_invalid_command(error, target);
         return console_result::failure;
     }
 
     std::string message;
     variables_map variables;
-    if (!load_variables(variables, message, *command, std::cin, argc, argv))
+
+    if (!load_variables(variables, message, *command, input, argc, argv))
     {
-        display_invalid_variables(message);
+        display_invalid_parameter(error, message);
         return console_result::failure;
     }
 
-    // Injection of io streams allows for test.
-    return command->invoke(std::cout, std::cerr);
-}
-
-// TODO: Update using program_options presentation.
-bool dispatch_usage()
-{
-    const auto func = [](std::shared_ptr<command> explorer_command) -> void
+    if (get_help_option(variables))
     {
-        display_usage(explorer_command);
-        display_line();
-    };
+        command->write_usage(output);
+        return console_result::okay;
+    }
 
-    return broadcast(func);
+    return command->invoke(output, error);
 }
 
-path get_config_variable(variables_map& variables)
+path get_config_option(variables_map& variables)
 {
     // Read config from the map so we don't require an early notify call.
-    const auto config = variables[BX_VARIABLE_CONFIG];
+    const auto& config = variables[BX_CONFIG_VARIABLE];
 
     // prevent exception in the case where the config variable is not set.
-    return if_else(config.empty(), path(), config.as<path>());
+    if (config.empty())
+        return path();
+
+    return config.as<path>();
+}
+
+bool get_help_option(variables_map& variables)
+{
+    // Read help from the map so we don't require an early notify call.
+    const auto& help = variables[BX_HELP_VARIABLE];
+
+    // prevent exception in the case where the help variable is not set.
+    if (help.empty())
+        return false;
+
+    return help.as<bool>();
 }
 
 void load_command_variables(variables_map& variables, command& instance,
@@ -113,7 +127,7 @@ void load_command_variables(variables_map& variables, command& instance,
 void load_configuration_variables(variables_map& variables, command& instance)
     throw()
 {
-    const auto config_path = get_config_variable(variables);
+    const auto config_path = get_config_option(variables);
     if (config_path.empty())
         return;
 
@@ -165,6 +179,8 @@ bool load_variables(variables_map& variables, std::string& message,
     }
     catch (const po::error& e)
     {
+        // BUGBUG: the error message is obtained directly form boost, which
+        // circumvents our localization model.
         message = e.what();
         return false;
     }

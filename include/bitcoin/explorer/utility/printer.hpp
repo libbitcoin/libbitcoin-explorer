@@ -29,24 +29,6 @@
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
-/*
-    USAGE: sx command [-hvt] [-w ARG]... [-m ARG] -n ARG ADD [LIKE]...
-
-    -- Option Descriptions --
-
-    Positional Arguments:
-    ADD "additional options"
-    LIKE "this"
-
-    Option Arguments:
-    -h [--help] Print help messages
-    -v [--verbose] Print words with verbosity
-    -w [--word] Words for the sentence, specify multiple times
-    -t Just a temp option that does very little
-    -n [--necessary] Give me anything
-    -m [--manual] Extract value manually
-*/
-
 namespace libbitcoin {
 namespace explorer {
     
@@ -65,11 +47,7 @@ public:
      * @param[in]  application  This application [and command (e.g. 'bx btc')].
      */
     printer(std::ostream& output, options_metadata& options,
-        arguments_metadata& arguments, const std::string& application)
-        : application_(application), arguments_(arguments), options_(options),
-        output_(output)
-    {
-    }
+        arguments_metadata& arguments, const std::string& application);
     
     /**
      * Format the help arguments table.
