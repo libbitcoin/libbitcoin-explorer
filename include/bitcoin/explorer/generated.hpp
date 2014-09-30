@@ -114,17 +114,26 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-#define BX_VARIABLE_CONFIG "config"
-
 namespace libbitcoin {
 namespace explorer {
 
 /**
+ * Various shared localizable strings.
+ */
+#define BX_CONFIG_DESCRIPTION \
+    "The path and file name for the configuration settings file to be used in the execution of the command."
+#define BX_INVALID_COMMAND \
+    "'%1%' is not a bx command. Enter 'bx help' for a list of commands."
+#define BX_INVALID_PARAMETER \
+    "Error: %1%"
+#define BX_LISTED_COMMAND_NAME \
+    "%1%"
+
+/**
  * Invoke a specified function on all commands.
  * @param[in]  func  The function to invoke on all commands.
- * @return           True if invoked successfully.
  */
-bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
+void broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
 /**
  * Find the command identified by the specified symbolic command name.

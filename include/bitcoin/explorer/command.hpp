@@ -57,7 +57,8 @@
 namespace libbitcoin {
 namespace explorer {
 
-#define BX_VARIABLE_CONFIG "config"
+#define BX_CONFIG_VARIABLE "config"
+#define BX_HELP_VARIABLE "help"
 
 /**
  * Abstract base class for definition of each Bitcoin Explorer command.
@@ -120,10 +121,10 @@ public:
         definitions.add_options()
             /* This composes with the command line options. */
             (
-                BX_VARIABLE_CONFIG, 
+                BX_CONFIG_VARIABLE, 
                 value<boost::filesystem::path>()
                     ->composing()->default_value(config_default()),
-                "The path and file name for the configuration settings file for this application."
+                "The path and file name for the configuration settings file to be used in the execution of the command."
             );
     }
     

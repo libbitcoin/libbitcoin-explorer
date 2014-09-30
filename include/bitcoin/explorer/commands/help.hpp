@@ -63,12 +63,6 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
- */
-#define BX_HELP_NOT_COMMAND \
-    "The word '%1%' is not a Bitcoin Explorer command. All commands:"
-
-/**
  * Class to implement the help command.
  */
 class help 
@@ -132,14 +126,14 @@ public:
         options_description& options = get_option_metadata();
         options.add_options()
             (
-                BX_VARIABLE_CONFIG ",c",
-                value<boost::filesystem::path>(),                 
-                "The path and file name for the configuration settings file for this application."
+                BX_CONFIG_VARIABLE ",c",
+                value<boost::filesystem::path>(),
+                "The path and file name for the configuration settings file to be used in the execution of the command."
             )
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get help for any command."
+                "Get the list of commands."
             )
             (
                 "COMMAND",

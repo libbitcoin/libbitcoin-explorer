@@ -130,9 +130,9 @@ public:
         options_description& options = get_option_metadata();
         options.add_options()
             (
-                BX_VARIABLE_CONFIG ",c",
-                value<boost::filesystem::path>(),                 
-                "The path and file name for the configuration settings file for this application."
+                BX_CONFIG_VARIABLE ",c",
+                value<boost::filesystem::path>(),
+                "The path and file name for the configuration settings file to be used in the execution of the command."
             )
             (
                 "help,h",

@@ -210,7 +210,7 @@
 .   return if_else(my.is_vector, "std::vector<$(my.type:)>", my.type)
 .endfunction
 .
-.config_description = resource("config_description")
+.config_description = resource("BX_CONFIG_DESCRIPTION")
 .config_option = "config"
 .type_bool = "bool"
 .type_address = "address"
@@ -289,17 +289,26 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-#define BX_VARIABLE_CONFIG "$(config_option:)"
-
 namespace libbitcoin {
 namespace explorer {
+.for resource
+.   for string by name
+.       if first()
+
+/**
+ * Various shared localizable strings.
+ */
+.       endif
+#define $(NAME:c) \\
+    "$(value:)"
+.   endfor
+.endfor
 
 /**
  * Invoke a specified function on all commands.
  * @param[in]  func  The function to invoke on all commands.
- * @return           True if invoked successfully.
  */
-bool broadcast(const std::function<void(std::shared_ptr<command>)> func);
+void broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
 /**
  * Find the command identified by the specified symbolic command name.
@@ -335,13 +344,11 @@ namespace libbitcoin {
 namespace explorer {
 using namespace commands;
 
-bool broadcast(const function<void(shared_ptr<command>)> func)
+void broadcast(const function<void(shared_ptr<command>)> func)
 {
 .for command by symbol
     func(make_shared<$(symbol:c)>());
 .endfor
-
-    return true;
 }
 
 shared_ptr<command> find(const string& symbol)
@@ -378,7 +385,8 @@ shared_ptr<command> find(const string& symbol)
 namespace libbitcoin {
 namespace explorer {
 
-#define BX_VARIABLE_CONFIG "config"
+#define BX_CONFIG_VARIABLE "config"
+#define BX_HELP_VARIABLE "help"
 
 /**
  * Abstract base class for definition of each Bitcoin Explorer command.
@@ -441,7 +449,7 @@ public:
         definitions.add_options()
             /* This composes with the command line options. */
             (
-                BX_VARIABLE_CONFIG, 
+                BX_CONFIG_VARIABLE, 
                 value<boost::filesystem::path>()
                     ->composing()->default_value(config_default()),
                 "$(config_description:)"
@@ -777,8 +785,8 @@ public:
         options_description& options = get_option_metadata();
         options.add_options()
             (
-                BX_VARIABLE_CONFIG ",c",
-                value<boost::filesystem::path>(),                 
+                BX_CONFIG_VARIABLE ",c",
+                value<boost::filesystem::path>(),
                 "$(config_description:)"
             )
 .# TODO: How to block the description so as not to exceed max line length?
@@ -939,11 +947,11 @@ private:
 
 BOOST_AUTO_TEST_SUITE(generated__broadcast)
 
-BOOST_AUTO_TEST_CASE(generated__broadcast__always__returns_true)
+BOOST_AUTO_TEST_CASE(generated__broadcast__always__does_not_throw)
 {
     // TODO: mocks and dependency injection required to test proper execution.
     auto func = [](std::shared_ptr<bc::explorer::command> command) -> void {};
-    BOOST_REQUIRE(bc::explorer::broadcast(func));
+    bc::explorer::broadcast(func);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

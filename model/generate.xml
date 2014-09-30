@@ -42,9 +42,11 @@
   </configuration>
   
   <!-- General resources. -->
-  
   <resource>
-    <string name="config_description" value="The path and file name for the configuration settings file for this application." />
+    <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
+    <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
+    <string name="BX_CONFIG_DESCRIPTION" value="The path and file name for the configuration settings file to be used in the execution of the command." />
+    <string name="BX_LISTED_COMMAND_NAME" value="%1%" />
   </resource>
 
   <!-- Bitcoin Explorer Commands -->
@@ -328,9 +330,8 @@
   </command>
 
   <command symbol="help" typeX="string" category="BX">
-    <option name="help" description="Get help for any command." />
+    <option name="help" description="Get the list of commands." />
     <argument name="COMMAND" stdin="true" description="The command for which help is requested." />
-    <define name="BX_HELP_NOT_COMMAND" value="The word '%1%' is not a Bitcoin Explorer command. All commands:" />
   </command>
 
   <command symbol="initchain" category="ONLINE" obsolete="true">
