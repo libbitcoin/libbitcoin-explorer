@@ -147,16 +147,6 @@ public:
                 "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
             )
             (
-                "retries,r",
-                value<uint8_t>(&option_.retries),
-                "Number of times to retry contacting the server before giving up. Defaults to zero."
-            )
-            (
-                "wait,w",
-                value<uint32_t>(&option_.wait)->default_value(2000),
-                "Milliseconds to wait for a response from the server. Defaults to 2000 (two seconds)."
-            )
-            (
                 "HASH",
                 value<std::vector<primitives::btc256>>(&argument_.hashs),
                 "The set of Base16 transaction hashes."
@@ -226,40 +216,6 @@ public:
         option_.format = value;
     }
 
-    /**
-     * Get the value of the retries option.
-     */
-    virtual uint8_t& get_retries_option()
-    {
-        return option_.retries;
-    }
-    
-    /**
-     * Set the value of the retries option.
-     */
-    virtual void set_retries_option(
-        const uint8_t& value)
-    {
-        option_.retries = value;
-    }
-
-    /**
-     * Get the value of the wait option.
-     */
-    virtual uint32_t& get_wait_option()
-    {
-        return option_.wait;
-    }
-    
-    /**
-     * Set the value of the wait option.
-     */
-    virtual void set_wait_option(
-        const uint32_t& value)
-    {
-        option_.wait = value;
-    }
-
 private:
 
     /**
@@ -286,16 +242,12 @@ private:
     {
         option()
           : help(),
-            format(),
-            retries(),
-            wait()
+            format()
         {
         }
         
         bool help;
         primitives::encoding format;
-        uint8_t retries;
-        uint32_t wait;
     } option_;
 };
 

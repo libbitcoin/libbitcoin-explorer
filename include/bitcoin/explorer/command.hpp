@@ -164,6 +164,16 @@ public:
                 "Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
             )
             (
+                "general.retries",
+                value<uint8_t>(&setting_.general.retries),
+                "Number of times to retry contacting the server before giving up."
+            )
+            (
+                "general.wait",
+                value<uint32_t>(&setting_.general.wait)->default_value(2000),
+                "Milliseconds to wait for a response from the server."
+            )
+            (
                 "logging.debug",
                 value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
                 "The file and path name to the debug log file."
@@ -246,6 +256,38 @@ public:
     virtual void set_general_testnet_setting(bool value)
     {
         setting_.general.testnet = value;
+    }
+    
+    /**
+     * Get the value of the general.retries setting.
+     */
+    virtual uint8_t get_general_retries_setting()
+    {
+        return setting_.general.retries;
+    }
+
+    /**
+     * Set the value of the general.retries setting.
+     */
+    virtual void set_general_retries_setting(uint8_t value)
+    {
+        setting_.general.retries = value;
+    }
+    
+    /**
+     * Get the value of the general.wait setting.
+     */
+    virtual uint32_t get_general_wait_setting()
+    {
+        return setting_.general.wait;
+    }
+
+    /**
+     * Set the value of the general.wait setting.
+     */
+    virtual void set_general_wait_setting(uint32_t value)
+    {
+        setting_.general.wait = value;
     }
     
     /**
@@ -389,11 +431,15 @@ private:
         struct general
         {
             general()
-              : testnet()
+              : testnet(),
+                retries(),
+                wait()
             {
             }
             
             bool testnet;
+            uint8_t retries;
+            uint32_t wait;
         } general;
 
         struct logging

@@ -66,11 +66,11 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& transactions = get_transactions_argument();
-    const auto& server = get_server_address_setting();
     const auto& encoding = get_format_option();
-    const auto retries = get_retries_option();
-    const auto timeout = get_wait_option();
+    const auto& transactions = get_transactions_argument();
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
+    const auto& server = get_server_address_setting();
 
     czmqpp::context context;
     obelisk_client client(context, sleep_time(timeout), retries);
