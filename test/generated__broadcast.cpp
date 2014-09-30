@@ -26,11 +26,11 @@
 
 BOOST_AUTO_TEST_SUITE(generated__broadcast)
 
-BOOST_AUTO_TEST_CASE(generated__broadcast__always__returns_true)
+BOOST_AUTO_TEST_CASE(generated__broadcast__always__does_not_throw)
 {
     // TODO: mocks and dependency injection required to test proper execution.
     auto func = [](std::shared_ptr<bc::explorer::command> command) -> void {};
-    BOOST_REQUIRE(bc::explorer::broadcast(func));
+    bc::explorer::broadcast(func);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

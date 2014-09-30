@@ -102,42 +102,42 @@ BOOST_AUTO_TEST_CASE(parameter__position__short_only__returns_not)
     BOOST_REQUIRE(result == -1);
 }
 
-BOOST_AUTO_TEST_CASE(parameter__position__long_only__returns_expeced_position)
+BOOST_AUTO_TEST_CASE(parameter__position__long_only__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::longy);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 0);
 }
 
-BOOST_AUTO_TEST_CASE(parameter__position__simple__returns_expeced_position)
+BOOST_AUTO_TEST_CASE(parameter__position__simple__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::simple);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 1);
 }
 
-BOOST_AUTO_TEST_CASE(parameter__position__defaulty__returns_expeced_position)
+BOOST_AUTO_TEST_CASE(parameter__position__defaulty__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::defaulty);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 2);
 }
 
-BOOST_AUTO_TEST_CASE(parameter__position__required__returns_expeced_position)
+BOOST_AUTO_TEST_CASE(parameter__position__required__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::required);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 3);
 }
 
-BOOST_AUTO_TEST_CASE(parameter__position__vector__returns_expeced_position)
+BOOST_AUTO_TEST_CASE(parameter__position__vector__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::vector);
     auto result = parameter.position(option, names);
     BOOST_REQUIRE(result == 4);
 }
 
-BOOST_AUTO_TEST_CASE(parameter__position__multitoken__returns_expeced_position)
+BOOST_AUTO_TEST_CASE(parameter__position__multitoken__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::multitoken);
     auto result = parameter.position(option, names);

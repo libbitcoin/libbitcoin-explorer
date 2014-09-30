@@ -25,9 +25,102 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/explorer.hpp>
 
+using namespace bc::explorer;
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_help_arguments)
+
+BOOST_AUTO_TEST_CASE(printer__format_help_arguments__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_help_options)
+
+BOOST_AUTO_TEST_CASE(printer__format_help_options__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_usage)
+
+BOOST_AUTO_TEST_CASE(printer__format_usage__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_usage_arguments)
+
+BOOST_AUTO_TEST_CASE(printer__format_usage_arguments__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_usage_options)
+
+BOOST_AUTO_TEST_CASE(printer__format_usage_options__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_usage_parameters)
+
+BOOST_AUTO_TEST_CASE(printer__format_usage_parameters__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_usage_toggle_options)
+
+BOOST_AUTO_TEST_CASE(printer__format_usage_toggle_options__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_usage_value_options)
+
+BOOST_AUTO_TEST_CASE(printer__format_usage_value_options__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(printer__initialize)
 
-BOOST_AUTO_TEST_CASE(printer__initialize_todo)
+BOOST_AUTO_TEST_CASE(printer__initialize__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__print_help)
+
+BOOST_AUTO_TEST_CASE(printer__print_help__todo)
+{
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__print_usage)
+
+BOOST_AUTO_TEST_CASE(printer__print_usage__todo)
 {
 }
 

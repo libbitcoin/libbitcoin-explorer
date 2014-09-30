@@ -21,6 +21,8 @@
 #include <bitcoin/explorer/utility/printer.hpp>
 
 #include <iostream>
+#include <string>
+#include <vector>
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -45,7 +47,32 @@
 #define BX_PRINTER_OPTION_LONG_FORMAT "--%1% %2\n"
 #define BX_PRINTER_OPTION_SHORT_LONG_FORMAT "-%1% [ --%2% ] %3\n"
 
+/*
+    USAGE: bx command [-hvt] [-w ARG]... [-m ARG] -n ARG ADD [LIKE]...
+
+    -- Option Descriptions --
+
+    Positional Arguments:
+    ADD "additional options"
+    LIKE "this"
+
+    Option Arguments:
+    -h [--help] Print help messages
+    -v [--verbose] Print words with verbosity
+    -w [--word] Words for the sentence, specify multiple times
+    -t Just a temp option that does very little
+    -n [--necessary] Give me anything
+    -m [--manual] Extract value manually
+*/
+
 using namespace bc::explorer;
+
+printer::printer(std::ostream& output, options_metadata& options,
+    arguments_metadata& arguments, const std::string& application)
+  : application_(application), arguments_(arguments), options_(options),
+    output_(output)
+{
+}
 
 /* Formatters */
 
@@ -134,7 +161,7 @@ void printer::initialize()
 // TODO: component test.
 void printer::print_help()
 {
-    // --Option Descriptions --
+    // -- Option Descriptions --
     // ...
     get_output()
         << BX_PRINTER_SUMMARY_HEADER
