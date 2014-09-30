@@ -23,13 +23,93 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
-
+/*
 // DISABLED until client-server calls are isolated for test.
 
-//BOOST_AUTO_TEST_CASE(fetch_tx__invoke__always__okay)
-//{
-//    BX_DECLARE_COMMAND(fetch_tx);
-//    BX_REQUIRE_OKAY(command.invoke(output, error));
-//}
+#define BX_FETCH_HEADER_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
 
+#define BX_FETCH_TX_SATOSHIS_WORDS_HASH "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"
+#define BX_FETCH_TX_SATOSHIS_WORDS_TX_XML \
+"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
+"<hash>4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</hash><inputs><input><previous_output>0000000000000000000000000000000000000000000000000000000000000000:4294967295</previous_output><script>[ 04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73 ]</script><sequence>4294967295</sequence></input></inputs><lock_time>0</lock_time><outputs><output><address>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</address><script>[ 04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f ] checksig</script><value>5000000000</value></output></outputs><version>1</version>"
+#define BX_FETCH_TX_SATOSHIS_WORDS_TX_INFO \
+"hash 4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\n" \
+"inputs\n" \
+"{\n" \
+"    input\n" \
+"    {\n" \
+"        previous_output 0000000000000000000000000000000000000000000000000000000000000000:4294967295\n" \
+"        script \"[ 04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73 ]\"\n" \
+"        sequence 4294967295\n" \
+"    }\n" \
+"}\n" \
+"lock_time 0\n" \
+"outputs\n" \
+"{\n" \
+"    output\n" \
+"    {\n" \
+"        address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n" \
+"        script \"[ 04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f ] checksig\"\n" \
+"        value 5000000000\n" \
+"    }\n" \
+"}\n" \
+"version 1\n"
+
+#define BX_FETCH_TX_SECOND_TX_HASH "0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098"
+#define BX_FETCH_TX_SECOND_TX_TX_INFO \
+"hash 0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098\n" \
+"inputs\n" \
+"{\n" \
+"    input\n" \
+"    {\n" \
+"        previous_output 0000000000000000000000000000000000000000000000000000000000000000:4294967295\n" \
+"        script \"[ 04ffff001d0104 ]\"\n" \
+"        sequence 4294967295\n" \
+"    }\n" \
+"}\n" \
+"lock_time 0\n" \
+"outputs\n" \
+"{\n" \
+"    output\n" \
+"    {\n" \
+"        address 12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX\n" \
+"        script \"[ 0496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858ee ] checksig\"\n" \
+"        value 5000000000\n" \
+"    }\n" \
+"}\n" \
+"version 1\n"
+
+BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_satoshis_words_tx_xml__okay_output)
+{
+    BX_DECLARE_COMMAND(fetch_tx);
+    command.set_wait_option(2000);
+    command.set_format_option({ "xml" });
+    command.set_hashs_argument({ { BX_FETCH_TX_SATOSHIS_WORDS_HASH } });
+    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_FETCH_TX_SATOSHIS_WORDS_TX_XML);
+}
+
+BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_second_tx_native__okay_output)
+{
+    BX_DECLARE_COMMAND(fetch_tx);
+    command.set_retries_option(0);
+    command.set_wait_option(2000);
+    command.set_hashs_argument({ { BX_FETCH_TX_SECOND_TX_HASH } });
+    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_FETCH_TX_SECOND_TX_TX_INFO);
+}
+
+BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_satoshis_words_tx_twice_info__okay_output)
+{
+    BX_DECLARE_COMMAND(fetch_tx);
+    command.set_wait_option(2000);
+    command.set_format_option({ "info" });
+    command.set_hashs_argument({ { BX_FETCH_TX_SATOSHIS_WORDS_HASH }, { BX_FETCH_TX_SATOSHIS_WORDS_HASH } });
+    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_FETCH_TX_SATOSHIS_WORDS_TX_INFO BX_FETCH_TX_SATOSHIS_WORDS_TX_INFO);
+}
+*/
 BOOST_AUTO_TEST_SUITE_END()

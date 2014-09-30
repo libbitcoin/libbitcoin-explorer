@@ -31,6 +31,7 @@
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -52,13 +53,15 @@ static void handle_callback(callback_state& state,
 console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
+    const auto& server = get_server_address_setting();
     const size_t height = get_height_option();
     const hash_digest& hash = get_hash_option();
     const encoding& encoding = get_format_option();
-    const auto& server = get_server_address_setting();
+    const auto retries = get_retries_option();
+    const auto timeout = get_wait_option();
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
@@ -75,6 +78,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
         handle_error(state, error);
     };
 
+    // Height is ignored if both are specified.
     // Use the null_hash as sentinel to determine whether to use height or hash.
     if (hash == null_hash)
         client.get_codec().fetch_block_header(on_error, on_done, height);

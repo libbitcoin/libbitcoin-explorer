@@ -31,6 +31,7 @@
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -67,12 +68,14 @@ static void fetch_tx_from_hash(obelisk_client& client, callback_state& state,
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
+    const auto& server = get_server_address_setting();
     const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
-    const auto& server = get_server_address_setting();
+    const auto retries = get_retries_option();
+    const auto timeout = get_wait_option();
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

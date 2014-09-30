@@ -23,13 +23,39 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(fetch_height__invoke)
-
+/*
 // DISABLED until client-server calls are isolated for test.
 
-//BOOST_AUTO_TEST_CASE(fetch_height__invoke__always__okay)
-//{
-//    BX_DECLARE_COMMAND(fetch_height);
-//    BX_REQUIRE_OKAY(command.invoke(output, error));
-//}
+#define BX_FETCH_HEADER_TIMEOUT "timed out"
+#define BX_FETCH_HEADER_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
+#define BX_FETCH_HEADER_TESTNET_SERVER "tcp://obelisk-testnet2.airbitz.co:9091"
 
+BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet_wait_0__failure_error)
+{
+    BX_DECLARE_COMMAND(fetch_height);
+    command.set_retries_option(0);
+    command.set_wait_option(0);
+    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_FETCH_HEADER_TIMEOUT "\n");
+}
+
+BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet__okay)
+{
+    BX_DECLARE_COMMAND(fetch_height);
+    command.set_retries_option(0);
+    command.set_wait_option(2000);
+    command.set_server_address_setting(BX_FETCH_HEADER_MAINNET_SERVER);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+}
+
+BOOST_AUTO_TEST_CASE(fetch_height__invoke__testnet__okay)
+{
+    BX_DECLARE_COMMAND(fetch_height);
+    command.set_retries_option(0);
+    command.set_wait_option(2000);
+    command.set_server_address_setting(BX_FETCH_HEADER_TESTNET_SERVER);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+}
+*/
 BOOST_AUTO_TEST_SUITE_END()

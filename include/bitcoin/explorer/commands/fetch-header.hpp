@@ -131,7 +131,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the block header from the specified hash or height. Requires an Obelisk server connection."
+                "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection."
             )
             (
                 "format,f",
@@ -147,6 +147,16 @@ public:
                 "height,t",
                 value<size_t>(&option_.height),
                 "The block height."
+            )
+            (
+                "retries,r",
+                value<uint8_t>(&option_.retries),
+                "Number of times to retry contacting the server before giving up. Defaults to zero."
+            )
+            (
+                "wait,w",
+                value<uint32_t>(&option_.wait)->default_value(2000),
+                "Milliseconds to wait for a response from the server. Defaults to 2000 (two seconds)."
             );
 
         return options;
@@ -230,6 +240,40 @@ public:
         option_.height = value;
     }
 
+    /**
+     * Get the value of the retries option.
+     */
+    virtual uint8_t& get_retries_option()
+    {
+        return option_.retries;
+    }
+    
+    /**
+     * Set the value of the retries option.
+     */
+    virtual void set_retries_option(
+        const uint8_t& value)
+    {
+        option_.retries = value;
+    }
+
+    /**
+     * Get the value of the wait option.
+     */
+    virtual uint32_t& get_wait_option()
+    {
+        return option_.wait;
+    }
+    
+    /**
+     * Set the value of the wait option.
+     */
+    virtual void set_wait_option(
+        const uint32_t& value)
+    {
+        option_.wait = value;
+    }
+
 private:
 
     /**
@@ -256,7 +300,9 @@ private:
           : help(),
             format(),
             hash(),
-            height()
+            height(),
+            retries(),
+            wait()
         {
         }
         
@@ -264,6 +310,8 @@ private:
         primitives::encoding format;
         primitives::btc256 hash;
         size_t height;
+        uint8_t retries;
+        uint32_t wait;
     } option_;
 };
 
