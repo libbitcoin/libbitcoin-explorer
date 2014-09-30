@@ -36,7 +36,7 @@ namespace libbitcoin {
 namespace explorer {
 using namespace commands;
 
-bool broadcast(const function<void(shared_ptr<command>)> func)
+void broadcast(const function<void(shared_ptr<command>)> func)
 {
     func(make_shared<address_decode>());
     func(make_shared<address_embed>());
@@ -125,8 +125,6 @@ bool broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<wif_to_public>());
     func(make_shared<wrap_decode>());
     func(make_shared<wrap_encode>());
-
-    return true;
 }
 
 shared_ptr<command> find(const string& symbol)

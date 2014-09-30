@@ -21,62 +21,59 @@
 #include <bitcoin/explorer/display.hpp>
 
 #include <iostream>
+#include <boost/format.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
+#include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
-
-// TODO: once these settle down make testable through stream injection.
 
 namespace libbitcoin {
 namespace explorer {
 
-void display_invalid_command(const std::string& command)
+void display_command_names(std::ostream& stream)
 {
-    std::cerr << "sx: " << command
-        << " is not a sx option or command. See 'sx --help'." << std::endl;
+    const auto func = [&stream](std::shared_ptr<command> explorer_command)
+    {
+        BITCOIN_ASSERT(explorer_command != nullptr);
+        stream << format(BX_LISTED_COMMAND_NAME) % explorer_command->name() << std::endl;
+    };
+
+    broadcast(func);
 }
 
-void display_invalid_config(const std::string& file)
+void display_invalid_command(std::ostream& stream, const std::string& command)
 {
-    std::cerr << "sx: config file '" << file << "' doesn't exist!" 
-        << std::endl;
+    stream << format(BX_INVALID_COMMAND) % command << std::endl;
 }
 
-void display_invalid_variables(const std::string& message)
+void display_invalid_parameter(std::ostream& stream, 
+    const std::string& message)
 {
-    std::cerr << "sx: " << message << std::endl;
+    stream << format(BX_INVALID_PARAMETER) % message << std::endl;
 }
 
-void display_line()
+void display_usage(std::ostream& stream)
 {
-    std::cout << std::endl;
+    stream << "Using bx: " << std::endl;
+    stream << std::endl;
+    stream << "  bx COMMAND [...]" << std::endl;
+    stream << std::endl;
+    stream << "  -c, --config          Specify a config file for the command" << std::endl;
+    stream << "  -h, --help            Get a description of the command" << std::endl;
+    stream << std::endl;
+    stream << "The bx commands are:" << std::endl;
+    stream << std::endl;
+
+    display_command_names(stream);
+
+    stream << std::endl;
+    stream << "For help on a specific command: " << std::endl;
+    stream << std::endl;
+    stream << "  bx help COMMAND" << std::endl;
+    stream << std::endl;
+    stream << "Bitcoin Explorer home page: " << std::endl;
+    stream << std::endl;
+    stream << "  https://github.com/libbitcoin/libbitcoin_explorer" << std::endl;
 }
-
-void display_usage()
-{
-    std::cerr << "Usage: sx COMMAND [ARGS]..." << std::endl;
-    std::cerr << std::endl;
-    std::cerr << "  -c, --config               "
-        "Specify a config file" << std::endl;
-    std::cerr << std::endl;
-    std::cerr << "The sx commands are:" << std::endl;
-    std::cerr << std::endl;
-
-    // TODO: sort commands and organize streamed output.
-    dispatch_usage();
-
-    std::cerr << std::endl;
-    std::cerr << "See 'sx help COMMAND' for more information "
-        "on a specific command." << std::endl;
-    std::cerr << std::endl;
-    std::cerr << "SX home page: <http://sx.dyne.org/>" << std::endl;
-}
-
-bool display_usage(const std::shared_ptr<command> command)
-{
-    std::cerr << "Not Implemented" << std::endl;
-    return true;
-}
-
 
 } // namespace explorer
 } // namespace libbitcoin
