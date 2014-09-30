@@ -46,23 +46,22 @@ static script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
     data_chunk hash(pubkey_hash.begin(), pubkey_hash.end());
 
     script_type script;
-    script.push_operation({ opcode::dup });
-    script.push_operation({ opcode::hash160 });
+    script.push_operation({ opcode::dup, {} });
+    script.push_operation({ opcode::hash160, {} });
     script.push_operation({ opcode::special, hash });
-    script.push_operation({ opcode::equalverify });
-    script.push_operation({ opcode::checksig });
+    script.push_operation({ opcode::equalverify, {} });
+    script.push_operation({ opcode::checksig, {} });
     return script;
 }
 
 static script_type build_script_hash_script(const short_hash& script_hash)
 {
-
     data_chunk hash(script_hash.begin(), script_hash.end());
 
     script_type script;
-    script.push_operation({ opcode::hash160 });
+    script.push_operation({ opcode::hash160, {} });
     script.push_operation({ opcode::special, hash });
-    script.push_operation({ opcode::equal });
+    script.push_operation({ opcode::equal, {} });
     return script;
 }
 
