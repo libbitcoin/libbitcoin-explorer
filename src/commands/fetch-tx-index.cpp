@@ -49,9 +49,10 @@ static void handle_callback(callback_state& state, const hash_digest& hash,
 }
 
 static void fetch_tx_index_from_hash(obelisk_client& client,
-    callback_state& state, primitives::btc256 hash)
+    callback_state& state, const primitives::btc256& hash)
 {
-    auto on_done = [&state, &hash](size_t block_height, size_t index)
+    // Do not pass the hash by reference here.
+    auto on_done = [&state, hash](size_t block_height, size_t index)
     {
         handle_callback(state, hash, block_height, index);
     };

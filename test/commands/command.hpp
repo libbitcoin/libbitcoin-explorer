@@ -34,6 +34,7 @@ using namespace bc::explorer; \
 using namespace bc::explorer::commands; \
 using namespace bc::explorer::primitives;
 
+//#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:8081"
 #define BX_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
 #define BX_TESTNET_SERVER "tcp://obelisk-testnet2.airbitz.co:9091"
 #define BX_TIMEOUT_MESSAGE "timed out"
