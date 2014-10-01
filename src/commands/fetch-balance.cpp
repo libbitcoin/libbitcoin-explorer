@@ -41,6 +41,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, 
     const payment_address& address, const std::vector<balance_row>& histories)
 {
+    // native is info.
     const auto tree = prop_tree(histories, address);
     state.output(tree);
 }

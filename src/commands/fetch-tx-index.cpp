@@ -26,8 +26,8 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -45,7 +45,7 @@ static void handle_callback(callback_state& state, const hash_digest& hash,
     size_t height, size_t index)
 {
     if (state.get_engine() == encoding_engine::native)
-        state.output(boost::format(BX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
+        state.output(format(BX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
             height % index);
     else
         state.output(prop_tree(hash, height, index));

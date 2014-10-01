@@ -44,6 +44,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, 
     const block_header_type& block_header)
 {
+    // native is info.
     if (state.get_engine() == encoding_engine::native)
         state.output(header(block_header));
     else

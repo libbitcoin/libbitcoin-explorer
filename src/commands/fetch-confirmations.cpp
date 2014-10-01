@@ -40,6 +40,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, size_t position,
     const index_list& confirmations)
 {
+    // TODO: support encoding like fetch-tx-index.
     // Why is this a list and why is it not summarized by transaction?
     for (const auto& confirmation: confirmations)
         state.output(format(BX_FETCH_CONFIRMATIONS_OUTPUT) % position %
@@ -66,7 +67,7 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
+    // const auto& encoding = get_format_option();
     const auto& transactions = get_transactions_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
@@ -78,7 +79,7 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     if (client.connect(server) < 0)
         return console_result::failure;
 
-    callback_state state(error, output, encoding);
+    callback_state state(error, output /*, encoding */);
 
     for (auto tx: transactions)
         fetch_confirmations_from_transaction(client, state, tx);
