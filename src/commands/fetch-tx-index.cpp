@@ -44,8 +44,11 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, const hash_digest& hash,
     size_t height, size_t index)
 {
-    state.output(boost::format(BX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
-        height % index);
+    if (state.get_engine() == encoding_engine::native)
+        state.output(boost::format(BX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
+            height % index);
+    else
+        state.output(prop_tree(hash, height, index));
 }
 
 static void fetch_tx_index_from_hash(obelisk_client& client,

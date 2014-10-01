@@ -195,7 +195,7 @@ public:
             )
             (
                 "server.address",
-                value<std::string>(&setting_.server.address)->default_value("tcp://obelisk.unsystem.net:8081"),
+                value<std::string>(&setting_.server.address)->default_value("tcp://obelisk2.airbitz.co:9091"),
                 "The URI of the server to which this application may connect."
             )
             (
