@@ -220,8 +220,8 @@ public:
      */
     virtual void write_usage(std::ostream& stream)
     {
-        auto options = load_options();
-        auto arguments = load_arguments();
+        const auto options = get_option_metadata();
+        const auto arguments = get_argument_metadata();
     } 
     
     /* Properties */
