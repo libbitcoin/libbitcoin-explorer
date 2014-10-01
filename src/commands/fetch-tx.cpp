@@ -44,7 +44,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, const tx_type& tx)
 {
     if (state.get_engine() == encoding_engine::native)
-        state.output(transaction(tx));
+        state.output(format("%1%") % transaction(tx));
     else
         state.output(prop_tree(tx));
 }
