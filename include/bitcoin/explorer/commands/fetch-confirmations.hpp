@@ -143,11 +143,6 @@ public:
                 "Get confirmations for a set of transactions. Requires an Obelisk server connection."
             )
             (
-                "format,f",
-                value<primitives::encoding>(&option_.format),
-                "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
-            )
-            (
                 "TRANSACTION",
                 value<std::string>(),
                 "The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."
@@ -200,23 +195,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the format option.
-     */
-    virtual primitives::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-    
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const primitives::encoding& value)
-    {
-        option_.format = value;
-    }
-
 private:
 
     /**
@@ -242,13 +220,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            format()
+          : help()
         {
         }
         
         bool help;
-        primitives::encoding format;
     } option_;
 };
 
