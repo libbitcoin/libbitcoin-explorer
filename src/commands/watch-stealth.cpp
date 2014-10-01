@@ -72,8 +72,8 @@ static void subscribe_from_prefix(obelisk_client& client,
 console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& prefixes = get_prefixs_argument();
     const auto& encoding = get_format_option();
+    const auto& prefixes = get_prefixs_argument();
     const auto& server = get_server_address_setting();
 
     callback_state state(error, output, encoding);

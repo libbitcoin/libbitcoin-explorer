@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_to_wif__invoke)
 
 BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_compressed_key__okay_output)
@@ -42,4 +43,5 @@ BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_uncompressed_key__okay_output)
     BX_REQUIRE_OUTPUT("5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

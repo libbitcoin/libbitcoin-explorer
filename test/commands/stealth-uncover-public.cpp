@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(stealth_uncover_public__invoke)
 
 // vectors
@@ -42,4 +43,5 @@ BOOST_AUTO_TEST_CASE(stealth_uncover_public__invoke__scenario__okay_output)
     BX_REQUIRE_OUTPUT(BX_STEALTH_UNCOVER_PUBLIC_STEALTH_PUBLIC_KEY "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

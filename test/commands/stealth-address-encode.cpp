@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(stealth_address_encode__invoke)
 
 // mainnet
@@ -147,4 +148,5 @@ BOOST_AUTO_TEST_CASE(stealth_address_encode__invoke__scan_key_prefix_too_long__f
     BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED "\n" BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

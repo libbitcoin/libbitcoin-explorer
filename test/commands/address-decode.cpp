@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(address_decode__invoke)
 
 // vectors
@@ -114,4 +115,5 @@ BOOST_AUTO_TEST_CASE(address_decode__invoke__version_42_default__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V42_DEFAULT);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(stealth_shared_secret__invoke)
 
 // vectors
@@ -53,4 +54,5 @@ BOOST_AUTO_TEST_CASE(stealth_shared_secret__invoke__ephem_secret_scan_pubkey__ok
     BX_REQUIRE_OUTPUT(BX_STEALTH_SHARED_SECRET_SHARED_SECRET "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

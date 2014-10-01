@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 
 // The public key of the signer, who is also the owner of the output, derived from INPUT_SIGN_PRIVATE_KEY_A.
@@ -76,4 +77,5 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_out
     BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

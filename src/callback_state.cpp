@@ -82,7 +82,7 @@ void callback_state::error(const std::string& message)
 // std::endl adds "/n" and flushes the stream.
 void callback_state::output(const pt::ptree tree)
 {
-    write_stream(error_, tree, engine_);
+    write_stream(output_, tree, engine_);
 }
 
 // std::endl adds "/n" and flushes the stream.

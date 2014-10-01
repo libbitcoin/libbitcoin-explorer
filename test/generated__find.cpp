@@ -27,6 +27,7 @@
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
+BOOST_AUTO_TEST_SUITE(generated)
 BOOST_AUTO_TEST_SUITE(generated__find)
 
 BOOST_AUTO_TEST_CASE(generated__find__address_decode__returns_object)
@@ -464,4 +465,5 @@ BOOST_AUTO_TEST_CASE(generated__find__wrap_encode__returns_object)
     BOOST_REQUIRE(find(wrap_encode::symbol()) != nullptr);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

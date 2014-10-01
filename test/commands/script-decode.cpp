@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(script_decode__invoke)
 
 BOOST_AUTO_TEST_CASE(script_decode__invoke__basic__okay_output)
@@ -32,4 +33,5 @@ BOOST_AUTO_TEST_CASE(script_decode__invoke__basic__okay_output)
     BX_REQUIRE_OUTPUT("dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

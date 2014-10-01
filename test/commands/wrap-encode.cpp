@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(wrap_encode__invoke)
 
 // vectors
@@ -48,4 +49,5 @@ BOOST_AUTO_TEST_CASE(wrap_encode__invoke__version_42__okay_output)
     BX_REQUIRE_OUTPUT(BX_WRAP_ENCODE_WRAPPED_V42 "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

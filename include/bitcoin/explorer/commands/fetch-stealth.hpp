@@ -148,7 +148,7 @@ public:
             (
                 "PREFIX",
                 value<std::vector<primitives::base2>>(&argument_.prefixs),
-                "The set of  Base2 stealth prefixes used to locate transactions."
+                "The set of Base2 stealth prefixes used to locate transactions."
             );
 
         return options;

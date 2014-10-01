@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(hd_to_ec__invoke)
 
 BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__mainnet_private_key__okay_output)
@@ -40,4 +41,5 @@ BOOST_AUTO_TEST_CASE(hd_to_ec__invoke__mainnet_public_key__okay_output)
     BX_REQUIRE_OUTPUT("0339a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

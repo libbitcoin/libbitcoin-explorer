@@ -31,6 +31,7 @@
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -43,7 +44,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, const tx_type& tx)
 {
     if (state.get_engine() == encoding_engine::native)
-        state.output(transaction(tx));
+        state.output(format("%1%") % transaction(tx));
     else
         state.output(prop_tree(tx));
 }
@@ -67,12 +68,14 @@ static void fetch_tx_from_hash(obelisk_client& client, callback_state& state,
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
+    const auto& hashes = get_hashs_argument();
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

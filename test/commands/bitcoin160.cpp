@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(bitcoin160__invoke)
 
 BOOST_AUTO_TEST_CASE(bitcoin160__invoke__always__okay_output)
@@ -32,4 +33,5 @@ BOOST_AUTO_TEST_CASE(bitcoin160__invoke__always__okay_output)
     BX_REQUIRE_OUTPUT("49f180cdaa4c6564f74a0b0321633bbcba4ef9c5\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

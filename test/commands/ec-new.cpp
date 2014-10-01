@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_new__invoke)
 
 BOOST_AUTO_TEST_CASE(ec_new__invoke_128_bit_seed__okay_output)
@@ -50,4 +51,5 @@ BOOST_AUTO_TEST_CASE(ec_new__invoke_64_bit_seed__failure_error)
 //    BX_REQUIRE_ERROR(BX_EC_NEW_INVALID_KEY "\n");
 //}
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

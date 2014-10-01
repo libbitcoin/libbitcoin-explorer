@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(hd_new__invoke)
 
 BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_mainnet__okay_output)
@@ -72,4 +73,5 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_testnet__failure_error)
 //    BX_REQUIRE_ERROR(BX_HD_NEW_INVALID_KEY "\n");
 //}
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

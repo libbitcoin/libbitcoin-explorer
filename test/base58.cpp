@@ -34,7 +34,8 @@ using namespace bc::explorer::primitives;
     0xa7, 0x97, 0x0c, 0xa3, 0x74, 0x51, 0x3d, 0xd0,  0x06 \
 }}
 
-BOOST_AUTO_TEST_SUITE(base58__primitives)
+BOOST_AUTO_TEST_SUITE(primitives)
+BOOST_AUTO_TEST_SUITE(primitives__base58)
 
 BOOST_AUTO_TEST_CASE(base58__constructor__default__does_not_throw)
 {
@@ -65,4 +66,5 @@ BOOST_AUTO_TEST_CASE(base58__constructor__copy_address_primitives__round_trips)
     //BX_SERIALIZE_COPY_ROUND_TRIP(base58, BASE58_ENCODED_A);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

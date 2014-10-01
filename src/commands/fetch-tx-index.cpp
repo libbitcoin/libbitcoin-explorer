@@ -26,11 +26,12 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -43,14 +44,18 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, const hash_digest& hash,
     size_t height, size_t index)
 {
-    state.output(boost::format(BX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
-        height % index);
+    if (state.get_engine() == encoding_engine::native)
+        state.output(format(BX_FETCH_TX_INDEX_OUTPUT) % base16(hash) % 
+            height % index);
+    else
+        state.output(prop_tree(hash, height, index));
 }
 
 static void fetch_tx_index_from_hash(obelisk_client& client,
-    callback_state& state, primitives::btc256 hash)
+    callback_state& state, const primitives::btc256& hash)
 {
-    auto on_done = [&state, &hash](size_t block_height, size_t index)
+    // Do not pass the hash by reference here.
+    auto on_done = [&state, hash](size_t block_height, size_t index)
     {
         handle_callback(state, hash, block_height, index);
     };
@@ -66,12 +71,14 @@ static void fetch_tx_index_from_hash(obelisk_client& client,
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& hashes = get_hashs_argument();
     const auto& encoding = get_format_option();
+    const auto& hashes = get_hashs_argument();
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

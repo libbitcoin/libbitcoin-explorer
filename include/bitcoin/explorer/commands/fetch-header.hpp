@@ -131,7 +131,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Get the block header from the specified hash or height. Requires an Obelisk server connection."
+                "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection."
             )
             (
                 "format,f",

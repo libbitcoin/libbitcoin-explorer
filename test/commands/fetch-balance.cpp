@@ -22,15 +22,17 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
 // DISABLED until client-server calls are isolated for test.
 
 //BOOST_AUTO_TEST_CASE(fetch_balance__invoke__address__okay)
 //{
-//    BX_DECLARE_COMMAND(fetch_balance);
+//    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
 //    command.set_bitcoin_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
 //    BX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

@@ -44,10 +44,12 @@ static void handle_callback(callback_state& state, size_t height)
 console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

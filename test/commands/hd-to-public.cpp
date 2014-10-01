@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(hd_to_public__invoke)
 
 BOOST_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_private_key__okay_output)
@@ -32,4 +33,5 @@ BOOST_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_private_key__okay_output)
     BX_REQUIRE_OUTPUT("xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

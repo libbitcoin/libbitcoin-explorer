@@ -28,7 +28,7 @@
 
 // TODO: obtain from XML resource as localized text.
 // NOTE: in the usage format "bx command" is the first parameter.
-#define BX_PRINTER_USAGE_FORMAT "\nUSAGE: %1% %2%\n"
+#define BX_PRINTER_USAGE_FORMAT "\nUsage: %1% %2%\n"
 #define BX_PRINTER_USAGE_OPTION_OPTIONAL_TOGGLE_FORMAT "[-%1%]"
 #define BX_PRINTER_USAGE_OPTION_REQUIRED_VALUE_FORMAT "-%1% ARG"
 #define BX_PRINTER_USAGE_OPTION_OPTIONAL_VALUE_FORMAT "[-%1% ARG]"
@@ -37,12 +37,12 @@
 #define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT "[%1%]"
 #define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_VARIABLE_FORMAT "[%1%]..."
 
-#define BX_PRINTER_SUMMARY_HEADER "\n-- Option Descriptions --\n"
+#define BX_PRINTER_SUMMARY_HEADER "\n-- Parameter Descriptions --\n"
 
-#define BX_PRINTER_ARGUMENTS_HEADER "\nPositional Arguments:\n"
+#define BX_PRINTER_ARGUMENTS_HEADER "\nArguments (positional):\n"
 #define BX_PRINTER_ARGUMENT_FORMAT "%1% \"%2%\"\n"
 
-#define BX_PRINTER_OPTIONS_HEADER "\nOption Arguments:\n"
+#define BX_PRINTER_OPTIONS_HEADER "\nOptions (named):\n"
 #define BX_PRINTER_OPTION_SHORT_FORMAT "-%1% %2\n"
 #define BX_PRINTER_OPTION_LONG_FORMAT "--%1% %2\n"
 #define BX_PRINTER_OPTION_SHORT_LONG_FORMAT "-%1% [ --%2% ] %3\n"
