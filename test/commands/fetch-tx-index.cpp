@@ -25,33 +25,29 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_tx_index__invoke)
 
-#define BX_FETCH_TX_INDEX_SATOSHIS_WORDS_HASH "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"
 #define BX_FETCH_TX_INDEX_SATOSHIS_WORDS_INDEX_NATIVE \
 "[4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b] Height: 0 Index: 0"
 
-#define BX_FETCH_TX_SECOND_TX_HASH "0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098"
+#define BX_FETCH_TX_SECOND_TX_HASH \
+"0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098"
 #define BX_FETCH_TX_INDEX_SECOND_INDEX_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
 "<hash>0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098</hash><height>1</height><index>0</index>"
 
 BOOST_AUTO_TEST_CASE(fetch_tx_index__invoke__mainnet_satoshis_words_tx_native__okay_output)
 {
-    BX_DECLARE_COMMAND(fetch_tx_index);
-    command.set_general_wait_setting(2000);
+    BX_DECLARE_NETWORK_COMMAND(fetch_tx_index);
     command.set_format_option({ "native" });
-    command.set_hashs_argument({ { BX_FETCH_TX_INDEX_SATOSHIS_WORDS_HASH } });
-    command.set_server_address_setting(BX_MAINNET_SERVER);
+    command.set_hashs_argument({ { BX_SATOSHIS_WORDS_TX_HASH } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_TX_INDEX_SATOSHIS_WORDS_INDEX_NATIVE "\n");
 }
 
 BOOST_AUTO_TEST_CASE(fetch_tx_index__invoke__mainnet_second_tx_native__okay_output)
 {
-    BX_DECLARE_COMMAND(fetch_tx_index);
-    command.set_general_wait_setting(2000);
+    BX_DECLARE_NETWORK_COMMAND(fetch_tx_index);
     command.set_format_option({ "xml" });
     command.set_hashs_argument({ { BX_FETCH_TX_SECOND_TX_HASH } });
-    command.set_server_address_setting(BX_MAINNET_SERVER);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_TX_INDEX_SECOND_INDEX_XML);
 }
