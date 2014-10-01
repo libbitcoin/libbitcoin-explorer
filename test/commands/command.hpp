@@ -34,14 +34,36 @@ using namespace bc::explorer; \
 using namespace bc::explorer::commands; \
 using namespace bc::explorer::primitives;
 
+// Server error messsages.
+#define BX_TIMEOUT_MESSAGE "timed out"
+#define BX_TX_NOT_FOUND_MESSAGE "Transaction inputs or outputs are empty"
+#define BX_MEMPOOL_COINBASE_TX_MESSAGE "Memory pool coinbase transaction"
+#define BX_MATCHING_PREVIOUS_OBJECT_MESSAGE "Matching previous object found"
+
+// Genesis block hash and transaction.
+#define BX_GENESIS_BLOCK_HASH \
+"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
+#define BX_SATOSHIS_WORDS_TX_HASH \
+"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"
+#define BX_SATOSHIS_WORDS_TX_BASE16 \
+"01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000"
+
+// Default network parameters.
+#define BX_NETWORK_RETRY 0
+#define BX_NETWORK_WAIT 2000
 //#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:8081"
 #define BX_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
 #define BX_TESTNET_SERVER "tcp://obelisk-testnet2.airbitz.co:9091"
-#define BX_TIMEOUT_MESSAGE "timed out"
 
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \
     extension command
+
+#define BX_DECLARE_NETWORK_COMMAND(extension) \
+    BX_DECLARE_COMMAND(extension); \
+    command.set_general_retries_setting(BX_NETWORK_RETRY); \
+    command.set_general_wait_setting(BX_NETWORK_WAIT); \
+    command.set_server_address_setting(BX_MAINNET_SERVER)
 
 // serializer results
 #define BX_SERIALIZE_COPY_ROUND_TRIP(serializer, value) \
