@@ -48,7 +48,7 @@ static void handle_callback(callback_state& state, size_t position,
 }
 
 static void fetch_confirmations_from_transaction(obelisk_client& client,
-    callback_state& state, primitives::transaction transaction)
+    callback_state& state, const primitives::transaction& transaction)
 {
     auto on_done = [&state](const index_list& unconfirmed)
     {

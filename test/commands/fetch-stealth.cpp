@@ -25,12 +25,22 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 
-// DISABLED until client-server calls are isolated for test.
+BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0__failure_error)
+{
+    BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
+    command.set_height_option(0);
+    command.set_format_option({ "info" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_TIMEOUT_MESSAGE "\n");
+}
 
-//BOOST_AUTO_TEST_CASE(fetch_stealth__invoke__always__okay)
+//BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__failure_error)
 //{
-//    BX_DECLARE_COMMAND(fetch_stealth);
-//    BX_REQUIRE_OKAY(command.invoke(output, error));
+//    BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
+//    command.set_height_option(323557);
+//    command.set_format_option({ "info" });
+//    BX_REQUIRE_FAILURE(command.invoke(output, error));
+//    BX_REQUIRE_ERROR(BX_TIMEOUT_MESSAGE "\n");
 //}
 
 BOOST_AUTO_TEST_SUITE_END()
