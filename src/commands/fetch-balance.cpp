@@ -47,9 +47,10 @@ static void handle_callback(callback_state& state,
 }
 
 static void fetch_balance_from_address(obelisk_client& client,
-    callback_state& state, primitives::address address)
+    callback_state& state, const primitives::address& address)
 {
-    auto on_done = [&state, &address](const blockchain::history_list& list)
+    // Do not pass the address by reference here.
+    auto on_done = [&state, address](const blockchain::history_list& list)
     {
         handle_callback(state, address, list);
     };

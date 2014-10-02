@@ -25,14 +25,35 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 
-// DISABLED until client-server calls are isolated for test.
+// Vector: github.com/spesmilo/sx/blob/master/README.md
+#define BX_FETCH_HISTORY_SX_DEMO_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
+#define BX_FETCH_HISTORY_SX_DEMO_INFO \
+"address 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz\n" \
+"histories\n" \
+"{\n" \
+"    history\n" \
+"    {\n" \
+"        value 100000\n" \
+"        output\n" \
+"        {\n" \
+"            height 247683\n" \
+"            point 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1\n" \
+"        }\n" \
+"        input\n" \
+"        {\n" \
+"            height 247742\n" \
+"            point b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0\n" \
+"        }\n" \
+"    }\n" \
+"}\n"
 
-//BOOST_AUTO_TEST_CASE(fetch_history__invoke__address__okay)
-//{
-//    BX_DECLARE_COMMAND(fetch_history);
-//    command.set_bitcoin_addresss_argument({{ "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz" }});
-//    BX_REQUIRE_OKAY(command.invoke(output, error));
-//}
-
+BOOST_AUTO_TEST_CASE(fetch_history__invoke__mainnet_sx_demo_info__okay_output)
+{
+    BX_DECLARE_NETWORK_COMMAND(bc::explorer::commands::fetch_history);
+    command.set_format_option({ "info" });
+    command.set_bitcoin_addresss_argument({ { BX_FETCH_HISTORY_SX_DEMO_ADDRESS } });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_FETCH_HISTORY_SX_DEMO_INFO);
+}
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
