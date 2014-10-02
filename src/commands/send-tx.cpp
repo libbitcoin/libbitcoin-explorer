@@ -39,7 +39,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 
 static void handle_callback(callback_state& state)
 {
-    state.output(boost::format(BX_SEND_TX_OUTPUT) % now());
+    state.output(format(BX_SEND_TX_OUTPUT) % now());
     state.stop();
 }
 

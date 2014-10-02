@@ -43,13 +43,15 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, 
     const stealth_prefix& prefix, const blockchain::stealth_list& row_list)
 {
+    // native is info.
     state.output(prop_tree(prefix, row_list));
 }
 
 static void fetch_stealth_from_prefix(obelisk_client& client,
-    callback_state& state, base2 prefix, size_t from_height)
+    callback_state& state, const base2& prefix, size_t from_height)
 {
-    auto on_done = [&state, &prefix](const blockchain::stealth_list& list)
+    // Do not pass the prefix by reference here.
+    auto on_done = [&state, prefix](const blockchain::stealth_list& list)
     {
         handle_callback(state, prefix, list);
     };

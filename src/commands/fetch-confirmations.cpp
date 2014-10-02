@@ -40,11 +40,11 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, size_t position,
     const index_list& confirmations)
 {
-    // TODO: support encoding like fetch-tx-index.
-    // Why is this a list and why is it not summarized by transaction?
-    for (const auto& confirmation: confirmations)
-        state.output(format(BX_FETCH_CONFIRMATIONS_OUTPUT) % position %
-            confirmation);
+    // native is info.
+    // Why is confirmations a list? This is disabled until we understand 
+    // what is the intended shape of the return. Then we will build a property
+    // tree to capture it.
+    //state.output(prop_tree(position, confirmations));
 }
 
 static void fetch_confirmations_from_transaction(obelisk_client& client,

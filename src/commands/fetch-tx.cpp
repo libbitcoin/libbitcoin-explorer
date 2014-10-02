@@ -43,6 +43,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 
 static void handle_callback(callback_state& state, const tx_type& tx)
 {
+    // native is base16 (unique among fetch commands).
     if (state.get_engine() == encoding_engine::native)
         state.output(format("%1%") % transaction(tx));
     else

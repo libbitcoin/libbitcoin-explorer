@@ -42,8 +42,7 @@ static void handle_callback(callback_state& state,
     const payment_address& address, const std::vector<balance_row>& histories)
 {
     // native is info.
-    const auto tree = prop_tree(histories, address);
-    state.output(tree);
+    state.output(prop_tree(histories, address));
 }
 
 static void fetch_balance_from_address(obelisk_client& client,

@@ -34,16 +34,17 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_sent(callback_state& state, tx_type& tx)
+static void handle_sent(callback_state& state, const tx_type& tx)
 {
     state.output(format(BX_SEND_TX_NODE_OUTPUT) % transaction(tx) % now());
     --state;
 }
 
 static void handle_send(callback_state& state, bc::network::channel_ptr node,
-    tx_type& tx)
+    const tx_type& tx)
 {
-    const auto sent_handler = [&state, &tx](const std::error_code& code)
+    // Do not pass the tx by reference here.
+    const auto sent_handler = [&state, tx](const std::error_code& code)
     {
         if (!state.handle_error(code))
             handle_sent(state, tx);

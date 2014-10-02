@@ -50,14 +50,15 @@ static void handle_update(callback_state& state, base2 prefix,
 }
 
 static void subscribe_from_prefix(obelisk_client& client,
-    callback_state& state, base2 prefix, bool& success_indicator)
+    callback_state& state, const base2& prefix, bool& subscribed)
 {
-    auto on_done = [&state, &prefix, &success_indicator]()
+    // Do not pass the prefix by reference here.
+    auto on_done = [&state, prefix, &subscribed]()
     {
         if (state.get_engine() != encoding_engine::native)
             state.output(format(BX_WATCH_STEALTH_PREFIX_WAITING) % prefix);
 
-        success_indicator = true;
+        subscribed = true;
     };
 
     auto on_error = [&state](const std::error_code& error)
@@ -95,17 +96,17 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     if (client.connect(server) < 0)
         return console_result::failure;
 
-    bool has_subscribed = false;
+    bool subscribed = false;
     client.get_codec().set_on_update(on_update);
 
     for (auto prefix: prefixes)
-        subscribe_from_prefix(client, state, prefix, has_subscribed);
+        subscribe_from_prefix(client, state, prefix, subscribed);
 
     // poll for subscribe callbacks
     if (client.resolve_callbacks())
     {
         // keep polling for updates if any subscriptions were established.
-        if (has_subscribed)
+        if (subscribed)
             client.poll_until_termination();
     }
 
