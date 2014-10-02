@@ -41,14 +41,16 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state,
     const payment_address& address, const std::vector<history_row>& histories)
 {
+    // native is info.
     const auto tree = prop_tree(address, histories);
     state.output(tree);
 }
 
 static void fetch_history_from_address(obelisk_client& client,
-    callback_state& state, primitives::address address)
+    callback_state& state, const primitives::address& address)
 {
-    auto on_done = [&state, &address](const blockchain::history_list& list)
+    // Do not pass the address by reference here.
+    auto on_done = [&state, address](const blockchain::history_list& list)
     {
         handle_callback(state, address, list);
     };

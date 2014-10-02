@@ -40,7 +40,9 @@ using namespace bc::explorer::primitives;
 #define BX_MEMPOOL_COINBASE_TX_MESSAGE "Memory pool coinbase transaction"
 #define BX_MATCHING_PREVIOUS_OBJECT_MESSAGE "Matching previous object found"
 
-// Genesis block hash and transaction.
+// Genesis block hash, transaction, address.
+#define BX_FIRST_ADDRESS \
+"1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
 #define BX_GENESIS_BLOCK_HASH \
 "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
 #define BX_SATOSHIS_WORDS_TX_HASH \

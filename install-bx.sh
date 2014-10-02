@@ -33,8 +33,9 @@ SECP256K1_OPTIONS=\
 
 # http://bit.ly/1pKbuFP
 # Run all unit and component tests (excludes 'network' group).
+# TODO: specify: utility,primitives,obelisk,generated,offline,stub,obsolete
 BOOST_UNIT_TEST_PARAMETERS=\
-"--run_test=utility,primitives,obelisk,generated,offline,stub,obsolete "\
+"--run_test=* "\
 "--random=1 "\
 "--show_progress=yes "\
 "--result_code=no "\
