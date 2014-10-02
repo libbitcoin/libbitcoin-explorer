@@ -27,9 +27,6 @@
 #include <boost/test/unit_test_suite.hpp>
 #include <bitcoin/explorer.hpp>
 
-namespace libbitcoin {
-namespace parameter {
-
 using namespace bc::explorer;
 
 enum opt
@@ -84,6 +81,9 @@ static void load_test_arguments(argument_list& arguments)
     load_test_options(options); \
     auto option = *(options.options()[index]); \
     bc::explorer::parameter parameter
+
+BOOST_AUTO_TEST_SUITE(utility)
+BOOST_AUTO_TEST_SUITE(utility__parameter)
 
 // ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(parameter__position)
@@ -368,5 +368,5 @@ BOOST_AUTO_TEST_CASE(parameter__short_name__long_only__returns_null)
 
 BOOST_AUTO_TEST_SUITE_END()
 
-} // namespace parameter
-} // namespace libbitcoin
+BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END()

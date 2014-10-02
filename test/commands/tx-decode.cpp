@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 
 // Vector: sx.dyne.org/offlinetx.html
@@ -123,4 +124,5 @@ BOOST_AUTO_TEST_CASE(tx_decode__invoke__two_tx_one_input_one_address_output_nati
     BX_REQUIRE_OUTPUT(TX_DECODE_TX_A_NATIVE "\n" TX_DECODE_TX_A_NATIVE "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

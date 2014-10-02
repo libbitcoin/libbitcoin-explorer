@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(tx_encode__invoke)
 
 // Vector: sx.dyne.org/offlinetx.html
@@ -91,4 +92,5 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_1_locktime_
     BX_REQUIRE_OUTPUT(TX_ENCODE_TX_ACV1L42_BASE16 "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

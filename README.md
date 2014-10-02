@@ -127,7 +127,7 @@ To upgrade GCC first set the following environment variables:
 ```
 Next execute the following commands:
 ```sh
-  $ brew install boost gmp libconfig
+  $ brew install boost gmp
   $ brew tap homebrew/versions
   $ brew install gcc48
   $ sudo ln -sf /usr/local/bin/g++-4.8 /usr/bin/g++

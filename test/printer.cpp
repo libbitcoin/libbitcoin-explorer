@@ -27,6 +27,9 @@
 
 using namespace bc::explorer;
 
+BOOST_AUTO_TEST_SUITE(utility)
+BOOST_AUTO_TEST_SUITE(utility__printer)
+
 // ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(printer__format_help_arguments)
 
@@ -124,4 +127,7 @@ BOOST_AUTO_TEST_CASE(printer__print_usage__todo)
 {
 }
 
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

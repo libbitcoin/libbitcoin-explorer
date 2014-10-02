@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(base58check_encode__invoke)
 
 // vectors
@@ -48,4 +49,5 @@ BOOST_AUTO_TEST_CASE(base58check_encode__invoke__version_42__okay_output)
     BX_REQUIRE_OUTPUT(BX_BASE58CHECK_ENCODE_ENCODED_V42 "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

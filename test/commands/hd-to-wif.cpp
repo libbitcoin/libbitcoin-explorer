@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(hd_to_wif__invoke)
 
 BOOST_AUTO_TEST_CASE(hd_to_wif__invoke__mainnet_key__okay_output)
@@ -32,4 +33,5 @@ BOOST_AUTO_TEST_CASE(hd_to_wif__invoke__mainnet_key__okay_output)
     BX_REQUIRE_OUTPUT("KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(help__invoke)
 
 BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure)
@@ -46,4 +47,5 @@ BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
     //BX_REQUIRE_OUTPUT("TODO");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

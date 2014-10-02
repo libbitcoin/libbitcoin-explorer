@@ -26,6 +26,8 @@
     <!-- NOTE: we could move this into the obelisk section if it was dynamic. -->
     <!-- NOTE: we probably shouldn't use this setting since the fact is compiled into dependencies. -->
     <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
+    <setting name="retries" type="uint8_t"description="Number of times to retry contacting the server before giving up." />
+    <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
   
   <configuration section="logging">
@@ -37,7 +39,7 @@
     <!-- TODO: create primitive for URI and use for socks-proxy and address. -->
     <setting name="certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert" />
     <setting name="public-key" type="base16" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
-    <setting name="address" default="tcp://obelisk.unsystem.net:8081" description="The URI of the server to which this application may connect." />
+    <setting name="address" default="tcp://obelisk2.airbitz.co:9091" description="The URI of the server to which this application may connect." />
     <setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />
   </configuration>
   
@@ -211,13 +213,13 @@
 
   <command symbol="fetch-confirmations" formerly="validtx" typeX="string" multipleX="true" category="ONLINE" network="true">
     <option name="help" description="Get confirmations for a set of transactions. Requires an Obelisk server connection." />
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <!--<option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />-->
     <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
     <define name="BX_FETCH_CONFIRMATIONS_OUTPUT" value="[%1%] Confirmations: %2%" />    
   </command>
 
   <command symbol="fetch-header" category="ONLINE" typeX="header" network="true">
-    <option name="help" description="Get the block header from the specified hash or height. Requires an Obelisk server connection." />
+    <option name="help" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <option name="hash" shortcut="s" type="btc256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="size_t" description="The block height."/>
@@ -247,13 +249,12 @@
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include."/>
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>
     <option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
-    <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of  Base2 stealth prefixes used to locate transactions." />
+    <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 stealth prefixes used to locate transactions." />
   </command>
 
   <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" multipleX="true" category="ONLINE" network="true">
     <option name="help" description="Get transactions by filter. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <option name="height" shortcut="t" type="size_t" description="The minimum block height of prefix transactions to get."/>
     <argument name="HASH" stdin="true" limit="-1"  type="btc256" description="The set of Base16 transaction hashes of transactions to get." />
   </command>
 

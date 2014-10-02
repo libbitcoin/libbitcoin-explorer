@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(seed__invoke)
 
 #define BX_SEED_BITS_TO_TERMINATED_BASE16(bits) (2 * (bits / 8) + 1)
@@ -69,4 +70,5 @@ BOOST_AUTO_TEST_CASE(seed__invoke__not_byte_aligned__failure_error)
     BX_REQUIRE_ERROR(BX_SEED_BIT_LENGTH_UNSUPPORTED "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

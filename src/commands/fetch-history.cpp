@@ -28,6 +28,7 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -40,14 +41,16 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state,
     const payment_address& address, const std::vector<history_row>& histories)
 {
+    // native is info.
     const auto tree = prop_tree(address, histories);
     state.output(tree);
 }
 
 static void fetch_history_from_address(obelisk_client& client,
-    callback_state& state, primitives::address address)
+    callback_state& state, const primitives::address& address)
 {
-    auto on_done = [&state, &address](const blockchain::history_list& list)
+    // Do not pass the address by reference here.
+    auto on_done = [&state, address](const blockchain::history_list& list)
     {
         handle_callback(state, address, list);
     };
@@ -72,10 +75,12 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& encoding = get_format_option();
     const auto& addresses = get_bitcoin_addresss_argument();
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

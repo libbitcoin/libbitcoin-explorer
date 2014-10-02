@@ -22,6 +22,7 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(sha160__invoke)
 
 BOOST_AUTO_TEST_CASE(sha160__invoke__always__okay_output)
@@ -32,4 +33,5 @@ BOOST_AUTO_TEST_CASE(sha160__invoke__always__okay_output)
     BX_REQUIRE_OUTPUT("ec5386a03e88b5ac9328f4eabe5103e601906daa\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

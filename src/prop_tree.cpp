@@ -299,6 +299,15 @@ ptree prop_tree(const wrapped_data& wrapped)
     return tree;
 }
 
+ptree prop_tree(const hash_digest& hash, size_t height, size_t index)
+{
+    ptree tree;
+    tree.put("hash", base16(hash));
+    tree.put("height", height);
+    tree.put("index", index);
+    return tree;
+}
+
 } // namespace primitives
 } // namespace explorer
 } // namespace libbitcoin

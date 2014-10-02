@@ -519,8 +519,8 @@ public:
      */
     virtual void write_usage(std::ostream& stream)
     {
-        auto options = load_options();
-        auto arguments = load_arguments();
+        const auto options = get_option_metadata();
+        const auto arguments = get_argument_metadata();
     } 
     
     /* Properties */
@@ -945,6 +945,7 @@ private:
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+BOOST_AUTO_TEST_SUITE(generated)
 BOOST_AUTO_TEST_SUITE(generated__broadcast)
 
 BOOST_AUTO_TEST_CASE(generated__broadcast__always__does_not_throw)
@@ -954,6 +955,7 @@ BOOST_AUTO_TEST_CASE(generated__broadcast__always__does_not_throw)
     bc::explorer::broadcast(func);
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
 .echo "Generating test/generated__find.cpp..."
@@ -969,6 +971,7 @@ BOOST_AUTO_TEST_SUITE_END()
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
+BOOST_AUTO_TEST_SUITE(generated)
 BOOST_AUTO_TEST_SUITE(generated__find)
 .for command by symbol
 
@@ -978,6 +981,7 @@ BOOST_AUTO_TEST_CASE(generated__find__$(symbol:c)__returns_object)
 }
 .endfor
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
 .echo "Generating test/generated__symbol.cpp..."
@@ -993,6 +997,7 @@ BOOST_AUTO_TEST_SUITE_END()
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
+BOOST_AUTO_TEST_SUITE(generated)
 BOOST_AUTO_TEST_SUITE(generated__symbol)
 .for command by symbol
 
@@ -1002,6 +1007,7 @@ BOOST_AUTO_TEST_CASE(generated__symbol__$(symbol:c)__returns_expected_value)
 }
 .endfor
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
 .echo "Generating include/bitcoin/Makefile.am..."

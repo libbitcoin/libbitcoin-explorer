@@ -141,11 +141,6 @@ public:
                 "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
             )
             (
-                "height,t",
-                value<size_t>(&option_.height),
-                "The minimum block height of prefix transactions to get."
-            )
-            (
                 "HASH",
                 value<std::vector<primitives::btc256>>(&argument_.hashs),
                 "The set of Base16 transaction hashes of transactions to get."
@@ -215,23 +210,6 @@ public:
         option_.format = value;
     }
 
-    /**
-     * Get the value of the height option.
-     */
-    virtual size_t& get_height_option()
-    {
-        return option_.height;
-    }
-    
-    /**
-     * Set the value of the height option.
-     */
-    virtual void set_height_option(
-        const size_t& value)
-    {
-        option_.height = value;
-    }
-
 private:
 
     /**
@@ -258,14 +236,12 @@ private:
     {
         option()
           : help(),
-            format(),
-            height()
+            format()
         {
         }
         
         bool help;
         primitives::encoding format;
-        size_t height;
     } option_;
 };
 

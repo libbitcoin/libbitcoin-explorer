@@ -22,9 +22,8 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(stub)
 BOOST_AUTO_TEST_SUITE(watch_tx__invoke)
-
-// DISABLED until client-server calls are isolated for test.
 
 BOOST_AUTO_TEST_CASE(watch_tx__invoke__invoke__always__failure_error)
 {
@@ -33,4 +32,5 @@ BOOST_AUTO_TEST_CASE(watch_tx__invoke__invoke__always__failure_error)
     BX_REQUIRE_ERROR(BX_WATCH_TX_NOT_IMPLEMENTED "\n");
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

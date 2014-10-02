@@ -22,14 +22,29 @@
 
 BX_USING_NAMESPACES()
 
+BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_height__invoke)
 
-// DISABLED until client-server calls are isolated for test.
+BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet_wait_0__failure_error)
+{
+    BX_DECLARE_NETWORK_COMMAND(fetch_height);
+    command.set_general_wait_setting(0);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_TIMEOUT_MESSAGE "\n");
+}
 
-//BOOST_AUTO_TEST_CASE(fetch_height__invoke__always__okay)
-//{
-//    BX_DECLARE_COMMAND(fetch_height);
-//    BX_REQUIRE_OKAY(command.invoke(output, error));
-//}
+BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet__okay)
+{
+    BX_DECLARE_NETWORK_COMMAND(fetch_height);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+}
 
+BOOST_AUTO_TEST_CASE(fetch_height__invoke__testnet__okay)
+{
+    BX_DECLARE_NETWORK_COMMAND(fetch_height);
+    command.set_server_address_setting(BX_TESTNET_SERVER);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+}
+
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

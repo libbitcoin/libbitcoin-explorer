@@ -245,6 +245,15 @@ pt::ptree prop_tree(const stealth_prefix& prefix,
  */
 pt::ptree prop_tree(const wrapped_data& wrapped);
 
+/**
+ * Create a property tree for the fetch-tx-index command.
+ * @param[in]  hash    The block hash.
+ * @param[in]  height  The block height.
+ * @param[in]  index   The tx index.
+ * @returns            A new property tree containing the list.
+ */
+pt::ptree prop_tree(const bc::hash_digest& hash, size_t height, size_t index);
+
 } // namespace primitives
 } // namespace explorer
 } // namespace libbitcoin

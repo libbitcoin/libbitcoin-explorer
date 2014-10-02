@@ -29,6 +29,7 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -65,13 +66,15 @@ static void fetch_stealth_from_prefix(obelisk_client& client,
 console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto height = get_height_option();
     const auto& prefixes = get_prefixs_argument();
+    const auto height = get_height_option();
     const auto& encoding = get_format_option();
     const auto& server = get_server_address_setting();
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
