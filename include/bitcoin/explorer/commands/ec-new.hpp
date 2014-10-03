@@ -118,7 +118,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        //load_input(get_seed_argument(), "SEED", variables, input);
+        load_input(get_seed_argument(), "SEED", variables, input);
     }
     
     /**

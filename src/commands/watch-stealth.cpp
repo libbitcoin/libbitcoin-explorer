@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -76,6 +77,8 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto& encoding = get_format_option();
     const auto& prefixes = get_prefixs_argument();
     const auto& server = get_server_address_setting();
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
 
     callback_state state(error, output, encoding);
 
@@ -92,13 +95,16 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     };
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
 
     bool subscribed = false;
     client.get_codec().set_on_update(on_update);
+
+    if (prefixes.empty())
+        subscribe_from_prefix(client, state, base2(), subscribed);
 
     for (auto prefix: prefixes)
         subscribe_from_prefix(client, state, prefix, subscribed);

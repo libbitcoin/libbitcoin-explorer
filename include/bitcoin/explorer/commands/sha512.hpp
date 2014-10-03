@@ -110,7 +110,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        //load_input(get_base16_argument(), "BASE16", variables, input);
+        load_input(get_base16_argument(), "BASE16", variables, input);
     }
     
     /**

@@ -36,6 +36,7 @@ using namespace bc::explorer::primitives;
 
 // Server error messsages.
 #define BX_TIMEOUT_MESSAGE "timed out"
+#define BX_BAD_STREAM_MESSAGE "Bad stream"
 #define BX_SPENT_INPUT_NOT_FOUND_MESSAGE "Spent input not found"
 #define BX_TX_NOT_FOUND_MESSAGE "Transaction inputs or outputs are empty"
 #define BX_MEMPOOL_COINBASE_TX_MESSAGE "Memory pool coinbase transaction"

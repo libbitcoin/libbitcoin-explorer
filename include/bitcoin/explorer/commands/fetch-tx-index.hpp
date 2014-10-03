@@ -63,12 +63,6 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
- */
-#define BX_FETCH_TX_INDEX_OUTPUT \
-    "[%1%] Height: %2% Index: %3%"
-
-/**
  * Class to implement the fetch-tx-index command.
  */
 class fetch_tx_index 
@@ -116,7 +110,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        //load_input(get_hashs_argument(), "HASH", variables, input);
+        load_input(get_hashs_argument(), "HASH", variables, input);
     }
     
     /**
