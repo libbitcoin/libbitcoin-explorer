@@ -57,7 +57,6 @@ static void broadcast_transaction(obelisk_client& client,
     };
 
     client.get_codec().broadcast_transaction(on_error, on_done, tx);
-
 }
 
 console_result send_tx::invoke(std::ostream& output, std::ostream& error)
