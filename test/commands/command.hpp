@@ -54,7 +54,8 @@ using namespace bc::explorer::primitives;
 // Default network parameters.
 #define BX_NETWORK_RETRY 0
 #define BX_NETWORK_WAIT 2000
-#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:8081"
+#define BX_MAINNET_SERVER "tcp://obelisk.coinkite.com:9091"
+//#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:8081"
 //#define BX_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
 #define BX_TESTNET_SERVER "tcp://obelisk-testnet2.airbitz.co:9091"
 

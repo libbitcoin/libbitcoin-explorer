@@ -34,14 +34,15 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0__failure_error)
     BX_REQUIRE_ERROR(BX_TIMEOUT_MESSAGE "\n");
 }
 
-//BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__failure_error)
-//{
-//    BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
-//    command.set_height_option(323557);
-//    command.set_format_option({ "info" });
-//    BX_REQUIRE_FAILURE(command.invoke(output, error));
-//    BX_REQUIRE_ERROR(BX_TIMEOUT_MESSAGE "\n");
-//}
+BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__failure_error)
+{
+    BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
+    command.set_format_option({ "info" });
+    command.set_general_wait_setting(2000);
+    command.set_height_option(323557);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_TIMEOUT_MESSAGE "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

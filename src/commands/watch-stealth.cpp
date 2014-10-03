@@ -42,7 +42,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
     state.handle_error(error);
 }
 
-static void handle_update(callback_state& state, base2 prefix,
+static void handle_update(callback_state& state, const base2& prefix,
     const payment_address& address, size_t, const hash_digest& block_hash,
     const transaction_type& tx)
 {
@@ -79,7 +79,8 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_update = [&state, &prefixes](const payment_address& address,
+    // Do not pass the prefixes by reference here.
+    auto on_update = [&state, prefixes](const payment_address& address,
         size_t height, const hash_digest& block_hash, 
         const transaction_type& tx)
     {

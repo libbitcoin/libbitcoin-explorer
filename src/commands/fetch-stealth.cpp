@@ -83,6 +83,9 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
+    if (prefixes.empty())
+        fetch_stealth_from_prefix(client, state, base2(), height);
+
     for (auto prefix: prefixes)
         fetch_stealth_from_prefix(client, state, prefix, height);
 
