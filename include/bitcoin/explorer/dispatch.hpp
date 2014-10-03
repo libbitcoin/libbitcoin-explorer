@@ -87,7 +87,7 @@ void load_command_variables(po::variables_map& variables, command& instance,
  * @param[in]  instance   The command instance for the current command.
  */
 void load_configuration_variables(po::variables_map& variables, 
-    command& instance) throw();
+    command& instance) throw(po::reading_file);
 
 /**
  * Load environment variables.

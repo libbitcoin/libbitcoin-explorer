@@ -125,7 +125,7 @@ void load_command_variables(variables_map& variables, command& instance,
 
 // Not unit testable (without creating actual config files).
 void load_configuration_variables(variables_map& variables, command& instance)
-    throw()
+    throw(reading_file)
 {
     const auto config_path = get_config_option(variables);
     if (config_path.empty())
