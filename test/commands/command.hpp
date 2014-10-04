@@ -36,6 +36,8 @@ using namespace bc::explorer::primitives;
 
 // Server error messsages.
 #define BX_TIMEOUT_MESSAGE "timed out"
+#define BX_BAD_STREAM_MESSAGE "Bad stream"
+#define BX_SPENT_INPUT_NOT_FOUND_MESSAGE "Spent input not found"
 #define BX_TX_NOT_FOUND_MESSAGE "Transaction inputs or outputs are empty"
 #define BX_MEMPOOL_COINBASE_TX_MESSAGE "Memory pool coinbase transaction"
 #define BX_MATCHING_PREVIOUS_OBJECT_MESSAGE "Matching previous object found"
@@ -53,8 +55,9 @@ using namespace bc::explorer::primitives;
 // Default network parameters.
 #define BX_NETWORK_RETRY 0
 #define BX_NETWORK_WAIT 2000
+#define BX_MAINNET_SERVER "tcp://obelisk.coinkite.com:9091"
 //#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:8081"
-#define BX_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
+//#define BX_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
 #define BX_TESTNET_SERVER "tcp://obelisk-testnet2.airbitz.co:9091"
 
 #define BX_DECLARE_COMMAND(extension) \

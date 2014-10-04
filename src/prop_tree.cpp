@@ -74,18 +74,26 @@ ptree prop_tree(const history_row& row)
     // missing implies pending
     if (row.output_height != 0)
         tree.put("output.height", row.output_height);
+    //else
+    //    tree.put("output.height", "unconfirmed");
 
     tree.put("output.point", point(row.output));
 
     // missing implies unspent
     if (row.spend.hash != null_hash)
     {
-        // missing implies pending
+        //tree.put("output.spent", true);
+
+        // missing implies unconfirmed
         if (row.spend_height != 0)
             tree.put("input.height", row.spend_height);
+        //else
+        //    tree.put("input.height", "unconfirmed");
 
         tree.put("input.point", point(row.spend));
     }
+    //else
+    //    tree.put("output.spent", false);
 
     return tree;
 }
@@ -110,26 +118,25 @@ ptree prop_tree(const std::vector<balance_row>& rows,
     ptree tree;
     uint64_t value(0);
     uint64_t total_recieved(0);
-    uint64_t received_balance(0);
-    uint64_t pending_balance(0);
+    uint64_t confirmed_balance(0);
+    uint64_t unconfirmed_balance(0);
 
-    // We do not assert against the quality of server response values.
     for (const auto& row: rows)
     {
-        total_recieved += value;
+        total_recieved += row.value;
 
         if (row.spend.hash == null_hash)
-            pending_balance += row.value;
+            unconfirmed_balance += row.value;
 
-        if (row.output_height != 0 && 
-            (row.spend.hash == null_hash || row.spend_height != 0))
-            received_balance += row.value;
+        if (row.output_height != 0 &&
+            (row.spend.hash == null_hash || row.spend_height == 0))
+            confirmed_balance += row.value;
     }
 
     tree.put("address", address(balance_address));
-    tree.put("paid", total_recieved);
-    tree.put("pending", pending_balance);
-    tree.put("received", received_balance);
+    tree.put("received", total_recieved);
+    tree.put("unconfirmed", unconfirmed_balance);
+    tree.put("confirmed", confirmed_balance);
     return tree;
 }
 

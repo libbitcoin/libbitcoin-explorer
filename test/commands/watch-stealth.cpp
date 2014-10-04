@@ -25,13 +25,13 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(watch_stealth__invoke)
 
-// DISABLED until client-server calls are isolated for test.
-
-//BOOST_AUTO_TEST_CASE(watch_stealth__invoke__invoke__always__failure_error)
-//{
-//    BX_DECLARE_COMMAND(watch_stealth);
-//    BX_REQUIRE_FAILURE(command.invoke(output, error));
-//}
+BOOST_AUTO_TEST_CASE(watch_stealth__invoke__invoke__always__failure_error)
+{
+    BX_DECLARE_NETWORK_COMMAND(watch_stealth);
+    command.set_format_option({ "info" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_BAD_STREAM_MESSAGE "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

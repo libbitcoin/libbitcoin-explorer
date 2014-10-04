@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -42,7 +43,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
     state.handle_error(error);
 }
 
-static void handle_update(callback_state& state, base2 prefix,
+static void handle_update(callback_state& state, const base2& prefix,
     const payment_address& address, size_t, const hash_digest& block_hash,
     const transaction_type& tx)
 {
@@ -50,14 +51,15 @@ static void handle_update(callback_state& state, base2 prefix,
 }
 
 static void subscribe_from_prefix(obelisk_client& client,
-    callback_state& state, base2 prefix, bool& success_indicator)
+    callback_state& state, const base2& prefix, bool& subscribed)
 {
-    auto on_done = [&state, &prefix, &success_indicator]()
+    // Do not pass the prefix by reference here.
+    auto on_done = [&state, prefix, &subscribed]()
     {
         if (state.get_engine() != encoding_engine::native)
             state.output(format(BX_WATCH_STEALTH_PREFIX_WAITING) % prefix);
 
-        success_indicator = true;
+        subscribed = true;
     };
 
     auto on_error = [&state](const std::error_code& error)
@@ -75,10 +77,13 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto& encoding = get_format_option();
     const auto& prefixes = get_prefixs_argument();
     const auto& server = get_server_address_setting();
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
 
     callback_state state(error, output, encoding);
 
-    auto on_update = [&state, &prefixes](const payment_address& address,
+    // Do not pass the prefixes by reference here.
+    auto on_update = [&state, prefixes](const payment_address& address,
         size_t height, const hash_digest& block_hash, 
         const transaction_type& tx)
     {
@@ -90,22 +95,25 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     };
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
 
-    bool has_subscribed = false;
+    bool subscribed = false;
     client.get_codec().set_on_update(on_update);
 
+    if (prefixes.empty())
+        subscribe_from_prefix(client, state, base2(), subscribed);
+
     for (auto prefix: prefixes)
-        subscribe_from_prefix(client, state, prefix, has_subscribed);
+        subscribe_from_prefix(client, state, prefix, subscribed);
 
     // poll for subscribe callbacks
     if (client.resolve_callbacks())
     {
         // keep polling for updates if any subscriptions were established.
-        if (has_subscribed)
+        if (subscribed)
             client.poll_until_termination();
     }
 

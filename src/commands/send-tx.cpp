@@ -39,7 +39,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 
 static void handle_callback(callback_state& state)
 {
-    state.output(boost::format(BX_SEND_TX_OUTPUT) % now());
+    state.output(format(BX_SEND_TX_OUTPUT) % now());
     state.stop();
 }
 
@@ -57,7 +57,6 @@ static void broadcast_transaction(obelisk_client& client,
     };
 
     client.get_codec().broadcast_transaction(on_error, on_done, tx);
-
 }
 
 console_result send_tx::invoke(std::ostream& output, std::ostream& error)

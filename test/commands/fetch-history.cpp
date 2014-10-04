@@ -26,8 +26,8 @@ BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 
 // Vector: github.com/spesmilo/sx/blob/master/README.md
-#define BX_FETCH_HISTORY_SX_DEMO_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
-#define BX_FETCH_HISTORY_SX_DEMO_INFO \
+#define BX_FETCH_HISTORY_SX_DEMO1_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
+#define BX_FETCH_HISTORY_SX_DEMO1_INFO \
 "address 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz\n" \
 "histories\n" \
 "{\n" \
@@ -47,13 +47,41 @@ BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 "    }\n" \
 "}\n"
 
-BOOST_AUTO_TEST_CASE(fetch_history__invoke__mainnet_sx_demo_info__okay_output)
+// Vector: github.com/spesmilo/sx/blob/master/README.md
+#define BX_FETCH_HISTORY_SX_DEMO2_ADDRESS "13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe"
+#define BX_FETCH_HISTORY_SX_DEMO2_INFO \
+"address 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe\n" \
+"histories\n" \
+"{\n" \
+"    history\n" \
+"    {\n" \
+"        value 90000\n" \
+"        output\n" \
+"        {\n" \
+"            height 247742\n" \
+"            point b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0\n" \
+"        }\n" \
+"    }\n" \
+"}\n"
+
+BOOST_AUTO_TEST_CASE(fetch_history__invoke__mainnet_sx_demo1_info__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(bc::explorer::commands::fetch_history);
     command.set_format_option({ "info" });
-    command.set_bitcoin_addresss_argument({ { BX_FETCH_HISTORY_SX_DEMO_ADDRESS } });
+    command.set_bitcoin_addresss_argument({ { BX_FETCH_HISTORY_SX_DEMO1_ADDRESS } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_FETCH_HISTORY_SX_DEMO_INFO);
+    BX_REQUIRE_OUTPUT(BX_FETCH_HISTORY_SX_DEMO1_INFO);
 }
+
+BOOST_AUTO_TEST_CASE(fetch_history__invoke__mainnet_sx_demo2_info__okay_output)
+{
+    BX_DECLARE_NETWORK_COMMAND(bc::explorer::commands::fetch_history);
+    command.set_format_option({ "info" });
+    command.set_bitcoin_addresss_argument({ { BX_FETCH_HISTORY_SX_DEMO2_ADDRESS } });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    auto foo = output.str();
+    BX_REQUIRE_OUTPUT(BX_FETCH_HISTORY_SX_DEMO2_INFO);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
