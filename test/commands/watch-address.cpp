@@ -23,11 +23,11 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(network)
-BOOST_AUTO_TEST_SUITE(watch_stealth__invoke)
+BOOST_AUTO_TEST_SUITE(watch_address__invoke)
 
-BOOST_AUTO_TEST_CASE(watch_stealth__invoke__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(watch_address__invoke__invoke__always__failure_error)
 {
-    BX_DECLARE_NETWORK_COMMAND(watch_stealth);
+    BX_DECLARE_NETWORK_COMMAND(watch_address);
     command.set_format_option({ "info" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_BAD_STREAM_MESSAGE "\n");

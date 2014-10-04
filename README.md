@@ -643,7 +643,6 @@ BX defines the following set of commands with corresponding names in the `bx::co
     ec-to-wif
     ec-unlock
     fetch-balance
-    fetch-confirmations
     fetch-header
     fetch-height
     fetch-history
@@ -687,7 +686,8 @@ BX defines the following set of commands with corresponding names in the `bx::co
     tx-decode
     tx-encode
     tx-sign
-    watch-stealth
+    validate-tx
+    watch-address
     watch-tx
     wif-to-ec
     wif-to-public

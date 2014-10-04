@@ -32,7 +32,6 @@
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
@@ -57,6 +56,7 @@
 #include <bitcoin/explorer/primitives/transaction.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/compat.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
 #include <bitcoin/explorer/utility/environment.hpp>

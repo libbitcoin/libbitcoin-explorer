@@ -165,11 +165,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_balance__returns_expected_value)
     BOOST_REQUIRE(fetch_balance::symbol() == std::string("fetch-balance"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__fetch_confirmations__returns_expected_value)
-{
-    BOOST_REQUIRE(fetch_confirmations::symbol() == std::string("fetch-confirmations"));
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header__returns_expected_value)
 {
     BOOST_REQUIRE(fetch_header::symbol() == std::string("fetch-header"));
@@ -430,14 +425,19 @@ BOOST_AUTO_TEST_CASE(generated__symbol__tx_sign__returns_expected_value)
     BOOST_REQUIRE(tx_sign::symbol() == std::string("tx-sign"));
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__validate_tx__returns_expected_value)
+{
+    BOOST_REQUIRE(validate_tx::symbol() == std::string("validate-tx"));
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__wallet__returns_expected_value)
 {
     BOOST_REQUIRE(wallet::symbol() == std::string("wallet"));
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__watch_stealth__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__watch_address__returns_expected_value)
 {
-    BOOST_REQUIRE(watch_stealth::symbol() == std::string("watch-stealth"));
+    BOOST_REQUIRE(watch_address::symbol() == std::string("watch-address"));
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__watch_tx__returns_expected_value)

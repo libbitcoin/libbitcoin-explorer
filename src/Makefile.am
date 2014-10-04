@@ -76,7 +76,6 @@ libbitcoin_explorer_la_SOURCES += \
     commands/ec-to-wif.cpp \
     commands/ec-unlock.cpp \
     commands/fetch-balance.cpp \
-    commands/fetch-confirmations.cpp \
     commands/fetch-header.cpp \
     commands/fetch-height.cpp \
     commands/fetch-history.cpp \
@@ -129,8 +128,9 @@ libbitcoin_explorer_la_SOURCES += \
     commands/tx-decode.cpp \
     commands/tx-encode.cpp \
     commands/tx-sign.cpp \
+    commands/validate-tx.cpp \
     commands/wallet.cpp \
-    commands/watch-stealth.cpp \
+    commands/watch-address.cpp \
     commands/watch-tx.cpp \
     commands/wif-to-ec.cpp \
     commands/wif-to-public.cpp \

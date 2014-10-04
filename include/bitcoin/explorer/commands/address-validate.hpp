@@ -139,7 +139,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Validate an address. Returns the address if is valid."
+                "Validate an address. Returns the address if it is valid."
             )
             (
                 "BITCOIN_ADDRESS",

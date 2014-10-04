@@ -63,6 +63,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_FETCH_STEALTH_PREFIX_TOO_LONG \
+    "WARNING: stealth prefix is limited to 32 bits."
+
+/**
  * Class to implement the fetch-stealth command.
  */
 class fetch_stealth 

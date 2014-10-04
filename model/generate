@@ -2,6 +2,6 @@
 #   Requires iMatix GSL, from http://github.com/imatix/gsl
 
 mkdir -p ../src/commands
-mkdir -p ../include/bitcoin\explorer/commands
+mkdir -p ../include/bitcoin/explorer/commands
 
-gsl -q project.xml
+gsl -q generate.xml

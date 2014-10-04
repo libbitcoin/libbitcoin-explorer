@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 // #include "precompile.hpp"
-#include <bitcoin/explorer/commands/watch-stealth.hpp>
+#include <bitcoin/explorer/commands/watch-address.hpp>
 
 #include <iostream>
 #include <czmq++/czmqpp.hpp>
@@ -26,10 +26,10 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -51,13 +51,13 @@ static void handle_update(callback_state& state, const base2& prefix,
 }
 
 static void subscribe_from_prefix(obelisk_client& client,
-    callback_state& state, const base2& prefix, bool& subscribed)
+    callback_state& state, const stealth_prefix& prefix, bool& subscribed)
 {
     // Do not pass the prefix by reference here.
     auto on_done = [&state, prefix, &subscribed]()
     {
         if (state.get_engine() != encoding_engine::native)
-            state.output(format(BX_WATCH_STEALTH_PREFIX_WAITING) % prefix);
+            state.output(format(BX_WATCH_ADDRESS_PREFIX_WAITING) % prefix);
 
         subscribed = true;
     };
@@ -71,7 +71,7 @@ static void subscribe_from_prefix(obelisk_client& client,
 }
 
 // This command only halts on failure.
-console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
+console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
@@ -106,16 +106,20 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     if (prefixes.empty())
         subscribe_from_prefix(client, state, base2(), subscribed);
 
-    for (auto prefix: prefixes)
-        subscribe_from_prefix(client, state, prefix, subscribed);
-
-    // poll for subscribe callbacks
-    if (client.resolve_callbacks())
+    for (const stealth_prefix& prefix: prefixes)
     {
-        // keep polling for updates if any subscriptions were established.
-        if (subscribed)
-            client.poll_until_termination();
+        if (prefix.size() > stealth_address::max_prefix_bits)
+        {
+            error << BX_WATCH_ADDRESS_PREFIX_TOO_LONG << std::endl;
+            return console_result::failure;
+        }
+
+        subscribe_from_prefix(client, state, prefix, subscribed);
     }
+
+    // poll for subscribe callbacks if any subscriptions were established.
+    if (client.resolve_callbacks() && subscribed)
+        client.poll_until_termination();
 
     return state.get_result();
 }

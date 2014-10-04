@@ -72,7 +72,7 @@
   </command>
 
   <command symbol="address-validate" formerly="validaddr" typeX="address" multipleX="true" category="WALLET">
-    <option name="help" description="Validate an address. Returns the address if is valid." />
+    <option name="help" description="Validate an address. Returns the address if it is valid." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The Bitcoin address to validate." />
     <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The signature is not invalid." />
   </command>
@@ -211,12 +211,6 @@
     <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
   </command>
 
-  <command symbol="fetch-confirmations" formerly="validtx" typeX="string" multipleX="true" category="ONLINE" network="true">
-    <option name="help" description="Get confirmations for a set of transactions. Requires an Obelisk server connection." />
-    <!--<option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />-->
-    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
-  </command>
-
   <command symbol="fetch-header" category="ONLINE" typeX="header" network="true">
     <option name="help" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
@@ -249,6 +243,7 @@
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>
     <option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
     <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 stealth prefixes used to locate transactions." />
+    <define name="BX_FETCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: stealth prefix is limited to 32 bits." />
   </command>
 
   <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" multipleX="true" category="ONLINE" network="true">
@@ -560,20 +555,34 @@
     <define name="BX_TX_SIGN_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
+  <command symbol="validate-tx" formerly="validtx" typeX="string" multipleX="true" category="ONLINE" network="true">
+    <option name="help" description="Determine if a transaction is valid for submission to the blockchain. Requires an Obelisk server connection." />
+    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
+    <define name="BX_VALIDATE_TX_INVALID_TX" value="The transaction is not valid." />
+  </command>
+
   <command symbol="wallet" category="WALLET" obsolete="true">
     <option name="help" description="Experimental command line wallet." />
     <define name="BX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
   </command>
 
-  <command symbol="watch-stealth" formerly="monitor" typeX="transaction" category="ONLINE" network="true">
+  <command symbol="watch-address" formerly="monitor" typeX="transaction" category="ONLINE" network="true">
+    <option name="help" description="Watch the network for transactions by address prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 address prefixes to watch." />
+    <define name="BX_WATCH_ADDRESS_PREFIX_WAITING" value="Watching address prefix: %1%..." />
+    <define name="BX_WATCH_ADDRESS_PREFIX_TOO_LONG" value="WARNING: address prefix is limited to 32 bits." />
+  </command>
+
+  <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
+  <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
+  <!--<command symbol="watch-stealth" typeX="transaction" category="ONLINE" network="true">
     <option name="help" description="Watch the network for transactions by stealth prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>
-    <option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
     <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 stealth prefixes to watch." />
-    <define name="BX_WATCH_STEALTH_PREFIX_WAITING" value="Watching prefix: %1%..." />
-    <define name="BX_WATCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: prefix is limited to 32 bits." />
-  </command>
+    <define name="BX_WATCH_STEALTH_PREFIX_WAITING" value="Watching stealth prefix: %1%..." />
+    <define name="BX_WATCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: stealth prefix is limited to 32 bits." />
+  </command>-->
 
   <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true">
     <option name="help" description="Watch the network for transactions by transaction hash. Requires an Obelisk server connection." />

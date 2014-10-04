@@ -41,6 +41,7 @@ using namespace bc::explorer::primitives;
 #define BX_TX_NOT_FOUND_MESSAGE "Transaction inputs or outputs are empty"
 #define BX_MEMPOOL_COINBASE_TX_MESSAGE "Memory pool coinbase transaction"
 #define BX_MATCHING_PREVIOUS_OBJECT_MESSAGE "Matching previous object found"
+#define BX_VALIDATION_OF_INPUTS_FAILED "Validation of inputs failed"
 
 // Genesis block hash, transaction, address.
 #define BX_FIRST_ADDRESS \
@@ -55,10 +56,28 @@ using namespace bc::explorer::primitives;
 // Default network parameters.
 #define BX_NETWORK_RETRY 0
 #define BX_NETWORK_WAIT 2000
-#define BX_MAINNET_SERVER "tcp://obelisk.coinkite.com:9091"
-//#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:8081"
-//#define BX_MAINNET_SERVER "tcp://obelisk2.airbitz.co:9091"
-#define BX_TESTNET_SERVER "tcp://obelisk-testnet2.airbitz.co:9091"
+
+// Development
+//#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:9091"       // timeout
+//#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:8081"       // timeout
+
+// Production
+//#define BX_MAINNET_SERVER "tcp://obelisk.coinkite.com:9091"       // alive
+//#define BX_MAINNET_SERVER "tcp://obelisk.bysh.me:9091"            // timeout
+//#define BX_MAINNET_SERVER "tcp://obelisk.ottrbutt.com:9091"       // timeout
+#define BX_MAINNET_SERVER "tcp://obelisk-baltic.airbitz.co:9091"    // alive
+//#define BX_MAINNET_SERVER "tcp://obelisk-crate.airbitz.co:9091"   // alive
+//#define BX_MAINNET_SERVER "tcp://obelisk-sol.airbitz.co:9091"     // alive
+//#define BX_MAINNET_SERVER "tcp://obelisk-virpus.airbitz.co:9091"  // alive
+
+// Testing
+//#define BX_MAINNET_SERVER "tcp://37.139.11.99:9091"               // timeout
+
+// Testnet
+//#define BX_TESTNET_SERVER "tcp://178.79.185.162:9091"             // timeout
+//#define BX_TESTNET_SERVER "tcp://85.25.198.97:10091"              // alive
+#define BX_TESTNET_SERVER "tcp://obelisk-testnet.airbitz.co:9091"   // alive
+//#define BX_TESTNET_SERVER "tcp://preacher.veox.pw:9091"           // alive
 
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \
