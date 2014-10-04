@@ -36,9 +36,7 @@ pt::ptree prop_tree_list(const std::string& name, const Values& values)
     pt::ptree list;
     pt::ptree element;
     for (const auto& value: values)
-    {
         list.push_back(std::make_pair(name, prop_tree(value)));
-    }
 
     return list;
 }

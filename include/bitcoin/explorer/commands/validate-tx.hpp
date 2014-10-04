@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_WATCH_STEALTH_HPP
-#define BX_WATCH_STEALTH_HPP
+#ifndef BX_VALIDATE_TX_HPP
+#define BX_VALIDATE_TX_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -65,15 +65,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_WATCH_STEALTH_PREFIX_WAITING \
-    "Watching prefix: %1%..."
-#define BX_WATCH_STEALTH_PREFIX_TOO_LONG \
-    "WARNING: prefix is limited to 32 bits."
+#define BX_VALIDATE_TX_INVALID_TX \
+    "The transaction is not valid."
 
 /**
- * Class to implement the watch-stealth command.
+ * Class to implement the validate-tx command.
  */
-class watch_stealth 
+class validate_tx 
     : public command
 {
 public:
@@ -81,14 +79,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "watch-stealth"; }
+    static const char* symbol() { return "validate-tx"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return watch_stealth::symbol();
+        return validate_tx::symbol();
     }
 
     /**
@@ -107,7 +105,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PREFIX", -1);
+            .add("TRANSACTION", -1);
     }
 	
 	/**
@@ -118,7 +116,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_prefixs_argument(), "PREFIX", variables, input);
+        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
     
     /**
@@ -141,17 +139,12 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Watch the network for transactions by stealth prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL."
+                "Determine if a transaction is valid for submission to the blockchain. Requires an Obelisk server connection."
             )
             (
-                "format,f",
-                value<primitives::encoding>(&option_.format),
-                "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
-            )
-            (
-                "PREFIX",
-                value<std::vector<primitives::base2>>(&argument_.prefixs),
-                "The set of Base2 stealth prefixes to watch."
+                "TRANSACTION",
+                value<std::vector<primitives::transaction>>(&argument_.transactions),
+                "The set of Base16 transactions. If not specified the transactions are read from STDIN."
             );
 
         return options;
@@ -168,20 +161,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PREFIX arguments.
+     * Get the value of the TRANSACTION arguments.
      */
-    virtual std::vector<primitives::base2>& get_prefixs_argument()
+    virtual std::vector<primitives::transaction>& get_transactions_argument()
     {
-        return argument_.prefixs;
+        return argument_.transactions;
     }
     
     /**
-     * Set the value of the PREFIX arguments.
+     * Set the value of the TRANSACTION arguments.
      */
-    virtual void set_prefixs_argument(
-        const std::vector<primitives::base2>& value)
+    virtual void set_transactions_argument(
+        const std::vector<primitives::transaction>& value)
     {
-        argument_.prefixs = value;
+        argument_.transactions = value;
     }
 
     /**
@@ -201,23 +194,6 @@ public:
         option_.help = value;
     }
 
-    /**
-     * Get the value of the format option.
-     */
-    virtual primitives::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-    
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const primitives::encoding& value)
-    {
-        option_.format = value;
-    }
-
 private:
 
     /**
@@ -228,11 +204,11 @@ private:
     struct argument
     {
         argument()
-          : prefixs()
+          : transactions()
         {
         }
         
-        std::vector<primitives::base2> prefixs;
+        std::vector<primitives::transaction> transactions;
     } argument_;
     
     /**
@@ -243,13 +219,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            format()
+          : help()
         {
         }
         
         bool help;
-        primitives::encoding format;
     } option_;
 };
 

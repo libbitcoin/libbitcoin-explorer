@@ -110,7 +110,6 @@
     <ClCompile Include="..\..\..\..\test\commands\ec-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-unlock.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\fetch-confirmations.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-header.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-height.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-history.cpp" />
@@ -163,8 +162,9 @@
     <ClCompile Include="..\..\..\..\test\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-sign.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wallet.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\watch-stealth.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\watch-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp" />

@@ -51,7 +51,6 @@
 #include <bitcoin/explorer/commands/ec-to-wif.hpp>
 #include <bitcoin/explorer/commands/ec-unlock.hpp>
 #include <bitcoin/explorer/commands/fetch-balance.hpp>
-#include <bitcoin/explorer/commands/fetch-confirmations.hpp>
 #include <bitcoin/explorer/commands/fetch-header.hpp>
 #include <bitcoin/explorer/commands/fetch-height.hpp>
 #include <bitcoin/explorer/commands/fetch-history.hpp>
@@ -104,8 +103,9 @@
 #include <bitcoin/explorer/commands/tx-decode.hpp>
 #include <bitcoin/explorer/commands/tx-encode.hpp>
 #include <bitcoin/explorer/commands/tx-sign.hpp>
+#include <bitcoin/explorer/commands/validate-tx.hpp>
 #include <bitcoin/explorer/commands/wallet.hpp>
-#include <bitcoin/explorer/commands/watch-stealth.hpp>
+#include <bitcoin/explorer/commands/watch-address.hpp>
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 #include <bitcoin/explorer/commands/wif-to-public.hpp>
