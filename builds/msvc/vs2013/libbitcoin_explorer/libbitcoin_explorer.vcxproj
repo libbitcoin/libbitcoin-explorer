@@ -147,7 +147,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-wif.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-unlock.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-confirmations.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-header.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-height.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-history.hpp" />
@@ -200,8 +199,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-sign.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\validate-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wallet.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-stealth.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-public.hpp" />
@@ -274,7 +274,6 @@
     <ClCompile Include="..\..\..\..\src\commands\ec-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-unlock.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\fetch-confirmations.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-header.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-height.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-history.cpp" />
@@ -327,8 +326,9 @@
     <ClCompile Include="..\..\..\..\src\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\tx-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\tx-sign.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\validate-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wallet.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\watch-stealth.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\watch-address.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-public.cpp" />

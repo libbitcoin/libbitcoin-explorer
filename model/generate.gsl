@@ -751,10 +751,10 @@ public:
 .   getter = "get_" + "$(pluralized_name:c)" + "_argument()"
 .#   bool_vector = if_else(is_vector, xml_true, xml_false)
 .   if (is_xml_true(argument.file))
-        //load_path($(getter), "$(name:)", variables);
+        load_path($(getter), "$(name:)", variables);
 .   endif
 .   if (is_xml_true(argument.stdin))
-        //load_input($(getter), "$(name:)", variables, input);
+        load_input($(getter), "$(name:)", variables, input);
 .   endif
 .endfor
 .for option

@@ -116,7 +116,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        //load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input);
+        load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input);
     }
     
     /**
@@ -139,7 +139,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Validate an address. Returns the address if is valid."
+                "Validate an address. Returns the address if it is valid."
             )
             (
                 "BITCOIN_ADDRESS",

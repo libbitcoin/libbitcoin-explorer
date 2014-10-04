@@ -87,7 +87,6 @@ bitcoin_explorer_commands_include_HEADERS = \
     explorer/commands/ec-to-wif.hpp \
     explorer/commands/ec-unlock.hpp \
     explorer/commands/fetch-balance.hpp \
-    explorer/commands/fetch-confirmations.hpp \
     explorer/commands/fetch-header.hpp \
     explorer/commands/fetch-height.hpp \
     explorer/commands/fetch-history.hpp \
@@ -140,8 +139,9 @@ bitcoin_explorer_commands_include_HEADERS = \
     explorer/commands/tx-decode.hpp \
     explorer/commands/tx-encode.hpp \
     explorer/commands/tx-sign.hpp \
+    explorer/commands/validate-tx.hpp \
     explorer/commands/wallet.hpp \
-    explorer/commands/watch-stealth.hpp \
+    explorer/commands/watch-address.hpp \
     explorer/commands/watch-tx.hpp \
     explorer/commands/wif-to-ec.hpp \
     explorer/commands/wif-to-public.hpp \

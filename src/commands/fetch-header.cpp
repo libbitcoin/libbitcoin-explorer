@@ -25,9 +25,9 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -45,10 +45,7 @@ static void handle_callback(callback_state& state,
     const block_header_type& block_header)
 {
     // native is info.
-    if (state.get_engine() == encoding_engine::native)
-        state.output(header(block_header));
-    else
-        state.output(prop_tree(block_header));
+    state.output(prop_tree(block_header));
 }
 
 console_result fetch_header::invoke(std::ostream& output, std::ostream& error)

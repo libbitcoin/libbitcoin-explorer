@@ -143,9 +143,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp">
       <Filter>include\bitcoin\explorer\commands\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-confirmations.hpp">
-      <Filter>include\bitcoin\explorer\commands\network</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-header.hpp">
       <Filter>include\bitcoin\explorer\commands\network</Filter>
     </ClInclude>
@@ -302,10 +299,13 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-sign.hpp">
       <Filter>include\bitcoin\explorer\commands\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\validate-tx.hpp">
+      <Filter>include\bitcoin\explorer\commands\network</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wallet.hpp">
       <Filter>include\bitcoin\explorer\commands\obsolete</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-stealth.hpp">
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-address.hpp">
       <Filter>include\bitcoin\explorer\commands\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-tx.hpp">
@@ -532,9 +532,6 @@
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp">
       <Filter>src\commands\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\fetch-confirmations.cpp">
-      <Filter>src\commands\network</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\fetch-header.cpp">
       <Filter>src\commands\network</Filter>
     </ClCompile>
@@ -691,10 +688,13 @@
     <ClCompile Include="..\..\..\..\src\commands\tx-sign.cpp">
       <Filter>src\commands\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\validate-tx.cpp">
+      <Filter>src\commands\network</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\wallet.cpp">
       <Filter>src\commands\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\watch-stealth.cpp">
+    <ClCompile Include="..\..\..\..\src\commands\watch-address.cpp">
       <Filter>src\commands\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\watch-tx.cpp">

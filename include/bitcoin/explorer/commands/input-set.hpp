@@ -105,8 +105,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("TRANSACTION", 1)
-            .add("SIGNATURE_SCRIPT", 1);
+            .add("SIGNATURE_SCRIPT", 1)
+            .add("TRANSACTION", 1);
     }
 	
 	/**
@@ -117,7 +117,6 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        //load_path(get_transaction_argument(), "TRANSACTION", variables);
     }
     
     /**
@@ -148,14 +147,14 @@ public:
                 "The ordinal position of the input within the transaction, defaults to zero."
             )
             (
-                "TRANSACTION",
-                value<std::string>()->required(),
-                "The file path of the Base16 transaction."
-            )
-            (
                 "SIGNATURE_SCRIPT",
                 value<primitives::script>(&argument_.signature_script),
-                "The signature script to assign to the input. If not specified the script is read from STDIN."
+                "The signature script to assign to the input."
+            )
+            (
+                "TRANSACTION",
+                value<primitives::transaction>(&argument_.transaction)->required(),
+                "The Base16 transaction. If not specified the transaction is read from STDIN."
             );
 
         return options;
@@ -172,23 +171,6 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the TRANSACTION argument.
-     */
-    virtual primitives::transaction& get_transaction_argument()
-    {
-        return argument_.transaction;
-    }
-    
-    /**
-     * Set the value of the TRANSACTION argument.
-     */
-    virtual void set_transaction_argument(
-        const primitives::transaction& value)
-    {
-        argument_.transaction = value;
-    }
-
-    /**
      * Get the value of the SIGNATURE_SCRIPT argument.
      */
     virtual primitives::script& get_signature_script_argument()
@@ -203,6 +185,23 @@ public:
         const primitives::script& value)
     {
         argument_.signature_script = value;
+    }
+
+    /**
+     * Get the value of the TRANSACTION argument.
+     */
+    virtual primitives::transaction& get_transaction_argument()
+    {
+        return argument_.transaction;
+    }
+    
+    /**
+     * Set the value of the TRANSACTION argument.
+     */
+    virtual void set_transaction_argument(
+        const primitives::transaction& value)
+    {
+        argument_.transaction = value;
     }
 
     /**
@@ -249,13 +248,13 @@ private:
     struct argument
     {
         argument()
-          : transaction(),
-            signature_script()
+          : signature_script(),
+            transaction()
         {
         }
         
-        primitives::transaction transaction;
         primitives::script signature_script;
+        primitives::transaction transaction;
     } argument_;
     
     /**

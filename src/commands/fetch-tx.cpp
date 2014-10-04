@@ -25,9 +25,9 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -43,6 +43,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 
 static void handle_callback(callback_state& state, const tx_type& tx)
 {
+    // native is base16 (unique among fetch commands).
     if (state.get_engine() == encoding_engine::native)
         state.output(format("%1%") % transaction(tx));
     else

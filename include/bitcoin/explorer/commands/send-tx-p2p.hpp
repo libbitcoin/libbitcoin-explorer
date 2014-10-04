@@ -132,8 +132,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        //load_path(get_transactions_argument(), "TRANSACTION", variables);
-        //load_input(get_transactions_argument(), "TRANSACTION", variables, input);
+        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
     
     /**
@@ -165,8 +164,8 @@ public:
             )
             (
                 "TRANSACTION",
-                value<std::string>(),
-                "The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."
+                value<std::vector<primitives::transaction>>(&argument_.transactions),
+                "The set of Base16 transactions. If not specified the transactions are read from STDIN."
             );
 
         return options;
