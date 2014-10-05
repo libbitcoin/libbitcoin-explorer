@@ -29,10 +29,16 @@ namespace explorer {
 
 std::string config_default()
 {
-    boost::filesystem::path home(home_directory());
-    if (home.empty())
-        return "";
-    return (home / BX_DEFAULT_CONFIG_FILE_NAME).generic_string();
+    return "";
+
+    // This is disabled so that we can throw an error in the case where a
+    // config file is explicitly specified but not otherwise. This ensures
+    // that the user can easily confirm that the config file is in use.
+
+    //boost::filesystem::path home(home_directory());
+    //if (home.empty())
+    //    return "";
+    //return (home / BX_DEFAULT_CONFIG_FILE_NAME).generic_string();
 }
 
 } // namespace explorer

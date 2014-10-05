@@ -125,7 +125,7 @@ void load_command_variables(variables_map& variables, command& instance,
 
 // Not unit testable (without creating actual config files).
 void load_configuration_variables(variables_map& variables, command& instance)
-    throw()
+    throw(reading_file)
 {
     const auto config_path = get_config_option(variables);
     if (config_path.empty())
@@ -134,8 +134,11 @@ void load_configuration_variables(variables_map& variables, command& instance)
     options_description config_settings("settings");
     instance.load_settings(config_settings);
 
-    // does not throw on missing file, would have to test existence
-    std::ifstream file(config_path.generic_string());
+    const auto& path = config_path.generic_string();
+    std::ifstream file(path);
+
+    if (!file.good())
+        throw reading_file(path.c_str());
 
     // parse inputs
     auto configuration = parse_config_file(file, config_settings);

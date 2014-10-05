@@ -116,9 +116,6 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp">
       <Filter>src\tests\commands\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\fetch-confirmations.cpp">
-      <Filter>src\tests\commands\network</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-header.cpp">
       <Filter>src\tests\commands\network</Filter>
     </ClCompile>
@@ -275,10 +272,13 @@
     <ClCompile Include="..\..\..\..\test\commands\tx-sign.cpp">
       <Filter>src\tests\commands\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp">
+      <Filter>src\tests\commands\network</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\wallet.cpp">
       <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\watch-stealth.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\watch-address.cpp">
       <Filter>src\tests\commands\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\watch-tx.cpp">

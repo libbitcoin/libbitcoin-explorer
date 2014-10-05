@@ -254,6 +254,21 @@ pt::ptree prop_tree(const wrapped_data& wrapped);
  */
 pt::ptree prop_tree(const bc::hash_digest& hash, size_t height, size_t index);
 
+/**
+ * Create a property tree for a list of indexes.
+ * @param[in]  confirmations  The list of indexes.
+ * @returns                   A new property tree containing the list.
+ */
+pt::ptree prop_tree(const index_list& indexes);
+
+/**
+ * Create a property tree for a list of indexes.
+ * @param[in]  position       The position of the indexes.
+ * @param[in]  confirmations  The list of indexes.
+ * @returns                   A new property tree containing the list.
+ */
+pt::ptree prop_tree(size_t position, const index_list& indexes);
+
 } // namespace primitives
 } // namespace explorer
 } // namespace libbitcoin

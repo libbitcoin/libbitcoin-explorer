@@ -40,16 +40,18 @@ static void handle_error(callback_state& state, const std::error_code& error)
 }
 
 // Write out the transaction hashes of *potential* matches.
-static void handle_callback(callback_state& state, 
-    const stealth_prefix& prefix, const blockchain::stealth_list& row_list)
+static void handle_callback(callback_state& state, const stealth_prefix& prefix,
+    const blockchain::stealth_list& row_list)
 {
+    // native is info.
     state.output(prop_tree(prefix, row_list));
 }
 
 static void fetch_stealth_from_prefix(obelisk_client& client,
-    callback_state& state, base2 prefix, size_t from_height)
+    callback_state& state, const stealth_prefix& prefix, size_t from_height)
 {
-    auto on_done = [&state, &prefix](const blockchain::stealth_list& list)
+    // Do not pass the prefix by reference here.
+    auto on_done = [&state, prefix](const blockchain::stealth_list& list)
     {
         handle_callback(state, prefix, list);
     };
@@ -81,8 +83,19 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    for (auto prefix: prefixes)
+    if (prefixes.empty())
+        fetch_stealth_from_prefix(client, state, base2(), height);
+
+    for (const stealth_prefix& prefix: prefixes)
+    {
+        if (prefix.size() > stealth_address::max_prefix_bits)
+        {
+            error << BX_FETCH_STEALTH_PREFIX_TOO_LONG << std::endl;
+            return console_result::failure;
+        }
+
         fetch_stealth_from_prefix(client, state, prefix, height);
+    }
 
     client.resolve_callbacks();
 

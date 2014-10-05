@@ -25,28 +25,26 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
-// BUGBUG: There is a summation error in
-// ptree prop_tree(const std::vector<balance_row>
+// These amounts may change at any time, making these particular tests fragile.
 
-// These amounts may change at any time.
-// If these change, notice whether Satoshi is spending or receiving.
+// The 50BTC coinbase in the genesis block cannot be confirmed.
 #define BX_FETCH_BALANCE_FIRST_ADDRESS_INFO \
 "address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n" \
-"paid 0\n" \
-"pending 6537136009\n" \
-"received 1537136009\n"
+"received 6537136009\n" \
+"unconfirmed 6537136009\n" \
+"confirmed 1537136009\n"
 
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_BALANCE_SX_DEMO1_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
 #define BX_FETCH_BALANCE_SX_DEMO1_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<address>134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz</address><paid>0</paid><pending>0</pending><received>100000</received>"
+"<address>134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz</address><received>100000</received><unconfirmed>0</unconfirmed><confirmed>0</confirmed>"
 
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_BALANCE_SX_DEMO2_ADDRESS "13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe"
 #define BX_FETCH_BALANCE_SX_DEMO2_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><paid>0</paid><pending>90000</pending><received>90000</received>"
+"<address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><received>90000</received><unconfirmed>90000</unconfirmed><confirmed>90000</confirmed>"
 
 BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_first_address_info__okay_output)
 {

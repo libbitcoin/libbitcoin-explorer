@@ -18,19 +18,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 // #include "precompile.hpp"
-#include <bitcoin/explorer/commands/fetch-confirmations.hpp>
+#include <bitcoin/explorer/commands/validate-tx.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
 using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 static void handle_error(callback_state& state, const std::error_code& error)
 {
@@ -38,17 +40,13 @@ static void handle_error(callback_state& state, const std::error_code& error)
 }
 
 static void handle_callback(callback_state& state, size_t position,
-    const index_list& confirmations)
+    const index_list& indexes)
 {
-    // TODO: support encoding like fetch-tx-index.
-    // Why is this a list and why is it not summarized by transaction?
-    for (const auto& confirmation: confirmations)
-        state.output(format(BX_FETCH_CONFIRMATIONS_OUTPUT) % position %
-            confirmation);
+    state.output(prop_tree(position, indexes));
 }
 
-static void fetch_confirmations_from_transaction(obelisk_client& client,
-    callback_state& state, primitives::transaction transaction)
+static void validate_tx_from_transaction(obelisk_client& client,
+    callback_state& state, const primitives::transaction& transaction)
 {
     auto on_done = [&state](const index_list& unconfirmed)
     {
@@ -63,11 +61,10 @@ static void fetch_confirmations_from_transaction(obelisk_client& client,
     client.get_codec().validate(on_error, on_done, transaction);
 }
 
-console_result fetch_confirmations::invoke(std::ostream& output,
+console_result validate_tx::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    // const auto& encoding = get_format_option();
     const auto& transactions = get_transactions_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
@@ -79,10 +76,10 @@ console_result fetch_confirmations::invoke(std::ostream& output,
     if (client.connect(server) < 0)
         return console_result::failure;
 
-    callback_state state(error, output /*, encoding */);
+    callback_state state(error, output);
 
     for (auto tx: transactions)
-        fetch_confirmations_from_transaction(client, state, tx);
+        validate_tx_from_transaction(client, state, tx);
 
     client.resolve_callbacks();
 

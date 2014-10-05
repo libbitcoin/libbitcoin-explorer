@@ -72,7 +72,7 @@
   </command>
 
   <command symbol="address-validate" formerly="validaddr" typeX="address" multipleX="true" category="WALLET">
-    <option name="help" description="Validate an address. Returns the address if is valid." />
+    <option name="help" description="Validate an address. Returns the address if it is valid." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The Bitcoin address to validate." />
     <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The signature is not invalid." />
   </command>
@@ -211,13 +211,6 @@
     <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses." />
   </command>
 
-  <command symbol="fetch-confirmations" formerly="validtx" typeX="string" multipleX="true" category="ONLINE" network="true">
-    <option name="help" description="Get confirmations for a set of transactions. Requires an Obelisk server connection." />
-    <!--<option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />-->
-    <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
-    <define name="BX_FETCH_CONFIRMATIONS_OUTPUT" value="[%1%] Confirmations: %2%" />    
-  </command>
-
   <command symbol="fetch-header" category="ONLINE" typeX="header" network="true">
     <option name="help" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
@@ -250,6 +243,7 @@
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>
     <option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
     <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 stealth prefixes used to locate transactions." />
+    <define name="BX_FETCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: stealth prefix is limited to 32 bits." />
   </command>
 
   <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" multipleX="true" category="ONLINE" network="true">
@@ -262,7 +256,6 @@
     <option name="help" description="Get the block height and index of a transaction. Requires an Obelisk server connection." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes." />
-    <define name="BX_FETCH_TX_INDEX_OUTPUT" value="[%1%] Height: %2% Index: %3%" /> 
   </command>
 
   <command symbol="fetch-utxo" formerly="get-utxo" typeX="output" multipleX="true" category="ONLINE" stub="true" network="true">
@@ -344,10 +337,10 @@
     <option name="help" description="Create a signature for a transaction input." />
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="signature_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
-    <argument name="TRANSACTION" file="true" required="true" type="transaction" description="The file path of the Base16 transaction."/>
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="NONCE" required="true" type="base16" description="The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length." />
-    <argument name="PREVIOUS_OUTPUT_SCRIPT" type="script" description="The previous output script to use in signing. If not specified the script is read from STDIN." />
+    <argument name="PREVIOUS_OUTPUT_SCRIPT" type="script" description="The previous output script to use in signing." />
+    <argument name="TRANSACTION" fileX="true" required="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_INPUT_SIGN_SHORT_NONCE" value="The nonce is less than 128 bits long." />
     <define name="BX_INPUT_SIGN_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
     <define name="BX_INPUT_SIGN_FAILED" value="The signing operation failed." />
@@ -356,8 +349,8 @@
   <command symbol="input-set" formerly="set-input" typeX="transaction" category="TRANSACTION">
     <option name="help" description="Assign a script to an existing transaction input." />
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
-    <argument name="TRANSACTION" file="true" required="true" type="transaction" description="The file path of the Base16 transaction."/>
-    <argument name="SIGNATURE_SCRIPT" type="script" description="The signature script to assign to the input. If not specified the script is read from STDIN." />
+    <argument name="SIGNATURE_SCRIPT" type="script" description="The signature script to assign to the input." />
+    <argument name="TRANSACTION" fileX="true" required="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
   </command>
   
@@ -365,10 +358,10 @@
     <option name="help" description="Validate a transaction signature." />
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="signature_type" type="hashtype" description="A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
-    <argument name="TRANSACTION" file="true" required="true" type="transaction" description="The file path of the Base16 transaction."/>
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
     <argument name="PREVIOUS_OUTPUT_SCRIPT" required="true" type="script" description="The previous output script used in signing." />
-    <argument name="SIGNATURE" type="base16" description="The Base16 signature to validate. If not specified the signature is read from STDIN."/>
+    <argument name="SIGNATURE" type="base16" description="The Base16 signature to validate."/>
+    <argument name="TRANSACTION" fileX="true" required="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
     <define name="BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
     <define name="BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
@@ -414,7 +407,7 @@
   
   <command symbol="script-decode" formerly="showscript" typeX="string" multipleX="true" category="SCRIPT">
     <option name="help" description="Decode a script to plain text tokens." />
-    <argument name="SCRIPT" file="true" stdin="true" type="base16" description="The Base16 script."/>
+    <argument name="SCRIPT" fileX="true" stdin="true" type="base16" description="The Base16 script."/>
   </command>
   
   <command symbol="script-encode" formerly="rawscript" typeX="base16" category="SCRIPT">
@@ -424,7 +417,7 @@
   
   <command symbol="script-to-address" formerly="scripthash" typeX="address" category="SCRIPT">
     <option name="help" description="Create a BIP16 pay-to-script-hash address from an encoded script." />
-    <argument name="SCRIPT" file="true" stdin="true" type="script" description="The script."/>
+    <argument name="SCRIPT" fileX="true" stdin="true" type="script" description="The script."/>
   </command>
   
   <command symbol="seed" typeX="base16" category="WALLET">
@@ -435,7 +428,7 @@
   
   <command symbol="send-tx" formerly="sendtx-obelisk" typeX="string" category="ONLINE" network="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server." />
-    <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
+    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
     <define name="BX_SEND_TX_OUTPUT" value="Sent transaction at %1%." />
   </command>
   
@@ -443,14 +436,14 @@
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via a single Bitcoin network node." />
     <option name="name" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
-    <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
+    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
     <define name="BX_SEND_TX_NODE_OUTPUT" value="Sent transaction %1% at %2%." />
   </command>
 
   <command symbol="send-tx-p2p" formerly="sendtx-p2p" typeX="string" category="ONLINE" network="true">
     <option name="help" description="Broadcast a transaction to the Bitcoin transaction pool via the Bitcoin peer-to-peer network." />
     <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to two." />
-    <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
+    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
     <define name="BX_SEND_TX_P2P_SIGNAL" value="Caught signal: %1%" />
     <define name="BX_SEND_TX_P2P_START_OKAY" value="Started." />
     <define name="BX_SEND_TX_P2P_START_FAIL" value="Start failed: %1%" />
@@ -541,7 +534,7 @@
     <option name="help" description="Decode a set of transactions." />
     <!-- The code generator does not yet have the ability to set default values requiring quotes, so native is currently the default. -->
     <option name="format" type="encoding" defaultX="info" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
+    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
   </command>
 
   <command symbol="tx-encode" typeX="transaction" category="TRANSACTION">
@@ -558,8 +551,14 @@
   <command symbol="tx-sign" formerly="signtx" typeX="transaction" multipleX="true" category="TRANSACTION" stub="true">
     <option name="help"  description="Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The EC private key to be used for signing." />
-    <argument name="TRANSACTION" file="true" stdin="true" limit="-1" type="transaction" description="The file path of the set of Base16 transactions. If not specified the transactions are read from STDIN."/>
+    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
     <define name="BX_TX_SIGN_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+  </command>
+
+  <command symbol="validate-tx" formerly="validtx" typeX="string" multipleX="true" category="ONLINE" network="true">
+    <option name="help" description="Determine if a transaction is valid for submission to the blockchain. Requires an Obelisk server connection." />
+    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
+    <define name="BX_VALIDATE_TX_INVALID_TX" value="The transaction is not valid." />
   </command>
 
   <command symbol="wallet" category="WALLET" obsolete="true">
@@ -567,15 +566,23 @@
     <define name="BX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
   </command>
 
-  <command symbol="watch-stealth" formerly="monitor" typeX="transaction" category="ONLINE" network="true">
+  <command symbol="watch-address" formerly="monitor" typeX="transaction" category="ONLINE" network="true">
+    <option name="help" description="Watch the network for transactions by address prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL." />
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 address prefixes to watch." />
+    <define name="BX_WATCH_ADDRESS_PREFIX_WAITING" value="Watching address prefix: %1%..." />
+    <define name="BX_WATCH_ADDRESS_PREFIX_TOO_LONG" value="WARNING: address prefix is limited to 32 bits." />
+  </command>
+
+  <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
+  <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
+  <!--<command symbol="watch-stealth" typeX="transaction" category="ONLINE" network="true">
     <option name="help" description="Watch the network for transactions by stealth prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>
-    <option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
     <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 stealth prefixes to watch." />
-    <define name="BX_WATCH_STEALTH_PREFIX_WAITING" value="Watching prefix: %1%..." />
-    <define name="BX_WATCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: prefix is limited to 32 bits." />
-  </command>
+    <define name="BX_WATCH_STEALTH_PREFIX_WAITING" value="Watching stealth prefix: %1%..." />
+    <define name="BX_WATCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: stealth prefix is limited to 32 bits." />
+  </command>-->
 
   <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true">
     <option name="help" description="Watch the network for transactions by transaction hash. Requires an Obelisk server connection." />

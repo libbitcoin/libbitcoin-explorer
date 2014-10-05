@@ -109,10 +109,10 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("TRANSACTION", 1)
             .add("EC_PUBLIC_KEY", 1)
             .add("PREVIOUS_OUTPUT_SCRIPT", 1)
-            .add("SIGNATURE", 1);
+            .add("SIGNATURE", 1)
+            .add("TRANSACTION", 1);
     }
 	
 	/**
@@ -123,7 +123,6 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        //load_path(get_transaction_argument(), "TRANSACTION", variables);
     }
     
     /**
@@ -159,11 +158,6 @@ public:
                 "A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
             )
             (
-                "TRANSACTION",
-                value<std::string>()->required(),
-                "The file path of the Base16 transaction."
-            )
-            (
                 "EC_PUBLIC_KEY",
                 value<primitives::ec_public>(&argument_.ec_public_key)->required(),
                 "The Base16 EC public key to verify against."
@@ -176,7 +170,12 @@ public:
             (
                 "SIGNATURE",
                 value<primitives::base16>(&argument_.signature),
-                "The Base16 signature to validate. If not specified the signature is read from STDIN."
+                "The Base16 signature to validate."
+            )
+            (
+                "TRANSACTION",
+                value<primitives::transaction>(&argument_.transaction)->required(),
+                "The Base16 transaction. If not specified the transaction is read from STDIN."
             );
 
         return options;
@@ -191,23 +190,6 @@ public:
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
         
     /* Properties */
-
-    /**
-     * Get the value of the TRANSACTION argument.
-     */
-    virtual primitives::transaction& get_transaction_argument()
-    {
-        return argument_.transaction;
-    }
-    
-    /**
-     * Set the value of the TRANSACTION argument.
-     */
-    virtual void set_transaction_argument(
-        const primitives::transaction& value)
-    {
-        argument_.transaction = value;
-    }
 
     /**
      * Get the value of the EC_PUBLIC_KEY argument.
@@ -258,6 +240,23 @@ public:
         const primitives::base16& value)
     {
         argument_.signature = value;
+    }
+
+    /**
+     * Get the value of the TRANSACTION argument.
+     */
+    virtual primitives::transaction& get_transaction_argument()
+    {
+        return argument_.transaction;
+    }
+    
+    /**
+     * Set the value of the TRANSACTION argument.
+     */
+    virtual void set_transaction_argument(
+        const primitives::transaction& value)
+    {
+        argument_.transaction = value;
     }
 
     /**
@@ -321,17 +320,17 @@ private:
     struct argument
     {
         argument()
-          : transaction(),
-            ec_public_key(),
+          : ec_public_key(),
             previous_output_script(),
-            signature()
+            signature(),
+            transaction()
         {
         }
         
-        primitives::transaction transaction;
         primitives::ec_public ec_public_key;
         primitives::script previous_output_script;
         primitives::base16 signature;
+        primitives::transaction transaction;
     } argument_;
     
     /**
