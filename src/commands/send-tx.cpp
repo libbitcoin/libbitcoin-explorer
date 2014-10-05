@@ -69,7 +69,7 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
     const auto& transactions = get_transactions_argument();
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
