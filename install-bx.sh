@@ -178,7 +178,7 @@ build_library()
     build_from_github libbitcoin libbitcoin develop "$@"
     build_from_github google protobuf master "$@"
     build_from_github libbitcoin libbitcoin_protocol master "$@"
-    build_from_github pmienk libbitcoin_client protocol "$@"
+    build_from_github libbitcoin libbitcoin_client develop "$@"
 
     # The primary build is not downloaded if we are running in Travis.
     build_primary "$@"

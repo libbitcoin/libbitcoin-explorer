@@ -148,7 +148,6 @@ explorer_SOURCES = \
     console/main.cpp
 
 explorer_LDADD = \
-    -L$(srcdir)/../src/ \
     -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
