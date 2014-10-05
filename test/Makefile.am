@@ -2,11 +2,14 @@
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-noinst_PROGRAMS = explorer_test
+TESTS = explorer_test
 
-AM_CPPFLAGS = \
+check_PROGRAMS = explorer_test
+
+explorer_test_CPPFLAGS = \
     -I$(srcdir)/../include \
     ${bitcoin_client_CFLAGS} \
+    ${bitcoin_protocol_CFLAGS} \
     -DBOOST_TEST_DYN_LINK
 
 explorer_test_SOURCES = \
@@ -115,4 +118,5 @@ explorer_test_LDADD = \
     -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
-    ${bitcoin_client_LIBS}
+    ${bitcoin_client_LIBS} \
+    ${bitcoin_protocol_LIBS}

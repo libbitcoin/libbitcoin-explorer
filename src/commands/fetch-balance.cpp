@@ -59,7 +59,7 @@ static void fetch_balance_from_address(obelisk_client& client,
         handle_error(state, error);
     };
 
-    client.get_codec().address_fetch_history(on_error, on_done, address);
+    client.get_codec()->address_fetch_history(on_error, on_done, address);
 }
 
 console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
@@ -72,7 +72,7 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

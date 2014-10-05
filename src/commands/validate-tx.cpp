@@ -58,7 +58,7 @@ static void validate_tx_from_transaction(obelisk_client& client,
         handle_error(state, error);
     };
 
-    client.get_codec().validate(on_error, on_done, transaction);
+    client.get_codec()->validate(on_error, on_done, transaction);
 }
 
 console_result validate_tx::invoke(std::ostream& output,
@@ -71,7 +71,7 @@ console_result validate_tx::invoke(std::ostream& output,
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

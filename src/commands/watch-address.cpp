@@ -51,7 +51,8 @@ static void handle_update(callback_state& state, const base2& prefix,
 }
 
 static void subscribe_from_prefix(obelisk_client& client,
-    callback_state& state, const stealth_prefix& prefix, bool& subscribed)
+    callback_state& state, const bc::client::address_prefix& prefix,
+    bool& subscribed)
 {
     // Do not pass the prefix by reference here.
     auto on_done = [&state, prefix, &subscribed]()
@@ -67,7 +68,7 @@ static void subscribe_from_prefix(obelisk_client& client,
         handle_error(state, error);
     };
 
-    client.get_codec().subscribe(on_error, on_done, prefix);
+    client.get_codec()->subscribe(on_error, on_done, prefix);
 }
 
 // This command only halts on failure.
@@ -95,13 +96,13 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     };
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
 
     bool subscribed = false;
-    client.get_codec().set_on_update(on_update);
+    client.get_codec()->set_on_update(on_update);
 
     if (prefixes.empty())
         subscribe_from_prefix(client, state, base2(), subscribed);

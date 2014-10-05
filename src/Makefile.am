@@ -7,7 +7,8 @@ noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 AM_CPPFLAGS = \
     -I$(srcdir)/../include \
-    ${bitcoin_client_CFLAGS}
+    ${bitcoin_client_CFLAGS} \
+    ${bitcoin_protocol_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \
     async_client.cpp \
@@ -151,4 +152,5 @@ explorer_LDADD = \
     -lbitcoin_explorer \
     -lboost_chrono \
     -lboost_program_options \
-    ${bitcoin_client_LIBS}
+    ${bitcoin_client_LIBS} \
+    ${bitcoin_protocol_LIBS}

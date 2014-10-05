@@ -1085,7 +1085,8 @@ noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 AM_CPPFLAGS = \\
     -I$\(srcdir)/../include \\
-    ${bitcoin_client_CFLAGS}
+    ${bitcoin_client_CFLAGS} \\
+    ${bitcoin_protocol_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \\
     async_client.cpp \\
@@ -1145,7 +1146,8 @@ explorer_LDADD = \\
     -lbitcoin_explorer \\
     -lboost_chrono \\
     -lboost_program_options \\
-    ${bitcoin_client_LIBS}
+    ${bitcoin_client_LIBS} \\
+    ${bitcoin_protocol_LIBS}
 .##############################################################################
 .echo "Generating test/Makefile.am..."
 .output "../test/Makefile.am"
@@ -1153,11 +1155,14 @@ explorer_LDADD = \\
 
 AUTOMAKE_OPTIONS = subdir-objects
 
-noinst_PROGRAMS = explorer_test
+TESTS = explorer_test
 
-AM_CPPFLAGS = \\
+check_PROGRAMS = explorer_test
+
+explorer_test_CPPFLAGS = \\
     -I$\(srcdir)/../include \\
     ${bitcoin_client_CFLAGS} \\
+    ${bitcoin_protocol_CFLAGS} \\
     -DBOOST_TEST_DYN_LINK
 
 explorer_test_SOURCES = \\
@@ -1182,7 +1187,8 @@ explorer_test_LDADD = \\
     -lbitcoin_explorer \\
     -lboost_chrono \\
     -lboost_program_options \\
-    ${bitcoin_client_LIBS}
+    ${bitcoin_client_LIBS} \\
+    ${bitcoin_protocol_LIBS}
 .##############################################################################
 .echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj..."
 .output "../builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj"

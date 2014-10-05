@@ -40,15 +40,17 @@ static void handle_error(callback_state& state, const std::error_code& error)
 }
 
 // Write out the transaction hashes of *potential* matches.
-static void handle_callback(callback_state& state, const stealth_prefix& prefix,
+static void handle_callback(callback_state& state,
+    const bc::stealth_prefix& prefix,
     const blockchain::stealth_list& row_list)
 {
     // native is info.
-    state.output(prop_tree(prefix, row_list));
+    // state.output(prop_tree(prefix, row_list));
 }
 
 static void fetch_stealth_from_prefix(obelisk_client& client,
-    callback_state& state, const stealth_prefix& prefix, size_t from_height)
+    callback_state& state, const bc::stealth_prefix& prefix,
+    size_t from_height)
 {
     // Do not pass the prefix by reference here.
     auto on_done = [&state, prefix](const blockchain::stealth_list& list)
@@ -61,7 +63,7 @@ static void fetch_stealth_from_prefix(obelisk_client& client,
         handle_error(state, error);
     };
 
-    client.get_codec().fetch_stealth(on_error, on_done, prefix, from_height);
+    client.get_codec()->fetch_stealth(on_error, on_done, prefix, from_height);
 }
 
 
@@ -76,7 +78,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto timeout = get_general_wait_setting();
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
