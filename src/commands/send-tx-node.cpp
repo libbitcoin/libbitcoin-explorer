@@ -50,13 +50,14 @@ static void handle_send(callback_state& state, bc::network::channel_ptr node,
             handle_sent(state, tx);
     };
 
+    // Access violation on lock creation when the host is not set.
     node->send(tx, sent_handler);
 }
 
 console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& host = get_name_option();
+    const auto& host = get_host_option();
     const auto& port = get_port_option();
     const auto& transactions = get_transactions_argument();
 

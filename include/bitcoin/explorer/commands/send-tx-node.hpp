@@ -142,8 +142,8 @@ public:
                 "Broadcast a transaction to the Bitcoin transaction pool via a single Bitcoin network node."
             )
             (
-                "name,n",
-                value<std::string>(&option_.name)->default_value("localhost"),
+                "host,t",
+                value<std::string>(&option_.host)->default_value("localhost"),
                 "The IP address or DNS name of the node. Defaults to localhost."
             )
             (
@@ -205,20 +205,20 @@ public:
     }
 
     /**
-     * Get the value of the name option.
+     * Get the value of the host option.
      */
-    virtual std::string& get_name_option()
+    virtual std::string& get_host_option()
     {
-        return option_.name;
+        return option_.host;
     }
     
     /**
-     * Set the value of the name option.
+     * Set the value of the host option.
      */
-    virtual void set_name_option(
+    virtual void set_host_option(
         const std::string& value)
     {
-        option_.name = value;
+        option_.host = value;
     }
 
     /**
@@ -264,13 +264,13 @@ private:
     {
         option()
           : help(),
-            name(),
+            host(),
             port()
         {
         }
         
         bool help;
-        std::string name;
+        std::string host;
         uint16_t port;
     } option_;
 };
