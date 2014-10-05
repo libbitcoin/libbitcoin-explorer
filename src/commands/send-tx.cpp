@@ -29,6 +29,7 @@
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
@@ -62,11 +63,13 @@ static void broadcast_transaction(obelisk_client& client,
 console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& transactions = get_transactions_argument();
+    const auto retries = get_general_retries_setting();
+    const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
+    const auto& transactions = get_transactions_argument();
 
     czmqpp::context context;
-    obelisk_client client(context);
+    obelisk_client client(context, sleep_time(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
