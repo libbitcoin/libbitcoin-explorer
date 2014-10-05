@@ -325,7 +325,6 @@ std::shared_ptr<command> find(const std::string& symbol);
 .echo "Generating src/generated.cpp..."
 .output "../src/generated.cpp"
 .copyleft()
-// #include "precompile.hpp"
 #include <bitcoin/explorer/generated.hpp>
 
 #include <functional>
@@ -938,7 +937,6 @@ private:
 .echo "Generating test/generated__broadcast.cpp..."
 .output "../test/generated__broadcast.cpp"
 .copyleft()
-// #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
 #include <bitcoin/explorer.hpp>
@@ -961,7 +959,6 @@ BOOST_AUTO_TEST_SUITE_END()
 .echo "Generating test/generated__find.cpp..."
 .output "../test/generated__find.cpp"
 .copyleft()
-// #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
 #include <bitcoin/explorer.hpp>
@@ -987,7 +984,6 @@ BOOST_AUTO_TEST_SUITE_END()
 .echo "Generating test/generated__symbol.cpp..."
 .output "../test/generated__symbol.cpp"
 .copyleft()
-// #include "precompile.hpp"
 #include <boost/test/unit_test.hpp>
 
 #include <bitcoin/explorer.hpp>
