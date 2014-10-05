@@ -34,6 +34,18 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+static bc::client::stealth_prefix get_prefix(const bitset& source)
+{
+    BITCOIN_ASSERT(source.size() <= sizeof(uint8_t));
+
+    bc::client::stealth_prefix prefix;
+
+    prefix.number_bits = static_cast<uint8_t>(source.size());
+    prefix.bitfield = source.to_ulong();
+
+    return prefix;
+}
+
 static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
@@ -49,8 +61,7 @@ static void handle_callback(callback_state& state,
 }
 
 static void fetch_stealth_from_prefix(obelisk_client& client,
-    callback_state& state, const bc::stealth_prefix& prefix,
-    size_t from_height)
+    callback_state& state, const base2& prefix, size_t from_height)
 {
     // Do not pass the prefix by reference here.
     auto on_done = [&state, prefix](const blockchain::stealth_list& list)
@@ -63,7 +74,9 @@ static void fetch_stealth_from_prefix(obelisk_client& client,
         handle_error(state, error);
     };
 
-    client.get_codec()->fetch_stealth(on_error, on_done, prefix, from_height);
+    bc::client::stealth_prefix query_prefix = get_prefix(prefix);
+
+    client.get_codec()->fetch_stealth(on_error, on_done, query_prefix, from_height);
 }
 
 
