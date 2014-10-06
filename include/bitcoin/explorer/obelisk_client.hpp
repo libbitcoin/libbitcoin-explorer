@@ -42,7 +42,7 @@ public:
      * @param[in]  retries  The number of retries allowed, defaults to zero.
      */
     obelisk_client(czmqpp::context& context, 
-        const client::sleep_time& timeout=client::sleep_time(0), 
+        const client::period_ms& timeout=client::period_ms(0),
         uint8_t retries=0);
 
     /**
@@ -56,7 +56,7 @@ public:
      * Get the value of the codec property.
      * @return The codec.
      */
-    virtual client::obelisk_codec& get_codec();
+    virtual std::shared_ptr<client::obelisk_codec> get_codec();
     
     /**
      * Resolve callback functions.
@@ -69,13 +69,13 @@ public:
      * @param[in]  timeout  The poll timeout, defaults to zero.
      */
     virtual void poll_until_termination(
-        const client::sleep_time& timeout=client::sleep_time(0));
+        const client::period_ms& timeout=client::period_ms(0));
 
 private:
 
     czmqpp::socket socket_;
-    client::socket_message_stream stream_;
-    client::obelisk_codec codec_;
+    std::shared_ptr<client::socket_stream> stream_;
+    std::shared_ptr<client::obelisk_codec> codec_;
 };
 
 } // namespace explorer

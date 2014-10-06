@@ -116,7 +116,7 @@ ptree prop_tree(const std::vector<balance_row>& rows,
     const payment_address& balance_address)
 {
     ptree tree;
-    uint64_t value(0);
+    // uint64_t value(0);
     uint64_t total_recieved(0);
     uint64_t confirmed_balance(0);
     uint64_t unconfirmed_balance(0);
@@ -237,6 +237,16 @@ ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
     ptree tree;
     tree.add("watch.block", base16(block_hash));
     tree.add("watch.prefix", prefix);
+    tree.add_child("watch.transaction", prop_tree(tx));
+    return tree;
+}
+
+ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
+    const payment_address& watch_address)
+{
+    ptree tree;
+    tree.add("watch.block", base16(block_hash));
+    tree.add("watch.address", address(watch_address));
     tree.add_child("watch.transaction", prop_tree(tx));
     return tree;
 }

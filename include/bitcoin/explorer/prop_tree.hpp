@@ -202,6 +202,16 @@ pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
     const base2& prefix);
 
 /**
+ * Generate a property tree for transaction with extended data.
+ * @param[in]  tx          The transaction.
+ * @param[in]  block_hash  Theblock_hash of the transaction.
+ * @param[in]  watch_address The address used to locate the transaction.
+ * @return                 A property tree.
+ */
+pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
+    const payment_address& watch_address);
+
+/**
  * Generate a property tree for a stealth address.
  * @param[in]  address  The stealth address.
  * @return              A property tree.

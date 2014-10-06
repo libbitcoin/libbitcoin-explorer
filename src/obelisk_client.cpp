@@ -29,11 +29,17 @@ namespace libbitcoin {
 namespace explorer {
 
 obelisk_client::obelisk_client(czmqpp::context& context, 
-    const sleep_time& timeout, uint8_t retries)
-  : socket_(context, ZMQ_DEALER), stream_(socket_), codec_(stream_,
-    obelisk_codec::on_update_nop, obelisk_codec::on_unknown_nop, timeout,
-    retries)
+    const period_ms& timeout, uint8_t retries)
+  : socket_(context, ZMQ_DEALER)
 {
+    stream_ = std::make_shared<socket_stream>(socket_);
+
+    std::shared_ptr<message_stream> base_stream
+        = std::static_pointer_cast<message_stream>(stream_);
+
+    codec_ = std::make_shared<obelisk_codec>(base_stream,
+        obelisk_codec::on_update_nop, obelisk_codec::on_unknown_nop, timeout,
+        retries);
 }
 
 int obelisk_client::connect(const std::string& address)
@@ -41,7 +47,7 @@ int obelisk_client::connect(const std::string& address)
     return socket_.connect(address);
 }
 
-obelisk_codec& obelisk_client::get_codec()
+std::shared_ptr<obelisk_codec> obelisk_client::get_codec()
 {
     return codec_;
 }
@@ -50,9 +56,9 @@ bool obelisk_client::resolve_callbacks()
 {
     bool success = true;
 
-    auto delay = static_cast<int>(codec_.wakeup().count());
+    auto delay = static_cast<int>(codec_->wakeup().count());
     czmqpp::poller poller;
-    poller.add(stream_.get_socket());
+    poller.add(stream_->get_socket());
 
     while (delay > 0)
     {
@@ -66,9 +72,9 @@ bool obelisk_client::resolve_callbacks()
 
         if (!poller.expired())
         {
-            stream_.forward(codec_);
+            stream_->signal_response(codec_);
 
-            if (codec_.outstanding_call_count() == 0)
+            if (codec_->outstanding_call_count() == 0)
             {
                 delay = 0;
             }
@@ -77,17 +83,17 @@ bool obelisk_client::resolve_callbacks()
         {
             // recompute the delay and signal the appropriate error callbacks
             // due to the timeout.
-            delay = static_cast<int>(codec_.wakeup().count());
+            delay = static_cast<int>(codec_->wakeup().count());
         }
     }
 
     return success;
 }
 
-void obelisk_client::poll_until_termination(const sleep_time& timeout)
+void obelisk_client::poll_until_termination(const period_ms& timeout)
 {
     czmqpp::poller poller;
-    poller.add(stream_.get_socket());
+    poller.add(stream_->get_socket());
 
     while (true)
     {
@@ -100,7 +106,7 @@ void obelisk_client::poll_until_termination(const sleep_time& timeout)
 
         if (!poller.expired())
         {
-            stream_.forward(codec_);
+            stream_->signal_response(codec_);
         }
     }
 }
