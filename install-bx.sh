@@ -16,8 +16,14 @@
 
 # This script will build libbitcoin using this relative directory.
 # This is meant to be temporary, just to facilitate the install.
-NPROC=$(nproc)
-PARALLEL_MAKE="-j$NPROC"
+
+if [ "$TRAVIS" = "true" ]; then
+    PARALLEL_MAKE="-j2"
+else
+    NPROC=$(nproc)
+    PARALLEL_MAKE="-j$NPROC"
+fi
+
 SEQUENTIAL_MAKE="-j1"
 
 BUILD_DIRECTORY="bx_build"
@@ -62,9 +68,6 @@ automake_current_directory()
 
     ./autogen.sh
     ./configure "$@"
-
-    echo "MAKE_ARGS=${MAKE_ARGS}"
-
     make "$MAKE_ARGS"
     sudo make install
     sudo ldconfig
