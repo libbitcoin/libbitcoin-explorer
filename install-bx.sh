@@ -16,6 +16,10 @@
 
 # This script will build libbitcoin using this relative directory.
 # This is meant to be temporary, just to facilitate the install.
+NPROC=$(nproc)
+PARALLEL_MAKE="-j$NPROC"
+SEQUENTIAL_MAKE="-j1"
+
 BUILD_DIRECTORY="bx_build"
 
 # The source repository for the primary build (when not running in Travis).
@@ -53,9 +57,15 @@ display_message()
 
 automake_current_directory()
 {
+    MAKE_ARGS=$1
+    shift 1
+
     ./autogen.sh
     ./configure "$@"
-    make
+
+    echo "MAKE_ARGS=${MAKE_ARGS}"
+
+    make "$MAKE_ARGS"
     sudo make install
     sudo ldconfig
 }
@@ -65,9 +75,10 @@ build_from_github()
     ACCOUNT=$1
     REPO=$2
     BRANCH=$3
+    MAKE_ARGS=$4
 
     # Shift the first three parameters out of @.
-    shift 3
+    shift 4
 
     # Show the user what repo we are building.
     FORK="$ACCOUNT/$REPO"
@@ -79,7 +90,7 @@ build_from_github()
 
     # Build the local repo clone.
     pushd $REPO
-    automake_current_directory "$@"
+    automake_current_directory "$MAKE_ARGS" "$@"
     popd
 }
 
@@ -170,18 +181,18 @@ build_library()
     create_build_directory
 
     # Download, build and install all unpackaged dependencies.
-    build_from_github jedisct1 libsodium master "$@"
-    build_from_github zeromq libzmq master "$@"
-    build_from_github zeromq czmq master "$@"
-    build_from_github zeromq czmqpp master "$@"
-    build_from_github bitcoin secp256k1 master "$@" $SECP256K1_OPTIONS
-    build_from_github libbitcoin libbitcoin develop "$@"
-    build_from_github google protobuf master "$@"
-    build_from_github libbitcoin libbitcoin_protocol master "$@"
-    build_from_github libbitcoin libbitcoin_client master "$@"
+    build_from_github jedisct1 libsodium master "$SEQUENTIAL_MAKE" "$@"
+    build_from_github zeromq libzmq master "$SEQUENTIAL_MAKE" "$@"
+    build_from_github zeromq czmq master "$SEQUENTIAL_MAKE" "$@"
+    build_from_github zeromq czmqpp master "$SEQUENTIAL_MAKE" "$@"
+    build_from_github bitcoin secp256k1 master "$SEQUENTIAL_MAKE" "$@" $SECP256K1_OPTIONS
+    build_from_github libbitcoin libbitcoin develop "$PARALLEL_MAKE" "$@"
+    build_from_github google protobuf master "$SEQUENTIAL_MAKE" "$@"
+    build_from_github libbitcoin libbitcoin_protocol master "$PARALLEL_MAKE" "$@"
+    build_from_github libbitcoin libbitcoin_client master "$PARALLEL_MAKE" "$@"
 
     # The primary build is not downloaded if we are running in Travis.
-    build_primary "$@"
+    build_primary "$PARALLEL_MAKE" "$@"
 
     # Allow the user to invoke by typing BX or SX.
     sudo ln --symbolic --force /usr/local/bin/explorer /usr/local/bin/bx
