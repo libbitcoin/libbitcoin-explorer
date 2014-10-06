@@ -11,7 +11,6 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>/Zm1000 %(AdditionalOptions)</AdditionalOptions>
       <!-- 4503: http://bit.ly/1nOftf3 -->
       <DisableSpecificWarnings>4503;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
