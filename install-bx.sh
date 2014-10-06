@@ -82,7 +82,7 @@ build_from_github()
 
     # Show the user what repo we are building.
     FORK="$ACCOUNT/$REPO"
-    display_message "Download $FORK/$BRANCH"
+    display_message "Download $FORK/$BRANCH/$MAKE_ARGS"
     
     # Clone the repo locally.
     rm -rf $REPO
@@ -117,9 +117,7 @@ build_primary()
 build_tests()
 {
     # Build and run unit tests relative to the primary directory.
-    pushd test
-    ./explorer_test $BOOST_UNIT_TEST_PARAMETERS
-    popd
+    TEST_FLAGS="$BOOST_UNIT_TEST_PARAMETERS" make check
 
     # Verify execution (note that 'help' currently returns empty with success).
     bx help
@@ -186,10 +184,10 @@ build_library()
     build_from_github zeromq czmq master "$SEQUENTIAL_MAKE" "$@"
     build_from_github zeromq czmqpp master "$SEQUENTIAL_MAKE" "$@"
     build_from_github bitcoin secp256k1 master "$SEQUENTIAL_MAKE" "$@" $SECP256K1_OPTIONS
-    build_from_github libbitcoin libbitcoin develop "$PARALLEL_MAKE" "$@"
+    build_from_github libbitcoin pmienk develop "$PARALLEL_MAKE" "$@"
     build_from_github google protobuf master "$SEQUENTIAL_MAKE" "$@"
-    build_from_github libbitcoin libbitcoin_protocol master "$PARALLEL_MAKE" "$@"
-    build_from_github libbitcoin libbitcoin_client master "$PARALLEL_MAKE" "$@"
+    build_from_github pmienk libbitcoin_protocol master "$PARALLEL_MAKE" "$@"
+    build_from_github pmienk libbitcoin_client master "$PARALLEL_MAKE" "$@"
 
     # The primary build is not downloaded if we are running in Travis.
     build_primary "$PARALLEL_MAKE" "$@"
