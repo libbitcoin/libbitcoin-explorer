@@ -184,7 +184,7 @@ build_library()
     build_from_github zeromq czmq master "$SEQUENTIAL_MAKE" "$@"
     build_from_github zeromq czmqpp master "$SEQUENTIAL_MAKE" "$@"
     build_from_github bitcoin secp256k1 master "$SEQUENTIAL_MAKE" "$@" $SECP256K1_OPTIONS
-    build_from_github libbitcoin pmienk develop "$PARALLEL_MAKE" "$@"
+    build_from_github pmienk libbitcoin develop "$PARALLEL_MAKE" "$@"
     build_from_github google protobuf master "$SEQUENTIAL_MAKE" "$@"
     build_from_github pmienk libbitcoin_protocol master "$PARALLEL_MAKE" "$@"
     build_from_github pmienk libbitcoin_client master "$PARALLEL_MAKE" "$@"
