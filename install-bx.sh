@@ -99,19 +99,22 @@ build_from_github()
 
 build_primary()
 {
+    MAKE_ARGS=$1
+    shift 1
+
     if [ "$TRAVIS" = "true" ]; then
         # If the environment is Travis drop out of build directory.
         cd ..
         display_message "Local $TRAVIS_REPO_SLUG"
-	    automake_current_directory "$@"
+	    automake_current_directory "$MAKE_ARGS" "$@"
         build_tests
     else
         # Otherwise we pull the primary repo down for the single file install.
-        build_from_github $BUILD_ACCOUNT $BUILD_REPO $BUILD_BRANCH "$@"
+        build_from_github $BUILD_ACCOUNT $BUILD_REPO $BUILD_BRANCH "$MAKE_ARGS" "$@"
 
         # Build the tests and drop out of build directory.
         pushd $BUILD_REPO
-        build_tests
+        build_tests "$MAKE_ARGS"
         popd
         cd ..
     fi
@@ -120,7 +123,7 @@ build_primary()
 build_tests()
 {
     # Build and run unit tests relative to the primary directory.
-    TEST_FLAGS="$BOOST_UNIT_TEST_PARAMETERS" make check
+    TEST_FLAGS="$BOOST_UNIT_TEST_PARAMETERS" make check "$@"
 
     # Verify execution (note that 'help' currently returns empty with success).
     bx help
