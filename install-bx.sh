@@ -18,7 +18,7 @@
 # This is meant to be temporary, just to facilitate the install.
 
 if [ "$TRAVIS" = "true" ]; then
-    PARALLEL="2"
+    PARALLEL="1"
 else
     NPROC=$(nproc)
     PARALLEL="$NPROC"
@@ -192,10 +192,10 @@ build_library()
     build_from_github zeromq czmq master "$SEQUENTIAL" "$@"
     build_from_github zeromq czmqpp master "$SEQUENTIAL" "$@"
     build_from_github bitcoin secp256k1 master "$SEQUENTIAL" "$@" $SECP256K1_OPTIONS
-    build_from_github pmienk libbitcoin develop "$PARALLEL" "$@"
-    build_from_github google protobuf master "$SEQUENTIAL" "$@"
-    build_from_github pmienk libbitcoin_protocol master "$PARALLEL" "$@"
-    build_from_github pmienk libbitcoin_client master "$PARALLEL" "$@"
+    build_from_github libbitcoin libbitcoin develop "$PARALLEL" "$@"
+    build_from_github libbitcoin protobuf 2.6.0 "$SEQUENTIAL" "$@"
+    build_from_github libbitcoin libbitcoin_protocol master "$PARALLEL" "$@"
+    build_from_github libbitcoin libbitcoin_client master "$PARALLEL" "$@"
 
     # The primary build is not downloaded if we are running in Travis.
     build_primary "$PARALLEL" "$@"
