@@ -59,7 +59,7 @@ static void fetch_history_from_address(obelisk_client& client,
         handle_error(state, error);
     };
 
-    client.get_codec().fetch_history(on_error, on_done, address);
+    client.get_codec()->fetch_history(on_error, on_done, address);
 }
 
 // When you restore your wallet, you should use fetch_history(). 
@@ -79,7 +79,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

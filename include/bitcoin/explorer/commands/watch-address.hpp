@@ -65,10 +65,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_WATCH_ADDRESS_PREFIX_WAITING \
-    "Watching address prefix: %1%..."
-#define BX_WATCH_ADDRESS_PREFIX_TOO_LONG \
-    "WARNING: address prefix is limited to 32 bits."
+#define BX_ADDRESS_VALIDATE_INVALID_ADDRESS \
+    "The signature is not invalid."
+#define BX_WATCH_ADDRESS_ADDRESS_WAITING \
+    "Watching address: %1%..."
 
 /**
  * Class to implement the watch-address command.
@@ -107,7 +107,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PREFIX", -1);
+            .add("BITCOIN_ADDRESS", 1);
     }
 	
 	/**
@@ -118,7 +118,7 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_prefixs_argument(), "PREFIX", variables, input);
+        load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input);
     }
     
     /**
@@ -149,9 +149,9 @@ public:
                 "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
             )
             (
-                "PREFIX",
-                value<std::vector<primitives::base2>>(&argument_.prefixs),
-                "The set of Base2 address prefixes to watch."
+                "BITCOIN_ADDRESS",
+                value<std::string>(&argument_.bitcoin_address),
+                "The Bitcoin address to validate."
             );
 
         return options;
@@ -168,20 +168,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PREFIX arguments.
+     * Get the value of the BITCOIN_ADDRESS argument.
      */
-    virtual std::vector<primitives::base2>& get_prefixs_argument()
+    virtual std::string& get_bitcoin_address_argument()
     {
-        return argument_.prefixs;
+        return argument_.bitcoin_address;
     }
     
     /**
-     * Set the value of the PREFIX arguments.
+     * Set the value of the BITCOIN_ADDRESS argument.
      */
-    virtual void set_prefixs_argument(
-        const std::vector<primitives::base2>& value)
+    virtual void set_bitcoin_address_argument(
+        const std::string& value)
     {
-        argument_.prefixs = value;
+        argument_.bitcoin_address = value;
     }
 
     /**
@@ -228,11 +228,11 @@ private:
     struct argument
     {
         argument()
-          : prefixs()
+          : bitcoin_address()
         {
         }
         
-        std::vector<primitives::base2> prefixs;
+        std::string bitcoin_address;
     } argument_;
     
     /**

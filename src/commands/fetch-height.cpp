@@ -50,7 +50,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
@@ -67,7 +67,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
         handle_error(state, error);
     };
 
-    client.get_codec().fetch_last_height(on_error, on_done);
+    client.get_codec()->fetch_last_height(on_error, on_done);
     client.resolve_callbacks();
 
     return state.get_result();

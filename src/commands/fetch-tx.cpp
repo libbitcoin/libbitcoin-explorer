@@ -63,7 +63,7 @@ static void fetch_tx_from_hash(obelisk_client& client, callback_state& state,
         handle_error(state, error);
     };
 
-    client.get_codec().fetch_transaction(on_error, on_done, hash);
+    client.get_codec()->fetch_transaction(on_error, on_done, hash);
 }
 
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
@@ -76,7 +76,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;

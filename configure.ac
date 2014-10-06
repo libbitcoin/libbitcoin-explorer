@@ -8,7 +8,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 # and a version specified in BOOST_ROOT.
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([-Wall -Werror])
+AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror])
 AM_PROG_AR
 LT_INIT
 AC_PROG_CXX
@@ -38,11 +38,13 @@ AC_CHECK_LIB(gmp,__gmpz_init,,
 # TODO: We require secp256k1 to require GMP (over OpenSSL).
 PKG_CHECK_MODULES([secp256k1], [libsecp256k1 >= 0.0.1])
 PKG_CHECK_MODULES([bitcoin], [libbitcoin >= 2.3.0])
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin_client >= 0.0.3])
+PKG_CHECK_MODULES([bitcoin_protocol], [libbitcoin_protocol >= 0.0.1])
+PKG_CHECK_MODULES([bitcoin_client], [libbitcoin_client >= 0.0.4])
 PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
 PKG_CHECK_MODULES([zmq], [libzmq >= 4.0.0])
 PKG_CHECK_MODULES([czmq], [libczmq >= 2.2.0])
 PKG_CHECK_MODULES([czmqpp], [libczmq++ >= 0.4.1])
+PKG_CHECK_MODULES([protobuf], [protobuf >= 2.6.0])
 
 PKG_PROG_PKG_CONFIG
 
@@ -60,6 +62,6 @@ AC_ARG_WITH([pkgconfigdir], AS_HELP_STRING([--with-pkgconfigdir=PATH],
     [pkgconfigdir="$withval"], [pkgconfigdir='${libdir}/pkgconfig'])
 AC_SUBST([pkgconfigdir])
 
-AC_CONFIG_FILES([Makefile include/bitcoin/Makefile src/Makefile test/Makefile libbitcoin_explorer.pc])
+AC_CONFIG_FILES([Makefile libbitcoin_explorer.pc])
 AC_OUTPUT
 

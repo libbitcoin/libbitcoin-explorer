@@ -59,7 +59,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const auto& server = get_server_address_setting();
 
     czmqpp::context context;
-    obelisk_client client(context, sleep_time(timeout), retries);
+    obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
         return console_result::failure;
@@ -79,9 +79,9 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     // Height is ignored if both are specified.
     // Use the null_hash as sentinel to determine whether to use height or hash.
     if (hash == null_hash)
-        client.get_codec().fetch_block_header(on_error, on_done, height);
+        client.get_codec()->fetch_block_header(on_error, on_done, height);
     else
-        client.get_codec().fetch_block_header(on_error, on_done, hash);
+        client.get_codec()->fetch_block_header(on_error, on_done, hash);
 
     client.resolve_callbacks();
 

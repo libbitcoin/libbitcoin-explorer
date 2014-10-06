@@ -1006,129 +1006,142 @@ BOOST_AUTO_TEST_CASE(generated__symbol__$(symbol:c)__returns_expected_value)
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 .##############################################################################
-.echo "Generating include/bitcoin/Makefile.am..."
-.output "../include/bitcoin/Makefile.am"
+.echo "Generating Makefile.am..."
+.output "../Makefile.am"
 # ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
+#
+# documentation
+#
+doc_DATA = README INSTALL COPYING
+
+#
+# pkg-config
+#
+pkgconfig_DATA = libbitcoin_explorer.pc
+
+# ?
+ACLOCAL_AMFLAGS = -I m4
+
+#
+# headers
+#
 bitcoin_includedir = $\(includedir)/bitcoin
 bitcoin_include_HEADERS = \\
-    explorer.hpp
+    include/bitcoin/explorer.hpp
     
 bitcoin_explorer_includedir = $\(includedir)/bitcoin/explorer
 bitcoin_explorer_include_HEADERS = \\
-    explorer/async_client.hpp \\
-    explorer/callback_state.hpp \\
-    explorer/command.hpp \\
-    explorer/define.hpp \\
-    explorer/dispatch.hpp \\
-    explorer/display.hpp \\
-    explorer/generated.hpp \\
-    explorer/obelisk_client.hpp \\
-    explorer/prop_tree.hpp
+    include/bitcoin/explorer/async_client.hpp \\
+    include/bitcoin/explorer/callback_state.hpp \\
+    include/bitcoin/explorer/command.hpp \\
+    include/bitcoin/explorer/define.hpp \\
+    include/bitcoin/explorer/dispatch.hpp \\
+    include/bitcoin/explorer/display.hpp \\
+    include/bitcoin/explorer/generated.hpp \\
+    include/bitcoin/explorer/obelisk_client.hpp \\
+    include/bitcoin/explorer/prop_tree.hpp
 
 bitcoin_explorer_impl_includedir = $\(includedir)/bitcoin/explorer/impl
 bitcoin_explorer_impl_include_HEADERS = \\
-    explorer/impl/prop_tree.ipp \\
-    explorer/impl/utility.ipp
+    include/bitcoin/explorer/impl/prop_tree.ipp \\
+    include/bitcoin/explorer/impl/utility.ipp
 
 bitcoin_explorer_utility_includedir = $\(includedir)/bitcoin/explorer/utility
 bitcoin_explorer_utility_include_HEADERS = \\
-    explorer/utility/compat.hpp \\
-    explorer/utility/config.hpp \\
-    explorer/utility/environment.hpp \\
-    explorer/utility/parameter.hpp \\
-    explorer/utility/printer.hpp \\
-    explorer/utility/utility.hpp
+    include/bitcoin/explorer/utility/compat.hpp \\
+    include/bitcoin/explorer/utility/config.hpp \\
+    include/bitcoin/explorer/utility/environment.hpp \\
+    include/bitcoin/explorer/utility/parameter.hpp \\
+    include/bitcoin/explorer/utility/printer.hpp \\
+    include/bitcoin/explorer/utility/utility.hpp
 
 bitcoin_explorer_primitives_includedir = $\(includedir)/bitcoin/explorer/primitives
 bitcoin_explorer_primitives_include_HEADERS = \\
-    explorer/primitives/address.hpp \\
-    explorer/primitives/base16.hpp \\
-    explorer/primitives/base2.hpp \\
-    explorer/primitives/base58.hpp \\
-    explorer/primitives/btc.hpp \\
-    explorer/primitives/btc160.hpp \\
-    explorer/primitives/btc256.hpp \\
-    explorer/primitives/ec_private.hpp \\
-    explorer/primitives/ec_public.hpp \\
-    explorer/primitives/encoding.hpp \\
-    explorer/primitives/hashtype.hpp \\
-    explorer/primitives/hd_key.hpp \\
-    explorer/primitives/hd_priv.hpp \\
-    explorer/primitives/hd_pub.hpp \\
-    explorer/primitives/header.hpp \\
-    explorer/primitives/input.hpp \\
-    explorer/primitives/output.hpp \\
-    explorer/primitives/point.hpp \\
-    explorer/primitives/raw.hpp \\
-    explorer/primitives/script.hpp \\
-    explorer/primitives/stealth.hpp \\
-    explorer/primitives/transaction.hpp \\
-    explorer/primitives/wif.hpp \\
-    explorer/primitives/wrapper.hpp
+    include/bitcoin/explorer/primitives/address.hpp \\
+    include/bitcoin/explorer/primitives/base16.hpp \\
+    include/bitcoin/explorer/primitives/base2.hpp \\
+    include/bitcoin/explorer/primitives/base58.hpp \\
+    include/bitcoin/explorer/primitives/btc.hpp \\
+    include/bitcoin/explorer/primitives/btc160.hpp \\
+    include/bitcoin/explorer/primitives/btc256.hpp \\
+    include/bitcoin/explorer/primitives/ec_private.hpp \\
+    include/bitcoin/explorer/primitives/ec_public.hpp \\
+    include/bitcoin/explorer/primitives/encoding.hpp \\
+    include/bitcoin/explorer/primitives/hashtype.hpp \\
+    include/bitcoin/explorer/primitives/hd_key.hpp \\
+    include/bitcoin/explorer/primitives/hd_priv.hpp \\
+    include/bitcoin/explorer/primitives/hd_pub.hpp \\
+    include/bitcoin/explorer/primitives/header.hpp \\
+    include/bitcoin/explorer/primitives/input.hpp \\
+    include/bitcoin/explorer/primitives/output.hpp \\
+    include/bitcoin/explorer/primitives/point.hpp \\
+    include/bitcoin/explorer/primitives/raw.hpp \\
+    include/bitcoin/explorer/primitives/script.hpp \\
+    include/bitcoin/explorer/primitives/stealth.hpp \\
+    include/bitcoin/explorer/primitives/transaction.hpp \\
+    include/bitcoin/explorer/primitives/wif.hpp \\
+    include/bitcoin/explorer/primitives/wrapper.hpp
 
 # Generated from XML data source.
 bitcoin_explorer_commands_includedir = $\(includedir)/bitcoin/explorer/commands
 bitcoin_explorer_commands_include_HEADERS = \\
 .for command by symbol
-    explorer/commands/$(symbol:).hpp$(!last() ?? " \\")
+    include/bitcoin/explorer/commands/$(symbol:).hpp$(!last() ?? " \\")
 .endfor
-.##############################################################################
-.echo "Generating src/Makefile.am..."
-.output "../src/Makefile.am"
-# ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
 
-AUTOMAKE_OPTIONS = subdir-objects
-
-# Library
+#
+# binaries
+#
 noinst_LTLIBRARIES = libbitcoin_explorer.la
 
-AM_CPPFLAGS = \\
-    -I$\(srcdir)/../include \\
-    ${bitcoin_client_CFLAGS}
+libbitcoin_explorer_la_CPPFLAGS = \\
+    -I$\(srcdir)/include \\
+    ${bitcoin_client_CFLAGS} \\
+    ${bitcoin_protocol_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \\
-    async_client.cpp \\
-    callback_state.cpp \\
-    dispatch.cpp \\
-    display.cpp \\
-    generated.cpp \\
-    obelisk_client.cpp \\
-    prop_tree.cpp \\
-    primitives/address.cpp \\
-    primitives/base16.cpp \\
-    primitives/base2.cpp \\
-    primitives/base58.cpp \\
-    primitives/btc.cpp \\
-    primitives/btc160.cpp \\
-    primitives/btc256.cpp \\
-    primitives/ec_private.cpp \\
-    primitives/ec_public.cpp \\
-    primitives/encoding.cpp \\
-    primitives/hashtype.cpp \\
-    primitives/hd_key.cpp \\
-    primitives/hd_priv.cpp \\
-    primitives/hd_pub.cpp \\
-    primitives/header.cpp \\
-    primitives/input.cpp \\
-    primitives/output.cpp \\
-    primitives/point.cpp \\
-    primitives/raw.cpp \\
-    primitives/script.cpp \\
-    primitives/stealth.cpp \\
-    primitives/transaction.cpp \\
-    primitives/wif.cpp \\
-    primitives/wrapper.cpp \\
-    utility/config.cpp \\
-    utility/environment.cpp \\
-    utility/parameter.cpp \\
-    utility/printer.cpp \\
-    utility/utility.cpp
+    src/async_client.cpp \\
+    src/callback_state.cpp \\
+    src/dispatch.cpp \\
+    src/display.cpp \\
+    src/generated.cpp \\
+    src/obelisk_client.cpp \\
+    src/prop_tree.cpp \\
+    src/primitives/address.cpp \\
+    src/primitives/base16.cpp \\
+    src/primitives/base2.cpp \\
+    src/primitives/base58.cpp \\
+    src/primitives/btc.cpp \\
+    src/primitives/btc160.cpp \\
+    src/primitives/btc256.cpp \\
+    src/primitives/ec_private.cpp \\
+    src/primitives/ec_public.cpp \\
+    src/primitives/encoding.cpp \\
+    src/primitives/hashtype.cpp \\
+    src/primitives/hd_key.cpp \\
+    src/primitives/hd_priv.cpp \\
+    src/primitives/hd_pub.cpp \\
+    src/primitives/header.cpp \\
+    src/primitives/input.cpp \\
+    src/primitives/output.cpp \\
+    src/primitives/point.cpp \\
+    src/primitives/raw.cpp \\
+    src/primitives/script.cpp \\
+    src/primitives/stealth.cpp \\
+    src/primitives/transaction.cpp \\
+    src/primitives/wif.cpp \\
+    src/primitives/wrapper.cpp \\
+    src/utility/config.cpp \\
+    src/utility/environment.cpp \\
+    src/utility/parameter.cpp \\
+    src/utility/printer.cpp \\
+    src/utility/utility.cpp
 
 # Generated from XML data source.
 libbitcoin_explorer_la_SOURCES += \\
 .for command by symbol
-    commands/$(symbol:).cpp$(!last() ?? " \\")
+    src/commands/$(symbol:).cpp$(!last() ?? " \\")
 .endfor
     
 libbitcoin_explorer_la_LIBADD = \\
@@ -1137,52 +1150,57 @@ libbitcoin_explorer_la_LIBADD = \\
 # Console Application
 bin_PROGRAMS = explorer
 
+explorer_CPPFLAGS = \\
+    -I$\(srcdir)/include \\
+    ${bitcoin_client_CFLAGS} \\
+    ${bitcoin_protocol_CFLAGS}
+
 explorer_SOURCES = \\
-    console/main.cpp
+    src/console/main.cpp
 
 explorer_LDADD = \\
-    -L$\(srcdir)/../src/ \\
-    -lbitcoin_explorer \\
+    libbitcoin_explorer.la \\
     -lboost_chrono \\
     -lboost_program_options \\
-    ${bitcoin_client_LIBS}
-.##############################################################################
-.echo "Generating test/Makefile.am..."
-.output "../test/Makefile.am"
-# ******** GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY ********* #
+    ${bitcoin_client_LIBS} \\
+    ${bitcoin_protocol_LIBS}
 
-AUTOMAKE_OPTIONS = subdir-objects
+#
+# tests
+#
+TESTS = explorer_test
 
-noinst_PROGRAMS = explorer_test
+check_PROGRAMS = explorer_test
 
-AM_CPPFLAGS = \\
-    -I$\(srcdir)/../include \\
+explorer_test_CPPFLAGS = \\
+    -I$\(srcdir)/include \\
     ${bitcoin_client_CFLAGS} \\
+    ${bitcoin_protocol_CFLAGS} \\
     -DBOOST_TEST_DYN_LINK
 
 explorer_test_SOURCES = \\
-    address.cpp \\
-    base58.cpp \\
-    generated__broadcast.cpp \\
-    generated__find.cpp \\
-    generated__symbol.cpp \\
-    main.cpp \\
-    obelisk_client.cpp \\
-    parameter.cpp \\
-    printer.cpp
+    test/address.cpp \\
+    test/base58.cpp \\
+    test/generated__broadcast.cpp \\
+    test/generated__find.cpp \\
+    test/generated__symbol.cpp \\
+    test/main.cpp \\
+    test/obelisk_client.cpp \\
+    test/parameter.cpp \\
+    test/printer.cpp
 
 # Generated from XML data source.
 explorer_test_SOURCES += \\
 .for command by symbol
-    commands/$(symbol:).cpp$(!last() ?? " \\")
+    test/commands/$(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
 explorer_test_LDADD = \\
-    -L$\(srcdir)/../src/ \\
-    -lbitcoin_explorer \\
+    libbitcoin_explorer.la \\
     -lboost_chrono \\
     -lboost_program_options \\
-    ${bitcoin_client_LIBS}
+    ${bitcoin_client_LIBS} \\
+    ${bitcoin_protocol_LIBS}
 .##############################################################################
 .echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj..."
 .output "../builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj"
