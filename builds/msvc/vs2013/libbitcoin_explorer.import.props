@@ -18,7 +18,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin_explorer\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4290;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <!--<PreprocessorDefinitions Condition="'$(Linkage-libbitcoin_explorer)' == 'static' Or '$(Linkage-libbitcoin_explorer)' == 'ltcg'">SX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>-->
+      <!--<PreprocessorDefinitions Condition="'$(Linkage-libbitcoin_explorer)' == 'static' Or '$(Linkage-libbitcoin_explorer)' == 'ltcg'">BX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>-->
     </ClCompile>
     <Link>
       <AdditionalDependencies Condition="'$(Linkage-libbitcoin_explorer)' != ''">libbitcoin_explorer.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>

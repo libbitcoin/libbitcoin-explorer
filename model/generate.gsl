@@ -1801,9 +1801,7 @@ explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\test\\generated__broadcast.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__find.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\main.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp" />
