@@ -540,7 +540,6 @@ BX command names, help and parameterization utilize the following set of acronym
     RACE    Research and development in Advanced Communications Technologies
     RIPEMD  RACE Integrity Primitives Evaluation Message Digest
     SHA     Secure Hash Algorithm
-    SIGHASH Signature Hash
     SOCKS   Socket Secure (proxy protocol)
     SX      Spesmilo Exchanger (the original version of Bitcoin Explorer)
     TX      Transaction
@@ -553,7 +552,7 @@ Commands are named with several objectives in mind. Congruence with the [SX comm
 
 #### Networking
 
-Commands are generally names so that related commands sort together. In the case of network commands (`fetch-`, `send-`, and `watch-`) the command's action (verb) starts the name. In other commands (e.g. `tx-`, `address-`) the primary data type (noun) starts the name. This distinction is primarily based on the congruence objective and also tends to read more naturally.
+Commands are generally names so that related commands sort together. In the case of network commands (`fetch-`, `send-`, `validate-` and `watch-`) the command's action (verb) starts the name. In other commands (e.g. `tx-`, `address-`) the primary data type (noun) starts the name. This distinction is primarily based on the congruence objective and also tends to read more naturally.
 
 #### Conversion
 
@@ -569,7 +568,7 @@ Commands pertaining to stealth addresses are prefixed with `stealth-` to differe
 
 #### Validation
 
-Commands suffixed with `-validate` have a third result code state: **invalid** (1). This is in addition to success / **valid** (0) and **failure** (-1), which may be returned by any command.
+Commands preixed or suffixed with `validate` have a third result code state: **invalid** (1). This is in addition to success / **valid** (0) and **failure** (-1), which may be returned by any command.
 
 #### Other
 
