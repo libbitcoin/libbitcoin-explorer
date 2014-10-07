@@ -126,7 +126,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     };
 
     // Set up connections.
-    // TODO: how is mainnet / testnet selected ?
+    // BUGBUG: mainnet/testnet determined by libbitcoin compilation.
     async_client client(*this, 4);
 
     // Create dependencies for our protocol object.
