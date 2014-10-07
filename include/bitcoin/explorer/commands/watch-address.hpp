@@ -65,8 +65,6 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_ADDRESS_VALIDATE_INVALID_ADDRESS \
-    "The signature is not invalid."
 #define BX_WATCH_ADDRESS_ADDRESS_WAITING \
     "Watching address: %1%..."
 
@@ -141,7 +139,7 @@ public:
             (
                 "help,h",
                 value<bool>(&option_.help)->implicit_value(true),
-                "Watch the network for transactions by address prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL."
+                "Watch the network for transactions in which an address participates. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL."
             )
             (
                 "format,f",
@@ -151,7 +149,7 @@ public:
             (
                 "BITCOIN_ADDRESS",
                 value<std::string>(&argument_.bitcoin_address),
-                "The Bitcoin address to validate."
+                "The participating Bitcoin address."
             );
 
         return options;

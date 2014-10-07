@@ -567,14 +567,10 @@
   </command>
 
   <command symbol="watch-address" formerly="monitor" typeX="transaction" category="ONLINE" network="true">
-    <option name="help" description="Watch the network for transactions by address prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL." />
+    <option name="help" description="Watch the network for transactions in which an address participates. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL." />
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The Bitcoin address to validate." />
-    <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The signature is not invalid." />
+    <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The participating Bitcoin address." />
     <define name="BX_WATCH_ADDRESS_ADDRESS_WAITING" value="Watching address: %1%..." />
-    <!--<argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 address prefixes to watch." />-->
-    <!--<define name="BX_WATCH_ADDRESS_PREFIX_WAITING" value="Watching address prefix: %1%..." />-->
-    <!--<define name="BX_WATCH_ADDRESS_PREFIX_TOO_LONG" value="WARNING: address prefix is limited to 32 bits." />-->
   </command>
 
   <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->

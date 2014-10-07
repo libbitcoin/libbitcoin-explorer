@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -7,7 +7,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ConfigurationType>Application</ConfigurationType>
-    <NuGetPackageImportStamp>4d879f83</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>5e4dc238</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
     <ProjectName>libbitcoin_explorer_test</ProjectName>
@@ -75,9 +75,7 @@
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
-    <ClCompile Include="..\..\..\..\test\main.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\main.cpp" />
     <ClCompile Include="..\..\..\..\test\obelisk_client.cpp" />
     <ClCompile Include="..\..\..\..\test\parameter.cpp" />
     <ClCompile Include="..\..\..\..\test\printer.cpp" />

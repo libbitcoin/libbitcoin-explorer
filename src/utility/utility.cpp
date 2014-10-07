@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-// #include "precompile.hpp"
+
 #ifdef _MSC_VER
 // Suppressing msvc warnings from boost that are heard to deal with
 // because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
