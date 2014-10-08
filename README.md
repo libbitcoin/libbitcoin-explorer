@@ -500,13 +500,13 @@ All code should pass through a quality gate before being committed to the reposi
 
 ## Explorer Library
 
-The libbitcoin-explorer build produces static and dynamic libraries. Tests are implemented in a distinct executable called `libbitcoin_explorer_test` which links `libbitcoin-explorer`. The command line executable `bx` also links to `libbitcoin-explorer`.
+The BX build produces static and dynamic versions of a library. Tests are implemented in an executable called `libbitcoin_explorer_test` which links the library. The command line executable `bx` also links the library. This separation ensures that the library remains useful for building other applications.
 
-Command parameterization is isolated so that each command unit test bypasses command line and [STDIO](http://wikipedia.org/wiki/Standard_streams) processing. This design also ensures that `libbitcoin-explorer` remains useful as a library for building other applications.
+In other words another application can link to `libbitcoin-explorer` and immediately take advantage of the full set of tested commands, as simple methods with no relation to the command line or STDIO. Such applications can even avoid a dependency on Boost program\_options and `bx` code that performs I/O processing.
 
-In other words another application can link to `libbitcoin-explorer` and immediately take advantage of the full set of tested commands, as simple methods with no relation to the command line or STDIO. Such applications can even avoid a dependency on Boost program\_options and `libbitcoin-explorer` code that performs I/O processing.
+Using the library requires inclusion of the header `<bitcoin/explorer.hpp>` and a reference to the `libbitcoin-explorer` library and its dependencies. To facilitate dependency management BX installs a standard [package config](http://en.wikipedia.org/wiki/Pkg-config).
 
-Using the library requires inclusion of the header `<explorer/explorer.hpp>` and a reference to the `libbitcoin-explorer` library and its dependencies. BX exposes common functionality in the following namespaces:
+Common functionality is exposed by the following namespaces:
 ```c++
 bc::explorer::commands
 bc::explorer::primitives
