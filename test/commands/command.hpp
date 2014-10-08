@@ -34,8 +34,8 @@ using namespace bc::explorer; \
 using namespace bc::explorer::commands; \
 using namespace bc::explorer::primitives;
 
-// Server error messsages.
-#define BX_TIMEOUT_MESSAGE "timed out"
+// Libbitcoin error messsages (see error.cpp).
+#define BX_TIMEOUT_MESSAGE "Channel timed out"
 #define BX_BAD_STREAM_MESSAGE "Bad stream"
 #define BX_SERVICE_STOPPED_MESSAGE "Service stopped"
 #define BX_SPENT_INPUT_NOT_FOUND_MESSAGE "Spent input not found"
