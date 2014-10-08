@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-// #include "precompile.hpp"
+
 #include <bitcoin/explorer/commands/fetch-stealth.hpp>
 
 #include <iostream>
@@ -36,13 +36,12 @@ using namespace bc::explorer::primitives;
 
 static bc::client::stealth_prefix get_prefix(const bitset& source)
 {
-    BITCOIN_ASSERT(source.size() <= sizeof(uint8_t));
+    // Size is constrained by BX_FETCH_STEALTH_PREFIX_TOO_LONG below.
+    BITCOIN_ASSERT(source.size() <= stealth_address::max_prefix_bits);
 
     bc::client::stealth_prefix prefix;
-
     prefix.number_bits = static_cast<uint8_t>(source.size());
     prefix.bitfield = source.to_ulong();
-
     return prefix;
 }
 
@@ -57,7 +56,7 @@ static void handle_callback(callback_state& state,
     const blockchain::stealth_list& row_list)
 {
     // native is info.
-    // state.output(prop_tree(prefix, row_list));
+    state.output(prop_tree(prefix, row_list));
 }
 
 static void fetch_stealth_from_prefix(obelisk_client& client,
@@ -74,21 +73,19 @@ static void fetch_stealth_from_prefix(obelisk_client& client,
         handle_error(state, error);
     };
 
-    bc::client::stealth_prefix query_prefix = get_prefix(prefix);
-
+    auto query_prefix = get_prefix(prefix);
     client.get_codec()->fetch_stealth(on_error, on_done, query_prefix, from_height);
 }
-
 
 console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& prefixes = get_prefixs_argument();
-    const auto height = get_height_option();
-    const auto& encoding = get_format_option();
     const auto& server = get_server_address_setting();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
+    const auto height = get_height_option();
+    const auto& encoding = get_format_option();
+    const auto& prefixes = get_prefixs_argument();
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);
