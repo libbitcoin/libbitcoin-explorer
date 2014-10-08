@@ -9,7 +9,7 @@
 *.swp
 Makefile
 Makefile.in
-libbitcoin_explorer.pc
+libbitcoin-explorer.pc
 
 /aclocal.m4
 /autom4te.cache

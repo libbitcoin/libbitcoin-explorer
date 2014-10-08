@@ -3,9 +3,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: libbitcoin_explorer
+Name: libbitcoin-explorer
 Description: Command line for Bitcoin queries and local operations.
-URL: https://github.com/evoskuil/libbitcoin_explorer
+URL: https://github.com/evoskuil/libbitcoin-explorer
 Version: @PACKAGE_VERSION@
 
 # Our dependencies that publish package configuration.
@@ -15,4 +15,4 @@ Requires: libbitcoin-client >= 0.0.3 libbitcoin >= 2.2.0
 Cflags: -I${includedir} -std=c++11
 
 # Our own lib and any we require that do not publish package configuration.
-Libs: -L${libdir} -lbitcoin_explorer -lboost_chrono -lboost_program_options
+Libs: -L${libdir} -lbitcoin-explorer -lboost_chrono -lboost_program_options

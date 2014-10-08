@@ -17,11 +17,11 @@
 # This script will build libbitcoin using this relative directory.
 # This is meant to be temporary, just to facilitate the install.
 
-BUILD_DIRECTORY="bx_build"
+BUILD_DIRECTORY="bx-build"
 
 # The source repository for the primary build (when not running in Travis).
 BUILD_ACCOUNT="libbitcoin"
-BUILD_REPO="libbitcoin_explorer"
+BUILD_REPO="libbitcoin-explorer"
 BUILD_BRANCH="master"
 
 # https://github.com/bitcoin/secp256k1

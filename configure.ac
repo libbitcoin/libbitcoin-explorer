@@ -1,4 +1,4 @@
-AC_INIT([libitcoin_explorer], [0.1.0], [genjix@riseup.net])
+AC_INIT([libitcoin-explorer], [0.1.0], [genjix@riseup.net])
 AC_USE_SYSTEM_EXTENSIONS
 AC_LANG(C++)
 AC_CONFIG_AUX_DIR([build-aux])
@@ -55,6 +55,6 @@ AC_ARG_WITH([pkgconfigdir], AS_HELP_STRING([--with-pkgconfigdir=PATH],
     [pkgconfigdir="$withval"], [pkgconfigdir='${libdir}/pkgconfig'])
 AC_SUBST([pkgconfigdir])
 
-AC_CONFIG_FILES([Makefile libbitcoin_explorer.pc])
+AC_CONFIG_FILES([Makefile libbitcoin-explorer.pc])
 AC_OUTPUT
 

@@ -8,7 +8,7 @@ doc_DATA = README INSTALL COPYING
 #
 # pkg-config
 #
-pkgconfig_DATA = libbitcoin_explorer.pc
+pkgconfig_DATA = libbitcoin-explorer.pc
 
 # ?
 ACLOCAL_AMFLAGS = -I m4
@@ -20,8 +20,8 @@ bitcoin_includedir = $(includedir)/bitcoin
 bitcoin_include_HEADERS = \
     include/bitcoin/explorer.hpp
     
-bitcoin_explorer_includedir = $(includedir)/bitcoin/explorer
-bitcoin_explorer_include_HEADERS = \
+bitcoin-explorer_includedir = $(includedir)/bitcoin/explorer
+bitcoin-explorer_include_HEADERS = \
     include/bitcoin/explorer/async_client.hpp \
     include/bitcoin/explorer/callback_state.hpp \
     include/bitcoin/explorer/command.hpp \
@@ -32,13 +32,13 @@ bitcoin_explorer_include_HEADERS = \
     include/bitcoin/explorer/obelisk_client.hpp \
     include/bitcoin/explorer/prop_tree.hpp
 
-bitcoin_explorer_impl_includedir = $(includedir)/bitcoin/explorer/impl
-bitcoin_explorer_impl_include_HEADERS = \
+bitcoin-explorer_impl_includedir = $(includedir)/bitcoin/explorer/impl
+bitcoin-explorer_impl_include_HEADERS = \
     include/bitcoin/explorer/impl/prop_tree.ipp \
     include/bitcoin/explorer/impl/utility.ipp
 
-bitcoin_explorer_utility_includedir = $(includedir)/bitcoin/explorer/utility
-bitcoin_explorer_utility_include_HEADERS = \
+bitcoin-explorer_utility_includedir = $(includedir)/bitcoin/explorer/utility
+bitcoin-explorer_utility_include_HEADERS = \
     include/bitcoin/explorer/utility/compat.hpp \
     include/bitcoin/explorer/utility/config.hpp \
     include/bitcoin/explorer/utility/environment.hpp \
@@ -46,8 +46,8 @@ bitcoin_explorer_utility_include_HEADERS = \
     include/bitcoin/explorer/utility/printer.hpp \
     include/bitcoin/explorer/utility/utility.hpp
 
-bitcoin_explorer_primitives_includedir = $(includedir)/bitcoin/explorer/primitives
-bitcoin_explorer_primitives_include_HEADERS = \
+bitcoin-explorer_primitives_includedir = $(includedir)/bitcoin/explorer/primitives
+bitcoin-explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/address.hpp \
     include/bitcoin/explorer/primitives/base16.hpp \
     include/bitcoin/explorer/primitives/base2.hpp \
@@ -74,8 +74,8 @@ bitcoin_explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/wrapper.hpp
 
 # Generated from XML data source.
-bitcoin_explorer_commands_includedir = $(includedir)/bitcoin/explorer/commands
-bitcoin_explorer_commands_include_HEADERS = \
+bitcoin-explorer_commands_includedir = $(includedir)/bitcoin/explorer/commands
+bitcoin-explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/address-decode.hpp \
     include/bitcoin/explorer/commands/address-embed.hpp \
     include/bitcoin/explorer/commands/address-encode.hpp \
@@ -167,13 +167,13 @@ bitcoin_explorer_commands_include_HEADERS = \
 #
 # binaries
 #
-noinst_LTLIBRARIES = libbitcoin_explorer.la
+noinst_LTLIBRARIES = libbitcoin-explorer.la
 
-libbitcoin_explorer_la_CPPFLAGS = \
+libbitcoin-explorer_la_CPPFLAGS = \
     -I$(srcdir)/include \
     ${bitcoin-client_CFLAGS}
 
-libbitcoin_explorer_la_SOURCES = \
+libbitcoin-explorer_la_SOURCES = \
     src/async_client.cpp \
     src/callback_state.cpp \
     src/dispatch.cpp \
@@ -212,7 +212,7 @@ libbitcoin_explorer_la_SOURCES = \
     src/utility/utility.cpp
 
 # Generated from XML data source.
-libbitcoin_explorer_la_SOURCES += \
+libbitcoin-explorer_la_SOURCES += \
     src/commands/address-decode.cpp \
     src/commands/address-embed.cpp \
     src/commands/address-encode.cpp \
@@ -301,7 +301,7 @@ libbitcoin_explorer_la_SOURCES += \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp
     
-libbitcoin_explorer_la_LIBADD = \
+libbitcoin-explorer_la_LIBADD = \
     ${bitcoin-client_LIBS}
 
 # Console Application
@@ -315,7 +315,7 @@ explorer_SOURCES = \
     src/console/main.cpp
 
 explorer_LDADD = \
-    libbitcoin_explorer.la \
+    libbitcoin-explorer.la \
     -lboost_chrono \
     -lboost_program_options \
     ${bitcoin-client_LIBS}
@@ -434,7 +434,7 @@ explorer_test_SOURCES += \
     test/commands/wrap-encode.cpp
 
 explorer_test_LDADD = \
-    libbitcoin_explorer.la \
+    libbitcoin-explorer.la \
     -lboost_chrono \
     -lboost_program_options \
     ${bitcoin-client_LIBS}
