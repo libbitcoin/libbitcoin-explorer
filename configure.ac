@@ -2,12 +2,7 @@ AC_INIT([libitcoin-explorer], [0.1.0], [genjix@riseup.net])
 AC_USE_SYSTEM_EXTENSIONS
 AC_LANG(C++)
 AC_CONFIG_AUX_DIR([build-aux])
-
-# The BOOST_ROOT environment variable is *not* prioritize by the m4 tests.
-# As a result there may be dependency conflicts between installed versions
-# and a version specified in BOOST_ROOT.
 AC_CONFIG_MACRO_DIR([m4])
-
 AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror])
 AM_PROG_AR
 LT_INIT
@@ -35,11 +30,11 @@ AC_CHECK_HEADER(gmp.h,,
 AC_CHECK_LIB(gmp,__gmpz_init,,
     [AC_MSG_ERROR([GMP library is required but was not found.])])
 
-# TODO: We require secp256k1 to require GMP (over OpenSSL).
-PKG_CHECK_MODULES([bitcoin-client], [libbitcoin-client >= 0.0.4])
-PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
-
 PKG_PROG_PKG_CONFIG
+
+# TODO: We require secp256k1 to require GMP (over OpenSSL).
+PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 0.1.0])
+PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
 
 # Do not add contextual build parameters in configuration.
 # http://stackoverflow.com/a/4680578

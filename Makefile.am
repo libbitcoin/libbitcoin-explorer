@@ -20,8 +20,8 @@ bitcoin_includedir = $(includedir)/bitcoin
 bitcoin_include_HEADERS = \
     include/bitcoin/explorer.hpp
     
-bitcoin-explorer_includedir = $(includedir)/bitcoin/explorer
-bitcoin-explorer_include_HEADERS = \
+bitcoin_explorer_includedir = $(includedir)/bitcoin/explorer
+bitcoin_explorer_include_HEADERS = \
     include/bitcoin/explorer/async_client.hpp \
     include/bitcoin/explorer/callback_state.hpp \
     include/bitcoin/explorer/command.hpp \
@@ -32,13 +32,13 @@ bitcoin-explorer_include_HEADERS = \
     include/bitcoin/explorer/obelisk_client.hpp \
     include/bitcoin/explorer/prop_tree.hpp
 
-bitcoin-explorer_impl_includedir = $(includedir)/bitcoin/explorer/impl
-bitcoin-explorer_impl_include_HEADERS = \
+bitcoin_explorer_impl_includedir = $(includedir)/bitcoin/explorer/impl
+bitcoin_explorer_impl_include_HEADERS = \
     include/bitcoin/explorer/impl/prop_tree.ipp \
     include/bitcoin/explorer/impl/utility.ipp
 
-bitcoin-explorer_utility_includedir = $(includedir)/bitcoin/explorer/utility
-bitcoin-explorer_utility_include_HEADERS = \
+bitcoin_explorer_utility_includedir = $(includedir)/bitcoin/explorer/utility
+bitcoin_explorer_utility_include_HEADERS = \
     include/bitcoin/explorer/utility/compat.hpp \
     include/bitcoin/explorer/utility/config.hpp \
     include/bitcoin/explorer/utility/environment.hpp \
@@ -46,8 +46,8 @@ bitcoin-explorer_utility_include_HEADERS = \
     include/bitcoin/explorer/utility/printer.hpp \
     include/bitcoin/explorer/utility/utility.hpp
 
-bitcoin-explorer_primitives_includedir = $(includedir)/bitcoin/explorer/primitives
-bitcoin-explorer_primitives_include_HEADERS = \
+bitcoin_explorer_primitives_includedir = $(includedir)/bitcoin/explorer/primitives
+bitcoin_explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/address.hpp \
     include/bitcoin/explorer/primitives/base16.hpp \
     include/bitcoin/explorer/primitives/base2.hpp \
@@ -74,8 +74,8 @@ bitcoin-explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/wrapper.hpp
 
 # Generated from XML data source.
-bitcoin-explorer_commands_includedir = $(includedir)/bitcoin/explorer/commands
-bitcoin-explorer_commands_include_HEADERS = \
+bitcoin_explorer_commands_includedir = $(includedir)/bitcoin/explorer/commands
+bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/address-decode.hpp \
     include/bitcoin/explorer/commands/address-embed.hpp \
     include/bitcoin/explorer/commands/address-encode.hpp \
@@ -169,11 +169,11 @@ bitcoin-explorer_commands_include_HEADERS = \
 #
 noinst_LTLIBRARIES = libbitcoin-explorer.la
 
-libbitcoin-explorer_la_CPPFLAGS = \
+libbitcoin_explorer_la_CPPFLAGS = \
     -I$(srcdir)/include \
-    ${bitcoin-client_CFLAGS}
+    ${bitcoin_client_CFLAGS}
 
-libbitcoin-explorer_la_SOURCES = \
+libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
     src/callback_state.cpp \
     src/dispatch.cpp \
@@ -212,7 +212,7 @@ libbitcoin-explorer_la_SOURCES = \
     src/utility/utility.cpp
 
 # Generated from XML data source.
-libbitcoin-explorer_la_SOURCES += \
+libbitcoin_explorer_la_SOURCES += \
     src/commands/address-decode.cpp \
     src/commands/address-embed.cpp \
     src/commands/address-encode.cpp \
@@ -301,38 +301,22 @@ libbitcoin-explorer_la_SOURCES += \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp
     
-libbitcoin-explorer_la_LIBADD = \
-    ${bitcoin-client_LIBS}
-
-# Console Application
-bin_PROGRAMS = explorer
-
-explorer_CPPFLAGS = \
-    -I$(srcdir)/include \
-    ${bitcoin-client_CFLAGS}
-
-explorer_SOURCES = \
-    src/console/main.cpp
-
-explorer_LDADD = \
-    libbitcoin-explorer.la \
-    -lboost_chrono \
-    -lboost_program_options \
-    ${bitcoin-client_LIBS}
+libbitcoin_explorer_la_LIBADD = \
+    ${bitcoin_client_LIBS}
 
 #
 # tests
 #
-TESTS = explorer_test
+TESTS = libbitcoin-explorer-test
 
-check_PROGRAMS = explorer_test
+check_PROGRAMS = libbitcoin-explorer-test
 
-explorer_test_CPPFLAGS = \
+libbitcoin_explorer_test_CPPFLAGS = \
     -I$(srcdir)/include \
-    ${bitcoin-client_CFLAGS} \
+    ${bitcoin_client_CFLAGS} \
     -DBOOST_TEST_DYN_LINK
 
-explorer_test_SOURCES = \
+libbitcoin_explorer_test_SOURCES = \
     test/address.cpp \
     test/base58.cpp \
     test/generated__broadcast.cpp \
@@ -344,7 +328,7 @@ explorer_test_SOURCES = \
     test/printer.cpp
 
 # Generated from XML data source.
-explorer_test_SOURCES += \
+libbitcoin_explorer_test_SOURCES += \
     test/commands/address-decode.cpp \
     test/commands/address-embed.cpp \
     test/commands/address-encode.cpp \
@@ -433,8 +417,24 @@ explorer_test_SOURCES += \
     test/commands/wrap-decode.cpp \
     test/commands/wrap-encode.cpp
 
-explorer_test_LDADD = \
+libbitcoin_explorer_test_LDADD = \
     libbitcoin-explorer.la \
     -lboost_chrono \
     -lboost_program_options \
-    ${bitcoin-client_LIBS}
+    ${bitcoin_client_LIBS}
+
+# Console Application
+bin_PROGRAMS = bx
+
+bx_CPPFLAGS = \
+    -I$(srcdir)/include \
+    ${bitcoin_client_CFLAGS}
+
+bx_SOURCES = \
+    src/console/main.cpp
+
+bx_LDADD = \
+    libbitcoin-explorer.la \
+    -lboost_chrono \
+    -lboost_program_options \
+    ${bitcoin_client_LIBS}
