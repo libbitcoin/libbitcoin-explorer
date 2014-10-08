@@ -84,7 +84,7 @@ Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the 
 
 If you intend to inspect and/or modify source code you should [git clone](http://git-scm.com/docs/git-clone) BX and each unpackaged dependency and build them manually. The install script itself is commented so that the manual build steps for each dependency can be inferred by a developer.
 
-You can run the install script from any directory on your system. This will build BX in a subdirectory named `bx_build` and install it to `/usr/local/`. When the build completes successfully the `bx_build` directory is deleted.
+You can run the install script from any directory on your system. This will build BX in a subdirectory named `bx-build` and install it to `/usr/local/`. When the build completes successfully the `bx-build` directory is deleted.
 
 The install script should not normally be executed using sudo. Instead it will immediately prompt you for a super user password if required. This ensures that only the necessary installation steps are executed as a super user, as opposed to the entire build process.
 
@@ -260,7 +260,7 @@ These are individual classes that are for the most part simple wrappers around t
 
 Deserialization by any of these primitives, including string-based construction, can throw `boost::program_options::invalid_option_value`. One should consider handling this exception when using `libbitcoin-explorer` as a library.
 
-The primitives that represent complex types also provide conversion functions to Boost [property_tree](http://www.boost.org/doc/libs/1_50_0/doc/html/property_tree.html), enabling complex textual serializations in addition to native formats. BX does not currently support complex textual deserializations apart from native formats, although that could be accomplished in part by extending the primitives with `property\_tree` deserialization.
+The primitives that represent complex types also provide conversion functions to Boost [property_tree](http://www.boost.org/doc/libs/1_50_0/doc/html/property_tree.html), enabling complex textual serializations in addition to native formats. BX does not currently support complex textual deserializations apart from native formats, although that could be accomplished in part by extending the primitives with property\_tree deserialization.
 
 ### Input Processing
 
@@ -297,10 +297,12 @@ Corresponding setters enable library consumers to execute BX methods directly. T
 BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1_2147483646h__okay_output)
 {
     BX_DECLARE_COMMAND(hd_private);
+    
     // corresponding setters
     command.set_hard_option(true);
     command.set_index_option(2147483646);
     command.set_hd_private_key_argument({ "xprv9zFnWC6h2cLgpmSA46vutJzBcfJ8yaJGg8cX1..." });
+    
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAx...");
 }
@@ -335,23 +337,15 @@ testnet = true
 address = tcp://85.25.198.97:10091
 public-key = 573d47524678485575554e23456e334d495d667b7d583a4b576e563d70525a2428286279673d3a68
 ```
-The path to the configuration settings file is specified by the `--config` command line option or `BX_CONFIG` environment variable. If the file is not found or a value is not specified it defaults according to metadata file values.
+The path to the configuration settings file is specified by the `--config` command line option or otherwise the `BX_CONFIG` environment variable. If the file is specified by either method, and is not found, an error is returned via STDERR.
 
-##### Linux/Unix/OSX
-
-The current user's home directory, as defined by the `HOME` environment variable or by the call `getpwuid(getuid())->pw_dir`. A typical path is `/home/username`.
-
-##### Windows
-
-The path defined by [CSIDL_LOCAL_APPDATA](http://msdn.microsoft.com/en-us/library/windows/desktop/bb762494(v=vs.85).aspx) for the current user. A typical path is `C:\Documents and Settings\username\Local Settings\Application Data`.
-
-Configuration settings are generated from metadata during development. The metadata includes full definition for all settings, including section, name, data type, default value and help description. If there is no configuration settings file, or if individual settings are not specified in the file, then default values are populated to bound properties.
+Configuration settings are generated from metadata during development. The metadata includes full definition for all settings, including section, name, data type, default value and help description. If the file, or a given value within the file, is not specified the value defaults according to its metadata default value.
 
 #### Environment Variables
 
 BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind environment variables. All BX environment variables are prefixed with `BX_`. Currently environment variables are bound explicitly (i.e. bindings are not generated from metadata).
 
-Currently `BX_CONFIG` is the only bound environment variable. BX uses a Boost feature to tie the environment variable and the command line option of the same identity (i.e. `--config`). The command line option takes precedence.
+Currently `BX_CONFIG` is the only bound environment variable. BX uses a Boost feature to tie the environment variable and the command line option of the same identity (i.e. `--config`). In BX the command line option takes precedence.
 
 ### Output Processing
 
@@ -405,7 +399,7 @@ wrapper
 
 #### Whitespace
 
-As a matter of convention content written to either stream is terminated with the Line Feed character `0x0a`. However this presents no difficulty for input processing as [whitespace](http://en.wikipedia.org/wiki/Whitespace_character), including the Line Feed character, is ignored.
+As a matter of convention content written to either stream is terminated with the Line Feed character `0x0a`. However this presents no difficulty for input processing as [whitespace](http://en.wikipedia.org/wiki/Whitespace_character), including the Line Feed character, is ignored except as a delimiter.
 
 #### Cardinality
 
@@ -506,7 +500,7 @@ All code should pass through a quality gate before being committed to the reposi
 
 ## Explorer Library
 
-The `libbitcoin-explorer` build produces static and dynamic libraries that implement all of the functionality of the `explorer` executable. Tests are implemented in a distinct executable called `explorer_test` which also links `libbitcoin-explorer`. The symbolic link `bx` is configured as an alias for `explorer`.
+The libbitcoin-explorer build produces static and dynamic libraries. Tests are implemented in a distinct executable called `libbitcoin_explorer_test` which links `libbitcoin-explorer`. The command line executable `bx` also links to `libbitcoin-explorer`.
 
 Command parameterization is isolated so that each command unit test bypasses command line and [STDIO](http://wikipedia.org/wiki/Standard_streams) processing. This design also ensures that `libbitcoin-explorer` remains useful as a library for building other applications.
 
