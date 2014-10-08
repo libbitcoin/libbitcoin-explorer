@@ -10,7 +10,7 @@ doc_DATA = README INSTALL COPYING
 #
 pkgconfig_DATA = libbitcoin-explorer.pc
 
-# ?
+# look for macros in the m4 subdirectory
 ACLOCAL_AMFLAGS = -I m4
 
 #
@@ -165,7 +165,7 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/wrap-encode.hpp
 
 #
-# binaries
+# libraries
 #
 noinst_LTLIBRARIES = libbitcoin-explorer.la
 
@@ -300,16 +300,34 @@ libbitcoin_explorer_la_SOURCES += \
     src/commands/wif-to-public.cpp \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp
-    
+
 libbitcoin_explorer_la_LIBADD = \
+    ${bitcoin_client_LIBS}
+
+#
+# console application
+#
+bin_PROGRAMS = bx
+
+bx_CPPFLAGS = \
+    -I$(srcdir)/include \
+    ${bitcoin_client_CFLAGS}
+
+bx_SOURCES = \
+    src/console/main.cpp
+
+bx_LDADD = \
+    libbitcoin-explorer.la \
+    -lboost_chrono \
+    -lboost_program_options \
     ${bitcoin_client_LIBS}
 
 #
 # tests
 #
-TESTS = libbitcoin-explorer-test
+TESTS = libbitcoin_explorer_test
 
-check_PROGRAMS = libbitcoin-explorer-test
+check_PROGRAMS = libbitcoin_explorer_test
 
 libbitcoin_explorer_test_CPPFLAGS = \
     -I$(srcdir)/include \
@@ -418,22 +436,6 @@ libbitcoin_explorer_test_SOURCES += \
     test/commands/wrap-encode.cpp
 
 libbitcoin_explorer_test_LDADD = \
-    libbitcoin-explorer.la \
-    -lboost_chrono \
-    -lboost_program_options \
-    ${bitcoin_client_LIBS}
-
-# Console Application
-bin_PROGRAMS = bx
-
-bx_CPPFLAGS = \
-    -I$(srcdir)/include \
-    ${bitcoin_client_CFLAGS}
-
-bx_SOURCES = \
-    src/console/main.cpp
-
-bx_LDADD = \
     libbitcoin-explorer.la \
     -lboost_chrono \
     -lboost_program_options \
