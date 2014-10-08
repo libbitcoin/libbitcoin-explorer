@@ -405,7 +405,7 @@ wrapper
 
 #### Whitespace
 
-As a matter of convention content written to either stream is terminated with the Line Feed character `0x0a`. However this presents no difficulty for input processing as [whitespace](http://en.wikipedia.org/wiki/Whitespace_character), including the Line Feed character, is ignored.
+As a matter of convention content written to either stream is terminated with the Line Feed character `0x0a`. However this presents no difficulty for input processing as [whitespace](http://en.wikipedia.org/wiki/Whitespace_character), including the Line Feed character, is ignored except as a delimiter.
 
 #### Cardinality
 
@@ -552,7 +552,7 @@ Commands are named with several objectives in mind. Congruence with the [SX comm
 
 #### Networking
 
-Commands are generally names so that related commands sort together. In the case of network commands (`fetch-`, `send-`, `validate-` and `watch-`) the command's action (verb) starts the name. In other commands (e.g. `tx-`, `address-`) the primary data type (noun) starts the name. This distinction is primarily based on the congruence objective and also tends to read more naturally.
+Commands are generally named so that related commands sort together. In the case of network commands (`fetch-`, `send-`, `validate-` and `watch-`) the command's action (verb) starts the name. In other commands (e.g. `tx-`, `address-`) the primary data type (noun) starts the name. This distinction is primarily based on the congruence objective and also tends to read more naturally.
 
 #### Conversion
 
