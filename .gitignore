@@ -26,4 +26,5 @@ libbitcoin-explorer.pc
 /bin/
 /src/explorer
 /test/explorer_test
-/BUILD/
+/bx-build/
+bx
