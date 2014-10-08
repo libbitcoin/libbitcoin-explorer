@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-// #include "precompile.hpp"
+
 #include <bitcoin/explorer/commands/watch-address.hpp>
 
 #include <iostream>
@@ -26,6 +26,7 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
+#include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
@@ -44,42 +45,21 @@ static void handle_error(callback_state& state, const std::error_code& error)
 }
 
 static void handle_update(callback_state& state,
-    const payment_address& address, size_t, const hash_digest& block_hash,
+    const address& bitcoin_address, size_t, const hash_digest& block_hash,
     const transaction_type& tx)
 {
-    state.output(prop_tree(tx, block_hash, address));
+    state.output(prop_tree(tx, block_hash, bitcoin_address));
 }
 
-//static void subscribe_from_prefix(obelisk_client& client,
-//    callback_state& state, const bc::client::address_prefix& prefix,
-//    bool& subscribed)
-//{
-//    // Do not pass the prefix by reference here.
-//    auto on_done = [&state, prefix, &subscribed]()
-//    {
-//        if (state.get_engine() != encoding_engine::native)
-//            state.output(format(BX_WATCH_ADDRESS_PREFIX_WAITING) % prefix);
-//
-//        subscribed = true;
-//    };
-//
-//    auto on_error = [&state](const std::error_code& error)
-//    {
-//        handle_error(state, error);
-//    };
-//
-//    client.get_codec()->subscribe(on_error, on_done, prefix);
-//}
-
 static void subscribe_from_address(obelisk_client& client,
-    callback_state& state, const payment_address& address,
+    callback_state& state, const address& bitcoin_address,
     bool& subscribed)
 {
     // Do not pass the address by reference here.
-    auto on_done = [&state, address, &subscribed]()
+    auto on_done = [&state, bitcoin_address, &subscribed]()
     {
-        if (state.get_engine() != encoding_engine::native)
-            state.output(format(BX_WATCH_ADDRESS_ADDRESS_WAITING) % address.encoded());
+        state.output(format(BX_WATCH_ADDRESS_ADDRESS_WAITING) % 
+            bitcoin_address);
 
         subscribed = true;
     };
@@ -89,49 +69,43 @@ static void subscribe_from_address(obelisk_client& client,
         handle_error(state, error);
     };
 
-    client.get_codec()->subscribe(on_error, on_done, address);
+    client.get_codec()->subscribe(on_error, on_done, bitcoin_address);
 }
 
 // This command only halts on failure.
 console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
-    const auto& address_param = get_bitcoin_address_argument();
     const auto& server = get_server_address_setting();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
+    const auto& encoding = get_format_option();
+    const auto& bitcoin_address = get_bitcoin_address_argument();
 
     callback_state state(error, output, encoding);
 
-    payment_address address;
-
-    if (address.set_encoded(address_param))
+    // Do not pass the prefixes by reference here.
+    auto on_update = [&state](const address& bitcoin_address, size_t height, 
+        const hash_digest& block_hash, const transaction_type& tx)
     {
-        // Do not pass the prefixes by reference here.
-        auto on_update = [&state](const payment_address& address,
-            size_t height, const hash_digest& block_hash,
-            const transaction_type& tx)
-        {
-            handle_update(state, address, height, block_hash, tx);
-        };
+        handle_update(state, bitcoin_address, height, block_hash, tx);
+    };
 
-        czmqpp::context context;
-        obelisk_client client(context, period_ms(timeout), retries);
+    czmqpp::context context;
+    obelisk_client client(context, period_ms(timeout), retries);
 
-        if (client.connect(server) < 0)
-            return console_result::failure;
+    if (client.connect(server) < 0)
+        return console_result::failure;
 
-        client.get_codec()->set_on_update(on_update);
+    client.get_codec()->set_on_update(on_update);
 
-        bool subscribed = false;
+    bool subscribed = false;
 
-        subscribe_from_address(client, state, address, subscribed);
+    subscribe_from_address(client, state, bitcoin_address, subscribed);
 
-        // poll for subscribe callbacks if any subscriptions were established.
-        if (client.resolve_callbacks() && subscribed)
-            client.poll_until_termination();
-    }
+    // poll for subscribe callbacks if any subscriptions were established.
+    if (client.resolve_callbacks() && subscribed)
+        client.poll_until_termination();
 
     return state.get_result();
 }
