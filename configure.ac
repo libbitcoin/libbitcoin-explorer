@@ -36,7 +36,7 @@ AC_CHECK_LIB(gmp,__gmpz_init,,
     [AC_MSG_ERROR([GMP library is required but was not found.])])
 
 # TODO: We require secp256k1 to require GMP (over OpenSSL).
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin_client >= 0.0.4])
+PKG_CHECK_MODULES([bitcoin-client], [libbitcoin-client >= 0.0.4])
 PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
 
 PKG_PROG_PKG_CONFIG

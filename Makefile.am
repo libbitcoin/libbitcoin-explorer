@@ -171,7 +171,7 @@ noinst_LTLIBRARIES = libbitcoin_explorer.la
 
 libbitcoin_explorer_la_CPPFLAGS = \
     -I$(srcdir)/include \
-    ${bitcoin_client_CFLAGS}
+    ${bitcoin-client_CFLAGS}
 
 libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
@@ -302,14 +302,14 @@ libbitcoin_explorer_la_SOURCES += \
     src/commands/wrap-encode.cpp
     
 libbitcoin_explorer_la_LIBADD = \
-    ${bitcoin_client_LIBS}
+    ${bitcoin-client_LIBS}
 
 # Console Application
 bin_PROGRAMS = explorer
 
 explorer_CPPFLAGS = \
     -I$(srcdir)/include \
-    ${bitcoin_client_CFLAGS}
+    ${bitcoin-client_CFLAGS}
 
 explorer_SOURCES = \
     src/console/main.cpp
@@ -318,7 +318,7 @@ explorer_LDADD = \
     libbitcoin_explorer.la \
     -lboost_chrono \
     -lboost_program_options \
-    ${bitcoin_client_LIBS}
+    ${bitcoin-client_LIBS}
 
 #
 # tests
@@ -329,7 +329,7 @@ check_PROGRAMS = explorer_test
 
 explorer_test_CPPFLAGS = \
     -I$(srcdir)/include \
-    ${bitcoin_client_CFLAGS} \
+    ${bitcoin-client_CFLAGS} \
     -DBOOST_TEST_DYN_LINK
 
 explorer_test_SOURCES = \
@@ -437,4 +437,4 @@ explorer_test_LDADD = \
     libbitcoin_explorer.la \
     -lboost_chrono \
     -lboost_program_options \
-    ${bitcoin_client_LIBS}
+    ${bitcoin-client_LIBS}

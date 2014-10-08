@@ -96,7 +96,7 @@ The install script should not normally be executed using sudo. Instead it will i
 * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
 * [bitcoin/secp256k1](https://github.com/bitcoin/secp256k1)
 * [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-* [libbitcoin/libbitcoin_client](https://github.com/libbitcoin/libbitcoin_client)
+* [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
 * [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
 Of these libraries, only libzmq is packaged. However we require a more recent version of the library in order to take advantage of new features such as the [SOCKS](http://wikipedia.org/wiki/SOCKS) proxy, so we build it as well.
@@ -187,7 +187,7 @@ To build BX you must also download and build its **libbitcoin dependencies**, as
 Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-3. [libbitcoin/libbitcoin_client](https://github.com/libbitcoin/libbitcoin_client)
+3. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
 4. [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
 
 > The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
