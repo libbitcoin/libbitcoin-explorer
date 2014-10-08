@@ -17,11 +17,11 @@
 # This script will build libbitcoin using this relative directory.
 # This is meant to be temporary, just to facilitate the install.
 
-BUILD_DIRECTORY="bx_build"
+BUILD_DIRECTORY="bx-build"
 
 # The source repository for the primary build (when not running in Travis).
 BUILD_ACCOUNT="libbitcoin"
-BUILD_REPO="libbitcoin_explorer"
+BUILD_REPO="libbitcoin-explorer"
 BUILD_BRANCH="master"
 
 # https://github.com/bitcoin/secp256k1
@@ -173,8 +173,8 @@ build_library()
     build_from_github bitcoin secp256k1 master "$SEQUENTIAL" "$@" $SECP256K1_OPTIONS
     build_from_github libbitcoin libbitcoin develop "$PARALLEL" "$@"
     build_from_github libbitcoin protobuf 2.6.0 "$SEQUENTIAL" "$@"
-    build_from_github libbitcoin libbitcoin_protocol master "$PARALLEL" "$@"
-    build_from_github libbitcoin libbitcoin_client master "$PARALLEL" "$@"
+    build_from_github libbitcoin libbitcoin-protocol master "$PARALLEL" "$@"
+    build_from_github libbitcoin libbitcoin-client master "$PARALLEL" "$@"
 
     # The primary build is not downloaded if we are running in Travis.
     build_primary "$PARALLEL" "$@"

@@ -8,7 +8,7 @@ doc_DATA = README INSTALL COPYING
 #
 # pkg-config
 #
-pkgconfig_DATA = libbitcoin_explorer.pc
+pkgconfig_DATA = libbitcoin-explorer.pc
 
 # ?
 ACLOCAL_AMFLAGS = -I m4
@@ -167,7 +167,7 @@ bitcoin_explorer_commands_include_HEADERS = \
 #
 # binaries
 #
-noinst_LTLIBRARIES = libbitcoin_explorer.la
+noinst_LTLIBRARIES = libbitcoin-explorer.la
 
 libbitcoin_explorer_la_CPPFLAGS = \
     -I$(srcdir)/include \
@@ -304,35 +304,19 @@ libbitcoin_explorer_la_SOURCES += \
 libbitcoin_explorer_la_LIBADD = \
     ${bitcoin_client_LIBS}
 
-# Console Application
-bin_PROGRAMS = explorer
-
-explorer_CPPFLAGS = \
-    -I$(srcdir)/include \
-    ${bitcoin_client_CFLAGS}
-
-explorer_SOURCES = \
-    src/console/main.cpp
-
-explorer_LDADD = \
-    libbitcoin_explorer.la \
-    -lboost_chrono \
-    -lboost_program_options \
-    ${bitcoin_client_LIBS}
-
 #
 # tests
 #
-TESTS = explorer_test
+TESTS = libbitcoin-explorer-test
 
-check_PROGRAMS = explorer_test
+check_PROGRAMS = libbitcoin-explorer-test
 
-explorer_test_CPPFLAGS = \
+libbitcoin_explorer_test_CPPFLAGS = \
     -I$(srcdir)/include \
     ${bitcoin_client_CFLAGS} \
     -DBOOST_TEST_DYN_LINK
 
-explorer_test_SOURCES = \
+libbitcoin_explorer_test_SOURCES = \
     test/address.cpp \
     test/base58.cpp \
     test/generated__broadcast.cpp \
@@ -344,7 +328,7 @@ explorer_test_SOURCES = \
     test/printer.cpp
 
 # Generated from XML data source.
-explorer_test_SOURCES += \
+libbitcoin_explorer_test_SOURCES += \
     test/commands/address-decode.cpp \
     test/commands/address-embed.cpp \
     test/commands/address-encode.cpp \
@@ -433,8 +417,24 @@ explorer_test_SOURCES += \
     test/commands/wrap-decode.cpp \
     test/commands/wrap-encode.cpp
 
-explorer_test_LDADD = \
-    libbitcoin_explorer.la \
+libbitcoin_explorer_test_LDADD = \
+    libbitcoin-explorer.la \
+    -lboost_chrono \
+    -lboost_program_options \
+    ${bitcoin_client_LIBS}
+
+# Console Application
+bin_PROGRAMS = bx
+
+bx_CPPFLAGS = \
+    -I$(srcdir)/include \
+    ${bitcoin_client_CFLAGS}
+
+bx_SOURCES = \
+    src/console/main.cpp
+
+bx_LDADD = \
+    libbitcoin-explorer.la \
     -lboost_chrono \
     -lboost_program_options \
     ${bitcoin_client_LIBS}

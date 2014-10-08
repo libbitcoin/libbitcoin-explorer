@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/libbitcoin/libbitcoin_explorer.svg?branch=master)](https://travis-ci.org/libbitcoin/libbitcoin_explorer)
+[![Build Status](https://travis-ci.org/libbitcoin/libbitcoin-explorer.svg?branch=master)](https://travis-ci.org/libbitcoin/libbitcoin-explorer)
 
 *The automated build is failing because it exceeds the current Travis time-out limit of 50 minutes.*
 
@@ -8,7 +8,7 @@
 
 **License Overview**
 
-All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
+All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
 
 **About Libbitcoin**
 
@@ -41,9 +41,9 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 Bitcoin Explorer is a fork of the popular [SX command line tool](https://sx.dyne.org/index.html). Many of the commands and their parameters are identical to SX although many have changed, some have been obsoleted and others have been added.
 
-Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [libbitcoin_server](https://github.com/libbitcoin/libbitcoin_server), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
+Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
 
-Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin_explorer**. Therefore the program is called **explorer** and is referred to as **BX** as a convenience and out of respect for its ground-breaking predecessor.
+Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin-explorer**. Therefore the program is called **explorer** and is referred to as **BX** as a convenience and out of respect for its ground-breaking predecessor.
 
 ## Installation
 
@@ -74,7 +74,7 @@ Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://g
   $ sudo apt-get install libboost-all-dev libgmp-dev
 ```
 
-Finally, execute the [install script](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/install-bx.sh).
+Finally, execute the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh).
 ```sh
 $ ./install-bx.sh
 ```
@@ -96,8 +96,8 @@ The install script should not normally be executed using sudo. Instead it will i
 * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
 * [bitcoin/secp256k1](https://github.com/bitcoin/secp256k1)
 * [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-* [libbitcoin/libbitcoin_client](https://github.com/libbitcoin/libbitcoin_client)
-* [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
+* [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
+* [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
 
 Of these libraries, only libzmq is packaged. However we require a more recent version of the library in order to take advantage of new features such as the [SOCKS](http://wikipedia.org/wiki/SOCKS) proxy, so we build it as well.
 
@@ -187,8 +187,8 @@ To build BX you must also download and build its **libbitcoin dependencies**, as
 Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-3. [libbitcoin/libbitcoin_client](https://github.com/libbitcoin/libbitcoin_client)
-4. [libbitcoin/libbitcoin_explorer](https://github.com/libbitcoin/libbitcoin_explorer)
+3. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
+4. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
 
 > The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
 
@@ -219,7 +219,7 @@ The primary objective in the evolution to BX was the desire to produce a single 
 
 With approximately 75 commands and growing, BX requires an extensibility model that eliminates redundant code across commands. Ad-hoc evolution without such a model led to significant maintenance difficulty and increasing fragility. In keeping with the single file requirement the extensions had to be incorporated at compile time.
 
-As such code generation is now used to produce headers, AutoMake files, MSVC project files, component tests, and shared source code from a single [XML metadata document](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/model/generate.xml). The [open source tool GSL](https://github.com/imatix/gsl) is used to push command metadata through a [GSL template](https://github.com/libbitcoin/libbitcoin_explorer/blob/master/model/generate.gsl), producing the necessary artefacts. To implement a new command required creating an XML element, running the code generator, and overriding a single invoke method. A stub for unit/component test execution is automatically defined as well.
+As such code generation is now used to produce headers, AutoMake files, MSVC project files, component tests, and shared source code from a single [XML metadata document](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/model/generate.xml). The [open source tool GSL](https://github.com/imatix/gsl) is used to push command metadata through a [GSL template](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/model/generate.gsl), producing the necessary artefacts. To implement a new command required creating an XML element, running the code generator, and overriding a single invoke method. A stub for unit/component test execution is automatically defined as well.
 
 ### Localization Model
 
@@ -258,7 +258,7 @@ BX defines the following set of Bitcoin primitive types in the `bx::primitives` 
 
 These are individual classes that are for the most part simple wrappers around types and/or functions exposed by [libbitcoin](tps://github.com/libbitcoin/libbitcoin). The classes consistently implement overrides of stream operators by conversion to/from text encodings. As a result they drop seamlessly into [input processing](#input-processing) and [output processing](#output-processing) like any other serializable type.
 
-Deserialization by any of these primitives, including string-based construction, can throw `boost::program_options::invalid_option_value`. One should consider handling this exception when using `libbitcoin_explorer` as a library.
+Deserialization by any of these primitives, including string-based construction, can throw `boost::program_options::invalid_option_value`. One should consider handling this exception when using `libbitcoin-explorer` as a library.
 
 The primitives that represent complex types also provide conversion functions to Boost [property_tree](http://www.boost.org/doc/libs/1_50_0/doc/html/property_tree.html), enabling complex textual serializations in addition to native formats. BX does not currently support complex textual deserializations apart from native formats, although that could be accomplished in part by extending the primitives with `property\_tree` deserialization.
 
@@ -506,13 +506,13 @@ All code should pass through a quality gate before being committed to the reposi
 
 ## Explorer Library
 
-The `libbitcoin_explorer` build produces static and dynamic libraries that implement all of the functionality of the `explorer` executable. Tests are implemented in a distinct executable called `explorer_test` which also links `libbitcoin_explorer`. The symbolic link `bx` is configured as an alias for `explorer`.
+The `libbitcoin-explorer` build produces static and dynamic libraries that implement all of the functionality of the `explorer` executable. Tests are implemented in a distinct executable called `explorer_test` which also links `libbitcoin-explorer`. The symbolic link `bx` is configured as an alias for `explorer`.
 
-Command parameterization is isolated so that each command unit test bypasses command line and [STDIO](http://wikipedia.org/wiki/Standard_streams) processing. This design also ensures that `libbitcoin_explorer` remains useful as a library for building other applications.
+Command parameterization is isolated so that each command unit test bypasses command line and [STDIO](http://wikipedia.org/wiki/Standard_streams) processing. This design also ensures that `libbitcoin-explorer` remains useful as a library for building other applications.
 
-In other words another application can link to `libbitcoin_explorer` and immediately take advantage of the full set of tested commands, as simple methods with no relation to the command line or STDIO. Such applications can even avoid a dependency on Boost program\_options and `libbitcoin_explorer` code that performs I/O processing.
+In other words another application can link to `libbitcoin-explorer` and immediately take advantage of the full set of tested commands, as simple methods with no relation to the command line or STDIO. Such applications can even avoid a dependency on Boost program\_options and `libbitcoin-explorer` code that performs I/O processing.
 
-Using the library requires inclusion of the header `<explorer/explorer.hpp>` and a reference to the `libbitcoin_explorer` library and its dependencies. BX exposes common functionality in the following namespaces:
+Using the library requires inclusion of the header `<explorer/explorer.hpp>` and a reference to the `libbitcoin-explorer` library and its dependencies. BX exposes common functionality in the following namespaces:
 ```c++
 bc::explorer::commands
 bc::explorer::primitives

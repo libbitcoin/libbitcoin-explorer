@@ -9,7 +9,7 @@
     <NuGetPackageImportStamp>82a52cd0</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
-    <ProjectName>libbitcoin_explorer</ProjectName>
+    <ProjectName>libbitcoin-explorer</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDLL|Win32">

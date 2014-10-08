@@ -1,4 +1,4 @@
-.#  Generate C++ source and make files for libbitcoin_explorer
+.#  Generate C++ source and make files for libbitcoin-explorer
 .#
 .#  This is a code generator built using the iMatix GSL code generation
 .#  language. See https://github.com/imatix/gsl for details.
@@ -12,9 +12,9 @@
 /**
  * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of libbitcoin_explorer.
+ * This file is part of libbitcoin-explorer.
  *
- * libbitcoin_explorer is free software: you can redistribute it and/or
+ * libbitcoin-explorer is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
@@ -1018,7 +1018,7 @@ doc_DATA = README INSTALL COPYING
 #
 # pkg-config
 #
-pkgconfig_DATA = libbitcoin_explorer.pc
+pkgconfig_DATA = libbitcoin-explorer.pc
 
 # ?
 ACLOCAL_AMFLAGS = -I m4
@@ -1093,7 +1093,7 @@ bitcoin_explorer_commands_include_HEADERS = \\
 #
 # binaries
 #
-noinst_LTLIBRARIES = libbitcoin_explorer.la
+noinst_LTLIBRARIES = libbitcoin-explorer.la
 
 libbitcoin_explorer_la_CPPFLAGS = \\
     -I$\(srcdir)/include \\
@@ -1146,35 +1146,19 @@ libbitcoin_explorer_la_SOURCES += \\
 libbitcoin_explorer_la_LIBADD = \\
     ${bitcoin_client_LIBS}
 
-# Console Application
-bin_PROGRAMS = explorer
-
-explorer_CPPFLAGS = \\
-    -I$\(srcdir)/include \\
-    ${bitcoin_client_CFLAGS}
-
-explorer_SOURCES = \\
-    src/console/main.cpp
-
-explorer_LDADD = \\
-    libbitcoin_explorer.la \\
-    -lboost_chrono \\
-    -lboost_program_options \\
-    ${bitcoin_client_LIBS}
-
 #
 # tests
 #
-TESTS = explorer_test
+TESTS = libbitcoin-explorer-test
 
-check_PROGRAMS = explorer_test
+check_PROGRAMS = libbitcoin-explorer-test
 
-explorer_test_CPPFLAGS = \\
+libbitcoin_explorer_test_CPPFLAGS = \\
     -I$\(srcdir)/include \\
     ${bitcoin_client_CFLAGS} \\
     -DBOOST_TEST_DYN_LINK
 
-explorer_test_SOURCES = \\
+libbitcoin_explorer_test_SOURCES = \\
     test/address.cpp \\
     test/base58.cpp \\
     test/generated__broadcast.cpp \\
@@ -1186,19 +1170,35 @@ explorer_test_SOURCES = \\
     test/printer.cpp
 
 # Generated from XML data source.
-explorer_test_SOURCES += \\
+libbitcoin_explorer_test_SOURCES += \\
 .for command by symbol
     test/commands/$(symbol:).cpp$(!last() ?? " \\")
 .endfor
 
 explorer_test_LDADD = \\
-    libbitcoin_explorer.la \\
+    libbitcoin-explorer.la \\
+    -lboost_chrono \\
+    -lboost_program_options \\
+    ${bitcoin_client_LIBS}
+
+# Console Application
+bin_PROGRAMS = bx
+
+bx_CPPFLAGS = \\
+    -I$\(srcdir)/include \\
+    ${bitcoin_client_CFLAGS}
+
+bx_SOURCES = \\
+    src/console/main.cpp
+
+bx_LDADD = \\
+    libbitcoin-explorer.la \\
     -lboost_chrono \\
     -lboost_program_options \\
     ${bitcoin_client_LIBS}
 .##############################################################################
-.echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj..."
-.output "../builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj"
+.echo "Generating builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj..."
+.output "../builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj"
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
@@ -1210,7 +1210,7 @@ explorer_test_LDADD = \\
     <NuGetPackageImportStamp>82a52cd0</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
-    <ProjectName>libbitcoin_explorer</ProjectName>
+    <ProjectName>libbitcoin-explorer</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDLL|Win32">
@@ -1405,8 +1405,8 @@ explorer_test_LDADD = \\
   </Target>
 </Project>
 .##############################################################################
-.echo "Generating builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj.filter..."
-.output "../builds/msvc/vs2013/libbitcoin_explorer/libbitcoin_explorer.vcxproj.filters"
+.echo "Generating builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj.filter..."
+.output "../builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj.filters"
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
@@ -1737,8 +1737,8 @@ explorer_test_LDADD = \\
 </Project>
 .##############################################################################
 .##############################################################################
-.echo "Generating builds/msvc/vs2013/libbitcoin_explorer_test/libbitcoin_explorer_test.vcxproj..."
-.output "../builds/msvc/vs2013/libbitcoin_explorer_test/libbitcoin_explorer_test.vcxproj"
+.echo "Generating builds/msvc/vs2013/libbitcoin-explorer-test/libbitcoin-explorer-test.vcxproj..."
+.output "../builds/msvc/vs2013/libbitcoin-explorer-test/libbitcoin-explorer-test.vcxproj"
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
@@ -1751,7 +1751,7 @@ explorer_test_LDADD = \\
     <NuGetPackageImportStamp>5e4dc238</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
-    <ProjectName>libbitcoin_explorer_test</ProjectName>
+    <ProjectName>libbitcoin-explorer-test</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDEXE|Win32">
@@ -1872,14 +1872,14 @@ explorer_test_LDADD = \\
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets'))" />
   </Target>
   <ItemGroup>
-    <ProjectReference Include="..\\libbitcoin_explorer\\libbitcoin_explorer.vcxproj">
+    <ProjectReference Include="..\\libbitcoin-explorer\\libbitcoin-explorer.vcxproj">
       <Project>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</Project>
     </ProjectReference>
   </ItemGroup>
 </Project>
 .##############################################################################
-.echo "Generating builds/msvc/vs2013/libbitcoin_explorer_test/libbitcoin_explorer_test.vcxproj.filter..."
-.output "../builds/msvc/vs2013/libbitcoin_explorer_test/libbitcoin_explorer_test.vcxproj.filters"
+.echo "Generating builds/msvc/vs2013/libbitcoin-explorer-test/libbitcoin-explorer-test.vcxproj.filter..."
+.output "../builds/msvc/vs2013/libbitcoin-explorer-test/libbitcoin-explorer-test.vcxproj.filters"
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
