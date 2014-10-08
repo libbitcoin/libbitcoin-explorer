@@ -78,7 +78,7 @@ Finally, execute the [install script](https://github.com/libbitcoin/libbitcoin-e
 ```sh
 $ ./install-bx.sh
 ```
-Bitcoin Explorer is now installed in `/usr/local/` and can be invoked using the `$ bx` or original `$ sx` alias.
+Bitcoin Explorer is now installed in `/usr/local/` and can be invoked as `$ bx`.
 
 #### Notes
 
