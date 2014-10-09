@@ -33,12 +33,12 @@ namespace libbitcoin {
 namespace explorer {
 
 /**
- * A type to represent the list of distinct positional argument names counts.
+ * A tuple to represent a positional argument name count.
  */
 typedef std::pair<const std::string, int> argument_pair;
 
 /**
- * A type to represent the list of distinct positional argument names counts.
+ * A type to represent the list of positional argument name counts.
  */
 typedef std::vector<argument_pair> argument_list;
 

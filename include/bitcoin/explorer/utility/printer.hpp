@@ -38,6 +38,11 @@ namespace explorer {
 class printer
 {
 public:
+        
+    /**
+     * Number of arguments above which the argument is considered unlimited.
+     */
+    static const int max_arguments = 256;
 
     /*
      * Construct an instance of the printer class.
@@ -96,6 +101,16 @@ public:
      * @return  The formatted command line value options.
      */
     virtual std::string format_usage_value_options();
+    
+    /**
+     * Build the list of argument name/count tuples.
+     */
+    void generate_argument_names();
+
+    /**
+     * Build the list of parameters.
+     */
+    void generate_parameters();
 
     /**
      * Parse the arguments and options into the normalized parameter list.
@@ -115,12 +130,12 @@ public:
     /**
      * Virtual property declarations.
      */
-    PROPERTY_GET(std::string, application);
-    PROPERTY_GET(argument_list, argument_names);
-    PROPERTY_GET(arguments_metadata&, arguments);
-    PROPERTY_GET(options_metadata&, options);
+    PROPERTY_GET_REF(std::string, application);
+    PROPERTY_GET_REF(argument_list, argument_names);
+    PROPERTY_GET_REF(arguments_metadata, arguments);
+    PROPERTY_GET_REF(options_metadata, options);
     PROPERTY_GET(std::ostream&, output);
-    PROPERTY_GET(parameter_list, parameters);
+    PROPERTY_GET_REF(parameter_list, parameters);
 };
 
 } // namespace explorer

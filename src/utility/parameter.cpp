@@ -55,7 +55,6 @@ bool parameter::has_short_name(const option_metadata& option)
 void parameter::initialize(const option_metadata& option,
     const argument_list& arguments)
 {
-    // TODO: eliminate all properties except for option and arguments.
     set_position(position(option, arguments));
     set_args_limit(option.semantic()->max_tokens());
     set_required(option.semantic()->is_required());

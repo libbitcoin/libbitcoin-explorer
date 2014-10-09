@@ -136,17 +136,65 @@ std::string printer::format_usage_value_options()
     return "format_usage_value_options";
 }
 
-/* Helpers */
+/* Initialization */
 
-// TODO: order collection? component test.
-void printer::initialize()
+// 100% component tested.
+// This method just gives us a copy of arguments_metadata private state.
+// It would be nice if instead that state was public.
+void printer::generate_argument_names()
 {
-    auto options = get_options();
-    auto parameters = get_parameters();
-    auto arguments = get_arguments();
+    // Member values
+    const auto& arguments = get_arguments();
+    auto& argument_names = get_argument_names();
+    const auto max_total_arguments = arguments.max_total_count();
 
-    // TODO: build list of names.
-    auto argument_names = get_argument_names();
+    // Temporary values
+    std::string argument_name;
+    std::string previous_argument_name;
+    int max_previous_argument = 0;
+
+    // We must enumerate all arguments to get the full set of names and counts.
+    for (unsigned int position = 0; position < max_total_arguments && 
+        max_previous_argument <= max_arguments; ++position)
+    {
+        argument_name = arguments.name_for_position(position);
+
+        // Initialize the first name as having a zeroth instance.
+        if (max_previous_argument == 0)
+            previous_argument_name = argument_name;
+
+        // This is the first name or a duplicate of the last name.
+        if (argument_name == previous_argument_name)
+        {
+            ++max_previous_argument;
+            continue;
+        }
+
+        // Save the previous name.
+        argument_pair pair(previous_argument_name, max_previous_argument);
+        argument_names.push_back(pair);
+
+        previous_argument_name = argument_name;
+        max_previous_argument = 1;
+    }
+
+    // Save the last argument (if there is one).
+    if (max_previous_argument > 0)
+    {
+        if (max_previous_argument > max_arguments)
+            max_previous_argument = -1;
+
+        argument_pair pair(previous_argument_name, max_previous_argument);
+        argument_names.push_back(pair);
+    }
+}
+
+// 100% component tested.
+void printer::generate_parameters()
+{
+    const auto& argument_names = get_argument_names();
+    const auto& options = get_options();
+    auto& parameters = get_parameters();
 
     parameter param;
     for (auto option_ptr: options.options())
@@ -154,6 +202,13 @@ void printer::initialize()
         param.initialize(*option_ptr, argument_names);
         parameters.push_back(param);
     }
+}
+
+// 100% component tested.
+void printer::initialize()
+{
+    generate_argument_names();
+    generate_parameters();
 }
 
 /* Printers */
