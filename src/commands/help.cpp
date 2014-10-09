@@ -26,7 +26,6 @@
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
 
-using namespace boost::program_options;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 

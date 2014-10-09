@@ -5,7 +5,7 @@
     <NuGetPackageImportStamp>3852e4f6</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{098A91F3-291C-4A0D-AE5A-BC5F9F5693ED}</ProjectGuid>
-    <ProjectName>bitcoin-explorer</ProjectName>
+    <ProjectName>bx</ProjectName>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDEXE|Win32">
