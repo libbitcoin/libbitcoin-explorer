@@ -55,6 +55,14 @@ printer::printer(const std::string& application, const std::string& command,
 
 /* Formatters */
 
+static void enqueue_fragment(std::string& fragment,
+    std::vector<std::string>& column)
+{
+    trim(fragment);
+    if (!fragment.empty())
+        column.push_back(fragment);
+}
+
 std::vector<std::string> printer::columnize(const std::string& paragraph,
     size_t width)
 {
@@ -67,18 +75,15 @@ std::vector<std::string> printer::columnize(const std::string& paragraph,
     {
         if (word.length() + fragment.length() < width)
         {
-            fragment += (" " + word);
+            fragment += " " + word;
             continue;
         }
 
-        trim(fragment);
-        column.push_back(fragment);
+        enqueue_fragment(fragment, column);
         fragment = word;
     }
 
-    trim(fragment);
-    column.push_back(fragment);
-
+    enqueue_fragment(fragment, column);
     return column;
 }
 
@@ -96,16 +101,20 @@ std::string printer::format_parameters_table(bool positional)
             (parameter.get_position() != -1 && !positional))
             continue;
 
+        // Get the formatted parameter name.
+        std::string name(parameter.get_format_name());
+
         // Build a column for the description.
         const auto rows = columnize(parameter.get_description(), 55);
-        auto row = rows.begin();
 
-        // First row is special.
-        output << table % parameter.get_format_name() % *row++;
+        // If there is no description the command is not output!
+        for (const auto& row: rows)
+        {
+            output << table % name % row;
 
-        // Other rows are for description overflow.
-        while (row != rows.end())
-            output << table % "" % *row++;
+            // The name is only set in the first row.
+            name = "";
+        }
     }
 
     return output.str();
