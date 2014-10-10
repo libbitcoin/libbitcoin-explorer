@@ -110,7 +110,6 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_command_argument(), "COMMAND", variables, input);
     }
     
     /**
@@ -128,7 +127,7 @@ public:
             (
                 BX_CONFIG_VARIABLE ",c",
                 value<boost::filesystem::path>(),
-                "The path and file name for the configuration settings file to be used in the execution of the command."
+                "The path to the configuration settings file."
             )
             (
                 "help,h",
