@@ -30,14 +30,14 @@ using namespace bc::explorer;
 BOOST_AUTO_TEST_SUITE(utility)
 BOOST_AUTO_TEST_SUITE(utility__printer)
 
-#define BX_APPLICATION_NAME "bx"
+#define BX_APPLICATION "bx"
+#define BX_COMMAND "COMMAND"
 
 #define BX_TEST_PRINTER_SETUP_ARGUMENTS(initializer) \
-    std::stringstream output; \
     options_metadata options; \
     arguments_metadata arguments; \
     initializer; \
-    printer test_printer(output, options, arguments, BX_APPLICATION_NAME)
+    printer test_printer(BX_APPLICATION, BX_COMMAND, arguments, options)
 
 #define BX_TEST_PRINTER_SETUP() \
     BX_TEST_PRINTER_SETUP_ARGUMENTS(options.add_options())
@@ -268,18 +268,9 @@ BOOST_AUTO_TEST_CASE(printer__initialize__multitple_options__expected_parameters
 BOOST_AUTO_TEST_SUITE_END()
 
 // ------------------------------------------------------------------------- //
-BOOST_AUTO_TEST_SUITE(printer__print_help)
+BOOST_AUTO_TEST_SUITE(printer__print)
 
-BOOST_AUTO_TEST_CASE(printer__print_help__todo)
-{
-}
-
-BOOST_AUTO_TEST_SUITE_END()
-
-// ------------------------------------------------------------------------- //
-BOOST_AUTO_TEST_SUITE(printer__print_usage)
-
-BOOST_AUTO_TEST_CASE(printer__print_usage__todo)
+BOOST_AUTO_TEST_CASE(printer__print__todo)
 {
 }
 

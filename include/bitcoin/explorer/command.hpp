@@ -50,6 +50,7 @@
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
+#include <bitcoin/explorer/utility/printer.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -59,6 +60,7 @@ namespace explorer {
 
 #define BX_CONFIG_VARIABLE "config"
 #define BX_HELP_VARIABLE "help"
+#define BX_PROGRAM_NAME "bx"
 
 /**
  * Abstract base class for definition of each Bitcoin Explorer command.
@@ -106,7 +108,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    virtual po::positional_options_description& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -115,7 +117,7 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(po::options_description& definitions)
+    virtual void load_environment(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -124,7 +126,7 @@ public:
                 BX_CONFIG_VARIABLE, 
                 value<boost::filesystem::path>()
                     ->composing()->default_value(config_default()),
-                "The path and file name for the configuration settings file to be used in the execution of the command."
+                "The path to the configuration settings file."
             );
     }
     
@@ -145,7 +147,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    virtual po::options_description& load_options()
+    virtual options_metadata& load_options()
     {
         return option_metadata_;
     }
@@ -154,7 +156,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(po::options_description& definitions)
+    virtual void load_settings(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -215,21 +217,24 @@ public:
     }
 
     /**
-     * Write the usage help for this command to the specified stream.
-     * @param[out] stream  The output stream.
+     * Write the help for this command to the specified stream.
+     * @param[out] output  The output stream.
      */
-    virtual void write_usage(std::ostream& stream)
+    virtual void write_help(std::ostream& output)
     {
-        const auto options = get_option_metadata();
-        const auto arguments = get_argument_metadata();
-    } 
+        const auto& options = get_option_metadata();
+        const auto& arguments = get_argument_metadata();
+        printer help(BX_PROGRAM_NAME, name(), arguments, options);
+        help.initialize();
+        help.print(output);
+    }
     
     /* Properties */
     
     /**
      * Get command line argument metadata.
      */
-    virtual po::positional_options_description& get_argument_metadata()
+    virtual arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -237,7 +242,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    virtual po::options_description& get_option_metadata()
+    virtual options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -401,12 +406,12 @@ private:
     /**
      * Command line argument metadata.
      */
-    po::positional_options_description argument_metadata_;
+    arguments_metadata argument_metadata_;
 
     /**
      * Command line option metadata.
      */
-    po::options_description option_metadata_;
+    options_metadata option_metadata_;
     
     /**
      * Environment variable bound variables.

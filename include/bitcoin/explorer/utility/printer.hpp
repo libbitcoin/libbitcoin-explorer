@@ -46,25 +46,31 @@ public:
 
     /*
      * Construct an instance of the printer class.
-     * @param[out] output       Stream that is sink for print output.
-     * @param[in]  options      Populated command line options metadata.
+     * @param[in]  application  This application (e.g. 'bx').
+     * @param[in]  command      This application (e.g. 'btc').
      * @param[in]  arguments    Populated command line arguments metadata.
-     * @param[in]  application  This application [and command (e.g. 'bx btc')].
+     * @param[in]  options      Populated command line options metadata.
      */
-    printer(std::ostream& output, options_metadata& options,
-        arguments_metadata& arguments, const std::string& application);
-    
-    /**
-     * Format the help arguments table.
-     * @return  The formatted help arguments table.
-     */
-    virtual std::string format_help_arguments();
+    printer(const std::string& application, const std::string& command,
+        const arguments_metadata& arguments, const options_metadata& options);
 
     /**
-     * Format the help options table.
-     * @return  The formatted help options table.
+     * Convert a paragraph of text into a column.
+     * This formats to 80 char width as: [ 23 | ' ' | 55 | '\n' ].
+     * If one word exceeds width it will cause a column overflow.
+     * This always sets at least one line and always collapses whitespace.
+     * @param[in]  paragraph  The paragraph to columnize.
+     * @return                The column, as a list of fragments.
      */
-    virtual std::string format_help_options();
+    virtual std::vector<std::string> columnize(const std::string& paragraph,
+        size_t width);
+    
+    /**
+     * Format the parameters table.
+     * @param[in]  positional  True for positional otherwize named.
+     * @return                 The formatted help arguments table.
+     */
+    virtual std::string format_parameters_table(bool positional);
 
     /**
      * Format the command line usage.
@@ -73,44 +79,62 @@ public:
     virtual std::string format_usage();
 
     /**
-     * Format the command line arguments.
-     * @return  The formatted command line arguments.
-     */
-    virtual std::string format_usage_arguments();
-
-    /**
-     * Format the command line options.
-     * @return  The formatted command line options.
-     */
-    virtual std::string format_usage_options();
-
-    /**
-     * Format the command line parameters (exclusive of the application).
+     * Format the command line parameters.
      * @return  The formatted command line parameters.
      */
     virtual std::string format_usage_parameters();
 
     /**
-     * Format the command line toggle options.
-     * @return  The formatted command line toggle options.
+     * Format the boolean command line options.
+     * @return  The formatted command line options.
      */
     virtual std::string format_usage_toggle_options();
-
+    
     /**
-     * Format the command line value options.
-     * @return  The formatted command line value options.
+     * Format the required command line options.
+     * @return  The formatted command line options.
      */
-    virtual std::string format_usage_value_options();
+    virtual std::string format_usage_required_options();
+    
+    /**
+     * Format the optional non-boolean command line options.
+     * @return  The formatted command line options.
+     */
+    virtual std::string format_usage_optional_options();
+    
+    /**
+     * Format the multiple-valued command line options.
+     * @return  The formatted command line options.
+     */
+    virtual std::string format_usage_multivalued_options();
+    
+    /**
+     * Format the required command line positional arguments.
+     * @return  The formatted command line arguments.
+     */
+    virtual std::string format_usage_required_arguments();
+    
+    /**
+     * Format the optional command line positional arguments.
+     * @return  The formatted command line arguments.
+     */
+    virtual std::string format_usage_optional_arguments();
+    
+    /**
+     * Format the multiple-valued command line positional arguments.
+     * @return  The formatted command line arguments.
+     */
+    virtual std::string format_usage_multivalued_arguments();
     
     /**
      * Build the list of argument name/count tuples.
      */
-    void generate_argument_names();
+    virtual void generate_argument_names();
 
     /**
      * Build the list of parameters.
      */
-    void generate_parameters();
+    virtual void generate_parameters();
 
     /**
      * Parse the arguments and options into the normalized parameter list.
@@ -119,22 +143,22 @@ public:
 
     /**
      * Serialize command line help (full details).
+     * @param[out] output  Stream that is sink for print output. 
      */
-    virtual void print_help();
+    virtual void print(std::ostream& output);
 
     /**
-     * Serialize command line usage (one line example).
-     */
-    virtual void print_usage();
-
-    /**
-     * Virtual property declarations.
+     * Virtual property declarations, passed on construct.
      */
     PROPERTY_GET_REF(std::string, application);
-    PROPERTY_GET_REF(argument_list, argument_names);
+    PROPERTY_GET_REF(std::string, command);
     PROPERTY_GET_REF(arguments_metadata, arguments);
     PROPERTY_GET_REF(options_metadata, options);
-    PROPERTY_GET(std::ostream&, output);
+
+    /**
+     * Virtual property declarations, generated from metadata.
+     */
+    PROPERTY_GET_REF(argument_list, argument_names);
     PROPERTY_GET_REF(parameter_list, parameters);
 };
 

@@ -74,7 +74,7 @@ console_result dispatch_invoke(int argc, const char* argv[],
 
     if (get_help_option(variables))
     {
-        command->write_usage(output);
+        command->write_help(output);
         return console_result::okay;
     }
 
@@ -109,8 +109,8 @@ void load_command_variables(variables_map& variables, command& instance,
     std::istream& input, int argc, const char* argv[]) throw()
 {
     // commands metadata is preserved on members for later usage presentation
-    auto options = instance.load_options();
-    auto arguments = instance.load_arguments();
+    const auto& options = instance.load_options();
+    const auto& arguments = instance.load_arguments();
 
     // parse inputs
     auto command_parser = command_line_parser(argc, argv).options(options)
@@ -119,8 +119,10 @@ void load_command_variables(variables_map& variables, command& instance,
     // map parsed inputs into variables map
     store(command_parser.run(), variables);
 
+    // Don't load rest if help is specified.
     // For variable with stdin or file fallback load the input stream.
-    instance.load_fallbacks(input, variables);
+    if (!get_help_option(variables))
+        instance.load_fallbacks(input, variables);
 }
 
 // Not unit testable (without creating actual config files).
@@ -141,7 +143,7 @@ void load_configuration_variables(variables_map& variables, command& instance)
         throw reading_file(path.c_str());
 
     // parse inputs
-    auto configuration = parse_config_file(file, config_settings);
+    const auto configuration = parse_config_file(file, config_settings);
 
     // map parsed inputs into variables map
     store(configuration, variables);
@@ -155,7 +157,7 @@ void load_environment_variables(variables_map& variables, command& instance)
     instance.load_environment(environment_variables);
 
     // parse inputs
-    auto environment = parse_environment(environment_variables,
+    const auto environment = parse_environment(environment_variables,
         BX_ENVIRONMENT_VARIABLE_PREFIX);
 
     store(environment, variables);
@@ -167,18 +169,22 @@ bool load_variables(variables_map& variables, std::string& message,
 {
     try
     {
-        // Command must store before environment in order for commands to supercede.
+        // Must store before environment in order for commands to supercede.
         load_command_variables(variables, instance, input, argc, argv);
 
-        // Environment must store before configuration in order to specify the path.
-        load_environment_variables(variables, instance);
+        // Don't load rest if help is specified.
+        if (!get_help_option(variables))
+        {
+            // Must store before configuration in order to specify the path.
+            load_environment_variables(variables, instance);
 
-        // Configuration is lowest priority, which will cause confusion if there is
-        // composition between them, which therefore should be avoided.
-        load_configuration_variables(variables, instance);
+            // Is lowest priority, which will cause confusion if there is
+            // composition between them, which therefore should be avoided.
+            load_configuration_variables(variables, instance);
 
-        // Send notifications and update bound variables.
-        notify(variables);
+            // Send notifications and update bound variables.
+            notify(variables);
+        }
     }
     catch (const po::error& e)
     {

@@ -29,7 +29,7 @@
 using namespace bc::explorer;
 
 // 100% unit coverage, all three scenarios (long, short, both)
-const std::string parameter::canonical(const option_metadata& option)
+const std::string parameter::canonical(const option_metadata& option) const
 {
     return option.canonical_display_name(
         search_options::dashed_both_prefer_long);
@@ -37,6 +37,7 @@ const std::string parameter::canonical(const option_metadata& option)
 
 // 100% component coverage, all three scenarios (long, short, both)
 const std::string parameter::clean_canonical(const option_metadata& option)
+    const
 {
     std::string prefix;
     prefix.push_back(option_prefix_char);
@@ -46,7 +47,7 @@ const std::string parameter::clean_canonical(const option_metadata& option)
 }
 
 // 100% component coverage, all three scenarios (long, short, both)
-bool parameter::has_short_name(const option_metadata& option)
+bool parameter::has_short_name(const option_metadata& option) const
 {
     return short_name(option) != no_short_name;
 }
@@ -67,14 +68,14 @@ void parameter::initialize(const option_metadata& option,
 
 // 100% component coverage.
 int parameter::position(const option_metadata& option,
-    const argument_list& arguments)
+    const argument_list& arguments) const
 {
     auto option_name = clean_canonical(option);
     return find_pair_position(arguments, option_name);
 }
 
 // 100% unit coverage, all three scenarios (long, short, both)
-char parameter::short_name(const option_metadata& option)
+char parameter::short_name(const option_metadata& option) const
 {
     auto name = option.canonical_display_name(
         search_options::dashed_short_prefer_short);

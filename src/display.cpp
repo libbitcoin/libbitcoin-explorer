@@ -34,7 +34,7 @@ void display_command_names(std::ostream& stream)
     const auto func = [&stream](std::shared_ptr<command> explorer_command)
     {
         BITCOIN_ASSERT(explorer_command != nullptr);
-        stream << format(BX_LISTED_COMMAND_NAME) % explorer_command->name() << std::endl;
+        stream << explorer_command->name() << std::endl;
     };
 
     broadcast(func);
@@ -53,26 +53,15 @@ void display_invalid_parameter(std::ostream& stream,
 
 void display_usage(std::ostream& stream)
 {
-    stream << "Using bx: " << std::endl;
-    stream << std::endl;
-    stream << "  bx COMMAND [...]" << std::endl;
-    stream << std::endl;
-    stream << "  -c, --config          Specify a config file for the command" << std::endl;
-    stream << "  -h, --help            Get a description of the command" << std::endl;
-    stream << std::endl;
-    stream << "The bx commands are:" << std::endl;
+    stream << BX_COMMAND_USAGE << std::endl;
     stream << std::endl;
 
+    stream << BX_COMMANDS_HEADER << std::endl;
     display_command_names(stream);
+    stream << std::endl;
 
-    stream << std::endl;
-    stream << "For help on a specific command: " << std::endl;
-    stream << std::endl;
-    stream << "  bx help COMMAND" << std::endl;
-    stream << std::endl;
-    stream << "Bitcoin Explorer home page: " << std::endl;
-    stream << std::endl;
-    stream << "  https://github.com/libbitcoin/libbitcoin-explorer" << std::endl;
+    stream << BX_HOME_PAGE_HEADER << std::endl;
+    stream << "https://github.com/libbitcoin/libbitcoin-explorer" << std::endl;
 }
 
 } // namespace explorer

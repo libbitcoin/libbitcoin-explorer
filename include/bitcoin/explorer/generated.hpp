@@ -120,14 +120,18 @@ namespace explorer {
 /**
  * Various shared localizable strings.
  */
+#define BX_COMMANDS_HEADER \
+    "The bx commands are:"
+#define BX_COMMAND_USAGE \
+    "USAGE: bx COMMAND [--help]"
 #define BX_CONFIG_DESCRIPTION \
-    "The path and file name for the configuration settings file to be used in the execution of the command."
+    "The path to the configuration settings file."
+#define BX_HOME_PAGE_HEADER \
+    "Bitcoin Explorer home page:"
 #define BX_INVALID_COMMAND \
     "'%1%' is not a bx command. Enter 'bx help' for a list of commands."
 #define BX_INVALID_PARAMETER \
     "Error: %1%"
-#define BX_LISTED_COMMAND_NAME \
-    "%1%"
 
 /**
  * Invoke a specified function on all commands.
