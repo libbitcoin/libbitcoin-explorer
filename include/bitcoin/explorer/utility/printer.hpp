@@ -72,7 +72,7 @@ public:
      * Format the command category.
      * @return  The command category.
      */
-    virtual std::string printer::format_category();
+    virtual std::string format_category();
 
     /**
      * Format the command description.
