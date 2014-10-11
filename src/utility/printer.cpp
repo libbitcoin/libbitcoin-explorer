@@ -28,22 +28,23 @@
 
 // We are doing this because po::options_description.print() sucks.
 
+// TODO: move these to metadata for localization.
 #define BX_PRINTER_USAGE_FORMAT "\nUsage: %1% %2% %3%\n"
+#define BX_PRINTER_DESCRIPTION_FORMAT "\n%1%\n"
+#define BX_PRINTER_CATEGORY_FORMAT "\nCategery: %1%\n"
+#define BX_PRINTER_OPTION_TABLE_HEADER "\nOptions (named):\n\n"
+#define BX_PRINTER_ARGUMENT_TABLE_HEADER "\nArguments (positional):\n\n"
+#define BX_PRINTER_VALUE_TEXT "VALUE"
 
+// Not localizable formatters.
+// %2% <- BX_PRINTER_VALUE_TEXT
 #define BX_PRINTER_USAGE_OPTION_TOGGLE_FORMAT "[-%1%]"
-#define BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT "-%1% VALUE"
-#define BX_PRINTER_USAGE_OPTION_OPTIONAL_FORMAT "[-%1% VALUE]"
-#define BX_PRINTER_USAGE_OPTION_VARIABLE_FORMAT "[-%1% VALUE]..."
-
+#define BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT "-%1% %2%"
+#define BX_PRINTER_USAGE_OPTION_OPTIONAL_FORMAT "[-%1% %2%]"
+#define BX_PRINTER_USAGE_OPTION_VARIABLE_FORMAT "[-%1% %2%]..."
 #define BX_PRINTER_USAGE_ARGUMENT_REQUIRED_FORMAT "%1%"
 #define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT "[%1%]"
 #define BX_PRINTER_USAGE_ARGUMENT_VARIABLE_FORMAT "[%1%]..."
-
-#define BX_PRINTER_DESCRIPTION_FORMAT "\n%1%\n"
-#define BX_PRINTER_CATEGORY_FORMAT "\nCategery: %1%\n"
-
-#define BX_PRINTER_OPTION_TABLE_HEADER "\nOptions (named):\n\n"
-#define BX_PRINTER_ARGUMENT_TABLE_HEADER "\nArguments (positional):\n\n"
 
 using namespace bc::explorer;
 
