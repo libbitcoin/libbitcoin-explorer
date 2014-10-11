@@ -133,94 +133,120 @@ BOOST_AUTO_TEST_SUITE_END()
 // ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(printer__format_parameters_table)
 
-BOOST_AUTO_TEST_CASE(printer__format_parameters_table__empty_positional__empty)
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_empty__empty)
 {
     BX_PRINTER_SETUP();
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(true), "");
 }
 
-BOOST_AUTO_TEST_CASE(printer__format_parameters_table__empty_named__empty)
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__named_empty__empty)
 {
     BX_PRINTER_SETUP();
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false), "");
 }
 
-BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_positional__empty)
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_three_options__empty)
 {
     BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
         ("long", "Long name only.")
         ("short_long,s", "Long and short name.")
         (",m", "Short name only."));
     BX_PRINTER_INITIALIZE(3, 0);
-    auto table = help.format_parameters_table(true);
-    BOOST_REQUIRE_EQUAL(table, "");
+    BOOST_REQUIRE_EQUAL(help.format_parameters_table(true), "");
 }
 
-BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_named__expected_table)
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__named_three_options__three_options)
 {
     BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
         ("long", "Long name only.")
         ("short_long,s", "Long and short name.")
         (",m", "Short name only."));
     BX_PRINTER_INITIALIZE(3, 0);
-    auto table = help.format_parameters_table(false);
-    BOOST_REQUIRE_EQUAL(table,
+    BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
         "--long                  Long name only.                                        \n"
         "-s [ --short_long ]     Long and short name.                                   \n"
         "-m                      Short name only.                                       \n"
     );
 }
 
-//BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_unused_arguments_named__expected_table)
-//{
-//    BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
-//        ("first,f", "First option description.")
-//        ("second,x", "Second option description.")
-//        ("third", "Third option description.");
-//        arguments.add("forty-two", 42);
-//        arguments.add("negative-one", -1));
-//    BX_PRINTER_INITIALIZE(3, 2);
-//    auto table = help.format_parameters_table(false);
-//    BOOST_REQUIRE_EQUAL(table, "TODO");
-//}
-
-BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_two_arguments_named__expected_table)
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__named_three_options_two_arguments__three_options)
 {
     BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
         ("first,f", "First option description.")
         ("second,x", "Second option description.")
         ("third", "Third option description.");
-        arguments.add("SECOND", 42);
+        arguments.add("forty-two", 42);
         arguments.add("THIRD", -1));
     BX_PRINTER_INITIALIZE(3, 2);
-    auto table = help.format_parameters_table(false);
-    BOOST_REQUIRE_EQUAL(table,
+    BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
         "-f [ --first ]          First option description.                              \n"
         "-x [ --second ]         Second option description.                             \n"
         "--third                 Third option description.                              \n"
     );
 }
 
-BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_two_arguments_positional__expected_table)
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__named_three_options_three_arguments__one_option)
+{
+    BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
+        ("first,f", "First option description.")
+        ("second,x", "Second option description.")
+        ("THIRD", "Third option description.");
+        arguments.add("FIRST", 1);
+        arguments.add("second", 42);
+        arguments.add("THIRD", -1));
+    BX_PRINTER_INITIALIZE(3, 3);
+    BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
+        "-f [ --first ]          First option description.                              \n"
+    );
+}
+
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_three_options_three_arguments__two_options)
 {
     BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
         ("first,f", "First option description.")
         ("second,x", "Second option description.")
         ("third", "Third option description.");
-        arguments.add("SECOND", 42);
-        arguments.add("THIRD", -1));
-    BX_PRINTER_INITIALIZE(3, 2);
+        arguments.add("FIRST", 1);
+        arguments.add("second", 42);
+        arguments.add("third", -1));
+    BX_PRINTER_INITIALIZE(3, 3);
+    BOOST_REQUIRE_EQUAL(help.format_parameters_table(true),
+        "-x [ --second ]         Second option description.                             \n"
+        "--third                 Third option description.                              \n"
+    );
+}
+
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_three_options_three_arguments_overflow__two_options_overflow)
+{
+    BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
+        ("first,f", "First option description.")
+        ("second,x", 
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do "
+            "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut "
+            "enim ad minim veniam, quis nostrud exercitation ullamco laboris "
+            "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor "
+            "in reprehenderit in voluptate velit esse cillum dolore eu fugiat "
+            "nulla pariatur. Excepteur sint occaecat cupidatat non proident, "
+            "sunt in culpa qui officia deserunt mollit anim id est laborum.")
+        ("third", "Third option description.");
+    arguments.add("FIRST", 1);
+    arguments.add("second", 42);
+    arguments.add("third", -1));
+    BX_PRINTER_INITIALIZE(3, 3);
     auto table = help.format_parameters_table(true);
     BOOST_REQUIRE_EQUAL(table,
-        "-f [ --first ]          First option description.                              \n"
-        "-x [ --second ]         Second option description.                             \n"
+        "-x [ --second ]         Lorem ipsum dolor sit amet, consectetur adipiscing     \n"
+        "                        elit, sed do eiusmod tempor incididunt ut labore et    \n"
+        "                        dolore magna aliqua. Ut enim ad minim veniam, quis     \n"
+        "                        nostrud exercitation ullamco laboris nisi ut aliquip ex\n"
+        "                        ea commodo consequat. Duis aute irure dolor in         \n"
+        "                        reprehenderit in voluptate velit esse cillum dolore eu \n"
+        "                        fugiat nulla pariatur. Excepteur sint occaecat         \n"
+        "                        cupidatat non proident, sunt in culpa qui officia      \n"
+        "                        deserunt mollit anim id est laborum.                   \n"
         "--third                 Third option description.                              \n"
     );
 }
-
-// Mixed
-
-// Overflow Text
 
 BOOST_AUTO_TEST_SUITE_END()
 

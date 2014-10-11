@@ -57,6 +57,7 @@ printer::printer(const std::string& application, const std::string& category,
 
 /* Formatters */
 
+// 100% component tested.
 static void enqueue_fragment(std::string& fragment,
     std::vector<std::string>& column)
 {
@@ -65,6 +66,7 @@ static void enqueue_fragment(std::string& fragment,
         column.push_back(fragment);
 }
 
+// 100% component tested.
 std::vector<std::string> printer::columnize(const std::string& paragraph,
     size_t width)
 {
@@ -89,6 +91,7 @@ std::vector<std::string> printer::columnize(const std::string& paragraph,
     return column;
 }
 
+// 100% component tested.
 // This formats to 80 char width as: [ 23 | ' ' | 55 | '\n' ]
 std::string printer::format_parameters_table(bool positional)
 {
@@ -200,6 +203,7 @@ std::string printer::format_usage_multivalued_arguments()
 
 /* Initialization */
 
+// 100% component tested.
 static void enqueue_name(int count, std::string& name, argument_list& names)
 {
     if (count <= 0)
