@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Broadcast a transaction to the Bitcoin transaction pool via a single Bitcoin network node.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -107,7 +115,7 @@ public:
         return get_argument_metadata()
             .add("TRANSACTION", -1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -118,7 +126,7 @@ public:
     {
         load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -131,31 +139,31 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path and file name for the configuration settings file to be used in the execution of the command."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Broadcast a transaction to the Bitcoin transaction pool via a single Bitcoin network node."
-            )
-            (
-                "host,t",
-                value<std::string>(&option_.host)->default_value("localhost"),
-                "The IP address or DNS name of the node. Defaults to localhost."
-            )
-            (
-                "port,p",
-                value<uint16_t>(&option_.port)->default_value(8333),
-                "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
-            )
-            (
-                "TRANSACTION",
-                value<std::vector<primitives::transaction>>(&argument_.transactions),
-                "The set of Base16 transactions. If not specified the transactions are read from STDIN."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "host,t",
+            value<std::string>(&option_.host)->default_value("localhost"),
+            "The IP address or DNS name of the node. Defaults to localhost."
+        )
+        (
+            "port,p",
+            value<uint16_t>(&option_.port)->default_value(8333),
+            "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
+        )
+        (
+            "TRANSACTION",
+            value<std::vector<primitives::transaction>>(&argument_.transactions),
+            "The set of Base16 transactions. If not specified the transactions are read from STDIN."
+        );
 
         return options;
     }
@@ -167,7 +175,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -177,7 +185,7 @@ public:
     {
         return argument_.transactions;
     }
-    
+
     /**
      * Set the value of the TRANSACTION arguments.
      */
@@ -188,30 +196,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the host option.
      */
     virtual std::string& get_host_option()
     {
         return option_.host;
     }
-    
+
     /**
      * Set the value of the host option.
      */
@@ -228,7 +219,7 @@ public:
     {
         return option_.port;
     }
-    
+
     /**
      * Set the value of the port option.
      */
@@ -251,10 +242,10 @@ private:
           : transactions()
         {
         }
-        
+
         std::vector<primitives::transaction> transactions;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -263,13 +254,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            host(),
+          : host(),
             port()
         {
         }
-        
-        bool help;
+
         std::string host;
         uint16_t port;
     } option_;

@@ -47,6 +47,8 @@ console_result help::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    command->write_usage(output);
+    command->load_options();
+    command->load_arguments();
+    command->write_help(output);
     return console_result::okay;
 }

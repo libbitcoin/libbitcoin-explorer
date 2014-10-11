@@ -37,7 +37,7 @@ console_result input_validate::invoke(std::ostream& output,
     const auto hash_type = get_signature_type_option();
     const tx_type& tx = get_transaction_argument();
     const auto& public_key = get_ec_public_key_argument();
-    const auto& script = get_previous_output_script_argument();
+    const auto& script = get_prevout_script_argument();
     const auto& signature = get_signature_argument();
 
     if (index >= tx.inputs.size())

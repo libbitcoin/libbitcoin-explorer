@@ -26,127 +26,249 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-// TODO: obtain from XML resource as localized text.
-// NOTE: in the usage format "bx command" is the first parameter.
-#define BX_PRINTER_USAGE_FORMAT "\nUsage: %1% %2%\n"
-#define BX_PRINTER_USAGE_OPTION_OPTIONAL_TOGGLE_FORMAT "[-%1%]"
-#define BX_PRINTER_USAGE_OPTION_REQUIRED_VALUE_FORMAT "-%1% ARG"
-#define BX_PRINTER_USAGE_OPTION_OPTIONAL_VALUE_FORMAT "[-%1% ARG]"
-#define BX_PRINTER_USAGE_OPTION_OPTIONAL_VALUE_VARIABLE_FORMAT "[-%1% ARG]..."
+// We are doing this because po::options_description.print() sucks.
+
+// TODO: move these to metadata for localization.
+#define BX_PRINTER_USAGE_FORMAT "\nUsage: %1% %2% %3%\n"
+#define BX_PRINTER_DESCRIPTION_FORMAT "\n%1%\n"
+#define BX_PRINTER_CATEGORY_FORMAT "\nCategery: %1%\n"
+#define BX_PRINTER_OPTION_TABLE_HEADER "\nOptions (named):\n\n"
+#define BX_PRINTER_ARGUMENT_TABLE_HEADER "\nArguments (positional):\n\n"
+#define BX_PRINTER_VALUE_TEXT "VALUE"
+
+// Not localizable formatters.
+// %2% <- BX_PRINTER_VALUE_TEXT
+#define BX_PRINTER_USAGE_OPTION_TOGGLE_FORMAT "[-%1%]"
+#define BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT "-%1% %2%"
+#define BX_PRINTER_USAGE_OPTION_OPTIONAL_FORMAT "[-%1% %2%]"
+#define BX_PRINTER_USAGE_OPTION_VARIABLE_FORMAT "[-%1% %2%]..."
 #define BX_PRINTER_USAGE_ARGUMENT_REQUIRED_FORMAT "%1%"
 #define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT "[%1%]"
-#define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_VARIABLE_FORMAT "[%1%]..."
-
-#define BX_PRINTER_SUMMARY_HEADER "\n-- Parameter Descriptions --\n"
-
-#define BX_PRINTER_ARGUMENTS_HEADER "\nArguments (positional):\n"
-#define BX_PRINTER_ARGUMENT_FORMAT "%1% \"%2%\"\n"
-
-#define BX_PRINTER_OPTIONS_HEADER "\nOptions (named):\n"
-#define BX_PRINTER_OPTION_SHORT_FORMAT "-%1% %2\n"
-#define BX_PRINTER_OPTION_LONG_FORMAT "--%1% %2\n"
-#define BX_PRINTER_OPTION_SHORT_LONG_FORMAT "-%1% [ --%2% ] %3\n"
-
-/*
-    USAGE: bx command [-hvt] [-w ARG]... [-m ARG] -n ARG ADD [LIKE]...
-
-    -- Option Descriptions --
-
-    Positional Arguments:
-    ADD "additional options"
-    LIKE "this"
-
-    Option Arguments:
-    -h [--help] Print help messages
-    -v [--verbose] Print words with verbosity
-    -w [--word] Words for the sentence, specify multiple times
-    -t Just a temp option that does very little
-    -n [--necessary] Give me anything
-    -m [--manual] Extract value manually
-*/
+#define BX_PRINTER_USAGE_ARGUMENT_VARIABLE_FORMAT "[%1%]..."
 
 using namespace bc::explorer;
 
-printer::printer(std::ostream& output, options_metadata& options,
-    arguments_metadata& arguments, const std::string& application)
-  : application_(application), arguments_(arguments), options_(options),
-    output_(output)
+printer::printer(const std::string& application, const std::string& category,
+    const std::string& command, const std::string& description,
+    const arguments_metadata& arguments, const options_metadata& options)
+  : application_(application), category_(category), command_(command),
+    description_(description), arguments_(arguments), options_(options)
 {
 }
 
 /* Formatters */
 
-// TODO: implement, component test.
-std::string printer::format_help_arguments()
+// 100% component tested.
+static void enqueue_fragment(std::string& fragment,
+    std::vector<std::string>& column)
 {
-    return "format_help_arguments";
+    trim(fragment);
+    if (!fragment.empty())
+        column.push_back(fragment);
 }
 
-// TODO: implement, component test.
-std::string printer::format_help_options()
+// 100% component tested.
+std::vector<std::string> printer::columnize(const std::string& paragraph,
+    size_t width)
 {
-    return "format_help_options";
+    const auto words = split(paragraph);
+
+    std::string fragment;
+    std::vector<std::string> column;
+
+    for (const auto& word: words)
+    {
+        if (word.length() + fragment.length() < width)
+        {
+            fragment += " " + word;
+            continue;
+        }
+
+        enqueue_fragment(fragment, column);
+        fragment = word;
+    }
+
+    enqueue_fragment(fragment, column);
+    return column;
 }
 
-// TODO: component test.
+// 100% component tested.
+// This formats to 80 char width as: [ 23 | ' ' | 55 | '\n' ]
+std::string printer::format_parameters_table(bool positional)
+{
+    std::stringstream output;
+    const auto& parameters = get_parameters();
+    format table("%-23s %-55s\n");
+
+    for (const auto& parameter: parameters)
+    {
+        // Skip positional arguments.
+        if ((parameter.get_position() == -1 && positional) || 
+            (parameter.get_position() != -1 && !positional))
+            continue;
+
+        // Get the formatted parameter name.
+        std::string name(parameter.get_format_name());
+
+        // Build a column for the description.
+        const auto rows = columnize(parameter.get_description(), 55);
+
+        // If there is no description the command is not output!
+        for (const auto& row: rows)
+        {
+            output << table % name % row;
+
+            // The name is only set in the first row.
+            name = "";
+        }
+    }
+
+    return output.str();
+}
+
 std::string printer::format_usage()
 {
-    auto usage = boost::format(BX_PRINTER_USAGE_FORMAT) %
-        get_application() % format_usage_parameters();
+    // USAGE: bx COMMAND [-hvt] -n VALUE [-m VALUE] [-w VALUE]... REQUIRED [OPTIONAL] [MULTIPLE]...
+    auto usage = format(BX_PRINTER_USAGE_FORMAT) % get_application() %
+        get_command() % format_usage_parameters();
     return usage.str();
 }
 
-// TODO: implement, component test.
-std::string printer::format_usage_arguments()
+std::string printer::format_category()
 {
-    return "format_usage_arguments";
+    // CATEGORY: %1%\n
+    auto category = format(BX_PRINTER_CATEGORY_FORMAT) % get_category();
+    return category.str();
 }
 
-// TODO: component test.
-std::string printer::format_usage_options()
+std::string printer::format_description()
 {
-    std::vector<std::string> words;
-    words.push_back(format_usage_toggle_options());
-    words.push_back(format_usage_value_options());
-    std::string sentence;
-    join(words, sentence);
-    return sentence;
+    // DESCRIPTION: %1%\n
+    auto description = format(BX_PRINTER_DESCRIPTION_FORMAT) % get_description();
+    return description.str();
 }
 
-// TODO: component test.
 std::string printer::format_usage_parameters()
 {
-    std::vector<std::string> words;
-    words.push_back(format_usage_options());
-    words.push_back(format_usage_arguments());
-    std::string sentence;
-    join(words, sentence);
-    return sentence;
+    //std::vector<std::string> words;
+
+    //words.push_back(format_usage_toggle_options());
+    //words.push_back(format_usage_required_options());
+    //words.push_back(format_usage_optional_options());
+    //words.push_back(format_usage_multivalued_options());
+
+    //words.push_back(format_usage_required_arguments());
+    //words.push_back(format_usage_optional_arguments());
+    //words.push_back(format_usage_multivalued_arguments());
+
+    //std::string sentence;
+    //join(words, sentence);
+
+    return "";
 }
 
-// TODO: implement, component test.
 std::string printer::format_usage_toggle_options()
 {
     return "format_usage_toggle_options";
 }
 
-// TODO: implement, component test.
-std::string printer::format_usage_value_options()
+std::string printer::format_usage_required_options()
 {
-    return "format_usage_value_options";
+    return "format_usage_required_options";
 }
 
-/* Helpers */
-
-// TODO: order collection? component test.
-void printer::initialize()
+std::string printer::format_usage_optional_options()
 {
-    auto options = get_options();
-    auto parameters = get_parameters();
-    auto arguments = get_arguments();
+    return "format_usage_optional_options";
+}
 
-    // TODO: build list of names.
-    auto argument_names = get_argument_names();
+std::string printer::format_usage_multivalued_options()
+{
+    return "format_usage_multivalue_options";
+}
+
+std::string printer::format_usage_required_arguments()
+{
+    return "format_usage_required_arguments";
+}
+
+std::string printer::format_usage_optional_arguments()
+{
+    return "format_usage_optional_arguments";
+}
+
+std::string printer::format_usage_multivalued_arguments()
+{
+    return "format_usage_multivalue_arguments";
+}
+
+/* Initialization */
+
+// 100% component tested.
+static void enqueue_name(int count, std::string& name, argument_list& names)
+{
+    if (count <= 0)
+        return;
+
+    if (count > printer::max_arguments)
+        count = -1;
+
+    names.push_back(argument_pair(name, count));
+}
+
+// 100% component tested.
+// This method just gives us a copy of arguments_metadata private state.
+// It would be nice if instead that state was public.
+void printer::generate_argument_names()
+{
+    // Member values
+    const auto& arguments = get_arguments();
+    auto& argument_names = get_argument_names();
+
+    argument_names.clear();
+    const auto max_total_arguments = arguments.max_total_count();
+
+    // Temporary values
+    std::string argument_name;
+    std::string previous_argument_name;
+    int max_previous_argument = 0;
+
+    // We must enumerate all arguments to get the full set of names and counts.
+    for (unsigned int position = 0; position < max_total_arguments && 
+        max_previous_argument <= max_arguments; ++position)
+    {
+        argument_name = arguments.name_for_position(position);
+
+        // Initialize the first name as having a zeroth instance.
+        if (max_previous_argument == 0)
+            previous_argument_name = argument_name;
+
+        // This is a duplicate of the previous name, so increment the count.
+        if (argument_name == previous_argument_name)
+        {
+            ++max_previous_argument;
+            continue;
+        }
+
+        enqueue_name(max_previous_argument, previous_argument_name,
+            argument_names);
+        previous_argument_name = argument_name;
+        max_previous_argument = 1;
+    }
+
+    // Save the previous name (if there is one).
+    enqueue_name(max_previous_argument, previous_argument_name,
+        argument_names);
+}
+
+// 100% component tested.
+void printer::generate_parameters()
+{
+    const auto& argument_names = get_argument_names();
+    const auto& options = get_options();
+    auto& parameters = get_parameters();
+
+    parameters.clear();
 
     parameter param;
     for (auto option_ptr: options.options())
@@ -156,24 +278,22 @@ void printer::initialize()
     }
 }
 
-/* Printers */
-
-// TODO: component test.
-void printer::print_help()
+// 100% component tested.
+void printer::initialize()
 {
-    // -- Option Descriptions --
-    // ...
-    get_output()
-        << BX_PRINTER_SUMMARY_HEADER
-        << BX_PRINTER_ARGUMENTS_HEADER
-        << format_help_arguments()
-        << BX_PRINTER_OPTIONS_HEADER
-        << format_help_options();
+    generate_argument_names();
+    generate_parameters();
 }
 
-// TODO: component test.
-void printer::print_usage()
+/* Printers */
+
+void printer::print(std::ostream& output)
 {
-    // USAGE: bx command [-hvt] [-w ARG]... [-m ARG] - n ARG ADD [LIKE]...
-    get_output() << format_usage();
+    output
+        << format_usage()
+        << format_description()
+        << BX_PRINTER_OPTION_TABLE_HEADER
+        << format_parameters_table(false)
+        << BX_PRINTER_ARGUMENT_TABLE_HEADER
+        << format_parameters_table(true);
 }

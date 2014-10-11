@@ -43,7 +43,7 @@
 #endif
 
 #define PROPERTY(type, name) \
-    public: virtual type get_##name() { return name##_; } \
+    public: virtual type get_##name() const { return name##_; } \
     public: virtual void set_##name(type value) { name##_ = value; } \
     private: type name##_
 
@@ -51,9 +51,18 @@
     public: virtual type get_##name() { return name##_; } \
     private: type name##_
 
+#define PROPERTY_GET_REF(type, name) \
+    public: virtual type& get_##name() { return name##_; } \
+    private: type name##_
+
 #define PROPERTY_SET(type, name) \
     public: virtual void set_##name(type value) { name##_ = value; } \
     private: type name##_
+
+/**
+ * The name of this program.
+ */
+#define BX_PROGRAM_NAME "bx"
 
 /**
  * Delimiter for use in word splitting serialized input and output points.

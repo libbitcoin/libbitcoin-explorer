@@ -50,6 +50,7 @@
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
+#include <bitcoin/explorer/utility/printer.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -59,6 +60,7 @@ namespace explorer {
 
 #define BX_CONFIG_VARIABLE "config"
 #define BX_HELP_VARIABLE "help"
+#define BX_PROGRAM_NAME "bx"
 
 /**
  * Abstract base class for definition of each Bitcoin Explorer command.
@@ -66,11 +68,14 @@ namespace explorer {
 class command
 {
 public:
-    
+
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "not-implemented"; }
+    static const char* symbol()
+    {
+        return "not-implemented";
+    }
 
     /**
      * The symbolic (not localizable) command name, lower case.
@@ -87,9 +92,18 @@ public:
      */
     virtual const char* category()
     {
-        return symbol();
+        return "not-implemented";
     }
-    
+
+    /**
+     * The localizable command description.
+     * @return  Example: "Get transactions by hash."
+     */
+    virtual const char* description()
+    {
+        return "not-implemented";
+    }
+
     /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
@@ -106,7 +120,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    virtual po::positional_options_description& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -115,19 +129,19 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(po::options_description& definitions)
+    virtual void load_environment(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
-            /* This composes with the command line options. */
-            (
-                BX_CONFIG_VARIABLE, 
-                value<boost::filesystem::path>()
-                    ->composing()->default_value(config_default()),
-                "The path and file name for the configuration settings file to be used in the execution of the command."
-            );
+        /* This composes with the command line options. */
+        (
+            BX_CONFIG_VARIABLE, 
+            value<boost::filesystem::path>()
+                ->composing()->default_value(config_default()),
+            "The path to the configuration settings file."
+        );
     }
-    
+
     /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input      The input stream for loading the parameters.
@@ -145,66 +159,66 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    virtual po::options_description& load_options()
+    virtual options_metadata& load_options()
     {
         return option_metadata_;
     }
-    
+
     /**
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(po::options_description& definitions)
+    virtual void load_settings(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
-            (
-                "general.testnet",
-                value<bool>(&setting_.general.testnet)->default_value(false),
-                "Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
-            )
-            (
-                "general.retries",
-                value<uint8_t>(&setting_.general.retries),
-                "Number of times to retry contacting the server before giving up."
-            )
-            (
-                "general.wait",
-                value<uint32_t>(&setting_.general.wait)->default_value(2000),
-                "Milliseconds to wait for a response from the server."
-            )
-            (
-                "logging.debug",
-                value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
-                "The file and path name to the debug log file."
-            )
-            (
-                "logging.error",
-                value<boost::filesystem::path>(&setting_.logging.error)->default_value("error.log"),
-                "The file and path name to the error log file."
-            )
-            (
-                "server.certificate",
-                value<boost::filesystem::path>(&setting_.server.certificate),
-                "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert"
-            )
-            (
-                "server.public-key",
-                value<primitives::base16>(&setting_.server.public_key),
-                "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
-            )
-            (
-                "server.address",
-                value<std::string>(&setting_.server.address)->default_value("tcp://obelisk2.airbitz.co:9091"),
-                "The URI of the server to which this application may connect."
-            )
-            (
-                "server.socks-proxy",
-                value<std::string>(&setting_.server.socks_proxy),
-                "The host name and port number of a Socks5 proxy server."
-            );
+        (
+            "general.testnet",
+            value<bool>(&setting_.general.testnet)->default_value(false),
+            "Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
+        )
+        (
+            "general.retries",
+            value<uint8_t>(&setting_.general.retries),
+            "Number of times to retry contacting the server before giving up."
+        )
+        (
+            "general.wait",
+            value<uint32_t>(&setting_.general.wait)->default_value(2000),
+            "Milliseconds to wait for a response from the server."
+        )
+        (
+            "logging.debug",
+            value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
+            "The file and path name to the debug log file."
+        )
+        (
+            "logging.error",
+            value<boost::filesystem::path>(&setting_.logging.error)->default_value("error.log"),
+            "The file and path name to the error log file."
+        )
+        (
+            "server.certificate",
+            value<boost::filesystem::path>(&setting_.server.certificate),
+            "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert"
+        )
+        (
+            "server.public-key",
+            value<primitives::base16>(&setting_.server.public_key),
+            "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
+        )
+        (
+            "server.address",
+            value<std::string>(&setting_.server.address)->default_value("tcp://obelisk2.airbitz.co:9091"),
+            "The URI of the server to which this application may connect."
+        )
+        (
+            "server.socks-proxy",
+            value<std::string>(&setting_.server.socks_proxy),
+            "The host name and port number of a Socks5 proxy server."
+        );
     }
-	
+
     /**
      * Load streamed value as parameter fallback.
      * @param[in]  input      The input stream for loading the parameter.
@@ -215,29 +229,33 @@ public:
     }
 
     /**
-     * Write the usage help for this command to the specified stream.
-     * @param[out] stream  The output stream.
+     * Write the help for this command to the specified stream.
+     * @param[out] output  The output stream.
      */
-    virtual void write_usage(std::ostream& stream)
+    virtual void write_help(std::ostream& output)
     {
-        const auto options = get_option_metadata();
-        const auto arguments = get_argument_metadata();
-    } 
-    
+        const auto& options = get_option_metadata();
+        const auto& arguments = get_argument_metadata();
+        printer help(BX_PROGRAM_NAME, category(), name(), description(),
+            arguments, options);
+        help.initialize();
+        help.print(output);
+    }
+
     /* Properties */
     
     /**
      * Get command line argument metadata.
      */
-    virtual po::positional_options_description& get_argument_metadata()
+    virtual arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
-    
+
     /**
      * Get command line option metadata.
      */
-    virtual po::options_description& get_option_metadata()
+    virtual options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -257,7 +275,7 @@ public:
     {
         setting_.general.testnet = value;
     }
-    
+
     /**
      * Get the value of the general.retries setting.
      */
@@ -273,7 +291,7 @@ public:
     {
         setting_.general.retries = value;
     }
-    
+
     /**
      * Get the value of the general.wait setting.
      */
@@ -289,7 +307,7 @@ public:
     {
         setting_.general.wait = value;
     }
-    
+
     /**
      * Get the value of the logging.debug setting.
      */
@@ -305,7 +323,7 @@ public:
     {
         setting_.logging.debug = value;
     }
-    
+
     /**
      * Get the value of the logging.error setting.
      */
@@ -321,7 +339,7 @@ public:
     {
         setting_.logging.error = value;
     }
-    
+
     /**
      * Get the value of the server.certificate setting.
      */
@@ -337,7 +355,7 @@ public:
     {
         setting_.server.certificate = value;
     }
-    
+
     /**
      * Get the value of the server.public-key setting.
      */
@@ -353,7 +371,7 @@ public:
     {
         setting_.server.public_key = value;
     }
-    
+
     /**
      * Get the value of the server.address setting.
      */
@@ -369,7 +387,7 @@ public:
     {
         setting_.server.address = value;
     }
-    
+
     /**
      * Get the value of the server.socks-proxy setting.
      */
@@ -385,7 +403,7 @@ public:
     {
         setting_.server.socks_proxy = value;
     }
-    
+
 protected:
 
     /**
@@ -395,19 +413,19 @@ protected:
     command()
     {
     }
-    
+
 private:
     
     /**
      * Command line argument metadata.
      */
-    po::positional_options_description argument_metadata_;
+    arguments_metadata argument_metadata_;
 
     /**
      * Command line option metadata.
      */
-    po::options_description option_metadata_;
-    
+    options_metadata option_metadata_;
+
     /**
      * Environment variable bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -418,7 +436,7 @@ private:
         environment()
         {
         }
-        
+
     } environment_;
 
     /**
@@ -436,7 +454,7 @@ private:
                 wait()
             {
             }
-            
+
             bool testnet;
             uint8_t retries;
             uint32_t wait;
@@ -449,7 +467,7 @@ private:
                 error()
             {
             }
-            
+
             boost::filesystem::path debug;
             boost::filesystem::path error;
         } logging;
@@ -463,7 +481,7 @@ private:
                 socks_proxy()
             {
             }
-            
+
             boost::filesystem::path certificate;
             primitives::base16 public_key;
             std::string address;

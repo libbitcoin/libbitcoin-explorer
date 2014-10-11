@@ -71,7 +71,9 @@ std::istream& operator>>(std::istream& input, base2& argument)
     std::string binary;
     input >> binary;
 
-    // TODO: test non-binary characters in input.
+    if (!is_base2(binary))
+        throw po::invalid_option_value(binary);
+
     bitset bits(binary);
 
     // Avoids setting the member value if there is an error.
