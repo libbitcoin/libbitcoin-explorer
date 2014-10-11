@@ -53,6 +53,17 @@ using namespace boost::posix_time;
 namespace libbitcoin {
 namespace explorer {
 
+bool is_base2(const std::string& text)
+{
+    for (const auto& character : text)
+    {
+        if (character != '0' && character != '1')
+            return false;
+    }
+
+    return true;
+}
+
 void join(const std::vector<std::string>& words, std::string& sentence,
     const std::string& delimiter)
 {
