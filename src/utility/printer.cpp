@@ -127,7 +127,7 @@ std::string printer::format_parameters_table(bool positional)
 
 std::string printer::format_usage()
 {
-    // USAGE: bx COMMAND ([-hvt] -n VALUE [-m VALUE] [-w VALUE]...) (REQUIRED [OPTIONAL] [MULTIPLE]...)
+    // USAGE: bx COMMAND [-hvt] -n VALUE [-m VALUE] [-w VALUE]... REQUIRED [OPTIONAL] [MULTIPLE]...
     auto usage = format(BX_PRINTER_USAGE_FORMAT) % get_application() %
         get_command() % format_usage_parameters();
     return usage.str();
