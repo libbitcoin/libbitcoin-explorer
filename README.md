@@ -420,13 +420,12 @@ These command lines are equivalent:
 ```sh
 $ bx address-decode --help
 $ bx help address-decode
-```
-> It is somewhat idiosyncratic that in metadata the help `description` attribute defines command help content as opposed to a description of the help option. 
+``` 
 
 The help command also supports the `--help` option:
 ```sh
 $ bx help --help
-Get the list of commands.
+Get a description and instructions for this command.
 ```
 An invalid command will result in a message to STDERR indicating that the command is not valid and to invoke `bx help` to see a list of commands.
 
@@ -529,6 +528,7 @@ BX command names, help and parameterization utilize the following set of acronym
     BX      Bitcoin Explorer
     EC      Elliptic Curve
     HD      Hierarchical Deterministic
+    PREVOUT Previous Output
     PUBKEY  EC Public Key
     QRCODE  Quick Response Code
     RACE    Research and development in Advanced Communications Technologies
