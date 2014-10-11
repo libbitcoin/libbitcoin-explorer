@@ -26,11 +26,9 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-// We are doing this because po::options_description sucks.
+// We are doing this because po::options_description.print() sucks.
 
-// TODO: obtain from XML resource as localized text.
-// NOTE: in the usage format "bx command" is the first parameter.
-#define BX_PRINTER_USAGE_FORMAT "USAGE: %1% %2% %3%\n"
+#define BX_PRINTER_USAGE_FORMAT "\nUsage: %1% %2% %3%\n"
 
 #define BX_PRINTER_USAGE_OPTION_TOGGLE_FORMAT "[-%1%]"
 #define BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT "-%1% VALUE"
@@ -41,15 +39,19 @@
 #define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT "[%1%]"
 #define BX_PRINTER_USAGE_ARGUMENT_VARIABLE_FORMAT "[%1%]..."
 
-#define BX_PRINTER_SUMMARY_HEADER "\n-- Parameter Descriptions --\n"
-#define BX_PRINTER_ARGUMENT_TABLE_HEADER "\nArguments (positional):\n\n"
+#define BX_PRINTER_DESCRIPTION_FORMAT "\n%1%\n"
+#define BX_PRINTER_CATEGORY_FORMAT "\nCategery: %1%\n"
+
 #define BX_PRINTER_OPTION_TABLE_HEADER "\nOptions (named):\n\n"
+#define BX_PRINTER_ARGUMENT_TABLE_HEADER "\nArguments (positional):\n\n"
 
 using namespace bc::explorer;
 
-printer::printer(const std::string& application, const std::string& command,
+printer::printer(const std::string& application, const std::string& category,
+    const std::string& command, const std::string& description,
     const arguments_metadata& arguments, const options_metadata& options)
-  : application_(application), arguments_(arguments), options_(options)
+  : application_(application), category_(category), command_(command),
+    description_(description), arguments_(arguments), options_(options)
 {
 }
 
@@ -122,12 +124,24 @@ std::string printer::format_parameters_table(bool positional)
 
 std::string printer::format_usage()
 {
-    //USAGE: bx COMMAND ([-hvt] -n VALUE [-m VALUE] [-w VALUE]...) (REQUIRED [OPTIONAL] [MULTIPLE]...)
-
-    auto usage = format(BX_PRINTER_USAGE_FORMAT) % get_application() % 
+    // USAGE: bx COMMAND ([-hvt] -n VALUE [-m VALUE] [-w VALUE]...) (REQUIRED [OPTIONAL] [MULTIPLE]...)
+    auto usage = format(BX_PRINTER_USAGE_FORMAT) % get_application() %
         get_command() % format_usage_parameters();
-
     return usage.str();
+}
+
+std::string printer::format_category()
+{
+    // CATEGORY: %1%\n
+    auto category = format(BX_PRINTER_CATEGORY_FORMAT) % get_category();
+    return category.str();
+}
+
+std::string printer::format_description()
+{
+    // DESCRIPTION: %1%\n
+    auto description = format(BX_PRINTER_DESCRIPTION_FORMAT) % get_description();
+    return description.str();
 }
 
 std::string printer::format_usage_parameters()
@@ -186,6 +200,17 @@ std::string printer::format_usage_multivalued_arguments()
 
 /* Initialization */
 
+static void enqueue_name(int count, std::string& name, argument_list& names)
+{
+    if (count <= 0)
+        return;
+
+    if (count > printer::max_arguments)
+        count = -1;
+
+    names.push_back(argument_pair(name, count));
+}
+
 // 100% component tested.
 // This method just gives us a copy of arguments_metadata private state.
 // It would be nice if instead that state was public.
@@ -220,23 +245,15 @@ void printer::generate_argument_names()
             continue;
         }
 
-        // Save the previous name.
-        argument_pair pair(previous_argument_name, max_previous_argument);
-        argument_names.push_back(pair);
-
+        enqueue_name(max_previous_argument, previous_argument_name,
+            argument_names);
         previous_argument_name = argument_name;
         max_previous_argument = 1;
     }
 
     // Save the previous name (if there is one).
-    if (max_previous_argument > 0)
-    {
-        if (max_previous_argument > max_arguments)
-            max_previous_argument = -1;
-
-        argument_pair pair(previous_argument_name, max_previous_argument);
-        argument_names.push_back(pair);
-    }
+    enqueue_name(max_previous_argument, previous_argument_name,
+        argument_names);
 }
 
 // 100% component tested.
@@ -269,9 +286,9 @@ void printer::print(std::ostream& output)
 {
     output
         << format_usage()
-        << BX_PRINTER_SUMMARY_HEADER
-        << BX_PRINTER_ARGUMENT_TABLE_HEADER
-        << format_parameters_table(false)
+        << format_description()
         << BX_PRINTER_OPTION_TABLE_HEADER
+        << format_parameters_table(false)
+        << BX_PRINTER_ARGUMENT_TABLE_HEADER
         << format_parameters_table(true);
 }

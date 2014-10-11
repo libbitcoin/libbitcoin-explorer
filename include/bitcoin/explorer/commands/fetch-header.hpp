@@ -92,6 +92,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -100,7 +108,7 @@ public:
     {
         return get_argument_metadata();
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -110,7 +118,7 @@ public:
         po::variables_map& variables)
     {
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -123,31 +131,31 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection."
-            )
-            (
-                "format,f",
-                value<primitives::encoding>(&option_.format),
-                "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
-            )
-            (
-                "hash,s",
-                value<primitives::btc256>(&option_.hash),
-                "The Base16 block hash."
-            )
-            (
-                "height,t",
-                value<size_t>(&option_.height),
-                "The block height."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "format,f",
+            value<primitives::encoding>(&option_.format),
+            "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+        )
+        (
+            "hash,s",
+            value<primitives::btc256>(&option_.hash),
+            "The Base16 block hash."
+        )
+        (
+            "height,t",
+            value<size_t>(&option_.height),
+            "The block height."
+        );
 
         return options;
     }
@@ -159,25 +167,8 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
-    /* Properties */
 
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
+    /* Properties */
 
     /**
      * Get the value of the format option.
@@ -186,7 +177,7 @@ public:
     {
         return option_.format;
     }
-    
+
     /**
      * Set the value of the format option.
      */
@@ -203,7 +194,7 @@ public:
     {
         return option_.hash;
     }
-    
+
     /**
      * Set the value of the hash option.
      */
@@ -220,7 +211,7 @@ public:
     {
         return option_.height;
     }
-    
+
     /**
      * Set the value of the height option.
      */
@@ -242,9 +233,9 @@ private:
         argument()
         {
         }
-        
+
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -253,14 +244,12 @@ private:
     struct option
     {
         option()
-          : help(),
-            format(),
+          : format(),
             hash(),
             height()
         {
         }
-        
-        bool help;
+
         primitives::encoding format;
         primitives::btc256 hash;
         size_t height;

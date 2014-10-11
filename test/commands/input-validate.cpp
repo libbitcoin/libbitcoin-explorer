@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_ou
     command.set_signature_type_option({ "single" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
-    command.set_previous_output_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
+    command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE "\n");
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
     command.set_signature_type_option({ "single" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
-    command.set_previous_output_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
+    command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_A });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE "\n");
@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_out
     command.set_signature_type_option({ "single" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
-    command.set_previous_output_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
+    command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_B });
     BX_REQUIRE_INVALID(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE "\n");

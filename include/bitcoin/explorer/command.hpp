@@ -68,11 +68,14 @@ namespace explorer {
 class command
 {
 public:
-    
+
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "not-implemented"; }
+    static const char* symbol()
+    {
+        return "not-implemented";
+    }
 
     /**
      * The symbolic (not localizable) command name, lower case.
@@ -89,9 +92,18 @@ public:
      */
     virtual const char* category()
     {
-        return symbol();
+        return "not-implemented";
     }
-    
+
+    /**
+     * The localizable command description.
+     * @return  Example: "Get transactions by hash."
+     */
+    virtual const char* description()
+    {
+        return "not-implemented";
+    }
+
     /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
@@ -121,15 +133,15 @@ public:
     {
         using namespace po;
         definitions.add_options()
-            /* This composes with the command line options. */
-            (
-                BX_CONFIG_VARIABLE, 
-                value<boost::filesystem::path>()
-                    ->composing()->default_value(config_default()),
-                "The path to the configuration settings file."
-            );
+        /* This composes with the command line options. */
+        (
+            BX_CONFIG_VARIABLE, 
+            value<boost::filesystem::path>()
+                ->composing()->default_value(config_default()),
+            "The path to the configuration settings file."
+        );
     }
-    
+
     /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input      The input stream for loading the parameters.
@@ -151,7 +163,7 @@ public:
     {
         return option_metadata_;
     }
-    
+
     /**
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
@@ -160,53 +172,53 @@ public:
     {
         using namespace po;
         definitions.add_options()
-            (
-                "general.testnet",
-                value<bool>(&setting_.general.testnet)->default_value(false),
-                "Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
-            )
-            (
-                "general.retries",
-                value<uint8_t>(&setting_.general.retries),
-                "Number of times to retry contacting the server before giving up."
-            )
-            (
-                "general.wait",
-                value<uint32_t>(&setting_.general.wait)->default_value(2000),
-                "Milliseconds to wait for a response from the server."
-            )
-            (
-                "logging.debug",
-                value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
-                "The file and path name to the debug log file."
-            )
-            (
-                "logging.error",
-                value<boost::filesystem::path>(&setting_.logging.error)->default_value("error.log"),
-                "The file and path name to the error log file."
-            )
-            (
-                "server.certificate",
-                value<boost::filesystem::path>(&setting_.server.certificate),
-                "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert"
-            )
-            (
-                "server.public-key",
-                value<primitives::base16>(&setting_.server.public_key),
-                "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
-            )
-            (
-                "server.address",
-                value<std::string>(&setting_.server.address)->default_value("tcp://obelisk2.airbitz.co:9091"),
-                "The URI of the server to which this application may connect."
-            )
-            (
-                "server.socks-proxy",
-                value<std::string>(&setting_.server.socks_proxy),
-                "The host name and port number of a Socks5 proxy server."
-            );
+        (
+            "general.testnet",
+            value<bool>(&setting_.general.testnet)->default_value(false),
+            "Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
+        )
+        (
+            "general.retries",
+            value<uint8_t>(&setting_.general.retries),
+            "Number of times to retry contacting the server before giving up."
+        )
+        (
+            "general.wait",
+            value<uint32_t>(&setting_.general.wait)->default_value(2000),
+            "Milliseconds to wait for a response from the server."
+        )
+        (
+            "logging.debug",
+            value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
+            "The file and path name to the debug log file."
+        )
+        (
+            "logging.error",
+            value<boost::filesystem::path>(&setting_.logging.error)->default_value("error.log"),
+            "The file and path name to the error log file."
+        )
+        (
+            "server.certificate",
+            value<boost::filesystem::path>(&setting_.server.certificate),
+            "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert"
+        )
+        (
+            "server.public-key",
+            value<primitives::base16>(&setting_.server.public_key),
+            "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
+        )
+        (
+            "server.address",
+            value<std::string>(&setting_.server.address)->default_value("tcp://obelisk2.airbitz.co:9091"),
+            "The URI of the server to which this application may connect."
+        )
+        (
+            "server.socks-proxy",
+            value<std::string>(&setting_.server.socks_proxy),
+            "The host name and port number of a Socks5 proxy server."
+        );
     }
-	
+
     /**
      * Load streamed value as parameter fallback.
      * @param[in]  input      The input stream for loading the parameter.
@@ -224,11 +236,12 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        printer help(BX_PROGRAM_NAME, name(), arguments, options);
+        printer help(BX_PROGRAM_NAME, category(), name(), description(),
+            arguments, options);
         help.initialize();
         help.print(output);
     }
-    
+
     /* Properties */
     
     /**
@@ -238,7 +251,7 @@ public:
     {
         return argument_metadata_;
     }
-    
+
     /**
      * Get command line option metadata.
      */
@@ -262,7 +275,7 @@ public:
     {
         setting_.general.testnet = value;
     }
-    
+
     /**
      * Get the value of the general.retries setting.
      */
@@ -278,7 +291,7 @@ public:
     {
         setting_.general.retries = value;
     }
-    
+
     /**
      * Get the value of the general.wait setting.
      */
@@ -294,7 +307,7 @@ public:
     {
         setting_.general.wait = value;
     }
-    
+
     /**
      * Get the value of the logging.debug setting.
      */
@@ -310,7 +323,7 @@ public:
     {
         setting_.logging.debug = value;
     }
-    
+
     /**
      * Get the value of the logging.error setting.
      */
@@ -326,7 +339,7 @@ public:
     {
         setting_.logging.error = value;
     }
-    
+
     /**
      * Get the value of the server.certificate setting.
      */
@@ -342,7 +355,7 @@ public:
     {
         setting_.server.certificate = value;
     }
-    
+
     /**
      * Get the value of the server.public-key setting.
      */
@@ -358,7 +371,7 @@ public:
     {
         setting_.server.public_key = value;
     }
-    
+
     /**
      * Get the value of the server.address setting.
      */
@@ -374,7 +387,7 @@ public:
     {
         setting_.server.address = value;
     }
-    
+
     /**
      * Get the value of the server.socks-proxy setting.
      */
@@ -390,7 +403,7 @@ public:
     {
         setting_.server.socks_proxy = value;
     }
-    
+
 protected:
 
     /**
@@ -400,7 +413,7 @@ protected:
     command()
     {
     }
-    
+
 private:
     
     /**
@@ -412,7 +425,7 @@ private:
      * Command line option metadata.
      */
     options_metadata option_metadata_;
-    
+
     /**
      * Environment variable bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -423,7 +436,7 @@ private:
         environment()
         {
         }
-        
+
     } environment_;
 
     /**
@@ -441,7 +454,7 @@ private:
                 wait()
             {
             }
-            
+
             bool testnet;
             uint8_t retries;
             uint32_t wait;
@@ -454,7 +467,7 @@ private:
                 error()
             {
             }
-            
+
             boost::filesystem::path debug;
             boost::filesystem::path error;
         } logging;
@@ -468,7 +481,7 @@ private:
                 socks_proxy()
             {
             }
-            
+
             boost::filesystem::path certificate;
             primitives::base16 public_key;
             std::string address;

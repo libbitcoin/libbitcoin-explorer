@@ -92,6 +92,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Convert a Base58 value to Base16.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -101,7 +109,7 @@ public:
         return get_argument_metadata()
             .add("BASE58", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -112,7 +120,7 @@ public:
     {
         load_input(get_base58_argument(), "BASE58", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -125,21 +133,21 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Convert a Base58 value to Base16."
-            )
-            (
-                "BASE58",
-                value<primitives::base58>(&argument_.base58),
-                "The Base58 value to decode as Base16."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "BASE58",
+            value<primitives::base58>(&argument_.base58),
+            "The Base58 value to decode as Base16."
+        );
 
         return options;
     }
@@ -151,7 +159,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -161,7 +169,7 @@ public:
     {
         return argument_.base58;
     }
-    
+
     /**
      * Set the value of the BASE58 argument.
      */
@@ -169,23 +177,6 @@ public:
         const primitives::base58& value)
     {
         argument_.base58 = value;
-    }
-
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
     }
 
 private:
@@ -201,10 +192,10 @@ private:
           : base58()
         {
         }
-        
+
         primitives::base58 base58;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -213,11 +204,9 @@ private:
     struct option
     {
         option()
-          : help()
         {
         }
-        
-        bool help;
+
     } option_;
 };
 

@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -108,7 +116,7 @@ public:
             .add("EC_PRIVATE_KEY", 1)
             .add("TRANSACTION", -1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -119,7 +127,7 @@ public:
     {
         load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -132,26 +140,26 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Sign a set of transactions using a private key. Output is suitable for sending to Bitcoin network."
-            )
-            (
-                "EC_PRIVATE_KEY",
-                value<primitives::ec_private>(&argument_.ec_private_key)->required(),
-                "The EC private key to be used for signing."
-            )
-            (
-                "TRANSACTION",
-                value<std::vector<primitives::transaction>>(&argument_.transactions),
-                "The set of Base16 transactions. If not specified the transactions are read from STDIN."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "EC_PRIVATE_KEY",
+            value<primitives::ec_private>(&argument_.ec_private_key)->required(),
+            "The EC private key to be used for signing."
+        )
+        (
+            "TRANSACTION",
+            value<std::vector<primitives::transaction>>(&argument_.transactions),
+            "The set of Base16 transactions. If not specified the transactions are read from STDIN."
+        );
 
         return options;
     }
@@ -163,7 +171,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -173,7 +181,7 @@ public:
     {
         return argument_.ec_private_key;
     }
-    
+
     /**
      * Set the value of the EC_PRIVATE_KEY argument.
      */
@@ -190,7 +198,7 @@ public:
     {
         return argument_.transactions;
     }
-    
+
     /**
      * Set the value of the TRANSACTION arguments.
      */
@@ -198,23 +206,6 @@ public:
         const std::vector<primitives::transaction>& value)
     {
         argument_.transactions = value;
-    }
-
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
     }
 
 private:
@@ -231,11 +222,11 @@ private:
             transactions()
         {
         }
-        
+
         primitives::ec_private ec_private_key;
         std::vector<primitives::transaction> transactions;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -244,11 +235,9 @@ private:
     struct option
     {
         option()
-          : help()
         {
         }
-        
-        bool help;
+
     } option_;
 };
 

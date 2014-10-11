@@ -47,11 +47,14 @@ public:
     /*
      * Construct an instance of the printer class.
      * @param[in]  application  This application (e.g. 'bx').
-     * @param[in]  command      This application (e.g. 'btc').
+     * @param[in]  category     This command category (e.g. 'MATH').
+     * @param[in]  command      This command (e.g. 'btc').
+     * @param[in]  description  This command description (e.g. 'Convert BTC').
      * @param[in]  arguments    Populated command line arguments metadata.
      * @param[in]  options      Populated command line options metadata.
      */
-    printer(const std::string& application, const std::string& command,
+    printer(const std::string& application, const std::string& category,
+        const std::string& command, const std::string& description,
         const arguments_metadata& arguments, const options_metadata& options);
 
     /**
@@ -64,6 +67,18 @@ public:
      */
     virtual std::vector<std::string> columnize(const std::string& paragraph,
         size_t width);
+    
+    /**
+     * Format the command category.
+     * @return  The command category.
+     */
+    virtual std::string printer::format_category();
+
+    /**
+     * Format the command description.
+     * @return  The command description.
+     */
+    virtual std::string format_description();
     
     /**
      * Format the parameters table.
@@ -151,7 +166,9 @@ public:
      * Virtual property declarations, passed on construct.
      */
     PROPERTY_GET_REF(std::string, application);
+    PROPERTY_GET_REF(std::string, category);
     PROPERTY_GET_REF(std::string, command);
+    PROPERTY_GET_REF(std::string, description);
     PROPERTY_GET_REF(arguments_metadata, arguments);
     PROPERTY_GET_REF(options_metadata, options);
 

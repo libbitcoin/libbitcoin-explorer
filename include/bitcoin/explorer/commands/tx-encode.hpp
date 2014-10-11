@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Encode an unsigned transaction.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -107,7 +115,7 @@ public:
         return get_argument_metadata()
             .add("TRANSACTION", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -117,7 +125,7 @@ public:
         po::variables_map& variables)
     {
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -130,41 +138,41 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Encode an unsigned transaction."
-            )
-            (
-                "lock_time,l",
-                value<uint32_t>(&option_.lock_time),
-                "The transaction lock time."
-            )
-            (
-                "version,v",
-                value<uint32_t>(&option_.version)->default_value(1),
-                "The transaction version."
-            )
-            (
-                "input,i",
-                value<std::vector<primitives::input>>(&option_.inputs),
-                "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
-            )
-            (
-                "output,o",
-                value<std::vector<primitives::output>>(&option_.outputs),
-                "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs."
-            )
-            (
-                "TRANSACTION",
-                value<std::string>(&argument_.transaction),
-                "The encoded transaction file path. If not specified the transaction is written to STDOUT."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "lock_time,l",
+            value<uint32_t>(&option_.lock_time),
+            "The transaction lock time."
+        )
+        (
+            "version,v",
+            value<uint32_t>(&option_.version)->default_value(1),
+            "The transaction version."
+        )
+        (
+            "input,i",
+            value<std::vector<primitives::input>>(&option_.inputs),
+            "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
+        )
+        (
+            "output,o",
+            value<std::vector<primitives::output>>(&option_.outputs),
+            "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs."
+        )
+        (
+            "TRANSACTION",
+            value<std::string>(&argument_.transaction),
+            "The encoded transaction file path. If not specified the transaction is written to STDOUT."
+        );
 
         return options;
     }
@@ -176,7 +184,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -186,7 +194,7 @@ public:
     {
         return argument_.transaction;
     }
-    
+
     /**
      * Set the value of the TRANSACTION argument.
      */
@@ -197,30 +205,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the lock_time option.
      */
     virtual uint32_t& get_lock_time_option()
     {
         return option_.lock_time;
     }
-    
+
     /**
      * Set the value of the lock_time option.
      */
@@ -237,7 +228,7 @@ public:
     {
         return option_.version;
     }
-    
+
     /**
      * Set the value of the version option.
      */
@@ -254,7 +245,7 @@ public:
     {
         return option_.inputs;
     }
-    
+
     /**
      * Set the value of the input options.
      */
@@ -271,7 +262,7 @@ public:
     {
         return option_.outputs;
     }
-    
+
     /**
      * Set the value of the output options.
      */
@@ -294,10 +285,10 @@ private:
           : transaction()
         {
         }
-        
+
         std::string transaction;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -306,15 +297,13 @@ private:
     struct option
     {
         option()
-          : help(),
-            lock_time(),
+          : lock_time(),
             version(),
             inputs(),
             outputs()
         {
         }
-        
-        bool help;
+
         uint32_t lock_time;
         uint32_t version;
         std::vector<primitives::input> inputs;

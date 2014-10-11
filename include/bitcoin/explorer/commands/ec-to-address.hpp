@@ -92,6 +92,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Convert an EC public key to a Bitcoin address.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -101,7 +109,7 @@ public:
         return get_argument_metadata()
             .add("EC_PUBLIC_KEY", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -112,7 +120,7 @@ public:
     {
         load_input(get_ec_public_key_argument(), "EC_PUBLIC_KEY", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -125,26 +133,26 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Convert an EC public key to a Bitcoin address."
-            )
-            (
-                "version,v",
-                value<uint8_t>(&option_.version),
-                "The desired Bitcoin address version."
-            )
-            (
-                "EC_PUBLIC_KEY",
-                value<primitives::ec_public>(&argument_.ec_public_key),
-                "The Base16 EC public key to convert."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "version,v",
+            value<uint8_t>(&option_.version),
+            "The desired Bitcoin address version."
+        )
+        (
+            "EC_PUBLIC_KEY",
+            value<primitives::ec_public>(&argument_.ec_public_key),
+            "The Base16 EC public key to convert."
+        );
 
         return options;
     }
@@ -156,7 +164,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -166,7 +174,7 @@ public:
     {
         return argument_.ec_public_key;
     }
-    
+
     /**
      * Set the value of the EC_PUBLIC_KEY argument.
      */
@@ -177,30 +185,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the version option.
      */
     virtual uint8_t& get_version_option()
     {
         return option_.version;
     }
-    
+
     /**
      * Set the value of the version option.
      */
@@ -223,10 +214,10 @@ private:
           : ec_public_key()
         {
         }
-        
+
         primitives::ec_public ec_public_key;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -235,12 +226,10 @@ private:
     struct option
     {
         option()
-          : help(),
-            version()
+          : version()
         {
         }
-        
-        bool help;
+
         uint8_t version;
     } option_;
 };

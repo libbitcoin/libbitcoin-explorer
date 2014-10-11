@@ -114,6 +114,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Broadcast a transaction to the Bitcoin transaction pool via the Bitcoin peer-to-peer network.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -123,7 +131,7 @@ public:
         return get_argument_metadata()
             .add("TRANSACTION", -1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -134,7 +142,7 @@ public:
     {
         load_input(get_transactions_argument(), "TRANSACTION", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -147,26 +155,26 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Broadcast a transaction to the Bitcoin transaction pool via the Bitcoin peer-to-peer network."
-            )
-            (
-                "nodes,n",
-                value<size_t>(&option_.nodes)->default_value(2),
-                "The number of network nodes to send the transaction to, defaults to two."
-            )
-            (
-                "TRANSACTION",
-                value<std::vector<primitives::transaction>>(&argument_.transactions),
-                "The set of Base16 transactions. If not specified the transactions are read from STDIN."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "nodes,n",
+            value<size_t>(&option_.nodes)->default_value(2),
+            "The number of network nodes to send the transaction to, defaults to two."
+        )
+        (
+            "TRANSACTION",
+            value<std::vector<primitives::transaction>>(&argument_.transactions),
+            "The set of Base16 transactions. If not specified the transactions are read from STDIN."
+        );
 
         return options;
     }
@@ -178,7 +186,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -188,7 +196,7 @@ public:
     {
         return argument_.transactions;
     }
-    
+
     /**
      * Set the value of the TRANSACTION arguments.
      */
@@ -199,30 +207,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the nodes option.
      */
     virtual size_t& get_nodes_option()
     {
         return option_.nodes;
     }
-    
+
     /**
      * Set the value of the nodes option.
      */
@@ -245,10 +236,10 @@ private:
           : transactions()
         {
         }
-        
+
         std::vector<primitives::transaction> transactions;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -257,12 +248,10 @@ private:
     struct option
     {
         option()
-          : help(),
-            nodes()
+          : nodes()
         {
         }
-        
-        bool help;
+
         size_t nodes;
     } option_;
 };

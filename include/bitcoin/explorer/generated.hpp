@@ -126,6 +126,8 @@ namespace explorer {
     "USAGE: bx COMMAND [--help]"
 #define BX_CONFIG_DESCRIPTION \
     "The path to the configuration settings file."
+#define BX_HELP_DESCRIPTION \
+    "Get a description and instructions for this command."
 #define BX_HOME_PAGE_HEADER \
     "Bitcoin Explorer home page:"
 #define BX_INVALID_COMMAND \

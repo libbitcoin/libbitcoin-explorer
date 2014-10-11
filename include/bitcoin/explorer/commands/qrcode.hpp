@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Generate a QR code image file for a Bitcoin address.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -107,7 +115,7 @@ public:
         return get_argument_metadata()
             .add("BITCOIN_ADDRESS", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -118,7 +126,7 @@ public:
     {
         load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -131,26 +139,26 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Generate a QR code image file for a Bitcoin address."
-            )
-            (
-                "file,f",
-                value<std::string>(&option_.file),
-                "The image file path. If not specified the image is written to STDOUT."
-            )
-            (
-                "BITCOIN_ADDRESS",
-                value<primitives::address>(&argument_.bitcoin_address),
-                "The Bitcoin address."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "file,f",
+            value<std::string>(&option_.file),
+            "The image file path. If not specified the image is written to STDOUT."
+        )
+        (
+            "BITCOIN_ADDRESS",
+            value<primitives::address>(&argument_.bitcoin_address),
+            "The Bitcoin address."
+        );
 
         return options;
     }
@@ -162,7 +170,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -172,7 +180,7 @@ public:
     {
         return argument_.bitcoin_address;
     }
-    
+
     /**
      * Set the value of the BITCOIN_ADDRESS argument.
      */
@@ -183,30 +191,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the file option.
      */
     virtual std::string& get_file_option()
     {
         return option_.file;
     }
-    
+
     /**
      * Set the value of the file option.
      */
@@ -229,10 +220,10 @@ private:
           : bitcoin_address()
         {
         }
-        
+
         primitives::address bitcoin_address;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -241,12 +232,10 @@ private:
     struct option
     {
         option()
-          : help(),
-            file()
+          : file()
         {
         }
-        
-        bool help;
+
         std::string file;
     } option_;
 };

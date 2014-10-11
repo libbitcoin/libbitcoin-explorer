@@ -30,17 +30,24 @@ using namespace bc::explorer;
 BOOST_AUTO_TEST_SUITE(utility)
 BOOST_AUTO_TEST_SUITE(utility__printer)
 
-#define BX_APPLICATION "bx"
+#define BX_APPLICATION "BX"
 #define BX_COMMAND "COMMAND"
+#define BX_CATEGORY "CATEGORY"
+#define BX_DESCRIPTION "DESCRIPTION"
 
 #define BX_PRINTER_SETUP_ARGUMENTS(initializer) \
     options_metadata options; \
     arguments_metadata arguments; \
     initializer; \
-    printer help(BX_APPLICATION, BX_COMMAND, arguments, options)
+    printer help(BX_APPLICATION, BX_CATEGORY, BX_COMMAND, BX_DESCRIPTION, arguments, options)
 
 #define BX_PRINTER_SETUP() \
     BX_PRINTER_SETUP_ARGUMENTS(options.add_options())
+
+#define BX_PRINTER_INITIALIZE(number_of_parameters, number_of_names) \
+    help.initialize(); \
+    BOOST_REQUIRE_EQUAL(help.get_parameters().size(), number_of_parameters); \
+    BOOST_REQUIRE_EQUAL(help.get_argument_names().size(), number_of_names)
 
 // ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(printer__columnize)
@@ -124,6 +131,100 @@ BOOST_AUTO_TEST_CASE(printer__columnize__excess_whitespace_width_10__whitespace_
 BOOST_AUTO_TEST_SUITE_END()
 
 // ------------------------------------------------------------------------- //
+BOOST_AUTO_TEST_SUITE(printer__format_parameters_table)
+
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__empty_positional__empty)
+{
+    BX_PRINTER_SETUP();
+    BOOST_REQUIRE_EQUAL(help.format_parameters_table(true), "");
+}
+
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__empty_named__empty)
+{
+    BX_PRINTER_SETUP();
+    BOOST_REQUIRE_EQUAL(help.format_parameters_table(false), "");
+}
+
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_positional__empty)
+{
+    BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
+        ("long", "Long name only.")
+        ("short_long,s", "Long and short name.")
+        (",m", "Short name only."));
+    BX_PRINTER_INITIALIZE(3, 0);
+    auto table = help.format_parameters_table(true);
+    BOOST_REQUIRE_EQUAL(table, "");
+}
+
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_named__expected_table)
+{
+    BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
+        ("long", "Long name only.")
+        ("short_long,s", "Long and short name.")
+        (",m", "Short name only."));
+    BX_PRINTER_INITIALIZE(3, 0);
+    auto table = help.format_parameters_table(false);
+    BOOST_REQUIRE_EQUAL(table,
+        "--long                  Long name only.                                        \n"
+        "-s [ --short_long ]     Long and short name.                                   \n"
+        "-m                      Short name only.                                       \n"
+    );
+}
+
+//BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_unused_arguments_named__expected_table)
+//{
+//    BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
+//        ("first,f", "First option description.")
+//        ("second,x", "Second option description.")
+//        ("third", "Third option description.");
+//        arguments.add("forty-two", 42);
+//        arguments.add("negative-one", -1));
+//    BX_PRINTER_INITIALIZE(3, 2);
+//    auto table = help.format_parameters_table(false);
+//    BOOST_REQUIRE_EQUAL(table, "TODO");
+//}
+
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_two_arguments_named__expected_table)
+{
+    BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
+        ("first,f", "First option description.")
+        ("second,x", "Second option description.")
+        ("third", "Third option description.");
+        arguments.add("SECOND", 42);
+        arguments.add("THIRD", -1));
+    BX_PRINTER_INITIALIZE(3, 2);
+    auto table = help.format_parameters_table(false);
+    BOOST_REQUIRE_EQUAL(table,
+        "-f [ --first ]          First option description.                              \n"
+        "-x [ --second ]         Second option description.                             \n"
+        "--third                 Third option description.                              \n"
+    );
+}
+
+BOOST_AUTO_TEST_CASE(printer__format_parameters_table__three_options_two_arguments_positional__expected_table)
+{
+    BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
+        ("first,f", "First option description.")
+        ("second,x", "Second option description.")
+        ("third", "Third option description.");
+        arguments.add("SECOND", 42);
+        arguments.add("THIRD", -1));
+    BX_PRINTER_INITIALIZE(3, 2);
+    auto table = help.format_parameters_table(true);
+    BOOST_REQUIRE_EQUAL(table,
+        "-f [ --first ]          First option description.                              \n"
+        "-x [ --second ]         Second option description.                             \n"
+        "--third                 Third option description.                              \n"
+    );
+}
+
+// Mixed
+
+// Overflow Text
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(printer__generate_argument_names)
 
 #define BX_PRINTER_GENERATE_ARGUMENT_NAMES(number_of_names) \
@@ -139,6 +240,7 @@ BOOST_AUTO_TEST_CASE(printer__generate_argument_names__empty_arguments_empty_opt
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__empty_arguments_multiple_options__empty)
 {
     BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
+        ("long", "Long name only.")
         ("short_long,s", "Long and short name.")
         (",m", "Short name only."));
     BX_PRINTER_GENERATE_ARGUMENT_NAMES(0);
@@ -251,11 +353,6 @@ BOOST_AUTO_TEST_SUITE_END()
 // ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(printer__initialize)
 
-#define BX_PRINTER_INITIALIZE(number_of_parameters, number_of_names) \
-    help.initialize(); \
-    BOOST_REQUIRE(help.get_parameters().size() == number_of_parameters); \
-    BOOST_REQUIRE(help.get_argument_names().size() == number_of_names)
-
 BOOST_AUTO_TEST_CASE(printer__initialize__multitple_options__expected_parameters)
 {
     BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
@@ -276,14 +373,5 @@ BOOST_AUTO_TEST_CASE(printer__initialize__multitple_options__expected_parameters
 
 BOOST_AUTO_TEST_SUITE_END()
 
-// ------------------------------------------------------------------------- //
-BOOST_AUTO_TEST_SUITE(printer__print)
-
-BOOST_AUTO_TEST_CASE(printer__print__todo)
-{
-}
-
-BOOST_AUTO_TEST_SUITE_END()
-
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END() // utility__printer
+BOOST_AUTO_TEST_SUITE_END() // utility

@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Derive a child HD (BIP32) public key from another HD public or private key.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -107,7 +115,7 @@ public:
         return get_argument_metadata()
             .add("HD_PUBLIC_KEY", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -118,7 +126,7 @@ public:
     {
         load_input(get_hd_public_key_argument(), "HD_PUBLIC_KEY", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -131,31 +139,31 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Derive a child HD (BIP32) public key from another HD public or private key."
-            )
-            (
-                "hard,d",
-                value<bool>(&option_.hard)->implicit_value(true),
-                "Signal to create a hardened key."
-            )
-            (
-                "index,i",
-                value<uint32_t>(&option_.index),
-                "The HD index, defaults to zero."
-            )
-            (
-                "HD_PUBLIC_KEY",
-                value<primitives::hd_key>(&argument_.hd_public_key),
-                "The parent HD public or private key."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "hard,d",
+            value<bool>(&option_.hard)->implicit_value(true),
+            "Signal to create a hardened key."
+        )
+        (
+            "index,i",
+            value<uint32_t>(&option_.index),
+            "The HD index, defaults to zero."
+        )
+        (
+            "HD_PUBLIC_KEY",
+            value<primitives::hd_key>(&argument_.hd_public_key),
+            "The parent HD public or private key."
+        );
 
         return options;
     }
@@ -167,7 +175,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -177,7 +185,7 @@ public:
     {
         return argument_.hd_public_key;
     }
-    
+
     /**
      * Set the value of the HD_PUBLIC_KEY argument.
      */
@@ -188,30 +196,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the hard option.
      */
     virtual bool& get_hard_option()
     {
         return option_.hard;
     }
-    
+
     /**
      * Set the value of the hard option.
      */
@@ -228,7 +219,7 @@ public:
     {
         return option_.index;
     }
-    
+
     /**
      * Set the value of the index option.
      */
@@ -251,10 +242,10 @@ private:
           : hd_public_key()
         {
         }
-        
+
         primitives::hd_key hd_public_key;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -263,13 +254,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            hard(),
+          : hard(),
             index()
         {
         }
-        
-        bool help;
+
         bool hard;
         uint32_t index;
     } option_;

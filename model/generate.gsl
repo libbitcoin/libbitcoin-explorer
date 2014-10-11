@@ -211,6 +211,7 @@
 .endfunction
 .
 .config_description = resource("BX_CONFIG_DESCRIPTION")
+.help_description = resource("BX_HELP_DESCRIPTION")
 .config_option = "config"
 .type_bool = "bool"
 .type_address = "address"
@@ -395,11 +396,14 @@ namespace explorer {
 class command
 {
 public:
-    
+
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "not-implemented"; }
+    static const char* symbol()
+    {
+        return "not-implemented";
+    }
 
     /**
      * The symbolic (not localizable) command name, lower case.
@@ -416,9 +420,18 @@ public:
      */
     virtual const char* category()
     {
-        return symbol();
+        return "not-implemented";
     }
-    
+
+    /**
+     * The localizable command description.
+     * @return  Example: "Get transactions by hash."
+     */
+    virtual const char* description()
+    {
+        return "not-implemented";
+    }
+
     /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
@@ -448,15 +461,15 @@ public:
     {
         using namespace po;
         definitions.add_options()
-            /* This composes with the command line options. */
-            (
-                BX_CONFIG_VARIABLE, 
-                value<boost::filesystem::path>()
-                    ->composing()->default_value(config_default()),
-                "$(config_description:)"
-            );
+        /* This composes with the command line options. */
+        (
+            BX_CONFIG_VARIABLE, 
+            value<boost::filesystem::path>()
+                ->composing()->default_value(config_default()),
+            "$(config_description:)"
+        );
     }
-    
+
     /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input      The input stream for loading the parameters.
@@ -478,7 +491,7 @@ public:
     {
         return option_metadata_;
     }
-    
+
     /**
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
@@ -496,15 +509,15 @@ public:
             pretty(name, "lower,c")
 .       expression = value_semantic(!true(), !true(), type,\
             is_xml_true(required), is_xml_true(multiple), variable, default)
-            (
-                "$(identifiers:)",
-                $(expression),
-                "$(description:)"
-            )$(is_last_setting ?? ";")
+        (
+            "$(identifiers:)",
+            $(expression),
+            "$(description:)"
+        )$(is_last_setting ?? ";")
 .   endfor
 .endfor
     }
-	
+
     /**
      * Load streamed value as parameter fallback.
      * @param[in]  input      The input stream for loading the parameter.
@@ -522,11 +535,12 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        printer help(BX_PROGRAM_NAME, name(), arguments, options);
+        printer help(BX_PROGRAM_NAME, category(), name(), description(),
+            arguments, options);
         help.initialize();
         help.print(output);
     }
-    
+
     /* Properties */
     
     /**
@@ -536,7 +550,7 @@ public:
     {
         return argument_metadata_;
     }
-    
+
     /**
      * Get command line option metadata.
      */
@@ -567,7 +581,7 @@ public:
     {
         setting_.$(section:c).$(pluralized_name:c) = value;
     }
-    
+
 .   endfor
 .endfor
 protected:
@@ -579,7 +593,7 @@ protected:
     command()
     {
     }
-    
+
 private:
     
     /**
@@ -591,7 +605,7 @@ private:
      * Command line option metadata.
      */
     options_metadata option_metadata_;
-    
+
     /**
      * Environment variable bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -602,7 +616,7 @@ private:
         environment()
         {
         }
-        
+
 .# There is no reason to expose the config path, as the config has been read.
 .#      boost::filesystem::path config;
     } environment_;
@@ -625,7 +639,7 @@ private:
 .   endfor
             {
             }
-            
+
 .   for setting
 .       is_vector = is_xml_true(multiple)
 .       setting_type = default_type(!true(), type)
@@ -716,6 +730,14 @@ public:
         return "$(category:)";
     }
 
+    /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "$(description:)";
+    }    
+
 .
 .# HACK: There must be a better way to count a collection.
 .argument_count = 0
@@ -739,7 +761,7 @@ public:
             .add("$(name:)", $(limit ? "1"))$(last() ?? ";")
 .endfor
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -775,7 +797,7 @@ public:
 .   endif
 .endfor
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -788,12 +810,16 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "$(config_description:)"
-            )
-.# TODO: How to block the description so as not to exceed max line length?
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "$(config_description:)"
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "$(help_description:)"
+        )$(((argument_count = 0) & (option_count = 0 )) ?? ";")
 .for option
 .   short_name = shortcut ? first_char(name)
 .   identifiers = name
@@ -801,21 +827,21 @@ public:
 .   variable = "option_." + pretty(name, "lower,c")
 .   expression = value_semantic(is_xml_true(option.file), true(), type,\
         is_xml_true(required), is_xml_true(multiple), variable, default)
-            (
-                "$(identifiers:)",
-                $(expression:),
-                "$(description:)"
-            )$((last() & (argument_count = 0)) ?? ";")
+        (
+            "$(identifiers:)",
+            $(expression:),
+            "$(description:)"
+        )$((last() & (argument_count = 0)) ?? ";")
 .endfor
 .for argument
 .   variable = "argument_." + pretty(name, "lower,c")
 .   expression = value_semantic(is_xml_true(argument.file), !true(), type,\
         is_xml_true(required), !is_default(limit, 1), variable)
-            (
-                "$(name:)",
-                $(expression:),
-                "$(description:)"
-            )$(last() ?? ";")
+        (
+            "$(name:)",
+            $(expression:),
+            "$(description:)"
+        )$(last() ?? ";")
 .endfor
 
         return options;
@@ -828,7 +854,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
 .for argument
@@ -844,7 +870,7 @@ public:
     {
         return argument_.$(pluralized_name:c);
     }
-    
+
     /**
      * Set the value of the $(name:) $(pluralized_argument:).
      */
@@ -868,7 +894,7 @@ public:
     {
         return option_.$(pluralized_name:c);
     }
-    
+
     /**
      * Set the value of the $(name:) $(pluralized_option:).
      */
@@ -896,7 +922,7 @@ private:
 .   endfor
         {
         }
-        
+
 .for argument
 .   is_vector = !is_default(limit, 1)
 .   argument_type = default_type(!true(), type)
@@ -905,7 +931,7 @@ private:
         $(vector_type:) $(pluralized_name:c);
 .endfor            
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -921,7 +947,7 @@ private:
 .endfor
         {
         }
-        
+
 .for option
 .   is_vector = is_xml_true(multiple)
 .   option_type = default_type(true(), type)

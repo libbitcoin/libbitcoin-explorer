@@ -102,6 +102,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Create a signature for a transaction input.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -111,10 +119,10 @@ public:
         return get_argument_metadata()
             .add("EC_PRIVATE_KEY", 1)
             .add("NONCE", 1)
-            .add("PREVIOUS_OUTPUT_SCRIPT", 1)
+            .add("PREVOUT_SCRIPT", 1)
             .add("TRANSACTION", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -124,7 +132,7 @@ public:
         po::variables_map& variables)
     {
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -137,46 +145,46 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Create a signature for a transaction input."
-            )
-            (
-                "index,i",
-                value<size_t>(&option_.index),
-                "The ordinal position of the input within the transaction, defaults to zero."
-            )
-            (
-                "signature_type,s",
-                value<primitives::hashtype>(&option_.signature_type),
-                "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
-            )
-            (
-                "EC_PRIVATE_KEY",
-                value<primitives::ec_private>(&argument_.ec_private_key)->required(),
-                "The Base16 EC private key to sign with."
-            )
-            (
-                "NONCE",
-                value<primitives::base16>(&argument_.nonce)->required(),
-                "The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length."
-            )
-            (
-                "PREVIOUS_OUTPUT_SCRIPT",
-                value<primitives::script>(&argument_.previous_output_script),
-                "The previous output script to use in signing."
-            )
-            (
-                "TRANSACTION",
-                value<primitives::transaction>(&argument_.transaction)->required(),
-                "The Base16 transaction. If not specified the transaction is read from STDIN."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "index,i",
+            value<size_t>(&option_.index),
+            "The ordinal position of the input within the transaction, defaults to zero."
+        )
+        (
+            "signature_type,s",
+            value<primitives::hashtype>(&option_.signature_type),
+            "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
+        )
+        (
+            "EC_PRIVATE_KEY",
+            value<primitives::ec_private>(&argument_.ec_private_key)->required(),
+            "The Base16 EC private key to sign with."
+        )
+        (
+            "NONCE",
+            value<primitives::base16>(&argument_.nonce)->required(),
+            "The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length."
+        )
+        (
+            "PREVOUT_SCRIPT",
+            value<primitives::script>(&argument_.prevout_script),
+            "The previous output script to use in signing."
+        )
+        (
+            "TRANSACTION",
+            value<primitives::transaction>(&argument_.transaction)->required(),
+            "The Base16 transaction. If not specified the transaction is read from STDIN."
+        );
 
         return options;
     }
@@ -188,7 +196,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -198,7 +206,7 @@ public:
     {
         return argument_.ec_private_key;
     }
-    
+
     /**
      * Set the value of the EC_PRIVATE_KEY argument.
      */
@@ -215,7 +223,7 @@ public:
     {
         return argument_.nonce;
     }
-    
+
     /**
      * Set the value of the NONCE argument.
      */
@@ -226,20 +234,20 @@ public:
     }
 
     /**
-     * Get the value of the PREVIOUS_OUTPUT_SCRIPT argument.
+     * Get the value of the PREVOUT_SCRIPT argument.
      */
-    virtual primitives::script& get_previous_output_script_argument()
+    virtual primitives::script& get_prevout_script_argument()
     {
-        return argument_.previous_output_script;
+        return argument_.prevout_script;
     }
-    
+
     /**
-     * Set the value of the PREVIOUS_OUTPUT_SCRIPT argument.
+     * Set the value of the PREVOUT_SCRIPT argument.
      */
-    virtual void set_previous_output_script_argument(
+    virtual void set_prevout_script_argument(
         const primitives::script& value)
     {
-        argument_.previous_output_script = value;
+        argument_.prevout_script = value;
     }
 
     /**
@@ -249,7 +257,7 @@ public:
     {
         return argument_.transaction;
     }
-    
+
     /**
      * Set the value of the TRANSACTION argument.
      */
@@ -260,30 +268,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the index option.
      */
     virtual size_t& get_index_option()
     {
         return option_.index;
     }
-    
+
     /**
      * Set the value of the index option.
      */
@@ -300,7 +291,7 @@ public:
     {
         return option_.signature_type;
     }
-    
+
     /**
      * Set the value of the signature_type option.
      */
@@ -322,17 +313,17 @@ private:
         argument()
           : ec_private_key(),
             nonce(),
-            previous_output_script(),
+            prevout_script(),
             transaction()
         {
         }
-        
+
         primitives::ec_private ec_private_key;
         primitives::base16 nonce;
-        primitives::script previous_output_script;
+        primitives::script prevout_script;
         primitives::transaction transaction;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -341,13 +332,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            index(),
+          : index(),
             signature_type()
         {
         }
-        
-        bool help;
+
         size_t index;
         primitives::hashtype signature_type;
     } option_;

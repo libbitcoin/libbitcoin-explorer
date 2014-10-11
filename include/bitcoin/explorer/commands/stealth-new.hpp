@@ -92,6 +92,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Create a new stealth public key from which a payment address can be generated. A unique ephemeral secret should be used for each stealth payment.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -103,7 +111,7 @@ public:
             .add("SCAN_PUBKEY", 1)
             .add("SPEND_PUBKEY", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -113,7 +121,7 @@ public:
         po::variables_map& variables)
     {
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -126,31 +134,31 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Create a new stealth public key from which a payment address can be generated. A unique ephemeral secret should be used for each stealth payment."
-            )
-            (
-                "EPHEMERAL_SECRET",
-                value<primitives::ec_private>(&argument_.ephemeral_secret),
-                "The Base16 ephemeral EC private key used to generate stealth payment metadata."
-            )
-            (
-                "SCAN_PUBKEY",
-                value<primitives::ec_public>(&argument_.scan_pubkey),
-                "The Base16 EC public key required to generate a stealth address."
-            )
-            (
-                "SPEND_PUBKEY",
-                value<primitives::ec_public>(&argument_.spend_pubkey)->required(),
-                "A Base16 EC public key corresponding to a private key that can spend payments to the stealth address."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "EPHEMERAL_SECRET",
+            value<primitives::ec_private>(&argument_.ephemeral_secret),
+            "The Base16 ephemeral EC private key used to generate stealth payment metadata."
+        )
+        (
+            "SCAN_PUBKEY",
+            value<primitives::ec_public>(&argument_.scan_pubkey),
+            "The Base16 EC public key required to generate a stealth address."
+        )
+        (
+            "SPEND_PUBKEY",
+            value<primitives::ec_public>(&argument_.spend_pubkey)->required(),
+            "A Base16 EC public key corresponding to a private key that can spend payments to the stealth address."
+        );
 
         return options;
     }
@@ -162,7 +170,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -172,7 +180,7 @@ public:
     {
         return argument_.ephemeral_secret;
     }
-    
+
     /**
      * Set the value of the EPHEMERAL_SECRET argument.
      */
@@ -189,7 +197,7 @@ public:
     {
         return argument_.scan_pubkey;
     }
-    
+
     /**
      * Set the value of the SCAN_PUBKEY argument.
      */
@@ -206,7 +214,7 @@ public:
     {
         return argument_.spend_pubkey;
     }
-    
+
     /**
      * Set the value of the SPEND_PUBKEY argument.
      */
@@ -214,23 +222,6 @@ public:
         const primitives::ec_public& value)
     {
         argument_.spend_pubkey = value;
-    }
-
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
     }
 
 private:
@@ -248,12 +239,12 @@ private:
             spend_pubkey()
         {
         }
-        
+
         primitives::ec_private ephemeral_secret;
         primitives::ec_public scan_pubkey;
         primitives::ec_public spend_pubkey;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -262,11 +253,9 @@ private:
     struct option
     {
         option()
-          : help()
         {
         }
-        
-        bool help;
+
     } option_;
 };
 

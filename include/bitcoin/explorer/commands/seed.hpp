@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Generate a pseudorandom seed.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -106,7 +114,7 @@ public:
     {
         return get_argument_metadata();
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -116,7 +124,7 @@ public:
         po::variables_map& variables)
     {
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -129,21 +137,21 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path to the configuration settings file."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Generate a pseudorandom seed."
-            )
-            (
-                "bit_length,b",
-                value<size_t>(&option_.bit_length)->default_value(128),
-                "The length of the seed in bits. Must be divisible by 8 and must not be less than 128."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "bit_length,b",
+            value<size_t>(&option_.bit_length)->default_value(128),
+            "The length of the seed in bits. Must be divisible by 8 and must not be less than 128."
+        );
 
         return options;
     }
@@ -155,25 +163,8 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
-    /* Properties */
 
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
+    /* Properties */
 
     /**
      * Get the value of the bit_length option.
@@ -182,7 +173,7 @@ public:
     {
         return option_.bit_length;
     }
-    
+
     /**
      * Set the value of the bit_length option.
      */
@@ -204,9 +195,9 @@ private:
         argument()
         {
         }
-        
+
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -215,12 +206,10 @@ private:
     struct option
     {
         option()
-          : help(),
-            bit_length()
+          : bit_length()
         {
         }
-        
-        bool help;
+
         size_t bit_length;
     } option_;
 };
