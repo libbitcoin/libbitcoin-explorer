@@ -123,8 +123,6 @@ public:
 
     /**
      * Load program option definitions.
-     * The implicit_value call allows flags to be strongly-typed on read while
-     * allowing but not requiring a value on the command line for the option.
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
@@ -134,14 +132,14 @@ public:
         options_description& options = get_option_metadata();
         options.add_options()
         (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->zero_tokens(),
+            "Get a description and instructions for this command."
+        )
+        (
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            BX_HELP_VARIABLE ",h",
-            value<bool>()->implicit_value(true),
-            "Get a description and instructions for this command."
         )
         (
             "format,f",
@@ -151,7 +149,7 @@ public:
         (
             "HASH",
             value<std::vector<primitives::btc256>>(&argument_.hashs),
-            "The set of Base16 transaction hashes of transactions to get."
+            "The set of Base16 transaction hashes of transactions to get. If not specified the transaction hashes are read from STDIN."
         );
 
         return options;

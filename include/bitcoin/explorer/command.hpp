@@ -154,8 +154,6 @@ public:
 
     /**
      * Load command option definitions.
-     * The implicit_value call allows flags to be strongly-typed on read while
-     * allowing but not requiring a value on the command line for the option.
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */

@@ -37,14 +37,19 @@
 #define BX_PRINTER_VALUE_TEXT "VALUE"
 
 // Not localizable formatters.
-// %2% <- BX_PRINTER_VALUE_TEXT
-#define BX_PRINTER_USAGE_OPTION_TOGGLE_FORMAT "[-%1%]"
-#define BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT "-%1% %2%"
-#define BX_PRINTER_USAGE_OPTION_OPTIONAL_FORMAT "[-%1% %2%]"
-#define BX_PRINTER_USAGE_OPTION_VARIABLE_FORMAT "[-%1% %2%]..."
-#define BX_PRINTER_USAGE_ARGUMENT_REQUIRED_FORMAT "%1%"
-#define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT "[%1%]"
-#define BX_PRINTER_USAGE_ARGUMENT_VARIABLE_FORMAT "[%1%]..."
+#define BX_PRINTER_USAGE_OPTION_TABLE_FORMAT "-%1% [--%2%]"
+#define BX_PRINTER_USAGE_OPTION_LONG_TABLE_FORMAT "--%1%"
+#define BX_PRINTER_USAGE_OPTION_SHORT_TABLE_FORMAT "-%1%"
+#define BX_PRINTER_USAGE_ARGUMENT_TABLE_FORMAT "%1%"
+
+#define BX_PRINTER_USAGE_OPTION_TOGGLE_FORMAT " [-%1%]"
+#define BX_PRINTER_USAGE_OPTION_MULTIPLE_FORMAT " [--%1% %2%]..."
+#define BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT " --%1% %2%"
+#define BX_PRINTER_USAGE_OPTION_OPTIONAL_FORMAT " [--%1% %2%]"
+
+#define BX_PRINTER_USAGE_ARGUMENT_MULTIPLE_FORMAT " [%1%]..."
+#define BX_PRINTER_USAGE_ARGUMENT_REQUIRED_FORMAT " %1%"
+#define BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT " [%1%]"
 
 using namespace bc::explorer;
 
@@ -93,33 +98,56 @@ std::vector<std::string> printer::columnize(const std::string& paragraph,
 }
 
 // 100% component tested.
-// This formats to 80 char width as: [ 23 | ' ' | 55 | '\n' ]
+static format format_row_name(const parameter& value)
+{
+    if (value.get_position() != parameter::not_positional)
+        return format(BX_PRINTER_USAGE_ARGUMENT_TABLE_FORMAT) %
+            value.get_long_name();
+    else if (value.get_short_name() == parameter::no_short_name)
+        return format(BX_PRINTER_USAGE_OPTION_LONG_TABLE_FORMAT) %
+        value.get_long_name();
+    else if (value.get_long_name().empty())
+        return format(BX_PRINTER_USAGE_OPTION_SHORT_TABLE_FORMAT) %
+            value.get_short_name();
+    else
+        return format(BX_PRINTER_USAGE_OPTION_TABLE_FORMAT) %
+            value.get_short_name() % value.get_long_name();
+}
+
+// 100% component tested.
+static bool match_positional(bool positional, const parameter& value)
+{
+    auto positioned = value.get_position() != parameter::not_positional;
+    return positioned == positional;
+}
+
+// 100% component tested.
+// This formats to 80 char width as: [ 20 | ' ' | 58 | '\n' ]
 std::string printer::format_parameters_table(bool positional)
 {
     std::stringstream output;
     const auto& parameters = get_parameters();
-    format table("%-23s %-55s\n");
+    format table_format("%-20s %-58s\n");
 
     for (const auto& parameter: parameters)
     {
-        // Skip positional arguments.
-        if ((parameter.get_position() == -1 && positional) || 
-            (parameter.get_position() != -1 && !positional))
+        // Skip positional arguments if not positional.
+        if (!match_positional(positional, parameter))
             continue;
 
         // Get the formatted parameter name.
-        std::string name(parameter.get_format_name());
+        auto name = format_row_name(parameter).str();
 
         // Build a column for the description.
-        const auto rows = columnize(parameter.get_description(), 55);
+        const auto rows = columnize(parameter.get_description(), 58);
 
         // If there is no description the command is not output!
         for (const auto& row: rows)
         {
-            output << table % name % row;
+            output << table_format % name % row;
 
             // The name is only set in the first row.
-            name = "";
+            name.clear();
         }
     }
 
@@ -128,7 +156,8 @@ std::string printer::format_parameters_table(bool positional)
 
 std::string printer::format_usage()
 {
-    // USAGE: bx COMMAND [-hvt] -n VALUE [-m VALUE] [-w VALUE]... REQUIRED [OPTIONAL] [MULTIPLE]...
+    // USAGE: bx COMMAND [-hvt] -n VALUE [-m VALUE] [-w VALUE]... REQUIRED 
+    // [OPTIONAL] [MULTIPLE]...
     auto usage = format(BX_PRINTER_USAGE_FORMAT) % get_application() %
         get_command() % format_usage_parameters();
     return usage.str();
@@ -150,56 +179,93 @@ std::string printer::format_description()
 
 std::string printer::format_usage_parameters()
 {
-    //std::vector<std::string> words;
+    std::string toggle_options;
+    std::vector<std::string> required_options;
+    std::vector<std::string> optional_options;
+    std::vector<std::string> multiple_options;
+    std::vector<std::string> required_arguments;
+    std::vector<std::string> optional_arguments;
+    std::vector<std::string> multiple_arguments;
 
-    //words.push_back(format_usage_toggle_options());
-    //words.push_back(format_usage_required_options());
-    //words.push_back(format_usage_optional_options());
-    //words.push_back(format_usage_multivalued_options());
+    std::stringstream output;
+    const auto& parameters = get_parameters();
+    
+    for (const auto& parameter: parameters)
+    {
+        // A required argument may only be preceeded by required arguments.
+        // Requiredness may be in error if the metadata is inconsistent.
+        auto required = parameter.get_required();
 
-    //words.push_back(format_usage_required_arguments());
-    //words.push_back(format_usage_optional_arguments());
-    //words.push_back(format_usage_multivalued_arguments());
+        // Options are named and args are positional.
+        auto option = parameter.get_position() == parameter::not_positional;
 
-    //std::string sentence;
-    //join(words, sentence);
+        // In terms of formatting we treat all multivalued as not required.
+        auto multiple = parameter.get_args_limit() > 1;
 
-    return "";
-}
+        // This will capture only options with zero_tokens() specified.
+        auto toggle = parameter.get_args_limit() == 0;
 
-std::string printer::format_usage_toggle_options()
-{
-    return "format_usage_toggle_options";
-}
+        if (toggle)
+        {
+            toggle_options.push_back(parameter.get_short_name());
+            continue;
+        }
 
-std::string printer::format_usage_required_options()
-{
-    return "format_usage_required_options";
-}
+        const auto& long_name = parameter.get_long_name();
 
-std::string printer::format_usage_optional_options()
-{
-    return "format_usage_optional_options";
-}
+        if (option)
+        {
+            if (multiple)
+                multiple_options.push_back(long_name);
+            else if (required)
+                required_options.push_back(long_name);
+            else
+                optional_options.push_back(long_name);
+        }
+        else
+        {
+            if (multiple)
+                multiple_arguments.push_back(long_name);
+            else if (required)
+                required_arguments.push_back(long_name);
+            else
+                optional_arguments.push_back(long_name);
+        }
+    }
 
-std::string printer::format_usage_multivalued_options()
-{
-    return "format_usage_multivalue_options";
-}
+    std::stringstream usage;
 
-std::string printer::format_usage_required_arguments()
-{
-    return "format_usage_required_arguments";
-}
+    if (!toggle_options.empty())
+        usage << format(BX_PRINTER_USAGE_OPTION_TOGGLE_FORMAT) % 
+            toggle_options;
 
-std::string printer::format_usage_optional_arguments()
-{
-    return "format_usage_optional_arguments";
-}
+    for (const auto& required_option: required_options)
+        usage << format(BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT) % 
+            required_option % BX_PRINTER_VALUE_TEXT;
 
-std::string printer::format_usage_multivalued_arguments()
-{
-    return "format_usage_multivalue_arguments";
+    for (const auto& multiple_option: multiple_options)
+        usage << format(BX_PRINTER_USAGE_OPTION_MULTIPLE_FORMAT) % 
+            multiple_option % BX_PRINTER_VALUE_TEXT;
+
+    for (const auto& optional_option: optional_options)
+        usage << format(BX_PRINTER_USAGE_OPTION_OPTIONAL_FORMAT) % 
+            optional_option % BX_PRINTER_VALUE_TEXT;
+
+    for (const auto& required_argument: required_arguments)
+        usage << format(BX_PRINTER_USAGE_ARGUMENT_REQUIRED_FORMAT) % 
+            required_argument;
+
+    for (const auto& multiple_argument: multiple_arguments)
+        usage << format(BX_PRINTER_USAGE_ARGUMENT_MULTIPLE_FORMAT) %
+            multiple_argument;
+
+    for (const auto& optional_argument: optional_arguments)
+        usage << format(BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT) %
+            optional_argument;
+
+    std::string clean_usage(usage.str());
+    trim(clean_usage);
+    return clean_usage;
 }
 
 /* Initialization */

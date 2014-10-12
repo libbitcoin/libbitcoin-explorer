@@ -37,6 +37,7 @@ enum opt
     simple,
     defaulty,
     required,
+    toggled,
     vector,
     multitoken
 };
@@ -52,6 +53,7 @@ static void load_test_options(options_metadata& options)
         ("simple", value<std::string>(), "Simple string.")
         ("defaulty", value<bool>()->default_value(true), "Defaulted bool.")
         ("required", value<path>()->required(), "Required path.")
+        ("toggled", value<bool>()->zero_tokens(), "Toggle only bool.")
         /* The enumerability of the data types does not control multiple,
            instance behavior but it is necessary to capture multiples. */
         ("VECTOR", value<std::vector<std::string>>(), "String vector.")
@@ -88,60 +90,58 @@ BOOST_AUTO_TEST_SUITE(utility__parameter)
 // ------------------------------------------------------------------------- //
 BOOST_AUTO_TEST_SUITE(parameter__position)
 
-BOOST_AUTO_TEST_CASE(parameter__position__short_and_long__returns_not)
+BOOST_AUTO_TEST_CASE(parameter__position__short_and_long__returns_not_positional)
 {
     BX_TEST_PARAMETER_SETUP(opt::short_long);
-    auto result = parameter.position(option, names);
-    BOOST_REQUIRE(result == -1);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), parameter::not_positional);
 }
 
-BOOST_AUTO_TEST_CASE(parameter__position__short_only__returns_not)
+BOOST_AUTO_TEST_CASE(parameter__position__short_only__returns_not_positional)
 {
     BX_TEST_PARAMETER_SETUP(opt::shorty);
-    auto result = parameter.position(option, names);
-    BOOST_REQUIRE(result == -1);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), parameter::not_positional);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__long_only__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::longy);
-    auto result = parameter.position(option, names);
-    BOOST_REQUIRE(result == 0);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), 0);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__simple__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::simple);
-    auto result = parameter.position(option, names);
-    BOOST_REQUIRE(result == 1);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), 1);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__defaulty__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::defaulty);
-    auto result = parameter.position(option, names);
-    BOOST_REQUIRE(result == 2);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), 2);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__required__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::required);
-    auto result = parameter.position(option, names);
-    BOOST_REQUIRE(result == 3);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), 3);
+}
+
+BOOST_AUTO_TEST_CASE(parameter__position__toggled__returns_not_positional)
+{
+    BX_TEST_PARAMETER_SETUP(opt::toggled);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), parameter::not_positional);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__vector__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::vector);
-    auto result = parameter.position(option, names);
-    BOOST_REQUIRE(result == 4);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), 4);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__position__multitoken__returns_expected_position)
 {
     BX_TEST_PARAMETER_SETUP(opt::multitoken);
-    auto result = parameter.position(option, names);
-    BOOST_REQUIRE(result == 5);
+    BOOST_REQUIRE_EQUAL(parameter.position(option, names), 5);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -153,191 +153,133 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__short_long__sets_limit_0)
 {
     BX_TEST_PARAMETER_SETUP(opt::short_long);
     parameter.initialize(option, names);
-    BOOST_REQUIRE(parameter.get_position() == -1);
-    BOOST_REQUIRE(parameter.get_args_limit() == 0);
-    BOOST_REQUIRE(parameter.get_required() == false);
-    BOOST_REQUIRE(parameter.get_short_name() == 's');
-    BOOST_REQUIRE(parameter.get_canonical_name() == "--short_long");
-    BOOST_REQUIRE(parameter.get_format_name() == "-s [ --short_long ]");
-    BOOST_REQUIRE(parameter.get_format_parameter() == "");
-    BOOST_REQUIRE(parameter.get_description() == "Long and short name.");
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), parameter::not_positional);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), 's');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "short_long");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "-s [ --short_long ]");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "Long and short name.");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__short_only__sets_limit_0)
 {
     BX_TEST_PARAMETER_SETUP(opt::shorty);
     parameter.initialize(option, names);
-    BOOST_REQUIRE(parameter.get_position() == -1);
-    BOOST_REQUIRE(parameter.get_args_limit() == 0);
-    BOOST_REQUIRE(parameter.get_required() == false);
-    BOOST_REQUIRE(parameter.get_short_name() == 'm');
-    BOOST_REQUIRE(parameter.get_canonical_name() == "-m");
-    BOOST_REQUIRE(parameter.get_format_name() == "-m");
-    BOOST_REQUIRE(parameter.get_format_parameter() == "");
-    BOOST_REQUIRE(parameter.get_description() == "Short name only.");
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), parameter::not_positional);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), 'm');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "-m");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "Short name only.");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__long_only__sets_limit_0)
 {
     BX_TEST_PARAMETER_SETUP(opt::longy);
     parameter.initialize(option, names);
-    BOOST_REQUIRE(parameter.get_position() == 0);
-    BOOST_REQUIRE(parameter.get_args_limit() == 0);
-    BOOST_REQUIRE(parameter.get_required() == false);
-    BOOST_REQUIRE(parameter.get_short_name() == '\0');
-    BOOST_REQUIRE(parameter.get_canonical_name() == "--longy");
-    BOOST_REQUIRE(parameter.get_format_name() == "--longy");
-    BOOST_REQUIRE(parameter.get_format_parameter() == "");
-    BOOST_REQUIRE(parameter.get_description() == "Long name only.");
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), 0);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "longy");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "--longy");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "Long name only.");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__simple__sets_limit_1)
 {
     BX_TEST_PARAMETER_SETUP(opt::simple);
     parameter.initialize(option, names);
-    BOOST_REQUIRE(parameter.get_position() == 1);
-    BOOST_REQUIRE(parameter.get_args_limit() == 1);
-    BOOST_REQUIRE(parameter.get_required() == false);
-    BOOST_REQUIRE(parameter.get_short_name() == '\0');
-    BOOST_REQUIRE(parameter.get_canonical_name() == "--simple");
-    BOOST_REQUIRE(parameter.get_format_name() == "--simple");
-    BOOST_REQUIRE(parameter.get_format_parameter() == "arg");
-    BOOST_REQUIRE(parameter.get_description() == "Simple string.");
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "simple");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "--simple");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "arg");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "Simple string.");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__defaulted__sets_limit_1)
 {
     BX_TEST_PARAMETER_SETUP(opt::defaulty);
     parameter.initialize(option, names);
-    BOOST_REQUIRE(parameter.get_position() == 2);
-    BOOST_REQUIRE(parameter.get_args_limit() == 1);
-    BOOST_REQUIRE(parameter.get_required() == false);
-    BOOST_REQUIRE(parameter.get_short_name() == '\0');
-    BOOST_REQUIRE(parameter.get_canonical_name() == "--defaulty");
-    BOOST_REQUIRE(parameter.get_format_name() == "--defaulty");
-    /* The (=1) appears to be the default value (as int), i.e. (=true) */
-    BOOST_REQUIRE(parameter.get_format_parameter() == "arg (=1)");
-    BOOST_REQUIRE(parameter.get_description() == "Defaulted bool.");
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), 2);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "defaulty");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "--defaulty");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "Defaulted bool.");
+
+    // The (=1) appears to be the default value (as int), i.e. (=true)
+    // This makes the bool type indistinguishable at the metadata level from
+    // an integer. So we must use zero_tokens() instead (see 'toggled' case).
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "arg (=1)");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__required__sets_limit_1)
 {
     BX_TEST_PARAMETER_SETUP(opt::required);
     parameter.initialize(option, names);
-    BOOST_REQUIRE(parameter.get_position() == 3);
-    BOOST_REQUIRE(parameter.get_args_limit() == 1);
-    BOOST_REQUIRE(parameter.get_required() == true);
-    BOOST_REQUIRE(parameter.get_short_name() == '\0');
-    BOOST_REQUIRE(parameter.get_canonical_name() == "--required");
-    BOOST_REQUIRE(parameter.get_format_name() == "--required");
-    BOOST_REQUIRE(parameter.get_format_parameter() == "arg");
-    BOOST_REQUIRE(parameter.get_description() == "Required path.");
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), 3);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), true);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "required");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "--required");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "arg");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "Required path.");
+}
+
+// 
+BOOST_AUTO_TEST_CASE(parameter__initialize__toggled__sets_limit_0)
+{
+    BX_TEST_PARAMETER_SETUP(opt::toggled);
+    parameter.initialize(option, names);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "toggled");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "--toggled");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "Toggle only bool.");
+    
+    // This combination uniquely implies that the option is a toggle.
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), parameter::not_positional);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__vector__sets_limit_1)
 {
     BX_TEST_PARAMETER_SETUP(opt::vector);
     parameter.initialize(option, names);
-    BOOST_REQUIRE(parameter.get_position() == 4);
-    BOOST_REQUIRE(parameter.get_args_limit() == 1);
-    BOOST_REQUIRE(parameter.get_required() == false);
-    BOOST_REQUIRE(parameter.get_short_name() == '\0');
-    BOOST_REQUIRE(parameter.get_canonical_name() == "--VECTOR");
-    BOOST_REQUIRE(parameter.get_format_name() == "--VECTOR");
-    BOOST_REQUIRE(parameter.get_format_parameter() == "arg");
-    BOOST_REQUIRE(parameter.get_description() == "String vector.");
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), 4);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "VECTOR");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "--VECTOR");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "arg");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "String vector.");
 }
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__multitoken__sets_unlimited)
 {
     BX_TEST_PARAMETER_SETUP(opt::multitoken);
     parameter.initialize(option, names);
-    BOOST_REQUIRE(parameter.get_position() == 5);
-    BOOST_REQUIRE(parameter.get_args_limit() == 0x7d00);
-    BOOST_REQUIRE(parameter.get_required() == false);
-    BOOST_REQUIRE(parameter.get_short_name() == '\0');
-    BOOST_REQUIRE(parameter.get_canonical_name() == "--multitoken");
-    BOOST_REQUIRE(parameter.get_format_name() == "--multitoken");
-    BOOST_REQUIRE(parameter.get_format_parameter() == "arg");
-    BOOST_REQUIRE(parameter.get_description() == "Multi-token int.");
-}
-
-BOOST_AUTO_TEST_SUITE_END()
-
-// ------------------------------------------------------------------------- //
-BOOST_AUTO_TEST_SUITE(parameter__canonical)
-
-BOOST_AUTO_TEST_CASE(parameter__canonical__short_and_long__matches_dash_long)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
-    auto result = parameter.canonical(option);
-    BOOST_REQUIRE(result == "--short_long");
-}
-
-BOOST_AUTO_TEST_CASE(parameter__canonical__short_only__matches_dash_short)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
-    auto result = parameter.canonical(option);
-    BOOST_REQUIRE(result == "-m");
-}
-
-BOOST_AUTO_TEST_CASE(parameter__canonical__long_only__matches_dash_long)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
-    auto result = parameter.canonical(option);
-    BOOST_REQUIRE(result == "--longy");
-}
-
-BOOST_AUTO_TEST_SUITE_END()
-
-// ------------------------------------------------------------------------- //
-BOOST_AUTO_TEST_SUITE(parameter__clean_canonical)
-
-BOOST_AUTO_TEST_CASE(parameter__clean_canonical__short_and_long__matches_long)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
-    auto result = parameter.clean_canonical(option);
-    BOOST_REQUIRE(result == "short_long");
-}
-
-BOOST_AUTO_TEST_CASE(parameter__clean_canonical__short_only__matches_short)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
-    auto result = parameter.clean_canonical(option);
-    BOOST_REQUIRE(result == "m");
-}
-
-BOOST_AUTO_TEST_CASE(parameter__clean_canonical__long_only__matches_long)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
-    auto result = parameter.clean_canonical(option);
-    BOOST_REQUIRE(result == "longy");
-}
-
-BOOST_AUTO_TEST_SUITE_END()
-
-// ------------------------------------------------------------------------- //
-BOOST_AUTO_TEST_SUITE(parameter__has_short_name)
-
-BOOST_AUTO_TEST_CASE(parameter__has_short_name__short_and_long__returns_true)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
-    auto result = parameter.has_short_name(option);
-    BOOST_REQUIRE(result);
-}
-
-BOOST_AUTO_TEST_CASE(parameter__has_short_name__short_only__returns_true)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
-    auto result = parameter.has_short_name(option);
-    BOOST_REQUIRE(result);
-}
-
-BOOST_AUTO_TEST_CASE(parameter__has_short_name__long_only__returns_false)
-{
-    BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
-    auto result = parameter.has_short_name(option);
-    BOOST_REQUIRE(!result);
+    BOOST_REQUIRE_EQUAL(parameter.get_position(), 5);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), parameter::unlimited_args);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
+    BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "multitoken");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "--multitoken");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "arg");
+    BOOST_REQUIRE_EQUAL(parameter.get_description(), "Multi-token int.");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -348,22 +290,19 @@ BOOST_AUTO_TEST_SUITE(parameter__short_name)
 BOOST_AUTO_TEST_CASE(parameter__short_name__short_and_long__returns_short)
 {
     BX_TEST_PARAMETER_OPTIONS_SETUP(opt::short_long);
-    auto result = parameter.short_name(option);
-    BOOST_REQUIRE(result = 's');
+    BOOST_REQUIRE_EQUAL(parameter.short_name(option), 's');
 }
 
 BOOST_AUTO_TEST_CASE(parameter__short_name__short_only__returns_short)
 {
     BX_TEST_PARAMETER_OPTIONS_SETUP(opt::shorty);
-    auto result = parameter.short_name(option);
-    BOOST_REQUIRE(result = 'm');
+    BOOST_REQUIRE_EQUAL(parameter.short_name(option), 'm');
 }
 
 BOOST_AUTO_TEST_CASE(parameter__short_name__long_only__returns_null_char)
 {
     BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
-    auto result = parameter.short_name(option);
-    BOOST_REQUIRE(result == 0x00);
+    BOOST_REQUIRE_EQUAL(parameter.short_name(option), parameter::no_short_name);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
