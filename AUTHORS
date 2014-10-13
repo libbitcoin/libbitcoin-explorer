@@ -1,5 +1,15 @@
 Authors:
+   
+ * Eric Voskuil <evoskuil>
+   BX design, development, unit and functional tests, documentation, Linux and
+   Windows builds, package config, build system.
+   eric@voskuil.org
 
+* Phillip Mienk <pmienk>
+  libbitcoin-client integration
+   
+Creadit to the SX developers for the original design and implementation:
+   
  * Amir Taaki (genjix)
    Development
    amir@unsystem.net
@@ -20,13 +30,7 @@ Authors:
  * Dr Washington Y. Sanchez <drwasho>
    GUI design and development
    washington.sanchez@gmail.com
-   
- * Eric Voskuil <evoskuil>
-   Windows build, single binary builds, unit tests, code-gen extension model,
-   argument/config processing, serializers, remove all global state, new client
-   API integration, obsolete old and add new commands, package config.
-   eric@voskuil.org
 
-Special thanks to Andrew Day for the early inspiration.
+Special thanks to Andrew Day for the early SX inspiration.
 
 
