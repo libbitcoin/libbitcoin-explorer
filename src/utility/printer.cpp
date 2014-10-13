@@ -26,16 +26,9 @@
 #include <vector>
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/generated.hpp>
 
-// We are doing this because po::options_description.print() sucks.
-
-// TODO: move these to metadata for localization.
-#define BX_PRINTER_USAGE_FORMAT "\nUsage: %1% %2% %3%\n"
-#define BX_PRINTER_DESCRIPTION_FORMAT "\n%1%\n"
-#define BX_PRINTER_CATEGORY_FORMAT "\nCategery: %1%\n"
-#define BX_PRINTER_OPTION_TABLE_HEADER "\nOptions (named):\n\n"
-#define BX_PRINTER_ARGUMENT_TABLE_HEADER "\nArguments (positional):\n\n"
-#define BX_PRINTER_VALUE_TEXT "VALUE"
+// We built this because po::options_description.print() sucks.
 
 // Not localizable formatters.
 #define BX_PRINTER_USAGE_OPTION_TABLE_FORMAT "-%1% [--%2%]"
@@ -179,7 +172,7 @@ std::string printer::format_description()
     return description.str();
 }
 
-// TODO: test
+// 100% component tested.
 std::string printer::format_usage_parameters()
 {
     std::string toggle_short_options;

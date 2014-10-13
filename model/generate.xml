@@ -25,32 +25,36 @@
   
   <configuration section="general">
     <!-- NOTE: we could move this into the obelisk section if it was dynamic. -->
-    <!-- NOTE: we probably shouldn't use this setting since the fact is compiled into dependencies. -->
+    <!-- NOTE: we probably shouldn't use this setting since the choice of testnet is compiled into dependencies. -->
     <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
     <setting name="retries" type="uint8_t"description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
   
-  <!-- Logging is currently unused. -->
   <configuration section="logging">
+    <!-- Logging is currently unused. -->
     <setting name="debug" type="path" default="debug.log" description="The file and path name to the debug log file." />
     <setting name="error" type="path" default="error.log" description="The file and path name to the error log file." />
   </configuration>
   
   <configuration section="server">
-    <!-- TODO: create primitive for URI and use for socks-proxy and address. -->
-    <setting name="certificate" type="path" description="The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert" />
     <setting name="public-key" type="base16" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
-    <setting name="address" default="tcp://obelisk2.airbitz.co:9091" description="The URI of the server to which this application may connect." />
+    <setting name="address" default="tcp://obelisk-sol.airbitz.co:9091" description="The URI of the server to which this application may connect." />
     <setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />
   </configuration>
   
   <!-- General resources. -->
+  
   <resource>
-    <string name="BX_COMMAND_USAGE" value="USAGE: bx COMMAND [--help]" />
-    <string name="BX_COMMANDS_HEADER" value="The bx commands are:" />
-    <string name="BX_HOME_PAGE_HEADER" value="Bitcoin Explorer home page:" />
-    
+    <string name="BX_PRINTER_USAGE_FORMAT" value="\nUsage: %1% %2% %3%\n" />
+    <string name="BX_PRINTER_DESCRIPTION_FORMAT" value="\n%1%\n" />
+    <string name="BX_PRINTER_CATEGORY_FORMAT" value="\nCategery: %1%\n" />
+    <string name="BX_PRINTER_OPTION_TABLE_HEADER" value="\nOptions (named):\n\n" />
+    <string name="BX_PRINTER_ARGUMENT_TABLE_HEADER" value="\nArguments (positional):\n\n" />
+    <string name="BX_PRINTER_VALUE_TEXT" value="VALUE" />
+    <string name="BX_COMMAND_USAGE" value="\nUSAGE: bx COMMAND [--help]\n" />
+    <string name="BX_COMMANDS_HEADER" value="\nThe bx commands are:\n\n" />
+    <string name="BX_COMMANDS_HOME_PAGE" value="\nBitcoin Explorer home page:\n\nhttps://github.com/libbitcoin/libbitcoin-explorer\n" />
     <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
     <string name="BX_CONFIG_DESCRIPTION" value="The path to the configuration settings file." />
@@ -58,7 +62,8 @@
   </resource>
 
   <!-- Bitcoin Explorer Commands -->
-
+  
+  <!-- The 'command' element attributes typeX multipleX are currently unused and are intended to eventually provide type information for output bindings. -->
   <command symbol="address-decode" formerly="decode-addr" typeX="wrapper" category="WALLET" description="Convert a Bitcoin address to RIPEMD160, dropping the version.">
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address to convert. If not specified the address is read from STDIN."/>
@@ -294,7 +299,7 @@
   </command>
   
   <command symbol="input-sign" formerly="sign-input" typeX="base16" category="TRANSACTION" description="Create a signature for a transaction input.">
-    <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="NONCE" required="true" type="base16" description="The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length." />
@@ -306,14 +311,14 @@
   </command>
   
   <command symbol="input-set" formerly="set-input" typeX="transaction" category="TRANSACTION" description="Assign a script to an existing transaction input.">
-    <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <argument name="SIGNATURE_SCRIPT" required="true" type="script" description="The signature script to assign to the input." />
     <argument name="TRANSACTION" fileX="true" required="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
   </command>
   
   <command symbol="input-validate" formerly="validsig" typeX="string" category="TRANSACTION" description="Validate a transaction signature.">
-    <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="sign_type" type="hashtype" description="A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
     <argument name="PREVOUT_SCRIPT" required="true" type="script" description="The previous output script used in signing." />
@@ -401,6 +406,9 @@
   <command symbol="sendtx-bci" category="ONLINE" obsolete="true" description="Broadcast a transaction to the Bitcoin transaction pool via blockchain.info.">
     <define name="BX_SENDTX_BCI_OBSOLETE" value="This command is no longer supported. Use send-tx, send-tx-node or send-tx-p2p." />
   </command>
+
+  <command-todo symbol="settings" typeX="string" category="BX" description="Display the loaded configuration settings.">
+  </command-todo>
 
   <command symbol="sha160" typeX="base16" category="HASH" description="Perform a SHA160 (also known as SHA-1) hash of Base16 data.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the value is read from STDIN."/>
