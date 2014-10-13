@@ -47,13 +47,12 @@
   
   <resource>
     <string name="BX_PRINTER_USAGE_FORMAT" value="\nUsage: %1% %2% %3%\n" />
-    <string name="BX_PRINTER_DESCRIPTION_FORMAT" value="\n%1%\n" />
-    <string name="BX_PRINTER_CATEGORY_FORMAT" value="\nCategery: %1%\n" />
+    <string name="BX_PRINTER_DESCRIPTION_FORMAT" value="\nInfo: %1%\n" />
     <string name="BX_PRINTER_OPTION_TABLE_HEADER" value="\nOptions (named):\n\n" />
     <string name="BX_PRINTER_ARGUMENT_TABLE_HEADER" value="\nArguments (positional):\n\n" />
     <string name="BX_PRINTER_VALUE_TEXT" value="VALUE" />
     <string name="BX_COMMAND_USAGE" value="\nUsage: bx COMMAND [--help]\n" />
-    <string name="BX_COMMANDS_HEADER" value="\nThe bx commands are:\n\n" />
+    <string name="BX_COMMANDS_HEADER" value="\nInfo: The bx commands are:\n\n" />
     <string name="BX_COMMANDS_HOME_PAGE" value="\nBitcoin Explorer home page:\n\nhttps://github.com/libbitcoin/libbitcoin-explorer\n" />
     <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
@@ -447,19 +446,19 @@
   </command>
   
   <command symbol="stealth-new" formerly="stealth-initiate" typeX="ec_public" category="STEALTH" description="Create a new stealth public key from which a payment address can be generated. A unique ephemeral secret should be used for each stealth payment.">
-    <argument name="EPHEMERAL_SECRET" type="ec_private" description="The Base16 ephemeral EC private key used to generate stealth payment metadata." />
+    <argument name="EPHEMERAL_SECRET" required="true" type="ec_private" description="The Base16 ephemeral EC private key used to generate stealth payment metadata." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a stealth address." />
     <argument name="SPEND_PUBKEY" required="true" type="ec_public" description="A Base16 EC public key corresponding to a private key that can spend payments to the stealth address." />
   </command>
 
   <command symbol="stealth-uncover-public" formerly="stealth-uncover" typeX="ec_public" category="STEALTH" description="Derive the stealth public key necessary to identify a stealth payment.">
-    <argument name="EPHEMERAL_PUBKEY" type="ec_public" description="The Base16 ephemeral EC public key retrieved from the stealth payment metadata." />
+    <argument name="EPHEMERAL_PUBKEY" required="true" type="ec_public" description="The Base16 ephemeral EC public key retrieved from the stealth payment metadata." />
     <argument name="SCAN_SECRET" required="true" type="ec_private" description="The Base16 EC private key corresponding to the public key required to generate a stealth payment." />
     <argument name="SPEND_PUBKEY" required="true" type="ec_public" description="A Base16 EC public key corresponding to a private key that can spend payments to the stealth address." />
   </command>
 
   <command symbol="stealth-uncover-secret" typeX="ec_private" category="STEALTH" description="Derive the stealth private key necessary to spend a stealth payment.">
-    <argument name="EPHEMERAL_PUBKEY" type="ec_public" description="The Base16 ephemeral EC public key retrieved from the stealth payment metadata." />
+    <argument name="EPHEMERAL_PUBKEY" required="true" type="ec_public" description="The Base16 ephemeral EC public key retrieved from the stealth payment metadata." />
     <argument name="SCAN_SECRET" required="true" type="ec_private" description="The Base16 EC private key corresponding to the public key required to generate a stealth address." />
     <argument name="SPEND_SECRET" required="true" type="ec_private" description="A Base16 EC private key that can spend payments to the stealth address." />
   </command>

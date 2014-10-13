@@ -62,7 +62,7 @@ printer::printer(const std::string& application, const std::string& category,
 static void enqueue_fragment(std::string& fragment,
     std::vector<std::string>& column)
 {
-    trim(fragment);
+    trim_left(fragment, BX_SENTENCE_DELIMITER);
     if (!fragment.empty())
         column.push_back(fragment);
 }
@@ -71,7 +71,8 @@ static void enqueue_fragment(std::string& fragment,
 std::vector<std::string> printer::columnize(const std::string& paragraph,
     size_t width)
 {
-    const auto words = split(paragraph);
+    // TODO: prevent this from eating endln's.
+    const auto words = split(paragraph, BX_SENTENCE_DELIMITER);
 
     std::string fragment;
     std::vector<std::string> column;
@@ -80,7 +81,7 @@ std::vector<std::string> printer::columnize(const std::string& paragraph,
     {
         if (word.length() + fragment.length() < width)
         {
-            fragment += " " + word;
+            fragment += BX_SENTENCE_DELIMITER + word;
             continue;
         }
 
@@ -149,27 +150,34 @@ std::string printer::format_parameters_table(bool positional)
     return output.str();
 }
 
+std::string printer::format_paragraph(const std::string& paragraph)
+{
+    std::stringstream output;
+    format paragraph_format("%-79s\n");
+
+    const auto lines = columnize(paragraph, 79);
+
+    for (const auto& line: lines)
+        output << paragraph_format % line;
+
+    return output.str();
+}
+
 std::string printer::format_usage()
 {
     // USAGE: bx COMMAND [-hvt] -n VALUE [-m VALUE] [-w VALUE]... REQUIRED 
     // [OPTIONAL] [MULTIPLE]...
     auto usage = format(BX_PRINTER_USAGE_FORMAT) % get_application() %
         get_command() % format_usage_parameters();
-    return usage.str();
-}
 
-std::string printer::format_category()
-{
-    // CATEGORY: %1%\n
-    auto category = format(BX_PRINTER_CATEGORY_FORMAT) % get_category();
-    return category.str();
+    return format_paragraph(usage.str());
 }
 
 std::string printer::format_description()
 {
     // DESCRIPTION: %1%\n
     auto description = format(BX_PRINTER_DESCRIPTION_FORMAT) % get_description();
-    return description.str();
+    return format_paragraph(description.str());
 }
 
 // 100% component tested.

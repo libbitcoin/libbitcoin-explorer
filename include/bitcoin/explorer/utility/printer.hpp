@@ -67,12 +67,6 @@ public:
      */
     virtual std::vector<std::string> columnize(const std::string& paragraph,
         size_t width);
-    
-    /**
-     * Format the command category.
-     * @return  The command category.
-     */
-    virtual std::string format_category();
 
     /**
      * Format the command description.
@@ -92,6 +86,13 @@ public:
      * @return  The formatted usage.
      */
     virtual std::string format_usage();
+
+    /**
+     * Format a paragraph.
+     * @param[in]  paragraph  The text to format. 
+     * @return                The formatted paragraph.
+     */
+    virtual std::string format_paragraph(const std::string& paragraph);
 
     /**
      * Format the command line parameters.

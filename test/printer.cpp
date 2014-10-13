@@ -119,13 +119,14 @@ BOOST_AUTO_TEST_CASE(printer__columnize__last_word_overflow_width_10__two_rows)
     BOOST_REQUIRE_EQUAL(rows[1], "morethantenchars");
 }
 
-BOOST_AUTO_TEST_CASE(printer__columnize__excess_whitespace_width_10__whitespace_removed)
+BOOST_AUTO_TEST_CASE(printer__columnize__excess_whitespace_width_10__space_removed)
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("  \tfoo   bar \n\n  morethantenchars\r\n  ", 10);
-    BOOST_REQUIRE_EQUAL(rows.size(), 2);
-    BOOST_REQUIRE_EQUAL(rows[0], "foo bar");
-    BOOST_REQUIRE_EQUAL(rows[1], "morethantenchars");
+    BOOST_REQUIRE_EQUAL(rows.size(), 3);
+    BOOST_REQUIRE_EQUAL(rows[0], "\tfoo bar");
+    BOOST_REQUIRE_EQUAL(rows[1], "\n\n");
+    BOOST_REQUIRE_EQUAL(rows[2], "morethantenchars\r\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

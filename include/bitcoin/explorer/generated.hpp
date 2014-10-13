@@ -121,7 +121,7 @@ namespace explorer {
  * Various shared localizable strings.
  */
 #define BX_COMMANDS_HEADER \
-    "\nThe bx commands are:\n\n"
+    "\nInfo: The bx commands are:\n\n"
 #define BX_COMMANDS_HOME_PAGE \
     "\nBitcoin Explorer home page:\n\nhttps://github.com/libbitcoin/libbitcoin-explorer\n"
 #define BX_COMMAND_USAGE \
@@ -136,10 +136,8 @@ namespace explorer {
     "Error: %1%"
 #define BX_PRINTER_ARGUMENT_TABLE_HEADER \
     "\nArguments (positional):\n\n"
-#define BX_PRINTER_CATEGORY_FORMAT \
-    "\nCategery: %1%\n"
 #define BX_PRINTER_DESCRIPTION_FORMAT \
-    "\n%1%\n"
+    "\nInfo: %1%\n"
 #define BX_PRINTER_OPTION_TABLE_HEADER \
     "\nOptions (named):\n\n"
 #define BX_PRINTER_USAGE_FORMAT \
