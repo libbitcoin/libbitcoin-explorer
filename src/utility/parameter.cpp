@@ -34,14 +34,8 @@ using namespace bc::explorer;
 void parameter::initialize(const option_metadata& option,
     const argument_list& arguments)
 {
-    auto index = position(option, arguments);
-    set_position(index);
-
-    if (index != parameter::not_positional)
-        set_args_limit(arguments[index].second);
-    else
-        set_args_limit(option.semantic()->max_tokens());
-
+    set_position(position(option, arguments));
+    set_args_limit(arguments_limit(get_position(), option, arguments));
     set_required(option.semantic()->is_required());
     set_long_name(option.long_name());
     set_short_name(short_name(option));
@@ -64,4 +58,14 @@ char parameter::short_name(const option_metadata& option) const
         search_options::dashed_short_prefer_short);
 
     return if_else(name[0] == option_prefix_char, name[1], no_short_name);
+}
+
+// 100% component coverage
+unsigned parameter::arguments_limit(int position, 
+    const option_metadata& option, const argument_list& arguments) const
+{
+    if (position == parameter::not_positional)
+        return option.semantic()->max_tokens();
+
+    return arguments[position].second;
 }

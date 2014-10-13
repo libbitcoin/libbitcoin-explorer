@@ -107,6 +107,16 @@ public:
         const argument_list& arguments) const;
 
     /**
+     * Get the value for the args_limit property.
+     * @param[in]  position   The option's position (or -1 of arg).
+     * @param[in]  option     The option.
+     * @param[in]  arguments  The argument names list.
+     * @return                The arguments limit value for the option.
+     */
+    unsigned arguments_limit(int position, const option_metadata& option,
+        const argument_list& arguments) const;
+
+    /**
      * Get the option's short name character or zero.
      * @param[in]  option  The metadata of the option to test.
      * @return             The short name character or null character.
@@ -125,24 +135,6 @@ public:
     PROPERTY(std::string, format_name);
     PROPERTY(std::string, format_parameter);
 };
-//
-///**
-// * Overload the less than operator for std::sort.
-// */
-//inline bool operator< (const parameter& left, const parameter& right)
-//{
-//    // The use of format_name sorts long name only options after all others.
-//    // This may be a localized sort, so results may vary by language.
-//    return left.get_format_name() < left.get_format_name();
-//}
-//
-///**
-// * Overload the identity operator for std::sort.
-// */
-//inline bool operator==(const parameter& left, const parameter& right)
-//{
-//    return left.get_format_name() == left.get_format_name();
-//}
 
 } // namespace explorer
 } // namespace libbitcoin
