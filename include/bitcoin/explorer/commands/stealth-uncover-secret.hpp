@@ -144,7 +144,7 @@ public:
         )
         (
             "EPHEMERAL_PUBKEY",
-            value<primitives::ec_public>(&argument_.ephemeral_pubkey),
+            value<primitives::ec_public>(&argument_.ephemeral_pubkey)->required(),
             "The Base16 ephemeral EC public key retrieved from the stealth payment metadata."
         )
         (

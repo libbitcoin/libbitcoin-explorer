@@ -144,7 +144,7 @@ public:
         )
         (
             "EPHEMERAL_SECRET",
-            value<primitives::ec_private>(&argument_.ephemeral_secret),
+            value<primitives::ec_private>(&argument_.ephemeral_secret)->required(),
             "The Base16 ephemeral EC private key used to generate stealth payment metadata."
         )
         (
