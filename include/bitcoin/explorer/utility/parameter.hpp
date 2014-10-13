@@ -89,11 +89,6 @@ public:
     static const char option_prefix_char = '-';
 
     /**
-     * Sentinel - unlimited multitoken arguments.
-     */
-    static const int unlimited_args = 0x7d00;
-
-    /**
      * Populate with normalized parameter data.
      * @param[in]  option     The metadata of the option to test.
      * @param[in]  arguments  The list of supported positional arguments.
@@ -130,6 +125,24 @@ public:
     PROPERTY(std::string, format_name);
     PROPERTY(std::string, format_parameter);
 };
+//
+///**
+// * Overload the less than operator for std::sort.
+// */
+//inline bool operator< (const parameter& left, const parameter& right)
+//{
+//    // The use of format_name sorts long name only options after all others.
+//    // This may be a localized sort, so results may vary by language.
+//    return left.get_format_name() < left.get_format_name();
+//}
+//
+///**
+// * Overload the identity operator for std::sort.
+// */
+//inline bool operator==(const parameter& left, const parameter& right)
+//{
+//    return left.get_format_name() == left.get_format_name();
+//}
 
 } // namespace explorer
 } // namespace libbitcoin

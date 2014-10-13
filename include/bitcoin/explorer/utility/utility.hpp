@@ -136,6 +136,18 @@ template <typename Pair, typename Key>
 int find_pair_position(const std::vector<Pair>& list, const Key& key);
 
 /**
+ * Facilitate a list insertion sort by inserting into a sorted position.
+ * @param      <Type>       The type of list member elements.
+ * @param      <Predicate>  The sort predicate function signature.
+ * @param[in]  list         The list to search.
+ * @param[in]  element      The element to insert.
+ * @param[in]  predicate    The sort predicate.
+ * @return                  Thevector iterator.
+ */
+template<typename Type, typename Predicate>
+typename std::vector<Type>::iterator insert_sorted(std::vector<Type>& list,
+    Type const& element, Predicate predicate);
+/**
  * If the variable is not yet loaded, load from stdin as fallback.
  * @param      <Value>    The type of the parameter to load.
  * @param[in]  name       The parameter name.

@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_SUITE(input_sign__invoke)
 BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_sign);
-    command.set_signature_type_option({ "single" });
+    command.set_sign_type_option({ "single" });
     command.set_nonce_argument({ INPUT_SIGN_NONCE_A });
     command.set_transaction_argument({ INPUT_SIGN_TX_A });
     command.set_prevout_script_argument({ INPUT_SIGN_PREVOUT_A });
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output
 BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_no_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_sign);
-    command.set_signature_type_option({ "single" });
+    command.set_sign_type_option({ "single" });
     command.set_nonce_argument({ INPUT_SIGN_NONCE_A });
     command.set_transaction_argument({ INPUT_SIGN_TX_B });
     command.set_prevout_script_argument({ INPUT_SIGN_PREVOUT_A });

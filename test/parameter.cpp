@@ -49,7 +49,7 @@ static void load_test_options(options_metadata& options)
     options.add_options()
         ("short_long,s", "Long and short name.")
         (",m", "Short name only.")
-        ("longy", "Long name only.")
+        ("longy", value<std::string>()->required(), "Long name only.")
         ("simple", value<std::string>(), "Simple string.")
         ("defaulty", value<bool>()->default_value(true), "Defaulted bool.")
         ("required", value<path>()->required(), "Required path.")
@@ -182,21 +182,21 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__long_only__sets_limit_0)
     BX_TEST_PARAMETER_SETUP(opt::longy);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 0);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0);
-    BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_required(), true);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "longy");
     BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "--longy");
-    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "");
+    BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "arg");
     BOOST_REQUIRE_EQUAL(parameter.get_description(), "Long name only.");
 }
 
-BOOST_AUTO_TEST_CASE(parameter__initialize__simple__sets_limit_1)
+BOOST_AUTO_TEST_CASE(parameter__initialize__simple__sets_limit_2)
 {
     BX_TEST_PARAMETER_SETUP(opt::simple);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 1);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 2);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "simple");
@@ -205,12 +205,12 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__simple__sets_limit_1)
     BOOST_REQUIRE_EQUAL(parameter.get_description(), "Simple string.");
 }
 
-BOOST_AUTO_TEST_CASE(parameter__initialize__defaulted__sets_limit_1)
+BOOST_AUTO_TEST_CASE(parameter__initialize__defaulted__sets_limit_3)
 {
     BX_TEST_PARAMETER_SETUP(opt::defaulty);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 2);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 3);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "defaulty");
@@ -223,12 +223,12 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__defaulted__sets_limit_1)
     BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "arg (=1)");
 }
 
-BOOST_AUTO_TEST_CASE(parameter__initialize__required__sets_limit_1)
+BOOST_AUTO_TEST_CASE(parameter__initialize__required__sets_limit_4)
 {
     BX_TEST_PARAMETER_SETUP(opt::required);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 3);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 4);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), true);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "required");
@@ -259,7 +259,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__vector__sets_limit_1)
     BX_TEST_PARAMETER_SETUP(opt::vector);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 4);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 5);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "VECTOR");
@@ -273,7 +273,8 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__multitoken__sets_unlimited)
     BX_TEST_PARAMETER_SETUP(opt::multitoken);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 5);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), parameter::unlimited_args);
+    /* The positional "unlimited" limit is different than the named limit. */
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0xFFFFFFFF);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "multitoken");

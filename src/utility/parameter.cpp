@@ -34,8 +34,14 @@ using namespace bc::explorer;
 void parameter::initialize(const option_metadata& option,
     const argument_list& arguments)
 {
-    set_position(position(option, arguments));
-    set_args_limit(option.semantic()->max_tokens());
+    auto index = position(option, arguments);
+    set_position(index);
+
+    if (index != parameter::not_positional)
+        set_args_limit(arguments[index].second);
+    else
+        set_args_limit(option.semantic()->max_tokens());
+
     set_required(option.semantic()->is_required());
     set_long_name(option.long_name());
     set_short_name(short_name(option));

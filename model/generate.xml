@@ -295,7 +295,7 @@
   
   <command symbol="input-sign" formerly="sign-input" typeX="base16" category="TRANSACTION" description="Create a signature for a transaction input.">
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
-    <option name="signature_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
+    <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="NONCE" required="true" type="base16" description="The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length." />
     <argument name="PREVOUT_SCRIPT" required="true" type="script" description="The previous output script to use in signing." />
@@ -314,7 +314,7 @@
   
   <command symbol="input-validate" formerly="validsig" typeX="string" category="TRANSACTION" description="Validate a transaction signature.">
     <option name="index" type="size_t" description="The ordinal position of the input within the transaction, defaults to zero." />
-    <option name="signature_type" type="hashtype" description="A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
+    <option name="sign_type" type="hashtype" description="A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
     <argument name="PREVOUT_SCRIPT" required="true" type="script" description="The previous output script used in signing." />
     <argument name="SIGNATURE" required="true" type="base16" description="The Base16 signature to validate."/>

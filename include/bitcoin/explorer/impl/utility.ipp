@@ -131,6 +131,15 @@ int find_pair_position(const std::vector<Pair>& list, const Key& key)
     return if_else(it == list.end(), -1, distance(list.begin(), it));
 }
 
+template<typename Type, typename Predicate>
+typename std::vector<Type>::iterator insert_sorted(std::vector<Type>& list,
+    Type const& element, Predicate predicate)
+{
+    return list.insert(
+        std::upper_bound(list.begin(), list.end(), element, predicate),
+        element);
+};
+
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
     po::variables_map& variables, std::istream& input)

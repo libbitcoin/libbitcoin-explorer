@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/utility/printer.hpp>
 
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -42,7 +43,8 @@
 #define BX_PRINTER_USAGE_OPTION_SHORT_TABLE_FORMAT "-%1%"
 #define BX_PRINTER_USAGE_ARGUMENT_TABLE_FORMAT "%1%"
 
-#define BX_PRINTER_USAGE_OPTION_TOGGLE_FORMAT " [-%1%]"
+#define BX_PRINTER_USAGE_OPTION_TOGGLE_SHORT_FORMAT " [-%1%]"
+#define BX_PRINTER_USAGE_OPTION_TOGGLE_LONG_FORMAT " [--%1%]"
 #define BX_PRINTER_USAGE_OPTION_MULTIPLE_FORMAT " [--%1% %2%]..."
 #define BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT " --%1% %2%"
 #define BX_PRINTER_USAGE_OPTION_OPTIONAL_FORMAT " [--%1% %2%]"
@@ -177,9 +179,11 @@ std::string printer::format_description()
     return description.str();
 }
 
+// TODO: test
 std::string printer::format_usage_parameters()
 {
-    std::string toggle_options;
+    std::string toggle_short_options;
+    std::vector<std::string> toggle_long_options;
     std::vector<std::string> required_options;
     std::vector<std::string> optional_options;
     std::vector<std::string> multiple_options;
@@ -199,69 +203,77 @@ std::string printer::format_usage_parameters()
         // Options are named and args are positional.
         auto option = parameter.get_position() == parameter::not_positional;
 
-        // In terms of formatting we treat all multivalued as not required.
-        auto multiple = parameter.get_args_limit() > 1;
+        // In terms of formatting we also treat multivalued as not required.
+        auto optional = parameter.get_args_limit() == 1;
 
-        // This will capture only options with zero_tokens() specified.
+        // This will capture only options set to zero_tokens().
         auto toggle = parameter.get_args_limit() == 0;
 
-        if (toggle)
-        {
-            toggle_options.push_back(parameter.get_short_name());
-            continue;
-        }
+        // A toggle with a short name gets mashed up in group.
+        auto is_short = parameter.get_short_name() != parameter::no_short_name;
 
         const auto& long_name = parameter.get_long_name();
 
-        if (option)
+        if (toggle)
         {
-            if (multiple)
-                multiple_options.push_back(long_name);
-            else if (required)
-                required_options.push_back(long_name);
+            if (is_short)
+                toggle_short_options.push_back(parameter.get_short_name());
             else
+                toggle_long_options.push_back(long_name);
+        }
+        else if (option)
+        {
+            if (required)
+                required_options.push_back(long_name);
+            else if (optional)
                 optional_options.push_back(long_name);
+            else /* multiple */
+                multiple_options.push_back(long_name);
         }
         else
         {
-            if (multiple)
-                multiple_arguments.push_back(long_name);
-            else if (required)
+            if (required)
                 required_arguments.push_back(long_name);
-            else
+            else if (optional)
                 optional_arguments.push_back(long_name);
+            else /* multiple */
+                multiple_arguments.push_back(long_name);
         }
     }
 
     std::stringstream usage;
 
-    if (!toggle_options.empty())
-        usage << format(BX_PRINTER_USAGE_OPTION_TOGGLE_FORMAT) % 
-            toggle_options;
+    if (!toggle_short_options.empty())
+        usage << format(BX_PRINTER_USAGE_OPTION_TOGGLE_SHORT_FORMAT) % 
+            toggle_short_options;
 
     for (const auto& required_option: required_options)
         usage << format(BX_PRINTER_USAGE_OPTION_REQUIRED_FORMAT) % 
             required_option % BX_PRINTER_VALUE_TEXT;
-
-    for (const auto& multiple_option: multiple_options)
-        usage << format(BX_PRINTER_USAGE_OPTION_MULTIPLE_FORMAT) % 
-            multiple_option % BX_PRINTER_VALUE_TEXT;
+    
+    for (const auto& toggle_long_option: toggle_long_options)
+        usage << format(BX_PRINTER_USAGE_OPTION_TOGGLE_LONG_FORMAT) % 
+            toggle_long_option;
 
     for (const auto& optional_option: optional_options)
         usage << format(BX_PRINTER_USAGE_OPTION_OPTIONAL_FORMAT) % 
             optional_option % BX_PRINTER_VALUE_TEXT;
 
+    for (const auto& multiple_option: multiple_options)
+        usage << format(BX_PRINTER_USAGE_OPTION_MULTIPLE_FORMAT) % 
+            multiple_option % BX_PRINTER_VALUE_TEXT;
+
     for (const auto& required_argument: required_arguments)
         usage << format(BX_PRINTER_USAGE_ARGUMENT_REQUIRED_FORMAT) % 
             required_argument;
 
-    for (const auto& multiple_argument: multiple_arguments)
-        usage << format(BX_PRINTER_USAGE_ARGUMENT_MULTIPLE_FORMAT) %
-            multiple_argument;
-
     for (const auto& optional_argument: optional_arguments)
         usage << format(BX_PRINTER_USAGE_ARGUMENT_OPTIONAL_FORMAT) %
             optional_argument;
+
+    for (const auto& multiple_argument: multiple_arguments)
+        usage << format(BX_PRINTER_USAGE_ARGUMENT_MULTIPLE_FORMAT) %
+            multiple_argument;
 
     std::string clean_usage(usage.str());
     trim(clean_usage);
@@ -328,6 +340,12 @@ void printer::generate_argument_names()
 }
 
 // 100% component tested.
+static bool compare_parameters(const parameter left, const parameter right)
+{
+    return left.get_format_name() < right.get_format_name();
+}
+
+// 100% component tested.
 void printer::generate_parameters()
 {
     const auto& argument_names = get_argument_names();
@@ -340,7 +358,12 @@ void printer::generate_parameters()
     for (auto option_ptr: options.options())
     {
         param.initialize(*option_ptr, argument_names);
-        parameters.push_back(param);
+
+        // Sort non-positonal parameters (i.e. options).
+        if (param.get_position() == parameter::not_positional)
+            insert_sorted(parameters, param, compare_parameters);
+        else
+            parameters.push_back(param);
     }
 }
 

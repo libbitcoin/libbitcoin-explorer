@@ -159,8 +159,8 @@ public:
             "The ordinal position of the input within the transaction, defaults to zero."
         )
         (
-            "signature_type,s",
-            value<primitives::hashtype>(&option_.signature_type),
+            "sign_type,s",
+            value<primitives::hashtype>(&option_.sign_type),
             "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
         )
         (
@@ -283,20 +283,20 @@ public:
     }
 
     /**
-     * Get the value of the signature_type option.
+     * Get the value of the sign_type option.
      */
-    virtual primitives::hashtype& get_signature_type_option()
+    virtual primitives::hashtype& get_sign_type_option()
     {
-        return option_.signature_type;
+        return option_.sign_type;
     }
 
     /**
-     * Set the value of the signature_type option.
+     * Set the value of the sign_type option.
      */
-    virtual void set_signature_type_option(
+    virtual void set_sign_type_option(
         const primitives::hashtype& value)
     {
-        option_.signature_type = value;
+        option_.sign_type = value;
     }
 
 private:
@@ -331,12 +331,12 @@ private:
     {
         option()
           : index(),
-            signature_type()
+            sign_type()
         {
         }
 
         size_t index;
-        primitives::hashtype signature_type;
+        primitives::hashtype sign_type;
     } option_;
 };
 
