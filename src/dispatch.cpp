@@ -129,24 +129,35 @@ void load_command_variables(variables_map& variables, command& instance,
 void load_configuration_variables(variables_map& variables, command& instance)
     throw(reading_file)
 {
-    const auto config_path = get_config_option(variables);
-    if (config_path.empty())
-        return;
-
     options_description config_settings("settings");
     instance.load_settings(config_settings);
+    const auto config_path = get_config_option(variables);
 
-    const auto& path = config_path.generic_string();
-    std::ifstream file(path);
+    if (config_path.empty())
+    {
+        // loading from an empty stream causes the defaults to populate.
+        std::stringstream stream;
 
-    if (!file.good())
-        throw reading_file(path.c_str());
+        // parse inputs
+        const auto configuration = parse_config_file(stream, config_settings);
 
-    // parse inputs
-    const auto configuration = parse_config_file(file, config_settings);
+        // map parsed inputs into variables map
+        store(configuration, variables);
+    }
+    else
+    {
+        const auto& path = config_path.generic_string();
+        std::ifstream file(path);
 
-    // map parsed inputs into variables map
-    store(configuration, variables);
+        if (!file.good())
+            throw reading_file(path.c_str());
+
+        // parse inputs
+        const auto configuration = parse_config_file(file, config_settings);
+
+        // map parsed inputs into variables map
+        store(configuration, variables);
+    }
 }
 
 // Not unit testable (reliance on shared test process environment).

@@ -129,8 +129,6 @@ public:
 
     /**
      * Load program option definitions.
-     * The implicit_value call allows flags to be strongly-typed on read while
-     * allowing but not requiring a value on the command line for the option.
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
@@ -140,23 +138,23 @@ public:
         options_description& options = get_option_metadata();
         options.add_options()
         (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->zero_tokens(),
+            "Get a description and instructions for this command."
+        )
+        (
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
         )
         (
-            BX_HELP_VARIABLE ",h",
-            value<bool>()->implicit_value(true),
-            "Get a description and instructions for this command."
-        )
-        (
             "index,i",
-            value<size_t>(&option_.index),
+            value<uint32_t>(&option_.index),
             "The ordinal position of the input within the transaction, defaults to zero."
         )
         (
             "SIGNATURE_SCRIPT",
-            value<primitives::script>(&argument_.signature_script),
+            value<primitives::script>(&argument_.signature_script)->required(),
             "The signature script to assign to the input."
         )
         (
@@ -215,7 +213,7 @@ public:
     /**
      * Get the value of the index option.
      */
-    virtual size_t& get_index_option()
+    virtual uint32_t& get_index_option()
     {
         return option_.index;
     }
@@ -224,7 +222,7 @@ public:
      * Set the value of the index option.
      */
     virtual void set_index_option(
-        const size_t& value)
+        const uint32_t& value)
     {
         option_.index = value;
     }
@@ -260,7 +258,7 @@ private:
         {
         }
 
-        size_t index;
+        uint32_t index;
     } option_;
 };
 

@@ -121,19 +121,31 @@ namespace explorer {
  * Various shared localizable strings.
  */
 #define BX_COMMANDS_HEADER \
-    "The bx commands are:"
+    "\nThe bx commands are:\n\n"
+#define BX_COMMANDS_HOME_PAGE \
+    "\nBitcoin Explorer home page:\n\nhttps://github.com/libbitcoin/libbitcoin-explorer\n"
 #define BX_COMMAND_USAGE \
-    "USAGE: bx COMMAND [--help]"
+    "\nUSAGE: bx COMMAND [--help]\n"
 #define BX_CONFIG_DESCRIPTION \
     "The path to the configuration settings file."
 #define BX_HELP_DESCRIPTION \
     "Get a description and instructions for this command."
-#define BX_HOME_PAGE_HEADER \
-    "Bitcoin Explorer home page:"
 #define BX_INVALID_COMMAND \
     "'%1%' is not a bx command. Enter 'bx help' for a list of commands."
 #define BX_INVALID_PARAMETER \
     "Error: %1%"
+#define BX_PRINTER_ARGUMENT_TABLE_HEADER \
+    "\nArguments (positional):\n\n"
+#define BX_PRINTER_CATEGORY_FORMAT \
+    "\nCategery: %1%\n"
+#define BX_PRINTER_DESCRIPTION_FORMAT \
+    "\n%1%\n"
+#define BX_PRINTER_OPTION_TABLE_HEADER \
+    "\nOptions (named):\n\n"
+#define BX_PRINTER_USAGE_FORMAT \
+    "\nUsage: %1% %2% %3%\n"
+#define BX_PRINTER_VALUE_TEXT \
+    "VALUE"
 
 /**
  * Invoke a specified function on all commands.
