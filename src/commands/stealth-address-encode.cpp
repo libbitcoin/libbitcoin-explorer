@@ -40,8 +40,7 @@ console_result stealth_address_encode::invoke(std::ostream& output,
     const auto& signatures = get_signatures_option();
     const auto testnet = get_general_testnet_setting();
 
-    // The implementation is safe for any value, but provide user feedback here.
-    const auto max = if_else(spend_pubkeys.empty(), 1, spend_pubkeys.size());
+    const auto max = if_else(spend_pubkeys.empty(), (size_t)1, spend_pubkeys.size());
     if (signatures > max)
     {
         error << BX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW << std::endl;
