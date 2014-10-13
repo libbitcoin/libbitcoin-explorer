@@ -124,7 +124,7 @@ script_type script_to_raw_data_script(const script_type& script)
 }
 
 bool sign_transaction(data_chunk& signature, const tx_type& transaction,
-    size_t index, const script_type& script, const ec_secret& secret,
+    uint32_t index, const script_type& script, const ec_secret& secret,
     const data_chunk& nonce, uint32_t hash_type)
 {
     // This always produces a valid signature hash. See libbitcoin comments.
