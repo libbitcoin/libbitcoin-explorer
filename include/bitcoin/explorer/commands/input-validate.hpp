@@ -155,7 +155,7 @@ public:
         )
         (
             "index,i",
-            value<size_t>(&option_.index),
+            value<uint32_t>(&option_.index),
             "The ordinal position of the input within the transaction, defaults to zero."
         )
         (
@@ -268,7 +268,7 @@ public:
     /**
      * Get the value of the index option.
      */
-    virtual size_t& get_index_option()
+    virtual uint32_t& get_index_option()
     {
         return option_.index;
     }
@@ -277,7 +277,7 @@ public:
      * Set the value of the index option.
      */
     virtual void set_index_option(
-        const size_t& value)
+        const uint32_t& value)
     {
         option_.index = value;
     }
@@ -335,7 +335,7 @@ private:
         {
         }
 
-        size_t index;
+        uint32_t index;
         primitives::hashtype sign_type;
     } option_;
 };
