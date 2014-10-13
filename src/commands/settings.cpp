@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
@@ -18,31 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "command.hpp"
+#include <bitcoin/explorer/commands/help.hpp>
 
-BX_USING_NAMESPACES()
+#include <iostream>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/display.hpp>
+#include <bitcoin/explorer/generated.hpp>
 
-BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(help__invoke)
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
 
-BOOST_AUTO_TEST_CASE(help__invoke__bogus_command__failure)
+console_result settings::invoke(std::ostream& output, std::ostream& error)
 {
-    BX_DECLARE_COMMAND(help);
-    command.set_command_argument("booger");
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    //write_settings(output);
+    return console_result::okay;
 }
-
-BOOST_AUTO_TEST_CASE(help__invoke__no_command__okay_output)
-{
-    BX_DECLARE_COMMAND(help);
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-}
-BOOST_AUTO_TEST_CASE(help__invoke__valid_command__okay_output)
-{
-    BX_DECLARE_COMMAND(help);
-    command.set_command_argument("help");
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-}
-
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()

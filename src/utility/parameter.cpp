@@ -28,50 +28,27 @@
 
 using namespace bc::explorer;
 
-// 100% unit coverage, all three scenarios (long, short, both)
-const std::string parameter::canonical(const option_metadata& option) const
-{
-    return option.canonical_display_name(
-        search_options::dashed_both_prefer_long);
-}
-
-// 100% component coverage, all three scenarios (long, short, both)
-const std::string parameter::clean_canonical(const option_metadata& option)
-    const
-{
-    std::string prefix;
-    prefix.push_back(option_prefix_char);
-    std::string clean(canonical(option));
-    trim_left(clean, prefix);
-    return clean;
-}
-
-// 100% component coverage, all three scenarios (long, short, both)
-bool parameter::has_short_name(const option_metadata& option) const
-{
-    return short_name(option) != no_short_name;
-}
-
 // 100% component coverage, common scenarios.
+// A required argument may only be preceeded by required arguments.
+// Requiredness may be in error if the metadata is inconsistent.
 void parameter::initialize(const option_metadata& option,
     const argument_list& arguments)
 {
     set_position(position(option, arguments));
-    set_args_limit(option.semantic()->max_tokens());
+    set_args_limit(arguments_limit(get_position(), option, arguments));
     set_required(option.semantic()->is_required());
+    set_long_name(option.long_name());
     set_short_name(short_name(option));
-    set_canonical_name(canonical(option));
     set_description(option.description());
     set_format_name(option.format_name());
     set_format_parameter(option.format_parameter());
- }
+}
 
-// 100% component coverage.
+// 100% component coverage, all three scenarios (long, short, both)
 int parameter::position(const option_metadata& option,
     const argument_list& arguments) const
 {
-    auto option_name = clean_canonical(option);
-    return find_pair_position(arguments, option_name);
+    return find_pair_position(arguments, option.long_name());
 }
 
 // 100% unit coverage, all three scenarios (long, short, both)
@@ -79,5 +56,16 @@ char parameter::short_name(const option_metadata& option) const
 {
     auto name = option.canonical_display_name(
         search_options::dashed_short_prefer_short);
+
     return if_else(name[0] == option_prefix_char, name[1], no_short_name);
+}
+
+// 100% component coverage
+unsigned parameter::arguments_limit(int position, 
+    const option_metadata& option, const argument_list& arguments) const
+{
+    if (position == parameter::not_positional)
+        return option.semantic()->max_tokens();
+
+    return arguments[position].second;
 }

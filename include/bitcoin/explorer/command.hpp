@@ -154,8 +154,6 @@ public:
 
     /**
      * Load command option definitions.
-     * The implicit_value call allows flags to be strongly-typed on read while
-     * allowing but not requiring a value on the command line for the option.
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
@@ -198,18 +196,13 @@ public:
             "The file and path name to the error log file."
         )
         (
-            "server.certificate",
-            value<boost::filesystem::path>(&setting_.server.certificate),
-            "The path to a private key certificate (file) that the server can use to prove the identity of this client. This is useful in authorizing remote administration of the server. The associated public key would need to be known by the server. Use the CZMQ program 'makecert' to generate the key certificate. For example: /home/genjix/.explorer.cert"
-        )
-        (
             "server.public-key",
             value<primitives::base16>(&setting_.server.public_key),
             "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
         )
         (
             "server.address",
-            value<std::string>(&setting_.server.address)->default_value("tcp://obelisk2.airbitz.co:9091"),
+            value<std::string>(&setting_.server.address)->default_value("tcp://obelisk-sol.airbitz.co:9091"),
             "The URI of the server to which this application may connect."
         )
         (
@@ -341,22 +334,6 @@ public:
     }
 
     /**
-     * Get the value of the server.certificate setting.
-     */
-    virtual boost::filesystem::path get_server_certificate_setting()
-    {
-        return setting_.server.certificate;
-    }
-
-    /**
-     * Set the value of the server.certificate setting.
-     */
-    virtual void set_server_certificate_setting(boost::filesystem::path value)
-    {
-        setting_.server.certificate = value;
-    }
-
-    /**
      * Get the value of the server.public-key setting.
      */
     virtual primitives::base16 get_server_public_key_setting()
@@ -475,14 +452,12 @@ private:
         struct server
         {
             server()
-              : certificate(),
-                public_key(),
+              : public_key(),
                 address(),
                 socks_proxy()
             {
             }
 
-            boost::filesystem::path certificate;
             primitives::base16 public_key;
             std::string address;
             std::string socks_proxy;

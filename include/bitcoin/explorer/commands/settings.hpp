@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_STEALTH_SHARED_SECRET_HPP
-#define BX_STEALTH_SHARED_SECRET_HPP
+#ifndef BX_SETTINGS_HPP
+#define BX_SETTINGS_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -63,9 +63,9 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the stealth-shared-secret command.
+ * Class to implement the settings command.
  */
-class stealth_shared_secret 
+class settings 
     : public command
 {
 public:
@@ -73,14 +73,14 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "stealth-shared-secret"; }
+    static const char* symbol() { return "settings"; }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return stealth_shared_secret::symbol();
+        return settings::symbol();
     }
 
     /**
@@ -88,7 +88,7 @@ public:
      */
     virtual const char* category()
     {
-        return "STEALTH";
+        return "BX";
     }
 
     /**
@@ -96,7 +96,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Derive the secret shared between an ephemeral key pair and a scan key pair. Provide scan secret and ephemeral public key or ephemeral secret and scan public key";
+        return "Display the loaded configuration settings.";
     }    
 
     /**
@@ -106,9 +106,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("SECRET", 1)
-            .add("PUBKEY", 1);
+        return get_argument_metadata();
     }
 
 	/**
@@ -134,22 +132,12 @@ public:
         (
             BX_HELP_VARIABLE ",h",
             value<bool>()->zero_tokens(),
-            "Get a description and instructions for this command."
+            "Get a description and instructions for this commandX."
         )
         (
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "SECRET",
-            value<primitives::ec_private>(&argument_.secret)->required(),
-            "A Base16 EC private key."
-        )
-        (
-            "PUBKEY",
-            value<primitives::ec_public>(&argument_.pubkey)->required(),
-            "A Base16 EC public key."
         );
 
         return options;
@@ -165,40 +153,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the SECRET argument.
-     */
-    virtual primitives::ec_private& get_secret_argument()
-    {
-        return argument_.secret;
-    }
-
-    /**
-     * Set the value of the SECRET argument.
-     */
-    virtual void set_secret_argument(
-        const primitives::ec_private& value)
-    {
-        argument_.secret = value;
-    }
-
-    /**
-     * Get the value of the PUBKEY argument.
-     */
-    virtual primitives::ec_public& get_pubkey_argument()
-    {
-        return argument_.pubkey;
-    }
-
-    /**
-     * Set the value of the PUBKEY argument.
-     */
-    virtual void set_pubkey_argument(
-        const primitives::ec_public& value)
-    {
-        argument_.pubkey = value;
-    }
-
 private:
 
     /**
@@ -209,13 +163,9 @@ private:
     struct argument
     {
         argument()
-          : secret(),
-            pubkey()
         {
         }
 
-        primitives::ec_private secret;
-        primitives::ec_public pubkey;
     } argument_;
 
     /**

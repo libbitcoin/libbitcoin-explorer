@@ -53,15 +53,10 @@ void display_invalid_parameter(std::ostream& stream,
 
 void display_usage(std::ostream& stream)
 {
-    stream << BX_COMMAND_USAGE << std::endl;
-    stream << std::endl;
-
-    stream << BX_COMMANDS_HEADER << std::endl;
+    stream << BX_COMMAND_USAGE;
+    stream << BX_COMMANDS_HEADER;
     display_command_names(stream);
-    stream << std::endl;
-
-    stream << BX_HOME_PAGE_HEADER << std::endl;
-    stream << "https://github.com/libbitcoin/libbitcoin-explorer" << std::endl;
+    stream << BX_COMMANDS_HOME_PAGE;
 }
 
 } // namespace explorer

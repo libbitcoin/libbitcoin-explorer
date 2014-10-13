@@ -56,7 +56,7 @@ using namespace bc::explorer::primitives;
 
 // Default network parameters.
 #define BX_NETWORK_RETRY 0
-#define BX_NETWORK_WAIT 2000
+#define BX_NETWORK_WAIT 3000
 #define BX_MAINNET_HOST "72.74.150.204"
 #define BX_MAINNET_PORT 8333
 //#define BX_TESTNET_HOST ""

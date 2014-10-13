@@ -98,48 +98,6 @@ public:
      * @return  The formatted command line parameters.
      */
     virtual std::string format_usage_parameters();
-
-    /**
-     * Format the boolean command line options.
-     * @return  The formatted command line options.
-     */
-    virtual std::string format_usage_toggle_options();
-    
-    /**
-     * Format the required command line options.
-     * @return  The formatted command line options.
-     */
-    virtual std::string format_usage_required_options();
-    
-    /**
-     * Format the optional non-boolean command line options.
-     * @return  The formatted command line options.
-     */
-    virtual std::string format_usage_optional_options();
-    
-    /**
-     * Format the multiple-valued command line options.
-     * @return  The formatted command line options.
-     */
-    virtual std::string format_usage_multivalued_options();
-    
-    /**
-     * Format the required command line positional arguments.
-     * @return  The formatted command line arguments.
-     */
-    virtual std::string format_usage_required_arguments();
-    
-    /**
-     * Format the optional command line positional arguments.
-     * @return  The formatted command line arguments.
-     */
-    virtual std::string format_usage_optional_arguments();
-    
-    /**
-     * Format the multiple-valued command line positional arguments.
-     * @return  The formatted command line arguments.
-     */
-    virtual std::string format_usage_multivalued_arguments();
     
     /**
      * Build the list of argument name/count tuples.

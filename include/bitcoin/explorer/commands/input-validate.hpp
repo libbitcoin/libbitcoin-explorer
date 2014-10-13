@@ -135,8 +135,6 @@ public:
 
     /**
      * Load program option definitions.
-     * The implicit_value call allows flags to be strongly-typed on read while
-     * allowing but not requiring a value on the command line for the option.
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
@@ -146,23 +144,23 @@ public:
         options_description& options = get_option_metadata();
         options.add_options()
         (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->zero_tokens(),
+            "Get a description and instructions for this command."
+        )
+        (
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
         )
         (
-            BX_HELP_VARIABLE ",h",
-            value<bool>()->implicit_value(true),
-            "Get a description and instructions for this command."
-        )
-        (
             "index,i",
-            value<size_t>(&option_.index),
+            value<uint32_t>(&option_.index),
             "The ordinal position of the input within the transaction, defaults to zero."
         )
         (
-            "signature_type,s",
-            value<primitives::hashtype>(&option_.signature_type),
+            "sign_type,s",
+            value<primitives::hashtype>(&option_.sign_type),
             "A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'."
         )
         (
@@ -177,7 +175,7 @@ public:
         )
         (
             "SIGNATURE",
-            value<primitives::base16>(&argument_.signature),
+            value<primitives::base16>(&argument_.signature)->required(),
             "The Base16 signature to validate."
         )
         (
@@ -270,7 +268,7 @@ public:
     /**
      * Get the value of the index option.
      */
-    virtual size_t& get_index_option()
+    virtual uint32_t& get_index_option()
     {
         return option_.index;
     }
@@ -279,26 +277,26 @@ public:
      * Set the value of the index option.
      */
     virtual void set_index_option(
-        const size_t& value)
+        const uint32_t& value)
     {
         option_.index = value;
     }
 
     /**
-     * Get the value of the signature_type option.
+     * Get the value of the sign_type option.
      */
-    virtual primitives::hashtype& get_signature_type_option()
+    virtual primitives::hashtype& get_sign_type_option()
     {
-        return option_.signature_type;
+        return option_.sign_type;
     }
 
     /**
-     * Set the value of the signature_type option.
+     * Set the value of the sign_type option.
      */
-    virtual void set_signature_type_option(
+    virtual void set_sign_type_option(
         const primitives::hashtype& value)
     {
-        option_.signature_type = value;
+        option_.sign_type = value;
     }
 
 private:
@@ -333,12 +331,12 @@ private:
     {
         option()
           : index(),
-            signature_type()
+            sign_type()
         {
         }
 
-        size_t index;
-        primitives::hashtype signature_type;
+        uint32_t index;
+        primitives::hashtype sign_type;
     } option_;
 };
 

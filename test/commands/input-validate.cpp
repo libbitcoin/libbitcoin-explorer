@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_validate);
-    command.set_signature_type_option({ "single" });
+    command.set_sign_type_option({ "single" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
 {
     BX_DECLARE_COMMAND(input_validate);
     command.set_index_option(42);
-    command.set_signature_type_option({ "single" });
+    command.set_sign_type_option({ "single" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
 BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_output)
 {
     BX_DECLARE_COMMAND(input_validate);
-    command.set_signature_type_option({ "single" });
+    command.set_sign_type_option({ "single" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
