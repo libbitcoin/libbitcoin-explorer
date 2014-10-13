@@ -1,7 +1,7 @@
 @ECHO OFF
 ECHO.
 ECHO Downloading Libbitcoin Explorer dependencies from NuGet
-CALL nuget.exe install ..\vs2013\bitcoin-explorer\packages.config
+CALL nuget.exe install ..\vs2013\bx\packages.config
 CALL nuget.exe install ..\vs2013\libbitcoin-explorer\packages.config
 CALL nuget.exe install ..\vs2013\libbitcoin-explorer-test\packages.config
 ECHO.
