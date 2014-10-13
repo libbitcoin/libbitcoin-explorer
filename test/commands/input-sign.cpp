@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output
     command.set_signature_type_option({ "single" });
     command.set_nonce_argument({ INPUT_SIGN_NONCE_A });
     command.set_transaction_argument({ INPUT_SIGN_TX_A });
-    command.set_previous_output_script_argument({ INPUT_SIGN_PREVOUT_A });
+    command.set_prevout_script_argument({ INPUT_SIGN_PREVOUT_A });
     command.set_ec_private_key_argument({ INPUT_SIGN_PRIVATE_KEY_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(INPUT_SIGN_SIGNATURE_A "\n");
@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_no_output__okay_output)
     command.set_signature_type_option({ "single" });
     command.set_nonce_argument({ INPUT_SIGN_NONCE_A });
     command.set_transaction_argument({ INPUT_SIGN_TX_B });
-    command.set_previous_output_script_argument({ INPUT_SIGN_PREVOUT_A });
+    command.set_prevout_script_argument({ INPUT_SIGN_PREVOUT_A });
     command.set_ec_private_key_argument({ INPUT_SIGN_PRIVATE_KEY_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(INPUT_SIGN_SIGNATURE_B "\n");
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__short_nonce__failure_error)
     BX_DECLARE_COMMAND(input_sign);
     command.set_nonce_argument({ INPUT_SIGN_NONCE_B });
     command.set_transaction_argument({ INPUT_SIGN_TX_A });
-    command.set_previous_output_script_argument({ INPUT_SIGN_PREVOUT_A });
+    command.set_prevout_script_argument({ INPUT_SIGN_PREVOUT_A });
     command.set_ec_private_key_argument({ INPUT_SIGN_PRIVATE_KEY_A });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_INPUT_SIGN_SHORT_NONCE "\n");
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(input_sign__invoke__invalid_index__failure_error)
     command.set_index_option(42);
     command.set_nonce_argument({ INPUT_SIGN_NONCE_A });
     command.set_transaction_argument({ INPUT_SIGN_TX_A });
-    command.set_previous_output_script_argument({ INPUT_SIGN_PREVOUT_A });
+    command.set_prevout_script_argument({ INPUT_SIGN_PREVOUT_A });
     command.set_ec_private_key_argument({ INPUT_SIGN_PRIVATE_KEY_A });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_INPUT_SIGN_INDEX_OUT_OF_RANGE "\n");

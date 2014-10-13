@@ -359,7 +359,7 @@ BOOST_AUTO_TEST_CASE(parameter__short_name__short_only__returns_short)
     BOOST_REQUIRE(result = 'm');
 }
 
-BOOST_AUTO_TEST_CASE(parameter__short_name__long_only__returns_null)
+BOOST_AUTO_TEST_CASE(parameter__short_name__long_only__returns_null_char)
 {
     BX_TEST_PARAMETER_OPTIONS_SETUP(opt::longy);
     auto result = parameter.short_name(option);

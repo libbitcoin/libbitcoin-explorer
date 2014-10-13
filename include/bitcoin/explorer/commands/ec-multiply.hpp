@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Calculate the EC product (POINT * SECRET).";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -108,7 +116,7 @@ public:
             .add("POINT", 1)
             .add("SECRET", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -118,7 +126,7 @@ public:
         po::variables_map& variables)
     {
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -131,26 +139,26 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path and file name for the configuration settings file to be used in the execution of the command."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Calculate the EC product (POINT * SECRET)."
-            )
-            (
-                "POINT",
-                value<primitives::ec_public>(&argument_.point)->required(),
-                "The Base16 EC point to multiply."
-            )
-            (
-                "SECRET",
-                value<primitives::ec_private>(&argument_.secret)->required(),
-                "The Base16 EC secret to multiply."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "POINT",
+            value<primitives::ec_public>(&argument_.point)->required(),
+            "The Base16 EC point to multiply."
+        )
+        (
+            "SECRET",
+            value<primitives::ec_private>(&argument_.secret)->required(),
+            "The Base16 EC secret to multiply."
+        );
 
         return options;
     }
@@ -162,7 +170,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -172,7 +180,7 @@ public:
     {
         return argument_.point;
     }
-    
+
     /**
      * Set the value of the POINT argument.
      */
@@ -189,7 +197,7 @@ public:
     {
         return argument_.secret;
     }
-    
+
     /**
      * Set the value of the SECRET argument.
      */
@@ -197,23 +205,6 @@ public:
         const primitives::ec_private& value)
     {
         argument_.secret = value;
-    }
-
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
     }
 
 private:
@@ -230,11 +221,11 @@ private:
             secret()
         {
         }
-        
+
         primitives::ec_public point;
         primitives::ec_private secret;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -243,11 +234,9 @@ private:
     struct option
     {
         option()
-          : help()
         {
         }
-        
-        bool help;
+
     } option_;
 };
 

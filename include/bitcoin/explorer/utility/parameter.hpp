@@ -33,12 +33,12 @@ namespace libbitcoin {
 namespace explorer {
 
 /**
- * A type to represent the list of distinct positional argument names counts.
+ * A tuple to represent a positional argument name count.
  */
 typedef std::pair<const std::string, int> argument_pair;
 
 /**
- * A type to represent the list of distinct positional argument names counts.
+ * A type to represent the list of positional argument name counts.
  */
 typedef std::vector<argument_pair> argument_list;
 
@@ -93,21 +93,22 @@ public:
      * @param[in]  option  The metadata of the option to test.
      * @return             The canonical name.
      */
-    virtual const std::string canonical(const option_metadata& option);
+    virtual const std::string canonical(const option_metadata& option) const;
 
     /**
      * Get the option's canonical name (long then short), without dashes.
      * @param[in]  option  The metadata of the option to test.
      * @return             The clean canonical name.
      */
-    virtual const std::string clean_canonical(const option_metadata& option);
+    virtual const std::string clean_canonical(const option_metadata& option) 
+        const;
 
     /**
      * Determine if the option has a short name.
      * @param[in]  option  The metadata of the option to test.
      * @return             True if the option has a short name.
      */
-    virtual bool has_short_name(const option_metadata& option);
+    virtual bool has_short_name(const option_metadata& option) const;
 
     /**
      * Populate with normalized parameter data.
@@ -125,14 +126,14 @@ public:
      * @return                Relative position or -1 if not positional.
      */
     virtual int position(const option_metadata& option,
-        const argument_list& arguments);
+        const argument_list& arguments) const;
 
     /**
      * Get the option's short name character or zero.
      * @param[in]  option  The metadata of the option to test.
      * @return             The short name character or null character.
      */
-    virtual char short_name(const option_metadata& option);
+    virtual char short_name(const option_metadata& option) const;
 
     /**
      * Virtual property declarations.

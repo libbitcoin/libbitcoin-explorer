@@ -65,6 +65,7 @@ static void fetch_tx_index_from_hash(obelisk_client& client,
     client.get_codec()->fetch_transaction_index(on_error, on_done, hash);
 }
 
+// This call is deprecated at the server.
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.

@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Assign a script to an existing transaction input.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -108,7 +116,7 @@ public:
             .add("SIGNATURE_SCRIPT", 1)
             .add("TRANSACTION", 1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -118,7 +126,7 @@ public:
         po::variables_map& variables)
     {
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -131,31 +139,31 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path and file name for the configuration settings file to be used in the execution of the command."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Assign a script to an existing transaction input."
-            )
-            (
-                "index,i",
-                value<size_t>(&option_.index),
-                "The ordinal position of the input within the transaction, defaults to zero."
-            )
-            (
-                "SIGNATURE_SCRIPT",
-                value<primitives::script>(&argument_.signature_script),
-                "The signature script to assign to the input."
-            )
-            (
-                "TRANSACTION",
-                value<primitives::transaction>(&argument_.transaction)->required(),
-                "The Base16 transaction. If not specified the transaction is read from STDIN."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "index,i",
+            value<size_t>(&option_.index),
+            "The ordinal position of the input within the transaction, defaults to zero."
+        )
+        (
+            "SIGNATURE_SCRIPT",
+            value<primitives::script>(&argument_.signature_script),
+            "The signature script to assign to the input."
+        )
+        (
+            "TRANSACTION",
+            value<primitives::transaction>(&argument_.transaction)->required(),
+            "The Base16 transaction. If not specified the transaction is read from STDIN."
+        );
 
         return options;
     }
@@ -167,7 +175,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -177,7 +185,7 @@ public:
     {
         return argument_.signature_script;
     }
-    
+
     /**
      * Set the value of the SIGNATURE_SCRIPT argument.
      */
@@ -194,7 +202,7 @@ public:
     {
         return argument_.transaction;
     }
-    
+
     /**
      * Set the value of the TRANSACTION argument.
      */
@@ -205,30 +213,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the index option.
      */
     virtual size_t& get_index_option()
     {
         return option_.index;
     }
-    
+
     /**
      * Set the value of the index option.
      */
@@ -252,11 +243,11 @@ private:
             transaction()
         {
         }
-        
+
         primitives::script signature_script;
         primitives::transaction transaction;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -265,12 +256,10 @@ private:
     struct option
     {
         option()
-          : help(),
-            index()
+          : index()
         {
         }
-        
-        bool help;
+
         size_t index;
     } option_;
 };

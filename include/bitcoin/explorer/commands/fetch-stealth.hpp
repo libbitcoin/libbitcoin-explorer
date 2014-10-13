@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Get metadata on potential payment transactions by stealth prefix. Requires an Obelisk server connection.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -107,7 +115,7 @@ public:
         return get_argument_metadata()
             .add("PREFIX", -1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -118,7 +126,7 @@ public:
     {
         load_input(get_prefixs_argument(), "PREFIX", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -131,31 +139,31 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path and file name for the configuration settings file to be used in the execution of the command."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Get metadata on potential payment transactions by stealth prefix. Requires an Obelisk server connection."
-            )
-            (
-                "format,f",
-                value<primitives::encoding>(&option_.format),
-                "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
-            )
-            (
-                "height,t",
-                value<size_t>(&option_.height),
-                "The minimum block height of transactions to include."
-            )
-            (
-                "PREFIX",
-                value<std::vector<primitives::base2>>(&argument_.prefixs),
-                "The set of Base2 stealth prefixes used to locate transactions."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "format,f",
+            value<primitives::encoding>(&option_.format),
+            "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+        )
+        (
+            "height,t",
+            value<size_t>(&option_.height),
+            "The minimum block height of transactions to include."
+        )
+        (
+            "PREFIX",
+            value<std::vector<primitives::base2>>(&argument_.prefixs),
+            "The set of Base2 stealth prefixes used to locate transactions."
+        );
 
         return options;
     }
@@ -167,7 +175,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -177,7 +185,7 @@ public:
     {
         return argument_.prefixs;
     }
-    
+
     /**
      * Set the value of the PREFIX arguments.
      */
@@ -188,30 +196,13 @@ public:
     }
 
     /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-    
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
-    /**
      * Get the value of the format option.
      */
     virtual primitives::encoding& get_format_option()
     {
         return option_.format;
     }
-    
+
     /**
      * Set the value of the format option.
      */
@@ -228,7 +219,7 @@ public:
     {
         return option_.height;
     }
-    
+
     /**
      * Set the value of the height option.
      */
@@ -251,10 +242,10 @@ private:
           : prefixs()
         {
         }
-        
+
         std::vector<primitives::base2> prefixs;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -263,13 +254,11 @@ private:
     struct option
     {
         option()
-          : help(),
-            format(),
+          : format(),
             height()
         {
         }
-        
-        bool help;
+
         primitives::encoding format;
         size_t height;
     } option_;

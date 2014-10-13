@@ -98,6 +98,14 @@ public:
     }
 
     /**
+     * The localizable command description.
+     */
+    virtual const char* description()
+    {
+        return "Calculate the EC function (SECRET + SECRET) % curve-order.";
+    }    
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
@@ -107,7 +115,7 @@ public:
         return get_argument_metadata()
             .add("SECRET", -1);
     }
-	
+
 	/**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
@@ -118,7 +126,7 @@ public:
     {
         load_input(get_secrets_argument(), "SECRET", variables, input);
     }
-    
+
     /**
      * Load program option definitions.
      * The implicit_value call allows flags to be strongly-typed on read while
@@ -131,21 +139,26 @@ public:
         using namespace po;
         options_description& options = get_option_metadata();
         options.add_options()
-            (
-                BX_CONFIG_VARIABLE ",c",
-                value<boost::filesystem::path>(),
-                "The path and file name for the configuration settings file to be used in the execution of the command."
-            )
-            (
-                "help,h",
-                value<bool>(&option_.help)->implicit_value(true),
-                "Calculate the EC function (SECRET + SECRET) % curve-order."
-            )
-            (
-                "SECRET",
-                value<std::vector<primitives::ec_private>>(&argument_.secrets),
-                "The set of Base16 secrets to add."
-            );
+        (
+            BX_CONFIG_VARIABLE ",c",
+            value<boost::filesystem::path>(),
+            "The path to the configuration settings file."
+        )
+        (
+            BX_HELP_VARIABLE ",h",
+            value<bool>()->implicit_value(true),
+            "Get a description and instructions for this command."
+        )
+        (
+            "help,h",
+            value<bool>(&option_.help)->implicit_value(true),
+            "Calculate the EC function (SECRET + SECRET) % curve-order."
+        )
+        (
+            "SECRET",
+            value<std::vector<primitives::ec_private>>(&argument_.secrets),
+            "The set of Base16 secrets to add."
+        );
 
         return options;
     }
@@ -157,7 +170,7 @@ public:
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
     virtual console_result invoke(std::ostream& output, std::ostream& cerr);
-        
+
     /* Properties */
 
     /**
@@ -167,7 +180,7 @@ public:
     {
         return argument_.secrets;
     }
-    
+
     /**
      * Set the value of the SECRET arguments.
      */
@@ -184,7 +197,7 @@ public:
     {
         return option_.help;
     }
-    
+
     /**
      * Set the value of the help option.
      */
@@ -207,10 +220,10 @@ private:
           : secrets()
         {
         }
-        
+
         std::vector<primitives::ec_private> secrets;
     } argument_;
-    
+
     /**
      * Command line option bound variables.
      * Uses cross-compiler safe constructor-based zeroize.
@@ -222,7 +235,7 @@ private:
           : help()
         {
         }
-        
+
         bool help;
     } option_;
 };
