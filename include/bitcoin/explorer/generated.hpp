@@ -125,7 +125,7 @@ namespace explorer {
 #define BX_COMMANDS_HOME_PAGE \
     "\nBitcoin Explorer home page:\n\nhttps://github.com/libbitcoin/libbitcoin-explorer\n"
 #define BX_COMMAND_USAGE \
-    "\nUSAGE: bx COMMAND [--help]\n"
+    "\nUsage: bx COMMAND [--help]\n"
 #define BX_CONFIG_DESCRIPTION \
     "The path to the configuration settings file."
 #define BX_HELP_DESCRIPTION \

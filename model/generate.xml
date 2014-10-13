@@ -52,7 +52,7 @@
     <string name="BX_PRINTER_OPTION_TABLE_HEADER" value="\nOptions (named):\n\n" />
     <string name="BX_PRINTER_ARGUMENT_TABLE_HEADER" value="\nArguments (positional):\n\n" />
     <string name="BX_PRINTER_VALUE_TEXT" value="VALUE" />
-    <string name="BX_COMMAND_USAGE" value="\nUSAGE: bx COMMAND [--help]\n" />
+    <string name="BX_COMMAND_USAGE" value="\nUsage: bx COMMAND [--help]\n" />
     <string name="BX_COMMANDS_HEADER" value="\nThe bx commands are:\n\n" />
     <string name="BX_COMMANDS_HOME_PAGE" value="\nBitcoin Explorer home page:\n\nhttps://github.com/libbitcoin/libbitcoin-explorer\n" />
     <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
