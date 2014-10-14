@@ -43,7 +43,7 @@ Bitcoin Explorer is a fork of the popular [SX command line tool](https://sx.dyne
 
 Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
 
-Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin-explorer**. Therefore the program is called **explorer** and is referred to as **BX** as a convenience and out of respect for its ground-breaking predecessor.
+Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin-explorer**. Therefore the program is called **Bitcoin Explorer** and is referred to as **BX** as a convenience and out of respect for its ground-breaking predecessor.
 
 ## Installation
 
@@ -96,6 +96,7 @@ The install script should not normally be executed using sudo. Instead it will i
 * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
 * [bitcoin/secp256k1](https://github.com/bitcoin/secp256k1)
 * [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
+* [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
 * [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
 * [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
 
@@ -187,6 +188,7 @@ To build BX you must also download and build its **libbitcoin dependencies**, as
 Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
+1. [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
 3. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
 4. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
 
