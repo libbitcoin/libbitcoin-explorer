@@ -67,7 +67,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_ADDRESS_VALIDATE_INVALID_ADDRESS \
-    "The signature is not invalid."
+    "The address is not valid."
 
 /**
  * Class to implement the address-validate command.

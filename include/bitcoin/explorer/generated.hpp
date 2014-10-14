@@ -128,6 +128,8 @@ namespace explorer {
     "\nUsage: bx COMMAND [--help]\n"
 #define BX_CONFIG_DESCRIPTION \
     "The path to the configuration settings file."
+#define BX_DEPRECATED_COMMAND \
+    "The '%1%' command has been replaced by '%2%'."
 #define BX_HELP_DESCRIPTION \
     "Get a description and instructions for this command."
 #define BX_INVALID_COMMAND \

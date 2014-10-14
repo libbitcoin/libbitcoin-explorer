@@ -59,7 +59,8 @@ console_result dispatch_invoke(int argc, const char* argv[],
 
     if (!command)
     {
-        display_invalid_command(error, target);
+        const std::string superseding(formerly(target));
+        display_invalid_command(error, target, superseding);
         return console_result::failure;
     }
 

@@ -41,9 +41,15 @@ void display_command_names(std::ostream& stream)
     broadcast(func);
 }
 
-void display_invalid_command(std::ostream& stream, const std::string& command)
+void display_invalid_command(std::ostream& stream, const std::string& command,
+    const std::string& superseding)
 {
-    stream << format(BX_INVALID_COMMAND) % command << std::endl;
+    if (superseding.empty())
+        stream << format(BX_INVALID_COMMAND) % command;
+    else
+        stream << format(BX_DEPRECATED_COMMAND) % command % superseding;
+
+    stream << std::endl;
 }
 
 void display_invalid_parameter(std::ostream& stream, 

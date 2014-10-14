@@ -54,6 +54,7 @@
     <string name="BX_COMMAND_USAGE" value="\nUsage: bx COMMAND [--help]\n" />
     <string name="BX_COMMANDS_HEADER" value="\nInfo: The bx commands are:\n\n" />
     <string name="BX_COMMANDS_HOME_PAGE" value="\nBitcoin Explorer home page:\n\nhttps://github.com/libbitcoin/libbitcoin-explorer\n" />
+    <string name="BX_DEPRECATED_COMMAND" value="The '%1%' command has been replaced by '%2%'."/>
     <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
     <string name="BX_CONFIG_DESCRIPTION" value="The path to the configuration settings file." />
@@ -80,7 +81,7 @@
 
   <command symbol="address-validate" formerly="validaddr" typeX="address" multipleX="true" category="WALLET" description="Validate an address. Returns the address if it is valid.">
     <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The Bitcoin address to validate. If not specified the address is read from STDIN." />
-    <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The signature is not invalid." />
+    <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The address is not valid." />
   </command>
 
   <command symbol="base58check-decode" typeX="wrapper" category="HASH" description="Convert a Base58Check value to Base16.">
