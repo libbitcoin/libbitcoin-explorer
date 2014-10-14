@@ -79,13 +79,6 @@ public:
         return "hd-to-address";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "hd-to-address";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.

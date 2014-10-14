@@ -318,8 +318,6 @@ std::string formerly(const string& former)
         return address_validate::symbol();
     if (former == btc_to_satoshi::formerly())
         return btc_to_satoshi::symbol();
-    if (former == ec_add::formerly())
-        return ec_add::symbol();
     if (former == ec_add_secrets::formerly())
         return ec_add_secrets::symbol();
     if (former == ec_lock::formerly())
@@ -344,8 +342,6 @@ std::string formerly(const string& former)
         return fetch_utxo::symbol();
     if (former == hd_new::formerly())
         return hd_new::symbol();
-    if (former == hd_to_address::formerly())
-        return hd_to_address::symbol();
     if (former == input_set::formerly())
         return input_set::symbol();
     if (former == input_sign::formerly())

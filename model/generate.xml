@@ -83,11 +83,6 @@
     <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The Bitcoin address to validate. If not specified the address is read from STDIN." />
     <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The address is not valid." />
   </command>
-
-  <command symbol="base58check-decode" typeX="wrapper" category="HASH" description="Convert a Base58Check value to Base16.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="BASE58CHECK" stdin="true" type="base58" description="The Base58Check value to decode. If not specified the value is read from STDIN." />
-  </command>
   
   <command symbol="base16-decode" typeX="raw" category="HASH" description="Convert a Base16 value to binary data.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to decode as binary data. If not specified the value is read from STDIN." />
@@ -95,6 +90,11 @@
 
   <command symbol="base16-encode" typeX="base16" category="HASH" description="Convert binary data to Base16.">
     <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN." />
+  </command>
+
+  <command symbol="base58check-decode" typeX="wrapper" category="HASH" description="Convert a Base58Check value to Base16.">
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <argument name="BASE58CHECK" stdin="true" type="base58" description="The Base58Check value to decode. If not specified the value is read from STDIN." />
   </command>
 
   <command symbol="base58check-encode" typeX="base58" category="HASH" description="Convert a Base16 value to Base58Check.">
@@ -141,7 +141,7 @@
     <define name="BX_EC_LOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
    
-  <command symbol="ec-add" formerly="ec-tweak-add" typeX="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">
+  <command symbol="ec-add" typeX="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">
     <argument name="POINT" required="true" type="ec_public" description="The Base16 EC point to add."/>
     <argument name="SECRET" required="true" type="ec_private" description="The Base16 EC secret to add."/>
     <define name="BX_EC_ADD_OUT_OF_RANGE" value="Function exceeds valid range." />
@@ -159,7 +159,7 @@
     <define name="BX_EC_MULITPLY_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
   
-  <command symbol="ec-multiply-secrets" formerly="ec-add" typeX="ec_private" category="MATH" description="Calculate the EC function (SECRET * SECRET) % curve-order.">
+  <command symbol="ec-multiply-secrets" formerly="ec-tweak-add" typeX="ec_private" category="MATH" description="Calculate the EC function (SECRET * SECRET) % curve-order.">
     <argument name="SECRET" stdin="true" limit="-1" type="ec_private" description="The set of Base16 EC secrets to multiply. If not specified the secrets are read from STDIN."/>
     <define name="BX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
@@ -274,7 +274,7 @@
     <define name="BX_HD_PUBLIC_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
 
-  <command symbol="hd-to-address" typeX="address" formerly="hd-to-address" category="WALLET" description="Convert a HD (BIP32) public or private key to a Bitcoin address.">
+  <command symbol="hd-to-address" typeX="address" category="WALLET" description="Convert a HD (BIP32) public or private key to a Bitcoin address.">
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The HD public or private key to convert. If not specified the key is read from STDIN." />
   </command>
 

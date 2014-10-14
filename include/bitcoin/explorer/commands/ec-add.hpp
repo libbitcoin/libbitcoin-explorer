@@ -85,13 +85,6 @@ public:
         return "ec-add";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "ec-tweak-add";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.

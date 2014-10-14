@@ -90,7 +90,7 @@ public:
      */
     static const char* formerly()
     {
-        return "ec-add";
+        return "ec-tweak-add";
     }
 
     /**

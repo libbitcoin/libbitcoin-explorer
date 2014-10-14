@@ -54,11 +54,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__btc_to_satoshi_was_satoshi__returns_ob
     BOOST_REQUIRE_EQUAL(formerly("satoshi"), btc_to_satoshi::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__ec_add_was_ec_tweak_add__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("ec-tweak-add"), ec_add::symbol());
-}
-
 BOOST_AUTO_TEST_CASE(generated__formerly__ec_add_secrets_was_ec_add_modp__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("ec-add-modp"), ec_add_secrets::symbol());
@@ -69,9 +64,9 @@ BOOST_AUTO_TEST_CASE(generated__formerly__ec_lock_was_brainwallet__returns_objec
     BOOST_REQUIRE_EQUAL(formerly("brainwallet"), ec_lock::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__ec_multiply_secrets_was_ec_add__returns_object)
+BOOST_AUTO_TEST_CASE(generated__formerly__ec_multiply_secrets_was_ec_tweak_add__returns_object)
 {
-    BOOST_REQUIRE_EQUAL(formerly("ec-add"), ec_multiply_secrets::symbol());
+    BOOST_REQUIRE_EQUAL(formerly("ec-tweak-add"), ec_multiply_secrets::symbol());
 }
 
 BOOST_AUTO_TEST_CASE(generated__formerly__ec_new_was_newkey__returns_object)
@@ -117,11 +112,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__fetch_utxo_was_get_utxo__returns_objec
 BOOST_AUTO_TEST_CASE(generated__formerly__hd_new_was_hd_seed__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("hd-seed"), hd_new::symbol());
-}
-
-BOOST_AUTO_TEST_CASE(generated__formerly__hd_to_address_was_hd_to_address__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("hd-to-address"), hd_to_address::symbol());
 }
 
 BOOST_AUTO_TEST_CASE(generated__formerly__input_set_was_set_input__returns_object)
