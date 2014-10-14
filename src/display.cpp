@@ -29,6 +29,8 @@
 namespace libbitcoin {
 namespace explorer {
 
+#define BX_HOME_PAGE_URL "https://github.com/libbitcoin/libbitcoin-explorer"
+
 void display_command_names(std::ostream& stream)
 {
     const auto func = [&stream](std::shared_ptr<command> explorer_command)
@@ -60,10 +62,16 @@ void display_invalid_parameter(std::ostream& stream,
 
 void display_usage(std::ostream& stream)
 {
-    stream << BX_COMMAND_USAGE;
-    stream << BX_COMMANDS_HEADER;
+    stream 
+        << std::endl << BX_COMMAND_USAGE << std::endl
+        << std::endl << BX_COMMANDS_HEADER << std::endl
+        << std::endl;
+
     display_command_names(stream);
-    stream << BX_COMMANDS_HOME_PAGE;
+
+    stream
+        << std::endl << BX_COMMANDS_HOME_PAGE << std::endl
+        << std::endl << BX_HOME_PAGE_URL << std::endl;
 }
 
 } // namespace explorer

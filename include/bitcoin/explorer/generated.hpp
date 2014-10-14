@@ -121,11 +121,11 @@ namespace explorer {
  * Various shared localizable strings.
  */
 #define BX_COMMANDS_HEADER \
-    "\nInfo: The bx commands are:\n\n"
+    "Info: The bx commands are:"
 #define BX_COMMANDS_HOME_PAGE \
-    "\nBitcoin Explorer home page:\n\nhttps://github.com/libbitcoin/libbitcoin-explorer\n"
+    "Bitcoin Explorer home page:"
 #define BX_COMMAND_USAGE \
-    "\nUsage: bx COMMAND [--help]\n"
+    "Usage: bx COMMAND [--help]"
 #define BX_CONFIG_DESCRIPTION \
     "The path to the configuration settings file."
 #define BX_DEPRECATED_COMMAND \
@@ -137,13 +137,13 @@ namespace explorer {
 #define BX_INVALID_PARAMETER \
     "Error: %1%"
 #define BX_PRINTER_ARGUMENT_TABLE_HEADER \
-    "\nArguments (positional):\n\n"
+    "Arguments (positional):"
 #define BX_PRINTER_DESCRIPTION_FORMAT \
-    "\nInfo: %1%\n"
+    "Info: %1%"
 #define BX_PRINTER_OPTION_TABLE_HEADER \
-    "\nOptions (named):\n\n"
+    "Options (named):"
 #define BX_PRINTER_USAGE_FORMAT \
-    "\nUsage: %1% %2% %3%\n"
+    "Usage: %1% %2% %3%"
 #define BX_PRINTER_VALUE_TEXT \
     "VALUE"
 

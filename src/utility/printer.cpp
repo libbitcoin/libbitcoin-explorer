@@ -70,8 +70,7 @@ static void enqueue_fragment(std::string& fragment,
 std::vector<std::string> printer::columnize(const std::string& paragraph,
     size_t width)
 {
-    // TODO: prevent this from eating endln's.
-    const auto words = split(paragraph, BX_SENTENCE_DELIMITER);
+    const auto words = split(paragraph);
 
     std::string fragment;
     std::vector<std::string> column;
@@ -177,7 +176,7 @@ std::string printer::format_usage()
 
 std::string printer::format_description()
 {
-    // DESCRIPTION: %1%\n
+    // DESCRIPTION: %1%
     auto description = format(BX_PRINTER_DESCRIPTION_FORMAT) % get_description();
     return format_paragraph(description.str());
 }
@@ -377,7 +376,7 @@ void printer::initialize()
     generate_parameters();
 }
 
-/* Printers */
+/* Printer */
 
 void printer::print(std::ostream& output)
 {
@@ -386,15 +385,15 @@ void printer::print(std::ostream& output)
 
     // Don't write a header if a table is empty.
     std::string option_table_header(if_else(option_table.empty(), "",
-        BX_PRINTER_OPTION_TABLE_HEADER));
+        BX_PRINTER_OPTION_TABLE_HEADER "\n"));
     std::string argument_table_header(if_else(argument_table.empty(), "",
-        BX_PRINTER_ARGUMENT_TABLE_HEADER));
+        BX_PRINTER_ARGUMENT_TABLE_HEADER "\n"));
 
     output
-        << format_usage()
-        << format_description()
-        << option_table_header
-        << option_table
-        << argument_table_header
-        << argument_table;
+        << std::endl << format_usage()
+        << std::endl << format_description()
+        << std::endl << option_table_header
+        << std::endl << option_table
+        << std::endl << argument_table_header
+        << std::endl << argument_table;
 }
