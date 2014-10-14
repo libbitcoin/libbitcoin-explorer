@@ -27,6 +27,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -105,6 +106,15 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return false;
+    }
+
+    /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
@@ -177,7 +187,7 @@ public:
         )
         (
             "general.retries",
-            value<uint8_t>(&setting_.general.retries),
+            value<primitives::base10>(&setting_.general.retries),
             "Number of times to retry contacting the server before giving up."
         )
         (
@@ -272,7 +282,7 @@ public:
     /**
      * Get the value of the general.retries setting.
      */
-    virtual uint8_t get_general_retries_setting()
+    virtual primitives::base10 get_general_retries_setting()
     {
         return setting_.general.retries;
     }
@@ -280,7 +290,7 @@ public:
     /**
      * Set the value of the general.retries setting.
      */
-    virtual void set_general_retries_setting(uint8_t value)
+    virtual void set_general_retries_setting(primitives::base10 value)
     {
         setting_.general.retries = value;
     }
@@ -433,7 +443,7 @@ private:
             }
 
             bool testnet;
-            uint8_t retries;
+            primitives::base10 retries;
             uint32_t wait;
         } general;
 

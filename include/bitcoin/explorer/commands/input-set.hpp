@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -79,7 +80,18 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "input-set"; }
+    static const char* symbol()
+    {
+        return "input-set";
+    }
+
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "set-input";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -103,7 +115,7 @@ public:
     virtual const char* description()
     {
         return "Assign a script to an existing transaction input.";
-    }    
+    }
 
     /**
      * Load program argument definitions.

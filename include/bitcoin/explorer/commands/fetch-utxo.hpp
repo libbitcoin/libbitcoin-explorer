@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -79,7 +80,18 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "fetch-utxo"; }
+    static const char* symbol()
+    {
+        return "fetch-utxo";
+    }
+
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "get-utxo";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -103,7 +115,7 @@ public:
     virtual const char* description()
     {
         return "Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires an Obelisk server connection.";
-    }    
+    }
 
     /**
      * Load program argument definitions.

@@ -36,11 +36,13 @@ void display_command_names(std::ostream& stream);
 
 /**
  * Write an error message to a stream that the specified explorer command
- * does not exist.
- * @param[in]  stream   The stream to write into.
- * @param[in]  command  The value that was attempted as a command.
+ * name has been deprecated in favor of another, or does not exist.
+ * @param[in]  stream       The stream to write into.
+ * @param[in]  command      The value that was attempted as a command.
+ * @param[in]  superseding  The superseding command, defaults to empty.
  */
-void display_invalid_command(std::ostream& stream, const std::string& command);
+void display_invalid_command(std::ostream& stream, const std::string& command,
+    const std::string& superseding="");
 
 /**
  * Write an error message to a stream that indicates what is wrong with

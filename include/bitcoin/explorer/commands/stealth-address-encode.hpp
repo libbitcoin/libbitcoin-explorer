@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -85,7 +86,11 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "stealth-address-encode"; }
+    static const char* symbol()
+    {
+        return "stealth-address-encode";
+    }
+
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -109,7 +114,7 @@ public:
     virtual const char* description()
     {
         return "Encode a stealth payment address.";
-    }    
+    }
 
     /**
      * Load program argument definitions.
@@ -160,7 +165,7 @@ public:
         )
         (
             "signatures,s",
-            value<uint8_t>(&option_.signatures),
+            value<primitives::base10>(&option_.signatures),
             "Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
         )
         (
@@ -241,7 +246,7 @@ public:
     /**
      * Get the value of the signatures option.
      */
-    virtual uint8_t& get_signatures_option()
+    virtual primitives::base10& get_signatures_option()
     {
         return option_.signatures;
     }
@@ -250,7 +255,7 @@ public:
      * Set the value of the signatures option.
      */
     virtual void set_signatures_option(
-        const uint8_t& value)
+        const primitives::base10& value)
     {
         option_.signatures = value;
     }
@@ -288,7 +293,7 @@ private:
         }
 
         primitives::base2 prefix;
-        uint8_t signatures;
+        primitives::base10 signatures;
     } option_;
 };
 

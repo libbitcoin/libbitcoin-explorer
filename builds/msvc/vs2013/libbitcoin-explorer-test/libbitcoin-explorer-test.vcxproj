@@ -74,6 +74,7 @@
     <ClCompile Include="..\..\..\..\test\base58.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
+    <ClCompile Include="..\..\..\..\test\generated__formerly.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
     <ClCompile Include="..\..\..\..\test\obelisk_client.cpp" />

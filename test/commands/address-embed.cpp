@@ -26,11 +26,11 @@ BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(embed_address__invoke)
 
 // vectors
-#define BX_ADDRESS_EMBED_A "Sataoshi Nakamoto"
+#define BX_ADDRESS_EMBED_A "Satoshi Nakamoto"
 
 // expectations
-#define BX_ADDRESS_EMBED_A_V0 "1D4ovciLtDDCRAnbQV2uerN8W5YoD7gYkN"
-#define BX_ADDRESS_EMBED_A_V42 "J7G9HBEShnfzmNeES72J27oAwGNR4HdLrF"
+#define BX_ADDRESS_EMBED_A_V0 "168LnUjqoJLie1PW5dTaF2vKUU9Jf6Fe4a"
+#define BX_ADDRESS_EMBED_A_V42 "HzKg93FwcsoWzDF97FSxcJMMuexvUhjGKa"
 
 BOOST_AUTO_TEST_CASE(address_embed__invoke__version_0__okay_output)
 {
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(address_embed__invoke__version_0__okay_output)
     BX_REQUIRE_OUTPUT(BX_ADDRESS_EMBED_A_V0 "\n");
 }
 
-BOOST_AUTO_TEST_CASE(aaddress_embed__invoke__version_42__okay_output)
+BOOST_AUTO_TEST_CASE(address_embed__invoke__version_42__okay_output)
 {
     BX_DECLARE_COMMAND(address_embed);
     command.set_version_option(42);

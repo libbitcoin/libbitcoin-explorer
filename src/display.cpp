@@ -34,15 +34,22 @@ void display_command_names(std::ostream& stream)
     const auto func = [&stream](std::shared_ptr<command> explorer_command)
     {
         BITCOIN_ASSERT(explorer_command != nullptr);
-        stream << explorer_command->name() << std::endl;
+        if (!explorer_command->obsolete())
+            stream << explorer_command->name() << std::endl;
     };
 
     broadcast(func);
 }
 
-void display_invalid_command(std::ostream& stream, const std::string& command)
+void display_invalid_command(std::ostream& stream, const std::string& command,
+    const std::string& superseding)
 {
-    stream << format(BX_INVALID_COMMAND) % command << std::endl;
+    if (superseding.empty())
+        stream << format(BX_INVALID_COMMAND) % command;
+    else
+        stream << format(BX_DEPRECATED_COMMAND) % command % superseding;
+
+    stream << std::endl;
 }
 
 void display_invalid_parameter(std::ostream& stream, 

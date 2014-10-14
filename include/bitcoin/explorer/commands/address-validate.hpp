@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -66,7 +67,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_ADDRESS_VALIDATE_INVALID_ADDRESS \
-    "The signature is not invalid."
+    "The address is not valid."
 
 /**
  * Class to implement the address-validate command.
@@ -79,7 +80,18 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "address-validate"; }
+    static const char* symbol()
+    {
+        return "address-validate";
+    }
+
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "validaddr";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -103,7 +115,7 @@ public:
     virtual const char* description()
     {
         return "Validate an address. Returns the address if it is valid.";
-    }    
+    }
 
     /**
      * Load program argument definitions.

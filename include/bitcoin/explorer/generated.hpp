@@ -128,6 +128,8 @@ namespace explorer {
     "\nUsage: bx COMMAND [--help]\n"
 #define BX_CONFIG_DESCRIPTION \
     "The path to the configuration settings file."
+#define BX_DEPRECATED_COMMAND \
+    "The '%1%' command has been replaced by '%2%'."
 #define BX_HELP_DESCRIPTION \
     "Get a description and instructions for this command."
 #define BX_INVALID_COMMAND \
@@ -157,6 +159,13 @@ void broadcast(const std::function<void(std::shared_ptr<command>)> func);
  * @return             An instance of the command or nullptr if not found.
  */
 std::shared_ptr<command> find(const std::string& symbol);
+
+/**
+ * Find the new name of the formerly-named command.
+ * @param[in]  former  The former symbolic command name.
+ * @return             The current name of the formerly-named command.
+ */
+std::string formerly(const std::string& former);
 
 } // namespace explorer
 } // namespace libbitcoin
