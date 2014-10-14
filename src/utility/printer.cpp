@@ -62,7 +62,6 @@ printer::printer(const std::string& application, const std::string& category,
 static void enqueue_fragment(std::string& fragment,
     std::vector<std::string>& column)
 {
-    trim_left(fragment, BX_SENTENCE_DELIMITER);
     if (!fragment.empty())
         column.push_back(fragment);
 }
@@ -79,7 +78,7 @@ std::vector<std::string> printer::columnize(const std::string& paragraph,
 
     for (const auto& word: words)
     {
-        if (word.length() + fragment.length() < width)
+        if (!fragment.empty() && (word.length() + fragment.length() < width))
         {
             fragment += BX_SENTENCE_DELIMITER + word;
             continue;
@@ -118,12 +117,13 @@ static bool match_positional(bool positional, const parameter& value)
 }
 
 // 100% component tested.
-// This formats to 80 char width as: [ 20 | ' ' | 58 | '\n' ]
+// This formats to 73 char width as: [ 20 | ' ' | 52 | '\n' ]
+// GitHub code examples start horizontal scroll after 73 characters.
 std::string printer::format_parameters_table(bool positional)
 {
     std::stringstream output;
     const auto& parameters = get_parameters();
-    format table_format("%-20s %-58s\n");
+    format table_format("%-20s %-52s\n");
 
     for (const auto& parameter: parameters)
     {
@@ -135,7 +135,7 @@ std::string printer::format_parameters_table(bool positional)
         auto name = format_row_name(parameter).str();
 
         // Build a column for the description.
-        const auto rows = columnize(parameter.get_description(), 58);
+        const auto rows = columnize(parameter.get_description(), 52);
 
         // If there is no description the command is not output!
         for (const auto& row: rows)
@@ -150,12 +150,14 @@ std::string printer::format_parameters_table(bool positional)
     return output.str();
 }
 
+// This formats to 73 char width: [ 73 | '\n' ]
+// GitHub code examples start horizontal scroll after 73 characters.
 std::string printer::format_paragraph(const std::string& paragraph)
 {
     std::stringstream output;
-    format paragraph_format("%-79s\n");
+    format paragraph_format("%-73s\n");
 
-    const auto lines = columnize(paragraph, 79);
+    const auto lines = columnize(paragraph, 73);
 
     for (const auto& line: lines)
         output << paragraph_format % line;
@@ -379,11 +381,20 @@ void printer::initialize()
 
 void printer::print(std::ostream& output)
 {
+    const auto& option_table = format_parameters_table(false);
+    const auto& argument_table = format_parameters_table(true);
+
+    // Don't write a header if a table is empty.
+    std::string option_table_header(if_else(option_table.empty(), "",
+        BX_PRINTER_OPTION_TABLE_HEADER));
+    std::string argument_table_header(if_else(argument_table.empty(), "",
+        BX_PRINTER_ARGUMENT_TABLE_HEADER));
+
     output
         << format_usage()
         << format_description()
-        << BX_PRINTER_OPTION_TABLE_HEADER
-        << format_parameters_table(false)
-        << BX_PRINTER_ARGUMENT_TABLE_HEADER
-        << format_parameters_table(true);
+        << option_table_header
+        << option_table
+        << argument_table_header
+        << argument_table;
 }

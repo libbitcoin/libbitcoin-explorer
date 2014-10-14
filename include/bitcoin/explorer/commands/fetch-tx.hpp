@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -73,7 +74,18 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "fetch-tx"; }
+    static const char* symbol()
+    {
+        return "fetch-tx";
+    }
+
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "fetch-transaction";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -97,7 +109,7 @@ public:
     virtual const char* description()
     {
         return "Get transactions by hash. Requires an Obelisk server connection.";
-    }    
+    }
 
     /**
      * Load program argument definitions.

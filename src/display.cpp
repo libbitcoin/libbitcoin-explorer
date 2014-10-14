@@ -34,7 +34,8 @@ void display_command_names(std::ostream& stream)
     const auto func = [&stream](std::shared_ptr<command> explorer_command)
     {
         BITCOIN_ASSERT(explorer_command != nullptr);
-        stream << explorer_command->name() << std::endl;
+        if (!explorer_command->obsolete())
+            stream << explorer_command->name() << std::endl;
     };
 
     broadcast(func);

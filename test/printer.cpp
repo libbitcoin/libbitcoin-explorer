@@ -154,9 +154,9 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__named_three_options__thre
         ("short_long,s", "Long and short name."));
     BX_PRINTER_INITIALIZE(3, 0);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
-        "--long               Long name only.                                           \n"
-        "-m                   Short name only.                                          \n"
-        "-s [--short_long]    Long and short name.                                      \n"
+        "--long               Long name only.                                     \n"
+        "-m                   Short name only.                                    \n"
+        "-s [--short_long]    Long and short name.                                \n"
     );
 }
 
@@ -168,9 +168,9 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__reversed_named_three_opti
         ("long", "Long name only."));
     BX_PRINTER_INITIALIZE(3, 0);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
-        "--long               Long name only.                                           \n"
-        "-m                   Short name only.                                          \n"
-        "-s [--short_long]    Long and short name.                                      \n"
+        "--long               Long name only.                                     \n"
+        "-m                   Short name only.                                    \n"
+        "-s [--short_long]    Long and short name.                                \n"
     );
 }
 
@@ -184,9 +184,9 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__unsorted_named_three_opti
         arguments.add("THIRD", -1));
     BX_PRINTER_INITIALIZE(3, 2);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
-        "--third              Third option description.                                 \n"
-        "-f [--first]         First option description.                                 \n"
-        "-x [--second]        Second option description.                                \n"
+        "--third              Third option description.                           \n"
+        "-f [--first]         First option description.                           \n"
+        "-x [--second]        Second option description.                          \n"
     );
 }
 
@@ -201,7 +201,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__named_three_options_two_m
         arguments.add("THIRD", -1));
     BX_PRINTER_INITIALIZE(3, 3);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
-        "-f [--first]         First option description.                                 \n"
+        "-f [--first]         First option description.                           \n"
     );
 }
 
@@ -226,7 +226,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_three_options_
         arguments.add("THIRD", -1));
     BX_PRINTER_INITIALIZE(3, 3);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(true),
-        "THIRD                Third option description.                                 \n"
+        "THIRD                Third option description.                           \n"
     );
 }
 
@@ -241,9 +241,9 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__reverse_positional_three_
         arguments.add("THIRD", -1));
     BX_PRINTER_INITIALIZE(3, 3);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(true),
-        "THIRD                Third option description.                                 \n"
-        "SECOND               Second option description.                                \n"
-        "FIRST                First option description.                                 \n"
+        "THIRD                Third option description.                           \n"
+        "SECOND               Second option description.                          \n"
+        "FIRST                First option description.                           \n"
     );
 }
 
@@ -266,15 +266,16 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_three_options_
     BX_PRINTER_INITIALIZE(3, 3);
     auto table = help.format_parameters_table(true);
     BOOST_REQUIRE_EQUAL(table,
-        "SECOND               Lorem ipsum dolor sit amet, consectetur adipiscing elit,  \n"
-        "                     sed do eiusmod tempor incididunt ut labore et dolore magna\n"
-        "                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation\n"
-        "                     ullamco laboris nisi ut aliquip ex ea commodo consequat.  \n"
-        "                     Duis aute irure dolor in reprehenderit in voluptate velit \n"
-        "                     esse cillum dolore eu fugiat nulla pariatur. Excepteur    \n"
-        "                     sint occaecat cupidatat non proident, sunt in culpa qui   \n"
-        "                     officia deserunt mollit anim id est laborum.              \n"
-        "THIRD                Third option description.                                 \n"
+        "SECOND               Lorem ipsum dolor sit amet, consectetur adipiscing  \n"
+        "                     elit, sed do eiusmod tempor incididunt ut labore et \n"
+        "                     dolore magna aliqua. Ut enim ad minim veniam, quis  \n"
+        "                     nostrud exercitation ullamco laboris nisi ut aliquip\n"
+        "                     ex ea commodo consequat. Duis aute irure dolor in   \n"
+        "                     reprehenderit in voluptate velit esse cillum dolore \n"
+        "                     eu fugiat nulla pariatur. Excepteur sint occaecat   \n"
+        "                     cupidatat non proident, sunt in culpa qui officia   \n"
+        "                     deserunt mollit anim id est laborum.                \n"
+        "THIRD                Third option description.                           \n"
     );
 }
 

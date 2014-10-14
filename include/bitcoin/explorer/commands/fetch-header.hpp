@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -73,7 +74,11 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "fetch-header"; }
+    static const char* symbol()
+    {
+        return "fetch-header";
+    }
+
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -97,7 +102,7 @@ public:
     virtual const char* description()
     {
         return "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection.";
-    }    
+    }
 
     /**
      * Load program argument definitions.

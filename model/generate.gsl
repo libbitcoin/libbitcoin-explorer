@@ -32,6 +32,7 @@
 .
 .macro global.primitives
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -96,6 +97,8 @@
 .function global.normalize_type(type)
 .   if my.type = type_address
 .       return type_address_bx
+.   elsif my.type = type_base10
+.       return type_base10_bx
 .   elsif my.type = type_base16
 .       return type_base16_bx
 .   elsif my.type = type_base2
@@ -215,6 +218,7 @@
 .config_option = "config"
 .type_bool = "bool"
 .type_address = "address"
+.type_base10 = "base10"
 .type_base16 = "base16"
 .type_base2 = "base2"
 .type_base58 = "base58"
@@ -243,6 +247,7 @@
 .type_wrapper = "wrapper"
 .
 .type_address_bx = "primitives::address"
+.type_base10_bx = "primitives::base10"
 .type_base16_bx = "primitives::base16"
 .type_base2_bx = "primitives::base2"
 .type_base58_bx = "primitives::base58"
@@ -318,6 +323,13 @@ void broadcast(const std::function<void(std::shared_ptr<command>)> func);
  */
 std::shared_ptr<command> find(const std::string& symbol);
 
+/**
+ * Find the new name of the formerly-named command.
+ * @param[in]  former  The former symbolic command name.
+ * @return             The current name of the formerly-named command.
+ */
+std::string formerly(const std::string& former);
+
 } // namespace explorer
 } // namespace libbitcoin
 
@@ -359,6 +371,18 @@ shared_ptr<command> find(const string& symbol)
 .endfor
 
     return nullptr;
+}
+
+std::string formerly(const string& former)
+{
+.for command by symbol
+.   if (!is_empty(formerly))
+    if (former == $(symbol:c)::formerly())
+        return $(symbol:c)::symbol();
+.   endif
+.endfor
+
+    return "";
 }
 
 } // namespace explorer
@@ -430,6 +454,15 @@ public:
     virtual const char* description()
     {
         return "not-implemented";
+    }
+
+    /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return false;
     }
 
     /**
@@ -710,7 +743,20 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "$(symbol:)"; }
+    static const char* symbol()
+    {
+        return "$(symbol:)";
+    }
+
+.if (!is_empty(formerly))
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "$(formerly:)";
+    }
+.endif
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -734,7 +780,18 @@ public:
     virtual const char* description()
     {
         return "$(description:)";
-    }    
+    }
+.if (is_xml_true(obsolete))
+
+    /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    virtual bool obsolete()
+    {
+        return true;
+    }
+.endif
 
 .
 .# HACK: There must be a better way to count a collection.
@@ -1001,8 +1058,35 @@ BOOST_AUTO_TEST_SUITE(generated__find)
 
 BOOST_AUTO_TEST_CASE(generated__find__$(symbol:c)__returns_object)
 {
-    BOOST_REQUIRE(find($(symbol:c)::symbol()) != nullptr);
+    BOOST_REQUIRE(find("$(symbol:)") != nullptr);
 }
+.endfor
+
+BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END()
+.##############################################################################
+.echo "Generating test/generated__formerly.cpp..."
+.output "../test/generated__formerly.cpp"
+.copyleft()
+#include <boost/test/unit_test.hpp>
+
+#include <bitcoin/explorer.hpp>
+
+/********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
+
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+
+BOOST_AUTO_TEST_SUITE(generated)
+BOOST_AUTO_TEST_SUITE(generated__formerly)
+.for command by symbol
+.   if (!is_empty(formerly))
+
+BOOST_AUTO_TEST_CASE(generated__formerly__$(symbol:c)_was_$(formerly:c)__returns_object)
+{
+    BOOST_REQUIRE_EQUAL(formerly("$(formerly:)"), $(symbol:c)::symbol());
+}
+.   endif
 .endfor
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -1026,7 +1110,7 @@ BOOST_AUTO_TEST_SUITE(generated__symbol)
 
 BOOST_AUTO_TEST_CASE(generated__symbol__$(symbol:c)__returns_expected_value)
 {
-    BOOST_REQUIRE($(symbol:c)::symbol() == std::string("$(symbol:)"));
+    BOOST_REQUIRE_EQUAL($(symbol:c)::symbol(), "$(symbol:)");
 }
 .endfor
 
@@ -1086,6 +1170,7 @@ bitcoin_explorer_utility_include_HEADERS = \\
 bitcoin_explorer_primitives_includedir = $\(includedir)/bitcoin/explorer/primitives
 bitcoin_explorer_primitives_include_HEADERS = \\
     include/bitcoin/explorer/primitives/address.hpp \\
+    include/bitcoin/explorer/primitives/base10.hpp \\
     include/bitcoin/explorer/primitives/base16.hpp \\
     include/bitcoin/explorer/primitives/base2.hpp \\
     include/bitcoin/explorer/primitives/base58.hpp \\
@@ -1135,6 +1220,7 @@ libbitcoin_explorer_la_SOURCES = \\
     src/obelisk_client.cpp \\
     src/prop_tree.cpp \\
     src/primitives/address.cpp \\
+    src/primitives/base10.cpp \\
     src/primitives/base16.cpp \\
     src/primitives/base2.cpp \\
     src/primitives/base58.cpp \\
@@ -1208,6 +1294,7 @@ libbitcoin_explorer_test_SOURCES = \\
     test/base58.cpp \\
     test/generated__broadcast.cpp \\
     test/generated__find.cpp \\
+    test/generated__formerly.cpp \\
     test/generated__symbol.cpp \\
     test/main.cpp \\
     test/obelisk_client.cpp \\
@@ -1319,6 +1406,7 @@ libbitcoin_explorer_test_LDADD = \\
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\obelisk_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\prop_tree.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\address.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base10.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base2.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base58.hpp" />
@@ -1363,6 +1451,7 @@ libbitcoin_explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base10.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base2.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp" />
@@ -1522,6 +1611,9 @@ libbitcoin_explorer_test_LDADD = \\
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\address.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base10.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
@@ -1655,6 +1747,9 @@ libbitcoin_explorer_test_LDADD = \\
     </ClCompile>
 .endfor
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base10.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp">
@@ -1844,6 +1939,7 @@ libbitcoin_explorer_test_LDADD = \\
     <ClCompile Include="..\\..\\..\\..\\test\\base58.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__broadcast.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__find.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\test\\generated__formerly.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\main.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp" />
@@ -1975,6 +2071,9 @@ libbitcoin_explorer_test_LDADD = \\
       <Filter>src\\tests</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\test\\generated__find.cpp">
+      <Filter>src\\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\generated__formerly.cpp">
       <Filter>src\\tests</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp">

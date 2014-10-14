@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -73,7 +74,18 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "ec-to-address"; }
+    static const char* symbol()
+    {
+        return "ec-to-address";
+    }
+
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "addr";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -97,7 +109,7 @@ public:
     virtual const char* description()
     {
         return "Convert an EC public key to a Bitcoin address.";
-    }    
+    }
 
     /**
      * Load program argument definitions.
@@ -143,7 +155,7 @@ public:
         )
         (
             "version,v",
-            value<uint8_t>(&option_.version),
+            value<primitives::base10>(&option_.version),
             "The desired Bitcoin address version."
         )
         (
@@ -185,7 +197,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    virtual uint8_t& get_version_option()
+    virtual primitives::base10& get_version_option()
     {
         return option_.version;
     }
@@ -194,7 +206,7 @@ public:
      * Set the value of the version option.
      */
     virtual void set_version_option(
-        const uint8_t& value)
+        const primitives::base10& value)
     {
         option_.version = value;
     }
@@ -228,7 +240,7 @@ private:
         {
         }
 
-        uint8_t version;
+        primitives::base10 version;
     } option_;
 };
 

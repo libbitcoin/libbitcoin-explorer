@@ -49,6 +49,7 @@ bitcoin_explorer_utility_include_HEADERS = \
 bitcoin_explorer_primitives_includedir = $(includedir)/bitcoin/explorer/primitives
 bitcoin_explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/address.hpp \
+    include/bitcoin/explorer/primitives/base10.hpp \
     include/bitcoin/explorer/primitives/base16.hpp \
     include/bitcoin/explorer/primitives/base2.hpp \
     include/bitcoin/explorer/primitives/base58.hpp \
@@ -182,6 +183,7 @@ libbitcoin_explorer_la_SOURCES = \
     src/obelisk_client.cpp \
     src/prop_tree.cpp \
     src/primitives/address.cpp \
+    src/primitives/base10.cpp \
     src/primitives/base16.cpp \
     src/primitives/base2.cpp \
     src/primitives/base58.cpp \
@@ -339,6 +341,7 @@ libbitcoin_explorer_test_SOURCES = \
     test/base58.cpp \
     test/generated__broadcast.cpp \
     test/generated__find.cpp \
+    test/generated__formerly.cpp \
     test/generated__symbol.cpp \
     test/main.cpp \
     test/obelisk_client.cpp \

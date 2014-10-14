@@ -31,437 +31,437 @@ BOOST_AUTO_TEST_SUITE(generated__find)
 
 BOOST_AUTO_TEST_CASE(generated__find__address_decode__returns_object)
 {
-    BOOST_REQUIRE(find(address_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("address-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__address_embed__returns_object)
 {
-    BOOST_REQUIRE(find(address_embed::symbol()) != nullptr);
+    BOOST_REQUIRE(find("address-embed") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__address_encode__returns_object)
 {
-    BOOST_REQUIRE(find(address_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("address-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__address_validate__returns_object)
 {
-    BOOST_REQUIRE(find(address_validate::symbol()) != nullptr);
+    BOOST_REQUIRE(find("address-validate") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__base16_decode__returns_object)
 {
-    BOOST_REQUIRE(find(base16_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("base16-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__base16_encode__returns_object)
 {
-    BOOST_REQUIRE(find(base16_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("base16-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__base58_decode__returns_object)
 {
-    BOOST_REQUIRE(find(base58_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("base58-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__base58_encode__returns_object)
 {
-    BOOST_REQUIRE(find(base58_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("base58-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__base58check_decode__returns_object)
 {
-    BOOST_REQUIRE(find(base58check_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("base58check-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__base58check_encode__returns_object)
 {
-    BOOST_REQUIRE(find(base58check_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("base58check-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__bci_fetch_last_height__returns_object)
 {
-    BOOST_REQUIRE(find(bci_fetch_last_height::symbol()) != nullptr);
+    BOOST_REQUIRE(find("bci-fetch-last-height") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__bci_history__returns_object)
 {
-    BOOST_REQUIRE(find(bci_history::symbol()) != nullptr);
+    BOOST_REQUIRE(find("bci-history") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__bitcoin160__returns_object)
 {
-    BOOST_REQUIRE(find(bitcoin160::symbol()) != nullptr);
+    BOOST_REQUIRE(find("bitcoin160") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__bitcoin256__returns_object)
 {
-    BOOST_REQUIRE(find(bitcoin256::symbol()) != nullptr);
+    BOOST_REQUIRE(find("bitcoin256") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__blke_fetch_transaction__returns_object)
 {
-    BOOST_REQUIRE(find(blke_fetch_transaction::symbol()) != nullptr);
+    BOOST_REQUIRE(find("blke-fetch-transaction") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__btc_to_satoshi__returns_object)
 {
-    BOOST_REQUIRE(find(btc_to_satoshi::symbol()) != nullptr);
+    BOOST_REQUIRE(find("btc-to-satoshi") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_add__returns_object)
 {
-    BOOST_REQUIRE(find(ec_add::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-add") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_add_secrets__returns_object)
 {
-    BOOST_REQUIRE(find(ec_add_secrets::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-add-secrets") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_lock__returns_object)
 {
-    BOOST_REQUIRE(find(ec_lock::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-lock") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_multiply__returns_object)
 {
-    BOOST_REQUIRE(find(ec_multiply::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-multiply") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_multiply_secrets__returns_object)
 {
-    BOOST_REQUIRE(find(ec_multiply_secrets::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-multiply-secrets") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_new__returns_object)
 {
-    BOOST_REQUIRE(find(ec_new::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-new") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_to_address__returns_object)
 {
-    BOOST_REQUIRE(find(ec_to_address::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-to-address") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_to_public__returns_object)
 {
-    BOOST_REQUIRE(find(ec_to_public::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-to-public") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_to_wif__returns_object)
 {
-    BOOST_REQUIRE(find(ec_to_wif::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-to-wif") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ec_unlock__returns_object)
 {
-    BOOST_REQUIRE(find(ec_unlock::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ec-unlock") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_balance::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-balance") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_header::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-header") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_height__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_height::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-height") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_history__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_history::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-history") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_public_key__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_public_key::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-public-key") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_stealth__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_stealth::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-stealth") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_tx__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_tx::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-tx") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_tx_index__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_tx_index::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-tx-index") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_utxo__returns_object)
 {
-    BOOST_REQUIRE(find(fetch_utxo::symbol()) != nullptr);
+    BOOST_REQUIRE(find("fetch-utxo") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__genaddr__returns_object)
 {
-    BOOST_REQUIRE(find(genaddr::symbol()) != nullptr);
+    BOOST_REQUIRE(find("genaddr") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__genpriv__returns_object)
 {
-    BOOST_REQUIRE(find(genpriv::symbol()) != nullptr);
+    BOOST_REQUIRE(find("genpriv") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__genpub__returns_object)
 {
-    BOOST_REQUIRE(find(genpub::symbol()) != nullptr);
+    BOOST_REQUIRE(find("genpub") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_new__returns_object)
 {
-    BOOST_REQUIRE(find(hd_new::symbol()) != nullptr);
+    BOOST_REQUIRE(find("hd-new") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_private__returns_object)
 {
-    BOOST_REQUIRE(find(hd_private::symbol()) != nullptr);
+    BOOST_REQUIRE(find("hd-private") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_public__returns_object)
 {
-    BOOST_REQUIRE(find(hd_public::symbol()) != nullptr);
+    BOOST_REQUIRE(find("hd-public") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_address__returns_object)
 {
-    BOOST_REQUIRE(find(hd_to_address::symbol()) != nullptr);
+    BOOST_REQUIRE(find("hd-to-address") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_ec__returns_object)
 {
-    BOOST_REQUIRE(find(hd_to_ec::symbol()) != nullptr);
+    BOOST_REQUIRE(find("hd-to-ec") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_public__returns_object)
 {
-    BOOST_REQUIRE(find(hd_to_public::symbol()) != nullptr);
+    BOOST_REQUIRE(find("hd-to-public") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__hd_to_wif__returns_object)
 {
-    BOOST_REQUIRE(find(hd_to_wif::symbol()) != nullptr);
+    BOOST_REQUIRE(find("hd-to-wif") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
-    BOOST_REQUIRE(find(help::symbol()) != nullptr);
+    BOOST_REQUIRE(find("help") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__initchain__returns_object)
 {
-    BOOST_REQUIRE(find(initchain::symbol()) != nullptr);
+    BOOST_REQUIRE(find("initchain") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__input_set__returns_object)
 {
-    BOOST_REQUIRE(find(input_set::symbol()) != nullptr);
+    BOOST_REQUIRE(find("input-set") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__input_sign__returns_object)
 {
-    BOOST_REQUIRE(find(input_sign::symbol()) != nullptr);
+    BOOST_REQUIRE(find("input-sign") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__input_validate__returns_object)
 {
-    BOOST_REQUIRE(find(input_validate::symbol()) != nullptr);
+    BOOST_REQUIRE(find("input-validate") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_decode__returns_object)
 {
-    BOOST_REQUIRE(find(mnemonic_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("mnemonic-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_encode__returns_object)
 {
-    BOOST_REQUIRE(find(mnemonic_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("mnemonic-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__mpk__returns_object)
 {
-    BOOST_REQUIRE(find(mpk::symbol()) != nullptr);
+    BOOST_REQUIRE(find("mpk") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__newseed__returns_object)
 {
-    BOOST_REQUIRE(find(newseed::symbol()) != nullptr);
+    BOOST_REQUIRE(find("newseed") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__qrcode__returns_object)
 {
-    BOOST_REQUIRE(find(qrcode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("qrcode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__ripemd160__returns_object)
 {
-    BOOST_REQUIRE(find(ripemd160::symbol()) != nullptr);
+    BOOST_REQUIRE(find("ripemd160") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__satoshi_to_btc__returns_object)
 {
-    BOOST_REQUIRE(find(satoshi_to_btc::symbol()) != nullptr);
+    BOOST_REQUIRE(find("satoshi-to-btc") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__script_decode__returns_object)
 {
-    BOOST_REQUIRE(find(script_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("script-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__script_encode__returns_object)
 {
-    BOOST_REQUIRE(find(script_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("script-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__script_to_address__returns_object)
 {
-    BOOST_REQUIRE(find(script_to_address::symbol()) != nullptr);
+    BOOST_REQUIRE(find("script-to-address") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)
 {
-    BOOST_REQUIRE(find(seed::symbol()) != nullptr);
+    BOOST_REQUIRE(find("seed") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__send_tx__returns_object)
 {
-    BOOST_REQUIRE(find(send_tx::symbol()) != nullptr);
+    BOOST_REQUIRE(find("send-tx") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__send_tx_node__returns_object)
 {
-    BOOST_REQUIRE(find(send_tx_node::symbol()) != nullptr);
+    BOOST_REQUIRE(find("send-tx-node") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__send_tx_p2p__returns_object)
 {
-    BOOST_REQUIRE(find(send_tx_p2p::symbol()) != nullptr);
+    BOOST_REQUIRE(find("send-tx-p2p") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__sendtx_bci__returns_object)
 {
-    BOOST_REQUIRE(find(sendtx_bci::symbol()) != nullptr);
+    BOOST_REQUIRE(find("sendtx-bci") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__sha160__returns_object)
 {
-    BOOST_REQUIRE(find(sha160::symbol()) != nullptr);
+    BOOST_REQUIRE(find("sha160") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__sha256__returns_object)
 {
-    BOOST_REQUIRE(find(sha256::symbol()) != nullptr);
+    BOOST_REQUIRE(find("sha256") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__sha512__returns_object)
 {
-    BOOST_REQUIRE(find(sha512::symbol()) != nullptr);
+    BOOST_REQUIRE(find("sha512") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__showblkhead__returns_object)
 {
-    BOOST_REQUIRE(find(showblkhead::symbol()) != nullptr);
+    BOOST_REQUIRE(find("showblkhead") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_address_decode__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_address_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("stealth-address-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_address_encode__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_address_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("stealth-address-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_new__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_new::symbol()) != nullptr);
+    BOOST_REQUIRE(find("stealth-new") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_newkey::symbol()) != nullptr);
+    BOOST_REQUIRE(find("stealth-newkey") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_shared_secret__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_shared_secret::symbol()) != nullptr);
+    BOOST_REQUIRE(find("stealth-shared-secret") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_uncover_public__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_uncover_public::symbol()) != nullptr);
+    BOOST_REQUIRE(find("stealth-uncover-public") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_uncover_secret__returns_object)
 {
-    BOOST_REQUIRE(find(stealth_uncover_secret::symbol()) != nullptr);
+    BOOST_REQUIRE(find("stealth-uncover-secret") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__tx_decode__returns_object)
 {
-    BOOST_REQUIRE(find(tx_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("tx-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__tx_encode__returns_object)
 {
-    BOOST_REQUIRE(find(tx_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("tx-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__tx_sign__returns_object)
 {
-    BOOST_REQUIRE(find(tx_sign::symbol()) != nullptr);
+    BOOST_REQUIRE(find("tx-sign") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__validate_tx__returns_object)
 {
-    BOOST_REQUIRE(find(validate_tx::symbol()) != nullptr);
+    BOOST_REQUIRE(find("validate-tx") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wallet__returns_object)
 {
-    BOOST_REQUIRE(find(wallet::symbol()) != nullptr);
+    BOOST_REQUIRE(find("wallet") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__watch_address__returns_object)
 {
-    BOOST_REQUIRE(find(watch_address::symbol()) != nullptr);
+    BOOST_REQUIRE(find("watch-address") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__watch_tx__returns_object)
 {
-    BOOST_REQUIRE(find(watch_tx::symbol()) != nullptr);
+    BOOST_REQUIRE(find("watch-tx") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wif_to_ec__returns_object)
 {
-    BOOST_REQUIRE(find(wif_to_ec::symbol()) != nullptr);
+    BOOST_REQUIRE(find("wif-to-ec") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wif_to_public__returns_object)
 {
-    BOOST_REQUIRE(find(wif_to_public::symbol()) != nullptr);
+    BOOST_REQUIRE(find("wif-to-public") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wrap_decode__returns_object)
 {
-    BOOST_REQUIRE(find(wrap_decode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("wrap-decode") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wrap_encode__returns_object)
 {
-    BOOST_REQUIRE(find(wrap_encode::symbol()) != nullptr);
+    BOOST_REQUIRE(find("wrap-encode") != nullptr);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

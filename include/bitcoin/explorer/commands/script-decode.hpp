@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -73,7 +74,18 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "script-decode"; }
+    static const char* symbol()
+    {
+        return "script-decode";
+    }
+
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "showscript";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -97,7 +109,7 @@ public:
     virtual const char* description()
     {
         return "Decode a script to plain text tokens.";
-    }    
+    }
 
     /**
      * Load program argument definitions.

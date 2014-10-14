@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -73,7 +74,11 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol() { return "hd-private"; }
+    static const char* symbol()
+    {
+        return "hd-private";
+    }
+
 
     /**
      * The member symbolic (not localizable) command name, lower case.
@@ -97,7 +102,7 @@ public:
     virtual const char* description()
     {
         return "Derive a child HD (BIP32) private key from another HD private key.";
-    }    
+    }
 
     /**
      * Load program argument definitions.

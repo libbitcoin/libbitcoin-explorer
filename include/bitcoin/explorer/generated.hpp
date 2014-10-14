@@ -158,6 +158,13 @@ void broadcast(const std::function<void(std::shared_ptr<command>)> func);
  */
 std::shared_ptr<command> find(const std::string& symbol);
 
+/**
+ * Find the new name of the formerly-named command.
+ * @param[in]  former  The former symbolic command name.
+ * @return             The current name of the formerly-named command.
+ */
+std::string formerly(const std::string& former);
+
 } // namespace explorer
 } // namespace libbitcoin
 

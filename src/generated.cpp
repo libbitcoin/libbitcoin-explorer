@@ -306,5 +306,91 @@ shared_ptr<command> find(const string& symbol)
     return nullptr;
 }
 
+std::string formerly(const string& former)
+{
+    if (former == address_decode::formerly())
+        return address_decode::symbol();
+    if (former == address_embed::formerly())
+        return address_embed::symbol();
+    if (former == address_encode::formerly())
+        return address_encode::symbol();
+    if (former == address_validate::formerly())
+        return address_validate::symbol();
+    if (former == btc_to_satoshi::formerly())
+        return btc_to_satoshi::symbol();
+    if (former == ec_add::formerly())
+        return ec_add::symbol();
+    if (former == ec_add_secrets::formerly())
+        return ec_add_secrets::symbol();
+    if (former == ec_lock::formerly())
+        return ec_lock::symbol();
+    if (former == ec_multiply_secrets::formerly())
+        return ec_multiply_secrets::symbol();
+    if (former == ec_new::formerly())
+        return ec_new::symbol();
+    if (former == ec_to_address::formerly())
+        return ec_to_address::symbol();
+    if (former == ec_to_public::formerly())
+        return ec_to_public::symbol();
+    if (former == fetch_height::formerly())
+        return fetch_height::symbol();
+    if (former == fetch_public_key::formerly())
+        return fetch_public_key::symbol();
+    if (former == fetch_tx::formerly())
+        return fetch_tx::symbol();
+    if (former == fetch_tx_index::formerly())
+        return fetch_tx_index::symbol();
+    if (former == fetch_utxo::formerly())
+        return fetch_utxo::symbol();
+    if (former == hd_new::formerly())
+        return hd_new::symbol();
+    if (former == hd_to_address::formerly())
+        return hd_to_address::symbol();
+    if (former == input_set::formerly())
+        return input_set::symbol();
+    if (former == input_sign::formerly())
+        return input_sign::symbol();
+    if (former == input_validate::formerly())
+        return input_validate::symbol();
+    if (former == mnemonic_encode::formerly())
+        return mnemonic_encode::symbol();
+    if (former == ripemd160::formerly())
+        return ripemd160::symbol();
+    if (former == satoshi_to_btc::formerly())
+        return satoshi_to_btc::symbol();
+    if (former == script_decode::formerly())
+        return script_decode::symbol();
+    if (former == script_encode::formerly())
+        return script_encode::symbol();
+    if (former == script_to_address::formerly())
+        return script_to_address::symbol();
+    if (former == send_tx::formerly())
+        return send_tx::symbol();
+    if (former == send_tx_node::formerly())
+        return send_tx_node::symbol();
+    if (former == send_tx_p2p::formerly())
+        return send_tx_p2p::symbol();
+    if (former == stealth_address_decode::formerly())
+        return stealth_address_decode::symbol();
+    if (former == stealth_new::formerly())
+        return stealth_new::symbol();
+    if (former == stealth_uncover_public::formerly())
+        return stealth_uncover_public::symbol();
+    if (former == tx_sign::formerly())
+        return tx_sign::symbol();
+    if (former == validate_tx::formerly())
+        return validate_tx::symbol();
+    if (former == watch_address::formerly())
+        return watch_address::symbol();
+    if (former == watch_tx::formerly())
+        return watch_tx::symbol();
+    if (former == wrap_decode::formerly())
+        return wrap_decode::symbol();
+    if (former == wrap_encode::formerly())
+        return wrap_encode::symbol();
+
+    return "";
+}
+
 } // namespace explorer
 } // namespace libbitcoin
