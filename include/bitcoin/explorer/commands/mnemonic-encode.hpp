@@ -114,7 +114,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Convert a seed to its Electrum mnemonic.";
+        return "Convert a seed to its Electrum mnemonic. WARNING: This implementation is deprecated in favor of BIP39.";
     }
 
     /**
@@ -162,7 +162,7 @@ public:
         (
             "SEED",
             value<primitives::base16>(&argument_.seed),
-            "The Base16 randomness seed.  Must be at least 128 bits in length. If not specified the seed is read from STDIN. WARNING: This implementation is deprecated in favor of BIP39."
+            "The Base16 randomness seed.  Must be at least 128 bits in length. If not specified the seed is read from STDIN."
         );
 
         return options;

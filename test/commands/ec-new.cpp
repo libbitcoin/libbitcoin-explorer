@@ -25,7 +25,7 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_new__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_new__invoke_128_bit_seed__okay_output)
+BOOST_AUTO_TEST_CASE(ec_new__invoke__128_bit_seed__okay_output)
 {
     BX_DECLARE_COMMAND(ec_new);
     command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE(ec_new__invoke_128_bit_seed__okay_output)
     BX_REQUIRE_OUTPUT("8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_new__invoke_64_bit_seed__failure_error)
+BOOST_AUTO_TEST_CASE(ec_new__invoke__64_bit_seed__failure_error)
 {
     BX_DECLARE_COMMAND(ec_new);
     command.set_seed_argument({ "baadf00dbaadf00d" });
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(ec_new__invoke_64_bit_seed__failure_error)
 
 // TODO: what seed generates an invalid key so we can cover this code path?
 
-//BOOST_AUTO_TEST_CASE(ec_new__invoke_128_bit_bad_seed__failure_error)
+//BOOST_AUTO_TEST_CASE(ec_new__invoke__128_bit_bad_seed__failure_error)
 //{
 //    BX_DECLARE_COMMAND(ec_new);
 //    command.set_seed_argument({ "00000000000000000000000000000000" });
