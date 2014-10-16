@@ -76,17 +76,17 @@ public:
     /**
      * Sentinel - the option is not a positional argument.
      */
-    static const int not_positional = -1;
+    static constexpr int not_positional = -1;
 
     /**
      * Sentinel - there is no short name.
      */
-    static const char no_short_name = 0x00;
+    static constexpr char no_short_name = 0x00;
 
     /**
      * The character used to prefix command line options.
      */
-    static const char option_prefix_char = '-';
+    static constexpr char option_prefix_char = '-';
 
     /**
      * Populate with normalized parameter data.
