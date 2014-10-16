@@ -1,4 +1,4 @@
-AC_INIT([libitcoin-explorer], [0.1.0], [genjix@riseup.net])
+AC_INIT([libitcoin-explorer], [0.1.0], [eric@voskuil.org])
 AC_USE_SYSTEM_EXTENSIONS
 AC_LANG(C++)
 AC_CONFIG_AUX_DIR([build-aux])
