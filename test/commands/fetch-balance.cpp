@@ -30,9 +30,9 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 // The 50BTC coinbase in the genesis block cannot be confirmed.
 #define BX_FETCH_BALANCE_FIRST_ADDRESS_INFO \
 "address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n" \
-"received 6537315969\n" \
-"unconfirmed 6537315969\n" \
-"confirmed 1537315969\n"
+"received 6537986349\n" \
+"unconfirmed 6537986349\n" \
+"confirmed 1537986349\n"
 
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_BALANCE_SX_DEMO1_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
