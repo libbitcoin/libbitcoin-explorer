@@ -28,11 +28,11 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 // These amounts may change at any time, making these particular tests fragile.
 
 // The 50BTC coinbase in the genesis block cannot be confirmed.
-#define BX_FETCH_BALANCE_FIRST_ADDRESS_INFO \
-"address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n" \
-"received 6537986349\n" \
-"unconfirmed 6537986349\n" \
-"confirmed 1537986349\n"
+//#define BX_FETCH_BALANCE_FIRST_ADDRESS_INFO \
+//"address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n" \
+//"received 6537986349\n" \
+//"unconfirmed 6537986349\n" \
+//"confirmed 1537986349\n"
 
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_BALANCE_SX_DEMO1_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
@@ -46,15 +46,16 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
 "<address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><received>90000</received><unconfirmed>90000</unconfirmed><confirmed>90000</confirmed>"
 
-BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_first_address_info__okay_output)
-{
-    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
-    command.set_format_option({ "info" });
-    command.set_bitcoin_addresss_argument({ { BX_FIRST_ADDRESS } });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    auto foo = output.str();
-    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_FIRST_ADDRESS_INFO);
-}
+// This test disabled because people are always sending change to Satoshi.
+//BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_first_address_info__okay_output)
+//{
+//    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
+//    command.set_format_option({ "info" });
+//    command.set_bitcoin_addresss_argument({ { BX_FIRST_ADDRESS } });
+//    BX_REQUIRE_OKAY(command.invoke(output, error));
+//    auto foo = output.str();
+//    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_FIRST_ADDRESS_INFO);
+//}
 
 BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo1_xml__okay_output)
 {
