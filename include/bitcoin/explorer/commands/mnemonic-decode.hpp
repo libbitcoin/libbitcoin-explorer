@@ -64,6 +64,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE \
+    "At least three words are required."
+
+/**
  * Class to implement the mnemonic-decode command.
  */
 class mnemonic_decode 
