@@ -82,7 +82,19 @@ BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__three_same_values__okay_output
     BX_REQUIRE_OUTPUT("1da46d54db3e774fe81dfeea880677b805d2ce041c1e2011b6362ee11df132d8\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__two_unique_values__okay_output)
+BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__two_secret_values__okay_output)
+{
+    BX_DECLARE_COMMAND(ec_multiply_secrets);
+    command.set_secrets_argument(
+    {
+        { "1bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006" },
+        { "e5b87c7917f8414d2fa5caa32ea61b06fca755fee6a113179db70f5e0d5393ba" }
+    });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("1da46d54db3e774fe81dfeea880677b805d2ce041c1e2011b6362ee11df132d8\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_multiply_secrets__invoke__identity_value__okay_output)
 {
     BX_DECLARE_COMMAND(ec_multiply_secrets);
     command.set_secrets_argument(
