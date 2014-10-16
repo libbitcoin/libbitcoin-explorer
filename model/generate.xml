@@ -148,7 +148,6 @@
   </command>
 
   <command symbol="ec-add-secrets" formerly="ec-add-modp" typeX="ec_private" category="MATH" description="Calculate the EC function (SECRET + SECRET) % curve-order.">
-    <option name="help" />
     <argument name="SECRET" stdin="true" limit="-1" type="ec_private" description="The set of Base16 secrets to add. If not specified the secrets are read from STDIN."/>
     <define name="BX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
