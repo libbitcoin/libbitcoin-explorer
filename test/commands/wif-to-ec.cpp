@@ -25,12 +25,20 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(wif_to_ec__invoke)
 
-BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_wif__okay_output)
+BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_compressed_wif__okay_output)
 {
     BX_DECLARE_COMMAND(wif_to_ec);
-    command.set_wif_argument({ "KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF" });
+    command.set_wif_argument({ "L21LJEeJwK35wby1BeTjwWssrhrgQE2MZrpTm2zbMC677czAHHu3" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("21178d53f1ea6c7287bcb24b13ac20357d4bc6022fd610d3659311874e8381cc\n");
+    BX_REQUIRE_OUTPUT("8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8\n");
+}
+
+BOOST_AUTO_TEST_CASE(wif_to_ec__invoke__mainnet_uncompressed_wif__okay_output)
+{
+    BX_DECLARE_COMMAND(wif_to_ec);
+    command.set_wif_argument({ "5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("8ed1d17dabce1fccbbe5e9bf008b318334e5bcc78eb9e7c1ea850b7eb0ddb9c8\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
