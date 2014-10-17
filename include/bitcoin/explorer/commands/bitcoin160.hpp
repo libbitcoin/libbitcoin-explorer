@@ -149,7 +149,7 @@ public:
         (
             "BASE16",
             value<primitives::base16>(&argument_.base16),
-            "The Base16 data to hash. If not specified the data is value from STDIN."
+            "The Base16 data to hash. If not specified the data is read from STDIN."
         );
 
         return options;

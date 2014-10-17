@@ -119,11 +119,11 @@
   </command>
 
   <command symbol="bitcoin160" typeX="base16" category="HASH" description="Perform a RIPEMD160 hash of a SHA256 hash of Base16 data.">
-    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is value from STDIN."/>
+    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is read from STDIN."/>
   </command>
 
-  <command symbol="bitcoin256" typeX="base16" category="HASH" description="Perform a SHA256 hash of a SHA256 hash of Base16 data.">
-    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is value from STDIN."/>
+  <command symbol="bitcoin256" typeX="base16" category="HASH" description="Perform a SHA256 hash of a SHA256 hash of Base16 data and then reverse the byte order.">
+    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is read from STDIN."/>
   </command>
 
   <command symbol="blke-fetch-transaction" category="ONLINE" obsolete="true" description="Get a Bitcoin transaction from blockexplorer.com.">
