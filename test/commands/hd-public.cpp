@@ -25,7 +25,7 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(hd_public__invoke)
 
-// https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-1
+// github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-1
 
 // public derivation
 
@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2_1000
     BX_REQUIRE_OUTPUT("xpub6H1LXWLaKsWFhvm6RVpEL9P4KfRZSW7abD2ttkWP3SSQvnyA8FSVqNTEcYFgJS2UaFcxupHiYkro49S8yGasTvXEYBVPamhGW6cFJodrTHy\n");
 }
 
-// https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-2
+// github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#test-vector-2
 
 // public derivation
 

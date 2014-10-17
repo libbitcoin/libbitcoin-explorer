@@ -54,7 +54,7 @@ wif::wif(const hd_private_key& value)
 }
 
 wif::wif(const wif& other)
-    : wif(other.value_)
+    : compressed_(other.compressed_), value_(other.value_)
 {
 }
 

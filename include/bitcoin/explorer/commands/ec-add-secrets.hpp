@@ -160,11 +160,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "help,h",
-            value<bool>(&option_.help)->zero_tokens(),
-            "Calculate the EC function (SECRET + SECRET) % curve-order."
-        )
-        (
             "SECRET",
             value<std::vector<primitives::ec_private>>(&argument_.secrets),
             "The set of Base16 secrets to add. If not specified the secrets are read from STDIN."
@@ -200,23 +195,6 @@ public:
         argument_.secrets = value;
     }
 
-    /**
-     * Get the value of the help option.
-     */
-    virtual bool& get_help_option()
-    {
-        return option_.help;
-    }
-
-    /**
-     * Set the value of the help option.
-     */
-    virtual void set_help_option(
-        const bool& value)
-    {
-        option_.help = value;
-    }
-
 private:
 
     /**
@@ -242,11 +220,9 @@ private:
     struct option
     {
         option()
-          : help()
         {
         }
 
-        bool help;
     } option_;
 };
 

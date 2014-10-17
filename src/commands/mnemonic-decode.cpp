@@ -35,6 +35,12 @@ console_result mnemonic_decode::invoke(std::ostream& output,
     // Bound parameters.
     const auto& words = get_words_argument();
 
+    if (words.size() < 3)
+    {
+        error << BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE << std::endl;
+        return console_result::failure;
+    }
+
     // Note that there is no dictionary validation in decode_mnemonic.
     const auto sentence = decode_mnemonic(words);
 

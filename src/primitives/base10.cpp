@@ -54,7 +54,7 @@ namespace primitives {
     {
     }
 
-    base10::operator const uint8_t() const
+    base10::operator uint8_t() const
     {
         return value_; 
     }

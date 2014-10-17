@@ -33,5 +33,13 @@ BOOST_AUTO_TEST_CASE(base58_encode__invoke__base16_value__okay_output)
     BX_REQUIRE_OUTPUT("vYxp6yFC7qiVtK1RcGQQt3L6EqTc8YhEDLnSMLqDvp8D\n");
 }
 
+BOOST_AUTO_TEST_CASE(base58_encode__invoke__satoshi_nakamoto__okay_output)
+{
+    BX_DECLARE_COMMAND(base58_encode);
+    command.set_base16_argument({ "5361746f736869204e616b616d6f746f" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("BJBRbygJtzBfp4gjJG2iqL\n");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
