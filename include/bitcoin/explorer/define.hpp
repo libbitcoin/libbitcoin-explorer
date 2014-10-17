@@ -88,12 +88,12 @@ typedef po::positional_options_description arguments_metadata;
 /**
  * The minimum safe length of a seed in bytes (16).
  */
-BCX_API constexpr size_t minimum_seed_size = 128 / bc::byte_bits;
+constexpr size_t minimum_seed_size = 128 / bc::byte_bits;
     
 /**
  * The noop void function.
  */
-BCX_API static const std::function<void()> noop = []{};
+static const std::function<void()> noop = []{};
 
 /**
 * Result codes for int main().
