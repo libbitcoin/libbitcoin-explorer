@@ -67,7 +67,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_SEED_BIT_LENGTH_UNSUPPORTED \
-    "The seed value is not supported."
+    "The seed size is not supported."
 
 /**
  * Class to implement the seed command.

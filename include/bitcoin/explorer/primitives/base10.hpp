@@ -65,7 +65,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const uint8_t() const;
+    operator uint8_t() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.

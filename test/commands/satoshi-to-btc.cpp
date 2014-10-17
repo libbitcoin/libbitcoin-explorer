@@ -51,5 +51,13 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_money_satoshi__okay_output)
     BX_REQUIRE_OUTPUT("20999999.9769\n");
 }
 
+BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__max_uint64_satoshi__okay_output)
+{
+    BX_DECLARE_COMMAND(commands::satoshi_to_btc);
+    command.set_satoshi_argument(max_uint64);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("184467440737.09551615\n");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

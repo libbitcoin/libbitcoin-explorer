@@ -138,7 +138,7 @@ typename std::vector<Type>::iterator insert_sorted(std::vector<Type>& list,
     return list.insert(
         std::upper_bound(list.begin(), list.end(), element, predicate),
         element);
-};
+}
 
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,

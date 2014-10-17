@@ -119,11 +119,11 @@
   </command>
 
   <command symbol="bitcoin160" typeX="base16" category="HASH" description="Perform a RIPEMD160 hash of a SHA256 hash of Base16 data.">
-    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is value from STDIN."/>
+    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is read from STDIN."/>
   </command>
 
-  <command symbol="bitcoin256" typeX="base16" category="HASH" description="Perform a SHA256 hash of a SHA256 hash of Base16 data.">
-    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is value from STDIN."/>
+  <command symbol="bitcoin256" typeX="base16" category="HASH" description="Perform a SHA256 hash of a SHA256 hash of Base16 data and then reverse the byte order.">
+    <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the data is read from STDIN."/>
   </command>
 
   <command symbol="blke-fetch-transaction" category="ONLINE" obsolete="true" description="Get a Bitcoin transaction from blockexplorer.com.">
@@ -148,7 +148,6 @@
   </command>
 
   <command symbol="ec-add-secrets" formerly="ec-add-modp" typeX="ec_private" category="MATH" description="Calculate the EC function (SECRET + SECRET) % curve-order.">
-    <option name="help" />
     <argument name="SECRET" stdin="true" limit="-1" type="ec_private" description="The set of Base16 secrets to add. If not specified the secrets are read from STDIN."/>
     <define name="BX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
@@ -331,10 +330,11 @@
   
   <command symbol="mnemonic-decode" typeX="base16" category="WALLET" description="Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39.">
     <argument name="WORD" stdin="true" limit="-1" description="The set of words from the Electrum word list. If not specified the words are read from STDIN." />
+    <define name="BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE" value="At least three words are required." />
   </command>
   
-  <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="WALLET" description="Convert a seed to its Electrum mnemonic.">
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed.  Must be at least 128 bits in length. If not specified the seed is read from STDIN. WARNING: This implementation is deprecated in favor of BIP39." />
+  <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="WALLET" description="Convert a seed to its Electrum mnemonic. WARNING: This implementation is deprecated in favor of BIP39.">
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed.  Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
     <define name="BX_EC_MNEMONIC_ENCODE_SHORT_SEED" value="The seed is less than 128 bits long." />
   </command>
   
@@ -374,7 +374,7 @@
   
   <command symbol="seed" typeX="base16" category="WALLET" description="Generate a pseudorandom seed.">
     <option name="bit_length" type="size_t" default="128" description="The length of the seed in bits. Must be divisible by 8 and must not be less than 128." />
-    <define name="BX_SEED_BIT_LENGTH_UNSUPPORTED" value="The seed value is not supported." />
+    <define name="BX_SEED_BIT_LENGTH_UNSUPPORTED" value="The seed size is not supported." />
   </command>
   
   <command symbol="send-tx" formerly="sendtx-obelisk" typeX="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server.">
