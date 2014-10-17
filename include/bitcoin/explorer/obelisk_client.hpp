@@ -22,6 +22,7 @@
 
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/client.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
