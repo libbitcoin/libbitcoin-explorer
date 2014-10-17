@@ -34,7 +34,7 @@
 #if defined BCX_STATIC
 #define BCX_API
 #define BCX_INTERNAL
-#elif defined BCS_DLL
+#elif defined BCX_DLL
 #define BCX_API      BC_HELPER_DLL_EXPORT
 #define BCX_INTERNAL BC_HELPER_DLL_LOCAL
 #else
@@ -88,12 +88,12 @@ typedef po::positional_options_description arguments_metadata;
 /**
  * The minimum safe length of a seed in bytes (16).
  */
-constexpr size_t minimum_seed_size = 128 / bc::byte_bits;
+BCX_API constexpr size_t minimum_seed_size = 128 / bc::byte_bits;
     
 /**
  * The noop void function.
  */
-static const std::function<void()> noop = []{};
+BCX_API static const std::function<void()> noop = []{};
 
 /**
 * Result codes for int main().
