@@ -44,7 +44,7 @@ namespace explorer {
  * Get the default configuration settings file path or return empty.
  * @return  The default configuration settings file path or empty.
  */
-std::string config_default();
+BCX_API std::string config_default();
 
 } // namespace explorer
 } // namespace libbitcoin

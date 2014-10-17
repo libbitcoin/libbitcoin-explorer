@@ -41,12 +41,12 @@ public:
     /**
      * The default polling period.
      */
-    static constexpr uint32_t default_poll_period_ms = 100;
+    BCX_API static constexpr uint32_t default_poll_period_ms = 100;
     
     /**
      * The default number of threads.
      */
-    static constexpr size_t default_threadpool_size = 1;
+    BCX_API static constexpr size_t default_threadpool_size = 1;
 
     /**
      * Initialization constructor, establish threadpool (RAII).
