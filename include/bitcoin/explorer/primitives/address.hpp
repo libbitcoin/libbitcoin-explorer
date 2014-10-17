@@ -44,56 +44,56 @@ public:
     /**
      * Default constructor.
      */
-    address();
+    BCX_API address();
 
     /**
      * Initialization constructor.
      * @param[in]  base58  The value to initialize with.
      */
-    address(const std::string& base58);
+    BCX_API address(const std::string& base58);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    address(const payment_address& value);
+    BCX_API address(const payment_address& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    address(const address& other);
+    BCX_API address(const address& other);
 
     /**
      * Initialization constructor.
      * @param[in]  version  The bitcoin address version.
      * @param[in]  hash     The ripemd160 value of the address.
      */
-    address(uint8_t version, const short_hash& hash);
+    BCX_API address(uint8_t version, const short_hash& hash);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    address(const hd_private_key& value);
+    BCX_API address(const hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    address(const hd_public_key& value);
+    BCX_API address(const hd_public_key& value);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    payment_address& data();
+    BCX_API payment_address& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const payment_address&() const;
+    BCX_API operator const payment_address&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -101,7 +101,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, address& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        address& argument);
 
     /**
      * Overload stream out.
@@ -109,7 +110,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const address& argument);
 
 private:

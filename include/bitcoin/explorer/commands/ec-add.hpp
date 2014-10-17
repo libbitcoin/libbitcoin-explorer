@@ -80,7 +80,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "ec-add";
     }
@@ -89,7 +89,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return ec_add::symbol();
     }
@@ -97,7 +97,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "MATH";
     }
@@ -105,7 +105,7 @@ public:
     /**
      * The localizable command description.
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
         return "Calculate the EC function POINT + (SECRET * curve-generator-point).";
     }
@@ -115,7 +115,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("POINT", 1)
@@ -127,7 +127,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
     }
@@ -137,7 +137,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -172,14 +172,15 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& cerr);
 
     /* Properties */
 
     /**
      * Get the value of the POINT argument.
      */
-    virtual primitives::ec_public& get_point_argument()
+    BCX_API virtual primitives::ec_public& get_point_argument()
     {
         return argument_.point;
     }
@@ -187,7 +188,7 @@ public:
     /**
      * Set the value of the POINT argument.
      */
-    virtual void set_point_argument(
+    BCX_API virtual void set_point_argument(
         const primitives::ec_public& value)
     {
         argument_.point = value;
@@ -196,7 +197,7 @@ public:
     /**
      * Get the value of the SECRET argument.
      */
-    virtual primitives::ec_private& get_secret_argument()
+    BCX_API virtual primitives::ec_private& get_secret_argument()
     {
         return argument_.secret;
     }
@@ -204,7 +205,7 @@ public:
     /**
      * Set the value of the SECRET argument.
      */
-    virtual void set_secret_argument(
+    BCX_API virtual void set_secret_argument(
         const primitives::ec_private& value)
     {
         argument_.secret = value;

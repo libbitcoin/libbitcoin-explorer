@@ -44,37 +44,37 @@ public:
     /**
      * Default constructor.
      */
-    btc256();
+    BCX_API btc256();
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    btc256(const std::string& hexcode);
+    BCX_API btc256(const std::string& hexcode);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    btc256(const hash_digest& value);
+    BCX_API btc256(const hash_digest& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    btc256(const btc256& other);
+    BCX_API btc256(const btc256& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    hash_digest& data();
+    BCX_API hash_digest& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const hash_digest&() const;
+    BCX_API operator const hash_digest&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -82,7 +82,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, btc256& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        btc256& argument);
 
     /**
      * Overload stream out.
@@ -90,7 +91,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const btc256& argument);
 
 private:

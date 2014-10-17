@@ -41,7 +41,7 @@ public:
      * @param[in]  timeout  The call timeout, defaults to zero.
      * @param[in]  retries  The number of retries allowed, defaults to zero.
      */
-    obelisk_client(czmqpp::context& context, 
+    BCX_API obelisk_client(czmqpp::context& context,
         const client::period_ms& timeout=client::period_ms(0),
         uint8_t retries=0);
 
@@ -50,25 +50,25 @@ public:
      * @param[in]  address  The server address.
      * @return              The connection status, negative for failure.
      */
-    virtual int connect(const std::string& address);
+    BCX_API virtual int connect(const std::string& address);
 
     /**
      * Get the value of the codec property.
      * @return The codec.
      */
-    virtual std::shared_ptr<client::obelisk_codec> get_codec();
+    BCX_API virtual std::shared_ptr<client::obelisk_codec> get_codec();
     
     /**
      * Resolve callback functions.
      * @return True if not terminated before completion.
      */
-    virtual bool resolve_callbacks();
+    BCX_API virtual bool resolve_callbacks();
 
     /**
      * Poll the connection until the request times out or terminates.
      * @param[in]  timeout  The poll timeout, defaults to zero.
      */
-    virtual void poll_until_termination(
+    BCX_API virtual void poll_until_termination(
         const client::period_ms& timeout=client::period_ms(0));
 
 private:

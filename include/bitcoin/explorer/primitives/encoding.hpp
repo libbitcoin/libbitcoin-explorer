@@ -38,31 +38,31 @@ public:
     /**
      * Default constructor, sets encoding_engine::native.
      */
-    encoding();
+    BCX_API encoding();
 
     /**
      * Initialization constructor.
      * @param[in]  token  The value to initialize with.
      */
-    encoding(const std::string& token);
+    BCX_API encoding(const std::string& token);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    encoding(const encoding_engine& value);
+    BCX_API encoding(const encoding_engine& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    encoding(const encoding& other);
+    BCX_API encoding(const encoding& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    operator encoding_engine() const;
+    BCX_API operator encoding_engine() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -70,7 +70,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, encoding& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        encoding& argument);
 
     /**
      * Overload stream out.
@@ -78,7 +79,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const encoding& argument);
 
 private:

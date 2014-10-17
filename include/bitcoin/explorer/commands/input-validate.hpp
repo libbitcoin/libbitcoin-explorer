@@ -84,7 +84,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "input-validate";
     }
@@ -92,7 +92,7 @@ public:
     /**
      * The symbolic (not localizable) former command name, lower case.
      */
-    static const char* formerly()
+    BCX_API static const char* formerly()
     {
         return "validsig";
     }
@@ -100,7 +100,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return input_validate::symbol();
     }
@@ -108,7 +108,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "TRANSACTION";
     }
@@ -116,7 +116,7 @@ public:
     /**
      * The localizable command description.
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
         return "Validate a transaction signature.";
     }
@@ -126,7 +126,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("EC_PUBLIC_KEY", 1)
@@ -140,7 +140,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
     }
@@ -150,7 +150,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -205,14 +205,15 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& cerr);
 
     /* Properties */
 
     /**
      * Get the value of the EC_PUBLIC_KEY argument.
      */
-    virtual primitives::ec_public& get_ec_public_key_argument()
+    BCX_API virtual primitives::ec_public& get_ec_public_key_argument()
     {
         return argument_.ec_public_key;
     }
@@ -220,7 +221,7 @@ public:
     /**
      * Set the value of the EC_PUBLIC_KEY argument.
      */
-    virtual void set_ec_public_key_argument(
+    BCX_API virtual void set_ec_public_key_argument(
         const primitives::ec_public& value)
     {
         argument_.ec_public_key = value;
@@ -229,7 +230,7 @@ public:
     /**
      * Get the value of the PREVOUT_SCRIPT argument.
      */
-    virtual primitives::script& get_prevout_script_argument()
+    BCX_API virtual primitives::script& get_prevout_script_argument()
     {
         return argument_.prevout_script;
     }
@@ -237,7 +238,7 @@ public:
     /**
      * Set the value of the PREVOUT_SCRIPT argument.
      */
-    virtual void set_prevout_script_argument(
+    BCX_API virtual void set_prevout_script_argument(
         const primitives::script& value)
     {
         argument_.prevout_script = value;
@@ -246,7 +247,7 @@ public:
     /**
      * Get the value of the SIGNATURE argument.
      */
-    virtual primitives::base16& get_signature_argument()
+    BCX_API virtual primitives::base16& get_signature_argument()
     {
         return argument_.signature;
     }
@@ -254,7 +255,7 @@ public:
     /**
      * Set the value of the SIGNATURE argument.
      */
-    virtual void set_signature_argument(
+    BCX_API virtual void set_signature_argument(
         const primitives::base16& value)
     {
         argument_.signature = value;
@@ -263,7 +264,7 @@ public:
     /**
      * Get the value of the TRANSACTION argument.
      */
-    virtual primitives::transaction& get_transaction_argument()
+    BCX_API virtual primitives::transaction& get_transaction_argument()
     {
         return argument_.transaction;
     }
@@ -271,7 +272,7 @@ public:
     /**
      * Set the value of the TRANSACTION argument.
      */
-    virtual void set_transaction_argument(
+    BCX_API virtual void set_transaction_argument(
         const primitives::transaction& value)
     {
         argument_.transaction = value;
@@ -280,7 +281,7 @@ public:
     /**
      * Get the value of the index option.
      */
-    virtual uint32_t& get_index_option()
+    BCX_API virtual uint32_t& get_index_option()
     {
         return option_.index;
     }
@@ -288,7 +289,7 @@ public:
     /**
      * Set the value of the index option.
      */
-    virtual void set_index_option(
+    BCX_API virtual void set_index_option(
         const uint32_t& value)
     {
         option_.index = value;
@@ -297,7 +298,7 @@ public:
     /**
      * Get the value of the sign_type option.
      */
-    virtual primitives::hashtype& get_sign_type_option()
+    BCX_API virtual primitives::hashtype& get_sign_type_option()
     {
         return option_.sign_type;
     }
@@ -305,7 +306,7 @@ public:
     /**
      * Set the value of the sign_type option.
      */
-    virtual void set_sign_type_option(
+    BCX_API virtual void set_sign_type_option(
         const primitives::hashtype& value)
     {
         option_.sign_type = value;

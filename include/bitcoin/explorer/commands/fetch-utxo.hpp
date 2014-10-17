@@ -80,7 +80,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "fetch-utxo";
     }
@@ -88,7 +88,7 @@ public:
     /**
      * The symbolic (not localizable) former command name, lower case.
      */
-    static const char* formerly()
+    BCX_API static const char* formerly()
     {
         return "get-utxo";
     }
@@ -96,7 +96,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return fetch_utxo::symbol();
     }
@@ -104,7 +104,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "ONLINE";
     }
@@ -112,7 +112,7 @@ public:
     /**
      * The localizable command description.
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
         return "Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires an Obelisk server connection.";
     }
@@ -122,7 +122,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("SATOSHI", 1)
@@ -134,7 +134,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
         load_input(get_bitcoin_addresss_argument(), "BITCOIN_ADDRESS", variables, input);
@@ -145,7 +145,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -185,14 +185,15 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& cerr);
 
     /* Properties */
 
     /**
      * Get the value of the SATOSHI argument.
      */
-    virtual uint64_t& get_satoshi_argument()
+    BCX_API virtual uint64_t& get_satoshi_argument()
     {
         return argument_.satoshi;
     }
@@ -200,7 +201,7 @@ public:
     /**
      * Set the value of the SATOSHI argument.
      */
-    virtual void set_satoshi_argument(
+    BCX_API virtual void set_satoshi_argument(
         const uint64_t& value)
     {
         argument_.satoshi = value;
@@ -209,7 +210,7 @@ public:
     /**
      * Get the value of the BITCOIN_ADDRESS arguments.
      */
-    virtual std::vector<primitives::address>& get_bitcoin_addresss_argument()
+    BCX_API virtual std::vector<primitives::address>& get_bitcoin_addresss_argument()
     {
         return argument_.bitcoin_addresss;
     }
@@ -217,7 +218,7 @@ public:
     /**
      * Set the value of the BITCOIN_ADDRESS arguments.
      */
-    virtual void set_bitcoin_addresss_argument(
+    BCX_API virtual void set_bitcoin_addresss_argument(
         const std::vector<primitives::address>& value)
     {
         argument_.bitcoin_addresss = value;
@@ -226,7 +227,7 @@ public:
     /**
      * Get the value of the format option.
      */
-    virtual primitives::encoding& get_format_option()
+    BCX_API virtual primitives::encoding& get_format_option()
     {
         return option_.format;
     }
@@ -234,7 +235,7 @@ public:
     /**
      * Set the value of the format option.
      */
-    virtual void set_format_option(
+    BCX_API virtual void set_format_option(
         const primitives::encoding& value)
     {
         option_.format = value;

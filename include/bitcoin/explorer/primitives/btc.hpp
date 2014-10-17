@@ -38,31 +38,31 @@ public:
     /**
      * Default constructor.
      */
-    btc();
+    BCX_API btc();
 
     /**
      * Initialization constructor.
      * @param[in]  btc  The number of btc to initialize with.
      */
-    btc(const std::string& btc);
+    BCX_API btc(const std::string& btc);
 
     /**
      * Initialization constructor.
      * @param[in]  satoshi  The number of satoshi to initialize with.
      */
-    btc(uint64_t satoshi);
+    BCX_API btc(uint64_t satoshi);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    btc(const btc& other);
+    BCX_API btc(const btc& other);
 
     /**
      * Return a reference to the data member cast as satoshi.
      * @return  A reference to the object's internal data.
      */
-    operator uint64_t() const;
+    BCX_API operator uint64_t() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -70,7 +70,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, 
+    BCX_API friend std::istream& operator>>(std::istream& input,
         btc& argument);
 
     /**
@@ -79,7 +79,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const btc& argument);
 
 private:

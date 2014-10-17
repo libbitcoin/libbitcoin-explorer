@@ -28,17 +28,17 @@
 namespace libbitcoin {
 namespace explorer {
 
-/**
- * The default configuration file name to use when the path/file has not been
- * otherwise specified.
- */
-#ifdef _WIN32
-    #define BX_DEFAULT_CONFIG_FILE_NAME "explorer_cfg.ini"
-    #define BX_DEFAULT_CLIENT_CERTIFICATE ".explorer.cfg.cer"
-#else
-    #define BX_DEFAULT_CONFIG_FILE_NAME "explorer_cfg"
-    #define BX_DEFAULT_CLIENT_CERTIFICATE ".explorer.cfg"
-#endif
+///**
+// * The default configuration file name to use when the path/file has not been
+// * otherwise specified.
+// */
+//#ifdef _WIN32
+//    #define BX_DEFAULT_CONFIG_FILE_NAME "explorer_cfg.ini"
+//    #define BX_DEFAULT_CLIENT_CERTIFICATE ".explorer.cfg.cer"
+//#else
+//    #define BX_DEFAULT_CONFIG_FILE_NAME "explorer_cfg"
+//    #define BX_DEFAULT_CLIENT_CERTIFICATE ".explorer.cfg"
+//#endif
 
 /**
  * Get the default configuration settings file path or return empty.

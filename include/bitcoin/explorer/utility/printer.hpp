@@ -25,13 +25,18 @@
 #include <vector>
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
+#include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility/parameter.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace libbitcoin {
 namespace explorer {
-    
+
+#define PROPERTY_GET_REF(type, name) \
+    public: virtual type& get_##name() { return name##_; } \
+    private: type name##_
+
 /**
  * Class for managing the serialization of command line options and arguments.
  */
@@ -53,9 +58,10 @@ public:
      * @param[in]  arguments    Populated command line arguments metadata.
      * @param[in]  options      Populated command line options metadata.
      */
-    printer(const std::string& application, const std::string& category,
-        const std::string& command, const std::string& description,
-        const arguments_metadata& arguments, const options_metadata& options);
+    BCX_API printer(const std::string& application, 
+        const std::string& category, const std::string& command, 
+        const std::string& description, const arguments_metadata& arguments,
+        const options_metadata& options);
 
     /**
      * Convert a paragraph of text into a column.
@@ -65,61 +71,61 @@ public:
      * @param[in]  paragraph  The paragraph to columnize.
      * @return                The column, as a list of fragments.
      */
-    virtual std::vector<std::string> columnize(const std::string& paragraph,
-        size_t width);
+    BCX_API virtual std::vector<std::string> columnize(
+        const std::string& paragraph, size_t width);
 
     /**
      * Format the command description.
      * @return  The command description.
      */
-    virtual std::string format_description();
+    BCX_API virtual std::string format_description();
     
     /**
      * Format the parameters table.
      * @param[in]  positional  True for positional otherwize named.
      * @return                 The formatted help arguments table.
      */
-    virtual std::string format_parameters_table(bool positional);
+    BCX_API virtual std::string format_parameters_table(bool positional);
 
     /**
      * Format the command line usage.
      * @return  The formatted usage.
      */
-    virtual std::string format_usage();
+    BCX_API virtual std::string format_usage();
 
     /**
      * Format a paragraph.
      * @param[in]  paragraph  The text to format. 
      * @return                The formatted paragraph.
      */
-    virtual std::string format_paragraph(const std::string& paragraph);
+    BCX_API virtual std::string format_paragraph(const std::string& paragraph);
 
     /**
      * Format the command line parameters.
      * @return  The formatted command line parameters.
      */
-    virtual std::string format_usage_parameters();
+    BCX_API virtual std::string format_usage_parameters();
     
     /**
      * Build the list of argument name/count tuples.
      */
-    virtual void generate_argument_names();
+    BCX_API virtual void generate_argument_names();
 
     /**
      * Build the list of parameters.
      */
-    virtual void generate_parameters();
+    BCX_API virtual void generate_parameters();
 
     /**
      * Parse the arguments and options into the normalized parameter list.
      */
-    virtual void initialize();
+    BCX_API virtual void initialize();
 
     /**
      * Serialize command line help (full details).
      * @param[out] output  Stream that is sink for print output. 
      */
-    virtual void print(std::ostream& output);
+    BCX_API virtual void print(std::ostream& output);
 
     /**
      * Virtual property declarations, passed on construct.

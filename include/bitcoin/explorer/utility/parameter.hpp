@@ -32,6 +32,11 @@
 namespace libbitcoin {
 namespace explorer {
 
+#define PROPERTY(type, name) \
+    public: virtual type get_##name() const { return name##_; } \
+    public: virtual void set_##name(type value) { name##_ = value; } \
+    private: type name##_
+
 /**
  * A tuple to represent a positional argument name count.
  */
@@ -93,7 +98,7 @@ public:
      * @param[in]  option     The metadata of the option to test.
      * @param[in]  arguments  The list of supported positional arguments.
      */
-    virtual void initialize(const option_metadata& option,
+    BCX_API virtual void initialize(const option_metadata& option,
         const argument_list& arguments);
 
     /**
@@ -103,7 +108,7 @@ public:
      * @param[in]  arguments  The list of supported positional arguments.
      * @return                Relative position or -1 if not positional.
      */
-    virtual int position(const option_metadata& option,
+    BCX_API virtual int position(const option_metadata& option,
         const argument_list& arguments) const;
 
     /**
@@ -113,15 +118,15 @@ public:
      * @param[in]  arguments  The argument names list.
      * @return                The arguments limit value for the option.
      */
-    unsigned arguments_limit(int position, const option_metadata& option,
-        const argument_list& arguments) const;
+    BCX_API unsigned arguments_limit(int position, 
+        const option_metadata& option, const argument_list& arguments) const;
 
     /**
      * Get the option's short name character or zero.
      * @param[in]  option  The metadata of the option to test.
      * @return             The short name character or null character.
      */
-    virtual char short_name(const option_metadata& option) const;
+    BCX_API virtual char short_name(const option_metadata& option) const;
 
     /**
      * Virtual property declarations.

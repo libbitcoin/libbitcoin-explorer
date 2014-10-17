@@ -43,19 +43,19 @@ public:
     /**
      * Default constructor.
      */
-    base16();
+    BCX_API base16();
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    base16(const std::string& hexcode);
+    BCX_API base16(const std::string& hexcode);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    base16(const data_chunk& value);
+    BCX_API base16(const data_chunk& value);
 
     /**
      * Initialization constructor.
@@ -71,19 +71,19 @@ public:
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    base16(const base16& other);
+    BCX_API base16(const base16& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    data_chunk& data();
+    BCX_API data_chunk& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const data_chunk&() const;
+    BCX_API operator const data_chunk&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -91,7 +91,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, base16& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        base16& argument);
 
     /**
      * Overload stream out.
@@ -99,7 +100,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const base16& argument);
 
 private:

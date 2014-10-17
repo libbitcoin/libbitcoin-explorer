@@ -40,7 +40,7 @@ namespace explorer {
  * @param[in]  error   The error stream (e.g. STDERR).
  * @return             The appropriate console return code { -1, 0, 1 }.
  */
-console_result dispatch(int argc, const char* argv[],
+BCX_API console_result dispatch(int argc, const char* argv[],
     std::istream& input, std::ostream& output, std::ostream& error);
 
 /**
@@ -53,7 +53,7 @@ console_result dispatch(int argc, const char* argv[],
  * @param[in]  error   The error stream (e.g. STDERR).
  * @return            The appropriate console return code { -1, 0, 1 }.
  */
-console_result dispatch_invoke(int argc, const char* argv[],
+BCX_API console_result dispatch_invoke(int argc, const char* argv[],
     std::istream& input, std::ostream& output, std::ostream& error);
 
 /**
@@ -61,14 +61,15 @@ console_result dispatch_invoke(int argc, const char* argv[],
  * @param[in]  variables  The variable map to read the config option from.
  * @return                The read path.
  */
-boost::filesystem::path get_config_option(po::variables_map& variables);
+BCX_API boost::filesystem::path get_config_option(
+    po::variables_map& variables);
 
 /**
  * Get the help option value from the variable map.
  * @param[in]  variables  The variable map to read the help option from.
  * @return                True if the help option is set.
  */
-bool get_help_option(po::variables_map& variables);
+BCX_API bool get_help_option(po::variables_map& variables);
 
 /**
  * Load command line variables.
@@ -78,15 +79,16 @@ bool get_help_option(po::variables_map& variables);
  * @param[in]  argc       The number of elements in the argv parameter.
  * @param[in]  argv       Array of command line arguments excluding process.
  */
-void load_command_variables(po::variables_map& variables, command& instance,
-    std::istream& input, int argc, const char* argv[]) throw();
+BCX_API void load_command_variables(po::variables_map& variables,
+    command& instance, std::istream& input, int argc, const char* argv[])
+    throw();
 
 /**
  * Load configuration file variables.
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
  */
-void load_configuration_variables(po::variables_map& variables, 
+BCX_API void load_configuration_variables(po::variables_map& variables,
     command& instance) throw(po::reading_file);
 
 /**
@@ -94,7 +96,7 @@ void load_configuration_variables(po::variables_map& variables,
  * @param[out] variables  The variable map to populate.
  * @param[in]  instance   The command instance for the current command.
  */
-void load_environment_variables(po::variables_map& variables,
+BCX_API void load_environment_variables(po::variables_map& variables,
     command& instance) throw();
 
 /**
@@ -107,7 +109,7 @@ void load_environment_variables(po::variables_map& variables,
  * @param[in]  argv       Array of command line arguments excluding process.
  * @return                True if the load is successful.
  */
-bool load_variables(po::variables_map& variables, std::string& message,
+BCX_API bool load_variables(po::variables_map& variables, std::string& message,
     command& instance, std::istream& input, int argc, const char* argv[]);
 
 } // namespace explorer

@@ -42,30 +42,30 @@ public:
     /**
      * Default constructor.
      */
-    base2();
+    BCX_API base2();
 
     /**
      * Initialization constructor.
      * @param[in]  bin  The value to initialize with.
      */
-    base2(const std::string& binary);
+    BCX_API base2(const std::string& binary);
 
     /**
      * @param[in]  value  The value to initialize with.
      */
-    base2(const bitset& value);
+    BCX_API base2(const bitset& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    base2(const base2& other);
+    BCX_API base2(const base2& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bitset&() const;
+    BCX_API operator const bitset&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -73,7 +73,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, base2& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        base2& argument);
 
     /**
      * Overload stream out.
@@ -81,7 +82,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const base2& argument);
 
 private:

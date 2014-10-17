@@ -44,49 +44,49 @@ public:
     /**
      * Default constructor.
      */
-    ec_public();
+    BCX_API ec_public();
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    ec_public(const std::string& hexcode);
+    BCX_API ec_public(const std::string& hexcode);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const ec_point& value);
+    BCX_API ec_public(const ec_point& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    ec_public(const ec_public& other);
+    BCX_API ec_public(const ec_public& other);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const hd_private_key& value);
+    BCX_API ec_public(const hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    ec_public(const hd_public_key& value);
+    BCX_API ec_public(const hd_public_key& value);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    ec_point& data();
+    BCX_API ec_point& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const ec_point&() const;
+    BCX_API operator const ec_point&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -94,7 +94,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, ec_public& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        ec_public& argument);
 
     /**
      * Overload stream out.
@@ -102,7 +103,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const ec_public& argument);
 
 private:

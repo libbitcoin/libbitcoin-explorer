@@ -73,7 +73,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "not-implemented";
     }
@@ -82,7 +82,7 @@ public:
      * The symbolic (not localizable) command name, lower case.
      * @return  Example: "fetch-transaction"
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return symbol();
     }
@@ -91,7 +91,7 @@ public:
      * The localizable command category name, upper case.
      * @return  Example: "ONLINE"
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "not-implemented";
     }
@@ -100,7 +100,7 @@ public:
      * The localizable command description.
      * @return  Example: "Get transactions by hash."
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
         return "not-implemented";
     }
@@ -109,7 +109,7 @@ public:
      * Declare whether the command has been obsoleted.
      * @return  True if the command is obsolete
      */
-    virtual bool obsolete()
+    BCX_API virtual bool obsolete()
     {
         return false;
     }
@@ -120,7 +120,8 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& error)
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& error)
     {
         return console_result::failure;
     }
@@ -130,7 +131,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -139,7 +140,7 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(options_metadata& definitions)
+    BCX_API virtual void load_environment(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -157,7 +158,7 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
     }
@@ -167,7 +168,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         return option_metadata_;
     }
@@ -176,7 +177,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(options_metadata& definitions)
+    BCX_API virtual void load_settings(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -227,7 +228,7 @@ public:
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
+    BCX_API virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
     }
 
@@ -235,7 +236,7 @@ public:
      * Write the help for this command to the specified stream.
      * @param[out] output  The output stream.
      */
-    virtual void write_help(std::ostream& output)
+    BCX_API virtual void write_help(std::ostream& output)
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
@@ -250,7 +251,7 @@ public:
     /**
      * Get command line argument metadata.
      */
-    virtual arguments_metadata& get_argument_metadata()
+    BCX_API virtual arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -258,7 +259,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    virtual options_metadata& get_option_metadata()
+    BCX_API virtual options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -266,7 +267,7 @@ public:
     /**
      * Get the value of the general.testnet setting.
      */
-    virtual bool get_general_testnet_setting()
+    BCX_API virtual bool get_general_testnet_setting()
     {
         return setting_.general.testnet;
     }
@@ -274,7 +275,7 @@ public:
     /**
      * Set the value of the general.testnet setting.
      */
-    virtual void set_general_testnet_setting(bool value)
+    BCX_API virtual void set_general_testnet_setting(bool value)
     {
         setting_.general.testnet = value;
     }
@@ -282,7 +283,7 @@ public:
     /**
      * Get the value of the general.retries setting.
      */
-    virtual primitives::base10 get_general_retries_setting()
+    BCX_API virtual primitives::base10 get_general_retries_setting()
     {
         return setting_.general.retries;
     }
@@ -290,7 +291,7 @@ public:
     /**
      * Set the value of the general.retries setting.
      */
-    virtual void set_general_retries_setting(primitives::base10 value)
+    BCX_API virtual void set_general_retries_setting(primitives::base10 value)
     {
         setting_.general.retries = value;
     }
@@ -298,7 +299,7 @@ public:
     /**
      * Get the value of the general.wait setting.
      */
-    virtual uint32_t get_general_wait_setting()
+    BCX_API virtual uint32_t get_general_wait_setting()
     {
         return setting_.general.wait;
     }
@@ -306,7 +307,7 @@ public:
     /**
      * Set the value of the general.wait setting.
      */
-    virtual void set_general_wait_setting(uint32_t value)
+    BCX_API virtual void set_general_wait_setting(uint32_t value)
     {
         setting_.general.wait = value;
     }
@@ -314,7 +315,7 @@ public:
     /**
      * Get the value of the logging.debug setting.
      */
-    virtual boost::filesystem::path get_logging_debug_setting()
+    BCX_API virtual boost::filesystem::path get_logging_debug_setting()
     {
         return setting_.logging.debug;
     }
@@ -322,7 +323,7 @@ public:
     /**
      * Set the value of the logging.debug setting.
      */
-    virtual void set_logging_debug_setting(boost::filesystem::path value)
+    BCX_API virtual void set_logging_debug_setting(boost::filesystem::path value)
     {
         setting_.logging.debug = value;
     }
@@ -330,7 +331,7 @@ public:
     /**
      * Get the value of the logging.error setting.
      */
-    virtual boost::filesystem::path get_logging_error_setting()
+    BCX_API virtual boost::filesystem::path get_logging_error_setting()
     {
         return setting_.logging.error;
     }
@@ -338,7 +339,7 @@ public:
     /**
      * Set the value of the logging.error setting.
      */
-    virtual void set_logging_error_setting(boost::filesystem::path value)
+    BCX_API virtual void set_logging_error_setting(boost::filesystem::path value)
     {
         setting_.logging.error = value;
     }
@@ -346,7 +347,7 @@ public:
     /**
      * Get the value of the server.public-key setting.
      */
-    virtual primitives::base16 get_server_public_key_setting()
+    BCX_API virtual primitives::base16 get_server_public_key_setting()
     {
         return setting_.server.public_key;
     }
@@ -354,7 +355,7 @@ public:
     /**
      * Set the value of the server.public-key setting.
      */
-    virtual void set_server_public_key_setting(primitives::base16 value)
+    BCX_API virtual void set_server_public_key_setting(primitives::base16 value)
     {
         setting_.server.public_key = value;
     }
@@ -362,7 +363,7 @@ public:
     /**
      * Get the value of the server.address setting.
      */
-    virtual std::string get_server_address_setting()
+    BCX_API virtual std::string get_server_address_setting()
     {
         return setting_.server.address;
     }
@@ -370,7 +371,7 @@ public:
     /**
      * Set the value of the server.address setting.
      */
-    virtual void set_server_address_setting(std::string value)
+    BCX_API virtual void set_server_address_setting(std::string value)
     {
         setting_.server.address = value;
     }
@@ -378,7 +379,7 @@ public:
     /**
      * Get the value of the server.socks-proxy setting.
      */
-    virtual std::string get_server_socks_proxy_setting()
+    BCX_API virtual std::string get_server_socks_proxy_setting()
     {
         return setting_.server.socks_proxy;
     }
@@ -386,7 +387,7 @@ public:
     /**
      * Set the value of the server.socks-proxy setting.
      */
-    virtual void set_server_socks_proxy_setting(std::string value)
+    BCX_API virtual void set_server_socks_proxy_setting(std::string value)
     {
         setting_.server.socks_proxy = value;
     }
@@ -397,7 +398,7 @@ protected:
      * This base class is abstract but not pure virtual, so prevent direct 
      * construction here.
      */
-    command()
+    BCX_API command()
     {
     }
 

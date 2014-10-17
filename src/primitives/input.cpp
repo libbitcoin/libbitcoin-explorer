@@ -40,7 +40,7 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-void parse_input(tx_input_type& input,
+static void parse_input(tx_input_type& input,
     const std::vector<std::string>& tokens)
 {
     input.script = script_type();

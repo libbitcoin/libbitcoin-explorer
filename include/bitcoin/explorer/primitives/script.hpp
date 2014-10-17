@@ -35,32 +35,32 @@ namespace primitives {
 /**
  * Serialization helper to convert between base16/raw script and script_type.
  */
-    class script
+class script
 {
 public:
 
     /**
      * Default constructor.
      */
-    script();
+    BCX_API script();
 
     /**
      * Initialization constructor.
      * @param[in]  mnemonic  The value to initialize with.
      */
-    script(const std::string& mnemonic);
+    BCX_API script(const std::string& mnemonic);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    script(const script_type& value);
+    BCX_API script(const script_type& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    script(const data_chunk& value);
+    BCX_API script(const data_chunk& value);
 
     /**
      * Initialization constructor.
@@ -70,13 +70,13 @@ public:
      * load them here.
      * @param[in]  tokens  The mnemonic tokens to initialize with.
      */
-    script(const std::vector<std::string>& tokens);
+    BCX_API script(const std::vector<std::string>& tokens);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    script(const script& other);
+    BCX_API script(const script& other);
 
     /**
      * Return a pretty-printed copy of the script.
@@ -84,19 +84,19 @@ public:
      * symmetry with the construction approach.
      * @return  A mnemonic-printed copy of the internal script.
      */
-    const std::string mnemonic() const;
+    BCX_API const std::string mnemonic() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const script_type&() const;
+    BCX_API operator const script_type&() const;
 
     /**
      * Overload cast to data chunk.
      * @return  This object's value cast to data chunk.
      */
-    operator const data_chunk() const;
+    BCX_API operator const data_chunk() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -104,7 +104,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, script& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        script& argument);
 
     /**
      * Overload stream out.
@@ -112,7 +113,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const script& argument);
 
 private:

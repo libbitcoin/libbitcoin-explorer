@@ -292,6 +292,7 @@
 .for command by symbol
 #include <bitcoin/explorer/commands/$(symbol).hpp>
 .endfor
+#include <bitcoin/explorer/define.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -314,21 +315,22 @@ namespace explorer {
  * Invoke a specified function on all commands.
  * @param[in]  func  The function to invoke on all commands.
  */
-void broadcast(const std::function<void(std::shared_ptr<command>)> func);
+BCX_API void broadcast(
+    const std::function<void(std::shared_ptr<command>)> func);
 
 /**
  * Find the command identified by the specified symbolic command name.
  * @param[in]  symbol  The symbolic command name.
  * @return             An instance of the command or nullptr if not found.
  */
-std::shared_ptr<command> find(const std::string& symbol);
+BCX_API std::shared_ptr<command> find(const std::string& symbol);
 
 /**
  * Find the new name of the formerly-named command.
  * @param[in]  former  The former symbolic command name.
  * @return             The current name of the formerly-named command.
  */
-std::string formerly(const std::string& former);
+BCX_API std::string formerly(const std::string& former);
 
 } // namespace explorer
 } // namespace libbitcoin
@@ -424,7 +426,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "not-implemented";
     }
@@ -433,7 +435,7 @@ public:
      * The symbolic (not localizable) command name, lower case.
      * @return  Example: "fetch-transaction"
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return symbol();
     }
@@ -442,7 +444,7 @@ public:
      * The localizable command category name, upper case.
      * @return  Example: "ONLINE"
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "not-implemented";
     }
@@ -451,7 +453,7 @@ public:
      * The localizable command description.
      * @return  Example: "Get transactions by hash."
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
         return "not-implemented";
     }
@@ -460,7 +462,7 @@ public:
      * Declare whether the command has been obsoleted.
      * @return  True if the command is obsolete
      */
-    virtual bool obsolete()
+    BCX_API virtual bool obsolete()
     {
         return false;
     }
@@ -471,7 +473,8 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& error)
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& error)
     {
         return console_result::failure;
     }
@@ -481,7 +484,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -490,7 +493,7 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(options_metadata& definitions)
+    BCX_API virtual void load_environment(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -508,7 +511,7 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
     }
@@ -518,7 +521,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         return option_metadata_;
     }
@@ -527,7 +530,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(options_metadata& definitions)
+    BCX_API virtual void load_settings(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -554,7 +557,7 @@ public:
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
-    virtual void load_stream(std::istream& input, po::variables_map& variables)
+    BCX_API virtual void load_stream(std::istream& input, po::variables_map& variables)
     {
     }
 
@@ -562,7 +565,7 @@ public:
      * Write the help for this command to the specified stream.
      * @param[out] output  The output stream.
      */
-    virtual void write_help(std::ostream& output)
+    BCX_API virtual void write_help(std::ostream& output)
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
@@ -577,7 +580,7 @@ public:
     /**
      * Get command line argument metadata.
      */
-    virtual arguments_metadata& get_argument_metadata()
+    BCX_API virtual arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -585,7 +588,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    virtual options_metadata& get_option_metadata()
+    BCX_API virtual options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -600,7 +603,7 @@ public:
     /**
      * Get the value of the $(section:c).$(name:) $(pluralized_setting:).
      */
-    virtual $(vectored_type:) get_$(section:c)_$(pluralized_name:c)_setting()
+    BCX_API virtual $(vectored_type:) get_$(section:c)_$(pluralized_name:c)_setting()
     {
         return setting_.$(section:c).$(pluralized_name:c);
     }
@@ -608,7 +611,7 @@ public:
     /**
      * Set the value of the $(section:c).$(name:) $(pluralized_setting:).
      */
-    virtual void set_$(section:c)_$(pluralized_name:c)_setting($(vectored_type:) value)
+    BCX_API virtual void set_$(section:c)_$(pluralized_name:c)_setting($(vectored_type:) value)
     {
         setting_.$(section:c).$(pluralized_name:c) = value;
     }
@@ -621,7 +624,7 @@ protected:
      * This base class is abstract but not pure virtual, so prevent direct 
      * construction here.
      */
-    command()
+    BCX_API command()
     {
     }
 
@@ -743,7 +746,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "$(symbol:)";
     }
@@ -752,7 +755,7 @@ public:
     /**
      * The symbolic (not localizable) former command name, lower case.
      */
-    static const char* formerly()
+    BCX_API static const char* formerly()
     {
         return "$(formerly:)";
     }
@@ -761,7 +764,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return $(symbol:c)::symbol();
     }
@@ -769,7 +772,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "$(category:)";
     }
@@ -777,7 +780,7 @@ public:
     /**
      * The localizable command description.
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
         return "$(description:)";
     }
@@ -787,7 +790,7 @@ public:
      * Declare whether the command has been obsoleted.
      * @return  True if the command is obsolete
      */
-    virtual bool obsolete()
+    BCX_API virtual bool obsolete()
     {
         return true;
     }
@@ -809,7 +812,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()$(if_else_empty(argument_count = 0, ";"))
 .for argument
@@ -822,7 +825,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
 .for argument
@@ -858,7 +861,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -906,7 +909,8 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& cerr);
 
     /* Properties */
 
@@ -919,7 +923,7 @@ public:
     /**
      * Get the value of the $(name:) $(pluralized_argument:).
      */
-    virtual $(vtype:)& get_$(pluralized_name:c)_argument()
+    BCX_API virtual $(vtype:)& get_$(pluralized_name:c)_argument()
     {
         return argument_.$(pluralized_name:c);
     }
@@ -927,7 +931,7 @@ public:
     /**
      * Set the value of the $(name:) $(pluralized_argument:).
      */
-    virtual void set_$(pluralized_name:c)_argument(
+    BCX_API virtual void set_$(pluralized_name:c)_argument(
         const $(vtype:)& value)
     {
         argument_.$(pluralized_name:c) = value;
@@ -943,7 +947,7 @@ public:
     /**
      * Get the value of the $(name:) $(pluralized_option:).
      */
-    virtual $(vtype:)& get_$(pluralized_name:c)_option()
+    BCX_API virtual $(vtype:)& get_$(pluralized_name:c)_option()
     {
         return option_.$(pluralized_name:c);
     }
@@ -951,7 +955,7 @@ public:
     /**
      * Set the value of the $(name:) $(pluralized_option:).
      */
-    virtual void set_$(pluralized_name:c)_option(
+    BCX_API virtual void set_$(pluralized_name:c)_option(
         const $(vtype:)& value)
     {
         option_.$(pluralized_name:c) = value;
