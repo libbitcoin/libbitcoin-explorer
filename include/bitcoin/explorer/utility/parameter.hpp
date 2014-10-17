@@ -81,17 +81,17 @@ public:
     /**
      * Sentinel - the option is not a positional argument.
      */
-    static constexpr int not_positional = -1;
+    BCX_API static constexpr int not_positional = -1;
 
     /**
      * Sentinel - there is no short name.
      */
-    static constexpr char no_short_name = 0x00;
+    BCX_API static constexpr char no_short_name = 0x00;
 
     /**
      * The character used to prefix command line options.
      */
-    static constexpr char option_prefix_char = '-';
+    BCX_API static constexpr char option_prefix_char = '-';
 
     /**
      * Populate with normalized parameter data.
