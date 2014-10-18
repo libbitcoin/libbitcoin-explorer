@@ -41,12 +41,12 @@ public:
     /**
      * The default polling period.
      */
-    BCX_API static constexpr uint32_t default_poll_period_ms = 100;
+    BCX_API static const uint32_t default_poll_period_ms;
     
     /**
      * The default number of threads.
      */
-    BCX_API static constexpr size_t default_threadpool_size = 1;
+    BCX_API static const size_t default_threadpool_size;
 
     /**
      * Initialization constructor, establish threadpool (RAII).
@@ -72,7 +72,8 @@ public:
      * @param[in]  period_ms  The polling period in ms, defaults to 100.
      * @param[in]  action     The poll function to execute, defaults to null.
      */
-    BCX_API virtual void poll(bool& done, uint32_t period_ms = default_poll_period_ms,
+    BCX_API virtual void poll(bool& done,
+        uint32_t period_ms=default_poll_period_ms,
         std::function<void()> action=nullptr);
 
     /**

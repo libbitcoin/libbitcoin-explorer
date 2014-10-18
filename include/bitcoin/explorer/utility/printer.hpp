@@ -47,7 +47,7 @@ public:
     /**
      * Number of arguments above which the argument is considered unlimited.
      */
-    BCX_API static constexpr int max_arguments = 256;
+    BCX_API static const int max_arguments;
 
     /*
      * Construct an instance of the printer class.
