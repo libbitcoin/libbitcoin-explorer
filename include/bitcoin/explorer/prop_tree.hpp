@@ -118,20 +118,6 @@ BCX_API pt::ptree prop_tree(const std::vector<balance_row>& rows,
     const payment_address& balance_address);
 
 /**
- * Generate a property tree for a transaction input.
- * @param[in]  tx_input  The input.
- * @return               A property tree.
- */
-BCX_API pt::ptree prop_tree(const tx_input_type& tx_input);
-
-/**
- * Generate a property tree for a set of transaction inputs.
- * @param[in]  tx_inputs  The set of transaction inputs.
- * @return                A property tree.
- */
-BCX_API pt::ptree prop_tree(const std::vector<tx_input_type>& tx_inputs);
-
-/**
  * Generate a property tree for an input.
  * @param[in]  input  The input.
  * @return            A property tree.
@@ -147,18 +133,18 @@ BCX_API pt::ptree prop_tree(
     const std::vector<explorer::primitives::input>& inputs);
 
 /**
- * Generate a property tree for a transaction output.
- * @param[in]  tx_output  The transaction output.
- * @return                A property tree.
+ * Generate a property tree for a transaction input.
+ * @param[in]  tx_input  The input.
+ * @return               A property tree.
  */
-BCX_API pt::ptree prop_tree(const tx_output_type& tx_output);
+BCX_API pt::ptree prop_tree(const tx_input_type& tx_input);
 
 /**
- * Generate a property tree for a set of transaction outputs.
- * @param[in]  tx_outputs  The set of transaction outputs.
- * @return                  A property tree.
+ * Generate a property tree for a set of transaction inputs.
+ * @param[in]  tx_inputs  The set of transaction inputs.
+ * @return                A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<tx_output_type>& tx_outputs);
+BCX_API pt::ptree prop_tree(const std::vector<tx_input_type>& tx_inputs);
 
 /**
  * Generate a property tree for an output.
@@ -179,6 +165,20 @@ BCX_API pt::ptree prop_tree(const output& output);
 BCX_API pt::ptree prop_tree(const std::vector<output>& outputs);
 
 /**
+ * Generate a property tree for a transaction output.
+ * @param[in]  tx_output  The transaction output.
+ * @return                A property tree.
+ */
+BCX_API pt::ptree prop_tree(const tx_output_type& tx_output);
+
+/**
+ * Generate a property tree for a set of transaction outputs.
+ * @param[in]  tx_outputs  The set of transaction outputs.
+ * @return                  A property tree.
+ */
+BCX_API pt::ptree prop_tree(const std::vector<tx_output_type>& tx_outputs);
+
+/**
  * Generate a property tree for a transaction.
  * @param[in]  transaction  The transaction.
  * @return                  A property tree.
@@ -193,9 +193,16 @@ BCX_API pt::ptree prop_tree(const transaction& transaction);
 BCX_API pt::ptree prop_tree(const std::vector<transaction>& transactions);
 
 /**
+ * Generate a property tree for a wrapper.
+ * @param[in]  wrapper  The wrapper instance.
+ * @return              A property tree.
+ */
+BCX_API pt::ptree prop_tree(const wrapped_data& wrapper);
+
+/**
  * Generate a property tree for transaction with extended data.
  * @param[in]  tx          The transaction.
- * @param[in]  block_hash  Theblock_hash of the transaction.
+ * @param[in]  block_hash  The block_hash of the transaction.
  * @param[in]  prefix      The prefix used to locate the transaction.
  * @return                 A property tree.
  */
@@ -205,26 +212,19 @@ BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
 /**
  * Generate a property tree for transaction with extended data.
  * @param[in]  tx          The transaction.
- * @param[in]  block_hash  Theblock_hash of the transaction.
- * @param[in]  watch_address The address used to locate the transaction.
+ * @param[in]  block_hash  The block_hash of the transaction.
+ * @param[in]  address     The address used to locate the transaction.
  * @return                 A property tree.
  */
 BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& watch_address);
+    const payment_address& address);
 
 /**
  * Generate a property tree for a stealth address.
- * @param[in]  address  The stealth address.
- * @return              A property tree.
+ * @param[in]  stealth_address  The stealth address.
+ * @return                      A property tree.
  */
-BCX_API pt::ptree prop_tree(const stealth& address);
-
-/**
- * Generate a property tree for a set of stealth addresses.
- * @param[in]  addresses  The set of stealth addresses.
- * @return                A property tree.
- */
-BCX_API pt::ptree prop_tree(const std::vector<stealth>& addresses);
+BCX_API pt::ptree prop_tree(const stealth& stealth_address);
 
 /**
  * Generate a property tree for a stealth metadata row.
@@ -246,15 +246,8 @@ BCX_API pt::ptree prop_tree(const std::vector<blockchain::stealth_row>& rows);
  * @param[in]  prefix  The stealth prefix.
  * @return             A property tree.
  */
-BCX_API pt::ptree prop_tree(const stealth_prefix& prefix, 
+BCX_API pt::ptree prop_tree(const stealth_prefix& prefix,
     const std::vector<blockchain::stealth_row>& rows);
-
-/**
- * Generate a property tree for a wrapper.
- * @param[in]  wrapped  A wrapped.
- * @return              A property tree.
- */
-BCX_API pt::ptree prop_tree(const wrapped_data& wrapped);
 
 /**
  * Create a property tree for the fetch-tx-index command.
@@ -265,13 +258,6 @@ BCX_API pt::ptree prop_tree(const wrapped_data& wrapped);
  */
 BCX_API pt::ptree prop_tree(const bc::hash_digest& hash, size_t height,
     size_t index);
-
-/**
- * Create a property tree for a list of indexes.
- * @param[in]  confirmations  The list of indexes.
- * @returns                   A new property tree containing the list.
- */
-BCX_API pt::ptree prop_tree(const index_list& indexes);
 
 /**
  * Create a property tree for a list of indexes.
