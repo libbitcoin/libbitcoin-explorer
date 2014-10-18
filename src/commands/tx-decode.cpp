@@ -39,15 +39,10 @@ console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
     const auto& transactions = get_transactions_argument();
 
     if (encoding == encoding_engine::native)
-    {
         for (const auto& tx: transactions)
             output << transaction(tx) << std::endl;
-    }
     else
-    {
-        const auto tree = prop_tree(transactions);
-        write_stream(output, tree, encoding);
-    }
+        write_stream(output, prop_tree(transactions), encoding);
 
     return console_result::okay;
 }
