@@ -192,7 +192,7 @@
   
   <command symbol="fetch-balance" typeX="balance_row" multipleX="true" category="ONLINE" network="true" description="Get the balance in satoshi of one or more Bitcoin addresses. Requires an Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses. If not specified the address is read from STDIN." />
+    <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses. If not specified the addresses are read from STDIN." />
   </command>
 
   <command symbol="fetch-header" category="ONLINE" typeX="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection.">

@@ -154,7 +154,7 @@ public:
         (
             "BITCOIN_ADDRESS",
             value<std::vector<primitives::address>>(&argument_.bitcoin_addresss),
-            "The set of Bitcoin addresses. If not specified the address is read from STDIN."
+            "The set of Bitcoin addresses. If not specified the addresses are read from STDIN."
         );
 
         return options;
