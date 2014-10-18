@@ -56,31 +56,6 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "    version 1\n" \
 "}\n"
 
-/*
-#define TX_DECODE_TX_A_JSON \
-"{\n" \
-"    \"transaction\": {\n" \
-"        \"hash\": \"39d2caaf112f21364be00c5d0b14e3763468934e586e416bf74647a1906b18e0\",\n" \
-"        \"inputs\": {\n" \
-"            \"input\": {\n" \
-"                \"previous_output\": \"97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1\",\n" \
-"                \"script\": \"\",\n" \
-"                \"sequence\": \"4294967295\"\n" \
-"            }\n" \
-"        },\n" \
-"        \"lock_time\": \"0\",\n" \
-"        \"outputs\": {\n" \
-"            \"output\": {\n" \
-"                \"address\": \"13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe\",\n" \
-"                \"script\": \"dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig\",\n" \
-"                \"value\": \"90000\"\n" \
-"            }\n" \
-"        },\n" \
-"        \"version\": \"1\"\n" \
-"    }\n" \
-"}\n"
-*/
-
 #define TX_DECODE_TX_A_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
 "<transaction><hash>39d2caaf112f21364be00c5d0b14e3763468934e586e416bf74647a1906b18e0</hash><inputs><input><previous_output>97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1</previous_output><script/><sequence>4294967295</sequence></input></inputs><lock_time>0</lock_time><outputs><output><address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><script>dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig</script><value>90000</value></output></outputs><version>1</version></transaction>"

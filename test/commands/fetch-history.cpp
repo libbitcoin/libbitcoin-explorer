@@ -28,21 +28,24 @@ BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_HISTORY_SX_DEMO1_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
 #define BX_FETCH_HISTORY_SX_DEMO1_INFO \
-"address 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz\n" \
-"histories\n" \
+"history\n" \
 "{\n" \
-"    history\n" \
+"    address 134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz\n" \
+"    records\n" \
 "    {\n" \
-"        value 100000\n" \
-"        output\n" \
+"        record\n" \
 "        {\n" \
-"            height 247683\n" \
-"            point 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1\n" \
-"        }\n" \
-"        input\n" \
-"        {\n" \
-"            height 247742\n" \
-"            point b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0\n" \
+"            value 100000\n" \
+"            output\n" \
+"            {\n" \
+"                height 247683\n" \
+"                point 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1\n" \
+"            }\n" \
+"            input\n" \
+"            {\n" \
+"                height 247742\n" \
+"                point b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0\n" \
+"            }\n" \
 "        }\n" \
 "    }\n" \
 "}\n"
@@ -50,16 +53,19 @@ BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_HISTORY_SX_DEMO2_ADDRESS "13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe"
 #define BX_FETCH_HISTORY_SX_DEMO2_INFO \
-"address 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe\n" \
-"histories\n" \
+"history\n" \
 "{\n" \
-"    history\n" \
+"    address 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe\n" \
+"    records\n" \
 "    {\n" \
-"        value 90000\n" \
-"        output\n" \
+"        record\n" \
 "        {\n" \
-"            height 247742\n" \
-"            point b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0\n" \
+"            value 90000\n" \
+"            output\n" \
+"            {\n" \
+"                height 247742\n" \
+"                point b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5:0\n" \
+"            }\n" \
 "        }\n" \
 "    }\n" \
 "}\n"
