@@ -221,13 +221,13 @@
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include."/>
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
     <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
-    <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 stealth prefixes used to locate transactions. If not specified the prefixes are read from STDIN." />
+    <argument name="PREFIX" limit="-1" type="base2" description="The set of Base2 stealth prefixes used to locate transactions." />
     <define name="BX_FETCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: stealth prefix is limited to 32 bits." />
   </command>
 
   <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" multipleX="true" category="ONLINE" network="true" description="Get transactions by hash. Requires an Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="HASH" stdin="true" limit="-1"  type="btc256" description="The set of Base16 transaction hashes of transactions to get. If not specified the transaction hashes are read from STDIN." />
+    <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes of transactions to get. If not specified the transaction hashes are read from STDIN." />
   </command>
 
   <command symbol="fetch-tx-index" formerly="fetch-transaction-index" typeX="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires an Obelisk server connection.">

@@ -129,7 +129,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_prefixs_argument(), "PREFIX", variables, input);
     }
 
     /**
@@ -165,7 +164,7 @@ public:
         (
             "PREFIX",
             value<std::vector<primitives::base2>>(&argument_.prefixs),
-            "The set of Base2 stealth prefixes used to locate transactions. If not specified the prefixes are read from STDIN."
+            "The set of Base2 stealth prefixes used to locate transactions."
         );
 
         return options;
