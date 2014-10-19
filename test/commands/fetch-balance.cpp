@@ -45,13 +45,13 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 #define BX_FETCH_BALANCE_SX_DEMO1_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
 #define BX_FETCH_BALANCE_SX_DEMO1_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<balance><address>134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz</address><received>100000</received><unconfirmed>0</unconfirmed><confirmed>0</confirmed></balance>"
+"<balance><address>134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz</address><received>100000</received><unconfirmed>0</unconfirmed><confirmed>0</confirmed></balance>\n"
 
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_BALANCE_SX_DEMO2_ADDRESS "13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe"
 #define BX_FETCH_BALANCE_SX_DEMO2_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<balance><address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><received>90000</received><unconfirmed>90000</unconfirmed><confirmed>90000</confirmed></balance>"
+"<balance><address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><received>90000</received><unconfirmed>90000</unconfirmed><confirmed>90000</confirmed></balance>\n"
 
 // This test disabled because people are always sending change to Satoshi.
 //BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_first_address_info__okay_output)
@@ -80,6 +80,15 @@ BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo2_xml__okay_output)
     command.set_bitcoin_addresss_argument({ { BX_FETCH_BALANCE_SX_DEMO2_ADDRESS } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO2_XML);
+}
+
+BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_two_sx_demo1_xml__okay_output)
+{
+    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
+    command.set_format_option({ "xml" });
+    command.set_bitcoin_addresss_argument({ { BX_FETCH_BALANCE_SX_DEMO1_ADDRESS }, { BX_FETCH_BALANCE_SX_DEMO1_ADDRESS } });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO1_XML BX_FETCH_BALANCE_SX_DEMO1_XML);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

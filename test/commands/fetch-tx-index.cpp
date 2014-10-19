@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(fetch_tx_index__invoke)
 "0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098"
 #define BX_FETCH_TX_INDEX_SECOND_INDEX_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<transaction_metadata><hash>0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098</hash><height>1</height><index>0</index></transaction_metadata>"
+"<transaction_metadata><hash>0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098</hash><height>1</height><index>0</index></transaction_metadata>\n"
 
 BOOST_AUTO_TEST_CASE(fetch_tx_index__invoke__mainnet_satoshis_words_tx_info__okay_output)
 {

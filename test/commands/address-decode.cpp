@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_SUITE(address_decode__invoke)
         "<checksum>1476364070</checksum>" \
         "<payload>b472a266d0bd89c13706a4132ccfb16f7c3b9fcb</payload>" \
         "<version>0</version>" \
-    "</wrapper>"
+    "</wrapper>\n"
 #define BX_ADDRESS_DECODE_V42_DEFAULT \
     "wrapper\n" \
     "{\n" \

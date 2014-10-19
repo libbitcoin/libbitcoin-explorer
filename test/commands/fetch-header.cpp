@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_SUITE(fetch_header__invoke)
 "}\n"
 #define FETCH_HEADER_SECOND_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<header><bits>486604799</bits><hash>00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048</hash><merkle_tree_hash>0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098</merkle_tree_hash><nonce>2573394689</nonce><previous_block_hash>000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</previous_block_hash><time_stamp>1231469665</time_stamp><version>1</version></header>"
+"<header><bits>486604799</bits><hash>00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048</hash><merkle_tree_hash>0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098</merkle_tree_hash><nonce>2573394689</nonce><previous_block_hash>000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</previous_block_hash><time_stamp>1231469665</time_stamp><version>1</version></header>\n"
 
 BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_0_native__okay_output)
 {
