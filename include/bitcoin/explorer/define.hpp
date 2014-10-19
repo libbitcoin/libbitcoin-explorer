@@ -34,30 +34,13 @@
 #if defined BCX_STATIC
 #define BCX_API
 #define BCX_INTERNAL
-#elif defined BCS_DLL
+#elif defined BCX_DLL
 #define BCX_API      BC_HELPER_DLL_EXPORT
 #define BCX_INTERNAL BC_HELPER_DLL_LOCAL
 #else
 #define BCX_API      BC_HELPER_DLL_IMPORT
 #define BCX_INTERNAL BC_HELPER_DLL_LOCAL
 #endif
-
-#define PROPERTY(type, name) \
-    public: virtual type get_##name() const { return name##_; } \
-    public: virtual void set_##name(type value) { name##_ = value; } \
-    private: type name##_
-
-#define PROPERTY_GET(type, name) \
-    public: virtual type get_##name() { return name##_; } \
-    private: type name##_
-
-#define PROPERTY_GET_REF(type, name) \
-    public: virtual type& get_##name() { return name##_; } \
-    private: type name##_
-
-#define PROPERTY_SET(type, name) \
-    public: virtual void set_##name(type value) { name##_ = value; } \
-    private: type name##_
 
 /**
  * The name of this program.
@@ -129,14 +112,13 @@ enum class encoding_engine
 {
     info,
     json,
-    xml,
-    native
+    xml
 };
 
 /**
  * Definition of the parts of a wrapped payload.
  */
-struct wrapped_data
+struct BCX_API wrapped_data
 {
     uint8_t version;
     uint32_t checksum;

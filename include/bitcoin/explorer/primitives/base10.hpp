@@ -41,31 +41,31 @@ public:
     /**
      * Default constructor.
      */
-    base10();
+    BCX_API base10();
 
     /**
      * Initialization constructor.
      * @param[in]  byte  The value to initialize with.
      */
-    base10(uint8_t byte);
+    BCX_API base10(uint8_t byte);
 
     /**
      * Initialization constructor.
      * @param[in]  decimal  The value to initialize with.
      */
-    base10(const std::string& decimal);
+    BCX_API base10(const std::string& decimal);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    base10(const base10& other);
+    BCX_API base10(const base10& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator uint8_t() const;
+    BCX_API operator uint8_t() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -73,7 +73,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, base10& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        base10& argument);
 
     /**
      * Overload stream out.
@@ -81,7 +82,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const base10& argument);
 
 private:

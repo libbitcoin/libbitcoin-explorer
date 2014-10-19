@@ -24,6 +24,7 @@
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -40,30 +41,30 @@ public:
     /**
      * The default polling period.
      */
-    static constexpr uint32_t default_poll_period_ms = 100;
+    BCX_API static const uint32_t default_poll_period_ms;
     
     /**
      * The default number of threads.
      */
-    static constexpr size_t default_threadpool_size = 1;
+    BCX_API static const size_t default_threadpool_size;
 
     /**
      * Initialization constructor, establish threadpool (RAII).
      * @param[in]  command  The command being processed.
      * @param[in]  threads  The number of pool threads to initialize.
      */
-    async_client(explorer::command& command,
+    BCX_API async_client(explorer::command& command,
         const size_t threads=default_threadpool_size);
 
     /**
      * Destructor, kill threads (RAII).
      */
-    ~async_client();
+    BCX_API ~async_client();
 
     /**
      * Get the value of the threadpool.
      */
-    virtual threadpool& get_threadpool();
+    BCX_API virtual threadpool& get_threadpool();
 
     /**
      * Poll for changes until stopped.
@@ -71,18 +72,19 @@ public:
      * @param[in]  period_ms  The polling period in ms, defaults to 100.
      * @param[in]  action     The poll function to execute, defaults to null.
      */
-    virtual void poll(bool& done, uint32_t period_ms=default_poll_period_ms,
+    BCX_API virtual void poll(bool& done,
+        uint32_t period_ms=default_poll_period_ms,
         std::function<void()> action=nullptr);
 
     /**
      * Sleep test wrapper.
      */
-    virtual void sleep(uint32_t period_ms);
+    BCX_API virtual void sleep(uint32_t period_ms);
 
     /**
      * Stop polling.
      */
-    virtual void stop();
+    BCX_API virtual void stop();
 
 private:
 

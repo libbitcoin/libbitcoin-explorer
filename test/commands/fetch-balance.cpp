@@ -19,6 +19,8 @@
  */
 
 #include "command.hpp"
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/info_parser.hpp>
 
 BX_USING_NAMESPACES()
 
@@ -27,33 +29,37 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
 // These amounts may change at any time, making these particular tests fragile.
 
+/*
 // The 50BTC coinbase in the genesis block cannot be confirmed.
-//#define BX_FETCH_BALANCE_FIRST_ADDRESS_INFO \
-//"address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n" \
-//"received 6537986349\n" \
-//"unconfirmed 6537986349\n" \
-//"confirmed 1537986349\n"
+#define BX_FETCH_BALANCE_FIRST_ADDRESS_INFO \
+"balance\n" \
+"{\n" \
+"    address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n" \
+"    received 6538241483\n" \
+"    unconfirmed 6538241483\n" \
+"    confirmed 1538241483\n" \
+"}\n"
+*/
 
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_BALANCE_SX_DEMO1_ADDRESS "134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz"
 #define BX_FETCH_BALANCE_SX_DEMO1_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<address>134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz</address><received>100000</received><unconfirmed>0</unconfirmed><confirmed>0</confirmed>"
+"<balance><address>134HfD2fdeBTohfx8YANxEpsYXsv5UoWyz</address><received>100000</received><unconfirmed>0</unconfirmed><confirmed>0</confirmed></balance>\n"
 
 // Vector: github.com/spesmilo/sx/blob/master/README.md
 #define BX_FETCH_BALANCE_SX_DEMO2_ADDRESS "13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe"
 #define BX_FETCH_BALANCE_SX_DEMO2_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><received>90000</received><unconfirmed>90000</unconfirmed><confirmed>90000</confirmed>"
+"<balance><address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><received>90000</received><unconfirmed>90000</unconfirmed><confirmed>90000</confirmed></balance>\n"
 
 // This test disabled because people are always sending change to Satoshi.
 //BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_first_address_info__okay_output)
 //{
 //    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
 //    command.set_format_option({ "info" });
-//    command.set_bitcoin_addresss_argument({ { BX_FIRST_ADDRESS } });
+//    command.set_bitcoin_address_argument({ { BX_FIRST_ADDRESS } });
 //    BX_REQUIRE_OKAY(command.invoke(output, error));
-//    auto foo = output.str();
 //    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_FIRST_ADDRESS_INFO);
 //}
 
@@ -61,7 +67,7 @@ BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo1_xml__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_balance);
     command.set_format_option({ "xml" });
-    command.set_bitcoin_addresss_argument({ { BX_FETCH_BALANCE_SX_DEMO1_ADDRESS } });
+    command.set_bitcoin_address_argument({ BX_FETCH_BALANCE_SX_DEMO1_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO1_XML);
 }
@@ -70,7 +76,7 @@ BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo2_xml__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_balance);
     command.set_format_option({ "xml" });
-    command.set_bitcoin_addresss_argument({ { BX_FETCH_BALANCE_SX_DEMO2_ADDRESS } });
+    command.set_bitcoin_address_argument({ BX_FETCH_BALANCE_SX_DEMO2_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO2_XML);
 }

@@ -80,7 +80,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "validate-tx";
     }
@@ -88,7 +88,7 @@ public:
     /**
      * The symbolic (not localizable) former command name, lower case.
      */
-    static const char* formerly()
+    BCX_API static const char* formerly()
     {
         return "validtx";
     }
@@ -96,7 +96,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return validate_tx::symbol();
     }
@@ -104,7 +104,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "ONLINE";
     }
@@ -112,7 +112,7 @@ public:
     /**
      * The localizable command description.
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
         return "Determine if a transaction is valid for submission to the blockchain. Requires an Obelisk server connection.";
     }
@@ -122,10 +122,10 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("TRANSACTION", -1);
+            .add("TRANSACTION", 1);
     }
 
 	/**
@@ -133,10 +133,10 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
+        load_input(get_transaction_argument(), "TRANSACTION", variables, input);
     }
 
     /**
@@ -144,7 +144,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -161,8 +161,8 @@ public:
         )
         (
             "TRANSACTION",
-            value<std::vector<primitives::transaction>>(&argument_.transactions),
-            "The set of Base16 transactions. If not specified the transactions are read from STDIN."
+            value<primitives::transaction>(&argument_.transaction),
+            "The Base16 transaction. If not specified the transaction is read from STDIN."
         );
 
         return options;
@@ -174,25 +174,26 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& cerr);
 
     /* Properties */
 
     /**
-     * Get the value of the TRANSACTION arguments.
+     * Get the value of the TRANSACTION argument.
      */
-    virtual std::vector<primitives::transaction>& get_transactions_argument()
+    BCX_API virtual primitives::transaction& get_transaction_argument()
     {
-        return argument_.transactions;
+        return argument_.transaction;
     }
 
     /**
-     * Set the value of the TRANSACTION arguments.
+     * Set the value of the TRANSACTION argument.
      */
-    virtual void set_transactions_argument(
-        const std::vector<primitives::transaction>& value)
+    BCX_API virtual void set_transaction_argument(
+        const primitives::transaction& value)
     {
-        argument_.transactions = value;
+        argument_.transaction = value;
     }
 
 private:
@@ -205,11 +206,11 @@ private:
     struct argument
     {
         argument()
-          : transactions()
+          : transaction()
         {
         }
 
-        std::vector<primitives::transaction> transactions;
+        primitives::transaction transaction;
     } argument_;
 
     /**

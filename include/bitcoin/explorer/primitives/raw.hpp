@@ -41,37 +41,37 @@ public:
     /**
      * Default constructor.
      */
-    raw();
+    BCX_API raw();
 
     /**
      * Initialization constructor.
      * @param[in]  text  The value to initialize with.
      */
-    raw(const std::string& text);
+    BCX_API raw(const std::string& text);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    raw(const data_chunk& value);
+    BCX_API raw(const data_chunk& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    raw(const raw& other);
+    BCX_API raw(const raw& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    data_chunk& data();
+    BCX_API data_chunk& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const data_chunk&() const;
+    BCX_API operator const data_chunk&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -79,7 +79,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, raw& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        raw& argument);
 
     /**
      * Overload stream out.
@@ -87,7 +88,8 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const raw& argument);
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
+        const raw& argument);
 
 private:
 

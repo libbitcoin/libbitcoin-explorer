@@ -22,11 +22,9 @@
       <DisableSpecificWarnings>4290;4503;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ConfigurationType)' == 'DynamicLibrary'">BCX_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ConfigurationType)' == 'StaticLibrary'">BCX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(DebugOrRelease)' == 'Release'">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <!-- These go together in support of precompiled headers. -->
-      <!--<PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>precompile.hpp</PrecompiledHeaderFile>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>-->
     </ClCompile>
   </ItemDefinitionGroup>
 

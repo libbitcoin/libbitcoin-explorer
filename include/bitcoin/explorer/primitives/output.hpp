@@ -100,43 +100,43 @@ public:
     /**
      * Default constructor.
      */
-    output();
+    BCX_API output();
 
     /**
      * Initialization constructor.
      * @param[in]  tuple  The value to initialize with.
      */
-    output(const std::string& tuple);
+    BCX_API output(const std::string& tuple);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    output(const tx_output_type& value);
+    BCX_API output(const tx_output_type& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    output(const output& other);
+    BCX_API output(const output& other);
 
     /**
      * Return a reference to the pay-to data member.
      * @return  A reference to the object's internal data.
      */
-    const std::string& payto() const;
+    BCX_API const std::string& payto() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const std::vector<tx_output_type>&() const;
+    BCX_API operator const std::vector<tx_output_type>&() const;
 
     /**
      * Overload cast to property tree.
      * @return  This object's value cast to a property tree.
      */
-    operator const pt::ptree() const;
+    BCX_API operator const pt::ptree() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -144,7 +144,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, output& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        output& argument);
 
     /**
      * Overload stream out.
@@ -152,7 +153,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& stream,
+    BCX_API friend std::ostream& operator<<(std::ostream& stream,
         const output& argument);
 
 private:

@@ -48,6 +48,8 @@
 
 using namespace bc::explorer;
 
+const int printer::max_arguments = 256;
+
 printer::printer(const std::string& application, const std::string& category,
     const std::string& command, const std::string& description,
     const arguments_metadata& arguments, const options_metadata& options)

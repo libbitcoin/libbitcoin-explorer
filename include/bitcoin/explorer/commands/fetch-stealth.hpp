@@ -80,7 +80,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "fetch-stealth";
     }
@@ -89,7 +89,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return fetch_stealth::symbol();
     }
@@ -97,7 +97,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "ONLINE";
     }
@@ -105,7 +105,7 @@ public:
     /**
      * The localizable command description.
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
         return "Get metadata on potential payment transactions by stealth prefix. Requires an Obelisk server connection.";
     }
@@ -115,10 +115,10 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PREFIX", -1);
+            .add("PREFIX", 1);
     }
 
 	/**
@@ -126,10 +126,9 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_prefixs_argument(), "PREFIX", variables, input);
     }
 
     /**
@@ -137,7 +136,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -155,7 +154,7 @@ public:
         (
             "format,f",
             value<primitives::encoding>(&option_.format),
-            "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
             "height,t",
@@ -164,8 +163,8 @@ public:
         )
         (
             "PREFIX",
-            value<std::vector<primitives::base2>>(&argument_.prefixs),
-            "The set of Base2 stealth prefixes used to locate transactions. If not specified the prefixes are read from STDIN."
+            value<primitives::base2>(&argument_.prefix),
+            "The Base2 stealth prefix used to locate transactions. Defaults to all stealth transactions."
         );
 
         return options;
@@ -177,31 +176,32 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& cerr);
 
     /* Properties */
 
     /**
-     * Get the value of the PREFIX arguments.
+     * Get the value of the PREFIX argument.
      */
-    virtual std::vector<primitives::base2>& get_prefixs_argument()
+    BCX_API virtual primitives::base2& get_prefix_argument()
     {
-        return argument_.prefixs;
+        return argument_.prefix;
     }
 
     /**
-     * Set the value of the PREFIX arguments.
+     * Set the value of the PREFIX argument.
      */
-    virtual void set_prefixs_argument(
-        const std::vector<primitives::base2>& value)
+    BCX_API virtual void set_prefix_argument(
+        const primitives::base2& value)
     {
-        argument_.prefixs = value;
+        argument_.prefix = value;
     }
 
     /**
      * Get the value of the format option.
      */
-    virtual primitives::encoding& get_format_option()
+    BCX_API virtual primitives::encoding& get_format_option()
     {
         return option_.format;
     }
@@ -209,7 +209,7 @@ public:
     /**
      * Set the value of the format option.
      */
-    virtual void set_format_option(
+    BCX_API virtual void set_format_option(
         const primitives::encoding& value)
     {
         option_.format = value;
@@ -218,7 +218,7 @@ public:
     /**
      * Get the value of the height option.
      */
-    virtual size_t& get_height_option()
+    BCX_API virtual size_t& get_height_option()
     {
         return option_.height;
     }
@@ -226,7 +226,7 @@ public:
     /**
      * Set the value of the height option.
      */
-    virtual void set_height_option(
+    BCX_API virtual void set_height_option(
         const size_t& value)
     {
         option_.height = value;
@@ -242,11 +242,11 @@ private:
     struct argument
     {
         argument()
-          : prefixs()
+          : prefix()
         {
         }
 
-        std::vector<primitives::base2> prefixs;
+        primitives::base2 prefix;
     } argument_;
 
     /**

@@ -38,8 +38,7 @@ console_result address_decode::invoke(std::ostream& output,
 
     // TESTNET VERSION REQUIRES RECOMPILE
     const wrapper wrapped(bitcoin_address);
-    const auto tree = prop_tree(wrapped);
+    write_stream(output, prop_tree(wrapped), encoding);
 
-    write_stream(output, tree, encoding);
     return console_result::okay;
 }

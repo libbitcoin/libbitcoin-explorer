@@ -41,53 +41,53 @@ public:
     /**
      * Default constructor.
      */
-    wif();
+    BCX_API wif();
 
     /**
      * Initialization constructor.
      * @param[in]  base58  The value to initialize with.
      */
-    wif(const std::string& base58);
+    BCX_API wif(const std::string& base58);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    wif(const ec_secret& value);
+    BCX_API wif(const ec_secret& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    wif(const hd_private_key& value);
+    BCX_API wif(const hd_private_key& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    wif(const wif& other);
+    BCX_API wif(const wif& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    ec_secret& data();
+    BCX_API ec_secret& data();
 
     /**
      * Get the compressed property.
      */
-    bool get_compressed() const;
+    BCX_API bool get_compressed() const;
 
     /**
      * Set the compressed property.
      */
-    void set_compressed(bool value);
+    BCX_API void set_compressed(bool value);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const ec_secret&() const;
+    BCX_API operator const ec_secret&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -95,7 +95,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, wif& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        wif& argument);
 
     /**
      * Overload stream out.
@@ -103,7 +104,8 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, const wif& argument);
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
+        const wif& argument);
 
 private:
 

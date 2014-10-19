@@ -208,56 +208,57 @@ void write_file(std::ostream& output, const std::string& path,
  * @param[in]  sentence   The resulting string.
  * @param[in]  delimiter  The delimiter, defaults to BX_SENTENCE_DELIMITER.
  */
-void join(const std::vector<std::string>& words, std::string& sentence,
-    const std::string& delimiter=BX_SENTENCE_DELIMITER);
+BCX_API void join(const std::vector<std::string>& words,
+    std::string& sentence,  const std::string& 
+    delimiter=BX_SENTENCE_DELIMITER);
 
 /**
  * Determine if a string is base2.
  * @param[in]  text  The string to test.
  * @return           True if text is base2.
  */
-bool is_base2(const std::string& text);
+BCX_API bool is_base2(const std::string& text);
 
 /**
  * Generate a new ec key from a seed.
  * @param[in]  seed  The seed for key randomness.
  * @return           The new key.
  */
-ec_secret new_key(const data_chunk& seed);
+BCX_API ec_secret new_key(const data_chunk& seed);
 
 /**
  * Generate a new pseudorandom seed.
  * @param[in]  seed  The seed length in bits. Will be aligned to nearest byte.
  * @return           The new key.
  */
-data_chunk new_seed(size_t bitlength=128);
+BCX_API data_chunk new_seed(size_t bitlength = 128);
 
 /**
  * Get the local time, second level resolution, based on the time zone settings
  * of the computer.
  * @return  The local time.
  */
-boost::posix_time::ptime now();
+BCX_API boost::posix_time::ptime now();
 
 /**
  * Fill a buffer with randomness using the default random engine.
  * @param[in]  chunk  The buffer to fill with randomness.
  */
-void random_fill(data_chunk& chunk);
+BCX_API void random_fill(data_chunk& chunk);
 
 /**
  * Get a message from the specified input stream.
  * @param[in]  stream The input stream to read.
  * @return            The message read from the input stream.
  */
-std::string read_stream(std::istream& stream);
+BCX_API std::string read_stream(std::istream& stream);
 
 /*
  * Convert any script to an opcode::raw_data script (e.g. for input signing).
  * @param[in]  script  The script to convert.
  * @return             The data script.
  */
-script_type script_to_raw_data_script(const script_type& script);
+BCX_API script_type script_to_raw_data_script(const script_type& script);
 
 /*
  * Create a signature for a single transaction input.
@@ -271,15 +272,16 @@ script_type script_to_raw_data_script(const script_type& script);
  * @param[in]  hash_type    Signal which inputs to sign (defaults to single).
  * @return                  True if successful.
  */
-bool sign_transaction(data_chunk& signature, const tx_type& transaction,
-    uint32_t index, const script_type& script, const ec_secret& secret,
-    const data_chunk& nonce, uint32_t hash_type=sighash::single);
+BCX_API bool sign_transaction(data_chunk& signature,
+    const tx_type& transaction,  uint32_t index, const script_type& script, 
+    const ec_secret& secret, const data_chunk& nonce, 
+    uint32_t hash_type=sighash::single);
 
 /**
  * Sleep for the specified number of milliseconds.
  * @param[in]  milliseconds  The number of milliseconds to sleep.
  */
-void sleep_ms(uint32_t milliseconds);
+BCX_API void sleep_ms(uint32_t milliseconds);
 
 /**
  * Split a list of strings into a string vector string, in order, white space
@@ -288,7 +290,7 @@ void sleep_ms(uint32_t milliseconds);
  * @param[in]  delimiter  The delimeter, defaults to BX_SENTENCE_DELIMITER.
  * @return                The list of resulting strings.
  */
-std::vector<std::string> split(const std::string& sentence,
+BCX_API std::vector<std::string> split(const std::string& sentence,
     const std::string& delimiter=BX_SENTENCE_DELIMITER);
 
 /**
@@ -302,7 +304,7 @@ void trim(std::string& value);
  * @param[out] value  The string to split.
  * @param[in] value   The characters to trim, defaults to BX_SENTENCE_DELIMITER.
  */
-void trim_left(std::string& value, 
+BCX_API void trim_left(std::string& value,
     const std::string& chars=BX_SENTENCE_DELIMITER);
 
 /**
@@ -311,7 +313,7 @@ void trim_left(std::string& value,
  * @param[in]  wrapped  The wrapped data to unwrap.
  * @return              True if input checksum validates.
  */
-bool unwrap(wrapped_data& data, const data_chunk& wrapped);
+BCX_API bool unwrap(wrapped_data& data, const data_chunk& wrapped);
 
 /**
  * Validate a transaction input signature.
@@ -323,7 +325,7 @@ bool unwrap(wrapped_data& data, const data_chunk& wrapped);
  * @param[in]  hash_type  The type of signature hash for which to validate.
  * @return                True if the signature is valid for the context.
  */
-bool valid_signature(const tx_type& tx, uint32_t index,
+BCX_API bool valid_signature(const tx_type& tx, uint32_t index,
     const ec_point& pubkey, const script_type& script,
     const data_chunk& signature, uint32_t hash_type=sighash::single);
 
@@ -335,7 +337,7 @@ bool valid_signature(const tx_type& tx, uint32_t index,
  * @param[in]  wrapped   The wrapped data to unwrap.
  * @return               True if input checksum validates.
  */
-bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
+BCX_API bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
     const data_chunk& wrapped);
 
 /**
@@ -343,7 +345,7 @@ bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
  * @param[in]  data  The data structure to wrap.
  * @return           The wrapped data.
  */
-data_chunk wrap(const wrapped_data& data);
+BCX_API data_chunk wrap(const wrapped_data& data);
 
 /**
  * Wrap arbitrary data.
@@ -351,17 +353,16 @@ data_chunk wrap(const wrapped_data& data);
  * @param[out] payload  The payload to wrap.
  * @return              The wrapped data.
  */
-data_chunk wrap(uint8_t version, const data_chunk& payload);
+BCX_API data_chunk wrap(uint8_t version, const data_chunk& payload);
 
 /**
  * Serialize a property tree using a specified encoding.
- * Encoding 'native' is serialized as 'info'.
  * @param[out] output  The output stream to write to.
  * @param[in]  tree    The property tree to serialize.
  * @param[in]  engine  The stream writing engine type to use, defaults to info.
  * @return             The output stream (for convenience).
  */
-std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
+BCX_API std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
     encoding_engine engine=encoding_engine::info);
 
 } // namespace explorer

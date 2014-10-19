@@ -44,8 +44,8 @@ namespace primitives {
  * @param[out] point   The out point to populate.
  * @param[in]  tokens  The two tokens to parse.
  */
-    static void parse_point(output_point& point,
-        const std::vector<std::string>& tokens);
+static void parse_point(output_point& point,
+    const std::vector<std::string>& tokens);
 
 /**
  * Serialization helper to convert between text and an output_point.
@@ -57,37 +57,37 @@ public:
     /**
      * Default constructor.
      */
-    point();
+    BCX_API point();
 
     /**
      * Initialization constructor.
      * @param[in]  tuple  The value to initialize with.
      */
-    point(const std::string& tuple);
+    BCX_API point(const std::string& tuple);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    point(const output_point& value);
+    BCX_API point(const output_point& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    point(const point& other);
+    BCX_API point(const point& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    output_point& data();
+    BCX_API output_point& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const output_point&() const;
+    BCX_API operator const output_point&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -95,7 +95,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, point& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        point& argument);
 
     /**
      * Overload stream out.
@@ -103,7 +104,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const point& argument);
 
 private:

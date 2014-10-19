@@ -21,6 +21,7 @@
 #define BX_ENVIRONMENT_HPP
 
 #include <string>
+#include <bitcoin/explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -42,7 +43,7 @@ namespace explorer {
  *
  * @return  The user's home directory.
  */
-std::string home_directory();
+BCX_API std::string home_directory();
 
 } // namespace explorer
 } // namespace libbitcoin

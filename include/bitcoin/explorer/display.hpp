@@ -21,6 +21,7 @@
 #define BX_DISPLAY_HPP
 
 #include <iostream>
+#include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/command.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -32,7 +33,7 @@ namespace explorer {
  * Write the list of all command names to a stream.
  * @param[in]  stream   The stream to write into.
  */
-void display_command_names(std::ostream& stream);
+BCX_API void display_command_names(std::ostream& stream);
 
 /**
  * Write an error message to a stream that the specified explorer command
@@ -41,8 +42,8 @@ void display_command_names(std::ostream& stream);
  * @param[in]  command      The value that was attempted as a command.
  * @param[in]  superseding  The superseding command, defaults to empty.
  */
-void display_invalid_command(std::ostream& stream, const std::string& command,
-    const std::string& superseding="");
+BCX_API void display_invalid_command(std::ostream& stream, 
+    const std::string& command, const std::string& superseding="");
 
 /**
  * Write an error message to a stream that indicates what is wrong with
@@ -50,14 +51,14 @@ void display_invalid_command(std::ostream& stream, const std::string& command,
  * @param[in]  stream   The stream to write into.
  * @param[in]  message  The message to write.
  */
-void display_invalid_parameter(std::ostream& stream,
+BCX_API void display_invalid_parameter(std::ostream& stream,
     const std::string& message);
 
 /**
  * Write usage instructions (help) to a tream for the explorer command line.
  * @param[in]  stream   The stream to write into.
  */
-void display_usage(std::ostream& stream);
+BCX_API void display_usage(std::ostream& stream);
 
 } // namespace explorer
 } // namespace libbitcoin

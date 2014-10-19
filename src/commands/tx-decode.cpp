@@ -23,7 +23,6 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
@@ -36,18 +35,9 @@ console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& transactions = get_transactions_argument();
+    const auto& transaction = get_transaction_argument();
 
-    if (encoding == encoding_engine::native)
-    {
-        for (const auto& tx: transactions)
-            output << transaction(tx) << std::endl;
-    }
-    else
-    {
-        const auto tree = prop_tree(transactions);
-        write_stream(output, tree, encoding);
-    }
+    write_stream(output, prop_tree(transaction), encoding);
 
     return console_result::okay;
 }

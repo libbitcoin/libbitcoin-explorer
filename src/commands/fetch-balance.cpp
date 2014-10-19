@@ -39,19 +39,18 @@ static void handle_error(callback_state& state, const std::error_code& error)
 }
 
 static void handle_callback(callback_state& state, 
-    const payment_address& address, const std::vector<balance_row>& histories)
+    const payment_address& address, const std::vector<balance_row>& rows)
 {
-    // native is info.
-    state.output(prop_tree(histories, address));
+    state.output(prop_tree(rows, address));
 }
 
 static void fetch_balance_from_address(obelisk_client& client,
     callback_state& state, const primitives::address& address)
 {
     // Do not pass the address by reference here.
-    auto on_done = [&state, address](const blockchain::history_list& list)
+    auto on_done = [&state, address](const blockchain::history_list& rows)
     {
-        handle_callback(state, address, list);
+        handle_callback(state, address, rows);
     };
 
     auto on_error = [&state](const std::error_code& error)
@@ -66,7 +65,7 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& addresses = get_bitcoin_addresss_argument();
+    const auto& address = get_bitcoin_address_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
@@ -78,10 +77,7 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
 
     callback_state state(error, output, encoding);
-
-    for (auto address: addresses)
-        fetch_balance_from_address(client, state, address);
-
+    fetch_balance_from_address(client, state, address);
     client.resolve_callbacks();
 
     return state.get_result();

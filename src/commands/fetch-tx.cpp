@@ -43,11 +43,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 
 static void handle_callback(callback_state& state, const tx_type& tx)
 {
-    // native is base16 (unique among fetch commands).
-    if (state.get_engine() == encoding_engine::native)
-        state.output(format("%1%") % transaction(tx));
-    else
-        state.output(prop_tree(tx));
+    state.output(prop_tree(tx));
 }
 
 static void fetch_tx_from_hash(obelisk_client& client, callback_state& state,
@@ -70,7 +66,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& hashes = get_hashs_argument();
+    const auto& hash = get_hash_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
@@ -82,10 +78,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
 
     callback_state state(error, output, encoding);
-
-    for (auto hash: hashes)
-        fetch_tx_from_hash(client, state, hash);
-
+    fetch_tx_from_hash(client, state, hash);
     client.resolve_callbacks();
 
     return state.get_result();

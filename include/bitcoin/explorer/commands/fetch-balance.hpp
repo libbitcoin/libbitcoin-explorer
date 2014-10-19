@@ -74,7 +74,7 @@ public:
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    static const char* symbol()
+    BCX_API static const char* symbol()
     {
         return "fetch-balance";
     }
@@ -83,7 +83,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    virtual const char* name()
+    BCX_API virtual const char* name()
     {
         return fetch_balance::symbol();
     }
@@ -91,7 +91,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    virtual const char* category()
+    BCX_API virtual const char* category()
     {
         return "ONLINE";
     }
@@ -99,9 +99,9 @@ public:
     /**
      * The localizable command description.
      */
-    virtual const char* description()
+    BCX_API virtual const char* description()
     {
-        return "Get the balance in satoshi of one or more Bitcoin addresses. Requires an Obelisk server connection.";
+        return "Get the balance in satoshi of a Bitcoin address. Requires an Obelisk server connection.";
     }
 
     /**
@@ -109,10 +109,10 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("BITCOIN_ADDRESS", -1);
+            .add("BITCOIN_ADDRESS", 1);
     }
 
 	/**
@@ -120,10 +120,10 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_bitcoin_addresss_argument(), "BITCOIN_ADDRESS", variables, input);
+        load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input);
     }
 
     /**
@@ -131,7 +131,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    BCX_API virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -149,12 +149,12 @@ public:
         (
             "format,f",
             value<primitives::encoding>(&option_.format),
-            "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
             "BITCOIN_ADDRESS",
-            value<std::vector<primitives::address>>(&argument_.bitcoin_addresss),
-            "The set of Bitcoin addresses. If not specified the address is read from STDIN."
+            value<primitives::address>(&argument_.bitcoin_address),
+            "The Bitcoin address. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -166,31 +166,32 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output, std::ostream& cerr);
+    BCX_API virtual console_result invoke(std::ostream& output,
+        std::ostream& cerr);
 
     /* Properties */
 
     /**
-     * Get the value of the BITCOIN_ADDRESS arguments.
+     * Get the value of the BITCOIN_ADDRESS argument.
      */
-    virtual std::vector<primitives::address>& get_bitcoin_addresss_argument()
+    BCX_API virtual primitives::address& get_bitcoin_address_argument()
     {
-        return argument_.bitcoin_addresss;
+        return argument_.bitcoin_address;
     }
 
     /**
-     * Set the value of the BITCOIN_ADDRESS arguments.
+     * Set the value of the BITCOIN_ADDRESS argument.
      */
-    virtual void set_bitcoin_addresss_argument(
-        const std::vector<primitives::address>& value)
+    BCX_API virtual void set_bitcoin_address_argument(
+        const primitives::address& value)
     {
-        argument_.bitcoin_addresss = value;
+        argument_.bitcoin_address = value;
     }
 
     /**
      * Get the value of the format option.
      */
-    virtual primitives::encoding& get_format_option()
+    BCX_API virtual primitives::encoding& get_format_option()
     {
         return option_.format;
     }
@@ -198,7 +199,7 @@ public:
     /**
      * Set the value of the format option.
      */
-    virtual void set_format_option(
+    BCX_API virtual void set_format_option(
         const primitives::encoding& value)
     {
         option_.format = value;
@@ -214,11 +215,11 @@ private:
     struct argument
     {
         argument()
-          : bitcoin_addresss()
+          : bitcoin_address()
         {
         }
 
-        std::vector<primitives::address> bitcoin_addresss;
+        primitives::address bitcoin_address;
     } argument_;
 
     /**

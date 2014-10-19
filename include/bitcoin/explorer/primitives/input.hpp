@@ -40,7 +40,7 @@ namespace primitives {
  * @param[out] input   The out point to populate.
  * @param[in]  tokens  The two-three tokens to parse.
  */
-void parse_input(tx_input_type& input,
+static void parse_input(tx_input_type& input,
     const std::vector<std::string>& tokens);
 
 /**
@@ -53,50 +53,50 @@ public:
     /**
      * Default constructor.
      */
-    input();
+    BCX_API input();
     
     /**
      * Initialization constructor.
      * @param[in]  tuple  The value to initialize with.
      */
-    input(const std::string& tuple);
+    BCX_API input(const std::string& tuple);
 
     /**
      * Initialization constructor. Only the point is retained.
      * @param[in]  value  The value to initialize with.
      */
-    input(const tx_input_type& value);
+    BCX_API input(const tx_input_type& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    input(const input& other);
+    BCX_API input(const input& other);
 
     /**
      * Initialization constructor. Aspects of the input other than the point
      * are defaulted.
      * @param[in]  value  The value to initialize with.
      */
-    input(const input_point& value);
+    BCX_API input(const input_point& value);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    tx_input_type& data();
+    BCX_API tx_input_type& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const tx_input_type&() const;
+    BCX_API operator const tx_input_type&() const;
 
     /**
      * Overload cast to property tree.
      * @return  This object's value cast to a property tree.
      */
-    operator const pt::ptree() const;
+    BCX_API operator const pt::ptree() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -104,7 +104,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& stream, input& argument);
+    BCX_API friend std::istream& operator>>(std::istream& stream,
+        input& argument);
 
     /**
      * Overload stream out.
@@ -112,7 +113,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const input& argument);
 
 private:

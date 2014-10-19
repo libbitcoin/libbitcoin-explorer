@@ -44,7 +44,7 @@ callback_state::callback_state(std::ostream& error, std::ostream& output,
 }
 
 callback_state::callback_state(std::ostream& error, std::ostream& output)
-    : callback_state(error, output, encoding_engine::native)
+    : callback_state(error, output, encoding_engine::info)
 {
 }
 
@@ -79,7 +79,6 @@ void callback_state::error(const std::string& message)
     error(format(message));
 }
 
-// std::endl adds "/n" and flushes the stream.
 void callback_state::output(const pt::ptree tree)
 {
     write_stream(output_, tree, engine_);

@@ -227,6 +227,10 @@ std::ostream& write_stream(std::ostream& output, const pt::ptree& tree,
             break;
         case encoding_engine::xml:
             pt::write_xml(output, tree);
+
+            // property tree XML serialization doesn't terminate the string.
+            output << std::endl;
+
             break;
         default:
             pt::write_info(output, tree);

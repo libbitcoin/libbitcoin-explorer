@@ -41,63 +41,63 @@ public:
     /**
      * Default constructor.
      */
-    wrapper();
+    BCX_API wrapper();
 
     /**
      * Initialization constructor.
      * 
      * @param[in]  wrapped  The value to initialize with.
      */
-    wrapper(const std::string& wrapped);
+    BCX_API wrapper(const std::string& wrapped);
 
     /**
      * Initialization constructor.
      * @param[in]  wrapped  The wrapped value to initialize with.
      */
-    wrapper(const data_chunk& wrapped);
+    BCX_API wrapper(const data_chunk& wrapped);
 
     /**
      * Initialization constructor.
      * @param[in]  wrapped  The wrapped value to initialize with.
      */
-    wrapper(const wrapped_data& wrapped);
+    BCX_API wrapper(const wrapped_data& wrapped);
 
     /**
      * Initialization constructor.
      * @param[in]  address  The payment address to initialize with.
      */
-    wrapper(const payment_address& address);
+    BCX_API wrapper(const payment_address& address);
 
     /**
      * Initialization constructor.
      * @param[in]  version  The version for the new wrapped value.
      * @param[in]  payload  The payload for the new wrapped value.
      */
-    wrapper(uint32_t version, const data_chunk& payload);
+    BCX_API wrapper(uint32_t version, const data_chunk& payload);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    wrapper(const wrapper& other);
+    BCX_API wrapper(const wrapper& other);
 
     /**
      * Overload cast to the wrapped value.
      * @return  This object's wrapped data cast to data chunk.
      */
-    operator const data_chunk() const;
+    BCX_API operator const data_chunk() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const wrapped_data&() const;
+    BCX_API operator const wrapped_data&() const;
 
     /**
      * Overload cast to property tree.
      * @return  This object's value cast to a property tree.
      */
-    operator const pt::ptree() const;
+    BCX_API operator const pt::ptree() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -105,7 +105,8 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, wrapper& argument);
+    BCX_API friend std::istream& operator>>(std::istream& input,
+        wrapper& argument);
 
     /**
      * Overload stream out.
@@ -113,7 +114,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output, 
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const wrapper& argument);
 
 private:

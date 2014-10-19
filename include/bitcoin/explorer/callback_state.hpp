@@ -25,8 +25,8 @@
 #include <string>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/encoding.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -49,7 +49,7 @@ public:
      * @param[in]  output  The output stream for the callback handler.
      * @param[in]  engine  The desired output format.
      */
-    callback_state(std::ostream& error, std::ostream& output,
+    BCX_API callback_state(std::ostream& error, std::ostream& output,
         const encoding_engine engine);
 
     /**
@@ -57,7 +57,7 @@ public:
      * @param[in]  error   The error stream for the callback handler.
      * @param[in]  output  The output stream for the callback handler.
      */
-    callback_state(std::ostream& error, std::ostream& output);
+    BCX_API  callback_state(std::ostream& error, std::ostream& output);
 
     /**
      * Handle the callback error with standard behavior.
@@ -65,7 +65,7 @@ public:
      * @param[in]  format  A single parameter format string or empty/default.
      * @return             True if no error.   
      */
-    virtual bool handle_error(const std::error_code& code, 
+    BCX_API  virtual bool handle_error(const std::error_code& code,
         const std::string& format="%1%");
 
     /**
@@ -73,109 +73,109 @@ public:
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
      */
-    virtual void error(const pt::ptree tree);
+    BCX_API virtual void error(const pt::ptree tree);
 
     /**
      * Write a line to the error stream. The stream must be flushed before 
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated error message to write.
      */
-    virtual void error(const format& message);
+    BCX_API virtual void error(const format& message);
    
     /**
      * Write a line to the error stream. The stream must be flushed before 
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated error message to write.
      */
-    virtual void error(const std::string& message);
+    BCX_API virtual void error(const std::string& message);
 
     /**
      * Serialize a property tree to output. The stream must be flushed before 
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
      */
-    virtual void output(const pt::ptree tree);
+    BCX_API virtual void output(const pt::ptree tree);
 
     /**
      * Write a line to the output stream. The stream must be flushed before 
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated output message to write.
      */
-    virtual void output(const format& message);
+    BCX_API virtual void output(const format& message);
 
     /**
      * Write a line to the output stream. The stream must be flushed before 
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated output message to write.
      */
-    virtual void output(const std::string& message);
+    BCX_API virtual void output(const std::string& message);
 
     /**
      * Write a number to the output stream. The stream must be flushed before 
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  value  The numeric value to write.
      */
-    virtual void output(uint64_t value);
+    BCX_API virtual void output(uint64_t value);
 
     /**
      * Set the callback refcount to one and reset result to okay.
      */
-    virtual void start();
+    BCX_API virtual void start();
     
     /**
      * Set the callback refcount to zero and assign the result.
      * This overrides any outstanding callback references.
      * @param[in]  result  The desired callback result code, defaults to okay.
      */
-    virtual void stop(console_result result = console_result::okay);
+    BCX_API virtual void stop(console_result result = console_result::okay);
     
     /**
      * Get a value indicating whether the callback reference count is zero.
      * @return  True if the reference count is zero.
      */
-    virtual bool& stopped();
+    BCX_API virtual bool& stopped();
 
     /**
      * Get the engine enumeration value.
      */
-    virtual encoding_engine get_engine();
+    BCX_API virtual encoding_engine get_engine();
 
     /**
      * Get the callback result code.
      */
-    virtual console_result get_result();
+    BCX_API virtual console_result get_result();
 
     /**
      * Set the callback result code.
      */
-    virtual void set_result(console_result result);
+    BCX_API virtual void set_result(console_result result);
     
     /**
      * Increment the callback synchronization reference count.
      * @return  The callback synchronization counter value.
      */
-    virtual size_t increment();
+    BCX_API virtual size_t increment();
 
     /**
      * Decrement the callback synchronization reference count.
      * @return  The callback synchronization counter value.
      */
-    virtual size_t decrement();
+    BCX_API virtual size_t decrement();
 
     /**
      * Overload numeric cast to return the reference count.
      */
-    virtual operator size_t() const;
+    BCX_API virtual operator size_t() const;
 
     /**
      * Overload ++ operator to increment the reference count.
      */
-    virtual callback_state& operator++();
+    BCX_API virtual callback_state& operator++();
 
     /**
      * Overload ++ operator to decrement the reference count.
      */
-    virtual callback_state& operator--();
+    BCX_API virtual callback_state& operator--();
 
 private:
     bool stopped_;

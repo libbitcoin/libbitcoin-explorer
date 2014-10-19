@@ -29,6 +29,9 @@
 namespace libbitcoin {
 namespace explorer {
 
+const uint32_t async_client::default_poll_period_ms = 100;
+const size_t async_client::default_threadpool_size = 1;
+
 async_client::async_client(bc::explorer::command& command, 
     const size_t threads)
     : threadpool_(threads)

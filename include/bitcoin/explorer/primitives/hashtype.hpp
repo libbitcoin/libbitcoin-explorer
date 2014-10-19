@@ -38,31 +38,31 @@ public:
     /**
      * Default constructor, sets sighash::single.
      */
-    hashtype();
+    BCX_API hashtype();
 
     /**
      * Initialization constructor.
      * @param[in]  token  The value to initialize with.
      */
-    hashtype(const std::string& token);
+    BCX_API hashtype(const std::string& token);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hashtype(const sighash& value);
+    BCX_API hashtype(const sighash& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    hashtype(const hashtype& other);
+    BCX_API hashtype(const hashtype& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    operator sighash() const;
+    BCX_API operator sighash() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -70,7 +70,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, 
+    BCX_API friend std::istream& operator>>(std::istream& input,
         hashtype& argument);
 
     /**
@@ -79,7 +79,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const hashtype& argument);
 
 private:

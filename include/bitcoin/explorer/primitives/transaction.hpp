@@ -45,49 +45,49 @@ public:
     /**
      * Default constructor.
      */
-    transaction();
+    BCX_API transaction();
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    transaction(const std::string& hexcode);
+    BCX_API transaction(const std::string& hexcode);
 
     ///**
     // * Initialization constructor.
     // * @param[in]  value  The value to initialize with.
     // */
-    //transaction(const data_chunk& value);
+    //BCX_API transaction(const data_chunk& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    transaction(const tx_type& value);
+    BCX_API transaction(const tx_type& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    transaction(const transaction& other);
+    BCX_API transaction(const transaction& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    tx_type& data();
+    BCX_API tx_type& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const tx_type&() const;
+    BCX_API operator const tx_type&() const;
 
     /**
      * Overload cast to property tree.
      * @return  This object's value cast to a property tree.
      */
-    operator const pt::ptree() const;
+    BCX_API operator const pt::ptree() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -95,7 +95,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    friend std::istream& operator>>(std::istream& input, 
+    BCX_API friend std::istream& operator>>(std::istream& input,
         transaction& argument);
 
     /**
@@ -104,7 +104,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    friend std::ostream& operator<<(std::ostream& output,
+    BCX_API friend std::ostream& operator<<(std::ostream& output,
         const transaction& argument);
 
 private:
