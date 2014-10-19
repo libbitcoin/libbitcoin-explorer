@@ -178,10 +178,6 @@ build_library()
     # The primary build is not downloaded if we are running in Travis.
     build_primary "$PARALLEL" "$@"
 
-    # Allow the user to invoke by typing BX or SX.
-    sudo ln --symbolic --force /usr/local/bin/explorer /usr/local/bin/bx
-    sudo ln --symbolic --force /usr/local/bin/explorer /usr/local/bin/sx
-
     # If the build succeeded clean up the build directory.
     delete_build_directory
 }
