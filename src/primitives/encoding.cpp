@@ -36,10 +36,9 @@ namespace primitives {
 static const char* encoding_info = "info";
 static const char* encoding_json = "json";
 static const char* encoding_xml = "xml";
-static const char* encoding_native = "native";
 
 encoding::encoding()
-    : encoding(encoding_engine::native)
+    : encoding(encoding_engine::info)
 {
 }
 
@@ -74,8 +73,6 @@ std::istream& operator>>(std::istream& input, encoding& argument)
         argument.value_ = encoding_engine::json;
     else if (text == encoding_xml)
         argument.value_ = encoding_engine::xml;
-    else if (text == encoding_native)
-        argument.value_ = encoding_engine::native;
     else
         throw invalid_option_value(text);
 
@@ -96,9 +93,6 @@ std::ostream& operator<<(std::ostream& output, const encoding& argument)
             break;
         case encoding_engine::xml:
             value = encoding_xml;
-            break;
-        case encoding_engine::native:
-            value = encoding_native;
             break;
         default:
             throw std::exception(/*"Unexpected encoding value."*/);

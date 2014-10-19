@@ -55,7 +55,6 @@ static void handle_callback(callback_state& state,
     const bc::stealth_prefix& prefix,
     const blockchain::stealth_list& row_list)
 {
-    // native is info.
     state.output(prop_tree(row_list));
 }
 

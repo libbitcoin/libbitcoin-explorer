@@ -65,7 +65,7 @@
   
   <!-- The 'command' element attributes typeX multipleX are currently unused and are intended to eventually provide type information for output bindings. -->
   <command symbol="address-decode" formerly="decode-addr" typeX="wrapper" category="WALLET" description="Convert a Bitcoin address to its component parts.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address to convert. If not specified the address is read from STDIN."/>
   </command>
   
@@ -93,7 +93,7 @@
   </command>
 
   <command symbol="base58check-decode" typeX="wrapper" category="HASH" description="Convert a Base58Check value to Base16.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BASE58CHECK" stdin="true" type="base58" description="The Base58Check value to decode. If not specified the value is read from STDIN." />
   </command>
 
@@ -191,12 +191,12 @@
   </command>
   
   <command symbol="fetch-balance" typeX="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a Bitcoin address. Requires an Obelisk server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address. If not specified the address is read from STDIN." />
   </command>
 
   <command symbol="fetch-header" category="ONLINE" typeX="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="btc256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="size_t" description="The block height."/>
   </command>
@@ -205,7 +205,7 @@
   </command>
   
   <command symbol="fetch-history" typeX="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a Bitcoin address. Requires an Obelisk server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address. If not specified the address is read from STDIN." />
   </command>
   
@@ -215,7 +215,7 @@
   </command>
 
   <command symbol="fetch-stealth" typeX="stealth_row" category="ONLINE" network="true" description="Get metadata on potential payment transactions by stealth prefix. Requires an Obelisk server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include."/>
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
     <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
@@ -223,18 +223,18 @@
     <define name="BX_FETCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: stealth prefix is limited to 32 bits." />
   </command>
 
-  <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" multipleX="true" category="ONLINE" network="true" description="Get transactions by hash. Requires an Obelisk server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes of transactions to get. If not specified the transaction hashes are read from STDIN." />
+  <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires an Obelisk server connection.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN." />
   </command>
 
   <command symbol="fetch-tx-index" formerly="fetch-transaction-index" typeX="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires an Obelisk server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes. If not specified the transaction hashes are read from STDIN." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash of the transaction index to get. If not specified the transaction hash is read from STDIN." />
   </command>
 
   <command symbol="fetch-utxo" formerly="get-utxo" typeX="output" multipleX="true" category="ONLINE" stub="true" network="true" description="Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires an Obelisk server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="BITCOIN_ADDRESS" stdin="true" limit="-1" type="address" description="The set of Bitcoin addresses. If not specified the addresses are read from STDIN." />
     <define name="BX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
@@ -297,7 +297,7 @@
   
   <command symbol="input-sign" formerly="sign-input" typeX="base16" category="TRANSACTION" description="Create a signature for a transaction input.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
-    <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
+    <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'single'." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="NONCE" required="true" type="base16" description="The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length." />
     <argument name="PREVOUT_SCRIPT" required="true" type="script" description="The previous output script to use in signing." />
@@ -316,7 +316,7 @@
   
   <command symbol="input-validate" formerly="validsig" typeX="string" category="TRANSACTION" description="Validate a transaction signature.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
-    <option name="sign_type" type="hashtype" description="A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', or 'anyone_can_pay', defaults to 'single'." />
+    <option name="sign_type" type="hashtype" description="A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'single'." />
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
     <argument name="PREVOUT_SCRIPT" required="true" type="script" description="The previous output script used in signing." />
     <argument name="SIGNATURE" required="true" type="base16" description="The Base16 signature to validate."/>
@@ -425,7 +425,7 @@
   </command>
 
   <command symbol="stealth-address-decode" formerly="stealth-show-addr" typeX="stealth" category="STEALTH" description="Decode a stealth address.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="STEALTH_ADDRESS" type="stealth" required="true" description="The stealth payment address." />
   </command>
   
@@ -467,13 +467,13 @@
     <argument name="PUBKEY" required="true" type="ec_public" description="A Base16 EC public key." />
   </command>
   
-  <command symbol="tx-decode" typeX="transaction" multipleX="true" category="TRANSACTION" description="Decode a set of transactions.">
+  <command symbol="tx-decode" typeX="transaction" category="TRANSACTION" description="Decode a Base16 transaction.">
     <!-- The code generator does not yet have the ability to set default values requiring quotes, so native is currently the default. -->
-    <option name="format" type="encoding" defaultX="info" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
   </command>
 
-  <command symbol="tx-encode" typeX="transaction" category="TRANSACTION" description="Encode an unsigned transaction.">
+  <command symbol="tx-encode" typeX="transaction" category="TRANSACTION" description="Encode an unsigned transaction as Base16.">
     <option name="lock_time" type="uint32_t" description="The transaction lock time." />
     <option name="version" type="uint32_t" default="1" description="The transaction version." />
     <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value." />
@@ -498,8 +498,8 @@
     <define name="BX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
   </command>
 
-  <command symbol="watch-address" formerly="monitor" typeX="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+  <command symbol="watch-address" formerly="monitor" typeX="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires an Obelisk server connection.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The participating Bitcoin address. If not specified the address is read from STDIN." />
     <define name="BX_WATCH_ADDRESS_ADDRESS_WAITING" value="Watching address: %1%..." />
   </command>
@@ -507,15 +507,15 @@
   <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
   <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
   <!--<command symbol="watch-stealth" typeX="transaction" category="ONLINE" network="true" description="Watch the network for transactions by stealth prefix. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="PREFIX" stdin="true" limit="-1" type="base2" description="The set of Base2 stealth prefixes to watch. If not specified the prefixes are read from STDIN." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <argument name="PREFIX" stdin="true" type="base2" description="The Base2 stealth prefix to watch. If not specified the prefix is read from STDIN." />
     <define name="BX_WATCH_STEALTH_PREFIX_WAITING" value="Watching stealth prefix: %1%..." />
     <define name="BX_WATCH_STEALTH_PREFIX_TOO_LONG" value="WARNING: stealth prefix is limited to 32 bits." />
   </command>-->
 
-  <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for transactions by transaction hash. Requires an Obelisk server connection.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="HASH" stdin="true" limit="-1" type="btc256" description="The set of Base16 transaction hashes to watch. If not specified the values are read from STDIN." />
+  <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires an Obelisk server connection.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <argument name="HASH" stdin="true" ype="btc256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
     <define name="BX_WATCH_TX_WAITING" value="Watching transaction: %1%..." />
     <define name="BX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
@@ -529,7 +529,7 @@
   </command>
 
   <command symbol="wrap-decode" formerly="unwrap" typeX="wrapper" category="HASH" description="Validate the checksum of a Base16 data and recover its version byte and data.">
-    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="WRAPPED" stdin="true" type="wrapper" description="The Base16 data to unwrap. If not specified the value is read from STDIN." />
   </command>
 

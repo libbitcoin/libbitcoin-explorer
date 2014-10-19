@@ -116,7 +116,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Watch the network for transactions by transaction hash. Requires an Obelisk server connection.";
+        return "Watch the network for a transaction by hash. Requires an Obelisk server connection.";
     }
 
     /**
@@ -127,7 +127,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HASH", -1);
+            .add("HASH", 1);
     }
 
 	/**
@@ -138,7 +138,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_hashs_argument(), "HASH", variables, input);
+        load_input(get_hash_argument(), "HASH", variables, input);
     }
 
     /**
@@ -164,12 +164,12 @@ public:
         (
             "format,f",
             value<primitives::encoding>(&option_.format),
-            "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
             "HASH",
-            value<std::vector<primitives::btc256>>(&argument_.hashs),
-            "The set of Base16 transaction hashes to watch. If not specified the values are read from STDIN."
+            value<std::string>(&argument_.hash),
+            "The Base16 transaction hash to watch. If not specified the hash is read from STDIN."
         );
 
         return options;
@@ -187,20 +187,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HASH arguments.
+     * Get the value of the HASH argument.
      */
-    BCX_API virtual std::vector<primitives::btc256>& get_hashs_argument()
+    BCX_API virtual std::string& get_hash_argument()
     {
-        return argument_.hashs;
+        return argument_.hash;
     }
 
     /**
-     * Set the value of the HASH arguments.
+     * Set the value of the HASH argument.
      */
-    BCX_API virtual void set_hashs_argument(
-        const std::vector<primitives::btc256>& value)
+    BCX_API virtual void set_hash_argument(
+        const std::string& value)
     {
-        argument_.hashs = value;
+        argument_.hash = value;
     }
 
     /**
@@ -230,11 +230,11 @@ private:
     struct argument
     {
         argument()
-          : hashs()
+          : hash()
         {
         }
 
-        std::vector<primitives::btc256> hashs;
+        std::string hash;
     } argument_;
 
     /**

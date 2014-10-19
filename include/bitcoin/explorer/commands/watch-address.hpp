@@ -114,7 +114,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Watch the network for transactions in which an address participates. Requires an Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL.";
+        return "Watch the network for transactions in which an address participates. Requires an Obelisk server connection.";
     }
 
     /**
@@ -162,7 +162,7 @@ public:
         (
             "format,f",
             value<primitives::encoding>(&option_.format),
-            "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
             "BITCOIN_ADDRESS",

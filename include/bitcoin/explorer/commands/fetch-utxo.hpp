@@ -163,7 +163,7 @@ public:
         (
             "format,f",
             value<primitives::encoding>(&option_.format),
-            "The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native."
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
             "SATOSHI",

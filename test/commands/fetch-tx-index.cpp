@@ -42,17 +42,17 @@ BOOST_AUTO_TEST_SUITE(fetch_tx_index__invoke)
 BOOST_AUTO_TEST_CASE(fetch_tx_index__invoke__mainnet_satoshis_words_tx_info__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_tx_index);
-    command.set_format_option({ "native" });
-    command.set_hashs_argument({ { BX_SATOSHIS_WORDS_TX_HASH } });
+    command.set_format_option({ "info" });
+    command.set_hash_argument({ BX_SATOSHIS_WORDS_TX_HASH });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_TX_INDEX_SATOSHIS_WORDS_INDEX_INFO);
 }
 
-BOOST_AUTO_TEST_CASE(fetch_tx_index__invoke__mainnet_second_tx_native__okay_output)
+BOOST_AUTO_TEST_CASE(fetch_tx_index__invoke__mainnet_second_tx_xml__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_tx_index);
     command.set_format_option({ "xml" });
-    command.set_hashs_argument({ { BX_FETCH_TX_SECOND_TX_HASH } });
+    command.set_hash_argument({ BX_FETCH_TX_SECOND_TX_HASH });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_TX_INDEX_SECOND_INDEX_XML);
 }

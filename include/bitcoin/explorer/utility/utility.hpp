@@ -357,7 +357,6 @@ BCX_API data_chunk wrap(uint8_t version, const data_chunk& payload);
 
 /**
  * Serialize a property tree using a specified encoding.
- * Encoding 'native' is serialized as 'info'.
  * @param[out] output  The output stream to write to.
  * @param[in]  tree    The property tree to serialize.
  * @param[in]  engine  The stream writing engine type to use, defaults to info.

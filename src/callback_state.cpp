@@ -44,7 +44,7 @@ callback_state::callback_state(std::ostream& error, std::ostream& output,
 }
 
 callback_state::callback_state(std::ostream& error, std::ostream& output)
-    : callback_state(error, output, encoding_engine::native)
+    : callback_state(error, output, encoding_engine::info)
 {
 }
 

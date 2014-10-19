@@ -112,8 +112,7 @@ enum class encoding_engine
 {
     info,
     json,
-    xml,
-    native
+    xml
 };
 
 /**

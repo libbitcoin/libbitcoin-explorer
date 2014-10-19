@@ -36,7 +36,7 @@ class encoding
 public:
 
     /**
-     * Default constructor, sets encoding_engine::native.
+     * Default constructor, sets encoding_engine::info.
      */
     BCX_API encoding();
 

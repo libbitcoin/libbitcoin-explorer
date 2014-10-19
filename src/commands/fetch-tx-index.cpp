@@ -44,7 +44,6 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, const hash_digest& hash,
     size_t height, size_t index)
 {
-    // native is info.
     state.output(prop_tree(hash, height, index));
 }
 
@@ -70,7 +69,7 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& hashes = get_hashs_argument();
+    const auto& hash = get_hash_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
@@ -82,10 +81,7 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
 
     callback_state state(error, output, encoding);
-
-    for (auto hash: hashes)
-        fetch_tx_index_from_hash(client, state, hash);
-
+    fetch_tx_index_from_hash(client, state, hash);
     client.resolve_callbacks();
 
     return state.get_result();

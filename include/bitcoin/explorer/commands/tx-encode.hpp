@@ -107,7 +107,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Encode an unsigned transaction.";
+        return "Encode an unsigned transaction as Base16.";
     }
 
     /**
