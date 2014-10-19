@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
 
 // expectations
 #define STEALTH_ADDRESS_DECODE_A \
-    "address\n" \
+    "stealth_address\n" \
     "{\n" \
     "    encoded hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i\n" \
     "    prefix \"\"\n" \
@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    testnet false\n" \
     "}\n"
 #define STEALTH_ADDRESS_DECODE_AB \
-    "address\n" \
+    "stealth_address\n" \
     "{\n" \
     "    encoded vJmwY32eS5VDC2C4GaZyXt7i4iCjzSMZ1XSd6KbkA7QbGE492akT2eZZMjCwWDqKRSYhnSA8Bgp78KeAYFVCi8ke5mELdoYMBNep7L\n" \
     "    prefix \"\"\n" \
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    testnet false\n" \
     "}\n"
 #define STEALTH_ADDRESS_DECODE_AAB \
-    "address\n" \
+    "stealth_address\n" \
     "{\n" \
     "    encoded vK4cs6xzzf326HyUeoJCQng6FXLVK27PyJoRbYSMyT9TzgKds8JDerKaRQ72q9kEp2tQNE2KRvabvqH5n5Rv6yv6Yht9uWNcbDGD7d\n" \
     "    prefix \"\"\n" \
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    testnet false\n" \
     "}\n"
 #define STEALTH_ADDRESS_DECODE_AAB1 \
-    "address\n" \
+    "stealth_address\n" \
     "{\n" \
     "    encoded vK4cs6xzzf326HyUeoJCQng6FXLVK27PyJoRbYSMyT9TzgKds8JDerKaRQ72q9kEp2tQNE2KRvabvqH5n5Rv6yv6Yht9uWN7nyPnY7\n" \
     "    prefix \"\"\n" \
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    testnet false\n" \
     "}\n"
 #define STEALTH_ADDRESS_DECODE_AAB10 \
-    "address\n" \
+    "stealth_address\n" \
     "{\n" \
     "    encoded JubEFUfmd2J3i83L9qWNr7fDSbb2bE7PY6RvEzH6wsNW8Ls7Mw3hxKZHWr3SvEz4o6NWLguFmyK9yBPrzxtC7ssTXQKJnyMUpL71mzBgd\n" \
     "    prefix 000000001010\n" \
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    testnet false\n" \
     "}\n"
 #define STEALTH_ADDRESS_DECODE_AAB1P \
-    "address\n" \
+    "stealth_address\n" \
     "{\n" \
     "    encoded 71rNEn94Rfjj2byKuyqRzcPM4kq5Zdi4ZdEe6ZqxmjaaSz3VuUNXzhxiiXLRHnVmpzkTd8Z2KG92pUudhYqkW6DcYHVA4PRkNJEYtpfK2nML\n" \
     "    prefix 10111010101011011111000000001101\n" \
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    testnet false\n" \
     "}\n"
 #define STEALTH_ADDRESS_DECODE_AAB1PT \
-    "address\n" \
+    "stealth_address\n" \
     "{\n" \
     "    encoded 7AA4vX3ZmyjrQGxHEmTZaef4Smpm1PaXcqKKH3ybTbWqrwjRXZE3LLf26rCLRJdLkRDTkk2vRdtH4iEaZpVFoAboEpSh4QbgYy6Pt91Mt1UK\n" \
     "    prefix 10111010101011011111000000001101\n" \

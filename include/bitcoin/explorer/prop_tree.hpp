@@ -100,13 +100,11 @@ BCX_API pt::ptree prop_tree(const history_row& row);
 BCX_API pt::ptree prop_tree(const std::vector<history_row>& rows);
 
 /**
- * Generate a property tree from history rows for an address.
- * @param[in]  history_address  The payment address for the history rows.
+ * Generate a property tree from history rows.
  * @param[in]  rows             The set of history rows.
  * @return                      A property tree.
  */
-BCX_API pt::ptree prop_tree(const payment_address& history_address,
-    const std::vector<history_row>& rows);
+BCX_API pt::ptree prop_tree(const std::vector<history_row>& rows);
 
 /**
  * Generate a property tree from balance rows for an address.
@@ -116,6 +114,20 @@ BCX_API pt::ptree prop_tree(const payment_address& history_address,
  */
 BCX_API pt::ptree prop_tree(const std::vector<balance_row>& rows,
     const payment_address& balance_address);
+
+/**
+ * Generate a property tree for a transaction input.
+ * @param[in]  tx_input  The input.
+ * @return               A property tree.
+ */
+BCX_API pt::ptree prop_tree(const tx_input_type& tx_input);
+
+/**
+ * Generate a property tree for a set of transaction inputs.
+ * @param[in]  tx_inputs  The set of transaction inputs.
+ * @return                A property tree.
+ */
+BCX_API pt::ptree prop_tree(const std::vector<tx_input_type>& tx_inputs);
 
 /**
  * Generate a property tree for an input.
@@ -133,18 +145,18 @@ BCX_API pt::ptree prop_tree(
     const std::vector<explorer::primitives::input>& inputs);
 
 /**
- * Generate a property tree for a transaction input.
- * @param[in]  tx_input  The input.
- * @return               A property tree.
- */
-BCX_API pt::ptree prop_tree(const tx_input_type& tx_input);
-
-/**
- * Generate a property tree for a set of transaction inputs.
- * @param[in]  tx_inputs  The set of transaction inputs.
+ * Generate a property tree for a transaction output.
+ * @param[in]  tx_output  The transaction output.
  * @return                A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<tx_input_type>& tx_inputs);
+BCX_API pt::ptree prop_tree(const tx_output_type& tx_output);
+
+/**
+ * Generate a property tree for a set of transaction outputs.
+ * @param[in]  tx_outputs  The set of transaction outputs.
+ * @return                  A property tree.
+ */
+BCX_API pt::ptree prop_tree(const std::vector<tx_output_type>& tx_outputs);
 
 /**
  * Generate a property tree for an output.
@@ -163,20 +175,6 @@ BCX_API pt::ptree prop_tree(const output& output);
  * @return              A property tree.
  */
 BCX_API pt::ptree prop_tree(const std::vector<output>& outputs);
-
-/**
- * Generate a property tree for a transaction output.
- * @param[in]  tx_output  The transaction output.
- * @return                A property tree.
- */
-BCX_API pt::ptree prop_tree(const tx_output_type& tx_output);
-
-/**
- * Generate a property tree for a set of transaction outputs.
- * @param[in]  tx_outputs  The set of transaction outputs.
- * @return                  A property tree.
- */
-BCX_API pt::ptree prop_tree(const std::vector<tx_output_type>& tx_outputs);
 
 /**
  * Generate a property tree for a transaction.
@@ -241,15 +239,6 @@ BCX_API pt::ptree prop_tree(const blockchain::stealth_row& row);
 BCX_API pt::ptree prop_tree(const std::vector<blockchain::stealth_row>& rows);
 
 /**
- * Generate a property tree from stealth metadata rows for a prefix.
- * @param[in]  rows    The set of stealth rows.
- * @param[in]  prefix  The stealth prefix.
- * @return             A property tree.
- */
-BCX_API pt::ptree prop_tree(const stealth_prefix& prefix,
-    const std::vector<blockchain::stealth_row>& rows);
-
-/**
  * Create a property tree for the fetch-tx-index command.
  * @param[in]  hash    The block hash.
  * @param[in]  height  The block height.
@@ -261,11 +250,10 @@ BCX_API pt::ptree prop_tree(const bc::hash_digest& hash, size_t height,
 
 /**
  * Create a property tree for a list of indexes.
- * @param[in]  position       The position of the indexes.
  * @param[in]  confirmations  The list of indexes.
  * @returns                   A new property tree containing the list.
  */
-BCX_API pt::ptree prop_tree(size_t position, const index_list& indexes);
+BCX_API pt::ptree prop_tree(const index_list& indexes);
 
 } // namespace primitives
 } // namespace explorer

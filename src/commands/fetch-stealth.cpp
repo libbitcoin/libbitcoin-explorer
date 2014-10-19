@@ -56,7 +56,7 @@ static void handle_callback(callback_state& state,
     const blockchain::stealth_list& row_list)
 {
     // native is info.
-    state.output(prop_tree(prefix, row_list));
+    state.output(prop_tree(row_list));
 }
 
 static void fetch_stealth_from_prefix(obelisk_client& client,
@@ -85,7 +85,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto timeout = get_general_wait_setting();
     const auto height = get_height_option();
     const auto& encoding = get_format_option();
-    const auto& prefixes = get_prefixs_argument();
+    const stealth_prefix& prefix = get_prefix_argument();
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);
@@ -93,24 +93,15 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     if (client.connect(server) < 0)
         return console_result::failure;
 
-    callback_state state(error, output, encoding);
-
-    if (prefixes.empty())
-        fetch_stealth_from_prefix(client, state, base2(), height);
-
-    for (const stealth_prefix& prefix: prefixes)
+    if (prefix.size() > stealth_address::max_prefix_bits)
     {
-        if (prefix.size() > stealth_address::max_prefix_bits)
-        {
-            error << BX_FETCH_STEALTH_PREFIX_TOO_LONG << std::endl;
-            return console_result::failure;
-        }
-
-        fetch_stealth_from_prefix(client, state, prefix, height);
+        error << BX_FETCH_STEALTH_PREFIX_TOO_LONG << std::endl;
+        return console_result::failure;
     }
 
+    callback_state state(error, output, encoding);
+    fetch_stealth_from_prefix(client, state, prefix, height);
     client.resolve_callbacks();
 
     return state.get_result();
 }
-

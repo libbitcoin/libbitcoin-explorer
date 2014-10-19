@@ -118,7 +118,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PREFIX", -1);
+            .add("PREFIX", 1);
     }
 
 	/**
@@ -163,8 +163,8 @@ public:
         )
         (
             "PREFIX",
-            value<std::vector<primitives::base2>>(&argument_.prefixs),
-            "The set of Base2 stealth prefixes used to locate transactions."
+            value<primitives::base2>(&argument_.prefix),
+            "The Base2 stealth prefix used to locate transactions. Defaults to all stealth transactions."
         );
 
         return options;
@@ -182,20 +182,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PREFIX arguments.
+     * Get the value of the PREFIX argument.
      */
-    BCX_API virtual std::vector<primitives::base2>& get_prefixs_argument()
+    BCX_API virtual primitives::base2& get_prefix_argument()
     {
-        return argument_.prefixs;
+        return argument_.prefix;
     }
 
     /**
-     * Set the value of the PREFIX arguments.
+     * Set the value of the PREFIX argument.
      */
-    BCX_API virtual void set_prefixs_argument(
-        const std::vector<primitives::base2>& value)
+    BCX_API virtual void set_prefix_argument(
+        const primitives::base2& value)
     {
-        argument_.prefixs = value;
+        argument_.prefix = value;
     }
 
     /**
@@ -242,11 +242,11 @@ private:
     struct argument
     {
         argument()
-          : prefixs()
+          : prefix()
         {
         }
 
-        std::vector<primitives::base2> prefixs;
+        primitives::base2 prefix;
     } argument_;
 
     /**

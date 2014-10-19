@@ -42,7 +42,8 @@ console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
         for (const auto& tx: transactions)
             output << transaction(tx) << std::endl;
     else
-        write_stream(output, prop_tree(transactions), encoding);
+        for (const auto& tx: transactions)
+            write_stream(output, prop_tree(tx), encoding);
 
     return console_result::okay;
 }

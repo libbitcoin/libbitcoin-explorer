@@ -26,18 +26,14 @@ BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 
 #define BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010_INFO \
-"stealth_metadata\n" \
+"stealth\n" \
 "{\n" \
-"    matches\n" \
+"    match\n" \
 "    {\n" \
-"        match\n" \
-"        {\n" \
-"            ephemeral_public_key 03c35235b93427c39f477a83c493d2ea74d9195dc8a3b3e7dbb5ad88584b1472d2\n" \
-"            paid_address 1C8cs6vuuHqN7dtHqh13Yc6395unYcpSC6\n" \
-"            transaction_hash d216cd6596d4119acba1b8d786cdeb15f76f01d8a3ee12603e2581950857b736\n" \
-"        }\n" \
+"        ephemeral_public_key 03c35235b93427c39f477a83c493d2ea74d9195dc8a3b3e7dbb5ad88584b1472d2\n" \
+"        paid_address 1C8cs6vuuHqN7dtHqh13Yc6395unYcpSC6\n" \
+"        transaction_hash d216cd6596d4119acba1b8d786cdeb15f76f01d8a3ee12603e2581950857b736\n" \
 "    }\n" \
-"    prefix 10101010\n" \
 "}\n"
 
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0__okay)
@@ -59,7 +55,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010__oka
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
     command.set_format_option({ "info" });
     command.set_height_option(0);
-    command.set_prefixs_argument({ { "10101010" } });
+    command.set_prefix_argument({ "10101010" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010_INFO);
 }

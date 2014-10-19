@@ -42,7 +42,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 static void handle_callback(callback_state& state, size_t position,
     const index_list& indexes)
 {
-    state.output(prop_tree(position, indexes));
+    state.output(prop_tree(indexes));
 }
 
 static void validate_tx_from_transaction(obelisk_client& client,
@@ -65,7 +65,7 @@ console_result validate_tx::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& transactions = get_transactions_argument();
+    const auto& transaction = get_transaction_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
@@ -77,10 +77,7 @@ console_result validate_tx::invoke(std::ostream& output,
         return console_result::failure;
 
     callback_state state(error, output);
-
-    for (auto tx: transactions)
-        validate_tx_from_transaction(client, state, tx);
-
+    validate_tx_from_transaction(client, state, transaction);
     client.resolve_callbacks();
 
     return state.get_result();

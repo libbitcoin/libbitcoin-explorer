@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_SUITE(validate_tx__invoke)
 BOOST_AUTO_TEST_CASE(validate_tx__invoke__mainnet_satoshis_words__failure_error)
 {
     BX_DECLARE_NETWORK_COMMAND(validate_tx);
-    command.set_transactions_argument({ { BX_SATOSHIS_WORDS_TX_BASE16 } });
+    command.set_transaction_argument({ BX_SATOSHIS_WORDS_TX_BASE16 });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_MEMPOOL_COINBASE_TX_MESSAGE "\n");
 }
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(validate_tx__invoke__mainnet_satoshis_words__failure_error)
 BOOST_AUTO_TEST_CASE(validate_tx__invoke__mainnet_random_tx__failure_error)
 {
     BX_DECLARE_NETWORK_COMMAND(validate_tx);
-    command.set_transactions_argument({ { VALIDATE_TX_RANDOM_TX_BASE16 } });
+    command.set_transaction_argument({ VALIDATE_TX_RANDOM_TX_BASE16 });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_MATCHING_PREVIOUS_OBJECT_MESSAGE "\n");
 }
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(validate_tx__invoke__mainnet_random_tx__failure_error)
 BOOST_AUTO_TEST_CASE(validate_tx__invoke__new_invalid_tx__failure_error)
 {
     BX_DECLARE_NETWORK_COMMAND(validate_tx);
-    command.set_transactions_argument({ { VALIDATE_TX_NEW_TX_BASE16 } });
+    command.set_transaction_argument({ VALIDATE_TX_NEW_TX_BASE16 });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_VALIDATION_OF_INPUTS_FAILED "\n");
 }

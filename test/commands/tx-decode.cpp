@@ -38,7 +38,11 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "    {\n" \
 "        input\n" \
 "        {\n" \
-"            previous_output 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1\n" \
+"            previous_output\n" \
+"            {\n" \
+"                hash 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3\n" \
+"                index 1\n" \
+"            }\n" \
 "            script \"\"\n" \
 "            sequence 4294967295\n" \
 "        }\n" \
@@ -58,7 +62,7 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 
 #define TX_DECODE_TX_A_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<transaction><hash>39d2caaf112f21364be00c5d0b14e3763468934e586e416bf74647a1906b18e0</hash><inputs><input><previous_output>97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1</previous_output><script/><sequence>4294967295</sequence></input></inputs><lock_time>0</lock_time><outputs><output><address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><script>dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig</script><value>90000</value></output></outputs><version>1</version></transaction>\n"
+"<transaction><hash>39d2caaf112f21364be00c5d0b14e3763468934e586e416bf74647a1906b18e0</hash><inputs><input><previous_output><hash>97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3</hash><index>1</index></previous_output><script/><sequence>4294967295</sequence></input></inputs><lock_time>0</lock_time><outputs><output><address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><script>dup hash160 [ 18c0bd8d1818f1bf99cb1df2269c645318ef7b73 ] equalverify checksig</script><value>90000</value></output></outputs><version>1</version></transaction>\n"
 
 #define TX_DECODE_TX_B_NATIVE \
 "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000069463044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202204fcc407ce9b6f719ee7d009aeb8d8d21423f400a5b871394ca32e00c26b348dd2103c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000"
@@ -71,7 +75,11 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "        input\n" \
 "        {\n" \
 "            address 1DRCR5Gvg18FNo8HUPH1u5bfd9b5XfnJDj\n" \
-"            previous_output 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1\n" \
+"            previous_output\n" \
+"            {\n" \
+"                hash 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3\n" \
+"                index 1\n" \
+"            }\n" \
 "            script \"[ 3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202204fcc407ce9b6f719ee7d009aeb8d8d21423f400a5b871394ca32e00c26b348dd ] [ 03c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0 ]\"\n" \
 "            sequence 4294967295\n" \
 "        }\n" \
