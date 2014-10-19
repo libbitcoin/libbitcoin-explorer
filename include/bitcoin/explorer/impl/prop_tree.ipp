@@ -35,7 +35,7 @@ pt::ptree prop_tree_list(const std::string& name, const Values& values)
 {
     pt::ptree list;
     for (const auto& value: values)
-        list.add_child(name, prop_values(value));
+        list.add_child(name, prop_list(value));
 
     return list;
 }

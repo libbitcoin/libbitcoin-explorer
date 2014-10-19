@@ -54,7 +54,7 @@ namespace primitives {
 
 // headers
 
-static ptree prop_values(const header& header)
+ptree prop_list(const header& header)
 {
     const block_header_type& block_header = header;
 
@@ -71,7 +71,7 @@ static ptree prop_values(const header& header)
 ptree prop_tree(const header& header)
 {
     ptree tree;
-    tree.add_child("header", prop_values(header));
+    tree.add_child("header", prop_list(header));
     return tree;
 }
 ptree prop_tree(const std::vector<header>& headers)
@@ -83,7 +83,7 @@ ptree prop_tree(const std::vector<header>& headers)
 
 // transfers
 
-static ptree prop_values(const history_row& row)
+ptree prop_list(const history_row& row)
 {
     ptree tree;
 
@@ -113,7 +113,7 @@ static ptree prop_values(const history_row& row)
 ptree prop_tree(const history_row& row)
 {
     ptree tree;
-    tree.add_child("transfer", prop_values(row));
+    tree.add_child("transfer", prop_list(row));
     return tree;
 }
 ptree prop_tree(const std::vector<history_row>& rows)
@@ -125,7 +125,7 @@ ptree prop_tree(const std::vector<history_row>& rows)
 
 // balance
 
-static ptree prop_values(const std::vector<balance_row>& rows,
+ptree prop_list(const std::vector<balance_row>& rows,
     const payment_address& balance_address)
 {
     ptree tree;
@@ -155,13 +155,13 @@ ptree prop_tree(const std::vector<balance_row>& rows,
     const payment_address& balance_address)
 {
     ptree tree;
-    tree.add_child("balance", prop_values(rows, balance_address));
+    tree.add_child("balance", prop_list(rows, balance_address));
     return tree;
 }
 
 // inputs
 
-static ptree prop_values(const tx_input_type& tx_input)
+ptree prop_list(const tx_input_type& tx_input)
 {
     ptree tree;
     payment_address script_address;
@@ -177,7 +177,7 @@ static ptree prop_values(const tx_input_type& tx_input)
 ptree prop_tree(const tx_input_type& tx_input)
 {
     ptree tree;
-    tree.add_child("input", prop_values(tx_input));
+    tree.add_child("input", prop_list(tx_input));
     return tree;
 }
 ptree prop_tree(const std::vector<tx_input_type>& tx_inputs)
@@ -187,15 +187,15 @@ ptree prop_tree(const std::vector<tx_input_type>& tx_inputs)
     return tree;
 }
 
-static ptree prop_values(const input& input)
+ptree prop_list(const input& input)
 {
     const tx_input_type& tx_input = input;
-    return prop_values(tx_input);
+    return prop_list(tx_input);
 }
 ptree prop_tree(const input& input)
 {
     ptree tree;
-    tree.add_child("input", prop_values(input));
+    tree.add_child("input", prop_list(input));
     return tree;
 }
 ptree prop_tree(const std::vector<input>& inputs)
@@ -209,7 +209,7 @@ ptree prop_tree(const std::vector<input>& inputs)
 
 // outputs
 
-static ptree prop_values(const tx_output_type& tx_output)
+ptree prop_list(const tx_output_type& tx_output)
 {
     ptree tree;
     payment_address output_address;
@@ -234,7 +234,7 @@ static ptree prop_values(const tx_output_type& tx_output)
 ptree prop_tree(const tx_output_type& tx_output)
 {
     ptree tree;
-    tree.add_child("output", prop_values(tx_output));
+    tree.add_child("output", prop_list(tx_output));
     return tree;
 }
 ptree prop_tree(const std::vector<tx_output_type>& tx_outputs)
@@ -244,7 +244,7 @@ ptree prop_tree(const std::vector<tx_output_type>& tx_outputs)
     return tree;
 }
 
-static ptree prop_values(const output& output)
+ptree prop_list(const output& output)
 {
     // An output is actually a set of tx_output.
     const std::vector<tx_output_type>& tx_outputs = output;
@@ -257,7 +257,7 @@ static ptree prop_values(const output& output)
 ptree prop_tree(const output& output)
 {
     ptree tree;
-    tree.add_child("output", prop_values(output));
+    tree.add_child("output", prop_list(output));
     return tree;
 }
 ptree prop_tree(const std::vector<output>& outputs)
@@ -269,7 +269,7 @@ ptree prop_tree(const std::vector<output>& outputs)
 
 // transactions
 
-static ptree prop_values(const transaction& transaction)
+ptree prop_list(const transaction& transaction)
 {
     const tx_type& tx = transaction;
 
@@ -284,7 +284,7 @@ static ptree prop_values(const transaction& transaction)
 ptree prop_tree(const transaction& transaction)
 {
     ptree tree;
-    tree.add_child("transaction", prop_values(transaction));
+    tree.add_child("transaction", prop_list(transaction));
     return tree;
 }
 ptree prop_tree(const std::vector<transaction>& transactions)
@@ -297,7 +297,7 @@ ptree prop_tree(const std::vector<transaction>& transactions)
 
 // wrapper
 
-static ptree prop_values(const wrapped_data& wrapper)
+ptree prop_list(const wrapped_data& wrapper)
 {
     ptree tree;
     tree.put("checksum", wrapper.checksum);
@@ -308,51 +308,51 @@ static ptree prop_values(const wrapped_data& wrapper)
 ptree prop_tree(const wrapped_data& wrapper)
 {
     ptree tree;
-    tree.add_child("wrapper", prop_values(wrapper));
+    tree.add_child("wrapper", prop_list(wrapper));
     return tree;
 }
 
 // watch_prefix
 
-static ptree prop_values(const tx_type& tx, const hash_digest& block_hash,
+ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
     const base2& prefix)
 {
     ptree tree;
     tree.add("block", base16(block_hash));
     tree.add("prefix", prefix);
-    tree.add_child("transaction", prop_values(tx));
+    tree.add_child("transaction", prop_list(tx));
     return tree;
 }
 ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
     const base2& prefix)
 {
     ptree tree;
-    tree.add_child("watch_prefix", prop_values(tx, block_hash, prefix));
+    tree.add_child("watch_prefix", prop_list(tx, block_hash, prefix));
     return tree;
 }
 
 // watch_address
 
-static ptree prop_values(const tx_type& tx, const hash_digest& block_hash,
+ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
     const payment_address& address)
 {
     ptree tree;
     tree.add("block", base16(block_hash));
     tree.add("address", primitives::address(address));
-    tree.add_child("transaction", prop_values(tx));
+    tree.add_child("transaction", prop_list(tx));
     return tree;
 }
 ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
     const payment_address& address)
 {
     ptree tree;
-    tree.add_child("watch_address", prop_values(tx, block_hash, address));
+    tree.add_child("watch_address", prop_list(tx, block_hash, address));
     return tree;
 }
 
 // stealth_address
 
-static ptree prop_values(const stealth& stealth_address)
+ptree prop_list(const stealth& stealth_address)
 {
     // We don't serialize a "reuse key" value as this is strictly an 
     // optimization for the purpose of serialization and otherwise complicates
@@ -376,13 +376,13 @@ static ptree prop_values(const stealth& stealth_address)
 ptree prop_tree(const stealth& stealth_address)
 {
     ptree tree;
-    tree.add_child("stealth_address", prop_values(stealth_address));
+    tree.add_child("stealth_address", prop_list(stealth_address));
     return tree;
 }
 
 // stealth
 
-static ptree prop_values(const blockchain::stealth_row& row)
+ptree prop_list(const blockchain::stealth_row& row)
 {
     ptree tree;
     tree.put("ephemeral_public_key", ec_public(row.ephemkey));
@@ -393,7 +393,7 @@ static ptree prop_values(const blockchain::stealth_row& row)
 ptree prop_tree(const blockchain::stealth_row& row)
 {
     ptree tree;
-    tree.add_child("match", prop_values(row));
+    tree.add_child("match", prop_list(row));
     return tree;
 }
 
@@ -406,7 +406,7 @@ ptree prop_tree(const std::vector<blockchain::stealth_row>& rows)
 
 // metadata
 
-static ptree prop_values(const hash_digest& hash, size_t height, size_t index)
+ptree prop_list(const hash_digest& hash, size_t height, size_t index)
 {
     ptree tree;
     tree.put("hash", base16(hash));
@@ -417,7 +417,7 @@ static ptree prop_values(const hash_digest& hash, size_t height, size_t index)
 ptree prop_tree(const hash_digest& hash, size_t height, size_t index)
 {
     ptree tree;
-    tree.add_child("metadata", prop_values(hash, height, index));
+    tree.add_child("metadata", prop_list(hash, height, index));
     return tree;
 }
 
