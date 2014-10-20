@@ -114,7 +114,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get enough unspent transaction outputs from a set of Bitcoin addresses to pay a number of satoshi. Requires an Obelisk server connection.";
+        return "Get enough unspent transaction outputs from a Bitcoin addresses to pay a number of satoshi. Requires an Obelisk server connection.";
     }
 
     /**
@@ -126,7 +126,7 @@ public:
     {
         return get_argument_metadata()
             .add("SATOSHI", 1)
-            .add("BITCOIN_ADDRESS", -1);
+            .add("BITCOIN_ADDRESS", 1);
     }
 
 	/**
@@ -137,7 +137,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_bitcoin_addresss_argument(), "BITCOIN_ADDRESS", variables, input);
+        load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input);
     }
 
     /**
@@ -172,8 +172,8 @@ public:
         )
         (
             "BITCOIN_ADDRESS",
-            value<std::vector<primitives::address>>(&argument_.bitcoin_addresss),
-            "The set of Bitcoin addresses. If not specified the addresses are read from STDIN."
+            value<primitives::address>(&argument_.bitcoin_address),
+            "The Bitcoin address. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -208,20 +208,20 @@ public:
     }
 
     /**
-     * Get the value of the BITCOIN_ADDRESS arguments.
+     * Get the value of the BITCOIN_ADDRESS argument.
      */
-    BCX_API virtual std::vector<primitives::address>& get_bitcoin_addresss_argument()
+    BCX_API virtual primitives::address& get_bitcoin_address_argument()
     {
-        return argument_.bitcoin_addresss;
+        return argument_.bitcoin_address;
     }
 
     /**
-     * Set the value of the BITCOIN_ADDRESS arguments.
+     * Set the value of the BITCOIN_ADDRESS argument.
      */
-    BCX_API virtual void set_bitcoin_addresss_argument(
-        const std::vector<primitives::address>& value)
+    BCX_API virtual void set_bitcoin_address_argument(
+        const primitives::address& value)
     {
-        argument_.bitcoin_addresss = value;
+        argument_.bitcoin_address = value;
     }
 
     /**
@@ -252,12 +252,12 @@ private:
     {
         argument()
           : satoshi(),
-            bitcoin_addresss()
+            bitcoin_address()
         {
         }
 
         uint64_t satoshi;
-        std::vector<primitives::address> bitcoin_addresss;
+        primitives::address bitcoin_address;
     } argument_;
 
     /**
