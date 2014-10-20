@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_SUITE(stealth_uncover_secret__invoke)
 // expecatations
 #define BX_STEALTH_UNCOVER_SECRET_STEALTH_PRIVATE_KEY "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475"
 
-BOOST_AUTO_TEST_CASE(stealth_uncover_secret__invoke__scenario__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_uncover_secret__invoke__scenario_receiver__okay_output)
 {
     BX_DECLARE_COMMAND(stealth_uncover_secret);
     command.set_scan_secret_argument({ BX_STEALTH_UNCOVER_SECRET_SCAN_SECRET });

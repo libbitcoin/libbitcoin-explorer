@@ -70,8 +70,6 @@ namespace commands {
     "The prefix is limited to 32 bits."
 #define BX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW \
     "The number of signatures is greater than the number of SPEND_PUBKEYs."
-#define BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED \
-    "WARNING: prefix search is not yet fully supported."
 #define BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED \
     "WARNING: multiple signature stealth transactions are not yet fully supported."
 
@@ -176,7 +174,7 @@ public:
         (
             "SPEND_PUBKEY",
             value<std::vector<primitives::ec_public>>(&argument_.spend_pubkeys),
-            "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_EC_PUBLIC_KEY."
+            "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
         );
 
         return options;

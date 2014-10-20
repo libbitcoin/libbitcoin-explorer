@@ -426,17 +426,16 @@
 
   <command symbol="stealth-address-decode" formerly="stealth-show-addr" typeX="stealth" category="STEALTH" description="Decode a stealth address.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="STEALTH_ADDRESS" type="stealth" required="true" description="The stealth payment address." />
+    <argument name="STEALTH_ADDRESS" type="stealth" stdin="true" description="The stealth payment address." />
   </command>
   
   <command symbol="stealth-address-encode" typeX="stealth" category="STEALTH" description="Encode a stealth payment address.">
     <option name="prefix" type="base2" description="The Base2 stealth prefix that will be used to locate payments." />
     <option name="signatures" type="base10" description="Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a payment." />
-    <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_EC_PUBLIC_KEY." />
+    <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
     <define name="BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG" value="The prefix is limited to 32 bits." />
     <define name="BX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />
-    <define name="BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED" value="WARNING: prefix search is not yet fully supported." />
     <define name="BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED" value="WARNING: multiple signature stealth transactions are not yet fully supported." />
   </command>
 
@@ -444,8 +443,8 @@
     <define name="BX_STEALTH_NEWKEY_OBSOLETE" value="This command is no longer supported. Use stealth-address-encode." />
   </command>
   
-  <command symbol="stealth-new" formerly="stealth-initiate" typeX="ec_public" category="STEALTH" description="Create a new stealth public key from which a payment address can be generated. A unique ephemeral secret should be used for each stealth payment.">
-    <argument name="EPHEMERAL_SECRET" required="true" type="ec_private" description="The Base16 ephemeral EC private key used to generate stealth payment metadata." />
+  <command symbol="stealth-new" formerly="stealth-initiate" typeX="ec_public" category="STEALTH" description="Create a new stealth public key from which a payment address can be generated.">
+    <argument name="EPHEMERAL_SECRET" required="true" type="ec_private" description="The Base16 ephemeral EC private key used to generate stealth payment metadata. A unique value should be used for each stealth payment." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a stealth address." />
     <argument name="SPEND_PUBKEY" required="true" type="ec_public" description="A Base16 EC public key corresponding to a private key that can spend payments to the stealth address." />
   </command>

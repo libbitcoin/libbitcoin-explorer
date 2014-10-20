@@ -130,6 +130,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_stealth_address_argument(), "STEALTH_ADDRESS", variables, input);
     }
 
     /**
@@ -159,7 +160,7 @@ public:
         )
         (
             "STEALTH_ADDRESS",
-            value<primitives::stealth>(&argument_.stealth_address)->required(),
+            value<primitives::stealth>(&argument_.stealth_address),
             "The stealth payment address."
         );
 

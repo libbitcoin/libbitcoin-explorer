@@ -52,8 +52,8 @@ console_result stealth_address_encode::invoke(std::ostream& output,
         error << BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED << std::endl;
 
     // Issue a warning but don't prevent experimentation.
-    if (prefix.size() > 0)
-        error << BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED << std::endl;
+    //if (prefix.size() > 0)
+    //    error << BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED << std::endl;
 
     if (prefix.size() > stealth_address::max_prefix_bits)
     {

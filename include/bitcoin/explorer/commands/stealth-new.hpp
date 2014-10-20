@@ -108,7 +108,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Create a new stealth public key from which a payment address can be generated. A unique ephemeral secret should be used for each stealth payment.";
+        return "Create a new stealth public key from which a payment address can be generated.";
     }
 
     /**
@@ -157,7 +157,7 @@ public:
         (
             "EPHEMERAL_SECRET",
             value<primitives::ec_private>(&argument_.ephemeral_secret)->required(),
-            "The Base16 ephemeral EC private key used to generate stealth payment metadata."
+            "The Base16 ephemeral EC private key used to generate stealth payment metadata. A unique value should be used for each stealth payment."
         )
         (
             "SCAN_PUBKEY",
