@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(send_tx__invoke)
 BOOST_AUTO_TEST_CASE(send_tx__invoke__mainnet_tx_A__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(send_tx);
-    command.set_transactions_argument({ { SEND_TX_A } });
+    command.set_transaction_argument({ SEND_TX_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 

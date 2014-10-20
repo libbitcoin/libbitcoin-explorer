@@ -36,7 +36,7 @@ using namespace bc::explorer::primitives;
 
 static void handle_sent(callback_state& state, const tx_type& tx)
 {
-    state.output(format(BX_SEND_TX_NODE_OUTPUT) % transaction(tx) % now());
+    state.output(format(BX_SEND_TX_NODE_OUTPUT) % now());
     --state;
 }
 
@@ -59,7 +59,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& host = get_host_option();
     const auto& port = get_port_option();
-    const auto& transactions = get_transactions_argument();
+    const tx_type& transaction = get_transaction_argument();
 
     callback_state state(error, output);
     const auto send_handler = [&state](const std::error_code& code,
@@ -74,15 +74,11 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     bc::network::handshake shake(pool);
     bc::network::network net(pool);
 
-    for (const tx_type& tx: transactions)
-    {
-        ++state;
-        connect(shake, net, host, port,
-            std::bind(send_handler, ph::_1, ph::_2, tx));
-    }
+    ++state;
+    connect(shake, net, host, port,
+        std::bind(send_handler, ph::_1, ph::_2, transaction));
 
     client.poll(state.stopped(), 2000);
 
     return state.get_result();
 }
-

@@ -114,7 +114,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Broadcast a transaction to the Bitcoin transaction pool via an Obelisk server.";
+        return "Broadcast a transaction to the Bitcoin network via an Obelisk server.";
     }
 
     /**
@@ -125,7 +125,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("TRANSACTION", -1);
+            .add("TRANSACTION", 1);
     }
 
 	/**
@@ -136,7 +136,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_transactions_argument(), "TRANSACTION", variables, input);
+        load_input(get_transaction_argument(), "TRANSACTION", variables, input);
     }
 
     /**
@@ -161,8 +161,8 @@ public:
         )
         (
             "TRANSACTION",
-            value<std::vector<primitives::transaction>>(&argument_.transactions),
-            "The set of Base16 transactions. If not specified the transactions are read from STDIN."
+            value<primitives::transaction>(&argument_.transaction),
+            "The Base16 transaction to send. If not specified the transaction is read from STDIN."
         );
 
         return options;
@@ -180,20 +180,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the TRANSACTION arguments.
+     * Get the value of the TRANSACTION argument.
      */
-    BCX_API virtual std::vector<primitives::transaction>& get_transactions_argument()
+    BCX_API virtual primitives::transaction& get_transaction_argument()
     {
-        return argument_.transactions;
+        return argument_.transaction;
     }
 
     /**
-     * Set the value of the TRANSACTION arguments.
+     * Set the value of the TRANSACTION argument.
      */
-    BCX_API virtual void set_transactions_argument(
-        const std::vector<primitives::transaction>& value)
+    BCX_API virtual void set_transaction_argument(
+        const primitives::transaction& value)
     {
-        argument_.transactions = value;
+        argument_.transaction = value;
     }
 
 private:
@@ -206,11 +206,11 @@ private:
     struct argument
     {
         argument()
-          : transactions()
+          : transaction()
         {
         }
 
-        std::vector<primitives::transaction> transactions;
+        primitives::transaction transaction;
     } argument_;
 
     /**
