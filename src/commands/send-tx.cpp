@@ -45,7 +45,7 @@ static void handle_callback(callback_state& state)
 }
 
 static void broadcast_transaction(obelisk_client& client,
-    callback_state& state, primitives::transaction& tx)
+    callback_state& state, const primitives::transaction& tx)
 {
     auto on_done = [&state]()
     {
@@ -66,7 +66,7 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto& server = get_server_address_setting();
-    const auto& transactions = get_transactions_argument();
+    const auto& transaction = get_transaction_argument();
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);
@@ -75,10 +75,7 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
 
     callback_state state(error, output);
-
-    for (auto tx: transactions)
-        broadcast_transaction(client, state, tx);
-
+    broadcast_transaction(client, state, transaction);
     client.resolve_callbacks();
 
     return state.get_result();

@@ -107,7 +107,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Broadcast a transaction to the Bitcoin transaction pool via blockchain.info.";
+        return "Broadcast a transaction to the Bitcoin network via blockchain.info.";
     }
 
     /**

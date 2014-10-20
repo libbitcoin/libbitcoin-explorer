@@ -94,7 +94,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& node_count = get_nodes_option();
-    const auto& transactions = get_transactions_argument();
+    const tx_type& transaction = get_transaction_argument();
 
     // Set up shared state.
     callback_state state(error, output);
@@ -143,13 +143,10 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Perform node discovery if needed and then creating connections.
     prot.start(start_handler);
 
-    // Create a subscription for each transaction.
-    for (const tx_type& tx: transactions)
-    {
-        ++state;
-        prot.subscribe_channel(
-            std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), tx));
-    }
+    // Create a subscription.
+    ++state;
+    prot.subscribe_channel(
+        std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), transaction));
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, handle_signal);

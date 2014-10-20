@@ -39,6 +39,15 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+static void handle_signal(int signal)
+{
+    // Can't pass args using lambda capture for a simple function pointer.
+    // This means there's no way to terminate without using a global variable
+    // or process termination. Since the variable would screw with testing all 
+    // other methods we opt for process termination here.
+    exit(console_result::failure);
+}
+
 static void handle_error(callback_state& state, const std::error_code& error)
 {
     state.handle_error(error);
@@ -102,6 +111,11 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     bool subscribed = false;
 
     subscribe_from_address(client, state, bitcoin_address, subscribed);
+
+    // Catch C signals for stopping the program.
+    signal(SIGABRT, handle_signal);
+    signal(SIGTERM, handle_signal);
+    signal(SIGINT, handle_signal);
 
     // poll for subscribe callbacks if any subscriptions were established.
     if (client.resolve_callbacks() && subscribed)

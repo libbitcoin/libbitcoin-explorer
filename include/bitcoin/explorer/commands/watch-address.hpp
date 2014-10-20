@@ -166,7 +166,7 @@ public:
         )
         (
             "BITCOIN_ADDRESS",
-            value<std::string>(&argument_.bitcoin_address),
+            value<primitives::address>(&argument_.bitcoin_address),
             "The participating Bitcoin address. If not specified the address is read from STDIN."
         );
 
@@ -187,7 +187,7 @@ public:
     /**
      * Get the value of the BITCOIN_ADDRESS argument.
      */
-    BCX_API virtual std::string& get_bitcoin_address_argument()
+    BCX_API virtual primitives::address& get_bitcoin_address_argument()
     {
         return argument_.bitcoin_address;
     }
@@ -196,7 +196,7 @@ public:
      * Set the value of the BITCOIN_ADDRESS argument.
      */
     BCX_API virtual void set_bitcoin_address_argument(
-        const std::string& value)
+        const primitives::address& value)
     {
         argument_.bitcoin_address = value;
     }
@@ -232,7 +232,7 @@ private:
         {
         }
 
-        std::string bitcoin_address;
+        primitives::address bitcoin_address;
     } argument_;
 
     /**
