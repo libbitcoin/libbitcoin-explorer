@@ -114,7 +114,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Derive the stealth public key necessary to identify a stealth payment.";
+        return "Derive the stealth public key necessary to address and to identify a stealth payment.";
     }
 
     /**

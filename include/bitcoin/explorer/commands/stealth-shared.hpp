@@ -160,7 +160,7 @@ public:
         (
             "PUBKEY",
             value<primitives::ec_public>(&argument_.pubkey)->required(),
-            "A Base16 EC public key. Either the scan or ephemeral public key"
+            "A Base16 EC public key. Either the scan or ephemeral public key."
         );
 
         return options;

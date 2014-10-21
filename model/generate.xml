@@ -447,7 +447,7 @@
     <define name="BX_STEALTH_NEWKEY_OBSOLETE" value="This command is no longer supported. Use stealth-encode instead." />
   </command>
 
-  <command symbol="stealth-public" formerly="stealth-uncover" typeX="ec_public" category="STEALTH" description="Derive the stealth public key necessary to identify a stealth payment.">
+  <command symbol="stealth-public" formerly="stealth-uncover" typeX="ec_public" category="STEALTH" description="Derive the stealth public key necessary to address and to identify a stealth payment.">
     <argument name="SPEND_PUBKEY" required="true" type="ec_public" description="The Base16 EC spend public key of a stealth address." />
     <argument name="SHARED_SECRET" stdin="true" type="ec_private" description="The Base16 EC shared secret corresponding to the SPEND_PUBKEY. If not specified the key is read from STDIN." />
     <define name="BX_STEALTH_PUBLIC_OUT_OF_RANGE" value="Function exceeds valid range." />
@@ -461,7 +461,7 @@
 
   <command symbol="stealth-shared" typeX="ec_private" category="STEALTH" description="Derive the secret shared between an ephemeral key pair and a scan key pair. Provide scan SECRET and ephemeral PUBKEY, or ephemeral SECRET and scan PUBKEY.">
     <argument name="SECRET" required="true" type="ec_private" description="A Base16 EC private key. Either the scan or ephemeral secret." />
-    <argument name="PUBKEY" required="true" type="ec_public" description="A Base16 EC public key. Either the scan or ephemeral public key" />
+    <argument name="PUBKEY" required="true" type="ec_public" description="A Base16 EC public key. Either the scan or ephemeral public key." />
     <define name="BX_STEALTH_SHARED_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
   
