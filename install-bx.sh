@@ -70,12 +70,12 @@ automake_current_directory()
     shift 1
 
     ./autogen.sh
-    ./configure "$@"
+    ./configure --enable-silent-rules "$@"
 
     if [[ "$JOBS" -gt "$SEQUENTIAL" ]]; then
-        make "-j$JOBS"
+        make --silent "-j$JOBS"
     else
-        make
+        make --silent
     fi
 
     sudo make install
