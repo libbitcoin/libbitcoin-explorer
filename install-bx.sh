@@ -11,7 +11,7 @@
 #  3. Validate Deployment: this file is both deployment and verification build.
 #  3. Be Declarative: make behavior obvious by not using conditional statements.
 #  4. Be Explicit: not everyone speaks the same code or human languages.
-#  5. Use Least Privilege: don't require sudo for the entire script.
+#  5. Enable Least Privilege: don't require sudo.
 #  6. Do Not Repeat Yourself: do not repeat yourself.
 
 # This script will build libbitcoin using this relative directory.
@@ -149,8 +149,8 @@ create_build_directory()
     # Notify that this script will do something destructive.
     echo "This script will erase and build in: $BUILD_DIRECTORY"
 
-    # Cache credentials for subsequent sudo calls.
-    sudo rm --force --recursive $BUILD_DIRECTORY
+    # By default will require privilege, use --prefix=<directory> to avoid.
+    rm --force --recursive $BUILD_DIRECTORY
     mkdir $BUILD_DIRECTORY
     cd $BUILD_DIRECTORY
 
@@ -188,7 +188,7 @@ delete_build_directory()
     # applied to dependencies as well. Typically each time a git pull occurs 
     # into a build directory the uninstall is potentially invalidated. This 
     # approach allows us to perform a complete uninstall across all versions.
-    sudo rm --force --recursive $BUILD_DIRECTORY
+    rm --force --recursive $BUILD_DIRECTORY
 }
 
 # Exit this script on the first error (any statement returns non-true value).
