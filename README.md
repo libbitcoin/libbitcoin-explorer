@@ -672,12 +672,11 @@ BX defines the following set of commands with corresponding names in the `bx::co
     sha160
     sha256
     sha512
-    stealth-address-decode
-    stealth-address-encode
-    stealth-new
-    stealth-shared-secret
-    stealth-uncover-public
-    stealth-uncover-secret
+    stealth-decode
+    stealth-encode
+    stealth-shared
+    stealth-public
+    stealth-secret
     tx-decode
     tx-encode
     tx-sign
