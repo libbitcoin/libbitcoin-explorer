@@ -104,10 +104,18 @@ Of these libraries, only libzmq is packaged. However we require a more recent ve
 
 #### Build Options
 
-Any set of `./configure` options can be passed via the build script, for example:
+Any set of `./configure` options can be passed via the build script.
+
+For example, to build without debug symbols:
 
 ```sh
-  $ ./install-bx.sh CPPFLAGS=-DDEBUG CFLAGS="-Og -g"
+  $ ./install-bx.sh CXXFLAGS="-Os -s"
+```
+
+To also install non-debug outputs to a specified directory, such as `/home/me/bx`:
+
+```sh
+  $ ./install-bx.sh CXXFLAGS="-Os -s" --prefix=/home/me/bx
 ```
 
 #### Compiling for Testnet
