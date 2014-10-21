@@ -374,19 +374,19 @@ BOOST_AUTO_TEST_CASE(generated__symbol__showblkhead__returns_expected_value)
     BOOST_REQUIRE_EQUAL(showblkhead::symbol(), "showblkhead");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_address_decode__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_decode__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(stealth_address_decode::symbol(), "stealth-address-decode");
+    BOOST_REQUIRE_EQUAL(stealth_decode::symbol(), "stealth-decode");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_address_encode__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_encode__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(stealth_address_encode::symbol(), "stealth-address-encode");
+    BOOST_REQUIRE_EQUAL(stealth_encode::symbol(), "stealth-encode");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_new__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_initiate__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(stealth_new::symbol(), "stealth-new");
+    BOOST_REQUIRE_EQUAL(stealth_initiate::symbol(), "stealth-initiate");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_newkey__returns_expected_value)
@@ -394,19 +394,19 @@ BOOST_AUTO_TEST_CASE(generated__symbol__stealth_newkey__returns_expected_value)
     BOOST_REQUIRE_EQUAL(stealth_newkey::symbol(), "stealth-newkey");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_shared_secret__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_public__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(stealth_shared_secret::symbol(), "stealth-shared-secret");
+    BOOST_REQUIRE_EQUAL(stealth_public::symbol(), "stealth-public");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_uncover_public__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_secret__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(stealth_uncover_public::symbol(), "stealth-uncover-public");
+    BOOST_REQUIRE_EQUAL(stealth_secret::symbol(), "stealth-secret");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__stealth_uncover_secret__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__stealth_shared__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(stealth_uncover_secret::symbol(), "stealth-uncover-secret");
+    BOOST_REQUIRE_EQUAL(stealth_shared::symbol(), "stealth-shared");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__tx_decode__returns_expected_value)

@@ -174,19 +174,19 @@ BOOST_AUTO_TEST_CASE(generated__formerly__send_tx_p2p_was_sendtx_p2p__returns_ob
     BOOST_REQUIRE_EQUAL(formerly("sendtx-p2p"), send_tx_p2p::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__stealth_address_decode_was_stealth_show_addr__returns_object)
+BOOST_AUTO_TEST_CASE(generated__formerly__stealth_decode_was_stealth_show_addr__returns_object)
 {
-    BOOST_REQUIRE_EQUAL(formerly("stealth-show-addr"), stealth_address_decode::symbol());
+    BOOST_REQUIRE_EQUAL(formerly("stealth-show-addr"), stealth_decode::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__stealth_new_was_stealth_initiate__returns_object)
+BOOST_AUTO_TEST_CASE(generated__formerly__stealth_public_was_stealth_uncover__returns_object)
 {
-    BOOST_REQUIRE_EQUAL(formerly("stealth-initiate"), stealth_new::symbol());
+    BOOST_REQUIRE_EQUAL(formerly("stealth-uncover"), stealth_public::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__stealth_uncover_public_was_stealth_uncover__returns_object)
+BOOST_AUTO_TEST_CASE(generated__formerly__stealth_secret_was_stealth_uncover_secret__returns_object)
 {
-    BOOST_REQUIRE_EQUAL(formerly("stealth-uncover"), stealth_uncover_public::symbol());
+    BOOST_REQUIRE_EQUAL(formerly("stealth-uncover-secret"), stealth_secret::symbol());
 }
 
 BOOST_AUTO_TEST_CASE(generated__formerly__tx_sign_was_signtx__returns_object)

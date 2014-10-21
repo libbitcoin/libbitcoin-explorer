@@ -18,30 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/stealth-uncover-secret.hpp>
+#include <bitcoin/explorer/commands/stealth-decode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
-console_result stealth_uncover_secret::invoke(std::ostream& output,
+console_result stealth_decode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& scan_secret = get_scan_secret_argument();
-    const auto& spend_secret = get_spend_secret_argument();
-    const auto& ephemeral_pubkey = get_ephemeral_pubkey_argument();
+    const auto& encoding = get_format_option();
+    const auto& address = get_stealth_address_argument();
 
-    auto ephemeral_secret = uncover_stealth_secret(ephemeral_pubkey,
-        scan_secret, spend_secret);
-
-    output << ec_private(ephemeral_secret) << std::endl;
+    write_stream(output, address, encoding);
     return console_result::okay;
 }
 

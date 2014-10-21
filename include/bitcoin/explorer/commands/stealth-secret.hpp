@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_STEALTH_ADDRESS_ENCODE_HPP
-#define BX_STEALTH_ADDRESS_ENCODE_HPP
+#ifndef BX_STEALTH_SECRET_HPP
+#define BX_STEALTH_SECRET_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -66,17 +66,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG \
-    "The prefix is limited to 32 bits."
-#define BX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW \
-    "The number of signatures is greater than the number of SPEND_PUBKEYs."
-#define BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED \
-    "WARNING: multiple signature stealth transactions are not yet fully supported."
+#define BX_STEALTH_SECRET_OUT_OF_RANGE \
+    "Sum exceeds valid range."
 
 /**
- * Class to implement the stealth-address-encode command.
+ * Class to implement the stealth-secret command.
  */
-class stealth_address_encode 
+class stealth_secret 
     : public command
 {
 public:
@@ -86,16 +82,23 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "stealth-address-encode";
+        return "stealth-secret";
     }
 
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    BCX_API static const char* formerly()
+    {
+        return "stealth-uncover-secret";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     BCX_API virtual const char* name()
     {
-        return stealth_address_encode::symbol();
+        return stealth_secret::symbol();
     }
 
     /**
@@ -111,7 +114,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Encode a stealth payment address.";
+        return "Derive the stealth private key necessary to spend a stealth payment.";
     }
 
     /**
@@ -122,8 +125,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SCAN_PUBKEY", 1)
-            .add("SPEND_PUBKEY", -1);
+            .add("SPEND_SECRET", 1)
+            .add("SHARED_SECRET", 1);
     }
 
 	/**
@@ -134,6 +137,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_shared_secret_argument(), "SHARED_SECRET", variables, input);
     }
 
     /**
@@ -157,24 +161,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "prefix,p",
-            value<primitives::base2>(&option_.prefix),
-            "The Base2 stealth prefix that will be used to locate payments."
+            "SPEND_SECRET",
+            value<primitives::ec_private>(&argument_.spend_secret)->required(),
+            "The Base16 EC spend secret for spending a stealth payment."
         )
         (
-            "signatures,s",
-            value<primitives::base10>(&option_.signatures),
-            "Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
-        )
-        (
-            "SCAN_PUBKEY",
-            value<primitives::ec_public>(&argument_.scan_pubkey)->required(),
-            "The Base16 EC public key required to generate a payment."
-        )
-        (
-            "SPEND_PUBKEY",
-            value<std::vector<primitives::ec_public>>(&argument_.spend_pubkeys),
-            "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
+            "SHARED_SECRET",
+            value<primitives::ec_private>(&argument_.shared_secret),
+            "The Base16 EC shared secret corresponding to the SPEND_PUBKEY. If not specified the key is read from STDIN."
         );
 
         return options;
@@ -192,71 +186,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SCAN_PUBKEY argument.
+     * Get the value of the SPEND_SECRET argument.
      */
-    BCX_API virtual primitives::ec_public& get_scan_pubkey_argument()
+    BCX_API virtual primitives::ec_private& get_spend_secret_argument()
     {
-        return argument_.scan_pubkey;
+        return argument_.spend_secret;
     }
 
     /**
-     * Set the value of the SCAN_PUBKEY argument.
+     * Set the value of the SPEND_SECRET argument.
      */
-    BCX_API virtual void set_scan_pubkey_argument(
-        const primitives::ec_public& value)
+    BCX_API virtual void set_spend_secret_argument(
+        const primitives::ec_private& value)
     {
-        argument_.scan_pubkey = value;
+        argument_.spend_secret = value;
     }
 
     /**
-     * Get the value of the SPEND_PUBKEY arguments.
+     * Get the value of the SHARED_SECRET argument.
      */
-    BCX_API virtual std::vector<primitives::ec_public>& get_spend_pubkeys_argument()
+    BCX_API virtual primitives::ec_private& get_shared_secret_argument()
     {
-        return argument_.spend_pubkeys;
+        return argument_.shared_secret;
     }
 
     /**
-     * Set the value of the SPEND_PUBKEY arguments.
+     * Set the value of the SHARED_SECRET argument.
      */
-    BCX_API virtual void set_spend_pubkeys_argument(
-        const std::vector<primitives::ec_public>& value)
+    BCX_API virtual void set_shared_secret_argument(
+        const primitives::ec_private& value)
     {
-        argument_.spend_pubkeys = value;
-    }
-
-    /**
-     * Get the value of the prefix option.
-     */
-    BCX_API virtual primitives::base2& get_prefix_option()
-    {
-        return option_.prefix;
-    }
-
-    /**
-     * Set the value of the prefix option.
-     */
-    BCX_API virtual void set_prefix_option(
-        const primitives::base2& value)
-    {
-        option_.prefix = value;
-    }
-
-    /**
-     * Get the value of the signatures option.
-     */
-    BCX_API virtual primitives::base10& get_signatures_option()
-    {
-        return option_.signatures;
-    }
-
-    /**
-     * Set the value of the signatures option.
-     */
-    BCX_API virtual void set_signatures_option(
-        const primitives::base10& value)
-    {
-        option_.signatures = value;
+        argument_.shared_secret = value;
     }
 
 private:
@@ -269,13 +229,13 @@ private:
     struct argument
     {
         argument()
-          : scan_pubkey(),
-            spend_pubkeys()
+          : spend_secret(),
+            shared_secret()
         {
         }
 
-        primitives::ec_public scan_pubkey;
-        std::vector<primitives::ec_public> spend_pubkeys;
+        primitives::ec_private spend_secret;
+        primitives::ec_private shared_secret;
     } argument_;
 
     /**
@@ -286,13 +246,9 @@ private:
     struct option
     {
         option()
-          : prefix(),
-            signatures()
         {
         }
 
-        primitives::base2 prefix;
-        primitives::base10 signatures;
     } option_;
 };
 

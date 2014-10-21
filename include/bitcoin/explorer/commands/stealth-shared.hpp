@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_STEALTH_UNCOVER_SECRET_HPP
-#define BX_STEALTH_UNCOVER_SECRET_HPP
+#ifndef BX_STEALTH_SHARED_HPP
+#define BX_STEALTH_SHARED_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -64,9 +64,15 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the stealth-uncover-secret command.
+ * Various localizable strings.
  */
-class stealth_uncover_secret 
+#define BX_STEALTH_SHARED_OUT_OF_RANGE \
+    "Product exceeds valid range."
+
+/**
+ * Class to implement the stealth-shared command.
+ */
+class stealth_shared 
     : public command
 {
 public:
@@ -76,7 +82,7 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "stealth-uncover-secret";
+        return "stealth-shared";
     }
 
 
@@ -85,7 +91,7 @@ public:
      */
     BCX_API virtual const char* name()
     {
-        return stealth_uncover_secret::symbol();
+        return stealth_shared::symbol();
     }
 
     /**
@@ -101,7 +107,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Derive the stealth private key necessary to spend a stealth payment.";
+        return "Derive the secret shared between an ephemeral key pair and a scan key pair. Provide scan SECRET and ephemeral PUBKEY, or ephemeral SECRET and scan PUBKEY.";
     }
 
     /**
@@ -112,9 +118,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("EPHEMERAL_PUBKEY", 1)
-            .add("SCAN_SECRET", 1)
-            .add("SPEND_SECRET", 1);
+            .add("SECRET", 1)
+            .add("PUBKEY", 1);
     }
 
 	/**
@@ -148,19 +153,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "EPHEMERAL_PUBKEY",
-            value<primitives::ec_public>(&argument_.ephemeral_pubkey)->required(),
-            "The Base16 ephemeral EC public key retrieved from the stealth payment metadata."
+            "SECRET",
+            value<primitives::ec_private>(&argument_.secret)->required(),
+            "A Base16 EC private key. Either the scan or ephemeral secret."
         )
         (
-            "SCAN_SECRET",
-            value<primitives::ec_private>(&argument_.scan_secret)->required(),
-            "The Base16 EC private key corresponding to the public key required to generate a stealth address."
-        )
-        (
-            "SPEND_SECRET",
-            value<primitives::ec_private>(&argument_.spend_secret)->required(),
-            "A Base16 EC private key that can spend payments to the stealth address."
+            "PUBKEY",
+            value<primitives::ec_public>(&argument_.pubkey)->required(),
+            "A Base16 EC public key. Either the scan or ephemeral public key"
         );
 
         return options;
@@ -178,54 +178,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the EPHEMERAL_PUBKEY argument.
+     * Get the value of the SECRET argument.
      */
-    BCX_API virtual primitives::ec_public& get_ephemeral_pubkey_argument()
+    BCX_API virtual primitives::ec_private& get_secret_argument()
     {
-        return argument_.ephemeral_pubkey;
+        return argument_.secret;
     }
 
     /**
-     * Set the value of the EPHEMERAL_PUBKEY argument.
+     * Set the value of the SECRET argument.
      */
-    BCX_API virtual void set_ephemeral_pubkey_argument(
+    BCX_API virtual void set_secret_argument(
+        const primitives::ec_private& value)
+    {
+        argument_.secret = value;
+    }
+
+    /**
+     * Get the value of the PUBKEY argument.
+     */
+    BCX_API virtual primitives::ec_public& get_pubkey_argument()
+    {
+        return argument_.pubkey;
+    }
+
+    /**
+     * Set the value of the PUBKEY argument.
+     */
+    BCX_API virtual void set_pubkey_argument(
         const primitives::ec_public& value)
     {
-        argument_.ephemeral_pubkey = value;
-    }
-
-    /**
-     * Get the value of the SCAN_SECRET argument.
-     */
-    BCX_API virtual primitives::ec_private& get_scan_secret_argument()
-    {
-        return argument_.scan_secret;
-    }
-
-    /**
-     * Set the value of the SCAN_SECRET argument.
-     */
-    BCX_API virtual void set_scan_secret_argument(
-        const primitives::ec_private& value)
-    {
-        argument_.scan_secret = value;
-    }
-
-    /**
-     * Get the value of the SPEND_SECRET argument.
-     */
-    BCX_API virtual primitives::ec_private& get_spend_secret_argument()
-    {
-        return argument_.spend_secret;
-    }
-
-    /**
-     * Set the value of the SPEND_SECRET argument.
-     */
-    BCX_API virtual void set_spend_secret_argument(
-        const primitives::ec_private& value)
-    {
-        argument_.spend_secret = value;
+        argument_.pubkey = value;
     }
 
 private:
@@ -238,15 +221,13 @@ private:
     struct argument
     {
         argument()
-          : ephemeral_pubkey(),
-            scan_secret(),
-            spend_secret()
+          : secret(),
+            pubkey()
         {
         }
 
-        primitives::ec_public ephemeral_pubkey;
-        primitives::ec_private scan_secret;
-        primitives::ec_private spend_secret;
+        primitives::ec_private secret;
+        primitives::ec_public pubkey;
     } argument_;
 
     /**

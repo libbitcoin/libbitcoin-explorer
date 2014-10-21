@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/stealth-address-encode.hpp>
+#include <bitcoin/explorer/commands/stealth-encode.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
@@ -30,7 +30,7 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-console_result stealth_address_encode::invoke(std::ostream& output,
+console_result stealth_encode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
@@ -40,24 +40,26 @@ console_result stealth_address_encode::invoke(std::ostream& output,
     const auto& signatures = get_signatures_option();
     const auto testnet = get_general_testnet_setting();
 
-    const auto max = if_else(spend_pubkeys.empty(), (size_t)1, spend_pubkeys.size());
-    if (signatures > max)
+    const auto maximum = if_else(spend_pubkeys.empty(), (size_t)1, 
+        spend_pubkeys.size());
+
+    if (signatures > maximum)
     {
-        error << BX_STEALTH_ADDRESS_ENCODE_SIGNATURES_OVERFLOW << std::endl;
+        error << BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW << std::endl;
         return console_result::failure;
     }
 
     // Issue a warning but don't prevent experimentation.
     if (spend_pubkeys.size() > 1)
-        error << BX_STEALTH_ADDRESS_ENCODE_MULTISIG_NOT_SUPPORTED << std::endl;
+        error << BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED << std::endl;
 
     // Issue a warning but don't prevent experimentation.
     //if (prefix.size() > 0)
-    //    error << BX_STEALTH_ADDRESS_ENCODE_PREFIX_NOT_SUPPORTED << std::endl;
+    //    error << BX_STEALTH_ENCODE_PREFIX_NOT_SUPPORTED << std::endl;
 
     if (prefix.size() > stealth_address::max_prefix_bits)
     {
-        error << BX_STEALTH_ADDRESS_ENCODE_PREFIX_TOO_LONG << std::endl;
+        error << BX_STEALTH_ENCODE_PREFIX_TOO_LONG << std::endl;
         return console_result::failure;
     }
 

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
@@ -18,29 +18,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/stealth-shared-secret.hpp>
+#include <bitcoin/explorer/commands/stealth-initiate.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
-console_result stealth_shared_secret::invoke(std::ostream& output,
-    std::ostream& error)
+console_result stealth_initiate::invoke(std::ostream& output, std::ostream& error)
 {
-    // Bound parameters.
-    const auto& secret = get_secret_argument();
-    const auto& pubkey = get_pubkey_argument();
-
-    // Pass either (ephem_secret, scan_pubkey) or (scan_secret, ephem_pubkey).
-    auto shared = shared_secret(secret, pubkey);
-
-    output << ec_private(shared) << std::endl;
-    return console_result::okay;
+    error << BX_STEALTH_INITIATE_OBSOLETE << std::endl;
+    return console_result::failure;
 }
 

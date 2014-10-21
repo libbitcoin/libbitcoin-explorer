@@ -374,19 +374,19 @@ BOOST_AUTO_TEST_CASE(generated__find__showblkhead__returns_object)
     BOOST_REQUIRE(find("showblkhead") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_address_decode__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_decode__returns_object)
 {
-    BOOST_REQUIRE(find("stealth-address-decode") != nullptr);
+    BOOST_REQUIRE(find("stealth-decode") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_address_encode__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_encode__returns_object)
 {
-    BOOST_REQUIRE(find("stealth-address-encode") != nullptr);
+    BOOST_REQUIRE(find("stealth-encode") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_new__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_initiate__returns_object)
 {
-    BOOST_REQUIRE(find("stealth-new") != nullptr);
+    BOOST_REQUIRE(find("stealth-initiate") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
@@ -394,19 +394,19 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
     BOOST_REQUIRE(find("stealth-newkey") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_shared_secret__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_public__returns_object)
 {
-    BOOST_REQUIRE(find("stealth-shared-secret") != nullptr);
+    BOOST_REQUIRE(find("stealth-public") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_uncover_public__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_secret__returns_object)
 {
-    BOOST_REQUIRE(find("stealth-uncover-public") != nullptr);
+    BOOST_REQUIRE(find("stealth-secret") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__stealth_uncover_secret__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__stealth_shared__returns_object)
 {
-    BOOST_REQUIRE(find("stealth-uncover-secret") != nullptr);
+    BOOST_REQUIRE(find("stealth-shared") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__tx_decode__returns_object)

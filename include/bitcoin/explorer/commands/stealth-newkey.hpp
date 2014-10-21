@@ -67,7 +67,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_STEALTH_NEWKEY_OBSOLETE \
-    "This command is no longer supported. Use stealth-address-encode."
+    "This command is no longer supported. Use stealth-encode instead."
 
 /**
  * Class to implement the stealth-newkey command.

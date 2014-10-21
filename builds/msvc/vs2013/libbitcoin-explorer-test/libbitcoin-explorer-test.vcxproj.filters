@@ -242,25 +242,25 @@
     <ClCompile Include="..\..\..\..\test\commands\showblkhead.cpp">
       <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-address-decode.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\stealth-decode.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-address-encode.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\stealth-encode.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-new.cpp">
-      <Filter>src\tests\commands</Filter>
+    <ClCompile Include="..\..\..\..\test\commands\stealth-initiate.cpp">
+      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\stealth-newkey.cpp">
       <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-shared-secret.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\stealth-public.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-uncover-public.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\stealth-secret.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-uncover-secret.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\stealth-shared.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\tx-decode.cpp">

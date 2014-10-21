@@ -23,19 +23,19 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
+BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
 
 // vectors
-#define STEALTH_ADDRESS_DECODE_ADDRESS_A "hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i"
-#define STEALTH_ADDRESS_DECODE_ADDRESS_AB "vJmwY32eS5VDC2C4GaZyXt7i4iCjzSMZ1XSd6KbkA7QbGE492akT2eZZMjCwWDqKRSYhnSA8Bgp78KeAYFVCi8ke5mELdoYMBNep7L"
-#define STEALTH_ADDRESS_DECODE_ADDRESS_AAB "vK4cs6xzzf326HyUeoJCQng6FXLVK27PyJoRbYSMyT9TzgKds8JDerKaRQ72q9kEp2tQNE2KRvabvqH5n5Rv6yv6Yht9uWNcbDGD7d"
-#define STEALTH_ADDRESS_DECODE_ADDRESS_AAB1 "vK4cs6xzzf326HyUeoJCQng6FXLVK27PyJoRbYSMyT9TzgKds8JDerKaRQ72q9kEp2tQNE2KRvabvqH5n5Rv6yv6Yht9uWN7nyPnY7"
-#define STEALTH_ADDRESS_DECODE_ADDRESS_AAB10 "JubEFUfmd2J3i83L9qWNr7fDSbb2bE7PY6RvEzH6wsNW8Ls7Mw3hxKZHWr3SvEz4o6NWLguFmyK9yBPrzxtC7ssTXQKJnyMUpL71mzBgd"
-#define STEALTH_ADDRESS_DECODE_ADDRESS_AAB1P "71rNEn94Rfjj2byKuyqRzcPM4kq5Zdi4ZdEe6ZqxmjaaSz3VuUNXzhxiiXLRHnVmpzkTd8Z2KG92pUudhYqkW6DcYHVA4PRkNJEYtpfK2nML"
-#define STEALTH_ADDRESS_DECODE_ADDRESS_AAB1PT "7AA4vX3ZmyjrQGxHEmTZaef4Smpm1PaXcqKKH3ybTbWqrwjRXZE3LLf26rCLRJdLkRDTkk2vRdtH4iEaZpVFoAboEpSh4QbgYy6Pt91Mt1UK"
+#define STEALTH_DECODE_ADDRESS_A "hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i"
+#define STEALTH_DECODE_ADDRESS_AB "vJmwY32eS5VDC2C4GaZyXt7i4iCjzSMZ1XSd6KbkA7QbGE492akT2eZZMjCwWDqKRSYhnSA8Bgp78KeAYFVCi8ke5mELdoYMBNep7L"
+#define STEALTH_DECODE_ADDRESS_AAB "vK4cs6xzzf326HyUeoJCQng6FXLVK27PyJoRbYSMyT9TzgKds8JDerKaRQ72q9kEp2tQNE2KRvabvqH5n5Rv6yv6Yht9uWNcbDGD7d"
+#define STEALTH_DECODE_ADDRESS_AAB1 "vK4cs6xzzf326HyUeoJCQng6FXLVK27PyJoRbYSMyT9TzgKds8JDerKaRQ72q9kEp2tQNE2KRvabvqH5n5Rv6yv6Yht9uWN7nyPnY7"
+#define STEALTH_DECODE_ADDRESS_AAB10 "JubEFUfmd2J3i83L9qWNr7fDSbb2bE7PY6RvEzH6wsNW8Ls7Mw3hxKZHWr3SvEz4o6NWLguFmyK9yBPrzxtC7ssTXQKJnyMUpL71mzBgd"
+#define STEALTH_DECODE_ADDRESS_AAB1P "71rNEn94Rfjj2byKuyqRzcPM4kq5Zdi4ZdEe6ZqxmjaaSz3VuUNXzhxiiXLRHnVmpzkTd8Z2KG92pUudhYqkW6DcYHVA4PRkNJEYtpfK2nML"
+#define STEALTH_DECODE_ADDRESS_AAB1PT "7AA4vX3ZmyjrQGxHEmTZaef4Smpm1PaXcqKKH3ybTbWqrwjRXZE3LLf26rCLRJdLkRDTkk2vRdtH4iEaZpVFoAboEpSh4QbgYy6Pt91Mt1UK"
 
 // expectations
-#define STEALTH_ADDRESS_DECODE_A \
+#define STEALTH_DECODE_A \
     "stealth_address\n" \
     "{\n" \
     "    encoded hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i\n" \
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    }\n" \
     "    testnet false\n" \
     "}\n"
-#define STEALTH_ADDRESS_DECODE_AB \
+#define STEALTH_DECODE_AB \
     "stealth_address\n" \
     "{\n" \
     "    encoded vJmwY32eS5VDC2C4GaZyXt7i4iCjzSMZ1XSd6KbkA7QbGE492akT2eZZMjCwWDqKRSYhnSA8Bgp78KeAYFVCi8ke5mELdoYMBNep7L\n" \
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    }\n" \
     "    testnet false\n" \
     "}\n"
-#define STEALTH_ADDRESS_DECODE_AAB \
+#define STEALTH_DECODE_AAB \
     "stealth_address\n" \
     "{\n" \
     "    encoded vK4cs6xzzf326HyUeoJCQng6FXLVK27PyJoRbYSMyT9TzgKds8JDerKaRQ72q9kEp2tQNE2KRvabvqH5n5Rv6yv6Yht9uWNcbDGD7d\n" \
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    }\n" \
     "    testnet false\n" \
     "}\n"
-#define STEALTH_ADDRESS_DECODE_AAB1 \
+#define STEALTH_DECODE_AAB1 \
     "stealth_address\n" \
     "{\n" \
     "    encoded vK4cs6xzzf326HyUeoJCQng6FXLVK27PyJoRbYSMyT9TzgKds8JDerKaRQ72q9kEp2tQNE2KRvabvqH5n5Rv6yv6Yht9uWN7nyPnY7\n" \
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    }\n" \
     "    testnet false\n" \
     "}\n"
-#define STEALTH_ADDRESS_DECODE_AAB10 \
+#define STEALTH_DECODE_AAB10 \
     "stealth_address\n" \
     "{\n" \
     "    encoded JubEFUfmd2J3i83L9qWNr7fDSbb2bE7PY6RvEzH6wsNW8Ls7Mw3hxKZHWr3SvEz4o6NWLguFmyK9yBPrzxtC7ssTXQKJnyMUpL71mzBgd\n" \
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    }\n" \
     "    testnet false\n" \
     "}\n"
-#define STEALTH_ADDRESS_DECODE_AAB1P \
+#define STEALTH_DECODE_AAB1P \
     "stealth_address\n" \
     "{\n" \
     "    encoded 71rNEn94Rfjj2byKuyqRzcPM4kq5Zdi4ZdEe6ZqxmjaaSz3VuUNXzhxiiXLRHnVmpzkTd8Z2KG92pUudhYqkW6DcYHVA4PRkNJEYtpfK2nML\n" \
@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "    }\n" \
     "    testnet false\n" \
     "}\n"
-#define STEALTH_ADDRESS_DECODE_AAB1PT \
+#define STEALTH_DECODE_AAB1PT \
     "stealth_address\n" \
     "{\n" \
     "    encoded 7AA4vX3ZmyjrQGxHEmTZaef4Smpm1PaXcqKKH3ybTbWqrwjRXZE3LLf26rCLRJdLkRDTkk2vRdtH4iEaZpVFoAboEpSh4QbgYy6Pt91Mt1UK\n" \
@@ -133,60 +133,60 @@ BOOST_AUTO_TEST_SUITE(stealth_address_decode__invoke)
     "}\n"
 
 
-BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_decode__invoke__scan_key__okay_output)
 {
-    BX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_A });
+    BX_DECLARE_COMMAND(stealth_decode);
+    command.set_stealth_address_argument({ STEALTH_DECODE_ADDRESS_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_A);
+    BX_REQUIRE_OUTPUT(STEALTH_DECODE_A);
 }
 
-BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_spend_key__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_decode__invoke__scan_key_spend_key__okay_output)
 {
-    BX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_AB });
+    BX_DECLARE_COMMAND(stealth_decode);
+    command.set_stealth_address_argument({ STEALTH_DECODE_ADDRESS_AB });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AB);
+    BX_REQUIRE_OUTPUT(STEALTH_DECODE_AB);
 }
 
-BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_2spend_keys_reuse__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_decode__invoke__scan_key_2spend_keys_reuse__okay_output)
 {
-    BX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_AAB });
+    BX_DECLARE_COMMAND(stealth_decode);
+    command.set_stealth_address_argument({ STEALTH_DECODE_ADDRESS_AAB });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AAB);
+    BX_REQUIRE_OUTPUT(STEALTH_DECODE_AAB);
 }
 
-BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_2_spend_keys_reuse_1_signature__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_decode__invoke__scan_key_2_spend_keys_reuse_1_signature__okay_output)
 {
-    BX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_AAB1 });
+    BX_DECLARE_COMMAND(stealth_decode);
+    command.set_stealth_address_argument({ STEALTH_DECODE_ADDRESS_AAB1 });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AAB1);
+    BX_REQUIRE_OUTPUT(STEALTH_DECODE_AAB1);
 }
 
-BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_2_spend_keys_reuse_1_signature_leading_0_prefix__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_decode__invoke__scan_key_2_spend_keys_reuse_1_signature_leading_0_prefix__okay_output)
 {
-    BX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_AAB10 });
+    BX_DECLARE_COMMAND(stealth_decode);
+    command.set_stealth_address_argument({ STEALTH_DECODE_ADDRESS_AAB10 });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AAB10);
+    BX_REQUIRE_OUTPUT(STEALTH_DECODE_AAB10);
 }
 
-BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_2_spend_keys_reuse_1_signature_baadf00d_prefix__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_decode__invoke__scan_key_2_spend_keys_reuse_1_signature_baadf00d_prefix__okay_output)
 {
-    BX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_AAB1P });
+    BX_DECLARE_COMMAND(stealth_decode);
+    command.set_stealth_address_argument({ STEALTH_DECODE_ADDRESS_AAB1P });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AAB1P);
+    BX_REQUIRE_OUTPUT(STEALTH_DECODE_AAB1P);
 }
 
-BOOST_AUTO_TEST_CASE(stealth_address_decode__invoke__scan_key_2_spend_keys_reuse_1_signature_baadf00d_prefix_testnet__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_decode__invoke__scan_key_2_spend_keys_reuse_1_signature_baadf00d_prefix_testnet__okay_output)
 {
-    BX_DECLARE_COMMAND(stealth_address_decode);
-    command.set_stealth_address_argument({ STEALTH_ADDRESS_DECODE_ADDRESS_AAB1PT });
+    BX_DECLARE_COMMAND(stealth_decode);
+    command.set_stealth_address_argument({ STEALTH_DECODE_ADDRESS_AAB1PT });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(STEALTH_ADDRESS_DECODE_AAB1PT);
+    BX_REQUIRE_OUTPUT(STEALTH_DECODE_AAB1PT);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

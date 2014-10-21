@@ -18,23 +18,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/stealth-address-decode.hpp>
+#include <bitcoin/explorer/commands/stealth-public.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
-console_result stealth_address_decode::invoke(std::ostream& output,
+// This is the same as ec-add.
+console_result stealth_public::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
-    const auto& address = get_stealth_address_argument();
+    const auto& spend_pubkey = get_spend_pubkey_argument();
+    const auto& shared_secret = get_shared_secret_argument();
 
-    write_stream(output, address, encoding);
+    // We avoid bc::uncover_stealth because it eats the failure code.
+
+    ec_public sum(spend_pubkey);
+    if (!bc::ec_add(sum.data(), shared_secret))
+    {
+        error << BX_STEALTH_PUBLIC_OUT_OF_RANGE << std::endl;
+        return console_result::failure;
+    }
+
+    output << sum << std::endl;
     return console_result::okay;
 }
-

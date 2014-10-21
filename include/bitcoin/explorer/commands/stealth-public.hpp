@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_STEALTH_UNCOVER_PUBLIC_HPP
-#define BX_STEALTH_UNCOVER_PUBLIC_HPP
+#ifndef BX_STEALTH_PUBLIC_HPP
+#define BX_STEALTH_PUBLIC_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -64,9 +64,15 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the stealth-uncover-public command.
+ * Various localizable strings.
  */
-class stealth_uncover_public 
+#define BX_STEALTH_PUBLIC_OUT_OF_RANGE \
+    "Function exceeds valid range."
+
+/**
+ * Class to implement the stealth-public command.
+ */
+class stealth_public 
     : public command
 {
 public:
@@ -76,7 +82,7 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "stealth-uncover-public";
+        return "stealth-public";
     }
 
     /**
@@ -92,7 +98,7 @@ public:
      */
     BCX_API virtual const char* name()
     {
-        return stealth_uncover_public::symbol();
+        return stealth_public::symbol();
     }
 
     /**
@@ -119,9 +125,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("EPHEMERAL_PUBKEY", 1)
-            .add("SCAN_SECRET", 1)
-            .add("SPEND_PUBKEY", 1);
+            .add("SPEND_PUBKEY", 1)
+            .add("SHARED_SECRET", 1);
     }
 
 	/**
@@ -132,6 +137,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_shared_secret_argument(), "SHARED_SECRET", variables, input);
     }
 
     /**
@@ -155,19 +161,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "EPHEMERAL_PUBKEY",
-            value<primitives::ec_public>(&argument_.ephemeral_pubkey)->required(),
-            "The Base16 ephemeral EC public key retrieved from the stealth payment metadata."
-        )
-        (
-            "SCAN_SECRET",
-            value<primitives::ec_private>(&argument_.scan_secret)->required(),
-            "The Base16 EC private key corresponding to the public key required to generate a stealth payment."
-        )
-        (
             "SPEND_PUBKEY",
             value<primitives::ec_public>(&argument_.spend_pubkey)->required(),
-            "A Base16 EC public key corresponding to a private key that can spend payments to the stealth address."
+            "The Base16 EC spend public key of a stealth address."
+        )
+        (
+            "SHARED_SECRET",
+            value<primitives::ec_private>(&argument_.shared_secret),
+            "The Base16 EC shared secret corresponding to the SPEND_PUBKEY. If not specified the key is read from STDIN."
         );
 
         return options;
@@ -183,40 +184,6 @@ public:
         std::ostream& cerr);
 
     /* Properties */
-
-    /**
-     * Get the value of the EPHEMERAL_PUBKEY argument.
-     */
-    BCX_API virtual primitives::ec_public& get_ephemeral_pubkey_argument()
-    {
-        return argument_.ephemeral_pubkey;
-    }
-
-    /**
-     * Set the value of the EPHEMERAL_PUBKEY argument.
-     */
-    BCX_API virtual void set_ephemeral_pubkey_argument(
-        const primitives::ec_public& value)
-    {
-        argument_.ephemeral_pubkey = value;
-    }
-
-    /**
-     * Get the value of the SCAN_SECRET argument.
-     */
-    BCX_API virtual primitives::ec_private& get_scan_secret_argument()
-    {
-        return argument_.scan_secret;
-    }
-
-    /**
-     * Set the value of the SCAN_SECRET argument.
-     */
-    BCX_API virtual void set_scan_secret_argument(
-        const primitives::ec_private& value)
-    {
-        argument_.scan_secret = value;
-    }
 
     /**
      * Get the value of the SPEND_PUBKEY argument.
@@ -235,6 +202,23 @@ public:
         argument_.spend_pubkey = value;
     }
 
+    /**
+     * Get the value of the SHARED_SECRET argument.
+     */
+    BCX_API virtual primitives::ec_private& get_shared_secret_argument()
+    {
+        return argument_.shared_secret;
+    }
+
+    /**
+     * Set the value of the SHARED_SECRET argument.
+     */
+    BCX_API virtual void set_shared_secret_argument(
+        const primitives::ec_private& value)
+    {
+        argument_.shared_secret = value;
+    }
+
 private:
 
     /**
@@ -245,15 +229,13 @@ private:
     struct argument
     {
         argument()
-          : ephemeral_pubkey(),
-            scan_secret(),
-            spend_pubkey()
+          : spend_pubkey(),
+            shared_secret()
         {
         }
 
-        primitives::ec_public ephemeral_pubkey;
-        primitives::ec_private scan_secret;
         primitives::ec_public spend_pubkey;
+        primitives::ec_private shared_secret;
     } argument_;
 
     /**

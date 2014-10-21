@@ -146,13 +146,13 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/sha256.hpp \
     include/bitcoin/explorer/commands/sha512.hpp \
     include/bitcoin/explorer/commands/showblkhead.hpp \
-    include/bitcoin/explorer/commands/stealth-address-decode.hpp \
-    include/bitcoin/explorer/commands/stealth-address-encode.hpp \
-    include/bitcoin/explorer/commands/stealth-new.hpp \
+    include/bitcoin/explorer/commands/stealth-decode.hpp \
+    include/bitcoin/explorer/commands/stealth-encode.hpp \
+    include/bitcoin/explorer/commands/stealth-initiate.hpp \
     include/bitcoin/explorer/commands/stealth-newkey.hpp \
-    include/bitcoin/explorer/commands/stealth-shared-secret.hpp \
-    include/bitcoin/explorer/commands/stealth-uncover-public.hpp \
-    include/bitcoin/explorer/commands/stealth-uncover-secret.hpp \
+    include/bitcoin/explorer/commands/stealth-public.hpp \
+    include/bitcoin/explorer/commands/stealth-secret.hpp \
+    include/bitcoin/explorer/commands/stealth-shared.hpp \
     include/bitcoin/explorer/commands/tx-decode.hpp \
     include/bitcoin/explorer/commands/tx-encode.hpp \
     include/bitcoin/explorer/commands/tx-sign.hpp \
@@ -284,13 +284,13 @@ libbitcoin_explorer_la_SOURCES += \
     src/commands/sha256.cpp \
     src/commands/sha512.cpp \
     src/commands/showblkhead.cpp \
-    src/commands/stealth-address-decode.cpp \
-    src/commands/stealth-address-encode.cpp \
-    src/commands/stealth-new.cpp \
+    src/commands/stealth-decode.cpp \
+    src/commands/stealth-encode.cpp \
+    src/commands/stealth-initiate.cpp \
     src/commands/stealth-newkey.cpp \
-    src/commands/stealth-shared-secret.cpp \
-    src/commands/stealth-uncover-public.cpp \
-    src/commands/stealth-uncover-secret.cpp \
+    src/commands/stealth-public.cpp \
+    src/commands/stealth-secret.cpp \
+    src/commands/stealth-shared.cpp \
     src/commands/tx-decode.cpp \
     src/commands/tx-encode.cpp \
     src/commands/tx-sign.cpp \
@@ -419,13 +419,13 @@ libbitcoin_explorer_test_SOURCES += \
     test/commands/sha256.cpp \
     test/commands/sha512.cpp \
     test/commands/showblkhead.cpp \
-    test/commands/stealth-address-decode.cpp \
-    test/commands/stealth-address-encode.cpp \
-    test/commands/stealth-new.cpp \
+    test/commands/stealth-decode.cpp \
+    test/commands/stealth-encode.cpp \
+    test/commands/stealth-initiate.cpp \
     test/commands/stealth-newkey.cpp \
-    test/commands/stealth-shared-secret.cpp \
-    test/commands/stealth-uncover-public.cpp \
-    test/commands/stealth-uncover-secret.cpp \
+    test/commands/stealth-public.cpp \
+    test/commands/stealth-secret.cpp \
+    test/commands/stealth-shared.cpp \
     test/commands/tx-decode.cpp \
     test/commands/tx-encode.cpp \
     test/commands/tx-sign.cpp \

@@ -106,13 +106,13 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<sha256>());
     func(make_shared<sha512>());
     func(make_shared<showblkhead>());
-    func(make_shared<stealth_address_decode>());
-    func(make_shared<stealth_address_encode>());
-    func(make_shared<stealth_new>());
+    func(make_shared<stealth_decode>());
+    func(make_shared<stealth_encode>());
+    func(make_shared<stealth_initiate>());
     func(make_shared<stealth_newkey>());
-    func(make_shared<stealth_shared_secret>());
-    func(make_shared<stealth_uncover_public>());
-    func(make_shared<stealth_uncover_secret>());
+    func(make_shared<stealth_public>());
+    func(make_shared<stealth_secret>());
+    func(make_shared<stealth_shared>());
     func(make_shared<tx_decode>());
     func(make_shared<tx_encode>());
     func(make_shared<tx_sign>());
@@ -266,20 +266,20 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha512>();
     if (symbol == showblkhead::symbol())
         return make_shared<showblkhead>();
-    if (symbol == stealth_address_decode::symbol())
-        return make_shared<stealth_address_decode>();
-    if (symbol == stealth_address_encode::symbol())
-        return make_shared<stealth_address_encode>();
-    if (symbol == stealth_new::symbol())
-        return make_shared<stealth_new>();
+    if (symbol == stealth_decode::symbol())
+        return make_shared<stealth_decode>();
+    if (symbol == stealth_encode::symbol())
+        return make_shared<stealth_encode>();
+    if (symbol == stealth_initiate::symbol())
+        return make_shared<stealth_initiate>();
     if (symbol == stealth_newkey::symbol())
         return make_shared<stealth_newkey>();
-    if (symbol == stealth_shared_secret::symbol())
-        return make_shared<stealth_shared_secret>();
-    if (symbol == stealth_uncover_public::symbol())
-        return make_shared<stealth_uncover_public>();
-    if (symbol == stealth_uncover_secret::symbol())
-        return make_shared<stealth_uncover_secret>();
+    if (symbol == stealth_public::symbol())
+        return make_shared<stealth_public>();
+    if (symbol == stealth_secret::symbol())
+        return make_shared<stealth_secret>();
+    if (symbol == stealth_shared::symbol())
+        return make_shared<stealth_shared>();
     if (symbol == tx_decode::symbol())
         return make_shared<tx_decode>();
     if (symbol == tx_encode::symbol())
@@ -366,12 +366,12 @@ std::string formerly(const string& former)
         return send_tx_node::symbol();
     if (former == send_tx_p2p::formerly())
         return send_tx_p2p::symbol();
-    if (former == stealth_address_decode::formerly())
-        return stealth_address_decode::symbol();
-    if (former == stealth_new::formerly())
-        return stealth_new::symbol();
-    if (former == stealth_uncover_public::formerly())
-        return stealth_uncover_public::symbol();
+    if (former == stealth_decode::formerly())
+        return stealth_decode::symbol();
+    if (former == stealth_public::formerly())
+        return stealth_public::symbol();
+    if (former == stealth_secret::formerly())
+        return stealth_secret::symbol();
     if (former == tx_sign::formerly())
         return tx_sign::symbol();
     if (former == validate_tx::formerly())

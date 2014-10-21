@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_STEALTH_NEW_HPP
-#define BX_STEALTH_NEW_HPP
+#ifndef BX_STEALTH_ENCODE_HPP
+#define BX_STEALTH_ENCODE_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -64,9 +64,19 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the stealth-new command.
+ * Various localizable strings.
  */
-class stealth_new 
+#define BX_STEALTH_ENCODE_PREFIX_TOO_LONG \
+    "The prefix is limited to 32 bits."
+#define BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW \
+    "The number of signatures is greater than the number of SPEND_PUBKEYs."
+#define BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED \
+    "WARNING: multiple signature stealth transactions are not yet fully supported."
+
+/**
+ * Class to implement the stealth-encode command.
+ */
+class stealth_encode 
     : public command
 {
 public:
@@ -76,23 +86,16 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "stealth-new";
+        return "stealth-encode";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    BCX_API static const char* formerly()
-    {
-        return "stealth-initiate";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     BCX_API virtual const char* name()
     {
-        return stealth_new::symbol();
+        return stealth_encode::symbol();
     }
 
     /**
@@ -108,7 +111,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Create a new stealth public key from which a payment address can be generated.";
+        return "Encode a stealth payment address.";
     }
 
     /**
@@ -119,9 +122,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("EPHEMERAL_SECRET", 1)
             .add("SCAN_PUBKEY", 1)
-            .add("SPEND_PUBKEY", 1);
+            .add("SPEND_PUBKEY", -1);
     }
 
 	/**
@@ -155,19 +157,24 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "EPHEMERAL_SECRET",
-            value<primitives::ec_private>(&argument_.ephemeral_secret)->required(),
-            "The Base16 ephemeral EC private key used to generate stealth payment metadata. A unique value should be used for each stealth payment."
+            "prefix,p",
+            value<primitives::base2>(&option_.prefix),
+            "The Base2 stealth prefix that will be used to locate payments."
+        )
+        (
+            "signatures,s",
+            value<primitives::base10>(&option_.signatures),
+            "Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
         )
         (
             "SCAN_PUBKEY",
             value<primitives::ec_public>(&argument_.scan_pubkey)->required(),
-            "The Base16 EC public key required to generate a stealth address."
+            "The Base16 EC public key required to generate a payment."
         )
         (
             "SPEND_PUBKEY",
-            value<primitives::ec_public>(&argument_.spend_pubkey)->required(),
-            "A Base16 EC public key corresponding to a private key that can spend payments to the stealth address."
+            value<std::vector<primitives::ec_public>>(&argument_.spend_pubkeys),
+            "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
         );
 
         return options;
@@ -183,23 +190,6 @@ public:
         std::ostream& cerr);
 
     /* Properties */
-
-    /**
-     * Get the value of the EPHEMERAL_SECRET argument.
-     */
-    BCX_API virtual primitives::ec_private& get_ephemeral_secret_argument()
-    {
-        return argument_.ephemeral_secret;
-    }
-
-    /**
-     * Set the value of the EPHEMERAL_SECRET argument.
-     */
-    BCX_API virtual void set_ephemeral_secret_argument(
-        const primitives::ec_private& value)
-    {
-        argument_.ephemeral_secret = value;
-    }
 
     /**
      * Get the value of the SCAN_PUBKEY argument.
@@ -219,20 +209,54 @@ public:
     }
 
     /**
-     * Get the value of the SPEND_PUBKEY argument.
+     * Get the value of the SPEND_PUBKEY arguments.
      */
-    BCX_API virtual primitives::ec_public& get_spend_pubkey_argument()
+    BCX_API virtual std::vector<primitives::ec_public>& get_spend_pubkeys_argument()
     {
-        return argument_.spend_pubkey;
+        return argument_.spend_pubkeys;
     }
 
     /**
-     * Set the value of the SPEND_PUBKEY argument.
+     * Set the value of the SPEND_PUBKEY arguments.
      */
-    BCX_API virtual void set_spend_pubkey_argument(
-        const primitives::ec_public& value)
+    BCX_API virtual void set_spend_pubkeys_argument(
+        const std::vector<primitives::ec_public>& value)
     {
-        argument_.spend_pubkey = value;
+        argument_.spend_pubkeys = value;
+    }
+
+    /**
+     * Get the value of the prefix option.
+     */
+    BCX_API virtual primitives::base2& get_prefix_option()
+    {
+        return option_.prefix;
+    }
+
+    /**
+     * Set the value of the prefix option.
+     */
+    BCX_API virtual void set_prefix_option(
+        const primitives::base2& value)
+    {
+        option_.prefix = value;
+    }
+
+    /**
+     * Get the value of the signatures option.
+     */
+    BCX_API virtual primitives::base10& get_signatures_option()
+    {
+        return option_.signatures;
+    }
+
+    /**
+     * Set the value of the signatures option.
+     */
+    BCX_API virtual void set_signatures_option(
+        const primitives::base10& value)
+    {
+        option_.signatures = value;
     }
 
 private:
@@ -245,15 +269,13 @@ private:
     struct argument
     {
         argument()
-          : ephemeral_secret(),
-            scan_pubkey(),
-            spend_pubkey()
+          : scan_pubkey(),
+            spend_pubkeys()
         {
         }
 
-        primitives::ec_private ephemeral_secret;
         primitives::ec_public scan_pubkey;
-        primitives::ec_public spend_pubkey;
+        std::vector<primitives::ec_public> spend_pubkeys;
     } argument_;
 
     /**
@@ -264,9 +286,13 @@ private:
     struct option
     {
         option()
+          : prefix(),
+            signatures()
         {
         }
 
+        primitives::base2 prefix;
+        primitives::base10 signatures;
     } option_;
 };
 

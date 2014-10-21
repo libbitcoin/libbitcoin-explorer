@@ -18,29 +18,39 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/stealth-uncover-public.hpp>
+#include <bitcoin/explorer/commands/stealth-shared.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-console_result stealth_uncover_public::invoke(std::ostream& output,
+// This is the same as ec-multiply + sha256.
+// Pass either (ephem_secret, scan_pubkey) or (scan_secret, ephem_pubkey).
+console_result stealth_shared::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& scan_secret = get_scan_secret_argument();
-    const auto& spend_pubkey = get_spend_pubkey_argument();
-    const auto& ephemeral_pubkey = get_ephemeral_pubkey_argument();
+    const auto& secret = get_secret_argument();
+    const auto& pubkey = get_pubkey_argument();
 
-    auto scan_pubkey = uncover_stealth(ephemeral_pubkey, scan_secret,
-        spend_pubkey);
+    // We avoid bc::shared_secret because it eats the failure code.
 
-    output << ec_public(scan_pubkey) << std::endl;
+    ec_public product(pubkey);
+    if (!bc::ec_multiply(product.data(), secret))
+    {
+        error << BX_STEALTH_SHARED_OUT_OF_RANGE << std::endl;
+        return console_result::failure;
+    }
+
+    const auto hash = sha256_hash(product);
+
+    output << base16(hash) << std::endl;
     return console_result::okay;
 }
+

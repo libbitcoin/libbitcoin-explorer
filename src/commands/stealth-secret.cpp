@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
@@ -18,29 +18,35 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/stealth-new.hpp>
+#include <bitcoin/explorer/commands/stealth-secret.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-console_result stealth_new::invoke(std::ostream& output, std::ostream& error)
+// This is the same as ec-add-secrets, except limited to two.
+console_result stealth_secret::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
-    const auto& scan_pubkey = get_scan_pubkey_argument();
-    const auto& spend_pubkey = get_spend_pubkey_argument();
-    const auto& ephemeral_secret = get_ephemeral_secret_argument();
+    const auto& scan_secret = get_spend_secret_argument();
+    const auto& shared_secret = get_shared_secret_argument();
 
-    auto ephemeral_pubkey = initiate_stealth(ephemeral_secret, scan_pubkey,
-        spend_pubkey);
+    // We avoid bc::uncover_stealth_secret because it eats the failure code.
 
-    output << ec_public(ephemeral_pubkey) << std::endl;
+    ec_private sum(scan_secret);
+    if (!bc::ec_add(sum.data(), shared_secret))
+    {
+        error << BX_STEALTH_SECRET_OUT_OF_RANGE << std::endl;
+        return console_result::failure;
+    }
+
+    output << sum << std::endl;
     return console_result::okay;
 }
 

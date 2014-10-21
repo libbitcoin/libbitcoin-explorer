@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_STEALTH_ADDRESS_DECODE_HPP
-#define BX_STEALTH_ADDRESS_DECODE_HPP
+#ifndef BX_STEALTH_DECODE_HPP
+#define BX_STEALTH_DECODE_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -64,9 +64,9 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the stealth-address-decode command.
+ * Class to implement the stealth-decode command.
  */
-class stealth_address_decode 
+class stealth_decode 
     : public command
 {
 public:
@@ -76,7 +76,7 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "stealth-address-decode";
+        return "stealth-decode";
     }
 
     /**
@@ -92,7 +92,7 @@ public:
      */
     BCX_API virtual const char* name()
     {
-        return stealth_address_decode::symbol();
+        return stealth_decode::symbol();
     }
 
     /**
@@ -161,7 +161,7 @@ public:
         (
             "STEALTH_ADDRESS",
             value<primitives::stealth>(&argument_.stealth_address),
-            "The stealth payment address."
+            "The stealth payment address. If not specified the address is read from STDIN."
         );
 
         return options;

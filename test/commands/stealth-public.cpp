@@ -23,24 +23,22 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(stealth_uncover_secret__invoke)
+BOOST_AUTO_TEST_SUITE(stealth_public__invoke)
 
-// vectors
-#define BX_STEALTH_UNCOVER_SECRET_SCAN_SECRET "af4afaeb40810e5f8abdbb177c31a2d310913f91cf556f5350bca10cbfe8b9ec"
-#define BX_STEALTH_UNCOVER_SECRET_SPEND_SECRET "d39758028e201e8edf6d6eec6910ae4038f9b1db3f2d4e2d109ed833be94a026"
-#define BX_STEALTH_UNCOVER_SECRET_EPHEMERAL_PUBKEY "0247140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36"
+// vector
+#define BX_STEALTH_PUBLIC_SPEND_PUBKEY "024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969"
+#define BX_STEALTH_PUBLIC_SHARED_SECRET "78dac4cad97b62efc67aff4890c3bc799815d144c5f93b171f559b43bca52590"
 
-// expecatations
-#define BX_STEALTH_UNCOVER_SECRET_STEALTH_PRIVATE_KEY "4c721ccd679b817ea5e86e34f9d46abb1660a63955dde908702214eaab038475"
+// expecatation
+#define BX_STEALTH_PUBLIC_STEALTH_PUBLIC_KEY "03ac9e60013853128b42a1324609bac2ccff6a0b4844b6301f1f552e15ee14c7a5"
 
-BOOST_AUTO_TEST_CASE(stealth_uncover_secret__invoke__scenario_receiver__okay_output)
+BOOST_AUTO_TEST_CASE(stealth_public__invoke__always__okay_output)
 {
-    BX_DECLARE_COMMAND(stealth_uncover_secret);
-    command.set_scan_secret_argument({ BX_STEALTH_UNCOVER_SECRET_SCAN_SECRET });
-    command.set_spend_secret_argument({ BX_STEALTH_UNCOVER_SECRET_SPEND_SECRET });
-    command.set_ephemeral_pubkey_argument({ BX_STEALTH_UNCOVER_SECRET_EPHEMERAL_PUBKEY });
+    BX_DECLARE_COMMAND(stealth_public);
+    command.set_shared_secret_argument({ BX_STEALTH_PUBLIC_SHARED_SECRET });
+    command.set_spend_pubkey_argument({ BX_STEALTH_PUBLIC_SPEND_PUBKEY });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_STEALTH_UNCOVER_SECRET_STEALTH_PRIVATE_KEY "\n");
+    BX_REQUIRE_OUTPUT(BX_STEALTH_PUBLIC_STEALTH_PUBLIC_KEY "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
