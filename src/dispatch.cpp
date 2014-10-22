@@ -205,6 +205,11 @@ bool load_variables(variables_map& variables, std::string& message,
         message = e.what();
         return false;
     }
+    catch (...)
+    {
+        message = "unexpected exception";
+        return false;
+    }
 
     return true;
 }
