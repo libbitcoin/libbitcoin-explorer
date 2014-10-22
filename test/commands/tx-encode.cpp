@@ -26,7 +26,6 @@ BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(tx_encode__invoke)
 
 // Vector: sx.dyne.org/offlinetx.html
-// Note that the output index is incorrect on part of the page.
 
 #define TX_ENCODE_INPUT_A "97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1:7"
 #define TX_ENCODE_INPUT_B "97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3:1"

@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__okay)
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
-// This test is fragile, wil eventually break.
+// This test is fragile, will eventually break.
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);

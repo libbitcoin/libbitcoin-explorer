@@ -131,14 +131,15 @@ ptree prop_list(const std::vector<balance_row>& rows,
     ptree tree;
     uint64_t total_recieved = 0;
     uint64_t confirmed_balance = 0;
-    uint64_t unconfirmed_balance = 0;
+    uint64_t unspent_balance = 0;
 
     for (const auto& row : rows)
     {
         total_recieved += row.value;
 
+        // spend unconfirmed (or no spend attempted)
         if (row.spend.hash == null_hash)
-            unconfirmed_balance += row.value;
+            unspent_balance += row.value;
 
         if (row.output_height != 0 &&
             (row.spend.hash == null_hash || row.spend_height == 0))
@@ -146,9 +147,9 @@ ptree prop_list(const std::vector<balance_row>& rows,
     }
 
     tree.put("address", address(balance_address));
-    tree.put("received", total_recieved);
-    tree.put("unconfirmed", unconfirmed_balance);
     tree.put("confirmed", confirmed_balance);
+    tree.put("received", total_recieved);
+    tree.put("unspent", unspent_balance);
     return tree;
 }
 ptree prop_tree(const std::vector<balance_row>& rows,

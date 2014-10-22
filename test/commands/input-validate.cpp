@@ -29,13 +29,13 @@ BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 #define INPUT_VALIDATE_PUBLIC_KEY_A "03c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0"
 
 // This is the signature INPUT_SIGN_SIGNATURE_A for the input signed by INPUT_SIGN_PRIVATE_KEY_A.
-#define INPUT_VALIDATE_SIGNATURE_A "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202204fcc407ce9b6f719ee7d009aeb8d8d21423f400a5b871394ca32e00c26b348dd"
+#define INPUT_VALIDATE_SIGNATURE_A "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202201035fe810e283bcf394485c6a9dfd117ad9f684cdd83d36453718f5d0491b9dd"
 
 // This is the previous output which was signed as the new tx input.
 #define INPUT_VALIDATE_PREVOUT_SCRIPT_A "dup hash160 [ 88350574280395ad2c3e2ee20e322073d94e5e40 ] equalverify checksig"
 
 // This is the new transaction which includes the previous output reference (as input) and the new outputs, all of which which were signed.
-#define INPUT_VALIDATE_TX_A "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000069463044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202204fcc407ce9b6f719ee7d009aeb8d8d21423f400a5b871394ca32e00c26b348dd2103c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000"
+#define INPUT_VALIDATE_TX_A "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000069463044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202201035fe810e283bcf394485c6a9dfd117ad9f684cdd83d36453718f5d0491b9dd2103c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0ffffffff01905f0100000000001976a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac00000000"
 
 // One input no output.
 #define INPUT_VALIDATE_TX_B "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970000000000ffffffff0000000000"
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_validate);
-    command.set_sign_type_option({ "single" });
+    command.set_sign_type_option({ "all" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
 {
     BX_DECLARE_COMMAND(input_validate);
     command.set_index_option(42);
-    command.set_sign_type_option({ "single" });
+    command.set_sign_type_option({ "all" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
 BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_output)
 {
     BX_DECLARE_COMMAND(input_validate);
-    command.set_sign_type_option({ "single" });
+    command.set_sign_type_option({ "all" });
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
