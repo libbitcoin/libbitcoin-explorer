@@ -11,7 +11,7 @@
 #  3. Validate Deployment: this file is both deployment and verification build.
 #  3. Be Declarative: make behavior obvious by not using conditional statements.
 #  4. Be Explicit: not everyone speaks the same code or human languages.
-#  5. Enable Least Privilege: don't require sudo.
+#  5. Enable Least Privilege: don't require more privilege than necessary.
 #  6. Do Not Repeat Yourself: do not repeat yourself.
 
 # This script will build libbitcoin using this relative directory.
@@ -31,6 +31,9 @@ SECP256K1_OPTIONS=\
 "--enable-benchmark=no "\
 "--enable-tests=no "\
 "--enable-endomorphism=no"
+
+ZMQ_OPTIONS=\
+"--with-libsodium=yes"
 
 # http://bit.ly/1pKbuFP
 # Run all unit and component tests (excludes 'network' group).
@@ -78,7 +81,10 @@ automake_current_directory()
         make --silent
     fi
 
+    # Sudo can be removed here if installing to a local directory (--prefix).
     sudo make install
+    
+    # This line can be removed it dynamic linking is not required.
     sudo ldconfig
 }
 
@@ -166,7 +172,7 @@ build_library()
 
     # Download, build and install all unpackaged dependencies.
     build_from_github jedisct1 libsodium master "$SEQUENTIAL" "$@"
-    build_from_github zeromq libzmq master "$SEQUENTIAL" "$@"
+    build_from_github zeromq libzmq master "$SEQUENTIAL" "$@" $ZMQ_OPTIONS
     build_from_github zeromq czmq master "$SEQUENTIAL" "$@"
     build_from_github zeromq czmqpp master "$SEQUENTIAL" "$@"
     build_from_github bitcoin secp256k1 master "$SEQUENTIAL" "$@" $SECP256K1_OPTIONS
