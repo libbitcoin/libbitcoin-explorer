@@ -214,6 +214,5 @@ bool load_variables(variables_map& variables, std::string& message,
     return true;
 }
 
-
 } // namespace explorer
 } // namespace libbitcoin
