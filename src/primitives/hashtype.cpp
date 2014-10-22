@@ -39,7 +39,7 @@ static const char* hashtype_single = "single";
 static const char* hashtype_anyone_can_pay = "anyone_can_pay";
 
 hashtype::hashtype()
-    : hashtype(sighash::single)
+    : hashtype(sighash::all)
 {
 }
 

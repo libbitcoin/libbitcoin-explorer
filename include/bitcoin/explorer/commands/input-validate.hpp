@@ -173,7 +173,7 @@ public:
         (
             "sign_type,s",
             value<primitives::hashtype>(&option_.sign_type),
-            "A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'single'."
+            "A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'."
         )
         (
             "EC_PUBLIC_KEY",
