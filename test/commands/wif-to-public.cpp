@@ -41,5 +41,15 @@ BOOST_AUTO_TEST_CASE(wif_to_public__invoke__mainnet_uncompressed_wif__okay_outpu
     BX_REQUIRE_OUTPUT("0447140d2811498679fe9a0467a75ac7aa581476c102d27377bc0232635af8ad36e87bb04f401be3b770a0f3e2267a6c3b14a3074f6b5ce4419f1fcdc1ca4b1cb6\n");
 }
 
+// vectors: en.bitcoin.it/wiki/Wallet_import_format
+
+BOOST_AUTO_TEST_CASE(wif_to_public__wiki_uncompressed_wif__okay_output)
+{
+    BX_DECLARE_COMMAND(wif_to_public);
+    command.set_wif_argument({ "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("04d0de0aaeaefad02b8bdc8a01a1b8b11c696bd3d66a2c5f10780d95b7df42645cd85228a6fb29940e858e7e55842ae2bd115d1ed7cc0e82d934e929c97648cb0a\n");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

@@ -43,5 +43,16 @@ BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__mainnet_uncompressed_key__okay_output)
     BX_REQUIRE_OUTPUT("5JuBiWpsjfXNxsWuc39KntBAiAiAP2bHtrMGaYGKCppq4MuVcQL\n");
 }
 
+// vectors: en.bitcoin.it/wiki/Wallet_import_format
+
+BOOST_AUTO_TEST_CASE(ec_to_wif__invoke__wiki_uncompressed_key__okay_output)
+{
+    BX_DECLARE_COMMAND(ec_to_wif);
+    command.set_uncompressed_option(true);
+    command.set_ec_private_key_argument({ "0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ\n");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
