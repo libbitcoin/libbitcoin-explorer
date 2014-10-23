@@ -143,6 +143,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_transaction_argument(), "TRANSACTION", variables, input);
     }
 
     /**
@@ -187,7 +188,7 @@ public:
         )
         (
             "TRANSACTION",
-            value<primitives::transaction>(&argument_.transaction)->required(),
+            value<primitives::transaction>(&argument_.transaction),
             "The Base16 transaction. If not specified the transaction is read from STDIN."
         );
 
