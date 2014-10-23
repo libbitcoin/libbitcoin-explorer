@@ -171,11 +171,6 @@ public:
             "The ordinal position of the input within the transaction, defaults to zero."
         )
         (
-            "sign_type,s",
-            value<primitives::hashtype>(&option_.sign_type),
-            "A token that indicates how the transaction was hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'."
-        )
-        (
             "EC_PUBLIC_KEY",
             value<primitives::ec_public>(&argument_.ec_public_key)->required(),
             "The Base16 EC public key to verify against."
@@ -188,7 +183,7 @@ public:
         (
             "SIGNATURE",
             value<primitives::base16>(&argument_.signature)->required(),
-            "The Base16 signature to validate."
+            "The Base16 Bitcoin signature to validate."
         )
         (
             "TRANSACTION",
@@ -295,23 +290,6 @@ public:
         option_.index = value;
     }
 
-    /**
-     * Get the value of the sign_type option.
-     */
-    BCX_API virtual primitives::hashtype& get_sign_type_option()
-    {
-        return option_.sign_type;
-    }
-
-    /**
-     * Set the value of the sign_type option.
-     */
-    BCX_API virtual void set_sign_type_option(
-        const primitives::hashtype& value)
-    {
-        option_.sign_type = value;
-    }
-
 private:
 
     /**
@@ -343,13 +321,11 @@ private:
     struct option
     {
         option()
-          : index(),
-            sign_type()
+          : index()
         {
         }
 
         uint32_t index;
-        primitives::hashtype sign_type;
     } option_;
 };
 

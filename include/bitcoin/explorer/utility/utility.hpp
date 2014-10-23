@@ -260,23 +260,6 @@ BCX_API std::string read_stream(std::istream& stream);
  */
 BCX_API script_type script_to_raw_data_script(const script_type& script);
 
-/*
- * Create a signature for a single transaction input.
- * Sign the single input corresponding output to our index.
- * @param[out] signature    The signature.
- * @param[in]  transaction  The script to convert.
- * @param[in]  index        The input ordinal position within the transaction.
- * @param[in]  script       The previous output (prevout) script.
- * @param[in]  secret       The secret to use for signing.
- * @param[in]  nonce        The nonce (use once) random value for signing.
- * @param[in]  hash_type    Signal which inputs to sign (defaults to single).
- * @return                  True if successful.
- */
-BCX_API bool sign_transaction(data_chunk& signature,
-    const tx_type& transaction,  uint32_t index, const script_type& script, 
-    const ec_secret& secret, const data_chunk& nonce, 
-    uint32_t hash_type=sighash::single);
-
 /**
  * Sleep for the specified number of milliseconds.
  * @param[in]  milliseconds  The number of milliseconds to sleep.
@@ -314,20 +297,6 @@ BCX_API void trim_left(std::string& value,
  * @return              True if input checksum validates.
  */
 BCX_API bool unwrap(wrapped_data& data, const data_chunk& wrapped);
-
-/**
- * Validate a transaction input signature.
- * @param[in]  tx         The transaction to validate against.
- * @param[in]  index      The ordinal position of the input in the tx.
- * @param[in]  pubkey     The public key to validate against.
- * @param[in]  script     The code script.
- * @param[in]  signature  Thesignature to validate.
- * @param[in]  hash_type  The type of signature hash for which to validate.
- * @return                True if the signature is valid for the context.
- */
-BCX_API bool valid_signature(const tx_type& tx, uint32_t index,
-    const ec_point& pubkey, const script_type& script,
-    const data_chunk& signature, uint32_t hash_type=sighash::single);
 
 /**
  * Unwrap a wrapped payload.

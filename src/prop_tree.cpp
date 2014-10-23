@@ -87,25 +87,25 @@ ptree prop_list(const history_row& row)
 {
     ptree tree;
 
+    tree.put("received.hash", base16(row.output.hash));
+
+    // missing received.height implies pending
+    if (row.output_height != 0)
+        tree.put("received.height", row.output_height);
+
+    tree.put("received.index", row.output.index);
+
     // missing input implies unspent
     if (row.spend.hash != null_hash)
     {
-        tree.put("input.hash", base16(row.spend.hash));
+        tree.put("spent.hash", base16(row.spend.hash));
 
         // missing input.height implies spend unconfirmed
         if (row.spend_height != 0)
-            tree.put("input.height", row.spend_height);
+            tree.put("spent.height", row.spend_height);
 
-        tree.put("input.index", row.spend.index);
+        tree.put("spent.index", row.spend.index);
     }
-
-    tree.put("output.hash", base16(row.output.hash));
-
-    // missing output.height implies pending
-    if (row.output_height != 0)
-        tree.put("output.height", row.output_height);
-
-    tree.put("output.index", row.output.index);
 
     tree.put("value", row.value);
     return tree;

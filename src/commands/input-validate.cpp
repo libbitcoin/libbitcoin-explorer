@@ -23,7 +23,6 @@
 #include <iostream>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -34,7 +33,6 @@ console_result input_validate::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto index = get_index_option();
-    const auto hash_type = get_sign_type_option();
     const tx_type& tx = get_transaction_argument();
     const auto& public_key = get_ec_public_key_argument();
     const auto& script = get_prevout_script_argument();
@@ -46,7 +44,7 @@ console_result input_validate::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    if (!valid_signature(tx, index, public_key, script, signature, hash_type))
+    if (!check_signature(signature, public_key, script, tx, index))
     {
         output << BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;
         return console_result::invalid;
