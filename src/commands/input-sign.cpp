@@ -38,10 +38,10 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto index = get_index_option();
     const auto hash_type = get_sign_type_option();
-    const data_chunk& nonce = get_nonce_argument();
     const tx_type& tx = get_transaction_argument();
-    const auto& secret = get_ec_private_key_argument();
-    const auto& script = get_prevout_script_argument();
+    const ec_secret& private_key = get_ec_private_key_argument();
+    const script_type& prevout_script = get_prevout_script_argument();
+    const data_chunk& nonce = get_nonce_option();
 
     if (nonce.size() < minimum_seed_size)
     {
@@ -56,7 +56,8 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     }
 
     data_chunk signature;
-    if (!sign_transaction(signature, tx, index, script, secret, nonce, hash_type))
+    if (!create_signature(signature, private_key, prevout_script, tx, index,
+        hash_type, new_key(nonce)))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;
         return console_result::failure;
@@ -65,4 +66,3 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     output << base16(signature) << std::endl;
     return console_result::okay;
 }
-

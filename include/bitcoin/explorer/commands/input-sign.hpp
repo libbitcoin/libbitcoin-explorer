@@ -118,7 +118,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Create a signature for a transaction input.";
+        return "Create a Bitcoin signature for a transaction input.";
     }
 
     /**
@@ -130,7 +130,6 @@ public:
     {
         return get_argument_metadata()
             .add("EC_PRIVATE_KEY", 1)
-            .add("NONCE", 1)
             .add("PREVOUT_SCRIPT", 1)
             .add("TRANSACTION", 1);
     }
@@ -176,14 +175,14 @@ public:
             "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'."
         )
         (
+            "nonce,n",
+            value<primitives::base16>(&option_.nonce)->required(),
+            "The Base16 random value used to seed a signing nonce. Must be at least 128 bits in length."
+        )
+        (
             "EC_PRIVATE_KEY",
             value<primitives::ec_private>(&argument_.ec_private_key)->required(),
             "The Base16 EC private key to sign with."
-        )
-        (
-            "NONCE",
-            value<primitives::base16>(&argument_.nonce)->required(),
-            "The Base16 random value to be used as the signing nonce. Must be at least 128 bits in length."
         )
         (
             "PREVOUT_SCRIPT",
@@ -225,23 +224,6 @@ public:
         const primitives::ec_private& value)
     {
         argument_.ec_private_key = value;
-    }
-
-    /**
-     * Get the value of the NONCE argument.
-     */
-    BCX_API virtual primitives::base16& get_nonce_argument()
-    {
-        return argument_.nonce;
-    }
-
-    /**
-     * Set the value of the NONCE argument.
-     */
-    BCX_API virtual void set_nonce_argument(
-        const primitives::base16& value)
-    {
-        argument_.nonce = value;
     }
 
     /**
@@ -312,6 +294,23 @@ public:
         option_.sign_type = value;
     }
 
+    /**
+     * Get the value of the nonce option.
+     */
+    BCX_API virtual primitives::base16& get_nonce_option()
+    {
+        return option_.nonce;
+    }
+
+    /**
+     * Set the value of the nonce option.
+     */
+    BCX_API virtual void set_nonce_option(
+        const primitives::base16& value)
+    {
+        option_.nonce = value;
+    }
+
 private:
 
     /**
@@ -323,14 +322,12 @@ private:
     {
         argument()
           : ec_private_key(),
-            nonce(),
             prevout_script(),
             transaction()
         {
         }
 
         primitives::ec_private ec_private_key;
-        primitives::base16 nonce;
         primitives::script prevout_script;
         primitives::transaction transaction;
     } argument_;
@@ -344,12 +341,14 @@ private:
     {
         option()
           : index(),
-            sign_type()
+            sign_type(),
+            nonce()
         {
         }
 
         uint32_t index;
         primitives::hashtype sign_type;
+        primitives::base16 nonce;
     } option_;
 };
 
