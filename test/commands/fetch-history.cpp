@@ -32,17 +32,17 @@ BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 "{\n" \
 "    transfer\n" \
 "    {\n" \
-"        input\n" \
-"        {\n" \
-"            hash b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5\n" \
-"            height 247742\n" \
-"            index 0\n" \
-"        }\n" \
-"        output\n" \
+"        received\n" \
 "        {\n" \
 "            hash 97e06e49dfdd26c5a904670971ccf4c7fe7d9da53cb379bf9b442fc9427080b3\n" \
 "            height 247683\n" \
 "            index 1\n" \
+"        }\n" \
+"        spent\n" \
+"        {\n" \
+"            hash b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5\n" \
+"            height 247742\n" \
+"            index 0\n" \
 "        }\n" \
 "        value 100000\n" \
 "    }\n" \
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 "{\n" \
 "    transfer\n" \
 "    {\n" \
-"        output\n" \
+"        received\n" \
 "        {\n" \
 "            hash b7354b8b9cc9a856aedaa349cffa289ae9917771f4e06b2386636b3c073df1b5\n" \
 "            height 247742\n" \
