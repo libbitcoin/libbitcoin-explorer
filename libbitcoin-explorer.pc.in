@@ -9,7 +9,7 @@ URL: https://github.com/libbitcoin/libbitcoin-explorer
 Version: @PACKAGE_VERSION@
 
 # Our dependencies that publish package configuration.
-Requires: libbitcoin-client >= 0.1.0 libbitcoin >= 2.4.0
+Requires: libbitcoin-client >= 0.1.0 libbitcoin >= 2.5.0
 
 # Our own include directory and any other compiler flags we require.
 Cflags: -I${includedir} -std=c++11
