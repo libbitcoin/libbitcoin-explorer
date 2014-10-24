@@ -119,7 +119,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SCRIPT", 1);
+            .add("TOKEN", -1);
     }
 
 	/**
@@ -130,7 +130,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_script_argument(), "SCRIPT", variables, input);
     }
 
     /**
@@ -154,8 +153,8 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "SCRIPT",
-            value<primitives::script>(&argument_.script),
+            "TOKEN",
+            value<std::vector<std::string>>(&argument_.tokens),
             "The script. If not specified the script is read from STDIN."
         );
 
@@ -174,20 +173,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SCRIPT argument.
+     * Get the value of the TOKEN arguments.
      */
-    BCX_API virtual primitives::script& get_script_argument()
+    BCX_API virtual std::vector<std::string>& get_tokens_argument()
     {
-        return argument_.script;
+        return argument_.tokens;
     }
 
     /**
-     * Set the value of the SCRIPT argument.
+     * Set the value of the TOKEN arguments.
      */
-    BCX_API virtual void set_script_argument(
-        const primitives::script& value)
+    BCX_API virtual void set_tokens_argument(
+        const std::vector<std::string>& value)
     {
-        argument_.script = value;
+        argument_.tokens = value;
     }
 
 private:
@@ -200,11 +199,11 @@ private:
     struct argument
     {
         argument()
-          : script()
+          : tokens()
         {
         }
 
-        primitives::script script;
+        std::vector<std::string> tokens;
     } argument_;
 
     /**

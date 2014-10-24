@@ -366,7 +366,7 @@
   </command>
   
   <command symbol="script-to-address" formerly="scripthash" typeX="address" category="SCRIPT" description="Create a BIP16 pay-to-script-hash address from an encoded script.">
-    <argument name="SCRIPT" fileX="true" stdin="true" type="script" description="The script. If not specified the script is read from STDIN."/>
+    <argument name="TOKEN" fileX="true" limit="-1" type="string" description="The script. If not specified the script is read from STDIN."/>
   </command>
   
   <command symbol="seed" typeX="base16" category="WALLET" description="Generate a pseudorandom seed.">
