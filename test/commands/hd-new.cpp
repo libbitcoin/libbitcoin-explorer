@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_testnet__okay_output)
 BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_mainnet__failure_error)
 {
     BX_DECLARE_COMMAND(hd_new);
-    command.set_seed_argument({ "baadf00dbaadf00db" });
+    command.set_seed_argument({ "baadf00dbaadf00d" });
     command.set_general_testnet_setting(false);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_HD_NEW_SHORT_SEED "\n");
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_mainnet__failure_error)
 BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_testnet__failure_error)
 {
     BX_DECLARE_COMMAND(hd_new);
-    command.set_seed_argument({ "baadf00dbaadf00db" });
+    command.set_seed_argument({ "baadf00dbaadf00d" });
     command.set_general_testnet_setting(true);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_HD_NEW_SHORT_SEED "\n");
