@@ -24,23 +24,24 @@
   <!-- Configuration file sections. -->
   
   <configuration section="general">
-    <!-- NOTE: we could move this into the obelisk section if it was dynamic. -->
-    <!-- NOTE: we probably shouldn't use this setting since the choice of testnet is compiled into dependencies. -->
-    <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
-    <setting name="retries" type="base10"description="Number of times to retry contacting the server before giving up." />
+    <!-- Only hd-new and stealth-encode currently use the testnet flag. -->
+    <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation." />
+    <setting name="retries" type="base10" description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
   
-  <configuration section="logging">
-    <!-- Logging is currently unused. -->
+  <!-- Logging is currently unused. -->
+  <!--<configuration section="logging">
     <setting name="debug" type="path" default="debug.log" description="The file and path name to the debug log file." />
     <setting name="error" type="path" default="error.log" description="The file and path name to the error log file." />
-  </configuration>
+  </configuration>-->
   
   <configuration section="server">
-    <setting name="public-key" type="base16" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
-    <setting name="address" default="tcp://obelisk-sol.airbitz.co:9091" description="The URI of the server to which this application may connect." />
-    <setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />
+    <setting name="address" default="tcp://obelisk-sol.airbitz.co:9091" description="The URI of the obelisk server." />
+    <!-- Proxy suport is not yet implemented. -->
+    <!--<setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />-->
+    <!-- Public key support requries libbitcoin-client integration. -->    
+    <!--<setting name="public-key" type="base16" description="The public key of the server to which this application may connect." />-->
   </configuration>
   
   <!-- General resources. -->
@@ -366,7 +367,7 @@
   </command>
   
   <command symbol="script-to-address" formerly="scripthash" typeX="address" category="SCRIPT" description="Create a BIP16 pay-to-script-hash address from an encoded script.">
-    <argument name="SCRIPT" fileX="true" stdin="true" type="script" description="The script. If not specified the script is read from STDIN."/>
+    <argument name="TOKEN" fileX="true" limit="-1" type="string" description="The script. If not specified the script is read from STDIN."/>
   </command>
   
   <command symbol="seed" typeX="base16" category="WALLET" description="Generate a pseudorandom seed.">
@@ -488,7 +489,9 @@
 
   <command symbol="validate-tx" formerly="validtx" typeX="string" category="ONLINE" network="true" description="Determine if a transaction is valid for submission to the blockchain. Requires an Obelisk server connection.">
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
-    <define name="BX_VALIDATE_TX_INVALID_TX" value="The transaction is not valid." />
+    <define name="BX_VALIDATE_TX_VALID" value="The transaction is valid." />
+    <define name="BX_VALIDATE_TX_INVALID_INPUT" value="The transaction has an invalid input at index %1%." />
+    <define name="BX_VALIDATE_TX_UNCONFIRMED_INPUTS" value="The transaction is valid, with unconfirmed inputs at index: %1%." />
   </command>
 
   <command symbol="wallet" category="WALLET" obsolete="true" description="Experimental command line wallet.">

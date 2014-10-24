@@ -352,13 +352,6 @@ BCX_API pt::ptree prop_list(const bc::hash_digest& hash, size_t height,
 BCX_API pt::ptree prop_tree(const bc::hash_digest& hash, size_t height,
     size_t index);
 
-/**
- * Create a property tree for a list of indexes.
- * @param[in]  confirmations  The list of indexes.
- * @returns                   A new property tree containing the list.
- */
-BCX_API pt::ptree prop_tree(const index_list& indexes);
-
 } // namespace primitives
 } // namespace explorer
 } // namespace libbitcoin

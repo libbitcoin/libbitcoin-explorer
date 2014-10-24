@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_SUITE(script_to_address__invoke)
 BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__okay_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
-    command.set_script_argument(
+    command.set_tokens_argument(
     { 
         {
             "2",
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__okay_output)
             "[", "04534072a9a62226252917f3011082a429900bbc5d1e11386b16e64e1dc985259c1cbcea0bad66fa6f106ea617ddddb6de45ac9118a3dcfc29c0763c167d56290e", "]",
             "3",
             "checkmultisig"
-        } 
+        }
     });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("3CS58tZGJtjz4qBFyNgQRtneKaWUjeEZVM\n");

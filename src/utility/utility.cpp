@@ -64,10 +64,10 @@ bool is_base2(const std::string& text)
     return true;
 }
 
-void join(const std::vector<std::string>& words, std::string& sentence,
+std::string join(const std::vector<std::string>& words,
     const std::string& delimiter)
 {
-    sentence = boost::join(words, delimiter);
+    return boost::join(words, delimiter);
 }
 
 // The key may be invalid, caller must test for null secret.
@@ -97,6 +97,15 @@ ptime now()
     using namespace boost::posix_time;
     ptime local_time_in_seconds(second_clock::local_time());
     return local_time_in_seconds;
+}
+
+std::vector<std::string> numbers_to_strings(const index_list& indexes)
+{
+    std::vector<std::string> stringlist;
+    for (const auto& index: indexes)
+        stringlist.push_back(std::to_string(index));
+
+    return stringlist;
 }
 
 // Not testable due to lack of random engine injection.

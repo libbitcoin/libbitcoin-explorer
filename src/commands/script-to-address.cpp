@@ -33,11 +33,11 @@ using namespace bc::explorer::primitives;
 console_result script_to_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& script = get_script_argument();
-
+    const auto& tokens = get_tokens_argument();
+    
     // TESTNET VERSION REQUIRES RECOMPILE
     address script_hash_address;
-    set_script(script_hash_address.data(), script);
+    set_script(script_hash_address.data(), script(tokens));
 
     output << script_hash_address << std::endl;
     return console_result::okay;
