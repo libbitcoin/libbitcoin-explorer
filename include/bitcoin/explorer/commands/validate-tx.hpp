@@ -66,8 +66,12 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_VALIDATE_TX_INVALID_TX \
-    "The transaction is not valid."
+#define BX_VALIDATE_TX_VALID \
+    "The transaction is valid."
+#define BX_VALIDATE_TX_INVALID_INPUT \
+    "The transaction has an invalid input at index %1%."
+#define BX_VALIDATE_TX_UNCONFIRMED_INPUTS \
+    "The transaction is valid, with unconfirmed inputs at index: %1%."
 
 /**
  * Class to implement the validate-tx command.

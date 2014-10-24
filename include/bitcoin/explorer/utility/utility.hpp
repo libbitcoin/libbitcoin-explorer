@@ -61,7 +61,7 @@ namespace explorer {
  * @returns              A new enumeration with elements cast to Target.
  */
 template <typename Source, typename Target>
-std::vector<Target> cast(const std::vector<Source> source);
+std::vector<Target> cast(const std::vector<Source>& source);
 
 /**
  * Avoid the ternary (just for fun). Must precede tempalte usage for gcc build.
@@ -205,12 +205,11 @@ void write_file(std::ostream& output, const std::string& path,
 /**
  * Join a list of strings into a single string, in order.
  * @param[in]  words      The list of strings to join.
- * @param[in]  sentence   The resulting string.
  * @param[in]  delimiter  The delimiter, defaults to BX_SENTENCE_DELIMITER.
+ * @return                The resulting string.
  */
-BCX_API void join(const std::vector<std::string>& words,
-    std::string& sentence,  const std::string& 
-    delimiter=BX_SENTENCE_DELIMITER);
+BCX_API std::string join(const std::vector<std::string>& words,
+    const std::string& delimiter=BX_SENTENCE_DELIMITER);
 
 /**
  * Determine if a string is base2.
@@ -232,6 +231,13 @@ BCX_API ec_secret new_key(const data_chunk& seed);
  * @return           The new key.
  */
 BCX_API data_chunk new_seed(size_t bitlength = 128);
+
+/**
+ * Convert a list of indexes to a list of strings. This could be generalized.
+ * @param[in]  indexes  The list of indexes to convert.
+ * @return              The list of strings.
+ */
+BCX_API std::vector<std::string> numbers_to_strings(const index_list& indexes);
 
 /**
  * Get the local time, second level resolution, based on the time zone settings
