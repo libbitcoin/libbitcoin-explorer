@@ -197,29 +197,14 @@ public:
             "Milliseconds to wait for a response from the server."
         )
         (
-            "logging.debug",
-            value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
-            "The file and path name to the debug log file."
-        )
-        (
-            "logging.error",
-            value<boost::filesystem::path>(&setting_.logging.error)->default_value("error.log"),
-            "The file and path name to the error log file."
-        )
-        (
             "server.public-key",
             value<primitives::base16>(&setting_.server.public_key),
-            "The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h"
+            "The public key of the server to which this application may connect."
         )
         (
             "server.address",
             value<std::string>(&setting_.server.address)->default_value("tcp://obelisk-sol.airbitz.co:9091"),
-            "The URI of the server to which this application may connect."
-        )
-        (
-            "server.socks-proxy",
-            value<std::string>(&setting_.server.socks_proxy),
-            "The host name and port number of a Socks5 proxy server."
+            "The URI of the obelisk server."
         );
     }
 
@@ -313,38 +298,6 @@ public:
     }
 
     /**
-     * Get the value of the logging.debug setting.
-     */
-    BCX_API virtual boost::filesystem::path get_logging_debug_setting()
-    {
-        return setting_.logging.debug;
-    }
-
-    /**
-     * Set the value of the logging.debug setting.
-     */
-    BCX_API virtual void set_logging_debug_setting(boost::filesystem::path value)
-    {
-        setting_.logging.debug = value;
-    }
-
-    /**
-     * Get the value of the logging.error setting.
-     */
-    BCX_API virtual boost::filesystem::path get_logging_error_setting()
-    {
-        return setting_.logging.error;
-    }
-
-    /**
-     * Set the value of the logging.error setting.
-     */
-    BCX_API virtual void set_logging_error_setting(boost::filesystem::path value)
-    {
-        setting_.logging.error = value;
-    }
-
-    /**
      * Get the value of the server.public-key setting.
      */
     BCX_API virtual primitives::base16 get_server_public_key_setting()
@@ -374,22 +327,6 @@ public:
     BCX_API virtual void set_server_address_setting(std::string value)
     {
         setting_.server.address = value;
-    }
-
-    /**
-     * Get the value of the server.socks-proxy setting.
-     */
-    BCX_API virtual std::string get_server_socks_proxy_setting()
-    {
-        return setting_.server.socks_proxy;
-    }
-
-    /**
-     * Set the value of the server.socks-proxy setting.
-     */
-    BCX_API virtual void set_server_socks_proxy_setting(std::string value)
-    {
-        setting_.server.socks_proxy = value;
     }
 
 protected:
@@ -448,35 +385,20 @@ private:
             uint32_t wait;
         } general;
 
-        struct logging
-        {
-            logging()
-              : debug(),
-                error()
-            {
-            }
-
-            boost::filesystem::path debug;
-            boost::filesystem::path error;
-        } logging;
-
         struct server
         {
             server()
               : public_key(),
-                address(),
-                socks_proxy()
+                address()
             {
             }
 
             primitives::base16 public_key;
             std::string address;
-            std::string socks_proxy;
         } server;
 
         setting()
           : general(),
-            logging(),
             server()
         {
         }

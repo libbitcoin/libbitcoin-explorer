@@ -27,20 +27,21 @@
     <!-- NOTE: we could move this into the obelisk section if it was dynamic. -->
     <!-- NOTE: we probably shouldn't use this setting since the choice of testnet is compiled into dependencies. -->
     <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics." />
-    <setting name="retries" type="base10"description="Number of times to retry contacting the server before giving up." />
+    <setting name="retries" type="base10" description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
   
-  <configuration section="logging">
-    <!-- Logging is currently unused. -->
+  <!-- Logging is currently unused. -->
+  <!--<configuration section="logging">
     <setting name="debug" type="path" default="debug.log" description="The file and path name to the debug log file." />
     <setting name="error" type="path" default="error.log" description="The file and path name to the error log file." />
-  </configuration>
+  </configuration>-->
   
   <configuration section="server">
-    <setting name="public-key" type="base16" description="The public key of the server to which this application may connect. This must be the key for server specified by the 'service' option. For example: W=GRFxHUuUN#En3MI]f{}X:KWnV=pRZ$((byg=:h" />
-    <setting name="address" default="tcp://obelisk-sol.airbitz.co:9091" description="The URI of the server to which this application may connect." />
-    <setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />
+    <setting name="public-key" type="base16" description="The public key of the server to which this application may connect." />
+    <setting name="address" default="tcp://obelisk-sol.airbitz.co:9091" description="The URI of the obelisk server." />
+    <!-- Proxy suport is not yet implemented. -->
+    <!--<setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />-->
   </configuration>
   
   <!-- General resources. -->
