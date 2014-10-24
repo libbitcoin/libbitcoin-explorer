@@ -184,7 +184,7 @@ public:
         (
             "general.testnet",
             value<bool>(&setting_.general.testnet)->default_value(false),
-            "Set to true for testnet operation. This option is EXPERIMENTAL because other libraries on which this application depends must currently be compiled with the testnet flag to ensure complete testnet semantics."
+            "Set to true for testnet operation."
         )
         (
             "general.retries",
@@ -195,11 +195,6 @@ public:
             "general.wait",
             value<uint32_t>(&setting_.general.wait)->default_value(2000),
             "Milliseconds to wait for a response from the server."
-        )
-        (
-            "server.public-key",
-            value<primitives::base16>(&setting_.server.public_key),
-            "The public key of the server to which this application may connect."
         )
         (
             "server.address",
@@ -298,22 +293,6 @@ public:
     }
 
     /**
-     * Get the value of the server.public-key setting.
-     */
-    BCX_API virtual primitives::base16 get_server_public_key_setting()
-    {
-        return setting_.server.public_key;
-    }
-
-    /**
-     * Set the value of the server.public-key setting.
-     */
-    BCX_API virtual void set_server_public_key_setting(primitives::base16 value)
-    {
-        setting_.server.public_key = value;
-    }
-
-    /**
      * Get the value of the server.address setting.
      */
     BCX_API virtual std::string get_server_address_setting()
@@ -388,12 +367,10 @@ private:
         struct server
         {
             server()
-              : public_key(),
-                address()
+              : address()
             {
             }
 
-            primitives::base16 public_key;
             std::string address;
         } server;
 
