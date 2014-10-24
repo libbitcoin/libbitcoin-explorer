@@ -43,8 +43,7 @@ console_result mnemonic_encode::invoke(std::ostream& output,
 
     // TODO: change implementation from Electrum to BIP39.
 
-    std::string sentence;
-    join(encode_mnemonic(seed), sentence);
+    const auto sentence = join(encode_mnemonic(seed));
 
     output << sentence << std::endl;
     return console_result::okay;

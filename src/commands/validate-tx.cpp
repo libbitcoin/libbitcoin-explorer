@@ -36,13 +36,23 @@ using namespace bc::explorer::primitives;
 
 static void handle_error(callback_state& state, const std::error_code& error)
 {
+    // BX_VALIDATE_TX_INVALID_INPUT is not currently utilized.
+    // The client suppresses an index list which may have 0 or one element.
+    // The list contains the index of the input which caused the failure.
     state.handle_error(error);
 }
 
 static void handle_callback(callback_state& state, size_t position,
     const index_list& indexes)
 {
-    state.output(prop_tree(indexes));
+    if (indexes.empty())
+    {
+        state.output(BX_VALIDATE_TX_VALID);
+        return;
+    }
+    
+    const auto unconfirmed = join(numbers_to_strings(indexes), ", ");
+    state.output(format(BX_VALIDATE_TX_UNCONFIRMED_INPUTS) % unconfirmed);
 }
 
 static void validate_tx_from_transaction(obelisk_client& client,
