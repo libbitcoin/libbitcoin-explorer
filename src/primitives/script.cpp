@@ -92,7 +92,7 @@ std::istream& operator>>(std::istream& input, script& argument)
 
     // Test for invalid result sentinel.
     if (argument.value_.operations().size() == 0 && mnemonic.length() > 0)
-        throw invalid_option_value(mnemonic);
+        BOOST_THROW_EXCEPTION(invalid_option_value(mnemonic));
 
     return input;
 }

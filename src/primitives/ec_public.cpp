@@ -82,7 +82,7 @@ std::istream& operator>>(std::istream& input, ec_public& argument)
 
     ec_point point = base16(hexcode);
     if (!verify_public_key_fast(point) /*|| !verify_public_key(point)*/)
-        throw invalid_option_value(hexcode);
+        BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
         
     argument.value_.assign(point.begin(), point.end());
     return input;

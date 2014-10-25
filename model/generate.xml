@@ -58,6 +58,7 @@
     <string name="BX_DEPRECATED_COMMAND" value="The '%1%' command has been replaced by '%2%'."/>
     <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
+    <string name="BX_UNEXPECTED_EXCEPTION" value="Unexpected error: %1%" />
     <string name="BX_CONFIG_DESCRIPTION" value="The path to the configuration settings file." />
     <string name="BX_HELP_DESCRIPTION" value="Get a description and instructions for this command." />
   </resource>

@@ -77,7 +77,7 @@ std::istream& operator>>(std::istream& input, ec_private& argument)
         
     ec_secret secret = btc256(hexcode);
     if (!verify_private_key(secret))
-        throw invalid_option_value(hexcode);
+        BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
     std::copy(secret.begin(), secret.end(), argument.value_.begin());
     return input;

@@ -70,8 +70,8 @@ namespace primitives {
         uint16_t number;
         deserialize(number, decimal);
 
-        if (number > bc::max_uint8)
-            throw po::invalid_option_value(decimal);
+        if (number > max_uint8)
+            BOOST_THROW_EXCEPTION(invalid_option_value(decimal));
 
         argument.value_ = static_cast<uint8_t>(number);
         return input;
