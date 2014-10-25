@@ -170,7 +170,7 @@ void load_path(Value& parameter, const std::string& name,
     // Create a file input stream.
     std::ifstream file(path, std::ifstream::binary);
     if (file.fail())
-        BOOST_THROW_EXCEPTION(invalid_option_value(path));
+        BOOST_THROW_EXCEPTION(po::invalid_option_value(path));
 
     deserialize(parameter, file);
 }
