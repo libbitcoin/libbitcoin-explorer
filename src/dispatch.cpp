@@ -24,7 +24,9 @@
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
+#include <boost/throw_exception.hpp>
 #include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
@@ -33,6 +35,29 @@
 
 using namespace po;
 using namespace boost::filesystem;
+
+#ifdef BOOST_NO_EXCEPTIONS
+
+// Allow the handler to vary context, could make this an enum.
+static bool trying_parser = false;
+#define TRYING_PARSER(enable) \
+    trying_parser = enable;
+
+// Catch any non-exception "thrown" by boost, should be dynamic builds only.
+void boost::throw_exception(const std::exception& e)
+{
+    using namespace bc::explorer;
+
+    if (trying_parser)
+        display_invalid_parameter(std::cerr, e.what());
+    else
+        display_unexpected_exception(std::cerr, e.what());
+
+    exit(console_result::failure);
+}
+#else
+#define TRYING_PARSER
+#endif
 
 namespace libbitcoin {
 namespace explorer {
@@ -151,7 +176,7 @@ void load_configuration_variables(variables_map& variables, command& instance)
         std::ifstream file(path);
 
         if (!file.good())
-            throw reading_file(path.c_str());
+            BOOST_THROW_EXCEPTION(reading_file(path.c_str()));
 
         // parse inputs
         const auto configuration = parse_config_file(file, config_settings);
@@ -181,6 +206,8 @@ bool load_variables(variables_map& variables, std::string& message,
 {
     try
     {
+        TRYING_PARSER(true);
+
         // Must store before environment in order for commands to supercede.
         load_command_variables(variables, instance, input, argc, argv);
 
@@ -197,17 +224,14 @@ bool load_variables(variables_map& variables, std::string& message,
             // Send notifications and update bound variables.
             notify(variables);
         }
+
+        TRYING_PARSER(false);
     }
     catch (const po::error& e)
     {
         // BUGBUG: the error message is obtained directly form boost, which
         // circumvents our localization model.
         message = e.what();
-        return false;
-    }
-    catch (...)
-    {
-        message = "unexpected exception";
         return false;
     }
 

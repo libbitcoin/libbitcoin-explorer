@@ -84,7 +84,7 @@ std::istream& operator>>(std::istream& input, transaction& argument)
     input >> hexcode;
 
     if (!deserialize_satoshi_item(argument.value_, base16(hexcode)))
-        throw invalid_option_value(hexcode);
+        BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
     return input;
 }

@@ -125,7 +125,7 @@ static std::string parse_outputs(std::vector<tx_output_type>& outputs,
     if (address.set_encoded(target))
     {
         if (!build_output_script(output.script, address))
-            throw invalid_option_value(target);
+            BOOST_THROW_EXCEPTION(invalid_option_value(target));
 
         outputs.push_back(output);
         return address.encoded();
@@ -140,12 +140,12 @@ static std::string parse_outputs(std::vector<tx_output_type>& outputs,
         // Prefix not yet supported, exactly one spend key is required.
         auto keys = spend_pubkeys.size();
         if (keys != 1 || stealth.get_prefix().size() > 0)
-            throw invalid_option_value(target);
+            BOOST_THROW_EXCEPTION(invalid_option_value(target));
         
         // Do stealth stuff.
         auto ephemeral_secret = generate_private_key(tokens);
         if (ephemeral_secret == null_hash)
-            throw invalid_option_value(target);
+            BOOST_THROW_EXCEPTION(invalid_option_value(target));
 
         // We have already ensured there is exactly one spend key.
         auto public_key = initiate_stealth(ephemeral_secret, scan_pubkey,
@@ -159,7 +159,7 @@ static std::string parse_outputs(std::vector<tx_output_type>& outputs,
         payment_address pay_address;
         set_public_key(pay_address, public_key);
         if (!build_output_script(output.script, pay_address))
-            throw invalid_option_value(target);
+            BOOST_THROW_EXCEPTION(invalid_option_value(target));
 
         outputs.push_back(output);
         return pay_address.encoded();
@@ -215,7 +215,7 @@ std::istream& operator>>(std::istream& input, output& argument)
 
     const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
     if (tokens.size() != 2 && tokens.size() != 3)
-        throw invalid_option_value(tuple);
+        BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
 
     argument.pay_to_ = parse_outputs(argument.value_, tokens);
     return input;

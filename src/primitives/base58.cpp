@@ -70,7 +70,7 @@ std::istream& operator>>(std::istream& input, base58& argument)
 
     data_chunk chunk = decode_base58(base58);
     if (chunk.empty())
-        throw invalid_option_value(base58);
+        BOOST_THROW_EXCEPTION(invalid_option_value(base58));
 
     argument.value_.assign(chunk.begin(), chunk.end());
     return input;

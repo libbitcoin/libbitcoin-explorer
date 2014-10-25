@@ -99,7 +99,7 @@ std::istream& operator>>(std::istream& stream, input& argument)
 
     const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
     if (tokens.size() != 2 && tokens.size() != 3)
-        throw invalid_option_value(tuple);
+        BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
 
     parse_input(argument.value_, tokens);
     return stream;

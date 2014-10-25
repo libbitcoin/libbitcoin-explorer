@@ -71,7 +71,7 @@ std::istream& operator>>(std::istream& input, btc256& argument)
 
     auto hash = decode_hash(hexcode);
     if (hash == null_hash)
-        throw invalid_option_value(hexcode);
+        BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
     std::copy(hash.begin(), hash.end(), argument.value_.begin());
     return input;

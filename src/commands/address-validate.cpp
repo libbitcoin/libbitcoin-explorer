@@ -21,11 +21,10 @@
 #include <bitcoin/explorer/commands/address-validate.hpp>
 
 #include <iostream>
-#include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 
-using namespace po;
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -35,21 +34,20 @@ console_result address_validate::invoke(std::ostream& output, std::ostream& erro
     // Bound parameters.
     const auto& token = get_bitcoin_address_argument();
 
+    // The address is bound to a string so that we can handle validation here
+    // instead of in the primitive.
+
     // TESTNET VERSION REQUIRES RECOMPILE
 
-    // The value is bound to a string so that we can handle validation here
-    // instead of in the deprimitive.
-
-    try
+    payment_address pay_address;
+    if (pay_address.set_encoded(token))
     {
-        const address bitcoin_address(token);
-        output << bitcoin_address << std::endl;
+        output << address(pay_address) << std::endl;
         return console_result::okay;
     }
-    catch (invalid_option_value&)
-    {
-        // We do not return a failure here, as this is a validity test.
-        output << BX_ADDRESS_VALIDATE_INVALID_ADDRESS << std::endl;
-        return console_result::invalid;
-    }
+
+    // We do not return a failure here, as this is a validity test.
+    output << BX_ADDRESS_VALIDATE_INVALID_ADDRESS << std::endl;
+    return console_result::invalid;
+
 }

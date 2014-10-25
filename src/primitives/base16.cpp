@@ -72,7 +72,7 @@ namespace primitives {
 
         data_chunk chunk = decode_hex(hexcode);
         if (chunk.empty())
-            throw invalid_option_value(hexcode);
+            BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
         argument.value_.assign(chunk.begin(), chunk.end());
         return input;
