@@ -37,6 +37,9 @@ PKG_CHECK_MODULES([bitcoin], [libbitcoin >= 2.5.0])
 PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 0.1.0])
 PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
 
+AC_DEFINE(BOOST_NO_EXCEPTIONS)
+AC_DEFINE(BOOST_EXCEPTION_DISABLE)
+
 # Do not add contextual build parameters in configuration.
 # http://stackoverflow.com/a/4680578
 OPTIMIZATIONS="-fvisibility=internal"
