@@ -74,7 +74,7 @@ std::istream& operator>>(std::istream& input, encoding& argument)
     else if (text == encoding_xml)
         argument.value_ = encoding_engine::xml;
     else
-        throw invalid_option_value(text);
+        BOOST_THROW_EXCEPTION(invalid_option_value(text));
 
     return input;
 }
@@ -95,7 +95,7 @@ std::ostream& operator<<(std::ostream& output, const encoding& argument)
             value = encoding_xml;
             break;
         default:
-            throw std::exception(/*"Unexpected encoding value."*/);
+            BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");
     }
 
     return output;

@@ -91,7 +91,7 @@ std::istream& operator>>(std::istream& input, hd_key& argument)
     {
         // Otherwise try to read as a public key.
         if (!argument.public_key_value_.set_encoded(base58))
-            throw invalid_option_value(base58);
+            BOOST_THROW_EXCEPTION(invalid_option_value(base58));
     }
 
     return input;

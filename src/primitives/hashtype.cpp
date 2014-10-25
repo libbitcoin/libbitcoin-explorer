@@ -77,7 +77,7 @@ std::istream& operator>>(std::istream& input, hashtype& argument)
     else if (text == hashtype_anyone_can_pay)
         argument.value_ = sighash::anyone_can_pay;
     else
-        throw invalid_option_value(text);
+        BOOST_THROW_EXCEPTION(invalid_option_value(text));
 
     return input;
 }
@@ -101,7 +101,7 @@ std::ostream& operator<<(std::ostream& output, const hashtype& argument)
             value = hashtype_anyone_can_pay;
             break;
         default:
-            throw std::exception(/*"Unexpected signature hash type value."*/);
+            BITCOIN_ASSERT_MSG(false, "Unexpected signature hash type value.");
     }
 
     return output;

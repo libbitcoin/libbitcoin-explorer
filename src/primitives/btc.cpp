@@ -62,7 +62,7 @@ std::istream& operator>>(std::istream& input, btc& argument)
     input >> bitcoins;
 
     if (!btc_to_satoshi(argument.value_, bitcoins))
-        throw invalid_option_value(bitcoins);
+        BOOST_THROW_EXCEPTION(invalid_option_value(bitcoins));
 
     return input;
 }

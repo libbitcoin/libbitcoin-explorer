@@ -50,7 +50,7 @@ base2::base2(const bitset& value)
     {
         std::string binary;
         boost::to_string(value, binary);
-        throw invalid_option_value(binary);
+        BOOST_THROW_EXCEPTION(invalid_option_value(binary));
     }
 
     value_ = value;
@@ -72,7 +72,7 @@ std::istream& operator>>(std::istream& input, base2& argument)
     input >> binary;
 
     if (!is_base2(binary))
-        throw po::invalid_option_value(binary);
+        BOOST_THROW_EXCEPTION(invalid_option_value(binary));
 
     bitset bits(binary);
 
