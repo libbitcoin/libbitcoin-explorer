@@ -169,13 +169,13 @@ bitcoin_explorer_commands_include_HEADERS = \
 #
 # libraries
 #
-noinst_LTLIBRARIES = libbitcoin-explorer.la
+noinst_LTLIBRARIES = src/libbitcoin-explorer.la
 
-libbitcoin_explorer_la_CPPFLAGS = \
+src_libbitcoin_explorer_la_CPPFLAGS = \
     -I$(srcdir)/include \
     ${bitcoin_client_CFLAGS}
 
-libbitcoin_explorer_la_SOURCES = \
+src_libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
     src/callback_state.cpp \
     src/dispatch.cpp \
@@ -215,7 +215,7 @@ libbitcoin_explorer_la_SOURCES = \
     src/utility/utility.cpp
 
 # Generated from XML data source.
-libbitcoin_explorer_la_SOURCES += \
+src_libbitcoin_explorer_la_SOURCES += \
     src/commands/address-decode.cpp \
     src/commands/address-embed.cpp \
     src/commands/address-encode.cpp \
@@ -305,7 +305,7 @@ libbitcoin_explorer_la_SOURCES += \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp
 
-libbitcoin_explorer_la_LIBADD = \
+src_libbitcoin_explorer_la_LIBADD = \
     ${bitcoin_client_LIBS}
 
 #
@@ -321,7 +321,7 @@ bx_SOURCES = \
     src/console/main.cpp
 
 bx_LDADD = \
-    libbitcoin-explorer.la \
+    src/libbitcoin-explorer.la \
     -lboost_chrono \
     -lboost_program_options \
     ${bitcoin_client_LIBS}
@@ -329,16 +329,16 @@ bx_LDADD = \
 #
 # tests
 #
-TESTS = libbitcoin_explorer_test
+TESTS = test/libbitcoin_explorer_test
 
-check_PROGRAMS = libbitcoin_explorer_test
+check_PROGRAMS = test/libbitcoin_explorer_test
 
-libbitcoin_explorer_test_CPPFLAGS = \
+test_libbitcoin_explorer_test_CPPFLAGS = \
     -I$(srcdir)/include \
     ${bitcoin_client_CFLAGS} \
     -DBOOST_TEST_DYN_LINK
 
-libbitcoin_explorer_test_SOURCES = \
+test_libbitcoin_explorer_test_SOURCES = \
     test/address.cpp \
     test/base58.cpp \
     test/generated__broadcast.cpp \
@@ -351,7 +351,7 @@ libbitcoin_explorer_test_SOURCES = \
     test/printer.cpp
 
 # Generated from XML data source.
-libbitcoin_explorer_test_SOURCES += \
+test_libbitcoin_explorer_test_SOURCES += \
     test/commands/address-decode.cpp \
     test/commands/address-embed.cpp \
     test/commands/address-encode.cpp \
@@ -441,8 +441,8 @@ libbitcoin_explorer_test_SOURCES += \
     test/commands/wrap-decode.cpp \
     test/commands/wrap-encode.cpp
 
-libbitcoin_explorer_test_LDADD = \
-    libbitcoin-explorer.la \
+test_libbitcoin_explorer_test_LDADD = \
+    src/libbitcoin-explorer.la \
     -lboost_chrono \
     -lboost_program_options \
     ${bitcoin_client_LIBS}
