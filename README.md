@@ -54,27 +54,24 @@ Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.or
 > For this reason Ubuntu is not supported prior to version 12.04.
 
 To see your GCC version:
-
 ```sh
-  $ gcc --version
+$ gcc --version
 ```
-
 If necessary, upgrade your compiler [as follows](http://bit.ly/1vXaaQL):
 ```sh
-  $ sudo apt-get install g++-4.8
-  $ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
-  $ sudo update-alternatives --config g++
+$ sudo apt-get install g++-4.8
+$ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
+$ sudo update-alternatives --config g++
 ```
 Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```sh
-  $ sudo apt-get install build-essential autoconf automake libtool pkg-config
+$ sudo apt-get install build-essential autoconf automake libtool pkg-config
 ```
 Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
 ```sh
-  $ sudo apt-get install libboost-all-dev libgmp-dev
+$ sudo apt-get install libboost-all-dev libgmp-dev
 ```
-
-Finally, execute the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh).
+Finally execute the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
 ```sh
 $ ./install-bx.sh
 ```
@@ -107,43 +104,61 @@ Of these libraries, only libzmq is packaged. However we require a more recent ve
 Any set of `./configure` options can be passed via the build script.
 
 For example, to build without debug symbols:
-
 ```sh
-  $ ./install-bx.sh CXXFLAGS="-Os -s"
+$ ./install-bx.sh CXXFLAGS="-Os -s"
 ```
-
 To also install non-debug outputs to a specified directory, such as `/home/me/bx`:
-
 ```sh
-  $ ./install-bx.sh CXXFLAGS="-Os -s" --prefix=/home/me/bx
+$ ./install-bx.sh CXXFLAGS="-Os -s" --prefix=/home/me/bx
 ```
 
 #### Compiling for Testnet
 
 Currently certain commands cannot work with both [testnet](https://en.bitcoin.it/wiki/Testnet) and mainnet. This is a libbitcoin restriction that will be lifted in a future version. In order to work with testnet in the interim the libbitcoin libraries must be recompiled with the testnet option:
 ```sh
-  $ ./install-bx.sh --enable-testnet
+$ ./install-bx.sh --enable-testnet
 ```
 
 ### Macintosh
 
 The OSX installation differs from Linux in the installation of the compiler and packaged dependencies.
 
-To upgrade GCC first set the following environment variables:
+First install [Homebrew](http://brew.sh). Homebrew requires [Ruby](https://www.ruby-lang.org/en), which is preinstalled on OSX.
 ```sh
-  CC=/usr/local/bin/gcc-4.8
-  CXX=/usr/local/bin/g++-4.8
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-Next execute the following commands:
+Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.org/projects/cxx0x.html) minimum.
+
+To see your GCC version:
 ```sh
-  $ brew install boost gmp
-  $ brew tap homebrew/versions
-  $ brew install gcc48
-  $ sudo ln -sf /usr/local/bin/g++-4.8 /usr/bin/g++
+$ gcc --version
 ```
-Finally, invoke the install script:
+If necessary install the [GCC 4.8](https://gcc.gnu.org/projects/cxx0x.html) compiler from the homebrew repository:
 ```sh
-  $ ./install-bx.sh
+$ brew tap homebrew/versions
+$ brew install gcc48
+```
+and then configure the environment to use the GCC 4.8 compiler as `g++`, `CC` and `CXX`.
+```sh
+$ sudo ln -sf /usr/local/bin/g++-4.8 /usr/bin/g++
+$ export CC=/usr/local/bin/gcc-4.8
+$ export CXX=/usr/local/bin/g++-4.8
+```
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
+```sh
+$ brew install autoconf automake libtool
+```
+Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
+```sh
+$ brew install boost gmp
+```
+Next set the default package config path.
+```sh
+$ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+```
+Finally execute the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
+```sh
+$ ./install-bx.sh
 ```
 
 ### Windows
@@ -677,6 +692,7 @@ BX defines the following set of commands with corresponding names in the `bx::co
     send-tx
     send-tx-node
     send-tx-p2p
+    settings
     sha160
     sha256
     sha512
