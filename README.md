@@ -152,7 +152,7 @@ Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://g
 ```sh
 $ brew install boost gmp
 ```
-Next set the default package config path.
+Next set the default [package config](http://linux.die.net/man/1/pkg-config) path, unless you prefer a different configuration.
 ```sh
 $ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 ```
