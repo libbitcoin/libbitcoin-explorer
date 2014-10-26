@@ -55,7 +55,7 @@ Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.or
 
 To see your GCC version:
 ```sh
-$ gcc --version
+$ g++ --version
 ```
 If necessary, upgrade your compiler [as follows](http://bit.ly/1vXaaQL):
 ```sh
@@ -131,7 +131,7 @@ Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.or
 
 To see your GCC version:
 ```sh
-$ gcc --version
+$ g++ --version
 ```
 If necessary install the [GCC 4.8](https://gcc.gnu.org/projects/cxx0x.html) compiler from the homebrew repository:
 ```sh
