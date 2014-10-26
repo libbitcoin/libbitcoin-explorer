@@ -258,10 +258,12 @@ BX defines the following set of Bitcoin primitive types in the `bx::primitives` 
 
     address
     base16
+    base2
     base58
     btc
     btc160
     btc256
+    byte
     ec_private
     ec_public
     encoding
@@ -273,7 +275,6 @@ BX defines the following set of Bitcoin primitive types in the `bx::primitives` 
     input
     output
     point
-    prefix
     raw
     script
     stealth
