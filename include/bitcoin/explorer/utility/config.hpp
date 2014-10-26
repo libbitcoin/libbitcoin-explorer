@@ -41,11 +41,11 @@ namespace explorer {
 //    #define BX_DEFAULT_CLIENT_CERTIFICATE ".explorer.cfg"
 //#endif
 
-/**
- * Get the default configuration settings file path or return empty.
- * @return  The default configuration settings file path or empty.
- */
-BCX_API std::string config_default();
+///**
+// * Get the default configuration settings file path or return empty.
+// * @return  The default configuration settings file path or empty.
+// */
+//BCX_API std::string config_default();
 
 } // namespace explorer
 } // namespace libbitcoin

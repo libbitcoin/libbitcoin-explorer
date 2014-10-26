@@ -230,6 +230,9 @@
     <ClCompile Include="..\..\..\..\test\commands\sendtx-bci.cpp">
       <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\settings.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\sha160.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>

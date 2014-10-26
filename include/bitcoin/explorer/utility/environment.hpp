@@ -38,12 +38,12 @@ namespace explorer {
  */
 #define BX_LINUX_HOME_ENVIRONMENT_VARIABLE "HOME"
 
-/**
- * Get the user's home directory.
- *
- * @return  The user's home directory.
- */
-BCX_API std::string home_directory();
+///**
+// * Get the user's home directory.
+// *
+// * @return  The user's home directory.
+// */
+//BCX_API std::string home_directory();
 
 } // namespace explorer
 } // namespace libbitcoin

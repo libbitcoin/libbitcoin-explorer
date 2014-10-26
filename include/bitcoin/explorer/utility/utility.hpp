@@ -203,6 +203,13 @@ void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
 
 /**
+ * Convert a bool to a literal string. The result not considered localizable.
+ * @param[in]  value      The value to convert.
+ * @return                The resulting string.
+ */
+BCX_API std::string bool_to_string(bool value);
+
+/**
  * Join a list of strings into a single string, in order.
  * @param[in]  words      The list of strings to join.
  * @param[in]  delimiter  The delimiter, defaults to BX_SENTENCE_DELIMITER.

@@ -55,7 +55,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const encoding& encoding = get_format_option();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& server = get_server_address_setting();
+    const auto& server = get_server_url_setting();
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);

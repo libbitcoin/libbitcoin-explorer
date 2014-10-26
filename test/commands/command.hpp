@@ -92,7 +92,7 @@ using namespace bc::explorer::primitives;
     BX_DECLARE_COMMAND(extension); \
     command.set_general_retries_setting(BX_NETWORK_RETRY); \
     command.set_general_wait_setting(BX_NETWORK_WAIT); \
-    command.set_server_address_setting(BX_MAINNET_SERVER)
+    command.set_server_url_setting(BX_MAINNET_SERVER)
 
 // serializer results
 #define BX_SERIALIZE_COPY_ROUND_TRIP(serializer, value) \

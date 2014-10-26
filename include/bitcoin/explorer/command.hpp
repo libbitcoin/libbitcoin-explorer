@@ -148,7 +148,7 @@ public:
         (
             BX_CONFIG_VARIABLE, 
             value<boost::filesystem::path>()
-                ->composing()->default_value(config_default()),
+                /* ->composing()->default_value(config_default()) */,
             "The path to the configuration settings file."
         );
     }
@@ -197,9 +197,9 @@ public:
             "Milliseconds to wait for a response from the server."
         )
         (
-            "server.address",
-            value<std::string>(&setting_.server.address)->default_value("tcp://obelisk-sol.airbitz.co:9091"),
-            "The URI of the obelisk server."
+            "server.url",
+            value<std::string>(&setting_.server.url)->default_value("tcp://obelisk.unsystem.net:9091"),
+            "The URL of the Obelisk server."
         );
     }
 
@@ -293,19 +293,19 @@ public:
     }
 
     /**
-     * Get the value of the server.address setting.
+     * Get the value of the server.url setting.
      */
-    BCX_API virtual std::string get_server_address_setting()
+    BCX_API virtual std::string get_server_url_setting()
     {
-        return setting_.server.address;
+        return setting_.server.url;
     }
 
     /**
-     * Set the value of the server.address setting.
+     * Set the value of the server.url setting.
      */
-    BCX_API virtual void set_server_address_setting(std::string value)
+    BCX_API virtual void set_server_url_setting(std::string value)
     {
-        setting_.server.address = value;
+        setting_.server.url = value;
     }
 
 protected:
@@ -367,11 +367,11 @@ private:
         struct server
         {
             server()
-              : address()
+              : url()
             {
             }
 
-            std::string address;
+            std::string url;
         } server;
 
         setting()

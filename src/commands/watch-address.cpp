@@ -85,7 +85,7 @@ static void subscribe_from_address(obelisk_client& client,
 console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& server = get_server_address_setting();
+    const auto& server = get_server_url_setting();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto& encoding = get_format_option();
