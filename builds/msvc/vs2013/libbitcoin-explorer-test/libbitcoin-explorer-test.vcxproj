@@ -147,6 +147,7 @@
     <ClCompile Include="..\..\..\..\test\commands\send-tx-node.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\send-tx-p2p.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sendtx-bci.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\settings.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha512.cpp" />

@@ -142,6 +142,7 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/send-tx-node.hpp \
     include/bitcoin/explorer/commands/send-tx-p2p.hpp \
     include/bitcoin/explorer/commands/sendtx-bci.hpp \
+    include/bitcoin/explorer/commands/settings.hpp \
     include/bitcoin/explorer/commands/sha160.hpp \
     include/bitcoin/explorer/commands/sha256.hpp \
     include/bitcoin/explorer/commands/sha512.hpp \
@@ -280,6 +281,7 @@ libbitcoin_explorer_la_SOURCES += \
     src/commands/send-tx-node.cpp \
     src/commands/send-tx-p2p.cpp \
     src/commands/sendtx-bci.cpp \
+    src/commands/settings.cpp \
     src/commands/sha160.cpp \
     src/commands/sha256.cpp \
     src/commands/sha512.cpp \
@@ -415,6 +417,7 @@ libbitcoin_explorer_test_SOURCES += \
     test/commands/send-tx-node.cpp \
     test/commands/send-tx-p2p.cpp \
     test/commands/sendtx-bci.cpp \
+    test/commands/settings.cpp \
     test/commands/sha160.cpp \
     test/commands/sha256.cpp \
     test/commands/sha512.cpp \

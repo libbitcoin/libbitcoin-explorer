@@ -32,22 +32,22 @@
 namespace libbitcoin {
 namespace explorer {
 
-std::string home_directory()
-{
-#ifdef _WIN32
-    char path[MAX_PATH];
-    const auto result = SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL,
-        SHGFP_TYPE_CURRENT, path);
-    if (SUCCEEDED(result))
-        return path;
-    return "";
-#else
-    const char* path = getenv(BX_LINUX_HOME_ENVIRONMENT_VARIABLE);
-    if (path == nullptr)
-        return getpwuid(getuid())->pw_dir;
-    return path;
-#endif
-}
+//std::string home_directory()
+//{
+//#ifdef _WIN32
+//    char path[MAX_PATH];
+//    const auto result = SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL,
+//        SHGFP_TYPE_CURRENT, path);
+//    if (SUCCEEDED(result))
+//        return path;
+//    return "";
+//#else
+//    const char* path = getenv(BX_LINUX_HOME_ENVIRONMENT_VARIABLE);
+//    if (path == nullptr)
+//        return getpwuid(getuid())->pw_dir;
+//    return path;
+//#endif
+//}
 
 } // namespace explorer
 } // namespace libbitcoin

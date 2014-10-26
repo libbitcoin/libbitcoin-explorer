@@ -53,6 +53,12 @@ using namespace boost::posix_time;
 namespace libbitcoin {
 namespace explorer {
 
+std::string bool_to_string(bool value)
+{
+    // This is not considered localizable text.
+    return if_else(value, "true", "false");
+}
+
 bool is_base2(const std::string& text)
 {
     for (const auto& character : text)

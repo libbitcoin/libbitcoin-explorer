@@ -354,6 +354,11 @@ BOOST_AUTO_TEST_CASE(generated__find__sendtx_bci__returns_object)
     BOOST_REQUIRE(find("sendtx-bci") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__settings__returns_object)
+{
+    BOOST_REQUIRE(find("settings") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__sha160__returns_object)
 {
     BOOST_REQUIRE(find("sha160") != nullptr);

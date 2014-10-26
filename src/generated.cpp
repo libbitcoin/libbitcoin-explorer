@@ -102,6 +102,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<send_tx_node>());
     func(make_shared<send_tx_p2p>());
     func(make_shared<sendtx_bci>());
+    func(make_shared<settings>());
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
@@ -258,6 +259,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<send_tx_p2p>();
     if (symbol == sendtx_bci::symbol())
         return make_shared<sendtx_bci>();
+    if (symbol == settings::symbol())
+        return make_shared<settings>();
     if (symbol == sha160::symbol())
         return make_shared<sha160>();
     if (symbol == sha256::symbol())

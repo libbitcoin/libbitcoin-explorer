@@ -22,6 +22,8 @@
   </help>
   
   <!-- Configuration file sections. -->
+  <!-- TODO: generate example.cfg from this. -->
+  <!-- IMPORTANT: update the 'settings' command when these change. -->
   
   <configuration section="general">
     <!-- Only hd-new and stealth-encode currently use the testnet flag. -->
@@ -37,7 +39,7 @@
   </configuration>-->
   
   <configuration section="server">
-    <setting name="address" default="tcp://obelisk-sol.airbitz.co:9091" description="The URI of the obelisk server." />
+    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk server." />
     <!-- Proxy suport is not yet implemented. -->
     <!--<setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />-->
     <!-- Public key support requries libbitcoin-client integration. -->    
@@ -204,6 +206,7 @@
   </command>
 
   <command symbol="fetch-height" formerly="fetch-last-height" typeX="size_t" category="ONLINE" network="true" description="Get the last block height. Requires an Obelisk server connection.">
+    <argument name="server-url" description="The URL of the Obelisk server to use. If not specified the URL is obtained from configuration settings or defaults."/>  
   </command>
   
   <command symbol="fetch-history" typeX="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a Bitcoin address. Requires an Obelisk server connection.">
@@ -406,8 +409,8 @@
     <define name="BX_SENDTX_BCI_OBSOLETE" value="This command is no longer supported. Use send-tx, send-tx-node or send-tx-p2p." />
   </command>
 
-  <command-todo symbol="settings" typeX="string" category="BX" description="Display the loaded configuration settings.">
-  </command-todo>
+  <command symbol="settings" typeX="string" multipleX="true" category="BX" description="Display the loaded configuration settings.">
+  </command>
 
   <command symbol="sha160" typeX="base16" category="HASH" description="Perform a SHA160 (also known as SHA-1) hash of Base16 data.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 data to hash. If not specified the value is read from STDIN."/>

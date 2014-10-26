@@ -89,6 +89,7 @@
 #include <bitcoin/explorer/commands/send-tx-node.hpp>
 #include <bitcoin/explorer/commands/send-tx-p2p.hpp>
 #include <bitcoin/explorer/commands/sendtx-bci.hpp>
+#include <bitcoin/explorer/commands/settings.hpp>
 #include <bitcoin/explorer/commands/sha160.hpp>
 #include <bitcoin/explorer/commands/sha256.hpp>
 #include <bitcoin/explorer/commands/sha512.hpp>

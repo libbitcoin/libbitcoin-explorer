@@ -501,7 +501,7 @@ public:
         (
             BX_CONFIG_VARIABLE, 
             value<boost::filesystem::path>()
-                ->composing()->default_value(config_default()),
+                /* ->composing()->default_value(config_default()) */,
             "$(config_description:)"
         );
     }

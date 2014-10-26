@@ -354,6 +354,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__sendtx_bci__returns_expected_value)
     BOOST_REQUIRE_EQUAL(sendtx_bci::symbol(), "sendtx-bci");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__settings__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(settings::symbol(), "settings");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__sha160__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(sha160::symbol(), "sha160");

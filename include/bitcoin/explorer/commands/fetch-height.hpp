@@ -118,7 +118,8 @@ public:
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("server-url", 1);
     }
 
 	/**
@@ -150,6 +151,11 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
+        )
+        (
+            "server-url",
+            value<std::string>(&argument_.server_url),
+            "The URL of the Obelisk server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;
@@ -166,6 +172,23 @@ public:
 
     /* Properties */
 
+    /**
+     * Get the value of the server-url argument.
+     */
+    BCX_API virtual std::string& get_server_url_argument()
+    {
+        return argument_.server_url;
+    }
+
+    /**
+     * Set the value of the server-url argument.
+     */
+    BCX_API virtual void set_server_url_argument(
+        const std::string& value)
+    {
+        argument_.server_url = value;
+    }
+
 private:
 
     /**
@@ -176,9 +199,11 @@ private:
     struct argument
     {
         argument()
+          : server_url()
         {
         }
 
+        std::string server_url;
     } argument_;
 
     /**

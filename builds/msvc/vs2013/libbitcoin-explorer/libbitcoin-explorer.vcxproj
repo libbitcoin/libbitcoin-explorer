@@ -186,6 +186,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\send-tx-node.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\send-tx-p2p.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sendtx-bci.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\settings.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha512.hpp" />
@@ -314,6 +315,7 @@
     <ClCompile Include="..\..\..\..\src\commands\send-tx-node.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\send-tx-p2p.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sendtx-bci.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\settings.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha512.cpp" />
