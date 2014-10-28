@@ -144,6 +144,8 @@ If necessary install and configure the [GCC 4.8](https://gcc.gnu.org/projects/cx
 ```sh
 $ brew install gcc48
 $ sudo ln -sf /usr/local/bin/g++-4.8 /usr/bin/g++
+$ export CC=/usr/local/bin/gcc-4.8
+$ export CXX=/usr/local/bin/g++-4.8
 ```
 Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```sh
