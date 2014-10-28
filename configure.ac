@@ -22,7 +22,6 @@ AX_BOOST_FILESYSTEM
 AX_BOOST_PROGRAM_OPTIONS
 AX_BOOST_REGEX
 AX_BOOST_SYSTEM
-AX_BOOST_UNIT_TEST_FRAMEWORK
 
 # GMP does not publish a package config, so we do a header and library test.
 AC_CHECK_HEADER(gmp.h,,
@@ -36,6 +35,19 @@ PKG_PROG_PKG_CONFIG
 PKG_CHECK_MODULES([bitcoin], [libbitcoin >= 2.5.0])
 PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 0.1.0])
 PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
+
+# build tests
+AC_ARG_WITH([tests], [AS_HELP_STRING([--with-tests],
+    [require build with tests. Requires pkg-config [default=no]])],
+    [enable_tests_ext=$withval],
+    [enable_tests_ext=no])
+
+# conditionally require test dependencies
+if test "x$enable_tests_ext" != "xno"; then
+    AX_BOOST_UNIT_TEST_FRAMEWORK
+fi
+
+AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_tests_ext" != "xno")
 
 AC_DEFINE(BOOST_NO_EXCEPTIONS)
 AC_DEFINE(BOOST_EXCEPTION_DISABLE)
