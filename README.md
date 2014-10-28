@@ -101,15 +101,16 @@ Of these libraries, only libzmq is packaged. However we require a more recent ve
 
 #### Build Options
 
-Any set of `./configure` options can be passed via the build script.
+Any set of `./configure` options can be passed via the build script, several examples follow.
 
-For example, to build without debug symbols:
+Compiling without debug symbols:
 ```sh
 $ ./install-bx.sh CXXFLAGS="-Os -s"
 ```
-To also install non-debug outputs to a specified directory, such as `/home/me/bx`:
+Installing to a directory other than `/usr/local`, such as `/home/me/stuff`:
 ```sh
-$ ./install-bx.sh CXXFLAGS="-Os -s" --prefix=/home/me/bx
+$ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/me/stuff/lib/pkgconfig
+$ ./install-bx.sh CXXFLAGS="-Os -s" --prefix=/home/me/stuff
 ```
 
 #### Compiling for Testnet
@@ -123,9 +124,15 @@ $ ./install-bx.sh --enable-testnet
 
 The OSX installation differs from Linux in the installation of the compiler and packaged dependencies.
 
-First install [Homebrew](http://brew.sh). Homebrew requires [Ruby](https://www.ruby-lang.org/en), which is preinstalled on OSX.
+First install [Homebrew](http://brew.sh). Homebrew installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are preinstalled on OSX.
 ```sh
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
+
+Next tap the homebrew repository.
+```sh
+$ brew tap homebrew/versions
 ```
 Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.org/projects/cxx0x.html) minimum.
 
@@ -133,9 +140,8 @@ To see your GCC version:
 ```sh
 $ g++ --version
 ```
-If necessary install the [GCC 4.8](https://gcc.gnu.org/projects/cxx0x.html) compiler from the homebrew repository:
+If necessary install the [GCC 4.8](https://gcc.gnu.org/projects/cxx0x.html) compiler:
 ```sh
-$ brew tap homebrew/versions
 $ brew install gcc48
 ```
 and then configure the environment to use the GCC 4.8 compiler as `g++`, `CC` and `CXX`.
@@ -152,15 +158,19 @@ Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://g
 ```sh
 $ brew install boost gmp
 ```
-Next set the default [package config](http://linux.die.net/man/1/pkg-config) path, unless you prefer a different configuration.
+Next add the `/usr/local` [package config](http://linux.die.net/man/1/pkg-config) path, which is not set by default on OSX:
 ```sh
 $ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 ```
-Finally execute the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
+Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
 ```sh
-$ ./install-bx.sh
+$ (curl -fsSL https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh)> install-bx.sh
+$ chmod +x install-bx.sh
 ```
-
+Finally install BX.
+```sh
+$ sudo ./install-bx.sh
+```
 ### Windows
 
 Visual Studio solutions are maintained for all libbitcoin libraries and dependencies.
@@ -300,7 +310,7 @@ Command headers are generated from metadata during development. The metadata inc
     <option name="help" description="Derive a child HD (BIP32) private key from another HD private key." />
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
-    <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The parent HD private key." />
+    <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The parent HD private key.  If not specified the key is read from STDIN." />
 </command>
 ```
 Input processing is handled in shared code and generated headers. All values are available to command implementation via strongly-typed getters on the command class:
@@ -342,30 +352,31 @@ In most commands the option is available to load the primary input parameter via
 
 BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind configuration settings to strongly-typed application level properties. Settings are populated by shared code into properties generated from metadata.
 ```xml
-<configuration section="general">
-    <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation..." />
-</configuration>
-
-<configuration section="server">
-    <setting name="address" default="obelisk.unsystem.net:8081" description="The URI of the server..." />
-    <setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />
-    <setting name="server-public-key" description="The public key of the server..." />
-</configuration>
+  <configuration section="general">
+    <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation." />
+    <setting name="retries" type="base10" description="Number of times to retry contacting the server before giving up." />
+    <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
+  </configuration>
+  
+  <configuration section="server">
+    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk server." />
+  </configuration>
 ```
 The implementation supports a two level hierarchy of settings using "sections" to group settings, similar to an `.ini` file:
 ```ini
-# Example libbitcoin explorer configuration file.
+# Example Bitcoin Explorer (BX) configuration file.
 
 [general]
-testnet = true
+testnet = false
+retries = 0
+wait = 2000
 
 [server]
-address = tcp://85.25.198.97:10091
-public-key = 573d47524678485575554e23456e334d495d667b7d583a4b576e563d70525a2428286279673d3a68
+uri = tcp://obelisk.unsystem.net:9091
 ```
-The path to the configuration settings file is specified by the `--config` command line option or otherwise the `BX_CONFIG` environment variable. If the file is specified by either method, and is not found, an error is returned via STDERR.
+The path to the configuration settings file is specified by the `--config` command line option or otherwise the `BX_CONFIG` environment variable. If the file is specified by either method, and is not found or contains invalid setttings, an error is returned via STDERR.
 
-Configuration settings are generated from metadata during development. The metadata includes full definition for all settings, including section, name, data type, default value and help description. If the file, or a given value within the file, is not specified the value defaults according to its metadata default value.
+Configuration settings are generated from metadata during development. The metadata includes full definition for all settings, including section, name, data type, default value and help description. If the file, or a given value within the file, is not specified the value defaults according to its metadata default value. The BX `settings` command shows the current value of all configuration settings.
 
 #### Environment Variables
 
@@ -405,10 +416,8 @@ Commands with complex outputs define the `format` option:
 ```xml
 <command symbol="address-decode" category="WALLET">
     <option name="help" description="Convert a Bitcoin address to RIPEMD160, dropping the version." />
-    <option name="format" type="encoding"
-        description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to native." />
-    <argument name="BITCOIN_ADDRESS" stdin="true" type="address" 
-        description="The Bitcoin address to convert."/>
+    <option name="format" type="encoding" description="The output format. Options are 'json', 'xml', 'info' or 'native', defaults to 'info'." />
+    <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address to convert. If not specified the address is read from STDIN."/>
 </command>
 ```
 To specify a non-default format set the `--format` option on the command line:
