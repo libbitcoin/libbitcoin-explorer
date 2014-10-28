@@ -55,7 +55,7 @@ AC_DEFINE(BOOST_EXCEPTION_DISABLE)
 # Do not add contextual build parameters in configuration.
 # http://stackoverflow.com/a/4680578
 OPTIMIZATIONS="-fvisibility=internal"
-WARNINGS="-Wall -Wextra -Wpedantic -Wno-missing-braces"
+WARNINGS="-Wall -Wextra -Wpedantic -Wno-missing-braces -Wno-maybe-uninitialized"
 SAFEGUARDS="-fvisibility-inlines-hidden -fstack-protector-all"
 EXCEPTIONS="-Wno-unused-function -Wno-unused-parameter"
 AM_CXXFLAGS=$WARNINGS" "$SAFEGUARDS" "$OPTIMIZATIONS" "$EXCEPTIONS
