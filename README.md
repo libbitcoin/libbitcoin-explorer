@@ -67,13 +67,17 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```sh
 $ sudo apt-get install build-essential autoconf automake libtool pkg-config
 ```
-Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
+Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
 ```sh
 $ sudo apt-get install libboost-all-dev libgmp-dev
 ```
+Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
+```sh
+$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
+```
 Finally execute the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
 ```sh
-$ ./install-bx.sh
+$ sudo install-bx.sh
 ```
 Bitcoin Explorer is now installed in `/usr/local/` and can be invoked as `$ bx`.
 
@@ -82,8 +86,6 @@ Bitcoin Explorer is now installed in `/usr/local/` and can be invoked as `$ bx`.
 If you intend to inspect and/or modify source code you should [git clone](http://git-scm.com/docs/git-clone) BX and each unpackaged dependency and build them manually. The install script itself is commented so that the manual build steps for each dependency can be inferred by a developer.
 
 You can run the install script from any directory on your system. This will build BX in a subdirectory named `bx-build` and install it to `/usr/local/`. When the build completes successfully the `bx-build` directory is deleted.
-
-The install script should not normally be executed using sudo. Instead it will immediately prompt you for a super user password if required. This ensures that only the necessary installation steps are executed as a super user, as opposed to the entire build process.
 
 **The install can take well over an hour to complete.** The install script clones, builds and installs nine unpackaged repositories, namely:
 
@@ -105,11 +107,10 @@ Any set of `./configure` options can be passed via the build script, several exa
 
 Compiling without debug symbols:
 ```sh
-$ ./install-bx.sh CXXFLAGS="-Os -s"
+$ sudo install-bx.sh CXXFLAGS="-Os -s"
 ```
-Installing to a directory other than `/usr/local`, such as `/home/me/stuff`:
+Installing to a directory other than `/usr/local`, such as `/home/me/stuff`, to which the user has permission:
 ```sh
-$ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/me/stuff/lib/pkgconfig
 $ ./install-bx.sh CXXFLAGS="-Os -s" --prefix=/home/me/stuff
 ```
 
@@ -117,7 +118,7 @@ $ ./install-bx.sh CXXFLAGS="-Os -s" --prefix=/home/me/stuff
 
 Currently certain commands cannot work with both [testnet](https://en.bitcoin.it/wiki/Testnet) and mainnet. This is a libbitcoin restriction that will be lifted in a future version. In order to work with testnet in the interim the libbitcoin libraries must be recompiled with the testnet option:
 ```sh
-$ ./install-bx.sh --enable-testnet
+$ sudo install-bx.sh --enable-testnet
 ```
 
 ### Macintosh
@@ -151,22 +152,18 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```sh
 $ brew install autoconf automake libtool
 ```
-Next install [Boost](http://www.boost.org) (1.50.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
+Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
 ```sh
 $ brew install boost gmp
 ```
-Next add the `/usr/local` [package config](http://linux.die.net/man/1/pkg-config) path, which is not set by default on OSX:
+Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) into a new file and enable execution:
 ```sh
-$ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
-```sh
-$ (curl -fsSL https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh)> install-bx.sh
+$ curl -fsSL https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh > install-bx.sh
 $ chmod +x install-bx.sh
 ```
 Finally install BX.
 ```sh
-$ sudo ./install-bx.sh
+$ sudo install-bx.sh
 ```
 ### Windows
 
