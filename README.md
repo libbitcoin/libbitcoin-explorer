@@ -148,22 +148,21 @@ $ sudo ln -sf /usr/local/bin/g++-4.8 /usr/bin/g++
 $ export CC=/usr/local/bin/gcc-4.8
 $ export CXX=/usr/local/bin/g++-4.8
 ```
-Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
 ```sh
-$ brew install autoconf automake libtool
+$ brew install autoconf automake libtool wget
 ```
 Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
 ```sh
 $ brew install boost gmp
 ```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) into a new file and enable execution:
+Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
 ```sh
-$ curl -fsSL https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh > install-bx.sh
-$ chmod +x install-bx.sh
+$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
 ```
 Finally install BX.
 ```sh
-$ sudo install-bx.sh
+$ install-bx.sh
 ```
 ### Windows
 
