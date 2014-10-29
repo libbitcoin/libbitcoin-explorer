@@ -58,10 +58,16 @@ int parameter::position(const option_metadata& option,
 // 100% unit coverage, all three scenarios (long, short, both)
 char parameter::short_name(const option_metadata& option) const
 {
-    auto name = option.canonical_display_name(
-        search_options::dashed_short_prefer_short);
+    // This call requires boost 1.50, don't use it.
+    //auto name = option.canonical_display_name(
+    //    search_options::dashed_short_prefer_short);
 
-    return if_else(name[0] == option_prefix_char, name[1], no_short_name);
+    // This is a substitute that allows us to use boost 1.49 for libbitcoin.
+    auto name = split(option.format_name()).front();
+    auto is_short_name = name[0] == option_prefix_char && 
+        name[1] != option_prefix_char;
+
+    return if_else(is_short_name, name[1], no_short_name);
 }
 
 // 100% component coverage
