@@ -20,6 +20,7 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 * [Installation](#installation)
   * [Debian/Ubuntu](#debianubuntu)
   * [Macintosh](#macintosh)
+  * [Configuration Options](#configuration-options)
   * [Windows](#windows)
 * [Design Overview](#design-overview)
   * [Single File Objective](#single-file-objective)
@@ -71,55 +72,16 @@ Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://g
 ```sh
 $ sudo apt-get install libboost-all-dev libgmp-dev
 ```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
+Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
+$ chmod +x install-bx.sh
 ```
 Finally install BX:
 ```sh
 $ sudo install-bx.sh
 ```
-Bitcoin Explorer is now installed in `/usr/local/` and can be invoked as `$ bx`.
-
-#### Notes
-
-If you intend to inspect and/or modify source code you should [git clone](http://git-scm.com/docs/git-clone) BX and each unpackaged dependency and build them manually. The install script itself is commented so that the manual build steps for each dependency can be inferred by a developer.
-
-You can run the install script from any directory on your system. This will build BX in a subdirectory named `bx-build` and install it to `/usr/local/`. When the build completes successfully the `bx-build` directory is deleted.
-
-**The install can take well over an hour to complete.** The install script clones, builds and installs nine unpackaged repositories, namely:
-
-* [jedisct1/libsodium](https://github.com/jedisct1/libsodium)
-* [zeromq/libzmq](https://github.com/zeromq/libzmq)
-* [zeromq/czmq](https://github.com/zeromq/czmq)
-* [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
-* [bitcoin/secp256k1](https://github.com/bitcoin/secp256k1)
-* [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-* [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
-* [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
-* [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
-
-Of these libraries, only libzmq is packaged. However we require a more recent version of the library in order to take advantage of new features such as the [SOCKS](http://wikipedia.org/wiki/SOCKS) proxy, so we build it as well.
-
-#### Build Options
-
-Any set of `./configure` options can be passed via the build script, several examples follow.
-
-Compiling without debug symbols:
-```sh
-$ sudo install-bx.sh CXXFLAGS="-Os -s"
-```
-Installing to a directory other than `/usr/local`, such as `/home/me/stuff`, to which the user has permission:
-```sh
-$ ./install-bx.sh CXXFLAGS="-Os -s" --prefix=/home/me/stuff
-```
-
-#### Compiling for Testnet
-
-Currently certain commands cannot work with both [testnet](https://en.bitcoin.it/wiki/Testnet) and mainnet. This is a libbitcoin restriction that will be lifted in a future version. In order to work with testnet in the interim the libbitcoin libraries must be recompiled with the testnet option:
-```sh
-$ sudo install-bx.sh --enable-testnet
-```
+Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
 ### Macintosh
 
@@ -156,19 +118,37 @@ Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://g
 ```sh
 $ brew install boost gmp
 ```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
+Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
+$ chmod +x install-bx.sh
 ```
-Finally install BX.
+Finally install BX:
 ```sh
-$ install-bx.sh
+$ ./install-bx.sh
 ```
+Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
+
+### Configuration Options
+
+Any set of `./configure` options can be passed via the build script, several examples follow.
+
+Compiling without debug symbols:
+```sh
+$ sudo install-bx.sh CXXFLAGS="-Os -s"
+```
+Installing to a directory other than `/usr/local`, such as `/home/me/stuff`, to which the user has permission:
+```sh
+$ ./install-bx.sh --prefix=/home/me/stuff
+```
+Currently certain commands cannot work with both [testnet](https://en.bitcoin.it/wiki/Testnet) and mainnet. This is a libbitcoin restriction that will be lifted in a future version. In order to work with testnet in the interim the libbitcoin libraries must be recompiled with the testnet option:
+```sh
+$ sudo install-bx.sh --enable-testnet
+```
+
 ### Windows
 
-Visual Studio solutions are maintained for all libbitcoin libraries and dependencies.
-
-> The libbitcoin execution environment supports `Windows XP Service Pack 2` and newer.
+Visual Studio solutions are maintained for all libbitcoin libraries and dependencies. The supported execution environment is `Windows XP Service Pack 2` and newer.
 
 #### Upgrade Compiler
 
@@ -219,6 +199,8 @@ Build these solutions in order:
 4. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
 
 > The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
+
+Configuration options are exposed in the Visual Studio property pages.
 
 #### Optional: Build Everything
 
