@@ -38,17 +38,6 @@ SECP256K1_OPTIONS=\
 ZMQ_OPTIONS=\
 "--with-libsodium=yes"
 
-# http://bit.ly/1pKbuFP
-# Run all unit and component tests (excludes 'network' group).
-BOOST_UNIT_TEST_PARAMETERS=\
-"--run_test=utility,primitives,obelisk,generated,offline,stub,obsolete "\
-"--random=1 "\
-"--show_progress=yes "\
-"--result_code=no "\
-"--detect_memory_leak=0 "\
-"--report_level=no "\
-"--build_info=yes"
-
 SEQUENTIAL="1"
 
 if [ "$TRAVIS" = "true" ]; then
@@ -144,9 +133,9 @@ build_tests()
 
     # Build and run unit tests relative to the primary directory.
     if [[ "$JOBS" -gt "$SEQUENTIAL" ]]; then
-        TEST_FLAGS="$BOOST_UNIT_TEST_PARAMETERS" make check "-j$JOBS"
+        make check "-j$JOBS"
     else
-        TEST_FLAGS="$BOOST_UNIT_TEST_PARAMETERS" make check
+        make check
     fi
 
     # Verify execution (note that 'help' currently returns empty with success).
