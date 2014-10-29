@@ -75,7 +75,7 @@ Next download the [install script](https://github.com/libbitcoin/libbitcoin-expl
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
 ```
-Finally execute the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh):
+Finally install BX:
 ```sh
 $ sudo install-bx.sh
 ```
