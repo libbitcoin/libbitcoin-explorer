@@ -79,7 +79,7 @@ $ chmod +x install-bx.sh
 ```
 Finally install BX:
 ```sh
-$ sudo install-bx.sh
+$ sudo ./install-bx.sh
 ```
 Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
@@ -135,7 +135,7 @@ Any set of `./configure` options can be passed via the build script, several exa
 
 Compiling without debug symbols:
 ```sh
-$ sudo install-bx.sh CXXFLAGS="-Os -s"
+$ sudo ./install-bx.sh CXXFLAGS="-Os -s"
 ```
 Installing to a directory other than `/usr/local`, such as `/home/me/stuff`, to which the user has permission:
 ```sh
@@ -143,7 +143,7 @@ $ ./install-bx.sh --prefix=/home/me/stuff
 ```
 Currently certain commands cannot work with both [testnet](https://en.bitcoin.it/wiki/Testnet) and mainnet. This is a libbitcoin restriction that will be lifted in a future version. In order to work with testnet in the interim the libbitcoin libraries must be recompiled with the testnet option:
 ```sh
-$ sudo install-bx.sh --enable-testnet
+$ sudo ./install-bx.sh --enable-testnet
 ```
 
 ### Windows
