@@ -21,7 +21,7 @@ build_boost()
     # Establish boost build parameters.
     # Boost thread (not currently used) with gcc7/8 requires (1.49)
     # For more information see: https://svn.boost.org/trac/boost/ticket/6165
-    BOOST_LIBS="date_time,filesystem,regex,system,test"
+    BOOST_LIBS="chrono,date_time,filesystem,program_options,regex,system,test"
     BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.49.0/boost_1_49_0.tar.bz2/download"
     BOOST_ARCHIVE="boost_1_49_0.tar.bz2"
 
