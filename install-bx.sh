@@ -4,9 +4,9 @@
 #
 
 # The source repository for the primary build (when not running in Travis).
-BUILD_ACCOUNT="evoskuil"
+BUILD_ACCOUNT="libbitcoin"
 BUILD_REPO="libbitcoin-explorer"
-BUILD_BRANCH="network"
+BUILD_BRANCH="master"
 
 # This script will build using this relative directory.
 # This is meant to be temporary, just to facilitate the install.
@@ -143,7 +143,6 @@ build_tests()
 {
     JOBS=$1
 
-    # TODO: pass $BOOST_UNIT_TEST_PARAMETERS
     # Build and run unit tests relative to the primary directory.
     if [[ $JOBS -gt $SEQUENTIAL ]]; then
         make check -j$JOBS
