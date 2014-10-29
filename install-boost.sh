@@ -35,7 +35,7 @@ build_boost()
     ./bootstrap.sh --with-libraries=$BOOST_LIBS
     
     # Build and install, disabling ICU for build consistency across platforms.
-    sudo ./b2 -d0 -q --disable-icu install
+    ./b2 -d0 -q --disable-icu install
 }
 
 # Establish shared build parameters.
@@ -49,7 +49,6 @@ echo "This script will erase and build in the subdirectory: "$BUILD_DIRECTORY
 
 # Create and move to the build directory.
 # Cache credentials for subsequent sudo calls and clean the build directory.
-sudo rm -rf $BUILD_DIRECTORY
 mkdir $BUILD_DIRECTORY
 cd $BUILD_DIRECTORY
 
