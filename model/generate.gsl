@@ -1285,7 +1285,7 @@ bx_LDADD = \\
 # tests
 #
 if ENABLE_TESTS
-TESTS = test/libbitcoin_explorer_test
+TESTS = run-tests.sh
 
 check_PROGRAMS = test/libbitcoin_explorer_test
 
