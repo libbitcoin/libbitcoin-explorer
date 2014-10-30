@@ -328,13 +328,17 @@ In most commands the option is available to load the primary input parameter via
 BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind configuration settings to strongly-typed application level properties. Settings are populated by shared code into properties generated from metadata.
 ```xml
   <configuration section="general">
-    <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation." />
+    <setting name="network" default="mainnet" description="The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'." />
     <setting name="retries" type="base10" description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
+    
+  <configuration section="mainnet">
+    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk mainnet server." />
+  </configuration>
   
-  <configuration section="server">
-    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk server." />
+  <configuration section="testnet">
+    <setting name="url" default="tcp://obelisk.unsystem.net:10091" description="The URL of the Obelisk testnet server." />
   </configuration>
 ```
 The implementation supports a two level hierarchy of settings using "sections" to group settings, similar to an `.ini` file:
@@ -342,12 +346,26 @@ The implementation supports a two level hierarchy of settings using "sections" t
 # Example Bitcoin Explorer (BX) configuration file.
 
 [general]
-testnet = false
+
+# Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers.
+# The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'.
+network = mainnet
+
+# Number of times to retry contacting the server before giving up.
 retries = 0
+
+# Milliseconds to wait for a response from the server.
 wait = 2000
 
-[server]
-uri = tcp://obelisk.unsystem.net:9091
+[mainnet]
+
+# The URL of the Obelisk mainnet server.
+url = tcp://obelisk.unsystem.net:9091
+
+[testnet]
+
+# The URL of the Obelisk testnet server.
+url = tcp://obelisk.unsystem.net:10091
 ```
 The path to the configuration settings file is specified by the `--config` command line option or otherwise the `BX_CONFIG` environment variable. If the file is specified by either method, and is not found or contains invalid setttings, an error is returned via STDERR.
 
