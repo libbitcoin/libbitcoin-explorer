@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_testnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
     command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
-    command.set_general_testnet_setting(true);
+    command.set_general_network_setting("testnet");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("tprv8ZgxMBicQKsPeQXeTomURYYS8ZhysPog3wXLPwStJ9LeiPeGvypYe4y6HhWadxZi4BB2dLSAMXVkoRi8AoeNXmjETeYFiyRi56BhFnkm9uh\n");
 }

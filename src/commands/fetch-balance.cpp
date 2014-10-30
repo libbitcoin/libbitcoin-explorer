@@ -68,7 +68,8 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_bitcoin_address_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& server = get_server_url_setting();
+    const auto& server = if_else(get_general_network_setting() == "testnet",
+        get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);

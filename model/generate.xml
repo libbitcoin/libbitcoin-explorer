@@ -26,25 +26,19 @@
   <!-- IMPORTANT: update the 'settings' command when these change. -->
   
   <configuration section="general">
-    <!-- Only hd-new and stealth-encode currently use the testnet flag. -->
-    <setting name="testnet" type="bool" default="false" description="Set to true for testnet operation." />
+    <!-- Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers. -->
+    <setting name="network" default="mainnet" description="The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'." />
     <setting name="retries" type="base10" description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
-  
-  <!-- Logging is currently unused. -->
-  <!--<configuration section="logging">
-    <setting name="debug" type="path" default="debug.log" description="The file and path name to the debug log file." />
-    <setting name="error" type="path" default="error.log" description="The file and path name to the error log file." />
-  </configuration>-->
-  
-  <configuration section="server">
-    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk server." />
-    <!-- Proxy suport is not yet implemented. -->
-    <!--<setting name="socks-proxy" description="The host name and port number of a Socks5 proxy server." />-->
-    <!-- Public key support requries libbitcoin-client integration. -->    
-    <!--<setting name="public-key" type="base16" description="The public key of the server to which this application may connect." />-->
+    
+  <configuration section="mainnet">
+    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk mainnet server." />
   </configuration>
+  
+  <configuration section="testnet">
+    <setting name="url" default="tcp://obelisk.unsystem.net:10091" description="The URL of the Obelisk testnet server." />
+  </configuration>  
   
   <!-- General resources. -->
   
@@ -410,6 +404,7 @@
   </command>
 
   <command symbol="settings" typeX="string" multipleX="true" category="BX" description="Display the loaded configuration settings.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />  
   </command>
 
   <command symbol="sha160" typeX="base16" category="HASH" description="Perform a SHA160 (also known as SHA-1) hash of Base16 data.">

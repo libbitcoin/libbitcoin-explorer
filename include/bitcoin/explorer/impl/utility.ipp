@@ -178,8 +178,9 @@ void load_path(Value& parameter, const std::string& name,
 template <typename Value>
 std::string serialize(const Value& value, const std::string& fallback)
 {
-    std::string text;
-    boost::to_string(value, text);
+    std::stringstream stream;
+    stream << value;
+    const auto& text = stream.str();
     return if_else(text.empty(), fallback, text);
 }
 

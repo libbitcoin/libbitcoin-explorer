@@ -21,27 +21,29 @@
 #include <bitcoin/explorer/commands/help.hpp>
 
 #include <iostream>
-#include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/generated.hpp>
+#include <map>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
+using namespace pt;
 
 console_result settings::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto general_testnet = get_general_testnet_setting();
-    const auto general_retries = get_general_retries_setting();
-    const auto general_wait = get_general_wait_setting();
-    const auto& server_url = get_server_url_setting();
+    // bound parameters
+    const auto& encoding = get_format_option();
 
-    // TODO: generate this from configuration settings metadata at runtime,
-    // and include localized descriptions rfom 
-    output << format("general.retries = %1%") % general_retries << std::endl;
-    output << format("general.testnet = %1%") % bool_to_string(general_testnet) << std::endl;
-    output << format("general.wait = %1%") % general_wait << std::endl;
-    output << format("server.url = %1%") % server_url << std::endl;
+    // TODO: load from metadata into settings list.
+    // This must be updated for any settings metadata change.
+    settings_list list;
+    list.emplace("general.network", get_general_network_setting());
+    list.emplace("general.retries", serialize(get_general_retries_setting()));
+    list.emplace("general.wait", serialize(get_general_wait_setting()));
+    list.emplace("mainnet.url", get_mainnet_url_setting());
+    list.emplace("testnet.url", get_testnet_url_setting());
 
+    write_stream(output, prop_tree(list), encoding);
     return console_result::okay;
 }

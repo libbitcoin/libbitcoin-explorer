@@ -48,15 +48,16 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto& server_argument = get_server_url_argument();
-    const auto& server_setting = get_server_url_setting();
+    const auto& server = if_else(get_general_network_setting() == "testnet",
+        get_testnet_url_setting(), get_mainnet_url_setting());
 
-    const std::string server(if_else(server_argument.empty(), server_setting,
-        server_argument));
+    const auto& use_server = if_else(server_argument.empty(),
+        server, server_argument);
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);
 
-    if (client.connect(server) < 0)
+    if (client.connect(use_server) < 0)
         return console_result::failure;
 
     callback_state state(error, output);
