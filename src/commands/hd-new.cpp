@@ -36,7 +36,7 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const data_chunk& seed = get_seed_argument();
-    const bool testnet = get_general_testnet_setting();
+    const auto& network = get_general_network_setting();
 
     if (seed.size() < minimum_seed_size)
     {
@@ -45,7 +45,7 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
     }
 
     // TESTNET OPTION DOES NOT REQUIRE RECOMPILE
-    const hd_private_key key(seed, testnet);
+    const hd_private_key key(seed, network == "testnet");
     if (!key.valid())
     {
         error << BX_HD_NEW_INVALID_KEY << std::endl;

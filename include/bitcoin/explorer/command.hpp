@@ -182,9 +182,9 @@ public:
         using namespace po;
         definitions.add_options()
         (
-            "general.testnet",
-            value<bool>(&setting_.general.testnet)->default_value(false),
-            "Set to true for testnet operation."
+            "general.network",
+            value<std::string>(&setting_.general.network)->default_value("mainnet"),
+            "The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'."
         )
         (
             "general.retries",
@@ -197,9 +197,14 @@ public:
             "Milliseconds to wait for a response from the server."
         )
         (
-            "server.url",
-            value<std::string>(&setting_.server.url)->default_value("tcp://obelisk.unsystem.net:9091"),
-            "The URL of the Obelisk server."
+            "mainnet.url",
+            value<std::string>(&setting_.mainnet.url)->default_value("tcp://obelisk.unsystem.net:9091"),
+            "The URL of the Obelisk mainnet server."
+        )
+        (
+            "testnet.url",
+            value<std::string>(&setting_.testnet.url)->default_value("tcp://obelisk.unsystem.net:10091"),
+            "The URL of the Obelisk testnet server."
         );
     }
 
@@ -245,19 +250,19 @@ public:
     }
 
     /**
-     * Get the value of the general.testnet setting.
+     * Get the value of the general.network setting.
      */
-    BCX_API virtual bool get_general_testnet_setting()
+    BCX_API virtual std::string get_general_network_setting()
     {
-        return setting_.general.testnet;
+        return setting_.general.network;
     }
 
     /**
-     * Set the value of the general.testnet setting.
+     * Set the value of the general.network setting.
      */
-    BCX_API virtual void set_general_testnet_setting(bool value)
+    BCX_API virtual void set_general_network_setting(std::string value)
     {
-        setting_.general.testnet = value;
+        setting_.general.network = value;
     }
 
     /**
@@ -293,19 +298,35 @@ public:
     }
 
     /**
-     * Get the value of the server.url setting.
+     * Get the value of the mainnet.url setting.
      */
-    BCX_API virtual std::string get_server_url_setting()
+    BCX_API virtual std::string get_mainnet_url_setting()
     {
-        return setting_.server.url;
+        return setting_.mainnet.url;
     }
 
     /**
-     * Set the value of the server.url setting.
+     * Set the value of the mainnet.url setting.
      */
-    BCX_API virtual void set_server_url_setting(std::string value)
+    BCX_API virtual void set_mainnet_url_setting(std::string value)
     {
-        setting_.server.url = value;
+        setting_.mainnet.url = value;
+    }
+
+    /**
+     * Get the value of the testnet.url setting.
+     */
+    BCX_API virtual std::string get_testnet_url_setting()
+    {
+        return setting_.testnet.url;
+    }
+
+    /**
+     * Set the value of the testnet.url setting.
+     */
+    BCX_API virtual void set_testnet_url_setting(std::string value)
+    {
+        setting_.testnet.url = value;
     }
 
 protected:
@@ -353,30 +374,41 @@ private:
         struct general
         {
             general()
-              : testnet(),
+              : network(),
                 retries(),
                 wait()
             {
             }
 
-            bool testnet;
+            std::string network;
             primitives::base10 retries;
             uint32_t wait;
         } general;
 
-        struct server
+        struct mainnet
         {
-            server()
+            mainnet()
               : url()
             {
             }
 
             std::string url;
-        } server;
+        } mainnet;
+
+        struct testnet
+        {
+            testnet()
+              : url()
+            {
+            }
+
+            std::string url;
+        } testnet;
 
         setting()
           : general(),
-            server()
+            mainnet(),
+            testnet()
         {
         }
     } setting_;

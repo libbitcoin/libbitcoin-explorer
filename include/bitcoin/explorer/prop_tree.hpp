@@ -20,6 +20,7 @@
 #ifndef BX_PROPERTY_TREE_HPP
 #define BX_PROPERTY_TREE_HPP
 
+#include <map>
 #include <string>
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
@@ -49,6 +50,11 @@ class point;
 class stealth;
 class transaction;
 class wrapper;
+
+/**
+ * A tuple to represent settings and serialized values.
+ */
+typedef std::map<std::string, std::string> settings_list;
 
 /**
  * Create a property tree array of property tree elements.
@@ -351,6 +357,13 @@ BCX_API pt::ptree prop_list(const bc::hash_digest& hash, size_t height,
  */
 BCX_API pt::ptree prop_tree(const bc::hash_digest& hash, size_t height,
     size_t index);
+
+/**
+ * Create a property tree for the settings command.
+ * @param[in]  settings   The tx index.
+ * @returns               A new property tree containing the settings.
+ */
+BCX_API pt::ptree prop_tree(const settings_list& settings);
 
 } // namespace primitives
 } // namespace explorer
