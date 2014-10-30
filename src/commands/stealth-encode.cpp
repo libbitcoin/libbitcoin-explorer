@@ -38,7 +38,7 @@ console_result stealth_encode::invoke(std::ostream& output,
     const auto& scan_pubkey = get_scan_pubkey_argument();
     const auto& spend_pubkeys = get_spend_pubkeys_argument();
     const auto& signatures = get_signatures_option();
-    const auto testnet = get_general_testnet_setting();
+    const auto& network = get_general_network_setting();
 
     const auto maximum = if_else(spend_pubkeys.empty(), (size_t)1, 
         spend_pubkeys.size());
@@ -64,7 +64,8 @@ console_result stealth_encode::invoke(std::ostream& output,
     }
 
     // TESTNET WORKS WITHOUT RECOMPILE
-    stealth address(prefix, scan_pubkey, spend_pubkeys, signatures, testnet);
+    stealth address(prefix, scan_pubkey, spend_pubkeys, signatures,
+        network == "testnet");
 
     output << address << std::endl;
     return console_result::okay;

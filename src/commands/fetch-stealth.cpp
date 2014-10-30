@@ -79,12 +79,13 @@ static void fetch_stealth_from_prefix(obelisk_client& client,
 console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& server = get_server_url_setting();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto height = get_height_option();
     const auto& encoding = get_format_option();
     const stealth_prefix& prefix = get_prefix_argument();
+    const auto& server = if_else(get_general_network_setting() == "testnet",
+        get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);

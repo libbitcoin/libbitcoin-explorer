@@ -133,7 +133,7 @@ ptree prop_list(const std::vector<balance_row>& rows,
     uint64_t confirmed_balance = 0;
     uint64_t unspent_balance = 0;
 
-    for (const auto& row : rows)
+    for (const auto& row: rows)
     {
         total_recieved += row.value;
 
@@ -419,6 +419,19 @@ ptree prop_tree(const hash_digest& hash, size_t height, size_t index)
 {
     ptree tree;
     tree.add_child("metadata", prop_list(hash, height, index));
+    return tree;
+}
+
+// settings
+
+ptree prop_tree(const settings_list& settings)
+{
+    ptree list;
+    for (const auto& setting: settings)
+        list.put(setting.first, setting.second);
+
+    ptree tree;
+    tree.add_child("settings", list);
     return tree;
 }
 

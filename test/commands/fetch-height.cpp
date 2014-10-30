@@ -44,7 +44,8 @@ BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet__okay)
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__testnet__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_height);
-    command.set_server_url_setting(BX_TESTNET_SERVER);
+    command.set_general_network_setting("testnet");
+    command.set_testnet_url_setting(BX_TESTNET_SERVER);
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
@@ -58,7 +59,8 @@ BOOST_AUTO_TEST_CASE(fetch_height__invoke__bogus_server_url_argument__failure)
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__testnet_server_url_argument__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_height);
-    command.set_server_url_argument(BX_TESTNET_SERVER);
+    command.set_general_network_setting("testnet");
+    command.set_testnet_url_setting(BX_TESTNET_SERVER);
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 

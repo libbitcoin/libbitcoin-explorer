@@ -139,7 +139,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_ba
 {
     BX_DECLARE_COMMAND(stealth_encode);
     command.set_signatures_option(1);
-    command.set_general_testnet_setting(true);
+    command.set_general_network_setting("testnet");
     command.set_prefix_option({ STEALTH_ENCODE_BAADF00D_PREFIX });
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ENCODE_SPEND_PUBKEY_B } });

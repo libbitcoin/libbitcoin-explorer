@@ -26,16 +26,42 @@ BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(settings__invoke)
 
 #define BX_SETTINGS_EMPTY \
-"general.retries = 0\n" \
-"general.testnet = false\n" \
-"general.wait = 0\n" \
-"server.url = \n"
+"settings\n" \
+"{\n" \
+"    general\n" \
+"    {\n" \
+"        network \"\"\n" \
+"        retries 0\n" \
+"        wait 0\n" \
+"    }\n" \
+"    mainnet\n" \
+"    {\n" \
+"        url \"\"\n" \
+"    }\n" \
+"    testnet\n" \
+"    {\n" \
+"        url \"\"\n" \
+"    }\n" \
+"}\n"
 
 #define BX_SETTINGS_TEST_VALUES \
-"general.retries = 42\n" \
-"general.testnet = true\n" \
-"general.wait = 7000\n" \
-"server.url = https://mainnet.obelisk.net:42\n"
+"settings\n" \
+"{\n" \
+"    general\n" \
+"    {\n" \
+"        network testnet\n" \
+"        retries 42\n" \
+"        wait 7000\n" \
+"    }\n" \
+"    mainnet\n" \
+"    {\n" \
+"        url https://mainnet.obelisk.net:42\n" \
+"    }\n" \
+"    testnet\n" \
+"    {\n" \
+"        url https://testnet.obelisk.net:42\n" \
+"    }\n" \
+"}\n"
 
 BOOST_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
 {
@@ -48,9 +74,10 @@ BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
 {
     BX_DECLARE_COMMAND(settings);
     command.set_general_retries_setting(42);
-    command.set_general_testnet_setting(true);
+    command.set_general_network_setting("testnet");
     command.set_general_wait_setting(7000);
-    command.set_server_url_setting("https://mainnet.obelisk.net:42");
+    command.set_mainnet_url_setting("https://mainnet.obelisk.net:42");
+    command.set_testnet_url_setting("https://testnet.obelisk.net:42");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SETTINGS_TEST_VALUES);
 }

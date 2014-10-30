@@ -234,6 +234,11 @@ bool load_variables(variables_map& variables, std::string& message,
         message = e.what();
         return false;
     }
+    catch (...)
+    {
+        message = "...";
+        return false;
+    }
 
     return true;
 }

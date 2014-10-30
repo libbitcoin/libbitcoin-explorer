@@ -143,6 +143,11 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
+        )
+        (
+            "format,f",
+            value<primitives::encoding>(&option_.format),
+            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         );
 
         return options;
@@ -158,6 +163,23 @@ public:
         std::ostream& cerr);
 
     /* Properties */
+
+    /**
+     * Get the value of the format option.
+     */
+    BCX_API virtual primitives::encoding& get_format_option()
+    {
+        return option_.format;
+    }
+
+    /**
+     * Set the value of the format option.
+     */
+    BCX_API virtual void set_format_option(
+        const primitives::encoding& value)
+    {
+        option_.format = value;
+    }
 
 private:
 
@@ -182,9 +204,11 @@ private:
     struct option
     {
         option()
+          : format()
         {
         }
 
+        primitives::encoding format;
     } option_;
 };
 
