@@ -367,13 +367,13 @@ wait = 2000
 
 [mainnet]
 
-# The URL of the Obelisk mainnet server.
-url = tcp://obelisk.unsystem.net:9091
+# The URL of the default mainnet Obelisk server.
+url = tcp://obelisk-sol.airbitz.co:9091
 
 [testnet]
 
-# The URL of the Obelisk testnet server.
-url = tcp://obelisk.unsystem.net:10091
+# The URL of the default testnet Obelisk server.
+url = tcp://obelisk-testnet.airbitz.co:9091
 ```
 The path to the configuration settings file is specified by the `--config` command line option or otherwise the `BX_CONFIG` environment variable. If the file is specified by either method, and is not found or contains invalid setttings, an error is returned via STDERR.
 
