@@ -6,6 +6,10 @@
 
 *The Bitcoin Command Line Tool*
 
+**User Documentation**
+
+Comprehensive [documentation and tutorials](https://github.com/libbitcoin/libbitcoin-explorer/wiki) are available on the wiki.
+
 **License Overview**
 
 All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
@@ -58,6 +62,12 @@ To see your GCC version:
 ```sh
 $ g++ --version
 ```
+```
+g++ (Ubuntu 4.8.2-19ubuntu1) 4.8.2
+Copyright (C) 2013 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
 If necessary, upgrade your compiler [as follows](http://bit.ly/1vXaaQL):
 ```sh
 $ sudo apt-get install g++-4.8
@@ -93,26 +103,24 @@ $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/maste
 ```
 You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
 
-Next tap the homebrew repository.
-```sh
-$ brew tap homebrew/versions
-```
-Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.org/projects/cxx0x.html) minimum.
+Libbitcoin compiles with Clang on OSX and requires C++11 support. Installation has been verified using CLang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html). This version or newer should be installed as part of the Xcode command line developer tools.
 
-To see your GCC version:
+To see your Clang/LLVM  version:
 ```sh
-$ g++ --version
+$ clang++ --version
 ```
-If necessary install and configure the [GCC 4.8](https://gcc.gnu.org/projects/cxx0x.html) compiler:
-```sh
-$ brew install gcc48
-$ sudo ln -sf /usr/local/bin/g++-4.8 /usr/bin/g++
-$ export CC=/usr/local/bin/gcc-4.8
-$ export CXX=/usr/local/bin/g++-4.8
+```
+Apple LLVM version 6.0 (clang-600.0.54) (based on LLVM 3.5svn)
+Target: x86_64-apple-darwin14.0.0
+Thread model: posix
+```
+If required update your version of the command line tools as follows:
+```
+$ xcode-select --install
 ```
 Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
 ```sh
-$ brew install autoconf automake libtool wget
+$ brew install autoconf automake libtool pkg-config wget
 ```
 Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
 ```sh
