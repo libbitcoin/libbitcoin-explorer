@@ -33,11 +33,11 @@
   </configuration>
     
   <configuration section="mainnet">
-    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk mainnet server." />
+    <setting name="url" default="tcp://obelisk-sol.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
   </configuration>
   
   <configuration section="testnet">
-    <setting name="url" default="tcp://obelisk.unsystem.net:10091" description="The URL of the Obelisk testnet server." />
+    <setting name="url" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
   </configuration>  
   
   <!-- General resources. -->
