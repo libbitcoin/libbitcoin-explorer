@@ -1141,11 +1141,11 @@ ACLOCAL_AMFLAGS = -I m4
 #
 # headers
 #
-bitcoin_includedir = $\(includedir)/bitcoin
+bitcoin_includedir = ${includedir}/bitcoin
 bitcoin_include_HEADERS = \\
     include/bitcoin/explorer.hpp
     
-bitcoin_explorer_includedir = $\(includedir)/bitcoin/explorer
+bitcoin_explorer_includedir = ${includedir}/bitcoin/explorer
 bitcoin_explorer_include_HEADERS = \\
     include/bitcoin/explorer/async_client.hpp \\
     include/bitcoin/explorer/callback_state.hpp \\
@@ -1157,12 +1157,12 @@ bitcoin_explorer_include_HEADERS = \\
     include/bitcoin/explorer/obelisk_client.hpp \\
     include/bitcoin/explorer/prop_tree.hpp
 
-bitcoin_explorer_impl_includedir = $\(includedir)/bitcoin/explorer/impl
+bitcoin_explorer_impl_includedir = ${includedir}/bitcoin/explorer/impl
 bitcoin_explorer_impl_include_HEADERS = \\
     include/bitcoin/explorer/impl/prop_tree.ipp \\
     include/bitcoin/explorer/impl/utility.ipp
 
-bitcoin_explorer_utility_includedir = $\(includedir)/bitcoin/explorer/utility
+bitcoin_explorer_utility_includedir = ${includedir}/bitcoin/explorer/utility
 bitcoin_explorer_utility_include_HEADERS = \\
     include/bitcoin/explorer/utility/compat.hpp \\
     include/bitcoin/explorer/utility/config.hpp \\
@@ -1171,7 +1171,7 @@ bitcoin_explorer_utility_include_HEADERS = \\
     include/bitcoin/explorer/utility/printer.hpp \\
     include/bitcoin/explorer/utility/utility.hpp
 
-bitcoin_explorer_primitives_includedir = $\(includedir)/bitcoin/explorer/primitives
+bitcoin_explorer_primitives_includedir = ${includedir}/bitcoin/explorer/primitives
 bitcoin_explorer_primitives_include_HEADERS = \\
     include/bitcoin/explorer/primitives/address.hpp \\
     include/bitcoin/explorer/primitives/base10.hpp \\
@@ -1200,7 +1200,7 @@ bitcoin_explorer_primitives_include_HEADERS = \\
     include/bitcoin/explorer/primitives/wrapper.hpp
 
 # Generated from XML data source.
-bitcoin_explorer_commands_includedir = $\(includedir)/bitcoin/explorer/commands
+bitcoin_explorer_commands_includedir = ${includedir}/bitcoin/explorer/commands
 bitcoin_explorer_commands_include_HEADERS = \\
 .for command by symbol
     include/bitcoin/explorer/commands/$(symbol:).hpp$(!last() ?? " \\")
@@ -1212,7 +1212,7 @@ bitcoin_explorer_commands_include_HEADERS = \\
 noinst_LTLIBRARIES = src/libbitcoin-explorer.la
 
 src_libbitcoin_explorer_la_CPPFLAGS = \\
-    -I$\(srcdir)/include \\
+    -I${srcdir}/include \\
     ${bitcoin_client_CFLAGS}
 
 src_libbitcoin_explorer_la_SOURCES = \\
@@ -1269,7 +1269,7 @@ src_libbitcoin_explorer_la_LIBADD = \\
 bin_PROGRAMS = bx
 
 bx_CPPFLAGS = \\
-    -I$\(srcdir)/include \\
+    -I${srcdir}/include \\
     ${bitcoin_client_CFLAGS}
 
 bx_SOURCES = \\
@@ -1290,7 +1290,7 @@ TESTS = run-tests.sh
 check_PROGRAMS = test/libbitcoin_explorer_test
 
 test_libbitcoin_explorer_test_CPPFLAGS = \\
-    -I$\(srcdir)/include \\
+    -I${srcdir}/include \\
     ${bitcoin_client_CFLAGS} \\
     -DBOOST_TEST_DYN_LINK
 
