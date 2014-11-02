@@ -329,7 +329,8 @@ bx_LDADD = \
 #
 # tests
 #
-if ENABLE_TESTS
+if WITH_TESTS
+
 TESTS = run-tests.sh
 
 check_PROGRAMS = test/libbitcoin_explorer_test
@@ -447,5 +448,6 @@ test_libbitcoin_explorer_test_LDADD = \
     -lboost_chrono \
     -lboost_program_options \
     ${bitcoin_client_LIBS}
+    
 endif
 
