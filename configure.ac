@@ -155,8 +155,9 @@ AX_CHECK_COMPILE_FLAG([-Wpedantic],
 #AX_CHECK_COMPILE_FLAG([-Wno-unused-function],
 #    [CXXFLAGS="$CXXFLAGS -Wno-unused-function"])
 
-#AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
-#    [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
+# This is for protobuf headers.
+AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
+    [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
 
 #AX_CHECK_COMPILE_FLAG([-Wno-maybe-uninitialized],
 #    [CXXFLAGS="$CXXFLAGS -Wno-maybe-uninitialized"])
