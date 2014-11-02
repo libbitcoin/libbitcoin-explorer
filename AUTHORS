@@ -1,16 +1,11 @@
 Authors:
    
  * Eric Voskuil <evoskuil>
-   BX design, development, unit and functional tests, documentation, Linux and
-   Windows builds, package config, build system.
-   eric@voskuil.org
-
-* Phillip Mienk <pmienk>
-  libbitcoin-client integration
+ * Phillip Mienk <pmienk>
    
-Creadit to the SX developers for the original design and implementation:
+Credit to the SX developers for the original design and implementation:
    
- * Amir Taaki (genjix)
+ * Amir Taaki <genjix>
    Development
    amir@unsystem.net
 
