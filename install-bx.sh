@@ -11,9 +11,11 @@ BUILD_BRANCH="master"
 # This script will build using this relative temporary directory.
 BUILD_DIRECTORY="bx-build"
 
+# Boost osx discovery code assumes boost is in the MacPorts package path.
 HOMEBREW_BOOST_ROOT_PATH=\
 "/usr/local/opt/boost"
 
+# A package config path is not set by default on osx.
 HOMEBREW_PKG_CONFIG_PATHS=\
 "/usr/local/opt/gmp/lib/pkgconfig"
 
@@ -59,7 +61,7 @@ for i in "$@"; do
     esac
 done
 
-# Set PKG_CONFIG_PATH, BOOST_ROOT, CC, CXX and update options for clang.
+# Set PKG_CONFIG_PATH, BOOST_ROOT, CC, CXX and set clang flags.
 if [[ $OS == "Darwin" ]]; then
     export CC=clang
     export CXX=clang++
@@ -83,9 +85,7 @@ echo "Package config path: $PKG_CONFIG_PATH"
 display_message()
 {
     MESSAGE=$1
-    echo
-    echo "********************** $MESSAGE **********************"
-    echo
+    echo "\n********************** $MESSAGE **********************\n"
 }
 
 automake_current_directory()
