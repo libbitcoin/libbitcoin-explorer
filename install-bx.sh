@@ -8,8 +8,7 @@ BUILD_ACCOUNT="libbitcoin"
 BUILD_REPO="libbitcoin-explorer"
 BUILD_BRANCH="master"
 
-# This script will build using this relative directory.
-# This is meant to be temporary, just to facilitate the install.
+# This script will build using this relative temporary directory.
 BUILD_DIRECTORY="bx-build"
 
 HOMEBREW_BOOST_ROOT_PATH=\
@@ -26,9 +25,8 @@ SECP256K1_OPTIONS=\
 "--enable-tests=no "\
 "--enable-endomorphism=no"
 
-# Suppress multiple clang "argument unused during compilation" warnings.
-SODIUM_OPTIONS=\
-"CPPFLAGS=-Qunused-arguments"
+# This is set for clang only, see below.
+SODIUM_OPTIONS=""
 
 # Enable test compile in the primary build.
 TEST_OPTIONS=\
@@ -61,14 +59,14 @@ for i in "$@"; do
     esac
 done
 
-# Set PKG_CONFIG_PATH, BOOST_ROOT, CC, CXX and SODIUM_OPTIONS.
+# Set PKG_CONFIG_PATH, BOOST_ROOT, CC, CXX and update options for clang.
 if [[ $OS == "Darwin" ]]; then
     export CC=clang
     export CXX=clang++
     export BOOST_ROOT=$HOMEBREW_BOOST_ROOT_PATH
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOMEBREW_PKG_CONFIG_PATHS"
-else
-    SODIUM_OPTIONS=""
+    SODIUM_OPTIONS="$SODIUM_OPTIONS CPPFLAGS=-Qunused-arguments"
+    SECP256K1_OPTIONS="$SECP256K1_OPTIONS CPPFLAGS=-Wno-unused-value"
 fi
 if [[ $PREFIX ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig"
@@ -200,7 +198,7 @@ build_library()
     build_from_github zeromq libzmq master $SEQUENTIAL "$@" $ZMQ_OPTIONS
     build_from_github zeromq czmq master $SEQUENTIAL "$@"
     build_from_github zeromq czmqpp master $SEQUENTIAL "$@"
-    build_from_github evoskuil secp256k1 osx-patch $SEQUENTIAL "$@" $SECP256K1_OPTIONS
+    build_from_github bitcoin secp256k1 master $SEQUENTIAL "$@" $SECP256K1_OPTIONS
     build_from_github libbitcoin libbitcoin develop $PARALLEL "$@"
     build_from_github libbitcoin protobuf 2.6.0 $SEQUENTIAL "$@"
     build_from_github libbitcoin libbitcoin-protocol master $PARALLEL "$@"
@@ -227,4 +225,3 @@ set -e
 
 # Build the primary library and its unpackaged dependencies.
 build_library "$@"
-
