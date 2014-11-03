@@ -26,13 +26,17 @@ SECP256K1_OPTIONS=\
 "--enable-tests=no "\
 "--enable-endomorphism=no"
 
-# Ensure we build ZMQ with libsodium.
-ZMQ_OPTIONS=\
-"--with-libsodium=yes"
+# Suppress multiple clang "argument unused during compilation" warnings.
+SODIUM_OPTIONS=\
+"CPPFLAGS=-Qunused-arguments"
 
 # Enable test compile in the primary build.
 TEST_OPTIONS=\
 "--with-tests=yes"
+
+# Ensure we build ZMQ with libsodium.
+ZMQ_OPTIONS=\
+"--with-libsodium=yes"
 
 # Set SEQUENTIAL (always 1), PARALLEL (number of concurrent jobs) and OS.
 SEQUENTIAL=1
@@ -57,12 +61,14 @@ for i in "$@"; do
     esac
 done
 
-# Set PKG_CONFIG_PATH, BOOST_ROOT, CC and CXX
+# Set PKG_CONFIG_PATH, BOOST_ROOT, CC, CXX and SODIUM_OPTIONS.
 if [[ $OS == "Darwin" ]]; then
     export CC=clang
     export CXX=clang++
     export BOOST_ROOT=$HOMEBREW_BOOST_ROOT_PATH
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOMEBREW_PKG_CONFIG_PATHS"
+else
+    SODIUM_OPTIONS=""
 fi
 if [[ $PREFIX ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig"
@@ -190,7 +196,7 @@ build_library()
     create_build_directory
 
     # Download, build and install all unpackaged dependencies.
-    build_from_github jedisct1 libsodium master $SEQUENTIAL "$@"
+    build_from_github jedisct1 libsodium master $SEQUENTIAL "$@" $SODIUM_OPTIONS
     build_from_github zeromq libzmq master $SEQUENTIAL "$@" $ZMQ_OPTIONS
     build_from_github zeromq czmq master $SEQUENTIAL "$@"
     build_from_github zeromq czmqpp master $SEQUENTIAL "$@"
