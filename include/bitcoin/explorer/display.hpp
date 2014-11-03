@@ -31,9 +31,17 @@ namespace explorer {
 
 /**
  * Write the list of all command names to a stream.
- * @param[in]  stream   The stream to write into.
+ * @param[in]  stream  The stream to write into.
  */
 BCX_API void display_command_names(std::ostream& stream);
+
+/**
+ * Write an error message indicating that the client-server connection failed.
+ * @param[in]  stream  The stream to write into.
+ * @param[in]  url     The server url.
+ */
+BCX_API void display_connection_failure(std::ostream& stream, 
+    const std::string& url);
 
 /**
  * Write an error message to a stream that the specified explorer command

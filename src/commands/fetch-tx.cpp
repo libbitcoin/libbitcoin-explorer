@@ -24,6 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
@@ -76,7 +77,10 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
+    {
+        display_connection_failure(error, server);
         return console_result::failure;
+    }
 
     callback_state state(error, output, encoding);
     fetch_tx_from_hash(client, state, hash);

@@ -43,6 +43,11 @@ void display_command_names(std::ostream& stream)
     broadcast(func);
 }
 
+void display_connection_failure(std::ostream& stream, const std::string& url)
+{
+    stream << format(BX_CONNECTION_FAILURE) % url << std::endl;
+}
+
 void display_invalid_command(std::ostream& stream, const std::string& command,
     const std::string& superseding)
 {

@@ -24,6 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
 
 using namespace bc;
@@ -47,18 +48,22 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& server_argument = get_server_url_argument();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& argument_server = get_server_url_argument();
+    const auto& config_server = if_else(
+        get_general_network_setting() == "testnet",
         get_testnet_url_setting(), get_mainnet_url_setting());
 
-    const auto& use_server = if_else(server_argument.empty(),
-        server, server_argument);
+    const auto& server = if_else(argument_server.empty(), config_server,
+        argument_server);
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);
 
-    if (client.connect(use_server) < 0)
+    if (client.connect(server) < 0)
+    {
+        display_connection_failure(error, server);
         return console_result::failure;
+    }
 
     callback_state state(error, output);
 

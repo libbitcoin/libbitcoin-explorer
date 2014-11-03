@@ -51,6 +51,7 @@
     <string name="BX_COMMAND_USAGE" value="Usage: bx COMMAND [--help]" />
     <string name="BX_COMMANDS_HEADER" value="Info: The bx commands are:" />
     <string name="BX_COMMANDS_HOME_PAGE" value="Bitcoin Explorer home page:" />
+    <string name="BX_CONNECTION_FAILURE" value="Could not connect to server: %1%" />
     <string name="BX_DEPRECATED_COMMAND" value="The '%1%' command has been replaced by '%2%'."/>
     <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />

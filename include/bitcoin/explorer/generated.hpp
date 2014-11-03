@@ -130,6 +130,8 @@ namespace explorer {
     "Usage: bx COMMAND [--help]"
 #define BX_CONFIG_DESCRIPTION \
     "The path to the configuration settings file."
+#define BX_CONNECTION_FAILURE \
+    "Could not connect to server: %1%"
 #define BX_DEPRECATED_COMMAND \
     "The '%1%' command has been replaced by '%2%'."
 #define BX_HELP_DESCRIPTION \

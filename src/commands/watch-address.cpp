@@ -25,6 +25,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -105,7 +106,10 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     obelisk_client client(context, period_ms(timeout), retries);
 
     if (client.connect(server) < 0)
+    {
+        display_connection_failure(error, server);
         return console_result::failure;
+    }
 
     client.get_codec()->set_on_update(on_update);
 
