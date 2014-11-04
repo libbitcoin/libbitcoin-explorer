@@ -355,17 +355,18 @@ In most commands the option is available to load the primary input parameter via
 BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind configuration settings to strongly-typed application level properties. Settings are populated by shared code into properties generated from metadata.
 ```xml
   <configuration section="general">
+    <!-- Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers. -->
     <setting name="network" default="mainnet" description="The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'." />
     <setting name="retries" type="base10" description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
     
   <configuration section="mainnet">
-    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk mainnet server." />
+    <setting name="url" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
   </configuration>
   
   <configuration section="testnet">
-    <setting name="url" default="tcp://obelisk.unsystem.net:10091" description="The URL of the Obelisk testnet server." />
+    <setting name="url" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
   </configuration>
 ```
 The implementation supports a two level hierarchy of settings using "sections" to group settings, similar to an `.ini` file:
