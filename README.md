@@ -95,15 +95,9 @@ Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ b
 
 ### Macintosh
 
-The OSX installation differs from Linux in the installation of the compiler and packaged dependencies.
+The OSX installation differs from Linux in the installation of the compiler and packaged dependencies. BX supports both [Homebrew](http://brew.sh) and [MacPorts](https://www.macports.org) package managers. Both require Apple's [Xcode](https://developer.apple.com/xcode) command line tools. Neither requires Xcode as the tools may be installed independently.
 
-First install [Homebrew](http://brew.sh). Homebrew installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are preinstalled on OSX.
-```sh
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
-
-Libbitcoin compiles with Clang on OSX and requires C++11 support. Installation has been verified using CLang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html). This version or newer should be installed as part of the Xcode command line developer tools.
+BX compiles with Clang on OSX and requires C++11 support. Installation has been verified using CLang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html). This version or newer should be installed as part of the Xcode command line tools.
 
 To see your Clang/LLVM  version:
 ```sh
@@ -118,15 +112,40 @@ If required update your version of the command line tools as follows:
 ```
 $ xcode-select --install
 ```
+
+#### Using Homebrew
+
+First install Homebrew. Installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are preinstalled on OSX.
+```sh
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
+
 Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
 ```sh
-$ brew install autoconf automake libtool pkg-config wget
+$ brew install autoconf automake libtool pkgconfig wget
 ```
 Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
 ```sh
 $ brew install boost gmp
 ```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
+
+#### Using MacPorts
+
+First install [MacPorts](https://www.macports.org/install.php).
+
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
+```sh
+$ sudo port install autoconf automake libtool pkgconfig wget
+```
+Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
+```sh
+$ sudo port install boost gmp
+```
+
+#### Install
+
+Download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
 $ chmod +x install-bx.sh
