@@ -44,7 +44,7 @@ static bool trying_parser = false;
     trying_parser = enable;
 
 // Catch any non-exception "thrown" by boost, should be dynamic builds only.
-void boost::throw_exception(const std::exception& e)
+extern BCX_API void boost::throw_exception(const std::exception& e)
 {
     using namespace bc::explorer;
 
