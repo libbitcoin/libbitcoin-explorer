@@ -125,9 +125,9 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ brew install autoconf automake libtool pkgconfig wget
 ```
-Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
+Next install [GMP](https://gmplib.org) (5.0.0 or newer) and [Boost](http://www.boost.org) (1.49.0 or newer) development packages:
 ```sh
-$ brew install boost gmp
+$ brew install gmp boost
 ```
 
 #### Using MacPorts
@@ -138,9 +138,9 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ sudo port install autoconf automake libtool pkgconfig wget
 ```
-Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
+Next install [GMP](https://gmplib.org) (5.0.0 or newer) and [Boost](http://www.boost.org) (1.49.0 or newer) development packages. The `-` options remove MacPort defaults that are not Boost defaults:
 ```sh
-$ sudo port install boost gmp
+$ sudo port install gmp boost -no_single -no_static -python27
 ```
 
 #### Install
