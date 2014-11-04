@@ -448,6 +448,6 @@ test_libbitcoin_explorer_test_LDADD = \
     -lboost_chrono \
     -lboost_program_options \
     ${bitcoin_client_LIBS}
-    
+
 endif
 

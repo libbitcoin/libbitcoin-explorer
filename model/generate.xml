@@ -33,7 +33,7 @@
   </configuration>
     
   <configuration section="mainnet">
-    <setting name="url" default="tcp://obelisk-sol.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
+    <setting name="url" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
   </configuration>
   
   <configuration section="testnet">
