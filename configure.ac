@@ -151,6 +151,10 @@ AX_CHECK_COMPILE_FLAG([-Wpedantic],
 AX_CHECK_COMPILE_FLAG([-Wno-unused-function],
     [CXXFLAGS="$CXXFLAGS -Wno-unused-function"])
 
+# This cleans up for a boost property_tree headers (with boost exceptions off).
+AX_CHECK_COMPILE_FLAG([-Wno-return-type],
+    [CXXFLAGS="$CXXFLAGS -Wno-return-type"])
+
 # These clean up for protobuf headers.
 AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
     [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])
@@ -161,13 +165,13 @@ AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
 
 # Set compiler flags.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-fvisibility-inlines-hidden],
-    [CXXFLAGS="$CXXFLAGS -fvisibility-inlines-hidden"])
+#AX_CHECK_COMPILE_FLAG([-fvisibility-inlines-hidden],
+#    [CXXFLAGS="$CXXFLAGS -fvisibility-inlines-hidden"])
 
-AX_CHECK_COMPILE_FLAG([-fvisibility=internal],
-    [CXXFLAGS="$CXXFLAGS -fvisibility=internal"],
-    AX_CHECK_COMPILE_FLAG([-fvisibility=hidden],
-        [CXXFLAGS="$CXXFLAGS -fvisibility=hidden"]))
+#AX_CHECK_COMPILE_FLAG([-fvisibility=internal],
+#    [CXXFLAGS="$CXXFLAGS -fvisibility=internal"],
+#    AX_CHECK_COMPILE_FLAG([-fvisibility=hidden],
+#        [CXXFLAGS="$CXXFLAGS -fvisibility=hidden"]))
 
 AX_CHECK_COMPILE_FLAG([-fstack-protector],
     [AX_CHECK_LINK_FLAG([-fstack-protector], 
