@@ -95,15 +95,9 @@ Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ b
 
 ### Macintosh
 
-The OSX installation differs from Linux in the installation of the compiler and packaged dependencies.
+The OSX installation differs from Linux in the installation of the compiler and packaged dependencies. BX supports both [Homebrew](http://brew.sh) and [MacPorts](https://www.macports.org) package managers. Both require Apple's [Xcode](https://developer.apple.com/xcode) command line tools. Neither requires Xcode as the tools may be installed independently.
 
-First install [Homebrew](http://brew.sh). Homebrew installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are preinstalled on OSX.
-```sh
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
-
-Libbitcoin compiles with Clang on OSX and requires C++11 support. Installation has been verified using CLang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html). This version or newer should be installed as part of the Xcode command line developer tools.
+BX compiles with Clang on OSX and requires C++11 support. Installation has been verified using CLang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html). This version or newer should be installed as part of the Xcode command line tools.
 
 To see your Clang/LLVM  version:
 ```sh
@@ -118,15 +112,40 @@ If required update your version of the command line tools as follows:
 ```
 $ xcode-select --install
 ```
+
+#### Using Homebrew
+
+First install Homebrew. Installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are preinstalled on OSX.
+```sh
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
+
 Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
 ```sh
-$ brew install autoconf automake libtool pkg-config wget
+$ brew install autoconf automake libtool pkgconfig wget
 ```
-Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
+Next install [GMP](https://gmplib.org) (5.0.0 or newer) and [Boost](http://www.boost.org) (1.49.0 or newer) development packages:
 ```sh
-$ brew install boost gmp
+$ brew install gmp boost
 ```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
+
+#### Using MacPorts
+
+First install [MacPorts](https://www.macports.org/install.php).
+
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
+```sh
+$ sudo port install autoconf automake libtool pkgconfig wget
+```
+Next install [GMP](https://gmplib.org) (5.0.0 or newer) and [Boost](http://www.boost.org) (1.49.0 or newer) development packages. The `-` options remove MacPort defaults that are not Boost defaults:
+```sh
+$ sudo port install gmp boost -no_single -no_static -python27
+```
+
+#### Install
+
+Download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
 $ chmod +x install-bx.sh
@@ -336,17 +355,18 @@ In most commands the option is available to load the primary input parameter via
 BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/program_options/overview.html) library to bind configuration settings to strongly-typed application level properties. Settings are populated by shared code into properties generated from metadata.
 ```xml
   <configuration section="general">
+    <!-- Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers. -->
     <setting name="network" default="mainnet" description="The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'." />
     <setting name="retries" type="base10" description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
     
   <configuration section="mainnet">
-    <setting name="url" default="tcp://obelisk.unsystem.net:9091" description="The URL of the Obelisk mainnet server." />
+    <setting name="url" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
   </configuration>
   
   <configuration section="testnet">
-    <setting name="url" default="tcp://obelisk.unsystem.net:10091" description="The URL of the Obelisk testnet server." />
+    <setting name="url" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
   </configuration>
 ```
 The implementation supports a two level hierarchy of settings using "sections" to group settings, similar to an `.ini` file:
@@ -368,7 +388,7 @@ wait = 2000
 [mainnet]
 
 # The URL of the default mainnet Obelisk server.
-url = tcp://obelisk-sol.airbitz.co:9091
+url = tcp://obelisk.airbitz.co:9091
 
 [testnet]
 

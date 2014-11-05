@@ -198,7 +198,7 @@ public:
         )
         (
             "mainnet.url",
-            value<std::string>(&setting_.mainnet.url)->default_value("tcp://obelisk-sol.airbitz.co:9091"),
+            value<std::string>(&setting_.mainnet.url)->default_value("tcp://obelisk.airbitz.co:9091"),
             "The URL of the Obelisk mainnet server."
         )
         (
