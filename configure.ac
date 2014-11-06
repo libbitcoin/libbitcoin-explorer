@@ -121,10 +121,8 @@ AC_CHECK_LIB([gmp],[__gmpz_init],
 
 # Require bitcoin, bitcoin_client and sodium package min versions.
 #------------------------------------------------------------------------------
-# libbitcoin is captured via libbitcoin-client but we need a higher version.
-PKG_CHECK_MODULES([bitcoin], [libbitcoin >= 2.5.0])
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 0.1.0])
-PKG_CHECK_MODULES([sodium], [libsodium >= 0.6.0])
+PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 2.0.0])
+PKG_CHECK_MODULES([sodium], [libsodium >= 1.0.0])
 
 # Require test dependencies if $with_tests is set.
 #------------------------------------------------------------------------------
