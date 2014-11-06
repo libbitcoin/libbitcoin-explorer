@@ -49,7 +49,7 @@ static void fetch_history_from_address(obelisk_client& client,
     callback_state& state, const primitives::address& address)
 {
     // Do not pass the address by reference here.
-    auto on_done = [&state, address](const blockchain::history_list& rows)
+    auto on_done = [&state, address](const client::history_list& rows)
     {
         handle_callback(state, address, rows);
     };
