@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
@@ -49,7 +50,7 @@ static void fetch_balance_from_address(obelisk_client& client,
     callback_state& state, const primitives::address& address)
 {
     // Do not pass the address by reference here.
-    auto on_done = [&state, address](const blockchain::history_list& rows)
+    auto on_done = [&state, address](const client::history_list& rows)
     {
         handle_callback(state, address, rows);
     };

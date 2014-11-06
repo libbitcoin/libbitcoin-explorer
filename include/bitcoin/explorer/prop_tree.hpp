@@ -322,21 +322,21 @@ BCX_API pt::ptree prop_tree(const stealth& stealth_address);
  * @param[in]  rows  The stealth row.
  * @return           A property list.
  */
-BCX_API pt::ptree prop_list(const blockchain::stealth_row& row);
+BCX_API pt::ptree prop_list(const client::stealth_row& row);
 
 /**
  * Generate a property tree for a stealth metadata row.
  * @param[in]  rows  The stealth row.
  * @return           A property tree.
  */
-BCX_API pt::ptree prop_tree(const blockchain::stealth_row& row);
+BCX_API pt::ptree prop_tree(const client::stealth_row& row);
 
 /**
  * Generate a property tree from stealth metadata rows.
  * @param[in]  rows    The set of stealth rows.
  * @return             A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<blockchain::stealth_row>& rows);
+BCX_API pt::ptree prop_tree(const std::vector<client::stealth_row>& rows);
 
 /**
  * Create a property list for the fetch-tx-index command.

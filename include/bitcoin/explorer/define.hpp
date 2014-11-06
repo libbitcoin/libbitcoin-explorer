@@ -25,6 +25,7 @@
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <bitcoin/client.hpp>
 
 // We use the generic helper definitions in libbitcoin to define BCX_API 
 // and BCX_INTERNAL. BCX_API is used for the public API symbols. It either DLL
@@ -77,8 +78,8 @@ namespace pt = boost::property_tree;
 typedef bc::transaction_type tx_type;
 typedef bc::transaction_input_type tx_input_type;
 typedef bc::transaction_output_type tx_output_type;
-typedef bc::blockchain::history_row balance_row;
-typedef bc::blockchain::history_row history_row;
+typedef bc::client::history_row balance_row;
+typedef bc::client::history_row history_row;
 typedef boost::format format;
 typedef boost::dynamic_bitset<uint8_t> bitset;
 typedef po::option_description option_metadata;

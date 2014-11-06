@@ -24,6 +24,7 @@
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
@@ -383,7 +384,7 @@ ptree prop_tree(const stealth& stealth_address)
 
 // stealth
 
-ptree prop_list(const blockchain::stealth_row& row)
+ptree prop_list(const client::stealth_row& row)
 {
     ptree tree;
     tree.put("ephemeral_public_key", ec_public(row.ephemkey));
@@ -391,14 +392,14 @@ ptree prop_list(const blockchain::stealth_row& row)
     tree.put("transaction_hash", btc256(row.transaction_hash));
     return tree;
 }
-ptree prop_tree(const blockchain::stealth_row& row)
+ptree prop_tree(const client::stealth_row& row)
 {
     ptree tree;
     tree.add_child("match", prop_list(row));
     return tree;
 }
 
-ptree prop_tree(const std::vector<blockchain::stealth_row>& rows)
+ptree prop_tree(const std::vector<client::stealth_row>& rows)
 {
     ptree tree;
     tree.add_child("stealth", prop_tree_list("match", rows));

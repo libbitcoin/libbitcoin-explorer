@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
+#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
@@ -54,7 +55,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 // Write out the transaction hashes of *potential* matches.
 static void handle_callback(callback_state& state,
     const bc::stealth_prefix& prefix,
-    const blockchain::stealth_list& row_list)
+    const client::stealth_list& row_list)
 {
     state.output(prop_tree(row_list));
 }
@@ -63,7 +64,7 @@ static void fetch_stealth_from_prefix(obelisk_client& client,
     callback_state& state, const base2& prefix, size_t from_height)
 {
     // Do not pass the prefix by reference here.
-    auto on_done = [&state, prefix](const blockchain::stealth_list& list)
+    auto on_done = [&state, prefix](const client::stealth_list& list)
     {
         handle_callback(state, prefix, list);
     };
