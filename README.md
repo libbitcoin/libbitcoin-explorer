@@ -12,7 +12,7 @@ Comprehensive [documentation and tutorials](https://github.com/libbitcoin/libbit
 
 **License Overview**
 
-All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
+All files in this repository fall under the license specified in [COPYING](https://github.com/libbitcoin/libbitcoin-explorer/blob/version2/COPYING). The project is licensed as [AGPL with a lesser clause](https://wiki.unsystem.net/en/index.php/Libbitcoin/License). It may be used within a proprietary project, but the core library and any changes to it must be published on-line. Source code for this library must always remain free for everybody to access.
 
 **About Libbitcoin**
 
@@ -117,7 +117,7 @@ $ xcode-select --install
 
 First install Homebrew. Installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are preinstalled on OSX.
 ```sh
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/version2/install)"
 ```
 You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
 
@@ -145,9 +145,9 @@ $ sudo port install gmp boost -no_single -no_static -python27
 
 #### Install
 
-Download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
+Download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version2/install-bx.sh) and enable execution:
 ```sh
-$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
+$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version2/install-bx.sh
 $ chmod +x install-bx.sh
 ```
 Finally install BX:
@@ -256,7 +256,7 @@ The primary objective in the evolution to BX was the desire to produce a single 
 
 With approximately 75 commands and growing, BX requires an extensibility model that eliminates redundant code across commands. Ad-hoc evolution without such a model led to significant maintenance difficulty and increasing fragility. In keeping with the single file requirement the extensions had to be incorporated at compile time.
 
-As such code generation is now used to produce headers, AutoMake files, MSVC project files, component tests, and shared source code from a single [XML metadata document](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/model/generate.xml). The [open source tool GSL](https://github.com/imatix/gsl) is used to push command metadata through a [GSL template](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/model/generate.gsl), producing the necessary artefacts. To implement a new command required creating an XML element, running the code generator, and overriding a single invoke method. A stub for unit/component test execution is automatically defined as well.
+As such code generation is now used to produce headers, AutoMake files, MSVC project files, component tests, and shared source code from a single [XML metadata document](https://github.com/libbitcoin/libbitcoin-explorer/blob/version2/model/generate.xml). The [open source tool GSL](https://github.com/imatix/gsl) is used to push command metadata through a [GSL template](https://github.com/libbitcoin/libbitcoin-explorer/blob/version2/model/generate.gsl), producing the necessary artefacts. To implement a new command required creating an XML element, running the code generator, and overriding a single invoke method. A stub for unit/component test execution is automatically defined as well.
 
 ### Localization Model
 
