@@ -82,9 +82,9 @@ Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://g
 ```sh
 $ sudo apt-get install libboost-all-dev libgmp-dev
 ```
-Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/master/install-bx.sh) and enable execution:
+Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version2/install-bx.sh) and enable execution:
 ```sh
-$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/master/install-bx.sh
+$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version2/install-bx.sh
 $ chmod +x install-bx.sh
 ```
 Finally install BX:
