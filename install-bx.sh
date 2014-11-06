@@ -35,8 +35,8 @@ SECP256K1_OPTIONS=\
 SODIUM_OPTIONS=""
 
 # Enable test compile in the primary build.
-TEST_OPTIONS=\
-"--with-tests=yes"
+BC_TEST_SUPPRESSION=\
+"--without-tests"
 
 # Ensure we build ZMQ with libsodium.
 ZMQ_OPTIONS=\
@@ -220,13 +220,13 @@ build_library()
     build_from_github zeromq czmq master $SEQUENTIAL "$@"
     build_from_github zeromq czmqpp master $SEQUENTIAL "$@"
     build_from_github bitcoin secp256k1 master $SEQUENTIAL "$@" $SECP256K1_OPTIONS
-    build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@"
+    build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@" $BC_TEST_SUPPRESSION
     build_from_github libbitcoin protobuf 2.6.0 $SEQUENTIAL "$@"
-    build_from_github libbitcoin libbitcoin-protocol version2 $PARALLEL "$@"
-    build_from_github libbitcoin libbitcoin-client version2 $PARALLEL "$@"
+    build_from_github libbitcoin libbitcoin-protocol version2 $PARALLEL "$@" $BC_TEST_SUPPRESSION
+    build_from_github libbitcoin libbitcoin-client version2 $PARALLEL "$@" $BC_TEST_SUPPRESSION
 
     # The primary build is not downloaded if we are running in Travis.
-    build_primary $PARALLEL "$@" $TEST_OPTIONS
+    build_primary $PARALLEL "$@"
 
     # If the build succeeded clean up the build directory.
     delete_build_directory
