@@ -3,6 +3,10 @@
 # Script to build and install libbitcoin-explorer and unpackaged dependencies.
 #
 
+# Disable test compile/dependency checks for non-primary libbitcoin projects.
+BC_TEST_SUPPRESSION=\
+"--without-tests"
+
 # The source repository for the primary build (when not running in Travis).
 BUILD_ACCOUNT="libbitcoin"
 BUILD_REPO="libbitcoin-explorer"
@@ -10,6 +14,9 @@ BUILD_BRANCH="version2"
 
 # This script will build using this relative temporary directory.
 BUILD_DIRECTORY="bx-build"
+
+# Suppress czmq makecert binary creation.
+CZMQ_OPTIONS="--without-makecert"
 
 # Homebrew: places each package in a distinct pkg-config path.
 # Unlike other pkg managers Homebrew declares a package for GMP.
@@ -217,7 +224,7 @@ build_library()
     # Download, build and install all unpackaged dependencies.
     build_from_github jedisct1 libsodium master $SEQUENTIAL "$@" $SODIUM_OPTIONS
     build_from_github zeromq libzmq master $SEQUENTIAL "$@" $ZMQ_OPTIONS
-    build_from_github zeromq czmq master $SEQUENTIAL "$@"
+    build_from_github zeromq czmq master $SEQUENTIAL "$@" $CZMQ_OPTIONS
     build_from_github zeromq czmqpp master $SEQUENTIAL "$@"
     build_from_github bitcoin secp256k1 master $SEQUENTIAL "$@" $SECP256K1_OPTIONS
     build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@" $BC_TEST_SUPPRESSION
