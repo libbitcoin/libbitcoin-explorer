@@ -38,11 +38,11 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     // TODO: load from metadata into settings list.
     // This must be updated for any settings metadata change.
     settings_list list;
-    list.emplace("general.network", get_general_network_setting());
-    list.emplace("general.retries", serialize(get_general_retries_setting()));
-    list.emplace("general.wait", serialize(get_general_wait_setting()));
-    list.emplace("mainnet.url", get_mainnet_url_setting());
-    list.emplace("testnet.url", get_testnet_url_setting());
+    list["general.network"] = get_general_network_setting();
+    list["general.retries"] = serialize(get_general_retries_setting());
+    list["general.wait"] = serialize(get_general_wait_setting());
+    list["mainnet.url"] = get_mainnet_url_setting();
+    list["testnet.url"] = get_testnet_url_setting();
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;
