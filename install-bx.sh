@@ -3,10 +3,6 @@
 # Script to build and install libbitcoin-explorer and unpackaged dependencies.
 #
 
-# Disable test compile/dependency checks for non-primary libbitcoin projects.
-BC_TEST_SUPPRESSION=\
-"--without-tests"
-
 # The source repository for the primary build (when not running in Travis).
 BUILD_ACCOUNT="libbitcoin"
 BUILD_REPO="libbitcoin-explorer"
@@ -14,9 +10,6 @@ BUILD_BRANCH="version2"
 
 # This script will build using this relative temporary directory.
 BUILD_DIRECTORY="bx-build"
-
-# Suppress czmq makecert binary creation.
-CZMQ_OPTIONS="--without-makecert"
 
 # Homebrew: places each package in a distinct pkg-config path.
 # Unlike other pkg managers Homebrew declares a package for GMP.
@@ -30,6 +23,13 @@ MACPORTS_CPPFLAGS="-I/opt/local/include"
 MACPORTS_LD_LIBRARY_PATH="/opt/local/lib"
 MACPORTS_LD_INCLUDE_PATH="/opt/local/include"
 
+# Set common libbitcoin options.
+BITCOIN_OPTIONS=\
+"--without-tests"
+
+# Suppress czmq makecert binary creation.
+CZMQ_OPTIONS="--without-makecert"
+
 # https://github.com/bitcoin/secp256k1
 SECP256K1_OPTIONS=\
 "--with-bignum=gmp "\
@@ -40,10 +40,6 @@ SECP256K1_OPTIONS=\
 
 # This is set for CLang only, see below.
 SODIUM_OPTIONS=""
-
-# Enable test compile in the primary build.
-BC_TEST_SUPPRESSION=\
-"--without-tests"
 
 # Ensure we build ZMQ with libsodium.
 ZMQ_OPTIONS=\
@@ -227,10 +223,10 @@ build_library()
     build_from_github zeromq czmq master $SEQUENTIAL "$@" $CZMQ_OPTIONS
     build_from_github zeromq czmqpp master $SEQUENTIAL "$@"
     build_from_github bitcoin secp256k1 master $SEQUENTIAL "$@" $SECP256K1_OPTIONS
-    build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@" $BC_TEST_SUPPRESSION
+    build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@" $BITCOIN_OPTIONS
     build_from_github libbitcoin protobuf 2.6.0 $SEQUENTIAL "$@"
-    build_from_github libbitcoin libbitcoin-protocol version2 $PARALLEL "$@" $BC_TEST_SUPPRESSION
-    build_from_github libbitcoin libbitcoin-client version2 $PARALLEL "$@" $BC_TEST_SUPPRESSION
+    build_from_github libbitcoin libbitcoin-protocol version2 $PARALLEL "$@" $BITCOIN_OPTIONS
+    build_from_github libbitcoin libbitcoin-client version2 $PARALLEL "$@" $BITCOIN_OPTIONS
 
     # The primary build is not downloaded if we are running in Travis.
     build_primary $PARALLEL "$@"
