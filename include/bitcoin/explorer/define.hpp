@@ -79,7 +79,6 @@ typedef bc::transaction_type tx_type;
 typedef bc::transaction_input_type tx_input_type;
 typedef bc::transaction_output_type tx_output_type;
 typedef bc::client::history_row balance_row;
-typedef bc::client::history_row history_row;
 typedef boost::format format;
 typedef boost::dynamic_bitset<uint8_t> bitset;
 typedef po::option_description option_metadata;

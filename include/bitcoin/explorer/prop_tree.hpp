@@ -102,14 +102,14 @@ BCX_API pt::ptree prop_tree(const std::vector<header>& headers);
 * @param[in]  row  The history row.
 * @return          A property list.
 */
-BCX_API pt::ptree prop_list(const history_row& row);
+BCX_API pt::ptree prop_list(const client::history_row& row);
 
 /**
  * Generate a property tree for a history row.
  * @param[in]  row  The history row.
  * @return          A property tree.
  */
-BCX_API pt::ptree prop_tree(const history_row& row);
+BCX_API pt::ptree prop_tree(const client::history_row& row);
 
 /**
  * Generate a property tree for a set of history rows.
@@ -117,7 +117,7 @@ BCX_API pt::ptree prop_tree(const history_row& row);
  * @param[in]  rows  The set of history rows.
  * @return           A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<history_row>& rows);
+BCX_API pt::ptree prop_tree(const std::vector<client::history_row>& rows);
 
 /**
  * Generate a property list from balance rows for an address.

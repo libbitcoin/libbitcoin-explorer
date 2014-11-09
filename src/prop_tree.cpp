@@ -23,7 +23,6 @@
 #include <string>
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
-#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
@@ -39,6 +38,7 @@
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 
 using namespace pt;
+using namespace bc::client;
 
 namespace libbitcoin {
 namespace explorer {
