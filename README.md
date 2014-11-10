@@ -267,32 +267,34 @@ In keeping with the single file requirement, and given the extensibility model, 
 ### Primitive Types
 
 BX defines the following set of Bitcoin primitive types in the `bx::primitives` namespace.
-
-    address
-    base16
-    base2
-    base58
-    btc
-    btc160
-    btc256
-    byte
-    ec_private
-    ec_public
-    encoding
-    hashtype
-    hd_key
-    hd_priv
-    hd_pub
-    header
-    input
-    output
-    point
-    raw
-    script
-    stealth
-    transaction
-    wif
-    wrapper
+```
+address
+base16
+base2
+base58
+btc
+btc160
+btc256
+byte
+ec_private
+ec_public
+encoding
+hashtype
+hd_key
+hd_priv
+hd_pub
+header
+input
+output
+point
+raw
+script
+stealth
+transaction
+uri
+wif
+wrapper
+```
 
 These are individual classes that are for the most part simple wrappers around types and/or functions exposed by [libbitcoin](tps://github.com/libbitcoin/libbitcoin). The classes consistently implement overrides of stream operators by conversion to/from text encodings. As a result they drop seamlessly into [input processing](#input-processing) and [output processing](#output-processing) like any other serializable type.
 
@@ -362,11 +364,11 @@ BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/
   </configuration>
     
   <configuration section="mainnet">
-    <setting name="url" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
+    <setting name="url" type="uri" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
   </configuration>
   
   <configuration section="testnet">
-    <setting name="url" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
+    <setting name="url" type="uri" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
   </configuration>
 ```
 The implementation supports a two level hierarchy of settings using "sections" to group settings, similar to an `.ini` file:
@@ -579,22 +581,23 @@ Seed output can be passed as an argument to any command that require randomness.
 ## Acronyms
 
 BX command names, help and parameterization utilize the following set of acronyms.
-
-    BTC     Bitcoin Denomination
-    BX      Bitcoin Explorer
-    EC      Elliptic Curve
-    HD      Hierarchical Deterministic
-    PREVOUT Previous Output
-    PUBKEY  EC Public Key
-    QRCODE  Quick Response Code
-    RACE    Research and development in Advanced Communications Technologies
-    RIPEMD  RACE Integrity Primitives Evaluation Message Digest
-    SHA     Secure Hash Algorithm
-    SOCKS   Socket Secure (proxy protocol)
-    SX      Spesmilo Exchanger (the original version of Bitcoin Explorer)
-    TX      Transaction
-    UTXO    Unspent Transaction Output
-    WIF     Wallet Import Format
+```
+BTC     Bitcoin Denomination
+BX      Bitcoin Explorer
+EC      Elliptic Curve
+HD      Hierarchical Deterministic
+PREVOUT Previous Output
+PUBKEY  EC Public Key
+QRCODE  Quick Response Code
+RACE    Research and development in Advanced Communications Technologies
+RIPEMD  RACE Integrity Primitives Evaluation Message Digest
+SHA     Secure Hash Algorithm
+SOCKS   Socket Secure (proxy protocol)
+SX      Spesmilo Exchanger (the original version of Bitcoin Explorer)
+TX      Transaction
+UTXO    Unspent Transaction Output
+WIF     Wallet Import Format
+```
 
 ### Command Taxonomy
 
@@ -667,78 +670,81 @@ Coin conversion and commands that perform secp256k1 elliptic curve math.
 ## Command List
 
 BX defines the following set of commands with corresponding names in the `bx::commands` namespace.
-
-    address-decode
-    address-embed
-    address-encode
-    address-validate
-    base16-decode
-    base16-encode    
-    base58-decode
-    base58-encode
-    base58check-decode
-    base58check-encode
-    bitcoin160
-    bitcoin256
-    btc-to-satoshi
-    ec-add
-    ec-add-secrets
-    ec-lock
-    ec-multiply
-    ec-multiply-secrets
-    ec-new
-    ec-to-address
-    ec-to-public
-    ec-to-wif
-    ec-unlock
-    fetch-balance
-    fetch-header
-    fetch-height
-    fetch-history
-    fetch-public-key
-    fetch-stealth
-    fetch-tx
-    fetch-tx-index
-    fetch-utxo
-    hd-new
-    hd-private
-    hd-public
-    hd-to-address
-    hd-to-ec
-    hd-to-public
-    hd-to-wif
-    help
-    input-set
-    input-sign
-    input-validate
-    mnemonic-decode
-    mnemonic-encode
-    qrcode
-    ripemd160
-    satoshi-to-btc
-    script-decode
-    script-encode
-    script-to-address
-    seed
-    send-tx
-    send-tx-node
-    send-tx-p2p
-    settings
-    sha160
-    sha256
-    sha512
-    stealth-decode
-    stealth-encode
-    stealth-shared
-    stealth-public
-    stealth-secret
-    tx-decode
-    tx-encode
-    tx-sign
-    validate-tx
-    watch-address
-    watch-tx
-    wif-to-ec
-    wif-to-public
-    wrap-decode
-    wrap-encode
+```
+address-decode
+address-embed
+address-encode
+address-validate
+base16-decode
+base16-encode
+base58-decode
+base58-encode
+base58check-decode
+base58check-encode
+bitcoin160
+bitcoin256
+btc-to-satoshi
+ec-add
+ec-add-secrets
+ec-lock
+ec-multiply
+ec-multiply-secrets
+ec-new
+ec-to-address
+ec-to-public
+ec-to-wif
+ec-unlock
+fetch-balance
+fetch-header
+fetch-height
+fetch-history
+fetch-public-key
+fetch-stealth
+fetch-tx
+fetch-tx-index
+fetch-utxo
+hd-new
+hd-private
+hd-public
+hd-to-address
+hd-to-ec
+hd-to-public
+hd-to-wif
+help
+input-set
+input-sign
+input-validate
+mnemonic-decode
+mnemonic-encode
+qrcode
+ripemd160
+satoshi-to-btc
+script-decode
+script-encode
+script-to-address
+seed
+send-tx
+send-tx-node
+send-tx-p2p
+settings
+sha160
+sha256
+sha512
+stealth-decode
+stealth-encode
+stealth-public
+stealth-secret
+stealth-shared
+tx-decode
+tx-encode
+tx-sign
+uri-decode
+uri-encode
+validate-tx
+watch-address
+watch-tx
+wif-to-ec
+wif-to-public
+wrap-decode
+wrap-encode
+```
