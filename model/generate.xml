@@ -33,11 +33,11 @@
   </configuration>
     
   <configuration section="mainnet">
-    <setting name="url" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
+    <setting name="url" type="uri" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
   </configuration>
   
   <configuration section="testnet">
-    <setting name="url" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
+    <setting name="url" type="uri"  default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
   </configuration>  
   
   <!-- General resources. -->
@@ -486,7 +486,22 @@
     <argument name="TRANSACTION" fileX="true" stdin="true" limit="-1" type="transaction" description="The set of Base16 transactions. If not specified the transactions are read from STDIN."/>
     <define name="BX_TX_SIGN_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
-
+  
+  <command symbol="uri-decode" typeX="uri" category="WALLET" description="Validate and decompose a Bitcoin URI into its parts.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <argument name="URI" type="uri" stdin="true"  description="The Bitcoin URI to decode. If not specified the URI is read from STDIN." />
+  </command>
+  
+  <command symbol="uri-encode" category="WALLET" description="Compose a Bitcoin URI from specified parts.">
+    <option name="amount" type="btc" description="The value of the amount parameter." />
+    <option name="label" type="string" description="The value of the label parameter." />
+    <option name="message" type="string" description="The value of the label parameter." />
+    <option name="request" type="uri" description="The value of the payment request parameter." />
+    <option name="stealth" type="stealth" description="The stealth address for the address part." />
+    <argument name="BITCOIN_ADDRESS" type="address" description="The Bitcoin address for the address part." />
+    <define name="BX_URI_ENCODE_ADDRESS_CONFLICT" value="Only one Bitcoin or stealth address may specified." />
+  </command>
+  
   <command symbol="validate-tx" formerly="validtx" typeX="string" category="ONLINE" network="true" description="Determine if a transaction is valid for submission to the blockchain. Requires an Obelisk server connection.">
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_VALIDATE_TX_VALID" value="The transaction is valid." />

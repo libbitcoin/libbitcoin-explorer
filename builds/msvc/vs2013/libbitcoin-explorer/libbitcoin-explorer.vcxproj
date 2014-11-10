@@ -111,6 +111,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\script.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\stealth.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\transaction.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\uri.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\wif.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\wrapper.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\compat.hpp" />
@@ -201,6 +202,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-sign.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\uri-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\uri-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\validate-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wallet.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-address.hpp" />
@@ -241,6 +244,7 @@
     <ClCompile Include="..\..\..\..\src\primitives\script.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\stealth.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\transaction.cpp" />
+    <ClCompile Include="..\..\..\..\src\primitives\uri.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\wif.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\wrapper.cpp" />
     <ClCompile Include="..\..\..\..\src\utility\config.cpp" />
@@ -330,6 +334,8 @@
     <ClCompile Include="..\..\..\..\src\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\tx-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\tx-sign.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\uri-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\uri-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\validate-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wallet.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\watch-address.cpp" />

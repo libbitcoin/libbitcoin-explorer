@@ -51,6 +51,7 @@
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility/compat.hpp>

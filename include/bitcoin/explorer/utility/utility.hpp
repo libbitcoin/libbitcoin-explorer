@@ -20,13 +20,6 @@
 #ifndef BX_UTILITY_HPP
 #define BX_UTILITY_HPP
 
-#ifdef _MSC_VER
-// Suppressing msvc warnings from boost that are heard to deal with
-// because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
-// without sampling it first. 
-#pragma warning(push)
-#pragma warning(disable : 4996)
-#endif
 #include <cstddef>
 #include <iostream>
 #include <cstdint>
@@ -42,9 +35,6 @@
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -290,10 +280,18 @@ BCX_API std::vector<std::string> split(const std::string& sentence,
     const std::string& delimiter=BX_SENTENCE_DELIMITER);
 
 /**
+ * determine if a string starts with another (case insensitive).
+ * @param[in]  value             The string to test
+ * @param[in]  prefix            The prefix to test against.
+ * @return                       True if the value is prefixed by the prefix.
+ */
+BCX_API bool starts_with(const std::string& value, const std::string& prefix);
+
+/**
  * Trim a string of whitespace.
  * @param[out] value  The string to trim.
  */
-void trim(std::string& value);
+BCX_API  void trim(std::string& value);
 
 /**
  * Trim the left side of a string of the specified characters.

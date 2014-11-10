@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef OUTPUT_HPP
-#define OUTPUT_HPP
+#ifndef BX_OUTPUT_HPP
+#define BX_OUTPUT_HPP
 
 #include <iostream>
 #include <cstdint>

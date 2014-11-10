@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef WIF_HPP
-#define WIF_HPP
+#ifndef BX_WIF_HPP
+#define BX_WIF_HPP
 
 #include <iostream>
 #include <string>

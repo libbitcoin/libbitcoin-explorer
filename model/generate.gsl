@@ -53,6 +53,7 @@
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 .endmacro
@@ -147,6 +148,8 @@
 .       return type_string_std
 .   elsif my.type = type_transaction
 .       return type_transaction_bx
+.   elsif my.type = type_uri
+.       return type_uri_bx
 .   elsif my.type = type_wif
 .       return type_wif_bx
 .   elsif my.type = type_wrapper
@@ -167,8 +170,12 @@
 .   return "$(my.text:$(my.format))"
 .endfunction
 .
-.function global.quote(text, is_quoted)
-.   return if_else(my.is_quoted, "\"$(my.text:)\"", my.text)
+.function global.quote(value, is_quoted)
+.   return if_else(my.is_quoted, "\"$(my.value:)\"", my.value)
+.endfunction
+.
+.function global.brace(value, is_braced)
+.   return if_else(my.is_braced, "{ $(my.value:) }", my.value)
 .endfunction
 .
 .function global.resource(name, fallback)
@@ -193,13 +200,17 @@
 .   norm_type = if_else(my.is_file, type_string_std, def_type)
 .   implicit_bool = my.is_option & (norm_type = type_bool)
 .   defaulted = !is_empty(my.fallback)
-.   is_text = ((norm_type = type_path_boost) | (norm_type = type_string_std))
+.   is_object = (norm_type = type_uri_bx)
+.   is_text = ((norm_type = type_path_boost) | (norm_type = type_string_std) | \
+      (norm_type = type_uri_bx))
 .   quote_default = (defaulted & is_text)
+.   brace_default = (defaulted & is_object)
 .
 .   norm_unlimited = my.unlimited & !my.is_file
 .   parameter = if_else_empty(!is_empty(my.variable), "&$(my.variable:)")
 .   binding = if_else(my.is_file, "", pluralize(parameter, norm_unlimited))
-.   default_value = quote(if_else_empty(defaulted, my.fallback), quote_default)
+.   quoted_value = quote(if_else_empty(defaulted, my.fallback), quote_default)
+.   default_value = brace(quoted_value, brace_default)
 .
 .   expr = "value<$(vectored_type(norm_type, norm_unlimited))>($(binding:))"
 .   expr += if_else_empty(my.required, "->required()")
@@ -243,6 +254,7 @@
 .type_stealth = "stealth"
 .type_string = "string"
 .type_transaction = "transaction"
+.type_uri = "uri"
 .type_wif = "wif"
 .type_wrapper = "wrapper"
 .
@@ -272,6 +284,7 @@
 .type_stealth_bx = "primitives::stealth"
 .type_string_std = "std::string"
 .type_transaction_bx = "primitives::transaction"
+.type_uri_bx = "primitives::uri"
 .type_wif_bx = "primitives::wif"
 .type_wrapper_bx = "primitives::wrapper"
 .
@@ -1196,6 +1209,7 @@ bitcoin_explorer_primitives_include_HEADERS = \\
     include/bitcoin/explorer/primitives/script.hpp \\
     include/bitcoin/explorer/primitives/stealth.hpp \\
     include/bitcoin/explorer/primitives/transaction.hpp \\
+    include/bitcoin/explorer/primitives/uri.hpp \\
     include/bitcoin/explorer/primitives/wif.hpp \\
     include/bitcoin/explorer/primitives/wrapper.hpp
 
@@ -1246,6 +1260,7 @@ src_libbitcoin_explorer_la_SOURCES = \\
     src/primitives/script.cpp \\
     src/primitives/stealth.cpp \\
     src/primitives/transaction.cpp \\
+    src/primitives/uri.cpp \\
     src/primitives/wif.cpp \\
     src/primitives/wrapper.cpp \\
     src/utility/config.cpp \\
@@ -1437,6 +1452,7 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\transaction.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\uri.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\compat.hpp" />
@@ -1482,6 +1498,7 @@ endif
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\transaction.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\uri.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wif.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wrapper.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
@@ -1686,6 +1703,9 @@ endif
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\transaction.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\uri.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
@@ -1822,6 +1842,9 @@ endif
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\transaction.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\uri.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wif.cpp">

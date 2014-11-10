@@ -302,6 +302,12 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-sign.hpp">
       <Filter>include\bitcoin\explorer\commands\stub</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\uri-decode.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\uri-encode.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\validate-tx.hpp">
       <Filter>include\bitcoin\explorer\commands\network</Filter>
     </ClInclude>
@@ -399,6 +405,9 @@
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\transaction.hpp">
+      <Filter>include\bitcoin\explorer\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\uri.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\wif.hpp">
@@ -697,6 +706,12 @@
     <ClCompile Include="..\..\..\..\src\commands\tx-sign.cpp">
       <Filter>src\commands\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\uri-decode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\uri-encode.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\validate-tx.cpp">
       <Filter>src\commands\network</Filter>
     </ClCompile>
@@ -788,6 +803,9 @@
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\transaction.cpp">
+      <Filter>src\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\primitives\uri.cpp">
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\wif.cpp">

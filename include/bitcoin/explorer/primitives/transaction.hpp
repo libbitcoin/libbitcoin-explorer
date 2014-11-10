@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef TRANSACTION_HPP
-#define TRANSACTION_HPP
+#ifndef BX_TRANSACTION_HPP
+#define BX_TRANSACTION_HPP
 
 #include <iostream>
 #include <sstream>

@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BTC_HPP
-#define BTC_HPP
+#ifndef BX_BTC_HPP
+#define BX_BTC_HPP
 
 #include <cstdint>
 #include <iostream>

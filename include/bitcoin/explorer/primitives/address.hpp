@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ADDRESS_HPP
-#define ADDRESS_HPP
+#ifndef BX_ADDRESS_HPP
+#define BX_ADDRESS_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -88,6 +88,12 @@ public:
      * @return  A reference to the object's internal data.
      */
     BCX_API payment_address& data();
+
+    /**
+     * Overload cast to bool.
+     * @return  This object's value cast to a bool.
+     */
+    BCX_API operator bool() const;
 
     /**
      * Overload cast to internal type.

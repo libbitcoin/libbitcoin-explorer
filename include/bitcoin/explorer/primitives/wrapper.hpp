@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef WRAPPER_HPP
-#define WRAPPER_HPP
+#ifndef BX_WRAPPER_HPP
+#define BX_WRAPPER_HPP
 
 #include <iostream>
 #include <boost/property_tree/ptree.hpp>

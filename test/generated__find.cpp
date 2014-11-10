@@ -429,6 +429,16 @@ BOOST_AUTO_TEST_CASE(generated__find__tx_sign__returns_object)
     BOOST_REQUIRE(find("tx-sign") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__uri_decode__returns_object)
+{
+    BOOST_REQUIRE(find("uri-decode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__uri_encode__returns_object)
+{
+    BOOST_REQUIRE(find("uri-encode") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__validate_tx__returns_object)
 {
     BOOST_REQUIRE(find("validate-tx") != nullptr);

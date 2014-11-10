@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BASE16_HPP
-#define BASE16_HPP
+#ifndef BX_BASE16_HPP
+#define BX_BASE16_HPP
 
 #include <array>
 #include <iostream>

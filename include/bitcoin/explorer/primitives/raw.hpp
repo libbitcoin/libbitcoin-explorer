@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef RAW_HPP
-#define RAW_HPP
+#ifndef BX_RAW_HPP
+#define BX_RAW_HPP
 
 #include <iostream>
 #include <boost/program_options.hpp>

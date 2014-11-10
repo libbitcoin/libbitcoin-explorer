@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef HASHTYPE_HPP
-#define HASHTYPE_HPP
+#ifndef BX_HASHTYPE_HPP
+#define BX_HASHTYPE_HPP
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>

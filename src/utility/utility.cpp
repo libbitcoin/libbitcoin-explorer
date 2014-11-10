@@ -17,15 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-#ifdef _MSC_VER
-// Suppressing msvc warnings from boost that are heard to deal with
-// because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
-// without first testing it.
-#pragma warning(push) 
-#pragma warning(disable : 4996)
-#endif
 #include <bitcoin/explorer/utility/utility.hpp>
+
 #include <iomanip>
 #include <iostream>
 #include <random>
@@ -36,15 +29,13 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/info_parser.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility/compat.hpp>
 
@@ -151,6 +142,18 @@ std::vector<std::string> split(const std::string& sentence,
     boost::split(words, sentence, boost::is_any_of(delimiter),
         boost::token_compress_on);
     return words;
+}
+
+bool starts_with(const std::string& value, const std::string& prefix)
+{
+    try
+    {
+        return boost::istarts_with(value, prefix);
+    }
+    catch (boost::bad_lexical_cast)
+    {
+        return false;
+    }
 }
 
 void trim(std::string& value)

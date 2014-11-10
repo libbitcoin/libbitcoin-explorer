@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef STEALTH_HPP
-#define STEALTH_HPP
+#ifndef BX_STEALTH_HPP
+#define BX_STEALTH_HPP
 
 #include <iostream>
 #include <cstdint>
@@ -78,6 +78,12 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     BCX_API stealth(const stealth& other);
+
+    /**
+     * Overload cast to bool.
+     * @return  This object's value cast to a bool.
+     */
+    BCX_API operator bool() const;
 
     /**
      * Overload cast to internal type.
