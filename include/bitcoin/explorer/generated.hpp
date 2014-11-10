@@ -104,6 +104,8 @@
 #include <bitcoin/explorer/commands/tx-decode.hpp>
 #include <bitcoin/explorer/commands/tx-encode.hpp>
 #include <bitcoin/explorer/commands/tx-sign.hpp>
+#include <bitcoin/explorer/commands/uri-decode.hpp>
+#include <bitcoin/explorer/commands/uri-encode.hpp>
 #include <bitcoin/explorer/commands/validate-tx.hpp>
 #include <bitcoin/explorer/commands/wallet.hpp>
 #include <bitcoin/explorer/commands/watch-address.hpp>

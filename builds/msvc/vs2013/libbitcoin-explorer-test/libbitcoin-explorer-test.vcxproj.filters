@@ -275,6 +275,12 @@
     <ClCompile Include="..\..\..\..\test\commands\tx-sign.cpp">
       <Filter>src\tests\commands\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\uri-decode.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\uri-encode.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp">
       <Filter>src\tests\commands\network</Filter>
     </ClCompile>

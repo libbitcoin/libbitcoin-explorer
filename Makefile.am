@@ -71,6 +71,7 @@ bitcoin_explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/script.hpp \
     include/bitcoin/explorer/primitives/stealth.hpp \
     include/bitcoin/explorer/primitives/transaction.hpp \
+    include/bitcoin/explorer/primitives/uri.hpp \
     include/bitcoin/explorer/primitives/wif.hpp \
     include/bitcoin/explorer/primitives/wrapper.hpp
 
@@ -157,6 +158,8 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/tx-decode.hpp \
     include/bitcoin/explorer/commands/tx-encode.hpp \
     include/bitcoin/explorer/commands/tx-sign.hpp \
+    include/bitcoin/explorer/commands/uri-decode.hpp \
+    include/bitcoin/explorer/commands/uri-encode.hpp \
     include/bitcoin/explorer/commands/validate-tx.hpp \
     include/bitcoin/explorer/commands/wallet.hpp \
     include/bitcoin/explorer/commands/watch-address.hpp \
@@ -206,6 +209,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/script.cpp \
     src/primitives/stealth.cpp \
     src/primitives/transaction.cpp \
+    src/primitives/uri.cpp \
     src/primitives/wif.cpp \
     src/primitives/wrapper.cpp \
     src/utility/config.cpp \
@@ -296,6 +300,8 @@ src_libbitcoin_explorer_la_SOURCES += \
     src/commands/tx-decode.cpp \
     src/commands/tx-encode.cpp \
     src/commands/tx-sign.cpp \
+    src/commands/uri-decode.cpp \
+    src/commands/uri-encode.cpp \
     src/commands/validate-tx.cpp \
     src/commands/wallet.cpp \
     src/commands/watch-address.cpp \
@@ -434,6 +440,8 @@ test_libbitcoin_explorer_test_SOURCES += \
     test/commands/tx-decode.cpp \
     test/commands/tx-encode.cpp \
     test/commands/tx-sign.cpp \
+    test/commands/uri-decode.cpp \
+    test/commands/uri-encode.cpp \
     test/commands/validate-tx.cpp \
     test/commands/wallet.cpp \
     test/commands/watch-address.cpp \

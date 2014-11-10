@@ -429,6 +429,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__tx_sign__returns_expected_value)
     BOOST_REQUIRE_EQUAL(tx_sign::symbol(), "tx-sign");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__uri_decode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(uri_decode::symbol(), "uri-decode");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__uri_encode__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(uri_encode::symbol(), "uri-encode");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__validate_tx__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(validate_tx::symbol(), "validate-tx");

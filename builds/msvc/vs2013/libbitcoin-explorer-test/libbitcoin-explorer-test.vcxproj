@@ -162,6 +162,8 @@
     <ClCompile Include="..\..\..\..\test\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-sign.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\uri-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\uri-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wallet.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\watch-address.cpp" />
