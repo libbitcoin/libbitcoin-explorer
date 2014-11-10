@@ -48,6 +48,7 @@
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
@@ -198,12 +199,12 @@ public:
         )
         (
             "mainnet.url",
-            value<std::string>(&setting_.mainnet.url)->default_value("tcp://obelisk.airbitz.co:9091"),
+            value<primitives::uri>(&setting_.mainnet.url)->default_value({ "tcp://obelisk.airbitz.co:9091" }),
             "The URL of the Obelisk mainnet server."
         )
         (
             "testnet.url",
-            value<std::string>(&setting_.testnet.url)->default_value("tcp://obelisk-testnet.airbitz.co:9091"),
+            value<primitives::uri>(&setting_.testnet.url)->default_value({ "tcp://obelisk-testnet.airbitz.co:9091" }),
             "The URL of the Obelisk testnet server."
         );
     }
@@ -300,7 +301,7 @@ public:
     /**
      * Get the value of the mainnet.url setting.
      */
-    BCX_API virtual std::string get_mainnet_url_setting()
+    BCX_API virtual primitives::uri get_mainnet_url_setting()
     {
         return setting_.mainnet.url;
     }
@@ -308,7 +309,7 @@ public:
     /**
      * Set the value of the mainnet.url setting.
      */
-    BCX_API virtual void set_mainnet_url_setting(std::string value)
+    BCX_API virtual void set_mainnet_url_setting(primitives::uri value)
     {
         setting_.mainnet.url = value;
     }
@@ -316,7 +317,7 @@ public:
     /**
      * Get the value of the testnet.url setting.
      */
-    BCX_API virtual std::string get_testnet_url_setting()
+    BCX_API virtual primitives::uri get_testnet_url_setting()
     {
         return setting_.testnet.url;
     }
@@ -324,7 +325,7 @@ public:
     /**
      * Set the value of the testnet.url setting.
      */
-    BCX_API virtual void set_testnet_url_setting(std::string value)
+    BCX_API virtual void set_testnet_url_setting(primitives::uri value)
     {
         setting_.testnet.url = value;
     }
@@ -392,7 +393,7 @@ private:
             {
             }
 
-            std::string url;
+            primitives::uri url;
         } mainnet;
 
         struct testnet
@@ -402,7 +403,7 @@ private:
             {
             }
 
-            std::string url;
+            primitives::uri url;
         } testnet;
 
         setting()
