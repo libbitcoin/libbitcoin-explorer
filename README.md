@@ -267,7 +267,6 @@ In keeping with the single file requirement, and given the extensibility model, 
 ### Primitive Types
 
 BX defines the following set of Bitcoin primitive types in the `bx::primitives` namespace.
-
 ```
 address
 base16
@@ -292,6 +291,7 @@ raw
 script
 stealth
 transaction
+uri
 wif
 wrapper
 ```
