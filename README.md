@@ -268,31 +268,33 @@ In keeping with the single file requirement, and given the extensibility model, 
 
 BX defines the following set of Bitcoin primitive types in the `bx::primitives` namespace.
 
-    address
-    base16
-    base2
-    base58
-    btc
-    btc160
-    btc256
-    byte
-    ec_private
-    ec_public
-    encoding
-    hashtype
-    hd_key
-    hd_priv
-    hd_pub
-    header
-    input
-    output
-    point
-    raw
-    script
-    stealth
-    transaction
-    wif
-    wrapper
+```
+address
+base16
+base2
+base58
+btc
+btc160
+btc256
+byte
+ec_private
+ec_public
+encoding
+hashtype
+hd_key
+hd_priv
+hd_pub
+header
+input
+output
+point
+raw
+script
+stealth
+transaction
+wif
+wrapper
+```
 
 These are individual classes that are for the most part simple wrappers around types and/or functions exposed by [libbitcoin](tps://github.com/libbitcoin/libbitcoin). The classes consistently implement overrides of stream operators by conversion to/from text encodings. As a result they drop seamlessly into [input processing](#input-processing) and [output processing](#output-processing) like any other serializable type.
 
@@ -362,11 +364,11 @@ BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/
   </configuration>
     
   <configuration section="mainnet">
-    <setting name="url" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
+    <setting name="url" type="uri" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
   </configuration>
   
   <configuration section="testnet">
-    <setting name="url" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
+    <setting name="url" type="uri" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
   </configuration>
 ```
 The implementation supports a two level hierarchy of settings using "sections" to group settings, similar to an `.ini` file:
@@ -580,21 +582,21 @@ Seed output can be passed as an argument to any command that require randomness.
 
 BX command names, help and parameterization utilize the following set of acronyms.
 ```
- BTC     Bitcoin Denomination
- BX      Bitcoin Explorer
- EC      Elliptic Curve
- HD      Hierarchical Deterministic
- PREVOUT Previous Output
- PUBKEY  EC Public Key
- QRCODE  Quick Response Code
- RACE    Research and development in Advanced Communications Technologies
- RIPEMD  RACE Integrity Primitives Evaluation Message Digest
- SHA     Secure Hash Algorithm
- SOCKS   Socket Secure (proxy protocol)
- SX      Spesmilo Exchanger (the original version of Bitcoin Explorer)
- TX      Transaction
- UTXO    Unspent Transaction Output
- WIF     Wallet Import Format
+BTC     Bitcoin Denomination
+BX      Bitcoin Explorer
+EC      Elliptic Curve
+HD      Hierarchical Deterministic
+PREVOUT Previous Output
+PUBKEY  EC Public Key
+QRCODE  Quick Response Code
+RACE    Research and development in Advanced Communications Technologies
+RIPEMD  RACE Integrity Primitives Evaluation Message Digest
+SHA     Secure Hash Algorithm
+SOCKS   Socket Secure (proxy protocol)
+SX      Spesmilo Exchanger (the original version of Bitcoin Explorer)
+TX      Transaction
+UTXO    Unspent Transaction Output
+WIF     Wallet Import Format
 ```
 
 ### Command Taxonomy
