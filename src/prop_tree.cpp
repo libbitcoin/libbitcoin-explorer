@@ -436,6 +436,37 @@ ptree prop_tree(const settings_list& settings)
     return tree;
 }
 
+// uri
+
+ptree prop_tree(const uri_parse_result& uri)
+{
+    ptree uri_props;
+
+    if (uri.address)
+        uri_props.put("address", address(uri.address.get()));
+
+    if (uri.amount)
+        uri_props.put("amount", uri.amount.get());
+
+    if (uri.label)
+        uri_props.put("label", uri.label.get());
+
+    if (uri.message)
+        uri_props.put("message", uri.message.get());
+
+    if (uri.r)
+        uri_props.put("r", uri.r.get());
+
+    uri_props.put("scheme", "bitcoin");
+
+    if (uri.stealth)
+        uri_props.add_child("stealth_address", prop_list(uri.stealth.get()));
+
+    ptree tree;
+    tree.add_child("uri", uri_props);
+    return tree;
+}
+
 } // namespace primitives
 } // namespace explorer
 } // namespace libbitcoin

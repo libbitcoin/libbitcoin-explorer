@@ -360,10 +360,17 @@ BCX_API pt::ptree prop_tree(const bc::hash_digest& hash, size_t height,
 
 /**
  * Create a property tree for the settings command.
- * @param[in]  settings   The tx index.
+ * @param[in]  settings   The list of settings.
  * @returns               A new property tree containing the settings.
  */
 BCX_API pt::ptree prop_tree(const settings_list& settings);
+
+/**
+ * Create a property tree for a parsed bitcoin uri.
+ * @param[in]  uri   The parsed uri.
+ * @returns          A new property tree containing the settings.
+ */
+BCX_API pt::ptree prop_tree(const uri_parse_result& uri);
 
 } // namespace primitives
 } // namespace explorer
