@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/primitives/base16.hpp>
 
 #include <array>
@@ -35,54 +34,54 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-    base16::base16()
-        : value_()
-    {
-    }
+base16::base16()
+    : value_()
+{
+}
 
-    base16::base16(const std::string& hexcode)
-    {
-        std::stringstream(hexcode) >> *this;
-    }
+base16::base16(const std::string& hexcode)
+{
+    std::stringstream(hexcode) >> *this;
+}
 
-    base16::base16(const data_chunk& value)
-        : value_(value)
-    {
-    }
+base16::base16(const data_chunk& value)
+    : value_(value)
+{
+}
 
-    base16::base16(const base16& other)
-        : base16(other.value_)
-    {
-    }
+base16::base16(const base16& other)
+    : base16(other.value_)
+{
+}
 
-    data_chunk& base16::data()
-    {
-        return value_;
-    }
+data_chunk& base16::data()
+{
+    return value_;
+}
 
-    base16::operator const data_chunk&() const
-    {
-        return value_; 
-    }
+base16::operator const data_chunk&() const
+{
+    return value_; 
+}
 
-    std::istream& operator>>(std::istream& input, base16& argument)
-    {
-        std::string hexcode;
-        input >> hexcode;
+std::istream& operator>>(std::istream& input, base16& argument)
+{
+    std::string hexcode;
+    input >> hexcode;
 
-        data_chunk chunk = decode_hex(hexcode);
-        if (chunk.empty())
-            BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
+    data_chunk chunk = decode_hex(hexcode);
+    if (chunk.empty())
+        BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
-        argument.value_.assign(chunk.begin(), chunk.end());
-        return input;
-    }
+    argument.value_.assign(chunk.begin(), chunk.end());
+    return input;
+}
 
-    std::ostream& operator<<(std::ostream& output, const base16& argument)
-    {
-        output << encode_hex(argument.value_);
-        return output;
-    }
+std::ostream& operator<<(std::ostream& output, const base16& argument)
+{
+    output << encode_hex(argument.value_);
+    return output;
+}
 
 } // namespace explorer
 } // namespace primitives

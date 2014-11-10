@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/primitives/base10.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 
 #include <iostream>
 #include <string>
@@ -25,61 +25,64 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 
 using namespace po;
+using namespace pt;
 
 namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-    base10::base10()
+    uri::uri()
         : value_()
     {
     }
 
-    base10::base10(const std::string& decimal)
+    uri::uri(const std::string& value)
     {
-        std::stringstream(decimal) >> *this;
+        std::stringstream(value) >> *this;
     }
 
-    base10::base10(uint8_t byte)
-        : value_(byte)
-    {
-    }
-
-    base10::base10(const base10& other)
-        : base10(other.value_)
+    uri::uri(const uri& other)
+        : uri(other.value_)
     {
     }
 
-    base10::operator uint8_t() const
+    uri::operator const std::string() const
     {
-        return value_; 
+        return value_;
     }
 
-    std::istream& operator>>(std::istream& input, base10& argument)
+    uri::operator const ptree() const
     {
-        std::string decimal;
-        input >> decimal;
-        
-        // We have this base10 class only because deserialization doesn't
-        // treat 8 bit values as decimal numbers (unlike 16+ bit numbers).
+        // We could store the parse result alongside the string instead of 
+        // reparsing here, but this simplifies copy construction and state.
+        uri_parse_result result;
+        uri_parse(value_, result);
+        return prop_tree(result);
+    }
 
-        uint16_t number;
-        deserialize(number, decimal);
+    std::istream& operator>>(std::istream& input, uri& argument)
+    {
+        std::string value;
+        input >> value;
 
-        if (number > max_uint8)
-            BOOST_THROW_EXCEPTION(invalid_option_value(decimal));
+        // We currently only validate Bitcoin URIs.
+        if (starts_with(value, "bitcoin:"))
+        {
+            uri_parse_result result;
+            if (!uri_parse(value, result))
+                BOOST_THROW_EXCEPTION(invalid_option_value(value));
+        }
 
-        argument.value_ = static_cast<uint8_t>(number);
+        argument.value_ = value;
         return input;
     }
 
-    std::ostream& operator<<(std::ostream& output, const base10& argument)
+    std::ostream& operator<<(std::ostream& output, const uri& argument)
     {
-        uint16_t number(argument.value_);
-        output << number;
+        output << argument.value_;
         return output;
     }
 

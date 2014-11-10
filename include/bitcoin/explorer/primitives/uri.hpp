@@ -17,16 +17,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_ADDRESS_HPP
-#define BX_ADDRESS_HPP
+#ifndef BX_URI_HPP
+#define BX_URI_HPP
 
-#include <cstdint>
 #include <iostream>
 #include <string>
-#include <bitcoin/bitcoin.hpp>
+#include <cstdint>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -35,80 +32,49 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between base58 string and payment_address.
+ * Serialization helper to convert between string and uri_parse_result.
  */
-class address
+class uri
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API address();
-
-    /**
-     * Initialization constructor.
-     * @param[in]  base58  The value to initialize with.
-     */
-    BCX_API address(const std::string& base58);
+    BCX_API uri();
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API address(const payment_address& value);
+    BCX_API uri(const std::string& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API address(const address& other);
+    BCX_API uri(const uri& other);
 
     /**
-     * Initialization constructor.
-     * @param[in]  version  The bitcoin address version.
-     * @param[in]  hash     The ripemd160 value of the address.
+     * Overload cast to property tree.
+     * @return  This object's value cast to a property tree.
      */
-    BCX_API address(uint8_t version, const short_hash& hash);
+    BCX_API operator const pt::ptree() const;
 
     /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
+     * Overload cast to string.
+     * @return  This object's value cast to a string.
      */
-    BCX_API address(const hd_private_key& value);
+    BCX_API operator const std::string() const;
 
     /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    BCX_API address(const hd_public_key& value);
-
-    /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API payment_address& data();
-
-    /**
-     * Overload cast to bool.
-     * @return  This object's value cast to a bool.
-     */
-    BCX_API operator bool() const;
-
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    BCX_API operator const payment_address&() const;
-
-    /**
-     * Overload stream in. Throws if input is invalid.
+     * Overload stream in. If input is invalid sets no bytes in argument.
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
     BCX_API friend std::istream& operator>>(std::istream& input,
-        address& argument);
+        uri& argument);
 
     /**
      * Overload stream out.
@@ -117,14 +83,14 @@ public:
      * @return                The output stream reference.
      */
     BCX_API friend std::ostream& operator<<(std::ostream& output,
-        const address& argument);
+        const uri& argument);
 
 private:
 
     /**
      * The state of this object.
      */
-    payment_address value_;
+    std::string value_;
 };
 
 } // namespace explorer

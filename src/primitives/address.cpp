@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/primitives/address.hpp>
 
 #include <cstdint>
@@ -74,6 +73,11 @@ address::address(const hd_public_key& value)
 payment_address& address::data()
 {
     return value_;
+}
+
+address::operator bool() const
+{
+    return value_.version() != payment_address::invalid_version;
 }
 
 address::operator const payment_address&() const

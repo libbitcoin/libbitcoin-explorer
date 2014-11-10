@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef EC_PUBLIC_HPP
-#define EC_PUBLIC_HPP
+#ifndef BX_EC_PUBLIC_HPP
+#define BX_EC_PUBLIC_HPP
 
 #include <iostream>
 #include <string>

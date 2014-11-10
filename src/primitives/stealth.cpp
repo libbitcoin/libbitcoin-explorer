@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/primitives/stealth.hpp>
 
 #include <iostream>
@@ -74,6 +73,11 @@ stealth::stealth(const stealth_prefix& prefix, const ec_public& scan_key,
 stealth::stealth(const stealth& other)
     : value_(other.value_)
 {
+}
+
+stealth::operator bool() const
+{
+    return value_.valid();
 }
 
 stealth::operator const stealth_address&() const

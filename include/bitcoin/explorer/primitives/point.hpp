@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef POINT_HPP
-#define POINT_HPP
+#ifndef BX_POINT_HPP
+#define BX_POINT_HPP
 
 #include <iostream>
 #include <sstream>
