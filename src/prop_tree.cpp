@@ -445,6 +445,10 @@ ptree prop_tree(const uri_parse_result& uri)
     if (uri.address)
         uri_props.put("address", address(uri.address.get()));
 
+    // If both addresses are set stealth will take priority.
+    if (uri.stealth)
+        uri_props.put("address", stealth(uri.stealth.get()));
+
     if (uri.amount)
         uri_props.put("amount", uri.amount.get());
 
@@ -458,9 +462,6 @@ ptree prop_tree(const uri_parse_result& uri)
         uri_props.put("r", uri.r.get());
 
     uri_props.put("scheme", "bitcoin");
-
-    if (uri.stealth)
-        uri_props.add_child("stealth_address", prop_list(uri.stealth.get()));
 
     ptree tree;
     tree.add_child("uri", uri_props);
