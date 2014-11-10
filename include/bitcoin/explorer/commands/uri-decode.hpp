@@ -65,6 +65,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_URI_DECODE_NOT_BITCOIN \
+    "The URI is not of the 'bitcoin' scheme."
+
+/**
  * Class to implement the uri-decode command.
  */
 class uri_decode 

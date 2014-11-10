@@ -490,6 +490,7 @@
   <command symbol="uri-decode" typeX="uri" category="WALLET" description="Validate and decompose a Bitcoin URI into its parts.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="URI" type="uri" stdin="true"  description="The Bitcoin URI to decode. If not specified the URI is read from STDIN." />
+    <define name="BX_URI_DECODE_NOT_BITCOIN" value="The URI is not of the 'bitcoin' scheme." />
   </command>
   
   <command symbol="uri-encode" category="WALLET" description="Compose a Bitcoin URI from specified parts.">

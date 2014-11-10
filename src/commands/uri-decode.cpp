@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
  using namespace bc::explorer;
  using namespace bc::explorer::commands;
@@ -30,6 +31,13 @@
      // Bound parameters.
      const auto& encoding = get_format_option();
      const auto& uri = get_uri_argument();
+
+     // The uri primitive type is not currently restricted to bitcoin uris.
+     if (!starts_with(uri, "bitcoin:"))
+     {
+         error << BX_URI_DECODE_NOT_BITCOIN << std::endl;
+         return console_result::failure;
+     }
 
      write_stream(output, uri, encoding);
      return console_result::okay;
