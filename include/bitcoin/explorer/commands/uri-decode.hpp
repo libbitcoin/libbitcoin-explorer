@@ -161,7 +161,7 @@ public:
         (
             "URI",
             value<primitives::uri>(&argument_.uri),
-            "The Bitcoin URI to decode. If not specified the URI is read from STDIN."
+            "The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN."
         );
 
         return options;
