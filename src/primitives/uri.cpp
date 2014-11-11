@@ -54,13 +54,13 @@ namespace primitives {
         return value_;
     }
 
-    uri::operator const ptree() const
+    uri::operator const uri_parse_result() const
     {
         // We could store the parse result alongside the string instead of 
         // reparsing here, but this simplifies copy construction and state.
         uri_parse_result result;
         uri_parse(value_, result);
-        return prop_tree(result);
+        return result;
     }
 
     std::istream& operator>>(std::istream& input, uri& argument)

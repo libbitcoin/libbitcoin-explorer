@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
  using namespace bc::explorer;
@@ -38,7 +39,7 @@
          error << BX_URI_DECODE_NOT_BITCOIN << std::endl;
          return console_result::failure;
      }
-
-     write_stream(output, uri, encoding);
+     
+     write_stream(output, prop_tree(uri), encoding);
      return console_result::okay;
  }

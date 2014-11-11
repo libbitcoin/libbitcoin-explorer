@@ -56,10 +56,10 @@ public:
     BCX_API uri(const uri& other);
 
     /**
-     * Overload cast to property tree.
-     * @return  This object's value cast to a property tree.
+     * Overload cast to parse result.
+     * @return  This object's value cast to a parse result.
      */
-    BCX_API operator const pt::ptree() const;
+    BCX_API operator const uri_parse_result() const;
 
     /**
      * Overload cast to string.
