@@ -22,7 +22,6 @@
 #include <iostream>
 #include <cstdint>
 #include <vector>
-#include <boost/property_tree/ptree.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -83,11 +82,6 @@ stealth::operator bool() const
 stealth::operator const stealth_address&() const
 {
     return value_;
-}
-
-stealth::operator const ptree() const
-{
-    return prop_tree(value_);
 }
 
 std::istream& operator>>(std::istream& input, stealth& argument)

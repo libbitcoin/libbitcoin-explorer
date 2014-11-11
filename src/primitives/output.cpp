@@ -24,7 +24,6 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
@@ -200,11 +199,6 @@ const std::string& output::payto() const
 output::operator const std::vector<tx_output_type>&() const
 {
     return value_; 
-}
-
-output::operator const ptree() const
-{
-    return prop_tree(value_);
 }
 
 std::istream& operator>>(std::istream& input, output& argument)

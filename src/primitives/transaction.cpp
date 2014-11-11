@@ -23,7 +23,6 @@
 #include <sstream>
 #include <string>
 #include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
@@ -70,11 +69,6 @@ tx_type& transaction::data()
 transaction::operator const tx_type&() const
 {
     return value_;
-}
-
-transaction::operator const ptree() const
-{
-    return prop_tree(value_);
 }
 
 std::istream& operator>>(std::istream& input, transaction& argument)

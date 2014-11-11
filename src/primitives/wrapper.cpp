@@ -20,7 +20,6 @@
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 
 #include <iostream>
-#include <boost/property_tree/ptree.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -81,11 +80,6 @@ wrapper::operator const data_chunk() const
 wrapper::operator const wrapped_data&() const
 {
     return value_;
-}
-
-wrapper::operator const ptree() const
-{
-    return prop_tree(value_);
 }
 
 std::istream& operator>>(std::istream& input, wrapper& argument)

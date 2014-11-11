@@ -25,7 +25,6 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -131,12 +130,6 @@ public:
      * @return  This object's value cast to internal type.
      */
     BCX_API operator const std::vector<tx_output_type>&() const;
-
-    /**
-     * Overload cast to property tree.
-     * @return  This object's value cast to a property tree.
-     */
-    BCX_API operator const pt::ptree() const;
 
     /**
      * Overload stream in. Throws if input is invalid.

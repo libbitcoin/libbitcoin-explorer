@@ -22,7 +22,6 @@
 
 #include <iostream>
 #include <string>
-#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
@@ -81,12 +80,6 @@ public:
      * @return  This object's value cast to internal type.
      */
     BCX_API operator const block_header_type&() const;
-
-    /**
-     * Overload cast to property tree.
-     * @return  This object's value cast to a property tree.
-     */
-    BCX_API operator const pt::ptree() const;
 
     /**
      * Overload stream in. Throws if input is invalid.

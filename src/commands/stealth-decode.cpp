@@ -22,8 +22,10 @@
 
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
+using namespace pt;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
@@ -34,7 +36,7 @@ console_result stealth_decode::invoke(std::ostream& output,
     const auto& encoding = get_format_option();
     const auto& address = get_stealth_address_argument();
 
-    write_stream(output, address, encoding);
+    write_stream(output, prop_tree(address), encoding);
     return console_result::okay;
 }
 

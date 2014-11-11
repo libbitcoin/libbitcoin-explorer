@@ -24,7 +24,6 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/point.hpp>
@@ -84,11 +83,6 @@ tx_input_type& input::data()
 input::operator const tx_input_type&() const
 {
     return value_; 
-}
-
-input::operator const ptree() const
-{
-    return prop_tree(value_);
 }
 
 std::istream& operator>>(std::istream& stream, input& argument)
