@@ -25,20 +25,53 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(uri_encode__invoke)
 
+// BIP-21 vectors
+
+BOOST_AUTO_TEST_CASE(uri_encode__invoke__address__okay_output)
+{
+    BX_DECLARE_COMMAND(uri_encode);
+    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L\n");
+}
+
+BOOST_AUTO_TEST_CASE(uri_encode__invoke__address_label__okay_output)
+{
+    BX_DECLARE_COMMAND(uri_encode);
+    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_label_option("Luke-Jr");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?label=Luke-Jr\n");
+}
+
+BOOST_AUTO_TEST_CASE(uri_encode__invoke__address_label_amount__okay_output)
+{
+    BX_DECLARE_COMMAND(uri_encode);
+    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_label_option("Luke-Jr");
+    command.set_amount_option({ "20.3" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?amount=20.3&label=Luke-Jr\n");
+}
+
+BOOST_AUTO_TEST_CASE(uri_encode__invoke__address_label_amount_message__okay_output)
+{
+    BX_DECLARE_COMMAND(uri_encode);
+    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_label_option("Luke-Jr");
+    command.set_amount_option({ "50" });
+    command.set_message_option("Donation for project xyz");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?amount=50&label=Luke-Jr&message=Donation%20for%20project%20xyz\n");
+}
+
+// additional (similar to libbitcoin vectors)
+
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__empty__okay_output)
 {
     BX_DECLARE_COMMAND(uri_encode);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("bitcoin:\n");
-}
-
-BOOST_AUTO_TEST_CASE(uri_encode__invoke__address__okay_output)
-{
-    BX_DECLARE_COMMAND(uri_encode);
-    command.set_bitcoin_address_argument({ "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    auto foo = output.str();
-    BX_REQUIRE_OUTPUT("bitcoin:1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E\n");
 }
 
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__stealth_address__okay_output)
@@ -49,36 +82,21 @@ BOOST_AUTO_TEST_CASE(uri_encode__invoke__stealth_address__okay_output)
     BX_REQUIRE_OUTPUT("bitcoin:hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i\n");
 }
 
-BOOST_AUTO_TEST_CASE(uri_encode__invoke__amount__okay_output)
+BOOST_AUTO_TEST_CASE(uri_encode__invoke__bitcoin_and_stealth_address__failure_error)
 {
     BX_DECLARE_COMMAND(uri_encode);
-    command.set_amount_option({ "100.0012" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("bitcoin:?amount=100.0012\n");
+    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_stealth_option({ "hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_URI_ENCODE_ADDRESS_CONFLICT "\n");
 }
 
-BOOST_AUTO_TEST_CASE(uri_encode__invoke__label__okay_output)
+BOOST_AUTO_TEST_CASE(uri_encode__invoke__escaped_label__okay_output)
 {
     BX_DECLARE_COMMAND(uri_encode);
     command.set_label_option("&=\\n#");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("bitcoin:?label=%26%3D%5Cn%23\n");
-}
-
-BOOST_AUTO_TEST_CASE(uri_encode__invoke__message__okay_output)
-{
-    BX_DECLARE_COMMAND(uri_encode);
-    command.set_message_option("hello bitcoin");
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("bitcoin:?message=hello%20bitcoin\n");
-}
-
-BOOST_AUTO_TEST_CASE(uri_encode__invoke__request__okay_output)
-{
-    BX_DECLARE_COMMAND(uri_encode);
-    command.set_request_option({ "http://example.com?purchase=shoes&user=bob" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("bitcoin:?r=http://example.com?purchase%3Dshoes%26user%3Dbob\n");
 }
 
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__composite__okay_output)

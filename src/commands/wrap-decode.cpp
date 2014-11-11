@@ -23,12 +23,10 @@
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
 {
