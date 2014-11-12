@@ -187,15 +187,19 @@ if [[ $PREFIX ]]; then
     # These work for MacPorts, Linux (system) and Homebrew (BOOST_ROOT).
     # Below we incorporate and prioritize the --prefix path for Boost.
 
-    # Set Boost path, assume internal build (no pkg-config).
-    BOOST_LOAD="--with-boost=$PREFIX"
+    # Set Boost discovery in the case of an internal build (no pkg-config).
+    if [[ $BUILD_BOOST ]]; then
+        WITH_BOOST="--with-boost=$PREFIX"
+    fi
     
-    # Augment include/lib paths for GMP, assuming local build (no pkg-config).
-    GMP_LOAD="CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib"
+    # Set GMP discovery in the case of an internal build (no pkg-config).
+    if [[ $BUILD_GMP ]]; then    
+        WITH_GMP="CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib"
+    fi
     
     # Set Boost and GMP discovery information into dependent builds.
-    SECP256K1_OPTIONS="$SECP256K1_OPTIONS $GMP_LOAD"
-    BITCOIN_OPTIONS="$BITCOIN_OPTIONS $GMP_LOAD $BOOST_LOAD"
+    SECP256K1_OPTIONS="$SECP256K1_OPTIONS $WITH_GMP"
+    BITCOIN_OPTIONS="$BITCOIN_OPTIONS $WITH_GMP $WITH_BOOST"
 fi
 
 configure_options()
@@ -264,7 +268,7 @@ build_from_tarball_boost()
     JOBS=$4
     shift 4
 
-    if [[ $BUILD_BOOST != "yes" ]]; then
+    if [[ !($BUILD_BOOST) ]]; then
         display_message "Boost build not enabled"
         return
     fi
@@ -296,7 +300,7 @@ build_from_tarball_gmp()
     JOBS=$4
     shift 4
 
-    if [[ $BUILD_GMP != "yes" ]]; then
+    if [[ !($BUILD_GMP) ]]; then
         display_message "GMP build not enabled"
         return
     fi
