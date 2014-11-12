@@ -83,6 +83,16 @@ AC_ARG_ENABLE([testnet],
 AC_MSG_RESULT($enable_testnet)
 AS_IF([test x$enable_testnet != xno], AC_DEFINE([ENABLE_TESTNET]))
 
+# Support --enable-shared option
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING(--enable-shared option)
+AC_ARG_WITH([shared],
+    AS_HELP_STRING([--enable-shared], 
+        [Compile with shared libraries.]),
+    [enable_shared=$enableval],
+    [enable_shared=no])
+AC_MSG_RESULT($enable_shared)
+
 # Support --with-tests option
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--with-tests option)
@@ -129,6 +139,8 @@ PKG_CHECK_MODULES([sodium], [libsodium >= 1.0.0])
 AS_IF([test x$with_tests != xno], [AX_BOOST_UNIT_TEST_FRAMEWORK])
 AM_CONDITIONAL([WITH_TESTS], [test x$with_tests != xno])
 AM_COND_IF([WITH_TESTS], [AC_MSG_NOTICE([WITH_TESTS defined])])
+AM_CONDITIONAL([SET_TEST_DYN_LINK], [test x$enable_shared != xno])
+AM_COND_IF([SET_TEST_DYN_LINK], [AC_MSG_NOTICE([SET_TEST_DYN_LINK defined])])
 
 # Set warning levels.
 #------------------------------------------------------------------------------
@@ -141,19 +153,30 @@ AX_CHECK_COMPILE_FLAG([-Wextra],
 AX_CHECK_COMPILE_FLAG([-Wno-missing-braces],
     [CXXFLAGS="$CXXFLAGS -Wno-missing-braces"])
 
-AX_CHECK_COMPILE_FLAG([-Wpedantic],
-    [CXXFLAGS="$CXXFLAGS -Wpedantic"],
-    AX_CHECK_COMPILE_FLAG([-pedantic],
-        [CXXFLAGS="$CXXFLAGS -pedantic"]))
-
 AX_CHECK_COMPILE_FLAG([-Wno-unused-function],
     [CXXFLAGS="$CXXFLAGS -Wno-unused-function"])
 
+# This cleans up for boost headers.
+AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
+    [CXXFLAGS="$CXXFLAGS -Wno-unused-local-typedefs"])
+
 # This cleans up for a boost property_tree headers (with boost exceptions off).
+# -Wpedantic causes lots of boost 1.49 included header warnings, so leave off.
+#AX_CHECK_COMPILE_FLAG([-Wpedantic],
+#    [CXXFLAGS="$CXXFLAGS -Wpedantic"],
+#    AX_CHECK_COMPILE_FLAG([-pedantic],
+#        [CXXFLAGS="$CXXFLAGS -pedantic"]))
+AX_CHECK_COMPILE_FLAG([-Wno-maybe-uninitialized],
+    [CXXFLAGS="$CXXFLAGS -Wno-maybe-uninitialized"])
 AX_CHECK_COMPILE_FLAG([-Wno-return-type],
     [CXXFLAGS="$CXXFLAGS -Wno-return-type"])
 
-# These clean up for protobuf headers.
+# Prevent clang from warning about unknown warnings (even though checked),
+# specifically -Wno-maybe-uninitialized and -Wno-unused-local-typedefs.
+AX_CHECK_COMPILE_FLAG([-Wno-unknown-warning-option],
+    [CXXFLAGS="$CXXFLAGS -Wno-unknown-warning-option"])
+
+# This cleans up for protobuf headers.
 AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
     [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])
 AX_CHECK_COMPILE_FLAG([-Wno-nested-anon-types],
@@ -172,7 +195,7 @@ AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
 #        [CXXFLAGS="$CXXFLAGS -fvisibility=hidden"]))
 
 AX_CHECK_COMPILE_FLAG([-fstack-protector],
-    [AX_CHECK_LINK_FLAG([-fstack-protector], 
+    [AX_CHECK_LINK_FLAG([-fstack-protector],
         [CXXFLAGS="$CXXFLAGS -fstack-protector"])])
 
 AX_CHECK_COMPILE_FLAG([-fstack-protector-all],

@@ -14,12 +14,12 @@ before_install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
   
 install:
-  # Get GMP (GNU Multiprecision Arithmetic Library)
-  - sudo apt-get -qq install libgmp-dev
+  # Get GNU Multiprecision Arithmetic Library (v5.0.2 on Travis, we prefer 6.0.0).
+  # - sudo apt-get -qq install libgmp-dev
 
-  # Download and install boost components at the minimum version required.
-  - sudo ./install-boost.sh
+  # Get Boost (v1.46 on Travis, we require 1.49).
+  # - sudo apt-get -qq install libboost-dev
 
 script:
-  # Download and build unpackaged dependencies and build bitcoin explorer.
-  - sudo ./install-bx.sh CXXFLAGS="-Os -s"
+  # Download and build all dependencies and bitcoin explorer.
+  - sudo ./install-bx.sh CXXFLAGS="-Os -s" --disable-shared --enable-static --build-gmp --build-boost
