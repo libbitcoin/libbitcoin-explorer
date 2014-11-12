@@ -49,12 +49,12 @@ namespace primitives {
     {
     }
 
-    uri::operator const std::string() const
+    uri::operator const std::string&() const
     {
         return value_;
     }
 
-    uri::operator const uri_parse_result() const
+    uri::operator const uri_parse_result&() const
     {
         // We could store the parse result alongside the string instead of 
         // reparsing here, but this simplifies copy construction and state.
