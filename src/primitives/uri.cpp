@@ -35,7 +35,7 @@ namespace explorer {
 namespace primitives {
 
     uri::uri()
-        : value_()
+        : value_(), parse_result_()
     {
     }
 
@@ -49,18 +49,15 @@ namespace primitives {
     {
     }
 
-    uri::operator const std::string() const
+    uri::operator const std::string&() const
     {
         return value_;
     }
 
-    uri::operator const uri_parse_result() const
+    // This will return a default object if not a bitcoin uri.
+    uri::operator const uri_parse_result&() const
     {
-        // We could store the parse result alongside the string instead of 
-        // reparsing here, but this simplifies copy construction and state.
-        uri_parse_result result;
-        uri_parse(value_, result);
-        return result;
+        return parse_result_;
     }
 
     std::istream& operator>>(std::istream& input, uri& argument)
@@ -71,8 +68,7 @@ namespace primitives {
         // We currently only validate Bitcoin URIs.
         if (starts_with(value, "bitcoin:"))
         {
-            uri_parse_result result;
-            if (!uri_parse(value, result))
+            if (!uri_parse(value, argument.parse_result_))
                 BOOST_THROW_EXCEPTION(invalid_option_value(value));
         }
 

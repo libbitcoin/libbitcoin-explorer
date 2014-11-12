@@ -56,16 +56,16 @@ public:
     BCX_API uri(const uri& other);
 
     /**
-     * Overload cast to parse result.
-     * @return  This object's value cast to a parse result.
-     */
-    BCX_API operator const uri_parse_result() const;
-
-    /**
      * Overload cast to string.
      * @return  This object's value cast to a string.
      */
-    BCX_API operator const std::string() const;
+    BCX_API operator const std::string&() const;
+
+    /**
+     * Overload cast to parse result.
+     * @return  This object's value cast to a parse result.
+     */
+    BCX_API operator const uri_parse_result&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -91,6 +91,11 @@ private:
      * The state of this object.
      */
     std::string value_;
+
+    /**
+     * The tracking state of this object.
+     */
+    uri_parse_result parse_result_;
 };
 
 } // namespace explorer
