@@ -345,7 +345,7 @@ test_libbitcoin_explorer_test_CPPFLAGS = \
     -I${srcdir}/include \
     ${bitcoin_client_CFLAGS}
     
-if SET_TEST_DYN_LINK
+if SET_BOOST_TEST_DYN_LINK
 test_libbitcoin_explorer_test_CPPFLAGS += \
     -DBOOST_TEST_DYN_LINK
 endif
@@ -459,6 +459,7 @@ test_libbitcoin_explorer_test_LDADD = \
     src/libbitcoin-explorer.la \
     -lboost_chrono \
     -lboost_program_options \
+    -lboost_unit_test_framework \
     ${bitcoin_client_LIBS}
 
 endif

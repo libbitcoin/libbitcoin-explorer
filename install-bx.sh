@@ -39,14 +39,7 @@ DARWIN_BOOST=\
 
 # Homebrew: places each package in a distinct pkg-config path.
 # Unlike other pkg managers Homebrew declares a package for GMP.
-HOMEBREW_BOOST_ROOT_PATH="/usr/local/opt/boost"
 HOMEBREW_PKG_CONFIG_PATHS="/usr/local/opt/gmp/lib/pkgconfig"
-
-# MacPorts: necessary for GMP and Boost (no packages, paths only).
-MACPORTS_LDFLAGS="-L/opt/local/lib"
-MACPORTS_CPPFLAGS="-I/opt/local/include"
-MACPORTS_LD_LIBRARY_PATH="/opt/local/lib"
-MACPORTS_LD_INCLUDE_PATH="/opt/local/include"
 
 # Set libbitcoin common options.
 BITCOIN_OPTIONS=\
@@ -156,21 +149,19 @@ if [[ $OS == "Darwin" ]]; then
     GMP_OPTIONS="$GMP_OPTIONS CPPFLAGS=-Wno-parentheses"
     SODIUM_OPTIONS="$SODIUM_OPTIONS CPPFLAGS=-Qunused-arguments"
     SECP256K1_OPTIONS="$SECP256K1_OPTIONS CPPFLAGS=-Wno-unused-value"
-
-    # Set up default Homebrew repository, if it exists.
+    
+    # Set up Homebrew packages, if Homebrew exists (GMP pkg-config).
     if [[ -d "/usr/local/opt" ]]; then
-        export BOOST_ROOT="$HOMEBREW_BOOST_ROOT_PATH"
         export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOMEBREW_PKG_CONFIG_PATHS"
     fi
-
-    # Set up default MacPorts repository, if it exists.
-    if [[ -d "/opt/local" ]]; then
-        export LDFLAGS="$LDFLAGS $MACPORTS_LDFLAGS"
-        export CPPFLAGS="$CPPFLAGS $MACPORTS_CPPFLAGS"
-        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$MACPORTS_LD_LIBRARY_PATH"
-        export LD_INCLUDE_PATH="$LD_INCLUDE_PATH:$MACPORTS_LD_INCLUDE_PATH"
-    fi
     
+    # Set up default MacPorts paths for GMP and Boost (no pkg-config).
+    if [[ -d "/opt/local" ]]; then
+        export LDFLAGS="$LDFLAGS -L/opt/local/lib"
+        export CPPFLAGS="$CPPFLAGS -I/opt/local/include"
+        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/local/lib"
+        export LD_INCLUDE_PATH="$LD_INCLUDE_PATH:/opt/local/include"
+    fi
 fi
 
 # Expose the prefix.
@@ -181,11 +172,6 @@ if [[ $PREFIX ]]; then
 
     # Augment PKG_CONFIG_PATH with prefix path, for pkg-config packages. 
     export PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
-
-    # Boost M4 discovery searches in the following order:
-    # --with-boost=<path>, /usr, /usr/local, /opt, /opt/local, BOOST_ROOT.
-    # These work for MacPorts, Linux (system) and Homebrew (BOOST_ROOT).
-    # Below we incorporate and prioritize the --prefix path for Boost.
 
     # Set Boost discovery in the case of an internal build (no pkg-config).
     if [[ $BUILD_BOOST ]]; then
@@ -214,6 +200,18 @@ create_directory()
 
     rm -rf $DIRECTORY
     mkdir $DIRECTORY
+}
+
+display_linkage()
+{
+    LIBRARY=$1
+    
+    # Display shared library links.
+    if [[ $OS == "Darwin" ]]; then
+        otool -L $LIBRARY
+    else
+        ldd --verbose $LIBRARY
+    fi
 }
 
 display_message()
@@ -258,6 +256,14 @@ make_silent()
     else
         make --silent
     fi
+}
+
+make_tests()
+{
+    JOBS=$1
+
+    # Build and run unit tests relative to the primary directory.
+    make_silent $JOBS check
 }
 
 build_from_tarball_boost()
@@ -367,36 +373,32 @@ build_from_travis()
     if [[ $TRAVIS == "true" ]]; then
         cd ..
         build_from_local "Local $TRAVIS_REPO_SLUG" $JOBS "$@"
-        build_tests
+        make_tests
         cd $BUILD_DIR
     else
         build_from_github $ACCOUNT $REPO $BRANCH $JOBS "$@"
         pushd $REPO
-        build_tests $JOBS
+        make_tests $JOBS
         popd
     fi
 }
 
-build_tests()
+demonstrate_library()
 {
-    JOBS=$1
-
-    # Build and run unit tests relative to the primary directory.
-    make_silent $JOBS check
-
     # Get the path.
     BX_PATH="bx"
     if [[ $PREFIX ]]; then
         BX_PATH="$PREFIX/bin/bx"
     fi
 
-    # Verify linkage (static or dynamic).
-    ldd --verbose $BX_PATH
+    # Run a command.
+    "$BX_PATH" settings
     echo
-
-    # Verify execution.
-    $BX_PATH help
-
+    
+    # Display the dynamic links.
+    display_linkage "$BX_PATH"
+    echo
+    
     echo "BX is located here: $BX_PATH"
     echo
 }
@@ -422,6 +424,7 @@ build_library()
     build_from_travis libbitcoin libbitcoin-explorer version2 $PARALLEL "$@" $BITCOIN_PRIMARY_OPTIONS
 
     popd
+    demonstrate_library
 }
 
 # Give user feedback on the basic build configuration.
