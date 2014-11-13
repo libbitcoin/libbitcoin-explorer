@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/libbitcoin/libbitcoin-explorer.svg?branch=version2)](https://travis-ci.org/libbitcoin/libbitcoin-explorer)
 
-*The automated build is failing because it exceeds the current Travis time-out limit of 50 minutes.*
+*The automated build often fails by exceeding the current Travis time-out limit of 50 minutes.*
 
 # Bitcoin Explorer
 
@@ -46,7 +46,7 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 Bitcoin Explorer is a fork of the popular [SX command line tool](https://sx.dyne.org/index.html). Many of the commands and their parameters are identical to SX although many have changed, some have been obsoleted and others have been added.
 
-Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server), making them redundant. Others were administrative interfaces to libbitcoin\_server and it was agreed that this scenario would be better handled independently.
+Obsoleted commands include those overtaken by industry standards or by changes to other commands. Others were based on interaction with network services other than the Bitcoin peer-to-peer network or [Obelisk](https://github.com/libbitcoin/obelisk), making them redundant. Others were administrative interfaces to Obelisk and it was agreed that this scenario would be better handled independently.
 
 Because of this significant interface change and out of a desire to provide consistent naming across repositories, the repository name of this fork is **libbitcoin-explorer**. Therefore the program is called **Bitcoin Explorer** and is referred to as **BX** as a convenience and out of respect for its ground-breaking predecessor.
 
@@ -54,9 +54,9 @@ Because of this significant interface change and out of a desire to provide cons
 
 ### Debian/Ubuntu
 
-Libbitcoin requires a C++11 compiler, which means [GCC 4.7.0](https://gcc.gnu.org/projects/cxx0x.html) minimum.
+Libbitcoin requires a C++11 compiler, currently [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) minimum.
 
-> For this reason Ubuntu is not supported prior to version 12.04.
+> For this reason Ubuntu is not supported prior to version [12.04](http://askubuntu.com/a/271561).
 
 To see your GCC version:
 ```sh
@@ -68,7 +68,7 @@ Copyright (C) 2013 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
-If necessary, upgrade your compiler [as follows](http://bit.ly/1vXaaQL):
+If necessary, upgrade your compiler as follows.
 ```sh
 $ sudo apt-get install g++-4.8
 $ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
@@ -109,7 +109,7 @@ Target: x86_64-apple-darwin14.0.0
 Thread model: posix
 ```
 If required update your version of the command line tools as follows:
-```
+```sh
 $ xcode-select --install
 ```
 
@@ -186,10 +186,10 @@ Libbitcoin requires a C++11 compiler, which means **Visual Studio 2013** minimum
 
 #### Create Local NuGet Repository
 
-Dependencies apart from the libbitcoin libraries are available as [NuGet packages](https://www.nuget.org/packages?q=evoskuil). The libbitcoin solution files are configured with references to these packages. To avoid redundancies these references expect a [NuGet.config](http://docs.nuget.org/docs/release-notes/nuget-2.1) in a central location.
-
-> TODO: provide instructions for creation of the central NuGet repository.
-
+Dependencies apart from the libbitcoin libraries are available as [NuGet packages](https://www.nuget.org/packages?q=evoskuil). The libbitcoin solution files are configured with references to these packages.
+```
+To avoid redundancies and conflicts across libbitcoin repositories these references expect a [NuGet.config](http://docs.nuget.org/docs/release-notes/nuget-2.1) in a central location. Despite flexibility in locating NuGet.config, NuGet writes the individual package paths into project files. As such the central repository should be configured in the same relative location as indicated by these paths within the project files.
+```
 The required set of NuGet packages can be viewed using the [NuGet package manager](http://docs.nuget.org/docs/start-here/managing-nuget-packages-using-the-dialog) from the BX solution. The NuGet package manager will automatically download missing packages, either from the build scripts or after prompting you in the Visual Studio environment. For your reference these are the required packages:
 
 * Packages maintained by [sergey.shandar](http://www.nuget.org/profiles/sergey.shandar)
@@ -269,13 +269,13 @@ In keeping with the single file requirement, and given the extensibility model, 
 BX defines the following set of Bitcoin primitive types in the `bx::primitives` namespace.
 ```
 address
+base10
 base16
 base2
 base58
 btc
 btc160
 btc256
-byte
 ec_private
 ec_public
 encoding
@@ -341,16 +341,16 @@ BOOST_AUTO_TEST_CASE(hd_private__invoke__mainnet_vector2_m_0_2147483647h_1_21474
     // corresponding setters
     command.set_hard_option(true);
     command.set_index_option(2147483646);
-    command.set_hd_private_key_argument({ "xprv9zFnWC6h2cLgpmSA46vutJzBcfJ8yaJGg8cX1..." });
+    command.set_hd_private_key_argument({ "xprv9zFnWC6h2cLgpmSA46vutJzBcfJ8yaJGg8cX1e5StJh45BBciYTRXSd25UEPVuesF9yog62tGAQtHjXajPPdbRCHuWS6T8XA2ECKADdw4Ef" });
     
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAx...");
+    BX_REQUIRE_OUTPUT("xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAxn8L39njGVyuoseXzU6rcxFLJ8HFsTjSyQbLYnMpCqE2VbFWc\n");
 }
 ```
 
 #### Standard and File Input
 
-In most commands the option is available to load the primary input parameter via [STDIN](http://wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29). In certain cases, such as for transactions, the input value can optionally be loaded from a file by specifying the path on the command line. In such cases, when the path is missing or set to  `-`, the input will instead be read from STDIN. Multi-valued inputs are supported in file formats and STDIN by treating any [whitespace](http://en.wikipedia.org/wiki/Whitespace_character) as a separator.
+In most commands the option is available to load the primary input parameter via [STDIN](http://wikipedia.org/wiki/Standard_streams#Standard_input_.28stdin.29). In many cases the input value can optionally be read from STDIN. Multi-valued inputs supported in STDIN treat any [whitespace](http://en.wikipedia.org/wiki/Whitespace_character) as a separator.
 
 #### Configuration Settings
 
@@ -368,7 +368,7 @@ BX uses Boost's [program_options](http://www.boost.org/doc/libs/1_50_0/doc/html/
   </configuration>
   
   <configuration section="testnet">
-    <setting name="url" type="uri" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
+    <setting name="url" type="uri"  default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
   </configuration>
 ```
 The implementation supports a two level hierarchy of settings using "sections" to group settings, similar to an `.ini` file:
@@ -419,9 +419,9 @@ Commands also return an enumerated integer value which is passed directly to the
 
 |value |meaning        |
 |------|---------------|
-|-1    |failure        |
-|0     |success or true|
-|1     |false          |
+|  -1  |failure        |
+|   0  |success or true|
+|   1  |false          |
 
 #### Error Stream
 
@@ -429,11 +429,9 @@ The error stream is intended for human consumption, it is localized and not sche
 
 #### Output Stream
 
-All commands have a default output format. Typically this is either the [Base 10](http://en.wikipedia.org/wiki/Decimal), [Base 16](ikipedia.org/wiki/Hexadecimal) or [Base 58](http://en.wikipedia.org/wiki/Base58) standard [binary-to-text](http://en.wikipedia.org/wiki/Binary-to-text_encoding) encoding.
+Many commands return values encoded in the wire serialization defined by the [Bitcoin protocol](https://en.bitcoin.it/wiki/Protocol_specification). Typically this is either the [Base 10](http://en.wikipedia.org/wiki/Decimal), [Base 16](http://en.wikipedia.org/wiki/Hexadecimal) or [Base 58](http://en.wikipedia.org/wiki/Base58) standard [binary-to-text](http://en.wikipedia.org/wiki/Binary-to-text_encoding) encoding. This is referred to as **native** encoding.
 
-Several commands return complex types. Some of these types have a wire serialization defined by the [Bitcoin protocol](https://en.bitcoin.it/wiki/Protocol_specification). This serialization is referred to as the **native** format.
-
-Commands that return complex objects support serializations to **xml**, **json** and **info** as defined by Boost's [property_tree](http://www.boost.org/doc/libs/1_41_0/doc/html/boost_propertytree/parsers.html), and **native** as applicable. The default format is always **native** when applicable and otherwise **info**. 
+Many commands that return complex objects support serializations to **xml**, **json** and **info** as defined by Boost's [property_tree](http://www.boost.org/doc/libs/1_41_0/doc/html/boost_propertytree/parsers.html). The default format is always **info**. The info and json formats escape values according to the [JSON standard](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 
 Commands with complex outputs define the `format` option:
 ```xml
@@ -453,7 +451,7 @@ wrapper
     version 0
 }
 ```
-> Outputs from certain commands can be passed directly into others. However, commands that accept complex types as arguments require the **native** format.
+> Outputs from certain commands can be passed directly into others. However, commands that accept complex types as arguments require **native** encoding.
 
 #### Whitespace
 
@@ -478,8 +476,7 @@ These command lines are equivalent:
 ```sh
 $ bx address-decode --help
 $ bx help address-decode
-``` 
-
+```
 The help command also supports the `--help` option:
 ```sh
 $ bx help --help
