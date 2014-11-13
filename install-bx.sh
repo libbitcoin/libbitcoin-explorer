@@ -23,11 +23,11 @@
 # The default build directory.
 BUILD_DIR="bx-build"
 
-# Boost v1.49
+# Boost v1.49 (minimum)
 BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.49.0/boost_1_49_0.tar.bz2/download"
 BOOST_ARCHIVE="boost_1_49_0.tar.bz2"
 
-# GMP v6.0.0a
+# GMP v6.0.0a (5.0.0 minimum)
 GMP_URL="https://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.bz2"
 GMP_ARCHIVE="gmp-6.0.0a.tar.bz2"
 
@@ -137,9 +137,9 @@ done
 
 # Map standard options to Boost link option.
 BOOST_LINK="static,shared"
-if [[ $DISABLE_STATIC == "yes" ]]; then
+if [[ $DISABLE_STATIC ]]; then
     BOOST_LINK="shared"
-elif [[ $DISABLE_SHARED == "yes" ]]; then
+elif [[ $DISABLE_SHARED ]]; then
     BOOST_LINK="static"
 fi
 BOOST_OPTIONS="link=$BOOST_LINK $BOOST_OPTIONS"
@@ -415,11 +415,11 @@ build_library()
     build_from_github zeromq czmq master $PARALLEL "$@" $CZMQ_OPTIONS
     build_from_github zeromq czmqpp master $PARALLEL "$@"
     build_from_github bitcoin secp256k1 master $PARALLEL "$@" $SECP256K1_OPTIONS
-    build_from_github evoskuil libbitcoin version2 $PARALLEL "$@" $BITCOIN_OPTIONS
-    build_from_github evoskuil protobuf 2.6.0 $SEQUENTIAL "$@"
-    build_from_github evoskuil libbitcoin-protocol version2 $PARALLEL "$@" $BITCOIN_OPTIONS
-    build_from_github evoskuil libbitcoin-client version2 $PARALLEL "$@" $BITCOIN_OPTIONS
-    build_from_travis evoskuil libbitcoin-explorer version2 $PARALLEL "$@" $BITCOIN_PRIMARY_OPTIONS
+    build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@" $BITCOIN_OPTIONS
+    build_from_github libbitcoin protobuf 2.6.0 $SEQUENTIAL "$@"
+    build_from_github libbitcoin libbitcoin-protocol version2 $PARALLEL "$@" $BITCOIN_OPTIONS
+    build_from_github libbitcoin libbitcoin-client version2 $PARALLEL "$@" $BITCOIN_OPTIONS
+    build_from_travis libbitcoin libbitcoin-explorer version2 $PARALLEL "$@" $BITCOIN_PRIMARY_OPTIONS
 
     popd
 }
