@@ -14,7 +14,7 @@ before_install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
   
 install:
-  # Get GNU Multiprecision Arithmetic Library (v5.0.2 on Travis, we prefer 6.0.0).
+  # Get GNU Multiprecision Arithmetic Library (v5.0.2 on Travis).
   # - sudo apt-get -qq install libgmp-dev
 
   # Get Boost (v1.46 on Travis, we require 1.49).

@@ -38,7 +38,7 @@
   
   <configuration section="testnet">
     <setting name="url" type="uri"  default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
-  </configuration>  
+  </configuration>
   
   <!-- General resources. -->
   
@@ -466,7 +466,6 @@
   </command>
   
   <command symbol="tx-decode" typeX="transaction" category="TRANSACTION" description="Decode a Base16 transaction.">
-    <!-- The code generator does not yet have the ability to set default values requiring quotes, so native is currently the default. -->
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
   </command>
