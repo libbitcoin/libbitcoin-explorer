@@ -237,7 +237,7 @@ make_current_directory()
     ./autogen.sh
     configure_options "$@"
     make_silent $JOBS
-    make install
+    sudo make install
 
     # Use ldconfig only in case of non --prefix installation on Linux.    
     if [[ ($OS == "Linux") && !($PREFIX)]]; then
@@ -324,7 +324,7 @@ build_from_tarball_gmp()
     # GMP does not provide autogen.sh or package config.
     configure_options "$@"
     make_silent $JOBS
-    make install
+    sudo make install
 
     popd
 }
