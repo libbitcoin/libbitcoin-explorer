@@ -210,7 +210,7 @@ display_linkage()
     if [[ $OS == "Darwin" ]]; then
         otool -L $LIBRARY
     else
-        ldd --verbose $LIBRARY
+        ldd --verbose `which $LIBRARY`
     fi
 }
 
