@@ -35,7 +35,7 @@ console_result bitcoin256::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& data = get_base16_argument();
 
-    const auto hash = bitcoin_hash(data);
+    const auto hash = bitcoin_hash((bc::data_chunk)data);
 
     output << base16(hash) << std::endl;
     return console_result::okay;

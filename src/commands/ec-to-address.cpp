@@ -37,7 +37,7 @@ console_result ec_to_address::invoke(std::ostream& output, std::ostream& error)
     const auto version = get_version_option();
 
     // Get the public key's payment address.
-    const auto ripemd160 = bitcoin_short_hash(point);
+    const auto ripemd160 = bitcoin_short_hash((bc::data_chunk)point);
 
     // TESTNET VERSION MAY REQUIRE RECOMPILE
     payment_address pay_address(version, ripemd160);

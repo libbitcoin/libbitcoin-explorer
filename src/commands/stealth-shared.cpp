@@ -48,7 +48,7 @@ console_result stealth_shared::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    const auto hash = sha256_hash(product);
+    const auto hash = sha256_hash((bc::data_chunk)product);
 
     output << base16(hash) << std::endl;
     return console_result::okay;
