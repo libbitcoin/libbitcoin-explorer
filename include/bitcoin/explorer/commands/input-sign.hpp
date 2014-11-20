@@ -68,7 +68,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_INPUT_SIGN_SHORT_NONCE \
-    "The nonce is less than 128 bits long."
+    "The optional nonce is less than 128 bits long."
 #define BX_INPUT_SIGN_INDEX_OUT_OF_RANGE \
     "The index does not refer to an existing input."
 #define BX_INPUT_SIGN_FAILED \
@@ -178,8 +178,8 @@ public:
         )
         (
             "nonce,n",
-            value<primitives::base16>(&option_.nonce)->required(),
-            "The Base16 random value used to seed a signing nonce. Must be at least 128 bits in length."
+            value<primitives::base16>(&option_.nonce),
+            "The Base16 random value used to seed a signing nonce. Must be at least 128 bits in length. If not specified the deterministic signature algorithm is used."
         )
         (
             "EC_PRIVATE_KEY",

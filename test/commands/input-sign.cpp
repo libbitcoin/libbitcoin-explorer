@@ -47,6 +47,23 @@ BOOST_AUTO_TEST_SUITE(input_sign__invoke)
 #define INPUT_SIGN_TX_B "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970000000000ffffffff0000000000"
 #define INPUT_SIGN_SIGNATURE_B "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2022013d279c191f296349f59ba1cb6e17ea1f0db8f80a26714ef573e887818d544af01"
 
+// This is not yet implemented in libbitcoin, should be soon.
+#define INPUT_SIGN_SIGNATURE_DETERMINISTIC ""
+
+// Until that time and until we update this test vector, this determinstic test will fail.
+//BOOST_AUTO_TEST_CASE(input_sign__invoke__deterministic_single_input_single_output__okay_output)
+//{
+//    BX_DECLARE_COMMAND(input_sign);
+//    command.set_sign_type_option({ "all" });
+//    //command.set_nonce_option({});
+//    command.set_transaction_argument({ INPUT_SIGN_TX_A });
+//    command.set_prevout_script_argument({ INPUT_SIGN_PREVOUT_A });
+//    command.set_ec_private_key_argument({ INPUT_SIGN_PRIVATE_KEY_A });
+//    BX_REQUIRE_OKAY(command.invoke(output, error));
+//    auto foo = output.str();
+//    BX_REQUIRE_OUTPUT(INPUT_SIGN_SIGNATURE_DETERMINISTIC "\n");
+//}
+
 BOOST_AUTO_TEST_CASE(input_sign__invoke__single_input_single_output__okay_output)
 {
     BX_DECLARE_COMMAND(input_sign);
