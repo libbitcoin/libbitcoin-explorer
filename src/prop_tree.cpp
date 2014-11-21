@@ -368,7 +368,7 @@ ptree prop_list(const stealth& stealth_address)
 
     ptree tree;
     tree.put("encoded", stealth_address);
-    tree.put("prefix", base2(address.get_prefix()));
+    tree.put("prefix", address.get_prefix());
     tree.put("scan_public_key", ec_public(address.get_scan_pubkey()));
     tree.put("signatures", address.get_signatures());
     tree.add_child("spend", spend_keys_prop_values);

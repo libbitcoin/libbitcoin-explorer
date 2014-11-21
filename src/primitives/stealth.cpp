@@ -37,6 +37,26 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
+bc::stealth_prefix get_libbitcoin_prefix(const bitset& source)
+{
+    // Size is constrained by BX_FETCH_STEALTH_PREFIX_TOO_LONG below.
+    BITCOIN_ASSERT(source.size() <= stealth_address::max_prefix_bits);
+
+    bc::stealth_prefix prefix(source.size(), source.to_ulong());
+    return prefix;
+}
+
+bc::client::stealth_prefix get_client_prefix(const bitset& source)
+{
+    // Size is constrained by BX_FETCH_STEALTH_PREFIX_TOO_LONG below.
+    BITCOIN_ASSERT(source.size() <= stealth_address::max_prefix_bits);
+
+    bc::client::stealth_prefix prefix;
+    prefix.number_bits = static_cast<uint8_t>(source.size());
+    prefix.bitfield = source.to_ulong();
+    return prefix;
+}
+
 stealth::stealth()
     : value_()
 {
