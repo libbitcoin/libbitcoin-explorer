@@ -48,10 +48,14 @@ public:
 
     /**
      * Connect to the specified server address.
-     * @param[in]  address  The server address.
-     * @return              The connection status, negative for failure.
+     * @param[in]  address              The server address.
+     * @param[in]  certificate_filename The certificate filename.
+     * @param[in]  server_public_key    The server public key.
+     * @return                          The connection status, negative for failure.
      */
-    BCX_API virtual int connect(const std::string& address);
+    BCX_API virtual int connect(const std::string& address,
+        const std::string& certificate_filename=std::string(),
+        const std::string& server_public_key=std::string());
 
     /**
      * Get the value of the codec property.
@@ -75,6 +79,7 @@ public:
 private:
 
     czmqpp::socket socket_;
+    czmqpp::certificate certificate_;
     std::shared_ptr<client::socket_stream> stream_;
     std::shared_ptr<client::obelisk_codec> codec_;
 };

@@ -32,6 +32,10 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
+BCX_API bc::stealth_prefix get_libbitcoin_prefix(const bitset& source);
+
+BCX_API bc::client::stealth_prefix get_client_prefix(const bitset& source);
+
 /**
  * Serialization helper to convert between a stealth address and a base16 string.
  */

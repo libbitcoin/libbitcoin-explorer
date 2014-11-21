@@ -42,9 +42,31 @@ obelisk_client::obelisk_client(czmqpp::context& context,
         retries);
 }
 
-int obelisk_client::connect(const std::string& address)
+int obelisk_client::connect(const std::string& address,
+        const std::string& certificate_filename,
+        const std::string& server_public_key)
 {
-    return socket_.connect(address);
+    int result = (server_public_key.empty() && certificate_filename.empty()) ? 0 : -1;
+
+    if (!server_public_key.empty() && !certificate_filename.empty())
+    {
+        certificate_.reset(czmqpp::load_cert(certificate_filename));
+        certificate_.apply(socket_);
+        socket_.set_curve_serverkey(server_public_key);
+        result = 0;
+    }
+
+    if (result >= 0)
+    {
+        result = socket_.connect(address);
+    }
+
+    if (result >= 0)
+    {
+        socket_.set_linger(0);
+    }
+
+    return result;
 }
 
 std::shared_ptr<obelisk_codec> obelisk_client::get_codec()
