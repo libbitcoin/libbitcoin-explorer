@@ -22,6 +22,7 @@ libbitcoin-explorer.pc
 .cproject
 .project
 
+/bx
 /obj/
 /bin/
 /bx-build/

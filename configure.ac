@@ -93,6 +93,16 @@ AC_ARG_WITH([tests],
     [with_tests=yes])
 AC_MSG_RESULT($with_tests)
 
+# Support --with-bash-completion-dir option
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING(--with-bash-completion-dir option)
+AC_ARG_WITH([bash-completion-dir],
+    AS_HELP_STRING([--with-bash-completion-dir[=PATH]],
+        [Install the bash auto-completion script in this directory. @<:@default=yes@:>@]),
+    [],
+    [with_bash_completion_dir=yes])
+AC_MSG_RESULT($with_bash_completion_dir)
+
 # Require boost min version.
 #------------------------------------------------------------------------------
 # Boost does not publish package configs but has m4 tests.
@@ -132,6 +142,19 @@ AM_COND_IF([WITH_TESTS], [AC_MSG_NOTICE([WITH_TESTS defined])])
 AM_CONDITIONAL([SET_BOOST_TEST_DYN_LINK], [test x$enable_shared != xno])
 AM_COND_IF([SET_BOOST_TEST_DYN_LINK],
     [AC_MSG_NOTICE([BOOST_TEST_DYN_LINK defined])])
+
+# Make use of bash completion if $with_bash_completion_dir is set.
+#------------------------------------------------------------------------------
+if test "x$with_bash_completion_dir" = "xyes"; then
+    PKG_CHECK_MODULES([BASH_COMPLETION], [bash-completion >= 2.0],
+        [BASH_COMPLETION_DIR="`pkg-config --variable=completionsdir bash-completion`"],
+        [BASH_COMPLETION_DIR="$datadir/bash-completion/completions"])
+else
+    BASH_COMPLETION_DIR="$with_bash_completion_dir"
+fi
+
+AC_SUBST([BASH_COMPLETION_DIR])
+AM_CONDITIONAL([ENABLE_BASH_COMPLETION],[test "x$with_bash_completion_dir" != "xno"])
 
 # Set warning levels.
 #------------------------------------------------------------------------------

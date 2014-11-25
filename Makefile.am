@@ -10,6 +10,12 @@ doc_DATA = README INSTALL COPYING
 #
 pkgconfig_DATA = libbitcoin-explorer.pc
 
+# bash completion
+if ENABLE_BASH_COMPLETION
+bashcompletiondir = $(BASH_COMPLETION_DIR)
+dist_bashcompletion_DATA = data/bx
+endif
+
 # look for macros in the m4 subdirectory
 ACLOCAL_AMFLAGS = -I m4
 
