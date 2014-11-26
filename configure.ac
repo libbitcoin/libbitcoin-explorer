@@ -53,10 +53,10 @@ AC_ARG_VAR([PKG_CONFIG_PATH], "Additional directories for package discovery.")
 #------------------------------------------------------------------------------
 PKG_PROG_PKG_CONFIG
 AC_MSG_CHECKING(--with-pkgconfigdir option)
-AC_ARG_WITH([pkgconfigdir], 
-    AS_HELP_STRING([--with-pkgconfigdir=PATH], 
+AC_ARG_WITH([pkgconfigdir],
+    AS_HELP_STRING([--with-pkgconfigdir=PATH],
         [Path to pkgconfig directory.]),
-    [pkgconfigdir=$withval], 
+    [pkgconfigdir=$withval],
     [pkgconfigdir=${libdir}/pkgconfig])
 AC_MSG_RESULT($pkgconfigdir)
 AC_SUBST([pkgconfigdir])
@@ -65,9 +65,9 @@ AC_SUBST([pkgconfigdir])
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--enable-debug option)
 AC_ARG_ENABLE([debug],
-    AS_HELP_STRING([--enable-debug], 
+    AS_HELP_STRING([--enable-debug],
         [Compile with debug assertions.]),
-    [enable_debug=$enableval],
+    [],
     [enable_debug=no])
 AC_MSG_RESULT($enable_debug)
 AS_IF([test x$enable_debug != xno], AC_DEFINE([DEBUG]))
@@ -76,9 +76,9 @@ AS_IF([test x$enable_debug != xno], AC_DEFINE([DEBUG]))
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--enable-testnet option)
 AC_ARG_ENABLE([testnet],
-    AS_HELP_STRING([--enable-testnet], 
+    AS_HELP_STRING([--enable-testnet],
         [Compile for testnet.]),
-    [enable_testnet=$enableval],
+    [],
     [enable_testnet=no])
 AC_MSG_RESULT($enable_testnet)
 AS_IF([test x$enable_testnet != xno], AC_DEFINE([ENABLE_TESTNET]))
@@ -87,9 +87,9 @@ AS_IF([test x$enable_testnet != xno], AC_DEFINE([ENABLE_TESTNET]))
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--with-tests option)
 AC_ARG_WITH([tests],
-    AS_HELP_STRING([--with-tests], 
+    AS_HELP_STRING([--with-tests],
         [Compile with unit tests.]),
-    [with_tests=$withval],
+    [],
     [with_tests=yes])
 AC_MSG_RESULT($with_tests)
 
@@ -194,7 +194,7 @@ AX_CHECK_COMPILE_FLAG([-fstack-protector-all],
         [CXXFLAGS="$CXXFLAGS -fstack-protector-all"])])
 
 # Set unconditional preprocessor defines.
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 AC_DEFINE(BOOST_NO_EXCEPTIONS)
 AC_DEFINE(BOOST_EXCEPTION_DISABLE)
 
