@@ -34,7 +34,7 @@ console_result stealth_encode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const bitset& prefix = get_prefix_option();
+    const auto& prefix = get_prefix_option();
     const auto& scan_pubkey = get_scan_pubkey_argument();
     const auto& spend_pubkeys = get_spend_pubkeys_argument();
     const auto& signatures = get_signatures_option();
@@ -64,11 +64,7 @@ console_result stealth_encode::invoke(std::ostream& output,
     }
 
     // TESTNET WORKS WITHOUT RECOMPILE
-    stealth address(
-        bc::explorer::primitives::get_libbitcoin_prefix(prefix),
-        scan_pubkey,
-        spend_pubkeys,
-        signatures,
+    stealth address(prefix, scan_pubkey, spend_pubkeys, signatures,
         network == "testnet");
 
     output << address << std::endl;

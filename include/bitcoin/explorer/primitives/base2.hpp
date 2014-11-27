@@ -53,7 +53,7 @@ public:
     /**
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API base2(const bitset& value);
+    BCX_API base2(const bc::stealth_prefix& value);
 
     /**
      * Copy constructor.
@@ -62,10 +62,21 @@ public:
     BCX_API base2(const base2& other);
 
     /**
+     * Get number of bits in value.
+     */
+    BCX_API size_t size() const;
+
+    /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bitset&() const;
+    BCX_API operator const bc::stealth_prefix&() const;
+
+    /**
+     * Overload cast to bc::client::stealth_prefix.
+     * @return  This object's value cast to bc::client::stealth_prefix.
+     */
+    BCX_API operator bc::client::stealth_prefix() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -90,7 +101,7 @@ private:
     /**
      * The state of this object.
      */
-    bitset value_;
+    bc::stealth_prefix value_;
 };
 
 } // namespace explorer
