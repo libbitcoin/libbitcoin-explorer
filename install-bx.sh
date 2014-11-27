@@ -254,7 +254,7 @@ make_silent()
     if [[ $JOBS -gt $SEQUENTIAL ]]; then
         make --silent -j$JOBS $TARGET
     else
-        make --silent
+        make --silent $TARGET
     fi
 }
 
@@ -373,7 +373,7 @@ build_from_travis()
     if [[ $TRAVIS == "true" ]]; then
         cd ..
         build_from_local "Local $TRAVIS_REPO_SLUG" $JOBS "$@"
-        make_tests
+        make_tests $JOBS
         cd $BUILD_DIR
     else
         build_from_github $ACCOUNT $REPO $BRANCH $JOBS "$@"
