@@ -90,8 +90,7 @@ std::istream& operator>>(std::istream& input, base2& argument)
     if (!is_base2(binary))
         BOOST_THROW_EXCEPTION(invalid_option_value(binary));
 
-    input.seekg(0);
-    input >> argument.value_;
+    std::stringstream(binary) >> argument.value_;
 
     return input;
 }
