@@ -172,6 +172,9 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__short_only__sets_limit_0)
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), 'm');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "");
+    // A boost 1.49 bug causes this test failure:
+    // parameter.get_format_name() == "-m" failed [-m [ -- ] != -m]
+    // But this behavior is not critical to operations, so we overlook it.
     BOOST_REQUIRE_EQUAL(parameter.get_format_name(), "-m");
     BOOST_REQUIRE_EQUAL(parameter.get_format_parameter(), "");
     BOOST_REQUIRE_EQUAL(parameter.get_description(), "Short name only.");
