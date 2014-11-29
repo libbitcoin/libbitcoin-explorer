@@ -226,8 +226,8 @@ ptree prop_list(const tx_output_type& tx_output)
     if (extract_stealth_info(stealth, tx_output.script))
     {
         tree.put("stealth.bit_field", stealth.bitfield);
-        tree.put("stealth.ephemeral_public_key",
-            ec_public(stealth.ephem_pubkey));
+        tree.put("stealth.ephemeral_public_key_hash",
+            btc256(stealth.ephem_pubkey_hash));
     }
 
     tree.put("value", tx_output.value);

@@ -44,8 +44,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 
 // Write out the transaction hashes of *potential* matches.
 static void handle_callback(callback_state& state,
-    const bc::stealth_prefix& prefix,
-    const client::stealth_list& row_list)
+    const bc::stealth_prefix& prefix, const client::stealth_list& row_list)
 {
     state.output(prop_tree(row_list));
 }
@@ -56,9 +55,7 @@ static void fetch_stealth_from_prefix(obelisk_client& client,
     // Do not pass the prefix by reference here.
     auto on_done = [&state, prefix](const client::stealth_list& list)
     {
-        handle_callback(state,
-                bc::explorer::primitives::get_libbitcoin_prefix(prefix),
-                list);
+        handle_callback(state, prefix, list);
     };
 
     auto on_error = [&state](const std::error_code& error)
@@ -66,8 +63,7 @@ static void fetch_stealth_from_prefix(obelisk_client& client,
         handle_error(state, error);
     };
 
-    auto query_prefix = bc::explorer::primitives::get_client_prefix(prefix);
-    client.get_codec()->fetch_stealth(on_error, on_done, query_prefix, from_height);
+    client.get_codec()->fetch_stealth(on_error, on_done, prefix, from_height);
 }
 
 console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
@@ -77,7 +73,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto timeout = get_general_wait_setting();
     const auto height = get_height_option();
     const auto& encoding = get_format_option();
-    const bitset& prefix = get_prefix_argument();
+    const auto& prefix = get_prefix_argument();
     const auto& server = if_else(get_general_network_setting() == "testnet",
         get_testnet_url_setting(), get_mainnet_url_setting());
 

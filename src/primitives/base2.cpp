@@ -43,16 +43,9 @@ base2::base2(const std::string& binary)
     std::stringstream(binary) >> *this;
 }
 
-base2::base2(const bitset& value)
+base2::base2(const stealth_prefix& value)
+    : value_(value)
 {
-    if (value.size() > stealth_address::max_prefix_bits)
-    {
-        std::string binary;
-        boost::to_string(value, binary);
-        BOOST_THROW_EXCEPTION(invalid_option_value(binary));
-    }
-
-    value_ = value;
 }
 
 base2::base2(const base2& other)
@@ -60,9 +53,33 @@ base2::base2(const base2& other)
 {
 }
 
-base2::operator const bitset&() const
+size_t base2::size() const
+{
+    return value_.size();
+}
+
+base2::operator const stealth_prefix&() const
 {
     return value_; 
+}
+
+base2::operator client::stealth_prefix() const
+{
+    client::stealth_prefix client_prefix{ 0, 0 };
+
+    // This isn't good, but not much else we can do here, guard externally.
+    if (value_.size() > stealth_address::max_prefix_bits)
+        return client_prefix;
+
+    client_prefix.number_bits = static_cast<uint8_t>(value_.size());
+
+    // This copy is inefficient but this is legacy support as 
+    // bc::stealth_prefix::uint32() has been deprecated.
+    auto blocks = value_.blocks();
+    client_prefix.bitfield = from_little_endian<uint32_t>(blocks.begin(),
+        blocks.end());
+
+    return client_prefix;
 }
 
 std::istream& operator>>(std::istream& input, base2& argument)
@@ -73,18 +90,15 @@ std::istream& operator>>(std::istream& input, base2& argument)
     if (!is_base2(binary))
         BOOST_THROW_EXCEPTION(invalid_option_value(binary));
 
-    bitset bits(binary);
+    input.seekg(0);
+    input >> argument.value_;
 
-    // Avoids setting the member value if there is an error.
-    argument.value_.swap(bits);
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const base2& argument)
 {
-    std::string binary;
-    boost::to_string(argument.value_, binary);
-    output << binary;
+    output << argument.value_;
     return output;
 }
 
