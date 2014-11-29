@@ -117,6 +117,5 @@ BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_second_tx_info__okay_output)
     BX_REQUIRE_OUTPUT(FETCH_TX_SECOND_TX_INFO);
 }
 
-
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
