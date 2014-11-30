@@ -196,11 +196,6 @@ AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
 
 # This cleans up for protobuf headers.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-nested-anon-types],
-    [CXXFLAGS="$CXXFLAGS -Wno-nested-anon-types"])
-
-# This cleans up for protobuf headers.
-#------------------------------------------------------------------------------
 AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
     [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
 
