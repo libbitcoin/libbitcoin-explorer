@@ -43,7 +43,7 @@ base2::base2(const std::string& binary)
     std::stringstream(binary) >> *this;
 }
 
-base2::base2(const stealth_prefix& value)
+base2::base2(const binary_type& value)
     : value_(value)
 {
 }
@@ -58,7 +58,7 @@ size_t base2::size() const
     return value_.size();
 }
 
-base2::operator const stealth_prefix&() const
+base2::operator const bc::binary_type&() const
 {
     return value_; 
 }
@@ -74,7 +74,7 @@ base2::operator client::stealth_prefix() const
     client_prefix.number_bits = static_cast<uint8_t>(value_.size());
 
     // This copy is inefficient but this is legacy support as 
-    // bc::stealth_prefix::uint32() has been deprecated.
+    // bc::binary_type::uint32() has been deprecated.
     auto blocks = value_.blocks();
     client_prefix.bitfield = from_little_endian<uint32_t>(blocks.begin(),
         blocks.end());

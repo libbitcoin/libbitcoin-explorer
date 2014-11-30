@@ -44,7 +44,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 
 // Write out the transaction hashes of *potential* matches.
 static void handle_callback(callback_state& state,
-    const bc::stealth_prefix& prefix, const client::stealth_list& row_list)
+    const bc::binary_type& prefix, const client::stealth_list& row_list)
 {
     state.output(prop_tree(row_list));
 }

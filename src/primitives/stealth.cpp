@@ -50,7 +50,7 @@ stealth::stealth(const stealth_address& address)
 {
 }
 
-stealth::stealth(const stealth_prefix& prefix, const ec_public& scan_key,
+stealth::stealth(const bc::binary_type& prefix, const ec_public& scan_key,
     const std::vector<ec_public>& spend_keys, uint8_t signatures, bool testnet)
 {
     // Normalize signatures between 1 and spend_keys.size().
