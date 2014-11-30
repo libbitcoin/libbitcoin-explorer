@@ -53,7 +53,7 @@ public:
     /**
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API base2(const bc::stealth_prefix& value);
+    BCX_API base2(const bc::binary_type& value);
 
     /**
      * Copy constructor.
@@ -70,7 +70,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bc::stealth_prefix&() const;
+    BCX_API operator const bc::binary_type&() const;
 
     /**
      * Overload cast to bc::client::stealth_prefix.
@@ -101,7 +101,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::stealth_prefix value_;
+    bc::binary_type value_;
 };
 
 } // namespace explorer
