@@ -1148,6 +1148,12 @@ doc_DATA = README INSTALL COPYING
 #
 pkgconfig_DATA = libbitcoin-explorer.pc
 
+# bash completion
+if ENABLE_BASH_COMPLETION
+bashcompletiondir = \$(BASH_COMPLETION_DIR)
+dist_bashcompletion_DATA = data/bx
+endif
+
 # look for macros in the m4 subdirectory
 ACLOCAL_AMFLAGS = -I m4
 
@@ -1340,6 +1346,35 @@ test_libbitcoin_explorer_test_LDADD = \\
     ${bitcoin_client_LIBS}
 
 endif
+
+.##############################################################################
+.echo "Generating data/bx..."
+.output "../data/bx"
+#
+#  Command-line completion for bx
+#
+_bx()
+{
+    local current="${COMP_WORDS[COMP_CWORD]}"
+    local commands="
+.for command by symbol
+        $(symbol:)
+.endfor
+    "
+
+    if [ $COMP_CWORD -eq 1 ]; then
+        COMPREPLY=( \$(compgen -W "$commands" -- $current) )
+        return
+    fi
+
+    local command=COMP_WORDS[1]
+    local options="--config --help -c -h"
+
+    # TODO: Generate per-command options here
+
+    COMPREPLY=( \$(compgen -W "$options" -- $current) )
+}
+complete -F _bx bx
 
 .##############################################################################
 .echo "Generating builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj..."

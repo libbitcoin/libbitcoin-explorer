@@ -53,10 +53,10 @@ AC_ARG_VAR([PKG_CONFIG_PATH], "Additional directories for package discovery.")
 #------------------------------------------------------------------------------
 PKG_PROG_PKG_CONFIG
 AC_MSG_CHECKING(--with-pkgconfigdir option)
-AC_ARG_WITH([pkgconfigdir], 
-    AS_HELP_STRING([--with-pkgconfigdir=PATH], 
+AC_ARG_WITH([pkgconfigdir],
+    AS_HELP_STRING([--with-pkgconfigdir=PATH],
         [Path to pkgconfig directory.]),
-    [pkgconfigdir=$withval], 
+    [pkgconfigdir=$withval],
     [pkgconfigdir=${libdir}/pkgconfig])
 AC_MSG_RESULT($pkgconfigdir)
 AC_SUBST([pkgconfigdir])
@@ -65,9 +65,9 @@ AC_SUBST([pkgconfigdir])
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--enable-debug option)
 AC_ARG_ENABLE([debug],
-    AS_HELP_STRING([--enable-debug], 
+    AS_HELP_STRING([--enable-debug],
         [Compile with debug assertions.]),
-    [enable_debug=$enableval],
+    [],
     [enable_debug=no])
 AC_MSG_RESULT($enable_debug)
 AS_IF([test x$enable_debug != xno], AC_DEFINE([DEBUG]))
@@ -76,9 +76,9 @@ AS_IF([test x$enable_debug != xno], AC_DEFINE([DEBUG]))
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--enable-testnet option)
 AC_ARG_ENABLE([testnet],
-    AS_HELP_STRING([--enable-testnet], 
+    AS_HELP_STRING([--enable-testnet],
         [Compile for testnet.]),
-    [enable_testnet=$enableval],
+    [],
     [enable_testnet=no])
 AC_MSG_RESULT($enable_testnet)
 AS_IF([test x$enable_testnet != xno], AC_DEFINE([ENABLE_TESTNET]))
@@ -87,11 +87,21 @@ AS_IF([test x$enable_testnet != xno], AC_DEFINE([ENABLE_TESTNET]))
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--with-tests option)
 AC_ARG_WITH([tests],
-    AS_HELP_STRING([--with-tests], 
+    AS_HELP_STRING([--with-tests],
         [Compile with unit tests.]),
-    [with_tests=$withval],
+    [],
     [with_tests=yes])
 AC_MSG_RESULT($with_tests)
+
+# Support --with-bash-completion-dir option
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING(--with-bash-completion-dir option)
+AC_ARG_WITH([bash-completion-dir],
+    AS_HELP_STRING([--with-bash-completion-dir[=PATH]],
+        [Install the bash auto-completion script in this directory. @<:@default=yes@:>@]),
+    [],
+    [with_bash_completion_dir=yes])
+AC_MSG_RESULT($with_bash_completion_dir)
 
 # Require boost min version.
 #------------------------------------------------------------------------------
@@ -132,6 +142,19 @@ AM_COND_IF([WITH_TESTS], [AC_MSG_NOTICE([WITH_TESTS defined])])
 AM_CONDITIONAL([SET_BOOST_TEST_DYN_LINK], [test x$enable_shared != xno])
 AM_COND_IF([SET_BOOST_TEST_DYN_LINK],
     [AC_MSG_NOTICE([BOOST_TEST_DYN_LINK defined])])
+
+# Make use of bash completion if $with_bash_completion_dir is set.
+#------------------------------------------------------------------------------
+if test "x$with_bash_completion_dir" = "xyes"; then
+    PKG_CHECK_MODULES([BASH_COMPLETION], [bash-completion >= 2.0],
+        [BASH_COMPLETION_DIR="`pkg-config --variable=completionsdir bash-completion`"],
+        [BASH_COMPLETION_DIR="$datadir/bash-completion/completions"])
+else
+    BASH_COMPLETION_DIR="$with_bash_completion_dir"
+fi
+
+AC_SUBST([BASH_COMPLETION_DIR])
+AM_CONDITIONAL([ENABLE_BASH_COMPLETION],[test "x$with_bash_completion_dir" != "xno"])
 
 # Set warning levels.
 #------------------------------------------------------------------------------
@@ -194,7 +217,7 @@ AX_CHECK_COMPILE_FLAG([-fstack-protector-all],
         [CXXFLAGS="$CXXFLAGS -fstack-protector-all"])])
 
 # Set unconditional preprocessor defines.
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 AC_DEFINE(BOOST_NO_EXCEPTIONS)
 AC_DEFINE(BOOST_EXCEPTION_DISABLE)
 
