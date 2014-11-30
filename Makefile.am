@@ -344,11 +344,6 @@ check_PROGRAMS = test/libbitcoin_explorer_test
 test_libbitcoin_explorer_test_CPPFLAGS = \
     -I${srcdir}/include \
     ${bitcoin_client_CFLAGS}
-    
-if SET_BOOST_TEST_DYN_LINK
-test_libbitcoin_explorer_test_CPPFLAGS += \
-    -DBOOST_TEST_DYN_LINK
-endif
 
 test_libbitcoin_explorer_test_SOURCES = \
     test/address.cpp \

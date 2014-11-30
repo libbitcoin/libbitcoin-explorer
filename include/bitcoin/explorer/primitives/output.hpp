@@ -35,60 +35,6 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Build the output script for the specified public key hash.
- * @param[in]  pubkey_hash  The pubkey hash used to generate the script.
- * @return                  The resulting script.
- */
-static script_type build_pubkey_hash_script(
-    const short_hash& pubkey_hash);
-
-/**
- * Build the output script for the specified script hash.
- * @param[in]  script_hash  The script hash used to generate the script.
- * @return                  The resulting script.
- */
-static script_type build_script_hash_script(
-    const short_hash& script_hash);
-
-/**
- * Build the output script for the specified address.
- * This allows the input to be a single address as a shorthand for a 
- * script which is generated here deterministically from the address.
- * @param[out] script   The resulting script.
- * @param[in]  address  The address from which the script is generated.
- * @return              True if successful.
- */
-static bool build_output_script(script_type& script,
-    const payment_address& address);
-
-/**
- * Build the stealth metadata output.
- * @param[in]  ephemeral_secret  The stealth payment ephemeral secret.
- * @return                       The stealth metadata output.
- */
-static tx_output_type build_stealth_meta_output(
-    const ec_secret& ephemeral_secret);
-
-/**
- * Generate a new secret from the third token (seed).
- * @param[in]  tokens   The tokens to parse (at least two).
- * @return              The new elliptic curve secret or null_hash.
- */
-static ec_secret generate_private_key(
-    const std::vector<std::string>& tokens);
-
-/**
- * Parse tokens into the transaction outputs. Throws if output is invalid.
- * The list of outputs is cleared before processing.
- * @param[out] outputs  The transaction outputs to populate.
- * @param[in]  tokens   The pre-validated two or three tokens to parse.
- * @return              The pay-to address or script.
- */
-static std::string parse_outputs(
-    std::vector<tx_output_type>& outputs,
-    const std::vector<std::string>& tokens);
-
-/**
  * Serialization helper to convert between a base58-string:number and 
  * a vector of tx_output_type.
  */
