@@ -128,6 +128,12 @@ BITCOIN_PROTOCOL_OPTIONS=\
 # Define bitcoin-client options.
 #------------------------------------------------------------------------------
 BITCOIN_CLIENT_OPTIONS=\
+"--enable-silent-rules "\
+"--without-tests "
+
+# Define bitcoin-explorer options.
+#------------------------------------------------------------------------------
+BITCOIN_EXPLORER_OPTIONS=\
 "--enable-silent-rules "
 
 
@@ -476,7 +482,8 @@ build_all()
     build_from_github zeromq czmqpp master $PARALLEL "$@" $CZMQPP_OPTIONS
     build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@" $BITCOIN_OPTIONS
     build_from_github libbitcoin libbitcoin-protocol version2 $PARALLEL "$@" $BITCOIN_PROTOCOL_OPTIONS
-    build_from_travis libbitcoin libbitcoin-client version2 $PARALLEL "$@" $BITCOIN_CLIENT_OPTIONS
+    build_from_github libbitcoin libbitcoin-client version2 $PARALLEL "$@" $BITCOIN_CLIENT_OPTIONS
+    build_from_travis libbitcoin libbitcoin-explorer version2 $PARALLEL "$@" $BITCOIN_EXPLORER_OPTIONS
 }
 
 
