@@ -38,16 +38,6 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Parse two tokens into an output point.
- * Throws if the hash digest or index is not valid.
- *
- * @param[out] point   The out point to populate.
- * @param[in]  tokens  The two tokens to parse.
- */
-static void parse_point(output_point& point,
-    const std::vector<std::string>& tokens);
-
-/**
  * Serialization helper to convert between text and an output_point.
  */
 class point

@@ -33,16 +33,6 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Parse two-three tokens into an output point.
- * Throws if the hash digest or index is not valid.
- * 
- * @param[out] input   The out point to populate.
- * @param[in]  tokens  The two-three tokens to parse.
- */
-static void parse_input(tx_input_type& input,
-    const std::vector<std::string>& tokens);
-
-/**
  * Serialization helper stub for tx_input_type.
  */
 class input
