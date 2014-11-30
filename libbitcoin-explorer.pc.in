@@ -1,18 +1,25 @@
+###############################################################################
+# Copyright (c) 2011-2014 libbitcoin-explorer developers (see COPYING).
+#
+#         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
+#
+###############################################################################
+
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
 Name: libbitcoin-explorer
-Description: Command line for Bitcoin queries and local operations.
+Description: Bitcoin Command Line Tool
 URL: https://github.com/libbitcoin/libbitcoin-explorer
 Version: @PACKAGE_VERSION@
 
 # Our dependencies that publish package configuration.
-Requires: libbitcoin-client >= 2.0.0 libbitcoin >= 2.7.0
+Requires: libbitcoin-client >= 2.0.0
 
 # Our own include directory and any other compiler flags we require.
 Cflags: -I${includedir} -std=c++11
 
 # Our own lib and any we require that do not publish package configuration.
-Libs: -L${libdir} -lbitcoin-explorer -lboost_chrono -lboost_program_options
+Libs: -L${libdir} -lbitcoin-explorer @boost_LIBS@ 
