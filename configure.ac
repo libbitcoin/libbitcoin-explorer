@@ -163,9 +163,9 @@ AS_IF([test x$with_tests = xyes], [AX_BOOST_UNIT_TEST_FRAMEWORK])
 # Require bash-completion of at least version 2.0.0 and output ${bash-completion}.
 #------------------------------------------------------------------------------
 AS_IF([test x$bash_completion_dir = xyes],
-    PKG_CHECK_MODULES([bash_completion], [bash-completion >= 2.0.0],
+    [PKG_CHECK_MODULES([bash_completion], [bash-completion >= 2.0.0],
     [bash_completion_dir="`pkg-config --variable=completionsdir bash-completion`"],
-    [bash_completion_dir="${datadir}/bash-completion/completions"]))
+    [bash_completion_dir="${datadir}/bash-completion/completions"])])
 
 # Require bitcoin-client of at least version 2.0.0 and output ${bitcoin-client}.
 #------------------------------------------------------------------------------
