@@ -198,25 +198,25 @@ AX_CHECK_COMPILE_FLAG([-Wno-missing-braces],
 AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
     [CXXFLAGS="$CXXFLAGS -Wno-unused-local-typedefs"])
 
-# This cleans up for boost property_tree headers (boost exceptions off).
+# Clean up protobuf headers.
+#------------------------------------------------------------------------------
+AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
+    [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
+
+# Clean up boost property_tree headers (boost exceptions off).
 #------------------------------------------------------------------------------
 AX_CHECK_COMPILE_FLAG([-Wno-maybe-uninitialized],
     [CXXFLAGS="$CXXFLAGS -Wno-maybe-uninitialized"])
 
-# This cleans up for boost property_tree headers (boost exceptions off).
+# Clean up boost property_tree headers (boost exceptions off).
 #------------------------------------------------------------------------------
 AX_CHECK_COMPILE_FLAG([-Wno-return-type],
     [CXXFLAGS="$CXXFLAGS -Wno-return-type"])
 
-# This cleans up for protobuf headers.
+# Clean up protobuf headers.
 #------------------------------------------------------------------------------
 AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
     [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])
-
-# This cleans up for protobuf headers.
-#------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
-    [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
 
 # Protect stack.
 #------------------------------------------------------------------------------
