@@ -82,9 +82,9 @@ AC_SUBST([pkgconfigdir])
 AC_MSG_CHECKING(--with-bash-completion-dir option)
 AC_ARG_WITH([bash-completion-dir],
     AS_HELP_STRING([--with-bash-completion-dir[=PATH]],
-        [Path to bash completion directory. @<:@default=yes@:>@]),
+        [Install bash completion support, optionally specifying the directory. This option may require elevated permissions. @<:@default=no@:>@]),
     [bash_completion_dir=$withval],
-    [bash_completion_dir=yes])
+    [bash_completion_dir=no])
 AC_MSG_RESULT([$bash_completion_dir])
 AC_SUBST([bash_completion_dir])
 AM_CONDITIONAL([BASH_COMPLETION_DIR], [test x$bash_completion_dir != xno])
@@ -160,14 +160,14 @@ AX_BOOST_PROGRAM_OPTIONS
 
 AS_IF([test x$with_tests = xyes], [AX_BOOST_UNIT_TEST_FRAMEWORK])
 
-# Require bash-completion of at least version 2.0.0 and output ${bash-completion}.
+# Require bash-completion of at least version 2.0.0 and output ${bash_completion_CFLAGS} and ${bash_completion_LIBS}.
 #------------------------------------------------------------------------------
 AS_IF([test x$bash_completion_dir = xyes],
     [PKG_CHECK_MODULES([bash_completion], [bash-completion >= 2.0.0],
     [bash_completion_dir="`pkg-config --variable=completionsdir bash-completion`"],
     [bash_completion_dir="${datadir}/bash-completion/completions"])])
 
-# Require bitcoin-client of at least version 2.0.0 and output ${bitcoin-client}.
+# Require bitcoin-client of at least version 2.0.0 and output ${bitcoin_client_CFLAGS} and ${bitcoin_client_LIBS}.
 #------------------------------------------------------------------------------
 PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 2.0.0])
 
