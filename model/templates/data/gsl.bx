@@ -1,0 +1,42 @@
+.template 0
+###############################################################################
+# Copyright (c) 2011-2014 libbitcoin developers (see COPYING).
+#
+# GSL generate libbitcoin-explorer source files.
+# This file contains no localizable resources.
+#
+# This is a code generator built using the iMatix GSL code generation
+# language. See https://github.com/imatix/gsl for details.
+###############################################################################
+.endtemplate
+.template 1
+.echo "Generating data/bx..."
+.output "../data/bx"
+#
+#  Command-line completion for bx.
+#
+_bx()
+{
+    local current="${COMP_WORDS[COMP_CWORD]}"
+    
+    # Generated from XML data source.
+    local commands="
+.for command by symbol as _command where !is_xml_true(_command.obsolete)
+        $(_command.symbol)
+.endfor _command
+    "
+
+    if [[ $COMP_CWORD == 1 ]]; then
+        COMPREPLY=( `compgen -W "$commands" -- $current` )
+        return
+    fi
+
+    local command=COMP_WORDS[1]
+    local options="--config --help -c -h"
+
+    # TODO: Generate per-command options here
+
+    COMPREPLY=( `compgen -W "$options" -- $current` )
+}
+complete -F _bx bx
+.endtemplate

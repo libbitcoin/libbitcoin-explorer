@@ -1,0 +1,355 @@
+.template 0
+###############################################################################
+# Copyright (c) 2011-2014 libbitcoin developers (see COPYING).
+#
+# GSL generate libbitcoin-explorer source files.
+# This file contains no localizable resources.
+#
+# This is a code generator built using the iMatix GSL code generation
+# language. See https://github.com/imatix/gsl for details.
+###############################################################################
+.endtemplate
+.template 1
+.echo "Generating builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj.filter..."
+.output "../builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj.filters"
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#################################################################
+#   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
+#################################################################
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include\\bitcoin\\explorer\\commands">
+      <UniqueIdentifier>{8f3f62c0-53c7-4044-a1da-c3fcc9d27651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin\\explorer\\commands\\network">
+      <UniqueIdentifier>{E9B42E1D-5F9D-41FA-AB9B-75D15069071C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin\\explorer\\commands\\obsolete">
+      <UniqueIdentifier>{268700C7-1C9D-44FF-B1CE-3104893288A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin\\explorer\\commands\\stub">
+      <UniqueIdentifier>{1A3D8C7D-8801-42D9-8420-A7E95CD259AE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin\\explorer\\impl">
+      <UniqueIdentifier>{d34fd634-a274-4629-8a8f-c588117d9733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin\\explorer\\primitives">
+      <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin\\explorer\\utility">
+      <UniqueIdentifier>{dc28e2c9-d07d-4242-8007-e44440c133a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin\\explorer">
+      <UniqueIdentifier>{31B4AAFD-BE8B-45EF-BCDC-B696C320F9F5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\\bitcoin">
+      <UniqueIdentifier>{f75d4585-8ee2-45e8-96ec-880c63fc243e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{86400492-13FA-494A-87E4-1E33C7EB2476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\commands\\network">
+      <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\commands\\obsolete">
+      <UniqueIdentifier>{DF81EBEE-BB03-406B-B4C5-1D9FD2964E97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\commands\\stub">
+      <UniqueIdentifier>{e96f4bef-2d18-4897-9078-a8c17783ee65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\commands">
+      <UniqueIdentifier>{4085fba5-b358-4b3f-968f-ee8be943775f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\primitives">
+      <UniqueIdentifier>{6CE1C682-2E57-4EA8-B819-5C733184121A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\utility">
+      <UniqueIdentifier>{c50b43cf-9009-45a6-b813-7a61877602f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{6afc4dd0-6330-4dca-b176-cd4887f27b9f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+.for command by symbol
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\commands\\$(symbol).hpp">
+.   if (is_xml_true(stub))
+      <Filter>include\\bitcoin\\explorer\\commands\\stub</Filter>
+.   elsif (is_xml_true(network))
+      <Filter>include\\bitcoin\\explorer\\commands\\network</Filter>
+.   elsif (is_xml_true(obsolete))
+      <Filter>include\\bitcoin\\explorer\\commands\\obsolete</Filter>
+.   else
+      <Filter>include\\bitcoin\\explorer\\commands</Filter>
+.   endif
+    </ClInclude>
+.endfor
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\utility.ipp">
+      <Filter>include\\bitcoin\\explorer\\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\prop_tree.ipp">
+      <Filter>include\\bitcoin\\explorer\\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\address.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base10.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base2.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base58.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc256.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_key.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hashtype.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_priv.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_pub.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\header.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\input.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\output.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\point.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\raw.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\transaction.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\uri.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\compat.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\config.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\environment.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\parameter.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\printer.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\utility.hpp">
+      <Filter>include\\bitcoin\\explorer\\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\async_client.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\callback_state.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\command.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\define.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\dispatch.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\display.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\generated.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\obelisk_client.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\prop_tree.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer.hpp">
+      <Filter>include\\bitcoin</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+.for command by symbol
+    <ClCompile Include="..\\..\\..\\..\\src\\commands\\$(symbol).cpp">
+.   if (is_xml_true(stub))
+      <Filter>src\\commands\\stub</Filter>
+.   elsif (is_xml_true(network))
+      <Filter>src\\commands\\network</Filter>
+.   elsif (is_xml_true(obsolete))
+      <Filter>src\\commands\\obsolete</Filter>
+.   else
+      <Filter>src\\commands</Filter>
+.   endif
+    </ClCompile>
+.endfor
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base10.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base2.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc256.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_key.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_priv.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_pub.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\header.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\input.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\output.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\point.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\raw.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\transaction.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\uri.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wif.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wrapper.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\utility.cpp">
+      <Filter>src\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\async_client.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\callback_state.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\display.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
+.endtemplate

@@ -1,0 +1,224 @@
+.template 0
+###############################################################################
+# Copyright (c) 2011-2014 libbitcoin developers (see COPYING).
+#
+# GSL generate libbitcoin-explorer source files.
+# This file contains no localizable resources.
+#
+# This is a code generator built using the iMatix GSL code generation
+# language. See https://github.com/imatix/gsl for details.
+###############################################################################
+.endtemplate
+.template 1
+.echo "Generating builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj..."
+.output "../builds/msvc/vs2013/libbitcoin-explorer/libbitcoin-explorer.vcxproj"
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#################################################################
+#   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
+#################################################################
+-->
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NuGetPackageImportStamp>82a52cd0</NuGetPackageImportStamp>
+    <PlatformToolset>CTP_Nov2013</PlatformToolset>
+    <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
+    <ProjectName>libbitcoin-explorer</ProjectName>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugDLL|Win32">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|Win32">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|x64">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDLL|x64">
+      <Configuration>ReleaseDLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLTCG|Win32">
+      <Configuration>DebugLTCG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLTCG|Win32">
+      <Configuration>ReleaseLTCG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLTCG|x64">
+      <Configuration>DebugLTCG</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLTCG|x64">
+      <Configuration>ReleaseLTCG</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLIB|Win32">
+      <Configuration>DebugLIB</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLIB|Win32">
+      <Configuration>ReleaseLIB</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugLIB|x64">
+      <Configuration>DebugLIB</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseLIB|x64">
+      <Configuration>ReleaseLIB</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType Condition="$\(Configuration.IndexOf('DLL')) == -1">StaticLibrary</ConfigurationType>
+    <ConfigurationType Condition="$\(Configuration.IndexOf('DLL')) != -1">DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.Default.props" />
+  <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$\(ProjectDir)..\\..\\properties\\$\(Configuration).props" />
+    <Import Project="$\(ProjectDir)..\\..\\properties\\Output.props" />
+    <Import Project="$\(ProjectDir)$\(ProjectName).props" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\prop_tree.ipp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\utility.ipp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\callback_state.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\async_client.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\command.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\define.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\dispatch.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\display.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\generated.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\obelisk_client.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\prop_tree.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\address.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base10.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base2.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base58.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc256.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hashtype.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_key.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_priv.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_pub.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\header.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\input.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\output.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\point.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\raw.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\transaction.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\uri.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\compat.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\config.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\environment.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\parameter.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\printer.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\utility.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+.for command by symbol
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\commands\\$(symbol).hpp" />
+.endfor
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\\..\\..\\..\\src\\async_client.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\callback_state.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base10.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base2.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc256.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_key.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_priv.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_pub.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\header.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\input.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\output.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\point.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\raw.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\transaction.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\uri.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wif.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wrapper.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\utility\\utility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+.for command by symbol
+    <ClCompile Include="..\\..\\..\\..\\src\\commands\\$(symbol).cpp" />
+.endfor
+  </ItemGroup>
+  <Import Project="$\(VCTargetsPath)\\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.56.0.0\\build\\native\\boost_filesystem.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.56.0.0\\build\\native\\boost_filesystem.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem-vc120.1.56.0.0\\build\\native\\boost_filesystem-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem-vc120.1.56.0.0\\build\\native\\boost_filesystem-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.3\\build\\native\\secp256k1_gmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.3\\build\\native\\secp256k1_gmp_vc120.targets')" />
+    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libgmp_vc120.5.1.3.2\\build\\native\\libgmp_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.56.0.0\\build\\native\\boost_filesystem.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem.1.56.0.0\\build\\native\\boost_filesystem.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem-vc120.1.56.0.0\\build\\native\\boost_filesystem-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_filesystem-vc120.1.56.0.0\\build\\native\\boost_filesystem-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_program_options-vc120.1.56.0.0\\build\\native\\boost_program_options-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_regex-vc120.1.56.0.0\\build\\native\\boost_regex-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost.1.56.0.0\\build\\native\\boost.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\boost_system-vc120.1.56.0.0\\build\\native\\boost_system-vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libzmq_vc120.4.1.0.7\\build\\native\\libzmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmq_vc120.2.2.0.8\\build\\native\\czmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.0.6.0.1\\build\\native\\libsodium_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.3\\build\\native\\secp256k1_gmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.3\\build\\native\\secp256k1_gmp_vc120.targets'))" />
+    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets'))" />
+  </Target>
+</Project>
+.endtemplate

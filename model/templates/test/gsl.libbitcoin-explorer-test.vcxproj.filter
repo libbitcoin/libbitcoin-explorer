@@ -1,0 +1,102 @@
+.template 0
+###############################################################################
+# Copyright (c) 2011-2014 libbitcoin developers (see COPYING).
+#
+# GSL generate libbitcoin-explorer source files.
+# This file contains no localizable resources.
+#
+# This is a code generator built using the iMatix GSL code generation
+# language. See https://github.com/imatix/gsl for details.
+###############################################################################
+.endtemplate
+.template 1
+.echo "Generating builds/msvc/vs2013/libbitcoin-explorer-test/libbitcoin-explorer-test.vcxproj.filter..."
+.output "../builds/msvc/vs2013/libbitcoin-explorer-test/libbitcoin-explorer-test.vcxproj.filters"
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+#################################################################
+#   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
+#################################################################
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{3eb17572-0d1e-4c0f-b582-bdc503608456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\tests">
+      <UniqueIdentifier>{272f2634-0335-488d-8741-271dd38c6092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\tests\\commands">
+      <UniqueIdentifier>{854c3ba2-ea3e-45ba-a329-75b1c9545712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\tests\\commands\\network">
+      <UniqueIdentifier>{30ec4ed5-e76c-45cd-a4c1-2da55271a06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\tests\\commands\\obsolete">
+      <UniqueIdentifier>{930d925a-aab0-4934-96a2-3766c01a2793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\tests\\commands\\stub">
+      <UniqueIdentifier>{44ca92b4-d241-4677-aac2-0bb85bd9a990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\tests\\primitives">
+      <UniqueIdentifier>{14f110d7-6526-4899-bddb-d390b0ca55ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\\tests\\utility">
+      <UniqueIdentifier>{ad3dcd3b-991e-438d-84e2-58b47c198365}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+.for command by symbol
+    <ClCompile Include="..\\..\\..\\..\\test\\commands\\$(symbol).cpp">
+.   if (is_xml_true(stub))
+      <Filter>src\\tests\\commands\\stub</Filter>
+.   elsif (is_xml_true(network))
+      <Filter>src\\tests\\commands\\network</Filter>
+.   elsif (is_xml_true(obsolete))
+      <Filter>src\\tests\\commands\\obsolete</Filter>
+.   else
+      <Filter>src\\tests\\commands</Filter>
+.   endif
+    </ClCompile>
+.endfor
+    <ClCompile Include="..\\..\\..\\..\\test\\address.cpp">
+      <Filter>src\\tests\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\base58.cpp">
+      <Filter>src\\tests\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp">
+      <Filter>src\\tests\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp">
+      <Filter>src\\tests\\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\generated__broadcast.cpp">
+      <Filter>src\\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\generated__find.cpp">
+      <Filter>src\\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\generated__formerly.cpp">
+      <Filter>src\\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp">
+      <Filter>src\\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp">
+      <Filter>src\\tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\\..\\..\\..\\test\\commands\\command.hpp">
+      <Filter>src\\tests\\commands</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
+.endtemplate
