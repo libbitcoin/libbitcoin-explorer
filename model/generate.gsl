@@ -1354,13 +1354,12 @@ _bx()
 {
     local current="${COMP_WORDS[COMP_CWORD]}"
     local commands="
-.for command by symbol
-        $(symbol:)
-.endfor
-    "
+.for command by symbol as _command where !is_xml_true(_command.obsolete)
+        $(_command.symbol:)$(last() ?? "\"")
+.endfor _command
 
     if [ $COMP_CWORD -eq 1 ]; then
-        COMPREPLY=( \$(compgen -W "$commands" -- $current) )
+        COMPREPLY=( $\(compgen -W "$commands" -- $current) )
         return
     fi
 
@@ -1369,7 +1368,7 @@ _bx()
 
     # TODO: Generate per-command options here
 
-    COMPREPLY=( \$(compgen -W "$options" -- $current) )
+    COMPREPLY=( $\(compgen -W "$options" -- $current) )
 }
 complete -F _bx bx
 

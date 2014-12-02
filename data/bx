@@ -15,11 +15,8 @@ _bx()
         base58-encode
         base58check-decode
         base58check-encode
-        bci-fetch-last-height
-        bci-history
         bitcoin160
         bitcoin256
-        blke-fetch-transaction
         btc-to-satoshi
         ec-add
         ec-add-secrets
@@ -40,9 +37,6 @@ _bx()
         fetch-tx
         fetch-tx-index
         fetch-utxo
-        genaddr
-        genpriv
-        genpub
         hd-new
         hd-private
         hd-public
@@ -51,14 +45,11 @@ _bx()
         hd-to-public
         hd-to-wif
         help
-        initchain
         input-set
         input-sign
         input-validate
         mnemonic-decode
         mnemonic-encode
-        mpk
-        newseed
         qrcode
         ripemd160
         satoshi-to-btc
@@ -69,16 +60,12 @@ _bx()
         send-tx
         send-tx-node
         send-tx-p2p
-        sendtx-bci
         settings
         sha160
         sha256
         sha512
-        showblkhead
         stealth-decode
         stealth-encode
-        stealth-initiate
-        stealth-newkey
         stealth-public
         stealth-secret
         stealth-shared
@@ -88,17 +75,15 @@ _bx()
         uri-decode
         uri-encode
         validate-tx
-        wallet
         watch-address
         watch-tx
         wif-to-ec
         wif-to-public
         wrap-decode
-        wrap-encode
-    "
+        wrap-encode"
 
-    if [ $COMP_CWORD -eq 1 ]; then
-        COMPREPLY=( $(compgen -W "$commands" -- $current) )
+    if [[ $COMP_CWORD == 1 ]]; then
+        COMPREPLY=( `compgen -W "$commands" -- $current` )
         return
     fi
 
@@ -107,7 +92,7 @@ _bx()
 
     # TODO: Generate per-command options here
 
-    COMPREPLY=( $(compgen -W "$options" -- $current) )
+    COMPREPLY=( `compgen -W "$options" -- $current` )
 }
 complete -F _bx bx
 
