@@ -71,18 +71,30 @@ AC_ARG_VAR([PKG_CONFIG_PATH], "Additional directories for package discovery.")
 AC_MSG_CHECKING(--with-pkgconfigdir option)
 AC_ARG_WITH([pkgconfigdir],
     AS_HELP_STRING([--with-pkgconfigdir=PATH],
-        [Path to pkgconfig directory.]),
+        [Path to pkgconfig directory. @<:@default=${libdir}/pkgconfig@:>@]),
     [pkgconfigdir=$withval],
     [pkgconfigdir=${libdir}/pkgconfig])
 AC_MSG_RESULT([$pkgconfigdir])
 AC_SUBST([pkgconfigdir])
+
+# Implement --with-bash-completion-dir and output ${bash_completion_dir} and declare BASH_COMPLETION_DIR.
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING(--with-bash-completion-dir option)
+AC_ARG_WITH([bash-completion-dir],
+    AS_HELP_STRING([--with-bash-completion-dir[=PATH]],
+        [Install bash completion support, optionally specifying the directory. This option may require elevated permissions. @<:@default=no@:>@]),
+    [bash_completion_dir=$withval],
+    [bash_completion_dir=no])
+AC_MSG_RESULT([$bash_completion_dir])
+AC_SUBST([bash_completion_dir])
+AM_CONDITIONAL([BASH_COMPLETION_DIR], [test x$bash_completion_dir != xno])
 
 # Implement --with-tests and declare WITH_TESTS.
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--with-tests option)
 AC_ARG_WITH([tests],
     AS_HELP_STRING([--with-tests],
-        [Compile with unit tests.]),
+        [Compile with unit tests. @<:@default=yes@:>@]),
     [with_tests=$withval],
     [with_tests=yes])
 AC_MSG_RESULT([$with_tests])
@@ -93,7 +105,7 @@ AM_CONDITIONAL([WITH_TESTS], [test x$with_tests != xno])
 AC_MSG_CHECKING(--enable-debug option)
 AC_ARG_ENABLE([debug],
     AS_HELP_STRING([--enable-debug],
-        [Compile with debug assertions.]),
+        [Compile with debug assertions. @<:@default=no@:>@]),
     [enable_debug=$enableval],
     [enable_debug=no])
 AC_MSG_RESULT([$enable_debug])
@@ -104,7 +116,7 @@ AS_IF([test x$enable_debug != xno], AC_DEFINE([DEBUG]))
 AC_MSG_CHECKING(--enable-testnet option)
 AC_ARG_ENABLE([testnet],
     AS_HELP_STRING([--enable-testnet],
-        [Compile for testnet (deprecated).]),
+        [Compile for testnet (deprecated). @<:@default=no@:>@]),
     [enable_testnet=$enableval],
     [enable_testnet=no])
 AC_MSG_RESULT([$enable_testnet])
@@ -146,9 +158,16 @@ AX_BOOST_CHRONO
 
 AX_BOOST_PROGRAM_OPTIONS
 
-AS_IF([test x$with_tests != xno], [AX_BOOST_UNIT_TEST_FRAMEWORK])
+AS_IF([test x$with_tests = xyes], [AX_BOOST_UNIT_TEST_FRAMEWORK])
 
-# Require bitcoin-client of at least version 2.0.0 and output ${bitcoin-client}.
+# Require bash-completion of at least version 2.0.0 and output ${bash_completion_CFLAGS} and ${bash_completion_LIBS}.
+#------------------------------------------------------------------------------
+AS_IF([test x$bash_completion_dir = xyes],
+    [PKG_CHECK_MODULES([bash_completion], [bash-completion >= 2.0.0],
+    [bash_completion_dir="`pkg-config --variable=completionsdir bash-completion`"],
+    [bash_completion_dir="${datadir}/bash-completion/completions"])])
+
+# Require bitcoin-client of at least version 2.0.0 and output ${bitcoin_client_CFLAGS} and ${bitcoin_client_LIBS}.
 #------------------------------------------------------------------------------
 PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 2.0.0])
 
@@ -179,25 +198,25 @@ AX_CHECK_COMPILE_FLAG([-Wno-missing-braces],
 AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
     [CXXFLAGS="$CXXFLAGS -Wno-unused-local-typedefs"])
 
-# This cleans up for boost property_tree headers (boost exceptions off).
+# Clean up protobuf headers.
+#------------------------------------------------------------------------------
+AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
+    [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
+
+# Clean up boost property_tree headers (boost exceptions off).
 #------------------------------------------------------------------------------
 AX_CHECK_COMPILE_FLAG([-Wno-maybe-uninitialized],
     [CXXFLAGS="$CXXFLAGS -Wno-maybe-uninitialized"])
 
-# This cleans up for boost property_tree headers (boost exceptions off).
+# Clean up boost property_tree headers (boost exceptions off).
 #------------------------------------------------------------------------------
 AX_CHECK_COMPILE_FLAG([-Wno-return-type],
     [CXXFLAGS="$CXXFLAGS -Wno-return-type"])
 
-# This cleans up for protobuf headers.
+# Clean up protobuf headers.
 #------------------------------------------------------------------------------
 AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
     [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])
-
-# This cleans up for protobuf headers.
-#------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
-    [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
 
 # Protect stack.
 #------------------------------------------------------------------------------

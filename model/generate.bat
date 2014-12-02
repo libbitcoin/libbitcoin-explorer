@@ -2,6 +2,7 @@
 REM   Run all code generation scripts
 REM   Requires iMatix GSL, from http:\\www.nuget.org\packages\gsl
 
+mkdir ..\data
 mkdir ..\src\commands
 mkdir ..\include\bitcoin\explorer\commands
 
