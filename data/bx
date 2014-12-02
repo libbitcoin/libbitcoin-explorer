@@ -1,9 +1,11 @@
 #
-#  Command-line completion for bx
+#  Command-line completion for bx.
 #
 _bx()
 {
     local current="${COMP_WORDS[COMP_CWORD]}"
+    
+    # Generated from XML data source.
     local commands="
         address-decode
         address-embed
@@ -80,7 +82,8 @@ _bx()
         wif-to-ec
         wif-to-public
         wrap-decode
-        wrap-encode"
+        wrap-encode
+    "
 
     if [[ $COMP_CWORD == 1 ]]; then
         COMPREPLY=( `compgen -W "$commands" -- $current` )
@@ -95,4 +98,3 @@ _bx()
     COMPREPLY=( `compgen -W "$options" -- $current` )
 }
 complete -F _bx bx
-
