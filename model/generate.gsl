@@ -1358,8 +1358,8 @@ _bx()
         $(_command.symbol:)$(last() ?? "\"")
 .endfor _command
 
-    if [ $COMP_CWORD -eq 1 ]; then
-        COMPREPLY=( $\(compgen -W "$commands" -- $current) )
+    if [[ $COMP_CWORD == 1 ]]; then
+        COMPREPLY=( `compgen -W "$commands" -- $current` )
         return
     fi
 
@@ -1368,7 +1368,7 @@ _bx()
 
     # TODO: Generate per-command options here
 
-    COMPREPLY=( $\(compgen -W "$options" -- $current) )
+    COMPREPLY=( `compgen -W "$options" -- $current` )
 }
 complete -F _bx bx
 
