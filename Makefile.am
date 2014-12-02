@@ -466,4 +466,3 @@ test_libbitcoin_explorer_test_LDADD = \
     ${bitcoin_client_LIBS}
 
 endif
-
