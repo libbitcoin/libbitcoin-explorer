@@ -71,7 +71,12 @@ ec_point& ec_public::data()
 
 ec_public::operator const ec_point&() const
 {
-    return value_; 
+    return value_;
+}
+
+ec_public::operator data_slice() const
+{
+    return value_;
 }
 
 std::istream& operator>>(std::istream& input, ec_public& argument)
@@ -82,7 +87,7 @@ std::istream& operator>>(std::istream& input, ec_public& argument)
     ec_point point = base16(hexcode);
     if (!verify_public_key_fast(point) /*|| !verify_public_key(point)*/)
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
-        
+
     argument.value_.assign(point.begin(), point.end());
     return input;
 }

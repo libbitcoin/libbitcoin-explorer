@@ -59,7 +59,12 @@ data_chunk& base58::data()
 
 base58::operator const data_chunk&() const
 {
-    return value_; 
+    return value_;
+}
+
+base58::operator data_slice() const
+{
+    return value_;
 }
 
 std::istream& operator>>(std::istream& input, base58& argument)
