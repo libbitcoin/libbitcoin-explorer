@@ -60,7 +60,7 @@ hash_digest& btc256::data()
 
 btc256::operator const hash_digest&() const
 {
-    return value_; 
+    return value_;
 }
 
 std::istream& operator>>(std::istream& input, btc256& argument)
@@ -68,8 +68,8 @@ std::istream& operator>>(std::istream& input, btc256& argument)
     std::string hexcode;
     input >> hexcode;
 
-    auto hash = decode_hash(hexcode);
-    if (hash == null_hash)
+    hash_digest hash;
+    if (!decode_hash(hash, hexcode))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
     std::copy(hash.begin(), hash.end(), argument.value_.begin());
@@ -78,7 +78,7 @@ std::istream& operator>>(std::istream& input, btc256& argument)
 
 std::ostream& operator<<(std::ostream& output, const btc256& argument)
 {
-    output << base16(argument.value_);
+    output << encode_hash(argument.value_);
     return output;
 }
 

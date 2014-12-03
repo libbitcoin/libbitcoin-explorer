@@ -74,8 +74,8 @@ std::istream& operator>>(std::istream& input, btc160& argument)
     std::string hexcode;
     input >> hexcode;
 
-    auto hash = decode_short_hash(hexcode);
-    if (hash == null_short_hash)
+    data_chunk hash;
+    if (!decode_base16(hash, hexcode) || hash.size() != short_hash_size)
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
     std::copy(hash.begin(), hash.end(), argument.value_.begin());
