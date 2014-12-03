@@ -45,9 +45,9 @@ namespace explorer {
 namespace primitives {
 
 // property_tree is very odd in that what one might consider a node or element,
-// having a "containing" name cannot be added into another node without 
+// having a "containing" name cannot be added into another node without
 // creating an intervening name/container. so we create uncontained nodes and
-// lists which can then be added to a parent node, creating the named container 
+// lists which can then be added to a parent node, creating the named container
 // on the add.
 
 // Edit with care - text property names trade DRY for readability.
@@ -61,10 +61,10 @@ ptree prop_list(const header& header)
 
     ptree tree;
     tree.put("bits", block_header.bits);
-    tree.put("hash", base16(hash_block_header(block_header)));
-    tree.put("merkle_tree_hash", base16(block_header.merkle));
+    tree.put("hash", btc256(hash_block_header(block_header)));
+    tree.put("merkle_tree_hash", btc256(block_header.merkle));
     tree.put("nonce", block_header.nonce);
-    tree.put("previous_block_hash", base16(block_header.previous_block_hash));
+    tree.put("previous_block_hash", btc256(block_header.previous_block_hash));
     tree.put("time_stamp", block_header.timestamp);
     tree.put("version", block_header.version);
     return tree;
@@ -88,7 +88,7 @@ ptree prop_list(const history_row& row)
 {
     ptree tree;
 
-    tree.put("received.hash", base16(row.output.hash));
+    tree.put("received.hash", btc256(row.output.hash));
 
     // missing received.height implies pending
     if (row.output_height != 0)
@@ -99,7 +99,7 @@ ptree prop_list(const history_row& row)
     // missing input implies unspent
     if (row.spend.hash != null_hash)
     {
-        tree.put("spent.hash", base16(row.spend.hash));
+        tree.put("spent.hash", btc256(row.spend.hash));
 
         // missing input.height implies spend unconfirmed
         if (row.spend_height != 0)
@@ -170,7 +170,7 @@ ptree prop_list(const tx_input_type& tx_input)
     if (extract(script_address, tx_input.script))
         tree.put("address", address(script_address));
 
-    tree.put("previous_output.hash", base16(tx_input.previous_output.hash));
+    tree.put("previous_output.hash", btc256(tx_input.previous_output.hash));
     tree.put("previous_output.index", tx_input.previous_output.index);
     tree.put("script", script(tx_input.script).mnemonic());
     tree.put("sequence", tx_input.sequence);
@@ -276,7 +276,7 @@ ptree prop_list(const transaction& transaction)
     const tx_type& tx = transaction;
 
     ptree tree;
-    tree.put("hash", base16(hash_transaction(tx)));
+    tree.put("hash", btc256(hash_transaction(tx)));
     tree.add_child("inputs", prop_tree_list("input", tx.inputs));
     tree.put("lock_time", tx.locktime);
     tree.add_child("outputs", prop_tree_list("output", tx.outputs));
@@ -320,7 +320,7 @@ ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
     const base2& prefix)
 {
     ptree tree;
-    tree.add("block", base16(block_hash));
+    tree.add("block", btc256(block_hash));
     tree.add("prefix", prefix);
     tree.add_child("transaction", prop_list(tx));
     return tree;
@@ -339,7 +339,7 @@ ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
     const payment_address& address)
 {
     ptree tree;
-    tree.add("block", base16(block_hash));
+    tree.add("block", btc256(block_hash));
     tree.add("address", primitives::address(address));
     tree.add_child("transaction", prop_list(tx));
     return tree;
@@ -356,7 +356,7 @@ ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
 
 ptree prop_list(const stealth& stealth_address)
 {
-    // We don't serialize a "reuse key" value as this is strictly an 
+    // We don't serialize a "reuse key" value as this is strictly an
     // optimization for the purpose of serialization and otherwise complicates
     // understanding of what is actually otherwise very simple behavior.
     // So instead we emit the reused key as one of the spend keys.
@@ -411,7 +411,7 @@ ptree prop_tree(const std::vector<client::stealth_row>& rows)
 ptree prop_list(const hash_digest& hash, size_t height, size_t index)
 {
     ptree tree;
-    tree.put("hash", base16(hash));
+    tree.put("hash", btc256(hash));
     tree.put("height", height);
     tree.put("index", index);
     return tree;
