@@ -29,17 +29,17 @@
 #==============================================================================
 # The default build directory.
 #------------------------------------------------------------------------------
-BUILD_DIR="libbitcoin-explorer-build"
+BUILD_DIR="build-libbitcoin-explorer"
 
-# Boost archives for linux.
+# Boost archives for gcc.
 #------------------------------------------------------------------------------
-BOOST_URL_LINUX="http://sourceforge.net/projects/boost/files/boost/1.49.0/boost_1_49_0.tar.bz2/download"
-BOOST_ARCHIVE_LINUX="boost_1_49_0.tar.bz2"
+BOOST_URL_GCC="http://sourceforge.net/projects/boost/files/boost/1.49.0/boost_1_49_0.tar.bz2/download"
+BOOST_ARCHIVE_GCC="boost_1_49_0.tar.bz2"
 
-# Boost archives for darwin.
+# Boost archives for clang.
 #------------------------------------------------------------------------------
-BOOST_URL_DARWIN="http://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.bz2/download"
-BOOST_ARCHIVE_DARWIN="boost_1_54_0.tar.bz2"
+BOOST_URL_CLANG="http://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.bz2/download"
+BOOST_ARCHIVE_CLANG="boost_1_54_0.tar.bz2"
 
 # GMP archives.
 #------------------------------------------------------------------------------
@@ -57,18 +57,32 @@ set -e
 #------------------------------------------------------------------------------
 SEQUENTIAL=1
 OS=`uname -s`
-if [[ $TRAVIS = "true" ]]; then
+if [[ $TRAVIS == true ]]; then
     PARALLEL=$SEQUENTIAL
-elif [[ $OS = "Linux" ]]; then
+elif [[ $OS == Linux ]]; then
     PARALLEL=`nproc`
-elif [[ $OS = "Darwin" ]]; then
+elif [[ $OS == Darwin ]]; then
     PARALLEL=2 #TODO
 else
     echo "Unsupported system: $OS"
     exit 1
 fi
-echo "Making for system: $OS"
-echo "Allocated jobs: $PARALLEL"
+echo "Make jobs: $PARALLEL"
+echo "Make for system: $OS"
+
+# Define operating system settings.
+#------------------------------------------------------------------------------
+if [[ $OS == Darwin ]]; then
+
+    # Always require CLang, common lib linking will otherwise fail.
+    export CC="clang"
+    export CXX="clang++"
+    
+    # Always initialize prefix on OSX so default is consistent.
+    PREFIX="/usr/local"
+fi
+echo "Make with cc: $CC"
+echo "Make with cxx: $CXX"
 
 # Parse command line options that are handled by this script.
 #------------------------------------------------------------------------------
@@ -95,17 +109,15 @@ for CUSTOM_OPTION in "${CUSTOM_OPTIONS[@]}"; do
     CONFIGURE_OPTIONS=( "${CONFIGURE_OPTIONS[@]/$CUSTOM_OPTION}" )
 done
 
-# Map standard libtool options to Boost link option.
+# Set public boost_link variable (to translate libtool link to Boost build).
 #------------------------------------------------------------------------------
-BOOST_LINK="static,shared"
-if [[ $DISABLE_STATIC ]]; then
-    BOOST_LINK="shared"
-elif [[ $DISABLE_SHARED ]]; then
-    BOOST_LINK="static"
+if [[ $DISABLE_STATIC == yes ]]; then
+    boost_link="link=shared"
+elif [[ $DISABLE_SHARED == yes ]]; then
+    boost_link="link=static"
+else
+    boost_link="link=static,shared"
 fi
-
-# Set public link variable (to translate the link type to the Boost build)
-link="link=$BOOST_LINK"
 
 # Incorporate the prefix.
 #------------------------------------------------------------------------------
@@ -127,12 +139,12 @@ if [[ $PREFIX ]]; then
     # Otherwise the standard paths suffice for Linux, Homebrew and MacPorts.
 
     # Set public with_boost variable (because Boost has no pkg-config).
-    if [[ $BUILD_BOOST ]]; then
+    if [[ $BUILD_BOOST == yes ]]; then
         with_boost="--with-boost=$PREFIX"
     fi
     
     # Set public prefix_flags variable (because GMP has no pkg-config).
-    if [[ $BUILD_GMP ]]; then    
+    if [[ $BUILD_GMP == yes ]]; then
         prefix_flags="CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib"
     fi
     
@@ -140,10 +152,10 @@ if [[ $PREFIX ]]; then
     prefix="--prefix=$PREFIX"
 fi
 
-# Echo build options.
+# Echo published dynamic build options.
 #------------------------------------------------------------------------------
 echo "Published dynamic options:"
-echo "  link: $link"
+echo "  boost_link: $boost_link"
 echo "  prefix: $prefix"
 echo "  prefix_flags: $prefix_flags"
 echo "  with_boost: $with_boost"
@@ -152,9 +164,9 @@ echo "  with_pkgconfigdir: $with_pkgconfigdir"
 
 # Define build options.
 #==============================================================================
-# Define boost options for linux.
+# Define boost options for gcc.
 #------------------------------------------------------------------------------
-BOOST_OPTIONS_LINUX=\
+BOOST_OPTIONS_GCC=\
 "threading=single "\
 "variant=release "\
 "--disable-icu "\
@@ -168,11 +180,11 @@ BOOST_OPTIONS_LINUX=\
 "-d0 "\
 "-q "\
 "${prefix} "\
-"${link} "
+"${boost_link} "
 
-# Define boost options for darwin.
+# Define boost options for clang.
 #------------------------------------------------------------------------------
-BOOST_OPTIONS_DARWIN=\
+BOOST_OPTIONS_CLANG=\
 "toolset=clang "\
 "cxxflags=-stdlib=libc++ "\
 "linkflags=-stdlib=libc++ "\
@@ -189,7 +201,7 @@ BOOST_OPTIONS_DARWIN=\
 "-d0 "\
 "-q "\
 "${prefix} "\
-"${link} "
+"${boost_link} "
 
 # Define gmp options.
 #------------------------------------------------------------------------------
@@ -211,6 +223,11 @@ SECP256K1_OPTIONS=\
 PROTOBUF_OPTIONS=\
 "--enable-silent-rules "
 
+# Define sodium options.
+#------------------------------------------------------------------------------
+SODIUM_OPTIONS=\
+"${with_pkgconfigdir} "
+
 # Define zmq options.
 #------------------------------------------------------------------------------
 ZMQ_OPTIONS=\
@@ -231,7 +248,6 @@ CZMQPP_OPTIONS=\
 # Define bitcoin options.
 #------------------------------------------------------------------------------
 BITCOIN_OPTIONS=\
-"--enable-silent-rules "\
 "--without-tests "\
 "${prefix_flags} "\
 "${with_boost} "\
@@ -240,7 +256,6 @@ BITCOIN_OPTIONS=\
 # Define bitcoin-protocol options.
 #------------------------------------------------------------------------------
 BITCOIN_PROTOCOL_OPTIONS=\
-"--enable-silent-rules "\
 "--without-tests "\
 "${with_boost} "\
 "${with_pkgconfigdir} "
@@ -248,7 +263,6 @@ BITCOIN_PROTOCOL_OPTIONS=\
 # Define bitcoin-client options.
 #------------------------------------------------------------------------------
 BITCOIN_CLIENT_OPTIONS=\
-"--enable-silent-rules "\
 "--without-tests "\
 "${with_boost} "\
 "${with_pkgconfigdir} "
@@ -256,30 +270,22 @@ BITCOIN_CLIENT_OPTIONS=\
 # Define bitcoin-explorer options.
 #------------------------------------------------------------------------------
 BITCOIN_EXPLORER_OPTIONS=\
-"--enable-silent-rules "\
+"--with-bash-completion-dir "\
 "${prefix_flags} "\
 "${with_boost} "\
 "${with_pkgconfigdir} "
 
 
-# Define operating system settings.
+# Define compiler settings.
 #==============================================================================
-if [[ $OS == "Darwin" ]]; then
-
-    # Always require CLang, common lib linking will otherwise fail.
-    export CC="clang"
-    export CXX="clang++"
-    
-    # Always initialize prefix on OSX so default is consistent.
-    PREFIX="/usr/local"
-    
-    BOOST_URL="$BOOST_URL_DARWIN"
-    BOOST_ARCHIVE="$BOOST_ARCHIVE_DARWIN"
-    BOOST_OPTIONS="$BOOST_OPTIONS_DARWIN"
-else
-    BOOST_URL="$BOOST_URL_LINUX"
-    BOOST_ARCHIVE="$BOOST_ARCHIVE_LINUX"
-    BOOST_OPTIONS="$BOOST_OPTIONS_LINUX"
+if [[ $CXX == "clang++" ]]; then
+    BOOST_URL="$BOOST_URL_CLANG"
+    BOOST_ARCHIVE="$BOOST_ARCHIVE_CLANG"
+    BOOST_OPTIONS="$BOOST_OPTIONS_CLANG"
+else # g++
+    BOOST_URL="$BOOST_URL_GCC"
+    BOOST_ARCHIVE="$BOOST_ARCHIVE_GCC"
+    BOOST_OPTIONS="$BOOST_OPTIONS_GCC"
 fi
 
 
@@ -304,7 +310,7 @@ display_linkage()
     local LIBRARY="$1"
     
     # Display shared library links.
-    if [[ $OS == "Darwin" ]]; then
+    if [[ $OS == Darwin ]]; then
         otool -L "$LIBRARY"
     else
         ldd --verbose "$LIBRARY"
@@ -333,25 +339,25 @@ make_current_directory()
 
     ./autogen.sh
     configure_options "$@"
-    make_silent $JOBS
+    make_jobs $JOBS
     make install
 
     # Use ldconfig only in case of non --prefix installation on Linux.    
-    if [[ ($OS == "Linux") && !($PREFIX)]]; then
+    if [[ ($OS == Linux) && !($PREFIX)]]; then
         ldconfig
     fi
 }
 
-make_silent()
+make_jobs()
 {
     local JOBS=$1
     local TARGET=$2
 
     # Avoid setting -j1 (causes problems on Travis).
-    if [[ $JOBS -gt $SEQUENTIAL ]]; then
-        make --silent -j$JOBS $TARGET
+    if [[ $JOBS > $SEQUENTIAL ]]; then
+        make -j$JOBS $TARGET
     else
-        make --silent $TARGET
+        make $TARGET
     fi
 }
 
@@ -360,7 +366,7 @@ make_tests()
     local JOBS=$1
 
     # Build and run unit tests relative to the primary directory.
-    make_silent $JOBS check
+    make_jobs $JOBS check
 }
 
 pop_directory()
@@ -386,7 +392,7 @@ build_from_tarball_boost()
     local JOBS=$4
     shift 4
 
-    if [[ !($BUILD_BOOST) ]]; then
+    if [[ $BUILD_BOOST != yes ]]; then
         display_message "Boost build not enabled"
         return
     fi
@@ -418,7 +424,7 @@ build_from_tarball_gmp()
     local JOBS=$4
     shift 4
 
-    if [[ !($BUILD_GMP) ]]; then
+    if [[ $BUILD_GMP != yes ]]; then
         display_message "GMP build not enabled"
         return
     fi
@@ -438,7 +444,7 @@ build_from_tarball_gmp()
 
     # GMP does not honor noise reduction.
     echo "Making all..."
-    make_silent $JOBS >/dev/null
+    make_jobs $JOBS >/dev/null
     echo "Installing all..."
     make install >/dev/null
 
@@ -486,11 +492,13 @@ build_from_travis()
     shift 4
 
     # The primary build is not downloaded if we are running in Travis.
-    if [[ $TRAVIS == "true" ]]; then
-        cd ..
+    if [[ $TRAVIS == true ]]; then
+        # TODO: enable so build-dir in travis can be absolute or multi-segment.
+        # push_directory "$TRAVIS_BUILD_DIR"
+        push_directory ".."
         build_from_local "Local $TRAVIS_REPO_SLUG" $JOBS "$@"
         make_tests $JOBS
-        cd "$BUILD_DIR"
+        pop_directory
     else
         build_from_github $ACCOUNT $REPO $BRANCH $JOBS "$@"
         push_directory $REPO
@@ -506,7 +514,7 @@ build_all()
 {
     build_from_tarball_boost $BOOST_URL $BOOST_ARCHIVE boost $PARALLEL $BOOST_OPTIONS
     build_from_tarball_gmp $GMP_URL $GMP_ARCHIVE gmp $PARALLEL "$@" $GMP_OPTIONS
-    build_from_github bitcoin secp256k1 master $PARALLEL "$@" $SECP256K1_OPTIONS
+    build_from_github libbitcoin secp256k1 master $PARALLEL "$@" $SECP256K1_OPTIONS
     build_from_github libbitcoin protobuf 2.6.0 $SEQUENTIAL "$@" $PROTOBUF_OPTIONS
     build_from_github jedisct1 libsodium master $PARALLEL "$@" $SODIUM_OPTIONS
     build_from_github zeromq libzmq master $PARALLEL "$@" $ZMQ_OPTIONS
