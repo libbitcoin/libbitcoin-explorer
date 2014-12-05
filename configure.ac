@@ -42,9 +42,6 @@ AC_PROG_CXX
 # Enable shared libraries if available, and static if they don't conflict.
 AC_PROG_LIBTOOL
 
-# Declare using the GNU C library (glibc).
-AC_GNU_SOURCE
-
 # Compute the canonical host-system type variable host, including host_os.
 AC_CANONICAL_HOST
 
@@ -66,17 +63,6 @@ AC_ARG_VAR([PKG_CONFIG_PATH], "Additional directories for package discovery.")
 
 # Process options.
 #==============================================================================
-# Implement --with-pkgconfigdir and output ${pkgconfigdir}.
-#------------------------------------------------------------------------------
-AC_MSG_CHECKING(--with-pkgconfigdir option)
-AC_ARG_WITH([pkgconfigdir],
-    AS_HELP_STRING([--with-pkgconfigdir=PATH],
-        [Path to pkgconfig directory. @<:@default=${libdir}/pkgconfig@:>@]),
-    [pkgconfigdir=$withval],
-    [pkgconfigdir=${libdir}/pkgconfig])
-AC_MSG_RESULT([$pkgconfigdir])
-AC_SUBST([pkgconfigdir])
-
 # Implement --with-bash-completion-dir and output ${bash_completion_dir} and declare BASH_COMPLETION_DIR.
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--with-bash-completion-dir option)
@@ -88,6 +74,17 @@ AC_ARG_WITH([bash-completion-dir],
 AC_MSG_RESULT([$bash_completion_dir])
 AC_SUBST([bash_completion_dir])
 AM_CONDITIONAL([BASH_COMPLETION_DIR], [test x$bash_completion_dir != xno])
+
+# Implement --with-pkgconfigdir and output ${pkgconfigdir}.
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING(--with-pkgconfigdir option)
+AC_ARG_WITH([pkgconfigdir],
+    AS_HELP_STRING([--with-pkgconfigdir=PATH],
+        [Path to pkgconfig directory. @<:@default=${libdir}/pkgconfig@:>@]),
+    [pkgconfigdir=$withval],
+    [pkgconfigdir=${libdir}/pkgconfig])
+AC_MSG_RESULT([$pkgconfigdir])
+AC_SUBST([pkgconfigdir])
 
 # Implement --with-tests and declare WITH_TESTS.
 #------------------------------------------------------------------------------
@@ -142,15 +139,15 @@ AC_DEFINE([BOOST_EXCEPTION_DISABLE])
 
 # Check dependencies.
 #==============================================================================
-# Require Boost of at least version 1.49.0 if on linux.
+# Require Boost of at least version 1.49.0 if in gcc.
 #------------------------------------------------------------------------------
-AS_CASE([${host_os}], [*linux*],
+AS_CASE([${CC}], [*gcc*],
     [AX_BOOST_BASE([1.49.0], [], [AC_MSG_ERROR(
         [Boost 1.49.0 or later is required but was not found.])])])
 
-# Require Boost of at least version 1.54.0 if on darwin.
+# Require Boost of at least version 1.54.0 if in clang.
 #------------------------------------------------------------------------------
-AS_CASE([${host_os}], [*darwin*],
+AS_CASE([${CC}], [*clang*],
     [AX_BOOST_BASE([1.54.0], [], [AC_MSG_ERROR(
         [Boost 1.54.0 or later is required but was not found.])])])
 
@@ -180,55 +177,105 @@ AC_SUBST([boost_LIBS], ["-lboost_chrono -lboost_program_options"])
 #==============================================================================
 # Warn on all stuff.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wall],
-    [CXXFLAGS="$CXXFLAGS -Wall"])
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wall],
+        [CXXFLAGS="$CXXFLAGS -Wall"])])
 
 # Warn on extra stuff.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wextra],
-    [CXXFLAGS="$CXXFLAGS -Wextra"])
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wextra],
+        [CXXFLAGS="$CXXFLAGS -Wextra"])])
+
+# Causes numerous property_tree warnings in clang. Enabled in gcc only.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*gcc*],
+    [AX_CHECK_COMPILE_FLAG([-Wpedantic],
+        [CXXFLAGS="$CXXFLAGS -Wpedantic"],
+        [AX_CHECK_COMPILE_FLAG([-pedantic],
+            [CXXFLAGS="$CXXFLAGS -pedantic"])])])
 
 # Conform to style.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-missing-braces],
-    [CXXFLAGS="$CXXFLAGS -Wno-missing-braces"])
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-missing-braces],
+        [CXXFLAGS="$CXXFLAGS -Wno-missing-braces"])])
 
-# Clean up Boost 1.49 headers (gcc).
+# Clean up Boost 1.54 headers. Enabled in clang only.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
-    [CXXFLAGS="$CXXFLAGS -Wno-unused-local-typedefs"])
+AS_CASE([${CC}], [*clang*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-deprecated-register],
+        [CXXFLAGS="$CXXFLAGS -Wno-deprecated-register"])])
+
+# Clean up Boost 1.49 headers. Enabled in gcc only.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*gcc*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
+        [CXXFLAGS="$CXXFLAGS -Wno-unused-local-typedefs"])])
+
+# Clean up Boost 1.49 headers, static with no exceptions. Enabled in gcc only.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*gcc*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-maybe-uninitialized],
+        [CXXFLAGS="$CXXFLAGS -Wno-maybe-uninitialized"])])
+
+# Clean up Boost 1.54 headers, static with no exceptions. Enabled in clang only.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*clang*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-sometimes-uninitialized],
+        [CXXFLAGS="$CXXFLAGS -Wno-sometimes-uninitialized"])])
+
+# Clean up Boost property_tree headers with exceptions disabled.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-return-type],
+        [CXXFLAGS="$CXXFLAGS -Wno-return-type"])])
 
 # Clean up protobuf headers.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
-    [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
-
-# Clean up boost property_tree headers (boost exceptions off).
-#------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-maybe-uninitialized],
-    [CXXFLAGS="$CXXFLAGS -Wno-maybe-uninitialized"])
-
-# Clean up boost property_tree headers (boost exceptions off).
-#------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-return-type],
-    [CXXFLAGS="$CXXFLAGS -Wno-return-type"])
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
+        [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])])
 
 # Clean up protobuf headers.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
-    [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
+        [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])])
+
+# Clean up protobuf headers. Enabled in clang only.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*clang*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-nested-anon-types],
+        [CXXFLAGS="$CXXFLAGS -Wno-nested-anon-types"])])
 
 # Protect stack.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-fstack-protector],
-    [AX_CHECK_LINK_FLAG([-fstack-protector],
-        [CXXFLAGS="$CXXFLAGS -fstack-protector"])])
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-fstack-protector],
+        [AX_CHECK_LINK_FLAG([-fstack-protector],
+            [CXXFLAGS="$CXXFLAGS -fstack-protector"])])])
 
 # Protect stack comprehensively.
 #------------------------------------------------------------------------------
-AX_CHECK_COMPILE_FLAG([-fstack-protector-all],
-    [AX_CHECK_LINK_FLAG([-fstack-protector-all],
-        [CXXFLAGS="$CXXFLAGS -fstack-protector-all"])])
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-fstack-protector-all],
+        [AX_CHECK_LINK_FLAG([-fstack-protector-all],
+            [CXXFLAGS="$CXXFLAGS -fstack-protector-all"])])])
+
+# Hide inlines from external libs (disabled pending review).
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*disabled*],
+    [AX_CHECK_COMPILE_FLAG([-fvisibility-inlines-hidden],
+        [CXXFLAGS="$CXXFLAGS -fvisibility-inlines-hidden"])])
+
+# Set visibility to internal or hidden (disabled pending review).
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*disabled*],
+    [AX_CHECK_COMPILE_FLAG([-fvisibility=internal],
+        [CXXFLAGS="$CXXFLAGS -fvisibility=internal"],
+        [AX_CHECK_COMPILE_FLAG([-fvisibility=hidden],
+            [CXXFLAGS="$CXXFLAGS -fvisibility=hidden"])])])
 
 
 # Process outputs into templates.
