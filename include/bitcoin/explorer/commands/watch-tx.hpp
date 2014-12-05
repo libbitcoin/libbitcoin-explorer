@@ -169,7 +169,7 @@ public:
         )
         (
             "HASH",
-            value<std::string>(&argument_.hash),
+            value<primitives::btc256>(&argument_.hash),
             "The Base16 transaction hash to watch. If not specified the hash is read from STDIN."
         );
 
@@ -190,7 +190,7 @@ public:
     /**
      * Get the value of the HASH argument.
      */
-    BCX_API virtual std::string& get_hash_argument()
+    BCX_API virtual primitives::btc256& get_hash_argument()
     {
         return argument_.hash;
     }
@@ -199,7 +199,7 @@ public:
      * Set the value of the HASH argument.
      */
     BCX_API virtual void set_hash_argument(
-        const std::string& value)
+        const primitives::btc256& value)
     {
         argument_.hash = value;
     }
@@ -235,7 +235,7 @@ private:
         {
         }
 
-        std::string hash;
+        primitives::btc256 hash;
     } argument_;
 
     /**

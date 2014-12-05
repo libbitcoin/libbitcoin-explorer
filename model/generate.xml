@@ -530,7 +530,7 @@
 
   <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires an Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="HASH" stdin="true" ype="btc256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
+    <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
     <define name="BX_WATCH_TX_WAITING" value="Watching transaction: %1%..." />
     <define name="BX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
