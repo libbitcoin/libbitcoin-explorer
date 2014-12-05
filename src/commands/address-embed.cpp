@@ -42,7 +42,7 @@ console_result address_embed::invoke(std::ostream& output, std::ostream& error)
     const auto& version = get_version_option();
 
     // Create script from hash of data.
-    auto tokens = format(ADDRESS_EMBED_SCRIPT) % base16(ripemd160_hash((bc::data_chunk)data));
+    auto tokens = format(ADDRESS_EMBED_SCRIPT) % base16(ripemd160_hash(data));
     const script embeded_script(split(tokens.str()));
 
     // Make ripemd hash of serialized script.

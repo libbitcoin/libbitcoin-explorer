@@ -58,6 +58,11 @@ raw::operator const data_chunk&() const
     return value_;
 }
 
+raw::operator data_slice() const
+{
+    return value_;
+}
+
 std::istream& operator>>(std::istream& input, raw& argument)
 {
     std::istreambuf_iterator<char> first(input), last;

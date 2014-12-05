@@ -66,16 +66,16 @@ ec_secret& ec_private::data()
 
 ec_private::operator const ec_secret&() const
 {
-    return value_; 
+    return value_;
 }
 
 std::istream& operator>>(std::istream& input, ec_private& argument)
 {
     std::string hexcode;
     input >> hexcode;
-        
-    ec_secret secret = btc256(hexcode);
-    if (!verify_private_key(secret))
+
+    data_chunk secret;
+    if (!decode_base16(secret, hexcode) || secret.size() != ec_secret_size)
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
     std::copy(secret.begin(), secret.end(), argument.value_.begin());
@@ -84,7 +84,7 @@ std::istream& operator>>(std::istream& input, ec_private& argument)
 
 std::ostream& operator<<(std::ostream& output, const ec_private& argument)
 {
-    output << btc256(argument.value_);
+    output << base16(argument.value_);
     return output;
 }
 
