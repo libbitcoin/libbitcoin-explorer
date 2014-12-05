@@ -37,9 +37,9 @@ obelisk_client::obelisk_client(czmqpp::context& context,
     std::shared_ptr<message_stream> base_stream
         = std::static_pointer_cast<message_stream>(stream_);
 
-    codec_ = std::make_shared<obelisk_codec>(base_stream,
-        obelisk_codec::on_update_nop, obelisk_codec::on_unknown_nop, timeout,
-        retries);
+    codec_ = std::make_shared<obelisk_codec>(base_stream);
+    codec_->set_timeout(timeout);
+    codec_->set_retries(retries);
 }
 
 int obelisk_client::connect(const std::string& address,
