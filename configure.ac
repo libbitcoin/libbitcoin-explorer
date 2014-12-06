@@ -187,9 +187,9 @@ AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wextra],
         [CXXFLAGS="$CXXFLAGS -Wextra"])])
 
-# Causes numerous property_tree warnings in clang. Enabled in gcc only.
+# Causes numerous property_tree warnings in boost 1.49 (static, gcc). Enabled in clang only.
 #------------------------------------------------------------------------------
-AS_CASE([${CC}], [*gcc*],
+AS_CASE([${CC}], [*clang*],
     [AX_CHECK_COMPILE_FLAG([-Wpedantic],
         [CXXFLAGS="$CXXFLAGS -Wpedantic"],
         [AX_CHECK_COMPILE_FLAG([-pedantic],
@@ -201,31 +201,31 @@ AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-missing-braces],
         [CXXFLAGS="$CXXFLAGS -Wno-missing-braces"])])
 
-# Clean up Boost 1.54 headers. Enabled in clang only.
+# Clean up boost 1.54 headers. Enabled in clang only.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*clang*],
     [AX_CHECK_COMPILE_FLAG([-Wno-deprecated-register],
         [CXXFLAGS="$CXXFLAGS -Wno-deprecated-register"])])
 
-# Clean up Boost 1.49 headers. Enabled in gcc only.
+# Clean up boost 1.49 headers. Enabled in gcc only.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*gcc*],
     [AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
         [CXXFLAGS="$CXXFLAGS -Wno-unused-local-typedefs"])])
 
-# Clean up Boost 1.49 headers, static with no exceptions. Enabled in gcc only.
+# Clean up boost 1.49 headers, static with no exceptions. Enabled in gcc only.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*gcc*],
     [AX_CHECK_COMPILE_FLAG([-Wno-maybe-uninitialized],
         [CXXFLAGS="$CXXFLAGS -Wno-maybe-uninitialized"])])
 
-# Clean up Boost 1.54 headers, static with no exceptions. Enabled in clang only.
+# Clean up boost 1.54 headers, static with no exceptions. Enabled in clang only.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*clang*],
     [AX_CHECK_COMPILE_FLAG([-Wno-sometimes-uninitialized],
         [CXXFLAGS="$CXXFLAGS -Wno-sometimes-uninitialized"])])
 
-# Clean up Boost property_tree headers with exceptions disabled.
+# Clean up boost property_tree headers, with no exceptions.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-return-type],
@@ -234,14 +234,14 @@ AS_CASE([${CC}], [*],
 # Clean up protobuf headers.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
-    [AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
-        [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])])
-
-# Clean up protobuf headers.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
         [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])])
+
+# Clean up protobuf headers. Enabled in clang only.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*clang*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
+        [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])])
 
 # Clean up protobuf headers. Enabled in clang only.
 #------------------------------------------------------------------------------
