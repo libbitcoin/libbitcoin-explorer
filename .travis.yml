@@ -96,11 +96,11 @@ install:
     - if [[ $OSX   && $CLANG && $DYNAMIC ]]; then brew install gmp; fi
     - if [[ $OSX   && $CLANG && $DYNAMIC ]]; then brew install bash-completion; fi
 
-    # Download and install packages for linux/gcc/dynamic.
-    - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo apt-get -qq install bash-completion; fi
-
     # Download and install packages for linux/clang/dynamic.
     - if [[ $LINUX && $CLANG && $DYNAMIC ]]; then sudo apt-get -qq install libgmp-dev; fi
+
+    # Download and install packages for linux/gcc/dynamic.
+    - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo apt-get -qq install bash-completion; fi
 
 script:
 
@@ -109,5 +109,5 @@ script:
     - if [[ $LINUX && $CLANG && $STATIC  ]]; then ./install.sh --disable-silent-rules --disable-shared --build-gmp --build-boost --prefix=$HOME/my-prefix CXXFLAGS='-Os -stdlib=libc++' LDLIBS='-lc++ -lc++abi -lm -lc -lgcc_s -lgcc'; fi
     - if [[ $LINUX && $GCC   && $STATIC  ]]; then ./install.sh --disable-shared --build-gmp --build-boost --prefix=$HOME/my-prefix --build-dir=my-build CXXFLAGS='-Os -s'; fi
     - if [[ $OSX   && $CLANG && $DYNAMIC ]]; then ./install.sh ; fi
-    - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-static --build-gmp --build-boost CXXFLAGS='-Os -s'; fi
     - if [[ $LINUX && $CLANG && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-silent-rules --disable-static --build-boost CXXFLAGS='-Os -stdlib=libc++' LDLIBS='-lc++ -lc++abi -lm -lc -lgcc_s -lgcc'; fi
+    - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-static --build-gmp --build-boost CXXFLAGS='-Os -s'; fi
