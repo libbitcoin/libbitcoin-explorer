@@ -54,13 +54,6 @@ BOOST_AUTO_TEST_CASE(base58__constructor__valid_string_cast__decodes)
     BOOST_REQUIRE(original == instance);
 }
 
-BOOST_AUTO_TEST_CASE(base58__constructor__chunk_data__decodes)
-{
-    const data_chunk original(BASE58_DECODED_A);
-    const data_chunk instance = base58(original).data();
-    BOOST_REQUIRE(original == instance);
-}
-
 BOOST_AUTO_TEST_CASE(base58__constructor__copy_address_primitives__round_trips)
 {
     //BX_SERIALIZE_COPY_ROUND_TRIP(base58, BASE58_ENCODED_A);

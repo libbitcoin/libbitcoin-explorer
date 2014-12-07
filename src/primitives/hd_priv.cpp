@@ -53,11 +53,6 @@ hd_priv::hd_priv(const hd_priv& other)
 {
 }
 
-hd_private_key& hd_priv::data()
-{
-    return value_;
-}
-
 hd_priv::operator const hd_private_key&() const
 {
     return value_; 

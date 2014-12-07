@@ -54,11 +54,6 @@ base16::base16(const base16& other)
 {
 }
 
-data_chunk& base16::data()
-{
-    return value_;
-}
-
 base16::operator const data_chunk&() const
 {
     return value_;

@@ -70,12 +70,6 @@ public:
     BCX_API input(const input_point& value);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API tx_input_type& data();
-
-    /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */

@@ -48,11 +48,6 @@ raw::raw(const raw& other)
 {
 }
 
-data_chunk& raw::data()
-{
-    return value_;
-}
-
 raw::operator const data_chunk&() const
 {
     return value_;

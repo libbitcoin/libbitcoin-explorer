@@ -68,12 +68,6 @@ public:
     BCX_API point(const point& other);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API output_point& data();
-
-    /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */

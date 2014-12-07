@@ -62,12 +62,6 @@ public:
     BCX_API raw(const raw& other);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API data_chunk& data();
-
-    /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */

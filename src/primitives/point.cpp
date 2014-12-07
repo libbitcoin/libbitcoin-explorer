@@ -67,11 +67,6 @@ point::point(const point& other)
 {
 }
 
-output_point& point::data()
-{
-    return value_;
-}
-
 point::operator const output_point&() const
 {
     return value_; 

@@ -53,11 +53,6 @@ btc256::btc256(const btc256& other)
 {
 }
 
-hash_digest& btc256::data()
-{
-    return value_;
-}
-
 btc256::operator const hash_digest&() const
 {
     return value_;

@@ -65,12 +65,6 @@ public:
     BCX_API btc256(const btc256& other);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API hash_digest& data();
-
-    /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
