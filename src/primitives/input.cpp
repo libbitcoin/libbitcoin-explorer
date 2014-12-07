@@ -73,11 +73,6 @@ input::input(const input_point& value)
     value_.script = script_type();
 }
 
-tx_input_type& input::data()
-{
-    return value_;
-}
-
 input::operator const tx_input_type&() const
 {
     return value_; 

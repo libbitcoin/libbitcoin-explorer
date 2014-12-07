@@ -52,11 +52,6 @@ base58::base58(const base58& other)
 {
 }
 
-data_chunk& base58::data()
-{
-    return value_;
-}
-
 base58::operator const data_chunk&() const
 {
     return value_;

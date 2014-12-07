@@ -59,11 +59,6 @@ btc160::btc160(const btc160& other)
 {
 }
 
-short_hash& btc160::data()
-{
-    return value_;
-}
-
 btc160::operator const short_hash&() const
 {
     return value_;

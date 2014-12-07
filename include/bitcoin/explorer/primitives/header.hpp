@@ -51,12 +51,6 @@ public:
      */
     BCX_API header(const std::string& hexcode);
 
-    ///**
-    // * Initialization constructor.
-    // * @param[in]  value  The value to initialize with.
-    // */
-    //BCX_API header(const data_chunk& value);
-
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
@@ -68,12 +62,6 @@ public:
      * @param[in]  other  The object to copy into self on construct.
      */
     BCX_API header(const header& other);
-
-    /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API block_header_type& data();
 
     /**
      * Overload cast to internal type.

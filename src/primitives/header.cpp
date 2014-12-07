@@ -44,11 +44,6 @@ header::header(const std::string& hexcode)
     std::stringstream(hexcode) >> *this;
 }
 
-//header::header(const data_chunk& value)
-//    : header((const std::string&)base16(value))
-//{
-//}
-
 header::header(const block_header_type& value)
     : value_(value)
 {
@@ -57,11 +52,6 @@ header::header(const block_header_type& value)
 header::header(const header& other)
     : header(other.value_)
 {
-}
-
-block_header_type& header::data()
-{
-    return value_;
 }
 
 header::operator const block_header_type&() const

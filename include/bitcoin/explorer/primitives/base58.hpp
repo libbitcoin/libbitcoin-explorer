@@ -62,12 +62,6 @@ public:
     BCX_API base58(const base58& other);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API data_chunk& data();
-
-    /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */

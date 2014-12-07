@@ -54,11 +54,6 @@ hd_pub::hd_pub(const hd_pub& other)
 {
 }
 
-hd_public_key& hd_pub::data()
-{
-    return value_;
-}
-
 hd_pub::operator const hd_public_key&() const
 {
     return value_; 

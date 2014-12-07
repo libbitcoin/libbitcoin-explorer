@@ -69,12 +69,6 @@ public:
     BCX_API btc160(const btc160& other);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API short_hash& data();
-
-    /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */

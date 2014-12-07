@@ -57,11 +57,6 @@ wif::wif(const wif& other)
 {
 }
 
-ec_secret& wif::data()
-{
-    return value_;
-}
-
 bool wif::get_compressed() const
 {
     return compressed_;

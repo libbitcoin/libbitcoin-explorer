@@ -68,12 +68,6 @@ public:
     BCX_API wif(const wif& other);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API ec_secret& data();
-
-    /**
      * Get the compressed property.
      */
     BCX_API bool get_compressed() const;
