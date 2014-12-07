@@ -185,6 +185,12 @@
     <ClCompile Include="..\..\..\..\test\commands\input-validate.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\message-sign.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>

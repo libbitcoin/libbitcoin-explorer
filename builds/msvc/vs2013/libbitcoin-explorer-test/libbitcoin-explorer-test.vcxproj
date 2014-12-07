@@ -132,6 +132,8 @@
     <ClCompile Include="..\..\..\..\test\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-validate.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\message-sign.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mpk.cpp" />

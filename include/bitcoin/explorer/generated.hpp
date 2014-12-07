@@ -74,6 +74,8 @@
 #include <bitcoin/explorer/commands/input-set.hpp>
 #include <bitcoin/explorer/commands/input-sign.hpp>
 #include <bitcoin/explorer/commands/input-validate.hpp>
+#include <bitcoin/explorer/commands/message-sign.hpp>
+#include <bitcoin/explorer/commands/message-validate.hpp>
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
 #include <bitcoin/explorer/commands/mpk.hpp>

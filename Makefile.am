@@ -61,6 +61,7 @@ bitcoin_explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/base16.hpp \
     include/bitcoin/explorer/primitives/base2.hpp \
     include/bitcoin/explorer/primitives/base58.hpp \
+    include/bitcoin/explorer/primitives/base64.hpp \
     include/bitcoin/explorer/primitives/btc.hpp \
     include/bitcoin/explorer/primitives/btc160.hpp \
     include/bitcoin/explorer/primitives/btc256.hpp \
@@ -136,6 +137,8 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/input-set.hpp \
     include/bitcoin/explorer/commands/input-sign.hpp \
     include/bitcoin/explorer/commands/input-validate.hpp \
+    include/bitcoin/explorer/commands/message-sign.hpp \
+    include/bitcoin/explorer/commands/message-validate.hpp \
     include/bitcoin/explorer/commands/mnemonic-decode.hpp \
     include/bitcoin/explorer/commands/mnemonic-encode.hpp \
     include/bitcoin/explorer/commands/mpk.hpp \
@@ -199,6 +202,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/base16.cpp \
     src/primitives/base2.cpp \
     src/primitives/base58.cpp \
+    src/primitives/base64.cpp \
     src/primitives/btc.cpp \
     src/primitives/btc160.cpp \
     src/primitives/btc256.cpp \
@@ -278,6 +282,8 @@ src_libbitcoin_explorer_la_SOURCES += \
     src/commands/input-set.cpp \
     src/commands/input-sign.cpp \
     src/commands/input-validate.cpp \
+    src/commands/message-sign.cpp \
+    src/commands/message-validate.cpp \
     src/commands/mnemonic-decode.cpp \
     src/commands/mnemonic-encode.cpp \
     src/commands/mpk.cpp \
@@ -417,6 +423,8 @@ test_libbitcoin_explorer_test_SOURCES += \
     test/commands/input-set.cpp \
     test/commands/input-sign.cpp \
     test/commands/input-validate.cpp \
+    test/commands/message-sign.cpp \
+    test/commands/message-validate.cpp \
     test/commands/mnemonic-decode.cpp \
     test/commands/mnemonic-encode.cpp \
     test/commands/mpk.cpp \

@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_BASE16_DECODE_HPP
-#define BX_BASE16_DECODE_HPP
+#ifndef BX_MESSAGE_SIGN_HPP
+#define BX_MESSAGE_SIGN_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -66,9 +66,9 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the base16-decode command.
+ * Class to implement the message-sign command.
  */
-class base16_decode 
+class message_sign 
     : public command
 {
 public:
@@ -78,7 +78,7 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "base16-decode";
+        return "message-sign";
     }
 
 
@@ -87,7 +87,7 @@ public:
      */
     BCX_API virtual const char* name()
     {
-        return base16_decode::symbol();
+        return message_sign::symbol();
     }
 
     /**
@@ -95,7 +95,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "HASH";
+        return "WALLET";
     }
 
     /**
@@ -103,7 +103,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert a Base16 value to binary data.";
+        return "Create a message signature.";
     }
 
     /**
@@ -114,7 +114,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("BASE16", 1);
+            .add("WIF", 1)
+            .add("MESSAGE", 1);
     }
 
 	/**
@@ -125,7 +126,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_base16_argument(), "BASE16", variables, input);
+        load_input(get_message_argument(), "MESSAGE", variables, input);
     }
 
     /**
@@ -149,9 +150,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "BASE16",
-            value<primitives::base16>(&argument_.base16),
-            "The Base16 value to decode as binary data. If not specified the value is read from STDIN."
+            "WIF",
+            value<primitives::wif>(&argument_.wif),
+            "The WIF private key to use for signing."
+        )
+        (
+            "MESSAGE",
+            value<primitives::raw>(&argument_.message),
+            "The binary message data to sign."
         );
 
         return options;
@@ -169,20 +175,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the BASE16 argument.
+     * Get the value of the WIF argument.
      */
-    BCX_API virtual primitives::base16& get_base16_argument()
+    BCX_API virtual primitives::wif& get_wif_argument()
     {
-        return argument_.base16;
+        return argument_.wif;
     }
 
     /**
-     * Set the value of the BASE16 argument.
+     * Set the value of the WIF argument.
      */
-    BCX_API virtual void set_base16_argument(
-        const primitives::base16& value)
+    BCX_API virtual void set_wif_argument(
+        const primitives::wif& value)
     {
-        argument_.base16 = value;
+        argument_.wif = value;
+    }
+
+    /**
+     * Get the value of the MESSAGE argument.
+     */
+    BCX_API virtual primitives::raw& get_message_argument()
+    {
+        return argument_.message;
+    }
+
+    /**
+     * Set the value of the MESSAGE argument.
+     */
+    BCX_API virtual void set_message_argument(
+        const primitives::raw& value)
+    {
+        argument_.message = value;
     }
 
 private:
@@ -195,11 +218,13 @@ private:
     struct argument
     {
         argument()
-          : base16()
+          : wif(),
+            message()
         {
         }
 
-        primitives::base16 base16;
+        primitives::wif wif;
+        primitives::raw message;
     } argument_;
 
     /**

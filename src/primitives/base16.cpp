@@ -69,11 +69,9 @@ std::istream& operator>>(std::istream& input, base16& argument)
     std::string hexcode;
     input >> hexcode;
 
-    data_chunk chunk = decode_hex(hexcode);
-    if (chunk.empty())
+    if (!decode_base16(argument.value_, hexcode))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
-    argument.value_.assign(chunk.begin(), chunk.end());
     return input;
 }
 

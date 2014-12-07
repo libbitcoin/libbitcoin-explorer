@@ -59,6 +59,8 @@ function global.normalize_type(type)
         return type_base2_bx
     elsif my.type = type_base58
         return type_base58_bx
+    elsif my.type = type_base64
+        return type_base64_bx
     elsif my.type = type_btc
         return type_btc_bx
     elsif my.type = type_btc160
@@ -180,6 +182,7 @@ type_base10 = "base10"
 type_base16 = "base16"
 type_base2 = "base2"
 type_base58 = "base58"
+type_base64 = "base64"
 type_btc = "btc"
 type_btc160 = "btc160"
 type_btc256 = "btc256"
@@ -210,6 +213,7 @@ type_base10_bx = "primitives::base10"
 type_base16_bx = "primitives::base16"
 type_base2_bx = "primitives::base2"
 type_base58_bx = "primitives::base58"
+type_base64_bx = "primitives::base64"
 type_btc_bx = "primitives::btc"
 type_btc160_bx = "primitives::btc160"
 type_btc256_bx = "primitives::btc256"
@@ -272,6 +276,7 @@ xml_true = "true"
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
+#include <bitcoin/explorer/primitives/base64.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>

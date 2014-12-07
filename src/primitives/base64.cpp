@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/primitives/btc160.hpp>
+#include <bitcoin/explorer/primitives/base64.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -25,7 +25,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace po;
 
@@ -33,65 +32,50 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-// This is not a libbitcoin utility similar to that for hash_digest
-// because it's just a simple base16 conversion.
-static bool decode_hash(short_hash& out, const std::string& in)
-{
-    if (in.size() != 2 * out.size())
-        return false;
-
-    if (!decode_base16_raw(out.data(), out.size(), in.data()))
-        return false;
-
-    return true;
-}
-
-
-btc160::btc160()
+base64::base64()
     : value_()
 {
 }
 
-btc160::btc160(const std::string& hexcode)
+base64::base64(const std::string& base64)
 {
-    std::stringstream(hexcode) >> *this;
+    std::stringstream(base64) >> *this;
 }
 
-btc160::btc160(const short_hash& value)
+base64::base64(const data_chunk& value)
     : value_(value)
 {
 }
 
-// This drops the address version number.
-btc160::btc160(const payment_address& address)
-    : btc160(address.hash())
+base64::base64(const base64& other)
+    : base64(other.value_)
 {
 }
 
-btc160::btc160(const btc160& other)
-    : btc160(other.value_)
-{
-}
-
-btc160::operator const short_hash&() const
+base64::operator const data_chunk&() const
 {
     return value_;
 }
 
-std::istream& operator>>(std::istream& input, btc160& argument)
+base64::operator data_slice() const
 {
-    std::string hexcode;
-    input >> hexcode;
+    return value_;
+}
 
-    if (!decode_hash(argument.value_, hexcode))
-        BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
+std::istream& operator>>(std::istream& input, base64& argument)
+{
+    std::string base64;
+    input >> base64;
+
+    if (!decode_base64(argument.value_, base64))
+        BOOST_THROW_EXCEPTION(invalid_option_value(base64));
 
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const btc160& argument)
+std::ostream& operator<<(std::ostream& output, const base64& argument)
 {
-    output << base16(argument.value_);
+    output << encode_base64(argument.value_);
     return output;
 }
 
