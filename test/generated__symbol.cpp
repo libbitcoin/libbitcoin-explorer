@@ -279,6 +279,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__input_validate__returns_expected_value)
     BOOST_REQUIRE_EQUAL(input_validate::symbol(), "input-validate");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__message_sign__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(message_sign::symbol(), "message-sign");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__message_validate__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(message_validate::symbol(), "message-validate");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_decode__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(mnemonic_decode::symbol(), "mnemonic-decode");

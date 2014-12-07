@@ -294,7 +294,7 @@
   <command symbol="initchain" category="ONLINE" obsolete="true" description="Initialize a new blockchain database.">
     <define name="BX_INITCHAIN_OBSOLETE" value="Server administration tools are no longer supported." />
   </command>
-  
+
   <command symbol="input-sign" formerly="sign-input" typeX="base16" category="TRANSACTION" description="Create a Bitcoin signature for a transaction input.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'." />
@@ -324,7 +324,21 @@
     <define name="BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
     <define name="BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
   </command>  
-  
+
+  <command symbol="message-sign" typeX="base64" category="WALLET" description="Create a message signature.">
+    <argument name="WIF" type="wif" description="The WIF private key to use for signing." />
+    <argument name="MESSAGE" stdin="true" type="raw" description="The binary message data to sign." />
+  </command>
+
+  <command symbol="message-validate" typeX="string" category="WALLET" description="Validate a message signature.">
+    <argument name="BITCOIN_ADDRESS" type="address" description="The Bitcoin address of the message signer."/>
+    <argument name="SIGNATURE" type="base64" description="The WIF private key." />
+    <argument name="MESSAGE" stdin="true" type="raw" description="The binary message data for which the signature applies." />
+    <define name="BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE_FORMAT" value="The signature is not the required 65 bytes in length." />
+    <define name="BX_MESSAGE_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
+    <define name="BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
+  </command>
+
   <command symbol="mnemonic-decode" typeX="base16" category="WALLET" description="Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39.">
     <argument name="WORD" stdin="true" limit="-1" description="The set of words from the Electrum word list. If not specified the words are read from STDIN." />
     <define name="BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE" value="At least three words are required." />

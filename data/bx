@@ -50,6 +50,8 @@ _bx()
         input-set
         input-sign
         input-validate
+        message-sign
+        message-validate
         mnemonic-decode
         mnemonic-encode
         qrcode

@@ -87,6 +87,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<input_set>());
     func(make_shared<input_sign>());
     func(make_shared<input_validate>());
+    func(make_shared<message_sign>());
+    func(make_shared<message_validate>());
     func(make_shared<mnemonic_decode>());
     func(make_shared<mnemonic_encode>());
     func(make_shared<mpk>());
@@ -231,6 +233,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<input_sign>();
     if (symbol == input_validate::symbol())
         return make_shared<input_validate>();
+    if (symbol == message_sign::symbol())
+        return make_shared<message_sign>();
+    if (symbol == message_validate::symbol())
+        return make_shared<message_validate>();
     if (symbol == mnemonic_decode::symbol())
         return make_shared<mnemonic_decode>();
     if (symbol == mnemonic_encode::symbol())

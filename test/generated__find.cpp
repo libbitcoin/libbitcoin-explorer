@@ -279,6 +279,16 @@ BOOST_AUTO_TEST_CASE(generated__find__input_validate__returns_object)
     BOOST_REQUIRE(find("input-validate") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__message_sign__returns_object)
+{
+    BOOST_REQUIRE(find("message-sign") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__message_validate__returns_object)
+{
+    BOOST_REQUIRE(find("message-validate") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_decode__returns_object)
 {
     BOOST_REQUIRE(find("mnemonic-decode") != nullptr);
