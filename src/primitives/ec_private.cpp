@@ -25,14 +25,29 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace po;
 
 namespace libbitcoin {
 namespace explorer {
 namespace primitives {
+
+// ec_secret format is currently private to bx.
+static bool decode_secret(ec_secret& secret, const std::string& encoded)
+{
+    data_chunk result;
+    if (!decode_base16(result, encoded) || result.size() != secret.size())
+        return false;
+
+    std::copy(result.begin(), result.end(), secret.begin());
+    return true;
+}
+
+static std::string encode_secret(const ec_secret& secret)
+{
+    return encode_base16(secret);
+}
 
 ec_private::ec_private()
     : value_()
@@ -74,17 +89,15 @@ std::istream& operator>>(std::istream& input, ec_private& argument)
     std::string hexcode;
     input >> hexcode;
 
-    data_chunk secret;
-    if (!decode_base16(secret, hexcode) || secret.size() != ec_secret_size)
+    if (!decode_secret(argument.value_, hexcode))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
-    std::copy(secret.begin(), secret.end(), argument.value_.begin());
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const ec_private& argument)
 {
-    output << base16(argument.value_);
+    output << encode_secret(argument.value_);
     return output;
 }
 

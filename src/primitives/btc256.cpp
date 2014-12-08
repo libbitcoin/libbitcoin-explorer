@@ -63,11 +63,9 @@ std::istream& operator>>(std::istream& input, btc256& argument)
     std::string hexcode;
     input >> hexcode;
 
-    hash_digest hash;
-    if (!decode_hash(hash, hexcode))
+    if (!decode_hash(argument.value_, hexcode))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
-    std::copy(hash.begin(), hash.end(), argument.value_.begin());
     return input;
 }
 

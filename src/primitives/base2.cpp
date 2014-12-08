@@ -63,6 +63,7 @@ base2::operator const bc::binary_type&() const
     return value_; 
 }
 
+// Legacy support for obelisk v1 implementation, maintained by -client.
 base2::operator client::stealth_prefix() const
 {
     client::stealth_prefix client_prefix{ 0, 0 };

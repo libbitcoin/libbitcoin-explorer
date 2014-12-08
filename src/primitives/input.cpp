@@ -36,14 +36,29 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-static void parse_input(tx_input_type& input,
-    const std::vector<std::string>& tokens)
+// input is currently a private encoding in bx.
+static bool decode_input(tx_input_type& input, const std::string& tuple)
 {
+    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
+    if (tokens.size() != 2 && tokens.size() != 3)
+        return false;
+
     input.script = script_type();
     input.sequence = max_sequence;
     input.previous_output = point(tokens[0] + ":" + tokens[1]);
     if (tokens.size() == 3)
         deserialize(input.sequence, tokens[2]);
+
+    return true;
+}
+
+// input is currently a private encoding in bx.
+static std::string encode_input(const tx_input_type& input)
+{
+    std::stringstream result;
+    result << point(input.previous_output) << BX_TX_POINT_DELIMITER << 
+        input.sequence;
+    return result.str();
 }
 
 input::input()
@@ -83,19 +98,15 @@ std::istream& operator>>(std::istream& stream, input& argument)
     std::string tuple;
     stream >> tuple;
 
-    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
-    if (tokens.size() != 2 && tokens.size() != 3)
+    if (!decode_input(argument.value_, tuple))
         BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
 
-    parse_input(argument.value_, tokens);
     return stream;
 }
 
 std::ostream& operator<<(std::ostream& output, const input& argument)
 {
-    const auto& out = argument.value_;
-    output << point(out.previous_output) << BX_TX_POINT_DELIMITER 
-        << out.sequence;
+    output << encode_input(argument.value_);
     return output;
 }
 

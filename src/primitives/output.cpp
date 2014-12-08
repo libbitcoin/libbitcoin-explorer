@@ -109,22 +109,30 @@ static ec_secret generate_private_key(const std::vector<std::string>& tokens)
     return null_hash;
 }
 
-static std::string parse_outputs(std::vector<tx_output_type>& outputs,
-    const std::vector<std::string>& tokens)
+// output is currently a private encoding in bx.
+static bool decode_outputs(std::vector<tx_output_type>& outputs,
+    std::string& pay_address, const std::string& tuple)
 {
-    outputs.clear();
+    std::vector<tx_output_type> result;
+
+    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
+    if (tokens.size() != 2 && tokens.size() != 3)
+        return false;
+
     auto& target = tokens[0];
     tx_output_type output;
     deserialize(output.value, tokens[1]);
 
-    payment_address address;
-    if (address.set_encoded(target))
+    payment_address pay_to_address;
+    if (pay_to_address.set_encoded(target))
     {
-        if (!build_output_script(output.script, address))
+        if (!build_output_script(output.script, pay_to_address))
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
 
-        outputs.push_back(output);
-        return address.encoded();
+        result.push_back(output);
+        outputs = result;
+        pay_address = pay_to_address.encoded();
+        return true;
     }
 
     stealth_address stealth;
@@ -149,23 +157,38 @@ static std::string parse_outputs(std::vector<tx_output_type>& outputs,
 
         // Add RETURN meta output.
         auto meta_output = build_stealth_meta_output(ephemeral_secret);
-        outputs.push_back(meta_output);
+        result.push_back(meta_output);
 
         // Generate the address.
-        payment_address pay_address;
-        set_public_key(pay_address, public_key);
-        if (!build_output_script(output.script, pay_address))
+        payment_address pay_to_address;
+        set_public_key(pay_to_address, public_key);
+        if (!build_output_script(output.script, pay_to_address))
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
 
-        outputs.push_back(output);
-        return pay_address.encoded();
+        result.push_back(output);
+        outputs = result;
+        pay_address = pay_to_address.encoded();
+        return true;
     }
 
     // Otherwise the token is assumed to be a base16-encoded script.
     output.script = script(target);
 
-    outputs.push_back(output);
-    return pretty(output.script);
+    result.push_back(output);
+    outputs = result;
+    pay_address = pretty(output.script);
+    return true;
+}
+
+// output is currently a private encoding in bx.
+// This does not retain the original serialized form.
+// It serializes the last output, as base16 encoded script.
+static std::string encode_outputs(const std::vector<tx_output_type>& outputs)
+{
+    std::stringstream result;
+    const auto& last = outputs.back();
+    result << script(last.script) << BX_TX_POINT_DELIMITER << last.value;
+    return result.str();
 }
 
 output::output()
@@ -204,20 +227,17 @@ std::istream& operator>>(std::istream& input, output& argument)
     std::string tuple;
     input >> tuple;
 
-    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
-    if (tokens.size() != 2 && tokens.size() != 3)
+    if (!decode_outputs(argument.value_, argument.pay_to_, tuple))
         BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
 
-    argument.pay_to_ = parse_outputs(argument.value_, tokens);
     return input;
 }
 
 std::ostream& operator<<(std::ostream& stream, const output& argument)
 {
     // This does not retain the original serialized form.
-    // Instead this serializes the last output, as base16 encoded script.
-    const auto& last = argument.value_.back();
-    stream << script(last.script) << BX_TX_POINT_DELIMITER << last.value;
+    // It serializes the last output, as base16 encoded script.
+    stream << encode_outputs(argument.value_);
     return stream;
 }
 

@@ -64,6 +64,7 @@ std::istream& operator>>(std::istream& input, header& argument)
     std::string hexcode;
     input >> hexcode;
 
+    // header base16 is a private encoding in bx, used to pass between commands.
     if (!deserialize_satoshi_item(argument.value_, base16(hexcode)))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
@@ -73,6 +74,8 @@ std::istream& operator>>(std::istream& input, header& argument)
 std::ostream& operator<<(std::ostream& output, const header& argument)
 {
     const auto bytes = serialize_satoshi_item(argument.value_);
+
+    // header base16 is a private encoding in bx, used to pass between commands.
     output << base16(bytes);
     return output;
 }
