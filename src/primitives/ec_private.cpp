@@ -36,12 +36,7 @@ namespace primitives {
 // ec_secret format is currently private to bx.
 static bool decode_secret(ec_secret& secret, const std::string& encoded)
 {
-    data_chunk result;
-    if (!decode_base16(result, encoded) || result.size() != secret.size())
-        return false;
-
-    std::copy(result.begin(), result.end(), secret.begin());
-    return true;
+    return decode_base16(secret, encoded);
 }
 
 static std::string encode_secret(const ec_secret& secret)

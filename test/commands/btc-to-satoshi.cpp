@@ -57,14 +57,13 @@ BOOST_AUTO_TEST_CASE(btc_to_satoshi__invoke__max_uint64_btc__okay_output)
     BX_REQUIRE_OUTPUT("18446744073709551615\n");
 }
 
-// This is beaking but shouldn't be.
-//BOOST_AUTO_TEST_CASE(btc_to_satoshi__invoke__max_precision_btc__okay_output)
-//{
-//    BX_DECLARE_COMMAND(commands::btc_to_satoshi);
-//    command.set_btc_argument({ "1.99999999" });
-//    BX_REQUIRE_OKAY(command.invoke(output, error));
-//    BX_REQUIRE_OUTPUT("199999999\n");
-//}
+BOOST_AUTO_TEST_CASE(btc_to_satoshi__invoke__max_precision_btc__okay_output)
+{
+    BX_DECLARE_COMMAND(commands::btc_to_satoshi);
+    command.set_btc_argument({ "1.99999999" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("199999999\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
