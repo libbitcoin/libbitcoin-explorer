@@ -52,12 +52,6 @@ public:
      */
     BCX_API transaction(const std::string& hexcode);
 
-    ///**
-    // * Initialization constructor.
-    // * @param[in]  value  The value to initialize with.
-    // */
-    //BCX_API transaction(const data_chunk& value);
-
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.

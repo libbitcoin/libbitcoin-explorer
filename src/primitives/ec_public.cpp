@@ -25,7 +25,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace po;
@@ -33,6 +32,25 @@ using namespace po;
 namespace libbitcoin {
 namespace explorer {
 namespace primitives {
+
+// ec_point format is currently private to bx.
+static bool decode_point(ec_point& point, const std::string& encoded)
+{
+    data_chunk result;
+    if (!decode_base16(result, encoded) || result.size() != point.size())
+        return false;
+
+    if (verify_public_key_fast(ec_point(result)))
+        return false;
+
+    point.assign(result.begin(), result.end());
+    return true;
+}
+
+static std::string encode_point(const ec_point& point)
+{
+    return encode_base16(point);
+}
 
 ec_public::ec_public()
     : value_()
@@ -84,17 +102,15 @@ std::istream& operator>>(std::istream& input, ec_public& argument)
     std::string hexcode;
     input >> hexcode;
 
-    ec_point point = base16(hexcode);
-    if (!verify_public_key_fast(point) /*|| !verify_public_key(point)*/)
+    if (!decode_point(argument.value_, hexcode))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
-    argument.value_.assign(point.begin(), point.end());
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const ec_public& argument)
 {
-    output << base16(argument.value_);
+    output << encode_point(argument.value_);
     return output;
 }
 

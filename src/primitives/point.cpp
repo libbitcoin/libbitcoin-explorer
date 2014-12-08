@@ -35,9 +35,13 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-static void parse_point(output_point& point,
-    const std::vector<std::string>& tokens)
+// point format is currently private to bx.
+static bool decode_point(output_point& point, const std::string& tuple)
 {
+    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
+    if (tokens.size() != 2)
+        return false;
+
     // validate and deserialize the transaction hash
     const btc256 digest(tokens[0]);
     const hash_digest& txhash = digest;
@@ -45,6 +49,15 @@ static void parse_point(output_point& point,
     // copy the input point values
     std::copy(txhash.begin(), txhash.end(), point.hash.begin());
     deserialize(point.index, tokens[1]);
+    return true;
+}
+
+// point format is currently private to bx.
+static std::string encode_point(const output_point& point)
+{
+    std::stringstream result;
+    result << btc256(point.hash) << BX_TX_POINT_DELIMITER << point.index;
+    return result.str();
 }
 
 point::point()
@@ -77,19 +90,15 @@ std::istream& operator>>(std::istream& input, point& argument)
     std::string tuple;
     input >> tuple;
 
-    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
-    if (tokens.size() != 2)
+    if (!decode_point(argument.value_, tuple))
         BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
 
-    parse_point(argument.value_, tokens);
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const point& argument)
 {
-    // see concat_point()
-    const auto& out = argument.value_;
-    output << btc256(out.hash) << BX_TX_POINT_DELIMITER << out.index;
+    output << encode_point(argument.value_);
     return output;
 }
 

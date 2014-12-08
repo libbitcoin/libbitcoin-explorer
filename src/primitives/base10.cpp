@@ -34,7 +34,7 @@ namespace explorer {
 namespace primitives {
 
     base10::base10()
-        : value_()
+        : value_(0)
     {
     }
 

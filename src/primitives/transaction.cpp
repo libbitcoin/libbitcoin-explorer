@@ -44,11 +44,6 @@ transaction::transaction(const std::string& hexcode)
     std::stringstream(hexcode) >> *this;
 }
 
-//transaction::transaction(const data_chunk& value)
-//    : transaction((const std::string&)base16(value))
-//{
-//}
-
 transaction::transaction(const tx_type& value)
     : value_(value)
 {
@@ -74,6 +69,7 @@ std::istream& operator>>(std::istream& input, transaction& argument)
     std::string hexcode;
     input >> hexcode;
 
+    // tx base16 is a private encoding in bx, used to pass between commands.
     if (!deserialize_satoshi_item(argument.value_, base16(hexcode)))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
@@ -82,6 +78,7 @@ std::istream& operator>>(std::istream& input, transaction& argument)
 
 std::ostream& operator<<(std::ostream& output, const transaction& argument)
 {
+    // tx base16 is a private encoding in bx, used to pass between commands.
     const auto bytes = serialize_satoshi_item(argument.value_);
     output << base16(bytes);
     return output;

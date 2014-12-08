@@ -88,7 +88,6 @@ std::istream& operator>>(std::istream& input, wif& argument)
 
 std::ostream& operator<<(std::ostream& output, const wif& argument)
 {
-    // secret_to_public_key(secret, compressed);
     output << secret_to_wif(argument.value_, argument.compressed_);
     return output;
 }

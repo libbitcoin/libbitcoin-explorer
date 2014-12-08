@@ -50,6 +50,7 @@ stealth::stealth(const stealth_address& address)
 {
 }
 
+// TODO: move to libbitcoin.
 stealth::stealth(const bc::binary_type& prefix, const ec_public& scan_key,
     const std::vector<ec_public>& spend_keys, uint8_t signatures, bool testnet)
 {
