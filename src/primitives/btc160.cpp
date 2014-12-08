@@ -33,20 +33,6 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-// This is not a libbitcoin utility similar to that for hash_digest
-// because it's just a simple base16 conversion.
-static bool decode_hash(short_hash& out, const std::string& in)
-{
-    if (in.size() != 2 * out.size())
-        return false;
-
-    if (!decode_base16_raw(out.data(), out.size(), in.data()))
-        return false;
-
-    return true;
-}
-
-
 btc160::btc160()
     : value_()
 {
