@@ -48,12 +48,6 @@ btc160::btc160(const short_hash& value)
 {
 }
 
-// This drops the address version number.
-btc160::btc160(const payment_address& address)
-    : btc160(address.hash())
-{
-}
-
 btc160::btc160(const btc160& other)
     : btc160(other.value_)
 {

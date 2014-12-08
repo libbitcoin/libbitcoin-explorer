@@ -57,12 +57,6 @@ public:
     BCX_API btc160(const short_hash& value);
 
     /**
-     * Initialization constructor.
-     * @param[in]  address  The value to initialize with.
-     */
-    BCX_API btc160(const payment_address& address);
-
-    /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
