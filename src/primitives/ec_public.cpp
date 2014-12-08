@@ -37,10 +37,10 @@ namespace primitives {
 static bool decode_point(ec_point& point, const std::string& encoded)
 {
     data_chunk result;
-    if (!decode_base16(result, encoded) || result.size() != point.size())
+    if (!decode_base16(result, encoded))
         return false;
 
-    if (verify_public_key_fast(ec_point(result)))
+    if (!verify_public_key_fast(ec_point(result)))
         return false;
 
     point.assign(result.begin(), result.end());
