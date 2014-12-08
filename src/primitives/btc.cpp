@@ -61,7 +61,7 @@ std::istream& operator>>(std::istream& input, btc& argument)
     std::string bitcoins;
     input >> bitcoins;
 
-    if (!decode_base10(argument.value_, bitcoins))
+    if (!decode_base10(argument.value_, bitcoins, btc_decimal_places))
         BOOST_THROW_EXCEPTION(invalid_option_value(bitcoins));
 
     return input;
@@ -70,7 +70,7 @@ std::istream& operator>>(std::istream& input, btc& argument)
 std::ostream& operator<<(std::ostream& output, const btc& argument)
 {
     std::string bitcoins;
-    bitcoins = encode_base10(argument.value_);
+    bitcoins = encode_base10(argument.value_, btc_decimal_places);
     output << bitcoins;
     return output;
 }
