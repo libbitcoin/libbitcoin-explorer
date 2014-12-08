@@ -89,6 +89,7 @@ data_chunk new_seed(size_t bitlength)
     return seed;
 }
 
+// Not testable due to lack of clock injection.
 ptime now()
 {
     using namespace boost::posix_time;
