@@ -47,6 +47,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<base58_encode>());
     func(make_shared<base58check_decode>());
     func(make_shared<base58check_encode>());
+    func(make_shared<base64_decode>());
+    func(make_shared<base64_encode>());
     func(make_shared<bci_fetch_last_height>());
     func(make_shared<bci_history>());
     func(make_shared<bitcoin160>());
@@ -153,6 +155,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base58check_decode>();
     if (symbol == base58check_encode::symbol())
         return make_shared<base58check_encode>();
+    if (symbol == base64_decode::symbol())
+        return make_shared<base64_decode>();
+    if (symbol == base64_encode::symbol())
+        return make_shared<base64_encode>();
     if (symbol == bci_fetch_last_height::symbol())
         return make_shared<bci_fetch_last_height>();
     if (symbol == bci_history::symbol())

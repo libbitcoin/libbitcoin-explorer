@@ -133,6 +133,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58check-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58check-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base64-decode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base64-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bci-fetch-last-height.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bci-history.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bitcoin160.hpp" />
@@ -268,6 +270,8 @@
     <ClCompile Include="..\..\..\..\src\commands\base58-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58check-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\base64-decode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\base64-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\bci-fetch-last-height.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\bitcoin160.cpp" />
