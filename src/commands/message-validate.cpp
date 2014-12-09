@@ -38,16 +38,18 @@ console_result message_validate::invoke(std::ostream& output,
 
     // This is a hack that prevents us from having to create a primitive for
     // message_signatures as a data type and instead just treat it as base16.
-
+    ///////////////////////////////////////////////////////////////////////////
     if (signature_bytes.size() != message_signature_size)
     {
-        output << BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE_FORMAT << std::endl;
+        error << BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE_FORMAT 
+            << std::endl;
         return console_result::failure;
     }
 
     message_signature signature;
     std::copy(signature_bytes.begin(), signature_bytes.end(),
         signature.begin());
+    ///////////////////////////////////////////////////////////////////////////
 
     if (!verify_message(message, address, signature))
     {

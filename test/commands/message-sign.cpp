@@ -26,8 +26,28 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(message_sign__invoke)
 
-BOOST_AUTO_TEST_CASE(message_sign__invoke__okay_output)
+#define MESSAGE_SIGN_WIF_COMPRESSED "KwE19y2Ud8EUEBjeUG4Uc4qWUJUUoZJxHR3xUfTpCSsJEDv2o8fu"
+#define MESSAGE_SIGN_SIGNATURE_COMPRESSED "HxQp3cXgOIhBEGXks27sfeSQHVgNUeYgl5i5wG/dOUYaSIRnnzXR6NcyH+AfNAHtkWcyOD9rX4pojqmuQyH79K4="
+
+#define MESSAGE_SIGN_WIF_UNCOMPRESSED "5HpMRgt5u8yyU1AfPwcgLGphD5Qu4ka4v7McE4jKrGNpQPyRqXC"
+#define MESSAGE_SIGN_SIGNATURE_UNCOMPRESSED "GxQp3cXgOIhBEGXks27sfeSQHVgNUeYgl5i5wG/dOUYaSIRnnzXR6NcyH+AfNAHtkWcyOD9rX4pojqmuQyH79K4="
+
+BOOST_AUTO_TEST_CASE(message_sign__invoke__compressed__okay_output)
 {
+    BX_DECLARE_NETWORK_COMMAND(message_sign);
+    command.set_message_argument({ "Nakomoto" });
+    command.set_wif_argument({ MESSAGE_SIGN_WIF_COMPRESSED });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(MESSAGE_SIGN_SIGNATURE_COMPRESSED "\n");
+}
+
+BOOST_AUTO_TEST_CASE(message_sign__invoke__uncompressed__okay_output)
+{
+    BX_DECLARE_NETWORK_COMMAND(message_sign);
+    command.set_message_argument({ "Nakomoto" });
+    command.set_wif_argument({ MESSAGE_SIGN_WIF_UNCOMPRESSED });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(MESSAGE_SIGN_SIGNATURE_UNCOMPRESSED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
