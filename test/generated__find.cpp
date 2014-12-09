@@ -79,6 +79,16 @@ BOOST_AUTO_TEST_CASE(generated__find__base58check_encode__returns_object)
     BOOST_REQUIRE(find("base58check-encode") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__base64_decode__returns_object)
+{
+    BOOST_REQUIRE(find("base64-decode") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__base64_encode__returns_object)
+{
+    BOOST_REQUIRE(find("base64-encode") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__bci_fetch_last_height__returns_object)
 {
     BOOST_REQUIRE(find("bci-fetch-last-height") != nullptr);

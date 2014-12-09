@@ -34,6 +34,8 @@
 #include <bitcoin/explorer/commands/base58-encode.hpp>
 #include <bitcoin/explorer/commands/base58check-decode.hpp>
 #include <bitcoin/explorer/commands/base58check-encode.hpp>
+#include <bitcoin/explorer/commands/base64-decode.hpp>
+#include <bitcoin/explorer/commands/base64-encode.hpp>
 #include <bitcoin/explorer/commands/bci-fetch-last-height.hpp>
 #include <bitcoin/explorer/commands/bci-history.hpp>
 #include <bitcoin/explorer/commands/bitcoin160.hpp>

@@ -92,6 +92,8 @@
     <ClCompile Include="..\..\..\..\test\commands\base58-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58check-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58check-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\base64-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\base64-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bci-fetch-last-height.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bitcoin160.cpp" />

@@ -109,13 +109,13 @@
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to encode as Base58. If not specified the value is read from STDIN." />
   </command>
   
-  <commandX symbol="base64-decode" typeX="raw" category="HASH" description="Convert a Base64 value to binary data.">
+  <command symbol="base64-decode" typeX="raw" category="HASH" description="Convert a Base64 value to binary data.">
     <argument name="BASE64" stdin="true" type="base64" description="The Base64 value to decode as binary data. If not specified the value is read from STDIN." />
-  </commandX>
+  </command>
 
-  <commandX symbol="base64-encode" typeX="base64" category="HASH" description="Convert binary data to Base64.">
+  <command symbol="base64-encode" typeX="base64" category="HASH" description="Convert binary data to Base64.">
     <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base64. This can be text or any other data. If not specified the data is read from STDIN." />
-  </commandX>
+  </command>
 
   <command symbol="bci-fetch-last-height" category="ONLINE" obsolete="true" description="Get the last block height from blockchain.info.">
     <define name="BX_BCI_FETCH_LAST_HEIGHT_OBSOLETE" value="This command is no longer supported. Use fetch-height." />

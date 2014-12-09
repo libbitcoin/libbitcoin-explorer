@@ -97,6 +97,8 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/base58-encode.hpp \
     include/bitcoin/explorer/commands/base58check-decode.hpp \
     include/bitcoin/explorer/commands/base58check-encode.hpp \
+    include/bitcoin/explorer/commands/base64-decode.hpp \
+    include/bitcoin/explorer/commands/base64-encode.hpp \
     include/bitcoin/explorer/commands/bci-fetch-last-height.hpp \
     include/bitcoin/explorer/commands/bci-history.hpp \
     include/bitcoin/explorer/commands/bitcoin160.hpp \
@@ -242,6 +244,8 @@ src_libbitcoin_explorer_la_SOURCES += \
     src/commands/base58-encode.cpp \
     src/commands/base58check-decode.cpp \
     src/commands/base58check-encode.cpp \
+    src/commands/base64-decode.cpp \
+    src/commands/base64-encode.cpp \
     src/commands/bci-fetch-last-height.cpp \
     src/commands/bci-history.cpp \
     src/commands/bitcoin160.cpp \
@@ -383,6 +387,8 @@ test_libbitcoin_explorer_test_SOURCES += \
     test/commands/base58-encode.cpp \
     test/commands/base58check-decode.cpp \
     test/commands/base58check-encode.cpp \
+    test/commands/base64-decode.cpp \
+    test/commands/base64-encode.cpp \
     test/commands/bci-fetch-last-height.cpp \
     test/commands/bci-history.cpp \
     test/commands/bitcoin160.cpp \
