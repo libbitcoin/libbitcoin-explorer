@@ -47,7 +47,6 @@ function global.last_char(value)
     return character
 endfunction
 
-# TODO: hash table
 function global.normalize_type(type)
     if my.type = type_address
         return type_address_bx
@@ -61,12 +60,12 @@ function global.normalize_type(type)
         return type_base58_bx
     elsif my.type = type_base64
         return type_base64_bx
-    elsif my.type = type_btc
-        return type_btc_bx
     elsif my.type = type_btc160
         return type_btc160_bx
     elsif my.type = type_btc256
         return type_btc256_bx
+    elsif my.type = type_byte
+        return type_byte_bx
     elsif my.type = type_ec_private
         return type_ec_private_bx
     elsif my.type = type_ec_public
@@ -116,7 +115,8 @@ endfunction
 function global.pluralize(name, is_plural)
     if (my.is_plural)
         #BUGBUG: the string comparison just doesn't work.
-        return my.name + if_else_empty(last_char(my.name) = "s", "e") + "s"
+        return my.name + \
+            if_else_empty(string.last_char(my.name) = "s", "e") + "s"
     endif
     return my.name
 endfunction
@@ -183,9 +183,9 @@ type_base16 = "base16"
 type_base2 = "base2"
 type_base58 = "base58"
 type_base64 = "base64"
-type_btc = "btc"
 type_btc160 = "btc160"
 type_btc256 = "btc256"
+type_byte = "byte"
 type_ec_private = "ec_private"
 type_ec_public = "ec_public"
 type_encoding = "encoding"
@@ -214,9 +214,9 @@ type_base16_bx = "primitives::base16"
 type_base2_bx = "primitives::base2"
 type_base58_bx = "primitives::base58"
 type_base64_bx = "primitives::base64"
-type_btc_bx = "primitives::btc"
 type_btc160_bx = "primitives::btc160"
 type_btc256_bx = "primitives::btc256"
+type_byte_bx = "primitives::byte"
 type_ec_private_bx = "primitives::ec_private"
 type_ec_public_bx = "primitives::ec_public"
 type_encoding_bx = "primitives::encoding"
@@ -277,9 +277,9 @@ xml_true = "true"
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>

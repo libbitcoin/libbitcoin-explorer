@@ -59,10 +59,19 @@ void display_invalid_command(std::ostream& stream, const std::string& command,
     stream << std::endl;
 }
 
+// English only hack to patch missing arg name in boost exception message.
+static std::string fixup_boost_po_what_en(const std::string& what)
+{
+    std::string message(what);
+    boost::replace_all(message, "for option is invalid", "is invalid");
+    return message;
+}
+
 void display_invalid_parameter(std::ostream& stream, 
     const std::string& message)
 {
-    stream << format(BX_INVALID_PARAMETER) % message << std::endl;
+    stream << format(BX_INVALID_PARAMETER) % fixup_boost_po_what_en(message)
+        << std::endl;
 }
 
 void display_unexpected_exception(std::ostream& stream,

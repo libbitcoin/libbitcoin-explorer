@@ -17,61 +17,64 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_BASE10_HPP
-#define BX_BASE10_HPP
+#ifndef BX_BYTE_HPP
+#define BX_BYTE_HPP
 
-#include <cstdint>
 #include <iostream>
+#include <string>
+#include <cstdint>
 #include <bitcoin/explorer/define.hpp>
+
+/* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between text, btc and satoshi.
+ * Serialization helper to convert between decimal string and uint8_t.
  */
-class base10
+class byte
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API base10();
+    BCX_API byte();
 
     /**
      * Initialization constructor.
-     * @param[in]  btc  The number of btc to initialize with.
+     * @param[in]  byte  The value to initialize with.
      */
-    BCX_API base10(const std::string& btc);
+    BCX_API byte(uint8_t byte);
 
     /**
      * Initialization constructor.
-     * @param[in]  satoshi  The number of satoshi to initialize with.
+     * @param[in]  decimal  The value to initialize with.
      */
-    BCX_API base10(uint64_t satoshi);
+    BCX_API byte(const std::string& decimal);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API base10(const base10& other);
+    BCX_API byte(const byte& other);
 
     /**
-     * Return a reference to the data member cast as satoshi.
-     * @return  A reference to the object's internal data.
+     * Overload cast to internal type.
+     * @return  This object's value cast to internal type.
      */
-    BCX_API operator uint64_t() const;
+    BCX_API operator uint8_t() const;
 
     /**
-     * Overload stream in. Throws if input is invalid.
+     * Overload stream in. If input is invalid sets no bytes in argument.
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
     BCX_API friend std::istream& operator>>(std::istream& input,
-        base10& argument);
+        byte& argument);
 
     /**
      * Overload stream out.
@@ -80,14 +83,14 @@ public:
      * @return                The output stream reference.
      */
     BCX_API friend std::ostream& operator<<(std::ostream& output,
-        const base10& argument);
+        const byte& argument);
 
 private:
 
     /**
-     * The state of this object's number of satoshis.
+     * The state of this object.
      */
-    uint64_t value_;
+    uint8_t value_;
 };
 
 } // namespace explorer

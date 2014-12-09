@@ -113,13 +113,13 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base64.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc.hpp">
-      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc256.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\byte.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp">
@@ -257,13 +257,13 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base64.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc.cpp">
-      <Filter>src\\primitives</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc256.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\byte.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp">

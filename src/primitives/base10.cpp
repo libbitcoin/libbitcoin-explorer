@@ -19,13 +19,11 @@
  */
 #include <bitcoin/explorer/primitives/base10.hpp>
 
-#include <iostream>
-#include <string>
 #include <cstdint>
+#include <iostream>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace po;
 
@@ -33,55 +31,49 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-    base10::base10()
-        : value_(0)
-    {
-    }
+base10::base10()
+    : value_(0)
+{
+}
 
-    base10::base10(const std::string& decimal)
-    {
-        std::stringstream(decimal) >> *this;
-    }
+base10::base10(const std::string& btc)
+{
+    std::stringstream(btc) >> *this;
+}
 
-    base10::base10(uint8_t byte)
-        : value_(byte)
-    {
-    }
+base10::base10(uint64_t satoshi)
+    : value_(satoshi)
+{
+}
 
-    base10::base10(const base10& other)
-        : base10(other.value_)
-    {
-    }
+base10::base10(const base10& other)
+    : value_(other.value_)
+{
+}
 
-    base10::operator uint8_t() const
-    {
-        return value_; 
-    }
+base10::operator uint64_t() const
+{
+    return value_;
+}
 
-    std::istream& operator>>(std::istream& input, base10& argument)
-    {
-        std::string decimal;
-        input >> decimal;
-        
-        // We have this base10 class only because deserialization doesn't
-        // treat 8 bit values as decimal numbers (unlike 16+ bit numbers).
+std::istream& operator>>(std::istream& input, base10& argument)
+{
+    std::string bitcoins;
+    input >> bitcoins;
 
-        uint16_t number;
-        deserialize(number, decimal);
+    if (!decode_base10(argument.value_, bitcoins, btc_decimal_places))
+        BOOST_THROW_EXCEPTION(invalid_option_value(bitcoins));
 
-        if (number > max_uint8)
-            BOOST_THROW_EXCEPTION(invalid_option_value(decimal));
+    return input;
+}
 
-        argument.value_ = static_cast<uint8_t>(number);
-        return input;
-    }
-
-    std::ostream& operator<<(std::ostream& output, const base10& argument)
-    {
-        uint16_t number(argument.value_);
-        output << number;
-        return output;
-    }
+std::ostream& operator<<(std::ostream& output, const base10& argument)
+{
+    std::string bitcoins;
+    bitcoins = encode_base10(argument.value_, btc_decimal_places);
+    output << bitcoins;
+    return output;
+}
 
 } // namespace explorer
 } // namespace primitives

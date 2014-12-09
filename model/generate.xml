@@ -28,7 +28,7 @@
   <configuration section="general">
     <!-- Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers. -->
     <setting name="network" default="mainnet" description="The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'." />
-    <setting name="retries" type="base10" description="Number of times to retry contacting the server before giving up." />
+    <setting name="retries" type="byte" description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
     
@@ -69,12 +69,12 @@
   </command>
   
   <command symbol="address-embed" formerly="embed-addr" typeX="address" category="WALLET" description="Generate a Bitcoin address with an embedded record of binary data.">
-    <option name="version" type="base10" description="The desired Bitcoin address version." />
+    <option name="version" type="byte" description="The desired Bitcoin address version." />
     <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN." />
   </command>
 
   <command symbol="address-encode" formerly="encode-addr" typeX="address" category="WALLET" description="Convert a RIPEMD160 value to a Bitcoin address.">
-    <option name="version" type="base10" description="The desired Bitcoin address version." />
+    <option name="version" type="byte" description="The desired Bitcoin address version." />
     <argument name="RIPEMD160" stdin="true" type="btc160" description="The Base16 hash to convert. If not specified the value is read from STDIN."/>
   </command>
 
@@ -97,7 +97,7 @@
   </command>
 
   <command symbol="base58check-encode" typeX="base58" category="HASH" description="Convert a Base16 value to Base58Check.">
-    <option name="version" type="base10" description="The desired version number." />
+    <option name="version" type="byte" description="The desired version number." />
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to Base58Check encode. If not specified the value is read from STDIN." />
   </command>
   
@@ -109,6 +109,14 @@
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to encode as Base58. If not specified the value is read from STDIN." />
   </command>
   
+  <commandX symbol="base64-decode" typeX="raw" category="HASH" description="Convert a Base64 value to binary data.">
+    <argument name="BASE64" stdin="true" type="base64" description="The Base64 value to decode as binary data. If not specified the value is read from STDIN." />
+  </commandX>
+
+  <commandX symbol="base64-encode" typeX="base64" category="HASH" description="Convert binary data to Base64.">
+    <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base64. This can be text or any other data. If not specified the data is read from STDIN." />
+  </commandX>
+
   <command symbol="bci-fetch-last-height" category="ONLINE" obsolete="true" description="Get the last block height from blockchain.info.">
     <define name="BX_BCI_FETCH_LAST_HEIGHT_OBSOLETE" value="This command is no longer supported. Use fetch-height." />
   </command>
@@ -130,7 +138,7 @@
   </command>
 
   <command symbol="btc-to-satoshi" formerly="satoshi" typeX="uint64_t" category="MATH" description="Convert BTC to satoshi.">
-    <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
+    <argument name="BTC" stdin="true" type="base10" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
   <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
@@ -169,7 +177,7 @@
   </command>
   
   <command symbol="ec-to-address" formerly="addr" typeX="address" category="WALLET" description="Convert an EC public key to a Bitcoin address.">
-    <option name="version" type="base10" description="The desired Bitcoin address version." />
+    <option name="version" type="byte" description="The desired Bitcoin address version." />
     <argument name="EC_PUBLIC_KEY" stdin="true" type="ec_public" description="The Base16 EC public key to convert. If not specified the key is read from STDIN." />
   </command>
 
@@ -183,7 +191,7 @@
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key to convert. If not specified the key is read from STDIN."/>
   </command>
   
-  <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
+  <!-- TODO: ensure proper handling of Unicode PASSPHRASE in Windows builds. -->
   <command symbol="ec-unlock" typeX="ec_private" category="WALLET" stub="true" description="Extract the EC private key from a passphrase-protected (BIP38) EC private key.">
     <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
     <define name="BX_EC_UNLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
@@ -445,7 +453,7 @@
   
   <command symbol="stealth-encode" typeX="stealth" category="STEALTH" description="Encode a stealth payment address.">
     <option name="prefix" type="base2" description="The Base2 stealth prefix that will be used to locate payments." />
-    <option name="signatures" type="base10" description="Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
+    <option name="signatures" type="byte" description="The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a payment." />
     <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
     <define name="BX_STEALTH_ENCODE_PREFIX_TOO_LONG" value="The prefix is limited to 32 bits." />
@@ -507,7 +515,7 @@
   </command>
   
   <command symbol="uri-encode" category="WALLET" description="Compose a Bitcoin URI from specified parts.">
-    <option name="amount" type="btc" description="The value of the amount parameter." />
+    <option name="amount" type="base10" description="The value of the amount parameter." />
     <option name="label" type="string" description="The value of the label parameter." />
     <option name="message" type="string" description="The value of the label parameter." />
     <option name="request" type="uri" description="The value of the payment request parameter." />
@@ -563,7 +571,7 @@
   </command>
 
   <command symbol="wrap-encode" formerly="wrap" typeX="wrapper" category="HASH" description="Add a version byte and checksum to Base16 data.">
-    <option name="version" type="base10" description="The desired version number." />
+    <option name="version" type="byte" description="The desired version number." />
     <argument name="PAYLOAD" stdin="true" type="base16" description="The Base16 data to wrap. If not specified the value is read from STDIN." />
   </command>
   

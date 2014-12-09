@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2011-2014 sx developers (see AUTHORS)
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
- * This file is part of sx.
+ * This file is part of libbitcoin-explorer.
  *
- * sx is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License with
+ * libbitcoin-explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
  * additional permissions to the one published by the Free Software
  * Foundation, either version 3 of the License, or (at your option)
  * any later version. For more information see LICENSE.
@@ -17,94 +17,72 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "precompile.hpp"
-#include <sx/serializer/byte.hpp>
+#include <bitcoin/explorer/primitives/byte.hpp>
 
 #include <iostream>
-#include <sstream>
 #include <string>
-#include <stdint.h>
+#include <cstdint>
 #include <boost/program_options.hpp>
-#include <sx/define.hpp>
-#include <sx/utility/utility.hpp>
+#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace po;
 
-namespace sx {
-namespace serializer {
+namespace libbitcoin {
+namespace explorer {
+namespace primitives {
 
-byte::byte()
-    : value_()
-{
-}
+    byte::byte()
+        : value_(0)
+    {
+    }
 
-byte::byte(const std::string& number)
-{
-    std::stringstream(number) >> *this;
-}
+    byte::byte(const std::string& decimal)
+    {
+        std::stringstream(decimal) >> *this;
+    }
 
-byte::byte(const uint8_t& value)
-    : value_(value)
-{
-}
+    byte::byte(uint8_t byte)
+        : value_(byte)
+    {
+    }
 
-byte::byte(const byte& other)
-    : byte(other.value_)
-{
-}
+    byte::byte(const byte& other)
+        : byte(other.value_)
+    {
+    }
 
-uint8_t& byte::data()
-{
-    return value_;
-}
+    byte::operator uint8_t() const
+    {
+        return value_; 
+    }
 
-byte::operator const uint8_t&() const
-{
-    return value_;
-}
+    std::istream& operator>>(std::istream& input, byte& argument)
+    {
+        std::string decimal;
+        input >> decimal;
+        
+        // We have this byte class only because deserialization doesn't
+        // treat 8 bit values as decimal numbers (unlike 16+ bit numbers).
 
-byte& byte::operator++()
-{
-    ++value_;
-    return *this;
-}
+        uint16_t number;
+        deserialize(number, decimal);
 
-byte byte::operator++(int)
-{
-    byte temp(*this);
-    operator++();
-    return temp;
-}
+        if (number > max_uint8)
+            BOOST_THROW_EXCEPTION(invalid_option_value(decimal));
 
-//byte& byte::operator--()
-//{
-//    --value_;
-//    return *this;
-//}
-//
-//byte byte::operator--(int)
-//{
-//    byte temp(*this);
-//    operator--();
-//    return temp;
-//}
+        argument.value_ = static_cast<uint8_t>(number);
+        return input;
+    }
 
-std::istream& operator>>(std::istream& input, byte& argument)
-{
-    std::string text;
-    input >> text;
+    std::ostream& operator<<(std::ostream& output, const byte& argument)
+    {
+        uint16_t number(argument.value_);
+        output << number;
+        return output;
+    }
 
-    deserialize(argument.value_, text);
-    // throw invalid_option_value(text);
-
-    return input;
-}
-
-std::ostream& operator<<(std::ostream& output, const byte& argument)
-{
-    output << static_cast<int>(argument.value_);
-    return output;
-}
-
-} // sx
-} // serializer
+} // namespace explorer
+} // namespace primitives
+} // namespace libbitcoin

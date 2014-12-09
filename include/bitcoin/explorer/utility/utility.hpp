@@ -220,7 +220,7 @@ BCX_API bool is_base2(const std::string& text);
  * @param[in]  seed  The seed for key randomness.
  * @return           The new key.
  */
-BCX_API ec_secret new_key(const data_chunk& seed);
+BCX_API ec_secret new_key(data_slice seed);
 
 /**
  * Generate a new pseudorandom seed.

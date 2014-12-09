@@ -35,9 +35,9 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>

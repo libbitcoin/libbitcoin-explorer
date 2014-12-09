@@ -35,9 +35,9 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -150,7 +150,7 @@ public:
         )
         (
             "version,v",
-            value<primitives::base10>(&option_.version),
+            value<primitives::byte>(&option_.version),
             "The desired version number."
         )
         (
@@ -193,7 +193,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    BCX_API virtual primitives::base10& get_version_option()
+    BCX_API virtual primitives::byte& get_version_option()
     {
         return option_.version;
     }
@@ -202,7 +202,7 @@ public:
      * Set the value of the version option.
      */
     BCX_API virtual void set_version_option(
-        const primitives::base10& value)
+        const primitives::byte& value)
     {
         option_.version = value;
     }
@@ -236,7 +236,7 @@ private:
         {
         }
 
-        primitives::base10 version;
+        primitives::byte version;
     } option_;
 };
 

@@ -67,16 +67,22 @@ std::string join(const std::vector<std::string>& words,
     return boost::join(words, delimiter);
 }
 
-// The key may be invalid, caller must test for null secret.
-// Note that random fill of ec_secret could also generate an invalid key,
-// but that would be less easily tested than this result.
-ec_secret new_key(const bc::data_chunk& seed)
+// The key may be invalid, caller may test for null secret.
+ec_secret new_key(data_slice seed)
 {
     // The testnet value is not relevant to the secret.
     constexpr bool testnet = false;
 
-    // Using HD key generation because we don't yet have one for EC.
+    // This is retained in order to preserve test cases and docs.
+    // Using HD key generation because we don't have helper for EC.
     const hd_private_key hd_key(seed, testnet);
+
+    if (!hd_key.valid())
+    {
+        std::cerr << "You just won the lottery!" << std::endl;
+        return ec_secret();
+    }
+
     return hd_key.private_key();
 }
 
@@ -89,6 +95,7 @@ data_chunk new_seed(size_t bitlength)
     return seed;
 }
 
+// Not testable due to lack of clock injection.
 ptime now()
 {
     using namespace boost::posix_time;
