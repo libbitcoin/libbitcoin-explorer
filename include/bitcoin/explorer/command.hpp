@@ -32,9 +32,9 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -190,7 +190,7 @@ public:
         )
         (
             "general.retries",
-            value<primitives::base10>(&setting_.general.retries),
+            value<primitives::byte>(&setting_.general.retries),
             "Number of times to retry contacting the server before giving up."
         )
         (
@@ -270,7 +270,7 @@ public:
     /**
      * Get the value of the general.retries setting.
      */
-    BCX_API virtual primitives::base10 get_general_retries_setting()
+    BCX_API virtual primitives::byte get_general_retries_setting()
     {
         return setting_.general.retries;
     }
@@ -278,7 +278,7 @@ public:
     /**
      * Set the value of the general.retries setting.
      */
-    BCX_API virtual void set_general_retries_setting(primitives::base10 value)
+    BCX_API virtual void set_general_retries_setting(primitives::byte value)
     {
         setting_.general.retries = value;
     }
@@ -383,7 +383,7 @@ private:
             }
 
             std::string network;
-            primitives::base10 retries;
+            primitives::byte retries;
             uint32_t wait;
         } general;
 

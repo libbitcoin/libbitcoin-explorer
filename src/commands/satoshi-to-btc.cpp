@@ -23,7 +23,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
@@ -35,6 +35,6 @@ console_result satoshi_to_btc::invoke(std::ostream& output,
     // Bound parameters.
     const auto satoshi = get_satoshi_argument();
 
-    output << btc(satoshi) << std::endl;
+    output << base10(satoshi) << std::endl;
     return console_result::okay;
 }

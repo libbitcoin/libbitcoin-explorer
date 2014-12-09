@@ -35,9 +35,9 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -165,8 +165,8 @@ public:
         )
         (
             "signatures,s",
-            value<primitives::base10>(&option_.signatures),
-            "Specify the number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
+            value<primitives::byte>(&option_.signatures),
+            "The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
         )
         (
             "SCAN_PUBKEY",
@@ -247,7 +247,7 @@ public:
     /**
      * Get the value of the signatures option.
      */
-    BCX_API virtual primitives::base10& get_signatures_option()
+    BCX_API virtual primitives::byte& get_signatures_option()
     {
         return option_.signatures;
     }
@@ -256,7 +256,7 @@ public:
      * Set the value of the signatures option.
      */
     BCX_API virtual void set_signatures_option(
-        const primitives::base10& value)
+        const primitives::byte& value)
     {
         option_.signatures = value;
     }
@@ -294,7 +294,7 @@ private:
         }
 
         primitives::base2 prefix;
-        primitives::base10 signatures;
+        primitives::byte signatures;
     } option_;
 };
 

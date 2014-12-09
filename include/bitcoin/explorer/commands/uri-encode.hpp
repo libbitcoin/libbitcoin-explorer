@@ -35,9 +35,9 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -155,7 +155,7 @@ public:
         )
         (
             "amount,a",
-            value<primitives::btc>(&option_.amount),
+            value<primitives::base10>(&option_.amount),
             "The value of the amount parameter."
         )
         (
@@ -218,7 +218,7 @@ public:
     /**
      * Get the value of the amount option.
      */
-    BCX_API virtual primitives::btc& get_amount_option()
+    BCX_API virtual primitives::base10& get_amount_option()
     {
         return option_.amount;
     }
@@ -227,7 +227,7 @@ public:
      * Set the value of the amount option.
      */
     BCX_API virtual void set_amount_option(
-        const primitives::btc& value)
+        const primitives::base10& value)
     {
         option_.amount = value;
     }
@@ -333,7 +333,7 @@ private:
         {
         }
 
-        primitives::btc amount;
+        primitives::base10 amount;
         std::string label;
         std::string message;
         primitives::uri request;

@@ -23,7 +23,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
