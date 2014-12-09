@@ -116,7 +116,7 @@ function global.pluralize(name, is_plural)
     if (my.is_plural)
         #BUGBUG: the string comparison just doesn't work.
         return my.name + \
-            if_else_empty(string.last_char(my.name) = "s", "e") + "s"
+            if_else_empty(last_char(my.name) = "s", "e") + "s"
     endif
     return my.name
 endfunction
