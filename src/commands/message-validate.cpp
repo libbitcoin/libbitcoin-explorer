@@ -33,10 +33,10 @@ console_result message_validate::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto& address = get_bitcoin_address_argument();
-    const auto& signature = get_signature_argument();
+    const auto& sign = get_signature_argument();
     const auto& message = get_message_argument();
 
-    if (!verify_message(message, address, signature))
+    if (!verify_message(message, address, sign))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;
