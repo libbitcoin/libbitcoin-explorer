@@ -28,17 +28,20 @@ BOOST_AUTO_TEST_SUITE(bas64_decode__invoke)
 // vectors
 // tools.ietf.org/html/rfc4648#section-10
 
-#define BX_BASE64_DECODE_EMPTY_ENCODED ""
 #define BX_BASE64_DECODE_RFC4648_ENCODED_A "Zm9v"
 #define BX_BASE64_DECODE_RFC4648_ENCODED_B "Zm9vYg=="
 #define BX_BASE64_DECODE_RFC4648_ENCODED_C "Zm9vYmE="
 #define BX_BASE64_DECODE_RFC4648_ENCODED_D "Zm9vYmFy"
 
-#define BX_BASE64_DECODE_EMPTY_DECODED ""
 #define BX_BASE64_DECODE_RFC4648_DECODED_A "foo"
 #define BX_BASE64_DECODE_RFC4648_DECODED_B "foob"
 #define BX_BASE64_DECODE_RFC4648_DECODED_C "fooba"
 #define BX_BASE64_DECODE_RFC4648_DECODED_D "foobar"
+
+#define BX_BASE64_DECODE_EMPTY_ENCODED ""
+#define BX_BASE64_DECODE_EMPTY_DECODED ""
+#define BX_BASE64_DECODE_SNOWDEN_ENCODED "TGV0IHVzIHNwZWFrIG5vIG1vcmUgb2YgZmFpdGggaW4gbWFuLCBidXQgYmluZCBoaW0gZG93biBmcm9tIG1pc2NoaWVmIGJ5IHRoZSBjaGFpbnMgb2YgY3J5cHRvZ3JhcGh5Lg=="
+#define BX_BASE64_DECODE_SNOWDEN_DECODED "Let us speak no more of faith in man, but bind him down from mischief by the chains of cryptography."
 
 BOOST_AUTO_TEST_CASE(base64_decode__invoke__empty__okay_output)
 {
@@ -78,6 +81,14 @@ BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_D__okay_output)
     command.set_base64_argument({ BX_BASE64_DECODE_RFC4648_ENCODED_D });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_D "\n");
+}
+
+BOOST_AUTO_TEST_CASE(base64_decode__invoke__SNOWDEN__okay_output)
+{
+    BX_DECLARE_COMMAND(base64_decode);
+    command.set_base64_argument({ BX_BASE64_DECODE_SNOWDEN_ENCODED });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_SNOWDEN_DECODED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
