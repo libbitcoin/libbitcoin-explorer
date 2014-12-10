@@ -139,7 +139,6 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     bc::network::protocol prot(pool, hst, hs, net);
     prot.set_max_outbound(node_count * 6);
 
-
     // Perform node discovery if needed and then creating connections.
     prot.start(start_handler);
 
