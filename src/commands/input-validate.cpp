@@ -36,7 +36,7 @@ console_result input_validate::invoke(std::ostream& output,
     const tx_type& tx = get_transaction_argument();
     const auto& public_key = get_ec_public_key_argument();
     const auto& script = get_prevout_script_argument();
-    const auto& signature = get_signature_argument();
+    const auto& endorsement = get_endorsement_argument();
 
     if (index >= tx.inputs.size())
     {
@@ -44,13 +44,14 @@ console_result input_validate::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    if (!check_signature(signature, public_key, script, tx, index))
+    if (!check_signature(endorsement, public_key, script, tx, index))
     {
-        output << BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;
+        // We do not return a failure here, as this is a validity test.
+        output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;
         return console_result::invalid;
     }
 
-    output << BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE << std::endl;
+    output << BX_INPUT_VALIDATE_INDEX_VALID_ENDORSEMENT << std::endl;
     return console_result::okay;
 }
 

@@ -40,14 +40,13 @@ console_result address_validate::invoke(std::ostream& output, std::ostream& erro
     // TESTNET VERSION REQUIRES RECOMPILE
 
     payment_address pay_address;
-    if (pay_address.set_encoded(token))
+    if (!pay_address.set_encoded(token))
     {
-        output << address(pay_address) << std::endl;
-        return console_result::okay;
+        // We do not return a failure here, as this is a validity test.
+        output << BX_ADDRESS_VALIDATE_INVALID_ADDRESS << std::endl;
+        return console_result::invalid;
     }
 
-    // We do not return a failure here, as this is a validity test.
-    output << BX_ADDRESS_VALIDATE_INVALID_ADDRESS << std::endl;
-    return console_result::invalid;
-
+    output << BX_ADDRESS_VALIDATE_VALID_ADDRESS << std::endl;
+    return console_result::okay;
 }

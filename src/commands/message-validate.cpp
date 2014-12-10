@@ -33,26 +33,12 @@ console_result message_validate::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto& address = get_bitcoin_address_argument();
-    const data_chunk& signature_bytes = get_signature_argument();
+    const auto& signature = get_signature_argument();
     const auto& message = get_message_argument();
-
-    // This is a hack that prevents us from having to create a primitive for
-    // message_signatures as a data type and instead just treat it as base16.
-    ///////////////////////////////////////////////////////////////////////////
-    if (signature_bytes.size() != message_signature_size)
-    {
-        error << BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE_FORMAT 
-            << std::endl;
-        return console_result::failure;
-    }
-
-    message_signature signature;
-    std::copy(signature_bytes.begin(), signature_bytes.end(),
-        signature.begin());
-    ///////////////////////////////////////////////////////////////////////////
 
     if (!verify_message(message, address, signature))
     {
+        // We do not return a failure here, as this is a validity test.
         output << BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;
         return console_result::invalid;
     }
@@ -60,4 +46,3 @@ console_result message_validate::invoke(std::ostream& output,
     output << BX_MESSAGE_VALIDATE_INDEX_VALID_SIGNATURE << std::endl;
     return console_result::okay;
 }
-

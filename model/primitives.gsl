@@ -1,0 +1,241 @@
+.template 0
+###############################################################################
+# Copyright (c) 2011-2014 libbitcoin developers (see COPYING).
+#
+# GSL generate libbitcoin-explorer source files.
+# This file contains no localizable resources.
+#
+# This is a code generator built using the iMatix GSL code generation
+# language. See https://github.com/imatix/gsl for details.
+###############################################################################
+# Functions
+###############################################################################
+
+function global.map_type(type)
+
+    # Local type constants.
+    my.type_bool = "bool"
+    my.type_address = "address"
+    my.type_base10 = "base10"
+    my.type_base16 = "base16"
+    my.type_base2 = "base2"
+    my.type_base58 = "base58"
+    my.type_base64 = "base64"
+    my.type_btc160 = "btc160"
+    my.type_btc256 = "btc256"
+    my.type_byte = "byte"
+    my.type_ec_private = "ec_private"
+    my.type_ec_public = "ec_public"
+    my.type_encoding = "encoding"
+    my.type_endorsement = "endorsement"
+    my.type_file = "file"
+    my.type_hashtype = "hashtype"
+    my.type_hd_key = "hd_key"
+    my.type_hd_private = "hd_private"
+    my.type_hd_public = "hd_public"
+    my.type_header = "header"
+    my.type_input = "input"
+    my.type_output = "output"
+    my.type_point = "point"
+    my.type_path = "path"
+    my.type_raw = "raw"
+    my.type_script = "script"
+    my.type_signature = "signature"
+    my.type_stealth = "stealth"
+    my.type_string = "string"
+    my.type_transaction = "transaction"
+    my.type_uri = "uri"
+    my.type_wif = "wif"
+    my.type_wrapper = "wrapper"
+
+    my.type_address_bx = "primitives::address"
+    my.type_base10_bx = "primitives::base10"
+    my.type_base16_bx = "primitives::base16"
+    my.type_base2_bx = "primitives::base2"
+    my.type_base58_bx = "primitives::base58"
+    my.type_base64_bx = "primitives::base64"
+    my.type_btc160_bx = "primitives::btc160"
+    my.type_btc256_bx = "primitives::btc256"
+    my.type_byte_bx = "primitives::byte"
+    my.type_ec_private_bx = "primitives::ec_private"
+    my.type_ec_public_bx = "primitives::ec_public"
+    my.type_encoding_bx = "primitives::encoding"
+    my.type_endorsement_bx = "primitives::endorsement"
+    my.type_file_bx = "primitives::file"
+    my.type_hashtype_bx = "primitives::hashtype"
+    my.type_hd_key_bx = "primitives::hd_key"
+    my.type_hd_private_bx = "primitives::hd_priv"
+    my.type_hd_public_bx = "primitives::hd_pub"
+    my.type_header_bx = "primitives::header"
+    my.type_input_bx = "primitives::input"
+    my.type_output_bx = "primitives::output"
+    my.type_path_boost = "boost::filesystem::path"
+    my.type_point_bx = "primitives::point"
+    my.type_raw_bx = "primitives::raw"
+    my.type_script_bx = "primitives::script"
+    my.type_signature_bx = "primitives::signature"
+    my.type_stealth_bx = "primitives::stealth"
+    my.type_string_std = "std::string"
+    my.type_transaction_bx = "primitives::transaction"
+    my.type_uri_bx = "primitives::uri"
+    my.type_wif_bx = "primitives::wif"
+    my.type_wrapper_bx = "primitives::wrapper"
+
+    if my.type = my.type_address
+        return my.type_address_bx
+    elsif my.type = my.type_base10
+        return my.type_base10_bx
+    elsif my.type = my.type_base16
+        return my.type_base16_bx
+    elsif my.type = my.type_base2
+        return my.type_base2_bx
+    elsif my.type = my.type_base58
+        return my.type_base58_bx
+    elsif my.type = my.type_base64
+        return my.type_base64_bx
+    elsif my.type = my.type_btc160
+        return my.type_btc160_bx
+    elsif my.type = my.type_btc256
+        return my.type_btc256_bx
+    elsif my.type = my.type_byte
+        return my.type_byte_bx
+    elsif my.type = my.type_ec_private
+        return my.type_ec_private_bx
+    elsif my.type = my.type_ec_public
+        return my.type_ec_public_bx
+    elsif my.type = my.type_encoding
+        return my.type_encoding_bx
+    elsif my.type = my.type_endorsement
+        return my.type_endorsement_bx
+    elsif my.type = my.type_file
+        return my.type_file_bx
+    elsif my.type = my.type_hashtype
+        return my.type_hashtype_bx
+    elsif my.type = my.type_hd_key
+        return my.type_hd_key_bx
+    elsif my.type = my.type_hd_private
+        return my.type_hd_private_bx
+    elsif my.type = my.type_hd_public
+        return my.type_hd_public_bx
+    elsif my.type = my.type_header
+        return my.type_header_bx
+    elsif my.type = my.type_input
+        return my.type_input_bx
+    elsif my.type = my.type_output
+        return my.type_output_bx
+    elsif my.type = my.type_path
+        return my.type_path_boost
+    elsif my.type = my.type_point
+        return my.type_point_bx
+    elsif my.type = my.type_raw
+        return my.type_raw_bx
+    elsif my.type = my.type_script
+        return my.type_script_bx
+    elsif my.type = my.type_signature
+        return my.type_signature_bx
+    elsif my.type = my.type_stealth
+        return my.type_stealth_bx
+    elsif my.type = my.type_string
+        return my.type_string_std
+    elsif my.type = my.type_transaction
+        return my.type_transaction_bx
+    elsif my.type = my.type_uri
+        return my.type_uri_bx
+    elsif my.type = my.type_wif
+        return my.type_wif_bx
+    elsif my.type = my.type_wrapper
+        return my.type_wrapper_bx
+    endif
+    return my.type
+endfunction
+
+function global.normalize_type(is_option, is_file, type)
+    if (my.is_file)
+        return "std::string"
+    elsif (is_empty(my.type))
+        if (my.is_option)
+            return "bool"    
+        else
+            return "std::string"
+        endif
+    endif
+    return map_type(my.type)
+endfunction
+
+function global.normal_type(type)
+    return normalize_type(!true(), !true(), my.type)
+endfunction
+
+function global.is_bool_type(type)
+    return (my.type = "bool")
+endfunction
+
+function global.is_braced_type(type)
+    return (my.type = "primitives::uri")
+endfunction
+
+function global.is_quoted_type(type)
+    return ((my.type = "boost::path") | (my.type = "std::string") | \
+        (my.type = "primitives::uri"))
+endfunction
+
+###############################################################################
+# Macros
+###############################################################################
+.endtemplate
+.template 1
+.
+.macro global.copyleft
+/**
+ * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+ *
+ * This file is part of libbitcoin-explorer.
+ *
+ * libbitcoin-explorer is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License with
+ * additional permissions to the one published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version. For more information see LICENSE.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+.endmacro
+.
+.macro global.primitives
+#include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base10.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/base2.hpp>
+#include <bitcoin/explorer/primitives/base58.hpp>
+#include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/btc160.hpp>
+#include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/byte.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/primitives/endorsement.hpp>
+#include <bitcoin/explorer/primitives/hashtype.hpp>
+#include <bitcoin/explorer/primitives/hd_key.hpp>
+#include <bitcoin/explorer/primitives/hd_priv.hpp>
+#include <bitcoin/explorer/primitives/hd_pub.hpp>
+#include <bitcoin/explorer/primitives/header.hpp>
+#include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/output.hpp>
+#include <bitcoin/explorer/primitives/raw.hpp>
+#include <bitcoin/explorer/primitives/script.hpp>
+#include <bitcoin/explorer/primitives/signature.hpp>
+#include <bitcoin/explorer/primitives/stealth.hpp>
+#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
+#include <bitcoin/explorer/primitives/wif.hpp>
+#include <bitcoin/explorer/primitives/wrapper.hpp>
+.endmacro
+.
+.endtemplate

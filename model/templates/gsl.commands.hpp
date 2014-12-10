@@ -142,7 +142,7 @@ public:
     {
 .for argument
 .   is_vector = !is_default(limit, 1)
-.   argument_type = default_type(!true(), type)
+.   argument_type = normalize_type(!true(), !true(), type)
 .   pluralized_name = pluralize(name, is_vector)
 .   getter = "get_" + "$(pluralized_name:lower,c)" + "_argument()"
 .#   bool_vector = if_else(is_vector, xml_true, xml_false)
@@ -155,7 +155,7 @@ public:
 .endfor
 .for option
 .   is_vector = is_xml_true(multiple)
-.   option_type = default_type(true(), type)
+.   option_type = normalize_type(true(), !true(), type)
 .   pluralized_name = pluralize(name, is_vector)
 .   getter = "get_" + "$(pluralized_name:lower,c)_option()"
 .#   bool_vector = if_else(is_vector, xml_true, xml_false)
@@ -228,7 +228,7 @@ public:
 
 .for argument
 .   is_vector = !is_default(limit, 1)
-.   argument_type = default_type(!true(), type)
+.   argument_type = normalize_type(!true(), !true(), type)
 .   vtype = vectored_type(argument_type, is_vector)
 .   pluralized_name = pluralize(name, is_vector)
 .   pluralized_argument = pluralize("argument", is_vector)
@@ -252,7 +252,7 @@ public:
 .endfor
 .for option
 .   is_vector = is_xml_true(multiple)
-.   option_type = default_type(true(), type)
+.   option_type = normalize_type(true(), !true(), type)
 .   vtype = vectored_type(option_type, is_vector)
 .   pluralized_name = pluralize(name, is_vector)
 .   pluralized_option = pluralize("option", is_vector)
@@ -294,7 +294,7 @@ private:
 
 .for argument
 .   is_vector = !is_default(limit, 1)
-.   argument_type = default_type(!true(), type)
+.   argument_type = normalize_type(!true(), !true(), type)
 .   vector_type = vectored_type(argument_type, is_vector)        
 .   pluralized_name = pluralize(name, is_vector)
         $(vector_type) $(pluralized_name:lower,c);
@@ -319,7 +319,7 @@ private:
 
 .for option
 .   is_vector = is_xml_true(multiple)
-.   option_type = default_type(true(), type)
+.   option_type = normalize_type(true(), !true(), type)
 .   vector_type = vectored_type(option_type, is_vector)
 .   pluralized_name = pluralize(name, is_vector)
         $(vector_type) $(pluralized_name:lower,c);

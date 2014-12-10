@@ -114,6 +114,7 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\endorsement.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hashtype.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_priv.hpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\point.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\raw.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\signature.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\transaction.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\uri.hpp" />
@@ -161,6 +163,7 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\endorsement.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_key.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_priv.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\point.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\raw.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\signature.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\transaction.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\uri.cpp" />

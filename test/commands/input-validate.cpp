@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_SUITE(input_validate__invoke)
 #define INPUT_VALIDATE_PUBLIC_KEY_A "03c40cbd64c9c608df2c9730f49b0888c4db1c436e8b2b74aead6c6afbd10428c0"
 
 // This is the signature INPUT_SIGN_SIGNATURE_A for the input signed by INPUT_SIGN_PRIVATE_KEY_A.
-#define INPUT_VALIDATE_SIGNATURE_A "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202201035fe810e283bcf394485c6a9dfd117ad9f684cdd83d36453718f5d0491b9dd01"
+#define INPUT_VALIDATE_ENDORSEMENT_A "3044022039a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c202201035fe810e283bcf394485c6a9dfd117ad9f684cdd83d36453718f5d0491b9dd01"
 
 // This is the previous output which was signed as the new tx input.
 #define INPUT_VALIDATE_PREVOUT_SCRIPT_A "dup hash160 [ 88350574280395ad2c3e2ee20e322073d94e5e40 ] equalverify checksig"
@@ -44,11 +44,11 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_ou
 {
     BX_DECLARE_COMMAND(input_validate);
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
-    command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
+    command.set_endorsement_argument({ INPUT_VALIDATE_ENDORSEMENT_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE "\n");
+    BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_VALID_ENDORSEMENT "\n");
 }
 
 BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
     BX_DECLARE_COMMAND(input_validate);
     command.set_index_option(42);
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
-    command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
+    command.set_endorsement_argument({ INPUT_VALIDATE_ENDORSEMENT_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_A });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
@@ -67,11 +67,11 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_out
 {
     BX_DECLARE_COMMAND(input_validate);
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
-    command.set_signature_argument({ INPUT_VALIDATE_SIGNATURE_A });
+    command.set_endorsement_argument({ INPUT_VALIDATE_ENDORSEMENT_A });
     command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_B });
     BX_REQUIRE_INVALID(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE "\n");
+    BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -41,6 +41,7 @@
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
 #include <bitcoin/explorer/primitives/hd_priv.hpp>
@@ -50,6 +51,7 @@
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
+#include <bitcoin/explorer/primitives/signature.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
 #include <bitcoin/explorer/primitives/uri.hpp>
@@ -127,7 +129,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SIGNATURE_SCRIPT", 1)
+            .add("ENDORSEMENT_SCRIPT", 1)
             .add("TRANSACTION", 1);
     }
 
@@ -168,9 +170,9 @@ public:
             "The ordinal position of the input within the transaction, defaults to zero."
         )
         (
-            "SIGNATURE_SCRIPT",
-            value<primitives::script>(&argument_.signature_script)->required(),
-            "The signature script to assign to the input."
+            "ENDORSEMENT_SCRIPT",
+            value<primitives::script>(&argument_.endorsement_script)->required(),
+            "The endorsement script to assign to the input."
         )
         (
             "TRANSACTION",
@@ -193,20 +195,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SIGNATURE_SCRIPT argument.
+     * Get the value of the ENDORSEMENT_SCRIPT argument.
      */
-    BCX_API virtual primitives::script& get_signature_script_argument()
+    BCX_API virtual primitives::script& get_endorsement_script_argument()
     {
-        return argument_.signature_script;
+        return argument_.endorsement_script;
     }
 
     /**
-     * Set the value of the SIGNATURE_SCRIPT argument.
+     * Set the value of the ENDORSEMENT_SCRIPT argument.
      */
-    BCX_API virtual void set_signature_script_argument(
+    BCX_API virtual void set_endorsement_script_argument(
         const primitives::script& value)
     {
-        argument_.signature_script = value;
+        argument_.endorsement_script = value;
     }
 
     /**
@@ -253,12 +255,12 @@ private:
     struct argument
     {
         argument()
-          : signature_script(),
+          : endorsement_script(),
             transaction()
         {
         }
 
-        primitives::script signature_script;
+        primitives::script endorsement_script;
         primitives::transaction transaction;
     } argument_;
 
