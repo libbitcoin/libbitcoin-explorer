@@ -99,7 +99,6 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_max_prefix__okay_output_er
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ENCODE_ADDRESS_AM "\n");
-    /*BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_PREFIX_NOT_SUPPORTED "\n");*/
 }
 
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_prefix_too_long__failure_errors)
@@ -108,7 +107,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_prefix_too_long__failure_e
     command.set_prefix_option({ STEALTH_ENCODE_MAX_PREFIX_LENGTH "1" });
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BOOST_REQUIRE_EQUAL(error.str(), /*BX_STEALTH_ENCODE_PREFIX_NOT_SUPPORTED "\n"*/ BX_STEALTH_ENCODE_PREFIX_TOO_LONG "\n");
+    BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_PREFIX_TOO_LONG "\n");
 }
 
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_leading_0_prefix__okay_output_errors)
@@ -120,7 +119,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_le
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ENCODE_SPEND_PUBKEY_B } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ENCODE_ADDRESS_AAB10 "\n");
-    BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED "\n" /*BX_STEALTH_ENCODE_PREFIX_NOT_SUPPORTED "\n"*/);
+    BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signaturebaadf00d_prefix__okay_output_errors)
@@ -132,7 +131,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signaturebaa
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ENCODE_SPEND_PUBKEY_B } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ENCODE_ADDRESS_AAB1P "\n");
-    BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED "\n" /*BX_STEALTH_ENCODE_PREFIX_NOT_SUPPORTED "\n"*/);
+    BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_baadf00d_prefix_testnet__okay_output_errors)
@@ -145,7 +144,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_ba
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ENCODE_SPEND_PUBKEY_B } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BOOST_REQUIRE_EQUAL(output.str(), STEALTH_ENCODE_ADDRESS_AAB1PT "\n");
-    BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED "\n" /*BX_STEALTH_ENCODE_PREFIX_NOT_SUPPORTED "\n"*/);
+    BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
