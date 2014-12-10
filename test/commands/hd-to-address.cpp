@@ -25,6 +25,8 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(hd_to_address__invoke)
 
+#ifndef ENABLE_TESTNET
+
 BOOST_AUTO_TEST_CASE(hd_to_address__invoke__mainnet_private_key__okay_output)
 {
     BX_DECLARE_COMMAND(hd_to_address);
@@ -40,6 +42,8 @@ BOOST_AUTO_TEST_CASE(hd_to_address__invoke__mainnet_public_key__okay_output)
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("15mKKb2eos1hWa6tisdPwwDC1a5J1y9nma\n");
 }
+
+#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
