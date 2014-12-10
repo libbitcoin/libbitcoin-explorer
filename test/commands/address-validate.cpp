@@ -25,21 +25,18 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(address_validate__invoke)
 
-#define ADDRESS_VALIDATE_VALID_ADDRESS "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy"
-#define ADDRESS_VALIDATE_INVALID_ADDRESS "@#$%^&*())(*&^%$%^&*()(*&^%$"
-
 BOOST_AUTO_TEST_CASE(address_validate__invoke__valid__okay_output)
 {
     BX_DECLARE_COMMAND(address_validate);
-    command.set_bitcoin_address_argument({ ADDRESS_VALIDATE_VALID_ADDRESS });
+    command.set_bitcoin_address_argument({ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(ADDRESS_VALIDATE_VALID_ADDRESS "\n");
+    BX_REQUIRE_OUTPUT(BX_ADDRESS_VALIDATE_VALID_ADDRESS "\n");
 }
 
 BOOST_AUTO_TEST_CASE(address_validate__invoke__invalid__invalid_output)
 {
     BX_DECLARE_COMMAND(address_validate);
-    command.set_bitcoin_address_argument({ ADDRESS_VALIDATE_INVALID_ADDRESS });
+    command.set_bitcoin_address_argument({ "@#$%^&*())(*&^%$%^&*()(*&^%$" });
     BX_REQUIRE_INVALID(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_ADDRESS_VALIDATE_INVALID_ADDRESS "\n");
 }

@@ -12,6 +12,12 @@
 [gsl].ignorecase = 0
 
 gsl from "utilities.gsl"
+gsl from "primitives.gsl"
+
+# Global constants.
+config_option = "config"
+config_description = get_resource("BX_CONFIG_DESCRIPTION")
+help_description = get_resource("BX_HELP_DESCRIPTION")
 
 # Templates retain their natural extensions to enable editor association, and
 # are therefore prefixed with 'gsl' for sorting and template identification.

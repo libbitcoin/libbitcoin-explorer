@@ -23,7 +23,7 @@
 #include <iostream>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/signature.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 using namespace bc;
@@ -37,16 +37,8 @@ console_result message_sign::invoke(std::ostream& output, std::ostream& error)
     const auto& wif = get_wif_argument();
     const auto& message = get_message_argument();
 
-    const auto signature = sign_message(message, wif, wif.get_compressed());
+    const auto sign = sign_message(message, wif, wif.get_compressed());
 
-    // This is a hack that prevents us from having to create a primitive for
-    // message_signatures as a data type and instead just treat it as base16.
-    ///////////////////////////////////////////////////////////////////////////
-    data_chunk signature_bytes(signature.size());
-    std::copy(signature.begin(), signature.end(), signature_bytes.begin());
-    const auto encoded = base64(signature_bytes);
-    ///////////////////////////////////////////////////////////////////////////
-
-    output << encoded << std::endl;
+    output << signature(sign) << std::endl;
     return console_result::okay;
 }

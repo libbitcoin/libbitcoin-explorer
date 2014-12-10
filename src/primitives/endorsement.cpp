@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/endorsement.hpp>
 
 #include <array>
 #include <iostream>
@@ -34,37 +34,49 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-base16::base16()
+// message_signature format is currently private to bx.
+static bool decode_endorsement(data_chunk& endorsement,
+    const std::string& encoded)
+{
+    return decode_base16(endorsement, encoded);
+}
+
+static std::string encode_endorsement(data_slice signature)
+{
+    return encode_base16(signature);
+}
+
+endorsement::endorsement()
     : value_()
 {
 }
 
-base16::base16(const std::string& hexcode)
+endorsement::endorsement(const std::string& hexcode)
 {
     std::stringstream(hexcode) >> *this;
 }
 
-base16::base16(const data_chunk& value)
+endorsement::endorsement(const data_chunk& value)
     : value_(value)
 {
 }
 
-base16::base16(const base16& other)
-    : base16(other.value_)
+endorsement::endorsement(const endorsement& other)
+    : endorsement(other.value_)
 {
 }
 
-base16::operator const data_chunk&() const
-{
-    return value_;
-}
-
-base16::operator data_slice() const
+endorsement::operator const data_chunk&() const
 {
     return value_;
 }
 
-std::istream& operator>>(std::istream& input, base16& argument)
+endorsement::operator data_slice() const
+{
+    return value_;
+}
+
+std::istream& operator>>(std::istream& input, endorsement& argument)
 {
     std::string hexcode;
     input >> hexcode;
@@ -75,9 +87,9 @@ std::istream& operator>>(std::istream& input, base16& argument)
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const base16& argument)
+std::ostream& operator<<(std::ostream& output, const endorsement& argument)
 {
-    output << encode_base16(argument.value_);
+    output << encode_endorsement(argument.value_);
     return output;
 }
 

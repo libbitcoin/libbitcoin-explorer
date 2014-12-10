@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/primitives/base16.hpp>
+#include <bitcoin/explorer/primitives/signature.hpp>
 
 #include <array>
 #include <iostream>
@@ -27,6 +27,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/base64.hpp>
 
 using namespace po;
 
@@ -34,50 +35,63 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-base16::base16()
+// message_signature format is currently private to bx.
+static bool decode_signature(message_signature& signature,
+    const std::string& encoded)
+{
+    // There is no bc::decode_base64 array-based override.
+    data_chunk signature_bytes;
+    if (!decode_base64(signature_bytes, encoded))
+        return false;
+
+    std::copy(signature_bytes.begin(), signature_bytes.end(),
+        signature.begin());
+}
+
+static std::string encode_signature(const message_signature& signature)
+{
+    return encode_base64(signature);
+}
+
+signature::signature()
     : value_()
 {
 }
 
-base16::base16(const std::string& hexcode)
+signature::signature(const std::string& hexcode)
 {
     std::stringstream(hexcode) >> *this;
 }
 
-base16::base16(const data_chunk& value)
+signature::signature(const message_signature& value)
     : value_(value)
 {
 }
 
-base16::base16(const base16& other)
-    : base16(other.value_)
+signature::signature(const signature& other)
+    : signature(other.value_)
 {
 }
 
-base16::operator const data_chunk&() const
-{
-    return value_;
-}
-
-base16::operator data_slice() const
+signature::operator const message_signature&() const
 {
     return value_;
 }
 
-std::istream& operator>>(std::istream& input, base16& argument)
+std::istream& operator>>(std::istream& input, signature& argument)
 {
     std::string hexcode;
     input >> hexcode;
 
-    if (!decode_base16(argument.value_, hexcode))
+    if (!decode_signature(argument.value_, hexcode))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const base16& argument)
+std::ostream& operator<<(std::ostream& output, const signature& argument)
 {
-    output << encode_base16(argument.value_);
+    output << encode_signature(argument.value_);
     return output;
 }
 

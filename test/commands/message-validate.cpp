@@ -60,15 +60,5 @@ BOOST_AUTO_TEST_CASE(message_validate__invoke__bogus__invalid_output)
     BX_REQUIRE_OUTPUT(BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(message_validate__invoke__corrupted__failure_error)
-{
-    BX_DECLARE_NETWORK_COMMAND(message_validate);
-    command.set_message_argument({ "Nakomoto" });
-    command.set_signature_argument({ "Ym9ndXM=" });
-    command.set_bitcoin_address_argument({ MESSAGE_VALIDATE_ADDRESS_COMPRESSED });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE_FORMAT "\n");
-}
-
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

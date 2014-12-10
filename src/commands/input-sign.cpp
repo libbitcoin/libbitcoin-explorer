@@ -57,13 +57,13 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     }
 
     bool success;
-    data_chunk signature;
+    data_chunk endorsement;
 
     if (deterministic)
-        success = create_signature(signature, private_key, prevout_script, tx,
+        success = create_signature(endorsement, private_key, prevout_script, tx,
             index, hash_type);
     else
-        success = create_signature(signature, private_key, prevout_script, tx,
+        success = create_signature(endorsement, private_key, prevout_script, tx,
             index, hash_type, new_key(nonce));
 
     if (!success)
@@ -72,6 +72,6 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    output << base16(signature) << std::endl;
+    output << base16(endorsement) << std::endl;
     return console_result::okay;
 }

@@ -128,10 +128,13 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_key.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp">
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\endorsement.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_key.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hashtype.hpp">
@@ -159,6 +162,9 @@
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\signature.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp">
@@ -275,10 +281,13 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_key.cpp">
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp">
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\endorsement.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_key.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_priv.cpp">
@@ -303,6 +312,9 @@
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\signature.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp">

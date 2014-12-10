@@ -215,7 +215,7 @@ public:
 .for configuration
 .   for setting
 .       is_vector = is_xml_true(multiple)
-.       setting_type = default_type(!true(), type)
+.       setting_type = normalize_type(!true(), !true(), type)
 .       vectored_type = vectored_type(setting_type, is_vector)
 .       pluralized_name = pluralize(name, is_vector)
 .       pluralized_setting = pluralize("setting", is_vector)
@@ -295,7 +295,7 @@ private:
 
 .   for setting
 .       is_vector = is_xml_true(multiple)
-.       setting_type = default_type(!true(), type)
+.       setting_type = normalize_type(!true(), !true(), type)
 .       vectored_type = vectored_type(setting_type, is_vector)
 .       pluralized_name = pluralize(name, is_vector)
             $(vectored_type) $(pluralized_name:c);

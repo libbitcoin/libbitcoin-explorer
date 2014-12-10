@@ -10,12 +10,6 @@
 ###############################################################################
 # Functions
 ###############################################################################
-
-function global.default_type(is_option, type)
-    bool_default = my.is_option & is_empty(my.type)
-    return normalize_type(if_else(bool_default, type_bool, my.type ? \
-        type_string))
-endfunction
  
 function global.first_char(value)
     return string.substr(my.value, 0, 0)
@@ -38,265 +32,63 @@ function global.is_empty(value)
 endfunction
 
 function global.is_xml_true(value)
-    return ((my.value ? xml_false) = xml_true)
+    return ((my.value ? "false") = "true")
 endfunction
 
 function global.last_char(value)
-    position = string.length(my.value)
-    character = string.substr(my.value, position, position)
-    return character
-endfunction
-
-function global.normalize_type(type)
-    if my.type = type_address
-        return type_address_bx
-    elsif my.type = type_base10
-        return type_base10_bx
-    elsif my.type = type_base16
-        return type_base16_bx
-    elsif my.type = type_base2
-        return type_base2_bx
-    elsif my.type = type_base58
-        return type_base58_bx
-    elsif my.type = type_base64
-        return type_base64_bx
-    elsif my.type = type_btc160
-        return type_btc160_bx
-    elsif my.type = type_btc256
-        return type_btc256_bx
-    elsif my.type = type_byte
-        return type_byte_bx
-    elsif my.type = type_ec_private
-        return type_ec_private_bx
-    elsif my.type = type_ec_public
-        return type_ec_public_bx
-    elsif my.type = type_encoding
-        return type_encoding_bx
-    elsif my.type = type_file
-        return type_file_bx
-    elsif my.type = type_hashtype
-        return type_hashtype_bx
-    elsif my.type = type_hd_key
-        return type_hd_key_bx
-    elsif my.type = type_hd_private
-        return type_hd_private_bx
-    elsif my.type = type_hd_public
-        return type_hd_public_bx
-    elsif my.type = type_header
-        return type_header_bx
-    elsif my.type = type_input
-        return type_input_bx
-    elsif my.type = type_output
-        return type_output_bx
-    elsif my.type = type_path
-        return type_path_boost
-    elsif my.type = type_point
-        return type_point_bx
-    elsif my.type = type_raw
-        return type_raw_bx
-    elsif my.type = type_script
-        return type_script_bx
-    elsif my.type = type_stealth
-        return type_stealth_bx
-    elsif my.type = type_string
-        return type_string_std
-    elsif my.type = type_transaction
-        return type_transaction_bx
-    elsif my.type = type_uri
-        return type_uri_bx
-    elsif my.type = type_wif
-        return type_wif_bx
-    elsif my.type = type_wrapper
-        return type_wrapper_bx
-    endif
-    return my.type
+    define my.position = string.length(my.value)
+    define my.character = string.substr(my.value, my.position, my.position)
+    return my.character
 endfunction
 
 function global.pluralize(name, is_plural)
     if (my.is_plural)
-        #BUGBUG: the string comparison just doesn't work.
-        return my.name + \
-            if_else_empty(last_char(my.name) = "s", "e") + "s"
+        # BUGBUG: last_char doesn't work.
+        if (last_char(name) = "s")
+            return "$(my.name)es"
+        else
+            return "$(my.name)s"
+        endif
     endif
     return my.name
 endfunction
 
 function global.quote(value, is_quoted)
-    return if_else(my.is_quoted, "\"$(my.value)\"", my.value)
+    return if_else(my.is_quoted, '"$(my.value)"', my.value)
 endfunction
 
 function global.brace(value, is_braced)
     return if_else(my.is_braced, "{ $(my.value) }", my.value)
 endfunction
 
-function global.resource(name, fallback)
-    for resource
-        for resource.string
-            if (name ? "") = my.name
-                return value ? ""
-            endif
-        endfor
-    endfor
-    return my.fallback ? ""
+function global.get_resource(name)
+    return generate->resource->string(name = my.name).value
 endfunction
 
 function global.true()
     return 0 = 0
 endfunction
 
-function global.value_semantic(is_file, is_option, type, required,\
-    unlimited, variable, fallback)
-    def_type = default_type(my.is_option, my.type)
-    norm_type = if_else(my.is_file, type_string_std, def_type)
-    implicit_bool = my.is_option & (norm_type = type_bool)
-    defaulted = !is_empty(my.fallback)
-    is_object = (norm_type = type_uri_bx)
-    is_text = ((norm_type = type_path_boost) | (norm_type = type_string_std) | \
-        (norm_type = type_uri_bx))
-    quote_default = (defaulted & is_text)
-    brace_default = (defaulted & is_object)
-
-    norm_unlimited = my.unlimited & !my.is_file
-    parameter = if_else_empty(!is_empty(my.variable), "&$(my.variable)")
-    binding = if_else(my.is_file, "", pluralize(parameter, norm_unlimited))
-    quoted_value = quote(if_else_empty(defaulted, my.fallback), quote_default)
-    default_value = brace(quoted_value, brace_default)
-
-    expr = "value<$(vectored_type(norm_type, norm_unlimited))>($(binding))"
-    expr += if_else_empty(my.required, "->required()")
-    expr += if_else_empty(defaulted, "->default_value($(default_value))")
-    expr += if_else_empty(implicit_bool, "->zero_tokens()")
-    return expr
-endfunction
-
 function global.vectored_type(type, is_vector)
-    return if_else(my.is_vector, "std::vector<$(my.type)>", my.type)
+    return my.is_vector ?? "std::vector<$(my.type)>" ? my.type
 endfunction
 
-config_description = resource("BX_CONFIG_DESCRIPTION")
-help_description = resource("BX_HELP_DESCRIPTION")
-config_option = "config"
-type_bool = "bool"
-type_address = "address"
-type_base10 = "base10"
-type_base16 = "base16"
-type_base2 = "base2"
-type_base58 = "base58"
-type_base64 = "base64"
-type_btc160 = "btc160"
-type_btc256 = "btc256"
-type_byte = "byte"
-type_ec_private = "ec_private"
-type_ec_public = "ec_public"
-type_encoding = "encoding"
-type_file = "file"
-type_hashtype = "hashtype"
-type_hd_key = "hd_key"
-type_hd_private = "hd_private"
-type_hd_public = "hd_public"
-type_header = "header"
-type_input = "input"
-type_output = "output"
-type_point = "point"
-type_path = "path"
-type_raw = "raw"
-type_script = "script"
-type_stealth = "stealth"
-type_string = "string"
-type_transaction = "transaction"
-type_uri = "uri"
-type_wif = "wif"
-type_wrapper = "wrapper"
+function global.value_semantic(is_file, is_option, type, required, unlimited, variable, fallback)
+    define my.defaulted = !is_empty(my.fallback)
+    define my.norm_type = normalize_type(my.is_option, my.is_file, my.type)
+    define my.quote_default = my.defaulted & is_quoted_type(my.norm_type)
+    define my.brace_default = my.defaulted & is_braced_type(my.norm_type)
+    define my.implicit_bool = my.is_option & is_bool_type(my.norm_type)
+    define my.norm_unlimited = my.unlimited & !my.is_file
+    define my.parameter = is_empty(my.variable) ?? "" ? "&$(my.variable)"
+    define my.binding = if_else_empty(!my.is_file, pluralize(my.parameter, my.norm_unlimited))
+    define my.quoted_value = quote(if_else_empty(my.defaulted, my.fallback), my.quote_default)
+    define my.default_value = brace(my.quoted_value, my.brace_default)
+    define my.expression = "value<$(vectored_type(my.norm_type, my.norm_unlimited))>($(my.binding))"
+    my.expression += if_else_empty(my.required, "->required()")
+    my.expression += if_else_empty(my.defaulted, "->default_value($(my.default_value))")
+    my.expression += if_else_empty(my.implicit_bool, "->zero_tokens()")
+    return my.expression
+endfunction
 
-type_address_bx = "primitives::address"
-type_base10_bx = "primitives::base10"
-type_base16_bx = "primitives::base16"
-type_base2_bx = "primitives::base2"
-type_base58_bx = "primitives::base58"
-type_base64_bx = "primitives::base64"
-type_btc160_bx = "primitives::btc160"
-type_btc256_bx = "primitives::btc256"
-type_byte_bx = "primitives::byte"
-type_ec_private_bx = "primitives::ec_private"
-type_ec_public_bx = "primitives::ec_public"
-type_encoding_bx = "primitives::encoding"
-type_file_bx = "primitives::file"
-type_hashtype_bx = "primitives::hashtype"
-type_hd_key_bx = "primitives::hd_key"
-type_hd_private_bx = "primitives::hd_priv"
-type_hd_public_bx = "primitives::hd_pub"
-type_header_bx = "primitives::header"
-type_input_bx = "primitives::input"
-type_output_bx = "primitives::output"
-type_path_boost = "boost::filesystem::path"
-type_point_bx = "primitives::point"
-type_raw_bx = "primitives::raw"
-type_script_bx = "primitives::script"
-type_stealth_bx = "primitives::stealth"
-type_string_std = "std::string"
-type_transaction_bx = "primitives::transaction"
-type_uri_bx = "primitives::uri"
-type_wif_bx = "primitives::wif"
-type_wrapper_bx = "primitives::wrapper"
-
-xml_false = "false"
-xml_true = "true"
-
-###############################################################################
-# Macros
-###############################################################################
-.endtemplate
-.template 1
-.
-.macro global.copyleft
-/**
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
- *
- * This file is part of libbitcoin-explorer.
- *
- * libbitcoin-explorer is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-.endmacro
-.
-.macro global.primitives
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/base10.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
-.endmacro
-.
 .endtemplate

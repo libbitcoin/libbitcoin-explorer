@@ -41,6 +41,7 @@
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
 #include <bitcoin/explorer/primitives/hd_priv.hpp>
@@ -50,6 +51,7 @@
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
+#include <bitcoin/explorer/primitives/signature.hpp>
 #include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
 #include <bitcoin/explorer/primitives/uri.hpp>
@@ -70,10 +72,10 @@ namespace commands {
  */
 #define BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE \
     "The index does not refer to an existing input."
-#define BX_INPUT_VALIDATE_INDEX_VALID_SIGNATURE \
-    "The signature is valid."
-#define BX_INPUT_VALIDATE_INDEX_INVALID_SIGNATURE \
-    "The signature is not valid."
+#define BX_INPUT_VALIDATE_INDEX_VALID_ENDORSEMENT \
+    "The endorsement is valid."
+#define BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT \
+    "The endorsement is not valid."
 
 /**
  * Class to implement the input-validate command.
@@ -120,7 +122,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Validate a transaction signature.";
+        return "Validate a transaction input endorsement.";
     }
 
     /**
@@ -133,7 +135,7 @@ public:
         return get_argument_metadata()
             .add("EC_PUBLIC_KEY", 1)
             .add("PREVOUT_SCRIPT", 1)
-            .add("SIGNATURE", 1)
+            .add("ENDORSEMENT", 1)
             .add("TRANSACTION", 1);
     }
 
@@ -184,9 +186,9 @@ public:
             "The previous output script used in signing."
         )
         (
-            "SIGNATURE",
-            value<primitives::base16>(&argument_.signature)->required(),
-            "The Base16 Bitcoin signature to validate."
+            "ENDORSEMENT",
+            value<primitives::endorsement>(&argument_.endorsement)->required(),
+            "The endorsement to validate."
         )
         (
             "TRANSACTION",
@@ -243,20 +245,20 @@ public:
     }
 
     /**
-     * Get the value of the SIGNATURE argument.
+     * Get the value of the ENDORSEMENT argument.
      */
-    BCX_API virtual primitives::base16& get_signature_argument()
+    BCX_API virtual primitives::endorsement& get_endorsement_argument()
     {
-        return argument_.signature;
+        return argument_.endorsement;
     }
 
     /**
-     * Set the value of the SIGNATURE argument.
+     * Set the value of the ENDORSEMENT argument.
      */
-    BCX_API virtual void set_signature_argument(
-        const primitives::base16& value)
+    BCX_API virtual void set_endorsement_argument(
+        const primitives::endorsement& value)
     {
-        argument_.signature = value;
+        argument_.endorsement = value;
     }
 
     /**
@@ -305,14 +307,14 @@ private:
         argument()
           : ec_public_key(),
             prevout_script(),
-            signature(),
+            endorsement(),
             transaction()
         {
         }
 
         primitives::ec_public ec_public_key;
         primitives::script prevout_script;
-        primitives::base16 signature;
+        primitives::endorsement endorsement;
         primitives::transaction transaction;
     } argument_;
 
