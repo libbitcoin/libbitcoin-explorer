@@ -60,6 +60,8 @@ BOOST_AUTO_TEST_CASE(address__constructor__payment_address_data__round_trips)
     BOOST_REQUIRE_EQUAL(internal_address.encoded(), ADDRESS_MAINNET_A);
 }
 
+#ifndef ENABLE_TESTNET
+
 BOOST_AUTO_TEST_CASE(address__constructor__hd_private_key__converts)
 {
     hd_private_key private_key;
@@ -75,6 +77,8 @@ BOOST_AUTO_TEST_CASE(address__constructor__hd_public_key__converts)
     const payment_address instance = address(public_key);
     BOOST_REQUIRE_EQUAL(instance.encoded(), ADDRESS_MAINNET_A);
 }
+
+#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

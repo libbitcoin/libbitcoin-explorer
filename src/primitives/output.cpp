@@ -152,7 +152,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
 
         // We have already ensured there is exactly one spend key.
-        auto public_key = initiate_stealth(ephemeral_secret, scan_pubkey,
+        auto public_key = uncover_stealth(scan_pubkey, ephemeral_secret,
             spend_pubkeys.front());
 
         // Add RETURN meta output.

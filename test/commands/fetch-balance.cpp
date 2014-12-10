@@ -27,6 +27,8 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
+#ifndef ENABLE_TESTNET
+
 // These amounts may change at any time, making these particular tests fragile.
 
 /*
@@ -80,6 +82,8 @@ BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo2_xml__okay_output)
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO2_XML);
 }
+
+#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

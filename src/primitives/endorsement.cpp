@@ -34,11 +34,17 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-// message_signature format is currently private to bx.
-static bool decode_endorsement(data_chunk& endorsement,
+// endorsement format is currently private to bx.
+static bool decode_endorsement(bc::endorsement& endorsement,
     const std::string& encoded)
 {
-    return decode_base16(endorsement, encoded);
+    bc::endorsement decoded;
+    if (!decode_base16(decoded, encoded) || 
+        (decoded.size() > max_endorsement_size))
+        return false;
+
+    endorsement = decoded;
+    return true;
 }
 
 static std::string encode_endorsement(data_slice signature)
@@ -81,7 +87,7 @@ std::istream& operator>>(std::istream& input, endorsement& argument)
     std::string hexcode;
     input >> hexcode;
 
-    if (!decode_base16(argument.value_, hexcode))
+    if (!decode_endorsement(argument.value_, hexcode))
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
 
     return input;
