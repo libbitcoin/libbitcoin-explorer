@@ -78,43 +78,43 @@
     <argument name="RIPEMD160" stdin="true" type="btc160" description="The Base16 hash to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="address-validate" formerly="validaddr" typeX="address" multipleX="true" category="WALLET" description="Validate an address. Returns the address if it is valid.">
+  <command symbol="address-validate" formerly="validaddr" typeX="address" multipleX="true" category="WALLET" description="Validate a Bitcoin address.">
     <argument name="BITCOIN_ADDRESS" stdin="true" type="string" description="The Bitcoin address to validate. If not specified the address is read from STDIN." />
     <define name="BX_ADDRESS_VALIDATE_VALID_ADDRESS" value="The address is valid." />
     <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The address is not valid." />
   </command>
   
-  <command symbol="base16-decode" typeX="raw" category="HASH" description="Convert a Base16 value to binary data.">
+  <command symbol="base16-decode" typeX="raw" category="ENCODING" description="Convert a Base16 value to binary data.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to decode as binary data. If not specified the value is read from STDIN." />
   </command>
 
-  <command symbol="base16-encode" typeX="base16" category="HASH" description="Convert binary data to Base16.">
+  <command symbol="base16-encode" typeX="base16" category="ENCODING" description="Convert binary data to Base16.">
     <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN." />
   </command>
 
-  <command symbol="base58check-decode" typeX="wrapper" category="HASH" description="Convert a Base58Check value to Base16.">
+  <command symbol="base58check-decode" typeX="wrapper" category="ENCODING" description="Convert a Base58Check value to Base16.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BASE58CHECK" stdin="true" type="base58" description="The Base58Check value to decode. If not specified the value is read from STDIN." />
   </command>
 
-  <command symbol="base58check-encode" typeX="base58" category="HASH" description="Convert a Base16 value to Base58Check.">
+  <command symbol="base58check-encode" typeX="base58" category="ENCODING" description="Convert a Base16 value to Base58Check.">
     <option name="version" type="byte" description="The desired version number." />
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to Base58Check encode. If not specified the value is read from STDIN." />
   </command>
   
-  <command symbol="base58-decode" typeX="base16" category="HASH" description="Convert a Base58 value to Base16.">
+  <command symbol="base58-decode" typeX="base16" category="ENCODING" description="Convert a Base58 value to Base16.">
     <argument name="BASE58" stdin="true" type="base58" description="The Base58 value to decode as Base16. If not specified the value is read from STDIN." />
   </command>
 
-  <command symbol="base58-encode" typeX="base58" category="HASH" description="Convert a Base16 value to Base58.">
+  <command symbol="base58-encode" typeX="base58" category="ENCODING" description="Convert a Base16 value to Base58.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to encode as Base58. If not specified the value is read from STDIN." />
   </command>
   
-  <command symbol="base64-decode" typeX="raw" category="HASH" description="Convert a Base64 value to binary data.">
+  <command symbol="base64-decode" typeX="raw" category="ENCODING" description="Convert a Base64 value to binary data.">
     <argument name="BASE64" stdin="true" type="base64" description="The Base64 value to decode as binary data. If not specified the value is read from STDIN." />
   </command>
 
-  <command symbol="base64-encode" typeX="base64" category="HASH" description="Convert binary data to Base64.">
+  <command symbol="base64-encode" typeX="base64" category="ENCODING" description="Convert binary data to Base64.">
     <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base64. This can be text or any other data. If not specified the data is read from STDIN." />
   </command>
 
@@ -296,7 +296,7 @@
     <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The HD private key to convert. If not specified the key is read from STDIN." />
   </command>
 
-  <command symbol="help" typeX="string" category="BX" description="Get the list of commands.">
+  <command symbol="help" typeX="string" category="META" description="Get the list of commands.">
     <argument name="COMMAND" description="The command for which help is requested." />
   </command>
 
@@ -334,15 +334,15 @@
     <define name="BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT" value="The endorsement is not valid." />
   </command>  
 
-  <command symbol="message-sign" typeX="signature" category="WALLET" description="Create a message signature.">
-    <argument name="WIF" type="wif" description="The WIF private key to use for signing." />
-    <argument name="MESSAGE" stdin="true" type="raw" description="The binary message data to sign." />
+  <command symbol="message-sign" typeX="signature" category="MESSAGING" description="Create a message signature.">
+    <argument name="WIF" type="wif" required="true" description="The WIF private key to use for signing." />
+    <argument name="MESSAGE" stdin="true" type="raw" description="The binary message data to sign. If not specified the message is read from STDIN." />
   </command>
 
-  <command symbol="message-validate" typeX="string" category="WALLET" description="Validate a message signature.">
-    <argument name="BITCOIN_ADDRESS" type="address" description="The Bitcoin address of the message signer."/>
-    <argument name="SIGNATURE" type="signature" description="The message signature." />
-    <argument name="MESSAGE" stdin="true" type="raw" description="The binary message data for which the signature applies." />
+  <command symbol="message-validate" typeX="string" category="MESSAGING" description="Validate a message signature.">
+    <argument name="BITCOIN_ADDRESS" required="true" type="address" description="The Bitcoin address of the message signer."/>
+    <argument name="SIGNATURE" required="true" type="signature" description="The message signature." />
+    <argument name="MESSAGE" stdin="true" type="raw" description="The binary message data for which the signature applies. If not specified the message is read from STDIN." />
     <define name="BX_MESSAGE_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
     <define name="BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
   </command>
@@ -379,15 +379,15 @@
     <argument name="SATOSHI" stdin="true" type="uint64_t" description="The whole number of satoshi to convert. If not specified the value is read from STDIN."/>
   </command>
   
-  <command symbol="script-decode" formerly="showscript" typeX="string" multipleX="true" category="SCRIPT" description="Decode a script to plain text tokens.">
+  <command symbol="script-decode" formerly="showscript" typeX="string" multipleX="true" category="TRANSACTION" description="Decode a script to plain text tokens.">
     <argument name="SCRIPT" fileX="true" stdin="true" type="base16" description="The Base16 script. If not specified the script is read from STDIN."/>
   </command>
   
-  <command symbol="script-encode" formerly="rawscript" typeX="base16" category="SCRIPT" description="Base16 encode a plain text script.">
+  <command symbol="script-encode" formerly="rawscript" typeX="base16" category="TRANSACTION" description="Base16 encode a plain text script.">
     <argument name="TOKEN" stdin="true" limit="-1" type="string" description="The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."/>
   </command>
   
-  <command symbol="script-to-address" formerly="scripthash" typeX="address" category="SCRIPT" description="Create a BIP16 pay-to-script-hash address from an encoded script.">
+  <command symbol="script-to-address" formerly="scripthash" typeX="address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from an encoded script.">
     <argument name="TOKEN" fileX="true" limit="-1" type="string" description="The script. If not specified the script is read from STDIN."/>
   </command>
   
@@ -426,7 +426,7 @@
     <define name="BX_SENDTX_BCI_OBSOLETE" value="This command is no longer supported. Use send-tx, send-tx-node or send-tx-p2p." />
   </command>
 
-  <command symbol="settings" typeX="string" multipleX="true" category="BX" description="Display the loaded configuration settings.">
+  <command symbol="settings" typeX="string" multipleX="true" category="META" description="Display the loaded configuration settings.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />  
   </command>
 
@@ -565,12 +565,12 @@
     <argument name="WIF" stdin="true" type="wif" description="The WIF private key. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="wrap-decode" formerly="unwrap" typeX="wrapper" category="HASH" description="Validate the checksum of a Base16 data and recover its version byte and data.">
+  <command symbol="wrap-decode" formerly="unwrap" typeX="wrapper" category="ENCODING" description="Validate the checksum of a Base16 data and recover its version byte and data.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="WRAPPED" stdin="true" type="wrapper" description="The Base16 data to unwrap. If not specified the value is read from STDIN." />
   </command>
 
-  <command symbol="wrap-encode" formerly="wrap" typeX="wrapper" category="HASH" description="Add a version byte and checksum to Base16 data.">
+  <command symbol="wrap-encode" formerly="wrap" typeX="wrapper" category="ENCODING" description="Add a version byte and checksum to Base16 data.">
     <option name="version" type="byte" description="The desired version number." />
     <argument name="PAYLOAD" stdin="true" type="base16" description="The Base16 data to wrap. If not specified the value is read from STDIN." />
   </command>

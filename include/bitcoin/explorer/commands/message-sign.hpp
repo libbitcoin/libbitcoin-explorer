@@ -97,7 +97,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "MESSAGING";
     }
 
     /**
@@ -153,13 +153,13 @@ public:
         )
         (
             "WIF",
-            value<primitives::wif>(&argument_.wif),
+            value<primitives::wif>(&argument_.wif)->required(),
             "The WIF private key to use for signing."
         )
         (
             "MESSAGE",
             value<primitives::raw>(&argument_.message),
-            "The binary message data to sign."
+            "The binary message data to sign. If not specified the message is read from STDIN."
         );
 
         return options;
