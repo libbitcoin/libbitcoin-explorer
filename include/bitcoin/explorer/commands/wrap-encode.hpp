@@ -104,7 +104,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "HASH";
+        return "ENCODING";
     }
 
     /**

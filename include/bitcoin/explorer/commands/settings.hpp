@@ -97,7 +97,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "BX";
+        return "META";
     }
 
     /**
