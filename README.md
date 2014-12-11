@@ -154,19 +154,19 @@ Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ b
 
 Any set of `./configure` options can be passed via the build script, several examples follow.
 
-Compiling for minimum size and with debug symbols stripped:
+Building for minimum size and with debug symbols stripped:
 ```sh
 $ sudo ./install.sh CXXFLAGS="-Os -s"
 ```
-Compiling with NDEBUG defined:
+Building with NDEBUG defined:
 ```sh
 $ sudo ./install.sh --enable-ndebug
 ```
-Compiling without building tests:
+Building without building tests:
 ```sh
 $ sudo ./install.sh --without-tests
 ```
-Compiling for [testnet](https://en.bitcoin.it/wiki/Testnet):
+Building for [testnet](https://en.bitcoin.it/wiki/Testnet):
 ```sh
 $ sudo ./install.sh --enable-testnet
 ```
@@ -174,7 +174,7 @@ Building from a specified directory, such as `/home/me/mybuild`:
 ```sh
 $ sudo ./install.sh --build-dir=/home/me/mybuild
 ```
-Installing into a directory other than `/usr/local`, such as `/home/me/myinstall`:
+Building into a directory other than `/usr/local`, such as `/home/me/myinstall`:
 ```sh
 $ ./install.sh --prefix=/home/me/myinstall
 ```
