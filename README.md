@@ -162,13 +162,33 @@ Compiling with NDEBUG defined:
 ```sh
 $ sudo ./install.sh --enable-ndebug
 ```
+Compiling without building tests:
+```sh
+$ sudo ./install.sh --without-tests
+```
 Compiling for [testnet](https://en.bitcoin.it/wiki/Testnet):
 ```sh
 $ sudo ./install.sh --enable-testnet
 ```
-Installing to a directory other than `/usr/local`, such as `/home/me/stuff`:
+Building from a specified directory, such as `/home/me/mybuild`:
 ```sh
-$ ./install.sh --prefix=/home/me/stuff
+$ sudo ./install.sh --prefix=/home/me/mybuild
+```
+Installing into a directory other than `/usr/local`, such as `/home/me/myinstall`:
+```sh
+$ ./install.sh --build-dir=/home/me/myinstall
+```
+Building and linking with private copies of Boost and GMP dependencies:
+```sh
+$ ./install.sh --build-gmp --build-boost --prefix=/home/me/mybuild
+```
+Building a statically-linked executable.
+```sh
+$ ./install.sh --disable-shared --build-gmp --build-boost --prefix=/home/me/mybuild
+```
+Building a small statically-linked executable most quickly.
+```sh
+$ ./install.sh CXXFLAGS="-Os -s" --enable-ndebug --without-tests --disable-shared --build-gmp --build-boost --prefix=/home/me/mybuild
 ```
 
 ### Windows
