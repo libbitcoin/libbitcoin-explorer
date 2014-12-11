@@ -22,21 +22,22 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 BX is a command line tool for working with Bitcoin. It can be built as a single portable executable file for Linux, OSX and Windows. BX exposes about 80 commands and supports network communication with Obelisk and the P2P Bitcoin network. BX supports simple as well as advanced scenarios, including stealth and multisig.
 
-**Installation**
-* [Debian/Ubuntu](#debianubuntu)
-* [Macintosh](#macintosh)
-* [Configuration Options](#configuration-options)
-* [Windows](#windows)
-
 ## Installation
 
-BX is built using autotools and (apart from dependencies) can be built as follows.
+BX can be built from sources or downloaded as a portable [single file executable](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download).
+
+On Linux and Macintosh BX is built using Autotools as follows.
 ```sh
 $ ./autogen.sh
 $ ./configure
 $ make
 $ sudo make install
 ```
+
+Detailed instructions are provided below.
+* [Debian/Ubuntu](#debianubuntu)
+* [Macintosh](#macintosh)
+* [Windows](#windows)
 
 ### Debian/Ubuntu
 
