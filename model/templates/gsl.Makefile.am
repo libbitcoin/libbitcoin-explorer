@@ -71,11 +71,11 @@ bitcoin_explorer_utility_include_HEADERS = \\
 bitcoin_explorer_primitives_includedir = ${includedir}/bitcoin/explorer/primitives
 bitcoin_explorer_primitives_include_HEADERS = \\
     include/bitcoin/explorer/primitives/address.hpp \\
-    include/bitcoin/explorer/primitives/base10.hpp \\
     include/bitcoin/explorer/primitives/base16.hpp \\
     include/bitcoin/explorer/primitives/base2.hpp \\
     include/bitcoin/explorer/primitives/base58.hpp \\
     include/bitcoin/explorer/primitives/base64.hpp \\
+    include/bitcoin/explorer/primitives/btc.hpp \\
     include/bitcoin/explorer/primitives/btc160.hpp \\
     include/bitcoin/explorer/primitives/btc256.hpp \\
     include/bitcoin/explorer/primitives/byte.hpp \\
@@ -125,11 +125,11 @@ src_libbitcoin_explorer_la_SOURCES = \\
     src/obelisk_client.cpp \\
     src/prop_tree.cpp \\
     src/primitives/address.cpp \\
-    src/primitives/base10.cpp \\
     src/primitives/base16.cpp \\
     src/primitives/base2.cpp \\
     src/primitives/base58.cpp \\
     src/primitives/base64.cpp \\
+    src/primitives/btc.cpp \\
     src/primitives/btc160.cpp \\
     src/primitives/btc256.cpp \\
     src/primitives/byte.cpp \\

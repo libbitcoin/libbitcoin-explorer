@@ -30,11 +30,11 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
@@ -159,7 +159,7 @@ public:
         )
         (
             "BTC",
-            value<primitives::base10>(&argument_.btc),
+            value<primitives::btc>(&argument_.btc),
             "The number of BTC to convert. If not specified the value is read from STDIN."
         );
 
@@ -180,7 +180,7 @@ public:
     /**
      * Get the value of the BTC argument.
      */
-    BCX_API virtual primitives::base10& get_btc_argument()
+    BCX_API virtual primitives::btc& get_btc_argument()
     {
         return argument_.btc;
     }
@@ -189,7 +189,7 @@ public:
      * Set the value of the BTC argument.
      */
     BCX_API virtual void set_btc_argument(
-        const primitives::base10& value)
+        const primitives::btc& value)
     {
         argument_.btc = value;
     }
@@ -208,7 +208,7 @@ private:
         {
         }
 
-        primitives::base10 btc;
+        primitives::btc btc;
     } argument_;
 
     /**

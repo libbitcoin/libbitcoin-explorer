@@ -139,7 +139,7 @@
   </command>
 
   <command symbol="btc-to-satoshi" formerly="satoshi" typeX="uint64_t" category="MATH" description="Convert BTC to satoshi.">
-    <argument name="BTC" stdin="true" type="base10" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
+    <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
   <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
@@ -515,7 +515,7 @@
   </command>
   
   <command symbol="uri-encode" category="WALLET" description="Compose a Bitcoin URI from specified parts.">
-    <option name="amount" type="base10" description="The value of the amount parameter." />
+    <option name="amount" type="btc" description="The value of the amount parameter." />
     <option name="label" type="string" description="The value of the label parameter." />
     <option name="message" type="string" description="The value of the label parameter." />
     <option name="request" type="uri" description="The value of the payment request parameter." />

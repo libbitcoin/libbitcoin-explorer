@@ -39,7 +39,7 @@ static void handle_error(callback_state& state, const std::error_code& error)
 
 static void handle_callback(callback_state& state, size_t height)
 {
-    // all formats are valid/same/base10.
+    // all formats are valid/same/decimal-encdoed.
     state.output(height);
 }
 

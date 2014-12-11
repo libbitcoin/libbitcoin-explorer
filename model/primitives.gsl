@@ -16,11 +16,11 @@ function global.map_type(type)
     # Local type constants.
     my.type_bool = "bool"
     my.type_address = "address"
-    my.type_base10 = "base10"
     my.type_base16 = "base16"
     my.type_base2 = "base2"
     my.type_base58 = "base58"
     my.type_base64 = "base64"
+    my.type_btc = "btc"
     my.type_btc160 = "btc160"
     my.type_btc256 = "btc256"
     my.type_byte = "byte"
@@ -49,11 +49,11 @@ function global.map_type(type)
     my.type_wrapper = "wrapper"
 
     my.type_address_bx = "primitives::address"
-    my.type_base10_bx = "primitives::base10"
     my.type_base16_bx = "primitives::base16"
     my.type_base2_bx = "primitives::base2"
     my.type_base58_bx = "primitives::base58"
     my.type_base64_bx = "primitives::base64"
+    my.type_btc_bx = "primitives::btc"
     my.type_btc160_bx = "primitives::btc160"
     my.type_btc256_bx = "primitives::btc256"
     my.type_byte_bx = "primitives::byte"
@@ -83,8 +83,6 @@ function global.map_type(type)
 
     if my.type = my.type_address
         return my.type_address_bx
-    elsif my.type = my.type_base10
-        return my.type_base10_bx
     elsif my.type = my.type_base16
         return my.type_base16_bx
     elsif my.type = my.type_base2
@@ -93,6 +91,8 @@ function global.map_type(type)
         return my.type_base58_bx
     elsif my.type = my.type_base64
         return my.type_base64_bx
+    elsif my.type = my.type_btc
+        return my.type_btc_bx
     elsif my.type = my.type_btc160
         return my.type_btc160_bx
     elsif my.type = my.type_btc256
@@ -209,11 +209,11 @@ endfunction
 .
 .macro global.primitives
 #include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/base10.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
