@@ -105,7 +105,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "MESSAGING";
     }
 
     /**
@@ -162,18 +162,18 @@ public:
         )
         (
             "BITCOIN_ADDRESS",
-            value<primitives::address>(&argument_.bitcoin_address),
+            value<primitives::address>(&argument_.bitcoin_address)->required(),
             "The Bitcoin address of the message signer."
         )
         (
             "SIGNATURE",
-            value<primitives::signature>(&argument_.signature),
+            value<primitives::signature>(&argument_.signature)->required(),
             "The message signature."
         )
         (
             "MESSAGE",
             value<primitives::raw>(&argument_.message),
-            "The binary message data for which the signature applies."
+            "The binary message data for which the signature applies. If not specified the message is read from STDIN."
         );
 
         return options;
