@@ -172,11 +172,11 @@ $ sudo ./install.sh --enable-testnet
 ```
 Building from a specified directory, such as `/home/me/mybuild`:
 ```sh
-$ sudo ./install.sh --prefix=/home/me/mybuild
+$ sudo ./install.sh --build-dir=/home/me/mybuild
 ```
 Installing into a directory other than `/usr/local`, such as `/home/me/myinstall`:
 ```sh
-$ ./install.sh --build-dir=/home/me/myinstall
+$ ./install.sh --prefix=/home/me/myinstall
 ```
 Building and linking with private copies of Boost and GMP dependencies:
 ```sh
