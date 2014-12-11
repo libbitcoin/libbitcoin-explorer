@@ -40,12 +40,13 @@ static bool decode_signature(message_signature& signature,
     const std::string& encoded)
 {
     // There is no bc::decode_base64 array-based override.
-    data_chunk signature_bytes;
-    if (!decode_base64(signature_bytes, encoded))
+    data_chunk decoded;
+    if (!decode_base64(decoded, encoded) || 
+        (decoded.size() != message_signature_size))
         return false;
 
-    std::copy(signature_bytes.begin(), signature_bytes.end(),
-        signature.begin());
+    std::copy(decoded.begin(), decoded.end(), signature.begin());
+    return true;
 }
 
 static std::string encode_signature(const message_signature& signature)
