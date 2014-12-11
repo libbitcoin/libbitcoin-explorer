@@ -22,21 +22,22 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 BX is a command line tool for working with Bitcoin. It can be built as a single portable executable file for Linux, OSX and Windows. BX exposes about 80 commands and supports network communication with Obelisk and the P2P Bitcoin network. BX supports simple as well as advanced scenarios, including stealth and multisig.
 
-**Installation**
-* [Debian/Ubuntu](#debianubuntu)
-* [Macintosh](#macintosh)
-* [Configuration Options](#configuration-options)
-* [Windows](#windows)
-
 ## Installation
 
-BX is built using autotools and (apart from dependencies) can be built as follows.
+BX can be built from sources or downloaded as a portable [single file executable](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download).
+
+On Linux and Macintosh BX is built using Autotools as follows.
 ```sh
 $ ./autogen.sh
 $ ./configure
 $ make
 $ sudo make install
 ```
+
+Detailed instructions are provided below.
+* [Debian/Ubuntu](#debianubuntu)
+* [Macintosh](#macintosh)
+* [Windows](#windows)
 
 ### Debian/Ubuntu
 
@@ -153,21 +154,41 @@ Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ b
 
 Any set of `./configure` options can be passed via the build script, several examples follow.
 
-Compiling for minimum size and with debug symbols stripped:
+Building for minimum size and with debug symbols stripped:
 ```sh
 $ sudo ./install.sh CXXFLAGS="-Os -s"
 ```
-Compiling with NDEBUG defined:
+Building with NDEBUG defined:
 ```sh
 $ sudo ./install.sh --enable-ndebug
 ```
-Compiling for [testnet](https://en.bitcoin.it/wiki/Testnet):
+Building without building tests:
+```sh
+$ sudo ./install.sh --without-tests
+```
+Building for [testnet](https://en.bitcoin.it/wiki/Testnet):
 ```sh
 $ sudo ./install.sh --enable-testnet
 ```
-Installing to a directory other than `/usr/local`, such as `/home/me/stuff`:
+Building from a specified directory, such as `/home/me/mybuild`:
 ```sh
-$ ./install.sh --prefix=/home/me/stuff
+$ sudo ./install.sh --build-dir=/home/me/mybuild
+```
+Building into a directory other than `/usr/local`, such as `/home/me/myinstall`:
+```sh
+$ ./install.sh --prefix=/home/me/myinstall
+```
+Building and linking with private copies of Boost and GMP dependencies:
+```sh
+$ ./install.sh --build-gmp --build-boost --prefix=/home/me/mybuild
+```
+Building a statically-linked executable.
+```sh
+$ ./install.sh --disable-shared --build-gmp --build-boost --prefix=/home/me/mybuild
+```
+Building a small statically-linked executable most quickly.
+```sh
+$ ./install.sh CXXFLAGS="-Os -s" --enable-ndebug --without-tests --disable-shared --build-gmp --build-boost --prefix=/home/me/mybuild
 ```
 
 ### Windows
