@@ -120,7 +120,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Validate an address. Returns the address if it is valid.";
+        return "Validate a Bitcoin address.";
     }
 
     /**
