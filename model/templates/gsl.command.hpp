@@ -154,9 +154,20 @@ public:
     {
         using namespace po;
         definitions.add_options()
+        (
+            "general.network",
+.# UGLY HACK FOR TESTNET CONDITIONALITY
+#ifdef ENABLE_TESTNET
+            value<std::string>(&setting_.general.network)->default_value("testnet"),
+            "The network to use, either 'mainnet' or 'testnet'. Defaults to 'testnet'."
+#else
+            value<std::string>(&setting_.general.network)->default_value("mainnet"),
+            "The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'."
+#endif
+        )
 .for configuration
 .   is_last_configuration = last()
-.   for setting
+.   for setting where !(configuration.section = "general" & setting.name = "network")
 .       is_last_setting = is_last_configuration & last()
 .       identifiers = section + "." + name
 .       variable = "setting_.$(section:lower,c).$(name:lower,c)"

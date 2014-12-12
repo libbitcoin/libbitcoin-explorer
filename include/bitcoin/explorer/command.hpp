@@ -187,8 +187,13 @@ public:
         definitions.add_options()
         (
             "general.network",
+#ifdef ENABLE_TESTNET
+            value<std::string>(&setting_.general.network)->default_value("testnet"),
+            "The network to use, either 'mainnet' or 'testnet'. Defaults to 'testnet'."
+#else
             value<std::string>(&setting_.general.network)->default_value("mainnet"),
             "The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'."
+#endif
         )
         (
             "general.retries",
