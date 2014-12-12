@@ -103,7 +103,7 @@ $ xcode-select --install
 
 First install Homebrew. Installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are preinstalled on OSX.
 ```sh
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/version2/install)"
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
 
