@@ -173,21 +173,21 @@ Building from a specified directory, such as `/home/me/mybuild`:
 ```sh
 $ sudo ./install.sh --build-dir=/home/me/mybuild
 ```
-Building into a directory other than `/usr/local`, such as `/home/me/myinstall`:
+Building into a directory other than `/usr/local`, such as `/home/me/myprefix`:
 ```sh
-$ ./install.sh --prefix=/home/me/myinstall
+$ ./install.sh --prefix=/home/me/myprefix
 ```
 Building and linking with private copies of Boost and GMP dependencies:
 ```sh
-$ ./install.sh --build-gmp --build-boost --prefix=/home/me/mybuild
+$ ./install.sh --build-gmp --build-boost --prefix=/home/me/myprefix
 ```
 Building a statically-linked executable:
 ```sh
-$ ./install.sh --disable-shared --build-gmp --build-boost --prefix=/home/me/mybuild
+$ ./install.sh --disable-shared --build-gmp --build-boost --prefix=/home/me/myprefix
 ```
 Building a small statically-linked executable most quickly:
 ```sh
-$ ./install.sh CXXFLAGS="-Os -s" --enable-ndebug --without-tests --disable-shared --build-gmp --build-boost --prefix=/home/me/mybuild
+$ ./install.sh CXXFLAGS="-Os -s" --enable-ndebug --without-tests --disable-shared --build-gmp --build-boost --prefix=/home/me/myprefix
 ```
 Building with bash-completion support:
 
