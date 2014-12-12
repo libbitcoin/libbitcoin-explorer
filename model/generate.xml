@@ -4,6 +4,7 @@
   <!-- Help resources. -->
   
   <help>
+    <!-- TODO: generate part of help output from shorthand. -->
     <shorthand name="BTC" description="Bitcoin Denomination" />
     <shorthand name="BX" description="Bitcoin Explorer" />
     <shorthand name="EC" description="Elliptic Curve" />
