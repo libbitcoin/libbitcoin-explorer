@@ -158,7 +158,7 @@ Building for minimum size and with debug symbols stripped:
 $ sudo ./install.sh CXXFLAGS="-Os -s"
 ```
 
-> The `-s` option is not supported by the clang compiler.
+> The `-s` option is not supported by the clang compiler. Instead use the command `$ strip bx` after the build.
 
 Building with NDEBUG defined:
 ```sh
