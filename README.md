@@ -157,6 +157,9 @@ Building for minimum size and with debug symbols stripped:
 ```sh
 $ sudo ./install.sh CXXFLAGS="-Os -s"
 ```
+
+> The `-s` option is not supported by the clang compiler.
+
 Building with NDEBUG defined:
 ```sh
 $ sudo ./install.sh --enable-ndebug
