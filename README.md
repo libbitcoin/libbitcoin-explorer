@@ -16,7 +16,7 @@ All files in this repository fall under the license specified in [COPYING](https
 
 **About Libbitcoin**
 
-The libbitcoin toolkit is a set of cross platform C++ libraries for building bitcoin applications. The toolkit consists of several libraries, most of which depend on the foundational [libbitcoin](https://github.com/libbitcoin/libbitcoin) library. Each library's repository can be cloned and built using common [automake](http://www.gnu.org/software/automake) instructions.
+The libbitcoin toolkit is a set of cross platform C++ libraries for building bitcoin applications. The toolkit consists of several libraries, most of which depend on the foundational [libbitcoin](https://github.com/libbitcoin/libbitcoin) library. Each library's repository can be cloned and built using common [Automake](http://www.gnu.org/software/automake) instructions.
 
 **About Libbitcoin Explorer**
 
@@ -31,7 +31,8 @@ On Linux and Macintosh BX is built using Autotools as follows.
 $ ./autogen.sh
 $ ./configure
 $ make
-$ sudo make install
+$ sudo make install # optional
+$ sudo ldconfig     # optional
 ```
 
 Detailed instructions are provided below.
@@ -41,9 +42,7 @@ Detailed instructions are provided below.
 
 ### Debian/Ubuntu
 
-Libbitcoin requires a C++11 compiler, currently [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) minimum.
-
-> For this reason Ubuntu is not supported prior to version [12.04](http://askubuntu.com/a/271561).
+Libbitcoin requires a C++11 compiler, currently [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) minimum. For this reason Ubuntu is not supported prior to version [12.04](http://askubuntu.com/a/271561).
 
 To see your GCC version:
 ```sh
@@ -182,13 +181,20 @@ Building and linking with private copies of Boost and GMP dependencies:
 ```sh
 $ ./install.sh --build-gmp --build-boost --prefix=/home/me/mybuild
 ```
-Building a statically-linked executable.
+Building a statically-linked executable:
 ```sh
 $ ./install.sh --disable-shared --build-gmp --build-boost --prefix=/home/me/mybuild
 ```
-Building a small statically-linked executable most quickly.
+Building a small statically-linked executable most quickly:
 ```sh
 $ ./install.sh CXXFLAGS="-Os -s" --enable-ndebug --without-tests --disable-shared --build-gmp --build-boost --prefix=/home/me/mybuild
+```
+Building with bash-completion support:
+
+> If your target system does not have it pre-installed you must first install the [bash-completion](http://bash-completion.alioth.debian.org) package. Packages are available for common package managers, including apt-get, homebrew and macports.
+
+```sh
+$ sudo ./install.sh --with-bash-completion-dir
 ```
 
 ### Windows
