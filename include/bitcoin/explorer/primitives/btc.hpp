@@ -29,7 +29,7 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between text, btc and satoshi.
+ * Serialization helper to convert between btc and satoshi.
  */
 class btc
 {
