@@ -272,7 +272,6 @@ BITCOIN_CLIENT_OPTIONS=\
 # Define bitcoin-explorer options.
 #------------------------------------------------------------------------------
 BITCOIN_EXPLORER_OPTIONS=\
-"--with-bash-completion-dir "\
 "${gmp_flags} "\
 "${with_boost} "\
 "${with_pkgconfigdir} "
