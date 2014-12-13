@@ -20,7 +20,7 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 **About Libbitcoin Explorer**
 
-BX is a command line tool for working with Bitcoin. It can be built as a single portable executable file for Linux, OSX and Windows. BX exposes about 80 commands and supports network communication with Obelisk and the P2P Bitcoin network. BX supports simple as well as advanced scenarios, including stealth and multisig.
+BX is a command line tool for working with Bitcoin. It can be built as a single portable executable file for Linux, OSX and Windows. BX exposes about 80 commands and supports network communication with [Obelisk](https://github.com/libbitcoin/obelisk) and the P2P Bitcoin network. BX supports simple as well as advanced scenarios, including stealth and multisig.
 
 ## Installation
 
