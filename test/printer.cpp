@@ -56,21 +56,21 @@ BOOST_AUTO_TEST_CASE(printer__columnize__paragraph_empty_width_0__empty)
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("", 0);
-    BOOST_REQUIRE_EQUAL(rows.size(), 0);
+    BOOST_REQUIRE_EQUAL(rows.size(), 0u);
 }
 
 BOOST_AUTO_TEST_CASE(printer__columnize__paragraph_empty_width_1__empty)
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("", 1);
-    BOOST_REQUIRE_EQUAL(rows.size(), 0);
+    BOOST_REQUIRE_EQUAL(rows.size(), 0u);
 }
 
 BOOST_AUTO_TEST_CASE(printer__columnize__short_word_width_10__one_word_row)
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("foo", 10);
-    BOOST_REQUIRE_EQUAL(rows.size(), 1);
+    BOOST_REQUIRE_EQUAL(rows.size(), 1u);
     BOOST_REQUIRE_EQUAL(rows.front(), "foo");
 }
 
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(printer__columnize__two_short_words_width_10__two_word_row)
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("foo bar", 10);
-    BOOST_REQUIRE_EQUAL(rows.size(), 1);
+    BOOST_REQUIRE_EQUAL(rows.size(), 1u);
     BOOST_REQUIRE_EQUAL(rows.front(), "foo bar");
 }
 
@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(printer__columnize__overflow_width_10__two_rows)
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("foo bar overflow", 10);
-    BOOST_REQUIRE_EQUAL(rows.size(), 2);
+    BOOST_REQUIRE_EQUAL(rows.size(), 2u);
     BOOST_REQUIRE_EQUAL(rows[0], "foo bar");
     BOOST_REQUIRE_EQUAL(rows[1], "overflow");
 }
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE(printer__columnize__first_word_overflow_width_10__two_rows)
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("morethantenchars foo bar", 10);
-    BOOST_REQUIRE_EQUAL(rows.size(), 2);
+    BOOST_REQUIRE_EQUAL(rows.size(), 2u);
     BOOST_REQUIRE_EQUAL(rows[0], "morethantenchars");
     BOOST_REQUIRE_EQUAL(rows[1], "foo bar");
 }
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE(printer__columnize__middle_word_overflow_width_10__three_ro
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("foo bar morethantenchars test", 10);
-    BOOST_REQUIRE_EQUAL(rows.size(), 3);
+    BOOST_REQUIRE_EQUAL(rows.size(), 3u);
     BOOST_REQUIRE_EQUAL(rows[0], "foo bar");
     BOOST_REQUIRE_EQUAL(rows[1], "morethantenchars");
     BOOST_REQUIRE_EQUAL(rows[2], "test");
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(printer__columnize__last_word_overflow_width_10__two_rows)
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("foo bar morethantenchars", 10);
-    BOOST_REQUIRE_EQUAL(rows.size(), 2);
+    BOOST_REQUIRE_EQUAL(rows.size(), 2u);
     BOOST_REQUIRE_EQUAL(rows[0], "foo bar");
     BOOST_REQUIRE_EQUAL(rows[1], "morethantenchars");
 }
@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE(printer__columnize__excess_whitespace_width_10__space_remov
 {
     BX_PRINTER_SETUP();
     auto rows = help.columnize("  \tfoo   bar \n\n  morethantenchars\r\n  ", 10);
-    BOOST_REQUIRE_EQUAL(rows.size(), 3);
+    BOOST_REQUIRE_EQUAL(rows.size(), 3u);
     BOOST_REQUIRE_EQUAL(rows[0], "\tfoo bar");
     BOOST_REQUIRE_EQUAL(rows[1], "\n\n");
     BOOST_REQUIRE_EQUAL(rows[2], "morethantenchars\r\n");
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__named_three_options__thre
         ("long", "Long name only.")
         (",m", "Short name only.")
         ("short_long,s", "Long and short name."));
-    BX_PRINTER_INITIALIZE(3, 0);
+    BX_PRINTER_INITIALIZE(3u, 0u);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
         "--long               Long name only.                                     \n"
         "-m                   Short name only.                                    \n"
@@ -166,7 +166,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__reversed_named_three_opti
         ("short_long,s", "Long and short name.")
         (",m", "Short name only.")
         ("long", "Long name only."));
-    BX_PRINTER_INITIALIZE(3, 0);
+    BX_PRINTER_INITIALIZE(3u, 0u);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
         "--long               Long name only.                                     \n"
         "-m                   Short name only.                                    \n"
@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__unsorted_named_three_opti
         ("third", "Third option description.");
         arguments.add("forty-two", 42);
         arguments.add("THIRD", -1));
-    BX_PRINTER_INITIALIZE(3, 2);
+    BX_PRINTER_INITIALIZE(3u, 2u);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
         "--third              Third option description.                           \n"
         "-f [--first]         First option description.                           \n"
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__named_three_options_two_m
         arguments.add("FIRST", 1);
         arguments.add("second", 42);
         arguments.add("THIRD", -1));
-    BX_PRINTER_INITIALIZE(3, 3);
+    BX_PRINTER_INITIALIZE(3u, 3u);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(false),
         "-f [--first]         First option description.                           \n"
     );
@@ -211,7 +211,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_three_options_
         ("long", "Long name only.")
         ("short_long,s", "Long and short name.")
         (",m", "Short name only."));
-    BX_PRINTER_INITIALIZE(3, 0);
+    BX_PRINTER_INITIALIZE(3u, 0u);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(true), "");
 }
 
@@ -224,7 +224,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_three_options_
         arguments.add("FIRST", 1);
         arguments.add("SECOND", 42);
         arguments.add("THIRD", -1));
-    BX_PRINTER_INITIALIZE(3, 3);
+    BX_PRINTER_INITIALIZE(3u, 3u);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(true),
         "THIRD                Third option description.                           \n"
     );
@@ -239,7 +239,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__reverse_positional_three_
         arguments.add("FIRST", 1);
         arguments.add("SECOND", 42);
         arguments.add("THIRD", -1));
-    BX_PRINTER_INITIALIZE(3, 3);
+    BX_PRINTER_INITIALIZE(3u, 3u);
     BOOST_REQUIRE_EQUAL(help.format_parameters_table(true),
         "THIRD                Third option description.                           \n"
         "SECOND               Second option description.                          \n"
@@ -263,7 +263,7 @@ BOOST_AUTO_TEST_CASE(printer__format_parameters_table__positional_three_options_
     arguments.add("FIRST", 1);
     arguments.add("SECOND", 42);
     arguments.add("THIRD", -1));
-    BX_PRINTER_INITIALIZE(3, 3);
+    BX_PRINTER_INITIALIZE(3u, 3u);
     auto table = help.format_parameters_table(true);
     BOOST_REQUIRE_EQUAL(table,
         "SECOND               Lorem ipsum dolor sit amet, consectetur adipiscing  \n"
@@ -293,7 +293,7 @@ BOOST_AUTO_TEST_CASE(printer__format_usage_parameters__unsorted_two_options_one_
         arguments.add("FIRST", 1);
         arguments.add("SECOND", 42);
         arguments.add("THIRD", -1));
-    BX_PRINTER_INITIALIZE(3, 3);
+    BX_PRINTER_INITIALIZE(3u, 3u);
     BOOST_REQUIRE_EQUAL(help.format_usage_parameters(), "[-fx] [THIRD]...");
 }
 
@@ -315,7 +315,7 @@ BOOST_AUTO_TEST_CASE(printer__format_usage_parameters__unsorted_multiple_paramet
         arguments.add("REQUIRED", 1);
         arguments.add("SIMPLE", 1);
         arguments.add("ARRAY", -1));
-    BX_PRINTER_INITIALIZE(10, 3);
+    BX_PRINTER_INITIALIZE(10u, 3u);
     BOOST_REQUIRE_EQUAL(help.format_usage_parameters(), "[-mst] --longy VALUE [--untoggled] [--defaulty VALUE] [--multy VALUE]... REQUIRED [SIMPLE] [ARRAY]...");
 }
 BOOST_AUTO_TEST_SUITE_END()
@@ -330,7 +330,7 @@ BOOST_AUTO_TEST_SUITE(printer__generate_argument_names)
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__empty_arguments_empty_options__empty)
 {
     BX_PRINTER_SETUP();
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(0);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(0u);
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__empty_arguments_multiple_options__empty)
@@ -339,13 +339,13 @@ BOOST_AUTO_TEST_CASE(printer__generate_argument_names__empty_arguments_multiple_
         ("long", "Long name only.")
         ("short_long,s", "Long and short name.")
         (",m", "Short name only."));
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(0);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(0u);
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__one_argument_1__one_name_1)
 {
     BX_PRINTER_SETUP_ARGUMENTS(arguments.add("one", 1));
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1u);
     auto& names = help.get_argument_names();
     BOOST_REQUIRE_EQUAL(names[0].first, "one");
     BOOST_REQUIRE_EQUAL(names[0].second, 1);
@@ -354,37 +354,37 @@ BOOST_AUTO_TEST_CASE(printer__generate_argument_names__one_argument_1__one_name_
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__one_argument_42__one_name_42)
 {
     BX_PRINTER_SETUP_ARGUMENTS(arguments.add("forty-two", 42));
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1u);
     auto& names = help.get_argument_names();
-    BOOST_REQUIRE(names[0].first == "forty-two");
-    BOOST_REQUIRE(names[0].second == 42);
+    BOOST_REQUIRE_EQUAL(names[0].first, "forty-two");
+    BOOST_REQUIRE_EQUAL(names[0].second, 42);
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__one_argument_max_arguments__one_name_max_arguments)
 {
     BX_PRINTER_SETUP_ARGUMENTS(arguments.add("max_arguments", printer::max_arguments));
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1u);
     auto& names = help.get_argument_names();
-    BOOST_REQUIRE(names[0].first == "max_arguments");
-    BOOST_REQUIRE(names[0].second == printer::max_arguments);
+    BOOST_REQUIRE_EQUAL(names[0].first, "max_arguments");
+    BOOST_REQUIRE_EQUAL(names[0].second, printer::max_arguments);
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__one_argument_max_arguments_plus_1__one_name_negative_1)
 {
     BX_PRINTER_SETUP_ARGUMENTS(arguments.add("max_arguments+1", printer::max_arguments + 1));
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1u);
     auto& names = help.get_argument_names();
-    BOOST_REQUIRE(names[0].first == "max_arguments+1");
-    BOOST_REQUIRE(names[0].second == -1);
+    BOOST_REQUIRE_EQUAL(names[0].first, "max_arguments+1");
+    BOOST_REQUIRE_EQUAL(names[0].second, -1);
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__one_argument_negative_1__one_name_negative_1)
 {
     BX_PRINTER_SETUP_ARGUMENTS(arguments.add("negative-one", -1));
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(1u);
     auto& names = help.get_argument_names();
-    BOOST_REQUIRE(names[0].first == "negative-one");
-    BOOST_REQUIRE(names[0].second == -1);
+    BOOST_REQUIRE_EQUAL(names[0].first, "negative-one");
+    BOOST_REQUIRE_EQUAL(names[0].second, -1);
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__multiple_arguments__expected_names)
@@ -392,12 +392,12 @@ BOOST_AUTO_TEST_CASE(printer__generate_argument_names__multiple_arguments__expec
     BX_PRINTER_SETUP_ARGUMENTS(
         arguments.add("forty-two", 42);
         arguments.add("max_arguments", printer::max_arguments));
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(2);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(2u);
     auto& names = help.get_argument_names();
-    BOOST_REQUIRE(names[0].first == "forty-two");
-    BOOST_REQUIRE(names[0].second == 42);
-    BOOST_REQUIRE(names[1].first == "max_arguments");
-    BOOST_REQUIRE(names[1].second == printer::max_arguments);
+    BOOST_REQUIRE_EQUAL(names[0].first, "forty-two");
+    BOOST_REQUIRE_EQUAL(names[0].second, 42);
+    BOOST_REQUIRE_EQUAL(names[1].first, "max_arguments");
+    BOOST_REQUIRE_EQUAL(names[1].second, printer::max_arguments);
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_argument_names__multiple_arguments_negative_1__expected_names)
@@ -406,14 +406,14 @@ BOOST_AUTO_TEST_CASE(printer__generate_argument_names__multiple_arguments_negati
         arguments.add("forty-two", 42);
         arguments.add("max_arguments", printer::max_arguments);
         arguments.add("negative-one", -1));
-    BX_PRINTER_GENERATE_ARGUMENT_NAMES(3);
+    BX_PRINTER_GENERATE_ARGUMENT_NAMES(3u);
     auto& names = help.get_argument_names();
-    BOOST_REQUIRE(names[0].first == "forty-two");
-    BOOST_REQUIRE(names[0].second == 42);
-    BOOST_REQUIRE(names[1].first == "max_arguments");
-    BOOST_REQUIRE(names[1].second == printer::max_arguments);
-    BOOST_REQUIRE(names[2].first == "negative-one");
-    BOOST_REQUIRE(names[2].second == -1);
+    BOOST_REQUIRE_EQUAL(names[0].first, "forty-two");
+    BOOST_REQUIRE_EQUAL(names[0].second, 42);
+    BOOST_REQUIRE_EQUAL(names[1].first, "max_arguments");
+    BOOST_REQUIRE_EQUAL(names[1].second, printer::max_arguments);
+    BOOST_REQUIRE_EQUAL(names[2].first, "negative-one");
+    BOOST_REQUIRE_EQUAL(names[2].second, -1);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -428,16 +428,16 @@ BOOST_AUTO_TEST_SUITE(printer__generate_parameters)
 BOOST_AUTO_TEST_CASE(printer__generate_parameters__empty__empty_parameters)
 {
     BX_PRINTER_SETUP();
-    BX_PRINTER_GENERATE_PARAMETERS(0);
+    BX_PRINTER_GENERATE_PARAMETERS(0u);
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_parameters__one_option__expected_parameter)
 {
     BX_PRINTER_SETUP_ARGUMENTS(options.add_options()
         ("foo_bar,f", "Foobar option name."));
-    BX_PRINTER_GENERATE_PARAMETERS(1);
+    BX_PRINTER_GENERATE_PARAMETERS(1u);
     auto& parameters = help.get_parameters();
-    BOOST_REQUIRE(parameters[0].get_short_name() == 'f');
+    BOOST_REQUIRE_EQUAL(parameters[0].get_short_name(), 'f');
 }
 
 BOOST_AUTO_TEST_CASE(printer__generate_parameters__unsorted_three_options__expected_sorted_parameters)
@@ -446,11 +446,11 @@ BOOST_AUTO_TEST_CASE(printer__generate_parameters__unsorted_three_options__expec
         ("first,f", "First option description.")
         ("second,x", "Second option description.")
         ("third", "Third option description."));
-    BX_PRINTER_GENERATE_PARAMETERS(3);
+    BX_PRINTER_GENERATE_PARAMETERS(3u);
     auto& parameters = help.get_parameters();
-    BOOST_REQUIRE(parameters[0].get_long_name() == "third");
-    BOOST_REQUIRE(parameters[1].get_short_name() == 'f');
-    BOOST_REQUIRE(parameters[2].get_description() == "Second option description.");
+    BOOST_REQUIRE_EQUAL(parameters[0].get_long_name(), "third");
+    BOOST_REQUIRE_EQUAL(parameters[1].get_short_name(), 'f');
+    BOOST_REQUIRE_EQUAL(parameters[2].get_description(), "Second option description.");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -466,16 +466,16 @@ BOOST_AUTO_TEST_CASE(printer__initialize__unsorted_multitple_options__expected_s
         ("third", "Third option description.");
         arguments.add("forty-two", 42);
         arguments.add("negative-one", -1));
-    BX_PRINTER_INITIALIZE(3, 2);
+    BX_PRINTER_INITIALIZE(3u, 2u);
     auto& names = help.get_argument_names();
     auto& parameters = help.get_parameters();
-    BOOST_REQUIRE(names[0].first == "forty-two");
-    BOOST_REQUIRE(names[0].second == 42);
-    BOOST_REQUIRE(names[1].first == "negative-one");
-    BOOST_REQUIRE(names[1].second == -1);
-    BOOST_REQUIRE(parameters[0].get_long_name() == "third");
-    BOOST_REQUIRE(parameters[1].get_short_name() == 'f');
-    BOOST_REQUIRE(parameters[2].get_description() == "Second option description.");
+    BOOST_REQUIRE_EQUAL(names[0].first, "forty-two");
+    BOOST_REQUIRE_EQUAL(names[0].second, 42);
+    BOOST_REQUIRE_EQUAL(names[1].first, "negative-one");
+    BOOST_REQUIRE_EQUAL(names[1].second, -1);
+    BOOST_REQUIRE_EQUAL(parameters[0].get_long_name(), "third");
+    BOOST_REQUIRE_EQUAL(parameters[1].get_short_name(), 'f');
+    BOOST_REQUIRE_EQUAL(parameters[2].get_description(), "Second option description.");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

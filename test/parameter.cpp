@@ -154,7 +154,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__short_long__sets_limit_0)
     BX_TEST_PARAMETER_SETUP(opt::short_long);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), parameter::not_positional);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0u);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), 's');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "short_long");
@@ -168,7 +168,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__short_only__sets_limit_0)
     BX_TEST_PARAMETER_SETUP(opt::shorty);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), parameter::not_positional);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0u);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), 'm');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "");
@@ -185,7 +185,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__long_only__sets_limit_0)
     BX_TEST_PARAMETER_SETUP(opt::longy);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 0);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 1u);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), true);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "longy");
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__simple__sets_limit_2)
     BX_TEST_PARAMETER_SETUP(opt::simple);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 1);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 2);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 2u);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "simple");
@@ -213,7 +213,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__defaulted__sets_limit_3)
     BX_TEST_PARAMETER_SETUP(opt::defaulty);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 2);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 3);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 3u);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "defaulty");
@@ -231,7 +231,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__required__sets_limit_4)
     BX_TEST_PARAMETER_SETUP(opt::required);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 3);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 4);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 4u);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), true);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "required");
@@ -254,7 +254,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__toggled__sets_limit_0)
     
     // This combination uniquely implies that the option is a toggle.
     BOOST_REQUIRE_EQUAL(parameter.get_position(), parameter::not_positional);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0u);
 }
 
 BOOST_AUTO_TEST_CASE(parameter__initialize__vector__sets_limit_1)
@@ -262,7 +262,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__vector__sets_limit_1)
     BX_TEST_PARAMETER_SETUP(opt::vector);
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 4);
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 5);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 5u);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "VECTOR");
@@ -277,7 +277,7 @@ BOOST_AUTO_TEST_CASE(parameter__initialize__multitoken__sets_unlimited)
     parameter.initialize(option, names);
     BOOST_REQUIRE_EQUAL(parameter.get_position(), 5);
     /* The positional "unlimited" limit is different than the named limit. */
-    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0xFFFFFFFF);
+    BOOST_REQUIRE_EQUAL(parameter.get_args_limit(), 0xFFFFFFFFu);
     BOOST_REQUIRE_EQUAL(parameter.get_required(), false);
     BOOST_REQUIRE_EQUAL(parameter.get_short_name(), '\0');
     BOOST_REQUIRE_EQUAL(parameter.get_long_name(), "multitoken");
