@@ -26,3 +26,6 @@ libbitcoin-explorer.pc
 /obj/
 /bin/
 /bx-build/
+/release/staging/bx-*
+/release/bx
+/release/bx.exe
