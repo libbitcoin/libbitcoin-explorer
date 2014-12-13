@@ -1,0 +1,63 @@
+5,638,156
+bx-osx-x64-mainnet
+926093855058fd9f42c627d1dd2e52313e65ca6084ffd4b2dbbe02725554c122
+H+arIVyD02wt8nDp6EEy5oG6oLG7nWYBbow1vEvIBAfYbF3fYdGuwqSp/hkpB+15GcTkIOQHpjVJcLttGl2Naxo=
+The signature is valid.
+https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-osx-x64-mainnet
+
+5,638,236
+bx-osx-x64-testnet
+c2b24db00bdbdfbed3288606c9e3c7c8c69a2989fc341f7a5b2bdc4fc4d9f633
+IGqIxQUo57lunhlLJGB8hnwYLWpf/6XRzprMCRFoDrW6XQMwyojtQ7edWa8K9WNmw2sv5s2ztPI/OonZKJn32Tw=
+The signature is valid.
+https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-osx-x64-testnet
+
+3,000,632
+bx-linux-x64-mainnet
+a5e1136b95f30b35c6077b48ce7b60e27e7b68cb778416a2569b891fea20cf3f
+IHKUMal99sCX3DQtyolNLyckNo7R1rAcQdYnb4kWpqd0K9f5GK5zc3xBB3YiffIiAbRDWTS69kBA8yn9GotZqEM=
+The signature is valid.
+https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-linux-x64-mainnet
+
+3,000,632
+bx-linux-x64-testnet
+938e3fc0795d9c5efb288cbbeb1ca9da763309699744ba42fc8fdd775d5f9ad0
+HwjA/dZqLLZuLrC9fe2TG3c4Bq/K0jgbjuxcDmZug7G9FhhHy0aNAMAbDRnW1gRERppiH4yS3DGYj2y7YPHWQO0=
+The signature is valid.
+https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-linux-x64-testnet
+
+334166
+The smoke test is good.
+3,385,344
+bx-windows-x64-mainnet.exe
+d60329e6dacc7edda87c7c6ad12a79a5f556199a51658b6b66ddc26827118832
+H7oUanne/SHv3q2JrliYEMi8nHm0VRBCq/XIoTDr3wu7DCXo6Y81u/PShdnO86b0O7rPvdlNvMtQ8BKapwAR8oQ=
+The signature is valid.
+https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-windows-x64-mainnet.exe
+
+314014
+The smoke test is good.
+3,384,320
+bx-windows-x64-testnet.exe
+f9290c398a458968a0770d74c8bb9c101e5b94a77538b3edbdc229ed109f2b44
+IMeud1HDcZv93wX6fID6CE6dFRvAbtm6/z6dRIguS63qdz8o7Bxzjav17eMqqhoxz6AE+ljlGOzVe01szRJE03U=
+The signature is valid.
+https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-windows-x64-testnet.exe
+
+334166
+The smoke test is good.
+2,467,328
+bx-windows-x86-mainnet.exe
+78b0e937aa8841532cade910d176e9d94e256a9410ce01dd4c5f798940b37410
+IALEyfiwUMeO+YlN6DDqaY00JoB3Sw6hsB5qtum/gjupTHSaktN46tFLC5oIDUtVGMT9FSKH8iSopPwmUCo0nN8=
+The signature is valid.
+https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-windows-x86-mainnet.exe
+
+314014
+The smoke test is good.
+2,467,328
+bx-windows-x86-testnet.exe
+c467144319ea1e975cd3fbd214feed2b901b07ec4cb129e34c162bfb23b2bc27
+H7E8KG5+QjFzSeHl3LSmqcz4ieSwi5GNWg4D+joJj3DkWyihlnGKGlkH97ggHYzhr/UaVHbOWBy7BWMXR8yQ9lk=
+The signature is valid.
+https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-windows-x86-testnet.exe
