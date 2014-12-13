@@ -231,23 +231,11 @@ AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-return-type],
         [CXXFLAGS="$CXXFLAGS -Wno-return-type"])])
 
-# Clean up protobuf headers.
+# Clean up bx generated code.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
         [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])])
-
-# Clean up protobuf headers. Enabled in clang only.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*clang*],
-    [AX_CHECK_COMPILE_FLAG([-Wno-sign-compare],
-        [CXXFLAGS="$CXXFLAGS -Wno-sign-compare"])])
-
-# Clean up protobuf headers. Enabled in clang only.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*clang*],
-    [AX_CHECK_COMPILE_FLAG([-Wno-nested-anon-types],
-        [CXXFLAGS="$CXXFLAGS -Wno-nested-anon-types"])])
 
 # Protect stack.
 #------------------------------------------------------------------------------
