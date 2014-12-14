@@ -1,14 +1,14 @@
-5,638,156
+4,343,020
 bx-osx-x64-mainnet
-926093855058fd9f42c627d1dd2e52313e65ca6084ffd4b2dbbe02725554c122
-H+arIVyD02wt8nDp6EEy5oG6oLG7nWYBbow1vEvIBAfYbF3fYdGuwqSp/hkpB+15GcTkIOQHpjVJcLttGl2Naxo=
+93b781caf300d71e28b7be1748cb54d529da19a456cfa35e1c0f680300dfd3d1
+HxVAo5ldF4aPcbnKxcsvPuuyOh1Sb2LPPfEJwRQc2UzKa1/9rSIes0B0YM87jHQjsCCUmpm5/EeFkCh26tWKQiI=
 The signature is valid.
 https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-osx-x64-mainnet
 
-5,638,236
+4,343,020
 bx-osx-x64-testnet
-c2b24db00bdbdfbed3288606c9e3c7c8c69a2989fc341f7a5b2bdc4fc4d9f633
-IGqIxQUo57lunhlLJGB8hnwYLWpf/6XRzprMCRFoDrW6XQMwyojtQ7edWa8K9WNmw2sv5s2ztPI/OonZKJn32Tw=
+c44ddca3c44af93efd8866d5891c9dcda6428beb1547b65679b6bb9ffcfdc0db
+IObbXfaYEaueIpTKkaa5W9FbekzqIEojsvsZrH0UDQS+PxEIUgJiyEJRspFgizMbhQpTDVxMtGiAgUfTWDBCHDo=
 The signature is valid.
 https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-osx-x64-testnet
 

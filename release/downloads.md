@@ -6,8 +6,8 @@ Each download is a single executable file.
 
 | OS | File | Bytes | SHA-256 | Signature |
 |----|------|-------|---------|-----------|
-|![osx](https://github.com/libbitcoin/libbitcoin-explorer/wiki/osx.png)        | [`bx-osx-x64-mainnet`](https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-osx-x64-mainnet)             | `5,638,156` | [`92..22`](#926093855058fd9f42c627d1dd2e52313e65ca6084ffd4b2dbbe02725554c122) | [`H+..o=`](#H+arIVyD02wt8nDp6EEy5oG6oLG7nWYBbow1vEvIBAfYbF3fYdGuwqSp/hkpB+15GcTkIOQHpjVJcLttGl2Naxo=) |
-|![osx](https://github.com/libbitcoin/libbitcoin-explorer/wiki/osx.png)        | [`bx-osx-x64-testnet`](https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-osx-x64-testnet)             | `5,638,236` | [`c2..33`](#c2b24db00bdbdfbed3288606c9e3c7c8c69a2989fc341f7a5b2bdc4fc4d9f633) | [`IG..w=`](#IGqIxQUo57lunhlLJGB8hnwYLWpf/6XRzprMCRFoDrW6XQMwyojtQ7edWa8K9WNmw2sv5s2ztPI/OonZKJn32Tw=) |
+|![osx](https://github.com/libbitcoin/libbitcoin-explorer/wiki/osx.png)        | [`bx-osx-x64-mainnet`](https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-osx-x64-mainnet)             | `4,343,020` | [`93..d1`](#93b781caf300d71e28b7be1748cb54d529da19a456cfa35e1c0f680300dfd3d1) | [`Hx..I=`](#HxVAo5ldF4aPcbnKxcsvPuuyOh1Sb2LPPfEJwRQc2UzKa1/9rSIes0B0YM87jHQjsCCUmpm5/EeFkCh26tWKQiI=) |
+|![osx](https://github.com/libbitcoin/libbitcoin-explorer/wiki/osx.png)        | [`bx-osx-x64-testnet`](https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-osx-x64-testnet)             | `4,343,020` | [`c4..db`](#c44ddca3c44af93efd8866d5891c9dcda6428beb1547b65679b6bb9ffcfdc0db) | [`IO..o=`](#IObbXfaYEaueIpTKkaa5W9FbekzqIEojsvsZrH0UDQS+PxEIUgJiyEJRspFgizMbhQpTDVxMtGiAgUfTWDBCHDo=) |
 |![linux](https://github.com/libbitcoin/libbitcoin-explorer/wiki/linux.png)    | [`bx-linux-x64-mainnet`](https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-linux-x64-mainnet)         | `3,000,632` | [`a5..3f`](#a5e1136b95f30b35c6077b48ce7b60e27e7b68cb778416a2569b891fea20cf3f) | [`IH..M=`](#IHKUMal99sCX3DQtyolNLyckNo7R1rAcQdYnb4kWpqd0K9f5GK5zc3xBB3YiffIiAbRDWTS69kBA8yn9GotZqEM=) |
 |![linux](https://github.com/libbitcoin/libbitcoin-explorer/wiki/linux.png)    | [`bx-linux-x64-testnet`](https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-linux-x64-testnet)         | `3,000,632` | [`93..d0`](#938e3fc0795d9c5efb288cbbeb1ca9da763309699744ba42fc8fdd775d5f9ad0) | [`Hw..0=`](#HwjA/dZqLLZuLrC9fe2TG3c4Bq/K0jgbjuxcDmZug7G9FhhHy0aNAMAbDRnW1gRERppiH4yS3DGYj2y7YPHWQO0=) |
 |![windows](https://github.com/libbitcoin/libbitcoin-explorer/wiki/windows.png)| [`bx-windows-x64-mainnet`](https://github.com/libbitcoin/libbitcoin-explorer/releases/download/v2.0.0/bx-windows-x64-mainnet.exe) | `3,385,344` | [`d6..32`](#d60329e6dacc7edda87c7c6ad12a79a5f556199a51658b6b66ddc26827118832) | [`H7..Q=`](#H7oUanne/SHv3q2JrliYEMi8nHm0VRBCq/XIoTDr3wu7DCXo6Y81u/PShdnO86b0O7rPvdlNvMtQ8BKapwAR8oQ=) |
@@ -29,12 +29,12 @@ Calculate the SHA-256 hash
 $ bx base16-encode < bx-osx-x64-mainnet | bx sha256
 ```
 ```
-926093855058fd9f42c627d1dd2e52313e65ca6084ffd4b2dbbe02725554c122
+93b781caf300d71e28b7be1748cb54d529da19a456cfa35e1c0f680300dfd3d1
 ```
 
 Validate the Bitcoin signature
 ```sh
-$ bx message-validate 1GpL7EH3QFeG89mZf7dKKssYf4gjrH4mu7 H+arIVyD02wt8nDp6EEy5oG6oLG7nWYBbow1vEvIBAfYbF3fYdGuwqSp/hkpB+15GcTkIOQHpjVJcLttGl2Naxo= 926093855058fd9f42c627d1dd2e52313e65ca6084ffd4b2dbbe02725554c122
+$ bx message-validate 1GpL7EH3QFeG89mZf7dKKssYf4gjrH4mu7 HxVAo5ldF4aPcbnKxcsvPuuyOh1Sb2LPPfEJwRQc2UzKa1/9rSIes0B0YM87jHQjsCCUmpm5/EeFkCh26tWKQiI= 93b781caf300d71e28b7be1748cb54d529da19a456cfa35e1c0f680300dfd3d1
 ```
 ```
 The signature is valid.
