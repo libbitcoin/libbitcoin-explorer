@@ -6,9 +6,9 @@
 
 *The Bitcoin Command Line Tool*
 
-**User and Developer Documentation**
+[Documentation](https://github.com/libbitcoin/libbitcoin-explorer/wiki) is available on the wiki.
 
-[DOCUMENTATION](https://github.com/libbitcoin/libbitcoin-explorer/wiki) is available on the wiki.
+[Downloads](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download) are available for Linux, Macintosh and Windows.
 
 **License Overview**
 
