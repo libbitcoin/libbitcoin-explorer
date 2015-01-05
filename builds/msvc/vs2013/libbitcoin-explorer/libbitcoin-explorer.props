@@ -17,7 +17,7 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(RepoRoot)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <!-- 4503: http://bit.ly/1nOftf3, 4715: from BOOST_EXCEPTION_DISABLE;BOOST_NO_EXCEPTIONS -->
       <DisableSpecificWarnings>4290;4503;4715;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnablePREfast>false</EnablePREfast>
@@ -32,7 +32,6 @@
   
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)libbitcoin.import.props" />
-    <Import Project="$(SolutionDir)libbitcoin-protocol.import.props" />
     <Import Project="$(SolutionDir)libbitcoin-client.import.props" />
   </ImportGroup>  
 
@@ -43,10 +42,8 @@
     <Linkage-czmq>dynamic</Linkage-czmq>
     <Linkage-libzmq>dynamic</Linkage-libzmq>
     <Linkage-libsodium>dynamic</Linkage-libsodium>
-    <Linkage-protobuf>dynamic</Linkage-protobuf>
     <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
     <Linkage-libbitcoin-client>dynamic</Linkage-libbitcoin-client>
-    <Linkage-libbitcoin-protocol>dynamic</Linkage-libbitcoin-protocol>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
     <Linkage-secp256k1>static</Linkage-secp256k1>
@@ -55,10 +52,8 @@
     <Linkage-czmq>ltcg</Linkage-czmq>
     <Linkage-libzmq>ltcg</Linkage-libzmq>
     <Linkage-libsodium>ltcg</Linkage-libsodium>
-    <Linkage-protobuf>ltcg</Linkage-protobuf>
     <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
     <Linkage-libbitcoin-client>ltcg</Linkage-libbitcoin-client>
-    <Linkage-libbitcoin-protocol>ltcg</Linkage-libbitcoin-protocol>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
     <Linkage-secp256k1>static</Linkage-secp256k1>
@@ -67,10 +62,8 @@
     <Linkage-czmq>static</Linkage-czmq>
     <Linkage-libzmq>static</Linkage-libzmq>
     <Linkage-libsodium>static</Linkage-libsodium>
-    <Linkage-protobuf>static</Linkage-protobuf>
     <Linkage-libbitcoin>static</Linkage-libbitcoin>
     <Linkage-libbitcoin-client>static</Linkage-libbitcoin-client>
-    <Linkage-libbitcoin-protocol>static</Linkage-libbitcoin-protocol>
   </PropertyGroup>
 
   <!-- Messages -->
@@ -82,9 +75,7 @@
     <Message Text="Linkage-czmq      : $(Linkage-czmq)" Importance="high"/>
     <Message Text="Linkage-libzmq    : $(Linkage-libzmq)" Importance="high"/>
     <Message Text="Linkage-libsodium : $(Linkage-libsodium)" Importance="high"/>
-    <Message Text="Linkage-protobuf  : $(Linkage-protobuf)" Importance="high"/>
     <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
-    <Message Text="Linkage-_protocol : $(Linkage-libbitcoin-protocol)" Importance="high"/>
     <Message Text="Linkage-_client   : $(Linkage-libbitcoin-client)" Importance="high"/>
   </Target>
 

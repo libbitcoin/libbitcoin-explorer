@@ -235,7 +235,6 @@ The required set of NuGet packages can be viewed using the [NuGet package manage
    * [libgmp\_vc120](http://www.nuget.org/packages/libgmp_vc120)
    * [libsodium\_vc120](http://www.nuget.org/packages/libsodium_vc120)
    * [libzmq\_vc120](http://www.nuget.org/packages/libzmq_vc120)
-   * [protobuf\_vc120](http://www.nuget.org/packages/protobuf_vc120)
    * [secp256k1\_gmp\_vc120](http://www.nuget.org/packages/secp256k1_gmp_vc120)
 
 > The GMP for Windows project is called [MPIR](http://www.mpir.org) and has binary compatibility with GMP.
@@ -249,9 +248,8 @@ To build BX you must also download and build its **libbitcoin dependencies**, as
 Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
-1. [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
-3. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
-4. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
+2. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
+3. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
 
 > The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
 
@@ -269,8 +267,6 @@ The non-boost packages above are all sourced from GitHub repositories maintained
 * Bitcoin Elliptic Curve
    * [libbitcoin/mpir](https://github.com/libbitcoin/mpir)
    * [libbitcoin/secp256k1](https://github.com/libbitcoin/secp256k1)
-* Protocol Buffers
-   * [libbitcoin/protobuf](https://github.com/libbitcoin/protobuf)
 
 This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface for each libbitcoin project and then importing the `.import.props` file(s) for the corresponding dependencies.
 
@@ -297,7 +293,6 @@ A better configuration is to centralize the NuGet repository outside of your `gi
                             packages.config
                         +libbitcoin-explorer-test
                         libbitcoin-explorer.sln
-        -libbitcoin-protocol
     -nuget
         repositories.config
         +boost.1.56.0.0
@@ -314,7 +309,6 @@ A better configuration is to centralize the NuGet repository outside of your `gi
         +libgmp_vc120.5.1.3.2
         +libsodium_vc120.1.0.0.0
         +libzmq_vc120.4.1.0.7
-        +protobuf_vc120.2.6.0.1
         +secp256k1_gmp_vc120.0.1.0.3
 ```
 

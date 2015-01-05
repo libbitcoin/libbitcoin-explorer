@@ -123,7 +123,6 @@
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.1.0.0.0\\build\\native\\libsodium_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.1.0.0.0\\build\\native\\libsodium_vc120.targets')" />
     <Import Project="..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.3\\build\\native\\secp256k1_gmp_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.3\\build\\native\\secp256k1_gmp_vc120.targets')" />
-    <Import Project="..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets" Condition="Exists('..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -143,7 +142,6 @@
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\czmqpp_vc120.1.0.0.10\\build\\native\\czmqpp_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.1.0.0.0\\build\\native\\libsodium_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\libsodium_vc120.1.0.0.0\\build\\native\\libsodium_vc120.targets'))" />
     <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.3\\build\\native\\secp256k1_gmp_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\secp256k1_gmp_vc120.0.1.0.3\\build\\native\\secp256k1_gmp_vc120.targets'))" />
-    <Error Condition="!Exists('..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets')" Text="$\([System.String]::Format('$\(ErrorText)', '..\\..\\..\\..\\..\\..\\nuget\\protobuf_vc120.2.6.0.1\\build\\native\\protobuf_vc120.targets'))" />
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\\libbitcoin-explorer\\libbitcoin-explorer.vcxproj">
