@@ -235,7 +235,6 @@ The required set of NuGet packages can be viewed using the [NuGet package manage
    * [libgmp\_vc120](http://www.nuget.org/packages/libgmp_vc120)
    * [libsodium\_vc120](http://www.nuget.org/packages/libsodium_vc120)
    * [libzmq\_vc120](http://www.nuget.org/packages/libzmq_vc120)
-   * [protobuf\_vc120](http://www.nuget.org/packages/protobuf_vc120)
    * [secp256k1\_gmp\_vc120](http://www.nuget.org/packages/secp256k1_gmp_vc120)
 
 > The GMP for Windows project is called [MPIR](http://www.mpir.org) and has binary compatibility with GMP.
