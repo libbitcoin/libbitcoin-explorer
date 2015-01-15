@@ -59,7 +59,7 @@ static void fetch_history_from_address(obelisk_client& client,
         handle_error(state, error);
     };
 
-    client.get_codec()->fetch_history(on_error, on_done, address);
+    client.get_codec()->address_fetch_history(on_error, on_done, address);
 }
 
 // When you restore your wallet, you should use fetch_history(). 
