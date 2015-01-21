@@ -11,7 +11,7 @@
 AC_PREREQ([2.65])
 
 # Process command-line arguments and perform initialization and verification.
-AC_INIT([libbitcoin-explorer], [2.0.0], [eric@voskuil.org])
+AC_INIT([libbitcoin-explorer], [2.1.0], [eric@voskuil.org])
 
 # Do compilation tests.
 AC_LANG(C++)
@@ -164,9 +164,9 @@ AS_IF([test x$bash_completion_dir = xyes],
     [bash_completion_dir="`pkg-config --variable=completionsdir bash-completion`"],
     [bash_completion_dir="${datadir}/bash-completion/completions"])])
 
-# Require bitcoin-client of at least version 2.0.0 and output ${bitcoin_client_CFLAGS} and ${bitcoin_client_LIBS}.
+# Require bitcoin-client of at least version 2.1.0 and output ${bitcoin_client_CFLAGS} and ${bitcoin_client_LIBS}.
 #------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 2.0.0])
+PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 2.1.0])
 
 # Output ${boost_LIBS}
 #------------------------------------------------------------------------------

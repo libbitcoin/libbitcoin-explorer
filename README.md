@@ -54,7 +54,7 @@ Copyright (C) 2013 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
-If necessary, upgrade your compiler as follows.
+If necessary, upgrade your compiler as follows:
 ```sh
 $ sudo apt-get install g++-4.8
 $ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
