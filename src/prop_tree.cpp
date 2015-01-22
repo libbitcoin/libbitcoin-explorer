@@ -28,6 +28,7 @@
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
+#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
@@ -387,8 +388,8 @@ ptree prop_tree(const stealth& stealth_address)
 ptree prop_list(const client::stealth_row& row)
 {
     ptree tree;
-    tree.put("ephemeral_public_key", ec_public(row.ephemkey));
-    tree.put("paid_address", address(row.address));
+    tree.put("ephemeral_public_key", btc256(row.ephemkey));
+    tree.put("paid_address", btc160(row.address));
     tree.put("transaction_hash", btc256(row.transaction_hash));
     return tree;
 }

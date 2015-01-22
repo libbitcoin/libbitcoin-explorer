@@ -63,24 +63,9 @@ base2::operator const bc::binary_type&() const
     return value_; 
 }
 
-// Legacy support for obelisk v1 implementation, maintained by -client.
-base2::operator client::stealth_prefix() const
+base2::operator bc::binary_type() const
 {
-    client::stealth_prefix client_prefix{ 0, 0 };
-
-    // This isn't good, but not much else we can do here, guard externally.
-    if (value_.size() > stealth_address::max_prefix_bits)
-        return client_prefix;
-
-    client_prefix.number_bits = static_cast<uint8_t>(value_.size());
-
-    // This copy is inefficient but this is legacy support as 
-    // bc::binary_type::uint32() has been deprecated.
-    auto blocks = value_.blocks();
-    client_prefix.bitfield = from_little_endian<uint32_t>(blocks.begin(),
-        blocks.end());
-
-    return client_prefix;
+    return value_;
 }
 
 std::istream& operator>>(std::istream& input, base2& argument)
