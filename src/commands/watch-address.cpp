@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/commands/watch-address.hpp>
 
+#include <csignal>
 #include <iostream>
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/bitcoin.hpp>

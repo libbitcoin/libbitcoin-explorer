@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/commands/send-tx-p2p.hpp>
 
+#include <csignal>
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
