@@ -108,17 +108,6 @@ AC_ARG_ENABLE([ndebug],
 AC_MSG_RESULT([$enable_ndebug])
 AS_IF([test x$enable_ndebug != xno], AC_DEFINE([NDEBUG]))
 
-# Implement --enable-testnet option and define ENABLE_TESTNET.
-#------------------------------------------------------------------------------
-AC_MSG_CHECKING(--enable-testnet option)
-AC_ARG_ENABLE([testnet],
-    AS_HELP_STRING([--enable-testnet],
-        [Compile for testnet (deprecated). @<:@default=no@:>@]),
-    [enable_testnet=$enableval],
-    [enable_testnet=no])
-AC_MSG_RESULT([$enable_testnet])
-AS_IF([test x$enable_testnet != xno], AC_DEFINE([ENABLE_TESTNET]))
-
 # Inherit --enable-shared option and define BOOST_TEST_DYN_LINK.
 #------------------------------------------------------------------------------
 AS_IF([test x$enable_shared != xno], AC_DEFINE([BOOST_TEST_DYN_LINK]))
@@ -153,8 +142,6 @@ AS_CASE([${CC}], [*clang*],
 
 AX_BOOST_CHRONO
 
-AX_BOOST_PROGRAM_OPTIONS
-
 AS_IF([test x$with_tests = xyes], [AX_BOOST_UNIT_TEST_FRAMEWORK])
 
 # Require bash-completion of at least version 2.0.0 and output ${bash_completion_CFLAGS} and ${bash_completion_LIBS}.
@@ -170,7 +157,7 @@ PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 2.1.0])
 
 # Output ${boost_LIBS}
 #------------------------------------------------------------------------------
-AC_SUBST([boost_LIBS], ["-lboost_chrono -lboost_program_options"])
+AC_SUBST([boost_LIBS], ["-lboost_chrono"])
 
 
 # Set flags.

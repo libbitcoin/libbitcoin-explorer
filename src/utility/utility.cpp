@@ -22,7 +22,6 @@
 #include <iomanip>
 #include <iostream>
 #include <random>
-#include <signal.h>
 #include <cstdint>
 #include <string>
 #include <vector>
