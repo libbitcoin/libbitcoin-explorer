@@ -64,9 +64,9 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```sh
 $ sudo apt-get install build-essential autoconf automake libtool pkg-config
 ```
-Next install [Boost](http://www.boost.org) (1.49.0 or newer) and [GMP](https://gmplib.org) (5.0.0 or newer) development packages:
+Next install the [Boost](http://www.boost.org) (1.49.0 or newer) development package:
 ```sh
-$ sudo apt-get install libboost-all-dev libgmp-dev
+$ sudo apt-get install libboost-all-dev
 ```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version2/install.sh) and enable execution:
 ```sh
@@ -111,9 +111,9 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ brew install autoconf automake libtool pkgconfig wget
 ```
-Next install [GMP](https://gmplib.org) (5.0.0 or newer) and [Boost](http://www.boost.org) (1.49.0 or newer) development packages:
+Next install the [Boost](http://www.boost.org) (1.49.0 or newer) development package:
 ```sh
-$ brew install gmp boost
+$ brew install boost
 ```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version2/install.sh) and enable execution:
 ```sh
@@ -134,9 +134,9 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ sudo port install autoconf automake libtool pkgconfig wget
 ```
-Next install [GMP](https://gmplib.org) (5.0.0 or newer) and [Boost](http://www.boost.org) (1.49.0 or newer) development packages. The `-` options remove MacPort defaults that are not Boost defaults:
+Next install the [Boost](http://www.boost.org) (1.49.0 or newer) development package. The `-` options remove MacPort defaults that are not Boost defaults:
 ```sh
-$ sudo port install gmp boost -no_single -no_static -python27
+$ sudo port install boost -no_single -no_static -python27
 ```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version2/install.sh) and enable execution:
 ```sh
@@ -180,17 +180,17 @@ Building into a directory other than `/usr/local`, such as `/home/me/myprefix`:
 ```sh
 $ ./install.sh --prefix=/home/me/myprefix
 ```
-Building and linking with private copies of Boost and GMP dependencies:
+Building and linking with a private copy of the Boost dependency:
 ```sh
-$ ./install.sh --build-gmp --build-boost --prefix=/home/me/myprefix
+$ ./install.sh --build-boost --prefix=/home/me/myprefix
 ```
 Building a statically-linked executable:
 ```sh
-$ ./install.sh --disable-shared --build-gmp --build-boost --prefix=/home/me/myprefix
+$ ./install.sh --disable-shared --build-boost --prefix=/home/me/myprefix
 ```
 Building a small statically-linked executable most quickly:
 ```sh
-$ ./install.sh CXXFLAGS="-Os -s" --enable-ndebug --without-tests --disable-shared --build-gmp --build-boost --prefix=/home/me/myprefix
+$ ./install.sh CXXFLAGS="-Os -s" --enable-ndebug --without-tests --disable-shared --build-boost --prefix=/home/me/myprefix
 ```
 Building with bash-completion support:
 
@@ -232,12 +232,9 @@ The required set of NuGet packages can be viewed using the [NuGet package manage
 * Packages maintained by [evoskuil](http://www.nuget.org/profiles/evoskuil)
    * [czmq\_vc120](http://www.nuget.org/packages/czmq_vc120)
    * [czmqpp\_vc120](http://www.nuget.org/packages/czmqpp_vc120)
-   * [libgmp\_vc120](http://www.nuget.org/packages/libgmp_vc120)
    * [libsodium\_vc120](http://www.nuget.org/packages/libsodium_vc120)
    * [libzmq\_vc120](http://www.nuget.org/packages/libzmq_vc120)
-   * [secp256k1\_gmp\_vc120](http://www.nuget.org/packages/secp256k1_gmp_vc120)
-
-> The GMP for Windows project is called [MPIR](http://www.mpir.org) and has binary compatibility with GMP.
+   * [secp256k1\_vc120](http://www.nuget.org/packages/secp256k1_vc120)
 
 #### Build Libbitcoin Projects
 
@@ -259,14 +256,13 @@ Configuration options are exposed in the Visual Studio property pages.
 
 The non-boost packages above are all sourced from GitHub repositories maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as the libbitcoin libraries. If so desired each of these can be built locally, in the same manner as the libbitcoin libraries above. This allows you to avoid using the pre-built NuGet packages. The repositories for each dependency are as follows:
 
-* Zero Message Queue
+* Cryptography
    * [jedisct1/libsodium](https://github.com/jedisct1/libsodium)
+   * [libbitcoin/secp256k1](https://github.com/libbitcoin/secp256k1)
+* Zero Message Queue
    * [zeromq/libzmq](https://github.com/zeromq/libzmq)
    * [zeromq/czmq](https://github.com/zeromq/czmq)
    * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
-* Bitcoin Elliptic Curve
-   * [libbitcoin/mpir](https://github.com/libbitcoin/mpir)
-   * [libbitcoin/secp256k1](https://github.com/libbitcoin/secp256k1)
 
 This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface for each libbitcoin project and then importing the `.import.props` file(s) for the corresponding dependencies.
 
@@ -306,10 +302,9 @@ A better configuration is to centralize the NuGet repository outside of your `gi
         +boost_unit_test_framework-vc120.1.56.0.0
         +czmq_vc120.2.2.0.8
         +czmqpp_vc120.1.0.0.10
-        +libgmp_vc120.5.1.3.2
         +libsodium_vc120.1.0.0.0
         +libzmq_vc120.4.1.0.7
-        +secp256k1_gmp_vc120.0.1.0.3
+        +secp256k1_vc120.0.1.0.3
 ```
 
 If properly configured the NuGet Package Manager will share this NuGet repository across all solutions within the `git` directory. There are three steps required in this configuration:

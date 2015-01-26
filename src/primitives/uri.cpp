@@ -33,53 +33,53 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-    uri::uri()
-        : value_(), parse_result_()
+uri::uri()
+    : value_(), parse_result_()
+{
+}
+
+uri::uri(const std::string& value)
+{
+    std::stringstream(value) >> *this;
+}
+
+uri::uri(const uri& other)
+    : uri(other.value_)
+{
+}
+
+uri::operator const std::string&() const
+{
+    return value_;
+}
+
+// This will return a default object if not a bitcoin uri.
+uri::operator const uri_parse_result&() const
+{
+    return parse_result_;
+}
+
+std::istream& operator>>(std::istream& input, uri& argument)
+{
+    std::string value;
+    input >> value;
+
+    // We currently only validate Bitcoin URIs.
+    if (starts_with(value, "bitcoin:"))
     {
+        if (!uri_parse(value, argument.parse_result_))
+            BOOST_THROW_EXCEPTION(invalid_option_value(value));
     }
 
-    uri::uri(const std::string& value)
-    {
-        std::stringstream(value) >> *this;
-    }
+    argument.value_ = value;
+    return input;
+}
 
-    uri::uri(const uri& other)
-        : uri(other.value_)
-    {
-    }
-
-    uri::operator const std::string&() const
-    {
-        return value_;
-    }
-
-    // This will return a default object if not a bitcoin uri.
-    uri::operator const uri_parse_result&() const
-    {
-        return parse_result_;
-    }
-
-    std::istream& operator>>(std::istream& input, uri& argument)
-    {
-        std::string value;
-        input >> value;
-
-        // We currently only validate Bitcoin URIs.
-        if (starts_with(value, "bitcoin:"))
-        {
-            if (!uri_parse(value, argument.parse_result_))
-                BOOST_THROW_EXCEPTION(invalid_option_value(value));
-        }
-
-        argument.value_ = value;
-        return input;
-    }
-
-    std::ostream& operator<<(std::ostream& output, const uri& argument)
-    {
-        output << argument.value_;
-        return output;
-    }
+std::ostream& operator<<(std::ostream& output, const uri& argument)
+{
+    output << argument.value_;
+    return output;
+}
 
 } // namespace explorer
 } // namespace primitives
