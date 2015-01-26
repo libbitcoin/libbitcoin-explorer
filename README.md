@@ -20,11 +20,11 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 **About Libbitcoin Explorer**
 
-BX is a command line tool for working with Bitcoin. It can be built as a single portable executable file for Linux, OSX and Windows. BX exposes about 80 commands and supports network communication with [Obelisk](https://github.com/libbitcoin/obelisk) and the P2P Bitcoin network. BX supports simple as well as advanced scenarios, including stealth and multisig.
+BX is a command line tool for working with Bitcoin. It can be built as a single portable executable file for Linux, OSX and Windows. BX exposes about 80 commands and supports network communication with [Obelisk](https://github.com/spesmilo/obelisk) or [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) and the P2P Bitcoin network. BX supports simple as well as advanced scenarios, including stealth and multisig.
 
 ## Installation
 
-BX can be built from sources or downloaded as a portable [single file executable](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download).
+BX can be built from sources or downloaded as a signed portable [single file executable](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download).
 
 On Linux and Macintosh BX is built using Autotools as follows.
 ```sh
@@ -42,7 +42,7 @@ Detailed instructions are provided below.
 
 ### Debian/Ubuntu
 
-Libbitcoin requires a C++11 compiler, currently [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) minimum. For this reason Ubuntu is not supported prior to version [12.04](http://askubuntu.com/a/271561).
+Libbitcoin requires a C++11 compiler, currently minimum [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) or Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html).
 
 To see your GCC version:
 ```sh
@@ -64,7 +64,7 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```sh
 $ sudo apt-get install build-essential autoconf automake libtool pkg-config
 ```
-Next install the [Boost](http://www.boost.org) (1.49.0 or newer) development package:
+Next install the [Boost](http://www.boost.org) (minimum 1.49.0 for GCC or 1.54.0 for Clang) development package:
 ```sh
 $ sudo apt-get install libboost-all-dev
 ```
@@ -101,17 +101,17 @@ $ xcode-select --install
 
 #### Using Homebrew
 
-First install Homebrew. Installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are preinstalled on OSX.
+First install Homebrew. Installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are pre-installed on OSX.
 ```sh
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-You may ecounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
+You may encounter a prompt to install the Xcode command line developer tools, in which case accept the prompt.
 
 Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and [wget](http://www.gnu.org/software/wget):
 ```sh
 $ brew install autoconf automake libtool pkgconfig wget
 ```
-Next install the [Boost](http://www.boost.org) (1.49.0 or newer) development package:
+Next install the [Boost](http://www.boost.org) (1.54.0 or newer) development package:
 ```sh
 $ brew install boost
 ```
@@ -134,7 +134,7 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ sudo port install autoconf automake libtool pkgconfig wget
 ```
-Next install the [Boost](http://www.boost.org) (1.49.0 or newer) development package. The `-` options remove MacPort defaults that are not Boost defaults:
+Next install the [Boost](http://www.boost.org) (1.54.0 or newer) development package. The `-` options remove MacPort defaults that are not Boost defaults:
 ```sh
 $ sudo port install boost -no_single -no_static -python27
 ```
@@ -158,7 +158,7 @@ Building for minimum size and with debug symbols stripped:
 $ sudo ./install.sh CXXFLAGS="-Os -s"
 ```
 
-> The `-s` option is not supported by the clang compiler. Instead use the command `$ strip bx` after the build.
+> The `-s` option is not supported by the Clang compiler. Instead use the command `$ strip bx` after the build.
 
 Building with NDEBUG defined:
 ```sh
@@ -223,7 +223,6 @@ The required set of NuGet packages can be viewed using the [NuGet package manage
    * [boost](http://www.nuget.org/packages/boost)
    * [boost\_chrono-vc120](http://www.nuget.org/packages/boost_chrono-vc120)
    * [boost\_date\_time-vc120](http://www.nuget.org/packages/boost_date_time-vc120)
-   * [boost\_filesystem](http://www.nuget.org/packages/boost_filesystem)
    * [boost\_filesystem-vc120](http://www.nuget.org/packages/boost_filesystem-vc120)
    * [boost\_program\_options-vc120](http://www.nuget.org/packages/boost_program_options-vc120)
    * [boost\_regex-vc120](http://www.nuget.org/packages/boost_regex-vc120)
@@ -294,7 +293,6 @@ A better configuration is to centralize the NuGet repository outside of your `gi
         +boost.1.56.0.0
         +boost_chrono-vc120.1.56.0.0
         +boost_date_time-vc120.1.56.0.0
-        +boost_filesystem.1.56.0.0
         +boost_filesystem-vc120.1.56.0.0
         +boost_program_options-vc120.1.56.0.0
         +boost_regex-vc120.1.56.0.0
@@ -341,7 +339,7 @@ The `nuget.config` should have the [documented structure](http://docs.nuget.org/
   </disabledPackageSources>
   <activePackageSource>
     <!-- "ActivePackageSource" points to the currently active source. 
-    Speciying "(Aggregate source)" as the source value would imply that
+    Specifying "(Aggregate source)" as the source value would imply that
     all the current package sources except for the disabled ones are active. -->
     <add key="All" value="(Aggregate source)"  />
   </activePackageSource>
