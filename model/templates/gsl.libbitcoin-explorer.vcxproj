@@ -134,8 +134,6 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\compat.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\config.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\environment.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\parameter.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\printer.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\utility.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,8 +180,6 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wrapper.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\config.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\environment.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\parameter.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\utility\\printer.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility\\utility.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,6 @@
 #include <bitcoin/explorer/define.hpp>
 .primitives()
 #include <bitcoin/explorer/utility/config.hpp>
-#include <bitcoin/explorer/utility/printer.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -199,8 +198,8 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        printer help(BX_PROGRAM_NAME, category(), name(), description(),
-            arguments, options);
+        config::printer help(options, arguments, BX_PROGRAM_NAME, description(),
+            name());
         help.initialize();
         help.print(output);
     }

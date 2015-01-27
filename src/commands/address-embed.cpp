@@ -29,6 +29,7 @@
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
+using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;

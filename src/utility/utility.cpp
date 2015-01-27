@@ -43,12 +43,6 @@ using namespace boost::posix_time;
 namespace libbitcoin {
 namespace explorer {
 
-std::string bool_to_string(bool value)
-{
-    // This is not considered localizable text.
-    return if_else(value, "true", "false");
-}
-
 bool is_base2(const std::string& text)
 {
     for (const auto& character : text)
@@ -58,12 +52,6 @@ bool is_base2(const std::string& text)
     }
 
     return true;
-}
-
-std::string join(const std::vector<std::string>& words,
-    const std::string& delimiter)
-{
-    return boost::join(words, delimiter);
 }
 
 // The key may be invalid, caller may test for null secret.
@@ -123,10 +111,10 @@ void random_fill(data_chunk& chunk)
 
 std::string read_stream(std::istream& stream)
 {
-    SET_BINARY_FILE_MODE(true);
+    BX_SET_BINARY_FILE_MODE(true);
     std::istreambuf_iterator<char> first(stream), last;
     std::string result(first, last);
-    SET_BINARY_FILE_MODE(false);
+    BX_SET_BINARY_FILE_MODE(false);
     return result;
 }
 
@@ -141,15 +129,6 @@ void sleep_ms(uint32_t milliseconds)
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
-std::vector<std::string> split(const std::string& sentence,
-    const std::string& delimiter)
-{
-    std::vector<std::string> words;
-    boost::split(words, sentence, boost::is_any_of(delimiter),
-        boost::token_compress_on);
-    return words;
-}
-
 bool starts_with(const std::string& value, const std::string& prefix)
 {
     try
@@ -162,59 +141,19 @@ bool starts_with(const std::string& value, const std::string& prefix)
     }
 }
 
-void trim(std::string& value)
-{
-    boost::trim(value);
-}
-
 void trim_left(std::string& value, const std::string& chars)
 {
     boost::trim_left_if(value, boost::is_any_of(chars));
 }
 
-bool unwrap(wrapped_data& data, const data_chunk& wrapped)
+bool unwrap(wrapped_data& data, data_slice wrapped)
 {
-    return unwrap(data.version, data.payload, data.checksum, wrapped);
-}
-
-// TODO: move to libbitcoin
-bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
-    const data_chunk& wrapped)
-{
-    constexpr size_t version_length = sizeof(version);
-    constexpr size_t checksum_length = sizeof(checksum);
-
-    // guard against insufficient buffer length
-    if (wrapped.size() < version_length + checksum_length)
-        return false;
-
-    if (!verify_checksum(wrapped))
-        return false;
-
-    // set return values
-    version = wrapped.front();
-    payload = data_chunk(wrapped.begin() + version_length,
-        wrapped.end() - checksum_length);
-    const auto checksum_start = wrapped.end() - checksum_length;
-    auto deserial = make_deserializer(checksum_start, wrapped.end());
-    checksum = deserial.read_4_bytes();
-
-    return true;
+    return bc::unwrap(data.version, data.payload, data.checksum, wrapped);
 }
 
 data_chunk wrap(const wrapped_data& data)
 {
-    return wrap(data.version, data.payload);
-}
-
-// TODO: move to libbitcoin
-data_chunk wrap(uint8_t version, const data_chunk& payload)
-{
-    data_chunk wrapped;
-    wrapped.push_back(version);
-    extend_data(wrapped, payload);
-    append_checksum(wrapped);
-    return wrapped;
+    return bc::wrap(data.version, data.payload);
 }
 
 // We aren't yet using a reader, although it is possible using ptree.

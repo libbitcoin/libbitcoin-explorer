@@ -38,7 +38,7 @@ namespace primitives {
 // point format is currently private to bx.
 static bool decode_point(output_point& point, const std::string& tuple)
 {
-    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
+    const auto tokens = config::split(tuple, BX_TX_POINT_DELIMITER);
     if (tokens.size() != 2)
         return false;
 

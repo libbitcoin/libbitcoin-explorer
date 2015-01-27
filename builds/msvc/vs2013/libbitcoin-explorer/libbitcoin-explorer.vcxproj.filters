@@ -446,12 +446,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\environment.hpp">
       <Filter>include\bitcoin\explorer\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\parameter.hpp">
-      <Filter>include\bitcoin\explorer\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\printer.hpp">
-      <Filter>include\bitcoin\explorer\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\utility.hpp">
       <Filter>include\bitcoin\explorer\utility</Filter>
     </ClInclude>
@@ -860,12 +854,6 @@
       <Filter>src\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\environment.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\parameter.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\printer.cpp">
       <Filter>src\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\utility\utility.cpp">

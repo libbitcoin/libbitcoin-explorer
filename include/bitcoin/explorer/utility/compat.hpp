@@ -30,10 +30,10 @@
 // Sets the _fmode global variable, which controls the default translation
 // mode for file I/O operations.
 #ifdef _MSC_VER
-    #define SET_BINARY_FILE_MODE(mode) \
-        _setmode(_fileno(stdin), if_else(mode, _O_BINARY, _O_TEXT))
+    #define BX_SET_BINARY_FILE_MODE(mode) \
+        _setmode(_fileno(stdin), mode ? _O_BINARY : _O_TEXT)
 #else
-    #define SET_BINARY_FILE_MODE(mode)
+    #define BX_SET_BINARY_FILE_MODE(mode)
 #endif
 
 #endif

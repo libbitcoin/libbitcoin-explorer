@@ -64,8 +64,6 @@ bitcoin_explorer_utility_include_HEADERS = \\
     include/bitcoin/explorer/utility/compat.hpp \\
     include/bitcoin/explorer/utility/config.hpp \\
     include/bitcoin/explorer/utility/environment.hpp \\
-    include/bitcoin/explorer/utility/parameter.hpp \\
-    include/bitcoin/explorer/utility/printer.hpp \\
     include/bitcoin/explorer/utility/utility.hpp
 
 bitcoin_explorer_primitives_includedir = ${includedir}/bitcoin/explorer/primitives
@@ -155,8 +153,6 @@ src_libbitcoin_explorer_la_SOURCES = \\
     src/primitives/wrapper.cpp \\
     src/utility/config.cpp \\
     src/utility/environment.cpp \\
-    src/utility/parameter.cpp \\
-    src/utility/printer.cpp \\
     src/utility/utility.cpp
 
 # Generated from XML data source.
@@ -207,9 +203,7 @@ test_libbitcoin_explorer_test_SOURCES = \\
     test/generated__formerly.cpp \\
     test/generated__symbol.cpp \\
     test/main.cpp \\
-    test/obelisk_client.cpp \\
-    test/parameter.cpp \\
-    test/printer.cpp
+    test/obelisk_client.cpp
 
 # Generated from XML data source.
 test_libbitcoin_explorer_test_SOURCES += \\

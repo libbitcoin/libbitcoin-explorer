@@ -61,21 +61,11 @@ std::vector<Target> cast(const std::vector<Source>& source)
     return target;
 }
 
-template <typename Consequent, typename Alternate>
-Consequent if_else(bool antecedent, const Consequent consequent,
-    const Alternate alternative)
-{
-    if (antecedent)
-        return consequent;
-    else 
-        return alternative;
-}
-
 template <typename Value>
 void deserialize(Value& value, const std::string& text)
 {
     std::string trimmed(text);
-    trim(trimmed);
+    bc::config::trim(trimmed);
     value = boost::lexical_cast<Value>(trimmed);
 }
 
@@ -88,7 +78,7 @@ void deserialize(Value& value, std::istream& input)
 template <typename Value>
 void deserialize(std::vector<Value>& collection, const std::string& text)
 {
-    const auto tokens = split(text, "\n\r\t ");
+    const auto tokens = bc::config::split(text, "\n\r\t ");
 
     for (const auto& token: tokens)
     {
@@ -112,33 +102,12 @@ bool deserialize_satoshi_item(Item& item, const data_chunk& data)
     return true;
 }
 
-template <typename Element>
-int find_position(const std::vector<Element>& list, const Element& element)
-{
-    auto it = std::find(list.begin(), list.end(), element);
-    return if_else(it == list.end(), -1, distance(list.begin(), it));
-}
-
-template <typename Pair, typename Key>
-int find_pair_position(const std::vector<Pair>& list, const Key& key)
-{
-    const auto predicate = [&](const Pair& pair)
-    {
-        return pair.first == key;
-    };
-
-    auto it = std::find_if(list.begin(), list.end(), predicate);
-    return if_else(it == list.end(), -1, distance(list.begin(), it));
-}
-
-template<typename Type, typename Predicate>
-typename std::vector<Type>::iterator insert_sorted(std::vector<Type>& list,
-    Type const& element, Predicate predicate)
-{
-    return list.insert(
-        std::upper_bound(list.begin(), list.end(), element, predicate),
-        element);
-}
+//template <typename Element>
+//int find_position(const std::vector<Element>& list, const Element& element)
+//{
+//    auto it = std::find(list.begin(), list.end(), element);
+//    return if_else(it == list.end(), -1, distance(list.begin(), it));
+//}
 
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
@@ -181,7 +150,7 @@ std::string serialize(const Value& value, const std::string& fallback)
     std::stringstream stream;
     stream << value;
     const auto& text = stream.str();
-    return if_else(text.empty(), fallback, text);
+    return bc::config::if_else(text.empty(), fallback, text);
 }
 
 template <typename Item>

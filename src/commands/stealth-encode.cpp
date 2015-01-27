@@ -26,6 +26,7 @@
 #include <bitcoin/explorer/primitives/stealth.hpp>
 
 using namespace bc;
+using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;

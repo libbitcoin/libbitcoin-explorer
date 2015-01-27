@@ -54,21 +54,6 @@ template <typename Source, typename Target>
 std::vector<Target> cast(const std::vector<Source>& source);
 
 /**
- * Avoid the ternary (just for fun). Must precede tempalte usage for gcc build.
- * You should use with expressions as consequent or alternative as they will be
- * executed regardless of the predicate.
- * @param      <Consequent>  The type of the consequent.
- * @param      <Alternate>   The type of the alternative.
- * @param[in]  antecedent    The proposition's antecedent.
- * @param[in]  consequent    The proposition's consequent (if predicate).
- * @param[in]  consequent    The proposition's alternative (if !predicate).
- * @return                   Either the consequent or the alternative.
- */
-template <typename Consequent, typename Alternate>
-Consequent if_else(bool antecedent, const Consequent consequent,
-    const Alternate alternative);
-
-/**
  * Convert a text string to the specified type.
  * @param      <Value>  The converted type.
  * @param[out] value    The parsed value.
@@ -105,38 +90,16 @@ void deserialize(std::vector<Value>& collection, const std::string& text);
 template <typename Item>
 bool deserialize_satoshi_item(Item& item, const data_chunk& data);
 
-/**
- * Find the position of an element in an ordered list.
- * @param      <Element>  The type of list member elements.
- * @param[in]  list       The list to search.
- * @param[in]  element    The element to find.
- * @return                The position or -1 if not found.
- */
-template <typename Element>
-int find_position(const std::vector<Element>& list, const Element& element);
+///**
+// * Find the position of an element in an ordered list.
+// * @param      <Element>  The type of list member elements.
+// * @param[in]  list       The list to search.
+// * @param[in]  element    The element to find.
+// * @return                The position or -1 if not found.
+// */
+//template <typename Element>
+//int find_position(const std::vector<Element>& list, const Element& element);
 
-/**
- * Find the position of a pair in an ordered list.
- * @param      <Pair>  The type of list member elements.
- * @param[in]  list    The list to search.
- * @param[in]  key     The key to the element to find.
- * @return             The position or -1 if not found.
- */
-template <typename Pair, typename Key>
-int find_pair_position(const std::vector<Pair>& list, const Key& key);
-
-/**
- * Facilitate a list insertion sort by inserting into a sorted position.
- * @param      <Type>       The type of list member elements.
- * @param      <Predicate>  The sort predicate function signature.
- * @param[in]  list         The list to search.
- * @param[in]  element      The element to insert.
- * @param[in]  predicate    The sort predicate.
- * @return                  Thevector iterator.
- */
-template<typename Type, typename Predicate>
-typename std::vector<Type>::iterator insert_sorted(std::vector<Type>& list,
-    Type const& element, Predicate predicate);
 /**
  * If the variable is not yet loaded, load from stdin as fallback.
  * @param      <Value>    The type of the parameter to load.
@@ -193,22 +156,6 @@ void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
 
 /**
- * Convert a bool to a literal string. The result not considered localizable.
- * @param[in]  value      The value to convert.
- * @return                The resulting string.
- */
-BCX_API std::string bool_to_string(bool value);
-
-/**
- * Join a list of strings into a single string, in order.
- * @param[in]  words      The list of strings to join.
- * @param[in]  delimiter  The delimiter, defaults to BX_SENTENCE_DELIMITER.
- * @return                The resulting string.
- */
-BCX_API std::string join(const std::vector<std::string>& words,
-    const std::string& delimiter=BX_SENTENCE_DELIMITER);
-
-/**
  * Determine if a string is base2.
  * @param[in]  text  The string to test.
  * @return           True if text is base2.
@@ -227,7 +174,7 @@ BCX_API ec_secret new_key(data_slice seed);
  * @param[in]  seed  The seed length in bits. Will be aligned to nearest byte.
  * @return           The new key.
  */
-BCX_API data_chunk new_seed(size_t bitlength = 128);
+BCX_API data_chunk new_seed(size_t bitlength=128);
 
 /**
  * Convert a list of indexes to a list of strings. This could be generalized.
@@ -256,7 +203,7 @@ BCX_API void random_fill(data_chunk& chunk);
  */
 BCX_API std::string read_stream(std::istream& stream);
 
-/*
+/**
  * Convert any script to an opcode::raw_data script (e.g. for input signing).
  * @param[in]  script  The script to convert.
  * @return             The data script.
@@ -270,28 +217,12 @@ BCX_API script_type script_to_raw_data_script(const script_type& script);
 BCX_API void sleep_ms(uint32_t milliseconds);
 
 /**
- * Split a list of strings into a string vector string, in order, white space
- * delimited.
- * @param[in]  sentence   The string to split.
- * @param[in]  delimiter  The delimeter, defaults to BX_SENTENCE_DELIMITER.
- * @return                The list of resulting strings.
- */
-BCX_API std::vector<std::string> split(const std::string& sentence,
-    const std::string& delimiter=BX_SENTENCE_DELIMITER);
-
-/**
  * determine if a string starts with another (case insensitive).
  * @param[in]  value             The string to test
  * @param[in]  prefix            The prefix to test against.
  * @return                       True if the value is prefixed by the prefix.
  */
 BCX_API bool starts_with(const std::string& value, const std::string& prefix);
-
-/**
- * Trim a string of whitespace.
- * @param[out] value  The string to trim.
- */
-BCX_API  void trim(std::string& value);
 
 /**
  * Trim the left side of a string of the specified characters.
@@ -307,18 +238,7 @@ BCX_API void trim_left(std::string& value,
  * @param[in]  wrapped  The wrapped data to unwrap.
  * @return              True if input checksum validates.
  */
-BCX_API bool unwrap(wrapped_data& data, const data_chunk& wrapped);
-
-/**
- * Unwrap a wrapped payload.
- * @param[out] version   The version byte of the wrapped data.
- * @param[out] payload   The payload of the wrapped data.
- * @param[out] checksum  The validated checksum of the wrapped data.
- * @param[in]  wrapped   The wrapped data to unwrap.
- * @return               True if input checksum validates.
- */
-BCX_API bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
-    const data_chunk& wrapped);
+BCX_API bool unwrap(wrapped_data& data, data_slice wrapped);
 
 /**
  * Wrap arbitrary data.
@@ -326,14 +246,6 @@ BCX_API bool unwrap(uint8_t& version, data_chunk& payload, uint32_t& checksum,
  * @return           The wrapped data.
  */
 BCX_API data_chunk wrap(const wrapped_data& data);
-
-/**
- * Wrap arbitrary data.
- * @param[in]  version  The version byte for the wrapped data.
- * @param[out] payload  The payload to wrap.
- * @return              The wrapped data.
- */
-BCX_API data_chunk wrap(uint8_t version, const data_chunk& payload);
 
 /**
  * Serialize a property tree using a specified encoding.

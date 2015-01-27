@@ -36,12 +36,14 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 "    }\n" \
 "}\n"
 
+// TODO: need libbitcoin-server.
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
+// TODO: need libbitcoin-server.
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
@@ -49,6 +51,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__okay)
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
+// TODO: need libbitcoin-server.
 // This test is fragile, will eventually break.
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010__okay_output)
 {

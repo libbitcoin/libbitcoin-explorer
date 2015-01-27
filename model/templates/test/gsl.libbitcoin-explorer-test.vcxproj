@@ -92,8 +92,6 @@
     <ClCompile Include="..\\..\\..\\..\\test\\generated__symbol.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\main.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\test\\parameter.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\test\\printer.cpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol

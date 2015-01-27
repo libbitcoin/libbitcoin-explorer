@@ -55,9 +55,9 @@ stealth::stealth(const bc::binary_type& prefix, const ec_public& scan_key,
     const std::vector<ec_public>& spend_keys, uint8_t signatures, bool testnet)
 {
     // Normalize signatures between 1 and spend_keys.size().
-    const auto size = if_else(spend_keys.empty(), (size_t)1, spend_keys.size());
-    auto sigs = if_else(signatures == 0, size, signatures);
-    sigs = if_else(sigs > size, size, sigs);
+    const auto size = config::if_else(spend_keys.empty(), (size_t)1, spend_keys.size());
+    auto sigs = config::if_else(signatures == 0, size, signatures);
+    sigs = config::if_else(sigs > size, size, sigs);
 
     // Convert the primitives vector to a point vector and apply 'reuse'.
     auto spend_points = cast<ec_public, ec_point>(spend_keys);

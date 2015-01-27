@@ -60,8 +60,6 @@
 #include <bitcoin/explorer/utility/compat.hpp>
 #include <bitcoin/explorer/utility/config.hpp>
 #include <bitcoin/explorer/utility/environment.hpp>
-#include <bitcoin/explorer/utility/parameter.hpp>
-#include <bitcoin/explorer/utility/printer.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 #endif
