@@ -207,10 +207,10 @@
   <command symbol="fetch-header" category="ONLINE" typeX="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="btc256" description="The Base16 block hash."/>
-    <option name="height" shortcut="t" type="size_t" description="The block height."/>
+    <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
   </command>
 
-  <command symbol="fetch-height" formerly="fetch-last-height" typeX="size_t" category="ONLINE" network="true" description="Get the last block height. Requires an Obelisk server connection.">
+  <command symbol="fetch-height" formerly="fetch-last-height" typeX="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires an Obelisk server connection.">
     <argument name="server-url" description="The URL of the Obelisk server to use. If not specified the URL is obtained from configuration settings or defaults."/>  
   </command>
   
@@ -226,7 +226,7 @@
 
   <command symbol="fetch-stealth" typeX="stealth_row" category="ONLINE" network="true" description="Get metadata on potential payment transactions by stealth prefix. Requires an Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <option name="height" shortcut="t" type="size_t" description="The minimum block height of transactions to include."/>
+    <option name="height" shortcut="t" type="uint32_t" description="The minimum block height of transactions to include."/>
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
     <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
     <argument name="PREFIX" type="base2" description="The Base2 stealth prefix used to locate transactions. Defaults to all stealth transactions." />
@@ -393,7 +393,7 @@
   </command>
   
   <command symbol="seed" typeX="base16" category="WALLET" description="Generate a pseudorandom seed.">
-    <option name="bit_length" type="size_t" default="128" description="The length of the seed in bits. Must be divisible by 8 and must not be less than 128." />
+    <option name="bit_length" type="uint16_t" default="128" description="The length of the seed in bits. Must be divisible by 8 and must not be less than 128." />
     <define name="BX_SEED_BIT_LENGTH_UNSUPPORTED" value="The seed size is not supported." />
   </command>
   

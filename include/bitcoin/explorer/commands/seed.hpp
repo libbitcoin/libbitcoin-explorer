@@ -156,7 +156,7 @@ public:
         )
         (
             "bit_length,b",
-            value<size_t>(&option_.bit_length)->default_value(128),
+            value<uint16_t>(&option_.bit_length)->default_value(128),
             "The length of the seed in bits. Must be divisible by 8 and must not be less than 128."
         );
 
@@ -177,7 +177,7 @@ public:
     /**
      * Get the value of the bit_length option.
      */
-    BCX_API virtual size_t& get_bit_length_option()
+    BCX_API virtual uint16_t& get_bit_length_option()
     {
         return option_.bit_length;
     }
@@ -186,7 +186,7 @@ public:
      * Set the value of the bit_length option.
      */
     BCX_API virtual void set_bit_length_option(
-        const size_t& value)
+        const uint16_t& value)
     {
         option_.bit_length = value;
     }
@@ -218,7 +218,7 @@ private:
         {
         }
 
-        size_t bit_length;
+        uint16_t bit_length;
     } option_;
 };
 

@@ -52,7 +52,7 @@ static void handle_callback(callback_state& state,
 console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const size_t height = get_height_option();
+    const auto height = get_height_option();
     const hash_digest& hash = get_hash_option();
     const encoding& encoding = get_format_option();
     const auto retries = get_general_retries_setting();

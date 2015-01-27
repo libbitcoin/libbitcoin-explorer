@@ -94,7 +94,7 @@ static void handle_send(callback_state& state, const std::error_code& code,
 console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& node_count = get_nodes_option();
+    const auto nodes = get_nodes_option();
     const tx_type& transaction = get_transaction_argument();
 
     // Set up shared state.
@@ -138,7 +138,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Set up protocol service.
     bc::network::protocol prot(pool, hst, hs, net);
-    prot.set_max_outbound(node_count * 6);
+    prot.set_max_outbound(nodes * 6);
 
     // Perform node discovery if needed and then creating connections.
     prot.start(start_handler);
@@ -154,10 +154,10 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     signal(SIGINT, handle_signal);
 
     // Check the connection count every 2 seconds.
-    const auto work = [&prot, &node_count, &check_handler]
+    const auto work = [&prot, &nodes, &check_handler]
     {
         prot.fetch_connection_count(
-            std::bind(check_handler, ph::_1, ph::_2, node_count));
+            std::bind(check_handler, ph::_1, ph::_2, nodes));
     };
 
     client.poll(state.stopped(), 2000, work);

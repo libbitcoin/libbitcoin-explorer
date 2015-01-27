@@ -160,7 +160,7 @@ public:
         )
         (
             "height,t",
-            value<size_t>(&option_.height),
+            value<uint32_t>(&option_.height),
             "The block height."
         );
 
@@ -215,7 +215,7 @@ public:
     /**
      * Get the value of the height option.
      */
-    BCX_API virtual size_t& get_height_option()
+    BCX_API virtual uint32_t& get_height_option()
     {
         return option_.height;
     }
@@ -224,7 +224,7 @@ public:
      * Set the value of the height option.
      */
     BCX_API virtual void set_height_option(
-        const size_t& value)
+        const uint32_t& value)
     {
         option_.height = value;
     }
@@ -260,7 +260,7 @@ private:
 
         primitives::encoding format;
         primitives::btc256 hash;
-        size_t height;
+        uint32_t height;
     } option_;
 };
 
