@@ -76,7 +76,7 @@ public:
      * Overload cast to bc::client::stealth_prefix.
      * @return  This object's value cast to bc::client::stealth_prefix.
      */
-    BCX_API operator bc::client::stealth_prefix() const;
+    BCX_API operator bc::binary_type() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
