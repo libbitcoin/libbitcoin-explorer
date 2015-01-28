@@ -65,7 +65,9 @@ std::istream& operator>>(std::istream& input, hd_pub& argument)
     input >> base58;
 
     if (!argument.value_.set_encoded(base58))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(base58));
+    }
 
     return input;
 }

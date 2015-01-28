@@ -70,7 +70,9 @@ namespace primitives {
         deserialize(number, decimal);
 
         if (number > max_uint8)
+        {
             BOOST_THROW_EXCEPTION(invalid_option_value(decimal));
+        }
 
         argument.value_ = static_cast<uint8_t>(number);
         return input;

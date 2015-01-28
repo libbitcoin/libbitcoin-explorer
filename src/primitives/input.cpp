@@ -99,7 +99,9 @@ std::istream& operator>>(std::istream& stream, input& argument)
     stream >> tuple;
 
     if (!decode_input(argument.value_, tuple))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
+    }
 
     return stream;
 }

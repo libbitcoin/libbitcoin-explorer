@@ -68,7 +68,9 @@ std::istream& operator>>(std::istream& input, uri& argument)
     if (starts_with(value, "bitcoin:"))
     {
         if (!uri_parse(value, argument.parse_result_))
+        {
             BOOST_THROW_EXCEPTION(invalid_option_value(value));
+        }
     }
 
     argument.value_ = value;

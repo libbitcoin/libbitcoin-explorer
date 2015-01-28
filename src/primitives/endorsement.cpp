@@ -88,7 +88,9 @@ std::istream& operator>>(std::istream& input, endorsement& argument)
     input >> hexcode;
 
     if (!decode_endorsement(argument.value_, hexcode))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
+    }
 
     return input;
 }

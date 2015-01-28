@@ -163,7 +163,9 @@ void load_configuration_variables(variables_map& variables, command& instance)
         const auto& path = config_path.generic_string();
         std::ifstream file(path);
         if (!file.good())
+        {
             BOOST_THROW_EXCEPTION(reading_file(path.c_str()));
+        }
 
         const auto configuration = parse_config_file(file, config_settings);
         store(configuration, variables);

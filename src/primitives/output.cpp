@@ -127,7 +127,9 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
     if (pay_to_address.set_encoded(target))
     {
         if (!build_output_script(output.script, pay_to_address))
+        {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
+        }
 
         result.push_back(output);
         outputs = result;
@@ -144,12 +146,16 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
         // Prefix not yet supported, exactly one spend key is required.
         auto keys = spend_pubkeys.size();
         if (keys != 1 || stealth.get_prefix().size() > 0)
+        {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
+        }
         
         // Do stealth stuff.
         auto ephemeral_secret = generate_private_key(tokens);
         if (ephemeral_secret == null_hash)
+        {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
+        }
 
         // We have already ensured there is exactly one spend key.
         auto public_key = uncover_stealth(scan_pubkey, ephemeral_secret,
@@ -163,7 +169,9 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
         payment_address pay_to_address;
         set_public_key(pay_to_address, public_key);
         if (!build_output_script(output.script, pay_to_address))
+        {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
+        }
 
         result.push_back(output);
         outputs = result;
@@ -228,7 +236,9 @@ std::istream& operator>>(std::istream& input, output& argument)
     input >> tuple;
 
     if (!decode_outputs(argument.value_, argument.pay_to_, tuple))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
+    }
 
     return input;
 }

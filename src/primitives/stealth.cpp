@@ -77,7 +77,9 @@ std::istream& operator>>(std::istream& input, stealth& argument)
     input >> encoded;
 
     if (!argument.value_.set_encoded(encoded))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(encoded));
+    }
 
     return input;
 }

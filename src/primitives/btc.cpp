@@ -62,7 +62,9 @@ std::istream& operator>>(std::istream& input, btc& argument)
     input >> bitcoins;
 
     if (!decode_base10(argument.value_, bitcoins, btc_decimal_places))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(bitcoins));
+    }
 
     return input;
 }

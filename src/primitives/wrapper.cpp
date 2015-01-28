@@ -87,7 +87,9 @@ std::istream& operator>>(std::istream& input, wrapper& argument)
 
     // wrapper base16 is a private encoding in bx, used to pass between commands.
     if (!unwrap(argument.value_, base16(hexcode)))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
+    }
 
     return input;
 }
