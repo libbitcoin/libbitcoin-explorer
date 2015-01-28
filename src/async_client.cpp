@@ -24,7 +24,7 @@
 #include <functional>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/command.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {

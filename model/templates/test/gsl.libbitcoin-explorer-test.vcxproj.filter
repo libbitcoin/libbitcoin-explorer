@@ -44,9 +44,6 @@
     <Filter Include="src\\tests\\primitives">
       <UniqueIdentifier>{14f110d7-6526-4899-bddb-d390b0ca55ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\\tests\\utility">
-      <UniqueIdentifier>{ad3dcd3b-991e-438d-84e2-58b47c198365}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
 .for command by symbol
@@ -62,10 +59,10 @@
 .   endif
     </ClCompile>
 .endfor
-    <ClCompile Include="..\\..\\..\\..\\test\\address.cpp">
+    <ClCompile Include="..\\..\\..\\..\\test\\primitives\\address.cpp">
       <Filter>src\\tests\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\test\\base58.cpp">
+    <ClCompile Include="..\\..\\..\\..\\test\\primitives\\base58.cpp">
       <Filter>src\\tests\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\test\\generated__broadcast.cpp">
@@ -82,9 +79,6 @@
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\test\\main.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\test\\obelisk_client.cpp">
-      <Filter>src\\tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

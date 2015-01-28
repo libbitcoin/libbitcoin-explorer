@@ -29,7 +29,7 @@
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
 

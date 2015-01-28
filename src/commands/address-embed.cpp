@@ -27,7 +27,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;

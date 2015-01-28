@@ -24,7 +24,7 @@
 #include <boost/format.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {

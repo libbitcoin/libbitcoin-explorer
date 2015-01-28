@@ -23,7 +23,7 @@
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace pt;
 using namespace bc::explorer;

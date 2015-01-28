@@ -26,12 +26,12 @@
 #include <boost/program_options.hpp>
 #include <boost/throw_exception.hpp>
 #include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/config.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/utility/config.hpp>
-#include <bitcoin/explorer/utility/environment.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/config.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
 using namespace boost::filesystem;

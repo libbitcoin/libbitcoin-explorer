@@ -21,9 +21,11 @@
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
+#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/explorer/config.hpp>
 #include <bitcoin/explorer/define.hpp>
 .primitives()
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
@@ -35,7 +37,7 @@ namespace explorer {
 #define BX_PROGRAM_NAME "bx"
 
 /**
- * Abstract base class for definition of each Bitcoin Explorer command.
+ * Base class for definition of each Bitcoin Explorer command.
  */
 class command
 {
@@ -115,11 +117,11 @@ public:
     {
         using namespace po;
         definitions.add_options()
-        /* This composes with the command line options. */
         (
+            /* This composes with the command line options. */
             BX_CONFIG_VARIABLE, 
             value<boost::filesystem::path>()
-                /* ->composing()->default_value(config_default()) */,
+                ->composing()->default_value(default_config_path()),
             "$(config_description)"
         );
     }
@@ -200,7 +202,7 @@ public:
         config::printer help(options, arguments, BX_PROGRAM_NAME, description(),
             name());
         help.initialize();
-        help.print(output);
+        help.commandline(output);
     }
 
     /* Properties */

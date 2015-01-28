@@ -27,9 +27,6 @@
     <Filter Include="include\bitcoin\explorer\primitives">
       <UniqueIdentifier>{3857250F-34CC-43E4-9781-68B9E01BBD9D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\bitcoin\explorer\utility">
-      <UniqueIdentifier>{dc28e2c9-d07d-4242-8007-e44440c133a0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\bitcoin\explorer">
       <UniqueIdentifier>{31B4AAFD-BE8B-45EF-BCDC-B696C320F9F5}</UniqueIdentifier>
     </Filter>
@@ -53,9 +50,6 @@
     </Filter>
     <Filter Include="src\primitives">
       <UniqueIdentifier>{6CE1C682-2E57-4EA8-B819-5C733184121A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\utility">
-      <UniqueIdentifier>{c50b43cf-9009-45a6-b813-7a61877602f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{6afc4dd0-6330-4dca-b176-cd4887f27b9f}</UniqueIdentifier>
@@ -437,12 +431,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\wrapper.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\environment.hpp">
-      <Filter>include\bitcoin\explorer\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\utility.hpp">
-      <Filter>include\bitcoin\explorer\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\async_client.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
@@ -450,6 +438,9 @@
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\command.hpp">
+      <Filter>include\bitcoin\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\define.hpp">
@@ -468,6 +459,9 @@
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\prop_tree.hpp">
+      <Filter>include\bitcoin\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp">
@@ -844,19 +838,13 @@
     <ClCompile Include="..\..\..\..\src\primitives\wrapper.cpp">
       <Filter>src\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\config.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\environment.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\utility\utility.cpp">
-      <Filter>src\utility</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\async_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\callback_state.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\config.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\dispatch.cpp">
@@ -872,6 +860,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\prop_tree.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\utility.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

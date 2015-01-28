@@ -24,7 +24,7 @@
 #include <string>
 #include <cstdint>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

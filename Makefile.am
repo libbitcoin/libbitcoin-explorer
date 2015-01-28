@@ -33,6 +33,7 @@ bitcoin_explorer_include_HEADERS = \
     include/bitcoin/explorer/async_client.hpp \
     include/bitcoin/explorer/callback_state.hpp \
     include/bitcoin/explorer/command.hpp \
+    include/bitcoin/explorer/config.hpp \
     include/bitcoin/explorer/define.hpp \
     include/bitcoin/explorer/dispatch.hpp \
     include/bitcoin/explorer/display.hpp \
@@ -48,7 +49,7 @@ bitcoin_explorer_impl_include_HEADERS = \
 bitcoin_explorer_utility_includedir = ${includedir}/bitcoin/explorer/utility
 bitcoin_explorer_utility_include_HEADERS = \
     include/bitcoin/explorer/utility/environment.hpp \
-    include/bitcoin/explorer/utility/utility.hpp
+    include/bitcoin/explorer/utility.hpp
 
 bitcoin_explorer_primitives_includedir = ${includedir}/bitcoin/explorer/primitives
 bitcoin_explorer_primitives_include_HEADERS = \
@@ -192,6 +193,7 @@ src_libbitcoin_explorer_la_CPPFLAGS = \
 src_libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
     src/callback_state.cpp \
+    src/config.cpp \
     src/dispatch.cpp \
     src/display.cpp \
     src/generated.cpp \
@@ -226,9 +228,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/uri.cpp \
     src/primitives/wif.cpp \
     src/primitives/wrapper.cpp \
-    src/utility/config.cpp \
-    src/utility/environment.cpp \
-    src/utility/utility.cpp
+    src/utility.cpp
 
 # Generated from XML data source.
 src_libbitcoin_explorer_la_SOURCES += \
@@ -337,7 +337,8 @@ bin_PROGRAMS = bx
 
 bx_CPPFLAGS = \
     -I${srcdir}/include \
-    ${bitcoin_client_CFLAGS}
+    ${bitcoin_client_CFLAGS} \
+    -DSYSCONFDIR=\"${sysconfdir}\"
 
 bx_SOURCES = \
     src/console/main.cpp
