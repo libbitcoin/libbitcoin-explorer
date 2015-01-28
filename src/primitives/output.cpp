@@ -115,7 +115,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
 {
     std::vector<tx_output_type> result;
 
-    const auto tokens = config::split(tuple, BX_TX_POINT_DELIMITER);
+    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
     if (tokens.size() != 2 && tokens.size() != 3)
         return false;
 

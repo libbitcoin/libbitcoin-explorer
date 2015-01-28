@@ -20,20 +20,6 @@
 #ifndef BX_COMPAT_H
 #define BX_COMPAT_H
 
-#ifdef _MSC_VER
-    // For SET_BINARY_FILE_MODE
-    #include <fcntl.h>
-    #include <io.h>
-    #include <stdio.h>
-#endif
 
-// Sets the _fmode global variable, which controls the default translation
-// mode for file I/O operations.
-#ifdef _MSC_VER
-    #define BX_SET_BINARY_FILE_MODE(mode) \
-        _setmode(_fileno(stdin), mode ? _O_BINARY : _O_TEXT)
-#else
-    #define BX_SET_BINARY_FILE_MODE(mode)
-#endif
 
 #endif

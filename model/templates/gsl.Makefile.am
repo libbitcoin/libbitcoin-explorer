@@ -61,8 +61,6 @@ bitcoin_explorer_impl_include_HEADERS = \\
 
 bitcoin_explorer_utility_includedir = ${includedir}/bitcoin/explorer/utility
 bitcoin_explorer_utility_include_HEADERS = \\
-    include/bitcoin/explorer/utility/compat.hpp \\
-    include/bitcoin/explorer/utility/config.hpp \\
     include/bitcoin/explorer/utility/environment.hpp \\
     include/bitcoin/explorer/utility/utility.hpp
 

@@ -68,9 +68,8 @@ public:
      *                         If zero spend will require all spend keys sign.
      * @param[in]  testnet     The stealth address will be for testnet.
      */
-    BCX_API stealth(const bc::binary_type& prefix, const ec_public& scan_key,
-        const std::vector<ec_public>& spend_keys, uint8_t signatures, 
-        bool testnet);
+    BCX_API stealth(const bc::binary_type& prefix, const ec_point& scan_key,
+        const pubkey_list& spend_keys, uint8_t signatures, bool testnet);
 
     /**
      * Copy constructor.

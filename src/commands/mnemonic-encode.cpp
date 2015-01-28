@@ -26,7 +26,6 @@
 #include <bitcoin/explorer/define.hpp>
 
 using namespace bc;
-using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 

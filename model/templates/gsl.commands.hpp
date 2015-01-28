@@ -27,8 +27,6 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 .primitives()
-#include <bitcoin/explorer/utility/compat.hpp>
-#include <bitcoin/explorer/utility/config.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/

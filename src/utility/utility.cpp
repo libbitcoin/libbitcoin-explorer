@@ -111,10 +111,10 @@ void random_fill(data_chunk& chunk)
 
 std::string read_stream(std::istream& stream)
 {
-    BX_SET_BINARY_FILE_MODE(true);
+    BC_SET_BINARY_FILE_MODE(true);
     std::istreambuf_iterator<char> first(stream), last;
     std::string result(first, last);
-    BX_SET_BINARY_FILE_MODE(false);
+    BC_SET_BINARY_FILE_MODE(false);
     return result;
 }
 

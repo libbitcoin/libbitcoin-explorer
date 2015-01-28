@@ -29,7 +29,6 @@
 
 using namespace bc;
 using namespace bc::client;
-using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 

@@ -26,7 +26,6 @@
 #include <bitcoin/explorer/primitives/stealth.hpp>
 
 using namespace bc;
-using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -61,7 +60,8 @@ console_result stealth_encode::invoke(std::ostream& output,
     }
 
     // TESTNET WORKS WITHOUT RECOMPILE
-    stealth address(prefix, scan_pubkey, spend_pubkeys, signatures,
+    auto spend_points = cast<ec_public, ec_point>(spend_pubkeys);
+    stealth address(prefix, scan_pubkey, spend_points, signatures,
         network == "testnet");
 
     output << address << std::endl;

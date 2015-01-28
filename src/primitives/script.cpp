@@ -57,7 +57,7 @@ script::script(const data_chunk& value)
 
 script::script(const std::vector<std::string>& tokens)
 {
-    const auto mnemonic = config::join(tokens);
+    const auto mnemonic = join(tokens);
     std::stringstream(mnemonic) >> *this;
 }
 
@@ -85,7 +85,7 @@ std::istream& operator>>(std::istream& input, script& argument)
 {
     std::istreambuf_iterator<char> eos;
     std::string mnemonic(std::istreambuf_iterator<char>(input), eos);
-    config::trim(mnemonic);
+    trim(mnemonic);
 
     argument.value_ = unpretty(mnemonic);
 

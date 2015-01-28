@@ -23,7 +23,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/define.hpp>
 .primitives()
-#include <bitcoin/explorer/utility/config.hpp>
 #include <bitcoin/explorer/utility/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/

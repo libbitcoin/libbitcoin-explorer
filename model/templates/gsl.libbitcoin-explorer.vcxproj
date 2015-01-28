@@ -131,8 +131,6 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\uri.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\compat.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\config.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\environment.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\utility.hpp" />
   </ItemGroup>

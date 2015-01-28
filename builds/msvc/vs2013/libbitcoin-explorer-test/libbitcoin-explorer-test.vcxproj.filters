@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -29,9 +29,6 @@
     </Filter>
     <Filter Include="src\tests\primitives">
       <UniqueIdentifier>{14f110d7-6526-4899-bddb-d390b0ca55ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\tests\utility">
-      <UniqueIdentifier>{ad3dcd3b-991e-438d-84e2-58b47c198365}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

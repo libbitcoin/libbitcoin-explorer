@@ -39,7 +39,7 @@ namespace primitives {
 // input is currently a private encoding in bx.
 static bool decode_input(tx_input_type& input, const std::string& tuple)
 {
-    const auto tokens = config::split(tuple, BX_TX_POINT_DELIMITER);
+    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
     if (tokens.size() != 2 && tokens.size() != 3)
         return false;
 

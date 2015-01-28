@@ -50,23 +50,10 @@ stealth::stealth(const stealth_address& address)
 {
 }
 
-// TODO: move to libbitcoin.
-stealth::stealth(const bc::binary_type& prefix, const ec_public& scan_key,
-    const std::vector<ec_public>& spend_keys, uint8_t signatures, bool testnet)
+stealth::stealth(const bc::binary_type& prefix, const ec_point& scan_key,
+    const pubkey_list& spend_keys, uint8_t signatures, bool testnet)
+    : value_(prefix, scan_key, spend_keys, signatures, testnet)
 {
-    // Normalize signatures between 1 and spend_keys.size().
-    auto spend_keys_size = static_cast<uint8_t>(spend_keys.size());
-    auto size = config::if_else(spend_keys.empty(), 1, spend_keys_size);
-    auto sigs = config::if_else(signatures == 0, size, signatures);
-    sigs = config::if_else(sigs > size, size, sigs);
-
-    // Convert the primitives vector to a point vector and apply 'reuse'.
-    auto spend_points = cast<ec_public, ec_point>(spend_keys);
-    if (spend_points.empty())
-        spend_points.push_back(scan_key);
-
-    // Persist the value as an address object.
-    value_ = stealth_address(prefix, scan_key, spend_points, sigs, testnet);
 }
 
 stealth::stealth(const stealth& other)

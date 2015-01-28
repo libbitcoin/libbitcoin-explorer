@@ -182,12 +182,6 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\compat.hpp">
-      <Filter>include\\bitcoin\\explorer\\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\config.hpp">
-      <Filter>include\\bitcoin\\explorer\\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility\\environment.hpp">
       <Filter>include\\bitcoin\\explorer\\utility</Filter>
     </ClInclude>

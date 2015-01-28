@@ -65,7 +65,7 @@ template <typename Value>
 void deserialize(Value& value, const std::string& text)
 {
     std::string trimmed(text);
-    bc::config::trim(trimmed);
+    trim(trimmed);
     value = boost::lexical_cast<Value>(trimmed);
 }
 
@@ -78,7 +78,7 @@ void deserialize(Value& value, std::istream& input)
 template <typename Value>
 void deserialize(std::vector<Value>& collection, const std::string& text)
 {
-    const auto tokens = bc::config::split(text, "\n\r\t ");
+    const auto tokens = split(text, "\n\r\t ");
 
     for (const auto& token: tokens)
     {
@@ -150,7 +150,7 @@ std::string serialize(const Value& value, const std::string& fallback)
     std::stringstream stream;
     stream << value;
     const auto& text = stream.str();
-    return bc::config::if_else(text.empty(), fallback, text);
+    return if_else(text.empty(), fallback, text);
 }
 
 template <typename Item>
