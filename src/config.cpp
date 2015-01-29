@@ -56,7 +56,7 @@ path default_config_path()
 {
     // This subdirectory and file name must stay in sync with the path
     // for the sample distributed via the build.
-    return path(system_config_directory()) / "libbitcoin" / "explorer.cfg";
+    return path(system_config_directory()) / "libbitcoin" / "bx.cfg";
 }
 
 } // namespace explorer

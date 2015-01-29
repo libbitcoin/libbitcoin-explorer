@@ -14,9 +14,15 @@ pkgconfig_DATA = libbitcoin-explorer.pc
 # bash completion
 #
 if BASH_COMPLETION_DIR
-bashcompletiondir = ${bash_completion_dir}
-dist_bashcompletion_DATA = data/bx
+    bashcompletiondir = ${bash_completion_dir}
+    dist_bashcompletion_DATA = data/bx
 endif
+
+#
+# configuration file
+#
+confdir="${sysconfdir}/libbitcoin"
+conf_DATA = data/bx.cfg
 
 # look for macros in the m4 subdirectory
 ACLOCAL_AMFLAGS = -I m4
@@ -39,17 +45,13 @@ bitcoin_explorer_include_HEADERS = \
     include/bitcoin/explorer/display.hpp \
     include/bitcoin/explorer/generated.hpp \
     include/bitcoin/explorer/obelisk_client.hpp \
-    include/bitcoin/explorer/prop_tree.hpp
+    include/bitcoin/explorer/prop_tree.hpp \
+    include/bitcoin/explorer/utility.hpp
 
 bitcoin_explorer_impl_includedir = ${includedir}/bitcoin/explorer/impl
 bitcoin_explorer_impl_include_HEADERS = \
     include/bitcoin/explorer/impl/prop_tree.ipp \
     include/bitcoin/explorer/impl/utility.ipp
-
-bitcoin_explorer_utility_includedir = ${includedir}/bitcoin/explorer/utility
-bitcoin_explorer_utility_include_HEADERS = \
-    include/bitcoin/explorer/utility/environment.hpp \
-    include/bitcoin/explorer/utility.hpp
 
 bitcoin_explorer_primitives_includedir = ${includedir}/bitcoin/explorer/primitives
 bitcoin_explorer_primitives_include_HEADERS = \
@@ -188,7 +190,8 @@ noinst_LTLIBRARIES = src/libbitcoin-explorer.la
 
 src_libbitcoin_explorer_la_CPPFLAGS = \
     -I${srcdir}/include \
-    ${bitcoin_client_CFLAGS}
+    ${bitcoin_client_CFLAGS} \
+    -DSYSCONFDIR=\"${sysconfdir}\"
 
 src_libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
@@ -337,8 +340,7 @@ bin_PROGRAMS = bx
 
 bx_CPPFLAGS = \
     -I${srcdir}/include \
-    ${bitcoin_client_CFLAGS} \
-    -DSYSCONFDIR=\"${sysconfdir}\"
+    ${bitcoin_client_CFLAGS}
 
 bx_SOURCES = \
     src/console/main.cpp
@@ -363,14 +365,13 @@ test_libbitcoin_explorer_test_CPPFLAGS = \
     ${bitcoin_client_CFLAGS}
 
 test_libbitcoin_explorer_test_SOURCES = \
-    test/address.cpp \
-    test/base58.cpp \
+    test/primitives/address.cpp \
+    test/primitives/base58.cpp \
     test/generated__broadcast.cpp \
     test/generated__find.cpp \
     test/generated__formerly.cpp \
     test/generated__symbol.cpp \
-    test/main.cpp \
-    test/obelisk_client.cpp
+    test/main.cpp
 
 # Generated from XML data source.
 test_libbitcoin_explorer_test_SOURCES += \
