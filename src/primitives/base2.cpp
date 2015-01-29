@@ -25,7 +25,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
 
@@ -69,7 +69,9 @@ std::istream& operator>>(std::istream& input, base2& argument)
     input >> binary;
 
     if (!is_base2(binary))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(binary));
+    }
 
     std::stringstream(binary) >> argument.value_;
 

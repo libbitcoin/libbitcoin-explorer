@@ -64,7 +64,9 @@ std::istream& operator>>(std::istream& input, btc160& argument)
     input >> hexcode;
 
     if (!decode_base16(argument.value_, hexcode))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
+    }
 
     return input;
 }

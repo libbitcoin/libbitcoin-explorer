@@ -28,9 +28,15 @@ pkgconfig_DATA = libbitcoin-explorer.pc
 # bash completion
 #
 if BASH_COMPLETION_DIR
-bashcompletiondir = ${bash_completion_dir}
-dist_bashcompletion_DATA = data/bx
+    bashcompletiondir = ${bash_completion_dir}
+    dist_bashcompletion_DATA = data/bx
 endif
+
+#
+# configuration file
+#
+confdir="${sysconfdir}/libbitcoin"
+conf_DATA = data/bx.cfg
 
 # look for macros in the m4 subdirectory
 ACLOCAL_AMFLAGS = -I m4
@@ -47,26 +53,19 @@ bitcoin_explorer_include_HEADERS = \\
     include/bitcoin/explorer/async_client.hpp \\
     include/bitcoin/explorer/callback_state.hpp \\
     include/bitcoin/explorer/command.hpp \\
+    include/bitcoin/explorer/config.hpp \\
     include/bitcoin/explorer/define.hpp \\
     include/bitcoin/explorer/dispatch.hpp \\
     include/bitcoin/explorer/display.hpp \\
     include/bitcoin/explorer/generated.hpp \\
     include/bitcoin/explorer/obelisk_client.hpp \\
-    include/bitcoin/explorer/prop_tree.hpp
+    include/bitcoin/explorer/prop_tree.hpp \\
+    include/bitcoin/explorer/utility.hpp
 
 bitcoin_explorer_impl_includedir = ${includedir}/bitcoin/explorer/impl
 bitcoin_explorer_impl_include_HEADERS = \\
     include/bitcoin/explorer/impl/prop_tree.ipp \\
     include/bitcoin/explorer/impl/utility.ipp
-
-bitcoin_explorer_utility_includedir = ${includedir}/bitcoin/explorer/utility
-bitcoin_explorer_utility_include_HEADERS = \\
-    include/bitcoin/explorer/utility/compat.hpp \\
-    include/bitcoin/explorer/utility/config.hpp \\
-    include/bitcoin/explorer/utility/environment.hpp \\
-    include/bitcoin/explorer/utility/parameter.hpp \\
-    include/bitcoin/explorer/utility/printer.hpp \\
-    include/bitcoin/explorer/utility/utility.hpp
 
 bitcoin_explorer_primitives_includedir = ${includedir}/bitcoin/explorer/primitives
 bitcoin_explorer_primitives_include_HEADERS = \\
@@ -114,11 +113,13 @@ noinst_LTLIBRARIES = src/libbitcoin-explorer.la
 
 src_libbitcoin_explorer_la_CPPFLAGS = \\
     -I${srcdir}/include \\
-    ${bitcoin_client_CFLAGS}
+    ${bitcoin_client_CFLAGS} \\
+    -DSYSCONFDIR=\\"${sysconfdir}\\"
 
 src_libbitcoin_explorer_la_SOURCES = \\
     src/async_client.cpp \\
     src/callback_state.cpp \\
+    src/config.cpp \\
     src/dispatch.cpp \\
     src/display.cpp \\
     src/generated.cpp \\
@@ -153,11 +154,7 @@ src_libbitcoin_explorer_la_SOURCES = \\
     src/primitives/uri.cpp \\
     src/primitives/wif.cpp \\
     src/primitives/wrapper.cpp \\
-    src/utility/config.cpp \\
-    src/utility/environment.cpp \\
-    src/utility/parameter.cpp \\
-    src/utility/printer.cpp \\
-    src/utility/utility.cpp
+    src/utility.cpp
 
 # Generated from XML data source.
 src_libbitcoin_explorer_la_SOURCES += \\
@@ -200,16 +197,13 @@ test_libbitcoin_explorer_test_CPPFLAGS = \\
     ${bitcoin_client_CFLAGS}
 
 test_libbitcoin_explorer_test_SOURCES = \\
-    test/address.cpp \\
-    test/base58.cpp \\
+    test/primitives/address.cpp \\
+    test/primitives/base58.cpp \\
     test/generated__broadcast.cpp \\
     test/generated__find.cpp \\
     test/generated__formerly.cpp \\
     test/generated__symbol.cpp \\
-    test/main.cpp \\
-    test/obelisk_client.cpp \\
-    test/parameter.cpp \\
-    test/printer.cpp
+    test/main.cpp
 
 # Generated from XML data source.
 test_libbitcoin_explorer_test_SOURCES += \\

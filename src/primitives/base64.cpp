@@ -68,7 +68,9 @@ std::istream& operator>>(std::istream& input, base64& argument)
     input >> base64;
 
     if (!decode_base64(argument.value_, base64))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(base64));
+    }
 
     return input;
 }

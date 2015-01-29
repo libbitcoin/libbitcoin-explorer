@@ -70,16 +70,13 @@
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\test\address.cpp" />
-    <ClCompile Include="..\..\..\..\test\base58.cpp" />
+    <ClCompile Include="..\..\..\..\test\primitives\address.cpp" />
+    <ClCompile Include="..\..\..\..\test\primitives\base58.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__formerly.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__symbol.cpp" />
     <ClCompile Include="..\..\..\..\test\main.cpp" />
-    <ClCompile Include="..\..\..\..\test\obelisk_client.cpp" />
-    <ClCompile Include="..\..\..\..\test\parameter.cpp" />
-    <ClCompile Include="..\..\..\..\test\printer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\commands\address-decode.cpp" />

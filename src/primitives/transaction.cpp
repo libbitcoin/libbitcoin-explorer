@@ -26,7 +26,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
 
@@ -71,7 +71,9 @@ std::istream& operator>>(std::istream& input, transaction& argument)
 
     // tx base16 is a private encoding in bx, used to pass between commands.
     if (!deserialize_satoshi_item(argument.value_, base16(hexcode)))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
+    }
 
     return input;
 }

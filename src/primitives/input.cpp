@@ -28,7 +28,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
 
@@ -99,7 +99,9 @@ std::istream& operator>>(std::istream& stream, input& argument)
     stream >> tuple;
 
     if (!decode_input(argument.value_, tuple))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
+    }
 
     return stream;
 }

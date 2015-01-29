@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_ENVIRONMENT_HPP
-#define BX_ENVIRONMENT_HPP
+#ifndef BX_CONFIG_HPP
+#define BX_CONFIG_HPP
 
-#include <string>
+#include <boost/filesystem.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -29,21 +29,10 @@ namespace libbitcoin {
 namespace explorer {
 
 /**
- * Naming convention prefix for Bitcoin Explorer environment variables.
+ * Get the default configuration settings file path or return empty.
+ * @return  The default configuration settings file path or empty.
  */
-#define BX_ENVIRONMENT_VARIABLE_PREFIX "BX_"
-
-/**
- * The name of the linux environment variable that defines the home directory.
- */
-#define BX_LINUX_HOME_ENVIRONMENT_VARIABLE "HOME"
-
-///**
-// * Get the user's home directory.
-// *
-// * @return  The user's home directory.
-// */
-//BCX_API std::string home_directory();
+BCX_API boost::filesystem::path default_config_path();
 
 } // namespace explorer
 } // namespace libbitcoin

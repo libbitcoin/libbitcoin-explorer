@@ -61,16 +61,6 @@ std::vector<Target> cast(const std::vector<Source>& source)
     return target;
 }
 
-template <typename Consequent, typename Alternate>
-Consequent if_else(bool antecedent, const Consequent consequent,
-    const Alternate alternative)
-{
-    if (antecedent)
-        return consequent;
-    else 
-        return alternative;
-}
-
 template <typename Value>
 void deserialize(Value& value, const std::string& text)
 {
@@ -112,33 +102,12 @@ bool deserialize_satoshi_item(Item& item, const data_chunk& data)
     return true;
 }
 
-template <typename Element>
-int find_position(const std::vector<Element>& list, const Element& element)
-{
-    auto it = std::find(list.begin(), list.end(), element);
-    return if_else(it == list.end(), -1, distance(list.begin(), it));
-}
-
-template <typename Pair, typename Key>
-int find_pair_position(const std::vector<Pair>& list, const Key& key)
-{
-    const auto predicate = [&](const Pair& pair)
-    {
-        return pair.first == key;
-    };
-
-    auto it = std::find_if(list.begin(), list.end(), predicate);
-    return if_else(it == list.end(), -1, distance(list.begin(), it));
-}
-
-template<typename Type, typename Predicate>
-typename std::vector<Type>::iterator insert_sorted(std::vector<Type>& list,
-    Type const& element, Predicate predicate)
-{
-    return list.insert(
-        std::upper_bound(list.begin(), list.end(), element, predicate),
-        element);
-}
+//template <typename Element>
+//int find_position(const std::vector<Element>& list, const Element& element)
+//{
+//    auto it = std::find(list.begin(), list.end(), element);
+//    return if_else(it == list.end(), -1, distance(list.begin(), it));
+//}
 
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
@@ -170,7 +139,9 @@ void load_path(Value& parameter, const std::string& name,
     // Create a file input stream.
     std::ifstream file(path, std::ifstream::binary);
     if (file.fail())
+    {
         BOOST_THROW_EXCEPTION(po::invalid_option_value(path));
+    }
 
     deserialize(parameter, file);
 }

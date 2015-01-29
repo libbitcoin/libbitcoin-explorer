@@ -73,7 +73,9 @@ std::istream& operator>>(std::istream& input, encoding& argument)
     else if (text == encoding_xml)
         argument.value_ = encoding_engine::xml;
     else
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
+    }
 
     return input;
 }

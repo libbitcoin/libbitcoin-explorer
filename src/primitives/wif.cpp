@@ -79,7 +79,9 @@ std::istream& operator>>(std::istream& input, wif& argument)
 
     auto value = wif_to_secret(base58);
     if (!verify_private_key(value))
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(base58));
+    }
 
     argument.compressed_ = is_wif_compressed(base58);
     std::copy(value.begin(), value.end(), argument.value_.begin());

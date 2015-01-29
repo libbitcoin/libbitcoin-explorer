@@ -50,7 +50,7 @@ static void handle_callback(callback_state& state,
 }
 
 static void fetch_stealth_from_prefix(obelisk_client& client,
-    callback_state& state, const base2& prefix, size_t from_height)
+    callback_state& state, const base2& prefix, uint32_t from_height)
 {
     // Do not pass the prefix by reference here.
     auto on_done = [&state, prefix](const client::stealth_list& list)

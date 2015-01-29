@@ -76,7 +76,9 @@ std::istream& operator>>(std::istream& input, hashtype& argument)
     else if (text == hashtype_anyone_can_pay)
         argument.value_ = sighash::anyone_can_pay;
     else
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
+    }
 
     return input;
 }

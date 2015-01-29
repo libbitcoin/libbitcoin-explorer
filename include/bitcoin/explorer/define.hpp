@@ -57,12 +57,16 @@
  * Default delimiter for use in word splitting and joining operations.
  */
 #define BX_SENTENCE_DELIMITER " "
+    
+/**
+ * Environemnt variable prefix for integrated environment variables.
+ */
+#define BX_ENVIRONMENT_VARIABLE_PREFIX "BX_"
 
 /**
  * Conventional command line argument sentinel for indicating that a file
  * should be read from STDIN or written to STDOUT.
  */
-
 #define BX_STDIO_PATH_SENTINEL "-"
 
 /**
@@ -88,11 +92,6 @@ typedef po::positional_options_description arguments_metadata;
  * The minimum safe length of a seed in bytes (16).
  */
 constexpr size_t minimum_seed_size = 128 / bc::byte_bits;
-    
-/**
- * The noop void function.
- */
-static const std::function<void()> noop = []{};
 
 /**
 * Result codes for int main().

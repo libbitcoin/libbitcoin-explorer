@@ -27,7 +27,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
 
@@ -91,7 +91,9 @@ std::istream& operator>>(std::istream& input, script& argument)
 
     // Test for invalid result sentinel.
     if (argument.value_.operations().size() == 0 && mnemonic.length() > 0)
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(mnemonic));
+    }
 
     return input;
 }

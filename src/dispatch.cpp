@@ -17,24 +17,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/dispatch.hpp>
 
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <boost/throw_exception.hpp>
 #include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/config.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/utility/config.hpp>
-#include <bitcoin/explorer/utility/environment.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/config.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
-using namespace po;
 using namespace boost::filesystem;
+using namespace boost::program_options;
+using namespace boost::system;
 
 #ifdef BOOST_NO_EXCEPTIONS
 
@@ -137,12 +138,8 @@ void load_command_variables(variables_map& variables, command& instance,
     // commands metadata is preserved on members for later usage presentation
     const auto& options = instance.load_options();
     const auto& arguments = instance.load_arguments();
-
-    // parse inputs
     auto command_parser = command_line_parser(argc, argv).options(options)
         .positional(arguments);
-
-    // map parsed inputs into variables map
     store(command_parser.run(), variables);
 
     // Don't load rest if help is specified.
@@ -159,31 +156,26 @@ void load_configuration_variables(variables_map& variables, command& instance)
     instance.load_settings(config_settings);
     const auto config_path = get_config_option(variables);
 
-    if (config_path.empty())
-    {
-        // loading from an empty stream causes the defaults to populate.
-        std::stringstream stream;
-
-        // parse inputs
-        const auto configuration = parse_config_file(stream, config_settings);
-
-        // map parsed inputs into variables map
-        store(configuration, variables);
-    }
-    else
+    // If the existence test errors out we pretend there's no file :/.
+    error_code code;
+    if (!config_path.empty() && exists(config_path, code))
     {
         const auto& path = config_path.generic_string();
         std::ifstream file(path);
-
         if (!file.good())
+        {
             BOOST_THROW_EXCEPTION(reading_file(path.c_str()));
+        }
 
-        // parse inputs
         const auto configuration = parse_config_file(file, config_settings);
-
-        // map parsed inputs into variables map
         store(configuration, variables);
+        return;
     }
+
+    // loading from an empty stream causes the defaults to populate.
+    std::stringstream stream;
+    const auto configuration = parse_config_file(stream, config_settings);
+    store(configuration, variables);
 }
 
 // Not unit testable (reliance on shared test process environment).
@@ -192,11 +184,8 @@ void load_environment_variables(variables_map& variables, command& instance)
 {
     options_description environment_variables("environment");
     instance.load_environment(environment_variables);
-
-    // parse inputs
     const auto environment = parse_environment(environment_variables,
         BX_ENVIRONMENT_VARIABLE_PREFIX);
-
     store(environment, variables);
 }
 
@@ -229,14 +218,20 @@ bool load_variables(variables_map& variables, std::string& message,
     }
     catch (const po::error& e)
     {
-        // BUGBUG: the error message is obtained directly form boost, which
-        // circumvents our localization model.
+        // This is obtained from boost, which circumvents our localization.
         message = e.what();
         return false;
     }
-    catch (...)
+#ifndef BOOST_NO_EXCEPTIONS
+    catch (const boost::exception&)
     {
-        message = "...";
+        message = "boost::exception";
+        return false;
+    }
+#endif
+    catch (const std::exception& e)
+    {
+        message = e.what();
         return false;
     }
 

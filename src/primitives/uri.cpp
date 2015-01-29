@@ -25,7 +25,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
 
@@ -68,7 +68,9 @@ std::istream& operator>>(std::istream& input, uri& argument)
     if (starts_with(value, "bitcoin:"))
     {
         if (!uri_parse(value, argument.parse_result_))
+        {
             BOOST_THROW_EXCEPTION(invalid_option_value(value));
+        }
     }
 
     argument.value_ = value;

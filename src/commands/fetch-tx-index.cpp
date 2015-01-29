@@ -29,7 +29,7 @@
 #include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::client;

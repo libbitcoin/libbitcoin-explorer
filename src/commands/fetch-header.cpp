@@ -29,7 +29,7 @@
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
-#include <bitcoin/explorer/utility/utility.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::client;
@@ -51,7 +51,7 @@ static void handle_callback(callback_state& state,
 console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const size_t height = get_height_option();
+    const auto height = get_height_option();
     const hash_digest& hash = get_hash_option();
     const encoding& encoding = get_format_option();
     const auto retries = get_general_retries_setting();

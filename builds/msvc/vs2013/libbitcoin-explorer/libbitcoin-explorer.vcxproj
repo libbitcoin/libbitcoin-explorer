@@ -79,9 +79,10 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\impl\prop_tree.ipp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\impl\utility.ipp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\callback_state.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\async_client.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\callback_state.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\command.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\define.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\dispatch.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\display.hpp" />
@@ -117,12 +118,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\uri.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\wif.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\wrapper.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\compat.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\config.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\environment.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\parameter.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\printer.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility\utility.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-decode.hpp" />
@@ -223,6 +219,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\async_client.cpp" />
     <ClCompile Include="..\..\..\..\src\callback_state.cpp" />
+    <ClCompile Include="..\..\..\..\src\config.cpp" />
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />
@@ -257,11 +254,7 @@
     <ClCompile Include="..\..\..\..\src\primitives\uri.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\wif.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\wrapper.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\config.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\environment.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\parameter.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\printer.cpp" />
-    <ClCompile Include="..\..\..\..\src\utility\utility.cpp" />
+    <ClCompile Include="..\..\..\..\src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\commands\address-decode.cpp" />
