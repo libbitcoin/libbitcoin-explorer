@@ -112,7 +112,7 @@ bool obelisk_client::resolve_callbacks()
     return success;
 }
 
-void obelisk_client::poll_until_termination(const period_ms& timeout)
+void obelisk_client::poll_until_termination(const client::period_ms& timeout)
 {
     czmqpp::poller poller;
     poller.add(stream_->get_socket());
@@ -120,6 +120,34 @@ void obelisk_client::poll_until_termination(const period_ms& timeout)
     while (true)
     {
         poller.wait(static_cast<int>(timeout.count()));
+
+        if (poller.terminated())
+        {
+            break;
+        }
+
+        if (!poller.expired())
+        {
+            stream_->signal_response(codec_);
+        }
+    }
+}
+
+void obelisk_client::poll_until_timeout_cumulative(const period_ms& timeout)
+{
+    czmqpp::poller poller;
+    poller.add(stream_->get_socket());
+
+    // calculate expected expiration time
+    auto expiry = std::chrono::steady_clock::now() + timeout;
+
+    while (std::chrono::steady_clock::now() < expiry)
+    {
+        // calculate maximum interval from now to expiration
+        auto max_wait_interval = std::chrono::duration_cast<period_ms>(
+            expiry - std::chrono::steady_clock::now());
+
+        poller.wait(static_cast<int>(max_wait_interval.count()));
 
         if (poller.terminated())
         {

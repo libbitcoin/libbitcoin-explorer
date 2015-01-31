@@ -70,10 +70,17 @@ public:
     BCX_API virtual bool resolve_callbacks();
 
     /**
-     * Poll the connection until the request times out or terminates.
+     * Poll the connection until the request terminates.
      * @param[in]  timeout  The poll timeout, defaults to zero.
      */
     BCX_API virtual void poll_until_termination(
+        const client::period_ms& timeout=client::period_ms(0));
+
+    /**
+     * Poll the connection until the request times out or terminates.
+     * @param[in]  timeout  The poll timeout, defaults to zero.
+     */
+    BCX_API virtual void poll_until_timeout_cumulative(
         const client::period_ms& timeout=client::period_ms(0));
 
 private:
