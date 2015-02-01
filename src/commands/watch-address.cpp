@@ -125,7 +125,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     // poll for subscribe callbacks if any subscriptions were established.
     if (client.resolve_callbacks() && subscribed)
-        client.poll_until_termination(period_ms(UINT32_MAX));
+        client.poll_until_timeout_cumulative(std::chrono::minutes(10));
 
     return state.get_result();
 }
