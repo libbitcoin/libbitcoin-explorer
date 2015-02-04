@@ -208,7 +208,7 @@ Visual Studio solutions are maintained for all libbitcoin libraries and dependen
 
 Libbitcoin requires a C++11 compiler, which means **Visual Studio 2013** minimum. Additionally a pre-release compiler must be installed as an update to Visual Studio. Download and install the following tools as necessary. Both are available free of charge:
 
-* [Visual Studio 2013 Express](http://www.microsoft.com/en-us/download/details.aspx?id=43733)
+* [Visual Studio 2013 Express](http://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx)
 * [November 2013 CTP Compiler](http://www.microsoft.com/en-us/download/details.aspx?id=41151)
 
 #### Create Local NuGet Repository
