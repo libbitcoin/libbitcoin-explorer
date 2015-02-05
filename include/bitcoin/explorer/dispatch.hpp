@@ -80,8 +80,7 @@ BCX_API bool get_help_option(po::variables_map& variables);
  * @param[in]  argv       Array of command line arguments excluding process.
  */
 BCX_API void load_command_variables(po::variables_map& variables,
-    command& instance, std::istream& input, int argc, const char* argv[])
-    throw();
+    command& instance, std::istream& input, int argc, const char* argv[]);
 
 /**
  * Load configuration file variables.
@@ -89,7 +88,7 @@ BCX_API void load_command_variables(po::variables_map& variables,
  * @param[in]  instance   The command instance for the current command.
  */
 BCX_API void load_configuration_variables(po::variables_map& variables,
-    command& instance) throw(po::reading_file);
+    command& instance);
 
 /**
  * Load environment variables.
@@ -97,7 +96,7 @@ BCX_API void load_configuration_variables(po::variables_map& variables,
  * @param[in]  instance   The command instance for the current command.
  */
 BCX_API void load_environment_variables(po::variables_map& variables,
-    command& instance) throw();
+    command& instance);
 
 /**
  * Load command line variables.

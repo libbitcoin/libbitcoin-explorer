@@ -37,29 +37,6 @@ using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace boost::system;
 
-#ifdef BOOST_NO_EXCEPTIONS
-
-// Allow the handler to vary context, could make this an enum.
-static bool trying_parser = false;
-#define TRYING_PARSER(enable) \
-    trying_parser = enable;
-
-// Catch any non-exception "thrown" by boost, should be dynamic builds only.
-extern BCX_API void boost::throw_exception(const std::exception& e)
-{
-    using namespace bc::explorer;
-
-    if (trying_parser)
-        display_invalid_parameter(std::cerr, e.what());
-    else
-        display_unexpected_exception(std::cerr, e.what());
-
-    exit(console_result::failure);
-}
-#else
-#define TRYING_PARSER
-#endif
-
 namespace libbitcoin {
 namespace explorer {
 
@@ -133,7 +110,7 @@ bool get_help_option(variables_map& variables)
 }
 
 void load_command_variables(variables_map& variables, command& instance,
-    std::istream& input, int argc, const char* argv[]) throw()
+    std::istream& input, int argc, const char* argv[])
 {
     // commands metadata is preserved on members for later usage presentation
     const auto& options = instance.load_options();
@@ -148,9 +125,7 @@ void load_command_variables(variables_map& variables, command& instance,
         instance.load_fallbacks(input, variables);
 }
 
-// Not unit testable (without creating actual config files).
 void load_configuration_variables(variables_map& variables, command& instance)
-    throw(reading_file)
 {
     options_description config_settings("settings");
     instance.load_settings(config_settings);
@@ -178,9 +153,7 @@ void load_configuration_variables(variables_map& variables, command& instance)
     store(configuration, variables);
 }
 
-// Not unit testable (reliance on shared test process environment).
 void load_environment_variables(variables_map& variables, command& instance)
-    throw()
 {
     options_description environment_variables("environment");
     instance.load_environment(environment_variables);
@@ -189,14 +162,11 @@ void load_environment_variables(variables_map& variables, command& instance)
     store(environment, variables);
 }
 
-// Not unit testable (reliance on untestable functions).
 bool load_variables(variables_map& variables, std::string& message,
     command& instance, std::istream& input, int argc, const char* argv[])
 {
     try
     {
-        TRYING_PARSER(true);
-
         // Must store before environment in order for commands to supercede.
         load_command_variables(variables, instance, input, argc, argv);
 
@@ -213,24 +183,10 @@ bool load_variables(variables_map& variables, std::string& message,
             // Send notifications and update bound variables.
             notify(variables);
         }
-
-        TRYING_PARSER(false);
     }
     catch (const po::error& e)
     {
         // This is obtained from boost, which circumvents our localization.
-        message = e.what();
-        return false;
-    }
-#ifndef BOOST_NO_EXCEPTIONS
-    catch (const boost::exception&)
-    {
-        message = "boost::exception";
-        return false;
-    }
-#endif
-    catch (const std::exception& e)
-    {
         message = e.what();
         return false;
     }
