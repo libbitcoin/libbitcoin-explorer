@@ -1,5 +1,5 @@
 ###############################################################################
-# Copyright (c) 2011-2014 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2015 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -111,19 +111,6 @@ AS_IF([test x$enable_ndebug != xno], AC_DEFINE([NDEBUG]))
 # Inherit --enable-shared option and define BOOST_TEST_DYN_LINK.
 #------------------------------------------------------------------------------
 AS_IF([test x$enable_shared != xno], AC_DEFINE([BOOST_TEST_DYN_LINK]))
-
-
-# Set unconditional preprocessor defines.
-#==============================================================================
-# Unconditionally define the preprocessor symbol BOOST_NO_EXCEPTIONS.
-#------------------------------------------------------------------------------
-# Capture exceptional conditions in callback function.
-AC_DEFINE([BOOST_NO_EXCEPTIONS])
-
-# Unconditionally define the preprocessor symbol BOOST_EXCEPTION_DISABLE.
-#------------------------------------------------------------------------------
-# Disable boost exception augmentation.
-AC_DEFINE([BOOST_EXCEPTION_DISABLE])
 
 
 # Check dependencies.

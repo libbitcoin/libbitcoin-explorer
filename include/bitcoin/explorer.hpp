@@ -58,5 +58,6 @@
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
+#include <bitcoin/explorer/version.hpp>
 
 #endif

@@ -60,7 +60,8 @@ bitcoin_explorer_include_HEADERS = \\
     include/bitcoin/explorer/generated.hpp \\
     include/bitcoin/explorer/obelisk_client.hpp \\
     include/bitcoin/explorer/prop_tree.hpp \\
-    include/bitcoin/explorer/utility.hpp
+    include/bitcoin/explorer/utility.hpp \\
+    include/bitcoin/explorer/version.hpp
 
 bitcoin_explorer_impl_includedir = ${includedir}/bitcoin/explorer/impl
 bitcoin_explorer_impl_include_HEADERS = \\

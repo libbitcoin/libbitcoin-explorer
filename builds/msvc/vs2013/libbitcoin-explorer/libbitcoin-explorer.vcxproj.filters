@@ -464,6 +464,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\utility.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\version.hpp">
+      <Filter>include\bitcoin\explorer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp">
       <Filter>include\bitcoin</Filter>
     </ClInclude>
