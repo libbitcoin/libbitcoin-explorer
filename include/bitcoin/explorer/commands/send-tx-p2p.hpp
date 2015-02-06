@@ -68,6 +68,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
+#define BX_SEND_TX_P2P_OUTPUT \
+    "%1% [%2%]: %3%"
 #define BX_SEND_TX_P2P_SIGNAL \
     "Caught signal: %1%"
 #define BX_SEND_TX_P2P_START_OKAY \

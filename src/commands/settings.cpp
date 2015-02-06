@@ -43,6 +43,8 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     list["general.wait"] = serialize(get_general_wait_setting());
     list["mainnet.url"] = get_mainnet_url_setting();
     list["testnet.url"] = get_testnet_url_setting();
+    list["logging.debug"] = get_logging_debug_setting().generic_string();
+    list["logging.error"] = get_logging_error_setting().generic_string();
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;

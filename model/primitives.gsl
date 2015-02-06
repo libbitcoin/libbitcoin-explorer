@@ -175,8 +175,8 @@ function global.is_braced_type(type)
 endfunction
 
 function global.is_quoted_type(type)
-    return ((my.type = "boost::path") | (my.type = "std::string") | \
-        (my.type = "primitives::uri"))
+    return ((my.type = "boost::filesystem::path") | \
+        (my.type = "std::string") | (my.type = "primitives::uri"))
 endfunction
 
 ###############################################################################

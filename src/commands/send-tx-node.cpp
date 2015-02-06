@@ -43,14 +43,12 @@ static void handle_sent(callback_state& state, const tx_type& tx)
 static void handle_send(callback_state& state, bc::network::channel_ptr node,
     const tx_type& tx)
 {
-    // Do not pass the tx by reference here.
-    const auto sent_handler = [&state, tx](const std::error_code& code)
+    const auto sent_handler = [&state, &tx](const std::error_code& code)
     {
-        if (!state.handle_error(code))
+        if (state.handle_error(code))
             handle_sent(state, tx);
     };
 
-    // Access violation on lock creation when the host is not set.
     node->send(tx, sent_handler);
 }
 
@@ -63,20 +61,20 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
     const auto send_handler = [&state](const std::error_code& code,
-        bc::network::channel_ptr node, tx_type& tx)
+        bc::network::channel_ptr node, const tx_type& tx)
     {
-        if (!state.handle_error(code))
+        if (state.handle_error(code))
             handle_send(state, node, tx);
     };
 
-    async_client client(*this, 4);
+    async_client client(4);
     auto& pool = client.get_threadpool();
     bc::network::handshake shake(pool);
     bc::network::network net(pool);
 
     ++state;
     connect(shake, net, host, port,
-        std::bind(send_handler, ph::_1, ph::_2, transaction));
+        std::bind(send_handler, ph::_1, ph::_2, std::ref(transaction)));
 
     client.poll(state.stopped(), 2000);
 

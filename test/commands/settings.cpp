@@ -34,6 +34,11 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        retries 0\n" \
 "        wait 0\n" \
 "    }\n" \
+"    logging\n" \
+"    {\n" \
+"        debug \"\"\n" \
+"        error \"\"\n" \
+"    }\n" \
 "    mainnet\n" \
 "    {\n" \
 "        url \"\"\n" \
@@ -52,6 +57,11 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        network testnet\n" \
 "        retries 42\n" \
 "        wait 7000\n" \
+"    }\n" \
+"    logging\n" \
+"    {\n" \
+"        debug debug.log\n" \
+"        error error.log\n" \
 "    }\n" \
 "    mainnet\n" \
 "    {\n" \
@@ -78,6 +88,8 @@ BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
     command.set_general_wait_setting(7000);
     command.set_mainnet_url_setting({ "https://mainnet.obelisk.net:42" });
     command.set_testnet_url_setting({ "https://testnet.obelisk.net:42" });
+    command.set_logging_debug_setting("debug.log");
+    command.set_logging_error_setting("error.log");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SETTINGS_TEST_VALUES);
 }
