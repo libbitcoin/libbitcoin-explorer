@@ -131,6 +131,9 @@ static void handle_send(callback_state& state, bc::network::channel_ptr node,
     state.output(format(BX_SEND_TX_P2P_SETUP_OKAY) % transaction(tx));
     node->send(tx, sent_handler);
 
+    if (state.stopped())
+        return;
+
     const auto send_handler = [&state](const std::error_code& code,
         bc::network::channel_ptr node, bc::network::protocol& prot,
         const tx_type& tx)
