@@ -36,6 +36,58 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+//using boost::format;
+//using boost::filesystem::path;
+//
+//static void output_to_file(std::ofstream& file, log_level level,
+//    const std::string&, const std::string& body)
+//{
+//    if (!body.empty())
+//        file << format(BX_SEND_TX_P2P_OUTPUT) % level_repr(level) %
+//            body << std::endl;
+//}
+//
+//static void output_cerr_and_file(std::ofstream& file, log_level level,
+//    const std::string&, const std::string& body)
+//{
+//    if (!body.empty())
+//        std::cerr << format(BX_SEND_TX_P2P_OUTPUT) % level_repr(level) %
+//            body << std::endl;
+//}
+//
+//static void bind_logging(const path& debug, const path& error)
+//{
+//    if (!debug.empty())
+//    {
+//        std::ofstream debug_file(debug.generic_string());
+//
+//        log_debug().set_output_function(
+//            std::bind(output_to_file, std::ref(debug_file),
+//                ph::_1, ph::_2, ph::_3));
+//
+//        log_info().set_output_function(
+//            std::bind(output_to_file, std::ref(debug_file),
+//                ph::_1, ph::_2, ph::_3));
+//    }
+//
+//    if (!error.empty())
+//    {
+//        std::ofstream error_file(error.generic_string());
+//
+//        log_warning().set_output_function(
+//            std::bind(output_to_file, std::ref(error_file),
+//                ph::_1, ph::_2, ph::_3));
+//
+//        log_error().set_output_function(
+//            std::bind(output_cerr_and_file, std::ref(error_file),
+//                ph::_1, ph::_2, ph::_3));
+//
+//        log_fatal().set_output_function(
+//            std::bind(output_cerr_and_file, std::ref(error_file),
+//                ph::_1, ph::_2, ph::_3));
+//    }
+//}
+
 static void handle_signal(int signal)
 {
     // Can't pass args using lambda capture for a simple function pointer.
@@ -66,27 +118,30 @@ static void handle_sent(callback_state& state)
     state.output(format(BX_SEND_TX_P2P_SEND_OKAY) % now());
 }
 
-// Send tx to another Bitcoin node.
-static void handle_send(callback_state& state, const std::error_code& code, 
-    bc::network::channel_ptr node, bc::network::protocol& prot, tx_type& tx)
+// Send tx to a Bitcoin node.
+static void handle_send(callback_state& state, bc::network::channel_ptr node,
+    bc::network::protocol& prot, const tx_type& tx)
 {
-    // Set up callback handlers for sent and send.
     const auto sent_handler = [&state](const std::error_code& code)
     {
-        state.handle_error(code, BX_SEND_TX_P2P_SEND_FAIL);
-        handle_sent(state);
-    };
-
-    const auto send_handler = [&state](const std::error_code& code,
-        bc::network::channel_ptr node, bc::network::protocol& prot, 
-        tx_type& tx)
-    {
-        state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
-        handle_send(state, code, node, prot, tx);
+        if (state.handle_error(code, BX_SEND_TX_P2P_SEND_FAIL))
+            handle_sent(state);
     };
 
     state.output(format(BX_SEND_TX_P2P_SETUP_OKAY) % transaction(tx));
     node->send(tx, sent_handler);
+
+    if (state.stopped())
+        return;
+
+    const auto send_handler = [&state](const std::error_code& code,
+        bc::network::channel_ptr node, bc::network::protocol& prot,
+        const tx_type& tx)
+    {
+        if (state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL))
+            handle_send(state, node, prot, tx);
+    };
+
     prot.subscribe_channel(std::bind(send_handler, ph::_1, ph::_2,
         std::ref(prot), std::ref(tx)));
 }
@@ -96,6 +151,10 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto nodes = get_nodes_option();
     const tx_type& transaction = get_transaction_argument();
+    //const path& debug_logging = get_logging_debug_setting();
+    //const path& error_logging = get_logging_error_setting();
+
+    //bind_logging(debug_logging, error_logging);
 
     // Set up shared state.
     callback_state state(error, output);
@@ -103,23 +162,23 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Set up callback handlers for start, connections check, send and stop.
     const auto start_handler = [&state](const std::error_code& code)
     {
-        state.handle_error(code, BX_SEND_TX_P2P_START_FAIL);
-        handle_start(state);
+        if (state.handle_error(code, BX_SEND_TX_P2P_START_FAIL))
+            handle_start(state);
     };
 
     const auto check_handler = [&state](const std::error_code& code,
         size_t connection_count, size_t node_count)
     {
-        state.handle_error(code, BX_SEND_TX_P2P_CHECK_FAIL);
-        handle_check(state, connection_count, node_count);
+        if (state.handle_error(code, BX_SEND_TX_P2P_CHECK_FAIL))
+            handle_check(state, connection_count, node_count);
     };
 
     const auto send_handler = [&state](const std::error_code& code,
         bc::network::channel_ptr node, bc::network::protocol& prot,
-        tx_type& tx)
+        const tx_type& tx)
     {
-        state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
-        handle_send(state, code, node, prot, tx);
+        if (state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL))
+            handle_send(state, node, prot, tx);
     };
 
     const auto stop_handler = [](const std::error_code&)
@@ -128,7 +187,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Set up connections.
     // BUGBUG: mainnet/testnet determined by libbitcoin compilation.
-    async_client client(*this, 4);
+    async_client client(4);
 
     // Create dependencies for our protocol object.
     auto& pool = client.get_threadpool();
@@ -146,7 +205,8 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Create a subscription.
     ++state;
     prot.subscribe_channel(
-        std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), transaction));
+        std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), 
+            std::ref(transaction)));
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, handle_signal);
@@ -154,7 +214,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     signal(SIGINT, handle_signal);
 
     // Check the connection count every 2 seconds.
-    const auto work = [&prot, &nodes, &check_handler]
+    const auto work = [&prot, nodes, &check_handler]
     {
         prot.fetch_connection_count(
             std::bind(check_handler, ph::_1, ph::_2, nodes));
@@ -165,53 +225,3 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     
     return state.get_result();
 }
-
-// <define name="BX_SEND_TX_P2P_OUTPUT" value="%1% [%2%]: %3%" />
-//static void output_to_file(std::ofstream& file, log_level level,
-//    const std::string& domain, const std::string& body)
-//{
-//    if (!body.empty())
-//        file << boost::format(BX_SEND_TX_P2P_OUTPUT) % level_repr(level) % body
-//            << std::endl;
-//}
-//
-//static void output_cerr_and_file(std::ofstream& file, log_level level,
-//    const std::string& domain, const std::string& body)
-//{
-//    if (!body.empty())
-//        std::cerr << boost::format(BX_SEND_TX_P2P_OUTPUT) % level_repr(level) %
-//            body << std::endl;
-//}
-
-//// TODO: look into behavior if logging is invoked but log is not initialized.
-//static void bind_logging(const boost::filesystem::path& debug,
-//    const boost::filesystem::path& error)
-//{
-//    if (!debug.empty())
-//    {
-//        std::ofstream debug_file(debug.generic_string());
-//        log_debug().set_output_function(
-//            std::bind(output_to_file, std::ref(debug_file),
-//            ph::_1, ph::_2, ph::_3));
-//
-//        log_info().set_output_function(
-//            std::bind(output_to_file, std::ref(debug_file),
-//            ph::_1, ph::_2, ph::_3));
-//    }
-//
-//    if (!error.empty())
-//    {
-//        std::ofstream error_file(error.generic_string());
-//        log_warning().set_output_function(
-//            std::bind(output_to_file, std::ref(error_file),
-//            ph::_1, ph::_2, ph::_3));
-//
-//        log_error().set_output_function(
-//            std::bind(output_cerr_and_file, std::ref(error_file),
-//            ph::_1, ph::_2, ph::_3));
-//
-//        log_fatal().set_output_function(
-//            std::bind(output_cerr_and_file, std::ref(error_file),
-//            ph::_1, ph::_2, ph::_3));
-//    }
-//}

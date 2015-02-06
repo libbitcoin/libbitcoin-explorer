@@ -21,7 +21,6 @@
 #include <bitcoin/explorer/obelisk_client.hpp>
 
 #include <bitcoin/explorer/async_client.hpp>
-#include <bitcoin/explorer/command.hpp>
 
 using namespace bc::client;
 
