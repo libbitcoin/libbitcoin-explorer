@@ -70,6 +70,11 @@
 #define BX_STDIO_PATH_SENTINEL "-"
 
 /**
+ * Configuration value for testnet.
+ */
+#define BX_TESTNET "testnet"
+
+/**
  * Space-saving namespaces.
  */
 namespace ph = std::placeholders;

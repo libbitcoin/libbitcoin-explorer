@@ -68,7 +68,7 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_WATCH_ADDRESS_ADDRESS_WAITING \
+#define BX_WATCH_ADDRESS_WAITING \
     "Watching address: %1%..."
 
 /**

@@ -37,17 +37,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    state.handle_error(error);
-}
-
-static void handle_callback(callback_state& state, 
-    const block_header_type& block_header)
-{
-    state.output(prop_tree(block_header));
-}
-
 console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -56,7 +45,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const encoding& encoding = get_format_option();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
@@ -72,12 +61,12 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 
     auto on_done = [&state](const block_header_type& header)
     {
-        handle_callback(state, header);
+        state.output(prop_tree(header));
     };
 
     auto on_error = [&state](const std::error_code& error)
     {
-        handle_error(state, error);
+        state.handle_error(error);
     };
 
     // Height is ignored if both are specified.

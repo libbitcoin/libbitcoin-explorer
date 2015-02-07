@@ -37,34 +37,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    state.handle_error(error);
-}
-
-static void handle_callback(callback_state& state, const hash_digest& hash,
-    size_t height, size_t index)
-{
-    state.output(prop_tree(hash, height, index));
-}
-
-static void fetch_tx_index_from_hash(obelisk_client& client,
-    callback_state& state, const primitives::btc256& hash)
-{
-    // Do not pass the hash by reference here.
-    auto on_done = [&state, hash](size_t block_height, size_t index)
-    {
-        handle_callback(state, hash, block_height, index);
-    };
-
-    auto on_error = [&state](const std::error_code& error)
-    {
-        handle_error(state, error);
-    };
-
-    client.get_codec()->fetch_transaction_index(on_error, on_done, hash);
-}
-
 // This call is deprecated at the server.
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
 {
@@ -73,7 +45,7 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     const auto& hash = get_hash_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
@@ -86,7 +58,18 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     }
 
     callback_state state(error, output, encoding);
-    fetch_tx_index_from_hash(client, state, hash);
+
+    auto on_done = [&state, &hash](size_t height, size_t index)
+    {
+        state.output(prop_tree(hash, height, index));
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        state.handle_error(error);
+    };
+
+    client.get_codec()->fetch_transaction_index(on_error, on_done, hash);
     client.resolve_callbacks();
 
     return state.get_result();
