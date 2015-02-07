@@ -150,9 +150,11 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
             node->send(tx, send_handler);
     };
 
-    const auto stop_handler = [&state](const std::error_code& code)
+    bool coalesced = false;
+    const auto stop_handler = [&state, &coalesced](const std::error_code& code)
     {
         state.handle_error(code);
+        coalesced = true;
     };
 
     // Increment state to the required number of node connections.
@@ -177,8 +179,9 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     client.poll(state.stopped(), 2000);
     proto.stop(stop_handler);
 
-    // Hack to allow threads to terminate before calling destructors.
-    sleep_ms(1000);
+    // Delay until the stop handler has been called.
+    while (!coalesced)
+        sleep_ms(1);
 
     return state.get_result();
 }
