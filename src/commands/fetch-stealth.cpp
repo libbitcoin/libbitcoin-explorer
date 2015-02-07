@@ -37,35 +37,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    state.handle_error(error);
-}
-
-// Write out the transaction hashes of *potential* matches.
-static void handle_callback(callback_state& state,
-    const bc::binary_type& prefix, const client::stealth_list& row_list)
-{
-    state.output(prop_tree(row_list));
-}
-
-static void fetch_stealth_from_prefix(obelisk_client& client,
-    callback_state& state, const base2& prefix, uint32_t from_height)
-{
-    // Do not pass the prefix by reference here.
-    auto on_done = [&state, prefix](const client::stealth_list& list)
-    {
-        handle_callback(state, prefix, list);
-    };
-
-    auto on_error = [&state](const std::error_code& error)
-    {
-        handle_error(state, error);
-    };
-
-    client.get_codec()->fetch_stealth(on_error, on_done, prefix, from_height);
-}
-
 console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -74,7 +45,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto height = get_height_option();
     const auto& encoding = get_format_option();
     const auto& prefix = get_prefix_argument();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
@@ -93,7 +64,19 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     }
 
     callback_state state(error, output, encoding);
-    fetch_stealth_from_prefix(client, state, prefix, height);
+
+    auto on_done = [&state, &prefix](const client::stealth_list& list)
+    {
+        // Write out the transaction hashes of *potential* matches.
+        state.output(prop_tree(list));
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        state.handle_error(error);
+    };
+
+    client.get_codec()->fetch_stealth(on_error, on_done, prefix, height);
     client.resolve_callbacks();
 
     return state.get_result();

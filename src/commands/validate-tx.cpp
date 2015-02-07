@@ -35,43 +35,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    // BX_VALIDATE_TX_INVALID_INPUT is not currently utilized.
-    // The client suppresses an index list which may have 0 or one element.
-    // The list contains the index of the input which caused the failure.
-    state.handle_error(error);
-}
-
-static void handle_callback(callback_state& state, size_t position,
-    const index_list& indexes)
-{
-    if (indexes.empty())
-    {
-        state.output(BX_VALIDATE_TX_VALID);
-        return;
-    }
-    
-    const auto unconfirmed = join(numbers_to_strings(indexes), ", ");
-    state.output(format(BX_VALIDATE_TX_UNCONFIRMED_INPUTS) % unconfirmed);
-}
-
-static void validate_tx_from_transaction(obelisk_client& client,
-    callback_state& state, const primitives::transaction& transaction)
-{
-    auto on_done = [&state](const index_list& unconfirmed)
-    {
-        handle_callback(state, state, unconfirmed);
-    };
-
-    auto on_error = [&state](const std::error_code& error)
-    {
-        handle_error(state, error);
-    };
-
-    client.get_codec()->validate(on_error, on_done, transaction);
-}
-
 console_result validate_tx::invoke(std::ostream& output,
     std::ostream& error)
 {
@@ -79,7 +42,7 @@ console_result validate_tx::invoke(std::ostream& output,
     const auto& transaction = get_transaction_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
@@ -92,7 +55,28 @@ console_result validate_tx::invoke(std::ostream& output,
     }
 
     callback_state state(error, output);
-    validate_tx_from_transaction(client, state, transaction);
+
+    auto on_done = [&state](const index_list& indexes)
+    {
+        if (indexes.empty())
+        {
+            state.output(BX_VALIDATE_TX_VALID);
+            return;
+        }
+
+        const auto unconfirmed = join(numbers_to_strings(indexes), ", ");
+        state.output(format(BX_VALIDATE_TX_UNCONFIRMED_INPUTS) % unconfirmed);
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        // BX_VALIDATE_TX_INVALID_INPUT is not currently utilized.
+        // The client suppresses an index list which may have 0 or one element.
+        // The list contains the index of the input which caused the failure.
+        state.handle_error(error);
+    };
+
+    client.get_codec()->validate(on_error, on_done, transaction);
     client.resolve_callbacks();
 
     return state.get_result();

@@ -34,34 +34,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    state.handle_error(error);
-}
-
-static void handle_callback(callback_state& state,
-    const payment_address& address, const std::vector<history_row>& rows)
-{
-    state.output(prop_tree(rows));
-}
-
-static void fetch_history_from_address(obelisk_client& client,
-    callback_state& state, const primitives::address& address)
-{
-    // Do not pass the address by reference here.
-    auto on_done = [&state, address](const client::history_list& rows)
-    {
-        handle_callback(state, address, rows);
-    };
-
-    auto on_error = [&state](const std::error_code& error)
-    {
-        handle_error(state, error);
-    };
-
-    client.get_codec()->address_fetch_history(on_error, on_done, address);
-}
-
 // When you restore your wallet, you should use fetch_history(). 
 // But for updating the wallet, use the [new] scan() method- 
 // which is faster because you avoid pulling the entire history.
@@ -76,7 +48,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_bitcoin_address_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
@@ -89,7 +61,18 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     }
 
     callback_state state(error, output, encoding);
-    fetch_history_from_address(client, state, address);
+
+    auto on_done = [&state, &address](const client::history_list& rows)
+    {
+        state.output(prop_tree(rows));
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        state.handle_error(error);
+    };
+
+    client.get_codec()->address_fetch_history(on_error, on_done, address);
     client.resolve_callbacks();
 
     return state.get_result();

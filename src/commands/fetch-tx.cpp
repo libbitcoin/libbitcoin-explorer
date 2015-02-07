@@ -37,32 +37,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    state.handle_error(error);
-}
-
-static void handle_callback(callback_state& state, const tx_type& tx)
-{
-    state.output(prop_tree(tx));
-}
-
-static void fetch_tx_from_hash(obelisk_client& client, callback_state& state,
-    btc256 hash)
-{
-    auto on_done = [&state](const tx_type& tx)
-    {
-        handle_callback(state, tx);
-    };
-
-    auto on_error = [&state](const std::error_code& error)
-    {
-        handle_error(state, error);
-    };
-
-    client.get_codec()->fetch_transaction(on_error, on_done, hash);
-}
-
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -70,7 +44,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     const auto& hash = get_hash_argument();
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
@@ -83,7 +57,18 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     }
 
     callback_state state(error, output, encoding);
-    fetch_tx_from_hash(client, state, hash);
+
+    auto on_done = [&state](const tx_type& tx)
+    {
+        state.output(prop_tree(tx));
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        state.handle_error(error);
+    };
+
+    client.get_codec()->fetch_transaction(on_error, on_done, hash);
     client.resolve_callbacks();
 
     return state.get_result();

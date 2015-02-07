@@ -32,17 +32,6 @@ using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    state.handle_error(error);
-}
-
-static void handle_callback(callback_state& state, size_t height)
-{
-    // all formats are valid/same/decimal-encdoed.
-    state.output(height);
-}
-
 console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -50,7 +39,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
     const auto timeout = get_general_wait_setting();
     const auto& argument_server = get_server_url_argument();
     const auto& config_server = if_else(
-        get_general_network_setting() == "testnet",
+        get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
 
     const auto& server = if_else(argument_server.empty(), config_server,
@@ -69,12 +58,12 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 
     auto on_done = [&state](size_t height)
     {
-        handle_callback(state, height);
+        state.output(height);
     };
 
     auto on_error = [&state](const std::error_code& error)
     {
-        handle_error(state, error);
+        state.handle_error(error);
     };
 
     client.get_codec()->fetch_last_height(on_error, on_done);

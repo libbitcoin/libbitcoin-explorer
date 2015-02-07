@@ -69,25 +69,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_SEND_TX_P2P_OUTPUT \
-    "%1% [%2%]: %3%"
-#define BX_SEND_TX_P2P_SIGNAL \
-    "Caught signal: %1%"
-#define BX_SEND_TX_P2P_START_OKAY \
-    "Started."
-#define BX_SEND_TX_P2P_START_FAIL \
-    "Start failed: %1%"
-#define BX_SEND_TX_P2P_CHECK_OKAY \
-    "%1% connections."
-#define BX_SEND_TX_P2P_CHECK_FAIL \
-    "Check failed: %1%"
-#define BX_SEND_TX_P2P_SETUP_OKAY \
-    "Sending %1%."
-#define BX_SEND_TX_P2P_SETUP_FAIL \
-    "Setup failed: %1%"
-#define BX_SEND_TX_P2P_SEND_OKAY \
-    "Sent at %1%."
-#define BX_SEND_TX_P2P_SEND_FAIL \
-    "Send failed: %1%"
+    "Sent transaction at %1%."
 
 /**
  * Class to implement the send-tx-p2p command.

@@ -34,24 +34,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-static void handle_sent(callback_state& state, const tx_type& tx)
-{
-    state.output(format(BX_SEND_TX_NODE_OUTPUT) % now());
-    --state;
-}
-
-static void handle_send(callback_state& state, bc::network::channel_ptr node,
-    const tx_type& tx)
-{
-    const auto sent_handler = [&state, &tx](const std::error_code& code)
-    {
-        if (state.handle_error(code))
-            handle_sent(state, tx);
-    };
-
-    node->send(tx, sent_handler);
-}
-
 console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -60,11 +42,20 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const tx_type& transaction = get_transaction_argument();
 
     callback_state state(error, output);
-    const auto send_handler = [&state](const std::error_code& code,
+
+    const auto connect_handler = [&state](const std::error_code& code,
         bc::network::channel_ptr node, const tx_type& tx)
     {
+        const auto send_handler = [&state, &tx](const std::error_code& code)
+        {
+            if (state.handle_error(code))
+                state.output(format(BX_SEND_TX_OUTPUT) % now());
+                
+            --state;
+        };
+
         if (state.handle_error(code))
-            handle_send(state, node, tx);
+            node->send(tx, send_handler);
     };
 
     async_client client(4);
@@ -74,7 +65,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     ++state;
     connect(shake, net, host, port,
-        std::bind(send_handler, ph::_1, ph::_2, std::ref(transaction)));
+        std::bind(connect_handler, ph::_1, ph::_2, std::ref(transaction)));
 
     client.poll(state.stopped(), 2000);
 
