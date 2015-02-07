@@ -20,7 +20,7 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 **About Libbitcoin Explorer**
 
-BX is a command line tool for working with Bitcoin. It can be built as a single portable executable file for Linux, OSX and Windows. BX exposes about 80 commands and supports network communication with [Obelisk](https://github.com/spesmilo/obelisk) or [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) and the P2P Bitcoin network. BX supports simple as well as advanced scenarios, including stealth and multisig.
+BX is a command line tool for working with Bitcoin. It can be built as a single portable executable for Linux, OSX or Windows and is available for download as a signed single executable for each. BX exposes about 80 commands and supports network communication with [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) or its predecessor [Obelisk](https://github.com/spesmilo/obelisk), and the P2P Bitcoin network. BX is well documented and supports simple and advanced scenarios, including stealth and multisig.
 
 ## Installation
 
@@ -160,7 +160,7 @@ $ sudo ./install.sh CXXFLAGS="-Os -s"
 
 > The `-s` option is not supported by the Clang compiler. Instead use the command `$ strip bx` after the build.
 
-Building with NDEBUG defined:
+Building with NDEBUG (no debug assertions) defined:
 ```sh
 $ sudo ./install.sh --enable-ndebug
 ```
@@ -264,8 +264,6 @@ The non-boost packages above are all sourced from GitHub repositories maintained
    * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
 
 This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface for each libbitcoin project and then importing the `.import.props` file(s) for the corresponding dependencies.
-
-> TODO: Update all libbitcoin libs with the .import.props files in a disabled configuration. This will allow this transition to be made entirely in the Visual Studio user interface. Then clarify the above explanation.
 
 #### NuGet Repository
 NuGet packages are downloaded to a local file systems repository. By default the [NuGet Package Manager](http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) uses a repository path within the solution. This can complicate source control and results in multiple repositories across solutions.
