@@ -68,6 +68,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
         std::bind(connect_handler, ph::_1, ph::_2, std::ref(transaction)));
 
     client.poll(state.stopped(), 2000);
+    client.stop();
 
     return state.get_result();
 }
