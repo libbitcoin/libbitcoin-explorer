@@ -179,9 +179,11 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     client.poll(state.stopped(), 2000);
     proto.stop(stop_handler);
 
-    // Delay until the stop handler has been called.
+//    // Delay until the stop handler has been called.
     while (!coalesced)
         sleep_ms(1);
+
+    client.stop();
 
     return state.get_result();
 }
