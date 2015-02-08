@@ -214,6 +214,16 @@ public:
             "testnet.url",
             value<primitives::uri>(&setting_.testnet.url)->default_value({ "tcp://obelisk-testnet.airbitz.co:9091" }),
             "The URL of the Obelisk testnet server."
+        )
+        (
+            "logging.debug",
+            value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
+            "The path to the debug log file, used by send-tx-p2p."
+        )
+        (
+            "logging.error",
+            value<boost::filesystem::path>(&setting_.logging.error)->default_value("error.log"),
+            "The path to the error log file, used by send-tx-p2p."
         );
     }
 
@@ -338,6 +348,38 @@ public:
         setting_.testnet.url = value;
     }
 
+    /**
+     * Get the value of the logging.debug setting.
+     */
+    BCX_API virtual boost::filesystem::path get_logging_debug_setting()
+    {
+        return setting_.logging.debug;
+    }
+
+    /**
+     * Set the value of the logging.debug setting.
+     */
+    BCX_API virtual void set_logging_debug_setting(boost::filesystem::path value)
+    {
+        setting_.logging.debug = value;
+    }
+
+    /**
+     * Get the value of the logging.error setting.
+     */
+    BCX_API virtual boost::filesystem::path get_logging_error_setting()
+    {
+        return setting_.logging.error;
+    }
+
+    /**
+     * Set the value of the logging.error setting.
+     */
+    BCX_API virtual void set_logging_error_setting(boost::filesystem::path value)
+    {
+        setting_.logging.error = value;
+    }
+
 protected:
 
     /**
@@ -414,10 +456,23 @@ private:
             primitives::uri url;
         } testnet;
 
+        struct logging
+        {
+            logging()
+              : debug(),
+                error()
+            {
+            }
+
+            boost::filesystem::path debug;
+            boost::filesystem::path error;
+        } logging;
+
         setting()
           : general(),
             mainnet(),
-            testnet()
+            testnet(),
+            logging()
         {
         }
     } setting_;

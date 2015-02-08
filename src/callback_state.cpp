@@ -56,10 +56,10 @@ bool callback_state::handle_error(const std::error_code& code,
         // May want to change the behavior to decrement vs. zeroizing refs.
         error(boost::format(format) % code.message());
         stop(console_result::failure);
-        return true;
+        return false;
     }
 
-    return false;
+    return true;
 }
 
 // std::endl adds "/n" and flushes the stream.

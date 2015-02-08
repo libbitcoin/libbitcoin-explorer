@@ -1,5 +1,7 @@
+*.aps
 *.suo
 *.user
 *.sdf
 *.opensdf
 *.log
+*.p2p

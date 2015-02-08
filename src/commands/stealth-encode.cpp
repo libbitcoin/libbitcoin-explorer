@@ -62,7 +62,7 @@ console_result stealth_encode::invoke(std::ostream& output,
     // TESTNET WORKS WITHOUT RECOMPILE
     auto spend_points = cast<ec_public, ec_point>(spend_pubkeys);
     stealth address(prefix, scan_pubkey, spend_points, signatures,
-        network == "testnet");
+        network == BX_TESTNET);
 
     output << address << std::endl;
     return console_result::okay;

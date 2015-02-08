@@ -133,6 +133,7 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\version.hpp" />
   </ItemGroup>
   <ItemGroup>
 .for command by symbol

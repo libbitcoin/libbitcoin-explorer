@@ -23,7 +23,6 @@
   </help>
   
   <!-- Configuration file sections. -->
-  <!-- TODO: generate example.cfg from this. -->
   <!-- IMPORTANT: update the 'settings' command when these change. -->
   
   <configuration section="general">
@@ -39,6 +38,11 @@
   
   <configuration section="testnet">
     <setting name="url" type="uri"  default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
+  </configuration>
+  
+  <configuration section="logging">
+    <setting name="debug" type="path"  default="debug.log" description="The path to the debug log file, used by send-tx-p2p." />
+    <setting name="error" type="path"  default="error.log" description="The path to the error log file, used by send-tx-p2p." />
   </configuration>
   
   <!-- General resources. -->
@@ -412,15 +416,7 @@
   <command symbol="send-tx-p2p" formerly="sendtx-p2p" typeX="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.">
     <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to two." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
-    <define name="BX_SEND_TX_P2P_SIGNAL" value="Caught signal: %1%" />
-    <define name="BX_SEND_TX_P2P_START_OKAY" value="Started." />
-    <define name="BX_SEND_TX_P2P_START_FAIL" value="Start failed: %1%" />
-    <define name="BX_SEND_TX_P2P_CHECK_OKAY" value="%1% connections." />
-    <define name="BX_SEND_TX_P2P_CHECK_FAIL" value="Check failed: %1%" />
-    <define name="BX_SEND_TX_P2P_SETUP_OKAY" value="Sending %1%." />
-    <define name="BX_SEND_TX_P2P_SETUP_FAIL" value="Setup failed: %1%" />
-    <define name="BX_SEND_TX_P2P_SEND_OKAY" value="Sent at %1%." />
-    <define name="BX_SEND_TX_P2P_SEND_FAIL" value="Send failed: %1%" />
+    <define name="BX_SEND_TX_P2P_OUTPUT" value="Sent transaction at %1%." />
   </command>
   
   <command symbol="sendtx-bci" category="ONLINE" obsolete="true" description="Broadcast a transaction to the Bitcoin network via blockchain.info.">
@@ -539,7 +535,7 @@
   <command symbol="watch-address" formerly="monitor" typeX="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires an Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The participating Bitcoin address. If not specified the address is read from STDIN." />
-    <define name="BX_WATCH_ADDRESS_ADDRESS_WAITING" value="Watching address: %1%..." />
+    <define name="BX_WATCH_ADDRESS_WAITING" value="Watching address: %1%..." />
   </command>
 
   <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->

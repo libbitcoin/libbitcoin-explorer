@@ -34,40 +34,13 @@ using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    state.handle_error(error);
-}
-
-static void handle_callback(callback_state& state)
-{
-    state.output(format(BX_SEND_TX_OUTPUT) % now());
-    state.stop();
-}
-
-static void broadcast_transaction(obelisk_client& client,
-    callback_state& state, const primitives::transaction& tx)
-{
-    auto on_done = [&state]()
-    {
-        handle_callback(state);
-    };
-
-    auto on_error = [&state](const std::error_code& error)
-    {
-        handle_error(state, error);
-    };
-
-    client.get_codec()->broadcast_transaction(on_error, on_done, tx);
-}
-
 console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
     const auto& transaction = get_transaction_argument();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
 
     czmqpp::context context;
@@ -80,9 +53,19 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
     }
 
     callback_state state(error, output);
-    broadcast_transaction(client, state, transaction);
+
+    auto on_done = [&state]()
+    {
+        state.output(format(BX_SEND_TX_OUTPUT) % now());
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        state.handle_error(error);
+    };
+
+    client.get_codec()->broadcast_transaction(on_error, on_done, transaction);
     client.resolve_callbacks();
 
     return state.get_result();
 }
-

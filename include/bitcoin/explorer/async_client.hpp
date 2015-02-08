@@ -23,7 +23,6 @@
 #include <functional>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -50,11 +49,9 @@ public:
 
     /**
      * Initialization constructor, establish threadpool (RAII).
-     * @param[in]  command  The command being processed.
      * @param[in]  threads  The number of pool threads to initialize.
      */
-    BCX_API async_client(explorer::command& command,
-        const size_t threads=default_threadpool_size);
+    BCX_API async_client(const size_t threads=default_threadpool_size);
 
     /**
      * Destructor, kill threads (RAII).

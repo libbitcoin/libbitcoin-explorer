@@ -50,39 +50,6 @@ static void handle_signal(int signal)
     exit(console_result::failure);
 }
 
-static void handle_error(callback_state& state, const std::error_code& error)
-{
-    state.handle_error(error);
-}
-
-static void handle_update(callback_state& state,
-    const address& bitcoin_address, size_t, const hash_digest& block_hash,
-    const transaction_type& tx)
-{
-    state.output(prop_tree(tx, block_hash, bitcoin_address));
-}
-
-static void subscribe_from_address(obelisk_client& client,
-    callback_state& state, const address& bitcoin_address,
-    bool& subscribed)
-{
-    // Do not pass the address by reference here.
-    auto on_done = [&state, bitcoin_address, &subscribed]()
-    {
-        state.output(format(BX_WATCH_ADDRESS_ADDRESS_WAITING) % 
-            bitcoin_address);
-
-        subscribed = true;
-    };
-
-    auto on_error = [&state](const std::error_code& error)
-    {
-        handle_error(state, error);
-    };
-
-    client.get_codec()->subscribe(on_error, on_done, bitcoin_address);
-}
-
 // This command only halts on failure.
 console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
@@ -91,17 +58,8 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     const auto timeout = get_general_wait_setting();
     const auto& encoding = get_format_option();
     const auto& bitcoin_address = get_bitcoin_address_argument();
-    const auto& server = if_else(get_general_network_setting() == "testnet",
+    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
         get_testnet_url_setting(), get_mainnet_url_setting());
-
-    callback_state state(error, output, encoding);
-
-    // Do not pass the prefixes by reference here.
-    auto on_update = [&state](const address& bitcoin_address, size_t height, 
-        const hash_digest& block_hash, const transaction_type& tx)
-    {
-        handle_update(state, bitcoin_address, height, block_hash, tx);
-    };
 
     czmqpp::context context;
     obelisk_client client(context, period_ms(timeout), retries);
@@ -112,11 +70,27 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
+    callback_state state(error, output, encoding);
+
+    auto on_update = [&state](const address& bitcoin_address, size_t,
+        const hash_digest& block_hash, const transaction_type& tx)
+    {
+        state.output(prop_tree(tx, block_hash, bitcoin_address));
+    };
+
+    auto on_subscribed = [&state, &bitcoin_address]()
+    {
+        state.output(format(BX_WATCH_ADDRESS_WAITING) % bitcoin_address);
+        ++state;
+    };
+
+    auto on_error = [&state](const std::error_code& error)
+    {
+        state.handle_error(error);
+    };
+
     client.get_codec()->set_on_update(on_update);
-
-    bool subscribed = false;
-
-    subscribe_from_address(client, state, bitcoin_address, subscribed);
+    client.get_codec()->subscribe(on_error, on_subscribed, bitcoin_address);
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, handle_signal);
@@ -124,7 +98,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     signal(SIGINT, handle_signal);
 
     // poll for subscribe callbacks if any subscriptions were established.
-    if (client.resolve_callbacks() && subscribed)
+    if (client.resolve_callbacks() && !state.stopped())
         client.poll_until_timeout_cumulative(std::chrono::minutes(10));
 
     return state.get_result();

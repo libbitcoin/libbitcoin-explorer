@@ -36,6 +36,60 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+//#define BX_SEND_TX_P2P_LOGGING " % 1 % [% 2 % ]: % 3 % ."
+//
+//using boost::format;
+//using boost::filesystem::path;
+//
+//static void output_to_file(std::ofstream& file, log_level level,
+//    const std::string&, const std::string& body)
+//{
+//    if (!body.empty())
+//        file << format(BX_SEND_TX_P2P_LOGGING) % level_repr(level) %
+//            body << std::endl;
+//}
+//
+//static void output_cerr_and_file(std::ofstream& file, log_level level,
+//    const std::string&, const std::string& body)
+//{
+//    if (!body.empty())
+//        std::cerr << format(BX_SEND_TX_P2P_LOGGING) % level_repr(level) %
+//            body << std::endl;
+//}
+//
+//static void bind_logging(const path& debug, const path& error)
+//{
+//    if (!debug.empty())
+//    {
+//        std::ofstream debug_file(debug.generic_string());
+//
+//        log_debug().set_output_function(
+//            std::bind(output_to_file, std::ref(debug_file),
+//                ph::_1, ph::_2, ph::_3));
+//
+//        log_info().set_output_function(
+//            std::bind(output_to_file, std::ref(debug_file),
+//                ph::_1, ph::_2, ph::_3));
+//    }
+//
+//    if (!error.empty())
+//    {
+//        std::ofstream error_file(error.generic_string());
+//
+//        log_warning().set_output_function(
+//            std::bind(output_to_file, std::ref(error_file),
+//                ph::_1, ph::_2, ph::_3));
+//
+//        log_error().set_output_function(
+//            std::bind(output_cerr_and_file, std::ref(error_file),
+//                ph::_1, ph::_2, ph::_3));
+//
+//        log_fatal().set_output_function(
+//            std::bind(output_cerr_and_file, std::ref(error_file),
+//                ph::_1, ph::_2, ph::_3));
+//    }
+//}
+
 static void handle_signal(int signal)
 {
     // Can't pass args using lambda capture for a simple function pointer.
@@ -45,173 +99,89 @@ static void handle_signal(int signal)
     exit(console_result::failure);
 }
 
-// Started protocol, node discovery complete.
-static void handle_start(callback_state& state)
-{
-    state.output(BX_SEND_TX_P2P_START_OKAY);
-}
-
-// Fetched a number of connections.
-static void handle_check(callback_state& state, size_t connection_count,
-    size_t node_count)
-{
-    state.output(format(BX_SEND_TX_P2P_CHECK_OKAY) % connection_count);
-    if (connection_count >= node_count)
-        state.stop();
-}
-
-// Send completed.
-static void handle_sent(callback_state& state)
-{
-    state.output(format(BX_SEND_TX_P2P_SEND_OKAY) % now());
-}
-
-// Send tx to another Bitcoin node.
-static void handle_send(callback_state& state, const std::error_code& code, 
-    bc::network::channel_ptr node, bc::network::protocol& prot, tx_type& tx)
-{
-    // Set up callback handlers for sent and send.
-    const auto sent_handler = [&state](const std::error_code& code)
-    {
-        state.handle_error(code, BX_SEND_TX_P2P_SEND_FAIL);
-        handle_sent(state);
-    };
-
-    const auto send_handler = [&state](const std::error_code& code,
-        bc::network::channel_ptr node, bc::network::protocol& prot, 
-        tx_type& tx)
-    {
-        state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
-        handle_send(state, code, node, prot, tx);
-    };
-
-    state.output(format(BX_SEND_TX_P2P_SETUP_OKAY) % transaction(tx));
-    node->send(tx, sent_handler);
-    prot.subscribe_channel(std::bind(send_handler, ph::_1, ph::_2,
-        std::ref(prot), std::ref(tx)));
-}
-
+// BUGBUG: mainnet/testnet determined by libbitcoin compilation.
 console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto nodes = get_nodes_option();
     const tx_type& transaction = get_transaction_argument();
+    //const path& debug_logging = get_logging_debug_setting();
+    //const path& error_logging = get_logging_error_setting();
 
-    // Set up shared state.
+    //bind_logging(debug_logging, error_logging);
+
+    async_client client(4);
+    auto& pool = client.get_threadpool();
+    bc::network::hosts host(pool);
+    bc::network::handshake shake(pool);
+    bc::network::network net(pool);
+    bc::network::protocol proto(pool, host, shake, net);
+
     callback_state state(error, output);
 
-    // Set up callback handlers for start, connections check, send and stop.
     const auto start_handler = [&state](const std::error_code& code)
     {
-        state.handle_error(code, BX_SEND_TX_P2P_START_FAIL);
-        handle_start(state);
+        state.handle_error(code);
     };
 
-    const auto check_handler = [&state](const std::error_code& code,
-        size_t connection_count, size_t node_count)
+    // Forward lambda declarations to enable the cycle between them.
+    std::function<void(const std::error_code&)> send_handler;
+    std::function<void(const std::error_code&, bc::network::channel_ptr,
+        bc::network::protocol&, const tx_type&)> channel_handler;
+    
+    send_handler = [&state, &proto, &transaction, &channel_handler](
+        const std::error_code& code)
     {
-        state.handle_error(code, BX_SEND_TX_P2P_CHECK_FAIL);
-        handle_check(state, connection_count, node_count);
+        if (state.handle_error(code))
+            state.output(format(BX_SEND_TX_P2P_OUTPUT) % now());
+
+        --state;
+        if (!state.stopped())
+            proto.subscribe_channel(
+                std::bind(channel_handler, ph::_1, ph::_2, std::ref(proto),
+                    std::ref(transaction)));
     };
 
-    const auto send_handler = [&state](const std::error_code& code,
-        bc::network::channel_ptr node, bc::network::protocol& prot,
-        tx_type& tx)
+    channel_handler = [&state, &send_handler](const std::error_code& code,
+        bc::network::channel_ptr node, bc::network::protocol&, 
+        const tx_type& tx)
     {
-        state.handle_error(code, BX_SEND_TX_P2P_SETUP_FAIL);
-        handle_send(state, code, node, prot, tx);
+        if (state.handle_error(code))
+            node->send(tx, send_handler);
     };
 
-    const auto stop_handler = [](const std::error_code&)
+    bool coalesced = false;
+    const auto stop_handler = [&state, &coalesced](const std::error_code& code)
     {
+        state.handle_error(code);
+        coalesced = true;
     };
 
-    // Set up connections.
-    // BUGBUG: mainnet/testnet determined by libbitcoin compilation.
-    async_client client(*this, 4);
+    // Increment state to the required number of node connections.
+    while (state < nodes)
+        ++state;
 
-    // Create dependencies for our protocol object.
-    auto& pool = client.get_threadpool();
-    bc::network::hosts hst(pool);
-    bc::network::handshake hs(pool);
-    bc::network::network net(pool);
+    // Zero nodes specified.
+    if (state.stopped())
+        return console_result::okay;
 
-    // Set up protocol service.
-    bc::network::protocol prot(pool, hst, hs, net);
-    prot.set_max_outbound(nodes * 6);
-
-    // Perform node discovery if needed and then creating connections.
-    prot.start(start_handler);
-
-    // Create a subscription.
-    ++state;
-    prot.subscribe_channel(
-        std::bind(send_handler, ph::_1, ph::_2, std::ref(prot), transaction));
+    proto.set_max_outbound(nodes * 6);
+    proto.start(start_handler);
+    proto.subscribe_channel(
+        std::bind(channel_handler, ph::_1, ph::_2, std::ref(proto),
+            std::ref(transaction)));
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
-    // Check the connection count every 2 seconds.
-    const auto work = [&prot, &nodes, &check_handler]
-    {
-        prot.fetch_connection_count(
-            std::bind(check_handler, ph::_1, ph::_2, nodes));
-    };
+    client.poll(state.stopped(), 2000);
+    proto.stop(stop_handler);
 
-    client.poll(state.stopped(), 2000, work);
-    prot.stop(stop_handler);
-    
+    // Delay until the stop handler has been called.
+    while (!coalesced)
+        sleep_ms(1);
+
     return state.get_result();
 }
-
-// <define name="BX_SEND_TX_P2P_OUTPUT" value="%1% [%2%]: %3%" />
-//static void output_to_file(std::ofstream& file, log_level level,
-//    const std::string& domain, const std::string& body)
-//{
-//    if (!body.empty())
-//        file << boost::format(BX_SEND_TX_P2P_OUTPUT) % level_repr(level) % body
-//            << std::endl;
-//}
-//
-//static void output_cerr_and_file(std::ofstream& file, log_level level,
-//    const std::string& domain, const std::string& body)
-//{
-//    if (!body.empty())
-//        std::cerr << boost::format(BX_SEND_TX_P2P_OUTPUT) % level_repr(level) %
-//            body << std::endl;
-//}
-
-//// TODO: look into behavior if logging is invoked but log is not initialized.
-//static void bind_logging(const boost::filesystem::path& debug,
-//    const boost::filesystem::path& error)
-//{
-//    if (!debug.empty())
-//    {
-//        std::ofstream debug_file(debug.generic_string());
-//        log_debug().set_output_function(
-//            std::bind(output_to_file, std::ref(debug_file),
-//            ph::_1, ph::_2, ph::_3));
-//
-//        log_info().set_output_function(
-//            std::bind(output_to_file, std::ref(debug_file),
-//            ph::_1, ph::_2, ph::_3));
-//    }
-//
-//    if (!error.empty())
-//    {
-//        std::ofstream error_file(error.generic_string());
-//        log_warning().set_output_function(
-//            std::bind(output_to_file, std::ref(error_file),
-//            ph::_1, ph::_2, ph::_3));
-//
-//        log_error().set_output_function(
-//            std::bind(output_cerr_and_file, std::ref(error_file),
-//            ph::_1, ph::_2, ph::_3));
-//
-//        log_fatal().set_output_function(
-//            std::bind(output_cerr_and_file, std::ref(error_file),
-//            ph::_1, ph::_2, ph::_3));
-//    }
-//}

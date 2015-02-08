@@ -21,32 +21,31 @@
 #include <bitcoin/explorer/obelisk_client.hpp>
 
 #include <bitcoin/explorer/async_client.hpp>
-#include <bitcoin/explorer/command.hpp>
 
 using namespace bc::client;
 
 namespace libbitcoin {
 namespace explorer {
 
-obelisk_client::obelisk_client(czmqpp::context& context, 
+obelisk_client::obelisk_client(czmqpp::context& context,
     const period_ms& timeout, uint8_t retries)
   : socket_(context, ZMQ_DEALER)
 {
     stream_ = std::make_shared<socket_stream>(socket_);
-
     std::shared_ptr<message_stream> base_stream
         = std::static_pointer_cast<message_stream>(stream_);
-
     codec_ = std::make_shared<obelisk_codec>(base_stream);
     codec_->set_timeout(timeout);
     codec_->set_retries(retries);
 }
 
 int obelisk_client::connect(const std::string& address,
-        const std::string& certificate_filename,
-        const std::string& server_public_key)
+    const std::string& certificate_filename,
+    const std::string& server_public_key)
 {
-    int result = (server_public_key.empty() && certificate_filename.empty()) ? 0 : -1;
+    int result = 0;
+    if (!server_public_key.empty() || !certificate_filename.empty()) 
+        result = -1;
 
     if (!server_public_key.empty() && !certificate_filename.empty())
     {
@@ -57,14 +56,10 @@ int obelisk_client::connect(const std::string& address,
     }
 
     if (result >= 0)
-    {
         result = socket_.connect(address);
-    }
 
     if (result >= 0)
-    {
         socket_.set_linger(0);
-    }
 
     return result;
 }
@@ -76,8 +71,6 @@ std::shared_ptr<obelisk_codec> obelisk_client::get_codec()
 
 bool obelisk_client::resolve_callbacks()
 {
-    bool success = true;
-
     auto delay = static_cast<int>(codec_->wakeup().count());
     czmqpp::poller poller;
     poller.add(stream_->get_socket());
@@ -87,29 +80,21 @@ bool obelisk_client::resolve_callbacks()
         poller.wait(delay);
 
         if (poller.terminated())
-        {
-            success = false;
-            break;
-        }
+            return false;
 
-        if (!poller.expired())
+        if (poller.expired())
         {
-            stream_->signal_response(codec_);
-
-            if (codec_->outstanding_call_count() == 0)
-            {
-                delay = 0;
-            }
-        }
-        else
-        {
-            // recompute the delay and signal the appropriate error callbacks
-            // due to the timeout.
+            // recompute the delay and signal the appropriate error callbacks.
             delay = static_cast<int>(codec_->wakeup().count());
+            continue;
         }
+
+        stream_->signal_response(codec_);
+        if (codec_->outstanding_call_count() == 0)
+            break;
     }
 
-    return success;
+    return true;
 }
 
 void obelisk_client::poll_until_termination(const client::period_ms& timeout)
@@ -122,14 +107,10 @@ void obelisk_client::poll_until_termination(const client::period_ms& timeout)
         poller.wait(static_cast<int>(timeout.count()));
 
         if (poller.terminated())
-        {
             break;
-        }
 
         if (!poller.expired())
-        {
             stream_->signal_response(codec_);
-        }
     }
 }
 
