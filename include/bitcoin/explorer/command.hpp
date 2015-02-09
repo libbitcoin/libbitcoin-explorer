@@ -206,9 +206,29 @@ public:
             "Milliseconds to wait for a response from the server."
         )
         (
+            "logging.debug_file",
+            value<boost::filesystem::path>(&setting_.logging.debug_file)->default_value("debug.log"),
+            "The path to the debug log file, used by send-tx-p2p."
+        )
+        (
+            "logging.error_file",
+            value<boost::filesystem::path>(&setting_.logging.error_file)->default_value("error.log"),
+            "The path to the error log file, used by send-tx-p2p."
+        )
+        (
             "mainnet.url",
             value<primitives::uri>(&setting_.mainnet.url)->default_value({ "tcp://obelisk.airbitz.co:9091" }),
             "The URL of the Obelisk mainnet server."
+        )
+        (
+            "mainnet.server_cert",
+            value<primitives::base64>(&setting_.mainnet.server_cert),
+            "The server's base64-encoded public certificate."
+        )
+        (
+            "mainnet.client_cert",
+            value<primitives::base64>(&setting_.mainnet.client_cert),
+            "The client's base64-encoded private certificate."
         )
         (
             "testnet.url",
@@ -216,14 +236,14 @@ public:
             "The URL of the Obelisk testnet server."
         )
         (
-            "logging.debug",
-            value<boost::filesystem::path>(&setting_.logging.debug)->default_value("debug.log"),
-            "The path to the debug log file, used by send-tx-p2p."
+            "testnet.server_cert",
+            value<primitives::base64>(&setting_.testnet.server_cert),
+            "The server's base64-encoded public certificate."
         )
         (
-            "logging.error",
-            value<boost::filesystem::path>(&setting_.logging.error)->default_value("error.log"),
-            "The path to the error log file, used by send-tx-p2p."
+            "testnet.client_cert",
+            value<primitives::base64>(&setting_.testnet.client_cert),
+            "The client's base64-encoded private certificate."
         );
     }
 
@@ -317,6 +337,38 @@ public:
     }
 
     /**
+     * Get the value of the logging.debug_file setting.
+     */
+    BCX_API virtual boost::filesystem::path get_logging_debug_file_setting()
+    {
+        return setting_.logging.debug_file;
+    }
+
+    /**
+     * Set the value of the logging.debug_file setting.
+     */
+    BCX_API virtual void set_logging_debug_file_setting(boost::filesystem::path value)
+    {
+        setting_.logging.debug_file = value;
+    }
+
+    /**
+     * Get the value of the logging.error_file setting.
+     */
+    BCX_API virtual boost::filesystem::path get_logging_error_file_setting()
+    {
+        return setting_.logging.error_file;
+    }
+
+    /**
+     * Set the value of the logging.error_file setting.
+     */
+    BCX_API virtual void set_logging_error_file_setting(boost::filesystem::path value)
+    {
+        setting_.logging.error_file = value;
+    }
+
+    /**
      * Get the value of the mainnet.url setting.
      */
     BCX_API virtual primitives::uri get_mainnet_url_setting()
@@ -330,6 +382,38 @@ public:
     BCX_API virtual void set_mainnet_url_setting(primitives::uri value)
     {
         setting_.mainnet.url = value;
+    }
+
+    /**
+     * Get the value of the mainnet.server_cert setting.
+     */
+    BCX_API virtual primitives::base64 get_mainnet_server_cert_setting()
+    {
+        return setting_.mainnet.server_cert;
+    }
+
+    /**
+     * Set the value of the mainnet.server_cert setting.
+     */
+    BCX_API virtual void set_mainnet_server_cert_setting(primitives::base64 value)
+    {
+        setting_.mainnet.server_cert = value;
+    }
+
+    /**
+     * Get the value of the mainnet.client_cert setting.
+     */
+    BCX_API virtual primitives::base64 get_mainnet_client_cert_setting()
+    {
+        return setting_.mainnet.client_cert;
+    }
+
+    /**
+     * Set the value of the mainnet.client_cert setting.
+     */
+    BCX_API virtual void set_mainnet_client_cert_setting(primitives::base64 value)
+    {
+        setting_.mainnet.client_cert = value;
     }
 
     /**
@@ -349,35 +433,35 @@ public:
     }
 
     /**
-     * Get the value of the logging.debug setting.
+     * Get the value of the testnet.server_cert setting.
      */
-    BCX_API virtual boost::filesystem::path get_logging_debug_setting()
+    BCX_API virtual primitives::base64 get_testnet_server_cert_setting()
     {
-        return setting_.logging.debug;
+        return setting_.testnet.server_cert;
     }
 
     /**
-     * Set the value of the logging.debug setting.
+     * Set the value of the testnet.server_cert setting.
      */
-    BCX_API virtual void set_logging_debug_setting(boost::filesystem::path value)
+    BCX_API virtual void set_testnet_server_cert_setting(primitives::base64 value)
     {
-        setting_.logging.debug = value;
+        setting_.testnet.server_cert = value;
     }
 
     /**
-     * Get the value of the logging.error setting.
+     * Get the value of the testnet.client_cert setting.
      */
-    BCX_API virtual boost::filesystem::path get_logging_error_setting()
+    BCX_API virtual primitives::base64 get_testnet_client_cert_setting()
     {
-        return setting_.logging.error;
+        return setting_.testnet.client_cert;
     }
 
     /**
-     * Set the value of the logging.error setting.
+     * Set the value of the testnet.client_cert setting.
      */
-    BCX_API virtual void set_logging_error_setting(boost::filesystem::path value)
+    BCX_API virtual void set_testnet_client_cert_setting(primitives::base64 value)
     {
-        setting_.logging.error = value;
+        setting_.testnet.client_cert = value;
     }
 
 protected:
@@ -436,43 +520,51 @@ private:
             uint32_t wait;
         } general;
 
+        struct logging
+        {
+            logging()
+              : debug_file(),
+                error_file()
+            {
+            }
+
+            boost::filesystem::path debug_file;
+            boost::filesystem::path error_file;
+        } logging;
+
         struct mainnet
         {
             mainnet()
-              : url()
+              : url(),
+                server_cert(),
+                client_cert()
             {
             }
 
             primitives::uri url;
+            primitives::base64 server_cert;
+            primitives::base64 client_cert;
         } mainnet;
 
         struct testnet
         {
             testnet()
-              : url()
+              : url(),
+                server_cert(),
+                client_cert()
             {
             }
 
             primitives::uri url;
+            primitives::base64 server_cert;
+            primitives::base64 client_cert;
         } testnet;
-
-        struct logging
-        {
-            logging()
-              : debug(),
-                error()
-            {
-            }
-
-            boost::filesystem::path debug;
-            boost::filesystem::path error;
-        } logging;
 
         setting()
           : general(),
+            logging(),
             mainnet(),
-            testnet(),
-            logging()
+            testnet()
         {
         }
     } setting_;
