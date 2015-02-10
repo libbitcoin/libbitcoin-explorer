@@ -108,6 +108,7 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base2.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base58.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base64.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base85.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc256.hpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base2.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base58.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base64.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base85.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc256.cpp" />

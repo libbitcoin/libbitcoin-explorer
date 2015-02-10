@@ -33,6 +33,7 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
@@ -222,13 +223,13 @@ public:
         )
         (
             "mainnet.server_cert",
-            value<primitives::base64>(&setting_.mainnet.server_cert),
-            "The server's base64-encoded public certificate."
+            value<primitives::base85>(&setting_.mainnet.server_cert),
+            "The server's base85-encoded public certificate."
         )
         (
             "mainnet.client_cert",
-            value<primitives::base64>(&setting_.mainnet.client_cert),
-            "The client's base64-encoded private certificate."
+            value<primitives::base85>(&setting_.mainnet.client_cert),
+            "The client's base85-encoded private certificate."
         )
         (
             "testnet.url",
@@ -237,13 +238,13 @@ public:
         )
         (
             "testnet.server_cert",
-            value<primitives::base64>(&setting_.testnet.server_cert),
-            "The server's base64-encoded public certificate."
+            value<primitives::base85>(&setting_.testnet.server_cert),
+            "The server's base85-encoded public certificate."
         )
         (
             "testnet.client_cert",
-            value<primitives::base64>(&setting_.testnet.client_cert),
-            "The client's base64-encoded private certificate."
+            value<primitives::base85>(&setting_.testnet.client_cert),
+            "The client's base85-encoded private certificate."
         );
     }
 
@@ -387,7 +388,7 @@ public:
     /**
      * Get the value of the mainnet.server_cert setting.
      */
-    BCX_API virtual primitives::base64 get_mainnet_server_cert_setting()
+    BCX_API virtual primitives::base85 get_mainnet_server_cert_setting()
     {
         return setting_.mainnet.server_cert;
     }
@@ -395,7 +396,7 @@ public:
     /**
      * Set the value of the mainnet.server_cert setting.
      */
-    BCX_API virtual void set_mainnet_server_cert_setting(primitives::base64 value)
+    BCX_API virtual void set_mainnet_server_cert_setting(primitives::base85 value)
     {
         setting_.mainnet.server_cert = value;
     }
@@ -403,7 +404,7 @@ public:
     /**
      * Get the value of the mainnet.client_cert setting.
      */
-    BCX_API virtual primitives::base64 get_mainnet_client_cert_setting()
+    BCX_API virtual primitives::base85 get_mainnet_client_cert_setting()
     {
         return setting_.mainnet.client_cert;
     }
@@ -411,7 +412,7 @@ public:
     /**
      * Set the value of the mainnet.client_cert setting.
      */
-    BCX_API virtual void set_mainnet_client_cert_setting(primitives::base64 value)
+    BCX_API virtual void set_mainnet_client_cert_setting(primitives::base85 value)
     {
         setting_.mainnet.client_cert = value;
     }
@@ -435,7 +436,7 @@ public:
     /**
      * Get the value of the testnet.server_cert setting.
      */
-    BCX_API virtual primitives::base64 get_testnet_server_cert_setting()
+    BCX_API virtual primitives::base85 get_testnet_server_cert_setting()
     {
         return setting_.testnet.server_cert;
     }
@@ -443,7 +444,7 @@ public:
     /**
      * Set the value of the testnet.server_cert setting.
      */
-    BCX_API virtual void set_testnet_server_cert_setting(primitives::base64 value)
+    BCX_API virtual void set_testnet_server_cert_setting(primitives::base85 value)
     {
         setting_.testnet.server_cert = value;
     }
@@ -451,7 +452,7 @@ public:
     /**
      * Get the value of the testnet.client_cert setting.
      */
-    BCX_API virtual primitives::base64 get_testnet_client_cert_setting()
+    BCX_API virtual primitives::base85 get_testnet_client_cert_setting()
     {
         return setting_.testnet.client_cert;
     }
@@ -459,7 +460,7 @@ public:
     /**
      * Set the value of the testnet.client_cert setting.
      */
-    BCX_API virtual void set_testnet_client_cert_setting(primitives::base64 value)
+    BCX_API virtual void set_testnet_client_cert_setting(primitives::base85 value)
     {
         setting_.testnet.client_cert = value;
     }
@@ -542,8 +543,8 @@ private:
             }
 
             primitives::uri url;
-            primitives::base64 server_cert;
-            primitives::base64 client_cert;
+            primitives::base85 server_cert;
+            primitives::base85 client_cert;
         } mainnet;
 
         struct testnet
@@ -556,8 +557,8 @@ private:
             }
 
             primitives::uri url;
-            primitives::base64 server_cert;
-            primitives::base64 client_cert;
+            primitives::base85 server_cert;
+            primitives::base85 client_cert;
         } testnet;
 
         setting()

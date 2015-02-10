@@ -20,6 +20,7 @@ function global.map_type(type)
     my.type_base2 = "base2"
     my.type_base58 = "base58"
     my.type_base64 = "base64"
+    my.type_base85 = "base85"
     my.type_btc = "btc"
     my.type_btc160 = "btc160"
     my.type_btc256 = "btc256"
@@ -53,6 +54,7 @@ function global.map_type(type)
     my.type_base2_bx = "primitives::base2"
     my.type_base58_bx = "primitives::base58"
     my.type_base64_bx = "primitives::base64"
+    my.type_base85_bx = "primitives::base85"
     my.type_btc_bx = "primitives::btc"
     my.type_btc160_bx = "primitives::btc160"
     my.type_btc256_bx = "primitives::btc256"
@@ -91,6 +93,8 @@ function global.map_type(type)
         return my.type_base58_bx
     elsif my.type = my.type_base64
         return my.type_base64_bx
+    elsif my.type = my.type_base85
+        return my.type_base85_bx
     elsif my.type = my.type_btc
         return my.type_btc_bx
     elsif my.type = my.type_btc160
@@ -213,6 +217,7 @@ endfunction
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>

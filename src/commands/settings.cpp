@@ -38,15 +38,29 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     // TODO: load from metadata into settings list.
     // This must be updated for any settings metadata change.
     settings_list list;
+
+    // [general]
     list["general.network"] = get_general_network_setting();
     list["general.retries"] = serialize(get_general_retries_setting());
     list["general.wait"] = serialize(get_general_wait_setting());
+
+    // [logging]
+    list["logging.debug_file"] = get_logging_debug_file_setting()
+        .generic_string();
+    list["logging.error_file"] = get_logging_error_file_setting()
+        .generic_string();
+
+    // TODO: look into serializer object quoting.
+
+    // [mainnet]
     list["mainnet.url"] = get_mainnet_url_setting();
+    //list["mainnet.client_cert"] = serialize(get_mainnet_client_cert_setting());
+    //list["mainnet.server_cert"] = serialize(get_mainnet_server_cert_setting());
+
+    // [testnet]
     list["testnet.url"] = get_testnet_url_setting();
-    list["logging.debug_file"] = 
-        get_logging_debug_file_setting().generic_string();
-    list["logging.error_file"] = 
-        get_logging_error_file_setting().generic_string();
+    //list["testnet.client_cert"] = serialize(get_testnet_client_cert_setting());
+    //list["testnet.server_cert"] = serialize(get_testnet_server_cert_setting());
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;
