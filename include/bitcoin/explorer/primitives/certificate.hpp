@@ -17,12 +17,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_URI_HPP
-#define BX_URI_HPP
+#ifndef BX_CERTIFICATE_HPP
+#define BX_CERTIFICATE_HPP
 
 #include <iostream>
 #include <string>
-#include <cstdint>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -32,49 +32,56 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between string and uri_parse_result.
+ * Serialization helper to convert between data_chunk and Z85 text.
  */
-class uri
+class certificate
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API uri();
+    BCX_API certificate();
 
     /**
      * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
+     * @param[in]  base85  The value to initialize with.
      */
-    BCX_API uri(const std::string& value);
+    BCX_API certificate(const std::string& base85);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API uri(const uri& other);
+    BCX_API certificate(const certificate& other);
 
     /**
      * Convert internal type to text string.
-     * @return  This object's value cast to a string.
+     * Returns empty string if not initialized.
+     * @return  This object's value cast to a Z85 encoded string.
      */
-    BCX_API std::string uri::to_string() const;
+    BCX_API std::string get_base85() const;
 
     /**
-     * Overload cast to parse result.
-     * @return  This object's value cast to a parse result.
+     * Overload cast to internal type.
+     * @return  This object's value cast to internal type.
      */
-    BCX_API operator const uri_parse_result&() const;
+    BCX_API operator const data_chunk&() const;
 
     /**
-     * Overload stream in. If input is invalid sets no bytes in argument.
+     * Overload cast to generic data reference.
+     * @return  This object's value cast to a generic data reference.
+     */
+    BCX_API operator data_slice() const;
+
+    /**
+     * Overload stream in. Throws if input is invalid.
      * @param[in]   input     The input stream to read the value from.
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
     BCX_API friend std::istream& operator>>(std::istream& input,
-        uri& argument);
+        certificate& argument);
 
     /**
      * Overload stream out.
@@ -83,19 +90,14 @@ public:
      * @return                The output stream reference.
      */
     BCX_API friend std::ostream& operator<<(std::ostream& output,
-        const uri& argument);
+        const certificate& argument);
 
 private:
 
     /**
      * The state of this object.
      */
-    std::string value_;
-
-    /**
-     * The tracking state of this object.
-     */
-    uri_parse_result parse_result_;
+    data_chunk value_;
 };
 
 } // namespace explorer

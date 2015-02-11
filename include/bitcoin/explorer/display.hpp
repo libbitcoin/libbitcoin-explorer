@@ -23,6 +23,7 @@
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/command.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -41,7 +42,7 @@ BCX_API void display_command_names(std::ostream& stream);
  * @param[in]  url     The server url.
  */
 BCX_API void display_connection_failure(std::ostream& stream, 
-    const std::string& url);
+    const primitives::uri& url);
 
 /**
  * Write an error message to a stream that the specified explorer command

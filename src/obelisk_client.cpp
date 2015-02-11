@@ -20,48 +20,83 @@
 
 #include <bitcoin/explorer/obelisk_client.hpp>
 
+#include <boost/filesystem.hpp>
+#include <czmq++/czmqpp.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/async_client.hpp>
+#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 
+using namespace bc;
 using namespace bc::client;
+using namespace bc::explorer::primitives;
+using boost::filesystem::path;
 
 namespace libbitcoin {
 namespace explorer {
 
-obelisk_client::obelisk_client(czmqpp::context& context,
-    const period_ms& timeout, uint8_t retries)
-  : socket_(context, ZMQ_DEALER)
+obelisk_client::obelisk_client(const period_ms& timeout, uint8_t retries)
+    : socket_(context_, ZMQ_DEALER)
 {
     stream_ = std::make_shared<socket_stream>(socket_);
-    std::shared_ptr<message_stream> base_stream
-        = std::static_pointer_cast<message_stream>(stream_);
+    auto base_stream = std::static_pointer_cast<message_stream>(stream_);
     codec_ = std::make_shared<obelisk_codec>(base_stream);
     codec_->set_timeout(timeout);
     codec_->set_retries(retries);
 }
 
-int obelisk_client::connect(const std::string& address,
-    const std::string& certificate_filename,
-    const std::string& server_public_key)
+obelisk_client::obelisk_client(const connection_type& channel)
+    : obelisk_client(channel.wait, channel.retries)
 {
-    int result = 0;
-    if (!server_public_key.empty() || !certificate_filename.empty()) 
-        result = -1;
+}
 
-    if (!server_public_key.empty() && !certificate_filename.empty())
+bool obelisk_client::connect(const uri& address)
+{
+    constexpr int zmq_success = 0;
+    constexpr int zmq_no_linger = 0;
+
+    // ZMQ *only* returns 0 or -1 for this call, so make boolean.
+    bool success = socket_.connect(address.to_string()) == zmq_success;
+    if (success)
+        socket_.set_linger(zmq_no_linger);
+
+    return success;
+}
+
+bool obelisk_client::connect(const uri& address, 
+    const certificate& server_public_cert)
+{
+    if (!zsys_has_curve())
+        return false;
+
+    const auto cert = server_public_cert.get_base85();
+    if (!cert.empty())
+        socket_.set_curve_serverkey(cert);
+
+    return connect(address);
+}
+
+bool obelisk_client::connect(const uri& address, 
+    const certificate& server_public_cert,
+    const path& client_private_cert_path)
+{
+    if (!zsys_has_curve())
+        return false;
+
+    const auto& path = client_private_cert_path.generic_string();
+    if (!path.empty())
     {
-        certificate_.reset(czmqpp::load_cert(certificate_filename));
-        certificate_.apply(socket_);
-        socket_.set_curve_serverkey(server_public_key);
-        result = 0;
+        auto zcert = czmqpp::load_cert(path);
+        socket_.set_curve_publickey(zcert_public_txt(zcert));
+        socket_.set_curve_secretkey(zcert_secret_txt(zcert));
     }
 
-    if (result >= 0)
-        result = socket_.connect(address);
+    return connect(address, server_public_cert);
+}
 
-    if (result >= 0)
-        socket_.set_linger(0);
-
-    return result;
+bool obelisk_client::connect(const connection_type& channel)
+{
+    return connect(channel.server, channel.key, channel.file);
 }
 
 std::shared_ptr<obelisk_codec> obelisk_client::get_codec()

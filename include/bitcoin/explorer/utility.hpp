@@ -21,6 +21,7 @@
 #define BX_UTILITY_HPP
 
 #include <cstddef>
+#include <cstdint>
 #include <iostream>
 #include <cstdint>
 #include <string>
@@ -29,6 +30,7 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -37,6 +39,8 @@
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -154,6 +158,34 @@ data_chunk serialize_satoshi_item(const Item& item);
 template <typename Instance>
 void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
+
+/**
+ * A structure used for passing connection settings for a server.
+ */
+struct BCX_API connection_type
+{
+    uint8_t retries;
+    client::period_ms wait;
+    boost::filesystem::path file;
+    primitives::uri server;
+    primitives::certificate key;
+};
+
+class command;
+
+/**
+ * Get the connection settings for the configured network.
+ * @param    cmd  The command.
+ * @returns       A structure containing the connection settings.
+ */
+BCX_API connection_type get_connection(const command& cmd);
+
+/**
+ * Determine if a network token represents testnet.
+ * @param[in]  network  The string to test.
+ * @return              True if text represents testnet.
+ */
+BCX_API bool is_testnet(const std::string& network);
 
 /**
  * Determine if a string is base2.

@@ -25,6 +25,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
@@ -35,9 +36,15 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 
 using namespace boost::posix_time;
+using namespace bc::client;
+using namespace bc::explorer::primitives;
+using boost::filesystem::path;
 
 namespace libbitcoin {
 namespace explorer {
@@ -51,6 +58,32 @@ bool is_base2(const std::string& text)
     }
 
     return true;
+}
+
+bool is_testnet(const std::string& network)
+{
+    return network == BX_TESTNET;
+}
+
+connection_type get_connection(const command& cmd)
+{
+    if (is_testnet(cmd.get_general_network_setting()))
+        return connection_type
+        {
+            cmd.get_general_retries_setting(),
+            period_ms(cmd.get_general_wait_setting()),
+            cmd.get_testnet_certificate_file_setting(),
+            cmd.get_testnet_url_setting(),
+            cmd.get_testnet_server_key_setting()
+        };
+    else return connection_type
+        {
+            cmd.get_general_retries_setting(),
+            period_ms(cmd.get_general_wait_setting()),
+            cmd.get_mainnet_certificate_file_setting(),
+            cmd.get_mainnet_url_setting(),
+            cmd.get_mainnet_server_key_setting()
+        };
 }
 
 // The key may be invalid, caller may test for null secret.

@@ -38,6 +38,7 @@
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
+#include <bitcoin/explorer/primitives/certificate.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -222,14 +223,14 @@ public:
             "The URL of the Obelisk mainnet server."
         )
         (
-            "mainnet.server_cert",
-            value<primitives::base85>(&setting_.mainnet.server_cert),
-            "The server's base85-encoded public certificate."
+            "mainnet.server_key",
+            value<primitives::certificate>(&setting_.mainnet.server_key),
+            "The Z85-encoded public key of the server certificate."
         )
         (
-            "mainnet.client_cert",
-            value<primitives::base85>(&setting_.mainnet.client_cert),
-            "The client's base85-encoded private certificate."
+            "mainnet.certificate_file",
+            value<boost::filesystem::path>(&setting_.mainnet.certificate_file),
+            "The path to the ZPL-encoded client private certificate file."
         )
         (
             "testnet.url",
@@ -237,14 +238,14 @@ public:
             "The URL of the Obelisk testnet server."
         )
         (
-            "testnet.server_cert",
-            value<primitives::base85>(&setting_.testnet.server_cert),
-            "The server's base85-encoded public certificate."
+            "testnet.server_key",
+            value<primitives::certificate>(&setting_.testnet.server_key),
+            "The Z85-encoded public key of the server certificate."
         )
         (
-            "testnet.client_cert",
-            value<primitives::base85>(&setting_.testnet.client_cert),
-            "The client's base85-encoded private certificate."
+            "testnet.certificate_file",
+            value<boost::filesystem::path>(&setting_.testnet.certificate_file),
+            "The path to the ZPL-encoded client private certificate file."
         );
     }
 
@@ -292,7 +293,7 @@ public:
     /**
      * Get the value of the general.network setting.
      */
-    BCX_API virtual std::string get_general_network_setting()
+    BCX_API virtual std::string get_general_network_setting() const
     {
         return setting_.general.network;
     }
@@ -308,7 +309,7 @@ public:
     /**
      * Get the value of the general.retries setting.
      */
-    BCX_API virtual primitives::byte get_general_retries_setting()
+    BCX_API virtual primitives::byte get_general_retries_setting() const
     {
         return setting_.general.retries;
     }
@@ -324,7 +325,7 @@ public:
     /**
      * Get the value of the general.wait setting.
      */
-    BCX_API virtual uint32_t get_general_wait_setting()
+    BCX_API virtual uint32_t get_general_wait_setting() const
     {
         return setting_.general.wait;
     }
@@ -340,7 +341,7 @@ public:
     /**
      * Get the value of the logging.debug_file setting.
      */
-    BCX_API virtual boost::filesystem::path get_logging_debug_file_setting()
+    BCX_API virtual boost::filesystem::path get_logging_debug_file_setting() const
     {
         return setting_.logging.debug_file;
     }
@@ -356,7 +357,7 @@ public:
     /**
      * Get the value of the logging.error_file setting.
      */
-    BCX_API virtual boost::filesystem::path get_logging_error_file_setting()
+    BCX_API virtual boost::filesystem::path get_logging_error_file_setting() const
     {
         return setting_.logging.error_file;
     }
@@ -372,7 +373,7 @@ public:
     /**
      * Get the value of the mainnet.url setting.
      */
-    BCX_API virtual primitives::uri get_mainnet_url_setting()
+    BCX_API virtual primitives::uri get_mainnet_url_setting() const
     {
         return setting_.mainnet.url;
     }
@@ -386,41 +387,41 @@ public:
     }
 
     /**
-     * Get the value of the mainnet.server_cert setting.
+     * Get the value of the mainnet.server_key setting.
      */
-    BCX_API virtual primitives::base85 get_mainnet_server_cert_setting()
+    BCX_API virtual primitives::certificate get_mainnet_server_key_setting() const
     {
-        return setting_.mainnet.server_cert;
+        return setting_.mainnet.server_key;
     }
 
     /**
-     * Set the value of the mainnet.server_cert setting.
+     * Set the value of the mainnet.server_key setting.
      */
-    BCX_API virtual void set_mainnet_server_cert_setting(primitives::base85 value)
+    BCX_API virtual void set_mainnet_server_key_setting(primitives::certificate value)
     {
-        setting_.mainnet.server_cert = value;
+        setting_.mainnet.server_key = value;
     }
 
     /**
-     * Get the value of the mainnet.client_cert setting.
+     * Get the value of the mainnet.certificate_file setting.
      */
-    BCX_API virtual primitives::base85 get_mainnet_client_cert_setting()
+    BCX_API virtual boost::filesystem::path get_mainnet_certificate_file_setting() const
     {
-        return setting_.mainnet.client_cert;
+        return setting_.mainnet.certificate_file;
     }
 
     /**
-     * Set the value of the mainnet.client_cert setting.
+     * Set the value of the mainnet.certificate_file setting.
      */
-    BCX_API virtual void set_mainnet_client_cert_setting(primitives::base85 value)
+    BCX_API virtual void set_mainnet_certificate_file_setting(boost::filesystem::path value)
     {
-        setting_.mainnet.client_cert = value;
+        setting_.mainnet.certificate_file = value;
     }
 
     /**
      * Get the value of the testnet.url setting.
      */
-    BCX_API virtual primitives::uri get_testnet_url_setting()
+    BCX_API virtual primitives::uri get_testnet_url_setting() const
     {
         return setting_.testnet.url;
     }
@@ -434,35 +435,35 @@ public:
     }
 
     /**
-     * Get the value of the testnet.server_cert setting.
+     * Get the value of the testnet.server_key setting.
      */
-    BCX_API virtual primitives::base85 get_testnet_server_cert_setting()
+    BCX_API virtual primitives::certificate get_testnet_server_key_setting() const
     {
-        return setting_.testnet.server_cert;
+        return setting_.testnet.server_key;
     }
 
     /**
-     * Set the value of the testnet.server_cert setting.
+     * Set the value of the testnet.server_key setting.
      */
-    BCX_API virtual void set_testnet_server_cert_setting(primitives::base85 value)
+    BCX_API virtual void set_testnet_server_key_setting(primitives::certificate value)
     {
-        setting_.testnet.server_cert = value;
+        setting_.testnet.server_key = value;
     }
 
     /**
-     * Get the value of the testnet.client_cert setting.
+     * Get the value of the testnet.certificate_file setting.
      */
-    BCX_API virtual primitives::base85 get_testnet_client_cert_setting()
+    BCX_API virtual boost::filesystem::path get_testnet_certificate_file_setting() const
     {
-        return setting_.testnet.client_cert;
+        return setting_.testnet.certificate_file;
     }
 
     /**
-     * Set the value of the testnet.client_cert setting.
+     * Set the value of the testnet.certificate_file setting.
      */
-    BCX_API virtual void set_testnet_client_cert_setting(primitives::base85 value)
+    BCX_API virtual void set_testnet_certificate_file_setting(boost::filesystem::path value)
     {
-        setting_.testnet.client_cert = value;
+        setting_.testnet.certificate_file = value;
     }
 
 protected:
@@ -537,28 +538,28 @@ private:
         {
             mainnet()
               : url(),
-                server_cert(),
-                client_cert()
+                server_key(),
+                certificate_file()
             {
             }
 
             primitives::uri url;
-            primitives::base85 server_cert;
-            primitives::base85 client_cert;
+            primitives::certificate server_key;
+            boost::filesystem::path certificate_file;
         } mainnet;
 
         struct testnet
         {
             testnet()
               : url(),
-                server_cert(),
-                client_cert()
+                server_key(),
+                certificate_file()
             {
             }
 
             primitives::uri url;
-            primitives::base85 server_cert;
-            primitives::base85 client_cert;
+            primitives::certificate server_key;
+            boost::filesystem::path certificate_file;
         } testnet;
 
         setting()

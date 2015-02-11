@@ -39,14 +39,14 @@
 
   <configuration section="mainnet">
     <setting name="url" type="uri" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Obelisk mainnet server." />
-    <setting name="server_cert" type="base85" description="The server's base85-encoded public certificate." />
-    <setting name="client_cert" type="base85" description="The client's base85-encoded private certificate." />
+    <setting name="server_key" type="certificate" description="The Z85-encoded public key of the server certificate." />
+    <setting name="certificate_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
 
   <configuration section="testnet">
     <setting name="url" type="uri" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Obelisk testnet server." />
-    <setting name="server_cert" type="base85" description="The server's base85-encoded public certificate." />
-    <setting name="client_cert" type="base85" description="The client's base85-encoded private certificate." />
+    <setting name="server_key" type="certificate" description="The Z85-encoded public key of the server certificate." />
+    <setting name="certificate_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
 
   <!-- General resources. -->

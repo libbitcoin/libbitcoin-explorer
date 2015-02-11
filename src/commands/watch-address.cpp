@@ -54,19 +54,15 @@ static void handle_signal(int signal)
 console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto retries = get_general_retries_setting();
-    const auto timeout = get_general_wait_setting();
     const auto& encoding = get_format_option();
     const auto& bitcoin_address = get_bitcoin_address_argument();
-    const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
-        get_testnet_url_setting(), get_mainnet_url_setting());
 
-    czmqpp::context context;
-    obelisk_client client(context, period_ms(timeout), retries);
+    const auto connection = get_connection(*this);
+    obelisk_client client(connection);
 
-    if (client.connect(server) < 0)
+    if (!client.connect(connection))
     {
-        display_connection_failure(error, server);
+        display_connection_failure(error, connection.server);
         return console_result::failure;
     }
 

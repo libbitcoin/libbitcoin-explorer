@@ -113,6 +113,7 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\byte.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\certificate.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc256.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\byte.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\certificate.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp" />

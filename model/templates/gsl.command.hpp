@@ -233,7 +233,7 @@ public:
     /**
      * Get the value of the $(section:c).$(name) $(pluralized_setting).
      */
-    BCX_API virtual $(vectored_type) get_$(section:c)_$(pluralized_name:c)_setting()
+    BCX_API virtual $(vectored_type) get_$(section:c)_$(pluralized_name:c)_setting() const
     {
         return setting_.$(section:c).$(pluralized_name:c);
     }

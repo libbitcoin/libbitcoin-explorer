@@ -44,7 +44,7 @@ console_result fetch_public_key::invoke(std::ostream& output, std::ostream& erro
     //czmqpp::context context;
     //obelisk_client client(context, period_ms(timeout), retries);
 
-    //if (client.connect(server) < 0)
+    //if (client.connect(server))
     //{
     //    display_connection_failure(error, server);
     //    return console_result::failure;

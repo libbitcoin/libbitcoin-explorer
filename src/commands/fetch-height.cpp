@@ -26,32 +26,40 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto retries = get_general_retries_setting();
     const auto timeout = get_general_wait_setting();
-    const auto& argument_server = get_server_url_argument();
-    const auto& config_server = if_else(
-        get_general_network_setting() == BX_TESTNET,
-        get_testnet_url_setting(), get_mainnet_url_setting());
+    const auto& server_url = get_server_url_argument();
 
-    const auto& server = if_else(argument_server.empty(), config_server,
-        argument_server);
+    const auto connection = get_connection(*this);
+    obelisk_client client(connection);
 
-    czmqpp::context context;
-    obelisk_client client(context, period_ms(timeout), retries);
-
-    if (client.connect(server) < 0)
+    // For this command only, allow command line to override server config.
+    if (!server_url.empty())
     {
-        display_connection_failure(error, server);
-        return console_result::failure;
+        if (!client.connect(server_url))
+        {
+            display_connection_failure(error, server_url);
+            return console_result::failure;
+        }
+    }
+    else
+    {
+        if (!client.connect(connection))
+        {
+            display_connection_failure(error, connection.server);
+            return console_result::failure;
+        }
     }
 
     callback_state state(error, output);

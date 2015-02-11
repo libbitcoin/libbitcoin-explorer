@@ -374,6 +374,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\byte.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\certificate.hpp">
+      <Filter>include\bitcoin\explorer\primitives</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\ec_private.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
@@ -785,6 +788,9 @@
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\byte.cpp">
+      <Filter>src\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\primitives\certificate.cpp">
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\ec_private.cpp">

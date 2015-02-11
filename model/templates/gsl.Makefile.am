@@ -80,6 +80,7 @@ bitcoin_explorer_primitives_include_HEADERS = \\
     include/bitcoin/explorer/primitives/btc160.hpp \\
     include/bitcoin/explorer/primitives/btc256.hpp \\
     include/bitcoin/explorer/primitives/byte.hpp \\
+    include/bitcoin/explorer/primitives/certificate.hpp \\
     include/bitcoin/explorer/primitives/ec_private.hpp \\
     include/bitcoin/explorer/primitives/ec_public.hpp \\
     include/bitcoin/explorer/primitives/encoding.hpp \\
@@ -137,6 +138,7 @@ src_libbitcoin_explorer_la_SOURCES = \\
     src/primitives/btc160.cpp \\
     src/primitives/btc256.cpp \\
     src/primitives/byte.cpp \\
+    src/primitives/certificate.cpp \\
     src/primitives/ec_private.cpp \\
     src/primitives/ec_public.cpp \\
     src/primitives/encoding.cpp \\

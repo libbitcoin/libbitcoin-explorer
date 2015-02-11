@@ -45,22 +45,20 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     list["general.wait"] = serialize(get_general_wait_setting());
 
     // [logging]
-    list["logging.debug_file"] = get_logging_debug_file_setting()
-        .generic_string();
-    list["logging.error_file"] = get_logging_error_file_setting()
-        .generic_string();
+    list["logging.debug_file"] = get_logging_debug_file_setting().generic_string();
+    list["logging.error_file"] = get_logging_error_file_setting().generic_string();
 
     // TODO: look into serializer object quoting.
 
     // [mainnet]
-    list["mainnet.url"] = get_mainnet_url_setting();
-    //list["mainnet.client_cert"] = serialize(get_mainnet_client_cert_setting());
-    //list["mainnet.server_cert"] = serialize(get_mainnet_server_cert_setting());
+    list["mainnet.certificate_file"] = get_mainnet_certificate_file_setting().generic_string();
+    list["mainnet.server_key"] = get_mainnet_server_key_setting().get_base85();
+    list["mainnet.url"] = get_mainnet_url_setting().to_string();
 
     // [testnet]
-    list["testnet.url"] = get_testnet_url_setting();
-    //list["testnet.client_cert"] = serialize(get_testnet_client_cert_setting());
-    //list["testnet.server_cert"] = serialize(get_testnet_server_cert_setting());
+    list["testnet.certificate_file"] = get_testnet_certificate_file_setting().generic_string();
+    list["testnet.server_key"] = get_testnet_server_key_setting().get_base85();
+    list["testnet.url"] = get_testnet_url_setting().to_string();
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;
