@@ -109,6 +109,8 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/bitcoin256.hpp \
     include/bitcoin/explorer/commands/blke-fetch-transaction.hpp \
     include/bitcoin/explorer/commands/btc-to-satoshi.hpp \
+    include/bitcoin/explorer/commands/cert-new.hpp \
+    include/bitcoin/explorer/commands/cert-public.hpp \
     include/bitcoin/explorer/commands/ec-add.hpp \
     include/bitcoin/explorer/commands/ec-add-secrets.hpp \
     include/bitcoin/explorer/commands/ec-lock.hpp \
@@ -258,6 +260,8 @@ src_libbitcoin_explorer_la_SOURCES += \
     src/commands/bitcoin256.cpp \
     src/commands/blke-fetch-transaction.cpp \
     src/commands/btc-to-satoshi.cpp \
+    src/commands/cert-new.cpp \
+    src/commands/cert-public.cpp \
     src/commands/ec-add.cpp \
     src/commands/ec-add-secrets.cpp \
     src/commands/ec-lock.cpp \
@@ -398,6 +402,8 @@ test_libbitcoin_explorer_test_SOURCES += \
     test/commands/bitcoin256.cpp \
     test/commands/blke-fetch-transaction.cpp \
     test/commands/btc-to-satoshi.cpp \
+    test/commands/cert-new.cpp \
+    test/commands/cert-public.cpp \
     test/commands/ec-add.cpp \
     test/commands/ec-add-secrets.cpp \
     test/commands/ec-lock.cpp \

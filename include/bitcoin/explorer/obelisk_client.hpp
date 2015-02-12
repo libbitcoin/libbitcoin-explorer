@@ -24,7 +24,7 @@
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -34,13 +34,17 @@ namespace libbitcoin {
 namespace explorer {
 
 /**
+ * The standard libzmq success code.
+ */
+constexpr int zmq_success = 0;
+
+/**
  * Class to simplify obelisk/libbitcoin-server usage. 
  * This class hides *all* use of czmqpp/czmq/zmq/libsodium.
  */
 class obelisk_client
 {
 public:
-
     /**
      * Initialization constructor.
      * @param[in]  timeout  The call timeout, defaults to zero (instant).
@@ -66,21 +70,21 @@ public:
     /**
      * Connect to the specified server address.
      * @param[in]  address              The server address.
-     * @param[in]  server_public_cert   The server public certificate.
+     * @param[in]  server_public_cert   The server public certificate key.
      * @return                          True if connected, otherwise false.
      */
     BCX_API virtual bool connect(const primitives::uri& address,
-        const primitives::certificate& server_public_cert);
+        const primitives::cert_key& server_public_cert);
 
     /**
      * Connect to the specified server address.
      * @param[in]  address                   The server address.
-     * @param[in]  server_public_cert        The server public certificate.
+     * @param[in]  server_public_cert        The server public certificate key.
      * @param[in]  client_private_cert_path  The client private cert file path.
      * @return                               True if connected, otherwise false.
      */
     BCX_API virtual bool connect(const primitives::uri& address,
-        const primitives::certificate& server_public_cert,
+        const primitives::cert_key& server_public_cert,
         const boost::filesystem::path& client_private_cert_path);
 
     /**

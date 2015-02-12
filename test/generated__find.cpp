@@ -119,6 +119,16 @@ BOOST_AUTO_TEST_CASE(generated__find__btc_to_satoshi__returns_object)
     BOOST_REQUIRE(find("btc-to-satoshi") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__cert_new__returns_object)
+{
+    BOOST_REQUIRE(find("cert-new") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__cert_public__returns_object)
+{
+    BOOST_REQUIRE(find("cert-public") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ec_add__returns_object)
 {
     BOOST_REQUIRE(find("ec-add") != nullptr);

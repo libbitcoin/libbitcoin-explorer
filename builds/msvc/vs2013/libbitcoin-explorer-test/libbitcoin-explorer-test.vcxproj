@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -69,42 +69,6 @@
     <Import Project="$(ProjectDir)..\..\properties\Output.props" />
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLEXE|Win32'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDEXE|Win32'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSEXE|Win32'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|Win32'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDEXE|Win32'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLEXE|Win32'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseLEXE|x64'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDEXE|x64'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSEXE|x64'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugSEXE|x64'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDEXE|x64'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLEXE|x64'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\primitives\address.cpp" />
     <ClCompile Include="..\..\..\..\test\primitives\base58.cpp" />
@@ -133,6 +97,8 @@
     <ClCompile Include="..\..\..\..\test\commands\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-lock.cpp" />
@@ -227,10 +193,10 @@
     <Import Project="..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.8\build\native\czmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.8\build\native\czmq_vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.10\build\native\czmqpp_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.10\build\native\czmqpp_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\czmq_vc120.3.0.1.0\build\native\czmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmq_vc120.3.0.1.0\build\native\czmq_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.7\build\native\libzmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.7\build\native\libzmq_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.4\build\native\secp256k1_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.4\build\native\secp256k1_vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -245,10 +211,10 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_unit_test_framework-vc120.1.56.0.0\build\native\boost_unit_test_framework-vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.8\build\native\czmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.8\build\native\czmq_vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.10\build\native\czmqpp_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.10\build\native\czmqpp_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmq_vc120.3.0.1.0\build\native\czmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmq_vc120.3.0.1.0\build\native\czmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.7\build\native\libzmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.7\build\native\libzmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.4\build\native\secp256k1_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.4\build\native\secp256k1_vc120.targets'))" />
   </Target>
   <ItemGroup>

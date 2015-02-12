@@ -39,7 +39,7 @@
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -105,7 +105,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Obelisk server connection.";
+        return "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Libbitcoin/Obelisk server connection.";
     }
 
     /**

@@ -39,13 +39,36 @@
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/uri.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace libbitcoin {
 namespace explorer {
+
+/**
+ * Types for defining name-value pair list.
+ */
+typedef std::pair<std::string, std::string> name_value_pair;
+typedef std::vector<name_value_pair> name_value_pairs;
+
+/**
+ * Atructure used for passing connection settings for a server.
+ */
+struct BCX_API connection_type
+{
+    uint8_t retries;
+    client::period_ms wait;
+    boost::filesystem::path file;
+    primitives::uri server;
+    primitives::cert_key key;
+};
+
+/**
+ * Forward declaration to break header cycle.
+ */
+class command;
 
 /**
  * Cast vector/enumerable elements into a new vector.
@@ -160,20 +183,6 @@ void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
 
 /**
- * A structure used for passing connection settings for a server.
- */
-struct BCX_API connection_type
-{
-    uint8_t retries;
-    client::period_ms wait;
-    boost::filesystem::path file;
-    primitives::uri server;
-    primitives::certificate key;
-};
-
-class command;
-
-/**
  * Get the connection settings for the configured network.
  * @param    cmd  The command.
  * @returns       A structure containing the connection settings.
@@ -249,10 +258,19 @@ BCX_API script_type script_to_raw_data_script(const script_type& script);
 BCX_API void sleep_ms(uint32_t milliseconds);
 
 /**
- * determine if a string starts with another (case insensitive).
- * @param[in]  value             The string to test
- * @param[in]  prefix            The prefix to test against.
- * @return                       True if the value is prefixed by the prefix.
+ * Split a list of tokens with delimiters into a name-value pair list.
+ * @param[in]  tokens     The string to test
+ * @param[in]  delimiter  The delimiter, defualts to ":".
+ * @return                The name-value pair list.
+ */
+name_value_pairs split_pairs(const std::vector<std::string> tokens,
+    const std::string delimiter=":");
+
+/**
+ * Determine if a string starts with another (case insensitive).
+ * @param[in]  value   The string to test
+ * @param[in]  prefix  The prefix to test against.
+ * @return             True if the value is prefixed by the prefix.
  */
 BCX_API bool starts_with(const std::string& value, const std::string& prefix);
 

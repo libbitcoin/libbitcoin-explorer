@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
@@ -18,30 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/qrcode.hpp>
+#include "command.hpp"
 
-#include <iostream>
-#include <bitcoin/explorer/define.hpp>
+BX_USING_NAMESPACES()
 
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+BOOST_AUTO_TEST_SUITE(offline)
+BOOST_AUTO_TEST_SUITE(cert_new__invoke)
 
-console_result qrcode::invoke(std::ostream& output, std::ostream& error)
+// Because zcert doesn't support cert streaming, and we can't add arbitrary
+// virutal methods to generated command headers, we have a test limitation.
+
+BOOST_AUTO_TEST_CASE(cert_new__invoke__invalid_path__okay_output)
 {
-    // Bound parameters.
-    //const auto& address = get_bitcoin_address_argument();
-
-    error << BX_QRCODE_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    BX_DECLARE_COMMAND(cert_new);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    const auto message = format(BX_CERT_NEW_SAVE_FAIL) % "\"\"";
+    BX_REQUIRE_ERROR(message.str() + "\n");
 }
 
-//#!/bin/bash
-//if [ $# -ne 2 ]; then
-//    echo "Usage: qrcode ADDRESS FILENAME"
-//    exit 1
-//fi
-//command -v qrencode >/dev/null 2>&1 || { echo >&2 "Please install 'qrencode'."; exit 1; }
-//ADDR=$1
-//FILE=$2
-//qrencode bitcoin:$ADDR -o $FILE -s 10
-//
+BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END()

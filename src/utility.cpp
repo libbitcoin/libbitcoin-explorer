@@ -24,6 +24,7 @@
 #include <random>
 #include <cstdint>
 #include <string>
+#include <tuple>
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
@@ -38,7 +39,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/uri.hpp>
 
 using namespace boost::posix_time;
@@ -72,17 +73,17 @@ connection_type get_connection(const command& cmd)
         {
             cmd.get_general_retries_setting(),
             period_ms(cmd.get_general_wait_setting()),
-            cmd.get_testnet_certificate_file_setting(),
+            cmd.get_testnet_cert_file_setting(),
             cmd.get_testnet_url_setting(),
-            cmd.get_testnet_server_key_setting()
+            cmd.get_testnet_server_cert_key_setting()
         };
     else return connection_type
         {
             cmd.get_general_retries_setting(),
             period_ms(cmd.get_general_wait_setting()),
-            cmd.get_mainnet_certificate_file_setting(),
+            cmd.get_mainnet_cert_file_setting(),
             cmd.get_mainnet_url_setting(),
-            cmd.get_mainnet_server_key_setting()
+            cmd.get_mainnet_server_cert_key_setting()
         };
 }
 
@@ -153,6 +154,26 @@ std::string read_stream(std::istream& stream)
 script_type script_to_raw_data_script(const script_type& script)
 {
     return raw_data_script(save_script(script));
+}
+
+name_value_pairs split_pairs(const std::vector<std::string> tokens,
+    const std::string delimiter)
+{
+    name_value_pairs list;
+
+    for (const auto& token: tokens)
+    {
+        const auto words = split(token, delimiter);
+
+        const auto& left = words[0];
+        std::string right;
+        if (words.size() > 1)
+            right = words[1];
+
+        list.push_back(std::make_pair(left, right));
+    }
+
+    return list;
 }
 
 // Not unit testable (sleep).

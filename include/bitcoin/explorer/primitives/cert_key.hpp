@@ -32,28 +32,28 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between data_chunk and Z85 text.
+ * Serialization helper to convert between data_chunk and Z85 cert key.
  */
-class certificate
+class cert_key
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API certificate();
+    BCX_API cert_key();
 
     /**
      * Initialization constructor.
      * @param[in]  base85  The value to initialize with.
      */
-    BCX_API certificate(const std::string& base85);
+    BCX_API cert_key(const std::string& base85);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API certificate(const certificate& other);
+    BCX_API cert_key(const cert_key& other);
 
     /**
      * Convert internal type to text string.
@@ -81,7 +81,7 @@ public:
      * @return                The input stream reference.
      */
     BCX_API friend std::istream& operator>>(std::istream& input,
-        certificate& argument);
+        cert_key& argument);
 
     /**
      * Overload stream out.
@@ -90,7 +90,7 @@ public:
      * @return                The output stream reference.
      */
     BCX_API friend std::ostream& operator<<(std::ostream& output,
-        const certificate& argument);
+        const cert_key& argument);
 
 private:
 

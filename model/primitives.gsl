@@ -25,7 +25,7 @@ function global.map_type(type)
     my.type_btc160 = "btc160"
     my.type_btc256 = "btc256"
     my.type_byte = "byte"
-    my.type_certificate = "certificate"
+    my.type_cert_key = "cert_key"
     my.type_ec_private = "ec_private"
     my.type_ec_public = "ec_public"
     my.type_encoding = "encoding"
@@ -60,7 +60,7 @@ function global.map_type(type)
     my.type_btc160_bx = "primitives::btc160"
     my.type_btc256_bx = "primitives::btc256"
     my.type_byte_bx = "primitives::byte"
-    my.type_certificate_bx = "primitives::certificate"
+    my.type_cert_key_bx = "primitives::cert_key"
     my.type_ec_private_bx = "primitives::ec_private"
     my.type_ec_public_bx = "primitives::ec_public"
     my.type_encoding_bx = "primitives::encoding"
@@ -105,8 +105,8 @@ function global.map_type(type)
         return my.type_btc256_bx
     elsif my.type = my.type_byte
         return my.type_byte_bx
-    elsif my.type = my.type_certificate
-        return my.type_certificate_bx
+    elsif my.type = my.type_cert_key
+        return my.type_cert_key_bx
     elsif my.type = my.type_ec_private
         return my.type_ec_private_bx
     elsif my.type = my.type_ec_public
@@ -226,7 +226,7 @@ endfunction
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>

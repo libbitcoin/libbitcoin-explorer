@@ -39,7 +39,7 @@
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -112,7 +112,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get the last block height. Requires an Obelisk server connection.";
+        return "Get the last block height. Requires an Libbitcoin/Obelisk server connection.";
     }
 
     /**
@@ -159,7 +159,7 @@ public:
         (
             "server-url",
             value<std::string>(&argument_.server_url),
-            "The URL of the Obelisk server to use. If not specified the URL is obtained from configuration settings or defaults."
+            "The URL of the Libbitcoin/Obelisk server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;

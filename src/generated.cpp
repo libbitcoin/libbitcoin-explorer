@@ -55,6 +55,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<bitcoin256>());
     func(make_shared<blke_fetch_transaction>());
     func(make_shared<btc_to_satoshi>());
+    func(make_shared<cert_new>());
+    func(make_shared<cert_public>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_lock>());
@@ -171,6 +173,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<blke_fetch_transaction>();
     if (symbol == btc_to_satoshi::symbol())
         return make_shared<btc_to_satoshi>();
+    if (symbol == cert_new::symbol())
+        return make_shared<cert_new>();
+    if (symbol == cert_public::symbol())
+        return make_shared<cert_public>();
     if (symbol == ec_add::symbol())
         return make_shared<ec_add>();
     if (symbol == ec_add_secrets::symbol())

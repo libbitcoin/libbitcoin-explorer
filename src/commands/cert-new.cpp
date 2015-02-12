@@ -18,47 +18,43 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/tx-encode.hpp>
+#include <bitcoin/explorer/commands/cert-new.hpp>
 
-#include <iostream>
-#include <vector>
-#include <bitcoin/bitcoin.hpp>
+#include <boost/format.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/utility.hpp>
+#include <czmq++/czmqpp.hpp>
 
-using namespace bc;
+using namespace czmqpp;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using boost::format;
 
-console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
+// CZMQ only has a file system interface, otherwise would send to stdout.
+console_result cert_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto locktime = get_lock_time_option();
-    const auto version = get_version_option();
-    const auto& inputs = get_inputs_option();
-    const auto& outputs = get_outputs_option();
+    const auto& private_cert = get_private_cert_argument();
+    const auto& metadata = get_metadatas_option();
 
-    tx_type tx;
-    tx.version = version;
-    tx.locktime = locktime;
+    // Create a new Curve ZMQ certificate.
+    auto cert = certificate(zcert_new());
 
-    for (const tx_input_type& input: inputs)
-        tx.inputs.push_back(input);
+    // Add optional name-value pairs metadata to certificate.
+    // These will be coppied to the public certificate by cert-public.
+    for (const auto pair: split_pairs(metadata))
+        cert.set_meta(pair.first, pair.second);
 
-    for (const std::vector<tx_output_type>& output_sets: outputs)
-        for (const auto& output: output_sets)
-            tx.outputs.push_back(output);
-
-    if (is_locktime_conflict(tx))
+    // The directory must exist, the file must not.
+    // Export the PRIVATE certificate to the specified file.
+    if (exists(private_cert) || 
+        cert.save_secret(private_cert.generic_string()) != zmq_success)
     {
-        error << BX_TX_ENCODE_LOCKTIME_CONFLICT << std::endl;
+        error << format(BX_CERT_NEW_SAVE_FAIL) % private_cert << std::endl;
         return console_result::failure;
     }
 
-    output << transaction(tx) << std::endl;
     return console_result::okay;
 }

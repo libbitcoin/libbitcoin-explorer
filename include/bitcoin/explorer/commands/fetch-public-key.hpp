@@ -39,7 +39,7 @@
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -118,7 +118,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get the EC public key of the address, if it exists on the blockchain. Requires an Obelisk server connection.";
+        return "Get the EC public key of the address, if it exists on the blockchain. Requires an Libbitcoin/Obelisk server connection.";
     }
 
     /**

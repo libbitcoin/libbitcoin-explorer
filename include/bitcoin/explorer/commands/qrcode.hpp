@@ -39,7 +39,7 @@
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -157,11 +157,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "file,f",
-            value<std::string>(&option_.file),
-            "The image file path. If not specified the image is written to STDOUT."
-        )
-        (
             "BITCOIN_ADDRESS",
             value<primitives::address>(&argument_.bitcoin_address),
             "The Bitcoin address. If not specified the address is read from STDIN."
@@ -198,23 +193,6 @@ public:
         argument_.bitcoin_address = value;
     }
 
-    /**
-     * Get the value of the file option.
-     */
-    BCX_API virtual std::string& get_file_option()
-    {
-        return option_.file;
-    }
-
-    /**
-     * Set the value of the file option.
-     */
-    BCX_API virtual void set_file_option(
-        const std::string& value)
-    {
-        option_.file = value;
-    }
-
 private:
 
     /**
@@ -240,11 +218,9 @@ private:
     struct option
     {
         option()
-          : file()
         {
         }
 
-        std::string file;
     } option_;
 };
 

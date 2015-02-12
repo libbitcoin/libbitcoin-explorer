@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -32,48 +32,48 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-constexpr uint8_t certificate_byte_size = 32;
-constexpr uint8_t certificate_string_length = 40;
+constexpr uint8_t cert_key_byte_size = 32;
+constexpr uint8_t cert_key_string_length = 40;
 
-certificate::certificate()
+cert_key::cert_key()
     : value_()
 {
 }
 
-certificate::certificate(const std::string& base85)
+cert_key::cert_key(const std::string& base85)
 {
     std::stringstream(base85) >> *this;
 }
 
-certificate::certificate(const certificate& other)
+cert_key::cert_key(const cert_key& other)
     : value_(other.value_)
 {
 }
 
 // Returns empty string if not initialized.
-std::string certificate::get_base85() const
+std::string cert_key::get_base85() const
 {
     std::stringstream base85;
     base85 << *this;
     return base85.str();
 }
 
-certificate::operator const data_chunk&() const
+cert_key::operator const data_chunk&() const
 {
     return value_;
 }
 
-certificate::operator data_slice() const
+cert_key::operator data_slice() const
 {
     return value_;
 }
 
-std::istream& operator>>(std::istream& input, certificate& argument)
+std::istream& operator>>(std::istream& input, cert_key& argument)
 {
     std::string base85;
     input >> base85;
 
-    if (base85.size() != certificate_string_length || 
+    if (base85.size() != cert_key_string_length ||
         !decode_base85(argument.value_, base85))
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(base85));
@@ -82,7 +82,7 @@ std::istream& operator>>(std::istream& input, certificate& argument)
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const certificate& argument)
+std::ostream& operator<<(std::ostream& output, const cert_key& argument)
 {
     std::string decoded;
 

@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_HD_PRIVATE_HPP
-#define BX_HD_PRIVATE_HPP
+#ifndef BX_CERT_PUBLIC_HPP
+#define BX_CERT_PUBLIC_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -68,9 +68,17 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the hd-private command.
+ * Various localizable strings.
  */
-class hd_private 
+#define BX_CERT_PUBLIC_INVALID \
+    "Certificate is not valid: %1%."
+#define BX_CERT_PUBLIC_SAVE_FAIL \
+    "Failed to save certificate file: %1%."
+
+/**
+ * Class to implement the cert-public command.
+ */
+class cert_public 
     : public command
 {
 public:
@@ -80,7 +88,7 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "hd-private";
+        return "cert-public";
     }
 
 
@@ -89,7 +97,7 @@ public:
      */
     BCX_API virtual const char* name()
     {
-        return hd_private::symbol();
+        return cert_public::symbol();
     }
 
     /**
@@ -97,7 +105,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "MATH";
     }
 
     /**
@@ -105,7 +113,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Derive a child HD (BIP32) private key from another HD private key.";
+        return "Create a derived public Curve ZMQ certificate for use with a Libbitcoin/Obelisk server.";
     }
 
     /**
@@ -116,7 +124,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("HD_PRIVATE_KEY", 1);
+            .add("PRIVATE_CERT", 1)
+            .add("PUBLIC_CERT", 1);
     }
 
 	/**
@@ -127,7 +136,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_hd_private_key_argument(), "HD_PRIVATE_KEY", variables, input);
     }
 
     /**
@@ -151,19 +159,19 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "hard,d",
-            value<bool>(&option_.hard)->zero_tokens(),
-            "Signal to create a hardened key."
+            "metadata,m",
+            value<std::vector<std::string>>(&option_.metadatas),
+            "The set of name-value pairs to add as metadata to the new certificate, encoded as NAME:VALUE."
         )
         (
-            "index,i",
-            value<uint32_t>(&option_.index),
-            "The HD index, defaults to zero."
+            "PRIVATE_CERT",
+            value<boost::filesystem::path>(&argument_.private_cert)->required(),
+            "The path to read the private certificate file."
         )
         (
-            "HD_PRIVATE_KEY",
-            value<primitives::hd_priv>(&argument_.hd_private_key),
-            "The parent HD private key. If not specified the key is read from STDIN."
+            "PUBLIC_CERT",
+            value<boost::filesystem::path>(&argument_.public_cert)->required(),
+            "The path to write the public certificate file."
         );
 
         return options;
@@ -181,54 +189,54 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the HD_PRIVATE_KEY argument.
+     * Get the value of the PRIVATE_CERT argument.
      */
-    BCX_API virtual primitives::hd_priv& get_hd_private_key_argument()
+    BCX_API virtual boost::filesystem::path& get_private_cert_argument()
     {
-        return argument_.hd_private_key;
+        return argument_.private_cert;
     }
 
     /**
-     * Set the value of the HD_PRIVATE_KEY argument.
+     * Set the value of the PRIVATE_CERT argument.
      */
-    BCX_API virtual void set_hd_private_key_argument(
-        const primitives::hd_priv& value)
+    BCX_API virtual void set_private_cert_argument(
+        const boost::filesystem::path& value)
     {
-        argument_.hd_private_key = value;
+        argument_.private_cert = value;
     }
 
     /**
-     * Get the value of the hard option.
+     * Get the value of the PUBLIC_CERT argument.
      */
-    BCX_API virtual bool& get_hard_option()
+    BCX_API virtual boost::filesystem::path& get_public_cert_argument()
     {
-        return option_.hard;
+        return argument_.public_cert;
     }
 
     /**
-     * Set the value of the hard option.
+     * Set the value of the PUBLIC_CERT argument.
      */
-    BCX_API virtual void set_hard_option(
-        const bool& value)
+    BCX_API virtual void set_public_cert_argument(
+        const boost::filesystem::path& value)
     {
-        option_.hard = value;
+        argument_.public_cert = value;
     }
 
     /**
-     * Get the value of the index option.
+     * Get the value of the metadata options.
      */
-    BCX_API virtual uint32_t& get_index_option()
+    BCX_API virtual std::vector<std::string>& get_metadatas_option()
     {
-        return option_.index;
+        return option_.metadatas;
     }
 
     /**
-     * Set the value of the index option.
+     * Set the value of the metadata options.
      */
-    BCX_API virtual void set_index_option(
-        const uint32_t& value)
+    BCX_API virtual void set_metadatas_option(
+        const std::vector<std::string>& value)
     {
-        option_.index = value;
+        option_.metadatas = value;
     }
 
 private:
@@ -241,11 +249,13 @@ private:
     struct argument
     {
         argument()
-          : hd_private_key()
+          : private_cert(),
+            public_cert()
         {
         }
 
-        primitives::hd_priv hd_private_key;
+        boost::filesystem::path private_cert;
+        boost::filesystem::path public_cert;
     } argument_;
 
     /**
@@ -256,13 +266,11 @@ private:
     struct option
     {
         option()
-          : hard(),
-            index()
+          : metadatas()
         {
         }
 
-        bool hard;
-        uint32_t index;
+        std::vector<std::string> metadatas;
     } option_;
 };
 

@@ -24,16 +24,20 @@
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/async_client.hpp>
-#include <bitcoin/explorer/primitives/certificate.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/uri.hpp>
 
 using namespace bc;
 using namespace bc::client;
 using namespace bc::explorer::primitives;
+using namespace czmqpp;
 using boost::filesystem::path;
 
 namespace libbitcoin {
 namespace explorer {
+
+constexpr int zmq_no_linger = 0;
+constexpr int zmq_curve_enabled = 1;
 
 obelisk_client::obelisk_client(const period_ms& timeout, uint8_t retries)
     : socket_(context_, ZMQ_DEALER)
@@ -52,9 +56,6 @@ obelisk_client::obelisk_client(const connection_type& channel)
 
 bool obelisk_client::connect(const uri& address)
 {
-    constexpr int zmq_success = 0;
-    constexpr int zmq_no_linger = 0;
-
     // ZMQ *only* returns 0 or -1 for this call, so make boolean.
     bool success = socket_.connect(address.to_string()) == zmq_success;
     if (success)
@@ -63,32 +64,31 @@ bool obelisk_client::connect(const uri& address)
     return success;
 }
 
-bool obelisk_client::connect(const uri& address, 
-    const certificate& server_public_cert)
+bool obelisk_client::connect(const uri& address,
+    const cert_key& server_public_cert)
 {
     if (!zsys_has_curve())
         return false;
 
-    const auto cert = server_public_cert.get_base85();
-    if (!cert.empty())
-        socket_.set_curve_serverkey(cert);
+    const auto server_key = server_public_cert.get_base85();
+    if (!server_key.empty())
+        socket_.set_curve_serverkey(server_key);
 
     return connect(address);
 }
 
 bool obelisk_client::connect(const uri& address, 
-    const certificate& server_public_cert,
-    const path& client_private_cert_path)
+    const cert_key& server_public_cert, const path& client_private_cert_path)
 {
     if (!zsys_has_curve())
         return false;
 
-    const auto& path = client_private_cert_path.generic_string();
-    if (!path.empty())
+    const auto& cert_path = client_private_cert_path.generic_string();
+    if (!cert_path.empty())
     {
-        auto zcert = czmqpp::load_cert(path);
-        socket_.set_curve_publickey(zcert_public_txt(zcert));
-        socket_.set_curve_secretkey(zcert_secret_txt(zcert));
+        certificate cert(cert_path);
+        cert.apply(socket_);
+        socket_.set_curve_server(zmq_curve_enabled);
     }
 
     return connect(address, server_public_cert);
