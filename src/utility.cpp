@@ -39,12 +39,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
 
 using namespace boost::posix_time;
 using namespace bc::client;
-using namespace bc::explorer::primitives;
 using boost::filesystem::path;
 
 namespace libbitcoin {
