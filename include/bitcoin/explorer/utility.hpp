@@ -54,13 +54,13 @@ typedef std::pair<std::string, std::string> name_value_pair;
 typedef std::vector<name_value_pair> name_value_pairs;
 
 /**
- * Atructure used for passing connection settings for a server.
+ * Structure used for passing connection settings for a server.
  */
 struct BCX_API connection_type
 {
     uint8_t retries;
     client::period_ms wait;
-    boost::filesystem::path file;
+    boost::filesystem::path cert_path;
     primitives::uri server;
     primitives::cert_key key;
 };

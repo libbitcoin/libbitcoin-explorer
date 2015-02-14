@@ -96,7 +96,7 @@ bool obelisk_client::connect(const uri& address,
 
 bool obelisk_client::connect(const connection_type& channel)
 {
-    return connect(channel.server, channel.key, channel.file);
+    return connect(channel.server, channel.key, channel.cert_path);
 }
 
 std::shared_ptr<obelisk_codec> obelisk_client::get_codec()
