@@ -58,7 +58,7 @@ public:
      * Initialization constructor.
      * @param[in]  channel  The channel to initialize.
      */
-    BCX_API obelisk_client::obelisk_client(const connection_type& channel);
+    BCX_API obelisk_client(const connection_type& channel);
 
     /**
      * Connect to the specified server address.
