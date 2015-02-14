@@ -59,7 +59,7 @@ public:
      * Convert internal type to text string.
      * @return  This object's value cast to a string.
      */
-    BCX_API std::string uri::to_string() const;
+    BCX_API std::string to_string() const;
 
     /**
      * Overload cast to parse result.
