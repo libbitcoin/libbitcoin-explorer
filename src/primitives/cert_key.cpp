@@ -32,7 +32,7 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-constexpr uint8_t cert_key_byte_size = 32;
+//constexpr uint8_t cert_key_byte_size = 32;
 constexpr uint8_t cert_key_string_length = 40;
 
 cert_key::cert_key()
