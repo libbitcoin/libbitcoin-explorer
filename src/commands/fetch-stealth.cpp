@@ -43,8 +43,8 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto height = get_height_option();
     const auto& encoding = get_format_option();
     const auto& prefix = get_prefix_argument();
-
     const auto connection = get_connection(*this);
+
     obelisk_client client(connection);
 
     if (!client.connect(connection))

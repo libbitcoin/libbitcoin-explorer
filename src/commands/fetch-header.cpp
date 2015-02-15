@@ -43,8 +43,8 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const auto height = get_height_option();
     const hash_digest& hash = get_hash_option();
     const encoding& encoding = get_format_option();
-
     const auto connection = get_connection(*this);
+
     obelisk_client client(connection);
 
     if (!client.connect(connection))

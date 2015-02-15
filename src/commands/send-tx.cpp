@@ -38,8 +38,8 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& transaction = get_transaction_argument();
-
     const auto connection = get_connection(*this);
+
     obelisk_client client(connection);
 
     if (!client.connect(connection))

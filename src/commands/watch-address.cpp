@@ -56,8 +56,8 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& encoding = get_format_option();
     const auto& bitcoin_address = get_bitcoin_address_argument();
-
     const auto connection = get_connection(*this);
+
     obelisk_client client(connection);
 
     if (!client.connect(connection))

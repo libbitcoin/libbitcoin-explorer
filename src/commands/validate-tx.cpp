@@ -40,8 +40,8 @@ console_result validate_tx::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto& transaction = get_transaction_argument();
-
     const auto connection = get_connection(*this);
+
     obelisk_client client(connection);
 
     if (!client.connect(connection))

@@ -37,11 +37,9 @@ using namespace bc::explorer::primitives;
 console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto retries = get_general_retries_setting();
-    const auto timeout = get_general_wait_setting();
     const auto& server_url = get_server_url_argument();
-
     const auto connection = get_connection(*this);
+
     obelisk_client client(connection);
 
     // For this command only, allow command line to override server config.

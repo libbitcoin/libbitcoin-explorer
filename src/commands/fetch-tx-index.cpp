@@ -43,8 +43,8 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& encoding = get_format_option();
     const auto& hash = get_hash_argument();
-
     const auto connection = get_connection(*this);
+
     obelisk_client client(connection);
 
     if (!client.connect(connection))
