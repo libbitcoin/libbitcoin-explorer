@@ -41,14 +41,6 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     const tx_type& tx = get_transaction_argument();
     const ec_secret& private_key = get_ec_private_key_argument();
     const script_type& prevout_script = get_prevout_script_argument();
-    const data_chunk& nonce = get_nonce_option();
-
-    const auto deterministic = nonce.empty();
-    if (!deterministic && nonce.size() < minimum_seed_size)
-    {
-        error << BX_INPUT_SIGN_SHORT_NONCE << std::endl;
-        return console_result::failure;
-    }
 
     if (index >= tx.inputs.size())
     {
@@ -56,17 +48,9 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    bool success;
     endorsement endorse;
-
-    if (deterministic)
-        success = create_signature(endorse, private_key, prevout_script, tx,
-            index, hash_type);
-    else
-        success = create_signature(endorse, private_key, prevout_script, tx,
-            index, hash_type, new_key(nonce));
-
-    if (!success)
+    if (!create_signature(endorse, private_key, prevout_script, tx,
+        index, hash_type))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;
         return console_result::failure;

@@ -61,10 +61,12 @@ bitcoin_explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/base2.hpp \
     include/bitcoin/explorer/primitives/base58.hpp \
     include/bitcoin/explorer/primitives/base64.hpp \
+    include/bitcoin/explorer/primitives/base85.hpp \
     include/bitcoin/explorer/primitives/btc.hpp \
     include/bitcoin/explorer/primitives/btc160.hpp \
     include/bitcoin/explorer/primitives/btc256.hpp \
     include/bitcoin/explorer/primitives/byte.hpp \
+    include/bitcoin/explorer/primitives/cert_key.hpp \
     include/bitcoin/explorer/primitives/ec_private.hpp \
     include/bitcoin/explorer/primitives/ec_public.hpp \
     include/bitcoin/explorer/primitives/encoding.hpp \
@@ -107,6 +109,8 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/bitcoin256.hpp \
     include/bitcoin/explorer/commands/blke-fetch-transaction.hpp \
     include/bitcoin/explorer/commands/btc-to-satoshi.hpp \
+    include/bitcoin/explorer/commands/cert-new.hpp \
+    include/bitcoin/explorer/commands/cert-public.hpp \
     include/bitcoin/explorer/commands/ec-add.hpp \
     include/bitcoin/explorer/commands/ec-add-secrets.hpp \
     include/bitcoin/explorer/commands/ec-lock.hpp \
@@ -208,10 +212,12 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/base2.cpp \
     src/primitives/base58.cpp \
     src/primitives/base64.cpp \
+    src/primitives/base85.cpp \
     src/primitives/btc.cpp \
     src/primitives/btc160.cpp \
     src/primitives/btc256.cpp \
     src/primitives/byte.cpp \
+    src/primitives/cert_key.cpp \
     src/primitives/ec_private.cpp \
     src/primitives/ec_public.cpp \
     src/primitives/encoding.cpp \
@@ -254,6 +260,8 @@ src_libbitcoin_explorer_la_SOURCES += \
     src/commands/bitcoin256.cpp \
     src/commands/blke-fetch-transaction.cpp \
     src/commands/btc-to-satoshi.cpp \
+    src/commands/cert-new.cpp \
+    src/commands/cert-public.cpp \
     src/commands/ec-add.cpp \
     src/commands/ec-add-secrets.cpp \
     src/commands/ec-lock.cpp \
@@ -394,6 +402,8 @@ test_libbitcoin_explorer_test_SOURCES += \
     test/commands/bitcoin256.cpp \
     test/commands/blke-fetch-transaction.cpp \
     test/commands/btc-to-satoshi.cpp \
+    test/commands/cert-new.cpp \
+    test/commands/cert-public.cpp \
     test/commands/ec-add.cpp \
     test/commands/ec-add-secrets.cpp \
     test/commands/ec-lock.cpp \

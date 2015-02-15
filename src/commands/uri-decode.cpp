@@ -34,7 +34,7 @@
      const auto& uri = get_uri_argument();
 
      // The uri primitive type is not currently restricted to bitcoin uris.
-     if (!starts_with(uri, "bitcoin:"))
+     if (!starts_with(uri.to_string(), "bitcoin:"))
      {
          error << BX_URI_DECODE_NOT_BITCOIN << std::endl;
          return console_result::failure;

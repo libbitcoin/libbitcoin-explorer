@@ -48,9 +48,11 @@ uri::uri(const uri& other)
 {
 }
 
-uri::operator const std::string&() const
+std::string uri::to_string() const
 {
-    return value_;
+    std::stringstream text;
+    text << *this;
+    return text.str();
 }
 
 // This will return a default object if not a bitcoin uri.

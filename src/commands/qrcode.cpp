@@ -29,20 +29,7 @@ using namespace bc::explorer::commands;
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    //const auto& path = get_file_option();
     //const auto& address = get_bitcoin_address_argument();
-
-    // TODO:
-    // Create qrcode as binary data.
-    //const auto qrcode = 42;
-
-    //if (path.empty() || path == BX_STDIO_PATH_SENTINEL)
-    //    output << qrcode;
-    //else
-    //{
-    //    std::ofstream outfile(path, std::ofstream::binary);
-    //    outfile << qrcode;
-    //}
 
     error << BX_QRCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

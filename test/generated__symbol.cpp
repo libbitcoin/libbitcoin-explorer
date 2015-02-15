@@ -119,6 +119,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__btc_to_satoshi__returns_expected_value)
     BOOST_REQUIRE_EQUAL(btc_to_satoshi::symbol(), "btc-to-satoshi");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__cert_new__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(cert_new::symbol(), "cert-new");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__cert_public__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(cert_public::symbol(), "cert-public");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_add__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(ec_add::symbol(), "ec-add");

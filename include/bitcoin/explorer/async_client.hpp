@@ -48,15 +48,11 @@ public:
     BCX_API static const size_t default_threadpool_size;
 
     /**
-     * Initialization constructor, establish threadpool (RAII).
+     * Initialization constructor, establish threadpool.
+     * Caller must invoke stop to free threads.
      * @param[in]  threads  The number of pool threads to initialize.
      */
     BCX_API async_client(const size_t threads=default_threadpool_size);
-
-    /**
-     * Destructor, kill threads (RAII).
-     */
-    BCX_API ~async_client();
 
     /**
      * Get the value of the threadpool.

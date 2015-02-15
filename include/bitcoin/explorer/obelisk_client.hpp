@@ -20,9 +20,13 @@
 #ifndef BX_OBELISK_CLIENT_HPP
 #define BX_OBELISK_CLIENT_HPP
 
+#include <boost/filesystem.hpp>
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -30,32 +34,65 @@ namespace libbitcoin {
 namespace explorer {
 
 /**
- * Class to simplify libbitcoin server usage. 
+ * The standard libzmq success code.
+ */
+constexpr int zmq_success = 0;
+
+/**
+ * Class to simplify obelisk/libbitcoin-server usage. 
+ * This class hides *all* use of czmqpp/czmq/zmq/libsodium.
  */
 class obelisk_client
 {
 public:
-
     /**
      * Initialization constructor.
-     * @param[in]  context  The zmq context.
-     * @param[in]  timeout  The call timeout, defaults to zero.
+     * @param[in]  timeout  The call timeout, defaults to zero (instant).
      * @param[in]  retries  The number of retries allowed, defaults to zero.
      */
-    BCX_API obelisk_client(czmqpp::context& context,
+    BCX_API obelisk_client(
         const client::period_ms& timeout=client::period_ms(0),
         uint8_t retries=0);
 
     /**
+     * Initialization constructor.
+     * @param[in]  channel  The channel to initialize.
+     */
+    BCX_API obelisk_client(const connection_type& channel);
+
+    /**
      * Connect to the specified server address.
      * @param[in]  address              The server address.
-     * @param[in]  certificate_filename The certificate filename.
-     * @param[in]  server_public_key    The server public key.
-     * @return                          The connection status, negative for failure.
+     * @return                          True if connected, otherwise false.
      */
-    BCX_API virtual int connect(const std::string& address,
-        const std::string& certificate_filename=std::string(),
-        const std::string& server_public_key=std::string());
+    BCX_API virtual bool connect(const primitives::uri& address);
+
+    /**
+     * Connect to the specified server address.
+     * @param[in]  address              The server address.
+     * @param[in]  server_public_cert   The server public certificate key.
+     * @return                          True if connected, otherwise false.
+     */
+    BCX_API virtual bool connect(const primitives::uri& address,
+        const primitives::cert_key& server_public_cert);
+
+    /**
+     * Connect to the specified server address.
+     * @param[in]  address                   The server address.
+     * @param[in]  server_public_cert        The server public certificate key.
+     * @param[in]  client_private_cert_path  The client private cert file path.
+     * @return                               True if connected, otherwise false.
+     */
+    BCX_API virtual bool connect(const primitives::uri& address,
+        const primitives::cert_key& server_public_cert,
+        const boost::filesystem::path& client_private_cert_path);
+
+    /**
+     * Connect using the specified server channel.
+     * @param[in]  channel  The channel to connect.
+     * @return              True if connected, otherwise false.
+     */
+    BCX_API virtual bool connect(const connection_type& channel);
 
     /**
      * Get the value of the codec property.
@@ -85,8 +122,8 @@ public:
 
 private:
 
+    czmqpp::context context_;
     czmqpp::socket socket_;
-    czmqpp::certificate certificate_;
     std::shared_ptr<client::socket_stream> stream_;
     std::shared_ptr<client::obelisk_codec> codec_;
 };

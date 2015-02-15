@@ -34,10 +34,12 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -68,8 +70,6 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_INPUT_SIGN_SHORT_NONCE \
-    "The optional nonce is less than 128 bits long."
 #define BX_INPUT_SIGN_INDEX_OUT_OF_RANGE \
     "The index does not refer to an existing input."
 #define BX_INPUT_SIGN_FAILED \
@@ -176,11 +176,6 @@ public:
             "sign_type,s",
             value<primitives::hashtype>(&option_.sign_type),
             "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'."
-        )
-        (
-            "nonce,n",
-            value<primitives::base16>(&option_.nonce),
-            "The Base16 random value used to seed a signing nonce. Must be at least 128 bits in length. If not specified the deterministic signature algorithm is used."
         )
         (
             "EC_PRIVATE_KEY",
@@ -297,23 +292,6 @@ public:
         option_.sign_type = value;
     }
 
-    /**
-     * Get the value of the nonce option.
-     */
-    BCX_API virtual primitives::base16& get_nonce_option()
-    {
-        return option_.nonce;
-    }
-
-    /**
-     * Set the value of the nonce option.
-     */
-    BCX_API virtual void set_nonce_option(
-        const primitives::base16& value)
-    {
-        option_.nonce = value;
-    }
-
 private:
 
     /**
@@ -344,14 +322,12 @@ private:
     {
         option()
           : index(),
-            sign_type(),
-            nonce()
+            sign_type()
         {
         }
 
         uint32_t index;
         primitives::hashtype sign_type;
-        primitives::base16 nonce;
     } option_;
 };
 

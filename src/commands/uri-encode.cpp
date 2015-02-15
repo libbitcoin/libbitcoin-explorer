@@ -32,7 +32,7 @@ using namespace bc::explorer::commands;
      const auto& amount = get_amount_option();
      const auto& label = get_label_option();
      const auto& message = get_message_option();
-     const std::string& request = get_request_option();
+     const auto& request = get_request_option();
      const auto& stealth = get_stealth_option();
      const auto& address = get_bitcoin_address_argument();
 
@@ -59,8 +59,9 @@ using namespace bc::explorer::commands;
      if (!message.empty())
          writer.write_message(message);
 
-     if (!request.empty())
-         writer.write_r(request);
+     const auto uri = request.to_string();
+     if (!uri.empty())
+         writer.write_r(uri);
 
      output << writer.string() << std::endl;
      return console_result::okay;

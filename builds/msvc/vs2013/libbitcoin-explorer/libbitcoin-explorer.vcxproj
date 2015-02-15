@@ -94,10 +94,12 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\base2.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\base58.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\base64.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\base85.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\btc160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\btc256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\byte.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\cert_key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\ec_private.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\ec_public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\encoding.hpp" />
@@ -140,6 +142,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bitcoin256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\blke-fetch-transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\btc-to-satoshi.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-new.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-lock.hpp" />
@@ -231,10 +235,12 @@
     <ClCompile Include="..\..\..\..\src\primitives\base2.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\base58.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\base64.cpp" />
+    <ClCompile Include="..\..\..\..\src\primitives\base85.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\btc160.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\btc256.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\byte.cpp" />
+    <ClCompile Include="..\..\..\..\src\primitives\cert_key.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\ec_private.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\ec_public.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\encoding.cpp" />
@@ -276,6 +282,8 @@
     <ClCompile Include="..\..\..\..\src\commands\bitcoin256.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\btc-to-satoshi.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\cert-new.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\cert-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-lock.cpp" />
@@ -361,10 +369,10 @@
     <Import Project="..\..\..\..\..\..\nuget\boost_program_options-vc120.1.56.0.0\build\native\boost_program_options-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_program_options-vc120.1.56.0.0\build\native\boost_program_options-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.8\build\native\czmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.8\build\native\czmq_vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.10\build\native\czmqpp_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.10\build\native\czmqpp_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\czmq_vc120.3.0.1.0\build\native\czmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmq_vc120.3.0.1.0\build\native\czmq_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.7\build\native\libzmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.7\build\native\libzmq_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.4\build\native\secp256k1_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.4\build\native\secp256k1_vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -376,10 +384,10 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_program_options-vc120.1.56.0.0\build\native\boost_program_options-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_program_options-vc120.1.56.0.0\build\native\boost_program_options-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.8\build\native\czmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmq_vc120.2.2.0.8\build\native\czmq_vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.10\build\native\czmqpp_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmqpp_vc120.1.0.0.10\build\native\czmqpp_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmq_vc120.3.0.1.0\build\native\czmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmq_vc120.3.0.1.0\build\native\czmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.7\build\native\libzmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libzmq_vc120.4.1.0.7\build\native\libzmq_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.4\build\native\secp256k1_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.4\build\native\secp256k1_vc120.targets'))" />
   </Target>
 </Project>

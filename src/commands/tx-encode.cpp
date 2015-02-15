@@ -41,7 +41,6 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
     const auto version = get_version_option();
     const auto& inputs = get_inputs_option();
     const auto& outputs = get_outputs_option();
-    const auto& file = get_transaction_argument();
 
     tx_type tx;
     tx.version = version;
@@ -60,7 +59,6 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    write_file(output, file, transaction(tx));
-
+    output << transaction(tx) << std::endl;
     return console_result::okay;
 }

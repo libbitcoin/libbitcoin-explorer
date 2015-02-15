@@ -34,10 +34,12 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -71,7 +73,7 @@ namespace commands {
 #define BX_VALIDATE_TX_VALID \
     "The transaction is valid."
 #define BX_VALIDATE_TX_INVALID_INPUT \
-    "The transaction has an invalid input at index %1%."
+    "The transaction has an invalid input at index: %1%."
 #define BX_VALIDATE_TX_UNCONFIRMED_INPUTS \
     "The transaction is valid, with unconfirmed inputs at index: %1%."
 
@@ -120,7 +122,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Determine if a transaction is valid for submission to the blockchain. Requires an Obelisk server connection.";
+        return "Determine if a transaction is valid for submission to the blockchain. Requires an Libbitcoin/Obelisk server connection.";
     }
 
     /**
