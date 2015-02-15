@@ -331,11 +331,12 @@
   <command symbol="input-sign" formerly="sign-input" typeX="endorsement" category="TRANSACTION" description="Create an endorsement for a transaction input.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'." />
-    <option name="nonce" type="base16" description="The Base16 random value used to seed a signing nonce. Must be at least 128 bits in length. If not specified the deterministic signature algorithm is used." />
+    <!-- Deterministic ECDSA required as of v2.1.0, nonce no longer allowed. -->
+    <!--<option name="nonce" type="base16" description="The Base16 random value used to seed a signing nonce. Must be at least 128 bits in length. If not specified the deterministic signature algorithm is used." />-->
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="PREVOUT_SCRIPT" required="true" type="script" description="The previous output script to use in signing." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
-    <define name="BX_INPUT_SIGN_SHORT_NONCE" value="The optional nonce is less than 128 bits long." />
+    <!--<define name="BX_INPUT_SIGN_SHORT_NONCE" value="The optional nonce is less than 128 bits long." />-->
     <define name="BX_INPUT_SIGN_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
     <define name="BX_INPUT_SIGN_FAILED" value="The signing operation failed." />
   </command>
