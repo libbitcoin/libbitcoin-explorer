@@ -112,7 +112,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get the block height and index of a transaction. Requires an Libbitcoin/Obelisk server connection.";
+        return "Get the block height and index of a transaction. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**

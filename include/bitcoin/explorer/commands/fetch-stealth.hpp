@@ -111,7 +111,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get metadata on potential payment transactions by stealth prefix. Requires an Libbitcoin/Obelisk server connection.";
+        return "Get metadata on potential payment transactions by stealth prefix. Requires a Libbitcoin server connection.";
     }
 
     /**

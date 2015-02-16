@@ -112,7 +112,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get a transaction by its hash. Requires an Libbitcoin/Obelisk server connection.";
+        return "Get a transaction by its hash. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**

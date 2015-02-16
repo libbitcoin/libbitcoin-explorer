@@ -122,7 +122,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Determine if a transaction is valid for submission to the blockchain. Requires an Libbitcoin/Obelisk server connection.";
+        return "Determine if a transaction is valid for submission to the blockchain. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**

@@ -118,7 +118,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Watch the network for transactions in which an address participates. Requires an Libbitcoin/Obelisk server connection.";
+        return "Watch the network for transactions in which an address participates. Requires a Libbitcoin server connection.";
     }
 
     /**

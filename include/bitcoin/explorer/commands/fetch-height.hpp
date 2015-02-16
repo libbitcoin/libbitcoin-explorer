@@ -112,7 +112,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get the last block height. Requires an Libbitcoin/Obelisk server connection.";
+        return "Get the last block height. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**

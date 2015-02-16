@@ -105,7 +105,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get the balance in satoshi of a Bitcoin address. Requires an Libbitcoin/Obelisk server connection.";
+        return "Get the balance in satoshi of a Bitcoin address. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**

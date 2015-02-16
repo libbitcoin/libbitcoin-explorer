@@ -118,7 +118,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get enough unspent transaction outputs from a Bitcoin addresses to pay a number of satoshi. Requires an Libbitcoin/Obelisk server connection.";
+        return "Get enough unspent transaction outputs from a Bitcoin addresses to pay a number of satoshi. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**

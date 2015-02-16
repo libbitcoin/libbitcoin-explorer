@@ -222,32 +222,32 @@
     <define name="BX_EC_UNLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
-  <command symbol="fetch-balance" typeX="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a Bitcoin address. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-balance" typeX="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a Bitcoin address. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address. If not specified the address is read from STDIN." />
   </command>
 
-  <command symbol="fetch-header" category="ONLINE" typeX="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-header" category="ONLINE" typeX="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="btc256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
   </command>
 
-  <command symbol="fetch-height" formerly="fetch-last-height" typeX="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-height" formerly="fetch-last-height" typeX="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires a Libbitcoin/Obelisk server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin/Obelisk server to use. If not specified the URL is obtained from configuration settings or defaults."/>  
   </command>
   
-  <command symbol="fetch-history" typeX="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a Bitcoin address. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-history" typeX="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a Bitcoin address. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address. If not specified the address is read from STDIN." />
   </command>
   
-  <command symbol="fetch-public-key" formerly="get-pubkey" typeX="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-public-key" formerly="get-pubkey" typeX="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin/Obelisk server connection.">
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address of the public key. If not specified the address is read from STDIN."/>
     <define name="BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-stealth" typeX="stealth_row" category="ONLINE" network="true" description="Get metadata on potential payment transactions by stealth prefix. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-stealth" typeX="stealth_row" category="ONLINE" network="true" description="Get metadata on potential payment transactions by stealth prefix. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="height" shortcut="t" type="uint32_t" description="The minimum block height of transactions to include."/>
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
@@ -256,17 +256,17 @@
     <define name="BX_FETCH_STEALTH_PREFIX_TOO_LONG" value="Stealth prefix is limited to 32 bits." />
   </command>
 
-  <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-tx" formerly="fetch-transaction" typeX="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN." />
   </command>
 
-  <command symbol="fetch-tx-index" formerly="fetch-transaction-index" typeX="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-tx-index" formerly="fetch-transaction-index" typeX="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash of the transaction index to get. If not specified the transaction hash is read from STDIN." />
   </command>
 
-  <command symbol="fetch-utxo" formerly="get-utxo" typeX="output" multipleX="true" category="ONLINE" stub="true" network="true" description="Get enough unspent transaction outputs from a Bitcoin addresses to pay a number of satoshi. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="fetch-utxo" formerly="get-utxo" typeX="output" multipleX="true" category="ONLINE" stub="true" network="true" description="Get enough unspent transaction outputs from a Bitcoin addresses to pay a number of satoshi. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address. If not specified the address is read from STDIN." />
@@ -539,7 +539,7 @@
     <define name="BX_URI_ENCODE_ADDRESS_CONFLICT" value="Only one Bitcoin or stealth address may specified." />
   </command>
   
-  <command symbol="validate-tx" formerly="validtx" typeX="string" category="ONLINE" network="true" description="Determine if a transaction is valid for submission to the blockchain. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="validate-tx" formerly="validtx" typeX="string" category="ONLINE" network="true" description="Determine if a transaction is valid for submission to the blockchain. Requires a Libbitcoin/Obelisk server connection.">
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_VALIDATE_TX_VALID" value="The transaction is valid." />
     <define name="BX_VALIDATE_TX_INVALID_INPUT" value="The transaction has an invalid input at index: %1%." />
@@ -550,7 +550,7 @@
     <define name="BX_WALLET_OBSOLETE" value="This experimental command is no longer supported." />
   </command>
 
-  <command symbol="watch-address" formerly="monitor" typeX="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="watch-address" formerly="monitor" typeX="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The participating Bitcoin address. If not specified the address is read from STDIN." />
     <define name="BX_WATCH_ADDRESS_WAITING" value="Watching address: %1%..." />
@@ -558,14 +558,14 @@
 
   <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
   <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
-  <!--<command symbol="watch-stealth" typeX="transaction" category="ONLINE" network="true" description="Watch the network for transactions by stealth prefix. Requires an Libbitcoin/Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL.">
+  <!--<command symbol="watch-stealth" typeX="transaction" category="ONLINE" network="true" description="Watch the network for transactions by stealth prefix. Requires a Libbitcoin/Obelisk server connection. WARNING: THIS COMMAND IS EXPERIMENTAL.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="PREFIX" stdin="true" type="base2" description="The Base2 stealth prefix to watch. If not specified the prefix is read from STDIN." />
     <define name="BX_WATCH_STEALTH_PREFIX_WAITING" value="Watching stealth prefix: %1%..." />
     <define name="BX_WATCH_STEALTH_PREFIX_TOO_LONG" value="Stealth prefix is limited to 32 bits." />
   </command>-->
 
-  <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires an Libbitcoin/Obelisk server connection.">
+  <command symbol="watch-tx" formerly="watchtx" typeX="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
     <define name="BX_WATCH_TX_WAITING" value="Watching transaction: %1%..." />
