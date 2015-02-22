@@ -120,7 +120,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Watch the network for a transaction by hash. Requires an Libbitcoin/Obelisk server connection.";
+        return "Watch the network for a transaction by hash. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**

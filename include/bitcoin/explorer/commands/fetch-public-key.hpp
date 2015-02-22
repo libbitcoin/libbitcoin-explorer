@@ -118,7 +118,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get the EC public key of the address, if it exists on the blockchain. Requires an Libbitcoin/Obelisk server connection.";
+        return "Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**

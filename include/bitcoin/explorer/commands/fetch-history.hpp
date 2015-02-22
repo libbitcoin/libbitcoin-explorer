@@ -105,7 +105,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get list of output points, values, and spends for a Bitcoin address. Requires an Libbitcoin/Obelisk server connection.";
+        return "Get list of output points, values, and spends for a Bitcoin address. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**
