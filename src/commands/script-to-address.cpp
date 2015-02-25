@@ -42,4 +42,3 @@ console_result script_to_address::invoke(std::ostream& output, std::ostream& err
     output << script_hash_address << std::endl;
     return console_result::okay;
 }
-
