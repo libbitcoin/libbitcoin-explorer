@@ -21,99 +21,53 @@
 #include <bitcoin/explorer/commands/fetch-public-key.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/display.hpp>
+#include <bitcoin/explorer/obelisk_client.hpp>
 
+using namespace bc;
+using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-console_result fetch_public_key::invoke(std::ostream& output,
-    std::ostream& error)
+console_result fetch_public_key::invoke(std::ostream& output, std::ostream& error)
 {
-    // Bound parameters.
+    //// Bound parameters.
     //const auto& address = get_bitcoin_address_argument();
+    //const auto retries = get_general_retries_setting();
+    //const auto timeout = get_general_wait_setting();
+    //const auto& server = if_else(get_general_network_setting() == BX_TESTNET,
+    //    get_testnet_url_setting(), get_mainnet_url_setting());
+
+    //czmqpp::context context;
+    //obelisk_client client(context, period_ms(timeout), retries);
+
+    //if (client.connect(server))
+    //{
+    //    display_connection_failure(error, server);
+    //    return console_result::failure;
+    //}
+
+    //callback_state state(error, output);
+
+    //auto on_done = [&state, &address](const client::history_list& rows)
+    //{
+    //    // TODO: get first rows tx where it (spend.hash) is not null.
+    //    // TODO: convert tx to pubkey and then stop.
+    //};
+
+    //auto on_error = [&state](const std::error_code& error)
+    //{
+    //    state.handle_error(error);
+    //};
+
+    //client.get_codec()->address_fetch_history(on_error, on_done, address);
+    //client.resolve_callbacks();
+
+    //return state.get_result();
 
     error << BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;
 }
-
-//#!/usr/bin/python
-//import sys, re, os, subprocess
-//
-//if (len(sys.argv) != 2):
-//    print >> sys.stderr, "Usage: sx get-pubkey ADDRESS"
-//    sys.exit(-1)
-//
-//address=sys.argv[1]
-//lines = os.popen('sx history '+address).readlines()
-//
-//# Convert to float or int if possible, otherwise leave as string
-//def attempt_num(x):
-//    if re.match('^(-|)[0-9]*(|\.[0-9]*)$',x): return float(x) if '.' in x else int(x)
-//    else: return x
-//
-//# run a shell command with/out input string
-//def run_command(command, input_str=None):
-//    if input_str!=None:
-//        p = subprocess.Popen(command, shell=True,
-//            stdin=subprocess.PIPE,
-//            stdout=subprocess.PIPE,
-//            stderr=subprocess.STDOUT)
-//        return p.communicate(input_str)
-//    else:
-//        p = subprocess.Popen(command, shell=True,
-//            stdout=subprocess.PIPE,
-//            stderr=subprocess.STDOUT)
-//        return p.communicate()
-//
-//# verify on blockchain
-//if len(lines) == 0:
-//    print >> sys.stderr, "Address "+address+" was not found on the blockchain"
-//    sys.exit(-1)
-//
-//# Create objects
-//txo = []
-//obj = {}
-//for i in range(len(lines)):
-//    indent = len(re.match('^ *',lines[i]).group(0))
-//    fields = [x for x in lines[i].strip().split(' ') if x]
-//    if len(fields) < 2:
-//        continue
-//    if indent == 0:
-//        if obj: txo.append(obj)
-//        obj = {}
-//    obj[fields[0][:-1]] = attempt_num(fields[1])
-//    obj["$txt"] = obj.get("$txt","") + lines[i]
-//
-//if obj: txo.append(obj)
-//
-//# look for spent tx
-//stxo=''
-//txid=''
-//for x in txo:
-//    if x["spend"] != "Unspent":
-//        stxo=x["spend"]
-//        break
-//# if not found, report
-//if stxo=='':
-//    print >> sys.stderr, "Address "+address+" has no spent tx so no public key is available"
-//    sys.exit(1)
-//
-//try:
-//    txid=stxo.split(':')[0]
-//except IndexError:
-//    print >> sys.stderr, "Failure parsing txid of stxo for address "+address
-//    sys.exit(1)
-//
-//# check the corresponding tx and retrieve the pubkey
-//f = os.popen('sx fetch-transaction '+txid).read()
-//parsed_tx=run_command('sx showtx', f)
-//first_tx=parsed_tx[0]
-//try:
-//    script=first_tx.split('script:')[1].split('sequence:')[0]
-//    if script.strip().startswith('zero'):
-//        print >> sys.stderr, "Cannot get public key for script hash based address "+address
-//        sys.exit(1)
-//    print first_tx.split('script:')[1].split('sequence:')[0].split('[ ')[-1].split()[0]
-//except IndexError:
-//    print >> sys.stderr, "Cannot parse data for address "+address
-//    sys.exit(1)

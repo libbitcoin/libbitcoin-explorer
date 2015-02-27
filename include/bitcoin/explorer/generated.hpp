@@ -42,6 +42,8 @@
 #include <bitcoin/explorer/commands/bitcoin256.hpp>
 #include <bitcoin/explorer/commands/blke-fetch-transaction.hpp>
 #include <bitcoin/explorer/commands/btc-to-satoshi.hpp>
+#include <bitcoin/explorer/commands/cert-new.hpp>
+#include <bitcoin/explorer/commands/cert-public.hpp>
 #include <bitcoin/explorer/commands/ec-add.hpp>
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 #include <bitcoin/explorer/commands/ec-lock.hpp>

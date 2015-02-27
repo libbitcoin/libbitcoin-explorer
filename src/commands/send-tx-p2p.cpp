@@ -105,10 +105,10 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto nodes = get_nodes_option();
     const tx_type& transaction = get_transaction_argument();
-    //const path& debug_logging = get_logging_debug_setting();
-    //const path& error_logging = get_logging_error_setting();
+    //const path& debug_file = get_logging_debug_file_setting();
+    //const path& error_file = get_logging_error_file_setting();
 
-    //bind_logging(debug_logging, error_logging);
+    //bind_logging(debug_file, error_file);
 
     async_client client(4);
     auto& pool = client.get_threadpool();
@@ -182,6 +182,8 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Delay until the stop handler has been called.
     while (!coalesced)
         sleep_ms(1);
+
+    client.stop();
 
     return state.get_result();
 }

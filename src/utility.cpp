@@ -24,7 +24,9 @@
 #include <random>
 #include <cstdint>
 #include <string>
+#include <tuple>
 #include <vector>
+#include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
@@ -35,9 +37,12 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 using namespace boost::posix_time;
+using namespace bc::client;
+using boost::filesystem::path;
 
 namespace libbitcoin {
 namespace explorer {
@@ -51,6 +56,32 @@ bool is_base2(const std::string& text)
     }
 
     return true;
+}
+
+bool is_testnet(const std::string& network)
+{
+    return network == BX_TESTNET;
+}
+
+connection_type get_connection(const command& cmd)
+{
+    if (is_testnet(cmd.get_general_network_setting()))
+        return connection_type
+        {
+            cmd.get_general_retries_setting(),
+            period_ms(cmd.get_general_wait_setting()),
+            cmd.get_testnet_cert_file_setting(),
+            cmd.get_testnet_url_setting(),
+            cmd.get_testnet_server_cert_key_setting()
+        };
+    else return connection_type
+        {
+            cmd.get_general_retries_setting(),
+            period_ms(cmd.get_general_wait_setting()),
+            cmd.get_mainnet_cert_file_setting(),
+            cmd.get_mainnet_url_setting(),
+            cmd.get_mainnet_server_cert_key_setting()
+        };
 }
 
 // The key may be invalid, caller may test for null secret.
@@ -120,6 +151,26 @@ std::string read_stream(std::istream& stream)
 script_type script_to_raw_data_script(const script_type& script)
 {
     return raw_data_script(save_script(script));
+}
+
+name_value_pairs split_pairs(const std::vector<std::string> tokens,
+    const std::string delimiter)
+{
+    name_value_pairs list;
+
+    for (const auto& token: tokens)
+    {
+        const auto words = split(token, delimiter);
+
+        const auto& left = words[0];
+        std::string right;
+        if (words.size() > 1)
+            right = words[1];
+
+        list.push_back(std::make_pair(left, right));
+    }
+
+    return list;
 }
 
 // Not unit testable (sleep).

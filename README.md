@@ -8,7 +8,7 @@
 
 [Documentation](https://github.com/libbitcoin/libbitcoin-explorer/wiki) is available on the wiki.
 
-[Downloads](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download) are available for Linux, Macintosh and Windows.
+[Downloads](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download-BX) are available for Linux, Macintosh and Windows.
 
 **License Overview**
 

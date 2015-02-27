@@ -170,7 +170,7 @@ echo "  with_pkgconfigdir: $with_pkgconfigdir"
 # Define boost options for gcc.
 #------------------------------------------------------------------------------
 BOOST_OPTIONS_GCC=\
-"threading=single "\
+"threading=multi "\
 "variant=release "\
 "--disable-icu "\
 "--with-chrono "\
@@ -191,7 +191,7 @@ BOOST_OPTIONS_CLANG=\
 "toolset=clang "\
 "cxxflags=-stdlib=${boost_stdlib} "\
 "linkflags=-stdlib=${boost_stdlib} "\
-"threading=single "\
+"threading=multi "\
 "variant=release "\
 "--disable-icu "\
 "--with-chrono "\
@@ -221,6 +221,7 @@ ZMQ_OPTIONS=\
 #------------------------------------------------------------------------------
 CZMQ_OPTIONS=\
 "--without-makecert "\
+"--without-test_zgossip "\
 "${with_pkgconfigdir} "
 
 # Define czmqpp options.

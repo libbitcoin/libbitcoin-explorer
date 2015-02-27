@@ -34,10 +34,12 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -70,7 +72,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_FETCH_STEALTH_PREFIX_TOO_LONG \
-    "WARNING: stealth prefix is limited to 32 bits."
+    "Stealth prefix is limited to 32 bits."
 
 /**
  * Class to implement the fetch-stealth command.
@@ -110,7 +112,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get metadata on potential payment transactions by stealth prefix. Requires an Obelisk server connection.";
+        return "Get metadata on potential payment transactions by stealth prefix. Requires a Libbitcoin server connection.";
     }
 
     /**

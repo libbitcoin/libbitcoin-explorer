@@ -24,6 +24,7 @@
 #include <boost/format.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/generated.hpp>
+#include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
@@ -43,7 +44,7 @@ void display_command_names(std::ostream& stream)
     broadcast(func);
 }
 
-void display_connection_failure(std::ostream& stream, const std::string& url)
+void display_connection_failure(std::ostream& stream, const primitives::uri& url)
 {
     stream << format(BX_CONNECTION_FAILURE) % url << std::endl;
 }

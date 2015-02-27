@@ -36,15 +36,19 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "    }\n" \
 "    logging\n" \
 "    {\n" \
-"        debug \"\"\n" \
-"        error \"\"\n" \
+"        debug_file \"\"\n" \
+"        error_file \"\"\n" \
 "    }\n" \
 "    mainnet\n" \
 "    {\n" \
+"        cert_file \"\"\n" \
+"        server_cert_key \"\"\n" \
 "        url \"\"\n" \
 "    }\n" \
 "    testnet\n" \
 "    {\n" \
+"        cert_file \"\"\n" \
+"        server_cert_key \"\"\n" \
 "        url \"\"\n" \
 "    }\n" \
 "}\n"
@@ -60,15 +64,19 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "    }\n" \
 "    logging\n" \
 "    {\n" \
-"        debug debug.log\n" \
-"        error error.log\n" \
+"        debug_file debug.log\n" \
+"        error_file error.log\n" \
 "    }\n" \
 "    mainnet\n" \
 "    {\n" \
+"        cert_file mainnet.certificate.zpl\n" \
+"        server_cert_key \"CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom\"\n" \
 "        url https://mainnet.obelisk.net:42\n" \
 "    }\n" \
 "    testnet\n" \
 "    {\n" \
+"        cert_file testnet.certificate.zpl\n" \
+"        server_cert_key \"DrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom\"\n" \
 "        url https://testnet.obelisk.net:42\n" \
 "    }\n" \
 "}\n"
@@ -87,9 +95,13 @@ BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
     command.set_general_network_setting("testnet");
     command.set_general_wait_setting(7000);
     command.set_mainnet_url_setting({ "https://mainnet.obelisk.net:42" });
+    command.set_mainnet_cert_file_setting("mainnet.certificate.zpl");
+    command.set_mainnet_server_cert_key_setting({ "CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });
     command.set_testnet_url_setting({ "https://testnet.obelisk.net:42" });
-    command.set_logging_debug_setting("debug.log");
-    command.set_logging_error_setting("error.log");
+    command.set_testnet_cert_file_setting("testnet.certificate.zpl");
+    command.set_testnet_server_cert_key_setting({ "DrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });
+    command.set_logging_debug_file_setting("debug.log");
+    command.set_logging_error_file_setting("error.log");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SETTINGS_TEST_VALUES);
 }

@@ -36,11 +36,6 @@ async_client::async_client(const size_t threads)
 {
 }
 
-async_client::~async_client()
-{
-    stop();
-}
-
 threadpool& async_client::get_threadpool()
 {
     return threadpool_;

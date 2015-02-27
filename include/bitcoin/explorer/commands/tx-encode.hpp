@@ -34,10 +34,12 @@
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/base64.hpp>
+#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
+#include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
@@ -120,8 +122,7 @@ public:
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("TRANSACTION", 1);
+        return get_argument_metadata();
     }
 
 	/**
@@ -173,11 +174,6 @@ public:
             "output,o",
             value<std::vector<primitives::output>>(&option_.outputs),
             "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs."
-        )
-        (
-            "TRANSACTION",
-            value<std::string>(&argument_.transaction),
-            "The encoded transaction file path. If not specified the transaction is written to STDOUT."
         );
 
         return options;
@@ -193,23 +189,6 @@ public:
         std::ostream& cerr);
 
     /* Properties */
-
-    /**
-     * Get the value of the TRANSACTION argument.
-     */
-    BCX_API virtual std::string& get_transaction_argument()
-    {
-        return argument_.transaction;
-    }
-
-    /**
-     * Set the value of the TRANSACTION argument.
-     */
-    BCX_API virtual void set_transaction_argument(
-        const std::string& value)
-    {
-        argument_.transaction = value;
-    }
 
     /**
      * Get the value of the lock_time option.
@@ -289,11 +268,9 @@ private:
     struct argument
     {
         argument()
-          : transaction()
         {
         }
 
-        std::string transaction;
     } argument_;
 
     /**

@@ -29,3 +29,4 @@ libbitcoin-explorer.pc
 /release/staging/bx-*
 /release/bx
 /release/bx.exe
+*.zpl

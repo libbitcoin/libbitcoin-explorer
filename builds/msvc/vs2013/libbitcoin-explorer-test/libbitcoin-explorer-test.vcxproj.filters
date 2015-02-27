@@ -86,6 +86,12 @@
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ec-add.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>

@@ -38,13 +38,38 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     // TODO: load from metadata into settings list.
     // This must be updated for any settings metadata change.
     settings_list list;
-    list["general.network"] = get_general_network_setting();
-    list["general.retries"] = serialize(get_general_retries_setting());
-    list["general.wait"] = serialize(get_general_wait_setting());
-    list["mainnet.url"] = get_mainnet_url_setting();
-    list["testnet.url"] = get_testnet_url_setting();
-    list["logging.debug"] = get_logging_debug_setting().generic_string();
-    list["logging.error"] = get_logging_error_setting().generic_string();
+
+    // [general]
+    list["general.network"] = 
+        get_general_network_setting();
+    list["general.retries"] = 
+        serialize(get_general_retries_setting());
+    list["general.wait"] = 
+        serialize(get_general_wait_setting());
+
+    // [logging]
+    list["logging.debug_file"] = 
+        get_logging_debug_file_setting().generic_string();
+    list["logging.error_file"] = 
+        get_logging_error_file_setting().generic_string();
+
+    // TODO: look into serializer object quoting.
+
+    // [mainnet]
+    list["mainnet.cert_file"] = 
+        get_mainnet_cert_file_setting().generic_string();
+    list["mainnet.server_cert_key"] = 
+        get_mainnet_server_cert_key_setting().get_base85();
+    list["mainnet.url"] = 
+        get_mainnet_url_setting().to_string();
+
+    // [testnet]
+    list["testnet.cert_file"] = 
+        get_testnet_cert_file_setting().generic_string();
+    list["testnet.server_cert_key"] = 
+        get_testnet_server_cert_key_setting().get_base85();
+    list["testnet.url"] = 
+        get_testnet_url_setting().to_string();
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;
