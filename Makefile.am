@@ -10,26 +10,23 @@ doc_DATA = README INSTALL COPYING
 #
 pkgconfig_DATA = libbitcoin-explorer.pc
 
-#
-# bash completion
-#
-if BASH_COMPLETION_DIR
-    bashcompletiondir = ${bash_completion_dir}
-    dist_bashcompletion_DATA = data/bx
-endif
-
-#
-# configuration file
-#
-confdir="${sysconfdir}/libbitcoin"
-conf_DATA = data/bx.cfg
-
 # look for macros in the m4 subdirectory
 ACLOCAL_AMFLAGS = -I m4
 
 #
-# headers
+# libraries
 #
+noinst_LTLIBRARIES = \
+    src/libbitcoin-explorer.la
+
+src_libbitcoin_explorer_la_CPPFLAGS = \
+    -I${srcdir}/include \
+    ${bitcoin_client_CFLAGS} \
+    -DSYSCONFDIR=\"${sysconfdir}\"
+
+src_libbitcoin_explorer_la_LIBADD = \
+    ${bitcoin_client_LIBS}
+    
 bitcoin_includedir = ${includedir}/bitcoin
 bitcoin_include_HEADERS = \
     include/bitcoin/explorer.hpp
@@ -188,16 +185,6 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/wrap-decode.hpp \
     include/bitcoin/explorer/commands/wrap-encode.hpp
 
-#
-# libraries
-#
-noinst_LTLIBRARIES = src/libbitcoin-explorer.la
-
-src_libbitcoin_explorer_la_CPPFLAGS = \
-    -I${srcdir}/include \
-    ${bitcoin_client_CFLAGS} \
-    -DSYSCONFDIR=\"${sysconfdir}\"
-
 src_libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
     src/callback_state.cpp \
@@ -339,20 +326,27 @@ src_libbitcoin_explorer_la_SOURCES += \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp
 
-src_libbitcoin_explorer_la_LIBADD = \
-    ${bitcoin_client_LIBS}
-
 #
 # console application
 #
-bin_PROGRAMS = bx
+if WITH_CONSOLE
+
+# bash completion
+if BASH_COMPLETION_DIR
+    bashcompletiondir = ${bash_completion_dir}
+    dist_bashcompletion_DATA = data/bx
+endif
+
+# configuration file
+confdir="${sysconfdir}/libbitcoin"
+conf_DATA = data/bx.cfg
+
+bin_PROGRAMS = \
+    bx
 
 bx_CPPFLAGS = \
     -I${srcdir}/include \
     ${bitcoin_client_CFLAGS}
-
-bx_SOURCES = \
-    src/console/main.cpp
 
 bx_LDADD = \
     src/libbitcoin-explorer.la \
@@ -360,18 +354,32 @@ bx_LDADD = \
     -lboost_program_options \
     ${bitcoin_client_LIBS}
 
+bx_SOURCES = \
+    src/console/main.cpp
+
+endif
+
 #
 # tests
 #
 if WITH_TESTS
 
-TESTS = run-tests.sh
+TESTS = \
+    run-tests.sh
 
-check_PROGRAMS = test/libbitcoin_explorer_test
+check_PROGRAMS = \
+    test/libbitcoin_explorer_test
 
 test_libbitcoin_explorer_test_CPPFLAGS = \
     -I${srcdir}/include \
     ${bitcoin_client_CFLAGS}
+
+test_libbitcoin_explorer_test_LDADD = \
+    src/libbitcoin-explorer.la \
+    -lboost_chrono \
+    -lboost_program_options \
+    -lboost_unit_test_framework \
+    ${bitcoin_client_LIBS}
 
 test_libbitcoin_explorer_test_SOURCES = \
     test/primitives/address.cpp \
@@ -480,12 +488,5 @@ test_libbitcoin_explorer_test_SOURCES += \
     test/commands/wif-to-public.cpp \
     test/commands/wrap-decode.cpp \
     test/commands/wrap-encode.cpp
-
-test_libbitcoin_explorer_test_LDADD = \
-    src/libbitcoin-explorer.la \
-    -lboost_chrono \
-    -lboost_program_options \
-    -lboost_unit_test_framework \
-    ${bitcoin_client_LIBS}
 
 endif
