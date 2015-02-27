@@ -94,6 +94,17 @@ AC_ARG_WITH([tests],
 AC_MSG_RESULT([$with_tests])
 AM_CONDITIONAL([WITH_TESTS], [test x$with_tests != xno])
 
+# Implement --with-console and declare WITH_CONSOLE.
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING(--with-console option)
+AC_ARG_WITH([console],
+    AS_HELP_STRING([--with-console],
+        [Compile console application. @<:@default=yes@:>@]),
+    [with_console=$withval],
+    [with_console=yes])
+AC_MSG_RESULT([$with_console])
+AM_CONDITIONAL([WITH_CONSOLE], [test x$with_console != xno])
+
 # Implement --enable-ndebug option and define NDEBUG.
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING(--enable-ndebug option)
