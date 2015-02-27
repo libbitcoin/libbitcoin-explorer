@@ -47,6 +47,7 @@ function global.map_type(type)
     my.type_uri = "uri"
     my.type_wif = "wif"
     my.type_wrapper = "wrapper"
+    my.type_bip39_language = "bip39_language"
 
     my.type_address_bx = "primitives::address"
     my.type_base16_bx = "primitives::base16"
@@ -80,6 +81,7 @@ function global.map_type(type)
     my.type_uri_bx = "primitives::uri"
     my.type_wif_bx = "primitives::wif"
     my.type_wrapper_bx = "primitives::wrapper"
+    my.type_bip39_language_bx = "primitives::bip39_language"
 
     if my.type = my.type_address
         return my.type_address_bx
@@ -145,6 +147,8 @@ function global.map_type(type)
         return my.type_wif_bx
     elsif my.type = my.type_wrapper
         return my.type_wrapper_bx
+    elsif my.type = my.type_bip39_language
+        return my.type_bip39_language_bx
     endif
     return my.type
 endfunction
@@ -236,6 +240,7 @@ endfunction
 #include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/primitives/bip39_language.hpp>
 .endmacro
 .
 .endtemplate

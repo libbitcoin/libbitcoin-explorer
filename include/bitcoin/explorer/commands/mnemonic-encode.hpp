@@ -57,6 +57,7 @@
 #include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/primitives/bip39_language.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -69,7 +70,9 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_EC_MNEMONIC_ENCODE_SHORT_SEED \
-    "The seed is less than 128 bits long."
+    "The seed is less than 512 bits long."
+#define BX_EC_MNEMONIC_INVALID_SEED \
+    "The seed is not divisible by 4."
 
 /**
  * Class to implement the mnemonic-encode command.
@@ -116,7 +119,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert a seed to its Electrum mnemonic. WARNING: This implementation is deprecated in favor of BIP39.";
+        return "Generate a BIP39 mnemonic with the specified seed.";
     }
 
     /**
@@ -127,7 +130,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SEED", 1);
+            .add("SEED", 1)
+            .add("language", 1);
     }
 
 	/**
@@ -164,7 +168,12 @@ public:
         (
             "SEED",
             value<primitives::base16>(&argument_.seed),
-            "The Base16 randomness seed.  Must be at least 128 bits in length. If not specified the seed is read from STDIN."
+            "The Base16 randomness seed.  Must be at least 512 bits in length. If not specified the seed is read from STDIN."
+        )
+        (
+            "language",
+            value<primitives::bip39_language>(&argument_.language),
+            "Specify mnemonic language."
         );
 
         return options;
@@ -198,6 +207,23 @@ public:
         argument_.seed = value;
     }
 
+    /**
+     * Get the value of the language argument.
+     */
+    BCX_API virtual primitives::bip39_language& get_language_argument()
+    {
+        return argument_.language;
+    }
+
+    /**
+     * Set the value of the language argument.
+     */
+    BCX_API virtual void set_language_argument(
+        const primitives::bip39_language& value)
+    {
+        argument_.language = value;
+    }
+
 private:
 
     /**
@@ -208,11 +234,13 @@ private:
     struct argument
     {
         argument()
-          : seed()
+          : seed(),
+            language()
         {
         }
 
         primitives::base16 seed;
+        primitives::bip39_language language;
     } argument_;
 
     /**

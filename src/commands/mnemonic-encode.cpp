@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
  *
@@ -29,23 +29,42 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
+static libbitcoin::bip39_language get_bip39_language(
+    primitives::bip39_language language)
+{
+    std::string lang_str = language;
+    boost::to_upper(lang_str);
+    if (lang_str == "JAPANESE") {
+        return libbitcoin::bip39_language::ja;
+    }
+    else if (lang_str == "SPANISH") {
+        return libbitcoin::bip39_language::es;
+    }
+    else if (lang_str == "CHINESE") {
+        return libbitcoin::bip39_language::zh;
+    }
+    return libbitcoin::bip39_language::en;
+}
+
 console_result mnemonic_encode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
+    const auto& language = get_language_argument();
     const data_chunk& seed = get_seed_argument();
 
-    if (seed.size() < minimum_seed_size)
-    {
+    if (seed.size() < minimum_seed_size) {
+        error << BX_EC_MNEMONIC_ENCODE_SHORT_SEED << std::endl;
+        return console_result::failure;
+    }
+    if ((seed.size() % 4) != 0) {
         error << BX_EC_MNEMONIC_ENCODE_SHORT_SEED << std::endl;
         return console_result::failure;
     }
 
-    // TODO: change implementation from Electrum to BIP39.
-
-    const auto sentence = join(encode_mnemonic(seed));
+    const auto sentence = join(
+        encode_mnemonic(seed, get_bip39_language(language)));
 
     output << sentence << std::endl;
     return console_result::okay;
 }
-

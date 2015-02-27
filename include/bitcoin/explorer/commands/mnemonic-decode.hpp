@@ -57,6 +57,7 @@
 #include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/primitives/bip39_language.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -68,8 +69,14 @@ namespace commands {
 /**
  * Various localizable strings.
  */
+#define BX_EC_MNEMONIC_DECODE_LENGTH_INVALID_SENTENCE \
+    "The number of words must be a multiple of three."
 #define BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE \
-    "At least three words are required."
+    "At least twelve words are required."
+#define BX_EC_MNEMONIC_DECODE_SENTENCE_INVALID \
+    "The specified words are not a valid BIP39 mnemonic."
+#define BX_EC_MNEMONIC_DECODE_SENTENCE_LENGTH_EXCEEDED \
+    "The maximum number of words (512) has been exceeded."
 
 /**
  * Class to implement the mnemonic-decode command.
@@ -109,7 +116,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39.";
+        return "Convert a BIP39 mnemonic to its seed. WARNING: mnemonic should be generated from properly formed random seed.";
     }
 
     /**
@@ -155,9 +162,14 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "passphrase,p",
+            value<std::string>(&option_.passphrase),
+            "An optional passphrase for BIP39 encoding/decoding."
+        )
+        (
             "WORD",
             value<std::vector<std::string>>(&argument_.words),
-            "The set of words from the Electrum word list. If not specified the words are read from STDIN."
+            "The set of words from the BIP39 word list. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -191,6 +203,23 @@ public:
         argument_.words = value;
     }
 
+    /**
+     * Get the value of the passphrase option.
+     */
+    BCX_API virtual std::string& get_passphrase_option()
+    {
+        return option_.passphrase;
+    }
+
+    /**
+     * Set the value of the passphrase option.
+     */
+    BCX_API virtual void set_passphrase_option(
+        const std::string& value)
+    {
+        option_.passphrase = value;
+    }
+
 private:
 
     /**
@@ -216,9 +245,11 @@ private:
     struct option
     {
         option()
+          : passphrase()
         {
         }
 
+        std::string passphrase;
     } option_;
 };
 

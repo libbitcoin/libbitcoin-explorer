@@ -352,16 +352,22 @@
     <define name="BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
   </command>
 
-  <command symbol="mnemonic-decode" typeX="base16" category="WALLET" description="Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39.">
-    <argument name="WORD" stdin="true" limit="-1" description="The set of words from the Electrum word list. If not specified the words are read from STDIN." />
-    <define name="BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE" value="At least three words are required." />
+  <command symbol="mnemonic-decode" typeX="base16" category="WALLET" description="Convert a BIP39 mnemonic to its seed. WARNING: mnemonic should be generated from properly formed random seed.">
+    <option name="passphrase" shortcut="p" type="string" description="An optional passphrase for BIP39 encoding/decoding." />
+    <argument name="WORD" stdin="true" limit="-1" description="The set of words from the BIP39 word list. If not specified the words are read from STDIN." />
+    <define name="BX_EC_MNEMONIC_DECODE_LENGTH_INVALID_SENTENCE" value="The number of words must be a multiple of three." />
+    <define name="BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE" value="At least twelve words are required." />
+    <define name="BX_EC_MNEMONIC_DECODE_SENTENCE_INVALID" value="The specified words are not a valid BIP39 mnemonic." />
+    <define name="BX_EC_MNEMONIC_DECODE_SENTENCE_LENGTH_EXCEEDED" value="The maximum number of words (512) has been exceeded." />
   </command>
-  
-  <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="WALLET" description="Convert a seed to its Electrum mnemonic. WARNING: This implementation is deprecated in favor of BIP39.">
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed.  Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
-    <define name="BX_EC_MNEMONIC_ENCODE_SHORT_SEED" value="The seed is less than 128 bits long." />
+
+  <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="WALLET" description="Generate a BIP39 mnemonic with the specified seed.">
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed.  Must be at least 512 bits in length. If not specified the seed is read from STDIN." />
+    <argument name="language" type="bip39_language" description="Specify mnemonic language." />
+    <define name="BX_EC_MNEMONIC_ENCODE_SHORT_SEED" value="The seed is less than 512 bits long." />
+    <define name="BX_EC_MNEMONIC_INVALID_SEED" value="The seed is not divisible by 4." />
   </command>
-  
+
   <command symbol="mpk" category="ELECTRUM" obsolete="true" description="Extract a master public key from a deterministic wallet seed.">
     <define name="BX_MPK_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>

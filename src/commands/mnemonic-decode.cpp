@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
  *
@@ -28,22 +28,34 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-// TODO: change implementation from Electrum to BIP39.
 console_result mnemonic_decode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
+    const auto& passphrase = get_passphrase_option();
     const auto& words = get_words_argument();
 
-    if (words.size() < 3)
-    {
+    auto word_count = words.size();
+    if (word_count < 12) {
         error << BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE << std::endl;
         return console_result::failure;
     }
+    if ((word_count % 3) != 0) {
+        error << BX_EC_MNEMONIC_DECODE_LENGTH_INVALID_SENTENCE << std::endl;
+        return console_result::failure;
+    }
+    if (word_count > max_word_count) {
+        error << BX_EC_MNEMONIC_DECODE_SENTENCE_LENGTH_EXCEEDED << std::endl;
+        return console_result::failure;
+    }
 
-    // Note that there is no dictionary validation in decode_mnemonic.
-    const auto sentence = decode_mnemonic(words);
+    const auto seed = decode_mnemonic(words, passphrase);
+    if (seed.size() == 0) {
+        error << BX_EC_MNEMONIC_DECODE_SENTENCE_INVALID << std::endl;
+        return console_result::failure;
+    }
 
+    std::string sentence = std::string(encode_base16(seed));
     output << sentence << std::endl;
     return console_result::okay;
 }
