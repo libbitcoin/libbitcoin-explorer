@@ -44,10 +44,6 @@ console_result mnemonic_decode::invoke(std::ostream& output,
         error << BX_EC_MNEMONIC_DECODE_LENGTH_INVALID_SENTENCE << std::endl;
         return console_result::failure;
     }
-    if (word_count > max_word_count) {
-        error << BX_EC_MNEMONIC_DECODE_SENTENCE_LENGTH_EXCEEDED << std::endl;
-        return console_result::failure;
-    }
 
     const auto seed = decode_mnemonic(words, passphrase);
     if (seed.size() == 0) {

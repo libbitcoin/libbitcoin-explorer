@@ -32,18 +32,18 @@ using namespace bc::explorer::commands;
 static libbitcoin::bip39_language get_bip39_language(
     primitives::bip39_language language)
 {
-    std::string lang_str = language;
-    boost::to_upper(lang_str);
-    if (lang_str == "JAPANESE") {
-        return libbitcoin::bip39_language::ja;
+    std::map<const std::string, libbitcoin::bip39_language> languages = {
+        { "ENGLISH", libbitcoin::bip39_language::en },
+        { "JAPANESE", libbitcoin::bip39_language::ja },
+        { "SPANISH", libbitcoin::bip39_language::es },
+        { "CHINESE", libbitcoin::bip39_language::zh_Hans }
+    };
+    std::string lang = language;
+    boost::to_upper(lang);
+    if (languages.find(lang) == languages.end()) {
+        return libbitcoin::bip39_language::en;
     }
-    else if (lang_str == "SPANISH") {
-        return libbitcoin::bip39_language::es;
-    }
-    else if (lang_str == "CHINESE") {
-        return libbitcoin::bip39_language::zh;
-    }
-    return libbitcoin::bip39_language::en;
+    return languages[lang];
 }
 
 console_result mnemonic_encode::invoke(std::ostream& output,
