@@ -201,9 +201,15 @@
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp">
-      <Filter>src\tests\commands</Filter>
+      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp">
+      <Filter>src\tests\commands\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\mnemonic-new.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\mnemonic-to-seed.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mpk.cpp">

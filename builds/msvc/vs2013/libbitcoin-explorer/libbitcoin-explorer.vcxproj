@@ -6,10 +6,10 @@
 -->
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <NuGetPackageImportStamp>82a52cd0</NuGetPackageImportStamp>
     <PlatformToolset>CTP_Nov2013</PlatformToolset>
     <ProjectGuid>{4A1D71D5-3DEE-47F0-A189-21C301E2808F}</ProjectGuid>
     <ProjectName>libbitcoin-explorer</ProjectName>
+    <NuGetPackageImportStamp>4fc3919d</NuGetPackageImportStamp>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDLL|Win32">
@@ -110,6 +110,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\hd_pub.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\header.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\input.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\language.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\output.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\point.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\raw.hpp" />
@@ -182,6 +183,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\message-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-new.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-to-seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mpk.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\newseed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\qrcode.hpp" />
@@ -251,6 +254,7 @@
     <ClCompile Include="..\..\..\..\src\primitives\hd_pub.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\header.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\input.cpp" />
+    <ClCompile Include="..\..\..\..\src\primitives\language.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\output.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\point.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\raw.cpp" />
@@ -322,6 +326,8 @@
     <ClCompile Include="..\..\..\..\src\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\mnemonic-new.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\mnemonic-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mpk.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\newseed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\qrcode.cpp" />
@@ -366,6 +372,7 @@
   <ImportGroup Label="ExtensionSettings">
     <Import Project="..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_filesystem-vc120.1.56.0.0\build\native\boost_filesystem-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_filesystem-vc120.1.56.0.0\build\native\boost_filesystem-vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\boost_locale-vc120.1.56.0.0\build\native\boost_locale-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_locale-vc120.1.56.0.0\build\native\boost_locale-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_program_options-vc120.1.56.0.0\build\native\boost_program_options-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_program_options-vc120.1.56.0.0\build\native\boost_program_options-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" />
@@ -381,6 +388,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost.1.56.0.0\build\native\boost.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_filesystem-vc120.1.56.0.0\build\native\boost_filesystem-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_filesystem-vc120.1.56.0.0\build\native\boost_filesystem-vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_locale-vc120.1.56.0.0\build\native\boost_locale-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_locale-vc120.1.56.0.0\build\native\boost_locale-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_program_options-vc120.1.56.0.0\build\native\boost_program_options-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_program_options-vc120.1.56.0.0\build\native\boost_program_options-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_regex-vc120.1.56.0.0\build\native\boost_regex-vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\boost_system-vc120.1.56.0.0\build\native\boost_system-vc120.targets'))" />

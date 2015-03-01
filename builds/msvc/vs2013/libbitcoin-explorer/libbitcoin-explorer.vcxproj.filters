@@ -225,9 +225,15 @@
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-decode.hpp">
-      <Filter>include\bitcoin\explorer\commands</Filter>
+      <Filter>include\bitcoin\explorer\commands\obsolete</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-encode.hpp">
+      <Filter>include\bitcoin\explorer\commands\obsolete</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-new.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-to-seed.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mpk.hpp">
@@ -411,6 +417,9 @@
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\input.hpp">
+      <Filter>include\bitcoin\explorer\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\language.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\output.hpp">
@@ -653,9 +662,15 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-decode.cpp">
-      <Filter>src\commands</Filter>
+      <Filter>src\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-encode.cpp">
+      <Filter>src\commands\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\mnemonic-new.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\mnemonic-to-seed.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\mpk.cpp">
@@ -833,6 +848,9 @@
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\input.cpp">
+      <Filter>src\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\primitives\language.cpp">
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\output.cpp">

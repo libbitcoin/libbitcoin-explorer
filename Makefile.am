@@ -59,7 +59,7 @@ bitcoin_explorer_primitives_include_HEADERS = \
     include/bitcoin/explorer/primitives/base58.hpp \
     include/bitcoin/explorer/primitives/base64.hpp \
     include/bitcoin/explorer/primitives/base85.hpp \
-    include/bitcoin/explorer/primitives/bip39_language.hpp \
+    include/bitcoin/explorer/primitives/language.hpp \
     include/bitcoin/explorer/primitives/btc.hpp \
     include/bitcoin/explorer/primitives/btc160.hpp \
     include/bitcoin/explorer/primitives/btc256.hpp \
@@ -147,6 +147,8 @@ bitcoin_explorer_commands_include_HEADERS = \
     include/bitcoin/explorer/commands/message-validate.hpp \
     include/bitcoin/explorer/commands/mnemonic-decode.hpp \
     include/bitcoin/explorer/commands/mnemonic-encode.hpp \
+    include/bitcoin/explorer/commands/mnemonic-new.hpp \
+    include/bitcoin/explorer/commands/mnemonic-to-seed.hpp \
     include/bitcoin/explorer/commands/mpk.hpp \
     include/bitcoin/explorer/commands/newseed.hpp \
     include/bitcoin/explorer/commands/qrcode.hpp \
@@ -201,7 +203,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/base58.cpp \
     src/primitives/base64.cpp \
     src/primitives/base85.cpp \
-    src/primitives/bip39_language.cpp \
+    src/primitives/language.cpp \
     src/primitives/btc.cpp \
     src/primitives/btc160.cpp \
     src/primitives/btc256.cpp \
@@ -289,6 +291,8 @@ src_libbitcoin_explorer_la_SOURCES += \
     src/commands/message-validate.cpp \
     src/commands/mnemonic-decode.cpp \
     src/commands/mnemonic-encode.cpp \
+    src/commands/mnemonic-new.cpp \
+    src/commands/mnemonic-to-seed.cpp \
     src/commands/mpk.cpp \
     src/commands/newseed.cpp \
     src/commands/qrcode.cpp \
@@ -452,6 +456,8 @@ test_libbitcoin_explorer_test_SOURCES += \
     test/commands/message-validate.cpp \
     test/commands/mnemonic-decode.cpp \
     test/commands/mnemonic-encode.cpp \
+    test/commands/mnemonic-new.cpp \
+    test/commands/mnemonic-to-seed.cpp \
     test/commands/mpk.cpp \
     test/commands/newseed.cpp \
     test/commands/qrcode.cpp \

@@ -56,8 +56,8 @@ _bx()
         input-validate
         message-sign
         message-validate
-        mnemonic-decode
-        mnemonic-encode
+        mnemonic-new
+        mnemonic-to-seed
         qrcode
         ripemd160
         satoshi-to-btc
