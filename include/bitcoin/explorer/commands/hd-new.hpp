@@ -50,6 +50,7 @@
 #include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
@@ -59,7 +60,6 @@
 #include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
-#include <bitcoin/explorer/primitives/bip39_language.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -169,7 +169,7 @@ public:
         (
             "SEED",
             value<primitives::base16>(&argument_.seed),
-            "The Base16 randomness seed for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN."
+            "The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN."
         );
 
         return options;
