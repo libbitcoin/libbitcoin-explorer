@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
  *
@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 
-#include <exception>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -32,46 +33,49 @@ namespace explorer {
 namespace primitives {
 
 // DRY
-static const char* encoding_info = "info";
-static const char* encoding_json = "json";
-static const char* encoding_xml = "xml";
+static const char* language_en = "en";
+static const char* language_es = "es";
+static const char* language_ja = "ja";
+static const char* language_zh = "zh";
 
-encoding::encoding()
-    : encoding(encoding_engine::info)
+language::language()
+    : language(bip39::language::en)
 {
 }
 
-encoding::encoding(const std::string& token)
+language::language(const std::string& token)
 {
     std::stringstream(token) >> *this;
 }
 
-encoding::encoding(encoding_engine engine)
-    : value_(engine)
+language::language(bip39::language language)
+    : value_(language)
 {
 }
 
-encoding::encoding(const encoding& other)
-    : value_(other.value_)
+language::language(const language& other)
+    : language(other.value_)
 {
 }
 
-encoding::operator encoding_engine() const
+language::operator bip39::language() const
 {
     return value_;
 }
 
-std::istream& operator>>(std::istream& input, encoding& argument)
+std::istream& operator>>(std::istream& input, language& argument)
 {
     std::string text;
     input >> text;
 
-    if (text == encoding_info)
-        argument.value_ = encoding_engine::info;
-    else if (text == encoding_json)
-        argument.value_ = encoding_engine::json;
-    else if (text == encoding_xml)
-        argument.value_ = encoding_engine::xml;
+    if (text == language_en)
+        argument.value_ = bip39::language::en;
+    else if (text == language_es)
+        argument.value_ = bip39::language::es;
+    else if (text == language_ja)
+        argument.value_ = bip39::language::ja;
+    else if (text == language_zh)
+        argument.value_ = bip39::language::zh_Hans;
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -80,20 +84,23 @@ std::istream& operator>>(std::istream& input, encoding& argument)
     return input;
 }
 
-std::ostream& operator<<(std::ostream& output, const encoding& argument)
+std::ostream& operator<<(std::ostream& output, const language& argument)
 {
     std::string value;
 
     switch (argument.value_)
     {
-        case encoding_engine::info:
-            value = encoding_info;
+        case bip39::language::en:
+            value = language_en;
             break;
-        case encoding_engine::json:
-            value = encoding_json;
+        case bip39::language::es:
+            value = language_es;
             break;
-        case encoding_engine::xml:
-            value = encoding_xml;
+        case bip39::language::ja:
+            value = language_ja;
+            break;
+        case bip39::language::zh_Hans:
+            value = language_zh;
             break;
         default:
             BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");

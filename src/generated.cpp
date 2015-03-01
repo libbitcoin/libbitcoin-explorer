@@ -95,6 +95,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<message_validate>());
     func(make_shared<mnemonic_decode>());
     func(make_shared<mnemonic_encode>());
+    func(make_shared<mnemonic_new>());
+    func(make_shared<mnemonic_to_seed>());
     func(make_shared<mpk>());
     func(make_shared<newseed>());
     func(make_shared<qrcode>());
@@ -253,6 +255,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<mnemonic_decode>();
     if (symbol == mnemonic_encode::symbol())
         return make_shared<mnemonic_encode>();
+    if (symbol == mnemonic_new::symbol())
+        return make_shared<mnemonic_new>();
+    if (symbol == mnemonic_to_seed::symbol())
+        return make_shared<mnemonic_to_seed>();
     if (symbol == mpk::symbol())
         return make_shared<mpk>();
     if (symbol == newseed::symbol())

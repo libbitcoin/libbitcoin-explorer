@@ -82,6 +82,8 @@
 #include <bitcoin/explorer/commands/message-validate.hpp>
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
+#include <bitcoin/explorer/commands/mnemonic-new.hpp>
+#include <bitcoin/explorer/commands/mnemonic-to-seed.hpp>
 #include <bitcoin/explorer/commands/mpk.hpp>
 #include <bitcoin/explorer/commands/newseed.hpp>
 #include <bitcoin/explorer/commands/qrcode.hpp>

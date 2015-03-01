@@ -50,6 +50,7 @@
 #include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
@@ -59,7 +60,6 @@
 #include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
-#include <bitcoin/explorer/primitives/bip39_language.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -71,12 +71,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_DECODE_LENGTH_INVALID_SENTENCE \
-    "The number of words must be a multiple of three."
-#define BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE \
-    "At least twelve words are required."
-#define BX_EC_MNEMONIC_DECODE_SENTENCE_INVALID \
-    "The specified words are not a valid BIP39 mnemonic."
+#define BX_MNEMONIC_DECODE_OBSOLETE \
+    "Electrum style key functions are obsolete. Use mnemonic-to-seed (BIP39) command instead."
 
 /**
  * Class to implement the mnemonic-decode command.
@@ -108,7 +104,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "ELECTRUM";
     }
 
     /**
@@ -116,7 +112,16 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert a BIP39 mnemonic to its seed. WARNING: mnemonic should be generated from properly formed random seed.";
+        return "Convert a seed to its Electrum mnemonic.";
+    }
+
+    /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    BCX_API virtual bool obsolete()
+    {
+        return true;
     }
 
     /**
@@ -126,8 +131,7 @@ public:
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("WORD", -1);
+        return get_argument_metadata();
     }
 
 	/**
@@ -138,7 +142,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_words_argument(), "WORD", variables, input);
     }
 
     /**
@@ -160,16 +163,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "passphrase,p",
-            value<std::string>(&option_.passphrase),
-            "An optional passphrase for BIP39 encoding/decoding."
-        )
-        (
-            "WORD",
-            value<std::vector<std::string>>(&argument_.words),
-            "The set of words from the BIP39 word list. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -186,40 +179,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the WORD arguments.
-     */
-    BCX_API virtual std::vector<std::string>& get_words_argument()
-    {
-        return argument_.words;
-    }
-
-    /**
-     * Set the value of the WORD arguments.
-     */
-    BCX_API virtual void set_words_argument(
-        const std::vector<std::string>& value)
-    {
-        argument_.words = value;
-    }
-
-    /**
-     * Get the value of the passphrase option.
-     */
-    BCX_API virtual std::string& get_passphrase_option()
-    {
-        return option_.passphrase;
-    }
-
-    /**
-     * Set the value of the passphrase option.
-     */
-    BCX_API virtual void set_passphrase_option(
-        const std::string& value)
-    {
-        option_.passphrase = value;
-    }
-
 private:
 
     /**
@@ -230,11 +189,9 @@ private:
     struct argument
     {
         argument()
-          : words()
         {
         }
 
-        std::vector<std::string> words;
     } argument_;
 
     /**
@@ -245,11 +202,9 @@ private:
     struct option
     {
         option()
-          : passphrase()
         {
         }
 
-        std::string passphrase;
     } option_;
 };
 

@@ -24,7 +24,6 @@
 #include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -33,34 +32,40 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between base16 string and short_hash.
+ * Serialization helper to convert between bip39_langauge and string.
  */
-class bip39_language
+class language
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API bip39_language();
+    BCX_API language();
 
     /**
      * Initialization constructor.
-     * @param[in]  hexcode  The value to initialize with.
+     * @param[in]  token  The value to initialize with.
      */
-    BCX_API bip39_language(const std::string& language);
+    BCX_API language(const std::string& token);
+
+    /**
+     * Initialization constructor.
+     * @param[in]  language  The value to initialize with.
+     */
+    BCX_API language(bc::bip39::language language);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API bip39_language(const bip39_language& other);
+    BCX_API language(const language& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const std::string&() const;
+    BCX_API operator bc::bip39::language() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -69,7 +74,7 @@ public:
      * @return                The input stream reference.
      */
     BCX_API friend std::istream& operator>>(std::istream& input,
-        bip39_language& argument);
+        language& argument);
 
     /**
      * Overload stream out.
@@ -78,14 +83,14 @@ public:
      * @return                The output stream reference.
      */
     BCX_API friend std::ostream& operator<<(std::ostream& output,
-        const bip39_language& argument);
+        const language& argument);
 
 private:
 
     /**
      * The state of this object.
      */
-    std::string value_;
+    bc::bip39::language value_;
 };
 
 } // namespace explorer

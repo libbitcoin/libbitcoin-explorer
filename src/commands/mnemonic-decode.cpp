@@ -24,29 +24,12 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
 console_result mnemonic_decode::invoke(std::ostream& output,
     std::ostream& error)
 {
-    // Bound parameters.
-    const auto& passphrase = get_passphrase_option();
-    const auto& words = get_words_argument();
-
-    auto word_count = words.size();
-    if (word_count < 12) {
-        error << BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE << std::endl;
-        return console_result::failure;
-    }
-    if ((word_count % 3) != 0) {
-        error << BX_EC_MNEMONIC_DECODE_LENGTH_INVALID_SENTENCE << std::endl;
-        return console_result::failure;
-    }
-
-    // Note that there is no dictionary validation in decode_mnemonic.
-    const auto hexidecimal = decode_mnemonic(words, passphrase);
-    output << primitives::base16(hexidecimal) << std::endl;
-    return console_result::okay;
+    error << BX_MNEMONIC_DECODE_OBSOLETE << std::endl;
+    return console_result::failure;
 }

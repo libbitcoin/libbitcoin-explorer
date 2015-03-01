@@ -48,9 +48,9 @@ public:
 
     /**
      * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
+     * @param[in]  engine  The value to initialize with.
      */
-    BCX_API encoding(const encoding_engine& value);
+    BCX_API encoding(encoding_engine engine);
 
     /**
      * Copy constructor.

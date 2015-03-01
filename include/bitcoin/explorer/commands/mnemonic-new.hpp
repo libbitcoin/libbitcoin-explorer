@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MNEMONIC_ENCODE_HPP
-#define BX_MNEMONIC_ENCODE_HPP
+#ifndef BX_MNEMONIC_NEW_HPP
+#define BX_MNEMONIC_NEW_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -71,13 +71,15 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_MNEMONIC_ENCODE_OBSOLETE \
-    "Electrum style key functions are obsolete. Use mnemonic-new (BIP39) command instead."
+#define BX_EC_MNEMONIC_NEW_SHORT_ENTROPY \
+    "The seed is less than 128 bits long."
+#define BX_EC_MNEMONIC_NEW_INVALID_ENTROPY \
+    "The seed length in bytes is not evenly divisible by 32 bits."
 
 /**
- * Class to implement the mnemonic-encode command.
+ * Class to implement the mnemonic-new command.
  */
-class mnemonic_encode 
+class mnemonic_new 
     : public command
 {
 public:
@@ -87,23 +89,16 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "mnemonic-encode";
+        return "mnemonic-new";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    BCX_API static const char* formerly()
-    {
-        return "mnemonic";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     BCX_API virtual const char* name()
     {
-        return mnemonic_encode::symbol();
+        return mnemonic_new::symbol();
     }
 
     /**
@@ -111,7 +106,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "ELECTRUM";
+        return "WALLET";
     }
 
     /**
@@ -119,16 +114,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert an Electrum mnemonic to its seed.";
-    }
-
-    /**
-     * Declare whether the command has been obsoleted.
-     * @return  True if the command is obsolete
-     */
-    BCX_API virtual bool obsolete()
-    {
-        return true;
+        return "Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.";
     }
 
     /**
@@ -138,7 +124,8 @@ public:
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("SEED", 1);
     }
 
 	/**
@@ -149,6 +136,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_seed_argument(), "SEED", variables, input);
     }
 
     /**
@@ -170,6 +158,21 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
+        )
+        (
+            "language,l",
+            value<primitives::language>(&option_.language),
+            "The two letter language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja' and 'zh', defaults to 'en'."
+        )
+        (
+            "passphrase,p",
+            value<std::string>(&option_.passphrase),
+            "An optional passphrase for encoding the mnemonic."
+        )
+        (
+            "SEED",
+            value<primitives::base16>(&argument_.seed),
+            "The Base16 entropy from which the mnemonic is created. The length must be at least 128 bits and evenly divisible by 32 bits. If not specified the entropy is read from STDIN."
         );
 
         return options;
@@ -186,6 +189,57 @@ public:
 
     /* Properties */
 
+    /**
+     * Get the value of the SEED argument.
+     */
+    BCX_API virtual primitives::base16& get_seed_argument()
+    {
+        return argument_.seed;
+    }
+
+    /**
+     * Set the value of the SEED argument.
+     */
+    BCX_API virtual void set_seed_argument(
+        const primitives::base16& value)
+    {
+        argument_.seed = value;
+    }
+
+    /**
+     * Get the value of the language option.
+     */
+    BCX_API virtual primitives::language& get_language_option()
+    {
+        return option_.language;
+    }
+
+    /**
+     * Set the value of the language option.
+     */
+    BCX_API virtual void set_language_option(
+        const primitives::language& value)
+    {
+        option_.language = value;
+    }
+
+    /**
+     * Get the value of the passphrase option.
+     */
+    BCX_API virtual std::string& get_passphrase_option()
+    {
+        return option_.passphrase;
+    }
+
+    /**
+     * Set the value of the passphrase option.
+     */
+    BCX_API virtual void set_passphrase_option(
+        const std::string& value)
+    {
+        option_.passphrase = value;
+    }
+
 private:
 
     /**
@@ -196,9 +250,11 @@ private:
     struct argument
     {
         argument()
+          : seed()
         {
         }
 
+        primitives::base16 seed;
     } argument_;
 
     /**
@@ -209,9 +265,13 @@ private:
     struct option
     {
         option()
+          : language(),
+            passphrase()
         {
         }
 
+        primitives::language language;
+        std::string passphrase;
     } option_;
 };
 

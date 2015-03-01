@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MNEMONIC_ENCODE_HPP
-#define BX_MNEMONIC_ENCODE_HPP
+#ifndef BX_MNEMONIC_TO_SEED_HPP
+#define BX_MNEMONIC_TO_SEED_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -71,13 +71,19 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_MNEMONIC_ENCODE_OBSOLETE \
-    "Electrum style key functions are obsolete. Use mnemonic-new (BIP39) command instead."
+#define BX_EC_MNEMONIC_TO_SEED_SHORT_SENTENCE \
+    "At least twelve words are required."
+#define BX_EC_MNEMONIC_TO_SEED_LONG_SENTENCE \
+    "No more than 128 words are allowed."
+#define BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE \
+    "The number of words must be divisible by 3."
+#define BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE \
+    "The specified words are not a valid mnemonic."
 
 /**
- * Class to implement the mnemonic-encode command.
+ * Class to implement the mnemonic-to-seed command.
  */
-class mnemonic_encode 
+class mnemonic_to_seed 
     : public command
 {
 public:
@@ -87,23 +93,16 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "mnemonic-encode";
+        return "mnemonic-to-seed";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    BCX_API static const char* formerly()
-    {
-        return "mnemonic";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     BCX_API virtual const char* name()
     {
-        return mnemonic_encode::symbol();
+        return mnemonic_to_seed::symbol();
     }
 
     /**
@@ -111,7 +110,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "ELECTRUM";
+        return "WALLET";
     }
 
     /**
@@ -119,16 +118,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert an Electrum mnemonic to its seed.";
-    }
-
-    /**
-     * Declare whether the command has been obsoleted.
-     * @return  True if the command is obsolete
-     */
-    BCX_API virtual bool obsolete()
-    {
-        return true;
+        return "Convert a mnemonic seed (BIP39) to its numeric representation.";
     }
 
     /**
@@ -138,7 +128,8 @@ public:
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("WORD", -1);
     }
 
 	/**
@@ -149,6 +140,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_words_argument(), "WORD", variables, input);
     }
 
     /**
@@ -170,6 +162,16 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
+        )
+        (
+            "passphrase,p",
+            value<std::string>(&option_.passphrase),
+            "An optional passphrase for decoding the mnemonic."
+        )
+        (
+            "WORD",
+            value<std::vector<std::string>>(&argument_.words),
+            "The set of words that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -186,6 +188,40 @@ public:
 
     /* Properties */
 
+    /**
+     * Get the value of the WORD arguments.
+     */
+    BCX_API virtual std::vector<std::string>& get_words_argument()
+    {
+        return argument_.words;
+    }
+
+    /**
+     * Set the value of the WORD arguments.
+     */
+    BCX_API virtual void set_words_argument(
+        const std::vector<std::string>& value)
+    {
+        argument_.words = value;
+    }
+
+    /**
+     * Get the value of the passphrase option.
+     */
+    BCX_API virtual std::string& get_passphrase_option()
+    {
+        return option_.passphrase;
+    }
+
+    /**
+     * Set the value of the passphrase option.
+     */
+    BCX_API virtual void set_passphrase_option(
+        const std::string& value)
+    {
+        option_.passphrase = value;
+    }
+
 private:
 
     /**
@@ -196,9 +232,11 @@ private:
     struct argument
     {
         argument()
+          : words()
         {
         }
 
+        std::vector<std::string> words;
     } argument_;
 
     /**
@@ -209,9 +247,11 @@ private:
     struct option
     {
         option()
+          : passphrase()
         {
         }
 
+        std::string passphrase;
     } option_;
 };
 

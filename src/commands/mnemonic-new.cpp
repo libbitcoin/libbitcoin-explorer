@@ -17,54 +17,44 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/primitives/bip39_language.hpp>
+
+#include <bitcoin/explorer/commands/mnemonic-new.hpp>
 
 #include <iostream>
-#include <sstream>
-#include <string>
-#include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 
-using namespace po;
+using namespace bc;
+using namespace bc::bip39;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
-namespace libbitcoin {
-namespace explorer {
-namespace primitives {
-
-bip39_language::bip39_language()
-    : value_()
+console_result mnemonic_new::invoke(std::ostream& output,
+    std::ostream& error)
 {
-}
+    // Bound parameters.
+    const auto& language = get_language_option();
+    const auto& passphrase = get_passphrase_option();
+    const data_chunk& entropy = get_seed_argument();
 
-bip39_language::bip39_language(const std::string& language)
-{
-    value_ = language;
-}
+    const auto entropy_size = entropy.size();
 
-bip39_language::bip39_language(const bip39_language& other)
-    : bip39_language(other.value_)
-{
-}
+    if (entropy_size < minimum_seed_size)
+    {
+        error << BX_EC_MNEMONIC_NEW_SHORT_ENTROPY << std::endl;
+        return console_result::failure;
+    }
 
-bip39_language::operator const std::string&() const
-{
-    return value_;
-}
+    if ((entropy_size % seed_multiple) != 0)
+    {
+        error << BX_EC_MNEMONIC_NEW_INVALID_ENTROPY << std::endl;
+        return console_result::failure;
+    }
 
-std::istream& operator>>(std::istream& input, bip39_language& argument)
-{
-    input >> argument.value_;
-    return input;
-}
+    const auto words = create_mnemonic(entropy, language);
 
-std::ostream& operator<<(std::ostream& output, const bip39_language& argument)
-{
-    output << argument.value_;
-    return output;
+    output << join(words) << std::endl;
+    return console_result::okay;
 }
-
-} // namespace explorer
-} // namespace primitives
-} // namespace libbitcoin
