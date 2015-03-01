@@ -37,7 +37,6 @@ static libbitcoin::bip39_language get_bip39_language(
         { "ja", libbitcoin::bip39_language::ja },
         { "es", libbitcoin::bip39_language::es },
         { "zh", libbitcoin::bip39_language::zh_Hans },
-        { "zh_Hans", libbitcoin::bip39_language::zh_Hans }
     };
     std::string lang = std::string(language);
     if (languages.find(lang) == languages.end()) {

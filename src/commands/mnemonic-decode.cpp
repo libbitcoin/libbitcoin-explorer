@@ -45,14 +45,8 @@ console_result mnemonic_decode::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    const auto seed = decode_mnemonic(words, passphrase);
-    if (seed.size() == 0) {
-        error << BX_EC_MNEMONIC_DECODE_SENTENCE_INVALID << std::endl;
-        return console_result::failure;
-    }
-
-    std::string sentence = std::string(encode_base16(seed));
-    output << sentence << std::endl;
+    // Note that there is no dictionary validation in decode_mnemonic.
+    const auto hexidecimal = decode_mnemonic(words, passphrase);
+    output << primitives::base16(hexidecimal) << std::endl;
     return console_result::okay;
 }
-
