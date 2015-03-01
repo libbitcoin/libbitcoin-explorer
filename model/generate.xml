@@ -378,7 +378,6 @@
     <define name="BX_EC_MNEMONIC_DECODE_LENGTH_INVALID_SENTENCE" value="The number of words must be a multiple of three." />
     <define name="BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE" value="At least twelve words are required." />
     <define name="BX_EC_MNEMONIC_DECODE_SENTENCE_INVALID" value="The specified words are not a valid BIP39 mnemonic." />
-    <define name="BX_EC_MNEMONIC_DECODE_SENTENCE_LENGTH_EXCEEDED" value="The maximum number of words (512) has been exceeded." />
   </command>
 
   <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="WALLET" description="Generate a BIP39 mnemonic with the specified seed.">

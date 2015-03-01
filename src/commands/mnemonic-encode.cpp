@@ -33,13 +33,13 @@ static libbitcoin::bip39_language get_bip39_language(
     primitives::bip39_language language)
 {
     std::map<const std::string, libbitcoin::bip39_language> languages = {
-        { "ENGLISH", libbitcoin::bip39_language::en },
-        { "JAPANESE", libbitcoin::bip39_language::ja },
-        { "SPANISH", libbitcoin::bip39_language::es },
-        { "CHINESE", libbitcoin::bip39_language::zh_Hans }
+        { "en", libbitcoin::bip39_language::en },
+        { "ja", libbitcoin::bip39_language::ja },
+        { "es", libbitcoin::bip39_language::es },
+        { "zh", libbitcoin::bip39_language::zh_Hans },
+        { "zh_Hans", libbitcoin::bip39_language::zh_Hans }
     };
-    std::string lang = language;
-    boost::to_upper(lang);
+    std::string lang = std::string(language);
     if (languages.find(lang) == languages.end()) {
         return libbitcoin::bip39_language::en;
     }

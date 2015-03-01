@@ -77,8 +77,6 @@ namespace commands {
     "At least twelve words are required."
 #define BX_EC_MNEMONIC_DECODE_SENTENCE_INVALID \
     "The specified words are not a valid BIP39 mnemonic."
-#define BX_EC_MNEMONIC_DECODE_SENTENCE_LENGTH_EXCEEDED \
-    "The maximum number of words (512) has been exceeded."
 
 /**
  * Class to implement the mnemonic-decode command.
