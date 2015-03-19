@@ -141,7 +141,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/wif-to-public.cpp \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp \
-    src/console/main.cpp \
     src/primitives/address.cpp \
     src/primitives/base16.cpp \
     src/primitives/base2.cpp \
@@ -174,6 +173,20 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/uri.cpp \
     src/primitives/wif.cpp \
     src/primitives/wrapper.cpp
+
+# console/bx => ${bindir}
+#------------------------------------------------------------------------------
+if WITH_CONSOLE
+
+bin_PROGRAMS = console/bx
+console_bx_CFLAGS = ${bitcoin_CFLAGS} ${sodium_CFLAGS} ${czmq___CFLAGS}
+console_bx_CPPFLAGS = -I${srcdir}/include ${bitcoin_client_CPPFLAGS} ${bitcoin_CPPFLAGS} ${sodium_CPPFLAGS} ${czmq___CPPFLAGS}
+console_bx_LDFLAGS = ${bitcoin_LDFLAGS} ${sodium_LDFLAGS} ${czmq___LDFLAGS}
+console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS} ${bitcoin_LIBS} ${sodium_LIBS} ${czmq___LIBS}
+console_bx_SOURCES = \
+    console/main.cpp
+
+endif WITH_CONSOLE
 
 # local: test/libbitcoin_explorer_test
 #------------------------------------------------------------------------------
