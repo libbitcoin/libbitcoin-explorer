@@ -3,7 +3,7 @@
 # http://bit.ly/1pKbuFP
 # Run all unit and component tests (excludes 'network' group).
 BOOST_UNIT_TEST_PARAMETERS=\
-"--run_test=utility,primitives,obelisk,generated,offline,stub,obsolete "\
+"--run_test=primitives,generated,offline,stub,obsolete "\
 "--random=1 "\
 "--show_progress=yes "\
 "--detect_memory_leak=0 "\

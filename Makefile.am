@@ -179,8 +179,8 @@ src_libbitcoin_explorer_la_SOURCES = \
 #------------------------------------------------------------------------------
 if WITH_TESTS
 
-# Execute 'test/libbitcoin_explorer_test' as a test.
-TESTS = test/libbitcoin_explorer_test
+# Execute 'run-tests.sh' as a test.
+TESTS = run-tests.sh
 
 check_PROGRAMS = test/libbitcoin_explorer_test
 test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
