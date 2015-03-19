@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
  *
@@ -21,31 +21,15 @@
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
 
 #include <iostream>
-#include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
 console_result mnemonic_encode::invoke(std::ostream& output,
     std::ostream& error)
 {
-    // Bound parameters.
-    const data_chunk& seed = get_seed_argument();
-
-    if (seed.size() < minimum_seed_size)
-    {
-        error << BX_EC_MNEMONIC_ENCODE_SHORT_SEED << std::endl;
-        return console_result::failure;
-    }
-
-    // TODO: change implementation from Electrum to BIP39.
-
-    const auto sentence = join(encode_mnemonic(seed));
-
-    output << sentence << std::endl;
-    return console_result::okay;
+    error << BX_MNEMONIC_ENCODE_OBSOLETE << std::endl;
+    return console_result::failure;
 }
-

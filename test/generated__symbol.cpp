@@ -319,6 +319,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_encode__returns_expected_value)
     BOOST_REQUIRE_EQUAL(mnemonic_encode::symbol(), "mnemonic-encode");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_new__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(mnemonic_new::symbol(), "mnemonic-new");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__mnemonic_to_seed__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(mnemonic_to_seed::symbol(), "mnemonic-to-seed");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__mpk__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(mpk::symbol(), "mpk");

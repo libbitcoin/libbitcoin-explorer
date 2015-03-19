@@ -50,6 +50,7 @@
 #include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
@@ -70,8 +71,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE \
-    "At least three words are required."
+#define BX_MNEMONIC_DECODE_OBSOLETE \
+    "Electrum style key functions are obsolete. Use mnemonic-to-seed (BIP39) command instead."
 
 /**
  * Class to implement the mnemonic-decode command.
@@ -103,7 +104,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "ELECTRUM";
     }
 
     /**
@@ -111,7 +112,16 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39.";
+        return "Convert a seed to its Electrum mnemonic.";
+    }
+
+    /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    BCX_API virtual bool obsolete()
+    {
+        return true;
     }
 
     /**
@@ -121,8 +131,7 @@ public:
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("WORD", -1);
+        return get_argument_metadata();
     }
 
 	/**
@@ -133,7 +142,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_words_argument(), "WORD", variables, input);
     }
 
     /**
@@ -155,11 +163,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "WORD",
-            value<std::vector<std::string>>(&argument_.words),
-            "The set of words from the Electrum word list. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -176,23 +179,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the WORD arguments.
-     */
-    BCX_API virtual std::vector<std::string>& get_words_argument()
-    {
-        return argument_.words;
-    }
-
-    /**
-     * Set the value of the WORD arguments.
-     */
-    BCX_API virtual void set_words_argument(
-        const std::vector<std::string>& value)
-    {
-        argument_.words = value;
-    }
-
 private:
 
     /**
@@ -203,11 +189,9 @@ private:
     struct argument
     {
         argument()
-          : words()
         {
         }
 
-        std::vector<std::string> words;
     } argument_;
 
     /**

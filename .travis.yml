@@ -74,7 +74,7 @@ script:
     # Download and build libbitcoin-explorer and all dependencies.
     - if [[ $OSX   && $CLANG && $STATIC  ]]; then ./install.sh --enable-testnet --disable-shared --build-boost --prefix=$HOME/my-prefix; fi
     - if [[ $LINUX && $CLANG && $STATIC  ]]; then ./install.sh --disable-shared --build-boost --prefix=$HOME/my-prefix CXXFLAGS='-Os -stdlib=libstdc++' LDLIBS='-lstdc++'; fi
-    - if [[ $LINUX && $GCC   && $STATIC  ]]; then ./install.sh --disable-ndebug --disable-shared --build-boost --prefix=$HOME/my-prefix --build-dir=my-build --with-bash-completion-dir CXXFLAGS='-Os -s'; fi
-    - if [[ $OSX   && $CLANG && $DYNAMIC ]]; then ./install.sh --with-bash-completion-dir; fi
+    - if [[ $LINUX && $GCC   && $STATIC  ]]; then ./install.sh --disable-ndebug --disable-shared --build-boost --prefix=$HOME/my-prefix --build-dir=my-build --with-bash-completiondir CXXFLAGS='-Os -s'; fi
+    - if [[ $OSX   && $CLANG && $DYNAMIC ]]; then ./install.sh --with-bash-completiondir; fi
     - if [[ $LINUX && $CLANG && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-ndebug --disable-static CXXFLAGS='-Os -stdlib=libstdc++' LDLIBS='-lstdc++'; fi
-    - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-static --build-boost --with-bash-completion-dir CXXFLAGS='-Os -s'; fi
+    - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-static --build-boost --with-bash-completiondir CXXFLAGS='-Os -s'; fi

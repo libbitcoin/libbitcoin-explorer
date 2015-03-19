@@ -50,6 +50,7 @@
 #include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
@@ -70,8 +71,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_ENCODE_SHORT_SEED \
-    "The seed is less than 128 bits long."
+#define BX_MNEMONIC_ENCODE_OBSOLETE \
+    "Electrum style key functions are obsolete. Use mnemonic-new (BIP39) command instead."
 
 /**
  * Class to implement the mnemonic-encode command.
@@ -110,7 +111,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "ELECTRUM";
     }
 
     /**
@@ -118,7 +119,16 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert a seed to its Electrum mnemonic. WARNING: This implementation is deprecated in favor of BIP39.";
+        return "Convert an Electrum mnemonic to its seed.";
+    }
+
+    /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    BCX_API virtual bool obsolete()
+    {
+        return true;
     }
 
     /**
@@ -128,8 +138,7 @@ public:
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("SEED", 1);
+        return get_argument_metadata();
     }
 
 	/**
@@ -140,7 +149,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_seed_argument(), "SEED", variables, input);
     }
 
     /**
@@ -162,11 +170,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "SEED",
-            value<primitives::base16>(&argument_.seed),
-            "The Base16 randomness seed.  Must be at least 128 bits in length. If not specified the seed is read from STDIN."
         );
 
         return options;
@@ -183,23 +186,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the SEED argument.
-     */
-    BCX_API virtual primitives::base16& get_seed_argument()
-    {
-        return argument_.seed;
-    }
-
-    /**
-     * Set the value of the SEED argument.
-     */
-    BCX_API virtual void set_seed_argument(
-        const primitives::base16& value)
-    {
-        argument_.seed = value;
-    }
-
 private:
 
     /**
@@ -210,11 +196,9 @@ private:
     struct argument
     {
         argument()
-          : seed()
         {
         }
 
-        primitives::base16 seed;
     } argument_;
 
     /**

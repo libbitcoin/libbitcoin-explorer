@@ -46,8 +46,8 @@ encoding::encoding(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-encoding::encoding(const encoding_engine& value)
-    : value_(value)
+encoding::encoding(encoding_engine engine)
+    : value_(engine)
 {
 }
 

@@ -25,20 +25,11 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(mnemonic_encode__invoke)
 
-BOOST_AUTO_TEST_CASE(mnemonic_encode__invoke__128_bit_see__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_encode__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(mnemonic_encode);
-    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("eternity blood task eternity blood task eternity blood task eternity blood task\n");
-}
-
-BOOST_AUTO_TEST_CASE(mnemonic_encode__invoke__64_bit_seed__failure_error)
-{
-    BX_DECLARE_COMMAND(mnemonic_encode);
-    command.set_seed_argument({ "baadf00dbaadf00d" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_ENCODE_SHORT_SEED "\n");
+    BX_REQUIRE_ERROR(BX_MNEMONIC_ENCODE_OBSOLETE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

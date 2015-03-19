@@ -37,6 +37,7 @@ function global.map_type(type)
     my.type_hd_public = "hd_public"
     my.type_header = "header"
     my.type_input = "input"
+    my.type_language = "language"
     my.type_output = "output"
     my.type_point = "point"
     my.type_path = "path"
@@ -72,6 +73,7 @@ function global.map_type(type)
     my.type_hd_public_bx = "primitives::hd_pub"
     my.type_header_bx = "primitives::header"
     my.type_input_bx = "primitives::input"
+    my.type_language_bx = "primitives::language"
     my.type_output_bx = "primitives::output"
     my.type_path_boost = "boost::filesystem::path"
     my.type_point_bx = "primitives::point"
@@ -129,6 +131,8 @@ function global.map_type(type)
         return my.type_header_bx
     elsif my.type = my.type_input
         return my.type_input_bx
+    elsif my.type = my.type_language
+        return my.type_language_bx
     elsif my.type = my.type_output
         return my.type_output_bx
     elsif my.type = my.type_path
@@ -237,6 +241,7 @@ endfunction
 #include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>

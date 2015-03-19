@@ -22,7 +22,6 @@
 
 // Convenience header that includes everything.
 // Not to be used internally. For API users.
-// This is intended primarily for test.
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
@@ -53,6 +52,7 @@
 #include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>

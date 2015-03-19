@@ -78,7 +78,7 @@
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address to convert. If not specified the address is read from STDIN."/>
   </command>
   
-  <command symbol="address-embed" formerly="embed-addr" typeX="address" category="WALLET" description="Generate a Bitcoin address with an embedded record of binary data.">
+  <command symbol="address-embed" formerly="embed-addr" typeX="address" category="WALLET" description="Create a Bitcoin address with an embedded record of binary data.">
     <option name="version" type="byte" description="The desired Bitcoin address version." />
     <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN." />
   </command>
@@ -196,7 +196,7 @@
   </command>
 
   <command symbol="ec-new" formerly="newkey" typeX="ec_private" category="WALLET" description="Create a new EC private key from entropy.">
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
     <define name="BX_EC_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
     <define name="BX_EC_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
@@ -273,20 +273,20 @@
     <define name="BX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="genaddr" category="ELECTRUM" obsolete="true" description="Generate a Bitcoin address deterministically from an Electrum wallet.">
+  <command symbol="genaddr" category="ELECTRUM" obsolete="true" description="Create a Bitcoin address deterministically from an Electrum wallet.">
     <define name="BX_GENADDR_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
   
-  <command symbol="genpriv" category="ELECTRUM" obsolete="true" description="Generate a private key deterministically from an Electrum seed.">
+  <command symbol="genpriv" category="ELECTRUM" obsolete="true" description="Create a private key deterministically from an Electrum seed.">
     <define name="BX_GENPRIV_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
-  <command symbol="genpub" category="ELECTRUM" obsolete="true" description="Generate a public key deterministically from an Electrum wallet.">
+  <command symbol="genpub" category="ELECTRUM" obsolete="true" description="Create a public key deterministically from an Electrum wallet.">
     <define name="BX_GENPUB_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" typeX="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
     <define name="BX_HD_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
     <define name="BX_HD_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
@@ -371,17 +371,32 @@
     <define name="BX_MESSAGE_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
     <define name="BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE" value="The signature is not valid." />
   </command>
+  
+  <command symbol="mnemonic-decode" typeX="base16" category="ELECTRUM" obsolete="true" description="Convert a seed to its Electrum mnemonic.">
+    <define name="BX_MNEMONIC_DECODE_OBSOLETE" value="Electrum style key functions are obsolete. Use mnemonic-to-seed (BIP39) command instead." />
+  </command>
+  
+  <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="ELECTRUM" obsolete="true" description="Convert an Electrum mnemonic to its seed.">
+    <define name="BX_MNEMONIC_ENCODE_OBSOLETE" value="Electrum style key functions are obsolete. Use mnemonic-new (BIP39) command instead." />
+  </command>
 
-  <command symbol="mnemonic-decode" typeX="base16" category="WALLET" description="Convert an Electrum mnemonic to its seed. WARNING: mnemonic should be generated from a random seed. WARNING: This implementation is deprecated in favor of BIP39.">
-    <argument name="WORD" stdin="true" limit="-1" description="The set of words from the Electrum word list. If not specified the words are read from STDIN." />
-    <define name="BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE" value="At least three words are required." />
+  <command symbol="mnemonic-new" typeX="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
+    <option name="language" type="language" description="The two letter language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja' and 'zh', defaults to 'en'." />
+    <option name="passphrase" type="string" description="An optional passphrase for encoding the mnemonic." />
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. The length must be at least 128 bits and evenly divisible by 32 bits. If not specified the entropy is read from STDIN." />
+    <define name="BX_EC_MNEMONIC_NEW_SHORT_ENTROPY" value="The seed is less than 128 bits long." />
+    <define name="BX_EC_MNEMONIC_NEW_INVALID_ENTROPY" value="The seed length in bytes is not evenly divisible by 32 bits." />
   </command>
-  
-  <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="WALLET" description="Convert a seed to its Electrum mnemonic. WARNING: This implementation is deprecated in favor of BIP39.">
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 randomness seed.  Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
-    <define name="BX_EC_MNEMONIC_ENCODE_SHORT_SEED" value="The seed is less than 128 bits long." />
+
+  <command symbol="mnemonic-to-seed" typeX="base16" category="WALLET" description="Convert a mnemonic seed (BIP39) to its numeric representation.">
+    <option name="passphrase" type="string" description="An optional passphrase for decoding the mnemonic." />
+    <argument name="WORD" stdin="true" limit="-1" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_SHORT_SENTENCE" value="At least twelve words are required." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_LONG_SENTENCE" value="No more than 128 words are allowed." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE" value="The number of words must be divisible by 3." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE" value="The specified words are not a valid mnemonic." />
   </command>
-  
+
   <command symbol="mpk" category="ELECTRUM" obsolete="true" description="Extract a master public key from a deterministic wallet seed.">
     <define name="BX_MPK_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
@@ -390,7 +405,7 @@
     <define name="BX_NEWSEED_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
   
-  <command symbol="qrcode" category="WALLET" typeX="raw" stub="true" description="Generate a QR code image file for a Bitcoin address.">
+  <command symbol="qrcode" category="WALLET" typeX="raw" stub="true" description="Create a QR code image file for a Bitcoin address.">
     <argument name="BITCOIN_ADDRESS" stdin="true" type="address" description="The Bitcoin address. If not specified the address is read from STDIN."/>
     <define name="BX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
@@ -470,7 +485,7 @@
   <command symbol="stealth-encode" typeX="stealth" category="STEALTH" description="Encode a stealth payment address.">
     <option name="prefix" type="base2" description="The Base2 stealth prefix that will be used to locate payments." />
     <option name="signatures" type="byte" description="The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
-    <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to generate a payment." />
+    <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to create a payment." />
     <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
     <define name="BX_STEALTH_ENCODE_PREFIX_TOO_LONG" value="The prefix is limited to 32 bits." />
     <define name="BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />

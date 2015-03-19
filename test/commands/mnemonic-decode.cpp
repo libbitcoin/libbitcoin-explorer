@@ -25,51 +25,11 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(mnemonic_decode__invoke)
 
-BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__12_words__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(mnemonic_decode);
-    command.set_words_argument(
-    {
-        { "eternity" },
-        { "blood" },
-        { "task" },
-        { "eternity" },
-        { "blood" },
-        { "task" },
-        { "eternity" },
-        { "blood" },
-        { "task" },
-        { "eternity" },
-        { "blood" },
-        { "task" }
-    });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("baadf00dbaadf00dbaadf00dbaadf00d\n");
-}
-
-BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__2_words__okay_output)
-{
-    BX_DECLARE_COMMAND(mnemonic_decode);
-    command.set_words_argument(
-    {
-        { "eternity" },
-        { "blood" },
-        { "task" }
-    });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("baadf00d\n");
-}
-
-BOOST_AUTO_TEST_CASE(mnemonic_decode__invoke__3_words__failure_error)
-{
-    BX_DECLARE_COMMAND(mnemonic_decode);
-    command.set_words_argument(
-    {
-        { "eternity" },
-        { "blood" }
-    });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE "\n");
+    BX_REQUIRE_ERROR(BX_MNEMONIC_DECODE_OBSOLETE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

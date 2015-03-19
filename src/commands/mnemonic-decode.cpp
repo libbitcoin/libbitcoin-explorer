@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
  *
@@ -24,26 +24,12 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-// TODO: change implementation from Electrum to BIP39.
 console_result mnemonic_decode::invoke(std::ostream& output,
     std::ostream& error)
 {
-    // Bound parameters.
-    const auto& words = get_words_argument();
-
-    if (words.size() < 3)
-    {
-        error << BX_EC_MNEMONIC_DECODE_SHORT_SENTENCE << std::endl;
-        return console_result::failure;
-    }
-
-    // Note that there is no dictionary validation in decode_mnemonic.
-    const auto hexidecimal = decode_mnemonic(words);
-
-    output << hexidecimal << std::endl;
-    return console_result::okay;
+    error << BX_MNEMONIC_DECODE_OBSOLETE << std::endl;
+    return console_result::failure;
 }

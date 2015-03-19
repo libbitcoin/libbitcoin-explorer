@@ -70,6 +70,7 @@ console_result dispatch_invoke(int argc, const char* argv[],
     std::string message;
     variables_map variables;
 
+
     if (!load_variables(variables, message, *command, input, argc, argv))
     {
         display_invalid_parameter(error, message);
@@ -115,8 +116,9 @@ void load_command_variables(variables_map& variables, command& instance,
     // commands metadata is preserved on members for later usage presentation
     const auto& options = instance.load_options();
     const auto& arguments = instance.load_arguments();
+
     auto command_parser = command_line_parser(argc, argv).options(options)
-        .positional(arguments);
+        .allow_unregistered().positional(arguments);
     store(command_parser.run(), variables);
 
     // Don't load rest if help is specified.

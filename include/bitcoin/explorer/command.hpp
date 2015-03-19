@@ -49,6 +49,7 @@
 #include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>

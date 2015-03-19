@@ -50,6 +50,7 @@
 #include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
+#include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
@@ -173,7 +174,7 @@ public:
         (
             "SCAN_PUBKEY",
             value<primitives::ec_public>(&argument_.scan_pubkey)->required(),
-            "The Base16 EC public key required to generate a payment."
+            "The Base16 EC public key required to create a payment."
         )
         (
             "SPEND_PUBKEY",
