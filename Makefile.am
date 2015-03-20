@@ -190,8 +190,7 @@ endif WITH_CONSOLE
 #------------------------------------------------------------------------------
 if WITH_TESTS
 
-# Execute 'run-tests.sh' as a test.
-TESTS = run-tests.sh
+TESTS = libbitcoin_explorer_test_runner.sh
 
 check_PROGRAMS = test/libbitcoin_explorer_test
 test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
