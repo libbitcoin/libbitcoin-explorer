@@ -22,4 +22,4 @@ Requires: @bitcoin_client_PKG@
 Cflags: -I${includedir} 
 
 # Our own lib directory, lib and any that do not publish package configuration.
-Libs: -L${libdir} -1bitcoin-explorer 
+Libs: -L${libdir} -lbitcoin-explorer 
