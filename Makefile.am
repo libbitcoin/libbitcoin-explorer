@@ -179,10 +179,8 @@ src_libbitcoin_explorer_la_SOURCES = \
 if WITH_CONSOLE
 
 bin_PROGRAMS = console/bx
-console_bx_CFLAGS = ${bitcoin_CFLAGS} ${sodium_CFLAGS} ${czmq___CFLAGS}
-console_bx_CPPFLAGS = -I${srcdir}/include ${bitcoin_client_CPPFLAGS} ${bitcoin_CPPFLAGS} ${sodium_CPPFLAGS} ${czmq___CPPFLAGS}
-console_bx_LDFLAGS = ${bitcoin_LDFLAGS} ${sodium_LDFLAGS} ${czmq___LDFLAGS}
-console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS} ${bitcoin_LIBS} ${sodium_LIBS} ${czmq___LIBS}
+console_bx_CPPFLAGS = -I${srcdir}/include ${bitcoin_client_CPPFLAGS}
+console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS}
 console_bx_SOURCES = \
     console/main.cpp
 
@@ -197,7 +195,7 @@ TESTS = run-tests.sh
 
 check_PROGRAMS = test/libbitcoin_explorer_test
 test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
-test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS} ${boost_unit_test_framework_LIBS}
+test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${boost_unit_test_framework_LIBS} ${bitcoin_client_LIBS}
 test_libbitcoin_explorer_test_SOURCES = \
     test/generated__broadcast.cpp \
     test/generated__find.cpp \
