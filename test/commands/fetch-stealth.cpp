@@ -25,42 +25,45 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 
-#define BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010_INFO \
+#define BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010101_INFO \
 "stealth\n" \
 "{\n" \
 "    match\n" \
 "    {\n" \
-"        ephemeral_public_key 03c35235b93427c39f477a83c493d2ea74d9195dc8a3b3e7dbb5ad88584b1472d2\n" \
-"        paid_address 1C8cs6vuuHqN7dtHqh13Yc6395unYcpSC6\n" \
-"        transaction_hash d216cd6596d4119acba1b8d786cdeb15f76f01d8a3ee12603e2581950857b736\n" \
+"        ephemeral_public_key 024f4101000199071b753d68747470733a2f2f6370722e736d2f50647334476956\n" \
+"        paid_address 1AEDp5EtdMg9ZUZhyB47ZZupwfdVCnG5bS\n" \
+"        transaction_hash 2b8024d6d4c1c333ecd8d0d8af44aed676c8624cf1503340b37e9465cad415f5\n" \
 "    }\n" \
 "}\n"
 
-// TODO: need libbitcoin-server.
+// requires libbitcoin-server.
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
+    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
-// TODO: need libbitcoin-server.
+// requires libbitcoin-server.
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
     command.set_height_option(323557);
+    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
-// TODO: need libbitcoin-server.
+// requires libbitcoin-server.
 // This test is fragile, will eventually break.
-BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010__okay_output)
+BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010101__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
     command.set_format_option({ "info" });
     command.set_height_option(0);
-    command.set_prefix_argument({ "10101010" });
+    command.set_prefix_argument({ "10101010101" });
+    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010_INFO);
+    BX_REQUIRE_OUTPUT(BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010101_INFO);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
