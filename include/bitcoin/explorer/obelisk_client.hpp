@@ -36,7 +36,7 @@ namespace explorer {
 /**
  * The standard libzmq success code.
  */
-constexpr int zmq_success = 0;
+BC_CONSTEXPR int zmq_success = 0;
 
 /**
  * Class to simplify obelisk/libbitcoin-server usage. 

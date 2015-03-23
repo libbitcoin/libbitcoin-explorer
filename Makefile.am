@@ -5,13 +5,14 @@
 #
 ###############################################################################
 
-# Standard declarations.
+# Automake settings.
 #==============================================================================
-# look for macros in the m4 subdirectory
+# Look for macros in the m4 subdirectory.
+#------------------------------------------------------------------------------
 ACLOCAL_AMFLAGS = -I m4
 
 
-# Automake products.
+# Distribution, build and install products.
 #==============================================================================
 # files => ${pkgconfigdir}
 #------------------------------------------------------------------------------
@@ -466,4 +467,14 @@ include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/uri.hpp \
     include/bitcoin/explorer/primitives/wif.hpp \
     include/bitcoin/explorer/primitives/wrapper.hpp
+
+
+# Custom make targets.
+#==============================================================================
+# make target: console
+#------------------------------------------------------------------------------
+target_console = \
+    console/bx
+
+console: ${target_console}
 
