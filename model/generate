@@ -1,8 +1,0 @@
-#   Run code generation
-#   Requires iMatix GSL, from http://github.com/imatix/gsl
-
-mkdir -p ../data
-mkdir -p ../src/commands
-mkdir -p ../include/bitcoin/explorer/commands
-
-gsl -q generate.xml

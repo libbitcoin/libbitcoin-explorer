@@ -22,7 +22,9 @@ help_description = get_resource("BX_HELP_DESCRIPTION")
 # Templates retain their natural extensions to enable editor association, and
 # are therefore prefixed with 'gsl' for sorting and template identification.
 
-gsl from "templates/gsl.Makefile.am"
+# Use libbitcoin-build to generate Makefile.am from metadata and sources.
+#gsl from "templates/gsl.Makefile.am"
+
 gsl from "templates/gsl.command.hpp"
 gsl from "templates/gsl.commands.hpp"
 gsl from "templates/gsl.generated.hpp"
