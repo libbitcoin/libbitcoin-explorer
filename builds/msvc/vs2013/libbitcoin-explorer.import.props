@@ -17,7 +17,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4290;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Linkage-libbitcoin-explorer)' == 'static' Or '$(Linkage-libbitcoin-explorer)' == 'ltcg'">BCX_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -25,22 +24,29 @@
       <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-explorer)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-explorer)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
-    </Link>    
+    </Link>
+    <Link Condition="$(PlatformToolset) != 'CTP_Nov2013'">
+      <!-- Need to link $(VC_CTP_Nov2013_LibraryPath_x86), $(VC_CTP_Nov2013_LibraryPath_x64), or $(VC_CTP_Nov2013_LibraryPath_ARM).-->
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'ARM'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib\arm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'x64'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib\amd64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'Win32'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
 
   <!-- Copy -->
 
+  <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
   <Target Name="Linkage-libbitcoin-explorer-dynamic" AfterTargets="AfterBuild" Condition="'$(Linkage-libbitcoin-explorer)' == 'dynamic'">
     <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libbitcoin-explorer.dll"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Debug\CTP_Nov2013\dynamic\libbitcoin-explorer.dll"
           DestinationFiles="$(TargetDir)libbitcoin-explorer.dll"
           SkipUnchangedFiles="true" />
     <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libbitcoin-explorer.pdb"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Debug\CTP_Nov2013\dynamic\libbitcoin-explorer.pdb"
           DestinationFiles="$(TargetDir)libbitcoin-explorer.pdb"
           SkipUnchangedFiles="true" />
     <Copy Condition="$(Configuration.IndexOf('Release')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Release\$(PlatformToolset)\dynamic\libbitcoin-explorer.dll"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-explorer\bin\$(PlatformName)\Release\CTP_Nov2013\dynamic\libbitcoin-explorer.dll"
           DestinationFiles="$(TargetDir)libbitcoin-explorer.dll"
           SkipUnchangedFiles="true" />
   </Target>

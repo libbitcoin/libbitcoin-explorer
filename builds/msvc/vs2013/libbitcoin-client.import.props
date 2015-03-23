@@ -16,7 +16,6 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\libbitcoin-client\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="$(Configuration.IndexOf('Release')) != -1">BITCOIN_DISABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Linkage-libbitcoin-client)' == 'static' Or '$(Linkage-libbitcoin-client)' == 'ltcg'">BCC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>      
     </ClCompile>
     <Link>
@@ -24,22 +23,29 @@
       <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-client)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-client)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
-    </Link>      
+    </Link>
+    <Link Condition="$(PlatformToolset) != 'CTP_Nov2013'">
+      <!-- Need to link $(VC_CTP_Nov2013_LibraryPath_x86), $(VC_CTP_Nov2013_LibraryPath_x64), or $(VC_CTP_Nov2013_LibraryPath_ARM).-->
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'ARM'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib\arm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'x64'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib\amd64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="$(PlatformName) == 'Win32'">$(ProgramFiles)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
 
   <!-- Copy -->
 
+  <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
   <Target Name="Linkage-libbitcoin-client-dynamic" AfterTargets="AfterBuild" Condition="'$(Linkage-libbitcoin-client)' == 'dynamic'">
     <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libbitcoin-client.dll"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Debug\CTP_Nov2013\dynamic\libbitcoin-client.dll"
           DestinationFiles="$(TargetDir)libbitcoin-client.dll"
           SkipUnchangedFiles="true" />
     <Copy Condition="$(Configuration.IndexOf('Debug')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Debug\$(PlatformToolset)\dynamic\libbitcoin-client.pdb"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Debug\CTP_Nov2013\dynamic\libbitcoin-client.pdb"
           DestinationFiles="$(TargetDir)libbitcoin-client.pdb"
           SkipUnchangedFiles="true" />
     <Copy Condition="$(Configuration.IndexOf('Release')) != -1"
-          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Release\$(PlatformToolset)\dynamic\libbitcoin-client.dll"
+          SourceFiles="$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Release\CTP_Nov2013\dynamic\libbitcoin-client.dll"
           DestinationFiles="$(TargetDir)libbitcoin-client.dll"
           SkipUnchangedFiles="true" />
   </Target>
