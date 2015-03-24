@@ -6,12 +6,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
-  
-  <!-- User Interface -->
-  
-  <ItemGroup Label="BuildOptionsExtension">
-    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)$(ProjectName).xml" />
-  </ItemGroup>
  
   <!-- Configuration -->
 
@@ -36,7 +30,7 @@
   </ImportGroup>  
 
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
-    <Linkage-secp256k1>static</Linkage-secp256k1>
+    <Linkage-secp256k1>dynamic</Linkage-secp256k1>
     <Linkage-czmqpp>dynamic</Linkage-czmqpp>
     <Linkage-czmq>dynamic</Linkage-czmq>
     <Linkage-libzmq>dynamic</Linkage-libzmq>
@@ -45,7 +39,7 @@
     <Linkage-libbitcoin-client>dynamic</Linkage-libbitcoin-client>
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
-    <Linkage-secp256k1>static</Linkage-secp256k1>
+    <Linkage-secp256k1>ltcg</Linkage-secp256k1>
     <Linkage-czmqpp>ltcg</Linkage-czmqpp>
     <Linkage-czmq>ltcg</Linkage-czmq>
     <Linkage-libzmq>ltcg</Linkage-libzmq>
