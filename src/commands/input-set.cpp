@@ -48,7 +48,7 @@ console_result input_set::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    tx_out.inputs[index].script = script_to_raw_data_script(script);
+    tx_out.inputs[index].script = script;
 
     output << tx_copy << std::endl;
     return console_result::okay;
