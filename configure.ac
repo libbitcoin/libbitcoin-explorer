@@ -259,5 +259,5 @@ AS_CASE([${CC}], [*gcc*],
 
 # Process outputs into templates.
 #==============================================================================
-AC_CONFIG_FILES([Makefile libbitcoin-explorer.pc ])
+AC_CONFIG_FILES([Makefile libbitcoin-explorer.pc])
 AC_OUTPUT
