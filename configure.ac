@@ -147,10 +147,6 @@ AS_CASE([${CC}], [*clang*],
          AC_MSG_NOTICE([boost_LDFLAGS : ${boost_LDFLAGS}])],
         [AC_MSG_ERROR([Boost 1.54.0 or later is required but was not found.])])])
 
-AX_BOOST_CHRONO
-AC_SUBST([boost_chrono_LIBS], [${BOOST_CHRONO_LIB}])
-AC_MSG_NOTICE([boost_chrono_LIBS : ${boost_chrono_LIBS}])
-
 AS_CASE([${with_tests}], [yes],
     [AX_BOOST_UNIT_TEST_FRAMEWORK
      AC_SUBST([boost_unit_test_framework_LIBS], [${BOOST_UNIT_TEST_FRAMEWORK_LIB}])
@@ -263,5 +259,5 @@ AS_CASE([${CC}], [*gcc*],
 
 # Process outputs into templates.
 #==============================================================================
-AC_CONFIG_FILES([Makefile libbitcoin-explorer.pc ])
+AC_CONFIG_FILES([Makefile libbitcoin-explorer.pc])
 AC_OUTPUT
