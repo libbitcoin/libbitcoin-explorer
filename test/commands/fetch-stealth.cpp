@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
-    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
+    command.set_mainnet_url_setting({ BX_MAINNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
     command.set_height_option(323557);
-    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
+    command.set_mainnet_url_setting({ BX_MAINNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010101__
     command.set_format_option({ "info" });
     command.set_height_option(0);
     command.set_prefix_argument({ "10101010101" });
-    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
+    command.set_mainnet_url_setting({ BX_MAINNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010101_INFO);
 }

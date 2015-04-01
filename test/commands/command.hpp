@@ -62,32 +62,12 @@ using namespace bc::explorer::primitives;
 //#define BX_TESTNET_HOST ""
 //#define BX_TESTNET_PORT 18333
 
-// Obelisk (development)
-//#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:9091"       // fetch-stealth (expected)
-//#define BX_MAINNET_SERVER "tcp://obelisk.unsystem.net:8081"       // timeout
+// Libbitcoin Server (production)
+#define BX_MAINNET_SERVER "tcp://obelisk-sol2.airbitz.co:9091"      // alive
 
-// Obelisk (production)
-#define BX_MAINNET_SERVER "tcp://obelisk.airbitz.co:9091"          // alive
-//#define BX_MAINNET_SERVER "tcp://obelisk.coinkite.com:9091"       // alive
-//#define BX_MAINNET_SERVER "tcp://obelisk.bysh.me:9091"            // timeout
-//#define BX_MAINNET_SERVER "tcp://obelisk.ottrbutt.com:9091"       // timeout
-//#define BX_MAINNET_SERVER "tcp://obelisk-baltic.airbitz.co:9091"  // alive
-//#define BX_MAINNET_SERVER "tcp://obelisk-crate.airbitz.co:9091"   // alive
-//#define BX_MAINNET_SERVER "tcp://obelisk-sol.airbitz.co:9091"     // alive
-//#define BX_MAINNET_SERVER "tcp://obelisk-virpus.airbitz.co:9091"  // alive
-
-// Obelisk (testing)
-//#define BX_MAINNET_SERVER "tcp://37.139.11.99:9091"               // timeout
-
-// Obelisk (testnet)
+// Libbitcoin Server (testnet)
 #define BX_TESTNET_SERVER "tcp://obelisk-testnet.airbitz.co:9091"   // alive
-//#define BX_TESTNET_SERVER "tcp://obelisk.unsystem.net:10091"      // alive
-//#define BX_TESTNET_SERVER "tcp://178.79.185.162:9091"             // timeout
-//#define BX_TESTNET_SERVER "tcp://85.25.198.97:10091"              // alive
-//#define BX_TESTNET_SERVER "tcp://preacher.veox.pw:9091"           // alive
-
-// Libbitcoin Server (testing)
-#define BX_MAINNET_LIBBITCOIN "tcp://obelisk-sol2.airbitz.co:9091"  // alive
+//#define BX_TESTNET_SERVER "tcp://obelisk.veox.pw:9091"            // alive
 
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \

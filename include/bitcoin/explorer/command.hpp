@@ -220,7 +220,7 @@ public:
         )
         (
             "mainnet.url",
-            value<primitives::uri>(&setting_.mainnet.url)->default_value({ "tcp://obelisk.airbitz.co:9091" }),
+            value<primitives::uri>(&setting_.mainnet.url)->default_value({ "tcp://obelisk-sol2.airbitz.co:9091" }),
             "The URL of the Libbitcoin/Obelisk mainnet server."
         )
         (

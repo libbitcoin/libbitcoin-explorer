@@ -39,7 +39,7 @@
   </configuration>
 
   <configuration section="mainnet">
-    <setting name="url" type="uri" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk mainnet server." />
+    <setting name="url" type="uri" default="tcp://obelisk-sol2.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk mainnet server." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
@@ -379,7 +379,8 @@
   <command symbol="mnemonic-encode" formerly="mnemonic" typeX="string" multipleX="true" category="ELECTRUM" obsolete="true" description="Convert an Electrum mnemonic to its seed.">
     <define name="BX_MNEMONIC_ENCODE_OBSOLETE" value="Electrum style key functions are obsolete. Use mnemonic-new (BIP39) command instead." />
   </command>
-
+  
+  <!-- TODO: ensure proper handling of Unicode passphrase. -->
   <command symbol="mnemonic-new" typeX="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="language" type="language" description="The two letter language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja' and 'zh', defaults to 'en'." />
     <option name="passphrase" type="string" description="An optional passphrase for encoding the mnemonic." />
@@ -388,6 +389,7 @@
     <define name="BX_EC_MNEMONIC_NEW_INVALID_ENTROPY" value="The seed length in bytes is not evenly divisible by 32 bits." />
   </command>
 
+  <!-- TODO: ensure proper handling of Unicode passphrase and WORDs. -->
   <command symbol="mnemonic-to-seed" typeX="base16" category="WALLET" description="Convert a mnemonic seed (BIP39) to its numeric representation.">
     <option name="passphrase" type="string" description="An optional passphrase for decoding the mnemonic." />
     <argument name="WORD" stdin="true" limit="-1" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
