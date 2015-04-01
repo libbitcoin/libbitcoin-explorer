@@ -164,6 +164,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "language,l",
+            value<primitives::language>(&option_.language),
+            "The two letter language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant'. Required only to disambiguate 'zh' mnemonics."
+        )
+        (
             "passphrase,p",
             value<std::string>(&option_.passphrase),
             "An optional passphrase for decoding the mnemonic."
@@ -203,6 +208,23 @@ public:
         const std::vector<std::string>& value)
     {
         argument_.words = value;
+    }
+
+    /**
+     * Get the value of the language option.
+     */
+    BCX_API virtual primitives::language& get_language_option()
+    {
+        return option_.language;
+    }
+
+    /**
+     * Set the value of the language option.
+     */
+    BCX_API virtual void set_language_option(
+        const primitives::language& value)
+    {
+        option_.language = value;
     }
 
     /**
@@ -247,10 +269,12 @@ private:
     struct option
     {
         option()
-          : passphrase()
+          : language(),
+            passphrase()
         {
         }
 
+        primitives::language language;
         std::string passphrase;
     } option_;
 };

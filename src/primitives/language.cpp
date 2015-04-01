@@ -36,10 +36,11 @@ namespace primitives {
 static const char* language_en = "en";
 static const char* language_es = "es";
 static const char* language_ja = "ja";
-static const char* language_zh = "zh";
+static const char* language_zh_Hans = "zh_Hans";
+static const char* language_zh_Hant = "zh_Hant";
 
 language::language()
-    : language(bip39::language::en)
+    : language(bip39::language::unknown)
 {
 }
 
@@ -74,8 +75,10 @@ std::istream& operator>>(std::istream& input, language& argument)
         argument.value_ = bip39::language::es;
     else if (text == language_ja)
         argument.value_ = bip39::language::ja;
-    else if (text == language_zh)
+    else if (text == language_zh_Hans)
         argument.value_ = bip39::language::zh_Hans;
+    else if (text == language_zh_Hant)
+        argument.value_ = bip39::language::zh_Hant;
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -100,7 +103,10 @@ std::ostream& operator<<(std::ostream& output, const language& argument)
             value = language_ja;
             break;
         case bip39::language::zh_Hans:
-            value = language_zh;
+            value = language_zh_Hans;
+            break;
+        case bip39::language::zh_Hant:
+            value = language_zh_Hant;
             break;
         default:
             BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");
