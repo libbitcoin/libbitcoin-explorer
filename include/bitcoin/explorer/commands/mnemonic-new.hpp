@@ -165,11 +165,6 @@ public:
             "The two letter language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant', defaults to 'en'."
         )
         (
-            "passphrase,p",
-            value<std::string>(&option_.passphrase),
-            "An optional passphrase for encoding the mnemonic."
-        )
-        (
             "SEED",
             value<primitives::base16>(&argument_.seed),
             "The Base16 entropy from which the mnemonic is created. The length must be at least 128 bits and evenly divisible by 32 bits. If not specified the entropy is read from STDIN."
@@ -223,23 +218,6 @@ public:
         option_.language = value;
     }
 
-    /**
-     * Get the value of the passphrase option.
-     */
-    BCX_API virtual std::string& get_passphrase_option()
-    {
-        return option_.passphrase;
-    }
-
-    /**
-     * Set the value of the passphrase option.
-     */
-    BCX_API virtual void set_passphrase_option(
-        const std::string& value)
-    {
-        option_.passphrase = value;
-    }
-
 private:
 
     /**
@@ -265,13 +243,11 @@ private:
     struct option
     {
         option()
-          : language(),
-            passphrase()
+          : language()
         {
         }
 
         primitives::language language;
-        std::string passphrase;
     } option_;
 };
 

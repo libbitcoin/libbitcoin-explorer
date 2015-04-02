@@ -383,7 +383,6 @@
   <!-- TODO: ensure proper handling of Unicode passphrase. -->
   <command symbol="mnemonic-new" typeX="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="language" type="language" description="The two letter language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant', defaults to 'en'." />
-    <option name="passphrase" type="string" description="An optional passphrase for encoding the mnemonic." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. The length must be at least 128 bits and evenly divisible by 32 bits. If not specified the entropy is read from STDIN." />
     <define name="BX_EC_MNEMONIC_NEW_SHORT_ENTROPY" value="The seed is less than 128 bits long." />
     <define name="BX_EC_MNEMONIC_NEW_INVALID_ENTROPY" value="The seed length in bytes is not evenly divisible by 32 bits." />
@@ -392,7 +391,7 @@
   <!-- TODO: ensure proper handling of Unicode passphrase and WORDs. -->
   <command symbol="mnemonic-to-seed" typeX="base16" category="WALLET" description="Convert a mnemonic seed (BIP39) to its numeric representation.">
     <option name="language" type="language" description="The two letter language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant'. Required only to disambiguate 'zh' mnemonics." />
-    <option name="passphrase" type="string" description="An optional passphrase for decoding the mnemonic." />
+    <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
     <argument name="WORD" stdin="true" limit="-1" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_EC_MNEMONIC_TO_SEED_SHORT_SENTENCE" value="At least twelve words are required." />
     <define name="BX_EC_MNEMONIC_TO_SEED_LONG_SENTENCE" value="No more than 128 words are allowed." />

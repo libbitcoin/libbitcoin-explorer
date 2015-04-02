@@ -171,7 +171,7 @@ public:
         (
             "passphrase,p",
             value<std::string>(&option_.passphrase),
-            "An optional passphrase for decoding the mnemonic."
+            "An optional passphrase for converting the mnemonic to a seed."
         )
         (
             "WORD",
