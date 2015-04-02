@@ -36,7 +36,6 @@ console_result mnemonic_new::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto& language = get_language_option();
-    const auto& passphrase = get_passphrase_option();
     const data_chunk& entropy = get_seed_argument();
 
     const auto entropy_size = entropy.size();
