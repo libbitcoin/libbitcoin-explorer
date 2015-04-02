@@ -35,6 +35,7 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
+    const auto& language = get_language_option();
     const auto& passphrase = get_passphrase_option();
     const auto& words = get_words_argument();
 
@@ -58,7 +59,7 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    const auto seed = decode_mnemonic(words, passphrase);
+    const auto seed = decode_mnemonic(words, passphrase, language);
 
     if (seed.empty())
     {

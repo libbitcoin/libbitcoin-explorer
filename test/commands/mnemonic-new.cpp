@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
@@ -41,17 +41,63 @@ BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__136_bits__failure_error)
     BX_REQUIRE_ERROR(BX_EC_MNEMONIC_NEW_INVALID_ENTROPY "\n");
 }
 
-// Throws assertion exception from bc::create_menmonic.
-//BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits__okay_output)
-//{
-//    BX_DECLARE_COMMAND(mnemonic_new);
-//    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
-//    BX_REQUIRE_OKAY(command.invoke(output, error));
-//    auto foo = output.str();
-//    BX_REQUIRE_OUTPUT("\n");
-//}
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab boy\n");
+}
 
-// TODO: add positive test cases, including passphrase/languages.
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__standard_en__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "en" });
+    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
+}
+
+// Windows i8n support is incomplete.
+#ifndef _MSC_VER
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_es__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "es" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("previo humilde actuar jarabe tabique ahorro tope pulpo anís señal lavar bahía\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_ja__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "ja" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("ねんかん すずしい あひる せたけ ほとんど あんまり めいあん のべる いなか ふとる ぜんりゃく えいせい\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_zh_Hans__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "zh_Hans" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_zh_Hant__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "zh_Hant" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
+}
+
+#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

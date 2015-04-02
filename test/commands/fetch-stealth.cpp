@@ -25,13 +25,14 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 
+// TODO: determine why the paid_address changed from 1AEDp5EtdMg9ZUZhyB47ZZupwfdVCnG5bS to mpkB78KsSP7QLb3Kgk2VPV89ofEC73bqD6.
 #define BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010101_INFO \
 "stealth\n" \
 "{\n" \
 "    match\n" \
 "    {\n" \
 "        ephemeral_public_key 024f4101000199071b753d68747470733a2f2f6370722e736d2f50647334476956\n" \
-"        paid_address 1AEDp5EtdMg9ZUZhyB47ZZupwfdVCnG5bS\n" \
+"        paid_address mpkB78KsSP7QLb3Kgk2VPV89ofEC73bqD6\n" \
 "        transaction_hash 2b8024d6d4c1c333ecd8d0d8af44aed676c8624cf1503340b37e9465cad415f5\n" \
 "    }\n" \
 "}\n"
@@ -40,7 +41,7 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
-    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
+    command.set_mainnet_url_setting({ BX_MAINNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
@@ -49,7 +50,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
     command.set_height_option(323557);
-    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
+    command.set_mainnet_url_setting({ BX_MAINNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
@@ -61,7 +62,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010101__
     command.set_format_option({ "info" });
     command.set_height_option(0);
     command.set_prefix_argument({ "10101010101" });
-    command.set_mainnet_url_setting({ BX_MAINNET_LIBBITCOIN });
+    command.set_mainnet_url_setting({ BX_MAINNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010101_INFO);
 }

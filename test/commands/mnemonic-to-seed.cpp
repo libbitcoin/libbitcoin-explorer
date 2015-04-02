@@ -97,7 +97,17 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__24_invalid_words__failure_error)
     BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE "\n");
 }
 
-// TODO: add positive test cases, including passphrase and not.
+BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__standard__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_to_seed);
+    command.set_passphrase_option("TREZOR");
+    command.set_words_argument(
+    {
+        "legal", "winner", "thank", "year", "wave", "sausage", "worth", "useful", "legal", "winner", "thank", "yellow"
+    });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("2e8905819b8723fe2c1d161860e5ee1830318dbf49a83bd451cfb8440c28bd6fa457fe1296106559a3c80937a1c1069be3a3a5bd381ee6260e8d9739fce1f607\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

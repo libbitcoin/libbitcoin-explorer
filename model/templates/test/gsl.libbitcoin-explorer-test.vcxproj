@@ -21,7 +21,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>CTP_Nov2013</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
     <ProjectName>libbitcoin-explorer-test</ProjectName>
     <NuGetPackageImportStamp>4fc3919d</NuGetPackageImportStamp>

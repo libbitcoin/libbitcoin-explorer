@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_0_info__okay_out
     BX_REQUIRE_OUTPUT(FETCH_HEADER_GENESIS_INFO);
 }
 
-BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_2_xml__okay_output)
+BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_1_xml__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_header);
     command.set_height_option(1);
