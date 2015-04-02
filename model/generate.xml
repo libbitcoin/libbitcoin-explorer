@@ -39,7 +39,7 @@
   </configuration>
 
   <configuration section="mainnet">
-    <setting name="url" type="uri" default="tcp://obelisk-sol2.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk mainnet server." />
+    <setting name="url" type="uri" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk mainnet server." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
