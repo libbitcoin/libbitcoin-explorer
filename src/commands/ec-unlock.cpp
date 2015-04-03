@@ -21,18 +21,30 @@
 #include <bitcoin/explorer/commands/ec-unlock.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
 
+using namespace bc;
+using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
 {
-    // Bound parameters.
-    //const auto& passphrase = get_passphrase_argument();
-    
-    // TODO: implement BIP38
+    const auto& secret = get_secret_argument();
+    const auto& passphrase = get_passphrase_argument();
 
-    error << BX_EC_UNLOCK_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    const auto unlocked = bip38_unlock_secret(
+        base58(secret), passphrase);
+
+    if (!verify_private_key(unlocked))
+    {
+        error << BX_EC_UNLOCK_FAILURE << std::endl;
+        return console_result::failure;
+    }
+
+    output << encode_base16(unlocked) << std::endl;
+    return console_result::okay;
 }

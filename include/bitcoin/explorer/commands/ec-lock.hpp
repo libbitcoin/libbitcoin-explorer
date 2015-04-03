@@ -72,8 +72,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_LOCK_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_EC_LOCK_PRIVKEY_LENGTH_INVALID \
+    "The specified private key is invalid."
 
 /**
  * Class to implement the ec-lock command.
@@ -143,6 +143,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input);
     }
 
     /**
@@ -167,8 +168,8 @@ public:
         )
         (
             "EC_PRIVATE_KEY",
-            value<primitives::ec_private>(&argument_.ec_private_key)->required(),
-            "The EC private key."
+            value<primitives::ec_private>(&argument_.ec_private_key),
+            "The Base16 EC private key."
         )
         (
             "PASSPHRASE",

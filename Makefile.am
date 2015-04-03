@@ -12,7 +12,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
 
-# Distribute, make and install products.
+# Distribution, build and install products.
 #==============================================================================
 # files => ${pkgconfigdir}
 #------------------------------------------------------------------------------
@@ -465,21 +465,6 @@ include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/uri.hpp \
     include/bitcoin/explorer/primitives/wif.hpp \
     include/bitcoin/explorer/primitives/wrapper.hpp
-
-# files => ${bash_completiondir}
-#------------------------------------------------------------------------------
-if BASH_COMPLETIONDIR
-
-dist_bash_completion_DATA = \
-    data/bx
-
-endif BASH_COMPLETIONDIR
-
-# files => ${sysconfdir}/libbitcoin
-#------------------------------------------------------------------------------
-sysconf_libbitcoindir = ${sysconfdir}/libbitcoin
-sysconf_libbitcoin_DATA = \
-    data/bx.cfg
 
 
 # Custom make targets.
