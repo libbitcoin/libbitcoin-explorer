@@ -12,7 +12,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
 
-# Distribute, make and install products.
+# Distribution, build and install products.
 #==============================================================================
 # files => ${pkgconfigdir}
 #------------------------------------------------------------------------------
