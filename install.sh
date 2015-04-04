@@ -230,6 +230,7 @@ SECP256K1_OPTIONS=\
 #------------------------------------------------------------------------------
 BITCOIN_OPTIONS=\
 "--without-tests "\
+"--without-examples "\
 "${with_boost} "\
 "${with_pkgconfigdir} "
 
