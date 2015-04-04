@@ -70,7 +70,6 @@ console_result dispatch_invoke(int argc, const char* argv[],
     std::string message;
     variables_map variables;
 
-
     if (!load_variables(variables, message, *command, input, argc, argv))
     {
         display_invalid_parameter(error, message);
