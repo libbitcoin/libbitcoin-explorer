@@ -102,13 +102,6 @@ bool deserialize_satoshi_item(Item& item, const data_chunk& data)
     return true;
 }
 
-//template <typename Element>
-//int find_position(const std::vector<Element>& list, const Element& element)
-//{
-//    auto it = std::find(list.begin(), list.end(), element);
-//    return if_else(it == list.end(), -1, distance(list.begin(), it));
-//}
-
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
     po::variables_map& variables, std::istream& input)

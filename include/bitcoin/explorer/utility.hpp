@@ -117,16 +117,6 @@ void deserialize(std::vector<Value>& collection, const std::string& text);
 template <typename Item>
 bool deserialize_satoshi_item(Item& item, const data_chunk& data);
 
-///**
-// * Find the position of an element in an ordered list.
-// * @param      <Element>  The type of list member elements.
-// * @param[in]  list       The list to search.
-// * @param[in]  element    The element to find.
-// * @return                The position or -1 if not found.
-// */
-//template <typename Element>
-//int find_position(const std::vector<Element>& list, const Element& element);
-
 /**
  * If the variable is not yet loaded, load from stdin as fallback.
  * @param      <Value>    The type of the parameter to load.
