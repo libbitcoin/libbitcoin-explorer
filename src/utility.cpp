@@ -139,12 +139,11 @@ void random_fill(data_chunk& chunk)
         byte = engine() % std::numeric_limits<uint8_t>::max();
 }
 
+// TODO: switch to binary for raw (primitive) reads in windows.
 std::string read_stream(std::istream& stream)
 {
-    BC_SET_BINARY_FILE_MODE(true);
     std::istreambuf_iterator<char> first(stream), last;
     std::string result(first, last);
-    BC_SET_BINARY_FILE_MODE(false);
     return result;
 }
 
