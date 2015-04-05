@@ -71,14 +71,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_TO_SEED_SHORT_SENTENCE \
-    "At least twelve words are required."
-#define BX_EC_MNEMONIC_TO_SEED_LONG_SENTENCE \
-    "No more than 128 words are allowed."
 #define BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE \
     "The number of words must be divisible by 3."
 #define BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE \
-    "The specified words are not a valid mnemonic."
+    "warning: The specified words are not a valid mnemonic."
 
 /**
  * Class to implement the mnemonic-to-seed command.

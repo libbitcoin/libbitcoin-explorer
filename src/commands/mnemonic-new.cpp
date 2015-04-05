@@ -26,7 +26,6 @@
 #include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace bc;
-using namespace bc::bip39;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -40,19 +39,17 @@ console_result mnemonic_new::invoke(std::ostream& output,
 
     const auto entropy_size = entropy.size();
 
-    if (entropy_size < minimum_seed_size)
-    {
-        error << BX_EC_MNEMONIC_NEW_SHORT_ENTROPY << std::endl;
-        return console_result::failure;
-    }
-
-    if ((entropy_size % seed_multiple) != 0)
+    if ((entropy_size % mnemonic_seed_multiple) != 0)
     {
         error << BX_EC_MNEMONIC_NEW_INVALID_ENTROPY << std::endl;
         return console_result::failure;
     }
 
-    const auto words = create_mnemonic(entropy, language);
+    string_list words;
+    if (language)
+        words = create_mnemonic(entropy, *language);
+    else
+        words = create_mnemonic(entropy);
 
     output << join(words) << std::endl;
     return console_result::okay;

@@ -26,7 +26,6 @@
 #include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace bc;
-using namespace bc::bip39;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -41,31 +40,26 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
 
     const auto word_count = words.size();
 
-    if (word_count < min_word_count)
-    {
-        error << BX_EC_MNEMONIC_TO_SEED_SHORT_SENTENCE << std::endl;
-        return console_result::failure;
-    }
-
-    if (word_count > max_word_count)
-    {
-        error << BX_EC_MNEMONIC_TO_SEED_LONG_SENTENCE << std::endl;
-        return console_result::failure;
-    }
-
-    if ((word_count % word_multiple) != 0)
+    if ((word_count % mnemonic_word_multiple) != 0)
     {
         error << BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE << std::endl;
         return console_result::failure;
     }
 
-    const auto seed = decode_mnemonic(words, passphrase, language);
+    bool valid;
+    if (language)
+        valid = validate_mnemonic(words, *language);
+    else
+        valid = validate_mnemonic(words);
 
-    if (seed.empty())
+    if (!valid)
     {
+        // This warning is non-fatal,
+        // since the mnemonic may be valid in a language we don't know:
         error << BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE << std::endl;
-        return console_result::failure;
     }
+
+    const auto seed = decode_mnemonic(words, passphrase);
 
     output << base16(seed) << std::endl;
     return console_result::okay;

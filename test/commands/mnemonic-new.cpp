@@ -25,12 +25,12 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(mnemonic_new__invoke)
 
-BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__64_bits__failure_error)
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__64_bits__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_seed_argument({ "baadf00dbaadf00d" });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_NEW_SHORT_ENTROPY "\n");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant alone\n");
 }
 
 BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__136_bits__failure_error)

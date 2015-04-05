@@ -393,10 +393,8 @@
     <option name="language" type="language" description="The two letter language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant'. Required only to disambiguate 'zh' mnemonics." />
     <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
     <argument name="WORD" stdin="true" limit="-1" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_SHORT_SENTENCE" value="At least twelve words are required." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_LONG_SENTENCE" value="No more than 128 words are allowed." />
     <define name="BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE" value="The number of words must be divisible by 3." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE" value="The specified words are not a valid mnemonic." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE" value="warning: The specified words are not a valid mnemonic." />
   </command>
 
   <command symbol="mpk" category="ELECTRUM" obsolete="true" description="Extract a master public key from a deterministic wallet seed.">
