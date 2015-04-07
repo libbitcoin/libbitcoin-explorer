@@ -40,7 +40,7 @@ static const char* language_zh_Hans = "zh_Hans";
 static const char* language_zh_Hant = "zh_Hant";
 
 language::language()
-    : language(bip39::language::unknown)
+    : value_(nullptr)
 {
 }
 
@@ -49,17 +49,17 @@ language::language(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-language::language(bip39::language language)
+language::language(dictionary* language)
     : value_(language)
 {
 }
 
 language::language(const language& other)
-    : language(other.value_)
+    : value_(other.value_)
 {
 }
 
-language::operator bip39::language() const
+language::operator const bc::dictionary*() const
 {
     return value_;
 }
@@ -70,15 +70,15 @@ std::istream& operator>>(std::istream& input, language& argument)
     input >> text;
 
     if (text == language_en)
-        argument.value_ = bip39::language::en;
+        argument.value_ = &bc::language::en;
     else if (text == language_es)
-        argument.value_ = bip39::language::es;
+        argument.value_ = &bc::language::es;
     else if (text == language_ja)
-        argument.value_ = bip39::language::ja;
+        argument.value_ = &bc::language::ja;
     else if (text == language_zh_Hans)
-        argument.value_ = bip39::language::zh_Hans;
+        argument.value_ = &bc::language::zh_Hans;
     else if (text == language_zh_Hant)
-        argument.value_ = bip39::language::zh_Hant;
+        argument.value_ = &bc::language::zh_Hant;
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -89,29 +89,24 @@ std::istream& operator>>(std::istream& input, language& argument)
 
 std::ostream& operator<<(std::ostream& output, const language& argument)
 {
-    std::string value;
+    std::string text;
 
-    switch (argument.value_)
+    if (argument.value_ == &bc::language::en)
+        text = language_en;
+    else if (argument.value_ == &bc::language::es)
+        text = language_es;
+    else if (argument.value_ == &bc::language::ja)
+        text = language_ja;
+    else if (argument.value_ == &bc::language::zh_Hans)
+        text = language_zh_Hans;
+    else if (argument.value_ == &bc::language::zh_Hant)
+        text = language_zh_Hant;
+    else
     {
-        case bip39::language::en:
-            value = language_en;
-            break;
-        case bip39::language::es:
-            value = language_es;
-            break;
-        case bip39::language::ja:
-            value = language_ja;
-            break;
-        case bip39::language::zh_Hans:
-            value = language_zh_Hans;
-            break;
-        case bip39::language::zh_Hant:
-            value = language_zh_Hant;
-            break;
-        default:
-            BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");
+        BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");
     }
 
+    output << text;
     return output;
 }
 

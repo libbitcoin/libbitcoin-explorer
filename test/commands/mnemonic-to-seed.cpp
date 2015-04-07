@@ -25,14 +25,6 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(mnemonic_to_seed__invoke)
 
-BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__3_words__failure_error)
-{
-    BX_DECLARE_COMMAND(mnemonic_to_seed);
-    command.set_words_argument({ "foo", "bar", "bar" });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_SHORT_SENTENCE "\n");
-}
-
 BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__13_words__failure_error)
 {
     BX_DECLARE_COMMAND(mnemonic_to_seed);
@@ -41,50 +33,7 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__13_words__failure_error)
     BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE "\n");
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__129_words__failure_error)
-{
-    BX_DECLARE_COMMAND(mnemonic_to_seed);
-    command.set_words_argument(
-    {
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "1", "2", "3", "4", "5", "6", "7", "8",
-        "0"
-    });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_LONG_SENTENCE "\n");
-}
-
-BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__24_invalid_words__failure_error)
+BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__24_invalid_words__ok_warning)
 {
     BX_DECLARE_COMMAND(mnemonic_to_seed);
     command.set_words_argument(
@@ -93,8 +42,9 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__24_invalid_words__failure_error)
         "1", "2", "3", "4", "5", "6", "7", "8",
         "1", "2", "3", "4", "5", "6", "7", "8"
     });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE "\n");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BOOST_REQUIRE_EQUAL(error.str(), BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE "\n");
+    BOOST_REQUIRE_EQUAL(output.str(), "4dcb7967130e59838c8aa12a61ce0fcbfd584d03885ce74f1f6775b3c881a2eeb34dca584e7ab2074cc6f0689fd1f1fb2545e35b979f1fe0aad0bbe31e0a011b\n");
 }
 
 BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__standard__okay_output)

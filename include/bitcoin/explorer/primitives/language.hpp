@@ -53,7 +53,7 @@ public:
      * Initialization constructor.
      * @param[in]  language  The value to initialize with.
      */
-    BCX_API language(bc::bip39::language language);
+    BCX_API language(bc::dictionary* language);
 
     /**
      * Copy constructor.
@@ -65,7 +65,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator bc::bip39::language() const;
+    BCX_API operator const bc::dictionary*() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -90,7 +90,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::bip39::language value_;
+    const bc::dictionary* value_;
 };
 
 } // namespace explorer
