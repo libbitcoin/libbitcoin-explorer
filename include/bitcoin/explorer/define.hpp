@@ -98,9 +98,9 @@ namespace pt = boost::property_tree;
 /**
  * Space-saving, clarifying and/or differentiating external type equivalents.
  */
-typedef bc::transaction_type tx_type;
-typedef bc::transaction_input_type tx_input_type;
-typedef bc::transaction_output_type tx_output_type;
+typedef bc::chain::transaction tx_type;
+typedef bc::chain::transaction_input tx_input_type;
+typedef bc::chain::transaction_output tx_output_type;
 typedef bc::client::history_row balance_row;
 typedef boost::format format;
 typedef po::option_description option_metadata;

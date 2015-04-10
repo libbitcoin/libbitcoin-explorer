@@ -39,14 +39,14 @@ console_result mnemonic_new::invoke(std::ostream& output,
 
     const auto entropy_size = entropy.size();
 
-    if ((entropy_size % mnemonic_seed_multiple) != 0)
+    if ((entropy_size % bc::wallet::mnemonic_seed_multiple) != 0)
     {
         error << BX_EC_MNEMONIC_NEW_INVALID_ENTROPY << std::endl;
         return console_result::failure;
     }
 
     // If 'any' is indicated, default to 'en', otherwise use as specified.
-    auto dictionary = &bc::language::en;
+    auto dictionary = &bc::wallet::language::en;
     if (language.size() == 1)
         dictionary = language.front();
 

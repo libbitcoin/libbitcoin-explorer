@@ -60,7 +60,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API wif(const hd_private_key& value);
+    BCX_API wif(const wallet::hd_private_key& value);
 
     /**
      * Copy constructor.
@@ -113,8 +113,8 @@ private:
     ec_secret value_;
 };
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin
 
 #endif

@@ -55,7 +55,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API header(const block_header_type& value);
+    BCX_API header(const chain::block_header& value);
 
     /**
      * Copy constructor.
@@ -67,7 +67,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const block_header_type&() const;
+    BCX_API operator const chain::block_header&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -92,11 +92,11 @@ private:
     /**
      * The state of this object's header data.
      */
-    block_header_type value_;
+    chain::block_header value_;
 };
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin
 
 #endif

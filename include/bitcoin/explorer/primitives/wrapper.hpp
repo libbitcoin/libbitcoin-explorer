@@ -65,7 +65,7 @@ public:
      * Initialization constructor.
      * @param[in]  address  The payment address to initialize with.
      */
-    BCX_API wrapper(const payment_address& address);
+    BCX_API wrapper(const wallet::payment_address& address);
 
     /**
      * Initialization constructor.

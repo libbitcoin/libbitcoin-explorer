@@ -96,7 +96,7 @@ bool deserialize_satoshi_item(Item& item, const data_chunk& data)
 {
     try
     {
-        satoshi_load(data.begin(), data.end(), item);
+        item = Item(data.begin(), data.end());
     }
     catch (end_of_stream)
     {
@@ -153,9 +153,7 @@ std::string serialize(const Value& value, const std::string& fallback)
 template <typename Item>
 data_chunk serialize_satoshi_item(const Item& item)
 {
-    data_chunk data(satoshi_raw_size(item));
-    satoshi_save(item, data.begin());
-    return data;
+    return item;
 }
 
 template <typename Instance>

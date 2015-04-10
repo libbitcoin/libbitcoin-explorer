@@ -53,7 +53,7 @@ console_result stealth_encode::invoke(std::ostream& output,
     if (spend_pubkeys.size() > 1)
         error << BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED << std::endl;
 
-    if (prefix.size() > stealth_address::max_prefix_bits)
+    if (prefix.size() > bc::wallet::stealth_address::max_prefix_bits)
     {
         error << BX_STEALTH_ENCODE_PREFIX_TOO_LONG << std::endl;
         return console_result::failure;

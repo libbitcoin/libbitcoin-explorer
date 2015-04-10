@@ -59,7 +59,7 @@ ec_private::ec_private(const ec_secret& value)
 {
 }
 
-ec_private::ec_private(const hd_private_key& value)
+ec_private::ec_private(const wallet::hd_private_key& value)
     : ec_private(value.private_key())
 {
 }

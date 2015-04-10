@@ -59,7 +59,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API point(const output_point& value);
+    BCX_API point(const chain::output_point& value);
 
     /**
      * Copy constructor.
@@ -71,7 +71,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const output_point&() const;
+    BCX_API operator const chain::output_point&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -96,7 +96,7 @@ private:
     /**
      * The state of this object.
      */
-    output_point value_;
+    chain::output_point value_;
 };
 
 } // namespace explorer

@@ -53,7 +53,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    if (prefix.size() > stealth_address::max_prefix_bits)
+    if (prefix.size() > bc::wallet::stealth_address::max_prefix_bits)
     {
         error << BX_FETCH_STEALTH_PREFIX_TOO_LONG << std::endl;
         return console_result::failure;

@@ -35,7 +35,7 @@ console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& secret = get_hd_private_key_argument();
     
-    const hd_public_key& public_key = secret;
+    const bc::wallet::hd_public_key& public_key = secret;
 
     output << hd_pub(public_key) << std::endl;
     return console_result::okay;

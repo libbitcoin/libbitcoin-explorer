@@ -52,7 +52,7 @@ wrapper::wrapper(const wrapped_data& wrapped)
 {
 }
 
-wrapper::wrapper(const payment_address& address)
+wrapper::wrapper(const wallet::payment_address& address)
     : wrapper(address.version(), 
     data_chunk(address.hash().begin(), address.hash().end()))
 {

@@ -45,7 +45,7 @@ script::script(const std::string& mnemonic)
     std::stringstream(mnemonic) >> *this;
 }
 
-script::script(const script_type& value)
+script::script(const chain::script& value)
     : value_(value)
 {
 }
@@ -75,24 +75,26 @@ script::script(const script& other)
 
 const data_chunk script::to_data() const
 {
-    return save_script(value_);
+    return value_;
 }
 
 const std::string script::to_string() const
 {
-    return pretty(value_);
+    return value_.to_string();
 }
 
-script::operator const script_type&() const
+script::operator const chain::script&() const
 {
-    return value_; 
+    return value_;
 }
 
 std::istream& operator>>(std::istream& input, script& argument)
 {
     std::istreambuf_iterator<char> end;
     std::string mnemonic(std::istreambuf_iterator<char>(input), end);
-    argument.value_ = unpretty(mnemonic);
+    boost::trim(mnemonic);
+
+    argument.value_ = chain::script(mnemonic);
 
     // Test for invalid result sentinel.
     if (argument.value_.operations().size() == 0 && mnemonic.length() > 0)
@@ -105,10 +107,10 @@ std::istream& operator>>(std::istream& input, script& argument)
 
 std::ostream& operator<<(std::ostream& output, const script& argument)
 {
-    output << pretty(argument.value_);
+    output << argument.value_.to_string();
     return output;
 }
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin

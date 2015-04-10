@@ -44,13 +44,13 @@ hd_key::hd_key(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-hd_key::hd_key(const hd_private_key& value)
+hd_key::hd_key(const wallet::hd_private_key& value)
 {
     // hd_public_key doesn't provide a copy constructor.
     private_key_value_.set_encoded(value.encoded());
 }
 
-hd_key::hd_key(const hd_public_key& value)
+hd_key::hd_key(const wallet::hd_public_key& value)
 {
     // hd_public_key doesn't provide a copy constructor.
     public_key_value_.set_encoded(value.encoded());
@@ -62,20 +62,20 @@ hd_key::hd_key(const hd_key& other)
     private_key_value_ = other.private_key_value_;
 }
 
-const hd_public_key& hd_key::derived_public_key() const
+const wallet::hd_public_key& hd_key::derived_public_key() const
 {
     if (private_key_value_.valid())
-        return (hd_public_key&)private_key_value_;
+        return (wallet::hd_public_key&)private_key_value_;
     else
         return public_key_value_;
 }
 
-hd_key::operator const hd_private_key&() const
+hd_key::operator const wallet::hd_private_key&() const
 {
     return private_key_value_;
 }
 
-hd_key::operator const hd_public_key&() const
+hd_key::operator const wallet::hd_public_key&() const
 {
     return public_key_value_;
 }

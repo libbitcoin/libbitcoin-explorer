@@ -126,7 +126,7 @@ BCX_API pt::ptree prop_tree(const std::vector<client::history_row>& rows);
  * @return                      A property list.
  */
 BCX_API pt::ptree prop_list(const std::vector<balance_row>& rows,
-    const payment_address& balance_address);
+    const wallet::payment_address& balance_address);
 
 /**
  * Generate a property tree from balance rows for an address.
@@ -135,7 +135,7 @@ BCX_API pt::ptree prop_list(const std::vector<balance_row>& rows,
  * @return                      A property tree.
  */
 BCX_API pt::ptree prop_tree(const std::vector<balance_row>& rows,
-    const payment_address& balance_address);
+    const wallet::payment_address& balance_address);
 
 /**
  * Generate a property list for a transaction input.
@@ -291,7 +291,7 @@ BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
  * @return                 A property list.
  */
 BCX_API pt::ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address);
+    const wallet::payment_address& address);
 
 /**
  * Generate a property tree for transaction with extended data.
@@ -301,7 +301,7 @@ BCX_API pt::ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
  * @return                 A property tree.
  */
 BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address);
+    const wallet::payment_address& address);
 
 /**
  * Generate a property list for a stealth address.
@@ -370,7 +370,7 @@ BCX_API pt::ptree prop_tree(const settings_list& settings);
  * @param[in]  uri   The parsed uri.
  * @returns          A new property tree containing the settings.
  */
-BCX_API pt::ptree prop_tree(const uri_parse_result& uri);
+BCX_API pt::ptree prop_tree(const wallet::uri_parse_result& uri);
 
 } // namespace primitives
 } // namespace explorer

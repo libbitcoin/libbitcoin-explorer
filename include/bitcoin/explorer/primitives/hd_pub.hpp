@@ -52,7 +52,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API hd_pub(const hd_public_key& value);
+    BCX_API hd_pub(const wallet::hd_public_key& value);
 
     /**
      * Copy constructor.
@@ -64,7 +64,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const hd_public_key&() const;
+    BCX_API operator const wallet::hd_public_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -89,11 +89,11 @@ private:
     /**
      * The state of this object.
      */
-    hd_public_key value_;
+    wallet::hd_public_key value_;
 };
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin
 
 #endif

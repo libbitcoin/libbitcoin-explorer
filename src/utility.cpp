@@ -131,7 +131,7 @@ ec_secret new_key(data_slice seed)
 
     // This is retained in order to preserve test cases and docs.
     // Using HD key generation because we don't have helper for EC.
-    const hd_private_key hd_key(seed, testnet);
+    const wallet::hd_private_key hd_key(seed, testnet);
 
     if (!hd_key.valid())
     {
@@ -159,7 +159,7 @@ ptime now()
     return local_time_in_seconds;
 }
 
-std::vector<std::string> numbers_to_strings(const index_list& indexes)
+std::vector<std::string> numbers_to_strings(const chain::index_list& indexes)
 {
     std::vector<std::string> stringlist;
     for (const auto& index: indexes)
@@ -186,9 +186,11 @@ std::string read_stream(std::istream& stream)
     return result;
 }
 
-script_type script_to_raw_data_script(const script_type& script)
+chain::script script_to_raw_data_script(const chain::script& script)
 {
-    return raw_data_script(save_script(script));
+    bc::data_chunk data = script;
+    chain::script duplicate(data, true);
+    return duplicate;
 }
 
 name_value_pairs split_pairs(const std::vector<std::string> tokens,
@@ -231,12 +233,13 @@ bool starts_with(const std::string& value, const std::string& prefix)
 
 bool unwrap(wrapped_data& data, data_slice wrapped)
 {
-    return bc::unwrap(data.version, data.payload, data.checksum, wrapped);
+    return bc::wallet::unwrap(
+        data.version, data.payload, data.checksum, wrapped);
 }
 
 data_chunk wrap(const wrapped_data& data)
 {
-    return bc::wrap(data.version, data.payload);
+    return bc::wallet::wrap(data.version, data.payload);
 }
 
 // We aren't yet using a reader, although it is possible using ptree.

@@ -32,7 +32,7 @@ using namespace bc::explorer::primitives;
 console_result hd_to_wif::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const hd_private_key& secret = get_hd_private_key_argument();
+    const bc::wallet::hd_private_key& secret = get_hd_private_key_argument();
 
     // TESTNET OPTION DOES NOT REQUIRE RECOMPILE
 

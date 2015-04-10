@@ -55,7 +55,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API signature(const message_signature& value);
+    BCX_API signature(const wallet::message_signature& value);
 
     /**
      * Copy constructor.
@@ -67,7 +67,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const message_signature&() const;
+    BCX_API operator const wallet::message_signature&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -92,11 +92,11 @@ private:
     /**
      * The state of this object.
      */
-    message_signature value_;
+    wallet::message_signature value_;
 };
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin
 
 #endif

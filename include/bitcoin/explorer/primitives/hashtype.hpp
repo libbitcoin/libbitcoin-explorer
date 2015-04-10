@@ -50,7 +50,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API hashtype(const sighash& value);
+    BCX_API hashtype(const chain::signature_hash_algorithm& value);
 
     /**
      * Copy constructor.
@@ -62,7 +62,7 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    BCX_API operator sighash() const;
+    BCX_API operator chain::signature_hash_algorithm() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -87,11 +87,11 @@ private:
     /**
      * The state of this object's sighash engine data.
      */
-    sighash value_;
+    chain::signature_hash_algorithm value_;
 };
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin
 
 #endif

@@ -38,7 +38,7 @@ static const char* hashtype_single = "single";
 static const char* hashtype_anyone_can_pay = "anyone_can_pay";
 
 hashtype::hashtype()
-    : hashtype(sighash::all)
+    : hashtype(chain::signature_hash_algorithm::all)
 {
 }
 
@@ -47,7 +47,7 @@ hashtype::hashtype(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-hashtype::hashtype(const sighash& value)
+hashtype::hashtype(const chain::signature_hash_algorithm& value)
     : value_(value)
 {
 }
@@ -57,7 +57,7 @@ hashtype::hashtype(const hashtype& other)
 {
 }
 
-hashtype::operator sighash() const
+hashtype::operator chain::signature_hash_algorithm() const
 {
     return value_;
 }
@@ -68,13 +68,13 @@ std::istream& operator>>(std::istream& input, hashtype& argument)
     input >> text;
 
     if (text == hashtype_all)
-        argument.value_ = sighash::all;
+        argument.value_ = chain::signature_hash_algorithm::all;
     else if (text == hashtype_none)
-        argument.value_ = sighash::none;
+        argument.value_ = chain::signature_hash_algorithm::none;
     else if (text == hashtype_single)
-        argument.value_ = sighash::single;
+        argument.value_ = chain::signature_hash_algorithm::single;
     else if (text == hashtype_anyone_can_pay)
-        argument.value_ = sighash::anyone_can_pay;
+        argument.value_ = chain::signature_hash_algorithm::anyone_can_pay;
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -89,16 +89,16 @@ std::ostream& operator<<(std::ostream& output, const hashtype& argument)
 
     switch (argument.value_)
     {
-        case sighash::all:
+        case chain::signature_hash_algorithm::all:
             value = hashtype_all;
             break;
-        case sighash::none:
+        case chain::signature_hash_algorithm::none:
             value = hashtype_none;
             break;
-        case sighash::single:
+        case chain::signature_hash_algorithm::single:
             value = hashtype_single;
             break;
-        case sighash::anyone_can_pay:
+        case chain::signature_hash_algorithm::anyone_can_pay:
             value = hashtype_anyone_can_pay;
             break;
         default:

@@ -53,7 +53,7 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
         for (const auto& output: output_sets)
             tx.outputs.push_back(output);
 
-    if (is_locktime_conflict(tx))
+    if (tx.is_locktime_conflict())
     {
         error << BX_TX_ENCODE_LOCKTIME_CONFLICT << std::endl;
         return console_result::failure;

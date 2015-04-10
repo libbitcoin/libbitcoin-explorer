@@ -67,7 +67,7 @@ public:
      * are defaulted.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API input(const input_point& value);
+    BCX_API input(const chain::input_point& value);
 
     /**
      * Overload cast to internal type.

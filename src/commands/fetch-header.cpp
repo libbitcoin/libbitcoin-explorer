@@ -55,7 +55,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state](const block_header_type& header)
+    auto on_done = [&state](const chain::block_header& header)
     {
         state.output(prop_tree(header));
     };

@@ -45,7 +45,7 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
     }
 
     // TESTNET OPTION DOES NOT REQUIRE RECOMPILE
-    const hd_private_key key(seed, network == BX_TESTNET);
+    const bc::wallet::hd_private_key key(seed, network == BX_TESTNET);
     if (!key.valid())
     {
         error << BX_HD_NEW_INVALID_KEY << std::endl;

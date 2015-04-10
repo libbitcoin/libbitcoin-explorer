@@ -56,7 +56,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API address(const payment_address& value);
+    BCX_API address(const wallet::payment_address& value);
 
     /**
      * Copy constructor.
@@ -75,19 +75,19 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API address(const hd_private_key& value);
+    BCX_API address(const wallet::hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API address(const hd_public_key& value);
+    BCX_API address(const wallet::hd_public_key& value);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    BCX_API payment_address& data();
+    BCX_API wallet::payment_address& data();
 
     /**
      * Overload cast to bool.
@@ -99,7 +99,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const payment_address&() const;
+    BCX_API operator const wallet::payment_address&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -124,7 +124,7 @@ private:
     /**
      * The state of this object.
      */
-    payment_address value_;
+    wallet::payment_address value_;
 };
 
 } // namespace explorer

@@ -45,13 +45,13 @@ stealth::stealth(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-stealth::stealth(const stealth_address& address)
+stealth::stealth(const wallet::stealth_address& address)
     : value_(address)
 {
 }
 
 stealth::stealth(const bc::binary_type& prefix, const ec_point& scan_key,
-    const pubkey_list& spend_keys, uint8_t signatures, bool testnet)
+    const wallet::pubkey_list& spend_keys, uint8_t signatures, bool testnet)
     : value_(prefix, scan_key, spend_keys, signatures, testnet)
 {
 }
@@ -66,7 +66,7 @@ stealth::operator bool() const
     return value_.valid();
 }
 
-stealth::operator const stealth_address&() const
+stealth::operator const wallet::stealth_address&() const
 {
     return value_;
 }
@@ -76,7 +76,7 @@ std::istream& operator>>(std::istream& input, stealth& argument)
     std::string encoded;
     input >> encoded;
 
-    if (!argument.value_.set_encoded(encoded))
+    if (!argument.value_.from_string(encoded))
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(encoded));
     }
@@ -86,7 +86,7 @@ std::istream& operator>>(std::istream& input, stealth& argument)
 
 std::ostream& operator<<(std::ostream& output, const stealth& argument)
 {
-    output << argument.value_.encoded();
+    output << argument.value_.to_string();
     return output;
 }
 

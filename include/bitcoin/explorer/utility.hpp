@@ -237,7 +237,8 @@ BCX_API data_chunk new_seed(size_t bitlength=128);
  * @param[in]  indexes  The list of indexes to convert.
  * @return              The list of strings.
  */
-BCX_API std::vector<std::string> numbers_to_strings(const index_list& indexes);
+BCX_API std::vector<std::string> numbers_to_strings(
+    const chain::index_list& indexes);
 
 /**
  * Get the local time, second level resolution, based on the time zone settings
@@ -264,7 +265,7 @@ BCX_API std::string read_stream(std::istream& stream);
  * @param[in]  script  The script to convert.
  * @return             The data script.
  */
-BCX_API script_type script_to_raw_data_script(const script_type& script);
+BCX_API chain::script script_to_raw_data_script(const chain::script& script);
 
 /**
  * Sleep for the specified number of milliseconds.

@@ -59,7 +59,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API ec_private(const hd_private_key& value);
+    BCX_API ec_private(const wallet::hd_private_key& value);
 
     /**
      * Copy constructor.

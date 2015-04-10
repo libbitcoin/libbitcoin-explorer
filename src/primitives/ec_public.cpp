@@ -72,12 +72,12 @@ ec_public::ec_public(const ec_public& other)
 {
 }
 
-ec_public::ec_public(const hd_private_key& value)
+ec_public::ec_public(const wallet::hd_private_key& value)
     : ec_public(value.public_key())
 {
 }
 
-ec_public::ec_public(const hd_public_key& value)
+ec_public::ec_public(const wallet::hd_public_key& value)
     : ec_public(value.public_key())
 {
 }

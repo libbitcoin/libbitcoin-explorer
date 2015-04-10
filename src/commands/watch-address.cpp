@@ -69,7 +69,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output, encoding);
 
     auto on_update = [&state](const address& bitcoin_address, size_t,
-        const hash_digest& block_hash, const transaction_type& tx)
+        const hash_digest& block_hash, const tx_type& tx)
     {
         state.output(prop_tree(tx, block_hash, bitcoin_address));
     };

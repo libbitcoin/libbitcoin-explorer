@@ -40,7 +40,7 @@ console_result ec_to_address::invoke(std::ostream& output, std::ostream& error)
     const auto ripemd160 = bitcoin_short_hash(point);
 
     // TESTNET VERSION MAY REQUIRE RECOMPILE
-    payment_address pay_address(version, ripemd160);
+    bc::wallet::payment_address pay_address(version, ripemd160);
 
     output << address(pay_address) << std::endl;
     return console_result::okay;
