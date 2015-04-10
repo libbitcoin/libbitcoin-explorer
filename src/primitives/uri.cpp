@@ -56,7 +56,7 @@ std::string uri::to_string() const
 }
 
 // This will return a default object if not a bitcoin uri.
-uri::operator const uri_parse_result&() const
+uri::operator const wallet::uri_parse_result&() const
 {
     return parse_result_;
 }

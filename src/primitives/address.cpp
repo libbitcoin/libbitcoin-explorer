@@ -45,8 +45,8 @@ address::address(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-address::address(const payment_address& value)
-    : address(value.encoded())
+address::address(const wallet::payment_address& value)
+    : address(value.to_string())
 {
 }
 
@@ -56,26 +56,26 @@ address::address(const address& other)
 }
 
 address::address(uint8_t version, const short_hash& hash)
-    : address(payment_address(version, hash))
+    : address(wallet::payment_address(version, hash))
 {
 }
 
-address::address(const hd_private_key& value)
+address::address(const wallet::hd_private_key& value)
     : address(value.address())
 {
 }
 
-address::address(const hd_public_key& value)
+address::address(const wallet::hd_public_key& value)
     : address(value.address())
 {
 }
 
 address::operator bool() const
 {
-    return value_.version() != payment_address::invalid_version;
+    return value_.version() != wallet::payment_address::invalid_version;
 }
 
-address::operator const payment_address&() const
+address::operator const wallet::payment_address&() const
 {
     return value_;
 }
@@ -85,7 +85,7 @@ std::istream& operator>>(std::istream& input, address& argument)
     std::string base58;
     input >> base58;
 
-    if (!argument.value_.set_encoded(base58))
+    if (!argument.value_.from_string(base58))
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(base58));
     }
@@ -95,7 +95,7 @@ std::istream& operator>>(std::istream& input, address& argument)
 
 std::ostream& operator<<(std::ostream& output, const address& argument)
 {
-    output << argument.value_.encoded();
+    output << argument.value_.to_string();
     return output;
 }
 

@@ -39,8 +39,8 @@ console_result address_validate::invoke(std::ostream& output, std::ostream& erro
 
     // TESTNET VERSION REQUIRES RECOMPILE
 
-    payment_address pay_address;
-    if (!pay_address.set_encoded(token))
+    bc::wallet::payment_address pay_address;
+    if (!pay_address.from_string(token))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_ADDRESS_VALIDATE_INVALID_ADDRESS << std::endl;

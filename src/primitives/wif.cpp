@@ -47,7 +47,7 @@ wif::wif(const ec_secret& value, bool compressed=true)
 {
 }
 
-wif::wif(const hd_private_key& value)
+wif::wif(const wallet::hd_private_key& value)
     : wif(value.private_key())
 {
 }
@@ -72,20 +72,20 @@ std::istream& operator>>(std::istream& input, wif& argument)
     std::string base58;
     input >> base58;
 
-    auto value = wif_to_secret(base58);
+    auto value = wallet::wif_to_secret(base58);
     if (!verify_private_key(value))
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(base58));
     }
 
-    argument.compressed_ = is_wif_compressed(base58);
+    argument.compressed_ = wallet::is_wif_compressed(base58);
     std::copy(value.begin(), value.end(), argument.value_.begin());
     return input;
 }
 
 std::ostream& operator<<(std::ostream& output, const wif& argument)
 {
-    output << secret_to_wif(argument.value_, argument.compressed_);
+    output << wallet::secret_to_wif(argument.value_, argument.compressed_);
     return output;
 }
 

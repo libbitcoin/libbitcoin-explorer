@@ -44,7 +44,8 @@ console_result input_validate::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    if (!check_signature(endorse, public_key, contract, tx, index))
+    if (!bc::chain::script::check_signature(endorse, public_key, script, tx,
+        index))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;

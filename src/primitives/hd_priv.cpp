@@ -42,7 +42,7 @@ hd_priv::hd_priv(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-hd_priv::hd_priv(const hd_private_key& value)
+hd_priv::hd_priv(const wallet::hd_private_key& value)
 {
     // hd_private_key doesn't provide a copy constructor.
     value_.set_encoded(value.encoded());
@@ -53,7 +53,7 @@ hd_priv::hd_priv(const hd_priv& other)
 {
 }
 
-hd_priv::operator const hd_private_key&() const
+hd_priv::operator const wallet::hd_private_key&() const
 {
     return value_; 
 }

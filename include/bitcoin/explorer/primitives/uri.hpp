@@ -65,7 +65,7 @@ public:
      * Overload cast to parse result.
      * @return  This object's value cast to a parse result.
      */
-    BCX_API operator const uri_parse_result&() const;
+    BCX_API operator const wallet::uri_parse_result&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -95,7 +95,7 @@ private:
     /**
      * The tracking state of this object.
      */
-    uri_parse_result parse_result_;
+    wallet::uri_parse_result parse_result_;
 };
 
 } // namespace explorer

@@ -43,7 +43,7 @@ static bool decode_input(tx_input_type& input, const std::string& tuple)
     if (tokens.size() != 2 && tokens.size() != 3)
         return false;
 
-    input.script = script_type();
+    input.script = chain::script();
     input.sequence = max_input_sequence;
     input.previous_output = point(tokens[0] + ":" + tokens[1]);
     if (tokens.size() == 3)
@@ -81,11 +81,11 @@ input::input(const input& other)
 {
 }
 
-input::input(const input_point& value)
+input::input(const chain::input_point& value)
 {
     value_.previous_output = value;
     value_.sequence = max_input_sequence;
-    value_.script = script_type();
+    value_.script = chain::script();
 }
 
 input::operator const tx_input_type&() const

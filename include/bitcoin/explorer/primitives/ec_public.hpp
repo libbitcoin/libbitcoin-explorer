@@ -68,13 +68,13 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API ec_public(const hd_private_key& value);
+    BCX_API ec_public(const wallet::hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API ec_public(const hd_public_key& value);
+    BCX_API ec_public(const wallet::hd_public_key& value);
 
     /**
      * Return a reference to the data member.

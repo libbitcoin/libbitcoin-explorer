@@ -43,7 +43,7 @@ hd_pub::hd_pub(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-hd_pub::hd_pub(const hd_public_key& value)
+hd_pub::hd_pub(const wallet::hd_public_key& value)
 {
     // hd_public_key doesn't provide a copy constructor.
     value_.set_encoded(value.encoded());
@@ -54,7 +54,7 @@ hd_pub::hd_pub(const hd_pub& other)
 {
 }
 
-hd_pub::operator const hd_public_key&() const
+hd_pub::operator const wallet::hd_public_key&() const
 {
     return value_; 
 }

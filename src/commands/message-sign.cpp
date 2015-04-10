@@ -37,7 +37,8 @@ console_result message_sign::invoke(std::ostream& output, std::ostream& error)
     const auto& wif = get_wif_argument();
     const auto& message = get_message_argument();
 
-    const auto sign = sign_message(message, wif, wif.get_compressed());
+    const auto sign = bc::wallet::sign_message(message, wif,
+        wif.get_compressed());
 
     output << signature(sign) << std::endl;
     return console_result::okay;

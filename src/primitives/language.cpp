@@ -41,7 +41,7 @@ static const char* language_zh_Hant = "zh_Hant";
 static const char* language_any = "any";
 
 language::language()
-    : value_(bc::language::all)
+    : value_(bc::wallet::language::all)
 {
 }
 
@@ -50,7 +50,7 @@ language::language(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-language::language(dictionary_list& languages)
+language::language(bc::wallet::dictionary_list& languages)
     : value_(languages)
 {
 }
@@ -60,7 +60,7 @@ language::language(const language& other)
 {
 }
 
-language::operator const bc::dictionary_list&() const
+language::operator const bc::wallet::dictionary_list() const
 {
     return value_;
 }
@@ -73,18 +73,18 @@ std::istream& operator>>(std::istream& input, language& argument)
     argument.value_.clear();
 
     if (text == language_any)
-        argument.value_.assign(bc::language::all.begin(),
-            bc::language::all.end());
+        argument.value_.assign(bc::wallet::language::all.begin(),
+            bc::wallet::language::all.end());
     else if(text == language_en)
-        argument.value_.push_back(&bc::language::en);
+        argument.value_.push_back(&bc::wallet::language::en);
     else if (text == language_es)
-        argument.value_.push_back(&bc::language::es);
+        argument.value_.push_back(&bc::wallet::language::es);
     else if (text == language_ja)
-        argument.value_.push_back(&bc::language::ja);
+        argument.value_.push_back(&bc::wallet::language::ja);
     else if (text == language_zh_Hans)
-        argument.value_.push_back(&bc::language::zh_Hans);
+        argument.value_.push_back(&bc::wallet::language::zh_Hans);
     else if (text == language_zh_Hant)
-        argument.value_.push_back(&bc::language::zh_Hant);
+        argument.value_.push_back(&bc::wallet::language::zh_Hant);
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -99,15 +99,15 @@ std::ostream& operator<<(std::ostream& output, const language& argument)
 
     if (argument.value_.size() > 1)
         text = language_any;
-    else if(argument.value_.front() == &bc::language::en)
+    else if(argument.value_.front() == &bc::wallet::language::en)
         text = language_en;
-    else if (argument.value_.front() == &bc::language::es)
+    else if (argument.value_.front() == &bc::wallet::language::es)
         text = language_es;
-    else if (argument.value_.front() == &bc::language::ja)
+    else if (argument.value_.front() == &bc::wallet::language::ja)
         text = language_ja;
-    else if (argument.value_.front() == &bc::language::zh_Hans)
+    else if (argument.value_.front() == &bc::wallet::language::zh_Hans)
         text = language_zh_Hans;
-    else if (argument.value_.front() == &bc::language::zh_Hant)
+    else if (argument.value_.front() == &bc::wallet::language::zh_Hant)
         text = language_zh_Hant;
     else
     {
@@ -118,6 +118,6 @@ std::ostream& operator<<(std::ostream& output, const language& argument)
     return output;
 }
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin

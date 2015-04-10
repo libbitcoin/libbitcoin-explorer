@@ -56,13 +56,13 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API hd_key(const hd_private_key& value);
+    BCX_API hd_key(const wallet::hd_private_key& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API hd_key(const hd_public_key& value);
+    BCX_API hd_key(const wallet::hd_public_key& value);
 
     /**
      * Copy constructor.
@@ -75,19 +75,19 @@ public:
      * and otherwise return the public key.
      * @return  A reference to the object's internal data.
      */
-    BCX_API const hd_public_key& derived_public_key() const;
+    BCX_API const wallet::hd_public_key& derived_public_key() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const hd_private_key&() const;
+    BCX_API operator const wallet::hd_private_key&() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const hd_public_key&() const;
+    BCX_API operator const wallet::hd_public_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -112,16 +112,16 @@ private:
     /**
      * The private key state of this object.
      */
-    hd_private_key private_key_value_;
+    wallet::hd_private_key private_key_value_;
 
     /**
     * The public key state of this object.
     */
-    hd_public_key public_key_value_;
+    wallet::hd_public_key public_key_value_;
 };
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin
 
 #endif

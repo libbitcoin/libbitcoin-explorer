@@ -42,7 +42,7 @@ using namespace bc::explorer::commands;
          return console_result::failure;
      }
 
-     uri_writer writer;
+     bc::wallet::uri_writer writer;
 
      if (stealth)
          writer.write_address(stealth);

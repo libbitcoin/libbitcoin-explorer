@@ -53,7 +53,7 @@ public:
      * Initialization constructor.
      * @param[in]  languages  The value to initialize with.
      */
-    BCX_API language(bc::dictionary_list& languages);
+    BCX_API language(bc::wallet::dictionary_list& languages);
 
     /**
      * Copy constructor.
@@ -65,7 +65,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bc::dictionary_list&() const;
+    BCX_API operator const bc::wallet::dictionary_list() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -90,11 +90,11 @@ private:
     /**
      * The state of this object.
      */
-    bc::dictionary_list value_;
+    bc::wallet::dictionary_list value_;
 };
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin
 
 #endif

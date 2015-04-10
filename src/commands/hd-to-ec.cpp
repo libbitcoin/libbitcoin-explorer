@@ -35,9 +35,9 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& key = get_hd_key_argument();
 
-    hd_public_key child_key;
-    const hd_public_key& public_key = key;
-    const hd_private_key& private_key = key;
+    bc::wallet::hd_public_key child_key;
+    const bc::wallet::hd_public_key& public_key = key;
+    const bc::wallet::hd_private_key& private_key = key;
 
     if (private_key.valid())
         output << ec_private(private_key) << std::endl;

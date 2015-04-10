@@ -37,9 +37,9 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     const auto index = get_index_option();
     const auto& key = get_hd_public_key_argument();
 
-    hd_public_key child_key;
-    const hd_public_key& public_key = key;
-    const hd_private_key& private_key = key;
+    bc::wallet::hd_public_key child_key;
+    const bc::wallet::hd_public_key& public_key = key;
+    const bc::wallet::hd_private_key& private_key = key;
 
     if (!private_key.valid() && hard)
     {
@@ -47,7 +47,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    const auto position = if_else(hard, index + first_hardened_key, index);
+    const auto position = if_else(hard, index + bc::wallet::first_hardened_key, index);
 
     if (private_key.valid())
         child_key = private_key.generate_public_key(position);

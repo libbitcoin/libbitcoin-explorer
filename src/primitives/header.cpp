@@ -44,7 +44,7 @@ header::header(const std::string& hexcode)
     std::stringstream(hexcode) >> *this;
 }
 
-header::header(const block_header_type& value)
+header::header(const chain::block_header& value)
     : value_(value)
 {
 }
@@ -54,7 +54,7 @@ header::header(const header& other)
 {
 }
 
-header::operator const block_header_type&() const
+header::operator const chain::block_header&() const
 {
     return value_;
 }
