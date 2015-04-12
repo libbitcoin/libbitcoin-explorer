@@ -32,7 +32,7 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between bip39_langauge and string.
+ * Serialization helper to convert between dictionary and string.
  */
 class language
 {
