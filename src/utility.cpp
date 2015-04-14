@@ -50,10 +50,8 @@ namespace explorer {
 bool is_base2(const std::string& text)
 {
     for (const auto& character : text)
-    {
         if (character != '0' && character != '1')
             return false;
-    }
 
     return true;
 }
