@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__payment_address_data__round_trips)
 BOOST_AUTO_TEST_CASE(address__constructor__hd_private_key__converts)
 {
     wallet::hd_private_key private_key;
-    private_key.set_encoded(ADDRESS_HD_PRIVATE_KEY_MAINNET_A);
+    private_key.from_string(ADDRESS_HD_PRIVATE_KEY_MAINNET_A);
     const wallet::payment_address instance = address(private_key);
     BOOST_REQUIRE_EQUAL(instance.to_string(), ADDRESS_MAINNET_A);
 }
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__hd_private_key__converts)
 BOOST_AUTO_TEST_CASE(address__constructor__hd_public_key__converts)
 {
     wallet::hd_public_key public_key;
-    public_key.set_encoded(ADDRESS_HD_PUBLIC_KEY_MAINNET_A);
+    public_key.from_string(ADDRESS_HD_PUBLIC_KEY_MAINNET_A);
     const wallet::payment_address instance = address(public_key);
     BOOST_REQUIRE_EQUAL(instance.to_string(), ADDRESS_MAINNET_A);
 }
