@@ -94,10 +94,8 @@ std::istream& operator>>(std::istream& input, script& argument)
     std::string mnemonic(std::istreambuf_iterator<char>(input), end);
     boost::trim(mnemonic);
 
-    argument.value_ = chain::script(mnemonic);
-
     // Test for invalid result sentinel.
-    if (argument.value_.operations().size() == 0 && mnemonic.length() > 0)
+    if (!argument.value_.from_string(mnemonic) && mnemonic.length() > 0)
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(mnemonic));
     }

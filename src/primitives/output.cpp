@@ -158,8 +158,8 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
         }
 
         // We have already ensured there is exactly one spend key.
-        auto public_key = uncover_stealth(scan_pubkey, ephemeral_secret,
-            spend_pubkeys.front());
+        auto public_key = wallet::uncover_stealth(scan_pubkey,
+            ephemeral_secret, spend_pubkeys.front());
 
         // Add RETURN meta output.
         auto meta_output = build_stealth_meta_output(ephemeral_secret);
