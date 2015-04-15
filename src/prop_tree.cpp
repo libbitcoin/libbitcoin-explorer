@@ -222,8 +222,8 @@ ptree prop_list(const tx_output_type& tx_output)
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
-    stealth_info stealth;
-    if (extract_stealth_info(stealth, tx_output.script))
+    wallet::stealth_info stealth;
+    if (wallet::extract_stealth_info(stealth, tx_output.script))
     {
         tree.put("stealth.bit_field", stealth.bitfield);
         tree.put("stealth.ephemeral_public_key_hash",
