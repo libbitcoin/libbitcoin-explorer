@@ -159,7 +159,7 @@ public:
         (
             "PASSPHRASE",
             value<std::string>(&argument_.passphrase)->required(),
-            "The Unicode passphrase."
+            "The passphrase."
         );
 
         return options;
