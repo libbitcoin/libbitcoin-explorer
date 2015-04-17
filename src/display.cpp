@@ -21,6 +21,7 @@
 #include <bitcoin/explorer/display.hpp>
 
 #include <iostream>
+#include <memory>
 #include <boost/format.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/generated.hpp>
