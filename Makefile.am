@@ -37,7 +37,6 @@ src_libbitcoin_explorer_la_LIBADD = ${bitcoin_client_LIBS}
 src_libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
     src/callback_state.cpp \
-    src/config.cpp \
     src/dispatch.cpp \
     src/display.cpp \
     src/generated.cpp \
@@ -317,7 +316,6 @@ include_bitcoin_explorer_HEADERS = \
     include/bitcoin/explorer/async_client.hpp \
     include/bitcoin/explorer/callback_state.hpp \
     include/bitcoin/explorer/command.hpp \
-    include/bitcoin/explorer/config.hpp \
     include/bitcoin/explorer/define.hpp \
     include/bitcoin/explorer/dispatch.hpp \
     include/bitcoin/explorer/display.hpp \
