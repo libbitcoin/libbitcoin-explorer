@@ -34,7 +34,7 @@ console_result mnemonic_new::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& language = get_language_option();
+    const dictionary_list& language = get_language_option();
     const data_chunk& entropy = get_seed_argument();
 
     const auto entropy_size = entropy.size();
@@ -45,11 +45,12 @@ console_result mnemonic_new::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    string_list words;
-    if (language)
-        words = create_mnemonic(entropy, *language);
-    else
-        words = create_mnemonic(entropy);
+    // If 'any' is indicated, default to 'en', otherwise use as specified.
+    auto dictionary = &bc::language::en;
+    if (language.size() == 1)
+        dictionary = language.front();
+
+    const auto words = create_mnemonic(entropy, *dictionary);
 
     output << join(words) << std::endl;
     return console_result::okay;

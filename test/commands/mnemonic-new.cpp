@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
@@ -49,6 +49,14 @@ BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits__okay_output)
     BX_REQUIRE_OUTPUT("rival hurdle address inspire tenant almost turkey safe asset step lab boy\n");
 }
 
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__standard_default__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
+}
+
 BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__standard_en__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
@@ -58,8 +66,14 @@ BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__standard_en__okay_output)
     BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
 }
 
-// Windows i8n support is incomplete.
-#ifndef _MSC_VER
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__standard_all__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "any" });
+    command.set_seed_argument({ "7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("legal winner thank year wave sausage worth useful legal winner thank yellow\n");
+}
 
 BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_es__okay_output)
 {
@@ -96,8 +110,6 @@ BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_zh_Hant__okay_output)
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("博 肉 地 危 惜 多 陪 荒 因 患 伊 基\n");
 }
-
-#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
