@@ -42,13 +42,13 @@ console_result input_set::invoke(std::ostream& output, std::ostream& error)
     auto tx_copy = transaction(tx_in);
     auto& tx_out = tx_copy.data();
 
-    if (index >= tx_out.inputs.size())
+    if (index >= tx_out.inputs().size())
     {
         error << BX_INPUT_SET_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    tx_out.inputs[index].script = script;
+    tx_out.inputs()[index].script(script);
 
     output << tx_copy << std::endl;
     return console_result::okay;

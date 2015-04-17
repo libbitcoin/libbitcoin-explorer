@@ -38,7 +38,7 @@ console_result input_validate::invoke(std::ostream& output,
     const auto& contract = get_contract_argument();
     const auto& endorse = get_endorsement_argument();
 
-    if (index >= tx.inputs.size())
+    if (index >= tx.inputs().size())
     {
         error << BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;

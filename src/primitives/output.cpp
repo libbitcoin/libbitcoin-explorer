@@ -41,24 +41,28 @@ static chain::script build_pubkey_hash_script(const short_hash& pubkey_hash)
 {
     data_chunk hash(pubkey_hash.begin(), pubkey_hash.end());
 
-    chain::script script;
-    script.push_operations({ chain::opcode::dup, data_chunk() });
-    script.push_operations({ chain::opcode::hash160, data_chunk() });
-    script.push_operations({ chain::opcode::special, hash });
-    script.push_operations({ chain::opcode::equalverify, data_chunk() });
-    script.push_operations({ chain::opcode::checksig, data_chunk() });
-    return script;
+    chain::operation_stack ops = {
+        chain::operation(chain::opcode::dup, data_chunk()),
+        chain::operation(chain::opcode::hash160, data_chunk()),
+        chain::operation(chain::opcode::special, hash),
+        chain::operation(chain::opcode::equalverify, data_chunk()),
+        chain::operation(chain::opcode::checksig, data_chunk())
+    };
+
+    return chain::script(ops);
 }
 
 static chain::script build_script_hash_script(const short_hash& script_hash)
 {
     data_chunk hash(script_hash.begin(), script_hash.end());
 
-    chain::script script;
-    script.push_operations({ chain::opcode::hash160, data_chunk() });
-    script.push_operations({ chain::opcode::special, hash });
-    script.push_operations({ chain::opcode::equal, data_chunk() });
-    return script;
+    chain::operation_stack ops = {
+        chain::operation(chain::opcode::hash160, data_chunk()),
+        chain::operation(chain::opcode::special, hash),
+        chain::operation(chain::opcode::equal, data_chunk())
+    };
+
+    return chain::script(ops);
 }
 
 static bool build_output_script(chain::script& script,
@@ -81,8 +85,6 @@ static bool build_output_script(chain::script& script,
 static tx_output_type build_stealth_meta_output(
     const ec_secret& ephemeral_secret)
 {
-    tx_output_type out;
-
     // NOTE: The version and fixed-length nonce both reduce privacy.
     constexpr uint8_t nonce = 0x00;
     constexpr uint8_t version = 0x06;
@@ -91,9 +93,13 @@ static tx_output_type build_stealth_meta_output(
     data_chunk stealth_metadata{ { version, nonce, nonce, nonce, nonce } };
     extend_data(stealth_metadata, ephemeral_pubkey);
 
-    out.value = 0;
-    out.script.push_operations({ chain::opcode::return_, data_chunk() });
-    out.script.push_operations({ chain::opcode::special, stealth_metadata });
+    chain::operation_stack ops = {
+        chain::operation(chain::opcode::return_, data_chunk()),
+        chain::operation(chain::opcode::special, stealth_metadata)
+    };
+
+    tx_output_type out(0, chain::script(ops));
+
     return out;
 }
 
@@ -126,7 +132,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
     wallet::payment_address pay_to_address;
     if (pay_to_address.from_string(target))
     {
-        if (!build_output_script(output.script, pay_to_address))
+        if (!build_output_script(output.script(), pay_to_address))
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
@@ -168,7 +174,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
         // Generate the address.
         wallet::payment_address pay_to_address;
         pay_to_address.set_public_key(public_key);
-        if (!build_output_script(output.script, pay_to_address))
+        if (!build_output_script(output.script(), pay_to_address))
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
@@ -180,11 +186,11 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
     }
 
     // Otherwise the token is assumed to be a base16-encoded script.
-    output.script = script(target);
+    output.script(script(target));
 
     result.push_back(output);
     outputs = result;
-    pay_address = output.script.to_string();
+    pay_address = output.script().to_string();
     return true;
 }
 
@@ -195,7 +201,7 @@ static std::string encode_outputs(const std::vector<tx_output_type>& outputs)
 {
     std::stringstream result;
     const auto& last = outputs.back();
-    result << script(last.script) << BX_TX_POINT_DELIMITER << last.value;
+    result << script(last.script()) << BX_TX_POINT_DELIMITER << last.value();
     return result.str();
 }
 
