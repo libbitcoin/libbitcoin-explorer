@@ -59,7 +59,7 @@
 #define BX_SENTENCE_DELIMITER " "
     
 /**
- * Environemnt variable prefix for integrated environment variables.
+ * Environment variable prefix for integrated environment variables.
  */
 #define BX_ENVIRONMENT_VARIABLE_PREFIX "BX_"
 
