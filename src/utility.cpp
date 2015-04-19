@@ -94,7 +94,7 @@ ec_secret new_key(data_slice seed)
 
     if (!hd_key.valid())
     {
-        std::cerr << "You just won the lottery!" << std::endl;
+        // bc::cerr << "You just won the lottery!" << std::endl;
         return ec_secret();
     }
 
