@@ -33,10 +33,6 @@ BC_USE_LIBBITCOIN_MAIN
  */
 int bc::main(int argc, char* argv[])
 {
-    unicode_istream input(std::cin, std::wcin);
-    unicode_ostream output(std::cout, std::wcout);
-    unicode_ostream error(std::cerr, std::wcerr);
-
     return bc::explorer::dispatch(argc, const_cast<const char**>(argv),
-        input, output, error);
+        bc::cin, bc::cout, bc::cerr);
 }

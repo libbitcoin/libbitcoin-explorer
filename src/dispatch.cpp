@@ -19,7 +19,6 @@
  */
 #include <bitcoin/explorer/dispatch.hpp>
 
-#include <fstream>
 #include <iostream>
 #include <string>
 #include <boost/filesystem.hpp>
@@ -134,8 +133,9 @@ void load_configuration_variables(variables_map& variables, command& instance)
     error_code code;
     if (!config_path.empty() && exists(config_path, code))
     {
-        const auto& path = config_path.generic_string();
-        std::ifstream file(path);
+        const auto& path = config_path.string();
+
+        std::ifstream file(path, std::ios::binary);
         if (!file.good())
         {
             BOOST_THROW_EXCEPTION(reading_file(path.c_str()));

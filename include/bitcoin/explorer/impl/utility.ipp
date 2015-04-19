@@ -129,9 +129,9 @@ void load_path(Value& parameter, const std::string& name,
         return;
     }
 
-    // Create a file input stream.
-    std::ifstream file(path, std::ifstream::binary);
-    if (file.fail())
+    // TODO: verify with raw binary file.
+    bc::ifstream file(path.string(), std::ios::binary);
+    if (!file.good())
     {
         BOOST_THROW_EXCEPTION(po::invalid_option_value(path));
     }
@@ -168,7 +168,7 @@ void write_file(std::ostream& output, const std::string& path,
     }
     else
     {
-        std::ofstream file(path, std::ofstream::binary);
+        bc::ofstream file(path, std::ofstream::binary);
         file << instance;
         if (terminate)
             file << std::endl;
