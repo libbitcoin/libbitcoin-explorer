@@ -83,7 +83,7 @@ bool obelisk_client::connect(const uri& address,
     if (!zsys_has_curve())
         return false;
 
-    const auto& cert_path = client_private_cert_path.generic_string();
+    const auto& cert_path = client_private_cert_path.string();
     if (!cert_path.empty())
     {
         certificate cert(cert_path);

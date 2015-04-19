@@ -41,7 +41,7 @@ console_result cert_public::invoke(std::ostream& output, std::ostream& error)
     const auto& metadata = get_metadatas_option();
 
     // Create a new Curve ZMQ certificate.
-    auto cert = certificate(private_cert.generic_string());
+    auto cert = certificate(private_cert.string());
     if (!cert.valid())
     {
         error << format(BX_CERT_PUBLIC_INVALID) % private_cert << std::endl;
@@ -56,7 +56,7 @@ console_result cert_public::invoke(std::ostream& output, std::ostream& error)
     // The directory must exist, the file must not.
     // Export the PUBLIC certificate to the specified file.
     if (exists(public_cert) || 
-        cert.save_public(public_cert.generic_string()) != zmq_success)
+        cert.save_public(public_cert.string()) != zmq_success)
     {
         error << format(BX_CERT_PUBLIC_SAVE_FAIL) % public_cert << std::endl;
         return console_result::failure;
