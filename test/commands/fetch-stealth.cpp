@@ -25,7 +25,6 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 
-// TODO: determine why the paid_address changed from 1AEDp5EtdMg9ZUZhyB47ZZupwfdVCnG5bS to mpkB78KsSP7QLb3Kgk2VPV89ofEC73bqD6.
 #define BX_FETCH_STEALTH_HEIGHT0_PREFIX10101010101_INFO \
 "stealth\n" \
 "{\n" \
@@ -34,6 +33,12 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 "        ephemeral_public_key 024f4101000199071b753d68747470733a2f2f6370722e736d2f50647334476956\n" \
 "        paid_address mpkB78KsSP7QLb3Kgk2VPV89ofEC73bqD6\n" \
 "        transaction_hash 2b8024d6d4c1c333ecd8d0d8af44aed676c8624cf1503340b37e9465cad415f5\n" \
+"    }\n" \
+"    match\n" \
+"    {\n" \
+"        ephemeral_public_key 026f7072657475726e2e6e696e6a61202d20707573682073746420747873202877\n" \
+"        paid_address mqe95F9cC8MaGpGF9uAmBBEfh8mgkYoCgK\n" \
+"        transaction_hash 02854c79fb685e2f9551b7c0e5e0074429ecc73aebfc5df558714cdfe6e07467\n" \
 "    }\n" \
 "}\n"
 
