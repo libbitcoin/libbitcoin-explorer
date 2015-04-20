@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(mnemonic_to_seed__invoke)
 BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__13_words__failure_error)
 {
     BX_DECLARE_COMMAND(mnemonic_to_seed);
-    command.set_words_argument({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "12" });
+    command.set_words_argument({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE "\n");
 }
