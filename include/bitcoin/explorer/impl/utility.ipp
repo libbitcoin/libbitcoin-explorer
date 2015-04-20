@@ -130,7 +130,7 @@ void load_path(Value& parameter, const std::string& name,
     }
 
     // TODO: verify with raw binary file.
-    bc::ifstream file(path.string(), std::ios::binary);
+    bc::ifstream file(path, std::ios::binary);
     if (!file.good())
     {
         BOOST_THROW_EXCEPTION(po::invalid_option_value(path));
