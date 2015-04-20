@@ -64,9 +64,7 @@ std::vector<Target> cast(const std::vector<Source>& source)
 template <typename Value>
 void deserialize(Value& value, const std::string& text)
 {
-    std::string trimmed(text);
-    trim(trimmed);
-    value = boost::lexical_cast<Value>(trimmed);
+    value = boost::lexical_cast<Value>(boost::trim_copy(text));
 }
 
 template <typename Value>
@@ -78,8 +76,7 @@ void deserialize(Value& value, std::istream& input)
 template <typename Value>
 void deserialize(std::vector<Value>& collection, const std::string& text)
 {
-    const auto tokens = split(text, "\n\r\t ");
-
+    const auto tokens = split(boost::trim_copy(text), "\n\r\t ");
     for (const auto& token: tokens)
     {
         Value value;
