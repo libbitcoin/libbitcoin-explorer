@@ -26,6 +26,7 @@
 #include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace bc;
+using namespace bc::wallet;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
