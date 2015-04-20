@@ -50,7 +50,7 @@ console_result cert_new::invoke(std::ostream& output, std::ostream& error)
     // The directory must exist, the file must not.
     // Export the PRIVATE certificate to the specified file.
     if (exists(private_cert) || 
-        cert.save_secret(private_cert.generic_string()) != zmq_success)
+        cert.save_secret(private_cert.string()) != zmq_success)
     {
         error << format(BX_CERT_NEW_SAVE_FAIL) % private_cert << std::endl;
         return console_result::failure;

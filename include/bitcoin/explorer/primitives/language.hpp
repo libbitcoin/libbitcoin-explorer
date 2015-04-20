@@ -32,7 +32,7 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between bip39_langauge and string.
+ * Serialization helper to convert between dictionary and string.
  */
 class language
 {
@@ -51,9 +51,9 @@ public:
 
     /**
      * Initialization constructor.
-     * @param[in]  language  The value to initialize with.
+     * @param[in]  languages  The value to initialize with.
      */
-    BCX_API language(bc::dictionary* language);
+    BCX_API language(bc::dictionary_list& languages);
 
     /**
      * Copy constructor.
@@ -65,7 +65,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bc::dictionary*() const;
+    BCX_API operator const bc::dictionary_list() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -90,7 +90,7 @@ private:
     /**
      * The state of this object.
      */
-    const bc::dictionary* value_;
+    bc::dictionary_list value_;
 };
 
 } // namespace explorer

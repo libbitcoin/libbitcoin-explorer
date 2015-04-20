@@ -50,10 +50,8 @@ namespace explorer {
 bool is_base2(const std::string& text)
 {
     for (const auto& character : text)
-    {
         if (character != '0' && character != '1')
             return false;
-    }
 
     return true;
 }
@@ -96,7 +94,7 @@ ec_secret new_key(data_slice seed)
 
     if (!hd_key.valid())
     {
-        std::cerr << "You just won the lottery!" << std::endl;
+        // bc::cerr << "You just won the lottery!" << std::endl;
         return ec_secret();
     }
 

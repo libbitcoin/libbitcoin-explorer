@@ -34,7 +34,7 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& language = get_language_option();
+    const dictionary_list& language = get_language_option();
     const auto& passphrase = get_passphrase_option();
     const auto& words = get_words_argument();
 
@@ -46,19 +46,19 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    bool valid;
-    if (language)
-        valid = validate_mnemonic(words, *language);
-    else
-        valid = validate_mnemonic(words);
+    const auto valid = validate_mnemonic(words, language);
 
-    if (!valid)
+    if (!valid && language.size() == 1)
     {
-        // This warning is non-fatal,
-        // since the mnemonic may be valid in a language we don't know:
-        error << BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE << std::endl;
+        // This is fatal because a dictionary was specified explicitly.
+        error << BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE << std::endl;
+        return console_result::failure;
     }
 
+    if (!valid && language.size() > 1)
+        error << BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES << std::endl;
+
+    // Any word set divisible by 3 decodes regardless of language validation.
     const auto seed = decode_mnemonic(words, passphrase);
 
     output << base16(seed) << std::endl;

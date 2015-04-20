@@ -166,10 +166,9 @@
     <define name="BX_CERT_PUBLIC_SAVE_FAIL" value="Failed to save certificate file: %1%." />
   </command>
 
-  <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
   <command symbol="ec-lock" formerly="brainwallet" typeX="ec_private" category="WALLET" stub="true" description="Make a passphrase-protected EC private key (BIP38) from an EC private key.">
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The EC private key." />
-    <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
+    <argument name="PASSPHRASE" required="true" description="The passphrase." />
     <define name="BX_EC_LOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
    
@@ -216,9 +215,8 @@
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key to convert. If not specified the key is read from STDIN."/>
   </command>
   
-  <!-- TODO: ensure proper handling of Unicode PASSPHRASE in Windows builds. -->
   <command symbol="ec-unlock" typeX="ec_private" category="WALLET" stub="true" description="Extract the EC private key from a passphrase-protected (BIP38) EC private key.">
-    <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
+    <argument name="PASSPHRASE" required="true" description="The passphrase." />
     <define name="BX_EC_UNLOCK_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
@@ -380,21 +378,20 @@
     <define name="BX_MNEMONIC_ENCODE_OBSOLETE" value="Electrum style key functions are obsolete. Use mnemonic-new (BIP39) command instead." />
   </command>
   
-  <!-- TODO: ensure proper handling of Unicode passphrase. -->
   <command symbol="mnemonic-new" typeX="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
-    <option name="language" type="language" description="The two letter language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant', defaults to 'en'." />
+    <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. The length must be at least 128 bits and evenly divisible by 32 bits. If not specified the entropy is read from STDIN." />
     <define name="BX_EC_MNEMONIC_NEW_SHORT_ENTROPY" value="The seed is less than 128 bits long." />
     <define name="BX_EC_MNEMONIC_NEW_INVALID_ENTROPY" value="The seed length in bytes is not evenly divisible by 32 bits." />
   </command>
 
-  <!-- TODO: ensure proper handling of Unicode passphrase and WORDs. -->
   <command symbol="mnemonic-to-seed" typeX="base16" category="WALLET" description="Convert a mnemonic seed (BIP39) to its numeric representation.">
-    <option name="language" type="language" description="The two letter language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant'. Required only to disambiguate 'zh' mnemonics." />
+    <option name="language" type="language" description="The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'any'." />
     <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
     <argument name="WORD" stdin="true" limit="-1" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE" value="The number of words must be divisible by 3." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE" value="warning: The specified words are not a valid mnemonic." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE" value="The specified words are not a valid mnemonic in the specified dictionary." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES" value="WARNING: The specified words are not a valid mnemonic in any supported dictionary." />
   </command>
 
   <command symbol="mpk" category="ELECTRUM" obsolete="true" description="Extract a master public key from a deterministic wallet seed.">

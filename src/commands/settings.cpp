@@ -49,15 +49,15 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
 
     // [logging]
     list["logging.debug_file"] = 
-        get_logging_debug_file_setting().generic_string();
+        get_logging_debug_file_setting().string();
     list["logging.error_file"] = 
-        get_logging_error_file_setting().generic_string();
+        get_logging_error_file_setting().string();
 
     // TODO: look into serializer object quoting.
 
     // [mainnet]
     list["mainnet.cert_file"] = 
-        get_mainnet_cert_file_setting().generic_string();
+        get_mainnet_cert_file_setting().string();
     list["mainnet.server_cert_key"] = 
         get_mainnet_server_cert_key_setting().get_base85();
     list["mainnet.url"] = 
@@ -65,7 +65,7 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
 
     // [testnet]
     list["testnet.cert_file"] = 
-        get_testnet_cert_file_setting().generic_string();
+        get_testnet_cert_file_setting().string();
     list["testnet.server_cert_key"] = 
         get_testnet_server_cert_key_setting().get_base85();
     list["testnet.url"] = 

@@ -22,7 +22,6 @@
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/config.hpp>
 #include <bitcoin/explorer/define.hpp>
 .primitives()
 #include <bitcoin/explorer/utility.hpp>
@@ -35,6 +34,20 @@ namespace explorer {
 #define BX_CONFIG_VARIABLE "config"
 #define BX_HELP_VARIABLE "help"
 #define BX_PROGRAM_NAME "bx"
+
+static boost::filesystem::path default_config_path()
+{
+#ifdef _MSC_VER
+    const auto directory = config::windows_config_directory();
+#else
+    // SYSCONFDIR must be defined at compile for this project, so do not move
+    // this definition into libbitcoin.
+    const auto directory = std::string(SYSCONFDIR);
+#endif
+    // This subdirectory and file name must stay in sync with the path for the
+    // configuration file distributed via the build.
+    return boost::filesystem::path(directory) / "libbitcoin" / "bx.cfg";
+}
 
 /**
  * Base class for definition of each Bitcoin Explorer command.

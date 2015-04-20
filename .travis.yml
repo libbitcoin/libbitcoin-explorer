@@ -63,9 +63,6 @@ install:
     # Download and install packages for osx/clang/dynamic.
     - if [[ $OSX   && $CLANG && $DYNAMIC ]]; then brew install bash-completion; fi
 
-    # Download and install packages for linux/clang/dynamic.
-    - if [[ $LINUX && $CLANG && $DYNAMIC ]]; then sudo apt-get -qq install boost1.54; fi
-
     # Download and install packages for linux/gcc/dynamic.
     - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo apt-get -qq install bash-completion; fi
 
@@ -76,5 +73,5 @@ script:
     - if [[ $LINUX && $CLANG && $STATIC  ]]; then ./install.sh --disable-shared --build-boost --prefix=$HOME/my-prefix CXXFLAGS='-Os -stdlib=libstdc++' LDLIBS='-lstdc++'; fi
     - if [[ $LINUX && $GCC   && $STATIC  ]]; then ./install.sh --disable-ndebug --disable-shared --build-boost --prefix=$HOME/my-prefix --build-dir=my-build --with-bash-completiondir CXXFLAGS='-Os -s'; fi
     - if [[ $OSX   && $CLANG && $DYNAMIC ]]; then ./install.sh --with-bash-completiondir; fi
-    - if [[ $LINUX && $CLANG && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-ndebug --disable-static CXXFLAGS='-Os -stdlib=libstdc++' LDLIBS='-lstdc++'; fi
+    - if [[ $LINUX && $CLANG && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-ndebug --disable-static --build-boost CXXFLAGS='-Os -stdlib=libstdc++' LDLIBS='-lstdc++'; fi
     - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --disable-static --build-boost --with-bash-completiondir CXXFLAGS='-Os -s'; fi

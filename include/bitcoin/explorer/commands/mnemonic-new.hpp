@@ -162,7 +162,7 @@ public:
         (
             "language,l",
             value<primitives::language>(&option_.language),
-            "The two letter language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant', defaults to 'en'."
+            "The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'."
         )
         (
             "SEED",

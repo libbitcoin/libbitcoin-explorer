@@ -53,7 +53,7 @@ using namespace bc::explorer::primitives;
 //    const std::string&, const std::string& body)
 //{
 //    if (!body.empty())
-//        std::cerr << format(BX_SEND_TX_P2P_LOGGING) % level_repr(level) %
+//        bc::cerr << format(BX_SEND_TX_P2P_LOGGING) % level_repr(level) %
 //            body << std::endl;
 //}
 //
@@ -61,7 +61,7 @@ using namespace bc::explorer::primitives;
 //{
 //    if (!debug.empty())
 //    {
-//        std::ofstream debug_file(debug.generic_string());
+//        bc::ofstream debug_file(debug.string());
 //
 //        log_debug().set_output_function(
 //            std::bind(output_to_file, std::ref(debug_file),
@@ -74,7 +74,7 @@ using namespace bc::explorer::primitives;
 //
 //    if (!error.empty())
 //    {
-//        std::ofstream error_file(error.generic_string());
+//        bc::ofstream error_file(error.string());
 //
 //        log_warning().set_output_function(
 //            std::bind(output_to_file, std::ref(error_file),

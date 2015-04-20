@@ -37,7 +37,6 @@ src_libbitcoin_explorer_la_LIBADD = ${bitcoin_client_LIBS}
 src_libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
     src/callback_state.cpp \
-    src/config.cpp \
     src/dispatch.cpp \
     src/display.cpp \
     src/generated.cpp \
@@ -180,7 +179,7 @@ src_libbitcoin_explorer_la_SOURCES = \
 if WITH_CONSOLE
 
 bin_PROGRAMS = console/bx
-console_bx_CPPFLAGS = -I${srcdir}/include ${bitcoin_client_CPPFLAGS}
+console_bx_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
 console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS}
 console_bx_SOURCES = \
     console/main.cpp
@@ -317,7 +316,6 @@ include_bitcoin_explorer_HEADERS = \
     include/bitcoin/explorer/async_client.hpp \
     include/bitcoin/explorer/callback_state.hpp \
     include/bitcoin/explorer/command.hpp \
-    include/bitcoin/explorer/config.hpp \
     include/bitcoin/explorer/define.hpp \
     include/bitcoin/explorer/dispatch.hpp \
     include/bitcoin/explorer/display.hpp \
@@ -467,6 +465,21 @@ include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/uri.hpp \
     include/bitcoin/explorer/primitives/wif.hpp \
     include/bitcoin/explorer/primitives/wrapper.hpp
+
+# files => ${bash_completiondir}
+#------------------------------------------------------------------------------
+if BASH_COMPLETIONDIR
+
+dist_bash_completion_DATA = \
+    data/bx
+
+endif BASH_COMPLETIONDIR
+
+# files => ${sysconfdir}/libbitcoin
+#------------------------------------------------------------------------------
+sysconf_libbitcoindir = ${sysconfdir}/libbitcoin
+sysconf_libbitcoin_DATA = \
+    data/bx.cfg
 
 
 # Custom make targets.

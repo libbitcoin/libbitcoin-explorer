@@ -38,9 +38,10 @@ static const char* language_es = "es";
 static const char* language_ja = "ja";
 static const char* language_zh_Hans = "zh_Hans";
 static const char* language_zh_Hant = "zh_Hant";
+static const char* language_any = "any";
 
 language::language()
-    : value_(nullptr)
+    : value_(bc::language::all)
 {
 }
 
@@ -49,8 +50,8 @@ language::language(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-language::language(dictionary* language)
-    : value_(language)
+language::language(dictionary_list& languages)
+    : value_(languages)
 {
 }
 
@@ -59,7 +60,7 @@ language::language(const language& other)
 {
 }
 
-language::operator const bc::dictionary*() const
+language::operator const bc::dictionary_list() const
 {
     return value_;
 }
@@ -69,16 +70,21 @@ std::istream& operator>>(std::istream& input, language& argument)
     std::string text;
     input >> text;
 
-    if (text == language_en)
-        argument.value_ = &bc::language::en;
+    argument.value_.clear();
+
+    if (text == language_any)
+        argument.value_.assign(bc::language::all.begin(),
+            bc::language::all.end());
+    else if(text == language_en)
+        argument.value_.push_back(&bc::language::en);
     else if (text == language_es)
-        argument.value_ = &bc::language::es;
+        argument.value_.push_back(&bc::language::es);
     else if (text == language_ja)
-        argument.value_ = &bc::language::ja;
+        argument.value_.push_back(&bc::language::ja);
     else if (text == language_zh_Hans)
-        argument.value_ = &bc::language::zh_Hans;
+        argument.value_.push_back(&bc::language::zh_Hans);
     else if (text == language_zh_Hant)
-        argument.value_ = &bc::language::zh_Hant;
+        argument.value_.push_back(&bc::language::zh_Hant);
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -91,15 +97,17 @@ std::ostream& operator<<(std::ostream& output, const language& argument)
 {
     std::string text;
 
-    if (argument.value_ == &bc::language::en)
+    if (argument.value_.size() > 1)
+        text = language_any;
+    else if(argument.value_.front() == &bc::language::en)
         text = language_en;
-    else if (argument.value_ == &bc::language::es)
+    else if (argument.value_.front() == &bc::language::es)
         text = language_es;
-    else if (argument.value_ == &bc::language::ja)
+    else if (argument.value_.front() == &bc::language::ja)
         text = language_ja;
-    else if (argument.value_ == &bc::language::zh_Hans)
+    else if (argument.value_.front() == &bc::language::zh_Hans)
         text = language_zh_Hans;
-    else if (argument.value_ == &bc::language::zh_Hant)
+    else if (argument.value_.front() == &bc::language::zh_Hant)
         text = language_zh_Hant;
     else
     {

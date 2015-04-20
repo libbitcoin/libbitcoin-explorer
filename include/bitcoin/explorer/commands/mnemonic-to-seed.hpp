@@ -73,8 +73,10 @@ namespace commands {
  */
 #define BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE \
     "The number of words must be divisible by 3."
-#define BX_EC_MNEMONIC_TO_SEED_INVALID_SENTENCE \
-    "warning: The specified words are not a valid mnemonic."
+#define BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE \
+    "The specified words are not a valid mnemonic in the specified dictionary."
+#define BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES \
+    "WARNING: The specified words are not a valid mnemonic in any supported dictionary."
 
 /**
  * Class to implement the mnemonic-to-seed command.
@@ -162,7 +164,7 @@ public:
         (
             "language,l",
             value<primitives::language>(&option_.language),
-            "The two letter language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'zh_Hans' and 'zh_Hant'. Required only to disambiguate 'zh' mnemonics."
+            "The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'any'."
         )
         (
             "passphrase,p",
