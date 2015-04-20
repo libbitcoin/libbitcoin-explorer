@@ -179,7 +179,7 @@ src_libbitcoin_explorer_la_SOURCES = \
 if WITH_CONSOLE
 
 bin_PROGRAMS = console/bx
-console_bx_CPPFLAGS = -I${srcdir}/include ${bitcoin_client_CPPFLAGS}
+console_bx_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
 console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS}
 console_bx_SOURCES = \
     console/main.cpp
