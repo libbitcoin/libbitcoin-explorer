@@ -85,7 +85,7 @@ std::istream& operator>>(std::istream& input, script& argument)
 {
     std::istreambuf_iterator<char> eos;
     std::string mnemonic(std::istreambuf_iterator<char>(input), eos);
-    trim(mnemonic);
+    boost::trim(mnemonic);
 
     argument.value_ = unpretty(mnemonic);
 
