@@ -76,7 +76,13 @@ void deserialize(Value& value, std::istream& input)
 template <typename Value>
 void deserialize(std::vector<Value>& collection, const std::string& text)
 {
-    const auto tokens = split(boost::trim_copy(text), "\n\r\t ");
+    // The following literal UTF8 string contains an ASCII space (0x20) and
+    // an ideographic (CJK) space (0xe3,0x80, 0x80). We don't use normalization
+    // here because it may otherwise disrupt the tokens. There are many 
+    // additional types of Unicode spaces that we may want to consider in a
+    // general "whitespace split". The ideographic space is included because of
+    // its relation to BIP39.
+    const auto tokens = split(text, " \n\r\t　");
     for (const auto& token: tokens)
     {
         Value value;
