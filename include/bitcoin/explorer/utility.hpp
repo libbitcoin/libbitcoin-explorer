@@ -265,14 +265,6 @@ name_value_pairs split_pairs(const std::vector<std::string> tokens,
 BCX_API bool starts_with(const std::string& value, const std::string& prefix);
 
 /**
- * Trim the left side of a string of the specified characters.
- * @param[out] value  The string to split.
- * @param[in] value   The characters to trim, defaults to BX_SENTENCE_DELIMITER.
- */
-BCX_API void trim_left(std::string& value,
-    const std::string& chars=BX_SENTENCE_DELIMITER);
-
-/**
  * Unwrap a wrapped payload.
  * @param[in]  data     The data structure to accept the unwrap.
  * @param[in]  wrapped  The wrapped data to unwrap.

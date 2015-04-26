@@ -188,11 +188,6 @@ bool starts_with(const std::string& value, const std::string& prefix)
     }
 }
 
-void trim_left(std::string& value, const std::string& chars)
-{
-    boost::trim_left_if(value, boost::is_any_of(chars));
-}
-
 bool unwrap(wrapped_data& data, data_slice wrapped)
 {
     return bc::unwrap(data.version, data.payload, data.checksum, wrapped);
