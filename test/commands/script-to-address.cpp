@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(script_to_address__invoke)
 BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__okay_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
-    command.set_tokens_argument(
+    command.set_script_argument(
     { 
         {
             "2",

@@ -172,7 +172,7 @@ ptree prop_list(const tx_input_type& tx_input)
 
     tree.put("previous_output.hash", btc256(tx_input.previous_output.hash));
     tree.put("previous_output.index", tx_input.previous_output.index);
-    tree.put("script", script(tx_input.script).mnemonic());
+    tree.put("script", script(tx_input.script).to_string());
     tree.put("sequence", tx_input.sequence);
     return tree;
 }
@@ -218,7 +218,7 @@ ptree prop_list(const tx_output_type& tx_output)
     if (extract(output_address, tx_output.script))
         tree.put("address", address(output_address));
 
-    tree.put("script", script(tx_output.script).mnemonic());
+    tree.put("script", script(tx_output.script).to_string());
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html

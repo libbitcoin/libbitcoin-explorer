@@ -51,9 +51,10 @@ public:
 
     /**
      * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
+     * @param[in]  value       The value to initialize with.
+     * @param[in]  compressed  The value is compressed.
      */
-    BCX_API wif(const ec_secret& value);
+    BCX_API wif(const ec_secret& value, bool compressed);
 
     /**
      * Initialization constructor.
@@ -71,11 +72,6 @@ public:
      * Get the compressed property.
      */
     BCX_API bool get_compressed() const;
-
-    /**
-     * Set the compressed property.
-     */
-    BCX_API void set_compressed(bool value);
 
     /**
      * Overload cast to internal type.

@@ -73,6 +73,8 @@ namespace commands {
  */
 #define BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE \
     "The number of words must be divisible by 3."
+#define BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED \
+    "The passphrase option requires an ICU build."
 #define BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE \
     "The specified words are not a valid mnemonic in the specified dictionary."
 #define BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES \

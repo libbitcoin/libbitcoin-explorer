@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(script_encode__invoke)
 BOOST_AUTO_TEST_CASE(script_encode__invoke__basic__okay_output)
 {
     BX_DECLARE_COMMAND(script_encode);
-    command.set_tokens_argument({ { "dup", "hash160", "[", "18c0bd8d1818f1bf99cb1df2269c645318ef7b73", "]", "equalverify", "checksig" } });
+    command.set_script_argument({ { "dup", "hash160", "[", "18c0bd8d1818f1bf99cb1df2269c645318ef7b73", "]", "equalverify", "checksig" } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("76a91418c0bd8d1818f1bf99cb1df2269c645318ef7b7388ac\n");
 }

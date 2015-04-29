@@ -10,6 +10,7 @@
     <shorthand name="CERT" description="Curve ZMQ Certificate" />
     <shorthand name="EC" description="Elliptic Curve" />
     <shorthand name="HD" description="Hierarchical Deterministic" />
+    <shorthand name="ICU" description="International Components for Unicode" />
     <shorthand name="PREVOUT" description="Previous Output" />
     <shorthand name="PUBKEY" description="EC Public Key" />
     <shorthand name="QRCODE" description="Quick Response Code" />
@@ -65,7 +66,6 @@
     <string name="BX_DEPRECATED_COMMAND" value="The '%1%' command has been replaced by '%2%'."/>
     <string name="BX_INVALID_COMMAND" value="'%1%' is not a bx command. Enter 'bx help' for a list of commands." />
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
-    <string name="BX_UNEXPECTED_EXCEPTION" value="Unexpected error: %1%" />
     <string name="BX_CONFIG_DESCRIPTION" value="The path to the configuration settings file." />
     <string name="BX_HELP_DESCRIPTION" value="Get a description and instructions for this command." />
   </resource>
@@ -390,6 +390,7 @@
     <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE" value="The number of words must be divisible by 3." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
     <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE" value="The specified words are not a valid mnemonic in the specified dictionary." />
     <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES" value="WARNING: The specified words are not a valid mnemonic in any supported dictionary." />
   </command>
@@ -416,15 +417,15 @@
   </command>
   
   <command symbol="script-decode" formerly="showscript" typeX="string" multipleX="true" category="TRANSACTION" description="Decode a script to plain text tokens.">
-    <argument name="SCRIPT" fileX="true" stdin="true" type="base16" description="The Base16 script. If not specified the script is read from STDIN."/>
+    <argument name="BASE16" fileX="true" stdin="true" type="base16" description="The Base16 script. If not specified the script is read from STDIN."/>
   </command>
   
   <command symbol="script-encode" formerly="rawscript" typeX="base16" category="TRANSACTION" description="Base16 encode a plain text script.">
-    <argument name="TOKEN" stdin="true" limit="-1" type="string" description="The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."/>
+    <argument name="SCRIPT" stdin="true" type="script" description="The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."/>
   </command>
   
-  <command symbol="script-to-address" formerly="scripthash" typeX="address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from an encoded script.">
-    <argument name="TOKEN" fileX="true" stdin="true" limit="-1" type="string" description="The script. If not specified the script is read from STDIN."/>
+  <command symbol="script-to-address" formerly="scripthash" typeX="address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from a script.">
+    <argument name="SCRIPT" fileX="true" stdin="true" type="script" description="The script to use in the address. If not specified the script is read from STDIN."/>
   </command>
   
   <command symbol="seed" typeX="base16" category="WALLET" description="Generate a pseudorandom seed.">

@@ -60,7 +60,7 @@ language::language(const language& other)
 {
 }
 
-language::operator const bc::dictionary_list() const
+language::operator const bc::dictionary_list&() const
 {
     return value_;
 }

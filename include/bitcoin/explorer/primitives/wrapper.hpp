@@ -81,10 +81,10 @@ public:
     BCX_API wrapper(const wrapper& other);
 
     /**
-     * Overload cast to the wrapped value.
-     * @return  This object's wrapped data cast to data chunk.
+     * Serialize the wrapper to bytes according to the wire protocol.
+     * @return  The byte serialized copy of the wrapper.
      */
-    BCX_API operator const data_chunk() const;
+    BCX_API const bc::data_chunk to_data() const;
 
     /**
      * Overload cast to internal type.

@@ -160,8 +160,6 @@ namespace explorer {
     "Usage: %1% %2% %3%"
 #define BX_PRINTER_VALUE_TEXT \
     "VALUE"
-#define BX_UNEXPECTED_EXCEPTION \
-    "Unexpected error: %1%"
 
 /**
  * Invoke a specified function on all commands.

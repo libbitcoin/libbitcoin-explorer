@@ -64,10 +64,6 @@ public:
 
     /**
      * Initialization constructor.
-     * We handle pretty printing internal to the script primitives because
-     * we do not use boost program_options to read the words as a single
-     * argument. Instead we read a set of string arguments and then explicitly
-     * load them here.
      * @param[in]  tokens  The mnemonic tokens to initialize with.
      */
     BCX_API script(const std::vector<std::string>& tokens);
@@ -79,24 +75,22 @@ public:
     BCX_API script(const script& other);
 
     /**
+     * Serialize the script to bytes according to the wire protocol.
+     * @return  The byte serialized copy of the script.
+     */
+    BCX_API const bc::data_chunk to_data() const;
+
+    /**
      * Return a pretty-printed copy of the script.
-     * See comments on the tokens constructor. We expose this method here for 
-     * symmetry with the construction approach.
      * @return  A mnemonic-printed copy of the internal script.
      */
-    BCX_API const std::string mnemonic() const;
+    BCX_API const std::string to_string() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
     BCX_API operator const script_type&() const;
-
-    /**
-     * Overload cast to data chunk.
-     * @return  This object's value cast to data chunk.
-     */
-    BCX_API operator const data_chunk() const;
 
     /**
      * Overload stream in. Throws if input is invalid.

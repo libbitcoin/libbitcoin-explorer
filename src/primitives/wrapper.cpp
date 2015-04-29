@@ -70,7 +70,7 @@ wrapper::wrapper(const wrapper& other)
 {
 }
 
-wrapper::operator const data_chunk() const
+const data_chunk wrapper::to_data() const
 {
     return wrap(value_);
 }

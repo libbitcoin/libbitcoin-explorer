@@ -58,8 +58,19 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
     if (!valid && language.size() > 1)
         error << BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES << std::endl;
 
-    // Any word set divisible by 3 decodes regardless of language validation.
+#ifdef BC_HAS_ICU
+    // Any word set divisible by 3 works regardless of language validation.
     const auto seed = decode_mnemonic(words, passphrase);
+#else
+    if (!passphrase.empty())
+    {
+        error << BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED << std::endl;
+        return console_result::failure;
+    }
+
+    // The passphrase requires ICU normalization.
+    const auto seed = decode_mnemonic(words);
+#endif
 
     output << base16(seed) << std::endl;
     return console_result::okay;
