@@ -50,6 +50,7 @@ script::script(const script_type& value)
 {
 }
 
+// parse_script cannot fail
 script::script(const data_chunk& value)
     : value_(parse_script(value))
 {
@@ -66,7 +67,12 @@ script::script(const script& other)
 {
 }
 
-const std::string script::mnemonic() const
+const data_chunk script::to_data() const
+{
+    return save_script(value_);
+}
+
+const std::string script::to_string() const
 {
     return pretty(value_);
 }
@@ -74,11 +80,6 @@ const std::string script::mnemonic() const
 script::operator const script_type&() const
 {
     return value_; 
-}
-
-script::operator const data_chunk() const
-{
-    return base16(save_script(value_));
 }
 
 std::istream& operator>>(std::istream& input, script& argument)

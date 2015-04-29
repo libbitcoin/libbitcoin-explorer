@@ -417,15 +417,15 @@
   </command>
   
   <command symbol="script-decode" formerly="showscript" typeX="string" multipleX="true" category="TRANSACTION" description="Decode a script to plain text tokens.">
-    <argument name="SCRIPT" fileX="true" stdin="true" type="base16" description="The Base16 script. If not specified the script is read from STDIN."/>
+    <argument name="BASE16" fileX="true" stdin="true" type="base16" description="The Base16 script. If not specified the script is read from STDIN."/>
   </command>
   
   <command symbol="script-encode" formerly="rawscript" typeX="base16" category="TRANSACTION" description="Base16 encode a plain text script.">
-    <argument name="TOKEN" stdin="true" limit="-1" type="string" description="The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."/>
+    <argument name="SCRIPT" stdin="true" type="script" description="The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."/>
   </command>
   
-  <command symbol="script-to-address" formerly="scripthash" typeX="address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from an encoded script.">
-    <argument name="TOKEN" fileX="true" stdin="true" limit="-1" type="string" description="The script. If not specified the script is read from STDIN."/>
+  <command symbol="script-to-address" formerly="scripthash" typeX="address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from a script.">
+    <argument name="SCRIPT" fileX="true" stdin="true" type="script" description="The script to use in the address. If not specified the script is read from STDIN."/>
   </command>
   
   <command symbol="seed" typeX="base16" category="WALLET" description="Generate a pseudorandom seed.">

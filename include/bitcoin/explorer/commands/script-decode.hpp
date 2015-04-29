@@ -124,7 +124,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SCRIPT", 1);
+            .add("BASE16", 1);
     }
 
 	/**
@@ -135,7 +135,7 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_script_argument(), "SCRIPT", variables, input);
+        load_input(get_base16_argument(), "BASE16", variables, input);
     }
 
     /**
@@ -159,8 +159,8 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "SCRIPT",
-            value<primitives::base16>(&argument_.script),
+            "BASE16",
+            value<primitives::base16>(&argument_.base16),
             "The Base16 script. If not specified the script is read from STDIN."
         );
 
@@ -179,20 +179,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SCRIPT argument.
+     * Get the value of the BASE16 argument.
      */
-    BCX_API virtual primitives::base16& get_script_argument()
+    BCX_API virtual primitives::base16& get_base16_argument()
     {
-        return argument_.script;
+        return argument_.base16;
     }
 
     /**
-     * Set the value of the SCRIPT argument.
+     * Set the value of the BASE16 argument.
      */
-    BCX_API virtual void set_script_argument(
+    BCX_API virtual void set_base16_argument(
         const primitives::base16& value)
     {
-        argument_.script = value;
+        argument_.base16 = value;
     }
 
 private:
@@ -205,11 +205,11 @@ private:
     struct argument
     {
         argument()
-          : script()
+          : base16()
         {
         }
 
-        primitives::base16 script;
+        primitives::base16 base16;
     } argument_;
 
     /**

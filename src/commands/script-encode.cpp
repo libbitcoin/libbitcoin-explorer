@@ -32,8 +32,10 @@ using namespace bc::explorer::primitives;
 console_result script_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& tokens = get_tokens_argument();
+    const auto& script = get_script_argument();
 
-    output << base16(script(tokens)) << std::endl;
+    const auto encoded_script = script.to_data();
+
+    output << base16(encoded_script) << std::endl;
     return console_result::okay;
 }
