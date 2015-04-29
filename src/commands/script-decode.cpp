@@ -33,6 +33,7 @@ console_result script_decode::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& base16 = get_base16_argument();
     
+    // Any array of bytes produces a valid script.
     output << script(base16) << std::endl;
     return console_result::okay;
 }

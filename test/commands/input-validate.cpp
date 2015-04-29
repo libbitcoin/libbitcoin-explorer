@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_single_output__okay_ou
     BX_DECLARE_COMMAND(input_validate);
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_endorsement_argument({ INPUT_VALIDATE_ENDORSEMENT_A });
-    command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
+    command.set_contract_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_VALID_ENDORSEMENT "\n");
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__invalid_index__failure_error)
     command.set_index_option(42);
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_endorsement_argument({ INPUT_VALIDATE_ENDORSEMENT_A });
-    command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
+    command.set_contract_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_A });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE "\n");
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(input_validate__invoke__single_input_no_output__invalid_out
     BX_DECLARE_COMMAND(input_validate);
     command.set_ec_public_key_argument({ INPUT_VALIDATE_PUBLIC_KEY_A });
     command.set_endorsement_argument({ INPUT_VALIDATE_ENDORSEMENT_A });
-    command.set_prevout_script_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
+    command.set_contract_argument({ INPUT_VALIDATE_PREVOUT_SCRIPT_A });
     command.set_transaction_argument({ INPUT_VALIDATE_TX_B });
     BX_REQUIRE_INVALID(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT "\n");

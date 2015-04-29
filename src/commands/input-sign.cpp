@@ -40,7 +40,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     const auto hash_type = get_sign_type_option();
     const tx_type& tx = get_transaction_argument();
     const ec_secret& private_key = get_ec_private_key_argument();
-    const script_type& prevout_script = get_prevout_script_argument();
+    const script_type& contract = get_contract_argument();
 
     if (index >= tx.inputs.size())
     {
@@ -49,8 +49,8 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     }
 
     endorsement endorse;
-    if (!create_signature(endorse, private_key, prevout_script, tx,
-        index, hash_type))
+    if (!create_signature(endorse, private_key, contract, tx, index,
+        hash_type))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;
         return console_result::failure;

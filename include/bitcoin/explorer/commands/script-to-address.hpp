@@ -161,7 +161,7 @@ public:
         (
             "SCRIPT",
             value<primitives::script>(&argument_.script),
-            "The script to use in the address. If not specified the script is read from STDIN."
+            "The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."
         );
 
         return options;
