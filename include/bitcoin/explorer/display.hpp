@@ -64,14 +64,6 @@ BCX_API void display_invalid_parameter(std::ostream& stream,
     const std::string& message);
 
 /**
- * Write an error message to a stream that indicates an unexpected exception.
- * @param[in]  stream   The stream to write into.
- * @param[in]  message  The message to write.
- */
-BCX_API void display_unexpected_exception(std::ostream& stream,
-    const std::string& message);
-
-/**
  * Write usage instructions (help) to a tream for the explorer command line.
  * @param[in]  stream   The stream to write into.
  */

@@ -76,12 +76,6 @@ void display_invalid_parameter(std::ostream& stream,
         << std::endl;
 }
 
-void display_unexpected_exception(std::ostream& stream,
-    const std::string& message)
-{
-    stream << format(BX_UNEXPECTED_EXCEPTION) % message << std::endl;
-}
-
 void display_usage(std::ostream& stream)
 {
     stream 
