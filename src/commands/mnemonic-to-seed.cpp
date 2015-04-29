@@ -58,7 +58,7 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
     if (!valid && language.size() > 1)
         error << BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES << std::endl;
 
-#ifdef BOOST_HAS_ICU
+#ifdef BC_HAS_ICU
     // Any word set divisible by 3 works regardless of language validation.
     const auto seed = decode_mnemonic(words, passphrase);
 #else
