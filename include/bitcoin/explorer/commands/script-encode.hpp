@@ -161,7 +161,7 @@ public:
         (
             "SCRIPT",
             value<primitives::script>(&argument_.script),
-            "The plain text script tokens that make up the script. If not specified the tokens are read from STDIN."
+            "The plain text script tokens that make up the script. Multiple tokens must be quoted. If not specified the tokens are read from STDIN."
         );
 
         return options;

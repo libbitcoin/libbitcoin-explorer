@@ -133,7 +133,7 @@ public:
     {
         return get_argument_metadata()
             .add("EC_PRIVATE_KEY", 1)
-            .add("PREVOUT_SCRIPT", 1)
+            .add("CONTRACT", 1)
             .add("TRANSACTION", 1);
     }
 
@@ -184,9 +184,9 @@ public:
             "The Base16 EC private key to sign with."
         )
         (
-            "PREVOUT_SCRIPT",
-            value<primitives::script>(&argument_.prevout_script)->required(),
-            "The previous output script to use in signing."
+            "CONTRACT",
+            value<primitives::script>(&argument_.contract)->required(),
+            "The previous output script to use in signing. Multiple tokens must be quoted."
         )
         (
             "TRANSACTION",
@@ -226,20 +226,20 @@ public:
     }
 
     /**
-     * Get the value of the PREVOUT_SCRIPT argument.
+     * Get the value of the CONTRACT argument.
      */
-    BCX_API virtual primitives::script& get_prevout_script_argument()
+    BCX_API virtual primitives::script& get_contract_argument()
     {
-        return argument_.prevout_script;
+        return argument_.contract;
     }
 
     /**
-     * Set the value of the PREVOUT_SCRIPT argument.
+     * Set the value of the CONTRACT argument.
      */
-    BCX_API virtual void set_prevout_script_argument(
+    BCX_API virtual void set_contract_argument(
         const primitives::script& value)
     {
-        argument_.prevout_script = value;
+        argument_.contract = value;
     }
 
     /**
@@ -304,13 +304,13 @@ private:
     {
         argument()
           : ec_private_key(),
-            prevout_script(),
+            contract(),
             transaction()
         {
         }
 
         primitives::ec_private ec_private_key;
-        primitives::script prevout_script;
+        primitives::script contract;
         primitives::transaction transaction;
     } argument_;
 

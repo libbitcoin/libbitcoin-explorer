@@ -173,7 +173,7 @@ public:
         (
             "ENDORSEMENT_SCRIPT",
             value<primitives::script>(&argument_.endorsement_script)->required(),
-            "The endorsement script to assign to the input."
+            "The endorsement script to assign to the input. Multiple tokens must be quoted."
         )
         (
             "TRANSACTION",
