@@ -109,6 +109,17 @@ AC_ARG_WITH([console],
 AC_MSG_RESULT([$with_console])
 AM_CONDITIONAL([WITH_CONSOLE], [test x$with_console != xno])
 
+# Implement --with-icu and define BOOST_HAS_ICU.
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING([--with-icu option])
+AC_ARG_WITH([icu],
+    AS_HELP_STRING([--with-icu],
+        [Compile with International Components for Unicode. @<:@default=no@:>@]),
+    [with_icu=$withval],
+    [with_icu=no])
+AC_MSG_RESULT([$with_icu])
+AS_CASE([${with_icu}], [yes], AC_DEFINE([BOOST_HAS_ICU]))
+
 # Implement --enable-ndebug and define NDEBUG.
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING([--enable-ndebug option])
@@ -173,6 +184,25 @@ AC_SUBST([bitcoin_client_CPPFLAGS], [${bitcoin_client_CFLAGS}])
 AC_MSG_NOTICE([bitcoin_client_CPPFLAGS : ${bitcoin_client_CPPFLAGS}])
 AC_MSG_NOTICE([bitcoin_client_LIBS : ${bitcoin_client_LIBS}])
 
+# Require icu-i18n of at least version 51.2 and output ${icu_i18n_CPPFLAGS/LIBS/PKG}.
+#------------------------------------------------------------------------------
+AS_CASE([${with_icu}], [yes],
+    [PKG_CHECK_MODULES([icu_i18n], [icu-i18n >= 51.2])
+     AC_SUBST([icu_i18n_PKG], ['icu-i18n >= 51.2'])
+     AC_SUBST([icu_i18n_CPPFLAGS], [${icu_i18n_CFLAGS}])
+     AC_MSG_NOTICE([icu_i18n_CPPFLAGS : ${icu_i18n_CPPFLAGS}])
+     AC_MSG_NOTICE([icu_i18n_LIBS : ${icu_i18n_LIBS}])],
+    [AC_SUBST([icu_i18n_PKG], [])])
+
+# Require dl if on linux and output ${dl_LIBS}.
+#------------------------------------------------------------------------------
+AS_CASE([${host_os}], [*linux*],
+    [AC_CHECK_LIB([dl], [dlopen],
+        [AC_SUBST([dl_LIBS], [-ldl])
+         AC_MSG_NOTICE([dl_LIBS : ${dl_LIBS}])], 
+        [AC_MSG_ERROR([dl library is required but was not found.])])],
+    [AC_SUBST([dl_LIBS], [])])
+
 
 # Set flags.
 #==============================================================================
@@ -219,12 +249,6 @@ AS_CASE([${CC}], [*clang*],
 AS_CASE([${CC}], [*clang*],
     [AX_CHECK_COMPILE_FLAG([-Wno-deprecated-register],
         [CXXFLAGS="$CXXFLAGS -Wno-deprecated-register"])])
-
-# Clean up boost 1.49 headers. Enabled in gcc only.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*gcc*],
-    [AX_CHECK_COMPILE_FLAG([-Wno-unused-local-typedefs],
-        [CXXFLAGS="$CXXFLAGS -Wno-unused-local-typedefs"])])
 
 # Clean up bx generated code.
 #------------------------------------------------------------------------------
