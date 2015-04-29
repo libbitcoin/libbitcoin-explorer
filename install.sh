@@ -296,7 +296,7 @@ configure_options()
 configure_links()
 {
     # Configure dynamic linker run-time bindings.
-    if [[ ($OS == Linux) && !($PREFIX)]]; then
+    if [[ ($OS == Linux) && !($PREFIX) ]]; then
         ldconfig
     fi
 }
@@ -331,19 +331,19 @@ initialize_boost_icu()
         BOOST_ICU_ONLY="boost.locale.iconv=off boost.locale.posix=off"
         
         # Extract ICU prefix directory from package config variable.
-        ICU_PREFIX=`pkg-config icu-i18n --variable=prefix`
+        local ICU_PREFIX=`pkg-config icu-i18n --variable=prefix`
         BOOST_ICU_PATH="-sICU_PATH=$ICU_PREFIX"
         BOOTSTRAP_WITH_ICU="--with-icu=$ICU_PREFIX"
 
         # Extract ICU libs from package config variables and augment with -ldl.
-        #ICU_LIBS="`pkg-config icu-i18n --libs` -ldl"
-        #BOOST_ICU_LINK="-sICU_LINK=$ICU_LIBS"
+        local ICU_LIBS="`pkg-config icu-i18n --libs` -ldl"
+        BOOST_ICU_LINK="-sICU_LINK=$ICU_LIBS"
     fi
 }
 
 initialize_icu_packages()
 {
-    if [[ $OS == Darwin && !($BUILD_ICU)]]; then
+    if [[ $OS == Darwin && !($BUILD_ICU) ]]; then
         # Update PKG_CONFIG_PATH for ICU package installations on OSX.
         # OSX provides libicucore.dylib with no pkgconfig and doesn't support
         # renaming or important features, so we can't use that.
@@ -483,7 +483,7 @@ build_from_tarball_boost()
     tar --extract --file $ARCHIVE --bzip2 --strip-components=1
     
     # Circumvent Boost ICU detection bug.
-# circumvent_boost_icu_detection
+    circumvent_boost_icu_detection
 
     initialize_boost_icu
     

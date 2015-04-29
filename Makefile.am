@@ -32,8 +32,8 @@ doc_DATA = \
 # src/libbitcoin-explorer.la => ${libdir}
 #------------------------------------------------------------------------------
 lib_LTLIBRARIES = src/libbitcoin-explorer.la
-src_libbitcoin_explorer_la_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS} ${icu_i18n_CPPFLAGS}
-src_libbitcoin_explorer_la_LIBADD = ${bitcoin_client_LIBS} ${icu_i18n_LIBS} ${dl_LIBS}
+src_libbitcoin_explorer_la_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
+src_libbitcoin_explorer_la_LIBADD = ${bitcoin_client_LIBS}
 src_libbitcoin_explorer_la_SOURCES = \
     src/async_client.cpp \
     src/callback_state.cpp \
@@ -179,8 +179,8 @@ src_libbitcoin_explorer_la_SOURCES = \
 if WITH_CONSOLE
 
 bin_PROGRAMS = console/bx
-console_bx_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS} ${icu_i18n_CPPFLAGS}
-console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS} ${icu_i18n_LIBS} ${dl_LIBS}
+console_bx_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
+console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS}
 console_bx_SOURCES = \
     console/main.cpp
 
@@ -193,8 +193,8 @@ if WITH_TESTS
 TESTS = libbitcoin_explorer_test_runner.sh
 
 check_PROGRAMS = test/libbitcoin_explorer_test
-test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS} ${icu_i18n_CPPFLAGS}
-test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${boost_unit_test_framework_LIBS} ${bitcoin_client_LIBS} ${icu_i18n_LIBS} ${dl_LIBS}
+test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
+test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${boost_unit_test_framework_LIBS} ${bitcoin_client_LIBS}
 test_libbitcoin_explorer_test_SOURCES = \
     test/generated__broadcast.cpp \
     test/generated__find.cpp \
