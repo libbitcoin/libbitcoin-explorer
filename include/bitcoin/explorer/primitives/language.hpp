@@ -65,7 +65,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bc::dictionary_list() const;
+    BCX_API operator const bc::dictionary_list&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.

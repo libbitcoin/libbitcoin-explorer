@@ -42,8 +42,8 @@ wif::wif(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-wif::wif(const ec_secret& value)
-    : compressed_(true), value_(value)
+wif::wif(const ec_secret& value, bool compressed=true)
+    : compressed_(compressed), value_(value)
 {
 }
 
@@ -60,11 +60,6 @@ wif::wif(const wif& other)
 bool wif::get_compressed() const
 {
     return compressed_;
-}
-
-void wif::set_compressed(bool value)
-{
-    compressed_ = value;
 }
 
 wif::operator const ec_secret&() const

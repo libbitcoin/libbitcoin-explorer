@@ -35,8 +35,7 @@ console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)
     const auto& uncompressed = get_uncompressed_option();
 
     // TESTNET REQUIRES RECOMPILE
-    auto import_format = wif(secret);
-    import_format.set_compressed(!uncompressed);
+    auto import_format = wif(secret, !uncompressed);
 
     output << import_format << std::endl;
     return console_result::okay;
