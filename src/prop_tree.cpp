@@ -218,11 +218,7 @@ ptree prop_list(const tx_output_type& tx_output)
     if (extract(output_address, tx_output.script()))
         tree.put("address", address(output_address));
 
-<<<<<<< HEAD
-    tree.put("script", script(tx_output.script).to_string());
-=======
-    tree.put("script", script(tx_output.script()).mnemonic());
->>>>>>> Adapt to libbitcoin changes.
+    tree.put("script", script(tx_output.script()).to_string());
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
