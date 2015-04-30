@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__standard__okay_output)
     {
         "legal", "winner", "thank", "year", "wave", "sausage", "worth", "useful", "legal", "winner", "thank", "yellow"
     });
-#ifdef BC_HAS_ICU
+#ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("2e8905819b8723fe2c1d161860e5ee1830318dbf49a83bd451cfb8440c28bd6fa457fe1296106559a3c80937a1c1069be3a3a5bd381ee6260e8d9739fce1f607\n");
 #else
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase__okay_output
     {
         "legal", "winner", "thank", "year", "wave", "sausage", "worth", "useful", "legal", "winner", "thank", "yellow"
     });
-#ifdef BC_HAS_ICU
+#ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("3e52585ea1275472a82fa0dcd84121e742140f64a302eca7c390832ba428c707a7ebf449267ae592c51f1740259226e31520de39fd8f33e08788fd21221c6f4e\n");
 #else
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words__o
     {
         "previo", "humilde", "actuar", "jarabe", "tabique", "ahorro", "tope", "pulpo", "anís", "señal", "lavar", "bahía"
     });
-#ifdef BC_HAS_ICU
+#ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("e72505021b97e15171fe09e996898888579c4196c445d7629762c5b09586e3fb3d68380120b8d8a6ed6f9a73306dab7bf54127f3a610ede2a2d5b4e59916ac73\n");
 #else
@@ -133,7 +133,7 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_es
     {
         "previo", "humilde", "actuar", "jarabe", "tabique", "ahorro", "tope", "pulpo", "anís", "señal", "lavar", "bahía"
     });
-#ifdef BC_HAS_ICU
+#ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("e72505021b97e15171fe09e996898888579c4196c445d7629762c5b09586e3fb3d68380120b8d8a6ed6f9a73306dab7bf54127f3a610ede2a2d5b4e59916ac73\n");
 #else
@@ -151,7 +151,7 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_an
     {
         "previo", "humilde", "actuar", "jarabe", "tabique", "ahorro", "tope", "pulpo", "anís", "señal", "lavar", "bahía"
     });
-#ifdef BC_HAS_ICU
+#ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("e72505021b97e15171fe09e996898888579c4196c445d7629762c5b09586e3fb3d68380120b8d8a6ed6f9a73306dab7bf54127f3a610ede2a2d5b4e59916ac73\n");
 #else
