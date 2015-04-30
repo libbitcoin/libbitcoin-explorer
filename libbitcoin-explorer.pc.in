@@ -33,5 +33,5 @@ Cflags: -I${includedir}
 
 # Lib directory, lib and any required that do not publish pkg-config.
 #------------------------------------------------------------------------------
-Libs: -L${libdir} -lbitcoin-explorer
+Libs: -L${libdir} -lbitcoin-explorer @dl_LIBS@
 
