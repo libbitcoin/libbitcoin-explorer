@@ -50,10 +50,16 @@ script::script(const script_type& value)
 {
 }
 
-// parse_script cannot fail
 script::script(const data_chunk& value)
-    : value_(parse_script(value))
 {
+    try
+    {
+        value_ = parse_script(value);
+    }
+    catch (end_of_stream)
+    {
+        value_ = raw_data_script(value);
+    }
 }
 
 script::script(const std::vector<std::string>& tokens)
