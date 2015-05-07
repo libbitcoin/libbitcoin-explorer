@@ -63,7 +63,7 @@ using namespace bc::explorer::primitives;
 //#define BX_TESTNET_PORT 18333
 
 // Libbitcoin Server (production)
-#define BX_MAINNET_SERVER "tcp://obelisk-sol2.airbitz.co:9091"      // alive
+#define BX_MAINNET_SERVER "tcp://obelisk.airbitz.co:9091"           // alive
 
 // Libbitcoin Server (testnet)
 #define BX_TESTNET_SERVER "tcp://obelisk-testnet.airbitz.co:9091"   // alive
