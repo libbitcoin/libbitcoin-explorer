@@ -26,6 +26,7 @@
 #include <string>
 #include <tuple>
 #include <vector>
+#include <boost/date_time.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
@@ -47,9 +48,49 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
+static void output_to_file(std::ofstream& file, log_level level, 
+    const std::string& domain, const std::string& body)
+{
+    static const auto message = "%1% %2% [%3%]: %4%";
+    if (!body.empty())
+    {
+        const auto log = level_repr(level);
+        const auto time = microsec_clock::local_time().time_of_day();
+        file << format(message) % time % log % domain % body << std::endl;
+    }
+}
+
+// Bind the global debug logging context.
+void bind_debug_log(std::ofstream& debug)
+{
+    log_debug().set_output_function(
+        std::bind(output_to_file, std::ref(debug),
+        ph::_1, ph::_2, ph::_3));
+
+    log_info().set_output_function(
+        std::bind(output_to_file, std::ref(debug),
+        ph::_1, ph::_2, ph::_3));
+}
+
+// Bind the global error logging context.
+void bind_error_log(std::ofstream& error)
+{
+    log_warning().set_output_function(
+        std::bind(output_to_file, std::ref(error),
+        ph::_1, ph::_2, ph::_3));
+
+    log_error().set_output_function(
+        std::bind(output_to_file, std::ref(error),
+        ph::_1, ph::_2, ph::_3));
+
+    log_fatal().set_output_function(
+        std::bind(output_to_file, std::ref(error),
+        ph::_1, ph::_2, ph::_3));
+}
+
 bool is_base2(const std::string& text)
 {
-    for (const auto& character : text)
+    for (const auto& character: text)
         if (character != '0' && character != '1')
             return false;
 
