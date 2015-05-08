@@ -20,7 +20,7 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 **About Libbitcoin Explorer**
 
-BX is a command line tool for working with Bitcoin. It can be built as a single portable executable for Linux, OSX or Windows and is available for download as a signed single executable for each. BX exposes about 80 commands and supports network communication with [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) or its predecessor [Obelisk](https://github.com/spesmilo/obelisk), and the P2P Bitcoin network. BX is well documented and supports simple and advanced scenarios, including stealth and multisig.
+BX is a command line tool for working with Bitcoin. It can be built as a single portable executable for Linux, OSX or Windows and is available for download as a signed single executable for each. BX exposes over 80 commands and supports network communication with [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) or its predecessor [Obelisk](https://github.com/spesmilo/obelisk), and the P2P Bitcoin network. BX is well documented and supports simple and advanced scenarios, including stealth and multisig.
 
 ## Installation
 
@@ -64,7 +64,7 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system):
 ```sh
 $ sudo apt-get install build-essential autoconf automake libtool pkg-config
 ```
-Next install the [Boost](http://www.boost.org) (minimum 1.50.0 for GCC or 1.54.0 for Clang) development package:
+Next install the [Boost](http://www.boost.org) (minimum 1.55.0 for GCC or 1.54.0 for Clang) development package:
 ```sh
 $ sudo apt-get install libboost-all-dev
 ```
@@ -155,14 +155,7 @@ Any set of `./configure` options can be passed via the build script, several exa
 
 Building for minimum size and with debug symbols stripped:
 ```sh
-$ sudo ./install.sh CXXFLAGS="-Os -s"
-```
-
-> The `-s` option is not supported by the Clang compiler. Instead use the command `$ strip bx` after the build.
-
-Building with NDEBUG (no debug assertions) defined:
-```sh
-$ sudo ./install.sh --enable-ndebug
+$ sudo ./install.sh CXXFLAGS=-Os --enable-ndebug
 ```
 Building without building tests:
 ```sh
@@ -190,7 +183,7 @@ $ ./install.sh --disable-shared --build-boost --prefix=/home/me/myprefix
 ```
 Building a small statically-linked executable most quickly:
 ```sh
-$ ./install.sh CXXFLAGS="-Os -s" --enable-ndebug --without-tests --disable-shared --build-boost --prefix=/home/me/myprefix
+$ ./install.sh CXXFLAGS=-Os --enable-ndebug --without-tests --disable-shared --build-boost --prefix=/home/me/myprefix
 ```
 Building with bash-completion support:
 
