@@ -24,6 +24,7 @@
 #include <cstdint>
 #include <iostream>
 #include <cstdint>
+#include <fstream>
 #include <string>
 #include <system_error>
 #include <tuple>
@@ -50,7 +51,7 @@ namespace explorer {
 /**
  * Constant for logging file open mode (append output).
  */
-constexpr std::ofstream::openmode log_open_mode =
+BC_CONSTEXPR std::ofstream::openmode log_open_mode =
     std::ofstream::out | std::ofstream::app;
 
 /**

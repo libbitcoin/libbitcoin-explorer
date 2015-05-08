@@ -40,6 +40,13 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const auto& host = get_host_option();
     const auto& port = get_port_option();
     const tx_type& transaction = get_transaction_argument();
+    const auto& debug_file = get_logging_debug_file_setting();
+    const auto& error_file = get_logging_error_file_setting();
+
+    bc::ofstream debug_log(debug_file.string(), log_open_mode);
+    bc::ofstream error_log(error_file.string(), log_open_mode);
+    bind_debug_log(debug_log);
+    bind_error_log(error_log);
 
     callback_state state(error, output);
 

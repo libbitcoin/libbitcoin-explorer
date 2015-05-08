@@ -36,60 +36,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-//#define BX_SEND_TX_P2P_LOGGING " % 1 % [% 2 % ]: % 3 % ."
-//
-//using boost::format;
-//using boost::filesystem::path;
-//
-//static void output_to_file(std::ofstream& file, log_level level,
-//    const std::string&, const std::string& body)
-//{
-//    if (!body.empty())
-//        file << format(BX_SEND_TX_P2P_LOGGING) % level_repr(level) %
-//            body << std::endl;
-//}
-//
-//static void output_cerr_and_file(std::ofstream& file, log_level level,
-//    const std::string&, const std::string& body)
-//{
-//    if (!body.empty())
-//        bc::cerr << format(BX_SEND_TX_P2P_LOGGING) % level_repr(level) %
-//            body << std::endl;
-//}
-//
-//static void bind_logging(const path& debug, const path& error)
-//{
-//    if (!debug.empty())
-//    {
-//        bc::ofstream debug_file(debug.string());
-//
-//        log_debug().set_output_function(
-//            std::bind(output_to_file, std::ref(debug_file),
-//                ph::_1, ph::_2, ph::_3));
-//
-//        log_info().set_output_function(
-//            std::bind(output_to_file, std::ref(debug_file),
-//                ph::_1, ph::_2, ph::_3));
-//    }
-//
-//    if (!error.empty())
-//    {
-//        bc::ofstream error_file(error.string());
-//
-//        log_warning().set_output_function(
-//            std::bind(output_to_file, std::ref(error_file),
-//                ph::_1, ph::_2, ph::_3));
-//
-//        log_error().set_output_function(
-//            std::bind(output_cerr_and_file, std::ref(error_file),
-//                ph::_1, ph::_2, ph::_3));
-//
-//        log_fatal().set_output_function(
-//            std::bind(output_cerr_and_file, std::ref(error_file),
-//                ph::_1, ph::_2, ph::_3));
-//    }
-//}
-
 static void handle_signal(int signal)
 {
     // Can't pass args using lambda capture for a simple function pointer.
@@ -105,10 +51,13 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto nodes = get_nodes_option();
     const tx_type& transaction = get_transaction_argument();
-    //const path& debug_file = get_logging_debug_file_setting();
-    //const path& error_file = get_logging_error_file_setting();
+    const auto& debug_file = get_logging_debug_file_setting();
+    const auto& error_file = get_logging_error_file_setting();
 
-    //bind_logging(debug_file, error_file);
+    bc::ofstream debug_log(debug_file.string(), log_open_mode);
+    bc::ofstream error_log(error_file.string(), log_open_mode);
+    bind_debug_log(debug_log);
+    bind_error_log(error_log);
 
     async_client client(4);
     auto& pool = client.get_threadpool();
