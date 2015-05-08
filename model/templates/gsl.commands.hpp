@@ -167,10 +167,12 @@ public:
 .   getter = "get_" + "$(pluralized_name:lower,c)" + "_argument()"
 .#   bool_vector = if_else(is_vector, xml_true, xml_false)
 .   if (is_xml_true(argument.file))
-        load_path($(getter), "$(name)", variables);
+        const auto raw = requires_raw_input();
+        load_path($(getter), "$(name)", variables, raw);
 .   endif
 .   if (is_xml_true(argument.stdin))
-        load_input($(getter), "$(name)", variables, input);
+        const auto raw = requires_raw_input();
+        load_input($(getter), "$(name)", variables, input, raw);
 .   endif
 .endfor
 .for option
@@ -180,10 +182,12 @@ public:
 .   getter = "get_" + "$(pluralized_name:lower,c)_option()"
 .#   bool_vector = if_else(is_vector, xml_true, xml_false)
 .   if (is_xml_true(option.file))
-        //load_path($(getter), "$(name:lower,c)", variables);
+        //const auto raw = requires_raw_input();
+        //load_path($(getter), "$(name:lower,c)", variables, raw);
 .   endif
 .   if (is_xml_true(option.stdin))
-        //load_input($(getter), "$(name:lower,c)", variables, input);
+        //const auto raw = requires_raw_input();
+        //load_input($(getter), "$(name:lower,c)", variables, input, raw);
 .   endif
 .endfor
     }

@@ -135,7 +135,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_stealth_address_argument(), "STEALTH_ADDRESS", variables, input);
+        const auto raw = requires_raw_input();
+        load_input(get_stealth_address_argument(), "STEALTH_ADDRESS", variables, input, raw);
     }
 
     /**

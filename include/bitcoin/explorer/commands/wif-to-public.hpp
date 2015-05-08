@@ -128,7 +128,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_wif_argument(), "WIF", variables, input);
+        const auto raw = requires_raw_input();
+        load_input(get_wif_argument(), "WIF", variables, input, raw);
     }
 
     /**

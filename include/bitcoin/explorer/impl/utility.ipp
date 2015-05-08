@@ -62,19 +62,23 @@ std::vector<Target> cast(const std::vector<Source>& source)
 }
 
 template <typename Value>
-void deserialize(Value& value, const std::string& text)
+void deserialize(Value& value, const std::string& text, bool trim)
 {
-    value = boost::lexical_cast<Value>(boost::trim_copy(text));
+    if (trim)
+        value = boost::lexical_cast<Value>(boost::trim_copy(text));
+    else
+        value = boost::lexical_cast<Value>(text);
 }
 
 template <typename Value>
-void deserialize(Value& value, std::istream& input)
+void deserialize(Value& value, std::istream& input, bool trim)
 {
-    deserialize(value, read_stream(input));
+    deserialize(value, read_stream(input), trim);
 }
 
 template <typename Value>
-void deserialize(std::vector<Value>& collection, const std::string& text)
+void deserialize(std::vector<Value>& collection, const std::string& text,
+    bool trim)
 {
     // This had problems with the inclusion of the ideographic (CJK) space 
     // (0xe3,0x80, 0x80). Need to infuse the local in bc::split().
@@ -82,7 +86,7 @@ void deserialize(std::vector<Value>& collection, const std::string& text)
     for (const auto& token: tokens)
     {
         Value value;
-        deserialize(value, token);
+        deserialize(value, token, true);
         collection.push_back(value);
     }
 }
@@ -103,15 +107,15 @@ bool deserialize_satoshi_item(Item& item, const data_chunk& data)
 
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
-    po::variables_map& variables, std::istream& input)
+    po::variables_map& variables, std::istream& input, bool raw)
 {
     if (variables.find(name) == variables.end())
-        deserialize(parameter, input);
+        deserialize(parameter, input, !raw);
 }
 
 template <typename Value>
 void load_path(Value& parameter, const std::string& name,
-    po::variables_map& variables)
+    po::variables_map& variables, bool raw)
 {
     // The path is not set as an argument so we can't load from file.
     auto variable = variables.find(name);
@@ -128,14 +132,13 @@ void load_path(Value& parameter, const std::string& name,
         return;
     }
 
-    // TODO: verify with raw binary file.
     bc::ifstream file(path, std::ios::binary);
     if (!file.good())
     {
         BOOST_THROW_EXCEPTION(po::invalid_option_value(path));
     }
 
-    deserialize(parameter, file);
+    deserialize(parameter, file, !raw);
 }
 
 template <typename Value>

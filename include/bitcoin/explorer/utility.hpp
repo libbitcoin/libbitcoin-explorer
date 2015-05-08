@@ -85,27 +85,31 @@ std::vector<Target> cast(const std::vector<Source>& source);
  * @param      <Value>  The converted type.
  * @param[out] value    The parsed value.
  * @param[in]  text     The text to convert.
+ * @param[in]  trim     True if value should be trimmed before conversion.
  */
 template <typename Value>
-void deserialize(Value& value, const std::string& text);
+void deserialize(Value& value, const std::string& text, bool trim);
 
 /**
  * Read an input stream to the specified type.
  * @param      <Value>  The converted type.
  * @param[out] value    The parsed value.
  * @param[in]  input    The stream to convert.
+ * @param[in]  trim     True if value should be trimmed before conversion.
  */
 template <typename Value>
-void deserialize(Value& value, std::istream& input);
+void deserialize(Value& value, std::istream& input, bool trim);
 
 /**
  * Deserialize the tokens of a text string to a vector of the inner type.
  * @param      <Value>     The inner type.
  * @param[out] collection  The parsed vector value.
  * @param[in]  text        The text to convert.
+ * @param[in]  trim        True if value should be trimmed before conversion.
  */
 template <typename Value>
-void deserialize(std::vector<Value>& collection, const std::string& text);
+void deserialize(std::vector<Value>& collection, const std::string& text,
+    bool trim);
 
 /**
  * Deserialize a satoshi item from the specified binary data.
@@ -123,10 +127,11 @@ bool deserialize_satoshi_item(Item& item, const data_chunk& data);
  * @param[in]  name       The parameter name.
  * @param[in]  variables  The loaded variables.
  * @param[in]  input      The input stream for loading the parameter.
+ * @param[in]  raw        True if the input is raw (should not be trimmed).
  */
 template <typename Value>
 void load_input(Value& parameter, const std::string& name,
-    po::variables_map& variables, std::istream& input);
+    po::variables_map& variables, std::istream& input, bool raw);
 
 /**
  * Load file contents as parameter fallback. Obtain the path from the parameter
@@ -134,10 +139,11 @@ void load_input(Value& parameter, const std::string& name,
  * @param      <Value>    The type of the parameter to load.
  * @param[in]  name       The parameter name.
  * @param[in]  variables  The loaded variables.
+ * @param[in]  raw        True if the file is raw (should not be trimmed).
  */
 template <typename Value>
 void load_path(Value& parameter, const std::string& name,
-    po::variables_map& variables);
+    po::variables_map& variables, bool raw);
 
 /**
  * Conveniently convert an instance of the specified type to string.

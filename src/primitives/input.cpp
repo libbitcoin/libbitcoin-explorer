@@ -47,7 +47,7 @@ static bool decode_input(tx_input_type& input, const std::string& tuple)
     input.sequence = max_sequence;
     input.previous_output = point(tokens[0] + ":" + tokens[1]);
     if (tokens.size() == 3)
-        deserialize(input.sequence, tokens[2]);
+        deserialize(input.sequence, tokens[2], true);
 
     return true;
 }

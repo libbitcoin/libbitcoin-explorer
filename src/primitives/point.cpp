@@ -48,7 +48,7 @@ static bool decode_point(output_point& point, const std::string& tuple)
 
     // copy the input point values
     std::copy(txhash.begin(), txhash.end(), point.hash.begin());
-    deserialize(point.index, tokens[1]);
+    deserialize(point.index, tokens[1], true);
     return true;
 }
 

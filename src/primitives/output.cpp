@@ -121,7 +121,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
 
     auto& target = tokens[0];
     tx_output_type output;
-    deserialize(output.value, tokens[1]);
+    deserialize(output.value, tokens[1], true);
 
     payment_address pay_to_address;
     if (pay_to_address.set_encoded(target))
