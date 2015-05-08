@@ -31,6 +31,16 @@ function global.is_empty(value)
     return ((my.value ? "") = "")
 endfunction
 
+function global.is_raw_input(command)
+    define my.command = is_raw_input.command
+    return defined(my.command->argument(is_raw_type(argument.type) & \
+        is_xml_true(argument.stdin)))
+endfunction
+
+function global.is_raw_output(output)
+    return is_raw_type(output)
+endfunction
+
 function global.is_xml_true(value)
     return ((my.value ? "false") = "true")
 endfunction

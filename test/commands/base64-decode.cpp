@@ -43,12 +43,14 @@ BOOST_AUTO_TEST_SUITE(bas64_decode__invoke)
 #define BX_BASE64_DECODE_SNOWDEN_ENCODED "TGV0IHVzIHNwZWFrIG5vIG1vcmUgb2YgZmFpdGggaW4gbWFuLCBidXQgYmluZCBoaW0gZG93biBmcm9tIG1pc2NoaWVmIGJ5IHRoZSBjaGFpbnMgb2YgY3J5cHRvZ3JhcGh5Lg=="
 #define BX_BASE64_DECODE_SNOWDEN_DECODED "Let us speak no more of faith in man, but bind him down from mischief by the chains of cryptography."
 
+// Raw output streams are not terniated by "\n".
+
 BOOST_AUTO_TEST_CASE(base64_decode__invoke__empty__okay_output)
 {
     BX_DECLARE_COMMAND(base64_decode);
     command.set_base64_argument({ BX_BASE64_DECODE_EMPTY_ENCODED });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_EMPTY_DECODED "\n");
+    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_EMPTY_DECODED);
 }
 
 BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_A__okay_output)
@@ -56,7 +58,7 @@ BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_A__okay_output)
     BX_DECLARE_COMMAND(base64_decode);
     command.set_base64_argument({ BX_BASE64_DECODE_RFC4648_ENCODED_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_A "\n");
+    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_A);
 }
 
 BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_B__okay_output)
@@ -64,7 +66,7 @@ BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_B__okay_output)
     BX_DECLARE_COMMAND(base64_decode);
     command.set_base64_argument({ BX_BASE64_DECODE_RFC4648_ENCODED_B });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_B "\n");
+    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_B);
 }
 
 BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_C__okay_output)
@@ -72,7 +74,7 @@ BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_C__okay_output)
     BX_DECLARE_COMMAND(base64_decode);
     command.set_base64_argument({ BX_BASE64_DECODE_RFC4648_ENCODED_C });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_C "\n");
+    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_C);
 }
 
 BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_D__okay_output)
@@ -80,7 +82,7 @@ BOOST_AUTO_TEST_CASE(base64_decode__invoke__RFC4648_D__okay_output)
     BX_DECLARE_COMMAND(base64_decode);
     command.set_base64_argument({ BX_BASE64_DECODE_RFC4648_ENCODED_D });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_D "\n");
+    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_RFC4648_DECODED_D);
 }
 
 BOOST_AUTO_TEST_CASE(base64_decode__invoke__SNOWDEN__okay_output)
@@ -88,7 +90,7 @@ BOOST_AUTO_TEST_CASE(base64_decode__invoke__SNOWDEN__okay_output)
     BX_DECLARE_COMMAND(base64_decode);
     command.set_base64_argument({ BX_BASE64_DECODE_SNOWDEN_ENCODED });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_SNOWDEN_DECODED "\n");
+    BX_REQUIRE_OUTPUT(BX_BASE64_DECODE_SNOWDEN_DECODED);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

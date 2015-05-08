@@ -34,6 +34,8 @@ console_result base16_decode::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& base16 = get_base16_argument();
 
-    output << raw(base16) << std::endl;
+    // Do not add terminator to raw (non-textual) output stream.
+    output << raw(base16) /* << std::endl */;
+
     return console_result::okay;
 }

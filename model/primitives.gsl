@@ -182,6 +182,10 @@ function global.is_bool_type(type)
     return (my.type = "bool")
 endfunction
 
+function global.is_raw_type(type)
+    return ((my.type ? "") = "raw")
+endfunction
+
 function global.is_braced_type(type)
     return (my.type = "primitives::uri")
 endfunction

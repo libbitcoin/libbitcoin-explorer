@@ -32,12 +32,14 @@ BOOST_AUTO_TEST_SUITE(bas16_decode__invoke)
 #define BX_BASE16_DECODE_NIST_ENCODED_A "616263"
 #define BX_BASE16_DECODE_NIST_ENCODED_B "6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f7071"
 
+// Raw output streams are not terniated by "\n".
+
 BOOST_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_A__okay_output)
 {
     BX_DECLARE_COMMAND(base16_decode);
     command.set_base16_argument({ BX_BASE16_DECODE_NIST_ENCODED_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_BASE16_DECODE_NIST_DECODED_A "\n");
+    BX_REQUIRE_OUTPUT(BX_BASE16_DECODE_NIST_DECODED_A);
 }
 
 BOOST_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_B__okay_output)
@@ -45,7 +47,7 @@ BOOST_AUTO_TEST_CASE(base16_decode__invoke__NIST_SHA256_B__okay_output)
     BX_DECLARE_COMMAND(base16_decode);
     command.set_base16_argument({ BX_BASE16_DECODE_NIST_ENCODED_B });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_BASE16_DECODE_NIST_DECODED_B "\n");
+    BX_REQUIRE_OUTPUT(BX_BASE16_DECODE_NIST_DECODED_B);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

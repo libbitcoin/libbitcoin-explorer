@@ -50,6 +50,56 @@ console_result dispatch(int argc, const char* argv[],
     return dispatch_invoke(argc - 1, &argv[1], input, output, error);
 }
 
+// Swap Unicode input stream for binary stream in Windows builds.
+static std::istream& get_command_input(command& command, std::istream& input)
+{
+#ifdef _MSC_VER
+    if (command.requires_raw_input())
+    {
+        if (_setmode(_fileno(stdin), _O_BINARY) == -1)
+            throw std::exception("Could not set STDIN to binary mode.");
+
+        return std::cin;
+    }
+
+    if (_setmode(_fileno(stdin), _O_U8TEXT) == -1)
+        throw std::exception("Could not set STDIN to utf8 mode.");
+
+#endif
+
+    return input;
+}
+
+// Swap Unicode output stream for binary stream in Windows builds.
+static std::ostream& get_command_output(command& command, std::ostream& output)
+{
+#ifdef _MSC_VER
+    if (command.requires_raw_output())
+    {
+        if (_setmode(_fileno(stdout), _O_BINARY) == -1)
+            throw std::exception("Could not set STDOUT to binary mode.");
+
+        return std::cout;
+    }
+
+    if (_setmode(_fileno(stdout), _O_U8TEXT) == -1)
+        throw std::exception("Could not set STDOUT to utf8 mode.");
+#endif
+
+    return output;
+}
+
+// Set Unicode error stream in Windows builds.
+static std::ostream& get_command_error(command& command, std::ostream& error)
+{
+#ifdef _MSC_VER
+    if (_setmode(_fileno(stderr), _O_U8TEXT) == -1)
+        throw std::exception("Could not set STDERR to utf8 mode.");
+#endif
+
+    return error;
+}
+
 // Not unit testable (reliance on untestable functions).
 console_result dispatch_invoke(int argc, const char* argv[],
     std::istream& input, std::ostream& output, std::ostream& error)
@@ -67,7 +117,8 @@ console_result dispatch_invoke(int argc, const char* argv[],
     std::string message;
     variables_map variables;
 
-    if (!load_variables(variables, message, *command, input, argc, argv))
+    auto& in = get_command_input(*command, input);
+    if (!load_variables(variables, message, *command, in, argc, argv))
     {
         display_invalid_parameter(error, message);
         return console_result::failure;
@@ -79,7 +130,9 @@ console_result dispatch_invoke(int argc, const char* argv[],
         return console_result::okay;
     }
 
-    return command->invoke(output, error);
+    auto& err = get_command_error(*command, error);
+    auto& out = get_command_output(*command, output);
+    return command->invoke(out, err);
 }
 
 path get_config_option(variables_map& variables)

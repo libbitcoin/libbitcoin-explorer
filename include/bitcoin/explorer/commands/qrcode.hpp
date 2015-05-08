@@ -116,6 +116,15 @@ public:
     }
 
     /**
+     * Determines if STDOUT is required to be raw.
+     * @return  True if the type of the STDOUT argument is primitive::raw.
+     */
+    BCX_API virtual bool requires_raw_output()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.

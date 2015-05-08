@@ -105,6 +105,28 @@ public:
         return true;
     }
 .endif
+.if (is_raw_input(command))
+
+    /**
+     * Determines if STDIN is required to be raw.
+     * @return  True if the type of the STDIN argument is primitive::raw.
+     */
+    BCX_API virtual bool requires_raw_input()
+    {
+        return true;
+    }
+.endif
+.if (is_raw_output(command.output))
+
+    /**
+     * Determines if STDOUT is required to be raw.
+     * @return  True if the type of the STDOUT argument is primitive::raw.
+     */
+    BCX_API virtual bool requires_raw_output()
+    {
+        return true;
+    }
+.endif
 
 .
 .# HACK: There must be a better way to count a collection.
