@@ -160,6 +160,8 @@ namespace explorer {
     "Usage: %1% %2% %3%"
 #define BX_PRINTER_VALUE_TEXT \
     "VALUE"
+#define BX_VERSION_MESSAGE \
+    "Version: %1% [%2%]"
 
 /**
  * Invoke a specified function on all commands.

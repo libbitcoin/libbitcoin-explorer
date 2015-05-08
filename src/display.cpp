@@ -23,10 +23,12 @@
 #include <iostream>
 #include <memory>
 #include <boost/format.hpp>
+#include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/utility.hpp>
+#include <bitcoin/explorer/version.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -80,6 +82,8 @@ void display_usage(std::ostream& stream)
 {
     stream 
         << std::endl << BX_COMMAND_USAGE << std::endl
+        << std::endl << format(BX_VERSION_MESSAGE) % 
+            LIBBITCOIN_EXPLORER_VERSION % BX_NETWORK << std::endl
         << std::endl << BX_COMMANDS_HEADER << std::endl
         << std::endl;
 

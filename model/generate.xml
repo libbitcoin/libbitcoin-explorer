@@ -22,6 +22,7 @@
     <shorthand name="TX" description="Transaction" />
     <shorthand name="UTXO" description="Unspent Transaction Output" />
     <shorthand name="WIF" description="Wallet Import Format" />
+    <shorthand name="ZMQ" description="Zero Message Queue" />
   </help>
 
   <!-- Configuration file sections. -->
@@ -29,7 +30,7 @@
 
   <configuration section="general">
     <!-- Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers. -->
-    <setting name="network" default="mainnet" description="The network to use, either 'mainnet' or 'testnet'. Defaults to 'mainnet'." />
+    <setting name="network" description="The network to use, either 'mainnet' or 'testnet'. Defaults to match the build." />
     <setting name="retries" type="byte" description="Number of times to retry contacting the server before giving up." />
     <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
   </configuration>
@@ -68,6 +69,7 @@
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
     <string name="BX_CONFIG_DESCRIPTION" value="The path to the configuration settings file." />
     <string name="BX_HELP_DESCRIPTION" value="Get a description and instructions for this command." />
+    <string name="BX_VERSION_MESSAGE" value="Version: %1% [%2%]" />
   </resource>
 
   <!-- Bitcoin Explorer Commands -->
