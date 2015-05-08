@@ -52,6 +52,7 @@
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
+#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
