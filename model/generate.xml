@@ -383,7 +383,6 @@
   <command symbol="mnemonic-new" output="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. The length must be at least 128 bits and evenly divisible by 32 bits. If not specified the entropy is read from STDIN." />
-    <define name="BX_EC_MNEMONIC_NEW_SHORT_ENTROPY" value="The seed is less than 128 bits long." />
     <define name="BX_EC_MNEMONIC_NEW_INVALID_ENTROPY" value="The seed length in bytes is not evenly divisible by 32 bits." />
   </command>
 

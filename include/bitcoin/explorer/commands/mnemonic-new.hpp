@@ -72,8 +72,6 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_NEW_SHORT_ENTROPY \
-    "The seed is less than 128 bits long."
 #define BX_EC_MNEMONIC_NEW_INVALID_ENTROPY \
     "The seed length in bytes is not evenly divisible by 32 bits."
 
@@ -169,7 +167,7 @@ public:
         (
             "SEED",
             value<primitives::base16>(&argument_.seed),
-            "The Base16 entropy from which the mnemonic is created. The length must be at least 128 bits and evenly divisible by 32 bits. If not specified the entropy is read from STDIN."
+            "The Base16 entropy from which the mnemonic is created. The length must be evenly divisible by 32 bits. If not specified the entropy is read from STDIN."
         );
 
         return options;
