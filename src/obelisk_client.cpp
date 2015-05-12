@@ -87,6 +87,9 @@ bool obelisk_client::connect(const uri& address,
     if (!cert_path.empty())
     {
         certificate cert(cert_path);
+        if (!cert.valid())
+            return false;
+
         cert.apply(socket_);
         socket_.set_curve_server(zmq_curve_enabled);
     }
