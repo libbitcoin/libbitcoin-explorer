@@ -143,7 +143,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input);
+        const auto raw = requires_raw_input();
+        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input, raw);
     }
 
     /**
@@ -174,7 +175,7 @@ public:
         (
             "PASSPHRASE",
             value<std::string>(&argument_.passphrase)->required(),
-            "The passphrase."
+            "The Unicode passphrase."
         );
 
         return options;

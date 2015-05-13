@@ -136,7 +136,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        load_input(get_secret_argument(), "SECRET", variables, input);
+        const auto raw = requires_raw_input();
+        load_input(get_secret_argument(), "SECRET", variables, input, raw);
     }
 
     /**
@@ -167,7 +168,7 @@ public:
         (
             "PASSPHRASE",
             value<std::string>(&argument_.passphrase)->required(),
-            "The passphrase."
+            "The Unicode passphrase."
         );
 
         return options;
