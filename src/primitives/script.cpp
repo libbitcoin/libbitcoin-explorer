@@ -52,14 +52,7 @@ script::script(const chain::script& value)
 
 script::script(const data_chunk& value)
 {
-    try
-    {
-        value_ = parse_script(value);
-    }
-    catch (end_of_stream)
-    {
-        value_ = raw_data_script(value);
-    }
+    value_.from_data(value, false, true);
 }
 
 script::script(const std::vector<std::string>& tokens)
@@ -75,7 +68,7 @@ script::script(const script& other)
 
 const data_chunk script::to_data() const
 {
-    return value_;
+    return value_.to_data(false);
 }
 
 const std::string script::to_string() const

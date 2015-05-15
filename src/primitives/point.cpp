@@ -57,7 +57,7 @@ static bool decode_point(chain::output_point& point, const std::string& tuple)
 static std::string encode_point(const chain::output_point& point)
 {
     std::stringstream result;
-    result << btc256(point.hash()) << BX_TX_POINT_DELIMITER << point.index();
+    result << btc256(point.hash) << BX_TX_POINT_DELIMITER << point.index;
     return result.str();
 }
 

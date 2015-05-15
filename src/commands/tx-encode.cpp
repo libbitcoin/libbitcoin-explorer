@@ -43,15 +43,15 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
     const auto& outputs = get_outputs_option();
 
     tx_type tx;
-    tx.version(version);
-    tx.locktime(locktime);
+    tx.version = version;
+    tx.locktime = locktime;
 
     for (const tx_input_type& input: inputs)
-        tx.inputs().push_back(input);
+        tx.inputs.push_back(input);
 
     for (const std::vector<tx_output_type>& output_sets: outputs)
         for (const auto& output: output_sets)
-            tx.outputs().push_back(output);
+            tx.outputs.push_back(output);
 
     if (tx.is_locktime_conflict())
     {
