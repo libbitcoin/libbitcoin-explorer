@@ -60,13 +60,13 @@ ptree prop_list(const header& header)
     const chain::block_header& block_header = header;
 
     ptree tree;
-    tree.put("bits", block_header.bits());
+    tree.put("bits", block_header.bits);
     tree.put("hash", btc256(block_header.hash()));
-    tree.put("merkle_tree_hash", btc256(block_header.merkle()));
-    tree.put("nonce", block_header.nonce());
-    tree.put("previous_block_hash", btc256(block_header.previous_block_hash()));
-    tree.put("time_stamp", block_header.timestamp());
-    tree.put("version", block_header.version());
+    tree.put("merkle_tree_hash", btc256(block_header.merkle));
+    tree.put("nonce", block_header.nonce);
+    tree.put("previous_block_hash", btc256(block_header.previous_block_hash));
+    tree.put("time_stamp", block_header.timestamp);
+    tree.put("version", block_header.version);
     return tree;
 }
 ptree prop_tree(const header& header)
@@ -88,24 +88,24 @@ ptree prop_list(const history_row& row)
 {
     ptree tree;
 
-    tree.put("received.hash", btc256(row.output.hash()));
+    tree.put("received.hash", btc256(row.output.hash));
 
     // missing received.height implies pending
     if (row.output_height != 0)
         tree.put("received.height", row.output_height);
 
-    tree.put("received.index", row.output.index());
+    tree.put("received.index", row.output.index);
 
     // missing input implies unspent
-    if (row.spend.hash() != null_hash)
+    if (row.spend.hash != null_hash)
     {
-        tree.put("spent.hash", btc256(row.spend.hash()));
+        tree.put("spent.hash", btc256(row.spend.hash));
 
         // missing input.height implies spend unconfirmed
         if (row.spend_height != 0)
             tree.put("spent.height", row.spend_height);
 
-        tree.put("spent.index", row.spend.index());
+        tree.put("spent.index", row.spend.index);
     }
 
     tree.put("value", row.value);
@@ -139,11 +139,11 @@ ptree prop_list(const std::vector<balance_row>& rows,
         total_recieved += row.value;
 
         // spend unconfirmed (or no spend attempted)
-        if (row.spend.hash() == null_hash)
+        if (row.spend.hash == null_hash)
             unspent_balance += row.value;
 
         if (row.output_height != 0 &&
-            (row.spend.hash() == null_hash || row.spend_height == 0))
+            (row.spend.hash == null_hash || row.spend_height == 0))
             confirmed_balance += row.value;
     }
 
@@ -167,13 +167,13 @@ ptree prop_list(const tx_input_type& tx_input)
 {
     ptree tree;
     wallet::payment_address script_address;
-    if (extract(script_address, tx_input.script()))
+    if (extract(script_address, tx_input.script))
         tree.put("address", address(script_address));
 
-    tree.put("previous_output.hash", btc256(tx_input.previous_output().hash()));
-    tree.put("previous_output.index", tx_input.previous_output().index());
-    tree.put("script", script(tx_input.script()).to_string());
-    tree.put("sequence", tx_input.sequence());
+    tree.put("previous_output.hash", btc256(tx_input.previous_output.hash));
+    tree.put("previous_output.index", tx_input.previous_output.index);
+    tree.put("script", script(tx_input.script).to_string());
+    tree.put("sequence", tx_input.sequence);
     return tree;
 }
 ptree prop_tree(const tx_input_type& tx_input)
@@ -215,22 +215,22 @@ ptree prop_list(const tx_output_type& tx_output)
 {
     ptree tree;
     wallet::payment_address output_address;
-    if (extract(output_address, tx_output.script()))
+    if (extract(output_address, tx_output.script))
         tree.put("address", address(output_address));
 
-    tree.put("script", script(tx_output.script()).to_string());
+    tree.put("script", script(tx_output.script).to_string());
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
     wallet::stealth_info stealth;
-    if (wallet::extract_stealth_info(stealth, tx_output.script()))
+    if (wallet::extract_stealth_info(stealth, tx_output.script))
     {
         tree.put("stealth.bit_field", stealth.bitfield);
         tree.put("stealth.ephemeral_public_key_hash",
             btc256(stealth.ephem_pubkey_hash));
     }
 
-    tree.put("value", tx_output.value());
+    tree.put("value", tx_output.value);
     return tree;
 }
 ptree prop_tree(const tx_output_type& tx_output)
@@ -277,10 +277,10 @@ ptree prop_list(const transaction& transaction)
 
     ptree tree;
     tree.put("hash", btc256(tx.hash()));
-    tree.add_child("inputs", prop_tree_list("input", tx.inputs()));
-    tree.put("lock_time", tx.locktime());
-    tree.add_child("outputs", prop_tree_list("output", tx.outputs()));
-    tree.put("version", tx.version());
+    tree.add_child("inputs", prop_tree_list("input", tx.inputs));
+    tree.put("lock_time", tx.locktime);
+    tree.add_child("outputs", prop_tree_list("output", tx.outputs));
+    tree.put("version", tx.version);
     return tree;
 }
 ptree prop_tree(const transaction& transaction)

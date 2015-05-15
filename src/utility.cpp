@@ -188,8 +188,8 @@ std::string read_stream(std::istream& stream)
 
 chain::script script_to_raw_data_script(const chain::script& script)
 {
-    bc::data_chunk data = script;
-    chain::script duplicate(data, true);
+    chain::script duplicate(script);
+//    duplicate.from_data(script.to_data(false), false, true);
     return duplicate;
 }
 

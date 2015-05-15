@@ -42,7 +42,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     const ec_secret& private_key = get_ec_private_key_argument();
     const chain::script& contract = get_contract_argument();
 
-    if (index >= tx.inputs().size())
+    if (index >= tx.inputs.size())
     {
         error << BX_INPUT_SIGN_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
