@@ -243,8 +243,7 @@ CZMQPP_OPTIONS=\
 # Define secp256k1 options.
 #------------------------------------------------------------------------------
 SECP256K1_OPTIONS=\
-"--disable-tests "\
-"--disable-bignum "
+"--disable-tests "
 
 # Define bitcoin options.
 #------------------------------------------------------------------------------
