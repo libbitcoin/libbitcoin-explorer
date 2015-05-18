@@ -56,15 +56,11 @@ static std::istream& get_command_input(command& command, std::istream& input)
 #ifdef _MSC_VER
     if (command.requires_raw_input())
     {
-        if (_setmode(_fileno(stdin), _O_BINARY) == -1)
-            throw std::exception("Could not set STDIN to binary mode.");
-
+        bc::set_binary_stdin();
         return std::cin;
     }
 
-    if (_setmode(_fileno(stdin), _O_U8TEXT) == -1)
-        throw std::exception("Could not set STDIN to utf8 mode.");
-
+    bc::set_utf8_stdin();
 #endif
 
     return input;
@@ -76,14 +72,11 @@ static std::ostream& get_command_output(command& command, std::ostream& output)
 #ifdef _MSC_VER
     if (command.requires_raw_output())
     {
-        if (_setmode(_fileno(stdout), _O_BINARY) == -1)
-            throw std::exception("Could not set STDOUT to binary mode.");
-
+        bc::set_binary_stdout();
         return std::cout;
     }
 
-    if (_setmode(_fileno(stdout), _O_U8TEXT) == -1)
-        throw std::exception("Could not set STDOUT to utf8 mode.");
+    bc::set_utf8_stdout();
 #endif
 
     return output;
@@ -92,11 +85,7 @@ static std::ostream& get_command_output(command& command, std::ostream& output)
 // Set Unicode error stream in Windows builds.
 static std::ostream& get_command_error(command& command, std::ostream& error)
 {
-#ifdef _MSC_VER
-    if (_setmode(_fileno(stderr), _O_U8TEXT) == -1)
-        throw std::exception("Could not set STDERR to utf8 mode.");
-#endif
-
+    bc::set_utf8_stderr();
     return error;
 }
 
