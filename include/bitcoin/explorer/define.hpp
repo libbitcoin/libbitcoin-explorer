@@ -24,7 +24,6 @@
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/client.hpp>
 
 // We use the generic helper definitions in libbitcoin to define BCX_API 
