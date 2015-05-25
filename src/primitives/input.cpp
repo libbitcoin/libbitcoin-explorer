@@ -84,7 +84,7 @@ input::input(const input& other)
 input::input(const input_point& value)
 {
     value_.previous_output = value;
-    value_.sequence = max_sequence;
+    value_.sequence = max_input_sequence;
     value_.script = script_type();
 }
 
