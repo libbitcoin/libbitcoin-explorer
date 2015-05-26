@@ -51,7 +51,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output);
 
     const auto connect_handler = [&state](const std::error_code& code,
-        bc::network::channel_ptr node, const tx_type& tx)
+        bc::network::channel::pointer node, const tx_type& tx)
     {
         const auto send_handler = [&state, &tx](const std::error_code& code)
         {

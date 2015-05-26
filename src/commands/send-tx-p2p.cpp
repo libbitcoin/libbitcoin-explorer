@@ -75,7 +75,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Forward lambda declarations to enable the cycle between them.
     std::function<void(const std::error_code&)> send_handler;
-    std::function<void(const std::error_code&, bc::network::channel_ptr,
+    std::function<void(const std::error_code&, bc::network::channel::pointer,
         bc::network::protocol&, const tx_type&)> channel_handler;
     
     send_handler = [&state, &proto, &transaction, &channel_handler](
@@ -92,7 +92,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     };
 
     channel_handler = [&state, &send_handler](const std::error_code& code,
-        bc::network::channel_ptr node, bc::network::protocol&, 
+        bc::network::channel::pointer node, bc::network::protocol&,
         const tx_type& tx)
     {
         if (state.handle_error(code))
