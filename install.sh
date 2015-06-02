@@ -274,19 +274,6 @@ BITCOIN_OPTIONS=\
 "${with_boost} "\
 "${with_pkgconfigdir} "
 
-# Define protobuf options.
-#------------------------------------------------------------------------------
-PROTOBUF_OPTIONS=\
-"--enable-silent-rules "
-
-# Define bitcoin-protocol options.
-#------------------------------------------------------------------------------
-BITCOIN_PROTOCOL_OPTIONS=\
-"--without-tests "\
-"--without-examples "\
-"${with_boost} "\
-"${with_pkgconfigdir} "
-
 # Define bitcoin-client options.
 #------------------------------------------------------------------------------
 BITCOIN_CLIENT_OPTIONS=\
@@ -618,8 +605,6 @@ build_all()
     build_from_github zeromq czmqpp master $PARALLEL "$@" $CZMQPP_OPTIONS
     build_from_github libbitcoin secp256k1 version3 $PARALLEL "$@" $SECP256K1_OPTIONS
     build_from_github pmienk libbitcoin refactor_types $PARALLEL "$@" $BITCOIN_OPTIONS
-    build_from_github libbitcoin protobuf 2.6.0 $SEQUENTIAL "$@" $PROTOBUF_OPTIONS
-    build_from_github pmienk libbitcoin-protocol refactor_types $PARALLEL "$@" $BITCOIN_PROTOCOL_OPTIONS
     build_from_github pmienk libbitcoin-client refactor_types $PARALLEL "$@" $BITCOIN_CLIENT_OPTIONS
     build_from_travis pmienk libbitcoin-explorer refactor_types $PARALLEL "$@" $BITCOIN_EXPLORER_OPTIONS
 }
