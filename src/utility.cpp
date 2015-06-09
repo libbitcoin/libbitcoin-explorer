@@ -168,6 +168,7 @@ std::vector<std::string> numbers_to_strings(const index_list& indexes)
     return stringlist;
 }
 
+// TODO: push to libbitcoin and use there in place of rand().
 // Not testable due to lack of random engine injection.
 void random_fill(data_chunk& chunk)
 {
