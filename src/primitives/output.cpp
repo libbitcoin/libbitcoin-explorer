@@ -41,7 +41,7 @@ static chain::script build_pubkey_hash_script(const short_hash& pubkey_hash)
 {
     data_chunk hash(pubkey_hash.begin(), pubkey_hash.end());
 
-    chain::operation_stack ops = {
+    chain::operation::stack ops = {
         chain::operation{ chain::opcode::dup, data_chunk() },
         chain::operation{ chain::opcode::hash160, data_chunk() },
         chain::operation{ chain::opcode::special, hash },
@@ -56,7 +56,7 @@ static chain::script build_script_hash_script(const short_hash& script_hash)
 {
     data_chunk hash(script_hash.begin(), script_hash.end());
 
-    chain::operation_stack ops = {
+    chain::operation::stack ops = {
         chain::operation{ chain::opcode::hash160, data_chunk() },
         chain::operation{ chain::opcode::special, hash },
         chain::operation{ chain::opcode::equal, data_chunk() }
@@ -93,7 +93,7 @@ static tx_output_type build_stealth_meta_output(
     data_chunk stealth_metadata{ { version, nonce, nonce, nonce, nonce } };
     extend_data(stealth_metadata, ephemeral_pubkey);
 
-    chain::operation_stack ops = {
+    chain::operation::stack ops = {
         chain::operation{ chain::opcode::return_, data_chunk() },
         chain::operation{ chain::opcode::special, stealth_metadata }
     };
