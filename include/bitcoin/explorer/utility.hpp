@@ -247,6 +247,7 @@ BCX_API std::vector<std::string> numbers_to_strings(const index_list& indexes);
 BCX_API boost::posix_time::ptime now();
 
 /**
+ * DEPRECATED in favor of libbitcoin::pseudo_random_fill.
  * Fill a buffer with randomness using the default random engine.
  * @param[in]  chunk  The buffer to fill with randomness.
  */

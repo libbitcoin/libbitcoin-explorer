@@ -169,13 +169,10 @@ std::vector<std::string> numbers_to_strings(const index_list& indexes)
 }
 
 // Not testable due to lack of random engine injection.
+// DEPRECATED in favor of libbitcoin::pseudo_random_fill.
 void random_fill(data_chunk& chunk)
 {
-    std::random_device random;
-    std::default_random_engine engine(random());
-
-    for (uint8_t& byte: chunk)
-        byte = engine() % std::numeric_limits<uint8_t>::max();
+    pseudo_random_fill(chunk);
 }
 
 // TODO: switch to binary for raw (primitive) reads in windows.
