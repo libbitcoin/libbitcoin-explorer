@@ -82,4 +82,3 @@ script:
     - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --build-boost --disable-static --with-bash-completiondir CFLAGS='-Os -s' CXXFLAGS='-Os -s'; fi
 
 after_success:
-
