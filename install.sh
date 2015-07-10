@@ -250,7 +250,7 @@ ZMQ_OPTIONS=\
 # Define czmq options.
 #------------------------------------------------------------------------------
 CZMQ_OPTIONS=\
-"--without-makecert "\
+"--without-zmakecert "\
 "--without-test_zgossip "\
 "${with_pkgconfigdir} "
 
