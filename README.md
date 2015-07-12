@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/libbitcoin/libbitcoin-explorer.svg?branch=master)](https://travis-ci.org/libbitcoin/libbitcoin-explorer)
 
-[![Coverage Status](https://s3.amazonaws.com/assets.coveralls.io/badges/coveralls_70.svg)](https://coveralls.io/r/libbitcoin/libbitcoin-explorer)
+[![Coverage Status](https://coveralls.io/repos/libbitcoin/libbitcoin-explorer/badge.svg)](https://coveralls.io/r/libbitcoin/libbitcoin-explorer)
 
-*The automated build often fails by exceeding the current Travis time-out limit of 50 minutes. Coverage is therefore presented based on offline measurement.*
+*The automated build often fails on OSX by exceeding the current Travis time-out limit of 50 minutes.*
 
 # Bitcoin Explorer
 
