@@ -48,6 +48,13 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     bind_debug_log(debug_log);
     bind_error_log(error_log);
 
+    const static auto headline = "================= Startup =================";
+    log_fatal(LOG_NETWORK) << headline;
+    log_error(LOG_NETWORK) << headline;
+    log_warning(LOG_NETWORK) << headline;
+    log_info(LOG_NETWORK) << headline;
+    log_debug(LOG_NETWORK) << headline;
+
     callback_state state(error, output);
 
     const auto connect_handler = [&state](const std::error_code& code,
@@ -65,7 +72,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
             node->send(tx, send_handler);
     };
 
-    async_client client(4);
+    async_client client(1);
     auto& pool = client.get_threadpool();
     bc::network::handshake shake(pool);
     bc::network::network net(pool);

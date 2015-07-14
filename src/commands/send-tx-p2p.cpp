@@ -59,6 +59,13 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     bind_debug_log(debug_log);
     bind_error_log(error_log);
 
+    const static auto headline = "================= Startup =================";
+    log_fatal(LOG_NETWORK) << headline;
+    log_error(LOG_NETWORK) << headline;
+    log_warning(LOG_NETWORK) << headline;
+    log_info(LOG_NETWORK) << headline;
+    log_debug(LOG_NETWORK) << headline;
+
     async_client client(4);
     auto& pool = client.get_threadpool();
     bc::network::hosts host(pool);
