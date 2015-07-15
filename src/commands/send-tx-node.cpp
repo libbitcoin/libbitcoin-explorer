@@ -37,7 +37,7 @@ using namespace bc::explorer::primitives;
 console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& host = get_host_option();
+    const auto& node = get_host_option();
     const auto& port = get_port_option();
     const tx_type& transaction = get_transaction_argument();
     const auto& debug_file = get_logging_debug_file_setting();
@@ -55,34 +55,74 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     log_info(LOG_NETWORK) << headline;
     log_debug(LOG_NETWORK) << headline;
 
+    // TODO: add hosts_file to bx.cfg
+    const static auto hosts_file = "peers";
+    const static auto seeds = bc::network::hosts::authority_list();
+
+    constexpr size_t nodes = 0;
+    constexpr size_t incoming_port = 0;
+    constexpr size_t host_multiplier = 0;
+    constexpr size_t thread_pool_size = 2;
+    constexpr size_t poll_period_milliseconds = 2000;
+
+    async_client client(thread_pool_size);
+    auto& pool = client.get_threadpool();
+    bc::network::hosts host(pool, hosts_file, nodes * host_multiplier);
+    bc::network::handshake shake(pool);
+    bc::network::network net(pool);
+    bc::network::protocol proto(pool, host, shake, net, seeds, incoming_port,
+        nodes);
+
     callback_state state(error, output);
 
-    const auto connect_handler = [&state](const std::error_code& code,
-        bc::network::channel_ptr node, const tx_type& tx)
+    const auto start_handler = [&state](const std::error_code& code)
     {
-        const auto send_handler = [&state, &tx](const std::error_code& code)
-        {
-            if (state.handle_error(code))
-                state.output(format(BX_SEND_TX_OUTPUT) % now());
-                
-            --state;
-        };
+        state.handle_error(code);
+    };
 
+    const auto send_handler = [&state](const std::error_code& code)
+    {
+        if (state.handle_error(code))
+            state.output(format(BX_SEND_TX_OUTPUT) % now());
+
+        --state;
+    };
+
+    const auto channel_handler = [&state, &send_handler](
+        const std::error_code& code, bc::network::channel_ptr node,
+        bc::network::protocol&, const tx_type& tx)
+    {
         if (state.handle_error(code))
             node->send(tx, send_handler);
     };
 
-    async_client client(2);
-    auto& pool = client.get_threadpool();
-    bc::network::handshake shake(pool);
-    bc::network::network net(pool);
+    bool stopped = false;
+    const auto stop_handler = [&state, &stopped](const std::error_code& code)
+    {
+        state.handle_error(code);
+        stopped = true;
+    };
 
     ++state;
-    connect(shake, net, host, port,
-        std::bind(connect_handler, ph::_1, ph::_2, std::ref(transaction)));
 
-    client.poll(state.stopped(), 2000);
+    // Handle each successful connection.
+    proto.subscribe_channel(
+        std::bind(channel_handler,
+            ph::_1, ph::_2, std::ref(proto), std::ref(transaction)));
+
+    // Connect to the explicitly-specified host.
+    proto.maintain_connection(node, port);
+
+    client.poll(state.stopped(), poll_period_milliseconds);
+    proto.stop(stop_handler);
+
+    // Delay until the protocol stop handler has been called.
+    while (!stopped)
+        sleep_ms(1);
+
     client.stop();
 
+    // BUGBUG: The server may not have time to process the message before the
+    // connection is dropped.
     return state.get_result();
 }

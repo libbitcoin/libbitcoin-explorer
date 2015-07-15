@@ -66,12 +66,22 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     log_info(LOG_NETWORK) << headline;
     log_debug(LOG_NETWORK) << headline;
 
-    async_client client(4);
+    // TODO: add hosts_file to bx.cfg
+    const static auto hosts_file = "peers";
+    const static auto& seeds = bc::network::protocol::default_seeds;
+
+    constexpr size_t incoming_port = 0;
+    constexpr size_t host_multiplier = 10;
+    constexpr size_t thread_pool_size = 4;
+    constexpr size_t poll_period_milliseconds = 2000;
+
+    async_client client(thread_pool_size);
     auto& pool = client.get_threadpool();
-    bc::network::hosts host(pool);
+    bc::network::hosts host(pool, hosts_file, nodes * host_multiplier);
     bc::network::handshake shake(pool);
     bc::network::network net(pool);
-    bc::network::protocol proto(pool, host, shake, net);
+    bc::network::protocol proto(pool, host, shake, net, seeds, incoming_port,
+        nodes);
 
     callback_state state(error, output);
 
@@ -94,23 +104,23 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         --state;
         if (!state.stopped())
             proto.subscribe_channel(
-                std::bind(channel_handler, ph::_1, ph::_2, std::ref(proto),
-                    std::ref(transaction)));
+                std::bind(channel_handler,
+                    ph::_1, ph::_2, std::ref(proto), std::ref(transaction)));
     };
 
     channel_handler = [&state, &send_handler](const std::error_code& code,
-        bc::network::channel_ptr node, bc::network::protocol&, 
+        bc::network::channel_ptr node, bc::network::protocol&,
         const tx_type& tx)
     {
         if (state.handle_error(code))
             node->send(tx, send_handler);
     };
 
-    bool coalesced = false;
-    const auto stop_handler = [&state, &coalesced](const std::error_code& code)
+    bool stopped = false;
+    const auto stop_handler = [&state, &stopped](const std::error_code& code)
     {
         state.handle_error(code);
-        coalesced = true;
+        stopped = true;
     };
 
     // Increment state to the required number of node connections.
@@ -121,25 +131,29 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     if (state.stopped())
         return console_result::okay;
 
-    proto.set_max_outbound(nodes * 6);
-    proto.start(start_handler);
+    // Handle each successful connection.
     proto.subscribe_channel(
-        std::bind(channel_handler, ph::_1, ph::_2, std::ref(proto),
-            std::ref(transaction)));
+        std::bind(channel_handler,
+            ph::_1, ph::_2, std::ref(proto), std::ref(transaction)));
+
+    // Connect to the specified number of discovered hosts.
+    proto.start(start_handler);
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
-    client.poll(state.stopped(), 2000);
+    client.poll(state.stopped(), poll_period_milliseconds);
     proto.stop(stop_handler);
 
-    // Delay until the stop handler has been called.
-    while (!coalesced)
+    // Delay until the protocol stop handler has been called.
+    while (!stopped)
         sleep_ms(1);
 
     client.stop();
 
+    // BUGBUG: The server may not have time to process the message before the
+    // connection is dropped.
     return state.get_result();
 }
