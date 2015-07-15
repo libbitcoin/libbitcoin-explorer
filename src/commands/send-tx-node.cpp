@@ -72,7 +72,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
             node->send(tx, send_handler);
     };
 
-    async_client client(1);
+    async_client client(2);
     auto& pool = client.get_threadpool();
     bc::network::handshake shake(pool);
     bc::network::network net(pool);
