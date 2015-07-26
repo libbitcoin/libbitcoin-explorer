@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+/**
+ * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
  *
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(address_decode__invoke)
 "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
 "    version 0\n" \
 "}\n"
-/*
+/**
 #define BX_ADDRESS_DECODE_V0_JSON \
 "{\n" \
 "    \"wrapper\": {\n" \

@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+/**
+ * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
  *
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
 // These amounts may change at any time, making these particular tests fragile.
 
-/*
+/**
 // The 50BTC coinbase in the genesis block cannot be confirmed.
 #define BX_FETCH_BALANCE_FIRST_ADDRESS_INFO \
 "balance\n" \
