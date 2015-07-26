@@ -66,22 +66,15 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     log_info(LOG_NETWORK) << headline;
     log_debug(LOG_NETWORK) << headline;
 
-    // TODO: add hosts_file to bx.cfg
-    const static auto hosts_file = "peers";
-    const static auto& seeds = bc::network::protocol::default_seeds;
+    constexpr size_t threads = 4;
+    constexpr size_t poll_period_ms = 2000;
 
-    constexpr size_t incoming_port = 0;
-    constexpr size_t host_multiplier = 10;
-    constexpr size_t thread_pool_size = 4;
-    constexpr size_t poll_period_milliseconds = 2000;
-
-    async_client client(thread_pool_size);
+    async_client client(threads);
     auto& pool = client.get_threadpool();
-    bc::network::hosts host(pool, hosts_file, nodes * host_multiplier);
+    bc::network::hosts host(pool);
     bc::network::handshake shake(pool);
     bc::network::network net(pool);
-    bc::network::protocol proto(pool, host, shake, net, seeds, incoming_port,
-        nodes);
+    bc::network::protocol proto(pool, host, shake, net);
 
     callback_state state(error, output);
 
@@ -144,7 +137,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
-    client.poll(state.stopped(), poll_period_milliseconds);
+    client.poll(state.stopped(), poll_period_ms);
     proto.stop(stop_handler);
 
     // Delay until the protocol stop handler has been called.
