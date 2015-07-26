@@ -7,11 +7,13 @@
 
 # Standard declarations.
 #==============================================================================
-# Declare the required version of autoconf.
+# Requires Automake 1.14 or newer.
+
+# Declare the required version of Autoconf.
 AC_PREREQ([2.65])
 
 # Process command-line arguments and perform initialization and verification.
-AC_INIT([libbitcoin-explorer], [2.1.1], [eric@voskuil.org])
+AC_INIT([libbitcoin-explorer], [2.2.1], [eric@voskuil.org])
 
 # Do compilation tests.
 AC_LANG(C++)
@@ -165,10 +167,10 @@ AS_CASE([${bash_completiondir}], [yes],
      AC_MSG_NOTICE([bash_completion_LIBS : ${bash_completion_LIBS}])],
     [AC_SUBST([bash_completion_PKG], [])])
 
-# Require bitcoin-client of at least version 2.1.0 and output ${bitcoin_client_CPPFLAGS/LIBS/PKG}.
+# Require bitcoin-client of at least version 2.2.0 and output ${bitcoin_client_CPPFLAGS/LIBS/PKG}.
 #------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 2.1.0])
-AC_SUBST([bitcoin_client_PKG], ['libbitcoin-client >= 2.1.0'])
+PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 2.2.0])
+AC_SUBST([bitcoin_client_PKG], ['libbitcoin-client >= 2.2.0'])
 AC_SUBST([bitcoin_client_CPPFLAGS], [${bitcoin_client_CFLAGS}])
 AC_MSG_NOTICE([bitcoin_client_CPPFLAGS : ${bitcoin_client_CPPFLAGS}])
 AC_MSG_NOTICE([bitcoin_client_LIBS : ${bitcoin_client_LIBS}])
