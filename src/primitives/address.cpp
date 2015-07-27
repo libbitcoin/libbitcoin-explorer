@@ -70,11 +70,6 @@ address::address(const hd_public_key& value)
 {
 }
 
-payment_address& address::data()
-{
-    return value_;
-}
-
 address::operator bool() const
 {
     return value_.version() != payment_address::invalid_version;
