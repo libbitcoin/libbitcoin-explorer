@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(script_to_address__invoke)
 #ifndef ENABLE_TESTNET
 
 // Vector: www.reddit.com/r/Bitcoin/comments/2h4ic8/why_dont_rbitcoin_community_donate_towards/
-BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__okay_output)
+BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
     command.set_script_argument(
@@ -44,6 +44,25 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__okay_output)
     });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("3CS58tZGJtjz4qBFyNgQRtneKaWUjeEZVM\n");
+}
+
+BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_version_42__expected_output)
+{
+    BX_DECLARE_COMMAND(script_to_address);
+    command.set_version_option(42);
+    command.set_script_argument(
+    {
+        {
+            "2",
+            "[", "048cdce248e9d30838a2b31ad7162195db0ef4c20517916fa371fd04b153c214eeb644dcda76a98d33b0180a949d521df1d75024587a28ef30f2906c266fbb360e", "]",
+            "[", "04d34775baab521d7ba2bd43997312d5f663633484ae1a4d84246866b7088297715a049e2288ae16f168809d36e2da1162f03412bf23aa5f949f235eb2e7141783", "]",
+            "[", "04534072a9a62226252917f3011082a429900bbc5d1e11386b16e64e1dc985259c1cbcea0bad66fa6f106ea617ddddb6de45ac9118a3dcfc29c0763c167d56290e", "]",
+            "3",
+            "checkmultisig"
+        }
+    });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("J5wPZuavaZtQKsLTsu1CNXrkcF3P1h2jMG\n");
 }
 
 #endif
