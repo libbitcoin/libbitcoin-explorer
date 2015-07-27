@@ -84,12 +84,6 @@ public:
     BCX_API address(const hd_public_key& value);
 
     /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API payment_address& data();
-
-    /**
      * Overload cast to bool.
      * @return  This object's value cast to a bool.
      */

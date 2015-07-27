@@ -161,6 +161,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "version,v",
+            value<primitives::byte>(&option_.version),
+            "The desired Bitcoin address version."
+        )
+        (
             "SCRIPT",
             value<primitives::script>(&argument_.script),
             "The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."
@@ -197,6 +202,23 @@ public:
         argument_.script = value;
     }
 
+    /**
+     * Get the value of the version option.
+     */
+    BCX_API virtual primitives::byte& get_version_option()
+    {
+        return option_.version;
+    }
+
+    /**
+     * Set the value of the version option.
+     */
+    BCX_API virtual void set_version_option(
+        const primitives::byte& value)
+    {
+        option_.version = value;
+    }
+
 private:
 
     /**
@@ -222,9 +244,11 @@ private:
     struct option
     {
         option()
+          : version()
         {
         }
 
+        primitives::byte version;
     } option_;
 };
 

@@ -426,6 +426,7 @@
   </command>
   
   <command symbol="script-to-address" formerly="scripthash" output="address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from a script.">
+    <option name="version" type="byte" description="The desired Bitcoin address version." />
     <argument name="SCRIPT" stdin="true" type="script" description="The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
   </command>
   

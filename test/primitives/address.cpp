@@ -53,13 +53,6 @@ BOOST_AUTO_TEST_CASE(address__constructor__copy_address_primitives__round_trips)
     //BX_SERIALIZE_COPY_ROUND_TRIP(address, ADDRESS_MAINNET_A);
 }
 
-BOOST_AUTO_TEST_CASE(address__constructor__payment_address_data__round_trips)
-{
-    payment_address pay_address(ADDRESS_MAINNET_A);
-    const auto internal_address = address(pay_address).data();
-    BOOST_REQUIRE_EQUAL(internal_address.encoded(), ADDRESS_MAINNET_A);
-}
-
 #ifndef ENABLE_TESTNET
 
 BOOST_AUTO_TEST_CASE(address__constructor__hd_private_key__converts)
