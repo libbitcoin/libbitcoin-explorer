@@ -12,9 +12,9 @@
  * For interpretation of the versioning scheme see: http://semver.org
  */
 
-#define LIBBITCOIN_EXPLORER_VERSION "2.1.1"
+#define LIBBITCOIN_EXPLORER_VERSION "2.2.1"
 #define LIBBITCOIN_EXPLORER_MAJOR_VERSION 2
-#define LIBBITCOIN_EXPLORER_MINOR_VERSION 1
+#define LIBBITCOIN_EXPLORER_MINOR_VERSION 2
 #define LIBBITCOIN_EXPLORER_PATCH_VERSION 1
 
 #endif

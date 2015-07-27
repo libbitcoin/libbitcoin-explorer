@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2011-2014 libbitcoin developers (see AUTHORS)
+/**
+ * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin-explorer.
  *
@@ -39,6 +39,18 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 "        ephemeral_public_key 026f7072657475726e2e6e696e6a61202d20707573682073746420747873202877\n" \
 "        paid_address 1B8BnC4dP6vKVhndSLCPMG2Lq9AyoRUKXq\n" \
 "        transaction_hash 02854c79fb685e2f9551b7c0e5e0074429ecc73aebfc5df558714cdfe6e07467\n" \
+"    }\n" \
+"    match\n" \
+"    {\n" \
+"        ephemeral_public_key 02a9b4d9e2115b3a6d18651f2d5e920a9c5c8b4f54a7882cd75a1b1a93752347a5\n" \
+"        paid_address 1NsN2ihdRijVsFKEMhrw9ZjQTZawtgh7kh\n" \
+"        transaction_hash f6cc0174f09f6583ec42817ba1172030609f418d78598e9bd7b8152be4100f55\n" \
+"    }\n" \
+"    match\n" \
+"    {\n" \
+"        ephemeral_public_key 024f41010001021b753d68747470733a2f2f6370722e736d2f6f647454475a3434\n" \
+"        paid_address 17t15PKUr2GCDY5ufaq3QQgcmfRzYEnoLg\n" \
+"        transaction_hash 1623d01142f80a2900e7b323ae5a36d864e0bceee85f2018bc601d1721bb82fd\n" \
 "    }\n" \
 "}\n"
 
