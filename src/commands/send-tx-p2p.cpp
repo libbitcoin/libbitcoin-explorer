@@ -71,7 +71,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     async_client client(threads);
     auto& pool = client.get_threadpool();
-    bc::network::hosts host(pool);
+    bc::network::hosts host(pool, 100);
     bc::network::handshake shake(pool);
     bc::network::network net(pool);
     bc::network::protocol proto(pool, host, shake, net);
@@ -132,21 +132,14 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Connect to the specified number of discovered hosts.
     proto.start(start_handler);
 
-    // Catch C signals for stopping the program.
+    // Catch C signals for aborting the program.
     signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
     client.poll(state.stopped(), poll_period_ms);
     proto.stop(stop_handler);
-
-    // Delay until the protocol stop handler has been called.
-    while (!stopped)
-        sleep_ms(1);
-
     client.stop();
 
-    // BUGBUG: The server may not have time to process the message before the
-    // connection is dropped.
     return state.get_result();
 }
