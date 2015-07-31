@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/commands/send-tx-node.hpp>
 
+#include <csignal>
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
@@ -34,6 +35,15 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
+static void handle_signal(int signal)
+{
+    // Can't pass args using lambda capture for a simple function pointer.
+    // This means there's no way to terminate without using a global variable
+    // or process termination. Since the variable would screw with testing all 
+    // other methods we opt for process termination here.
+    exit(console_result::failure);
+}
+
 console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -42,6 +52,10 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const tx_type& transaction = get_transaction_argument();
     const auto& debug_file = get_logging_debug_file_setting();
     const auto& error_file = get_logging_error_file_setting();
+
+    // These haven't been used for node (or p2p) connections.
+    const auto retries = get_general_retries_setting();
+    const auto wait = get_general_wait_setting();
 
     bc::ofstream debug_log(debug_file.string(), log_open_mode);
     bc::ofstream error_log(error_file.string(), log_open_mode);
@@ -60,7 +74,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     async_client client(threads);
     auto& pool = client.get_threadpool();
-    bc::network::hosts host(pool);
+    bc::network::hosts host(pool, 0);
     bc::network::handshake shake(pool);
     bc::network::network net(pool);
     bc::network::protocol proto(pool, host, shake, net);
@@ -75,7 +89,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const auto send_handler = [&state](const std::error_code& code)
     {
         if (state.handle_error(code))
-            state.output(format(BX_SEND_TX_OUTPUT) % now());
+            state.output(format(BX_SEND_TX_NODE_OUTPUT) % now());
 
         --state;
     };
@@ -103,18 +117,16 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
             ph::_1, ph::_2, std::ref(proto), std::ref(transaction)));
 
     // Connect to the explicitly-specified host.
-    proto.maintain_connection(node, port);
+    proto.maintain_connection(node, port, false);
+
+    // Catch C signals for aborting the program.
+    signal(SIGABRT, handle_signal);
+    signal(SIGTERM, handle_signal);
+    signal(SIGINT, handle_signal);
 
     client.poll(state.stopped(), poll_period_ms);
     proto.stop(stop_handler);
-
-    // Delay until the protocol stop handler has been called.
-    while (!stopped)
-        sleep_ms(1);
-
     client.stop();
 
-    // BUGBUG: The server may not have time to process the message before the
-    // connection is dropped.
     return state.get_result();
 }
