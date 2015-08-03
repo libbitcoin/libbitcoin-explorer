@@ -228,22 +228,27 @@ public:
         (
             "general.retries",
             value<primitives::byte>(&setting_.general.retries),
-            "Number of times to retry contacting the server before giving up."
+            "Number of times to retry contacting a server or node before giving up."
         )
         (
             "general.wait",
             value<uint32_t>(&setting_.general.wait)->default_value(2000),
-            "Milliseconds to wait for a response from the server."
+            "Milliseconds to wait for a response from a server or node."
+        )
+        (
+            "general.hosts_file",
+            value<boost::filesystem::path>(&setting_.general.hosts_file)->default_value("hosts"),
+            "The path to the p2p hosts file, defaults to 'hosts'."
         )
         (
             "logging.debug_file",
             value<boost::filesystem::path>(&setting_.logging.debug_file)->default_value("debug.log"),
-            "The path to the debug log file, used by send-tx-p2p."
+            "The path to the p2p debug log file, defaults to 'debug.log'."
         )
         (
             "logging.error_file",
             value<boost::filesystem::path>(&setting_.logging.error_file)->default_value("error.log"),
-            "The path to the error log file, used by send-tx-p2p."
+            "The path to the p2p error log file, defaults to 'error.log'."
         )
         (
             "mainnet.url",
@@ -364,6 +369,22 @@ public:
     BCX_API virtual void set_general_wait_setting(uint32_t value)
     {
         setting_.general.wait = value;
+    }
+
+    /**
+     * Get the value of the general.hosts_file setting.
+     */
+    BCX_API virtual boost::filesystem::path get_general_hosts_file_setting() const
+    {
+        return setting_.general.hosts_file;
+    }
+
+    /**
+     * Set the value of the general.hosts_file setting.
+     */
+    BCX_API virtual void set_general_hosts_file_setting(boost::filesystem::path value)
+    {
+        setting_.general.hosts_file = value;
     }
 
     /**
@@ -541,13 +562,15 @@ private:
             general()
               : network(),
                 retries(),
-                wait()
+                wait(),
+                hosts_file()
             {
             }
 
             std::string network;
             primitives::byte retries;
             uint32_t wait;
+            boost::filesystem::path hosts_file;
         } general;
 
         struct logging

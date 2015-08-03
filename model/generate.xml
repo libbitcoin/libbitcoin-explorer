@@ -31,13 +31,14 @@
   <configuration section="general">
     <!-- Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers. -->
     <setting name="network" description="The network to use, either 'mainnet' or 'testnet'. Defaults to match the build." />
-    <setting name="retries" type="byte" description="Number of times to retry contacting the server before giving up." />
-    <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from the server." />
+    <setting name="retries" type="byte" description="Number of times to retry contacting a server or node before giving up." />
+    <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from a server or node." />
+    <setting name="hosts_file" type="path" default="hosts" description="The path to the p2p hosts file, defaults to 'hosts'." />
   </configuration>
 
   <configuration section="logging">
-    <setting name="debug_file" type="path" default="debug.log" description="The path to the debug log file, used by send-tx-p2p." />
-    <setting name="error_file" type="path" default="error.log" description="The path to the error log file, used by send-tx-p2p." />
+    <setting name="debug_file" type="path" default="debug.log" description="The path to the p2p debug log file, defaults to 'debug.log'." />
+    <setting name="error_file" type="path" default="error.log" description="The path to the p2p error log file, defaults to 'error.log'." />
   </configuration>
 
   <configuration section="mainnet">
