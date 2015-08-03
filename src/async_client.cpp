@@ -36,7 +36,7 @@ async_client::async_client(const size_t threads)
 {
 }
 
-threadpool& async_client::get_threadpool()
+threadpool& async_client::pool()
 {
     return threadpool_;
 }
@@ -61,9 +61,8 @@ void async_client::sleep(uint32_t period_ms)
 // Not yet unit testable (nonvirtual pool).
 void async_client::stop()
 {
-    auto& pool = get_threadpool();
-    pool.stop();
-    pool.join();
+    threadpool_.stop();
+    threadpool_.join();
 }
 
 } // namepsace explorer
