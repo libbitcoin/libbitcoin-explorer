@@ -23,7 +23,9 @@
 #include <iostream>
 #include <random>
 #include <cstdint>
+#include <mutex>
 #include <string>
+#include <thread>
 #include <tuple>
 #include <vector>
 #include <boost/date_time.hpp>
@@ -44,19 +46,27 @@
 using namespace boost::posix_time;
 using namespace bc::client;
 using boost::filesystem::path;
+using boost::format;
 
 namespace libbitcoin {
 namespace explorer {
 
+// Guard against concurrent file writes.
+static std::mutex logfile_mutex;
+
 static void output_to_file(std::ofstream& file, log_level level, 
     const std::string& domain, const std::string& body)
 {
-    static const auto message = "%1% %2% [%3%]: %4%";
+    static const auto form = "%1% %2% [%3%] %4%\n";
     if (!body.empty())
     {
         const auto log = level_repr(level);
         const auto time = microsec_clock::local_time().time_of_day();
-        file << format(message) % time % log % domain % body << std::endl;
+        const auto message = (format(form) % time % log % domain % body).str();
+
+        std::lock_guard<std::mutex> lock_logfile(logfile_mutex);
+        file << message;
+        file.flush();
     }
 }
 
