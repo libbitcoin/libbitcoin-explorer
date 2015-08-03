@@ -75,7 +75,6 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     static constexpr size_t threads = 2;
     static constexpr size_t no_host_pool = 0;
 
-    // TODO: don't send getaddr.
     async_client client(threads);
     bc::network::hosts host(client.pool(), no_host_pool);
     bc::network::handshake shake(client.pool());
