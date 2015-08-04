@@ -55,7 +55,8 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const auto& debug_file = get_logging_debug_file_setting();
     const auto& error_file = get_logging_error_file_setting();
     const auto& hosts_file = get_general_hosts_file_setting();
-    const auto wait = get_general_wait_setting();
+    const auto connect = get_general_connect_timeout_seconds_setting();
+    const auto handshake = get_general_channel_handshake_minutes_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();
@@ -68,54 +69,41 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Not listening, no relay.
     static constexpr bool relay = false;
-    static constexpr uint16_t port = 0;
     static constexpr size_t threads = 4;
-    const bc::network::timeout timeouts(90, 30, 15, 1, 1, wait);
+    static constexpr uint16_t listen = 0;
+    const network::timeout timeouts(connect, handshake);
 
     async_client client(threads);
-    bc::network::hosts host(client.pool(), hosts_file);
-    bc::network::handshake shake(client.pool());
-    bc::network::network net(client.pool(), timeouts);
-    bc::network::protocol proto(client.pool(), host, shake, net, port, relay);
+    network::hosts hosts(client.pool(), hosts_file);
+    network::handshake shake(client.pool());
+    network::network net(client.pool(), timeouts);
+    network::protocol proto(client.pool(), hosts, shake, net, listen, relay);
 
     callback_state state(error, output);
+    network::protocol::channel_handler handle_connect;
 
-    const auto start_handler = [&state](const std::error_code& code)
+    const auto protocol_handler = [&state](const std::error_code& code)
     {
-        state.handle_error(code);
+        state.succeeded(code);
     };
 
-    // Forward lambda declarations to enable the cycle between them.
-    std::function<void(const std::error_code&)> send_handler;
-    std::function<void(const std::error_code&, bc::network::channel_ptr,
-        bc::network::protocol&, const tx_type&)> channel_handler;
-    
-    send_handler = [&state, &proto, &transaction, &channel_handler](
+    const auto handle_send = [&state, &proto, &transaction, &handle_connect](
         const std::error_code& code)
     {
-        if (state.handle_error(code))
+        if (state.succeeded(code))
             state.output(format(BX_SEND_TX_P2P_OUTPUT) % now());
 
+        // Success or failed, if not done visiting nodes resubscribe.
         --state;
         if (!state.stopped())
-            proto.subscribe_channel(
-                std::bind(channel_handler,
-                    ph::_1, ph::_2, std::ref(proto), std::ref(transaction)));
+            proto.subscribe_channel(handle_connect);
     };
 
-    channel_handler = [&state, &send_handler](const std::error_code& code,
-        bc::network::channel_ptr node, bc::network::protocol&,
-        const tx_type& tx)
+    handle_connect = [&state, &transaction, handle_send](
+        const std::error_code& code, network::channel_ptr node)
     {
-        if (state.handle_error(code))
-            node->send(tx, send_handler);
-    };
-
-    bool stopped = false;
-    const auto stop_handler = [&state, &stopped](const std::error_code& code)
-    {
-        state.handle_error(code);
-        stopped = true;
+        if (state.succeeded(code))
+            node->send(transaction, handle_send);
     };
 
     // Increment state to the required number of node connections.
@@ -127,12 +115,10 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         return console_result::okay;
 
     // Handle each successful connection.
-    proto.subscribe_channel(
-        std::bind(channel_handler,
-            ph::_1, ph::_2, std::ref(proto), std::ref(transaction)));
+    proto.subscribe_channel(handle_connect);
 
     // Connect to the specified number of hosts from the host pool.
-    proto.start(start_handler);
+    proto.start(protocol_handler);
 
     // Catch C signals for aborting the program.
     signal(SIGABRT, handle_signal);
@@ -140,7 +126,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     signal(SIGINT, handle_signal);
 
     client.poll(state.stopped());
-    proto.stop(stop_handler);
+    proto.stop(protocol_handler);
     client.stop();
 
     return state.get_result();

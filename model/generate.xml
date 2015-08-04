@@ -31,9 +31,10 @@
   <configuration section="general">
     <!-- Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers. -->
     <setting name="network" description="The network to use, either 'mainnet' or 'testnet'. Defaults to match the build." />
-    <setting name="retries" type="byte" description="Number of times to retry contacting a server or node before giving up." />
-    <setting name="wait" default="2000" type="uint32_t" description="Milliseconds to wait for a response from a server or node." />
-    <setting name="hosts_file" type="path" default="hosts" description="The path to the p2p hosts file, defaults to 'hosts'." />
+    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a server or node, defaults to 0." />
+    <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
+    <setting name="channel_handshake_minutes" default="1" type="uint32_t" description="The time limit to complete the connection handshake, defaults to 1." />
+    <setting name="hosts_file" type="path" default="hosts.cache" description="The path to the p2p hosts file, defaults to 'hosts.cache'." />
   </configuration>
 
   <configuration section="logging">

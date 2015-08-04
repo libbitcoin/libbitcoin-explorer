@@ -30,9 +30,11 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "{\n" \
 "    general\n" \
 "    {\n" \
+"        channel_handshake_minutes 0\n" \
+"        connect_retries 0\n" \
+"        connect_timeout_seconds 0\n" \
+"        hosts_file \"\"\n" \
 "        network \"\"\n" \
-"        retries 0\n" \
-"        wait 0\n" \
 "    }\n" \
 "    logging\n" \
 "    {\n" \
@@ -58,9 +60,11 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "{\n" \
 "    general\n" \
 "    {\n" \
+"        channel_handshake_minutes 9\n" \
+"        connect_retries 42\n" \
+"        connect_timeout_seconds 7\n" \
+"        hosts_file my.hosts\n" \
 "        network testnet\n" \
-"        retries 42\n" \
-"        wait 7000\n" \
 "    }\n" \
 "    logging\n" \
 "    {\n" \
@@ -91,9 +95,11 @@ BOOST_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
 BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
 {
     BX_DECLARE_COMMAND(settings);
-    command.set_general_retries_setting(42);
+    command.set_general_channel_handshake_minutes_setting(9);
+    command.set_general_connect_retries_setting(42);
+    command.set_general_connect_timeout_seconds_setting(7);
     command.set_general_network_setting("testnet");
-    command.set_general_wait_setting(7000);
+    command.set_general_hosts_file_setting("my.hosts");
     command.set_mainnet_url_setting({ "https://mainnet.obelisk.net:42" });
     command.set_mainnet_cert_file_setting("mainnet.certificate.zpl");
     command.set_mainnet_server_cert_key_setting({ "CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });

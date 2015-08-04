@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(fetch_height__invoke)
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet_wait_0__failure)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_height);
-    command.set_general_wait_setting(0);
+    command.set_general_connect_timeout_seconds_setting(0);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 
     // TODO: figure out why on Windows the message is not the libbitcoin text.

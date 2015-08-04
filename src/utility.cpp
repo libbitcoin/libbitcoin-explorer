@@ -114,19 +114,22 @@ bool is_testnet(const std::string& network)
 
 connection_type get_connection(const command& cmd)
 {
+    const auto connect_timeout_milliseconds = period_ms(
+        cmd.get_general_connect_timeout_seconds_setting() * 1000);
+
     if (is_testnet(cmd.get_general_network_setting()))
         return connection_type
         {
-            cmd.get_general_retries_setting(),
-            period_ms(cmd.get_general_wait_setting()),
+            cmd.get_general_connect_retries_setting(),
+            connect_timeout_milliseconds,
             cmd.get_testnet_cert_file_setting(),
             cmd.get_testnet_url_setting(),
             cmd.get_testnet_server_cert_key_setting()
         };
     else return connection_type
         {
-            cmd.get_general_retries_setting(),
-            period_ms(cmd.get_general_wait_setting()),
+            cmd.get_general_connect_retries_setting(),
+            connect_timeout_milliseconds,
             cmd.get_mainnet_cert_file_setting(),
             cmd.get_mainnet_url_setting(),
             cmd.get_mainnet_server_cert_key_setting()

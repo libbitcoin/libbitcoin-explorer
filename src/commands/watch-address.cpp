@@ -82,7 +82,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     auto on_error = [&state](const std::error_code& error)
     {
-        state.handle_error(error);
+        state.succeeded(error);
     };
 
     client.get_codec()->set_on_update(on_update);

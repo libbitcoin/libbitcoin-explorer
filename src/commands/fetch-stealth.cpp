@@ -69,7 +69,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     auto on_error = [&state](const std::error_code& error)
     {
-        state.handle_error(error);
+        state.succeeded(error);
     };
 
     client.get_codec()->fetch_stealth(on_error, on_done, prefix, height);

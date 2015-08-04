@@ -50,15 +50,14 @@ static void handle_signal(int)
 console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& node = get_host_option();
-    const auto& node_port = get_port_option();
+    const auto& host = get_host_option();
+    const auto& port = get_port_option();
     const tx_type& transaction = get_transaction_argument();
     const auto& debug_file = get_logging_debug_file_setting();
     const auto& error_file = get_logging_error_file_setting();
-    const auto wait = get_general_wait_setting();
-
-    //// TODO
-    ////const auto retries = get_general_retries_setting();
+    const auto retries = get_general_connect_retries_setting();
+    const auto connect = get_general_connect_timeout_seconds_setting();
+    const auto handshake = get_general_channel_handshake_minutes_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();
@@ -71,56 +70,43 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     // Not listening, no tx relay, no seeded host pool or address requests.
     static constexpr bool relay = false;
-    static constexpr uint16_t port = 0;
     static constexpr size_t threads = 2;
-    static constexpr size_t no_host_pool = 0;
-    const bc::network::timeout timeouts(90, 30, 15, 1, 1, wait);
+    static constexpr uint16_t listen = 0;
+    static constexpr size_t host_pool_size = 0;
+    const network::timeout timeouts(connect, handshake);
 
     async_client client(threads);
-    bc::network::hosts host(client.pool(), no_host_pool);
-    bc::network::handshake shake(client.pool());
-    bc::network::network net(client.pool(), timeouts);
-    bc::network::protocol proto(client.pool(), host, shake, net, port, relay);
+    network::hosts hosts(client.pool(), host_pool_size);
+    network::handshake shake(client.pool());
+    network::network net(client.pool(), timeouts);
+    network::protocol proto(client.pool(), hosts, shake, net, listen);
 
     callback_state state(error, output);
 
-    const auto start_handler = [&state](const std::error_code& code)
+    const auto handle_send = [&state](const std::error_code& code)
     {
-        state.handle_error(code);
-    };
-
-    const auto send_handler = [&state](const std::error_code& code)
-    {
-        if (state.handle_error(code))
+        if (state.succeeded(code))
             state.output(format(BX_SEND_TX_NODE_OUTPUT) % now());
 
         --state;
     };
 
-    const auto channel_handler = [&state, &send_handler](
-        const std::error_code& code, bc::network::channel_ptr node,
-        bc::network::protocol&, const tx_type& tx)
+    const auto handle_connect = [&state, &transaction, &handle_send](
+        const std::error_code& code, network::channel_ptr node)
     {
-        if (state.handle_error(code))
-            node->send(tx, send_handler);
+        if (state.succeeded(code))
+            node->send(transaction, handle_send);
     };
 
-    bool stopped = false;
-    const auto stop_handler = [&state, &stopped](const std::error_code& code)
-    {
-        state.handle_error(code);
-        stopped = true;
-    };
-
+    // One node always specified.
     ++state;
 
     // Handle each successful connection.
-    proto.subscribe_channel(
-        std::bind(channel_handler,
-            ph::_1, ph::_2, std::ref(proto), std::ref(transaction)));
+    proto.subscribe_channel(handle_connect);
 
-    // Connect to the explicitly-specified host.
-    proto.maintain_connection(node, node_port, false);
+    // No need to start or stop the protocol since we only use manual.
+    // Connect to the one specified host and retry up to the specified limit.
+    proto.maintain_connection(host, port, relay, retries);
 
     // Catch C signals for aborting the program.
     signal(SIGABRT, handle_signal);
@@ -128,7 +114,6 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     signal(SIGINT, handle_signal);
 
     client.poll(state.stopped());
-    proto.stop(stop_handler);
     client.stop();
 
     return state.get_result();

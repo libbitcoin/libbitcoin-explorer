@@ -60,15 +60,6 @@ public:
     BCX_API  callback_state(std::ostream& error, std::ostream& output);
 
     /**
-     * Handle the callback error with standard behavior.
-     * @param[in]  code    The callback error result.
-     * @param[in]  format  A single parameter format string or empty/default.
-     * @return             True if no error.   
-     */
-    BCX_API  virtual bool handle_error(const std::error_code& code,
-        const std::string& format="%1%");
-
-    /**
      * Serialize a property tree to output. The stream must be flushed before 
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
@@ -134,6 +125,15 @@ public:
      * @return  True if the reference count is zero.
      */
     BCX_API virtual bool& stopped();
+
+    /**
+     * Handle the callback error with standard behavior.
+     * @param[in]  code    The callback error result.
+     * @param[in]  format  A single parameter format string or empty/default.
+     * @return             True if no error.   
+     */
+    BCX_API  virtual bool succeeded(const std::error_code& code,
+        const std::string& format="%1%");
 
     /**
      * Get the engine enumeration value.

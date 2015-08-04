@@ -69,7 +69,7 @@ console_result validate_tx::invoke(std::ostream& output,
         // BX_VALIDATE_TX_INVALID_INPUT is not currently utilized.
         // The client suppresses an index list which may have 0 or one element.
         // The list contains the index of the input which caused the failure.
-        state.handle_error(error);
+        state.succeeded(error);
     };
 
     client.get_codec()->validate(on_error, on_done, transaction);
