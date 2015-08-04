@@ -55,10 +55,10 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const tx_type& transaction = get_transaction_argument();
     const auto& debug_file = get_logging_debug_file_setting();
     const auto& error_file = get_logging_error_file_setting();
+    const auto wait = get_general_wait_setting();
 
     //// TODO
     ////const auto retries = get_general_retries_setting();
-    ////const auto timeout = get_general_wait_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();
@@ -74,11 +74,12 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     static constexpr uint16_t port = 0;
     static constexpr size_t threads = 2;
     static constexpr size_t no_host_pool = 0;
+    const bc::network::timeout timeouts(90, 30, 15, 1, 1, wait);
 
     async_client client(threads);
     bc::network::hosts host(client.pool(), no_host_pool);
     bc::network::handshake shake(client.pool());
-    bc::network::network net(client.pool());
+    bc::network::network net(client.pool(), timeouts);
     bc::network::protocol proto(client.pool(), host, shake, net, port, relay);
 
     callback_state state(error, output);

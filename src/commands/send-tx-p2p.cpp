@@ -55,9 +55,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const auto& debug_file = get_logging_debug_file_setting();
     const auto& error_file = get_logging_error_file_setting();
     const auto& hosts_file = get_general_hosts_file_setting();
-
-    //// TODO
-    ////const auto timeout = get_general_wait_setting();
+    const auto wait = get_general_wait_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();
@@ -72,11 +70,12 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     static constexpr bool relay = false;
     static constexpr uint16_t port = 0;
     static constexpr size_t threads = 4;
+    const bc::network::timeout timeouts(90, 30, 15, 1, 1, wait);
 
     async_client client(threads);
     bc::network::hosts host(client.pool(), hosts_file);
     bc::network::handshake shake(client.pool());
-    bc::network::network net(client.pool());
+    bc::network::network net(client.pool(), timeouts);
     bc::network::protocol proto(client.pool(), host, shake, net, port, relay);
 
     callback_state state(error, output);
