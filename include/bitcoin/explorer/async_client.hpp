@@ -57,7 +57,7 @@ public:
     /**
      * Get the value of the threadpool.
      */
-    BCX_API virtual threadpool& get_threadpool();
+    BCX_API virtual threadpool& pool();
 
     /**
      * Poll for changes until stopped.
