@@ -226,19 +226,24 @@ public:
             "The network to use, either 'mainnet' or 'testnet'. Defaults to match the build."
         )
         (
-            "general.retries",
-            value<primitives::byte>(&setting_.general.retries),
-            "Number of times to retry contacting a server or node before giving up."
+            "general.connect_timeout_seconds",
+            value<uint32_t>(&setting_.general.connect_timeout_seconds)->default_value(5),
+            "The time limit for connection establishment, defaults to 5."
         )
         (
-            "general.wait",
-            value<uint32_t>(&setting_.general.wait)->default_value(2000),
-            "Milliseconds to wait for a response from a server or node."
+            "general.channel_handshake_minutes",
+            value<uint32_t>(&setting_.general.channel_handshake_minutes)->default_value(1),
+            "The time limit to complete the connection handshake, defaults to 1."
+        )
+        (
+            "general.connect_retries",
+            value<primitives::byte>(&setting_.general.connect_retries),
+            "The number of times to retry contacting a server or node, defaults to 0."
         )
         (
             "general.hosts_file",
-            value<boost::filesystem::path>(&setting_.general.hosts_file)->default_value("hosts"),
-            "The path to the p2p hosts file, defaults to 'hosts'."
+            value<boost::filesystem::path>(&setting_.general.hosts_file)->default_value("hosts.cache"),
+            "The path to the p2p hosts file, defaults to 'hosts.cache'."
         )
         (
             "logging.debug_file",
@@ -340,35 +345,51 @@ public:
     }
 
     /**
-     * Get the value of the general.retries setting.
+     * Get the value of the general.connect_timeout_seconds setting.
      */
-    BCX_API virtual primitives::byte get_general_retries_setting() const
+    BCX_API virtual uint32_t get_general_connect_timeout_seconds_setting() const
     {
-        return setting_.general.retries;
+        return setting_.general.connect_timeout_seconds;
     }
 
     /**
-     * Set the value of the general.retries setting.
+     * Set the value of the general.connect_timeout_seconds setting.
      */
-    BCX_API virtual void set_general_retries_setting(primitives::byte value)
+    BCX_API virtual void set_general_connect_timeout_seconds_setting(uint32_t value)
     {
-        setting_.general.retries = value;
+        setting_.general.connect_timeout_seconds = value;
     }
 
     /**
-     * Get the value of the general.wait setting.
+     * Get the value of the general.channel_handshake_minutes setting.
      */
-    BCX_API virtual uint32_t get_general_wait_setting() const
+    BCX_API virtual uint32_t get_general_channel_handshake_minutes_setting() const
     {
-        return setting_.general.wait;
+        return setting_.general.channel_handshake_minutes;
     }
 
     /**
-     * Set the value of the general.wait setting.
+     * Set the value of the general.channel_handshake_minutes setting.
      */
-    BCX_API virtual void set_general_wait_setting(uint32_t value)
+    BCX_API virtual void set_general_channel_handshake_minutes_setting(uint32_t value)
     {
-        setting_.general.wait = value;
+        setting_.general.channel_handshake_minutes = value;
+    }
+
+    /**
+     * Get the value of the general.connect_retries setting.
+     */
+    BCX_API virtual primitives::byte get_general_connect_retries_setting() const
+    {
+        return setting_.general.connect_retries;
+    }
+
+    /**
+     * Set the value of the general.connect_retries setting.
+     */
+    BCX_API virtual void set_general_connect_retries_setting(primitives::byte value)
+    {
+        setting_.general.connect_retries = value;
     }
 
     /**
@@ -561,15 +582,17 @@ private:
         {
             general()
               : network(),
-                retries(),
-                wait(),
+                connect_timeout_seconds(),
+                channel_handshake_minutes(),
+                connect_retries(),
                 hosts_file()
             {
             }
 
             std::string network;
-            primitives::byte retries;
-            uint32_t wait;
+            uint32_t connect_timeout_seconds;
+            uint32_t channel_handshake_minutes;
+            primitives::byte connect_retries;
             boost::filesystem::path hosts_file;
         } general;
 

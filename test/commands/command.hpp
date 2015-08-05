@@ -56,7 +56,7 @@ using namespace bc::explorer::primitives;
 
 // Default network parameters.
 #define BX_NETWORK_RETRY 0
-#define BX_NETWORK_WAIT 3000
+#define BX_NETWORK_TIMEOUT 3
 #define BX_MAINNET_HOST "72.74.150.204"
 #define BX_MAINNET_PORT 8333
 //#define BX_TESTNET_HOST ""
@@ -75,8 +75,8 @@ using namespace bc::explorer::primitives;
 
 #define BX_DECLARE_NETWORK_COMMAND(extension) \
     BX_DECLARE_COMMAND(extension); \
-    command.set_general_retries_setting(BX_NETWORK_RETRY); \
-    command.set_general_wait_setting(BX_NETWORK_WAIT); \
+    command.set_general_connect_retries_setting(BX_NETWORK_RETRY); \
+    command.set_general_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT); \
     command.set_mainnet_url_setting({ BX_MAINNET_SERVER })
 
 // serializer results

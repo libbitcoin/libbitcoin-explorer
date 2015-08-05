@@ -40,12 +40,16 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     settings_list list;
 
     // [general]
-    list["general.network"] = 
+    list["general.channel_handshake_minutes"] =
+        serialize(get_general_channel_handshake_minutes_setting());
+    list["general.connect_retries"] =
+        serialize(get_general_connect_retries_setting());
+    list["general.connect_timeout_seconds"] = 
+        serialize(get_general_connect_timeout_seconds_setting());
+    list["general.hosts_file"] =
+        get_general_hosts_file_setting().string();
+    list["general.network"] =
         get_general_network_setting();
-    list["general.retries"] = 
-        serialize(get_general_retries_setting());
-    list["general.wait"] = 
-        serialize(get_general_wait_setting());
 
     // [logging]
     list["logging.debug_file"] = 

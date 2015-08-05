@@ -48,20 +48,6 @@ callback_state::callback_state(std::ostream& error, std::ostream& output)
 {
 }
 
-bool callback_state::handle_error(const std::error_code& code, 
-    const std::string& format)
-{
-    if (code)
-    {
-        // May want to change the behavior to decrement vs. zeroizing refs.
-        error(boost::format(format) % code.message());
-        stop(console_result::failure);
-        return false;
-    }
-
-    return true;
-}
-
 // std::endl adds "/n" and flushes the stream.
 void callback_state::error(const ptree tree)
 {
@@ -117,6 +103,20 @@ void callback_state::stop(console_result result)
 bool& callback_state::stopped()
 {
     return stopped_;
+}
+
+bool callback_state::succeeded(const std::error_code& code, 
+    const std::string& format)
+{
+    if (code)
+    {
+        // May want to change the behavior to decrement vs. zeroizing refs.
+        error(boost::format(format) % code.message());
+        stop(console_result::failure);
+        return false;
+    }
+
+    return true;
 }
 
 encoding_engine callback_state::get_engine()

@@ -69,7 +69,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 
     auto on_error = [&state](const std::error_code& error)
     {
-        state.handle_error(error);
+        state.succeeded(error);
     };
 
     client.get_codec()->fetch_last_height(on_error, on_done);

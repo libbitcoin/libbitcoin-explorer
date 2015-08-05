@@ -60,7 +60,7 @@ console_result fetch_public_key::invoke(std::ostream& output, std::ostream& erro
 
     //auto on_error = [&state](const std::error_code& error)
     //{
-    //    state.handle_error(error);
+    //    state.succeeded(error);
     //};
 
     //client.get_codec()->address_fetch_history(on_error, on_done, address);
