@@ -35,6 +35,7 @@ console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
 {
     const auto& secret = get_ec_private_key_argument();
     const auto& passphrase = get_passphrase_argument();
+    const bool& use_compression = get_compress_argument();
 
     if (!verify_private_key(secret))
     {
@@ -42,7 +43,8 @@ console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    const auto locked = bip38_lock_secret(secret, passphrase);
+    const auto locked = bip38_lock_secret(
+        secret, passphrase, use_compression);
     output << encode_base58(locked) << std::endl;
     return console_result::okay;
 }
