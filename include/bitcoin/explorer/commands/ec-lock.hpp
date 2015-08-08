@@ -132,7 +132,8 @@ public:
     {
         return get_argument_metadata()
             .add("EC_PRIVATE_KEY", 1)
-            .add("PASSPHRASE", 1);
+            .add("PASSPHRASE", 1)
+            .add("COMPRESS", 1);
     }
 
 	/**
@@ -176,6 +177,11 @@ public:
             "PASSPHRASE",
             value<std::string>(&argument_.passphrase)->required(),
             "The Unicode passphrase."
+        )
+        (
+            "COMPRESS",
+            value<primitives::byte>(&argument_.compress),
+            "Specify '1' if the key should be converted to a bitcoin address using the compressed public key format."
         );
 
         return options;
@@ -226,6 +232,23 @@ public:
         argument_.passphrase = value;
     }
 
+    /**
+     * Get the value of the COMPRESS argument.
+     */
+    BCX_API virtual primitives::byte& get_compress_argument()
+    {
+        return argument_.compress;
+    }
+
+    /**
+     * Set the value of the COMPRESS argument.
+     */
+    BCX_API virtual void set_compress_argument(
+        const primitives::byte& value)
+    {
+        argument_.compress = value;
+    }
+
 private:
 
     /**
@@ -237,12 +260,14 @@ private:
     {
         argument()
           : ec_private_key(),
-            passphrase()
+            passphrase(),
+            compress()
         {
         }
 
         primitives::ec_private ec_private_key;
         std::string passphrase;
+        primitives::byte compress;
     } argument_;
 
     /**
