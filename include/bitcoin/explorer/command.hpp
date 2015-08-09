@@ -226,6 +226,11 @@ public:
             "The network to use, either 'mainnet' or 'testnet'. Defaults to match the build."
         )
         (
+            "general.connect_retries",
+            value<primitives::byte>(&setting_.general.connect_retries),
+            "The number of times to retry contacting a server or node, defaults to 0."
+        )
+        (
             "general.connect_timeout_seconds",
             value<uint32_t>(&setting_.general.connect_timeout_seconds)->default_value(5),
             "The time limit for connection establishment, defaults to 5."
@@ -234,11 +239,6 @@ public:
             "general.channel_handshake_minutes",
             value<uint32_t>(&setting_.general.channel_handshake_minutes)->default_value(1),
             "The time limit to complete the connection handshake, defaults to 1."
-        )
-        (
-            "general.connect_retries",
-            value<primitives::byte>(&setting_.general.connect_retries),
-            "The number of times to retry contacting a server or node, defaults to 0."
         )
         (
             "general.hosts_file",
@@ -345,6 +345,22 @@ public:
     }
 
     /**
+     * Get the value of the general.connect_retries setting.
+     */
+    BCX_API virtual primitives::byte get_general_connect_retries_setting() const
+    {
+        return setting_.general.connect_retries;
+    }
+
+    /**
+     * Set the value of the general.connect_retries setting.
+     */
+    BCX_API virtual void set_general_connect_retries_setting(primitives::byte value)
+    {
+        setting_.general.connect_retries = value;
+    }
+
+    /**
      * Get the value of the general.connect_timeout_seconds setting.
      */
     BCX_API virtual uint32_t get_general_connect_timeout_seconds_setting() const
@@ -374,22 +390,6 @@ public:
     BCX_API virtual void set_general_channel_handshake_minutes_setting(uint32_t value)
     {
         setting_.general.channel_handshake_minutes = value;
-    }
-
-    /**
-     * Get the value of the general.connect_retries setting.
-     */
-    BCX_API virtual primitives::byte get_general_connect_retries_setting() const
-    {
-        return setting_.general.connect_retries;
-    }
-
-    /**
-     * Set the value of the general.connect_retries setting.
-     */
-    BCX_API virtual void set_general_connect_retries_setting(primitives::byte value)
-    {
-        setting_.general.connect_retries = value;
     }
 
     /**
@@ -582,17 +582,17 @@ private:
         {
             general()
               : network(),
+                connect_retries(),
                 connect_timeout_seconds(),
                 channel_handshake_minutes(),
-                connect_retries(),
                 hosts_file()
             {
             }
 
             std::string network;
+            primitives::byte connect_retries;
             uint32_t connect_timeout_seconds;
             uint32_t channel_handshake_minutes;
-            primitives::byte connect_retries;
             boost::filesystem::path hosts_file;
         } general;
 
