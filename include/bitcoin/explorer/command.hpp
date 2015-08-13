@@ -243,17 +243,17 @@ public:
         (
             "general.hosts_file",
             value<boost::filesystem::path>(&setting_.general.hosts_file)->default_value("hosts.cache"),
-            "The path to the p2p hosts file, defaults to 'hosts.cache'."
+            "The peer hosts cache file path, defaults to 'hosts.cache'."
         )
         (
             "logging.debug_file",
             value<boost::filesystem::path>(&setting_.logging.debug_file)->default_value("debug.log"),
-            "The path to the p2p debug log file, defaults to 'debug.log'."
+            "The debug log file path, defaults to 'debug.log'."
         )
         (
             "logging.error_file",
             value<boost::filesystem::path>(&setting_.logging.error_file)->default_value("error.log"),
-            "The path to the p2p error log file, defaults to 'error.log'."
+            "The error log file path, defaults to 'error.log'."
         )
         (
             "mainnet.url",
