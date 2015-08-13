@@ -78,7 +78,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     async_client client(threads);
     network::hosts hosts(client.pool(), host_pool_size);
     network::handshake shake(client.pool());
-    network::network net(client.pool(), timeouts);
+    network::peer net(client.pool(), timeouts);
     network::protocol proto(client.pool(), hosts, shake, net, listen);
 
     callback_state state(error, output);
