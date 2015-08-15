@@ -57,7 +57,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const auto& error_file = get_logging_error_file_setting();
     const auto retries = get_general_connect_retries_setting();
     const auto connect = get_general_connect_timeout_seconds_setting();
-    const auto handshake = get_general_channel_handshake_minutes_setting();
+    const auto handshake = get_general_channel_handshake_seconds_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();
