@@ -40,8 +40,8 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     settings_list list;
 
     // [general]
-    list["general.channel_handshake_minutes"] =
-        serialize(get_general_channel_handshake_minutes_setting());
+    list["general.channel_handshake_seconds"] =
+        serialize(get_general_channel_handshake_seconds_setting());
     list["general.connect_retries"] =
         serialize(get_general_connect_retries_setting());
     list["general.connect_timeout_seconds"] = 

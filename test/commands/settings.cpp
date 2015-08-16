@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "{\n" \
 "    general\n" \
 "    {\n" \
-"        channel_handshake_minutes 0\n" \
+"        channel_handshake_seconds 0\n" \
 "        connect_retries 0\n" \
 "        connect_timeout_seconds 0\n" \
 "        hosts_file \"\"\n" \
@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "{\n" \
 "    general\n" \
 "    {\n" \
-"        channel_handshake_minutes 9\n" \
+"        channel_handshake_seconds 9\n" \
 "        connect_retries 42\n" \
 "        connect_timeout_seconds 7\n" \
 "        hosts_file my.hosts\n" \
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
 BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
 {
     BX_DECLARE_COMMAND(settings);
-    command.set_general_channel_handshake_minutes_setting(9);
+    command.set_general_channel_handshake_seconds_setting(9);
     command.set_general_connect_retries_setting(42);
     command.set_general_connect_timeout_seconds_setting(7);
     command.set_general_network_setting("testnet");
