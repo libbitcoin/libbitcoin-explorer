@@ -99,7 +99,10 @@
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ec-lock.cpp">
-      <Filter>src\tests\commands\stub</Filter>
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\ec-lock-verify.cpp">
+      <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ec-multiply.cpp">
       <Filter>src\tests\commands</Filter>
@@ -120,7 +123,7 @@
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ec-unlock.cpp">
-      <Filter>src\tests\commands\stub</Filter>
+      <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp">
       <Filter>src\tests\commands\network</Filter>
