@@ -36,6 +36,7 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::network;
 using boost::format;
 
 static void handle_signal(int)
@@ -57,7 +58,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const auto& error_file = get_logging_error_file_setting();
     const auto retries = get_general_connect_retries_setting();
     const auto connect = get_general_connect_timeout_seconds_setting();
-    const auto handshake = get_general_channel_handshake_seconds_setting();
+    const auto negotiate = get_general_channel_handshake_seconds_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();
@@ -73,13 +74,13 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     static constexpr size_t threads = 2;
     static constexpr uint16_t listen = 0;
     static constexpr size_t host_pool_size = 0;
-    const network::timeout timeouts(connect, handshake);
+    const timeout timeouts(connect, negotiate);
 
     async_client client(threads);
-    network::hosts hosts(client.pool(), host_pool_size);
-    network::handshake shake(client.pool());
-    network::peer net(client.pool(), timeouts);
-    network::protocol proto(client.pool(), hosts, shake, net, listen);
+    hosts hosts(client.pool(), host_pool_size);
+    handshake shake(client.pool());
+    peer_to_peer net(client.pool(), timeouts);
+    protocol proto(client.pool(), hosts, shake, net, listen);
 
     callback_state state(error, output);
 
@@ -92,7 +93,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     };
 
     const auto handle_connect = [&state, &transaction, &handle_send](
-        const std::error_code& code, network::channel_ptr node)
+        const std::error_code& code, channel_ptr node)
     {
         if (state.succeeded(code))
             node->send(transaction, handle_send);
