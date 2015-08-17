@@ -67,6 +67,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/ec-add.cpp \
     src/commands/ec-lock-verify.cpp \
     src/commands/ec-lock.cpp \
+    src/commands/ec-lock-verify.cpp \
     src/commands/ec-multiply-secrets.cpp \
     src/commands/ec-multiply.cpp \
     src/commands/ec-new.cpp \
