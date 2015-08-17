@@ -147,6 +147,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-lock.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-lock-verify.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-multiply.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-multiply-secrets.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-new.hpp" />
@@ -289,6 +290,7 @@
     <ClCompile Include="..\..\..\..\src\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-lock.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\ec-lock-verify.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-multiply-secrets.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-new.cpp" />

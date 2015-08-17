@@ -144,6 +144,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_lock__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ec_lock::symbol(), "ec-lock");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_lock_verify__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ec_lock_verify::symbol(), "ec-lock-verify");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(ec_multiply::symbol(), "ec-multiply");
