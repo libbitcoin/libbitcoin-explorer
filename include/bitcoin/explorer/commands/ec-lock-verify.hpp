@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_EC_LOCK_HPP
-#define BX_EC_LOCK_HPP
+#ifndef BX_EC_LOCK_VERIFY_HPP
+#define BX_EC_LOCK_VERIFY_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -72,23 +72,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_LOCK_PRIVKEY_LENGTH_INVALID \
-    "The specified private key is invalid."
-#define BX_EC_LOCK_MODE_INCORRECT \
-    "Either passphrase or intermediate mode can be specified, but not both."
-#define BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID \
-    "The specified intermediate is invalid."
-#define BX_EC_LOCK_INTERMEDIATE_MORE_REQUIRED \
-    "When using an intermediate, both an intermediate and the seed are required."
-#define BX_EC_LOCK_SEED_NOT_REQUIRED \
-    "The specified seed is not required when using a passphrase."
-#define BX_EC_LOCK_SEED_LENGTH_INVALID \
-    "The seed is required to be 24 bytes in length."
+#define BX_EC_LOCK_VERIFY_INVALID \
+    "This Bitcoin address does NOT depend on this passphrase."
 
 /**
- * Class to implement the ec-lock command.
+ * Class to implement the ec-lock-verify command.
  */
-class ec_lock 
+class ec_lock_verify 
     : public command
 {
 public:
@@ -98,23 +88,16 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "ec-lock";
+        return "ec-lock-verify";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    BCX_API static const char* formerly()
-    {
-        return "brainwallet";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     BCX_API virtual const char* name()
     {
-        return ec_lock::symbol();
+        return ec_lock_verify::symbol();
     }
 
     /**
@@ -141,12 +124,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("EC_PRIVATE_KEY", 1)
             .add("passphrase", 1)
-            .add("intermediate", 1)
-            .add("seed", 1)
-            .add("compress", 1)
-            .add("confirm", 1);
+            .add("confirmation", 1);
     }
 
 	/**
@@ -158,7 +137,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input, raw);
+        load_input(get_confirmation_argument(), "confirmation", variables, input, raw);
     }
 
     /**
@@ -182,34 +161,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "EC_PRIVATE_KEY",
-            value<primitives::ec_private>(&argument_.ec_private_key),
-            "The Base16 EC private key."
-        )
-        (
             "passphrase",
-            value<std::string>(&argument_.passphrase),
+            value<std::string>(&argument_.passphrase)->required(),
             "The Unicode passphrase."
         )
         (
-            "intermediate",
-            value<primitives::base58>(&argument_.intermediate),
-            "The base58 checked Intermediate."
-        )
-        (
-            "seed",
-            value<primitives::base16>(&argument_.seed),
-            "24 bytes of random data used in the bip38 process (required if locking with an intermediate instead of a passphrase)."
-        )
-        (
-            "compress",
-            value<primitives::byte>(&argument_.compress),
-            "Specify '1' if the key should be converted to a bitcoin address using the compressed public key format."
-        )
-        (
-            "confirm",
-            value<primitives::byte>(&argument_.confirm),
-            "Specify '1' if the confirmation code generated when locking with an intermediate should be displayed"
+            "confirmation",
+            value<primitives::base58>(&argument_.confirmation)->required(),
+            "The base58 checked bip38 confirmation code."
         );
 
         return options;
@@ -225,23 +184,6 @@ public:
         std::ostream& cerr);
 
     /* Properties */
-
-    /**
-     * Get the value of the EC_PRIVATE_KEY argument.
-     */
-    BCX_API virtual primitives::ec_private& get_ec_private_key_argument()
-    {
-        return argument_.ec_private_key;
-    }
-
-    /**
-     * Set the value of the EC_PRIVATE_KEY argument.
-     */
-    BCX_API virtual void set_ec_private_key_argument(
-        const primitives::ec_private& value)
-    {
-        argument_.ec_private_key = value;
-    }
 
     /**
      * Get the value of the passphrase argument.
@@ -261,71 +203,20 @@ public:
     }
 
     /**
-     * Get the value of the intermediate argument.
+     * Get the value of the confirmation argument.
      */
-    BCX_API virtual primitives::base58& get_intermediate_argument()
+    BCX_API virtual primitives::base58& get_confirmation_argument()
     {
-        return argument_.intermediate;
+        return argument_.confirmation;
     }
 
     /**
-     * Set the value of the intermediate argument.
+     * Set the value of the confirmation argument.
      */
-    BCX_API virtual void set_intermediate_argument(
+    BCX_API virtual void set_confirmation_argument(
         const primitives::base58& value)
     {
-        argument_.intermediate = value;
-    }
-
-    /**
-     * Get the value of the seed argument.
-     */
-    BCX_API virtual primitives::base16& get_seed_argument()
-    {
-        return argument_.seed;
-    }
-
-    /**
-     * Set the value of the seed argument.
-     */
-    BCX_API virtual void set_seed_argument(
-        const primitives::base16& value)
-    {
-        argument_.seed = value;
-    }
-
-    /**
-     * Get the value of the compress argument.
-     */
-    BCX_API virtual primitives::byte& get_compress_argument()
-    {
-        return argument_.compress;
-    }
-
-    /**
-     * Set the value of the compress argument.
-     */
-    BCX_API virtual void set_compress_argument(
-        const primitives::byte& value)
-    {
-        argument_.compress = value;
-    }
-
-    /**
-     * Get the value of the confirm argument.
-     */
-    BCX_API virtual primitives::byte& get_confirm_argument()
-    {
-        return argument_.confirm;
-    }
-
-    /**
-     * Set the value of the confirm argument.
-     */
-    BCX_API virtual void set_confirm_argument(
-        const primitives::byte& value)
-    {
-        argument_.confirm = value;
+        argument_.confirmation = value;
     }
 
 private:
@@ -338,21 +229,13 @@ private:
     struct argument
     {
         argument()
-          : ec_private_key(),
-            passphrase(),
-            intermediate(),
-            seed(),
-            compress(),
-            confirm()
+          : passphrase(),
+            confirmation()
         {
         }
 
-        primitives::ec_private ec_private_key;
         std::string passphrase;
-        primitives::base58 intermediate;
-        primitives::base16 seed;
-        primitives::byte compress;
-        primitives::byte confirm;
+        primitives::base58 confirmation;
     } argument_;
 
     /**

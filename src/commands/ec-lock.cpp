@@ -21,56 +21,88 @@
 #include <bitcoin/explorer/commands/ec-lock.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
 
+using namespace bc;
+using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
 {
-    // Bound parameters.
-    //const auto& secret = get_ec_private_key_argument();
-    //const auto& passphrase = get_passphrase_argument();
+    const auto& secret = get_ec_private_key_argument();
+    const auto& passphrase = get_passphrase_argument();
+    const auto& intermediate = get_intermediate_argument();
+    const auto& seed = get_seed_argument();
+    const auto& show_confirm = get_confirm_argument();
+    const bool& use_compression = get_compress_argument();
 
-    // TODO: implement BIP38
+    constexpr auto bip38_intermediate_required_length = 53;
+    constexpr auto bip38_seed_required_length = 24;
 
-    error << BX_EC_LOCK_NOT_IMPLEMENTED << std::endl;
-    return console_result::failure;
+    if (!verify_private_key(secret))
+    {
+        error << BX_EC_LOCK_PRIVKEY_LENGTH_INVALID << std::endl;
+        return console_result::failure;
+    }
+
+    data_chunk _seed = seed;
+    data_chunk _intermediate = intermediate;
+
+    if (passphrase.size() && (_intermediate.size() || _seed.size()))
+    {
+        error << BX_EC_LOCK_MODE_INCORRECT << std::endl;
+        return console_result::failure;
+    }
+
+    if (passphrase.size() && _intermediate.size())
+    {
+        error << BX_EC_LOCK_MODE_INCORRECT << std::endl;
+        return console_result::failure;
+    }
+
+    if (passphrase.size() && _seed.size())
+    {
+        error << BX_EC_LOCK_SEED_NOT_REQUIRED << std::endl;
+        return console_result::failure;
+    }
+
+    if (_intermediate.size() &&
+       (_intermediate.size() != bip38_intermediate_required_length))
+    {
+        error << "intermediate size is " << _intermediate.size() << std::endl;
+        error << BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID << std::endl;
+        return console_result::failure;
+    }
+
+    if (_intermediate.size() &&
+        !(_seed.size() == bip38_seed_required_length))
+    {
+        error << "seed size is " << _seed.size() << std::endl;
+        error << BX_EC_LOCK_SEED_LENGTH_INVALID << std::endl;
+        return console_result::failure;
+    }
+
+    if (_intermediate.size() && _seed.size() &&
+        (passphrase.size() == 0))
+    {
+        data_chunk confirmation;
+        const auto locked = bip38_lock_intermediate(
+            intermediate, seed, confirmation, use_compression);
+        output << encode_base58(locked) << std::endl;
+
+        if (show_confirm)
+            output << encode_base58(confirmation) << std::endl;
+    }
+    else
+    {
+        const auto locked = bip38_lock_secret(
+            secret, passphrase, use_compression);
+        output << encode_base58(locked) << std::endl;
+    }
+    return console_result::okay;
 }
 
-//#!/usr/bin/python
-//import  sys, subprocess, hashlib
-//PIPE = subprocess.PIPE
-//
-//def runcmd(args,inp=''):
-//    p = subprocess.Popen(args, stdout=PIPE, stdin=PIPE, stderr=PIPE)
-//    return p.communicate(input=inp)[0]
-//
-//args, opts = [], {}
-//i = 1
-//while i < len(sys.argv):
-//    if sys.argv[i][0:2] == '--':
-//        opts[sys.argv[i][2:]] = sys.argv[i+1]
-//        i += 2
-//    else:
-//        args.append(sys.argv[i])
-//        i += 1
-//
-//if len(args) == 0: seed = ''
-//elif len(args) == 1: seed = args[0]
-//else: seed = args[0] + ':' + args[1]
-//
-//def bitcoin256(x): return hashlib.bitcoin256(x).base16digest()
-//
-//def slowsha(x,rounds=1000):
-//    old, new = x, ''
-//    for i in range(rounds):
-//        new = hashlib.bitcoin256(old).digest()
-//        old = new+x
-//    return new.encode('base16')
-//
-//if opts.get('algo','') == 'slowsha': algo = slowsha
-//elif opts.get('rounds',None): algo = lambda x: slowsha(x,int(opts['rounds']))
-//else: algo = bitcoin256
-//
-//print runcmd(['sx','base58check-encode',algo(seed),'128']).strip()

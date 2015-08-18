@@ -72,8 +72,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_UNLOCK_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_EC_UNLOCK_FAILURE \
+    "The specified input and passphrase combination is invalid."
 
 /**
  * Class to implement the ec-unlock command.
@@ -124,6 +124,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
+            .add("SECRET", 1)
             .add("PASSPHRASE", 1);
     }
 
@@ -135,6 +136,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_secret_argument(), "SECRET", variables, input, raw);
     }
 
     /**
@@ -158,9 +161,14 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "SECRET",
+            value<primitives::base58>(&argument_.secret),
+            "The BIP38 Base58Check value to unlock. If not specified the value is read from STDIN."
+        )
+        (
             "PASSPHRASE",
             value<std::string>(&argument_.passphrase)->required(),
-            "The passphrase."
+            "The Unicode passphrase."
         );
 
         return options;
@@ -176,6 +184,23 @@ public:
         std::ostream& cerr);
 
     /* Properties */
+
+    /**
+     * Get the value of the SECRET argument.
+     */
+    BCX_API virtual primitives::base58& get_secret_argument()
+    {
+        return argument_.secret;
+    }
+
+    /**
+     * Set the value of the SECRET argument.
+     */
+    BCX_API virtual void set_secret_argument(
+        const primitives::base58& value)
+    {
+        argument_.secret = value;
+    }
 
     /**
      * Get the value of the PASSPHRASE argument.
@@ -204,10 +229,12 @@ private:
     struct argument
     {
         argument()
-          : passphrase()
+          : secret(),
+            passphrase()
         {
         }
 
+        primitives::base58 secret;
         std::string passphrase;
     } argument_;
 

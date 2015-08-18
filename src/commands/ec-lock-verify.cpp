@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/ec-unlock.hpp>
+#include <bitcoin/explorer/commands/ec-lock.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
@@ -31,20 +31,22 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
+console_result ec_lock_verify::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto& secret = get_secret_argument();
     const auto& passphrase = get_passphrase_argument();
+    const auto& confirmation = get_confirmation_argument();
 
-    const auto unlocked = bip38_unlock_secret(
-        base58(secret), passphrase);
+    std::string address;
 
-    if (!verify_private_key(unlocked))
-    {
-        error << BX_EC_UNLOCK_FAILURE << std::endl;
-        return console_result::failure;
-    }
+    const auto confirmed = bip38_lock_verify(
+        base58(confirmation), passphrase, address);
 
-    output << encode_base16(unlocked) << std::endl;
+    if (confirmed)
+        output << "It is confirmed that " << address
+            << " depends on this passphrase." << std::endl;
+    else
+        output << BX_EC_LOCK_VERIFY_INVALID << std::endl;
+
     return console_result::okay;
 }
+

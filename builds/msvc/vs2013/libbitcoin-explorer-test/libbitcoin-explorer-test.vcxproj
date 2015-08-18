@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\..\..\test\commands\ec-add.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-lock.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\ec-lock-verify.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-multiply-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-new.cpp" />
