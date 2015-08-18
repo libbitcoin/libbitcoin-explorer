@@ -23,7 +23,7 @@
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(stub)
+BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_lock__invoke)
 
 BOOST_AUTO_TEST_CASE(ec_lock__invoke__always__failure_error)
