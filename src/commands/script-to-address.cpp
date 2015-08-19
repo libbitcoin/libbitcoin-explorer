@@ -39,7 +39,7 @@ console_result script_to_address::invoke(std::ostream& output, std::ostream& err
     // We use zero as a sentinel as it is invalid as any coin's p2sh version.
     uint8_t address_version = version;
     if (version == 0)
-        address_version = wallet::payment_address::script_version;
+        address_version = bc::wallet::payment_address::script_version;
         
     // Make ripemd hash of serialized script.
     const auto serialized_script = script.to_data();
