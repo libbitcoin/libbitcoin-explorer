@@ -1,3 +1,4 @@
+
 /**
  * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
  *
@@ -29,7 +30,7 @@ BOOST_AUTO_TEST_CASE(ec_lock__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(ec_lock);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_LOCK_NOT_IMPLEMENTED "\n");
+    BX_REQUIRE_ERROR(BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(ec_unlock__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(ec_unlock);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_UNLOCK_NOT_IMPLEMENTED "\n");
+    BX_REQUIRE_ERROR(BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED "\n" BX_EC_UNLOCK_FAILURE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
