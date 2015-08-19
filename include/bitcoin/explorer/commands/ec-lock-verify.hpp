@@ -74,6 +74,8 @@ namespace commands {
  */
 #define BX_EC_LOCK_VERIFY_INVALID \
     "This Bitcoin address does NOT depend on this passphrase."
+#define BX_EC_LOCK_VERIFY_USING_PASSPHRASE_UNSUPPORTED \
+    "The passphrase option requires an ICU build."
 
 /**
  * Class to implement the ec-lock-verify command.

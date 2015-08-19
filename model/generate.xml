@@ -170,7 +170,6 @@
     <define name="BX_CERT_PUBLIC_SAVE_FAIL" value="Failed to save certificate file: %1%." />
   </command>
 
-  <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
   <command symbol="ec-lock" formerly="brainwallet" typeX="ec_private" category="WALLET" description="Make a passphrase-protected EC private key (BIP38) from an EC private key.">
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key." />
     <argument name="passphrase" required="false" default="" description="The Unicode passphrase." />
@@ -184,12 +183,14 @@
     <define name="BX_EC_LOCK_INTERMEDIATE_MORE_REQUIRED" value="When using an intermediate, both an intermediate and the seed are required." />
     <define name="BX_EC_LOCK_SEED_NOT_REQUIRED" value="The specified seed is not required when using a passphrase." />
     <define name="BX_EC_LOCK_SEED_LENGTH_INVALID" value="The seed is required to be 24 bytes in length." />
+    <define name="BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
   </command>
 
   <command symbol="ec-lock-verify" category="WALLET" description="Make a passphrase-protected EC private key (BIP38) from an EC private key.">
     <argument name="passphrase" required="true" default="" description="The Unicode passphrase." />
     <argument name="confirmation" stdin="true" required="true" type="base58" default="" description="The base58 checked bip38 confirmation code." />
     <define name="BX_EC_LOCK_VERIFY_INVALID" value="This Bitcoin address does NOT depend on this passphrase." />
+    <define name="BX_EC_LOCK_VERIFY_USING_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
   </command>
    
   <command symbol="ec-add" output="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">
@@ -235,11 +236,11 @@
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key to convert. If not specified the key is read from STDIN."/>
   </command>
   
-  <!-- TODO: ensure proper handling of Unicode PASSPHRASE. -->
   <command symbol="ec-unlock" typeX="ec_private" category="WALLET" description="Extract the EC private key from a passphrase-protected (BIP38) EC private key.">
     <argument name="SECRET" stdin="true" type="base58" description="The BIP38 Base58Check value to unlock. If not specified the value is read from STDIN." />
     <argument name="PASSPHRASE" required="true" description="The Unicode passphrase." />
     <define name="BX_EC_UNLOCK_FAILURE" value="The specified input and passphrase combination is invalid." />
+    <define name="BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
   </command>
   
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a Bitcoin address. Requires a Libbitcoin/Obelisk server connection.">

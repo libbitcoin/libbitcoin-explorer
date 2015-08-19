@@ -36,6 +36,7 @@ console_result ec_lock_verify::invoke(std::ostream& output, std::ostream& error)
     const auto& passphrase = get_passphrase_argument();
     const auto& confirmation = get_confirmation_argument();
 
+#ifdef WITH_ICU
     std::string address;
 
     const auto confirmed = bip38_lock_verify(
@@ -48,5 +49,9 @@ console_result ec_lock_verify::invoke(std::ostream& output, std::ostream& error)
         output << BX_EC_LOCK_VERIFY_INVALID << std::endl;
 
     return console_result::okay;
+#else
+    error << BX_EC_LOCK_VERIFY_USING_PASSPHRASE_UNSUPPORTED << std::endl;
+    return console_result::failure;
+#endif
 }
 

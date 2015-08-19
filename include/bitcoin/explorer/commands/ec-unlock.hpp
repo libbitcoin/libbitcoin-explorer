@@ -74,6 +74,8 @@ namespace commands {
  */
 #define BX_EC_UNLOCK_FAILURE \
     "The specified input and passphrase combination is invalid."
+#define BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED \
+    "The passphrase option requires an ICU build."
 
 /**
  * Class to implement the ec-unlock command.

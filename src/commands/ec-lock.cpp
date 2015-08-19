@@ -99,9 +99,14 @@ console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
     }
     else
     {
+#ifdef WITH_ICU
         const auto locked = bip38_lock_secret(
             secret, passphrase, use_compression);
         output << encode_base58(locked) << std::endl;
+#else
+        error << BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
+        return console_result::failure;
+#endif
     }
     return console_result::okay;
 }

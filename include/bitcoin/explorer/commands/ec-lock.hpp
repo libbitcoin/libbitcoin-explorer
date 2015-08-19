@@ -84,6 +84,8 @@ namespace commands {
     "The specified seed is not required when using a passphrase."
 #define BX_EC_LOCK_SEED_LENGTH_INVALID \
     "The seed is required to be 24 bytes in length."
+#define BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED \
+    "The passphrase option requires an ICU build."
 
 /**
  * Class to implement the ec-lock command.
