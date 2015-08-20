@@ -51,6 +51,5 @@ console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
 #else
     error << BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
 #endif
-    error << BX_EC_UNLOCK_FAILURE << std::endl;
     return console_result::failure;
 }

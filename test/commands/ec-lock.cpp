@@ -30,8 +30,113 @@ BOOST_AUTO_TEST_CASE(ec_lock__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(ec_lock);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
+#ifdef WITH_ICU
+    BX_REQUIRE_ERROR(BX_EC_LOCK_PRIVKEY_LENGTH_INVALID "\n");
+#else
     BX_REQUIRE_ERROR(BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED "\n");
+#endif
 }
+
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_passphrase_1_no_compress__okay_if_icu)
+{
+    BX_DECLARE_COMMAND(ec_lock);
+    command.set_ec_private_key_argument({ "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5" });
+    command.set_passphrase_argument({ "TestingOneTwoThree" });
+    command.set_compress_argument({ "0" });
+#ifdef WITH_ICU
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg\n");
+#else
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED "\n");
+#endif
+}
+
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_passphrase_2_no_compress__okay_if_icu)
+{
+    BX_DECLARE_COMMAND(ec_lock);
+    command.set_ec_private_key_argument({ "09c2686880095b1a4c249ee3ac4eea8a014f11e6f986d0b5025ac1f39afbd9ae" });
+    command.set_passphrase_argument({ "Satoshi" });
+    command.set_compress_argument({ "0" });
+#ifdef WITH_ICU
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PRNFFkZc2NZ6dJqFfhRoFNMR9Lnyj7dYGrzdgXXVMXcxoKTePPX1dWByq\n");
+#else
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED "\n");
+#endif
+}
+
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_passphrase_1_compress__okay_if_icu)
+{
+    BX_DECLARE_COMMAND(ec_lock);
+    command.set_ec_private_key_argument({ "cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5" });
+    command.set_passphrase_argument({ "TestingOneTwoThree" });
+    command.set_compress_argument({ "1" });
+#ifdef WITH_ICU
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo\n");
+#else
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED "\n");
+#endif
+}
+
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_passphrase_2_compress__okay_if_icu)
+{
+    BX_DECLARE_COMMAND(ec_lock);
+    command.set_ec_private_key_argument({ "09c2686880095b1a4c249ee3ac4eea8a014f11e6f986d0b5025ac1f39afbd9ae" });
+    command.set_passphrase_argument({ "Satoshi" });
+    command.set_compress_argument({ "1" });
+#ifdef WITH_ICU
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PYLtMnXvfG3oJde97zRyLYFZCYizPU5T3LwgdYJz1fRhh16bU7u6PPmY7\n");
+#else
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED "\n");
+#endif
+}
+
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_intermediate_1_no_compress__okay)
+{
+    BX_DECLARE_COMMAND(ec_lock);
+    command.set_intermediate_argument({ "passphraseo59BauW85etaRsKpbbTrEa5RRYw6bq5K9yrDf4r4N5fcirPdtDKmfJw9oYNoGM" });
+    command.set_seed_argument({ "d36d8e703d8bd5445044178f69087657fba73d9f3ff211f7" });
+    command.set_compress_argument({ "0" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PfPAw5HErFdzMyBvGMwSfSWjKmzgm3jDg7RxQyVCSSBJFZLAZ6hVupmpn\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_intermediate_2_no_compress__okay)
+{
+    BX_DECLARE_COMMAND(ec_lock);
+    command.set_intermediate_argument({ "passphraseouGLY8yjTZQ5Q2bTo8rtKfdbHz4tme7QuPheRgES8KnT6pX5yxFauYhv3SVPDD" });
+    command.set_seed_argument({ "bbeac8b9bb39381520b6873553544b387bcaa19112602230" });
+    command.set_compress_argument({ "0" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PfU2yS6DUHjgH8wmsJRT1rHWXRofmDV5UJ3dypocew56BDcw5TQJXFYfm\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_intermediate_3_no_compress__okay)
+{
+    BX_DECLARE_COMMAND(ec_lock);
+    command.set_intermediate_argument({ "passphraseo59BauW85etaRsKpbbTrEa5RRYw6bq5K9yrDf4r4N5fcirPdtDKmfJw9oYNoGM" });
+    command.set_seed_argument({ "d36d8e703d8bd5445044178f69087657fba73d9f3ff211f7" });
+    command.set_compress_argument({ "0" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PfPAw5HErFdzMyBvGMwSfSWjKmzgm3jDg7RxQyVCSSBJFZLAZ6hVupmpn\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_intermediate_4_no_compress__okay)
+{
+    BX_DECLARE_COMMAND(ec_lock);
+    command.set_intermediate_argument({ "passphraseouGLY8yjTZQ5Q2bTo8rtKfdbHz4tme7QuPheRgES8KnT6pX5yxFauYhv3SVPDD" });
+    command.set_seed_argument({ "bbeac8b9bb39381520b6873553544b387bcaa19112602230" });
+    command.set_compress_argument({ "0" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PfU2yS6DUHjgH8wmsJRT1rHWXRofmDV5UJ3dypocew56BDcw5TQJXFYfm\n");
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

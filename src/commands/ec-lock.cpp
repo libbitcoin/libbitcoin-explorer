@@ -43,10 +43,10 @@ console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
     data_chunk _seed = seed;
     data_chunk _intermediate = intermediate;
 
-#ifdef WITH_ICU
     constexpr auto bip38_intermediate_required_length = 53;
     constexpr auto bip38_seed_required_length = 24;
 
+#ifdef WITH_ICU
     if (!verify_private_key(secret))
     {
         error << BX_EC_LOCK_PRIVKEY_LENGTH_INVALID << std::endl;
@@ -74,7 +74,6 @@ console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
     if (_intermediate.size() &&
        (_intermediate.size() != bip38_intermediate_required_length))
     {
-        error << "intermediate size is " << _intermediate.size() << std::endl;
         error << BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID << std::endl;
         return console_result::failure;
     }
@@ -82,7 +81,6 @@ console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
     if (_intermediate.size() &&
         !(_seed.size() == bip38_seed_required_length))
     {
-        error << "seed size is " << _seed.size() << std::endl;
         error << BX_EC_LOCK_SEED_LENGTH_INVALID << std::endl;
         return console_result::failure;
     }
@@ -105,9 +103,10 @@ console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
         const auto locked = bip38_lock_secret(
             secret, passphrase, use_compression);
         output << encode_base58(locked) << std::endl;
-#endif
+#else
         error << BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
         return console_result::failure;
+#endif
     }
     return console_result::okay;
 }
