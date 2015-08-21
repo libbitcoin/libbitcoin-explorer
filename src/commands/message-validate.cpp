@@ -36,7 +36,7 @@ console_result message_validate::invoke(std::ostream& output,
     const auto& sign = get_signature_argument();
     const auto& message = get_message_argument();
 
-    if (!verify_message(message, address, sign))
+    if (!bc::wallet::verify_message(message, address, sign))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;

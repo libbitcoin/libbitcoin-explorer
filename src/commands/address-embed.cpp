@@ -46,7 +46,7 @@ console_result address_embed::invoke(std::ostream& output, std::ostream& error)
     const script embeded_script(split(tokens.str()));
 
     // Make ripemd hash of serialized script.
-    const auto serialized_script = save_script(embeded_script);
+    const data_chunk serialized_script = embeded_script.to_data();
     const auto ripemd160 = ripemd160_hash(serialized_script);
 
     // RECOMPILE REQUIRED FOR TESTNET

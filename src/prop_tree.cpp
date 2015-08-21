@@ -57,11 +57,11 @@ namespace primitives {
 
 ptree prop_list(const header& header)
 {
-    const block_header_type& block_header = header;
+    const chain::block_header& block_header = header;
 
     ptree tree;
     tree.put("bits", block_header.bits);
-    tree.put("hash", btc256(hash_block_header(block_header)));
+    tree.put("hash", btc256(block_header.hash()));
     tree.put("merkle_tree_hash", btc256(block_header.merkle));
     tree.put("nonce", block_header.nonce);
     tree.put("previous_block_hash", btc256(block_header.previous_block_hash));
@@ -127,7 +127,7 @@ ptree prop_tree(const std::vector<history_row>& rows)
 // balance
 
 ptree prop_list(const std::vector<balance_row>& rows,
-    const payment_address& balance_address)
+    const wallet::payment_address& balance_address)
 {
     ptree tree;
     uint64_t total_recieved = 0;
@@ -154,7 +154,7 @@ ptree prop_list(const std::vector<balance_row>& rows,
     return tree;
 }
 ptree prop_tree(const std::vector<balance_row>& rows,
-    const payment_address& balance_address)
+    const wallet::payment_address& balance_address)
 {
     ptree tree;
     tree.add_child("balance", prop_list(rows, balance_address));
@@ -166,7 +166,7 @@ ptree prop_tree(const std::vector<balance_row>& rows,
 ptree prop_list(const tx_input_type& tx_input)
 {
     ptree tree;
-    payment_address script_address;
+    wallet::payment_address script_address;
     if (extract(script_address, tx_input.script))
         tree.put("address", address(script_address));
 
@@ -214,7 +214,7 @@ ptree prop_tree(const std::vector<input>& inputs)
 ptree prop_list(const tx_output_type& tx_output)
 {
     ptree tree;
-    payment_address output_address;
+    wallet::payment_address output_address;
     if (extract(output_address, tx_output.script))
         tree.put("address", address(output_address));
 
@@ -222,8 +222,8 @@ ptree prop_list(const tx_output_type& tx_output)
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
-    stealth_info stealth;
-    if (extract_stealth_info(stealth, tx_output.script))
+    wallet::stealth_info stealth;
+    if (wallet::extract_stealth_info(stealth, tx_output.script))
     {
         tree.put("stealth.bit_field", stealth.bitfield);
         tree.put("stealth.ephemeral_public_key_hash",
@@ -276,7 +276,7 @@ ptree prop_list(const transaction& transaction)
     const tx_type& tx = transaction;
 
     ptree tree;
-    tree.put("hash", btc256(hash_transaction(tx)));
+    tree.put("hash", btc256(tx.hash()));
     tree.add_child("inputs", prop_tree_list("input", tx.inputs));
     tree.put("lock_time", tx.locktime);
     tree.add_child("outputs", prop_tree_list("output", tx.outputs));
@@ -336,7 +336,7 @@ ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
 // watch_address
 
 ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address)
+    const wallet::payment_address& address)
 {
     ptree tree;
     tree.add("block", btc256(block_hash));
@@ -345,7 +345,7 @@ ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
     return tree;
 }
 ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address)
+    const wallet::payment_address& address)
 {
     ptree tree;
     tree.add_child("watch_address", prop_list(tx, block_hash, address));
@@ -362,7 +362,7 @@ ptree prop_list(const stealth& stealth_address)
     // So instead we emit the reused key as one of the spend keys.
     // This means that it is typical to see the same key in scan and spend.
 
-    const bc::stealth_address& address = stealth_address;
+    const wallet::stealth_address& address = stealth_address;
     auto spend_keys = cast<ec_point, ec_public>(address.get_spend_pubkeys());
     auto spend_keys_prop_values = prop_value_list("public_key", spend_keys);
 
@@ -438,7 +438,7 @@ ptree prop_tree(const settings_list& settings)
 
 // uri
 
-ptree prop_tree(const uri_parse_result& uri)
+ptree prop_tree(const wallet::uri_parse_result& uri)
 {
     ptree uri_props;
 

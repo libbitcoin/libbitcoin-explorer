@@ -37,40 +37,44 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-static script_type build_pubkey_hash_script(const short_hash& pubkey_hash)
+static chain::script build_pubkey_hash_script(const short_hash& pubkey_hash)
 {
     data_chunk hash(pubkey_hash.begin(), pubkey_hash.end());
 
-    script_type script;
-    script.push_operation({ opcode::dup, data_chunk() });
-    script.push_operation({ opcode::hash160, data_chunk() });
-    script.push_operation({ opcode::special, hash });
-    script.push_operation({ opcode::equalverify, data_chunk() });
-    script.push_operation({ opcode::checksig, data_chunk() });
-    return script;
+    chain::operation::stack ops = {
+        chain::operation{ chain::opcode::dup, data_chunk() },
+        chain::operation{ chain::opcode::hash160, data_chunk() },
+        chain::operation{ chain::opcode::special, hash },
+        chain::operation{ chain::opcode::equalverify, data_chunk() },
+        chain::operation{ chain::opcode::checksig, data_chunk() }
+    };
+
+    return chain::script{ ops };
 }
 
-static script_type build_script_hash_script(const short_hash& script_hash)
+static chain::script build_script_hash_script(const short_hash& script_hash)
 {
     data_chunk hash(script_hash.begin(), script_hash.end());
 
-    script_type script;
-    script.push_operation({ opcode::hash160, data_chunk() });
-    script.push_operation({ opcode::special, hash });
-    script.push_operation({ opcode::equal, data_chunk() });
-    return script;
+    chain::operation::stack ops = {
+        chain::operation{ chain::opcode::hash160, data_chunk() },
+        chain::operation{ chain::opcode::special, hash },
+        chain::operation{ chain::opcode::equal, data_chunk() }
+    };
+
+    return chain::script{ ops };
 }
 
-static bool build_output_script(script_type& script,
-    const payment_address& address)
+static bool build_output_script(chain::script& script,
+    const wallet::payment_address& address)
 {
     switch (address.version())
     {
-        case payment_address::pubkey_version:
+        case wallet::payment_address::pubkey_version:
             script = build_pubkey_hash_script(address.hash());
             return true;
 
-        case payment_address::script_version:
+        case wallet::payment_address::script_version:
             script = build_script_hash_script(address.hash());
             return true;
     }
@@ -81,8 +85,6 @@ static bool build_output_script(script_type& script,
 static tx_output_type build_stealth_meta_output(
     const ec_secret& ephemeral_secret)
 {
-    tx_output_type out;
-
     // NOTE: The version and fixed-length nonce both reduce privacy.
     constexpr uint8_t nonce = 0x00;
     constexpr uint8_t version = 0x06;
@@ -91,9 +93,13 @@ static tx_output_type build_stealth_meta_output(
     data_chunk stealth_metadata{ { version, nonce, nonce, nonce, nonce } };
     extend_data(stealth_metadata, ephemeral_pubkey);
 
-    out.value = 0;
-    out.script.push_operation({ opcode::return_, data_chunk() });
-    out.script.push_operation({ opcode::special, stealth_metadata });
+    chain::operation::stack ops = {
+        chain::operation{ chain::opcode::return_, data_chunk() },
+        chain::operation{ chain::opcode::special, stealth_metadata }
+    };
+
+    tx_output_type out{ 0, chain::script{ ops } };
+
     return out;
 }
 
@@ -123,8 +129,8 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
     tx_output_type output;
     deserialize(output.value, tokens[1], true);
 
-    payment_address pay_to_address;
-    if (pay_to_address.set_encoded(target))
+    wallet::payment_address pay_to_address;
+    if (pay_to_address.from_string(target))
     {
         if (!build_output_script(output.script, pay_to_address))
         {
@@ -133,12 +139,12 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
 
         result.push_back(output);
         outputs = result;
-        pay_address = pay_to_address.encoded();
+        pay_address = pay_to_address.to_string();
         return true;
     }
 
-    stealth_address stealth;
-    if (stealth.set_encoded(target))
+    wallet::stealth_address stealth;
+    if (stealth.from_string(target))
     {
         auto scan_pubkey = stealth.get_scan_pubkey();
         auto spend_pubkeys = stealth.get_spend_pubkeys();
@@ -158,16 +164,16 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
         }
 
         // We have already ensured there is exactly one spend key.
-        auto public_key = uncover_stealth(scan_pubkey, ephemeral_secret,
-            spend_pubkeys.front());
+        auto public_key = wallet::uncover_stealth(scan_pubkey,
+            ephemeral_secret, spend_pubkeys.front());
 
         // Add RETURN meta output.
         auto meta_output = build_stealth_meta_output(ephemeral_secret);
         result.push_back(meta_output);
 
         // Generate the address.
-        payment_address pay_to_address;
-        set_public_key(pay_to_address, public_key);
+        wallet::payment_address pay_to_address;
+        pay_to_address.set_public_key(public_key);
         if (!build_output_script(output.script, pay_to_address))
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
@@ -175,7 +181,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
 
         result.push_back(output);
         outputs = result;
-        pay_address = pay_to_address.encoded();
+        pay_address = pay_to_address.to_string();
         return true;
     }
 
@@ -184,7 +190,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
 
     result.push_back(output);
     outputs = result;
-    pay_address = pretty(output.script);
+    pay_address = output.script.to_string();
     return true;
 }
 

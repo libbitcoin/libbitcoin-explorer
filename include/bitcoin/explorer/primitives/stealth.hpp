@@ -55,7 +55,7 @@ public:
      * Initialization constructor.
      * @param[in]  address  The value to initialize with.
      */
-    BCX_API stealth(const stealth_address& address);
+    BCX_API stealth(const wallet::stealth_address& address);
 
     /**
      * Initialization constructor.
@@ -69,7 +69,8 @@ public:
      * @param[in]  testnet     The stealth address will be for testnet.
      */
     BCX_API stealth(const bc::binary_type& prefix, const ec_point& scan_key,
-        const pubkey_list& spend_keys, uint8_t signatures, bool testnet);
+        const wallet::pubkey_list& spend_keys, uint8_t signatures,
+        bool testnet);
 
     /**
      * Copy constructor.
@@ -87,7 +88,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const stealth_address&() const;
+    BCX_API operator const wallet::stealth_address&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -112,7 +113,7 @@ private:
     /**
      * The state of this object's data.
      */
-    stealth_address value_;
+    wallet::stealth_address value_;
 };
 
 } // namespace explorer

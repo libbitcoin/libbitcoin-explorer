@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_SUITE(wallet__invoke)
 
 BOOST_AUTO_TEST_CASE(wallet__invoke__always__failure_error)
 {
-    BX_DECLARE_COMMAND(wallet);
+    BX_DECLARE_COMMAND(bc::explorer::commands::wallet);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_WALLET_OBSOLETE "\n");
 }

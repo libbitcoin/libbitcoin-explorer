@@ -36,7 +36,7 @@ namespace explorer {
 namespace primitives {
 
 // point format is currently private to bx.
-static bool decode_point(output_point& point, const std::string& tuple)
+static bool decode_point(chain::output_point& point, const std::string& tuple)
 {
     const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
     if (tokens.size() != 2)
@@ -49,11 +49,12 @@ static bool decode_point(output_point& point, const std::string& tuple)
     // copy the input point values
     std::copy(txhash.begin(), txhash.end(), point.hash.begin());
     deserialize(point.index, tokens[1], true);
+
     return true;
 }
 
 // point format is currently private to bx.
-static std::string encode_point(const output_point& point)
+static std::string encode_point(const chain::output_point& point)
 {
     std::stringstream result;
     result << btc256(point.hash) << BX_TX_POINT_DELIMITER << point.index;
@@ -70,7 +71,7 @@ point::point(const std::string& tuple)
     std::stringstream(tuple) >> *this;
 }
 
-point::point(const output_point& value)
+point::point(const chain::output_point& value)
     : value_(value)
 {
 }
@@ -80,7 +81,7 @@ point::point(const point& other)
 {
 }
 
-point::operator const output_point&() const
+point::operator const chain::output_point&() const
 {
     return value_; 
 }

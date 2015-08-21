@@ -44,16 +44,16 @@ hd_key::hd_key(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-hd_key::hd_key(const hd_private_key& value)
+hd_key::hd_key(const wallet::hd_private_key& value)
 {
     // hd_public_key doesn't provide a copy constructor.
-    private_key_value_.set_encoded(value.encoded());
+    private_key_value_.from_string(value.to_string());
 }
 
-hd_key::hd_key(const hd_public_key& value)
+hd_key::hd_key(const wallet::hd_public_key& value)
 {
     // hd_public_key doesn't provide a copy constructor.
-    public_key_value_.set_encoded(value.encoded());
+    public_key_value_.from_string(value.to_string());
 }
 
 hd_key::hd_key(const hd_key& other)
@@ -62,20 +62,20 @@ hd_key::hd_key(const hd_key& other)
     private_key_value_ = other.private_key_value_;
 }
 
-const hd_public_key& hd_key::derived_public_key() const
+const wallet::hd_public_key& hd_key::derived_public_key() const
 {
     if (private_key_value_.valid())
-        return (hd_public_key&)private_key_value_;
+        return (wallet::hd_public_key&)private_key_value_;
     else
         return public_key_value_;
 }
 
-hd_key::operator const hd_private_key&() const
+hd_key::operator const wallet::hd_private_key&() const
 {
     return private_key_value_;
 }
 
-hd_key::operator const hd_public_key&() const
+hd_key::operator const wallet::hd_public_key&() const
 {
     return public_key_value_;
 }
@@ -86,10 +86,10 @@ std::istream& operator>>(std::istream& input, hd_key& argument)
     input >> base58;
 
     // First try to read as a private key.
-    if (!argument.private_key_value_.set_encoded(base58))
+    if (!argument.private_key_value_.from_string(base58))
     {
         // Otherwise try to read as a public key.
-        if (!argument.public_key_value_.set_encoded(base58))
+        if (!argument.public_key_value_.from_string(base58))
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(base58));
         }
@@ -101,10 +101,10 @@ std::istream& operator>>(std::istream& input, hd_key& argument)
 std::ostream& operator<<(std::ostream& output, const hd_key& argument)
 {
     const auto& public_key = argument.derived_public_key();
-    output << public_key.encoded();
+    output << public_key.to_string();
     return output;
 }
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin

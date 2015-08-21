@@ -42,10 +42,10 @@ hd_priv::hd_priv(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-hd_priv::hd_priv(const hd_private_key& value)
+hd_priv::hd_priv(const wallet::hd_private_key& value)
 {
     // hd_private_key doesn't provide a copy constructor.
-    value_.set_encoded(value.encoded());
+    value_.from_string(value.to_string());
 }
 
 hd_priv::hd_priv(const hd_priv& other)
@@ -53,7 +53,7 @@ hd_priv::hd_priv(const hd_priv& other)
 {
 }
 
-hd_priv::operator const hd_private_key&() const
+hd_priv::operator const wallet::hd_private_key&() const
 {
     return value_; 
 }
@@ -63,7 +63,7 @@ std::istream& operator>>(std::istream& input, hd_priv& argument)
     std::string base58;
     input >> base58;
 
-    if (!argument.value_.set_encoded(base58))
+    if (!argument.value_.from_string(base58))
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(base58));
     }
@@ -73,10 +73,10 @@ std::istream& operator>>(std::istream& input, hd_priv& argument)
 
 std::ostream& operator<<(std::ostream& output, const hd_priv& argument)
 {
-    output << argument.value_.encoded();
+    output << argument.value_.to_string();
     return output;
 }
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin

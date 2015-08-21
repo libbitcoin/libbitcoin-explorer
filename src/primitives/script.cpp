@@ -45,21 +45,15 @@ script::script(const std::string& mnemonic)
     std::stringstream(mnemonic) >> *this;
 }
 
-script::script(const script_type& value)
+script::script(const chain::script& value)
     : value_(value)
 {
 }
 
 script::script(const data_chunk& value)
 {
-    try
-    {
-        value_ = parse_script(value);
-    }
-    catch (end_of_stream)
-    {
-        value_ = raw_data_script(value);
-    }
+    value_.from_data(value, false,
+        chain::script::parse_mode::raw_data_fallback);
 }
 
 script::script(const std::vector<std::string>& tokens)
@@ -75,27 +69,27 @@ script::script(const script& other)
 
 const data_chunk script::to_data() const
 {
-    return save_script(value_);
+    return value_.to_data(false);
 }
 
 const std::string script::to_string() const
 {
-    return pretty(value_);
+    return value_.to_string();
 }
 
-script::operator const script_type&() const
+script::operator const chain::script&() const
 {
-    return value_; 
+    return value_;
 }
 
 std::istream& operator>>(std::istream& input, script& argument)
 {
     std::istreambuf_iterator<char> end;
     std::string mnemonic(std::istreambuf_iterator<char>(input), end);
-    argument.value_ = unpretty(mnemonic);
+    boost::trim(mnemonic);
 
     // Test for invalid result sentinel.
-    if (argument.value_.operations().size() == 0 && mnemonic.length() > 0)
+    if (!argument.value_.from_string(mnemonic) && mnemonic.length() > 0)
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(mnemonic));
     }
@@ -105,10 +99,10 @@ std::istream& operator>>(std::istream& input, script& argument)
 
 std::ostream& operator<<(std::ostream& output, const script& argument)
 {
-    output << pretty(argument.value_);
+    output << argument.value_.to_string();
     return output;
 }
 
-} // namespace explorer
 } // namespace primitives
+} // namespace explorer
 } // namespace libbitcoin

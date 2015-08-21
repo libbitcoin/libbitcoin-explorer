@@ -36,20 +36,20 @@ namespace explorer {
 namespace primitives {
 
 // message_signature format is currently private to bx.
-static bool decode_signature(message_signature& signature,
+static bool decode_signature(wallet::message_signature& signature,
     const std::string& encoded)
 {
     // There is no bc::decode_base64 array-based override.
     data_chunk decoded;
     if (!decode_base64(decoded, encoded) || 
-        (decoded.size() != message_signature_size))
+        (decoded.size() != wallet::message_signature_size))
         return false;
 
     std::copy(decoded.begin(), decoded.end(), signature.begin());
     return true;
 }
 
-static std::string encode_signature(const message_signature& signature)
+static std::string encode_signature(const wallet::message_signature& signature)
 {
     return encode_base64(signature);
 }
@@ -64,7 +64,7 @@ signature::signature(const std::string& hexcode)
     std::stringstream(hexcode) >> *this;
 }
 
-signature::signature(const message_signature& value)
+signature::signature(const wallet::message_signature& value)
     : value_(value)
 {
 }
@@ -74,7 +74,7 @@ signature::signature(const signature& other)
 {
 }
 
-signature::operator const message_signature&() const
+signature::operator const wallet::message_signature&() const
 {
     return value_;
 }
