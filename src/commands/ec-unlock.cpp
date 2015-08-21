@@ -36,6 +36,16 @@ console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
     const auto& secret = get_secret_argument();
     const auto& passphrase = get_passphrase_argument();
 
+    if (encode_base58(secret).size() == 0)
+    {
+#ifdef WITH_ICU
+        error << BX_EC_UNLOCK_FAILURE << std::endl;
+#else
+        error << BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
+#endif
+        return console_result::failure;
+    }
+
 #ifdef WITH_ICU
     const auto unlocked = bip38_unlock_secret(
         base58(secret), passphrase);
@@ -50,6 +60,6 @@ console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
     return console_result::okay;
 #else
     error << BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
-#endif
     return console_result::failure;
+#endif
 }

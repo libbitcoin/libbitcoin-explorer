@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE(ec_lock__invoke__always__failure_error)
     BX_DECLARE_COMMAND(ec_lock);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 #ifdef WITH_ICU
-    BX_REQUIRE_ERROR(BX_EC_LOCK_PRIVKEY_LENGTH_INVALID "\n");
+    BX_REQUIRE_ERROR(BX_EC_LOCK_MODE_INCORRECT "\n");
 #else
     BX_REQUIRE_ERROR(BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED "\n");
 #endif

@@ -75,7 +75,7 @@ namespace commands {
 #define BX_EC_LOCK_PRIVKEY_LENGTH_INVALID \
     "The specified private key is invalid."
 #define BX_EC_LOCK_MODE_INCORRECT \
-    "Either passphrase or intermediate mode can be specified, but not both."
+    "Either passphrase or intermediate must be specified, but not both."
 #define BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID \
     "The specified intermediate is invalid."
 #define BX_EC_LOCK_INTERMEDIATE_MORE_REQUIRED \
