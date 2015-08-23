@@ -20,6 +20,8 @@
 
 #include "command.hpp"
 
+#ifndef ENABLE_TESTNET
+
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(stub)
@@ -178,3 +180,5 @@ BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_6_ec_multiply__okay_if_icu)
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
+
+#endif // ENABLE_TESTNET

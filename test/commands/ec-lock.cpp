@@ -21,6 +21,8 @@
 
 #include "command.hpp"
 
+#ifndef ENABLE_TESTNET
+
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(stub)
@@ -140,3 +142,5 @@ BOOST_AUTO_TEST_CASE(ec_lock__invoke__lock_intermediate_4_no_compress__okay)
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
+
+#endif // ENABLE_TESTNET
