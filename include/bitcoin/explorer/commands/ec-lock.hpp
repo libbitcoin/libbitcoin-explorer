@@ -72,8 +72,20 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_LOCK_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_EC_LOCK_PRIVKEY_LENGTH_INVALID \
+    "The specified private key is invalid."
+#define BX_EC_LOCK_MODE_INCORRECT \
+    "Either passphrase or intermediate must be specified, but not both."
+#define BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID \
+    "The specified intermediate is invalid."
+#define BX_EC_LOCK_INTERMEDIATE_MORE_REQUIRED \
+    "When using an intermediate, both an intermediate and the seed are required."
+#define BX_EC_LOCK_SEED_NOT_REQUIRED \
+    "The specified seed is not required when using a passphrase."
+#define BX_EC_LOCK_SEED_LENGTH_INVALID \
+    "The seed is required to be 24 bytes in length."
+#define BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED \
+    "The passphrase option requires an ICU build."
 
 /**
  * Class to implement the ec-lock command.
@@ -132,7 +144,11 @@ public:
     {
         return get_argument_metadata()
             .add("EC_PRIVATE_KEY", 1)
-            .add("PASSPHRASE", 1);
+            .add("passphrase", 1)
+            .add("intermediate", 1)
+            .add("seed", 1)
+            .add("compress", 1)
+            .add("confirm", 1);
     }
 
 	/**
@@ -143,6 +159,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input, raw);
     }
 
     /**
@@ -167,13 +185,33 @@ public:
         )
         (
             "EC_PRIVATE_KEY",
-            value<primitives::ec_private>(&argument_.ec_private_key)->required(),
-            "The EC private key."
+            value<primitives::ec_private>(&argument_.ec_private_key),
+            "The Base16 EC private key."
         )
         (
-            "PASSPHRASE",
-            value<std::string>(&argument_.passphrase)->required(),
-            "The passphrase."
+            "passphrase",
+            value<std::string>(&argument_.passphrase),
+            "The Unicode passphrase."
+        )
+        (
+            "intermediate",
+            value<primitives::base58>(&argument_.intermediate),
+            "The base58 checked Intermediate."
+        )
+        (
+            "seed",
+            value<primitives::base16>(&argument_.seed),
+            "24 bytes of random data used in the bip38 process (required if locking with an intermediate instead of a passphrase)."
+        )
+        (
+            "compress",
+            value<primitives::byte>(&argument_.compress),
+            "Specify '1' if the key should be converted to a bitcoin address using the compressed public key format."
+        )
+        (
+            "confirm",
+            value<primitives::byte>(&argument_.confirm),
+            "Specify '1' if the confirmation code generated when locking with an intermediate should be displayed"
         );
 
         return options;
@@ -208,7 +246,7 @@ public:
     }
 
     /**
-     * Get the value of the PASSPHRASE argument.
+     * Get the value of the passphrase argument.
      */
     BCX_API virtual std::string& get_passphrase_argument()
     {
@@ -216,12 +254,80 @@ public:
     }
 
     /**
-     * Set the value of the PASSPHRASE argument.
+     * Set the value of the passphrase argument.
      */
     BCX_API virtual void set_passphrase_argument(
         const std::string& value)
     {
         argument_.passphrase = value;
+    }
+
+    /**
+     * Get the value of the intermediate argument.
+     */
+    BCX_API virtual primitives::base58& get_intermediate_argument()
+    {
+        return argument_.intermediate;
+    }
+
+    /**
+     * Set the value of the intermediate argument.
+     */
+    BCX_API virtual void set_intermediate_argument(
+        const primitives::base58& value)
+    {
+        argument_.intermediate = value;
+    }
+
+    /**
+     * Get the value of the seed argument.
+     */
+    BCX_API virtual primitives::base16& get_seed_argument()
+    {
+        return argument_.seed;
+    }
+
+    /**
+     * Set the value of the seed argument.
+     */
+    BCX_API virtual void set_seed_argument(
+        const primitives::base16& value)
+    {
+        argument_.seed = value;
+    }
+
+    /**
+     * Get the value of the compress argument.
+     */
+    BCX_API virtual primitives::byte& get_compress_argument()
+    {
+        return argument_.compress;
+    }
+
+    /**
+     * Set the value of the compress argument.
+     */
+    BCX_API virtual void set_compress_argument(
+        const primitives::byte& value)
+    {
+        argument_.compress = value;
+    }
+
+    /**
+     * Get the value of the confirm argument.
+     */
+    BCX_API virtual primitives::byte& get_confirm_argument()
+    {
+        return argument_.confirm;
+    }
+
+    /**
+     * Set the value of the confirm argument.
+     */
+    BCX_API virtual void set_confirm_argument(
+        const primitives::byte& value)
+    {
+        argument_.confirm = value;
     }
 
 private:
@@ -235,12 +341,20 @@ private:
     {
         argument()
           : ec_private_key(),
-            passphrase()
+            passphrase(),
+            intermediate(),
+            seed(),
+            compress(),
+            confirm()
         {
         }
 
         primitives::ec_private ec_private_key;
         std::string passphrase;
+        primitives::base58 intermediate;
+        primitives::base16 seed;
+        primitives::byte compress;
+        primitives::byte confirm;
     } argument_;
 
     /**

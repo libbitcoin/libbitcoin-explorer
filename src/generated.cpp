@@ -60,6 +60,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
     func(make_shared<ec_lock>());
+    func(make_shared<ec_lock_verify>());
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
     func(make_shared<ec_new>());
@@ -185,6 +186,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_add_secrets>();
     if (symbol == ec_lock::symbol())
         return make_shared<ec_lock>();
+    if (symbol == ec_lock_verify::symbol())
+        return make_shared<ec_lock_verify>();
     if (symbol == ec_multiply::symbol())
         return make_shared<ec_multiply>();
     if (symbol == ec_multiply_secrets::symbol())

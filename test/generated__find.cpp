@@ -144,6 +144,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_lock__returns_object)
     BOOST_REQUIRE(find("ec-lock") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__ec_lock_verify__returns_object)
+{
+    BOOST_REQUIRE(find("ec-lock-verify") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ec_multiply__returns_object)
 {
     BOOST_REQUIRE(find("ec-multiply") != nullptr);

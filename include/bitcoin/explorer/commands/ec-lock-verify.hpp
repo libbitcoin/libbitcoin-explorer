@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_EC_UNLOCK_HPP
-#define BX_EC_UNLOCK_HPP
+#ifndef BX_EC_LOCK_VERIFY_HPP
+#define BX_EC_LOCK_VERIFY_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -72,15 +72,15 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_UNLOCK_FAILURE \
-    "The specified input and passphrase combination is invalid."
-#define BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED \
+#define BX_EC_LOCK_VERIFY_INVALID \
+    "This Bitcoin address does NOT depend on this passphrase."
+#define BX_EC_LOCK_VERIFY_USING_PASSPHRASE_UNSUPPORTED \
     "The passphrase option requires an ICU build."
 
 /**
- * Class to implement the ec-unlock command.
+ * Class to implement the ec-lock-verify command.
  */
-class ec_unlock 
+class ec_lock_verify 
     : public command
 {
 public:
@@ -90,7 +90,7 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "ec-unlock";
+        return "ec-lock-verify";
     }
 
 
@@ -99,7 +99,7 @@ public:
      */
     BCX_API virtual const char* name()
     {
-        return ec_unlock::symbol();
+        return ec_lock_verify::symbol();
     }
 
     /**
@@ -115,7 +115,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Extract the EC private key from a passphrase-protected (BIP38) EC private key.";
+        return "Make a passphrase-protected EC private key (BIP38) from an EC private key.";
     }
 
     /**
@@ -126,8 +126,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SECRET", 1)
-            .add("PASSPHRASE", 1);
+            .add("passphrase", 1)
+            .add("confirmation", 1);
     }
 
 	/**
@@ -139,7 +139,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_secret_argument(), "SECRET", variables, input, raw);
+        load_input(get_confirmation_argument(), "confirmation", variables, input, raw);
     }
 
     /**
@@ -163,14 +163,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "SECRET",
-            value<primitives::base58>(&argument_.secret),
-            "The BIP38 Base58Check value to unlock. If not specified the value is read from STDIN."
+            "passphrase",
+            value<std::string>(&argument_.passphrase)->required(),
+            "The Unicode passphrase."
         )
         (
-            "PASSPHRASE",
-            value<std::string>(&argument_.passphrase),
-            "The Unicode passphrase."
+            "confirmation",
+            value<primitives::base58>(&argument_.confirmation)->required(),
+            "The base58 checked bip38 confirmation code."
         );
 
         return options;
@@ -188,24 +188,7 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SECRET argument.
-     */
-    BCX_API virtual primitives::base58& get_secret_argument()
-    {
-        return argument_.secret;
-    }
-
-    /**
-     * Set the value of the SECRET argument.
-     */
-    BCX_API virtual void set_secret_argument(
-        const primitives::base58& value)
-    {
-        argument_.secret = value;
-    }
-
-    /**
-     * Get the value of the PASSPHRASE argument.
+     * Get the value of the passphrase argument.
      */
     BCX_API virtual std::string& get_passphrase_argument()
     {
@@ -213,12 +196,29 @@ public:
     }
 
     /**
-     * Set the value of the PASSPHRASE argument.
+     * Set the value of the passphrase argument.
      */
     BCX_API virtual void set_passphrase_argument(
         const std::string& value)
     {
         argument_.passphrase = value;
+    }
+
+    /**
+     * Get the value of the confirmation argument.
+     */
+    BCX_API virtual primitives::base58& get_confirmation_argument()
+    {
+        return argument_.confirmation;
+    }
+
+    /**
+     * Set the value of the confirmation argument.
+     */
+    BCX_API virtual void set_confirmation_argument(
+        const primitives::base58& value)
+    {
+        argument_.confirmation = value;
     }
 
 private:
@@ -231,13 +231,13 @@ private:
     struct argument
     {
         argument()
-          : secret(),
-            passphrase()
+          : passphrase(),
+            confirmation()
         {
         }
 
-        primitives::base58 secret;
         std::string passphrase;
+        primitives::base58 confirmation;
     } argument_;
 
     /**

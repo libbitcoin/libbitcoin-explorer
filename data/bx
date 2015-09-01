@@ -27,6 +27,7 @@ _bx()
         ec-add
         ec-add-secrets
         ec-lock
+        ec-lock-verify
         ec-multiply
         ec-multiply-secrets
         ec-new
