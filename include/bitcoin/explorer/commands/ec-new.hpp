@@ -122,7 +122,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Create a new EC private key from entropy.";
+        return "Create a new Base16 EC private key from entropy.";
     }
 
     /**
