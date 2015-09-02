@@ -36,7 +36,7 @@ namespace primitives {
 // ec_secret format is currently private to bx.
 static bool decode_secret(ec_secret& secret, const std::string& encoded)
 {
-    return decode_base16(secret, encoded);
+    return decode_base16(secret, encoded) && verify_private_key(secret);
 }
 
 static std::string encode_secret(const ec_secret& secret)
