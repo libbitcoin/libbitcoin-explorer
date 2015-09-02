@@ -20,120 +20,133 @@
 
 #include "command.hpp"
 
-#ifndef ENABLE_TESTNET
-
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_unlock__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__always__failure_error)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__defaults__failure_error)
 {
     BX_DECLARE_COMMAND(ec_unlock);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 #ifdef WITH_ICU
-    BX_REQUIRE_ERROR(BX_EC_UNLOCK_FAILURE "\n");
+    BX_REQUIRE_ERROR(BX_EC_UNLOCK_ENCRYPTED_KEY_LENGTH_INVALID "\n");
 #else
-    BX_REQUIRE_ERROR(BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED "\n");
+    BX_REQUIRE_ERROR(BX_EC_UNLOCK_REQUIRES_ICU "\n");
 #endif
 }
 
-#ifdef WITH_ICU
+#ifndef ENABLE_TESTNET
+
 // NOTE: All ec-unlock tests require a passphrase which requires icu
+#ifdef WITH_ICU
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_1_no_compress__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_1_uncompressed__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg" });
-    command.set_passphrase_argument({ "TestingOneTwoThree" });
+    command.set_encrypted_private_key_argument({ "6PRVWUbkzzsbcVac2qwfssoUJAN1Xhrg6bNk8J7Nzm5H7kxEbn2Nh2ZoGg" });
+    command.set_passphrase_argument("TestingOneTwoThree");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_2_no_compress__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_2_uncompressed__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PRNFFkZc2NZ6dJqFfhRoFNMR9Lnyj7dYGrzdgXXVMXcxoKTePPX1dWByq" });
-    command.set_passphrase_argument({ "Satoshi" });
+    command.set_encrypted_private_key_argument({ "6PRNFFkZc2NZ6dJqFfhRoFNMR9Lnyj7dYGrzdgXXVMXcxoKTePPX1dWByq" });
+    command.set_passphrase_argument("Satoshi");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("09c2686880095b1a4c249ee3ac4eea8a014f11e6f986d0b5025ac1f39afbd9ae\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_1_compress__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_1_compressed__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo" });
-    command.set_passphrase_argument({ "TestingOneTwoThree" });
+    command.set_encrypted_private_key_argument({ "6PYNKZ1EAgYgmQfmNVamxyXVWHzK5s6DGhwP4J5o44cvXdoY7sRzhtpUeo" });
+    command.set_passphrase_argument("TestingOneTwoThree");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("cbf4b9f70470856bb4f40f80b87edb90865997ffee6df315ab166d713af433a5\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_2_compress__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_2_compressed__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PYLtMnXvfG3oJde97zRyLYFZCYizPU5T3LwgdYJz1fRhh16bU7u6PPmY7" });
-    command.set_passphrase_argument({ "Satoshi" });
+    command.set_encrypted_private_key_argument({ "6PYLtMnXvfG3oJde97zRyLYFZCYizPU5T3LwgdYJz1fRhh16bU7u6PPmY7" });
+    command.set_passphrase_argument("Satoshi");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("09c2686880095b1a4c249ee3ac4eea8a014f11e6f986d0b5025ac1f39afbd9ae\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_1_ec_multiply__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_1_multiplied__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PfQu77ygVyJLZjfvMLyhLMQbYnu5uguoJJ4kMCLqWwPEdfpwANVS76gTX" });
-    command.set_passphrase_argument({ "TestingOneTwoThree" });
+    command.set_encrypted_private_key_argument({ "6PfQu77ygVyJLZjfvMLyhLMQbYnu5uguoJJ4kMCLqWwPEdfpwANVS76gTX" });
+    command.set_passphrase_argument("TestingOneTwoThree");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("a43a940577f4e97f5c4d39eb14ff083a98187c64ea7c99ef7ce460833959a519\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_2_ec_multiply__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_2_multiplied__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PfLGnQs6VZnrNpmVKfjotbnQuaJK4KZoPFrAjx1JMJUa1Ft8gnf5WxfKd" });
-    command.set_passphrase_argument({ "Satoshi" });
+    command.set_encrypted_private_key_argument({ "6PfLGnQs6VZnrNpmVKfjotbnQuaJK4KZoPFrAjx1JMJUa1Ft8gnf5WxfKd" });
+    command.set_passphrase_argument("Satoshi");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("c2c8036df268f498099350718c4a3ef3984d2be84618c2650f5171dcc5eb660a\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_3_ec_multiply__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_3_multiplied__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PgNBNNzDkKdhkT6uJntUXwwzQV8Rr2tZcbkDcuC9DZRsS6AtHts4Ypo1j" });
+    command.set_encrypted_private_key_argument({ "6PgNBNNzDkKdhkT6uJntUXwwzQV8Rr2tZcbkDcuC9DZRsS6AtHts4Ypo1j" });
     command.set_passphrase_argument({ "MOLON LABE" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("44ea95afbf138356a05ea32110dfd627232d0f2991ad221187be356f19fa8190\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_4_ec_multiply__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_4_multiplied__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PgGWtx25kUg8QWvwuJAgorN6k9FbE25rv5dMRwu5SKMnfpfVe5mar2ngH" });
-    command.set_passphrase_argument({ "ΜΟΛΩΝ ΛΑΒΕ" });
+    command.set_encrypted_private_key_argument({ "6PgGWtx25kUg8QWvwuJAgorN6k9FbE25rv5dMRwu5SKMnfpfVe5mar2ngH" });
+    command.set_passphrase_argument("ΜΟΛΩΝ ΛΑΒΕ");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("ca2759aa4adb0f96c414f36abeb8db59342985be9fa50faac228c8e7d90e3006\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_5_ec_multiply__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_5_multiplied__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PfPAw5HErFdzMyBvGMwSfSWjKmzgm3jDg7RxQyVCSSBJFZLAZ6hVupmpn" });
-    command.set_passphrase_argument({ "libbitcoin test" });
+    command.set_encrypted_private_key_argument({ "6PfPAw5HErFdzMyBvGMwSfSWjKmzgm3jDg7RxQyVCSSBJFZLAZ6hVupmpn" });
+    command.set_passphrase_argument("libbitcoin test");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("fb4bfb0bfe151d524b0b11983b9f826d6a0bc7f7bdc480864a1b557ff0c59eb4\n");
 }
 
-BOOST_AUTO_TEST_CASE(ec_unlock__invoke__unlock_6_ec_multiply__okay_if_icu)
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__mainnet_icu_key_6_multiplied__okay)
 {
     BX_DECLARE_COMMAND(ec_unlock);
-    command.set_secret_argument({ "6PfU2yS6DUHjgH8wmsJRT1rHWXRofmDV5UJ3dypocew56BDcw5TQJXFYfm" });
-    command.set_passphrase_argument({ "Libbitcoin BIP38 Test Vector" });
+    command.set_encrypted_private_key_argument({ "6PfU2yS6DUHjgH8wmsJRT1rHWXRofmDV5UJ3dypocew56BDcw5TQJXFYfm" });
+    command.set_passphrase_argument("Libbitcoin BIP38 Test Vector");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("97c745cc980e5a070e12d0bff3f539b70748aadb406045fc1b42d4ded559a564\n");
 }
 
-#endif // WITH_ICU
+#else // WITH_ICU
 
-BOOST_AUTO_TEST_SUITE_END()
-BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_CASE(ec_unlock__invoke__not_icu__failure_error)
+{
+    BX_DECLARE_COMMAND(ec_unlock);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_EC_UNLOCK_REQUIRES_ICU "\n");
+}
+
+#endif // !WITH_ICU
+
+#else // !ENABLE_TESTNET
+
+// TODO: create testnet test cases.
 
 #endif // ENABLE_TESTNET
+
+BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END()

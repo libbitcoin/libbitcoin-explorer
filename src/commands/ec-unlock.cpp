@@ -17,49 +17,44 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-unlock.hpp>
 
+#include <algorithm>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 
 using namespace bc;
-using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
 console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto& secret = get_secret_argument();
+#ifdef WITH_ICU
     const auto& passphrase = get_passphrase_argument();
+    const data_chunk& key_decoded = get_encrypted_private_key_argument();
 
-    if (encode_base58(secret).size() == 0)
+    if (key_decoded.size() != bip38::encrypted_key_decoded_size)
     {
-#ifdef WITH_ICU
-        error << BX_EC_UNLOCK_FAILURE << std::endl;
-#else
-        error << BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
-#endif
+        error << BX_EC_UNLOCK_ENCRYPTED_KEY_LENGTH_INVALID << std::endl;
         return console_result::failure;
     }
 
-#ifdef WITH_ICU
-    const auto unlocked = bip38_unlock_secret(
-        base58(secret), passphrase);
-
-    if (!verify_private_key(unlocked))
+    bip38::encrypted_private_key key;
+    std::copy(key_decoded.begin(), key_decoded.end(), key.begin());
+    const auto secret = bip38::unlock_secret(key, passphrase);
+    if (secret == ec_secret())
     {
-        error << BX_EC_UNLOCK_FAILURE << std::endl;
+        error << BX_EC_UNLOCK_FAILED << std::endl;
         return console_result::failure;
     }
 
-    output << encode_base16(unlocked) << std::endl;
+    output << ec_private(secret) << std::endl;
     return console_result::okay;
 #else
-    error << BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
+    error << BX_EC_UNLOCK_REQUIRES_ICU << std::endl;
     return console_result::failure;
 #endif
 }

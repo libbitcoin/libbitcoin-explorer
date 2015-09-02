@@ -169,29 +169,6 @@
     <define name="BX_CERT_PUBLIC_INVALID" value="Certificate is not valid: %1%." />
     <define name="BX_CERT_PUBLIC_SAVE_FAIL" value="Failed to save certificate file: %1%." />
   </command>
-
-  <command symbol="ec-lock" formerly="brainwallet" typeX="ec_private" category="WALLET" description="Make a passphrase-protected EC private key (BIP38) from an EC private key.">
-    <argument name="EC_PRIVATE_KEY" stdin="true" required="false" type="ec_private" description="The Base16 EC private key." />
-    <argument name="passphrase" required="false" default="" description="The Unicode passphrase." />
-    <argument name="intermediate" required="false" type="base58" default="" description="The base58 checked Intermediate." />
-    <argument name="seed" required="false" type="base16" default="" description="24 bytes of random data used in the bip38 process (required if locking with an intermediate instead of a passphrase)." />
-    <argument name="compress" required="false" type="byte" default="0" description="Specify '1' if the key should be converted to a bitcoin address using the compressed public key format." />
-    <argument name="confirm" required="false" type="byte" description="Specify '1' if the confirmation code generated when locking with an intermediate should be displayed" />
-    <define name="BX_EC_LOCK_PRIVKEY_LENGTH_INVALID" value="The specified private key is invalid." />
-    <define name="BX_EC_LOCK_MODE_INCORRECT" value="Either passphrase or intermediate must be specified, but not both." />
-    <define name="BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID" value="The specified intermediate is invalid." />
-    <define name="BX_EC_LOCK_INTERMEDIATE_MORE_REQUIRED" value="When using an intermediate, both an intermediate and the seed are required." />
-    <define name="BX_EC_LOCK_SEED_NOT_REQUIRED" value="The specified seed is not required when using a passphrase." />
-    <define name="BX_EC_LOCK_SEED_LENGTH_INVALID" value="The seed is required to be 24 bytes in length." />
-    <define name="BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
-  </command>
-
-  <command symbol="ec-lock-verify" category="WALLET" description="Make a passphrase-protected EC private key (BIP38) from an EC private key.">
-    <argument name="passphrase" required="true" default="" description="The Unicode passphrase." />
-    <argument name="confirmation" stdin="true" required="true" type="base58" default="" description="The base58 checked bip38 confirmation code." />
-    <define name="BX_EC_LOCK_VERIFY_INVALID" value="This Bitcoin address does NOT depend on this passphrase." />
-    <define name="BX_EC_LOCK_VERIFY_USING_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
-  </command>
    
   <command symbol="ec-add" output="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">
     <argument name="POINT" required="true" type="ec_public" description="The Base16 EC point to add."/>
@@ -202,6 +179,33 @@
   <command symbol="ec-add-secrets" formerly="ec-add-modp" output="ec_private" category="MATH" description="Calculate the EC function (SECRET + SECRET) % curve-order.">
     <argument name="SECRET" stdin="true" limit="-1" type="ec_private" description="The set of Base16 secrets to add. If not specified the secrets are read from STDIN."/>
     <define name="BX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
+  </command>
+
+  <command symbol="ec-lock" formerly="brainwallet" typeX="base58" category="WALLET" description="Encrypt a Base16 EC private key as a Base58 encoded encrypted private key (BIP38) using a passphrase or intermediate value and seed.">
+    <argument name="EC_PRIVATE_KEY" required="false" type="ec_private" description="The Base16 EC private key to encrypt." />
+    <option name="uncompressed" description="Use the uncompressed public key format." />
+    <!-- passphrase mode: passphrase indicates. -->
+    <option name="passphrase" type="string" description="The passphrase for locking the private key." />
+    <!-- non-passphrase mode: intermediate and seed required. -->
+    <option name="intermediate" type="base58" description="The Base58 intermediate, required for locking without a passphrase." />
+    <option name="seed" type="base16" description="The Base16 entropy, required for locking without a passphrase. Must be at least 192 bits in length." />
+    <define name="BX_EC_LOCK_SHORT_SEED" value="The seed is less than 192 bits long." />
+    <define name="BX_EC_LOCK_PASSPHRASE_REQUIRES_ICU" value="The passphrase option requires an ICU build." />
+    <!-- deprecated-->
+    <define name="BX_EC_LOCK_MODE_REQUIRED" value="One of the passphrase or intermediate option is required." />
+    <define name="BX_EC_LOCK_MODE_CONFLICT" value="The passphrase and intermediate options are mutually exclusive." />
+    <define name="BX_EC_LOCK_INTERMEDIATE_CONFLICT" value="The intermediate option is not allowed when using a passphrase." />
+    <define name="BX_EC_LOCK_SEED_CONFLICT" value="The seed is not allowed when using a passphrase." />
+    <define name="BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID" value="The intermediate must be 72 characters long." />
+  </command>
+
+  <command symbol="ec-lock-verify" category="WALLET" description="Verify the passphrase for an encrypted private key (BIP38).">
+    <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the encrypted private key." />
+    <argument name="CONFIRMATION_CODE" required="true" type="base58" description="The Base58 confirmation code that was generated from the passphrase." />
+    <define name="BX_EC_LOCK_VERIFY_CONFIRMATION_LENGTH_INVALID" value="The confirmation code must be 75 characters long." />
+    <define name="BX_EC_LOCK_VERIFY_VALID" value="The passphrase is valid for the confirmation code." />
+    <define name="BX_EC_LOCK_VERIFY_INVALID" value="The passphrase is not valid for the confirmation code." />
+    <define name="BX_EC_LOCK_VERIFY_PASSPHRASE_REQUIRES_ICU" value="The passphrase option requires an ICU build." />
   </command>
 
   <command symbol="ec-multiply" output="ec_public" category="MATH" description="Calculate the EC product (POINT * SECRET).">
@@ -215,7 +219,7 @@
     <define name="BX_EC_MULITPLY_SECRETS_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
 
-  <command symbol="ec-new" formerly="newkey" output="ec_private" category="WALLET" description="Create a new EC private key from entropy.">
+  <command symbol="ec-new" formerly="newkey" output="ec_private" category="WALLET" description="Create a new Base16 EC private key from entropy.">
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
     <define name="BX_EC_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
     <define name="BX_EC_NEW_INVALID_KEY" value="The seed produced an invalid key." />
@@ -236,11 +240,12 @@
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key to convert. If not specified the key is read from STDIN."/>
   </command>
   
-  <command symbol="ec-unlock" typeX="ec_private" category="WALLET" description="Extract the EC private key from a passphrase-protected (BIP38) EC private key.">
-    <argument name="SECRET" stdin="true" type="base58" description="The BIP38 Base58Check value to unlock. If not specified the value is read from STDIN." />
-    <argument name="PASSPHRASE" required="false" description="The Unicode passphrase." />
-    <define name="BX_EC_UNLOCK_FAILURE" value="The specified input and passphrase combination is invalid." />
-    <define name="BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
+  <command symbol="ec-unlock" typeX="ec_private" category="WALLET" description="Recover the Base16 EC private key from an encrypted private key (BIP38).">
+    <argument name="ENCRYPTED_PRIVATE_KEY" type="base58" description="The Base58 encoded encrypted private key (BIP38) to unlock." />
+    <argument name="PASSPHRASE" required="true" description="The passphrase that was used to lock the encrypted private key." />
+    <define name="BX_EC_UNLOCK_ENCRYPTED_KEY_LENGTH_INVALID" value="The encrypted private key must be 58 characters long." />
+    <define name="BX_EC_UNLOCK_FAILED" value="The password was not used to encrypt the encrypted private key." />
+    <define name="BX_EC_UNLOCK_REQUIRES_ICU" value="This command requires an ICU build." />
   </command>
   
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a Bitcoin address. Requires a Libbitcoin/Obelisk server connection.">
@@ -352,12 +357,9 @@
   <command symbol="input-sign" formerly="sign-input" output="endorsement" category="TRANSACTION" description="Create an endorsement for a transaction input.">
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
     <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'." />
-    <!-- Deterministic ECDSA required as of v2.1.0, nonce no longer allowed. -->
-    <!--<option name="nonce" type="base16" description="The Base16 random value used to seed a signing nonce. Must be at least 128 bits in length. If not specified the deterministic signature algorithm is used." />-->
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="CONTRACT" required="true" type="script" description="The previous output script to use in signing. Multiple tokens must be quoted." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
-    <!--<define name="BX_INPUT_SIGN_SHORT_NONCE" value="The optional nonce is less than 128 bits long." />-->
     <define name="BX_INPUT_SIGN_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
     <define name="BX_INPUT_SIGN_FAILED" value="The signing operation failed." />
   </command>
@@ -452,7 +454,7 @@
   </command>
   
   <command symbol="seed" output="base16" category="WALLET" description="Generate a pseudorandom seed.">
-    <option name="bit_length" type="uint16_t" default="128" description="The length of the seed in bits. Must be divisible by 8 and must not be less than 128." />
+    <option name="bit_length" type="uint16_t" default="192" description="The length of the seed in bits. Must be divisible by 8 and must not be less than 128, defaults to 192." />
     <define name="BX_SEED_BIT_LENGTH_UNSUPPORTED" value="The seed size is not supported." />
   </command>
   

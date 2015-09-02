@@ -72,10 +72,12 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_UNLOCK_FAILURE \
-    "The specified input and passphrase combination is invalid."
-#define BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED \
-    "The passphrase option requires an ICU build."
+#define BX_EC_UNLOCK_ENCRYPTED_KEY_LENGTH_INVALID \
+    "The encrypted private key must be 58 characters long."
+#define BX_EC_UNLOCK_FAILED \
+    "The password was not used to encrypt the encrypted private key."
+#define BX_EC_UNLOCK_REQUIRES_ICU \
+    "This command requires an ICU build."
 
 /**
  * Class to implement the ec-unlock command.
@@ -115,7 +117,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Extract the EC private key from a passphrase-protected (BIP38) EC private key.";
+        return "Recover the Base16 EC private key from an encrypted private key (BIP38).";
     }
 
     /**
@@ -126,7 +128,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SECRET", 1)
+            .add("ENCRYPTED_PRIVATE_KEY", 1)
             .add("PASSPHRASE", 1);
     }
 
@@ -138,8 +140,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_secret_argument(), "SECRET", variables, input, raw);
     }
 
     /**
@@ -163,14 +163,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "SECRET",
-            value<primitives::base58>(&argument_.secret),
-            "The BIP38 Base58Check value to unlock. If not specified the value is read from STDIN."
+            "ENCRYPTED_PRIVATE_KEY",
+            value<primitives::base58>(&argument_.encrypted_private_key),
+            "The Base58 encoded encrypted private key (BIP38) to unlock."
         )
         (
             "PASSPHRASE",
-            value<std::string>(&argument_.passphrase),
-            "The Unicode passphrase."
+            value<std::string>(&argument_.passphrase)->required(),
+            "The passphrase that was used to lock the encrypted private key."
         );
 
         return options;
@@ -188,20 +188,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SECRET argument.
+     * Get the value of the ENCRYPTED_PRIVATE_KEY argument.
      */
-    BCX_API virtual primitives::base58& get_secret_argument()
+    BCX_API virtual primitives::base58& get_encrypted_private_key_argument()
     {
-        return argument_.secret;
+        return argument_.encrypted_private_key;
     }
 
     /**
-     * Set the value of the SECRET argument.
+     * Set the value of the ENCRYPTED_PRIVATE_KEY argument.
      */
-    BCX_API virtual void set_secret_argument(
+    BCX_API virtual void set_encrypted_private_key_argument(
         const primitives::base58& value)
     {
-        argument_.secret = value;
+        argument_.encrypted_private_key = value;
     }
 
     /**
@@ -231,12 +231,12 @@ private:
     struct argument
     {
         argument()
-          : secret(),
+          : encrypted_private_key(),
             passphrase()
         {
         }
 
-        primitives::base58 secret;
+        primitives::base58 encrypted_private_key;
         std::string passphrase;
     } argument_;
 

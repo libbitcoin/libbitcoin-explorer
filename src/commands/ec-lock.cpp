@@ -17,90 +17,111 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-lock.hpp>
 
+#include <algorithm>
+#include <cstddef>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
 
 using namespace bc;
-using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
 console_result ec_lock::invoke(std::ostream& output, std::ostream& error)
 {
+    // TODO: create primitives for intermediate and confirmation_code.
+    // TODO: split into `ec-lock` and `secret-new`.
+    // TODO: change `ec-lock-verify` to `secret-to-public`.
+    // TODO: create new `intermediate` command.
+    ///////////////////////////////////////////////////////////////////////////
+
+    // bx ec-lock PASSPHRASE EC_PRIVATE_KEY[stdin] -> ENCRYPTED_PRIVATE_KEY
     const auto& secret = get_ec_private_key_argument();
-    const auto& passphrase = get_passphrase_argument();
-    const auto& intermediate = get_intermediate_argument();
-    const auto& seed = get_seed_argument();
-    const auto& show_confirm = get_confirm_argument();
-    const bool& use_compression = get_compress_argument();
+    const auto& passphrase = get_passphrase_option();
+    // bx ec-unlock PASSPHRASE ENCRYPTED_PRIVATE_KEY[stdin] -> EC_PRIVATE_KEY
 
-    data_chunk _seed = seed;
-    data_chunk _intermediate = intermediate;
+    // bx intermediate SEED[stdin] LOT SEQUENCE
+    // bx secret-new INTERMEDIATE SEED[stdin] --uncompressed -> 
+    //     ENCRYPTED_PRIVATE_KEY:CONFIRMATION_CODE
+    const data_chunk& intermediate_decoded = get_intermediate_option();
+    const data_chunk& seed_buffer = get_seed_option();
+    const auto uncompressed = get_uncompressed_option();
+    // bx secret-to-public PASSPHRASE CONFIRMATION_CODE -> EC_PUBLIC_KEY
 
-    constexpr auto bip38_intermediate_required_length = 53;
-    constexpr auto bip38_seed_required_length = 24;
-
-    if (passphrase.size() > 0)
+    if (passphrase.empty() && intermediate_decoded.empty())
     {
+        error << BX_EC_LOCK_MODE_REQUIRED << std::endl;
+        return console_result::failure;
+    }
+
+    if (!passphrase.empty() && !intermediate_decoded.empty())
+    {
+        error << BX_EC_LOCK_MODE_CONFLICT << std::endl;
+        return console_result::failure;
+    }
+
+    // passphrase mode
+    ///////////////////////////////////////////////////////////////////////////
+
+    if (!passphrase.empty())
+    {
+        if (!intermediate_decoded.empty())
+        {
+            error << BX_EC_LOCK_INTERMEDIATE_CONFLICT << std::endl;
+            return console_result::failure;
+        }
+
+        if (!seed_buffer.empty())
+        {
+            error << BX_EC_LOCK_SEED_CONFLICT << std::endl;
+            return console_result::failure;
+        }
+
 #ifdef WITH_ICU
-        if (_intermediate.size() || _seed.size())
-        {
-            error << BX_EC_LOCK_MODE_INCORRECT << std::endl;
-            return console_result::failure;
-        }
+        const auto encrypted_key = bip38::lock_secret(secret, passphrase,
+            !uncompressed);
 
-        if (!verify_private_key(secret))
-        {
-            error << BX_EC_LOCK_PRIVKEY_LENGTH_INVALID << std::endl;
-            return console_result::failure;
-        }
-
-        const auto locked = bip38_lock_secret(
-            secret, passphrase, use_compression);
-
-        output << encode_base58(locked) << std::endl;
+        output << encode_base58(encrypted_key) << std::endl;
         return console_result::okay;
 #else
-        error << BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
+        error << BX_EC_LOCK_PASSPHRASE_REQUIRES_ICU << std::endl;
         return console_result::failure;
 #endif
     }
-    else if (_intermediate.size())
+
+    // intermediate mode
+    ///////////////////////////////////////////////////////////////////////////
+
+    if (intermediate_decoded.size() != bip38::intermediate_decoded_size)
     {
-        if (_intermediate.size() !=
-            bip38_intermediate_required_length)
-        {
-            error << BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID << std::endl;
-            return console_result::failure;
-        }
-
-        if (_seed.size() != bip38_seed_required_length)
-        {
-            error << BX_EC_LOCK_SEED_LENGTH_INVALID << std::endl;
-            return console_result::failure;
-        }
-
-        data_chunk confirmation;
-        const auto locked = bip38_lock_intermediate(
-            intermediate, seed, confirmation, use_compression);
-        output << encode_base58(locked) << std::endl;
-
-        if (show_confirm)
-            output << encode_base58(confirmation) << std::endl;
-
-        return console_result::okay;
+        error << BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID << std::endl;
+        return console_result::failure;
     }
-#ifdef WITH_ICU
-    error << BX_EC_LOCK_MODE_INCORRECT << std::endl;
-#else
-    error << BX_EC_LOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
-#endif
-    return console_result::failure;
-}
 
+    bip38::intermediate intermediate;
+    std::copy(intermediate_decoded.begin(), intermediate_decoded.end(),
+        intermediate.begin());
+
+    if (seed_buffer.size() < bip38::seed_size)
+    {
+        error << BX_EC_LOCK_SHORT_SEED << std::endl;
+        return console_result::failure;
+    }
+
+    // Allow excess seed, just truncate the unused bytes.
+    bip38::seed seed;
+    std::copy(seed_buffer.begin(), seed_buffer.begin() + bip38::seed_size,
+        seed.begin());
+
+    bip38::confirmation_code confirmation_code;
+    const auto encrypted_key = bip38::lock_intermediate(intermediate, seed,
+        confirmation_code, !uncompressed);
+
+    // TODO: use complex output (?)
+    output << encode_base58(encrypted_key) << std::endl;
+    output << encode_base58(confirmation_code) << std::endl;
+    return console_result::okay;
+}

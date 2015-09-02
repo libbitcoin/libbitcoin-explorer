@@ -72,9 +72,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
+#define BX_EC_LOCK_VERIFY_CONFIRMATION_LENGTH_INVALID \
+    "The confirmation code must be 75 characters long."
+#define BX_EC_LOCK_VERIFY_VALID \
+    "The passphrase is valid for the confirmation code."
 #define BX_EC_LOCK_VERIFY_INVALID \
-    "This Bitcoin address does NOT depend on this passphrase."
-#define BX_EC_LOCK_VERIFY_USING_PASSPHRASE_UNSUPPORTED \
+    "The passphrase is not valid for the confirmation code."
+#define BX_EC_LOCK_VERIFY_PASSPHRASE_REQUIRES_ICU \
     "The passphrase option requires an ICU build."
 
 /**
@@ -115,7 +119,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Make a passphrase-protected EC private key (BIP38) from an EC private key.";
+        return "Verify the passphrase for an encrypted private key (BIP38).";
     }
 
     /**
@@ -126,8 +130,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("passphrase", 1)
-            .add("confirmation", 1);
+            .add("PASSPHRASE", 1)
+            .add("CONFIRMATION_CODE", 1);
     }
 
 	/**
@@ -138,8 +142,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_confirmation_argument(), "confirmation", variables, input, raw);
     }
 
     /**
@@ -163,14 +165,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "passphrase",
+            "PASSPHRASE",
             value<std::string>(&argument_.passphrase)->required(),
-            "The Unicode passphrase."
+            "The passphrase that was used to generate the encrypted private key."
         )
         (
-            "confirmation",
-            value<primitives::base58>(&argument_.confirmation)->required(),
-            "The base58 checked bip38 confirmation code."
+            "CONFIRMATION_CODE",
+            value<primitives::base58>(&argument_.confirmation_code)->required(),
+            "The Base58 confirmation code that was generated from the passphrase."
         );
 
         return options;
@@ -188,7 +190,7 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the passphrase argument.
+     * Get the value of the PASSPHRASE argument.
      */
     BCX_API virtual std::string& get_passphrase_argument()
     {
@@ -196,7 +198,7 @@ public:
     }
 
     /**
-     * Set the value of the passphrase argument.
+     * Set the value of the PASSPHRASE argument.
      */
     BCX_API virtual void set_passphrase_argument(
         const std::string& value)
@@ -205,20 +207,20 @@ public:
     }
 
     /**
-     * Get the value of the confirmation argument.
+     * Get the value of the CONFIRMATION_CODE argument.
      */
-    BCX_API virtual primitives::base58& get_confirmation_argument()
+    BCX_API virtual primitives::base58& get_confirmation_code_argument()
     {
-        return argument_.confirmation;
+        return argument_.confirmation_code;
     }
 
     /**
-     * Set the value of the confirmation argument.
+     * Set the value of the CONFIRMATION_CODE argument.
      */
-    BCX_API virtual void set_confirmation_argument(
+    BCX_API virtual void set_confirmation_code_argument(
         const primitives::base58& value)
     {
-        argument_.confirmation = value;
+        argument_.confirmation_code = value;
     }
 
 private:
@@ -232,12 +234,12 @@ private:
     {
         argument()
           : passphrase(),
-            confirmation()
+            confirmation_code()
         {
         }
 
         std::string passphrase;
-        primitives::base58 confirmation;
+        primitives::base58 confirmation_code;
     } argument_;
 
     /**

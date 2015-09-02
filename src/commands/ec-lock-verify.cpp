@@ -17,40 +17,45 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-lock.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/base58.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 
 using namespace bc;
-using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-console_result ec_lock_verify::invoke(std::ostream& output, std::ostream& error)
+console_result ec_lock_verify::invoke(std::ostream& output,
+    std::ostream& error)
 {
-    const auto& passphrase = get_passphrase_argument();
-    const auto& confirmation = get_confirmation_argument();
-
 #ifdef WITH_ICU
-    std::string address;
+    const auto& passphrase = get_passphrase_argument();
+    const data_chunk& code_decoded = get_confirmation_code_argument();
 
-    const auto confirmed = bip38_lock_verify(
-        base58(confirmation), passphrase, address);
+    if (code_decoded.size() != bip38::confirmation_code_decoded_size)
+    {
+        error << BX_EC_LOCK_VERIFY_CONFIRMATION_LENGTH_INVALID << std::endl;
+        return console_result::failure;
+    }
 
+    bip38::confirmation_code code;
+    std::copy(code_decoded.begin(), code_decoded.end(), code.begin());
+
+    bc::wallet::payment_address address;
+    const auto confirmed = bip38::lock_verify(code, passphrase, address);
     if (confirmed)
-        output << "It is confirmed that " << address
-            << " depends on this passphrase." << std::endl;
+        output << BX_EC_LOCK_VERIFY_VALID << std::endl;
     else
         output << BX_EC_LOCK_VERIFY_INVALID << std::endl;
 
     return console_result::okay;
 #else
-    error << BX_EC_LOCK_VERIFY_USING_PASSPHRASE_UNSUPPORTED << std::endl;
+    error << BX_EC_LOCK_VERIFY_PASSPHRASE_REQUIRES_ICU << std::endl;
     return console_result::failure;
 #endif
 }
