@@ -158,8 +158,8 @@ public:
         )
         (
             "bit_length,b",
-            value<uint16_t>(&option_.bit_length)->default_value(128),
-            "The length of the seed in bits. Must be divisible by 8 and must not be less than 128."
+            value<uint16_t>(&option_.bit_length)->default_value(192),
+            "The length of the seed in bits. Must be divisible by 8 and must not be less than 128, defaults to 192."
         );
 
         return options;
