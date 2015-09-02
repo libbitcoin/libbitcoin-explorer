@@ -61,7 +61,7 @@ void async_client::sleep(uint32_t period_ms)
 // Not yet unit testable (nonvirtual pool).
 void async_client::stop()
 {
-    threadpool_.stop();
+    threadpool_.shutdown();
     threadpool_.join();
 }
 

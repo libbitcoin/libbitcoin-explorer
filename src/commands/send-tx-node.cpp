@@ -36,7 +36,6 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
-using boost::format;
 
 static void handle_signal(int)
 {
@@ -77,9 +76,8 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     async_client client(threads);
     network::hosts hosts(client.pool(), host_pool_size);
-    network::handshake shake(client.pool());
-    network::peer net(client.pool(), timeouts);
-    network::protocol proto(client.pool(), hosts, shake, net, listen);
+    network::initiator net(client.pool(), timeouts);
+    network::protocol proto(client.pool(), hosts, net, listen);
 
     callback_state state(error, output);
 
@@ -92,7 +90,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     };
 
     const auto handle_connect = [&state, &transaction, &handle_send](
-        const std::error_code& code, network::channel_ptr node)
+        const std::error_code& code, network::channel::ptr node)
     {
         if (state.succeeded(code))
             node->send(transaction, handle_send);

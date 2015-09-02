@@ -57,7 +57,7 @@ namespace primitives {
 
 ptree prop_list(const header& header)
 {
-    const chain::block_header& block_header = header;
+    const chain::header& block_header = header;
 
     ptree tree;
     tree.put("bits", block_header.bits);
