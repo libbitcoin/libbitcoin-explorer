@@ -52,6 +52,18 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 "        paid_address 17t15PKUr2GCDY5ufaq3QQgcmfRzYEnoLg\n" \
 "        transaction_hash 1623d01142f80a2900e7b323ae5a36d864e0bceee85f2018bc601d1721bb82fd\n" \
 "    }\n" \
+"    match\n" \
+"    {\n" \
+"        ephemeral_public_key 02466100000000013ade3ea849d1e743370b2825222e9dd7756c340c5ee524981e\n" \
+"        paid_address 16bGr1x6DZgDBC5UTarqACn2aCBBY5Rg66\n" \
+"        transaction_hash 5dbbcb33be54d2d685a910d36976285c8bd46c294cb87e6e1cd8ec9fe288823b\n" \
+"    }\n" \
+"    match\n" \
+"    {\n" \
+"        ephemeral_public_key 0206c1bb73ed03bcb8bfb55f271e5a1a5c393dc326b98486310615c4e266cf40da\n" \
+"        paid_address 17PxmbDXL23bn6NwhSzSvnDKtX6YuxakCA\n" \
+"        transaction_hash 271dca78c3b0a0e0358d6c8b721e2dc365159a7684a4130aaf0b91d711cb820a\n" \
+"    }\n" \
 "}\n"
 
 // requires libbitcoin-server.
