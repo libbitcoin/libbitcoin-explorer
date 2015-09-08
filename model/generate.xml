@@ -611,7 +611,7 @@
     <option name="message" type="string" description="The value of the label parameter." />
     <option name="request" type="uri" description="The value of the payment request parameter." />
     <option name="stealth" type="stealth" description="The stealth address for the address part." />
-    <argument name="BITCOIN_ADDRESS" type="address" description="The payment address for the address part." />
+    <argument name="PAYMENT_ADDRESS" type="address" description="The payment address for the address part." />
     <define name="BX_URI_ENCODE_ADDRESS_CONFLICT" value="Only one payment address or stealth address may specified." />
   </command>
   
