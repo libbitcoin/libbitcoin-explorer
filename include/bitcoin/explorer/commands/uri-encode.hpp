@@ -208,7 +208,7 @@ public:
     /**
      * Get the value of the BITCOIN_ADDRESS argument.
      */
-    BCX_API virtual primitives::address& get_bitcoin_address_argument()
+    BCX_API virtual primitives::address& get_payment_address_argument()
     {
         return argument_.bitcoin_address;
     }
@@ -216,7 +216,7 @@ public:
     /**
      * Set the value of the BITCOIN_ADDRESS argument.
      */
-    BCX_API virtual void set_bitcoin_address_argument(
+    BCX_API virtual void set_payment_address_argument(
         const primitives::address& value)
     {
         argument_.bitcoin_address = value;

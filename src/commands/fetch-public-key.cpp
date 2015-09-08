@@ -35,7 +35,7 @@ using namespace bc::explorer::commands;
 console_result fetch_public_key::invoke(std::ostream& output, std::ostream& error)
 {
     //// Bound parameters.
-    //const auto& address = get_bitcoin_address_argument();
+    //const auto& address = get_payment_address_argument();
     //const auto retries = get_general_retries_setting();
     //const auto timeout = get_general_wait_setting();
     //const auto& server = if_else(get_general_network_setting() == BX_TESTNET,

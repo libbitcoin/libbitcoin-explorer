@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 //{
 //    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
 //    command.set_format_option({ "info" });
-//    command.set_bitcoin_address_argument({ { BX_FIRST_ADDRESS } });
+//    command.set_payment_address_argument({ { BX_FIRST_ADDRESS } });
 //    BX_REQUIRE_OKAY(command.invoke(output, error));
 //    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_FIRST_ADDRESS_INFO);
 //}
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo1_xml__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_balance);
     command.set_format_option({ "xml" });
-    command.set_bitcoin_address_argument({ BX_FETCH_BALANCE_SX_DEMO1_ADDRESS });
+    command.set_payment_address_argument({ BX_FETCH_BALANCE_SX_DEMO1_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO1_XML);
 }
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo2_xml__okay_output)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_balance);
     command.set_format_option({ "xml" });
-    command.set_bitcoin_address_argument({ BX_FETCH_BALANCE_SX_DEMO2_ADDRESS });
+    command.set_payment_address_argument({ BX_FETCH_BALANCE_SX_DEMO2_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO2_XML);
 }

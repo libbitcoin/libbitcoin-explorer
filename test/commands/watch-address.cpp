@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(watch_address__invoke)
 //{
 //    BX_DECLARE_NETWORK_COMMAND(watch_address);
 //    command.set_format_option({ "info" });
-//    command.set_bitcoin_address_argument({ BX_FIRST_ADDRESS });
+//    command.set_payment_address_argument({ BX_FIRST_ADDRESS });
 //    BX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 

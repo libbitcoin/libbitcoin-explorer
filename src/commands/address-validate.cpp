@@ -32,7 +32,7 @@ using namespace bc::explorer::primitives;
 console_result address_validate::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& token = get_bitcoin_address_argument();
+    const auto& token = get_payment_address_argument();
 
     // The address is bound to a string so that we can handle validation here
     // instead of in the primitive.

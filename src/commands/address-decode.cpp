@@ -33,11 +33,11 @@ console_result address_decode::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& bitcoin_address = get_bitcoin_address_argument();
+    const auto& payment_address = get_payment_address_argument();
     const auto& encoding = get_format_option();
 
     // TESTNET VERSION REQUIRES RECOMPILE
-    const wrapper wrapped(bitcoin_address);
+    const wrapper wrapped(payment_address);
     write_stream(output, prop_tree(wrapped), encoding);
 
     return console_result::okay;

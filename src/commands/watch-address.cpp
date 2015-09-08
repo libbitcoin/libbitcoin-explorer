@@ -55,7 +55,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& bitcoin_address = get_bitcoin_address_argument();
+    const auto& payment_address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection);
@@ -68,15 +68,15 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_update = [&state](const address& bitcoin_address, size_t,
+    auto on_update = [&state](const address& payment_address, size_t,
         const hash_digest& block_hash, const tx_type& tx)
     {
-        state.output(prop_tree(tx, block_hash, bitcoin_address));
+        state.output(prop_tree(tx, block_hash, payment_address));
     };
 
-    auto on_subscribed = [&state, &bitcoin_address]()
+    auto on_subscribed = [&state, &payment_address]()
     {
-        state.output(format(BX_WATCH_ADDRESS_WAITING) % bitcoin_address);
+        state.output(format(BX_WATCH_ADDRESS_WAITING) % payment_address);
         ++state;
     };
 
@@ -86,7 +86,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     };
 
     client.get_codec()->set_on_update(on_update);
-    client.get_codec()->subscribe(on_error, on_subscribed, bitcoin_address);
+    client.get_codec()->subscribe(on_error, on_subscribed, payment_address);
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, handle_signal);
