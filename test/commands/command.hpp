@@ -35,14 +35,8 @@ using namespace bc::explorer::commands; \
 using namespace bc::explorer::primitives;
 
 // Libbitcoin error messsages (see error.cpp).
-#define BX_TIMEOUT_MESSAGE "connection timed out"
-#define BX_BAD_STREAM_MESSAGE "bad data stream"
-#define BX_SERVICE_STOPPED_MESSAGE "connection terminated"
-#define BX_SPENT_INPUT_NOT_FOUND_MESSAGE "spent input not found"
-#define BX_TX_NOT_FOUND_MESSAGE "transaction inputs or outputs are empty"
-#define BX_MEMPOOL_COINBASE_TX_MESSAGE "coinbase transaction disallowed in memory pool"
-#define BX_MATCHING_PREVIOUS_OBJECT_MESSAGE "matching previous object found"
-#define BX_VALIDATION_OF_INPUTS_FAILED "validation of inputs failed"
+#define BX_ERROR_MESSAGE(ec) \
+    code(error::ec).message();
 
 // Genesis block hash, transaction, address.
 #define BX_FIRST_ADDRESS \

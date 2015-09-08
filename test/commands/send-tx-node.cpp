@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_SUITE(send_tx_node__invoke)
 //    command.set_port_option(BX_MAINNET_PORT);
 //    command.set_transaction_argument({ SEND_TX_NODE_A });
 //    BX_REQUIRE_FAILURE(command.invoke(output, error));
-//    //BX_REQUIRE_ERROR(BX_SERVICE_STOPPED_MESSAGE "\n");
+//    //BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(service_stopped) "\n");
 //}
 
 BOOST_AUTO_TEST_SUITE_END()
