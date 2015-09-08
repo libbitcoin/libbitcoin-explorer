@@ -81,6 +81,8 @@ namespace commands {
     "The sequence exceeds the maximum value of 4095."
 #define BX_TOKEN_NEW_SHORT_SALT \
     "The salt is less than 32 bits long."
+#define BX_TOKEN_NEW_REQUIRES_ICU \
+    "The command requires an ICU build."
 
 /**
  * Class to implement the token-new command.
