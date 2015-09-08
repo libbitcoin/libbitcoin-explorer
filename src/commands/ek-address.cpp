@@ -38,14 +38,14 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
     const auto& token = get_token_argument();
     const data_chunk& seed = get_seed_argument();
 
-    if (seed.size() < bip38::seed_size)
+    if (seed.size() < seed_size)
     {
         error << BX_EK_ADDRESS_SHORT_SEED << std::endl;
         return console_result::failure;
     }
     
     bip38::seed bytes;
-    std::copy(seed.begin(), seed.begin() + bip38::seed_size, bytes.begin());
+    std::copy(seed.begin(), seed.begin() + seed_size, bytes.begin());
 
     ec_point point;
     private_key unused;
