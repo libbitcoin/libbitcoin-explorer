@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_EC_LOCK_VERIFY_HPP
-#define BX_EC_LOCK_VERIFY_HPP
+#ifndef BX_EC_TO_EK_HPP
+#define BX_EC_TO_EK_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -42,6 +42,9 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -72,19 +75,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_LOCK_VERIFY_CONFIRMATION_LENGTH_INVALID \
-    "The confirmation code must be 75 characters long."
-#define BX_EC_LOCK_VERIFY_VALID \
-    "The passphrase is valid for the confirmation code."
-#define BX_EC_LOCK_VERIFY_INVALID \
-    "The passphrase is not valid for the confirmation code."
-#define BX_EC_LOCK_VERIFY_PASSPHRASE_REQUIRES_ICU \
-    "The passphrase option requires an ICU build."
+#define BX_EC_TO_EK_REQUIRES_ICU \
+    "The command requires an ICU build."
 
 /**
- * Class to implement the ec-lock-verify command.
+ * Class to implement the ec-to-ek command.
  */
-class ec_lock_verify 
+class ec_to_ek 
     : public command
 {
 public:
@@ -94,16 +91,23 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "ec-lock-verify";
+        return "ec-to-ek";
     }
 
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    BCX_API static const char* formerly()
+    {
+        return "brainwallet";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     BCX_API virtual const char* name()
     {
-        return ec_lock_verify::symbol();
+        return ec_to_ek::symbol();
     }
 
     /**
@@ -111,7 +115,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "KEY_ENCRYPTION";
     }
 
     /**
@@ -119,7 +123,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Verify the passphrase for an encrypted private key (BIP38).";
+        return "Encrypt an EC private key as an encrypted private key (BIP38).";
     }
 
     /**
@@ -131,7 +135,7 @@ public:
     {
         return get_argument_metadata()
             .add("PASSPHRASE", 1)
-            .add("CONFIRMATION_CODE", 1);
+            .add("EC_PRIVATE_KEY", 1);
     }
 
 	/**
@@ -142,6 +146,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_ec_private_key_argument(), "EC_PRIVATE_KEY", variables, input, raw);
     }
 
     /**
@@ -165,14 +171,24 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "PASSPHRASE",
-            value<std::string>(&argument_.passphrase)->required(),
-            "The passphrase that was used to generate the encrypted private key."
+            "uncompressed,u",
+            value<bool>(&option_.uncompressed)->zero_tokens(),
+            "Use the uncompressed public key format."
         )
         (
-            "CONFIRMATION_CODE",
-            value<primitives::base58>(&argument_.confirmation_code)->required(),
-            "The Base58 confirmation code that was generated from the passphrase."
+            "version,v",
+            value<primitives::byte>(&option_.version),
+            "The desired payment address version."
+        )
+        (
+            "PASSPHRASE",
+            value<std::string>(&argument_.passphrase),
+            "The passphrase for locking the private key."
+        )
+        (
+            "EC_PRIVATE_KEY",
+            value<primitives::ec_private>(&argument_.ec_private_key),
+            "The EC private key to encrypt. If not specified the key is read from STDIN."
         );
 
         return options;
@@ -207,20 +223,54 @@ public:
     }
 
     /**
-     * Get the value of the CONFIRMATION_CODE argument.
+     * Get the value of the EC_PRIVATE_KEY argument.
      */
-    BCX_API virtual primitives::base58& get_confirmation_code_argument()
+    BCX_API virtual primitives::ec_private& get_ec_private_key_argument()
     {
-        return argument_.confirmation_code;
+        return argument_.ec_private_key;
     }
 
     /**
-     * Set the value of the CONFIRMATION_CODE argument.
+     * Set the value of the EC_PRIVATE_KEY argument.
      */
-    BCX_API virtual void set_confirmation_code_argument(
-        const primitives::base58& value)
+    BCX_API virtual void set_ec_private_key_argument(
+        const primitives::ec_private& value)
     {
-        argument_.confirmation_code = value;
+        argument_.ec_private_key = value;
+    }
+
+    /**
+     * Get the value of the uncompressed option.
+     */
+    BCX_API virtual bool& get_uncompressed_option()
+    {
+        return option_.uncompressed;
+    }
+
+    /**
+     * Set the value of the uncompressed option.
+     */
+    BCX_API virtual void set_uncompressed_option(
+        const bool& value)
+    {
+        option_.uncompressed = value;
+    }
+
+    /**
+     * Get the value of the version option.
+     */
+    BCX_API virtual primitives::byte& get_version_option()
+    {
+        return option_.version;
+    }
+
+    /**
+     * Set the value of the version option.
+     */
+    BCX_API virtual void set_version_option(
+        const primitives::byte& value)
+    {
+        option_.version = value;
     }
 
 private:
@@ -234,12 +284,12 @@ private:
     {
         argument()
           : passphrase(),
-            confirmation_code()
+            ec_private_key()
         {
         }
 
         std::string passphrase;
-        primitives::base58 confirmation_code;
+        primitives::ec_private ec_private_key;
     } argument_;
 
     /**
@@ -250,9 +300,13 @@ private:
     struct option
     {
         option()
+          : uncompressed(),
+            version()
         {
         }
 
+        bool uncompressed;
+        primitives::byte version;
     } option_;
 };
 

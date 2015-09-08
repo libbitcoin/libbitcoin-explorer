@@ -59,11 +59,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__ec_add_secrets_was_ec_add_modp__return
     BOOST_REQUIRE_EQUAL(formerly("ec-add-modp"), ec_add_secrets::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__ec_lock_was_brainwallet__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("brainwallet"), ec_lock::symbol());
-}
-
 BOOST_AUTO_TEST_CASE(generated__formerly__ec_multiply_secrets_was_ec_tweak_add__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("ec-tweak-add"), ec_multiply_secrets::symbol());
@@ -77,6 +72,11 @@ BOOST_AUTO_TEST_CASE(generated__formerly__ec_new_was_newkey__returns_object)
 BOOST_AUTO_TEST_CASE(generated__formerly__ec_to_address_was_addr__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("addr"), ec_to_address::symbol());
+}
+
+BOOST_AUTO_TEST_CASE(generated__formerly__ec_to_ek_was_brainwallet__returns_object)
+{
+    BOOST_REQUIRE_EQUAL(formerly("brainwallet"), ec_to_ek::symbol());
 }
 
 BOOST_AUTO_TEST_CASE(generated__formerly__ec_to_public_was_pubkey__returns_object)

@@ -42,6 +42,9 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -135,7 +138,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("BITCOIN_ADDRESS", 1)
+            .add("PAYMENT_ADDRESS", 1)
             .add("SIGNATURE", 1)
             .add("MESSAGE", 1);
     }
@@ -173,9 +176,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "BITCOIN_ADDRESS",
-            value<primitives::address>(&argument_.bitcoin_address)->required(),
-            "The Bitcoin address of the message signer."
+            "PAYMENT_ADDRESS",
+            value<primitives::address>(&argument_.payment_address)->required(),
+            "The payment address of the message signer."
         )
         (
             "SIGNATURE",
@@ -203,20 +206,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the BITCOIN_ADDRESS argument.
+     * Get the value of the PAYMENT_ADDRESS argument.
      */
-    BCX_API virtual primitives::address& get_bitcoin_address_argument()
+    BCX_API virtual primitives::address& get_payment_address_argument()
     {
-        return argument_.bitcoin_address;
+        return argument_.payment_address;
     }
 
     /**
-     * Set the value of the BITCOIN_ADDRESS argument.
+     * Set the value of the PAYMENT_ADDRESS argument.
      */
-    BCX_API virtual void set_bitcoin_address_argument(
+    BCX_API virtual void set_payment_address_argument(
         const primitives::address& value)
     {
-        argument_.bitcoin_address = value;
+        argument_.payment_address = value;
     }
 
     /**
@@ -263,13 +266,13 @@ private:
     struct argument
     {
         argument()
-          : bitcoin_address(),
+          : payment_address(),
             signature(),
             message()
         {
         }
 
-        primitives::address bitcoin_address;
+        primitives::address payment_address;
         primitives::signature signature;
         primitives::raw message;
     } argument_;

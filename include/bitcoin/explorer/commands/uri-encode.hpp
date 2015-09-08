@@ -42,6 +42,9 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -73,7 +76,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_URI_ENCODE_ADDRESS_CONFLICT \
-    "Only one Bitcoin or stealth address may specified."
+    "Only one payment address or stealth address may specified."
 
 /**
  * Class to implement the uri-encode command.
@@ -185,7 +188,7 @@ public:
         (
             "BITCOIN_ADDRESS",
             value<primitives::address>(&argument_.bitcoin_address),
-            "The Bitcoin address for the address part."
+            "The payment address for the address part."
         );
 
         return options;

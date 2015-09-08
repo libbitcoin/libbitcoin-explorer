@@ -139,16 +139,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_add_secrets__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ec_add_secrets::symbol(), "ec-add-secrets");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__ec_lock__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(ec_lock::symbol(), "ec-lock");
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__ec_lock_verify__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(ec_lock_verify::symbol(), "ec-lock-verify");
-}
-
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(ec_multiply::symbol(), "ec-multiply");
@@ -169,6 +159,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_address__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ec_to_address::symbol(), "ec-to-address");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_ek__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ec_to_ek::symbol(), "ec-to-ek");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_public__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(ec_to_public::symbol(), "ec-to-public");
@@ -179,9 +174,39 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_wif__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ec_to_wif::symbol(), "ec-to-wif");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__ec_unlock__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__ek_address__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(ec_unlock::symbol(), "ec-unlock");
+    BOOST_REQUIRE_EQUAL(ek_address::symbol(), "ek-address");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ek_new__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ek_new::symbol(), "ek-new");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ek_public__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ek_public::symbol(), "ek-public");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ek_public_to_address__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ek_public_to_address::symbol(), "ek-public-to-address");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ek_public_to_ec__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ek_public_to_ec::symbol(), "ek-public-to-ec");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ek_to_address__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ek_to_address::symbol(), "ek-to-address");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__ek_to_ec__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ek_to_ec::symbol(), "ek-to-ec");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_balance__returns_expected_value)
@@ -457,6 +482,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__stealth_secret__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__stealth_shared__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(stealth_shared::symbol(), "stealth-shared");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__token_new__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(token_new::symbol(), "token-new");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__tx_decode__returns_expected_value)

@@ -24,8 +24,6 @@
 #include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_EC_UNLOCK_HPP
-#define BX_EC_UNLOCK_HPP
+#ifndef BX_EK_TO_ADDRESS_HPP
+#define BX_EK_TO_ADDRESS_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -42,6 +42,9 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -72,17 +75,15 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_UNLOCK_ENCRYPTED_KEY_LENGTH_INVALID \
-    "The encrypted private key must be 58 characters long."
-#define BX_EC_UNLOCK_FAILED \
-    "The password was not used to encrypt the encrypted private key."
-#define BX_EC_UNLOCK_REQUIRES_ICU \
-    "This command requires an ICU build."
+#define BX_EK_TO_ADDRESS_INVALID_PASSPHRASE \
+    "The passphrase is incorrect."
+#define BX_EK_TO_ADDRESS_REQUIRES_ICU \
+    "The command requires an ICU build."
 
 /**
- * Class to implement the ec-unlock command.
+ * Class to implement the ek-to-address command.
  */
-class ec_unlock 
+class ek_to_address 
     : public command
 {
 public:
@@ -92,7 +93,7 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "ec-unlock";
+        return "ek-to-address";
     }
 
 
@@ -101,7 +102,7 @@ public:
      */
     BCX_API virtual const char* name()
     {
-        return ec_unlock::symbol();
+        return ek_to_address::symbol();
     }
 
     /**
@@ -109,7 +110,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "KEY_ENCRYPTION";
     }
 
     /**
@@ -117,7 +118,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Recover the Base16 EC private key from an encrypted private key (BIP38).";
+        return "Extract the payment address of an encrypted private key (BIP38).";
     }
 
     /**
@@ -128,8 +129,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("ENCRYPTED_PRIVATE_KEY", 1)
-            .add("PASSPHRASE", 1);
+            .add("PASSPHRASE", 1)
+            .add("EK_PRIVATE_KEY", 1);
     }
 
 	/**
@@ -140,6 +141,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_ek_private_key_argument(), "EK_PRIVATE_KEY", variables, input, raw);
     }
 
     /**
@@ -163,14 +166,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "ENCRYPTED_PRIVATE_KEY",
-            value<primitives::base58>(&argument_.encrypted_private_key),
-            "The Base58 encoded encrypted private key (BIP38) to unlock."
+            "PASSPHRASE",
+            value<std::string>(&argument_.passphrase),
+            "The passphrase that was used to generate the intermediate passphrase token or to lock the encrypted private key."
         )
         (
-            "PASSPHRASE",
-            value<std::string>(&argument_.passphrase)->required(),
-            "The passphrase that was used to lock the encrypted private key."
+            "EK_PRIVATE_KEY",
+            value<primitives::ek_private>(&argument_.ek_private_key),
+            "The encrypted private key from which to extract the payment address."
         );
 
         return options;
@@ -186,23 +189,6 @@ public:
         std::ostream& cerr);
 
     /* Properties */
-
-    /**
-     * Get the value of the ENCRYPTED_PRIVATE_KEY argument.
-     */
-    BCX_API virtual primitives::base58& get_encrypted_private_key_argument()
-    {
-        return argument_.encrypted_private_key;
-    }
-
-    /**
-     * Set the value of the ENCRYPTED_PRIVATE_KEY argument.
-     */
-    BCX_API virtual void set_encrypted_private_key_argument(
-        const primitives::base58& value)
-    {
-        argument_.encrypted_private_key = value;
-    }
 
     /**
      * Get the value of the PASSPHRASE argument.
@@ -221,6 +207,23 @@ public:
         argument_.passphrase = value;
     }
 
+    /**
+     * Get the value of the EK_PRIVATE_KEY argument.
+     */
+    BCX_API virtual primitives::ek_private& get_ek_private_key_argument()
+    {
+        return argument_.ek_private_key;
+    }
+
+    /**
+     * Set the value of the EK_PRIVATE_KEY argument.
+     */
+    BCX_API virtual void set_ek_private_key_argument(
+        const primitives::ek_private& value)
+    {
+        argument_.ek_private_key = value;
+    }
+
 private:
 
     /**
@@ -231,13 +234,13 @@ private:
     struct argument
     {
         argument()
-          : encrypted_private_key(),
-            passphrase()
+          : passphrase(),
+            ek_private_key()
         {
         }
 
-        primitives::base58 encrypted_private_key;
         std::string passphrase;
+        primitives::ek_private ek_private_key;
     } argument_;
 
     /**

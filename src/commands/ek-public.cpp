@@ -17,46 +17,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/commands/ec-lock.hpp>
+#include <bitcoin/explorer/commands/ek-public.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
 
 using namespace bc;
+using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+////using namespace bc::explorer::primitives;
 
-console_result ec_lock_verify::invoke(std::ostream& output,
-    std::ostream& error)
+console_result ek_public::invoke(std::ostream& output, std::ostream& error)
 {
-#ifdef WITH_ICU
-    const auto& passphrase = get_passphrase_argument();
-    const data_chunk& code_decoded = get_confirmation_code_argument();
+    const auto uncompressed = get_uncompressed_option();
+    const auto version = get_version_option();
+    const auto& token = get_token_argument();
+    const data_chunk& seed = get_seed_argument();
 
-    if (code_decoded.size() != bip38::confirmation_code_decoded_size)
+    if (seed.size() < bip38::seed_size)
     {
-        error << BX_EC_LOCK_VERIFY_CONFIRMATION_LENGTH_INVALID << std::endl;
+        error << BX_EK_PUBLIC_SHORT_SEED << std::endl;
         return console_result::failure;
     }
+    
+    bip38::seed bytes;
+    std::copy(seed.begin(), seed.begin() + bip38::seed_size, bytes.begin());
 
-    bip38::confirmation_code code;
-    std::copy(code_decoded.begin(), code_decoded.end(), code.begin());
-
-    bc::wallet::payment_address address;
-    const auto confirmed = bip38::lock_verify(code, passphrase, address);
-    if (confirmed)
-        output << BX_EC_LOCK_VERIFY_VALID << std::endl;
-    else
-        output << BX_EC_LOCK_VERIFY_INVALID << std::endl;
-
-    return console_result::okay;
-#else
-    error << BX_EC_LOCK_VERIFY_PASSPHRASE_REQUIRES_ICU << std::endl;
+    ec_point unused1;
+    private_key unused2;
+    primitives::ek_public key;
+    create_key_pair(unused2, key.data(), unused1, token, bytes, version,
+        !uncompressed);
+    
+    output << key << std::endl;
     return console_result::failure;
-#endif
 }
-

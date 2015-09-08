@@ -17,23 +17,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include "command.hpp"
 
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(offline)
-BOOST_AUTO_TEST_SUITE(ec_lock_verify__invoke)
+BOOST_AUTO_TEST_SUITE(token_new__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_lock_verify__invoke__defaults__failure_error)
+BOOST_AUTO_TEST_CASE(token_new__invoke__default__okay)
 {
-    BX_DECLARE_COMMAND(ec_lock_verify);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-#ifdef WITH_ICU
-    BX_REQUIRE_ERROR(BX_EC_LOCK_VERIFY_CONFIRMATION_LENGTH_INVALID "\n");
-#else
-    BX_REQUIRE_ERROR(BX_EC_LOCK_VERIFY_PASSPHRASE_REQUIRES_ICU "\n");
-#endif
 }
 
 BOOST_AUTO_TEST_SUITE_END()

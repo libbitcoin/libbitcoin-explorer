@@ -24,7 +24,6 @@
 #include <cstdint>
 #include <vector>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

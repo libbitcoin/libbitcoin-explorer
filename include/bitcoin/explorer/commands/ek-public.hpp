@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_EC_LOCK_HPP
-#define BX_EC_LOCK_HPP
+#ifndef BX_EK_PUBLIC_HPP
+#define BX_EK_PUBLIC_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -42,6 +42,9 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -72,25 +75,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_LOCK_SHORT_SEED \
+#define BX_EK_PUBLIC_SHORT_SEED \
     "The seed is less than 192 bits long."
-#define BX_EC_LOCK_PASSPHRASE_REQUIRES_ICU \
-    "The passphrase option requires an ICU build."
-#define BX_EC_LOCK_MODE_REQUIRED \
-    "One of the passphrase or intermediate option is required."
-#define BX_EC_LOCK_MODE_CONFLICT \
-    "The passphrase and intermediate options are mutually exclusive."
-#define BX_EC_LOCK_INTERMEDIATE_CONFLICT \
-    "The intermediate option is not allowed when using a passphrase."
-#define BX_EC_LOCK_SEED_CONFLICT \
-    "The seed is not allowed when using a passphrase."
-#define BX_EC_LOCK_INTERMEDIATE_LENGTH_INVALID \
-    "The intermediate must be 72 characters long."
 
 /**
- * Class to implement the ec-lock command.
+ * Class to implement the ek-public command.
  */
-class ec_lock 
+class ek_public 
     : public command
 {
 public:
@@ -100,23 +91,16 @@ public:
      */
     BCX_API static const char* symbol()
     {
-        return "ec-lock";
+        return "ek-public";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    BCX_API static const char* formerly()
-    {
-        return "brainwallet";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     BCX_API virtual const char* name()
     {
-        return ec_lock::symbol();
+        return ek_public::symbol();
     }
 
     /**
@@ -124,7 +108,7 @@ public:
      */
     BCX_API virtual const char* category()
     {
-        return "WALLET";
+        return "KEY_ENCRYPTION";
     }
 
     /**
@@ -132,7 +116,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Encrypt a Base16 EC private key as a Base58 encoded encrypted private key (BIP38) using a passphrase or intermediate value and seed.";
+        return "Create an encrypted public key from an intermediate passphrase token (BIP38).";
     }
 
     /**
@@ -143,7 +127,8 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("EC_PRIVATE_KEY", 1);
+            .add("TOKEN", 1)
+            .add("SEED", 1);
     }
 
 	/**
@@ -179,27 +164,22 @@ public:
         (
             "uncompressed,u",
             value<bool>(&option_.uncompressed)->zero_tokens(),
-            "Use the uncompressed public key format."
+            "Use the uncompressed public key format, as used to create the corresponding encrypted private key."
         )
         (
-            "passphrase,p",
-            value<std::string>(&option_.passphrase),
-            "The passphrase for locking the private key."
+            "version,v",
+            value<primitives::byte>(&option_.version),
+            "The desired payment address version used to create the corresponding encrypted private key."
         )
         (
-            "intermediate,i",
-            value<primitives::base58>(&option_.intermediate),
-            "The Base58 intermediate, required for locking without a passphrase."
+            "TOKEN",
+            value<primitives::ek_token>(&argument_.token),
+            "The intermediate passphrase token used to create the corresponding encrypted private key."
         )
         (
-            "seed,s",
-            value<primitives::base16>(&option_.seed),
-            "The Base16 entropy, required for locking without a passphrase. Must be at least 192 bits in length."
-        )
-        (
-            "EC_PRIVATE_KEY",
-            value<primitives::ec_private>(&argument_.ec_private_key),
-            "The Base16 EC private key to encrypt."
+            "SEED",
+            value<primitives::base16>(&argument_.seed),
+            "The Base16 entropy for the new encrypted public key. Must be at least 192 bits in length (only the first 192 bits are used)."
         );
 
         return options;
@@ -217,20 +197,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the EC_PRIVATE_KEY argument.
+     * Get the value of the TOKEN argument.
      */
-    BCX_API virtual primitives::ec_private& get_ec_private_key_argument()
+    BCX_API virtual primitives::ek_token& get_token_argument()
     {
-        return argument_.ec_private_key;
+        return argument_.token;
     }
 
     /**
-     * Set the value of the EC_PRIVATE_KEY argument.
+     * Set the value of the TOKEN argument.
      */
-    BCX_API virtual void set_ec_private_key_argument(
-        const primitives::ec_private& value)
+    BCX_API virtual void set_token_argument(
+        const primitives::ek_token& value)
     {
-        argument_.ec_private_key = value;
+        argument_.token = value;
+    }
+
+    /**
+     * Get the value of the SEED argument.
+     */
+    BCX_API virtual primitives::base16& get_seed_argument()
+    {
+        return argument_.seed;
+    }
+
+    /**
+     * Set the value of the SEED argument.
+     */
+    BCX_API virtual void set_seed_argument(
+        const primitives::base16& value)
+    {
+        argument_.seed = value;
     }
 
     /**
@@ -251,54 +248,20 @@ public:
     }
 
     /**
-     * Get the value of the passphrase option.
+     * Get the value of the version option.
      */
-    BCX_API virtual std::string& get_passphrase_option()
+    BCX_API virtual primitives::byte& get_version_option()
     {
-        return option_.passphrase;
+        return option_.version;
     }
 
     /**
-     * Set the value of the passphrase option.
+     * Set the value of the version option.
      */
-    BCX_API virtual void set_passphrase_option(
-        const std::string& value)
+    BCX_API virtual void set_version_option(
+        const primitives::byte& value)
     {
-        option_.passphrase = value;
-    }
-
-    /**
-     * Get the value of the intermediate option.
-     */
-    BCX_API virtual primitives::base58& get_intermediate_option()
-    {
-        return option_.intermediate;
-    }
-
-    /**
-     * Set the value of the intermediate option.
-     */
-    BCX_API virtual void set_intermediate_option(
-        const primitives::base58& value)
-    {
-        option_.intermediate = value;
-    }
-
-    /**
-     * Get the value of the seed option.
-     */
-    BCX_API virtual primitives::base16& get_seed_option()
-    {
-        return option_.seed;
-    }
-
-    /**
-     * Set the value of the seed option.
-     */
-    BCX_API virtual void set_seed_option(
-        const primitives::base16& value)
-    {
-        option_.seed = value;
+        option_.version = value;
     }
 
 private:
@@ -311,11 +274,13 @@ private:
     struct argument
     {
         argument()
-          : ec_private_key()
+          : token(),
+            seed()
         {
         }
 
-        primitives::ec_private ec_private_key;
+        primitives::ek_token token;
+        primitives::base16 seed;
     } argument_;
 
     /**
@@ -327,16 +292,12 @@ private:
     {
         option()
           : uncompressed(),
-            passphrase(),
-            intermediate(),
-            seed()
+            version()
         {
         }
 
         bool uncompressed;
-        std::string passphrase;
-        primitives::base58 intermediate;
-        primitives::base16 seed;
+        primitives::byte version;
     } option_;
 };
 

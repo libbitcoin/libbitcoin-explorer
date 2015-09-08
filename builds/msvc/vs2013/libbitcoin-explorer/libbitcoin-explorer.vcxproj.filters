@@ -122,12 +122,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-add-secrets.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-lock.hpp">
-      <Filter>include\bitcoin\explorer\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-lock-verify.hpp">
-      <Filter>include\bitcoin\explorer\commands</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-multiply.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
@@ -140,13 +134,34 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-address.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-ek.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-public.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-wif.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-unlock.hpp">
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-address.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-new.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-public.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-public-to-address.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-public-to-ec.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-address.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-ec.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp">
@@ -314,6 +329,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-shared.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\token-new.hpp">
+      <Filter>include\bitcoin\explorer\commands</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-decode.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
@@ -396,6 +414,15 @@
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\ec_public.hpp">
+      <Filter>include\bitcoin\explorer\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\ek_private.hpp">
+      <Filter>include\bitcoin\explorer\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\ek_public.hpp">
+      <Filter>include\bitcoin\explorer\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\ek_token.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\encoding.hpp">
@@ -559,12 +586,6 @@
     <ClCompile Include="..\..\..\..\src\commands\ec-add-secrets.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\ec-lock.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\ec-lock-verify.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\ec-multiply.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -577,13 +598,34 @@
     <ClCompile Include="..\..\..\..\src\commands\ec-to-address.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ec-to-ek.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\ec-to-public.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\ec-to-wif.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\ec-unlock.cpp">
+    <ClCompile Include="..\..\..\..\src\commands\ek-address.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ek-new.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ek-public.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ek-public-to-address.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ek-public-to-ec.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ek-to-address.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\ek-to-ec.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp">
@@ -751,6 +793,9 @@
     <ClCompile Include="..\..\..\..\src\commands\stealth-shared.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\token-new.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\tx-decode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -827,6 +872,15 @@
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\ec_public.cpp">
+      <Filter>src\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\primitives\ek_private.cpp">
+      <Filter>src\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\primitives\ek_public.cpp">
+      <Filter>src\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\primitives\ek_token.cpp">
       <Filter>src\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\hashtype.cpp">

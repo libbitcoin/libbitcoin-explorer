@@ -42,6 +42,9 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -107,7 +110,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get list of output points, values, and spends for a Bitcoin address. Requires a Libbitcoin/Obelisk server connection.";
+        return "Get list of output points, values, and spends for a payment address. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**
@@ -118,7 +121,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("BITCOIN_ADDRESS", 1);
+            .add("PAYMENT_ADDRESS", 1);
     }
 
 	/**
@@ -130,7 +133,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input, raw);
+        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
     }
 
     /**
@@ -159,9 +162,9 @@ public:
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "BITCOIN_ADDRESS",
-            value<primitives::address>(&argument_.bitcoin_address),
-            "The Bitcoin address. If not specified the address is read from STDIN."
+            "PAYMENT_ADDRESS",
+            value<primitives::address>(&argument_.payment_address),
+            "The payment address. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -179,20 +182,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the BITCOIN_ADDRESS argument.
+     * Get the value of the PAYMENT_ADDRESS argument.
      */
-    BCX_API virtual primitives::address& get_bitcoin_address_argument()
+    BCX_API virtual primitives::address& get_payment_address_argument()
     {
-        return argument_.bitcoin_address;
+        return argument_.payment_address;
     }
 
     /**
-     * Set the value of the BITCOIN_ADDRESS argument.
+     * Set the value of the PAYMENT_ADDRESS argument.
      */
-    BCX_API virtual void set_bitcoin_address_argument(
+    BCX_API virtual void set_payment_address_argument(
         const primitives::address& value)
     {
-        argument_.bitcoin_address = value;
+        argument_.payment_address = value;
     }
 
     /**
@@ -222,11 +225,11 @@ private:
     struct argument
     {
         argument()
-          : bitcoin_address()
+          : payment_address()
         {
         }
 
-        primitives::address bitcoin_address;
+        primitives::address payment_address;
     } argument_;
 
     /**

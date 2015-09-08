@@ -26,15 +26,20 @@ _bx()
         cert-public
         ec-add
         ec-add-secrets
-        ec-lock
-        ec-lock-verify
         ec-multiply
         ec-multiply-secrets
         ec-new
         ec-to-address
+        ec-to-ek
         ec-to-public
         ec-to-wif
-        ec-unlock
+        ek-address
+        ek-new
+        ek-public
+        ek-public-to-address
+        ek-public-to-ec
+        ek-to-address
+        ek-to-ec
         fetch-balance
         fetch-header
         fetch-height
@@ -78,6 +83,7 @@ _bx()
         stealth-public
         stealth-secret
         stealth-shared
+        token-new
         tx-decode
         tx-encode
         tx-sign

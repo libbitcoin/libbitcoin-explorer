@@ -17,44 +17,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/commands/ec-unlock.hpp>
+#include <bitcoin/explorer/commands/token-new.hpp>
 
-#include <algorithm>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
 
 using namespace bc;
+using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
+console_result token_new::invoke(std::ostream& output, std::ostream& error)
 {
-#ifdef WITH_ICU
-    const auto& passphrase = get_passphrase_argument();
-    const data_chunk& key_decoded = get_encrypted_private_key_argument();
-
-    if (key_decoded.size() != bip38::encrypted_key_decoded_size)
-    {
-        error << BX_EC_UNLOCK_ENCRYPTED_KEY_LENGTH_INVALID << std::endl;
-        return console_result::failure;
-    }
-
-    bip38::encrypted_private_key key;
-    std::copy(key_decoded.begin(), key_decoded.end(), key.begin());
-    const auto secret = bip38::unlock_secret(key, passphrase);
-    if (secret == ec_secret())
-    {
-        error << BX_EC_UNLOCK_FAILED << std::endl;
-        return console_result::failure;
-    }
-
-    output << ec_private(secret) << std::endl;
-    return console_result::okay;
-#else
-    error << BX_EC_UNLOCK_REQUIRES_ICU << std::endl;
     return console_result::failure;
-#endif
 }
