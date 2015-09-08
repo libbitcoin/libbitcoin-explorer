@@ -36,7 +36,7 @@ using namespace bc::explorer::primitives;
 
 // Libbitcoin error messsages (see error.cpp).
 #define BX_ERROR_MESSAGE(ec) \
-    code(error::ec).message();
+    code(error::ec).message()
 
 // Genesis block hash, transaction, address.
 #define BX_FIRST_ADDRESS \

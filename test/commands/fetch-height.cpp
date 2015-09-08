@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet_wait_0__failure)
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 
     // TODO: figure out why on Windows the message is not the libbitcoin text.
-    // BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(channel_timeout) "\n");
+    // BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(channel_timeout) + "\n");
 }
 
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet__okay)
