@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__passphrase_8_byte_salt__okay)
     command.set_salt_argument({ "baadf00dbaadf00d" });
     command.set_passphrase_argument("passphrase");
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("passphrasecpXbDpHuo8F7x4pQXMhsJs2j7L8LTV8ujk9jGqgzUrafBeto9VrabP5SmvANvz\n");
+    BX_REQUIRE_OUTPUT("passphraseqVHzjN9paya9Fpe22QRCzqLhBiobhtgHd1e7T4QP6kqTtNeKA5jaYBcD4U2V23\n");
 }
 
 BOOST_AUTO_TEST_CASE(token_new__invoke__excess_lot_4_byte_salt__okay)

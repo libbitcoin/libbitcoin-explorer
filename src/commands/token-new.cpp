@@ -60,11 +60,19 @@ console_result token_new::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    bip38::salt bytes;
-    std::copy(salt.begin(), salt.begin() + salt_size, bytes.begin());
-
     ek_token token;
-    create_token(token.data(), passphrase, bytes, lot, sequence);
+    if (lot == 0 && sequence == 0 && salt.size() >= entropy_size)
+    {
+        entropy bytes;
+        std::copy(salt.begin(), salt.begin() + salt_size, bytes.begin());
+        create_token(token.data(), passphrase, bytes);
+    }
+    else
+    {
+        bip38::salt bytes;
+        std::copy(salt.begin(), salt.begin() + salt_size, bytes.begin());
+        create_token(token.data(), passphrase, bytes, lot, sequence);
+    }
 
     output << token << std::endl;
     return console_result::okay;
