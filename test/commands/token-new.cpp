@@ -24,6 +24,8 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(token_new__invoke)
 
+#ifdef WITH_ICU
+
 BOOST_AUTO_TEST_CASE(token_new__invoke__empty_salt__failure_error)
 {
     BX_DECLARE_COMMAND(token_new);
@@ -102,6 +104,17 @@ BOOST_AUTO_TEST_CASE(token_new__invoke__lot_sequence_passphrase_4_byte_salt__oka
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("passphrasecpXbDpHuo8FGWnwMTnTFiHSDnqyARArE2YSFQzMHtCZvM2oWg2K3Ua2crKyc11\n");
 }
+
+#else // WITH_ICU
+
+BOOST_AUTO_TEST_CASE(token_new__invoke__not_icu__failure_error)
+{
+    BX_DECLARE_COMMAND(token_new);
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_TOKEN_NEW_REQUIRES_ICU "\n");
+}
+
+#endif // !WITH_ICU
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
