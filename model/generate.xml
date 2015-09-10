@@ -107,7 +107,7 @@
     <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN." />
   </command>
 
-  <command symbol="base58check-decode" output="wrapper" category="ENCODING" description="Convert a Base58Check value to Base16.">
+  <command symbol="base58check-decode" output="wrapper" category="ENCODING" description="Convert a Base58Check value to its component parts.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="BASE58CHECK" stdin="true" type="base58" description="The Base58Check value to decode. If not specified the value is read from STDIN." />
   </command>
@@ -255,13 +255,13 @@
 
   <command symbol="ek-public-to-ec" output="ec_public" category="KEY_ENCRYPTION" description="Extract the EC public key of an encrypted public key (BIP38). ">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the encrypted private key." />
-    <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key to unlock." />
+    <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key to decrypt." />
     <define name="BX_EK_PUBLIC_TO_EC_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
     <define name="BX_EK_PUBLIC_TO_EC_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
   <command symbol="ek-to-address" output="address" category="KEY_ENCRYPTION" description="Extract the payment address of an encrypted private key (BIP38).">
-    <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the intermediate passphrase token or to lock the encrypted private key." />
+    <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the intermediate passphrase token or to encrypt the encrypted private key." />
     <argument name="EK_PRIVATE_KEY" stdin="true" type="ek_private" description="The encrypted private key from which to extract the payment address." />
     <define name="BX_EK_TO_ADDRESS_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
     <define name="BX_EK_TO_ADDRESS_REQUIRES_ICU" value="The command requires an ICU build." />
@@ -599,7 +599,7 @@
     <define name="BX_TX_SIGN_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
   
-  <command symbol="uri-decode" output="uri" category="WALLET" description="Validate and decompose a Bitcoin URI into its parts.">
+  <command symbol="uri-decode" output="uri" category="WALLET" description="Decompose a Bitcoin URI into its parts.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="URI" type="uri" stdin="true"  description="The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN." />
     <define name="BX_URI_DECODE_NOT_BITCOIN" value="The URI is not of the 'bitcoin' scheme." />
@@ -655,7 +655,7 @@
     <argument name="WIF" stdin="true" type="wif" description="The WIF private key. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="wrap-decode" formerly="unwrap" output="wrapper" category="ENCODING" description="Validate the checksum of a Base16 data and recover its version byte and data.">
+  <command symbol="wrap-decode" formerly="unwrap" output="wrapper" category="ENCODING" description="Validate the checksum of checked Base16 data and recover its version and payload.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="WRAPPED" stdin="true" type="wrapper" description="The Base16 data to unwrap. If not specified the value is read from STDIN." />
   </command>
