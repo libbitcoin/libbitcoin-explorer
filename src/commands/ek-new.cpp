@@ -51,5 +51,5 @@ console_result ek_new::invoke(std::ostream& output, std::ostream& error)
     create_key_pair(key.data(), unused, token, bytes, version, !uncompressed);
     
     output << key << std::endl;
-    return console_result::failure;
+    return console_result::okay;
 }

@@ -53,5 +53,5 @@ console_result ek_public::invoke(std::ostream& output, std::ostream& error)
         !uncompressed);
     
     output << key << std::endl;
-    return console_result::failure;
+    return console_result::okay;
 }

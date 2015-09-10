@@ -54,5 +54,5 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
     const address payment_address(version, point);
 
     output << payment_address << std::endl;
-    return console_result::failure;
+    return console_result::okay;
 }
