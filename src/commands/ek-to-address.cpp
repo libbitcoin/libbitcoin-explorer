@@ -32,13 +32,9 @@ using namespace bc::explorer::primitives;
 
 console_result ek_to_address::invoke(std::ostream& output, std::ostream& error)
 {
+#ifdef WITH_ICU
     const auto& passphrase = get_passphrase_argument();
     const auto& key = get_ek_private_key_argument();
-
-#ifndef WITH_ICU
-    error << BX_EK_TO_ADDRESS_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
 
     bool compressed;
     uint8_t version;
@@ -54,4 +50,8 @@ console_result ek_to_address::invoke(std::ostream& output, std::ostream& error)
 
     output << secret << std::endl;
     return console_result::okay;
+#else
+    error << BX_EK_TO_ADDRESS_REQUIRES_ICU << std::endl;
+    return console_result::failure;
+#endif
 }

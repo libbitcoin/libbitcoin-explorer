@@ -33,13 +33,9 @@ using namespace bc::explorer::primitives;
 console_result ek_public_to_ec::invoke(std::ostream& output,
     std::ostream& error)
 {
+#ifdef WITH_ICU
     const auto& passphrase = get_passphrase_argument();
     const auto& key = get_ek_public_key_argument();
-
-#ifndef WITH_ICU
-    error << BX_EK_PUBLIC_TO_EC_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
 
     ec_public point;
     uint8_t version;
@@ -51,4 +47,8 @@ console_result ek_public_to_ec::invoke(std::ostream& output,
 
     output << point << std::endl;
     return console_result::okay;
+#else
+    error << BX_EK_PUBLIC_TO_EC_REQUIRES_ICU << std::endl;
+    return console_result::failure;
+#endif
 }

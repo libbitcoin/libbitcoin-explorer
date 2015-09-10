@@ -32,16 +32,12 @@ using namespace bc::explorer::primitives;
 
 console_result token_new::invoke(std::ostream& output, std::ostream& error)
 {
+#ifdef WITH_ICU
     const auto lot = get_lot_option();
     const auto sequence = get_sequence_option();
     const auto& passphrase = get_passphrase_argument();
     const data_chunk& salt = get_salt_argument();
 
-#ifndef WITH_ICU
-    error << BX_TOKEN_NEW_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
-    
     if (salt.size() < salt_size)
     {
         error << BX_TOKEN_NEW_SHORT_SALT << std::endl;
@@ -76,4 +72,8 @@ console_result token_new::invoke(std::ostream& output, std::ostream& error)
 
     output << token << std::endl;
     return console_result::okay;
+#else
+    error << BX_TOKEN_NEW_REQUIRES_ICU << std::endl;
+    return console_result::failure;
+#endif
 }

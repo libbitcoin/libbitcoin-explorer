@@ -34,19 +34,19 @@ using namespace bc::explorer::primitives;
 
 console_result ec_to_ek::invoke(std::ostream& output, std::ostream& error)
 {
+#ifdef WITH_ICU
     const auto uncompressed = get_uncompressed_option();
     const auto version = get_version_option();
     const auto& passphrase = get_passphrase_argument();
     const auto& secret = get_ec_private_key_argument();
-
-#ifndef WITH_ICU
-    error << BX_EC_TO_EK_REQUIRES_ICU << std::endl;
-    return console_result::failure;
-#endif
 
     ek_private key;
     encrypt(key.data(), secret, passphrase, version, !uncompressed);
 
     output << key << std::endl;
     return console_result::okay;
+#else
+    error << BX_EC_TO_EK_REQUIRES_ICU << std::endl;
+    return console_result::failure;
+#endif
 }
