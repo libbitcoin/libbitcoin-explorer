@@ -168,12 +168,12 @@ public:
         (
             "PASSPHRASE",
             value<std::string>(&argument_.passphrase),
-            "The passphrase that was used to lock the encrypted private key."
+            "The passphrase that was used to encrypt the encrypted private key."
         )
         (
             "EK_PRIVATE_KEY",
             value<primitives::ek_private>(&argument_.ek_private_key),
-            "The encrypted private key to unlock."
+            "The encrypted private key to decrypt."
         );
 
         return options;

@@ -183,7 +183,7 @@ public:
         (
             "PASSPHRASE",
             value<std::string>(&argument_.passphrase),
-            "The passphrase for locking the private key."
+            "The passphrase for encrypting the private key."
         )
         (
             "EC_PRIVATE_KEY",

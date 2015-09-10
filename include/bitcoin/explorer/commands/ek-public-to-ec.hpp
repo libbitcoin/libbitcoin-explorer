@@ -118,7 +118,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Verify the passphrase for an encrypted private key (BIP38).";
+        return "Extract the EC public key of an encrypted public key (BIP38). ";
     }
 
     /**

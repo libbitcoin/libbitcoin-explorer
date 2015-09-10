@@ -253,7 +253,7 @@
     <define name="BX_EK_PUBLIC_TO_ADDRESS_REQUIRES_ICU" value="The command requires an ICU build." />
   </command> 
 
-  <command symbol="ek-public-to-ec" output="ec_public" category="KEY_ENCRYPTION" description="Verify the passphrase for an encrypted private key (BIP38).">
+  <command symbol="ek-public-to-ec" output="ec_public" category="KEY_ENCRYPTION" description="Extract the EC public key of an encrypted public key (BIP38). ">
     <argument name="PASSPHRASE" description="The passphrase that was used to generate the encrypted private key." />
     <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key to unlock." />
     <define name="BX_EK_PUBLIC_TO_EC_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
@@ -571,7 +571,7 @@
     <option name="lot" type="uint32_t" description="An arbitrary lot number, limited to 1048575." />
     <option name="sequence" type="uint32_t" description="An arbitrary sequence number, limited to 4095." />
     <argument name="PASSPHRASE" description="The passphrase for encrypting the token." />
-    <argument name="SALT" stdin="true" type="base16" description="The Base16 entropy for the new token. Must be at least 32 bits in length (only the first 32 bits are used)." />
+    <argument name="SALT" stdin="true" type="base16" description="The Base16 entropy for the new token. Must be at least 32 bits in length. Only the first 32 bits are used unless lot and sequence are zero or unspecified and the salt is at least 64 bits, in which case 64 bits are used and lot and sequence are not used." />
     <!-- We could implement custom types for lot and sequence and eliminate these checks. -->
     <define name="BX_TOKEN_NEW_MAXIMUM_LOT" value="The lot exceeds the maximum value of 1048575." />
     <define name="BX_TOKEN_NEW_MAXIMUM_SEQUENCE" value="The sequence exceeds the maximum value of 4095." />
