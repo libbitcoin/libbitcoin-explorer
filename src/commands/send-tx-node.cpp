@@ -54,6 +54,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const tx_type& transaction = get_transaction_argument();
     const auto& debug_file = get_logging_debug_file_setting();
     const auto& error_file = get_logging_error_file_setting();
+    const auto& hosts_file = get_general_hosts_file_setting();
     const auto retries = get_general_connect_retries_setting();
     const auto connect = get_general_connect_timeout_seconds_setting();
     const auto handshake = get_general_channel_handshake_seconds_setting();
@@ -75,7 +76,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const network::timeout timeouts(connect, handshake);
 
     async_client client(threads);
-    network::hosts hosts(client.pool(), host_pool_size);
+    network::hosts hosts(client.pool(), hosts_file, host_pool_size);
     network::initiator net(client.pool(), timeouts);
     network::protocol proto(client.pool(), hosts, net, listen);
 
