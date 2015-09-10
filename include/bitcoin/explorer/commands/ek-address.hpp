@@ -175,7 +175,7 @@ public:
         )
         (
             "TOKEN",
-            value<primitives::ek_token>(&argument_.token),
+            value<primitives::ek_token>(&argument_.token)->required(),
             "The intermediate passphrase token used to create the corresponding encrypted private key."
         )
         (

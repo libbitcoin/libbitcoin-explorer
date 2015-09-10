@@ -182,7 +182,7 @@ public:
         )
         (
             "PASSPHRASE",
-            value<std::string>(&argument_.passphrase),
+            value<std::string>(&argument_.passphrase)->required(),
             "The passphrase for encrypting the private key."
         )
         (
