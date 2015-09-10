@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(ek_to_ec__invoke__vector_5_uncompressed_multiplied__okay)
     BX_REQUIRE_OUTPUT("c2c8036df268f498099350718c4a3ef3984d2be84618c2650f5171dcc5eb660a\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_to_ec__invoke__vector_6_uncompressed_multiplied__okay)
+BOOST_AUTO_TEST_CASE(ek_to_ec__invoke__vector_6_uncompressed_multiplied_lot__okay)
 {
     BX_DECLARE_COMMAND(ek_to_ec);
     command.set_ek_private_key_argument({ "6PgNBNNzDkKdhkT6uJntUXwwzQV8Rr2tZcbkDcuC9DZRsS6AtHts4Ypo1j" });
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(ek_to_ec__invoke__vector_6_uncompressed_multiplied__okay)
     BX_REQUIRE_OUTPUT("44ea95afbf138356a05ea32110dfd627232d0f2991ad221187be356f19fa8190\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_to_ec__invoke__vector_7_uncompressed_multiplied__okay)
+BOOST_AUTO_TEST_CASE(ek_to_ec__invoke__vector_7_uncompressed_multiplied_lot__okay)
 {
     BX_DECLARE_COMMAND(ek_to_ec);
     command.set_ek_private_key_argument({ "6PgGWtx25kUg8QWvwuJAgorN6k9FbE25rv5dMRwu5SKMnfpfVe5mar2ngH" });
