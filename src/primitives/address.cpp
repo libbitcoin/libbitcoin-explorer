@@ -26,8 +26,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 using namespace po;
 
@@ -36,7 +34,7 @@ namespace explorer {
 namespace primitives {
 
 address::address()
-    : value_()
+  : value_()
 {
 }
 
@@ -46,27 +44,32 @@ address::address(const std::string& base58)
 }
 
 address::address(const wallet::payment_address& value)
-    : address(value.to_string())
+  : address(value.to_string())
 {
 }
 
 address::address(const address& other)
-    : address(other.value_)
+  : address(other.value_)
+{
+}
+
+address::address(uint8_t version, const ec_point& point)
+  : address(wallet::payment_address(version, point))
 {
 }
 
 address::address(uint8_t version, const short_hash& hash)
-    : address(wallet::payment_address(version, hash))
+  : address(wallet::payment_address(version, hash))
 {
 }
 
 address::address(const wallet::hd_private_key& value)
-    : address(value.address())
+  : address(value.address())
 {
 }
 
 address::address(const wallet::hd_public_key& value)
-    : address(value.address())
+  : address(value.address())
 {
 }
 

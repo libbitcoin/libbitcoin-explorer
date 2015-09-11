@@ -17,13 +17,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <bitcoin/explorer/commands/ek-to-ec.hpp>
 
-#include <bitcoin/explorer/commands/ec-lock.hpp>
-
+#include <algorithm>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::bip38;
@@ -31,27 +30,25 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 
-console_result ec_lock_verify::invoke(std::ostream& output, std::ostream& error)
+console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto& passphrase = get_passphrase_argument();
-    const auto& confirmation = get_confirmation_argument();
-
 #ifdef WITH_ICU
-    std::string address;
+    const auto& passphrase = get_passphrase_argument();
+    const auto& key = get_ek_private_key_argument();
 
-    const auto confirmed = bip38_lock_verify(
-        base58(confirmation), passphrase, address);
+    bool unused1;
+    uint8_t unused2;
+    ec_private secret;
+    if (!decrypt(secret.data(), unused2, unused1, key, passphrase))
+    {
+        error << BX_EK_TO_EC_INVALID_PASSPHRASE << std::endl;
+        return console_result::failure;
+    }
 
-    if (confirmed)
-        output << "It is confirmed that " << address
-            << " depends on this passphrase." << std::endl;
-    else
-        output << BX_EC_LOCK_VERIFY_INVALID << std::endl;
-
+    output << secret << std::endl;
     return console_result::okay;
 #else
-    error << BX_EC_LOCK_VERIFY_USING_PASSPHRASE_UNSUPPORTED << std::endl;
+    error << BX_EK_TO_EC_REQUIRES_ICU << std::endl;
     return console_result::failure;
 #endif
 }
-

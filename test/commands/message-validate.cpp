@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(message_validate__invoke__compressed__okay_output)
     BX_DECLARE_NETWORK_COMMAND(message_validate);
     command.set_message_argument({ "Nakomoto" });
     command.set_signature_argument({ MESSAGE_VALIDATE_SIGNATURE_COMPRESSED });
-    command.set_bitcoin_address_argument({ MESSAGE_VALIDATE_ADDRESS_COMPRESSED });
+    command.set_payment_address_argument({ MESSAGE_VALIDATE_ADDRESS_COMPRESSED });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_MESSAGE_VALIDATE_INDEX_VALID_SIGNATURE "\n");
 }
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(message_validate__invoke__uncompressed__okay_output)
     BX_DECLARE_NETWORK_COMMAND(message_validate);
     command.set_message_argument({ "Nakomoto" });
     command.set_signature_argument({ MESSAGE_VALIDATE_SIGNATURE_UNCOMPRESSED });
-    command.set_bitcoin_address_argument({ MESSAGE_VALIDATE_ADDRESS_UNCOMPRESSED });
+    command.set_payment_address_argument({ MESSAGE_VALIDATE_ADDRESS_UNCOMPRESSED });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_MESSAGE_VALIDATE_INDEX_VALID_SIGNATURE "\n");
 }
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(message_validate__invoke__bogus__invalid_output)
     BX_DECLARE_NETWORK_COMMAND(message_validate);
     command.set_message_argument({ "Satoshi" });
     command.set_signature_argument({ MESSAGE_VALIDATE_SIGNATURE_COMPRESSED });
-    command.set_bitcoin_address_argument({ MESSAGE_VALIDATE_ADDRESS_COMPRESSED });
+    command.set_payment_address_argument({ MESSAGE_VALIDATE_ADDRESS_COMPRESSED });
     BX_REQUIRE_INVALID(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE "\n");
 }

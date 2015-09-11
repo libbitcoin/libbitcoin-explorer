@@ -28,6 +28,9 @@ function global.map_type(type)
     my.type_cert_key = "cert_key"
     my.type_ec_private = "ec_private"
     my.type_ec_public = "ec_public"
+    my.type_ek_private = "ek_private"
+    my.type_ek_public = "ek_public"
+    my.type_ek_token = "ek_token"
     my.type_encoding = "encoding"
     my.type_endorsement = "endorsement"
     my.type_file = "file"
@@ -64,6 +67,9 @@ function global.map_type(type)
     my.type_cert_key_bx = "primitives::cert_key"
     my.type_ec_private_bx = "primitives::ec_private"
     my.type_ec_public_bx = "primitives::ec_public"
+    my.type_ek_private_bx = "primitives::ek_private"
+    my.type_ek_public_bx = "primitives::ek_public"
+    my.type_ek_token_bx = "primitives::ek_token"
     my.type_encoding_bx = "primitives::encoding"
     my.type_endorsement_bx = "primitives::endorsement"
     my.type_file_bx = "primitives::file"
@@ -113,6 +119,12 @@ function global.map_type(type)
         return my.type_ec_private_bx
     elsif my.type = my.type_ec_public
         return my.type_ec_public_bx
+    elsif my.type = my.type_ek_private
+        return my.type_ek_private_bx
+    elsif my.type = my.type_ek_public
+        return my.type_ek_public_bx
+    elsif my.type = my.type_ek_token
+        return my.type_ek_token_bx
     elsif my.type = my.type_encoding
         return my.type_encoding_bx
     elsif my.type = my.type_endorsement
@@ -237,6 +249,9 @@ endfunction
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>

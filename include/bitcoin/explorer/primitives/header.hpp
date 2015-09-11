@@ -24,7 +24,6 @@
 #include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -55,7 +54,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API header(const chain::block_header& value);
+    BCX_API header(const chain::header& value);
 
     /**
      * Copy constructor.
@@ -67,7 +66,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const chain::block_header&() const;
+    BCX_API operator const chain::header&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -92,7 +91,7 @@ private:
     /**
      * The state of this object's header data.
      */
-    chain::block_header value_;
+    chain::header value_;
 };
 
 } // namespace primitives

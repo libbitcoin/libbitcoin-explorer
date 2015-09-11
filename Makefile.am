@@ -65,15 +65,20 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/cert-public.cpp \
     src/commands/ec-add-secrets.cpp \
     src/commands/ec-add.cpp \
-    src/commands/ec-lock.cpp \
-    src/commands/ec-lock-verify.cpp \
     src/commands/ec-multiply-secrets.cpp \
     src/commands/ec-multiply.cpp \
     src/commands/ec-new.cpp \
     src/commands/ec-to-address.cpp \
+    src/commands/ec-to-ek.cpp \
     src/commands/ec-to-public.cpp \
     src/commands/ec-to-wif.cpp \
-    src/commands/ec-unlock.cpp \
+    src/commands/ek-address.cpp \
+    src/commands/ek-new.cpp \
+    src/commands/ek-public-to-address.cpp \
+    src/commands/ek-public-to-ec.cpp \
+    src/commands/ek-public.cpp \
+    src/commands/ek-to-address.cpp \
+    src/commands/ek-to-ec.cpp \
     src/commands/fetch-balance.cpp \
     src/commands/fetch-header.cpp \
     src/commands/fetch-height.cpp \
@@ -129,6 +134,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/stealth-public.cpp \
     src/commands/stealth-secret.cpp \
     src/commands/stealth-shared.cpp \
+    src/commands/token-new.cpp \
     src/commands/tx-decode.cpp \
     src/commands/tx-encode.cpp \
     src/commands/tx-sign.cpp \
@@ -155,6 +161,9 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/cert_key.cpp \
     src/primitives/ec_private.cpp \
     src/primitives/ec_public.cpp \
+    src/primitives/ek_private.cpp \
+    src/primitives/ek_public.cpp \
+    src/primitives/ek_token.cpp \
     src/primitives/encoding.cpp \
     src/primitives/endorsement.cpp \
     src/primitives/hashtype.cpp \
@@ -225,14 +234,20 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/command.hpp \
     test/commands/ec-add-secrets.cpp \
     test/commands/ec-add.cpp \
-    test/commands/ec-lock.cpp \
     test/commands/ec-multiply-secrets.cpp \
     test/commands/ec-multiply.cpp \
     test/commands/ec-new.cpp \
     test/commands/ec-to-address.cpp \
+    test/commands/ec-to-ek.cpp \
     test/commands/ec-to-public.cpp \
     test/commands/ec-to-wif.cpp \
-    test/commands/ec-unlock.cpp \
+    test/commands/ek-address.cpp \
+    test/commands/ek-new.cpp \
+    test/commands/ek-public-to-address.cpp \
+    test/commands/ek-public-to-ec.cpp \
+    test/commands/ek-public.cpp \
+    test/commands/ek-to-address.cpp \
+    test/commands/ek-to-ec.cpp \
     test/commands/fetch-balance.cpp \
     test/commands/fetch-header.cpp \
     test/commands/fetch-height.cpp \
@@ -288,6 +303,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/stealth-public.cpp \
     test/commands/stealth-secret.cpp \
     test/commands/stealth-shared.cpp \
+    test/commands/token-new.cpp \
     test/commands/tx-decode.cpp \
     test/commands/tx-encode.cpp \
     test/commands/tx-sign.cpp \
@@ -350,14 +366,20 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/cert-public.hpp \
     include/bitcoin/explorer/commands/ec-add-secrets.hpp \
     include/bitcoin/explorer/commands/ec-add.hpp \
-    include/bitcoin/explorer/commands/ec-lock.hpp \
     include/bitcoin/explorer/commands/ec-multiply-secrets.hpp \
     include/bitcoin/explorer/commands/ec-multiply.hpp \
     include/bitcoin/explorer/commands/ec-new.hpp \
     include/bitcoin/explorer/commands/ec-to-address.hpp \
+    include/bitcoin/explorer/commands/ec-to-ek.hpp \
     include/bitcoin/explorer/commands/ec-to-public.hpp \
     include/bitcoin/explorer/commands/ec-to-wif.hpp \
-    include/bitcoin/explorer/commands/ec-unlock.hpp \
+    include/bitcoin/explorer/commands/ek-address.hpp \
+    include/bitcoin/explorer/commands/ek-new.hpp \
+    include/bitcoin/explorer/commands/ek-public-to-address.hpp \
+    include/bitcoin/explorer/commands/ek-public-to-ec.hpp \
+    include/bitcoin/explorer/commands/ek-public.hpp \
+    include/bitcoin/explorer/commands/ek-to-address.hpp \
+    include/bitcoin/explorer/commands/ek-to-ec.hpp \
     include/bitcoin/explorer/commands/fetch-balance.hpp \
     include/bitcoin/explorer/commands/fetch-header.hpp \
     include/bitcoin/explorer/commands/fetch-height.hpp \
@@ -413,6 +435,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/stealth-public.hpp \
     include/bitcoin/explorer/commands/stealth-secret.hpp \
     include/bitcoin/explorer/commands/stealth-shared.hpp \
+    include/bitcoin/explorer/commands/token-new.hpp \
     include/bitcoin/explorer/commands/tx-decode.hpp \
     include/bitcoin/explorer/commands/tx-encode.hpp \
     include/bitcoin/explorer/commands/tx-sign.hpp \
@@ -447,6 +470,9 @@ include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/cert_key.hpp \
     include/bitcoin/explorer/primitives/ec_private.hpp \
     include/bitcoin/explorer/primitives/ec_public.hpp \
+    include/bitcoin/explorer/primitives/ek_private.hpp \
+    include/bitcoin/explorer/primitives/ek_public.hpp \
+    include/bitcoin/explorer/primitives/ek_token.hpp \
     include/bitcoin/explorer/primitives/encoding.hpp \
     include/bitcoin/explorer/primitives/endorsement.hpp \
     include/bitcoin/explorer/primitives/hashtype.hpp \
@@ -481,6 +507,7 @@ endif BASH_COMPLETIONDIR
 sysconf_libbitcoindir = ${sysconfdir}/libbitcoin
 sysconf_libbitcoin_DATA = \
     data/bx.cfg
+
 
 # Custom make targets.
 #==============================================================================

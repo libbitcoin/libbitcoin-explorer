@@ -26,7 +26,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

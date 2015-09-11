@@ -30,7 +30,6 @@ using namespace czmqpp;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
-using boost::format;
 
 // CZMQ only has a file system interface, otherwise would send to stdout.
 console_result cert_public::invoke(std::ostream& output, std::ostream& error)

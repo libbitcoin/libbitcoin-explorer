@@ -42,6 +42,9 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -158,8 +161,8 @@ public:
         )
         (
             "bit_length,b",
-            value<uint16_t>(&option_.bit_length)->default_value(128),
-            "The length of the seed in bits. Must be divisible by 8 and must not be less than 128."
+            value<uint16_t>(&option_.bit_length)->default_value(192),
+            "The length of the seed in bits. Must be divisible by 8 and must not be less than 128, defaults to 192."
         );
 
         return options;

@@ -115,6 +115,9 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\cert_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ek_private.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ek_public.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ek_token.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\endorsement.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hashtype.hpp" />
@@ -163,6 +166,9 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\cert_key.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ek_private.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ek_public.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ek_token.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\endorsement.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp" />

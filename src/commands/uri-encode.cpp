@@ -34,7 +34,7 @@ using namespace bc::explorer::commands;
      const auto& message = get_message_option();
      const auto& request = get_request_option();
      const auto& stealth = get_stealth_option();
-     const auto& address = get_bitcoin_address_argument();
+     const auto& address = get_payment_address_argument();
 
      if (stealth && address)
      {

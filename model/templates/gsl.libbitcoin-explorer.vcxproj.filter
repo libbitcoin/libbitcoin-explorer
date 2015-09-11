@@ -128,6 +128,15 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ek_private.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ek_public.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ek_token.hpp">
+      <Filter>include\\bitcoin\\explorer\\primitives</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
@@ -273,6 +282,15 @@
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ek_private.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ek_public.cpp">
+      <Filter>src\\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ek_token.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp">

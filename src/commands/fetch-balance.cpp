@@ -39,7 +39,7 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& address = get_bitcoin_address_argument();
+    const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection);

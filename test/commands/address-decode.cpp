@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_info__okay_output)
 {
     BX_DECLARE_COMMAND(address_decode);
     command.set_format_option({ encoding_engine::info });
-    command.set_bitcoin_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
+    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V0_INFO);
 }
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_json__okay)
 {
     BX_DECLARE_COMMAND(address_decode);
     command.set_format_option({ encoding_engine::json });
-    command.set_bitcoin_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
+    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     // BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V0_JSON);
 }
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_xml__okay_output)
 {
     BX_DECLARE_COMMAND(address_decode);
     command.set_format_option({ encoding_engine::xml });
-    command.set_bitcoin_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
+    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V0_XML);
 }
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_xml__okay_output)
 BOOST_AUTO_TEST_CASE(address_decode__invoke__version_42_default__okay_output)
 {
     BX_DECLARE_COMMAND(address_decode);
-    command.set_bitcoin_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V42 });
+    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V42 });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V42_DEFAULT);
 }

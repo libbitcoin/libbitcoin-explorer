@@ -25,8 +25,6 @@
 #include <string>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -67,7 +65,14 @@ public:
     /**
      * Initialization constructor.
      * @param[in]  version  The bitcoin address version.
-     * @param[in]  hash     The ripemd160 value of the address.
+     * @param[in]  point    The address public key.
+     */
+    BCX_API address(uint8_t version, const ec_point& point);
+
+    /**
+     * Initialization constructor.
+     * @param[in]  version  The bitcoin address version.
+     * @param[in]  hash     The ripemd160 hash of the address public key.
      */
     BCX_API address(uint8_t version, const short_hash& hash);
 

@@ -29,7 +29,7 @@ using namespace bc::explorer::commands;
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    //const auto& address = get_bitcoin_address_argument();
+    //const auto& address = get_payment_address_argument();
 
     error << BX_QRCODE_NOT_IMPLEMENTED << std::endl;
     return console_result::failure;

@@ -25,8 +25,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 
 using namespace po;
 

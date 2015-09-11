@@ -46,7 +46,6 @@
 using namespace boost::posix_time;
 using namespace bc::client;
 using boost::filesystem::path;
-using boost::format;
 
 namespace libbitcoin {
 namespace explorer {

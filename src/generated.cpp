@@ -59,15 +59,20 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<cert_public>());
     func(make_shared<ec_add>());
     func(make_shared<ec_add_secrets>());
-    func(make_shared<ec_lock>());
-    func(make_shared<ec_lock_verify>());
     func(make_shared<ec_multiply>());
     func(make_shared<ec_multiply_secrets>());
     func(make_shared<ec_new>());
     func(make_shared<ec_to_address>());
+    func(make_shared<ec_to_ek>());
     func(make_shared<ec_to_public>());
     func(make_shared<ec_to_wif>());
-    func(make_shared<ec_unlock>());
+    func(make_shared<ek_address>());
+    func(make_shared<ek_new>());
+    func(make_shared<ek_public>());
+    func(make_shared<ek_public_to_address>());
+    func(make_shared<ek_public_to_ec>());
+    func(make_shared<ek_to_address>());
+    func(make_shared<ek_to_ec>());
     func(make_shared<fetch_balance>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_height>());
@@ -123,6 +128,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<stealth_public>());
     func(make_shared<stealth_secret>());
     func(make_shared<stealth_shared>());
+    func(make_shared<token_new>());
     func(make_shared<tx_decode>());
     func(make_shared<tx_encode>());
     func(make_shared<tx_sign>());
@@ -184,10 +190,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_add>();
     if (symbol == ec_add_secrets::symbol())
         return make_shared<ec_add_secrets>();
-    if (symbol == ec_lock::symbol())
-        return make_shared<ec_lock>();
-    if (symbol == ec_lock_verify::symbol())
-        return make_shared<ec_lock_verify>();
     if (symbol == ec_multiply::symbol())
         return make_shared<ec_multiply>();
     if (symbol == ec_multiply_secrets::symbol())
@@ -196,12 +198,26 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_new>();
     if (symbol == ec_to_address::symbol())
         return make_shared<ec_to_address>();
+    if (symbol == ec_to_ek::symbol())
+        return make_shared<ec_to_ek>();
     if (symbol == ec_to_public::symbol())
         return make_shared<ec_to_public>();
     if (symbol == ec_to_wif::symbol())
         return make_shared<ec_to_wif>();
-    if (symbol == ec_unlock::symbol())
-        return make_shared<ec_unlock>();
+    if (symbol == ek_address::symbol())
+        return make_shared<ek_address>();
+    if (symbol == ek_new::symbol())
+        return make_shared<ek_new>();
+    if (symbol == ek_public::symbol())
+        return make_shared<ek_public>();
+    if (symbol == ek_public_to_address::symbol())
+        return make_shared<ek_public_to_address>();
+    if (symbol == ek_public_to_ec::symbol())
+        return make_shared<ek_public_to_ec>();
+    if (symbol == ek_to_address::symbol())
+        return make_shared<ek_to_address>();
+    if (symbol == ek_to_ec::symbol())
+        return make_shared<ek_to_ec>();
     if (symbol == fetch_balance::symbol())
         return make_shared<fetch_balance>();
     if (symbol == fetch_header::symbol())
@@ -312,6 +328,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<stealth_secret>();
     if (symbol == stealth_shared::symbol())
         return make_shared<stealth_shared>();
+    if (symbol == token_new::symbol())
+        return make_shared<token_new>();
     if (symbol == tx_decode::symbol())
         return make_shared<tx_decode>();
     if (symbol == tx_encode::symbol())
@@ -356,14 +374,14 @@ std::string formerly(const string& former)
         return btc_to_satoshi::symbol();
     if (former == ec_add_secrets::formerly())
         return ec_add_secrets::symbol();
-    if (former == ec_lock::formerly())
-        return ec_lock::symbol();
     if (former == ec_multiply_secrets::formerly())
         return ec_multiply_secrets::symbol();
     if (former == ec_new::formerly())
         return ec_new::symbol();
     if (former == ec_to_address::formerly())
         return ec_to_address::symbol();
+    if (former == ec_to_ek::formerly())
+        return ec_to_ek::symbol();
     if (former == ec_to_public::formerly())
         return ec_to_public::symbol();
     if (former == fetch_height::formerly())

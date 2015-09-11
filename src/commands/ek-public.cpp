@@ -17,49 +17,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include <bitcoin/explorer/commands/ec-unlock.hpp>
+#include <bitcoin/explorer/commands/ek-public.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
 
 using namespace bc;
 using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+////using namespace bc::explorer::primitives;
 
-console_result ec_unlock::invoke(std::ostream& output, std::ostream& error)
+console_result ek_public::invoke(std::ostream& output, std::ostream& error)
 {
-    const auto& secret = get_secret_argument();
-    const auto& passphrase = get_passphrase_argument();
+    const auto uncompressed = get_uncompressed_option();
+    const auto version = get_version_option();
+    const auto& token = get_token_argument();
+    const data_chunk& seed = get_seed_argument();
 
-    if (encode_base58(secret).size() == 0)
+    if (seed.size() < seed_size)
     {
-#ifdef WITH_ICU
-        error << BX_EC_UNLOCK_FAILURE << std::endl;
-#else
-        error << BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
-#endif
+        error << BX_EK_PUBLIC_SHORT_SEED << std::endl;
         return console_result::failure;
     }
+    
+    bip38::seed bytes;
+    std::copy(seed.begin(), seed.begin() + seed_size, bytes.begin());
 
-#ifdef WITH_ICU
-    const auto unlocked = bip38_unlock_secret(
-        base58(secret), passphrase);
-
-    if (!verify_private_key(unlocked))
-    {
-        error << BX_EC_UNLOCK_FAILURE << std::endl;
-        return console_result::failure;
-    }
-
-    output << encode_base16(unlocked) << std::endl;
+    ec_point unused1;
+    private_key unused2;
+    primitives::ek_public key;
+    create_key_pair(unused2, key.data(), unused1, token, bytes, version,
+        !uncompressed);
+    
+    output << key << std::endl;
     return console_result::okay;
-#else
-    error << BX_EC_UNLOCK_USING_PASSPHRASE_UNSUPPORTED << std::endl;
-    return console_result::failure;
-#endif
 }

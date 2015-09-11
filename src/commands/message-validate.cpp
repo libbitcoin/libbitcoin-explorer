@@ -32,7 +32,7 @@ console_result message_validate::invoke(std::ostream& output,
     std::ostream& error)
 {
     // Bound parameters.
-    const auto& address = get_bitcoin_address_argument();
+    const auto& address = get_payment_address_argument();
     const auto& sign = get_signature_argument();
     const auto& message = get_message_argument();
 

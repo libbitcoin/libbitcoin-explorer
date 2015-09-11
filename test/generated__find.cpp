@@ -139,16 +139,6 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_add_secrets__returns_object)
     BOOST_REQUIRE(find("ec-add-secrets") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__ec_lock__returns_object)
-{
-    BOOST_REQUIRE(find("ec-lock") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__ec_lock_verify__returns_object)
-{
-    BOOST_REQUIRE(find("ec-lock-verify") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__ec_multiply__returns_object)
 {
     BOOST_REQUIRE(find("ec-multiply") != nullptr);
@@ -169,6 +159,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_to_address__returns_object)
     BOOST_REQUIRE(find("ec-to-address") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__ec_to_ek__returns_object)
+{
+    BOOST_REQUIRE(find("ec-to-ek") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ec_to_public__returns_object)
 {
     BOOST_REQUIRE(find("ec-to-public") != nullptr);
@@ -179,9 +174,39 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_to_wif__returns_object)
     BOOST_REQUIRE(find("ec-to-wif") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__ec_unlock__returns_object)
+BOOST_AUTO_TEST_CASE(generated__find__ek_address__returns_object)
 {
-    BOOST_REQUIRE(find("ec-unlock") != nullptr);
+    BOOST_REQUIRE(find("ek-address") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ek_new__returns_object)
+{
+    BOOST_REQUIRE(find("ek-new") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ek_public__returns_object)
+{
+    BOOST_REQUIRE(find("ek-public") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ek_public_to_address__returns_object)
+{
+    BOOST_REQUIRE(find("ek-public-to-address") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ek_public_to_ec__returns_object)
+{
+    BOOST_REQUIRE(find("ek-public-to-ec") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ek_to_address__returns_object)
+{
+    BOOST_REQUIRE(find("ek-to-address") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__ek_to_ec__returns_object)
+{
+    BOOST_REQUIRE(find("ek-to-ec") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
@@ -457,6 +482,11 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_secret__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__stealth_shared__returns_object)
 {
     BOOST_REQUIRE(find("stealth-shared") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__token_new__returns_object)
+{
+    BOOST_REQUIRE(find("token-new") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__tx_decode__returns_object)

@@ -42,6 +42,9 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/ek_private.hpp>
+#include <bitcoin/explorer/primitives/ek_public.hpp>
+#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -120,7 +123,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get enough unspent transaction outputs from a Bitcoin addresses to pay a number of satoshi. Requires a Libbitcoin/Obelisk server connection.";
+        return "Get enough unspent transaction outputs from a payment addresses to pay a number of satoshi. Requires a Libbitcoin/Obelisk server connection.";
     }
 
     /**
@@ -132,7 +135,7 @@ public:
     {
         return get_argument_metadata()
             .add("SATOSHI", 1)
-            .add("BITCOIN_ADDRESS", 1);
+            .add("PAYMENT_ADDRESS", 1);
     }
 
 	/**
@@ -144,7 +147,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_bitcoin_address_argument(), "BITCOIN_ADDRESS", variables, input, raw);
+        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
     }
 
     /**
@@ -178,9 +181,9 @@ public:
             "The whole number of satoshi."
         )
         (
-            "BITCOIN_ADDRESS",
-            value<primitives::address>(&argument_.bitcoin_address),
-            "The Bitcoin address. If not specified the address is read from STDIN."
+            "PAYMENT_ADDRESS",
+            value<primitives::address>(&argument_.payment_address),
+            "The payment address. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -215,20 +218,20 @@ public:
     }
 
     /**
-     * Get the value of the BITCOIN_ADDRESS argument.
+     * Get the value of the PAYMENT_ADDRESS argument.
      */
-    BCX_API virtual primitives::address& get_bitcoin_address_argument()
+    BCX_API virtual primitives::address& get_payment_address_argument()
     {
-        return argument_.bitcoin_address;
+        return argument_.payment_address;
     }
 
     /**
-     * Set the value of the BITCOIN_ADDRESS argument.
+     * Set the value of the PAYMENT_ADDRESS argument.
      */
-    BCX_API virtual void set_bitcoin_address_argument(
+    BCX_API virtual void set_payment_address_argument(
         const primitives::address& value)
     {
-        argument_.bitcoin_address = value;
+        argument_.payment_address = value;
     }
 
     /**
@@ -259,12 +262,12 @@ private:
     {
         argument()
           : satoshi(),
-            bitcoin_address()
+            payment_address()
         {
         }
 
         uint64_t satoshi;
-        primitives::address bitcoin_address;
+        primitives::address payment_address;
     } argument_;
 
     /**

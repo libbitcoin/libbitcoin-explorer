@@ -20,6 +20,8 @@
 
 #include <bitcoin/explorer/commands/send-tx-p2p.hpp>
 
+#include <cstddef>
+#include <cstdint>
 #include <csignal>
 #include <iostream>
 #include <boost/filesystem.hpp>
@@ -35,7 +37,6 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
-using boost::format;
 
 static void handle_signal(int)
 {
@@ -75,9 +76,8 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     async_client client(threads);
     network::hosts hosts(client.pool(), hosts_file);
-    network::handshake shake(client.pool());
-    network::peer net(client.pool(), timeouts);
-    network::protocol proto(client.pool(), hosts, shake, net, listen, relay);
+    network::initiator net(client.pool(), timeouts);
+    network::protocol proto(client.pool(), hosts, net, listen, relay);
 
     callback_state state(error, output);
     network::protocol::channel_handler handle_connect;
@@ -100,7 +100,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     };
 
     handle_connect = [&state, &transaction, handle_send](
-        const std::error_code& code, network::channel_ptr node)
+        const std::error_code& code, network::channel::ptr node)
     {
         if (state.succeeded(code))
             node->send(transaction, handle_send);

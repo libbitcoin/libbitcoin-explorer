@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(uri_encode__invoke)
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__address__okay_output)
 {
     BX_DECLARE_COMMAND(uri_encode);
-    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_payment_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L\n");
 }
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(uri_encode__invoke__address__okay_output)
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__address_label__okay_output)
 {
     BX_DECLARE_COMMAND(uri_encode);
-    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_payment_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
     command.set_label_option("Luke-Jr");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("bitcoin:1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L?label=Luke-Jr\n");
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(uri_encode__invoke__address_label__okay_output)
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__address_label_amount__okay_output)
 {
     BX_DECLARE_COMMAND(uri_encode);
-    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_payment_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
     command.set_label_option("Luke-Jr");
     command.set_amount_option({ "20.3" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(uri_encode__invoke__address_label_amount__okay_output)
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__address_label_amount_message__okay_output)
 {
     BX_DECLARE_COMMAND(uri_encode);
-    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_payment_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
     command.set_label_option("Luke-Jr");
     command.set_amount_option({ "50" });
     command.set_message_option("Donation for project xyz");
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(uri_encode__invoke__stealth_address__okay_output)
 BOOST_AUTO_TEST_CASE(uri_encode__invoke__bitcoin_and_stealth_address__failure_error)
 {
     BX_DECLARE_COMMAND(uri_encode);
-    command.set_bitcoin_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
+    command.set_payment_address_argument({ "1NS17iag9jJgTHD1VXjvLCEnZuQ3rJED9L" });
     command.set_stealth_option({ "hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_URI_ENCODE_ADDRESS_CONFLICT "\n");

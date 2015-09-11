@@ -26,6 +26,7 @@
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
@@ -57,7 +58,7 @@ namespace primitives {
 
 ptree prop_list(const header& header)
 {
-    const chain::block_header& block_header = header;
+    const chain::header& block_header = header;
 
     ptree tree;
     tree.put("bits", block_header.bits);
