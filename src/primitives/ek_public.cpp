@@ -27,7 +27,7 @@
 #include <bitcoin/explorer/define.hpp>
 
 using namespace po;
-using namespace bc::bip38;
+using namespace bc::wallet;
 
 namespace libbitcoin {
 namespace explorer {

@@ -25,10 +25,10 @@
 #include <bitcoin/explorer/define.hpp>
 
 using namespace bc;
-using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
 {

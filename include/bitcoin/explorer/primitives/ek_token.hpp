@@ -32,7 +32,7 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between base16 string and bip38::token.
+ * Serialization helper to convert between base16 string and wallet::token.
  */
 class ek_token
 {
@@ -53,7 +53,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API ek_token(const bip38::token& value);
+    BCX_API ek_token(const wallet::token& value);
 
     /**
      * Copy constructor.
@@ -65,13 +65,13 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    BCX_API bip38::token& data();
+    BCX_API wallet::token& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bip38::token&() const;
+    BCX_API operator const wallet::token&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -96,7 +96,7 @@ private:
     /**
      * The state of this object.
      */
-    bip38::token value_;
+    wallet::token value_;
 };
 
 } // namespace explorer

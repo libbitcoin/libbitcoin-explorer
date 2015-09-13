@@ -25,10 +25,10 @@
 #include <bitcoin/explorer/primitives/address.hpp>
 
 using namespace bc;
-using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result ek_to_address::invoke(std::ostream& output, std::ostream& error)
 {

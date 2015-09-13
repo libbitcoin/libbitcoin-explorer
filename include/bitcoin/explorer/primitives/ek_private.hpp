@@ -53,7 +53,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API ek_private(const bip38::private_key& value);
+    BCX_API ek_private(const wallet::private_key& value);
 
     /**
      * Copy constructor.
@@ -65,13 +65,13 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    BCX_API bip38::private_key& data();
+    BCX_API wallet::private_key& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bip38::private_key&() const;
+    BCX_API operator const wallet::private_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -96,7 +96,7 @@ private:
     /**
      * The state of this object.
      */
-    bip38::private_key value_;
+    wallet::private_key value_;
 };
 
 } // namespace explorer
