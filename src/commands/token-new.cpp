@@ -25,10 +25,10 @@
 #include <bitcoin/explorer/primitives/ek_token.hpp>
 
 using namespace bc;
-using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result token_new::invoke(std::ostream& output, std::ostream& error)
 {
@@ -65,7 +65,7 @@ console_result token_new::invoke(std::ostream& output, std::ostream& error)
     }
     else
     {
-        bip38::salt bytes;
+        bc::wallet::salt bytes;
         std::copy(salt.begin(), salt.begin() + bytes.size(), bytes.begin());
         create_token(token.data(), passphrase, bytes, lot, sequence);
     }

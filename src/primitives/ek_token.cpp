@@ -27,19 +27,19 @@
 #include <bitcoin/explorer/define.hpp>
 
 using namespace po;
-using namespace bc::bip38;
+using namespace bc::wallet;
 
 namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-// bip38::token format is currently private to bx.
-static bool decode_token(bip38::token& token, const std::string& encoded)
+// wallet::token format is currently private to bx.
+static bool decode_token(wallet::token& token, const std::string& encoded)
 {
     return decode_base58(token, encoded) && verify_checksum(token);
 }
 
-static std::string encode_token(const bip38::token& token)
+static std::string encode_token(const wallet::token& token)
 {
     return encode_base58(token);
 }
@@ -54,7 +54,7 @@ ek_token::ek_token(const std::string& hexcode)
     std::stringstream(hexcode) >> *this;
 }
 
-ek_token::ek_token(const bc::bip38::token& value)
+ek_token::ek_token(const bc::wallet::token& value)
   : value_(value)
 {
 }
@@ -64,12 +64,12 @@ ek_token::ek_token(const ek_token& other)
 {
 }
 
-bip38::token& ek_token::data()
+wallet::token& ek_token::data()
 {
     return value_;
 }
 
-ek_token::operator const bip38::token&() const
+ek_token::operator const wallet::token&() const
 {
     return value_;
 }

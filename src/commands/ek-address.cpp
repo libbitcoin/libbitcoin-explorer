@@ -26,10 +26,10 @@
 #include <bitcoin/explorer/primitives/address.hpp>
 
 using namespace bc;
-using namespace bc::bip38;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result ek_address::invoke(std::ostream& output, std::ostream& error)
 {
@@ -44,7 +44,7 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
     
-    bip38::seed bytes;
+    bc::wallet::seed bytes;
     std::copy(seed.begin(), seed.begin() + seed_size, bytes.begin());
 
     ec_point point;

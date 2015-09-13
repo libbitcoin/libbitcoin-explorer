@@ -32,7 +32,7 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between base16 string and bip38::public_key.
+ * Serialization helper to convert between base16 string and public_key.
  */
 class ek_public
 {
@@ -53,7 +53,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API ek_public(const bip38::public_key& value);
+    BCX_API ek_public(const wallet::public_key& value);
 
     /**
      * Copy constructor.
@@ -65,13 +65,13 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    BCX_API bip38::public_key& data();
+    BCX_API wallet::public_key& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bip38::public_key&() const;
+    BCX_API operator const wallet::public_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -96,7 +96,7 @@ private:
     /**
      * The state of this object.
      */
-    bip38::public_key value_;
+    wallet::public_key value_;
 };
 
 } // namespace explorer
