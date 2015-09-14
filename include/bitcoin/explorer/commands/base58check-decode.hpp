@@ -42,9 +42,6 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
-#include <bitcoin/explorer/primitives/ek_private.hpp>
-#include <bitcoin/explorer/primitives/ek_public.hpp>
-#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -110,7 +107,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Convert a Base58Check value to Base16.";
+        return "Convert a Base58Check value to its component parts.";
     }
 
     /**

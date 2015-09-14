@@ -24,12 +24,10 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ek_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 using namespace bc::wallet;
 
 console_result ec_to_ek::invoke(std::ostream& output, std::ostream& error)
@@ -40,7 +38,7 @@ console_result ec_to_ek::invoke(std::ostream& output, std::ostream& error)
     const auto& passphrase = get_passphrase_argument();
     const auto& secret = get_ec_private_key_argument();
 
-    ek_private key;
+    config::ek_private key;
     encrypt(key.data(), secret, passphrase, version, !uncompressed);
 
     output << key << std::endl;

@@ -42,9 +42,6 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
-#include <bitcoin/explorer/primitives/ek_private.hpp>
-#include <bitcoin/explorer/primitives/ek_public.hpp>
-#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -172,7 +169,7 @@ public:
         )
         (
             "EK_PUBLIC_KEY",
-            value<primitives::ek_public>(&argument_.ek_public_key),
+            value<bc::config::ek_public>(&argument_.ek_public_key),
             "The encrypted public key from which to extract the payment address."
         );
 
@@ -210,7 +207,7 @@ public:
     /**
      * Get the value of the EK_PUBLIC_KEY argument.
      */
-    BCX_API virtual primitives::ek_public& get_ek_public_key_argument()
+    BCX_API virtual bc::config::ek_public& get_ek_public_key_argument()
     {
         return argument_.ek_public_key;
     }
@@ -219,7 +216,7 @@ public:
      * Set the value of the EK_PUBLIC_KEY argument.
      */
     BCX_API virtual void set_ek_public_key_argument(
-        const primitives::ek_public& value)
+        const bc::config::ek_public& value)
     {
         argument_.ek_public_key = value;
     }
@@ -240,7 +237,7 @@ private:
         }
 
         std::string passphrase;
-        primitives::ek_public ek_public_key;
+        bc::config::ek_public ek_public_key;
     } argument_;
 
     /**

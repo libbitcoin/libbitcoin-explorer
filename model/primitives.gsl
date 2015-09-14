@@ -67,9 +67,9 @@ function global.map_type(type)
     my.type_cert_key_bx = "primitives::cert_key"
     my.type_ec_private_bx = "primitives::ec_private"
     my.type_ec_public_bx = "primitives::ec_public"
-    my.type_ek_private_bx = "primitives::ek_private"
-    my.type_ek_public_bx = "primitives::ek_public"
-    my.type_ek_token_bx = "primitives::ek_token"
+    my.type_ek_private_bx = "bc::config::ek_private"
+    my.type_ek_public_bx = "bc::config::ek_public"
+    my.type_ek_token_bx = "bc::config::ek_token"
     my.type_encoding_bx = "primitives::encoding"
     my.type_endorsement_bx = "primitives::endorsement"
     my.type_file_bx = "primitives::file"
@@ -249,9 +249,6 @@ endfunction
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
-#include <bitcoin/explorer/primitives/ek_private.hpp>
-#include <bitcoin/explorer/primitives/ek_public.hpp>
-#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>

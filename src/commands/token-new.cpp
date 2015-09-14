@@ -22,7 +22,6 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ek_token.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -38,34 +37,34 @@ console_result token_new::invoke(std::ostream& output, std::ostream& error)
     const auto& passphrase = get_passphrase_argument();
     const data_chunk& salt = get_salt_argument();
 
-    if (salt.size() < salt_size)
+    if (salt.size() < ek_salt_size)
     {
         error << BX_TOKEN_NEW_SHORT_SALT << std::endl;
         return console_result::failure;
     }
 
-    if (lot > max_token_lot)
+    if (lot > ek_max_lot)
     {
         error << BX_TOKEN_NEW_MAXIMUM_LOT << std::endl;
         return console_result::failure;
     }
 
-    if (sequence > max_token_sequence)
+    if (sequence > ek_max_sequence)
     {
         error << BX_TOKEN_NEW_MAXIMUM_SEQUENCE << std::endl;
         return console_result::failure;
     }
 
-    ek_token token;
-    if (lot == 0 && sequence == 0 && salt.size() >= entropy_size)
+    config::ek_token token;
+    if (lot == 0 && sequence == 0 && salt.size() >= ek_entropy_size)
     {
-        entropy bytes;
+        ek_entropy bytes;
         std::copy(salt.begin(), salt.begin() + bytes.size(), bytes.begin());
         create_token(token.data(), passphrase, bytes);
     }
     else
     {
-        bc::wallet::salt bytes;
+        ek_salt bytes;
         std::copy(salt.begin(), salt.begin() + bytes.size(), bytes.begin());
         create_token(token.data(), passphrase, bytes, lot, sequence);
     }

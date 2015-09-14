@@ -161,9 +161,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/cert_key.cpp \
     src/primitives/ec_private.cpp \
     src/primitives/ec_public.cpp \
-    src/primitives/ek_private.cpp \
-    src/primitives/ek_public.cpp \
-    src/primitives/ek_token.cpp \
     src/primitives/encoding.cpp \
     src/primitives/endorsement.cpp \
     src/primitives/hashtype.cpp \
@@ -470,9 +467,6 @@ include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/cert_key.hpp \
     include/bitcoin/explorer/primitives/ec_private.hpp \
     include/bitcoin/explorer/primitives/ec_public.hpp \
-    include/bitcoin/explorer/primitives/ek_private.hpp \
-    include/bitcoin/explorer/primitives/ek_public.hpp \
-    include/bitcoin/explorer/primitives/ek_token.hpp \
     include/bitcoin/explorer/primitives/encoding.hpp \
     include/bitcoin/explorer/primitives/endorsement.hpp \
     include/bitcoin/explorer/primitives/hashtype.hpp \

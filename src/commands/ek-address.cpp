@@ -38,17 +38,17 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
     const auto& token = get_token_argument();
     const data_chunk& seed = get_seed_argument();
 
-    if (seed.size() < seed_size)
+    if (seed.size() < ek_seed_size)
     {
         error << BX_EK_ADDRESS_SHORT_SEED << std::endl;
         return console_result::failure;
     }
     
-    bc::wallet::seed bytes;
-    std::copy(seed.begin(), seed.begin() + seed_size, bytes.begin());
+    ek_seed bytes;
+    std::copy(seed.begin(), seed.begin() + ek_seed_size, bytes.begin());
 
     ec_point point;
-    private_key unused;
+    ek_private unused;
     create_key_pair(unused, point, token, bytes, version, !uncompressed);
 
     const address payment_address(version, point);
