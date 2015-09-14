@@ -42,9 +42,6 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
-#include <bitcoin/explorer/primitives/ek_private.hpp>
-#include <bitcoin/explorer/primitives/ek_public.hpp>
-#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -172,7 +169,7 @@ public:
         )
         (
             "EK_PRIVATE_KEY",
-            value<primitives::ek_private>(&argument_.ek_private_key),
+            value<bc::config::ek_private>(&argument_.ek_private_key),
             "The encrypted private key to decrypt."
         );
 
@@ -210,7 +207,7 @@ public:
     /**
      * Get the value of the EK_PRIVATE_KEY argument.
      */
-    BCX_API virtual primitives::ek_private& get_ek_private_key_argument()
+    BCX_API virtual bc::config::ek_private& get_ek_private_key_argument()
     {
         return argument_.ek_private_key;
     }
@@ -219,7 +216,7 @@ public:
      * Set the value of the EK_PRIVATE_KEY argument.
      */
     BCX_API virtual void set_ek_private_key_argument(
-        const primitives::ek_private& value)
+        const bc::config::ek_private& value)
     {
         argument_.ek_private_key = value;
     }
@@ -240,7 +237,7 @@ private:
         }
 
         std::string passphrase;
-        primitives::ek_private ek_private_key;
+        bc::config::ek_private ek_private_key;
     } argument_;
 
     /**

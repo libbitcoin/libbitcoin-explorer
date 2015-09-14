@@ -42,9 +42,6 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 #include <bitcoin/explorer/primitives/ec_public.hpp>
-#include <bitcoin/explorer/primitives/ek_private.hpp>
-#include <bitcoin/explorer/primitives/ek_public.hpp>
-#include <bitcoin/explorer/primitives/ek_token.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
@@ -173,7 +170,7 @@ public:
         )
         (
             "TOKEN",
-            value<primitives::ek_token>(&argument_.token),
+            value<bc::config::ek_token>(&argument_.token),
             "The intermediate passphrase token used to create the corresponding encrypted private key."
         )
         (
@@ -199,7 +196,7 @@ public:
     /**
      * Get the value of the TOKEN argument.
      */
-    BCX_API virtual primitives::ek_token& get_token_argument()
+    BCX_API virtual bc::config::ek_token& get_token_argument()
     {
         return argument_.token;
     }
@@ -208,7 +205,7 @@ public:
      * Set the value of the TOKEN argument.
      */
     BCX_API virtual void set_token_argument(
-        const primitives::ek_token& value)
+        const bc::config::ek_token& value)
     {
         argument_.token = value;
     }
@@ -279,7 +276,7 @@ private:
         {
         }
 
-        primitives::ek_token token;
+        bc::config::ek_token token;
         primitives::base16 seed;
     } argument_;
 
