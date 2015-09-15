@@ -26,6 +26,8 @@ BOOST_AUTO_TEST_SUITE(ec_to_ek__invoke)
 
 #ifdef WITH_ICU
 
+// BI-38 Vectors
+
 BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__vector_0_uncompressed__okay)
 {
     BX_DECLARE_COMMAND(ec_to_ek);
@@ -62,6 +64,74 @@ BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__vector_3__okay)
     command.set_passphrase_argument("Satoshi");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("6PYLtMnXvfG3oJde97zRyLYFZCYizPU5T3LwgdYJz1fRhh16bU7u6PPmY7\n");
+}
+
+// Wiki Examples
+
+BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__example_1_mainnet__okay)
+{
+    BX_DECLARE_COMMAND(ec_to_ek);
+    command.set_ec_private_key_argument({ "261fc32e9f29c70e3d898aa7db028c81ede0658e8ff8ffab8160073c048ae83f" });
+    command.set_passphrase_argument("my passphrase");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PYXCdvtrs4NN1TjUYbGS5Sd2gjsVsDm7GttqERRWvRjWDsrhQfJeEHrg5\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__example_2_empty_passphrase__okay)
+{
+    BX_DECLARE_COMMAND(ec_to_ek);
+    command.set_ec_private_key_argument({ "261fc32e9f29c70e3d898aa7db028c81ede0658e8ff8ffab8160073c048ae83f" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PYXCdvttCfzn7bo5NrhXsSE1hrYgw2oLbGQCvSLMZV4qr7FEJK7fJhN4R\n");
+}
+
+// Redundant with #1
+//BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__example_3_piped_commands__okay)
+//{
+//    BX_DECLARE_COMMAND(ec_to_ek);
+//    command.set_ec_private_key_argument({ "261fc32e9f29c70e3d898aa7db028c81ede0658e8ff8ffab8160073c048ae83f" });
+//    BX_REQUIRE_OKAY(command.invoke(output, error));
+//    BX_REQUIRE_OUTPUT("6PYXCdvtrs4NN1TjUYbGS5Sd2gjsVsDm7GttqERRWvRjWDsrhQfJeEHrg5\n");
+//}
+
+// Redundant with #1
+//BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__example_4_round_trip__okay)
+//{
+//    BX_DECLARE_COMMAND(ec_to_ek);
+//    command.set_ec_private_key_argument({ "261fc32e9f29c70e3d898aa7db028c81ede0658e8ff8ffab8160073c048ae83f" });
+//    BX_REQUIRE_OKAY(command.invoke(output, error));
+//    BX_REQUIRE_OUTPUT("6PYXCdvtrs4NN1TjUYbGS5Sd2gjsVsDm7GttqERRWvRjWDsrhQfJeEHrg5\n");
+//}
+
+BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__example_5_uncompressed__okay)
+{
+    BX_DECLARE_COMMAND(ec_to_ek);
+    command.set_ec_private_key_argument({ "261fc32e9f29c70e3d898aa7db028c81ede0658e8ff8ffab8160073c048ae83f" });
+    command.set_passphrase_argument("my passphrase");
+    command.set_uncompressed_option(true);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("6PRPDbKfv3A45QPPfEtvcxM4oA6ShVL7t72VP74P1W3JEUHPrZXNy39FKe\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__example_6_testnet__okay)
+{
+    BX_DECLARE_COMMAND(ec_to_ek);
+    command.set_ec_private_key_argument({ "261fc32e9f29c70e3d898aa7db028c81ede0658e8ff8ffab8160073c048ae83f" });
+    command.set_passphrase_argument("my passphrase");
+    command.set_version_option(111);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("8EzHSxX3sfZp6NjYUdt7fZAPCKByrFDS12PHfdexFLSaSAfM7wM7tw3Hof\n");
+}
+
+BOOST_AUTO_TEST_CASE(ec_to_ek__invoke__example_7_litecoin_uncompressed__okay)
+{
+    BX_DECLARE_COMMAND(ec_to_ek);
+    command.set_ec_private_key_argument({ "261fc32e9f29c70e3d898aa7db028c81ede0658e8ff8ffab8160073c048ae83f" });
+    command.set_passphrase_argument("my passphrase");
+    command.set_uncompressed_option(true);
+    command.set_version_option(48);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("7BtJaSMBHZJMgKtDp4rNLDjkoCZu2e5av1FYxMwwvdq5AN124paeds82tP\n");
 }
 
 #else // WITH_ICU
