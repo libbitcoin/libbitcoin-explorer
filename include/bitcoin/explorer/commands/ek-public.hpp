@@ -136,6 +136,8 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_seed_argument(), "SEED", variables, input, raw);
     }
 
     /**
@@ -170,13 +172,13 @@ public:
         )
         (
             "TOKEN",
-            value<bc::config::ek_token>(&argument_.token),
+            value<bc::config::ek_token>(&argument_.token)->required(),
             "The intermediate passphrase token used to create the corresponding encrypted private key."
         )
         (
             "SEED",
             value<primitives::base16>(&argument_.seed),
-            "The Base16 entropy for the new encrypted public key. Must be at least 192 bits in length (only the first 192 bits are used)."
+            "The Base16 entropy for the new encrypted public key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the seed is read from STDIN."
         );
 
         return options;
