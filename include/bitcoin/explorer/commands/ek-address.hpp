@@ -178,7 +178,7 @@ public:
         (
             "SEED",
             value<primitives::base16>(&argument_.seed),
-            "The Base16 entropy used to create the corresponding encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used)."
+            "The Base16 entropy used to create the corresponding encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the seed is read from STDIN."
         );
 
         return options;

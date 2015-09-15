@@ -170,7 +170,7 @@ public:
         (
             "EK_PUBLIC_KEY",
             value<bc::config::ek_public>(&argument_.ek_public_key),
-            "The encrypted public key to decrypt."
+            "The encrypted public key to decrypt. If not specified the key is read from STDIN."
         );
 
         return options;

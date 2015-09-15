@@ -226,7 +226,7 @@
     <option name="uncompressed" description="Use the uncompressed public key format, as used to create the corresponding encrypted private key." />
     <option name="version" type="byte" description="The desired payment address version used to create the corresponding encrypted private key." />
     <argument name="TOKEN" required="true" type="ek_token" description="The intermediate passphrase token used to create the corresponding encrypted private key." />
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy used to create the corresponding encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used)." />
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy used to create the corresponding encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the seed is read from STDIN." />
     <define name="BX_EK_ADDRESS_SHORT_SEED" value="The seed is less than 192 bits long." />
   </command>
 
@@ -234,42 +234,42 @@
     <option name="uncompressed" description="Use the uncompressed public key format." />
     <option name="version" type="byte" description="The desired payment address version." />
     <argument name="TOKEN" required="true" type="ek_token" description="The intermediate passphrase token." />
-    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used)." />
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new encrypted private key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the seed is read from STDIN." />
     <define name="BX_EK_NEW_SHORT_SEED" value="The seed is less than 192 bits long." />
   </command>
 
   <command symbol="ek-public" output="ek_public" category="KEY_ENCRYPTION" description="Create an encrypted public key from an intermediate passphrase token (BIP38).">
     <option name="uncompressed" description="Use the uncompressed public key format, as used to create the corresponding encrypted private key." />
     <option name="version" type="byte" description="The desired payment address version used to create the corresponding encrypted private key." />
-    <argument name="TOKEN" type="ek_token" description="The intermediate passphrase token used to create the corresponding encrypted private key." />
-    <argument name="SEED" type="base16" description="The Base16 entropy for the new encrypted public key. Must be at least 192 bits in length (only the first 192 bits are used)." />
+    <argument name="TOKEN" required="true" type="ek_token" description="The intermediate passphrase token used to create the corresponding encrypted private key." />
+    <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new encrypted public key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the seed is read from STDIN." />
     <define name="BX_EK_PUBLIC_SHORT_SEED" value="The seed is less than 192 bits long." />
   </command>
 
   <command symbol="ek-public-to-address" output="address" category="KEY_ENCRYPTION" description="Extract the payment address of an encrypted public key (BIP38).">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the intermediate passphrase token." />
-    <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key from which to extract the payment address." />
-    <define name="BX_EK_PUBLIC_TO_ADDRESS_INVALID_PASSPHRASE" value="The passphrase is incorrect" />
+    <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key from which to extract the payment address. If not specified the key is read from STDIN." />
+    <define name="BX_EK_PUBLIC_TO_ADDRESS_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
     <define name="BX_EK_PUBLIC_TO_ADDRESS_REQUIRES_ICU" value="The command requires an ICU build." />
   </command> 
 
   <command symbol="ek-public-to-ec" output="ec_public" category="KEY_ENCRYPTION" description="Extract the EC public key of an encrypted public key (BIP38). ">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the encrypted private key." />
-    <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key to decrypt." />
+    <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key to decrypt. If not specified the key is read from STDIN." />
     <define name="BX_EK_PUBLIC_TO_EC_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
     <define name="BX_EK_PUBLIC_TO_EC_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
   <command symbol="ek-to-address" output="address" category="KEY_ENCRYPTION" description="Extract the payment address of an encrypted private key (BIP38).">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the intermediate passphrase token or to encrypt the encrypted private key." />
-    <argument name="EK_PRIVATE_KEY" stdin="true" type="ek_private" description="The encrypted private key from which to extract the payment address." />
+    <argument name="EK_PRIVATE_KEY" stdin="true" type="ek_private" description="The encrypted private key from which to extract the payment address.  If not specified the key is read from STDIN." />
     <define name="BX_EK_TO_ADDRESS_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
     <define name="BX_EK_TO_ADDRESS_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
   <command symbol="ek-to-ec" output="ec_private" category="KEY_ENCRYPTION" description="Recover the EC private key from an encrypted private key (BIP38).">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to encrypt the encrypted private key." />
-    <argument name="EK_PRIVATE_KEY" stdin="true" type="ek_private" description="The encrypted private key to decrypt." />
+    <argument name="EK_PRIVATE_KEY" stdin="true" type="ek_private" description="The encrypted private key to decrypt. If not specified the key is read from STDIN." />
     <define name="BX_EK_TO_EC_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
     <define name="BX_EK_TO_EC_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
