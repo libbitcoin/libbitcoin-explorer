@@ -170,7 +170,7 @@ public:
         (
             "EK_PRIVATE_KEY",
             value<bc::config::ek_private>(&argument_.ek_private_key),
-            "The encrypted private key from which to extract the payment address."
+            "The encrypted private key from which to extract the payment address.  If not specified the key is read from STDIN."
         );
 
         return options;

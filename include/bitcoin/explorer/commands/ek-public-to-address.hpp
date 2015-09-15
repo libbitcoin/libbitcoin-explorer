@@ -73,7 +73,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_EK_PUBLIC_TO_ADDRESS_INVALID_PASSPHRASE \
-    "The passphrase is incorrect"
+    "The passphrase is incorrect."
 #define BX_EK_PUBLIC_TO_ADDRESS_REQUIRES_ICU \
     "The command requires an ICU build."
 
@@ -170,7 +170,7 @@ public:
         (
             "EK_PUBLIC_KEY",
             value<bc::config::ek_public>(&argument_.ek_public_key),
-            "The encrypted public key from which to extract the payment address."
+            "The encrypted public key from which to extract the payment address. If not specified the key is read from STDIN."
         );
 
         return options;
