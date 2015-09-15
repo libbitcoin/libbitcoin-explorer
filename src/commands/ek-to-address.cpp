@@ -48,7 +48,7 @@ console_result ek_to_address::invoke(std::ostream& output, std::ostream& error)
     const auto point = secret_to_public_key(secret, compressed);
     const address payment_address(version, point);
 
-    output << secret << std::endl;
+    output << payment_address << std::endl;
     return console_result::okay;
 #else
     error << BX_EK_TO_ADDRESS_REQUIRES_ICU << std::endl;
