@@ -69,7 +69,7 @@ std::istream& operator>>(std::istream& input, uri& argument)
     // We currently only validate Bitcoin URIs.
     if (starts_with(value, "bitcoin:"))
     {
-        if (!uri_parse(value, argument.parse_result_))
+        if (!uri_parse(argument.parse_result_, value))
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(value));
         }

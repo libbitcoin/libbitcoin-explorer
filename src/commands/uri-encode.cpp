@@ -63,6 +63,6 @@ using namespace bc::explorer::commands;
      if (!uri.empty())
          writer.write_r(uri);
 
-     output << writer.string() << std::endl;
+     output << writer.encoded() << std::endl;
      return console_result::okay;
  }
