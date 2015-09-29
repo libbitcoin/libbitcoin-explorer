@@ -57,7 +57,7 @@ wrapper::wrapper(const wallet::payment_address& address)
 {
 }
 
-wrapper::wrapper(uint32_t version, const data_chunk& payload)
+wrapper::wrapper(uint8_t version, const data_chunk& payload)
   : wrapper(wrapped_data{ version, 0, payload })
 {
 }

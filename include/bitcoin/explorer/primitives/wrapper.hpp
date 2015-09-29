@@ -72,7 +72,7 @@ public:
      * @param[in]  version  The version for the new wrapped value.
      * @param[in]  payload  The payload for the new wrapped value.
      */
-    wrapper(uint32_t version, const data_chunk& payload);
+    wrapper(uint8_t version, const data_chunk& payload);
 
     /**
      * Copy constructor.
