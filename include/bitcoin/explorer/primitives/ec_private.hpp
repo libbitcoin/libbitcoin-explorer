@@ -34,50 +34,34 @@ namespace primitives {
 /**
  * Serialization helper to convert between base16 string and ec_secret.
  */
-class ec_private
+class BCX_API ec_private
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API ec_private();
+    ec_private()
+    {
+    }
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    BCX_API ec_private(const std::string& hexcode);
+    ec_private(const std::string& hexcode);
 
     /**
      * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
+     * @param[in]  secret  The value to initialize with.
      */
-    BCX_API ec_private(const ec_secret& value);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    BCX_API ec_private(const wallet::hd_private_key& value);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
-    BCX_API ec_private(const ec_private& other);
-
-    /**
-     * Return a reference to the data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API ec_secret& data();
+    ec_private(const ec_secret& secret);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const ec_secret&() const;
+    operator const ec_secret&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -85,7 +69,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         ec_private& argument);
 
     /**
@@ -94,7 +78,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const ec_private& argument);
 
 private:

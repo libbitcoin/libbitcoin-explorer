@@ -32,48 +32,22 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-hd_key::hd_key()
-    : private_key_value_(), public_key_value_()
-{
-}
-
 hd_key::hd_key(const std::string& base58)
 {
     std::stringstream(base58) >> *this;
 }
 
-hd_key::hd_key(const wallet::hd_private_key& value)
+const wallet::hd_public& hd_key::to_public() const
 {
-    // hd_public_key doesn't provide a copy constructor.
-    private_key_value_.from_string(value.to_string());
+    return private_key_value_? private_key_value_ : public_key_value_;
 }
 
-hd_key::hd_key(const wallet::hd_public_key& value)
-{
-    // hd_public_key doesn't provide a copy constructor.
-    public_key_value_.from_string(value.to_string());
-}
-
-hd_key::hd_key(const hd_key& other)
-{
-    public_key_value_ = other.public_key_value_;
-    private_key_value_ = other.private_key_value_;
-}
-
-const wallet::hd_public_key& hd_key::derived_public_key() const
-{
-    if (private_key_value_.valid())
-        return (wallet::hd_public_key&)private_key_value_;
-    else
-        return public_key_value_;
-}
-
-hd_key::operator const wallet::hd_private_key&() const
+hd_key::operator const wallet::hd_private&() const
 {
     return private_key_value_;
 }
 
-hd_key::operator const wallet::hd_public_key&() const
+hd_key::operator const wallet::hd_public&() const
 {
     return public_key_value_;
 }
@@ -84,23 +58,22 @@ std::istream& operator>>(std::istream& input, hd_key& argument)
     input >> base58;
 
     // First try to read as a private key.
-    if (!argument.private_key_value_.from_string(base58))
+    wallet::hd_private private_key(base58);
+    if (private_key)
     {
-        // Otherwise try to read as a public key.
-        if (!argument.public_key_value_.from_string(base58))
-        {
-            BOOST_THROW_EXCEPTION(invalid_option_value(base58));
-        }
+        argument.private_key_value_ = private_key;
+        return input;
     }
 
-    return input;
-}
+    // Otherwise try to read as a public key.
+    wallet::hd_public public_key(base58);
+    if (public_key)
+    {
+        argument.public_key_value_ = public_key;
+        return input;
+    }
 
-std::ostream& operator<<(std::ostream& output, const hd_key& argument)
-{
-    const auto& public_key = argument.derived_public_key();
-    output << public_key.to_string();
-    return output;
+    BOOST_THROW_EXCEPTION(invalid_option_value(base58));
 }
 
 } // namespace primitives

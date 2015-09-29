@@ -36,38 +36,38 @@ namespace primitives {
 /**
  * Serialization helper to convert between string and message_signature.
  */
-class signature
+class BCX_API signature
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API signature();
+    signature();
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    BCX_API signature(const std::string& hexcode);
+    signature(const std::string& hexcode);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API signature(const wallet::message_signature& value);
+    signature(const wallet::message_signature& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API signature(const signature& other);
+    signature(const signature& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const wallet::message_signature&() const;
+    operator const wallet::message_signature&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -75,7 +75,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         signature& argument);
 
     /**
@@ -84,7 +84,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const signature& argument);
 
 private:

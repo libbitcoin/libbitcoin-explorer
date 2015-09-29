@@ -34,38 +34,38 @@ namespace primitives {
 /**
  * Serialization helper to convert between dictionary and string.
  */
-class language
+class BCX_API language
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API language();
+    language();
 
     /**
      * Initialization constructor.
      * @param[in]  token  The value to initialize with.
      */
-    BCX_API language(const std::string& token);
+    language(const std::string& token);
 
     /**
      * Initialization constructor.
      * @param[in]  languages  The value to initialize with.
      */
-    BCX_API language(bc::wallet::dictionary_list& languages);
+    language(bc::wallet::dictionary_list& languages);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API language(const language& other);
+    language(const language& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bc::wallet::dictionary_list() const;
+    operator const bc::wallet::dictionary_list() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -73,7 +73,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         language& argument);
 
     /**
@@ -82,7 +82,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const language& argument);
 
 private:

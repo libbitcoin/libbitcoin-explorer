@@ -23,24 +23,17 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result wif_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& secret = get_wif_argument();
 
-    // wif-to-pub is required in order to preserve the WIF compression flag.
-    // Otherwise we would only support transition through a private key.
-
-    const auto compressed = secret.get_compressed();
-    const auto public_key = secret_to_public_key(secret, compressed);
-
-    output << ec_public(public_key) << std::endl;
+    output << ec_public(secret) << std::endl;
     return console_result::okay;
 }

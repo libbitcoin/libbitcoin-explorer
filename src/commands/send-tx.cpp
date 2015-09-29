@@ -55,7 +55,7 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
         state.output(format(BX_SEND_TX_OUTPUT) % now());
     };
 
-    auto on_error = [&state](const std::error_code& error)
+    auto on_error = [&state](const code& error)
     {
         state.succeeded(error);
     };

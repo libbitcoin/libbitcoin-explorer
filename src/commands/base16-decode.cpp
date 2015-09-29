@@ -17,12 +17,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/base16-decode.hpp>
 
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 
 using namespace bc::explorer;
@@ -36,6 +34,5 @@ console_result base16_decode::invoke(std::ostream& output, std::ostream& error)
 
     // Do not add terminator to raw (non-textual) output stream.
     output << raw(base16) /* << std::endl */;
-
     return console_result::okay;
 }

@@ -26,76 +26,76 @@ BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(address_decode__invoke)
 
 // vectors
-#define BX_ADDRESS_DECODE_ADDRESS_V0 "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E"
-#define BX_ADDRESS_DECODE_ADDRESS_V42 "JBeTK2YUWEFTTQvcqEyQoS3poXKjjc1oEP"
+#define BX_ADDRESS_DECODE_ADDRESS_MAINNET "1HT7xU2Ngenf7D4yocz2SAcnNLW7rK8d4E"
+#define BX_ADDRESS_DECODE_ADDRESS_TESTNET "mwy5FX7MVgDutKYbXBxQG5q7EL6pmhHT58"
 
 // expectations
-#define BX_ADDRESS_DECODE_V0_INFO \
+#define BX_ADDRESS_DECODE_MAINNET_INFO \
 "wrapper\n" \
 "{\n" \
-"    checksum 1476364070\n" \
+"    checksum 2743498322\n" \
 "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
 "    version 0\n" \
 "}\n"
 /**
-#define BX_ADDRESS_DECODE_V0_JSON \
+#define BX_ADDRESS_DECODE_MAINNET_JSON \
 "{\n" \
 "    \"wrapper\": {\n" \
-"        \"checksum\": \"1476364070\",\n" \
+"        \"checksum\": \"2743498322\",\n" \
 "        \"payload\": \"b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\",\n" \
 "        \"version\": \"0\"\n" \
 "    }\n" \
 "}\n"
 */
-#define BX_ADDRESS_DECODE_V0_XML \
+#define BX_ADDRESS_DECODE_MAINNET_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
 "<wrapper>" \
-    "<checksum>1476364070</checksum>" \
+    "<checksum>2743498322</checksum>" \
     "<payload>b472a266d0bd89c13706a4132ccfb16f7c3b9fcb</payload>" \
     "<version>0</version>" \
 "</wrapper>\n"
-#define BX_ADDRESS_DECODE_V42_DEFAULT \
+#define BX_ADDRESS_DECODE_TESTNET_DEFAULT \
 "wrapper\n" \
 "{\n" \
-"    checksum 1476364070\n" \
+"    checksum 1475514977\n" \
 "    payload b472a266d0bd89c13706a4132ccfb16f7c3b9fcb\n" \
-"    version 42\n" \
+"    version 111\n" \
 "}\n"
 
-BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_info__okay_output)
+BOOST_AUTO_TEST_CASE(address_decode__invoke__mainnet_info__okay_output)
 {
     BX_DECLARE_COMMAND(address_decode);
     command.set_format_option({ encoding_engine::info });
-    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
+    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_MAINNET });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V0_INFO);
+    BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_MAINNET_INFO);
 }
 
 // BOOST is inconsistent across versions regarding pretty printing JSON.
-BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_json__okay)
+BOOST_AUTO_TEST_CASE(address_decode__invoke__mainnet_json__okay)
 {
     BX_DECLARE_COMMAND(address_decode);
     command.set_format_option({ encoding_engine::json });
-    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
+    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_MAINNET });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    // BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V0_JSON);
+    // BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_MAINNET_JSON);
 }
 
-BOOST_AUTO_TEST_CASE(address_decode__invoke__version_0_xml__okay_output)
+BOOST_AUTO_TEST_CASE(address_decode__invoke__mainnet_xml__okay_output)
 {
     BX_DECLARE_COMMAND(address_decode);
     command.set_format_option({ encoding_engine::xml });
-    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V0 });
+    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_MAINNET });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V0_XML);
+    BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_MAINNET_XML);
 }
 
-BOOST_AUTO_TEST_CASE(address_decode__invoke__version_42_default__okay_output)
+BOOST_AUTO_TEST_CASE(address_decode__invoke__testnet_default__okay_output)
 {
     BX_DECLARE_COMMAND(address_decode);
-    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_V42 });
+    command.set_payment_address_argument({ BX_ADDRESS_DECODE_ADDRESS_TESTNET });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_V42_DEFAULT);
+    BX_REQUIRE_OUTPUT(BX_ADDRESS_DECODE_TESTNET_DEFAULT);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

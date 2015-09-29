@@ -33,64 +33,64 @@ namespace primitives {
 /**
  * Serialization helper to convert between a checksum'd wrapper and data_chunk.
  */
-class wrapper
+class BCX_API wrapper
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API wrapper();
+    wrapper();
 
     /**
      * Initialization constructor.
      * 
      * @param[in]  wrapped  The value to initialize with.
      */
-    BCX_API wrapper(const std::string& wrapped);
+    wrapper(const std::string& wrapped);
 
     /**
      * Initialization constructor.
      * @param[in]  wrapped  The wrapped value to initialize with.
      */
-    BCX_API wrapper(const data_chunk& wrapped);
+    wrapper(const data_chunk& wrapped);
 
     /**
      * Initialization constructor.
      * @param[in]  wrapped  The wrapped value to initialize with.
      */
-    BCX_API wrapper(const wrapped_data& wrapped);
+    wrapper(const wrapped_data& wrapped);
 
     /**
      * Initialization constructor.
      * @param[in]  address  The payment address to initialize with.
      */
-    BCX_API wrapper(const wallet::payment_address& address);
+    wrapper(const wallet::payment_address& address);
 
     /**
      * Initialization constructor.
      * @param[in]  version  The version for the new wrapped value.
      * @param[in]  payload  The payload for the new wrapped value.
      */
-    BCX_API wrapper(uint32_t version, const data_chunk& payload);
+    wrapper(uint8_t version, const data_chunk& payload);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API wrapper(const wrapper& other);
+    wrapper(const wrapper& other);
 
     /**
      * Serialize the wrapper to bytes according to the wire protocol.
      * @return  The byte serialized copy of the wrapper.
      */
-    BCX_API const bc::data_chunk to_data() const;
+    const bc::data_chunk to_data() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const wrapped_data&() const;
+    operator const wrapped_data&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -98,7 +98,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         wrapper& argument);
 
     /**
@@ -107,7 +107,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const wrapper& argument);
 
 private:

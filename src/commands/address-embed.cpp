@@ -17,23 +17,36 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/address-embed.hpp>
 
 #include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
-#define ADDRESS_EMBED_SCRIPT "dup hash160 [ %1% ] equalverify checksig"
+// TODO: why not use p2sh or null_data script?
+static chain::script to_p2kh_script(const short_hash& key_hash)
+{
+    using namespace chain;
+    const operation::stack ops
+    {
+        operation{ opcode::dup, data_chunk() },
+        operation{ opcode::hash160, data_chunk() },
+        operation{ opcode::special, to_chunk(key_hash) },
+        operation{ opcode::equalverify, data_chunk() },
+        operation{ opcode::checksig, data_chunk() }
+    };
+
+    return chain::script{ ops };
+}
 
 console_result address_embed::invoke(std::ostream& output, std::ostream& error)
 {
@@ -42,24 +55,12 @@ console_result address_embed::invoke(std::ostream& output, std::ostream& error)
     const auto& version = get_version_option();
 
     // Create script from hash of data.
-    auto tokens = format(ADDRESS_EMBED_SCRIPT) % base16(ripemd160_hash(data));
-    const script embeded_script(split(tokens.str()));
+    const auto script = to_p2kh_script(ripemd160_hash(data));
 
     // Make ripemd hash of serialized script.
-    const data_chunk serialized_script = embeded_script.to_data();
-    const auto ripemd160 = ripemd160_hash(serialized_script);
-
-    // RECOMPILE REQUIRED FOR TESTNET
-    const address pay_address(version, ripemd160);
-
-    output << pay_address << std::endl;
+    const auto hash = ripemd160_hash(script.to_data(false));
+    
+    // Make address (money sent here is lost forever).
+    output << payment_address(hash, version) << std::endl;
     return console_result::okay;
 }
-
-//#!/bin/bash
-//read INPUT
-//DECODED_ADDR=$(echo $INPUT | sx ripemd160)
-//SCRIPT=$(sx rawscript dup hash160 [ $DECODED_ADDR ] equalverify checksig)
-//HASH=$(echo $SCRIPT | sx ripemd160)
-//sx encode-addr $HASH
-//

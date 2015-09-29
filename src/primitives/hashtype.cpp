@@ -35,10 +35,9 @@ namespace primitives {
 static const char* hashtype_all = "all";
 static const char* hashtype_none = "none";
 static const char* hashtype_single = "single";
-static const char* hashtype_anyone_can_pay = "anyone_can_pay";
 
 hashtype::hashtype()
-    : hashtype(chain::signature_hash_algorithm::all)
+  : hashtype(chain::signature_hash_algorithm::all)
 {
 }
 
@@ -48,12 +47,12 @@ hashtype::hashtype(const std::string& token)
 }
 
 hashtype::hashtype(const chain::signature_hash_algorithm& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 hashtype::hashtype(const hashtype& other)
-    : value_(other.value_)
+  : value_(other.value_)
 {
 }
 
@@ -73,8 +72,6 @@ std::istream& operator>>(std::istream& input, hashtype& argument)
         argument.value_ = chain::signature_hash_algorithm::none;
     else if (text == hashtype_single)
         argument.value_ = chain::signature_hash_algorithm::single;
-    else if (text == hashtype_anyone_can_pay)
-        argument.value_ = chain::signature_hash_algorithm::anyone_can_pay;
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -97,9 +94,6 @@ std::ostream& operator<<(std::ostream& output, const hashtype& argument)
             break;
         case chain::signature_hash_algorithm::single:
             value = hashtype_single;
-            break;
-        case chain::signature_hash_algorithm::anyone_can_pay:
-            value = hashtype_anyone_can_pay;
             break;
         default:
             BITCOIN_ASSERT_MSG(false, "Unexpected signature hash type value.");

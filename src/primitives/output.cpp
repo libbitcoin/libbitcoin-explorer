@@ -19,6 +19,7 @@
  */
 #include <bitcoin/explorer/primitives/output.hpp>
 
+#include <cstdint>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -36,176 +37,9 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-static chain::script build_pubkey_hash_script(const short_hash& pubkey_hash)
-{
-    data_chunk hash(pubkey_hash.begin(), pubkey_hash.end());
-
-    chain::operation::stack ops = {
-        chain::operation{ chain::opcode::dup, data_chunk() },
-        chain::operation{ chain::opcode::hash160, data_chunk() },
-        chain::operation{ chain::opcode::special, hash },
-        chain::operation{ chain::opcode::equalverify, data_chunk() },
-        chain::operation{ chain::opcode::checksig, data_chunk() }
-    };
-
-    return chain::script{ ops };
-}
-
-static chain::script build_script_hash_script(const short_hash& script_hash)
-{
-    data_chunk hash(script_hash.begin(), script_hash.end());
-
-    chain::operation::stack ops = {
-        chain::operation{ chain::opcode::hash160, data_chunk() },
-        chain::operation{ chain::opcode::special, hash },
-        chain::operation{ chain::opcode::equal, data_chunk() }
-    };
-
-    return chain::script{ ops };
-}
-
-static bool build_output_script(chain::script& script,
-    const wallet::payment_address& address)
-{
-    switch (address.version())
-    {
-        case wallet::payment_address::pubkey_version:
-            script = build_pubkey_hash_script(address.hash());
-            return true;
-
-        case wallet::payment_address::script_version:
-            script = build_script_hash_script(address.hash());
-            return true;
-    }
-
-    return false;
-}
-
-static tx_output_type build_stealth_meta_output(
-    const ec_secret& ephemeral_secret)
-{
-    // NOTE: The version and fixed-length nonce both reduce privacy.
-    constexpr uint8_t nonce = 0x00;
-    constexpr uint8_t version = 0x06;
-
-    auto ephemeral_pubkey = secret_to_public_key(ephemeral_secret);
-    data_chunk stealth_metadata{ { version, nonce, nonce, nonce, nonce } };
-    extend_data(stealth_metadata, ephemeral_pubkey);
-
-    chain::operation::stack ops = {
-        chain::operation{ chain::opcode::return_, data_chunk() },
-        chain::operation{ chain::opcode::special, stealth_metadata }
-    };
-
-    tx_output_type out{ 0, chain::script{ ops } };
-
-    return out;
-}
-
-static ec_secret generate_private_key(const std::vector<std::string>& tokens)
-{
-    if (tokens.size() == 3)
-    {
-        data_chunk seed = base16(tokens[2]);
-        if (seed.size() >= minimum_seed_size)
-            return new_key(seed);
-    }
-
-    return null_hash;
-}
-
-// output is currently a private encoding in bx.
-static bool decode_outputs(std::vector<tx_output_type>& outputs,
-    std::string& pay_address, const std::string& tuple)
-{
-    std::vector<tx_output_type> result;
-
-    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
-    if (tokens.size() != 2 && tokens.size() != 3)
-        return false;
-
-    auto& target = tokens[0];
-    tx_output_type output;
-    deserialize(output.value, tokens[1], true);
-
-    wallet::payment_address pay_to_address;
-    if (pay_to_address.from_string(target))
-    {
-        if (!build_output_script(output.script, pay_to_address))
-        {
-            BOOST_THROW_EXCEPTION(invalid_option_value(target));
-        }
-
-        result.push_back(output);
-        outputs = result;
-        pay_address = pay_to_address.to_string();
-        return true;
-    }
-
-    wallet::stealth_address stealth;
-    if (stealth.from_string(target))
-    {
-        auto scan_pubkey = stealth.get_scan_pubkey();
-        auto spend_pubkeys = stealth.get_spend_pubkeys();
-
-        // Prefix not yet supported, exactly one spend key is required.
-        auto keys = spend_pubkeys.size();
-        if (keys != 1 || stealth.get_prefix().size() > 0)
-        {
-            BOOST_THROW_EXCEPTION(invalid_option_value(target));
-        }
-        
-        // Do stealth stuff.
-        auto ephemeral_secret = generate_private_key(tokens);
-        if (ephemeral_secret == null_hash)
-        {
-            BOOST_THROW_EXCEPTION(invalid_option_value(target));
-        }
-
-        // We have already ensured there is exactly one spend key.
-        auto public_key = wallet::uncover_stealth(scan_pubkey,
-            ephemeral_secret, spend_pubkeys.front());
-
-        // Add RETURN meta output.
-        auto meta_output = build_stealth_meta_output(ephemeral_secret);
-        result.push_back(meta_output);
-
-        // Generate the address.
-        wallet::payment_address pay_to_address;
-        pay_to_address.set_public_key(public_key);
-        if (!build_output_script(output.script, pay_to_address))
-        {
-            BOOST_THROW_EXCEPTION(invalid_option_value(target));
-        }
-
-        result.push_back(output);
-        outputs = result;
-        pay_address = pay_to_address.to_string();
-        return true;
-    }
-
-    // Otherwise the token is assumed to be a base16-encoded script.
-    output.script = script(target);
-
-    result.push_back(output);
-    outputs = result;
-    pay_address = output.script.to_string();
-    return true;
-}
-
-// output is currently a private encoding in bx.
-// This does not retain the original serialized form.
-// It serializes the last output, as base16 encoded script.
-static std::string encode_outputs(const std::vector<tx_output_type>& outputs)
-{
-    std::stringstream result;
-    const auto& last = outputs.back();
-    result << script(last.script) << BX_TX_POINT_DELIMITER << last.value;
-    return result.str();
-}
-
 output::output()
-    : value_()
+  : amount_(0), payment_version_(0), stealth_version_(0), script_(),
+    pay_to_hash_(null_short_hash), ephemeral_key_(null_compressed_point)
 {
 }
 
@@ -214,25 +48,34 @@ output::output(const std::string& tuple)
     std::stringstream(tuple) >> *this;
 }
 
-output::output(const tx_output_type& value)
+uint64_t output::amount() const
 {
-    value_.clear();
-    value_.push_back(value);
+    return amount_;
 }
 
-output::output(const output& other)
-    : value_(other.value_), pay_to_(other.pay_to_)
+uint8_t output::payment_version() const
 {
+    return payment_version_;
 }
 
-const std::string& output::payto() const
+uint8_t output::stealth_version() const
 {
-    return pay_to_;
+    return stealth_version_;
 }
 
-output::operator const std::vector<tx_output_type>&() const
+chain::script output::script() const
 {
-    return value_; 
+    return script_;
+}
+
+short_hash output::pay_to_hash() const
+{
+    return pay_to_hash_;
+}
+
+ec_compressed output::ephemeral_key() const
+{
+    return ephemeral_key_;
 }
 
 std::istream& operator>>(std::istream& input, output& argument)
@@ -240,20 +83,66 @@ std::istream& operator>>(std::istream& input, output& argument)
     std::string tuple;
     input >> tuple;
 
-    if (!decode_outputs(argument.value_, argument.pay_to_, tuple))
+    const auto tokens = split(tuple, BX_TX_POINT_DELIMITER);
+    if (tokens.size() < 2 || tokens.size() > 3)
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
     }
 
-    return input;
-}
+    const auto& target = tokens.front();
 
-std::ostream& operator<<(std::ostream& stream, const output& argument)
-{
-    // This does not retain the original serialized form.
-    // It serializes the last output, as base16 encoded script.
-    stream << encode_outputs(argument.value_);
-    return stream;
+    // TODO: validate amount <= max money (and > 0 ?).
+    deserialize(argument.amount_, tokens[1], true);
+
+    // Is the target a payment address?
+    const wallet::payment_address payment(target);
+    if (payment)
+    {
+        argument.payment_version_ = payment.version();
+        argument.pay_to_hash_ = payment.hash();
+        return input;
+    }
+
+    // Is the target a stealth address?
+    const wallet::stealth_address stealth(target);
+    if (stealth)
+    {
+        // TODO: finish stealth multisig implemetation.
+        if (stealth.spend_keys().size() != 1 || tokens.size() != 3 ||
+            tokens[2].size() < minimum_seed_size * 2)
+        {
+            BOOST_THROW_EXCEPTION(invalid_option_value(target));
+        }
+
+        data_chunk seed;
+        if (!decode_base16(seed, tokens[2]))
+        {
+            BOOST_THROW_EXCEPTION(invalid_option_value(target));
+        }
+
+        ec_secret ephemeral_secret;
+        ec_compressed ephemeral_point;
+        if (!create_ephemeral_keys(ephemeral_secret, ephemeral_point, seed))
+        {
+            BOOST_THROW_EXCEPTION(invalid_option_value(target));
+        }
+
+        ec_compressed stealth_key;
+        if (!uncover_stealth(stealth_key, stealth.scan_key(), ephemeral_secret,
+            stealth.spend_keys().front()))
+        {
+            BOOST_THROW_EXCEPTION(invalid_option_value(target));
+        }
+
+        argument.ephemeral_key_ = ephemeral_point;
+        argument.stealth_version_ = stealth.version();
+        argument.pay_to_hash_ = bitcoin_short_hash(stealth_key);
+        return input;
+    }
+
+    // The target must be a serialized script.
+    argument.script_ = script(target);
+    return input;
 }
 
 } // namespace explorer

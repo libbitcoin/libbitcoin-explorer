@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    {\n" \
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    }\n" \
-    "    testnet false\n" \
+    "    version 42\n" \
     "}\n"
 #define STEALTH_DECODE_AB \
     "stealth_address\n" \
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    {\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
     "    }\n" \
-    "    testnet false\n" \
+    "    version 42\n" \
     "}\n"
 #define STEALTH_DECODE_AAB \
     "stealth_address\n" \
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
     "    }\n" \
-    "    testnet false\n" \
+    "    version 42\n" \
     "}\n"
 #define STEALTH_DECODE_AAB1 \
     "stealth_address\n" \
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
     "    }\n" \
-    "    testnet false\n" \
+    "    version 42\n" \
     "}\n"
 #define STEALTH_DECODE_AAB10 \
     "stealth_address\n" \
@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
     "    }\n" \
-    "    testnet false\n" \
+    "    version 42\n" \
     "}\n"
 #define STEALTH_DECODE_AAB1P \
     "stealth_address\n" \
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
     "    }\n" \
-    "    testnet false\n" \
+    "    version 42\n" \
     "}\n"
 #define STEALTH_DECODE_AAB1PT \
     "stealth_address\n" \
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
     "    }\n" \
-    "    testnet true\n" \
+    "    version 43\n" \
     "}\n"
 
 

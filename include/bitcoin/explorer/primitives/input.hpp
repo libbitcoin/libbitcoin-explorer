@@ -35,45 +35,45 @@ namespace primitives {
 /**
  * Serialization helper stub for tx_input_type.
  */
-class input
+class BCX_API input
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API input();
+    input();
     
     /**
      * Initialization constructor.
      * @param[in]  tuple  The value to initialize with.
      */
-    BCX_API input(const std::string& tuple);
+    input(const std::string& tuple);
 
     /**
      * Initialization constructor. Only the point is retained.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API input(const tx_input_type& value);
+    input(const tx_input_type& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API input(const input& other);
+    input(const input& other);
 
     /**
      * Initialization constructor. Aspects of the input other than the point
      * are defaulted.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API input(const chain::input_point& value);
+    input(const chain::input_point& value);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const tx_input_type&() const;
+    operator const tx_input_type&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -81,7 +81,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& stream,
+    friend std::istream& operator>>(std::istream& stream,
         input& argument);
 
     /**
@@ -90,7 +90,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const input& argument);
 
 private:

@@ -17,37 +17,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/script-to-address.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result script_to_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& script = get_script_argument();
     const auto version = get_version_option();
-
-    // We use zero as a sentinel as it is invalid as any coin's p2sh version.
-    uint8_t address_version = version;
-    if (version == 0)
-        address_version = bc::wallet::payment_address::script_version;
         
-    // Make ripemd hash of serialized script.
-    const auto serialized_script = script.to_data();
-    const auto bitcoin160 = bitcoin_short_hash(serialized_script);
+    // TODO: if not set default version from config (address_p2sh).
 
-    // TESTNET VERSION REQUIRES RECOMPILE TO USE DEFAULT VERSION
-    address script_hash_address(address_version, bitcoin160);
+    const payment_address address(script, version);
 
-    output << script_hash_address << std::endl;
+    output << address << std::endl;
     return console_result::okay;
 }

@@ -14,8 +14,8 @@
 function global.map_type(type)
 
     # Local type constants.
-    my.type_bool = "bool"
     my.type_address = "address"
+    my.type_bool = "bool"
     my.type_base16 = "base16"
     my.type_base2 = "base2"
     my.type_base58 = "base58"
@@ -33,6 +33,7 @@ function global.map_type(type)
     my.type_ek_token = "ek_token"
     my.type_encoding = "encoding"
     my.type_endorsement = "endorsement"
+    my.type_endpoint = "endpoint"
     my.type_file = "file"
     my.type_hashtype = "hashtype"
     my.type_hd_key = "hd_key"
@@ -42,12 +43,13 @@ function global.map_type(type)
     my.type_input = "input"
     my.type_language = "language"
     my.type_output = "output"
+    my.type_payment_address = "payment_address"
     my.type_point = "point"
     my.type_path = "path"
     my.type_raw = "raw"
     my.type_script = "script"
     my.type_signature = "signature"
-    my.type_stealth = "stealth"
+    my.type_stealth_address = "stealth_address"
     my.type_string = "string"
     my.type_transaction = "transaction"
     my.type_uri = "uri"
@@ -62,35 +64,37 @@ function global.map_type(type)
     my.type_base85_bx = "primitives::base85"
     my.type_btc_bx = "primitives::btc"
     my.type_btc160_bx = "primitives::btc160"
-    my.type_btc256_bx = "primitives::btc256"
+    my.type_btc256_bx = "bc::config::btc256"
     my.type_byte_bx = "primitives::byte"
     my.type_cert_key_bx = "primitives::cert_key"
     my.type_ec_private_bx = "primitives::ec_private"
-    my.type_ec_public_bx = "primitives::ec_public"
+    my.type_ec_public_bx = "bc::wallet::ec_public"
     my.type_ek_private_bx = "bc::config::ek_private"
     my.type_ek_public_bx = "bc::config::ek_public"
     my.type_ek_token_bx = "bc::config::ek_token"
     my.type_encoding_bx = "primitives::encoding"
     my.type_endorsement_bx = "primitives::endorsement"
+    my.type_endpoint_bx = "bc::config::endpoint"
     my.type_file_bx = "primitives::file"
     my.type_hashtype_bx = "primitives::hashtype"
     my.type_hd_key_bx = "primitives::hd_key"
-    my.type_hd_private_bx = "primitives::hd_priv"
-    my.type_hd_public_bx = "primitives::hd_pub"
+    my.type_hd_private_bx = "bc::wallet::hd_private"
+    my.type_hd_public_bx = "bc::wallet::hd_public"
     my.type_header_bx = "primitives::header"
     my.type_input_bx = "primitives::input"
     my.type_language_bx = "primitives::language"
     my.type_output_bx = "primitives::output"
     my.type_path_boost = "boost::filesystem::path"
+    my.type_payment_address_bx = "bc::wallet::payment_address"
     my.type_point_bx = "primitives::point"
     my.type_raw_bx = "primitives::raw"
     my.type_script_bx = "primitives::script"
     my.type_signature_bx = "primitives::signature"
-    my.type_stealth_bx = "primitives::stealth"
+    my.type_stealth_address_bx = "bc::wallet::stealth_address"
     my.type_string_std = "std::string"
     my.type_transaction_bx = "primitives::transaction"
-    my.type_uri_bx = "primitives::uri"
-    my.type_wif_bx = "primitives::wif"
+    my.type_uri_bx = "bc::wallet::bitcoin_uri"
+    my.type_wif_bx = "bc::wallet::ec_private"
     my.type_wrapper_bx = "primitives::wrapper"
 
     if my.type = my.type_address
@@ -129,6 +133,8 @@ function global.map_type(type)
         return my.type_encoding_bx
     elsif my.type = my.type_endorsement
         return my.type_endorsement_bx
+    elsif my.type = my.type_endpoint
+        return my.type_endpoint_bx
     elsif my.type = my.type_file
         return my.type_file_bx
     elsif my.type = my.type_hashtype
@@ -149,6 +155,8 @@ function global.map_type(type)
         return my.type_output_bx
     elsif my.type = my.type_path
         return my.type_path_boost
+    elsif my.type = my.type_payment_address
+        return my.type_payment_address_bx
     elsif my.type = my.type_point
         return my.type_point_bx
     elsif my.type = my.type_raw
@@ -157,8 +165,8 @@ function global.map_type(type)
         return my.type_script_bx
     elsif my.type = my.type_signature
         return my.type_signature_bx
-    elsif my.type = my.type_stealth
-        return my.type_stealth_bx
+    elsif my.type = my.type_stealth_address
+        return my.type_stealth_address_bx
     elsif my.type = my.type_string
         return my.type_string_std
     elsif my.type = my.type_transaction
@@ -199,12 +207,13 @@ function global.is_raw_type(type)
 endfunction
 
 function global.is_braced_type(type)
-    return (my.type = "primitives::uri")
+    return (my.type = "primitives::uri") | (my.type = "bc::config::endpoint")
 endfunction
 
 function global.is_quoted_type(type)
     return ((my.type = "boost::filesystem::path") | \
-        (my.type = "std::string") | (my.type = "primitives::uri"))
+        (my.type = "std::string") | (my.type = "primitives::uri") | \
+        (my.type = "bc::config::endpoint"))
 endfunction
 
 ###############################################################################
@@ -244,29 +253,21 @@ endfunction
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 .endmacro
 .

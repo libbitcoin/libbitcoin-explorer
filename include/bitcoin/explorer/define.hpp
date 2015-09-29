@@ -107,6 +107,11 @@ typedef po::options_description options_metadata;
 typedef po::positional_options_description arguments_metadata;
 
 /**
+ * The minimum safe length of a seed in bits.
+ */
+BC_CONSTEXPR size_t minimum_seed_bits = 128;
+
+/**
  * The minimum safe length of a seed in bytes (16).
  */
 BC_CONSTEXPR size_t minimum_seed_size = 128 / bc::byte_bits;

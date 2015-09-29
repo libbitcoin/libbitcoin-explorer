@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -167,7 +159,7 @@ public:
         )
         (
             "EC_PUBLIC_KEY",
-            value<primitives::ec_public>(&argument_.ec_public_key),
+            value<bc::wallet::ec_public>(&argument_.ec_public_key),
             "The Base16 EC public key to convert. If not specified the key is read from STDIN."
         );
 
@@ -188,7 +180,7 @@ public:
     /**
      * Get the value of the EC_PUBLIC_KEY argument.
      */
-    BCX_API virtual primitives::ec_public& get_ec_public_key_argument()
+    BCX_API virtual bc::wallet::ec_public& get_ec_public_key_argument()
     {
         return argument_.ec_public_key;
     }
@@ -197,7 +189,7 @@ public:
      * Set the value of the EC_PUBLIC_KEY argument.
      */
     BCX_API virtual void set_ec_public_key_argument(
-        const primitives::ec_public& value)
+        const bc::wallet::ec_public& value)
     {
         argument_.ec_public_key = value;
     }
@@ -233,7 +225,7 @@ private:
         {
         }
 
-        primitives::ec_public ec_public_key;
+        bc::wallet::ec_public ec_public_key;
     } argument_;
 
     /**

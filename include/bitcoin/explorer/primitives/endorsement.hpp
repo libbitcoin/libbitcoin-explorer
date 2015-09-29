@@ -36,26 +36,26 @@ namespace primitives {
 /**
  * Serialization helper to convert between endorsement string and data_chunk.
  */
-class endorsement
+class BCX_API endorsement
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API endorsement();
+    endorsement();
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    BCX_API endorsement(const std::string& hexcode);
+    endorsement(const std::string& hexcode);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API endorsement(const data_chunk& value);
+    endorsement(const data_chunk& value);
 
     /**
      * Initialization constructor.
@@ -71,19 +71,19 @@ public:
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API endorsement(const endorsement& other);
+    endorsement(const endorsement& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const data_chunk&() const;
+    operator const data_chunk&() const;
 
     /**
      * Overload cast to generic data reference.
      * @return  This object's value cast to a generic data reference.
      */
-    BCX_API operator data_slice() const;
+    operator data_slice() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -91,7 +91,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         endorsement& argument);
 
     /**
@@ -100,7 +100,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const endorsement& argument);
 
 private:

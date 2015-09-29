@@ -34,44 +34,44 @@ namespace primitives {
 /**
  * Serialization helper to convert between a byte stream and data_chunk.
  */
-class raw
+class BCX_API raw
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API raw();
+    raw();
 
     /**
      * Initialization constructor.
      * @param[in]  text  The value to initialize with.
      */
-    BCX_API raw(const std::string& text);
+    raw(const std::string& text);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API raw(const data_chunk& value);
+    raw(const data_chunk& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API raw(const raw& other);
+    raw(const raw& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const data_chunk&() const;
+    operator const data_chunk&() const;
 
     /**
      * Overload cast to generic data reference.
      * @return  This object's value cast to a generic data reference.
      */
-    BCX_API operator data_slice() const;
+    operator data_slice() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -79,7 +79,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         raw& argument);
 
     /**
@@ -88,7 +88,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const raw& argument);
 
 private:

@@ -82,7 +82,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    const auto handle_send = [&state](const std::error_code& code)
+    const auto handle_send = [&state](const code& code)
     {
         if (state.succeeded(code))
             state.output(format(BX_SEND_TX_NODE_OUTPUT) % now());

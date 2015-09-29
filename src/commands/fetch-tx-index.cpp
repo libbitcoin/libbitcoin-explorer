@@ -60,7 +60,7 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
         state.output(prop_tree(hash, height, index));
     };
 
-    auto on_error = [&state](const std::error_code& error)
+    auto on_error = [&state](const code& error)
     {
         state.succeeded(error);
     };

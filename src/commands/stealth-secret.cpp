@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/stealth-secret.hpp>
 
 #include <iostream>
@@ -25,11 +24,11 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
-// This is the same as ec-add-secrets, except limited to two.
+// This is nearly the same as ec-add-secrets.
 console_result stealth_secret::invoke(std::ostream& output,
     std::ostream& error)
 {
@@ -37,16 +36,13 @@ console_result stealth_secret::invoke(std::ostream& output,
     const auto& scan_secret = get_spend_secret_argument();
     const auto& shared_secret = get_shared_secret_argument();
 
-    // We avoid bc::uncover_stealth_secret because it eats the failure code.
-
-    ec_private sum(scan_secret);
-    if (!bc::ec_add(sum.data(), shared_secret))
+    ec_secret sum(scan_secret);
+    if (!bc::ec_add(sum, shared_secret))
     {
         error << BX_STEALTH_SECRET_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    output << sum << std::endl;
+    output << primitives::ec_private(sum) << std::endl;
     return console_result::okay;
 }
-

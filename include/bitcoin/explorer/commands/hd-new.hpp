@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -169,6 +161,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "version,v",
+            value<uint32_t>(&option_.version)->default_value(76066276),
+            "The desired HD private key version, defaults to 76066276."
+        )
+        (
             "SEED",
             value<primitives::base16>(&argument_.seed),
             "The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN."
@@ -205,6 +202,23 @@ public:
         argument_.seed = value;
     }
 
+    /**
+     * Get the value of the version option.
+     */
+    BCX_API virtual uint32_t& get_version_option()
+    {
+        return option_.version;
+    }
+
+    /**
+     * Set the value of the version option.
+     */
+    BCX_API virtual void set_version_option(
+        const uint32_t& value)
+    {
+        option_.version = value;
+    }
+
 private:
 
     /**
@@ -230,9 +244,11 @@ private:
     struct option
     {
         option()
+          : version()
         {
         }
 
+        uint32_t version;
     } option_;
 };
 

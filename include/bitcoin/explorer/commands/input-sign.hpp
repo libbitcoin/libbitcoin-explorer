@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -171,6 +163,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "anyone,a",
+            value<bool>(&option_.anyone)->zero_tokens(),
+            "Modify signature hashing so that other inputs are ignored."
+        )
+        (
             "index,i",
             value<uint32_t>(&option_.index),
             "The ordinal position of the input within the transaction, defaults to zero."
@@ -178,7 +175,7 @@ public:
         (
             "sign_type,s",
             value<primitives::hashtype>(&option_.sign_type),
-            "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'."
+            "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', and 'single', defaults to 'all'."
         )
         (
             "EC_PRIVATE_KEY",
@@ -262,6 +259,23 @@ public:
     }
 
     /**
+     * Get the value of the anyone option.
+     */
+    BCX_API virtual bool& get_anyone_option()
+    {
+        return option_.anyone;
+    }
+
+    /**
+     * Set the value of the anyone option.
+     */
+    BCX_API virtual void set_anyone_option(
+        const bool& value)
+    {
+        option_.anyone = value;
+    }
+
+    /**
      * Get the value of the index option.
      */
     BCX_API virtual uint32_t& get_index_option()
@@ -324,11 +338,13 @@ private:
     struct option
     {
         option()
-          : index(),
+          : anyone(),
+            index(),
             sign_type()
         {
         }
 
+        bool anyone;
         uint32_t index;
         primitives::hashtype sign_type;
     } option_;

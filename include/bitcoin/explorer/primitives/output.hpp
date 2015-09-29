@@ -22,8 +22,6 @@
 
 #include <iostream>
 #include <cstdint>
-#include <string>
-#include <vector>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -37,44 +35,28 @@ namespace primitives {
  * Serialization helper to convert between a base58-string:number and 
  * a vector of tx_output_type.
  */
-class output
+class BCX_API output
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API output();
+    output();
 
     /**
      * Initialization constructor.
      * @param[in]  tuple  The value to initialize with.
      */
-    BCX_API output(const std::string& tuple);
+    output(const std::string& tuple);
 
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    BCX_API output(const tx_output_type& value);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
-    BCX_API output(const output& other);
-
-    /**
-     * Return a reference to the pay-to data member.
-     * @return  A reference to the object's internal data.
-     */
-    BCX_API const std::string& payto() const;
-
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    BCX_API operator const std::vector<tx_output_type>&() const;
+    /// Parsed properties
+    uint64_t amount() const;
+    uint8_t payment_version() const;
+    uint8_t stealth_version() const;
+    chain::script script() const;
+    short_hash pay_to_hash() const;
+    ec_compressed ephemeral_key() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -82,30 +64,21 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         output& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   stream    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
-    BCX_API friend std::ostream& operator<<(std::ostream& stream,
-        const output& argument);
 
 private:
 
     /**
-     * The transaction outputs state of this object. We use a vector to capture
-     * the meta-output required for stealth and potentially other scenarios.
+     * The transaction output state of this object.
+     * This data is translated to an output given expected version information.
      */
-    std::vector<tx_output_type> value_;
-
-    /**
-     * The pay to address that matches the state of this object.
-     */
-    std::string pay_to_;
+    uint64_t amount_;
+    uint8_t payment_version_;
+    uint8_t stealth_version_;
+    chain::script script_;
+    short_hash pay_to_hash_;
+    ec_compressed ephemeral_key_;
 };
 
 } // namespace explorer

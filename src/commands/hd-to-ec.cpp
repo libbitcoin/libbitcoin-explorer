@@ -23,26 +23,23 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& key = get_hd_key_argument();
 
-    bc::wallet::hd_public_key child_key;
-    const bc::wallet::hd_public_key& public_key = key;
-    const bc::wallet::hd_private_key& private_key = key;
+    const bc::wallet::hd_public& public_key = key;
+    const bc::wallet::hd_private& private_key = key;
 
-    if (private_key.valid())
-        output << ec_private(private_key) << std::endl;
+    if (private_key)
+        output << primitives::ec_private(private_key) << std::endl;
     else
-        output << ec_public(public_key) << std::endl;
+        output << bc::wallet::ec_public(public_key) << std::endl;
 
     return console_result::okay;
 }

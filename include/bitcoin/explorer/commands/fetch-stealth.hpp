@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -72,8 +64,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_STEALTH_PREFIX_TOO_LONG \
-    "Stealth prefix is limited to 32 bits."
+#define BX_FETCH_STEALTH_FILTER_TOO_LONG \
+    "Stealth prefix filter is limited to 32 bits."
 
 /**
  * Class to implement the fetch-stealth command.
@@ -113,7 +105,7 @@ public:
      */
     BCX_API virtual const char* description()
     {
-        return "Get metadata on potential payment transactions by stealth prefix. Requires a Libbitcoin server connection.";
+        return "Get metadata on potential payment transactions by stealth prefix filter. Requires a Libbitcoin server connection.";
     }
 
     /**
@@ -124,7 +116,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PREFIX", 1);
+            .add("FILTER", 1);
     }
 
 	/**
@@ -168,9 +160,9 @@ public:
             "The minimum block height of transactions to include."
         )
         (
-            "PREFIX",
-            value<primitives::base2>(&argument_.prefix),
-            "The Base2 stealth prefix used to locate transactions. Defaults to all stealth transactions."
+            "FILTER",
+            value<primitives::base2>(&argument_.filter),
+            "The Base2 stealth prefix filter used to locate transactions. Defaults to all stealth transactions."
         );
 
         return options;
@@ -188,20 +180,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PREFIX argument.
+     * Get the value of the FILTER argument.
      */
-    BCX_API virtual primitives::base2& get_prefix_argument()
+    BCX_API virtual primitives::base2& get_filter_argument()
     {
-        return argument_.prefix;
+        return argument_.filter;
     }
 
     /**
-     * Set the value of the PREFIX argument.
+     * Set the value of the FILTER argument.
      */
-    BCX_API virtual void set_prefix_argument(
+    BCX_API virtual void set_filter_argument(
         const primitives::base2& value)
     {
-        argument_.prefix = value;
+        argument_.filter = value;
     }
 
     /**
@@ -248,11 +240,11 @@ private:
     struct argument
     {
         argument()
-          : prefix()
+          : filter()
         {
         }
 
-        primitives::base2 prefix;
+        primitives::base2 filter;
     } argument_;
 
     /**

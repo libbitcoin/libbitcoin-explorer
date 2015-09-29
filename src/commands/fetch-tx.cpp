@@ -26,7 +26,6 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
@@ -59,7 +58,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
         state.output(prop_tree(tx));
     };
 
-    auto on_error = [&state](const std::error_code& error)
+    auto on_error = [&state](const code& error)
     {
         state.succeeded(error);
     };

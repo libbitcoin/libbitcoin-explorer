@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -157,7 +149,7 @@ public:
         )
         (
             "hash,s",
-            value<primitives::btc256>(&option_.hash),
+            value<bc::config::btc256>(&option_.hash),
             "The Base16 block hash."
         )
         (
@@ -200,7 +192,7 @@ public:
     /**
      * Get the value of the hash option.
      */
-    BCX_API virtual primitives::btc256& get_hash_option()
+    BCX_API virtual bc::config::btc256& get_hash_option()
     {
         return option_.hash;
     }
@@ -209,7 +201,7 @@ public:
      * Set the value of the hash option.
      */
     BCX_API virtual void set_hash_option(
-        const primitives::btc256& value)
+        const bc::config::btc256& value)
     {
         option_.hash = value;
     }
@@ -261,7 +253,7 @@ private:
         }
 
         primitives::encoding format;
-        primitives::btc256 hash;
+        bc::config::btc256 hash;
         uint32_t height;
     } option_;
 };

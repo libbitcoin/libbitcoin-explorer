@@ -17,24 +17,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/hd-new.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 // The BX_HD_NEW_INVALID_KEY condition is uncovered by test.
 // This is because is not known what seed will produce an invalid key.
 console_result hd_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
+    const auto prefix = get_version_option();
     const data_chunk& seed = get_seed_argument();
     const auto& network = get_general_network_setting();
 
@@ -44,14 +42,18 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    // TESTNET OPTION DOES NOT REQUIRE RECOMPILE
-    const bc::wallet::hd_private_key key(seed, network == BX_TESTNET);
-    if (!key.valid())
+    // TODO: if not set default version from config.
+
+    // hd_private requires a composite version, but public is unused here.
+    const auto prefixes = bc::wallet::hd_private::to_prefixes(prefix, 0);
+
+    const bc::wallet::hd_private private_key(seed, prefixes);
+    if (!private_key)
     {
         error << BX_HD_NEW_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 
-    output << hd_priv(key) << std::endl;
+    output << private_key << std::endl;
     return console_result::okay;
 }

@@ -17,28 +17,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include "command.hpp"
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
+BOOST_AUTO_TEST_SUITE(obsolete)
 BOOST_AUTO_TEST_SUITE(address_validate__invoke)
 
-BOOST_AUTO_TEST_CASE(address_validate__invoke__valid__okay_output)
+BOOST_AUTO_TEST_CASE(address_validate__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(address_validate);
-    command.set_payment_address_argument({ "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_ADDRESS_VALIDATE_VALID_ADDRESS "\n");
-}
-
-BOOST_AUTO_TEST_CASE(address_validate__invoke__invalid__invalid_output)
-{
-    BX_DECLARE_COMMAND(address_validate);
-    command.set_payment_address_argument({ "@#$%^&*())(*&^%$%^&*()(*&^%$" });
-    BX_REQUIRE_INVALID(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_ADDRESS_VALIDATE_INVALID_ADDRESS "\n");
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_ADDRESS_VALIDATE_OBSOLETE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

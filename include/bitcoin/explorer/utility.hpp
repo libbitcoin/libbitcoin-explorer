@@ -41,7 +41,6 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -68,7 +67,7 @@ struct BCX_API connection_type
     uint8_t retries;
     client::period_ms wait;
     boost::filesystem::path cert_path;
-    primitives::uri server;
+    config::endpoint server;
     primitives::cert_key key;
 };
 
@@ -223,14 +222,14 @@ BCX_API bool is_base2(const std::string& text);
  * @param[in]  seed  The seed for key randomness.
  * @return           The new key.
  */
-BCX_API ec_secret new_key(data_slice seed);
+BCX_API ec_secret new_key(const data_chunk& seed);
 
 /**
  * Generate a new pseudorandom seed.
  * @param[in]  seed  The seed length in bits. Will be aligned to nearest byte.
  * @return           The new key.
  */
-BCX_API data_chunk new_seed(size_t bitlength=128);
+BCX_API data_chunk new_seed(size_t bitlength=minimum_seed_bits);
 
 /**
  * Convert a list of indexes to a list of strings. This could be generalized.

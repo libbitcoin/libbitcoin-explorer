@@ -34,45 +34,45 @@ namespace primitives {
 /**
  * Serialization helper to convert between data_chunk and Z85 cert key.
  */
-class cert_key
+class BCX_API cert_key
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API cert_key();
+    cert_key();
 
     /**
      * Initialization constructor.
      * @param[in]  base85  The value to initialize with.
      */
-    BCX_API cert_key(const std::string& base85);
+    cert_key(const std::string& base85);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API cert_key(const cert_key& other);
+    cert_key(const cert_key& other);
 
     /**
      * Convert internal type to text string.
      * Returns empty string if not initialized.
      * @return  This object's value cast to a Z85 encoded string.
      */
-    BCX_API std::string get_base85() const;
+    std::string get_base85() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const data_chunk&() const;
+    operator const data_chunk&() const;
 
     /**
      * Overload cast to generic data reference.
      * @return  This object's value cast to a generic data reference.
      */
-    BCX_API operator data_slice() const;
+    operator data_slice() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -80,7 +80,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         cert_key& argument);
 
     /**
@@ -89,7 +89,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const cert_key& argument);
 
 private:

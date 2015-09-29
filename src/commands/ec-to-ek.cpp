@@ -19,8 +19,6 @@
  */
 #include <bitcoin/explorer/commands/ec-to-ek.hpp>
 
-#include <algorithm>
-#include <cstddef>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -38,10 +36,12 @@ console_result ec_to_ek::invoke(std::ostream& output, std::ostream& error)
     const auto& passphrase = get_passphrase_argument();
     const auto& secret = get_ec_private_key_argument();
 
-    config::ek_private key;
-    encrypt(key.data(), secret, passphrase, version, !uncompressed);
+    // TODO: if not set default version from config.
 
-    output << key << std::endl;
+    bc::wallet::ek_private point;
+    encrypt(point, secret, passphrase, version, !uncompressed);
+
+    output << config::ek_private(point) << std::endl;
     return console_result::okay;
 #else
     error << BX_EC_TO_EK_REQUIRES_ICU << std::endl;

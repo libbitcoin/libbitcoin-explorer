@@ -63,7 +63,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
         state.output(prop_tree(rows));
     };
 
-    auto on_error = [&state](const std::error_code& error)
+    auto on_error = [&state](const code& error)
     {
         state.succeeded(error);
     };

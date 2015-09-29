@@ -20,7 +20,6 @@
 #ifndef BX_ADDRESS_HPP
 #define BX_ADDRESS_HPP
 
-#include <cstdint>
 #include <iostream>
 #include <string>
 #include <bitcoin/bitcoin.hpp>
@@ -33,72 +32,31 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between base58 string and payment_address.
+ * Serialization helper to convert between base58 string and bitcoin payment
+ * and stealth address.
  */
-class address
+class BCX_API address
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API address();
+    address()
+    {
+    }
 
     /**
      * Initialization constructor.
      * @param[in]  base58  The value to initialize with.
      */
-    BCX_API address(const std::string& base58);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    BCX_API address(const wallet::payment_address& value);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
-    BCX_API address(const address& other);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  version  The bitcoin address version.
-     * @param[in]  point    The address public key.
-     */
-    BCX_API address(uint8_t version, const ec_point& point);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  version  The bitcoin address version.
-     * @param[in]  hash     The ripemd160 hash of the address public key.
-     */
-    BCX_API address(uint8_t version, const short_hash& hash);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    BCX_API address(const wallet::hd_private_key& value);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    BCX_API address(const wallet::hd_public_key& value);
-
-    /**
-     * Overload cast to bool.
-     * @return  This object's value cast to a bool.
-     */
-    BCX_API operator bool() const;
-
+    address(const std::string& base58);
+    
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const wallet::payment_address&() const;
+    operator const std::string&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -106,24 +64,15 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         address& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   output    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
-        const address& argument);
 
 private:
 
     /**
      * The state of this object.
      */
-    wallet::payment_address value_;
+    std::string value_;
 };
 
 } // namespace explorer

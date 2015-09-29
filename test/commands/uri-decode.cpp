@@ -202,14 +202,6 @@ BOOST_AUTO_TEST_CASE(uri_decode__invoke__stealth_address__okay_output)
     BX_REQUIRE_OUTPUT(URI_DECODE_STEALTH_ADDRESS);
 }
 
-BOOST_AUTO_TEST_CASE(uri_decode__invoke__not_bitcoin__failure_error)
-{
-    BX_DECLARE_COMMAND(uri_decode);
-    command.set_uri_argument({ "http://eff.org" });
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_URI_DECODE_NOT_BITCOIN "\n");
-}
-
 // only one amount token is allowed on a bitcoin uri
 BOOST_AUTO_TEST_CASE(uri_decode__invoke__amount__okay_output)
 {

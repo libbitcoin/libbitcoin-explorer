@@ -25,8 +25,6 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 
-#ifndef ENABLE_TESTNET
-
 // Vector: sx.dyne.org/offlinetx.html
 
 #define TX_DECODE_TX_A_BASE16 \
@@ -133,8 +131,6 @@ BOOST_AUTO_TEST_CASE(tx_decode__invoke__tx_B_info__okay_output)
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(TX_DECODE_TX_B_INFO);
 }
-
-#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

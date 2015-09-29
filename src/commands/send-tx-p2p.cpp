@@ -82,7 +82,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     callback_state state(error, output);
     network::protocol::channel_handler handle_connect;
 
-    const auto protocol_handler = [&state](const std::error_code& code)
+    const auto protocol_handler = [&state](const code& code)
     {
         state.succeeded(code);
     };
@@ -99,8 +99,8 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
             proto.subscribe_channel(handle_connect);
     };
 
-    handle_connect = [&state, &transaction, handle_send](
-        const std::error_code& code, network::channel::ptr node)
+    handle_connect = [&state, &transaction, handle_send](const code& code,
+        network::channel::ptr node)
     {
         if (state.succeeded(code))
             node->send(transaction, handle_send);
