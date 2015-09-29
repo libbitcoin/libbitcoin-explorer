@@ -34,7 +34,6 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto prefix = get_version_option();
     const data_chunk& seed = get_seed_argument();
-    const auto& network = get_general_network_setting();
 
     if (seed.size() < minimum_seed_size)
     {

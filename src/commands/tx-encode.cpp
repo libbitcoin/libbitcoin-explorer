@@ -82,6 +82,8 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
     const auto& inputs = get_inputs_option();
     const auto& outputs = get_outputs_option();
 
+    // LIMITED TO MAINNET OUTPUT PAYMENT AND STEALTH ADDRESSES.
+
     // TODO: obtain from config.
     static const auto p2kh = bc::wallet::payment_address::mainnet_p2kh;
     static const auto p2sh = bc::wallet::payment_address::mainnet_p2sh;

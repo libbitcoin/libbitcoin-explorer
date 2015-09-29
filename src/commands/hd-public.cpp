@@ -48,6 +48,9 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     static constexpr auto first = bc::wallet::hd_first_hardened_key;
     const auto position = hard ? first + index : index;
 
+    // LIMITED TO GENERATING MAINNET KEYS FROM PRIVATE KEYS.
+    // TODO: deriving public form private requires prefix configuration.
+
     const auto child_public_key = private_key ?
         private_key.derive_public(position) :
         public_key.derive_public(position);

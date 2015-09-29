@@ -32,6 +32,9 @@ console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& private_key = get_hd_private_key_argument();
+
+    // LIMITED TO GENERATING MAINNET KEYS FROM PRIVATE KEYS.
+    // TODO: deriving public form private requires prefix configuration.
     
     output << private_key.to_public() << std::endl;
     return console_result::okay;
