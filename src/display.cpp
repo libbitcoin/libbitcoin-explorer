@@ -26,12 +26,13 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/dispatch.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/utility.hpp>
 #include <bitcoin/explorer/version.hpp>
 
 namespace libbitcoin {
 namespace explorer {
+
+using namespace bc::config;
 
 #define BX_HOME_PAGE_URL "https://github.com/libbitcoin/libbitcoin-explorer"
 
@@ -47,7 +48,7 @@ void display_command_names(std::ostream& stream)
     broadcast(func);
 }
 
-void display_connection_failure(std::ostream& stream, const primitives::uri& url)
+void display_connection_failure(std::ostream& stream, const endpoint& url)
 {
     stream << format(BX_CONNECTION_FAILURE) % url << std::endl;
 }

@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/input-validate.hpp>
 
 #include <iostream>
@@ -25,6 +24,7 @@
 #include <bitcoin/bitcoin.hpp>
 
 using namespace bc;
+using namespace bc::chain;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
@@ -43,9 +43,10 @@ console_result input_validate::invoke(std::ostream& output,
         error << BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
-
-    if (!bc::chain::script::check_signature(endorse, public_key, contract, tx,
-        index))
+    
+    data_chunk point;
+    if (!public_key.to_data(point) || 
+        !script::check_signature(endorse, point, contract, tx, index))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;
@@ -55,4 +56,3 @@ console_result input_validate::invoke(std::ostream& output,
     output << BX_INPUT_VALIDATE_INDEX_VALID_ENDORSEMENT << std::endl;
     return console_result::okay;
 }
-

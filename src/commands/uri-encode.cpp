@@ -17,14 +17,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/uri-encode.hpp>
 
 #include <iostream>
+#include <string>
 #include <bitcoin/explorer/define.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::wallet;
 
  console_result uri_encode::invoke(std::ostream& output, std::ostream& error)
  {
@@ -33,36 +34,25 @@ using namespace bc::explorer::commands;
      const auto& label = get_label_option();
      const auto& message = get_message_option();
      const auto& request = get_request_option();
-     const auto& stealth = get_stealth_option();
-     const auto& address = get_payment_address_argument();
+     const std::string& address = get_address_argument();
 
-     if (stealth && address)
-     {
-         error << BX_URI_ENCODE_ADDRESS_CONFLICT << std::endl;
-         return console_result::failure;
-     }
+     bitcoin_uri uri;
 
-     bc::wallet::uri_writer writer;
-
-     if (stealth)
-         writer.write_address(stealth);
-
-     if (address)
-         writer.write_address(address);
+     if (!address.empty())
+         uri.set_address(address);
 
      if (amount > 0)
-         writer.write_amount(amount);
+         uri.set_amount(amount);
 
      if (!label.empty())
-         writer.write_label(label);
+         uri.set_label(label);
 
      if (!message.empty())
-         writer.write_message(message);
+         uri.set_message(message);
 
-     const auto uri = request.to_string();
-     if (!uri.empty())
-         writer.write_r(uri);
+     if (request)
+         uri.set_r(request.to_string());
 
-     output << writer.encoded() << std::endl;
+     output << uri.encoded() << std::endl;
      return console_result::okay;
  }

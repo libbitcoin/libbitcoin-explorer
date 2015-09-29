@@ -32,60 +32,55 @@ namespace explorer {
 namespace primitives {
 
 /**
- * Serialization helper to convert between base16 string and ec_point.
- * Reads public or private key and writes corresponding public key.
+ * Serialization helper to serialize both public and private hd keys.
  */
-class hd_key
+class BCX_API hd_key
 {
 public:
 
     /**
-     * Default onstructor.
+     * Default constructor.
      */
-    BCX_API hd_key();
-
+    hd_key()
+    {
+    }
+    
     /**
      * Initialization constructor.
      * @param[in]  base58  The value to initialize with.
      */
-    BCX_API hd_key(const std::string& base58);
+    hd_key(const std::string& base58);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API hd_key(const wallet::hd_private_key& value);
+    hd_key(const wallet::hd_private& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API hd_key(const wallet::hd_public_key& value);
-
-    /**
-     * Copy constructor.
-     * @param[in]  other  The object to copy into self on construct.
-     */
-    BCX_API hd_key(const hd_key& other);
+    hd_key(const wallet::hd_public& value);
 
     /**
      * Return a const reference to the public key of the private key if valid 
      * and otherwise return the public key.
      * @return  A reference to the object's internal data.
      */
-    BCX_API const wallet::hd_public_key& derived_public_key() const;
+    const wallet::hd_public& to_public() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const wallet::hd_private_key&() const;
+    operator const wallet::hd_private&() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const wallet::hd_public_key&() const;
+    operator const wallet::hd_public&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -93,29 +88,19 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
-        hd_key& argument);
-
-    /**
-     * Overload stream out.
-     * @param[in]   output    The output stream to write the value to.
-     * @param[out]  argument  The object from which to obtain the value.
-     * @return                The output stream reference.
-     */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
-        const hd_key& argument);
+    friend std::istream& operator>>(std::istream& input, hd_key& argument);
 
 private:
 
     /**
      * The private key state of this object.
      */
-    wallet::hd_private_key private_key_value_;
+    wallet::hd_private private_key_value_;
 
     /**
     * The public key state of this object.
     */
-    wallet::hd_public_key public_key_value_;
+    wallet::hd_public public_key_value_;
 };
 
 } // namespace primitives

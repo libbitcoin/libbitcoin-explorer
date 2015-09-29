@@ -31,38 +31,38 @@ namespace primitives {
 /**
  * Serialization helper to convert between text and signature hash type.
  */
-class hashtype
+class BCX_API hashtype
 {
 public:
 
     /**
      * Default constructor, sets sighash::single.
      */
-    BCX_API hashtype();
+    hashtype();
 
     /**
      * Initialization constructor.
      * @param[in]  token  The value to initialize with.
      */
-    BCX_API hashtype(const std::string& token);
+    hashtype(const std::string& token);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API hashtype(const chain::signature_hash_algorithm& value);
+    hashtype(const chain::signature_hash_algorithm& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API hashtype(const hashtype& other);
+    hashtype(const hashtype& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    BCX_API operator chain::signature_hash_algorithm() const;
+    operator chain::signature_hash_algorithm() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -70,7 +70,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         hashtype& argument);
 
     /**
@@ -79,7 +79,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const hashtype& argument);
 
 private:

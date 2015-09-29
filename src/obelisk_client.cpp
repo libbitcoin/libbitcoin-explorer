@@ -25,10 +25,10 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
 
 using namespace bc;
 using namespace bc::client;
+using namespace bc::config;
 using namespace bc::explorer::primitives;
 using namespace czmqpp;
 using boost::filesystem::path;
@@ -54,7 +54,7 @@ obelisk_client::obelisk_client(const connection_type& channel)
 {
 }
 
-bool obelisk_client::connect(const uri& address)
+bool obelisk_client::connect(const endpoint& address)
 {
     // ZMQ *only* returns 0 or -1 for this call, so make boolean.
     bool success = socket_.connect(address.to_string()) == zmq_success;
@@ -64,7 +64,7 @@ bool obelisk_client::connect(const uri& address)
     return success;
 }
 
-bool obelisk_client::connect(const uri& address,
+bool obelisk_client::connect(const endpoint& address,
     const cert_key& server_public_cert)
 {
     if (!zsys_has_curve())
@@ -77,7 +77,7 @@ bool obelisk_client::connect(const uri& address,
     return connect(address);
 }
 
-bool obelisk_client::connect(const uri& address, 
+bool obelisk_client::connect(const endpoint& address,
     const cert_key& server_public_cert, const path& client_private_cert_path)
 {
     if (!zsys_has_curve())

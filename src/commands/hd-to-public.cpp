@@ -17,26 +17,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/hd-to-public.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& secret = get_hd_private_key_argument();
+    const auto& private_key = get_hd_private_key_argument();
     
-    const bc::wallet::hd_public_key& public_key = secret;
-
-    output << hd_pub(public_key) << std::endl;
+    output << private_key.to_public() << std::endl;
     return console_result::okay;
 }

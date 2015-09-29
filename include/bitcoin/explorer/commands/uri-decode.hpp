@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -68,12 +60,6 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-
-/**
- * Various localizable strings.
- */
-#define BX_URI_DECODE_NOT_BITCOIN \
-    "The URI is not of the 'bitcoin' scheme."
 
 /**
  * Class to implement the uri-decode command.
@@ -166,7 +152,7 @@ public:
         )
         (
             "URI",
-            value<primitives::uri>(&argument_.uri),
+            value<bc::wallet::bitcoin_uri>(&argument_.uri),
             "The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN."
         );
 
@@ -187,7 +173,7 @@ public:
     /**
      * Get the value of the URI argument.
      */
-    BCX_API virtual primitives::uri& get_uri_argument()
+    BCX_API virtual bc::wallet::bitcoin_uri& get_uri_argument()
     {
         return argument_.uri;
     }
@@ -196,7 +182,7 @@ public:
      * Set the value of the URI argument.
      */
     BCX_API virtual void set_uri_argument(
-        const primitives::uri& value)
+        const bc::wallet::bitcoin_uri& value)
     {
         argument_.uri = value;
     }
@@ -232,7 +218,7 @@ private:
         {
         }
 
-        primitives::uri uri;
+        bc::wallet::bitcoin_uri uri;
     } argument_;
 
     /**

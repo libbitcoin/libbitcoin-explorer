@@ -33,7 +33,7 @@ namespace explorer {
 namespace primitives {
 
 wrapper::wrapper()
-    : value_()
+  : value_()
 {
 }
 
@@ -43,30 +43,27 @@ wrapper::wrapper(const std::string& wrapped)
 }
 
 wrapper::wrapper(const data_chunk& wrapped)
+  : wrapper(encode_base16(wrapped))
 {
-    unwrap(value_, base16(wrapped));
 }
 
 wrapper::wrapper(const wrapped_data& wrapped)
-    : value_(wrapped)
+  : value_(wrapped)
 {
 }
 
 wrapper::wrapper(const wallet::payment_address& address)
-    : wrapper(address.version(), 
-    data_chunk(address.hash().begin(), address.hash().end()))
+  : wrapper(encode_base16(address.to_payment()))
 {
 }
 
 wrapper::wrapper(uint32_t version, const data_chunk& payload)
+  : wrapper(wrapped_data{ version, 0, payload })
 {
-    value_.version = version;
-    value_.payload = payload;
-    value_.checksum = bitcoin_checksum(payload);
 }
 
 wrapper::wrapper(const wrapper& other)
-    : value_(other.value_)
+  : value_(other.value_)
 {
 }
 
@@ -84,8 +81,8 @@ std::istream& operator>>(std::istream& input, wrapper& argument)
 {
     std::string hexcode;
     input >> hexcode;
-
-    // wrapper base16 is a private encoding in bx, used to pass between commands.
+    
+    // The checksum is validated here.
     if (!unwrap(argument.value_, base16(hexcode)))
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
@@ -96,10 +93,9 @@ std::istream& operator>>(std::istream& input, wrapper& argument)
 
 std::ostream& operator<<(std::ostream& output, const wrapper& argument)
 {
-    const auto wrapped = wrap(argument.value_);
-
-    // wrapper base16 is a private encoding in bx, used to pass between commands.
-    output << base16(wrapped);
+    // The checksum is calculated here (value_ checksum is ignored).
+    const auto bytes = wrap(argument.value_);
+    output << base16(bytes);
     return output;
 }
 

@@ -17,20 +17,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-new.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/utility.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
-// The BX_EC_NEW_INVALID_KEY condition uncovered by test.
+// The BX_EC_NEW_INVALID_KEY condition is not covered by test.
 // This is because is not known what seed will produce an invalid key.
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {
@@ -43,13 +42,14 @@ console_result ec_new::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    ec_private key(new_key(seed));
-    if ((ec_secret)key == null_hash)
+    ec_secret secret(new_key(seed));
+    if (secret == null_hash)
     {
         error << BX_EC_NEW_INVALID_KEY << std::endl;
         return console_result::failure;
     }
 
-    output << key << std::endl;
+    // We don't use bc::ec_private serialization (WIF) here.
+    output << primitives::ec_private(secret) << std::endl;
     return console_result::okay;
 }

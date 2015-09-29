@@ -30,7 +30,6 @@
   <!-- IMPORTANT: update the 'settings' command when these change. -->
 
   <configuration section="general">
-    <!-- Only hd-new and stealth-encode currently use the testnet distinction, apart from swapping servers. -->
     <setting name="network" description="The network to use, either 'mainnet' or 'testnet'. Defaults to match the build." />
     <setting name="connect_retries" type="byte" description="The number of times to retry contacting a server or node, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
@@ -44,13 +43,13 @@
   </configuration>
 
   <configuration section="mainnet">
-    <setting name="url" type="uri" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk mainnet server." />
+    <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk mainnet server." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
 
   <configuration section="testnet">
-    <setting name="url" type="uri" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk testnet server." />
+    <setting name="url" type="endpoint" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk testnet server." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
@@ -80,23 +79,21 @@
   <!-- The 'command' element attributes typeX multipleX are currently unused and are intended to eventually provide type information for output bindings. -->
   <command symbol="address-decode" formerly="decode-addr" output="wrapper" category="WALLET" description="Convert a payment address to its component parts.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="address" description="The payment address to convert. If not specified the address is read from STDIN."/>
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address to convert. If not specified the address is read from STDIN."/>
   </command>
   
-  <command symbol="address-embed" formerly="embed-addr" output="address" category="WALLET" description="Create a payment address with an embedded record of binary data.">
+  <command symbol="address-embed" formerly="embed-addr" output="payment_address" category="WALLET" description="Create a payment address with an embedded record of binary data.">
     <option name="version" type="byte" description="The desired payment address version." />
     <argument name="DATA" stdin="true" type="raw" description="The binary data to encode as Base16. This can be text or any other data. If not specified the data is read from STDIN." />
   </command>
 
-  <command symbol="address-encode" formerly="encode-addr" output="address" category="WALLET" description="Convert a RIPEMD160 value to a payment address.">
+  <command symbol="address-encode" formerly="encode-addr" output="payment_address" category="WALLET" description="Convert a RIPEMD160 value to a payment address.">
     <option name="version" type="byte" description="The desired payment address version." />
     <argument name="RIPEMD160" stdin="true" type="btc160" description="The Base16 hash to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="address-validate" formerly="validaddr" output="address" multipleX="true" category="WALLET" description="Validate a payment address.">
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="string" description="The payment address to validate. If not specified the address is read from STDIN." />
-    <define name="BX_ADDRESS_VALIDATE_VALID_ADDRESS" value="The address is valid." />
-    <define name="BX_ADDRESS_VALIDATE_INVALID_ADDRESS" value="The address is not valid." />
+  <command symbol="address-validate" formerly="validaddr" category="WALLET" obsolete="true" description="Validate a payment address.">
+    <define name="BX_ADDRESS_VALIDATE_OBSOLETE" value="This command is no longer supported. Use address-decode." />
   </command>
   
   <command symbol="base16-decode" output="raw" category="ENCODING" description="Convert a Base16 value to binary data.">
@@ -199,7 +196,7 @@
     <define name="BX_EC_NEW_INVALID_KEY" value="The seed produced an invalid key." />
   </command>
   
-  <command symbol="ec-to-address" formerly="addr" output="address" category="WALLET" description="Convert an EC public key to a payment address.">
+  <command symbol="ec-to-address" formerly="addr" output="payment_address" category="WALLET" description="Convert an EC public key to a payment address.">
     <option name="version" type="byte" description="The desired payment address version." />
     <argument name="EC_PUBLIC_KEY" stdin="true" type="ec_public" description="The Base16 EC public key to convert. If not specified the key is read from STDIN." />
   </command>
@@ -219,10 +216,11 @@
   
   <command symbol="ec-to-wif" output="wif" category="WALLET" description="Convert an EC private key to a WIF private key. The result associates with the compressed public key format by default.">
     <option name="uncompressed" description="Associate the result with the uncompressed public key format." />
+    <option name="version" type="byte" default="128" description="The desired WIF version, defaults to 128." />
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key to convert. If not specified the key is read from STDIN."/>
   </command>
 
-  <command symbol="ek-address" output="address" category="KEY_ENCRYPTION" description="Create a payment address derived from an intermediate passphrase token (BIP38).">
+  <command symbol="ek-address" output="payment_address" category="KEY_ENCRYPTION" description="Create a payment address derived from an intermediate passphrase token (BIP38).">
     <option name="uncompressed" description="Use the uncompressed public key format, as used to create the corresponding encrypted private key." />
     <option name="version" type="byte" description="The desired payment address version used to create the corresponding encrypted private key." />
     <argument name="TOKEN" required="true" type="ek_token" description="The intermediate passphrase token used to create the corresponding encrypted private key." />
@@ -246,7 +244,7 @@
     <define name="BX_EK_PUBLIC_SHORT_SEED" value="The seed is less than 192 bits long." />
   </command>
 
-  <command symbol="ek-public-to-address" output="address" category="KEY_ENCRYPTION" description="Extract the payment address of an encrypted public key (BIP38).">
+  <command symbol="ek-public-to-address" output="payment_address" category="KEY_ENCRYPTION" description="Extract the payment address of an encrypted public key (BIP38).">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the intermediate passphrase token." />
     <argument name="EK_PUBLIC_KEY" stdin="true" type="ek_public" description="The encrypted public key from which to extract the payment address. If not specified the key is read from STDIN." />
     <define name="BX_EK_PUBLIC_TO_ADDRESS_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
@@ -260,7 +258,7 @@
     <define name="BX_EK_PUBLIC_TO_EC_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
-  <command symbol="ek-to-address" output="address" category="KEY_ENCRYPTION" description="Extract the payment address of an encrypted private key (BIP38).">
+  <command symbol="ek-to-address" output="payment_address" category="KEY_ENCRYPTION" description="Extract the payment address of an encrypted private key (BIP38).">
     <argument name="PASSPHRASE" required="true" description="The passphrase that was used to generate the intermediate passphrase token or to encrypt the encrypted private key." />
     <argument name="EK_PRIVATE_KEY" stdin="true" type="ek_private" description="The encrypted private key from which to extract the payment address.  If not specified the key is read from STDIN." />
     <define name="BX_EK_TO_ADDRESS_INVALID_PASSPHRASE" value="The passphrase is incorrect." />
@@ -276,7 +274,7 @@
   
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="address" description="The payment address. If not specified the address is read from STDIN." />
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
   </command>
 
   <command symbol="fetch-header" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin/Obelisk server connection.">
@@ -291,21 +289,21 @@
   
   <command symbol="fetch-history" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment address. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="address" description="The payment address. If not specified the address is read from STDIN." />
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
   </command>
   
   <command symbol="fetch-public-key" formerly="get-pubkey" output="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin/Obelisk server connection.">
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="address" description="The payment address of the public key. If not specified the address is read from STDIN."/>
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address of the public key. If not specified the address is read from STDIN."/>
     <define name="BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <command symbol="fetch-stealth" output="stealth_row" category="ONLINE" network="true" description="Get metadata on potential payment transactions by stealth prefix. Requires a Libbitcoin server connection.">
+  <command symbol="fetch-stealth" output="stealth_row" category="ONLINE" network="true" description="Get metadata on potential payment transactions by stealth prefix filter. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="height" shortcut="t" type="uint32_t" description="The minimum block height of transactions to include."/>
     <!--<option name="scan_secret" type="ec_private" description="The Base16 EC private key to use locally in confirming stealth transactions."/>-->
     <!--<option name="scan_pubkey" shortcut="p" type="ec_public" description="The Base16 EC public key to use locally in confirming stealth transactions."/>-->
-    <argument name="PREFIX" type="base2" description="The Base2 stealth prefix used to locate transactions. Defaults to all stealth transactions." />
-    <define name="BX_FETCH_STEALTH_PREFIX_TOO_LONG" value="Stealth prefix is limited to 32 bits." />
+    <argument name="FILTER" type="base2" description="The Base2 stealth prefix filter used to locate transactions. Defaults to all stealth transactions." />
+    <define name="BX_FETCH_STEALTH_FILTER_TOO_LONG" value="Stealth prefix filter is limited to 32 bits." />
   </command>
 
   <command symbol="fetch-tx" formerly="fetch-transaction" output="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin/Obelisk server connection.">
@@ -321,7 +319,7 @@
   <command symbol="fetch-utxo" formerly="get-utxo" output="output" multipleX="true" category="ONLINE" stub="true" network="true" description="Get enough unspent transaction outputs from a payment addresses to pay a number of satoshi. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="address" description="The payment address. If not specified the address is read from STDIN." />
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
     <define name="BX_FETCH_UTXO_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
@@ -338,6 +336,7 @@
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" output="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">
+    <option name="version" type="uint32_t" default="76066276" description="The desired HD private key version, defaults to 76066276." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
     <define name="BX_HD_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
     <define name="BX_HD_NEW_INVALID_KEY" value="The seed produced an invalid key." />
@@ -352,12 +351,12 @@
   <command symbol="hd-public" output="hd_public" category="WALLET" description="Derive a child HD (BIP32) public key from another HD public or private key.">
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
-    <argument name="HD_PUBLIC_KEY" stdin="true" type="hd_key" description="The parent HD public or private key. If not specified the key is read from STDIN." />
+    <argument name="HD_KEY" stdin="true" type="hd_key" description="The parent HD public or private key. If not specified the key is read from STDIN." />
     <define name="BX_HD_PUBLIC_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
 
-  <command symbol="hd-to-address" output="address" category="WALLET" description="Convert a HD (BIP32) public or private key to a payment address.">
-    <argument name="HD_KEY" stdin="true" type="hd_key" description="The HD public or private key to convert. If not specified the key is read from STDIN." />
+  <command symbol="hd-to-address" category="WALLET" obsolete="true" description="Convert a HD (BIP32) public or private key to a payment address.">
+    <define name="BX_HD_TO_ADDRESS_OBSOLETE" value="This command is obsolete. Use combination of hd-to-ec and ec-to-address instead." />
   </command>
 
   <command symbol="hd-to-ec" output="ec_private" category="WALLET" description="Convert a HD (BIP32) public or private key to the equivalent EC public or private key.">
@@ -368,8 +367,8 @@
     <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The HD private key. If not specified the key is read from STDIN." />
   </command>
 
-  <command symbol="hd-to-wif" output="wif" category="WALLET" description="Convert a HD (BIP32) private key to a WIF private key.">
-    <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The HD private key to convert. If not specified the key is read from STDIN." />
+  <command symbol="hd-to-wif" output="wif" category="WALLET" obsolete="true" description="Convert a HD (BIP32) private key to a WIF private key.">
+    <define name="BX_HD_TO_WIF_OBSOLETE" value="This command is obsolete. Use combination of hd-to-ec and ec-to-wif instead." />
   </command>
 
   <command symbol="help" output="string" category="META" description="Get the list of commands.">
@@ -381,8 +380,9 @@
   </command>
 
   <command symbol="input-sign" formerly="sign-input" output="endorsement" category="TRANSACTION" description="Create an endorsement for a transaction input.">
+    <option name="anyone" description="Modify signature hashing so that other inputs are ignored." />
     <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
-    <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', 'single', and 'anyone_can_pay', defaults to 'all'." />
+    <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', and 'single', defaults to 'all'." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="CONTRACT" required="true" type="script" description="The previous output script to use in signing. Multiple tokens must be quoted." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
@@ -414,7 +414,7 @@
   </command>
 
   <command symbol="message-validate" output="string" category="MESSAGING" description="Validate a message signature.">
-    <argument name="PAYMENT_ADDRESS" required="true" type="address" description="The payment address of the message signer."/>
+    <argument name="PAYMENT_ADDRESS" required="true" type="payment_address" description="The payment address of the message signer."/>
     <argument name="SIGNATURE" required="true" type="signature" description="The message signature." />
     <argument name="MESSAGE" stdin="true" type="raw" description="The binary message data for which the signature applies. If not specified the message is read from STDIN." />
     <define name="BX_MESSAGE_VALIDATE_INDEX_VALID_SIGNATURE" value="The signature is valid." />
@@ -454,7 +454,7 @@
   </command>
   
   <command symbol="qrcode" category="WALLET" output="raw" stub="true" description="Create a QR code image file for a payment address.">
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="address" description="The payment address. If not specified the address is read from STDIN."/>
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN."/>
     <define name="BX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
@@ -474,8 +474,8 @@
     <argument name="SCRIPT" stdin="true" type="script" description="The plain text script tokens that make up the script. Multiple tokens must be quoted. If not specified the tokens are read from STDIN."/>
   </command>
   
-  <command symbol="script-to-address" formerly="scripthash" output="address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from a script.">
-    <option name="version" type="byte" description="The desired payment address version." />
+  <command symbol="script-to-address" formerly="scripthash" output="payment_address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from a script.">
+    <option name="version" type="byte" default="5" description="The desired payment address version, defaults to 5." />
     <argument name="SCRIPT" stdin="true" type="script" description="The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
   </command>
   
@@ -526,14 +526,15 @@
     <define name="BX_SHOWBLKHEAD_OBSOLETE" value="This command is obsolete. Use fetch-header with formatting instead." />
   </command>
 
-  <command symbol="stealth-decode" formerly="stealth-show-addr" output="stealth" category="STEALTH" description="Decode a stealth address.">
+  <command symbol="stealth-decode" formerly="stealth-show-addr" output="stealth_address" category="STEALTH" description="Decode a stealth address.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="STEALTH_ADDRESS" type="stealth" stdin="true" description="The stealth payment address. If not specified the address is read from STDIN." />
+    <argument name="STEALTH_ADDRESS" type="stealth_address" stdin="true" description="The stealth payment address. If not specified the address is read from STDIN." />
   </command>
   
-  <command symbol="stealth-encode" output="stealth" category="STEALTH" description="Encode a stealth payment address.">
+  <command symbol="stealth-encode" output="stealth_address" category="STEALTH" description="Encode a stealth payment address.">
     <option name="prefix" type="base2" description="The Base2 stealth prefix that will be used to locate payments." />
     <option name="signatures" type="byte" description="The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
+    <option name="version" type="byte" default="43" description="The stealth address version, defaults to 42." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to create a payment." />
     <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
     <define name="BX_STEALTH_ENCODE_PREFIX_TOO_LONG" value="The prefix is limited to 32 bits." />
@@ -586,9 +587,10 @@
 
   <command symbol="tx-encode" output="transaction" category="TRANSACTION" description="Encode an unsigned transaction as Base16.">
     <option name="lock_time" type="uint32_t" description="The transaction lock time." />
-    <option name="version" type="uint32_t" default="1" description="The transaction version." />
+    <option name="version" type="uint32_t" default="1" description="The transaction version, defaults to 1." />
     <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value." />
     <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs." />
+    <define name="BX_TX_ENCODE_INVALID_OUTPUT" value="An output is not valid." />
     <define name="BX_TX_ENCODE_LOCKTIME_CONFLICT" value="The specified lock time is ineffective because all sequences are set to the maximum value." />
   </command>
   
@@ -602,17 +604,14 @@
   <command symbol="uri-decode" output="uri" category="WALLET" description="Decompose a Bitcoin URI into its parts.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="URI" type="uri" stdin="true"  description="The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN." />
-    <define name="BX_URI_DECODE_NOT_BITCOIN" value="The URI is not of the 'bitcoin' scheme." />
   </command>
   
-  <command symbol="uri-encode" category="WALLET" description="Compose a Bitcoin URI from specified parts.">
+  <command symbol="uri-encode" output="uri" category="WALLET" description="Compose a Bitcoin URI from specified parts.">
     <option name="amount" type="btc" description="The value of the amount parameter." />
     <option name="label" type="string" description="The value of the label parameter." />
     <option name="message" type="string" description="The value of the label parameter." />
-    <option name="request" type="uri" description="The value of the payment request parameter." />
-    <option name="stealth" type="stealth" description="The stealth address for the address part." />
-    <argument name="PAYMENT_ADDRESS" type="address" description="The payment address for the address part." />
-    <define name="BX_URI_ENCODE_ADDRESS_CONFLICT" value="Only one payment address or stealth address may specified." />
+    <option name="request" type="endpoint" description="The value of the payment request parameter." />
+    <argument name="ADDRESS" type="address" description="The payment address or stealth address for the address part." />
   </command>
   
   <command symbol="validate-tx" formerly="validtx" output="string" category="ONLINE" network="true" description="Determine if a transaction is valid for submission to the blockchain. Requires a Libbitcoin/Obelisk server connection.">
@@ -627,7 +626,7 @@
 
   <command symbol="watch-address" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="address" description="The participating payment address. If not specified the address is read from STDIN." />
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The participating payment address. If not specified the address is read from STDIN." />
     <define name="BX_WATCH_ADDRESS_WAITING" value="Watching address: %1%..." />
   </command>
 

@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -155,7 +147,7 @@ public:
         )
         (
             "WIF",
-            value<primitives::wif>(&argument_.wif),
+            value<bc::wallet::ec_private>(&argument_.wif),
             "The WIF private key. If not specified the value is read from STDIN."
         );
 
@@ -176,7 +168,7 @@ public:
     /**
      * Get the value of the WIF argument.
      */
-    BCX_API virtual primitives::wif& get_wif_argument()
+    BCX_API virtual bc::wallet::ec_private& get_wif_argument()
     {
         return argument_.wif;
     }
@@ -185,7 +177,7 @@ public:
      * Set the value of the WIF argument.
      */
     BCX_API virtual void set_wif_argument(
-        const primitives::wif& value)
+        const bc::wallet::ec_private& value)
     {
         argument_.wif = value;
     }
@@ -204,7 +196,7 @@ private:
         {
         }
 
-        primitives::wif wif;
+        bc::wallet::ec_private wif;
     } argument_;
 
     /**

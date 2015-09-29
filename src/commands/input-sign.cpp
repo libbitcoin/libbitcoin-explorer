@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/input-sign.hpp>
 
 #include <iostream>
@@ -36,8 +35,9 @@ using namespace bc::explorer::primitives;
 console_result input_sign::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
+    const auto anyone_can_pay = get_anyone_option();
     const auto index = get_index_option();
-    const auto hash_type = get_sign_type_option();
+    const auto sign_type = get_sign_type_option();
     const tx_type& tx = get_transaction_argument();
     const ec_secret& private_key = get_ec_private_key_argument();
     const chain::script& contract = get_contract_argument();
@@ -47,6 +47,10 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         error << BX_INPUT_SIGN_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
+
+    uint32_t hash_type = (chain::signature_hash_algorithm)sign_type;
+    if (anyone_can_pay)
+        hash_type |= chain::signature_hash_algorithm::anyone_can_pay;
 
     endorsement endorse;
     if (!bc::chain::script::create_signature(endorse, private_key,

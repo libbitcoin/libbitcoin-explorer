@@ -26,7 +26,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
@@ -34,6 +33,8 @@ using namespace po;
 namespace libbitcoin {
 namespace explorer {
 namespace primitives {
+
+using namespace bc::config;
 
 // point format is currently private to bx.
 static bool decode_point(chain::output_point& point, const std::string& tuple)
@@ -62,7 +63,7 @@ static std::string encode_point(const chain::output_point& point)
 }
 
 point::point()
-    : value_()
+  : value_()
 {
 }
 
@@ -72,12 +73,12 @@ point::point(const std::string& tuple)
 }
 
 point::point(const chain::output_point& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 point::point(const point& other)
-    : point(other.value_)
+  : point(other.value_)
 {
 }
 

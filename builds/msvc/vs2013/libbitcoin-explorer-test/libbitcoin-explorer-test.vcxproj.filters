@@ -42,7 +42,7 @@
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\address-validate.cpp">
-      <Filter>src\tests\commands</Filter>
+      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\base16-decode.cpp">
       <Filter>src\tests\commands</Filter>
@@ -186,7 +186,7 @@
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\hd-to-address.cpp">
-      <Filter>src\tests\commands</Filter>
+      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\hd-to-ec.cpp">
       <Filter>src\tests\commands</Filter>
@@ -195,7 +195,7 @@
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\hd-to-wif.cpp">
-      <Filter>src\tests\commands</Filter>
+      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\help.cpp">
       <Filter>src\tests\commands</Filter>

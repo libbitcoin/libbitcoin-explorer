@@ -27,8 +27,6 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 
 using namespace bc;
@@ -36,13 +34,14 @@ using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto height = get_height_option();
     const auto& encoding = get_format_option();
-    const auto& prefix = get_prefix_argument();
+    const auto& filter = get_filter_argument();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection);
@@ -53,15 +52,15 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    if (prefix.size() > bc::wallet::stealth_address::max_prefix_bits)
+    if (filter.size() > stealth_address::max_filter_bits)
     {
-        error << BX_FETCH_STEALTH_PREFIX_TOO_LONG << std::endl;
+        error << BX_FETCH_STEALTH_FILTER_TOO_LONG << std::endl;
         return console_result::failure;
     }
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &prefix](const client::stealth_list& list)
+    auto on_done = [&state, &filter](const client::stealth_list& list)
     {
         // Write out the transaction hashes of *potential* matches.
         state.output(prop_tree(list));
@@ -72,7 +71,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.get_codec()->fetch_stealth(on_error, on_done, prefix, height);
+    client.get_codec()->fetch_stealth(on_error, on_done, filter, height);
     client.resolve_callbacks();
 
     return state.get_result();

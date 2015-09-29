@@ -19,15 +19,14 @@
  */
 #include <bitcoin/explorer/commands/ek-public-to-address.hpp>
 
+#include <cstdint>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 using namespace bc::wallet;
 
 console_result ek_public_to_address::invoke(std::ostream& output,
@@ -37,17 +36,18 @@ console_result ek_public_to_address::invoke(std::ostream& output,
     const auto& passphrase = get_passphrase_argument();
     const auto& key = get_ek_public_key_argument();
 
-    ec_point point;
+    bool compressed;
     uint8_t version;
-    if (!decrypt(point, version, key, passphrase))
+    ec_compressed point;
+    if (!decrypt(point, version, compressed, key, passphrase))
     {
         error << BX_EK_PUBLIC_TO_ADDRESS_INVALID_PASSPHRASE << std::endl;
         return console_result::failure;
     }
 
-    const address payment_address(version, point);
+    const payment_address address({ point, compressed }, version);
 
-    output << payment_address << std::endl;
+    output << address << std::endl;
     return console_result::okay;
 #else
     error << BX_EK_PUBLIC_TO_ADDRESS_REQUIRES_ICU << std::endl;

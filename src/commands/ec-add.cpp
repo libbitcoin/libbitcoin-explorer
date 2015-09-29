@@ -17,33 +17,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-add.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result ec_add::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& point = get_point_argument();
     const auto& secret = get_secret_argument();
+    
+    // Create a copy of the public key.
+    ec_compressed sum(point);
 
     // Elliptic curve function POINT + (INTEGER * curve-generator-point).
-    ec_public sum(point);
-    if (!bc::ec_add(sum.data(), secret))
+    if (!bc::ec_add(sum, secret))
     {
         error << BX_EC_ADD_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    output << sum << std::endl;
+    // Serialize to the original compression state.
+    output << ec_public(sum, point.compressed()) << std::endl;
     return console_result::okay;
 }

@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-multiply-secrets.hpp>
 
 #include <iostream>
@@ -28,32 +27,32 @@
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& secrets = get_secrets_argument();
 
-    ec_private product;
+    ec_secret product(null_hash);
     for (auto const& secret: secrets)
     {
         // Initialize product on first pass.
-        if ((ec_secret)product == null_hash)
+        if (product == null_hash)
         {
-            product.data() = secret;
+            product = secret;
             continue;
         }
 
         // Elliptic curve function (INTEGER * INTEGER) % curve-order.
-        if (!bc::ec_multiply(product.data(), secret))
+        if (!bc::ec_multiply(product, secret))
         {
             error << BX_EC_MULITPLY_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }
 
-    output << product << std::endl;
+    // We don't use bc::ec_private serialization (WIF) here.
+    output << primitives::ec_private(product) << std::endl;
     return console_result::okay;
 }
 

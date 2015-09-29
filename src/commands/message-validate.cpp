@@ -17,16 +17,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/input-validate.hpp>
 
 #include <iostream>
-#include <cstdint>
 #include <bitcoin/bitcoin.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::wallet;
 
 console_result message_validate::invoke(std::ostream& output,
     std::ostream& error)
@@ -36,7 +35,7 @@ console_result message_validate::invoke(std::ostream& output,
     const auto& sign = get_signature_argument();
     const auto& message = get_message_argument();
 
-    if (!bc::wallet::verify_message(message, address, sign))
+    if (!verify_message(message, address, sign))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_MESSAGE_VALIDATE_INDEX_INVALID_SIGNATURE << std::endl;

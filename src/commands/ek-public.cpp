@@ -19,6 +19,7 @@
  */
 #include <bitcoin/explorer/commands/ek-public.hpp>
 
+#include <algorithm>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -32,7 +33,7 @@ console_result commands::ek_public::invoke(std::ostream& output,
     std::ostream& error)
 {
     const auto uncompressed = get_uncompressed_option();
-    const auto version = get_version_option();
+    const uint8_t version = get_version_option();
     const auto& token = get_token_argument();
     const data_chunk& seed = get_seed_argument();
 
@@ -44,13 +45,15 @@ console_result commands::ek_public::invoke(std::ostream& output,
     
     ek_seed bytes;
     std::copy(seed.begin(), seed.begin() + ek_seed_size, bytes.begin());
+    const auto compressed = !uncompressed;
 
-    ec_point unused1;
-    ek_private unused2;
-    config::ek_public key;
-    create_key_pair(unused2, key.data(), unused1, token, bytes, version,
-        !uncompressed);
+    // TODO: if not set default version from config.
+
+    bc::wallet::ek_private unused1;
+    bc::wallet::ek_public key;
+    ec_compressed unused2;
+    create_key_pair(unused1, key, unused2, token, bytes, version, compressed);
     
-    output << key << std::endl;
+    output << config::ek_public(key) << std::endl;
     return console_result::okay;
 }

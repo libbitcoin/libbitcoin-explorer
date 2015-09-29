@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 
 #include <iostream>
@@ -26,13 +25,12 @@
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result wif_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& secret = get_wif_argument();
 
-    output << ec_private(secret) << std::endl;
+    output << primitives::ec_private(secret) << std::endl;
     return console_result::okay;
 }

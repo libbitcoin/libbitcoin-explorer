@@ -110,17 +110,13 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base85.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc160.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\btc256.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\cert_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_private.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\ec_public.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\encoding.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\endorsement.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hashtype.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_key.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_priv.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\hd_pub.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\header.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\input.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\language.hpp" />
@@ -129,10 +125,7 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\raw.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\script.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\signature.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\stealth.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\transaction.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\uri.hpp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wif.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\utility.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\version.hpp" />
@@ -158,17 +151,13 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base85.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc160.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\btc256.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\byte.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\cert_key.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_private.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\ec_public.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\encoding.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\endorsement.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hashtype.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_key.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_priv.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\hd_pub.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\header.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\input.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\language.cpp" />
@@ -177,10 +166,7 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\raw.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\script.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\signature.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\stealth.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\transaction.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\uri.cpp" />
-    <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wif.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wrapper.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\utility.cpp" />
   </ItemGroup>

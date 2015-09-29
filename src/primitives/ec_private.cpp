@@ -32,20 +32,10 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
-// ec_secret format is currently private to bx.
+// ec_secret base16 format is private to bx.
 static bool decode_secret(ec_secret& secret, const std::string& encoded)
 {
-    return decode_base16(secret, encoded) && verify_private_key(secret);
-}
-
-static std::string encode_secret(const ec_secret& secret)
-{
-    return encode_base16(secret);
-}
-
-ec_private::ec_private()
-    : value_()
-{
+    return decode_base16(secret, encoded) && verify(secret);
 }
 
 ec_private::ec_private(const std::string& hexcode)
@@ -53,24 +43,9 @@ ec_private::ec_private(const std::string& hexcode)
     std::stringstream(hexcode) >> *this;
 }
 
-ec_private::ec_private(const ec_secret& value)
-    : value_(value)
+ec_private::ec_private(const ec_secret& secret)
+  : value_(secret)
 {
-}
-
-ec_private::ec_private(const wallet::hd_private_key& value)
-    : ec_private(value.private_key())
-{
-}
-
-ec_private::ec_private(const ec_private& other)
-    : ec_private(other.value_)
-{
-}
-
-ec_secret& ec_private::data()
-{
-    return value_;
 }
 
 ec_private::operator const ec_secret&() const
@@ -93,7 +68,7 @@ std::istream& operator>>(std::istream& input, ec_private& argument)
 
 std::ostream& operator<<(std::ostream& output, const ec_private& argument)
 {
-    output << encode_secret(argument.value_);
+    output << encode_base16(argument.value_);
     return output;
 }
 

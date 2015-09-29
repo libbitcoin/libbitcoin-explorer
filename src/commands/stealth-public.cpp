@@ -17,19 +17,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/stealth-public.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
-// This is the same as ec-add.
+// This is nearly the same as ec-add.
 console_result stealth_public::invoke(std::ostream& output,
     std::ostream& error)
 {
@@ -37,15 +36,13 @@ console_result stealth_public::invoke(std::ostream& output,
     const auto& spend_pubkey = get_spend_pubkey_argument();
     const auto& shared_secret = get_shared_secret_argument();
 
-    // We avoid bc::uncover_stealth because it eats the failure code.
-
-    ec_public sum(spend_pubkey);
-    if (!bc::ec_add(sum.data(), shared_secret))
+    ec_compressed sum(spend_pubkey);
+    if (!bc::ec_add(sum, shared_secret))
     {
         error << BX_STEALTH_PUBLIC_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
 
-    output << sum << std::endl;
+    output << ec_public(sum) << std::endl;
     return console_result::okay;
 }

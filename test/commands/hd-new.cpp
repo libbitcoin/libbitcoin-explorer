@@ -29,6 +29,7 @@ BOOST_AUTO_TEST_SUITE(hd_new__invoke)
 BOOST_AUTO_TEST_CASE(hd_new__invoke__vector_1_master__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
+    command.set_version_option(76066276);
     command.set_seed_argument({ "000102030405060708090a0b0c0d0e0f" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi\n");
@@ -38,6 +39,7 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__vector_1_master__okay_output)
 BOOST_AUTO_TEST_CASE(hd_new__invoke__vector_2_master__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
+    command.set_version_option(76066276);
     command.set_seed_argument({ "fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U\n");
@@ -46,17 +48,17 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__vector_2_master__okay_output)
 BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_mainnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
+    command.set_version_option(76066276);
     command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xprv9s21ZrQH143K3bJ7oEuyFtvSpSHmdsmfiPcDXX2RpArAvnuBwcUo8KbeNXLvdbBPgjeFdEpQCAuxLaAP3bJRiiTdw1Kx4chf9zSGp95KBBR\n");
 }
 
-// This particular command supports testnet without the need for recompilation.
 BOOST_AUTO_TEST_CASE(hd_new__invoke__128_bit_seed_testnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_new);
+    command.set_version_option(70615956);
     command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
-    command.set_general_network_setting("testnet");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("tprv8ZgxMBicQKsPeQXeTomURYYS8ZhysPog3wXLPwStJ9LeiPeGvypYe4y6HhWadxZi4BB2dLSAMXVkoRi8AoeNXmjETeYFiyRi56BhFnkm9uh\n");
 }
@@ -69,20 +71,20 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_mainnet__failure_error)
     BX_REQUIRE_ERROR(BX_HD_NEW_SHORT_SEED "\n");
 }
 
-// This particular command supports testnet without the need for recompilation.
 BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_testnet__failure_error)
 {
     BX_DECLARE_COMMAND(hd_new);
+    command.set_version_option(70615956);
     command.set_seed_argument({ "baadf00dbaadf00d" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_HD_NEW_SHORT_SEED "\n");
 }
 
 // TODO: what seed generates an invalid key so we can cover this code path?
-
 //BOOST_AUTO_TEST_CASE(hd_new__invoke_128_bit_bad_seed__failure_error)
 //{
 //    BX_DECLARE_COMMAND(hd_new);
+//    command.set_version_option(76066276);
 //    command.set_seed_argument({ "00000000000000000000000000000000" });
 //    BX_REQUIRE_FAILURE(command.invoke(output, error));
 //    BX_REQUIRE_ERROR(BX_HD_NEW_INVALID_KEY "\n");

@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -68,6 +60,12 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+/**
+ * Various localizable strings.
+ */
+#define BX_HD_TO_WIF_OBSOLETE \
+    "This command is obsolete. Use combination of hd-to-ec and ec-to-wif instead."
 
 /**
  * Class to implement the hd-to-wif command.
@@ -111,14 +109,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    BCX_API virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("HD_PRIVATE_KEY", 1);
+        return get_argument_metadata();
     }
 
 	/**
@@ -129,8 +135,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_hd_private_key_argument(), "HD_PRIVATE_KEY", variables, input, raw);
     }
 
     /**
@@ -152,11 +156,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "HD_PRIVATE_KEY",
-            value<primitives::hd_priv>(&argument_.hd_private_key),
-            "The HD private key to convert. If not specified the key is read from STDIN."
         );
 
         return options;
@@ -173,23 +172,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the HD_PRIVATE_KEY argument.
-     */
-    BCX_API virtual primitives::hd_priv& get_hd_private_key_argument()
-    {
-        return argument_.hd_private_key;
-    }
-
-    /**
-     * Set the value of the HD_PRIVATE_KEY argument.
-     */
-    BCX_API virtual void set_hd_private_key_argument(
-        const primitives::hd_priv& value)
-    {
-        argument_.hd_private_key = value;
-    }
-
 private:
 
     /**
@@ -200,11 +182,9 @@ private:
     struct argument
     {
         argument()
-          : hd_private_key()
         {
         }
 
-        primitives::hd_priv hd_private_key;
     } argument_;
 
     /**

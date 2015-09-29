@@ -64,7 +64,7 @@ console_result validate_tx::invoke(std::ostream& output,
         state.output(format(BX_VALIDATE_TX_UNCONFIRMED_INPUTS) % unconfirmed);
     };
 
-    auto on_error = [&state](const std::error_code& error)
+    auto on_error = [&state](const code& error)
     {
         // BX_VALIDATE_TX_INVALID_INPUT is not currently utilized.
         // The client suppresses an index list which may have 0 or one element.

@@ -25,11 +25,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
+#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
@@ -40,6 +38,8 @@
 
 using namespace pt;
 using namespace bc::client;
+using namespace bc::config;
+using namespace bc::wallet;
 
 namespace libbitcoin {
 namespace explorer {
@@ -128,7 +128,7 @@ ptree prop_tree(const std::vector<history_row>& rows)
 // balance
 
 ptree prop_list(const std::vector<balance_row>& rows,
-    const wallet::payment_address& balance_address)
+    const payment_address& balance_address)
 {
     ptree tree;
     uint64_t total_recieved = 0;
@@ -148,14 +148,14 @@ ptree prop_list(const std::vector<balance_row>& rows,
             confirmed_balance += row.value;
     }
 
-    tree.put("address", address(balance_address));
+    tree.put("address", balance_address);
     tree.put("confirmed", confirmed_balance);
     tree.put("received", total_recieved);
     tree.put("unspent", unspent_balance);
     return tree;
 }
 ptree prop_tree(const std::vector<balance_row>& rows,
-    const wallet::payment_address& balance_address)
+    const payment_address& balance_address)
 {
     ptree tree;
     tree.add_child("balance", prop_list(rows, balance_address));
@@ -167,9 +167,9 @@ ptree prop_tree(const std::vector<balance_row>& rows,
 ptree prop_list(const tx_input_type& tx_input)
 {
     ptree tree;
-    wallet::payment_address script_address;
-    if (extract(script_address, tx_input.script))
-        tree.put("address", address(script_address));
+    const auto script_address = payment_address::extract(tx_input.script);
+    if (script_address)
+        tree.put("address", script_address);
 
     tree.put("previous_output.hash", btc256(tx_input.previous_output.hash));
     tree.put("previous_output.index", tx_input.previous_output.index);
@@ -215,20 +215,22 @@ ptree prop_tree(const std::vector<input>& inputs)
 ptree prop_list(const tx_output_type& tx_output)
 {
     ptree tree;
-    wallet::payment_address output_address;
-    if (extract(output_address, tx_output.script))
-        tree.put("address", address(output_address));
+    const auto address = payment_address::extract(tx_output.script);
+    if (address)
+        tree.put("address", address);
 
     tree.put("script", script(tx_output.script).to_string());
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
-    wallet::stealth_info stealth;
-    if (wallet::extract_stealth_info(stealth, tx_output.script))
+
+    binary_type stealth_prefix;
+    ec_compressed ephemeral_key;
+    if (to_stealth_prefix(stealth_prefix, tx_output.script) &&
+        extract_ephemeral_key(ephemeral_key, tx_output.script))
     {
-        tree.put("stealth.bit_field", stealth.bitfield);
-        tree.put("stealth.ephemeral_public_key_hash",
-            btc256(stealth.ephem_pubkey_hash));
+        tree.put("stealth.prefix", stealth_prefix);
+        tree.put("stealth.ephemeral_public_key", ec_public(ephemeral_key));
     }
 
     tree.put("value", tx_output.value);
@@ -244,29 +246,6 @@ ptree prop_tree(const std::vector<tx_output_type>& tx_outputs)
 {
     ptree tree;
     tree.add_child("outputs", prop_tree_list("output", tx_outputs));
-    return tree;
-}
-
-ptree prop_list(const output& output)
-{
-    // An output is actually a set of tx_output.
-    const std::vector<tx_output_type>& tx_outputs = output;
-
-    ptree tree;
-    tree.add_child("outputs", prop_tree_list("output", tx_outputs));
-    tree.put("pay_to", output.payto());
-    return tree;
-}
-ptree prop_tree(const output& output)
-{
-    ptree tree;
-    tree.add_child("output", prop_list(output));
-    return tree;
-}
-ptree prop_tree(const std::vector<output>& outputs)
-{
-    ptree tree;
-    tree.add_child("outputs", prop_tree_list("output", outputs));
     return tree;
 }
 
@@ -337,16 +316,16 @@ ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
 // watch_address
 
 ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const wallet::payment_address& address)
+    const payment_address& address)
 {
     ptree tree;
     tree.add("block", btc256(block_hash));
-    tree.add("address", primitives::address(address));
+    tree.add("address", address);
     tree.add_child("transaction", prop_list(tx));
     return tree;
 }
 ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const wallet::payment_address& address)
+    const payment_address& address)
 {
     ptree tree;
     tree.add_child("watch_address", prop_list(tx, block_hash, address));
@@ -355,7 +334,7 @@ ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
 
 // stealth_address
 
-ptree prop_list(const stealth& stealth_address)
+ptree prop_list(const stealth_address& stealth)
 {
     // We don't serialize a "reuse key" value as this is strictly an
     // optimization for the purpose of serialization and otherwise complicates
@@ -363,23 +342,22 @@ ptree prop_list(const stealth& stealth_address)
     // So instead we emit the reused key as one of the spend keys.
     // This means that it is typical to see the same key in scan and spend.
 
-    const wallet::stealth_address& address = stealth_address;
-    auto spend_keys = cast<ec_point, ec_public>(address.get_spend_pubkeys());
+    auto spend_keys = cast<ec_compressed, ec_public>(stealth.spend_keys());
     auto spend_keys_prop_values = prop_value_list("public_key", spend_keys);
 
     ptree tree;
-    tree.put("encoded", stealth_address);
-    tree.put("prefix", address.get_prefix());
-    tree.put("scan_public_key", ec_public(address.get_scan_pubkey()));
-    tree.put("signatures", address.get_signatures());
+    tree.put("encoded", stealth);
+    tree.put("prefix", stealth.filter());
+    tree.put("scan_public_key", ec_public(stealth.scan_key()));
+    tree.put("signatures", stealth.signatures());
     tree.add_child("spend", spend_keys_prop_values);
-    tree.put("testnet", address.get_testnet());
+    tree.put("version", stealth.version());
     return tree;
 }
-ptree prop_tree(const stealth& stealth_address)
+ptree prop_tree(const stealth_address& stealth)
 {
     ptree tree;
-    tree.add_child("stealth_address", prop_list(stealth_address));
+    tree.add_child("stealth_address", prop_list(stealth));
     return tree;
 }
 
@@ -388,8 +366,8 @@ ptree prop_tree(const stealth& stealth_address)
 ptree prop_list(const client::stealth_row& row)
 {
     ptree tree;
-    tree.put("ephemeral_public_key", ec_public(row.ephemkey));
-    tree.put("paid_address", address(row.address));
+    tree.put("ephemeral_public_key", encode_base16(row.ephemeral_public_key));
+    tree.put("public_key_hash", btc160(row.public_key_hash));
     tree.put("transaction_hash", btc256(row.transaction_hash));
     return tree;
 }
@@ -439,28 +417,24 @@ ptree prop_tree(const settings_list& settings)
 
 // uri
 
-ptree prop_tree(const wallet::uri_parse_result& uri)
+ptree prop_tree(const bitcoin_uri& uri)
 {
     ptree uri_props;
 
-    if (uri.address)
-        uri_props.put("address", address(uri.address.get()));
+    if (!uri.address().empty())
+        uri_props.put("address", uri.address());
 
-    // If both addresses are set stealth will take priority.
-    if (uri.stealth)
-        uri_props.put("address", stealth(uri.stealth.get()));
+    if (uri.amount() != 0)
+        uri_props.put("amount", uri.amount());
 
-    if (uri.amount)
-        uri_props.put("amount", uri.amount.get());
+    if (!uri.label().empty())
+        uri_props.put("label", uri.label());
 
-    if (uri.label)
-        uri_props.put("label", uri.label.get());
+    if (!uri.message().empty())
+        uri_props.put("message", uri.message());
 
-    if (uri.message)
-        uri_props.put("message", uri.message.get());
-
-    if (uri.r)
-        uri_props.put("r", uri.r.get());
+    if (!uri.r().empty())
+        uri_props.put("r", uri.r());
 
     uri_props.put("scheme", "bitcoin");
 

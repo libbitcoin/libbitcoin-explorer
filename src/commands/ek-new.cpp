@@ -19,6 +19,7 @@
  */
 #include <bitcoin/explorer/commands/ek-new.hpp>
 
+#include <algorithm>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -44,10 +45,12 @@ console_result ek_new::invoke(std::ostream& output, std::ostream& error)
     ek_seed bytes;
     std::copy(seed.begin(), seed.begin() + ek_seed_size, bytes.begin());
 
-    config::ek_private key;
-    ec_point unused;
-    create_key_pair(key.data(), unused, token, bytes, version, !uncompressed);
+    // TODO: if not set default version from config.
+
+    ec_compressed unused;
+    bc::wallet::ek_private secret;
+    create_key_pair(secret, unused, token, bytes, version, !uncompressed);
     
-    output << key << std::endl;
+    output << config::ek_private(secret) << std::endl;
     return console_result::okay;
 }

@@ -17,26 +17,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-to-public.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
+// In the case of failure this produces ec_compressed_null.
 console_result ec_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     const auto& secret = get_ec_private_key_argument();
     const auto& uncompressed = get_uncompressed_option();
 
-    const auto public_key = secret_to_public_key(secret, !uncompressed);
+    ec_compressed point;
+    secret_to_public(point, secret);
 
-    output << ec_public(public_key) << std::endl;
+    // Serialize to the original compression state.
+    output << ec_public(point, !uncompressed) << std::endl;
     return console_result::okay;
 }

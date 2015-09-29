@@ -25,7 +25,6 @@
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
@@ -62,18 +61,18 @@ public:
 
     /**
      * Connect to the specified server address.
-     * @param[in]  address              The server address.
-     * @return                          True if connected, otherwise false.
+     * @param[in]  address  The server address.
+     * @return              True if connected, otherwise false.
      */
-    BCX_API virtual bool connect(const primitives::uri& address);
+    BCX_API virtual bool connect(const bc::config::endpoint& address);
 
     /**
      * Connect to the specified server address.
-     * @param[in]  address              The server address.
-     * @param[in]  server_public_cert   The server public certificate key.
-     * @return                          True if connected, otherwise false.
+     * @param[in]  address             The server address.
+     * @param[in]  server_public_cert  The server public certificate key.
+     * @return                         True if connected, otherwise false.
      */
-    BCX_API virtual bool connect(const primitives::uri& address,
+    BCX_API virtual bool connect(const bc::config::endpoint& address,
         const primitives::cert_key& server_public_cert);
 
     /**
@@ -83,7 +82,7 @@ public:
      * @param[in]  client_private_cert_path  The client private cert file path.
      * @return                               True if connected, otherwise false.
      */
-    BCX_API virtual bool connect(const primitives::uri& address,
+    BCX_API virtual bool connect(const bc::config::endpoint& address,
         const primitives::cert_key& server_public_cert,
         const boost::filesystem::path& client_private_cert_path);
 

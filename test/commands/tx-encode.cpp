@@ -45,8 +45,6 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_no_output_version_1__okay_outp
     BX_REQUIRE_OUTPUT(TX_ENCODE_TX_BV1_BASE16 "\n");
 }
 
-#ifndef ENABLE_TESTNET
-
 BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_1__okay_output)
 {
     // Defaults are not established by the library, so 'version' is set explicitly here.
@@ -92,8 +90,6 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_1_locktime_
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(TX_ENCODE_TX_ACV1L42_BASE16 "\n");
 }
-
-#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

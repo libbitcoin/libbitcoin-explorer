@@ -42,7 +42,6 @@ static bool decode_input(tx_input_type& input, const std::string& tuple)
     if (tokens.size() != 2 && tokens.size() != 3)
         return false;
 
-    input.script.reset();
     input.sequence = max_input_sequence;
     input.previous_output = point(tokens[0] + ":" + tokens[1]);
 
@@ -62,7 +61,7 @@ static std::string encode_input(const tx_input_type& input)
 }
 
 input::input()
-    : value_()
+  : value_()
 {
 }
 
@@ -72,20 +71,18 @@ input::input(const std::string& tuple)
 }
 
 input::input(const tx_input_type& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 input::input(const input& other)
-    : input(other.value_)
+  : input(other.value_)
 {
 }
 
 input::input(const chain::input_point& value)
+  : value_({value, {}, max_input_sequence})
 {
-    value_.previous_output = value;
-    value_.sequence = max_input_sequence;
-    value_.script.reset();
 }
 
 input::operator const tx_input_type&() const

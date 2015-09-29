@@ -19,15 +19,14 @@
  */
 #include <bitcoin/explorer/commands/ek-public-to-ec.hpp>
 
+#include <cstdint>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 using namespace bc::wallet;
 
 console_result ek_public_to_ec::invoke(std::ostream& output,
@@ -37,15 +36,16 @@ console_result ek_public_to_ec::invoke(std::ostream& output,
     const auto& passphrase = get_passphrase_argument();
     const auto& key = get_ek_public_key_argument();
 
-    ec_public point;
+    bool compressed;
     uint8_t version;
-    if (!decrypt(point.data(), version, key, passphrase))
+    ec_compressed point;
+    if (!decrypt(point, version, compressed, key, passphrase))
     {
         error << BX_EK_PUBLIC_TO_EC_INVALID_PASSPHRASE << std::endl;
         return console_result::failure;
     }
 
-    output << point << std::endl;
+    output << ec_public(point, compressed) << std::endl;
     return console_result::okay;
 #else
     error << BX_EK_PUBLIC_TO_EC_REQUIRES_ICU << std::endl;

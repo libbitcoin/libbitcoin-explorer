@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/input-sign.hpp>
 
 #include <iostream>
@@ -26,19 +25,20 @@
 #include <bitcoin/explorer/primitives/signature.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
+// This doesn't have to be WIF, but it incorporates the compression context.
 console_result message_sign::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& wif = get_wif_argument();
+    const auto& secret = get_wif_argument();
     const auto& message = get_message_argument();
 
-    const auto sign = bc::wallet::sign_message(message, wif,
-        wif.get_compressed());
+    message_signature sign;
+    sign_message(sign, message, secret);
 
     output << signature(sign) << std::endl;
     return console_result::okay;

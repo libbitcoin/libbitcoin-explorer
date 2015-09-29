@@ -156,17 +156,13 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/base85.cpp \
     src/primitives/btc.cpp \
     src/primitives/btc160.cpp \
-    src/primitives/btc256.cpp \
     src/primitives/byte.cpp \
     src/primitives/cert_key.cpp \
     src/primitives/ec_private.cpp \
-    src/primitives/ec_public.cpp \
     src/primitives/encoding.cpp \
     src/primitives/endorsement.cpp \
     src/primitives/hashtype.cpp \
     src/primitives/hd_key.cpp \
-    src/primitives/hd_priv.cpp \
-    src/primitives/hd_pub.cpp \
     src/primitives/header.cpp \
     src/primitives/input.cpp \
     src/primitives/language.cpp \
@@ -175,10 +171,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/primitives/raw.cpp \
     src/primitives/script.cpp \
     src/primitives/signature.cpp \
-    src/primitives/stealth.cpp \
     src/primitives/transaction.cpp \
-    src/primitives/uri.cpp \
-    src/primitives/wif.cpp \
     src/primitives/wrapper.cpp
 
 # console/bx => ${bindir}
@@ -462,17 +455,13 @@ include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/base85.hpp \
     include/bitcoin/explorer/primitives/btc.hpp \
     include/bitcoin/explorer/primitives/btc160.hpp \
-    include/bitcoin/explorer/primitives/btc256.hpp \
     include/bitcoin/explorer/primitives/byte.hpp \
     include/bitcoin/explorer/primitives/cert_key.hpp \
     include/bitcoin/explorer/primitives/ec_private.hpp \
-    include/bitcoin/explorer/primitives/ec_public.hpp \
     include/bitcoin/explorer/primitives/encoding.hpp \
     include/bitcoin/explorer/primitives/endorsement.hpp \
     include/bitcoin/explorer/primitives/hashtype.hpp \
     include/bitcoin/explorer/primitives/hd_key.hpp \
-    include/bitcoin/explorer/primitives/hd_priv.hpp \
-    include/bitcoin/explorer/primitives/hd_pub.hpp \
     include/bitcoin/explorer/primitives/header.hpp \
     include/bitcoin/explorer/primitives/input.hpp \
     include/bitcoin/explorer/primitives/language.hpp \
@@ -481,10 +470,7 @@ include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/raw.hpp \
     include/bitcoin/explorer/primitives/script.hpp \
     include/bitcoin/explorer/primitives/signature.hpp \
-    include/bitcoin/explorer/primitives/stealth.hpp \
     include/bitcoin/explorer/primitives/transaction.hpp \
-    include/bitcoin/explorer/primitives/uri.hpp \
-    include/bitcoin/explorer/primitives/wif.hpp \
     include/bitcoin/explorer/primitives/wrapper.hpp
 
 # files => ${bash_completiondir}

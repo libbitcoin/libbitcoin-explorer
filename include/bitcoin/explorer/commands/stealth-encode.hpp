@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -173,13 +165,18 @@ public:
             "The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs."
         )
         (
+            "version,v",
+            value<primitives::byte>(&option_.version)->default_value(43),
+            "The stealth address version, defaults to 42."
+        )
+        (
             "SCAN_PUBKEY",
-            value<primitives::ec_public>(&argument_.scan_pubkey)->required(),
+            value<bc::wallet::ec_public>(&argument_.scan_pubkey)->required(),
             "The Base16 EC public key required to create a payment."
         )
         (
             "SPEND_PUBKEY",
-            value<std::vector<primitives::ec_public>>(&argument_.spend_pubkeys),
+            value<std::vector<bc::wallet::ec_public>>(&argument_.spend_pubkeys),
             "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
         );
 
@@ -200,7 +197,7 @@ public:
     /**
      * Get the value of the SCAN_PUBKEY argument.
      */
-    BCX_API virtual primitives::ec_public& get_scan_pubkey_argument()
+    BCX_API virtual bc::wallet::ec_public& get_scan_pubkey_argument()
     {
         return argument_.scan_pubkey;
     }
@@ -209,7 +206,7 @@ public:
      * Set the value of the SCAN_PUBKEY argument.
      */
     BCX_API virtual void set_scan_pubkey_argument(
-        const primitives::ec_public& value)
+        const bc::wallet::ec_public& value)
     {
         argument_.scan_pubkey = value;
     }
@@ -217,7 +214,7 @@ public:
     /**
      * Get the value of the SPEND_PUBKEY arguments.
      */
-    BCX_API virtual std::vector<primitives::ec_public>& get_spend_pubkeys_argument()
+    BCX_API virtual std::vector<bc::wallet::ec_public>& get_spend_pubkeys_argument()
     {
         return argument_.spend_pubkeys;
     }
@@ -226,7 +223,7 @@ public:
      * Set the value of the SPEND_PUBKEY arguments.
      */
     BCX_API virtual void set_spend_pubkeys_argument(
-        const std::vector<primitives::ec_public>& value)
+        const std::vector<bc::wallet::ec_public>& value)
     {
         argument_.spend_pubkeys = value;
     }
@@ -265,6 +262,23 @@ public:
         option_.signatures = value;
     }
 
+    /**
+     * Get the value of the version option.
+     */
+    BCX_API virtual primitives::byte& get_version_option()
+    {
+        return option_.version;
+    }
+
+    /**
+     * Set the value of the version option.
+     */
+    BCX_API virtual void set_version_option(
+        const primitives::byte& value)
+    {
+        option_.version = value;
+    }
+
 private:
 
     /**
@@ -280,8 +294,8 @@ private:
         {
         }
 
-        primitives::ec_public scan_pubkey;
-        std::vector<primitives::ec_public> spend_pubkeys;
+        bc::wallet::ec_public scan_pubkey;
+        std::vector<bc::wallet::ec_public> spend_pubkeys;
     } argument_;
 
     /**
@@ -293,12 +307,14 @@ private:
     {
         option()
           : prefix(),
-            signatures()
+            signatures(),
+            version()
         {
         }
 
         primitives::base2 prefix;
         primitives::byte signatures;
+        primitives::byte version;
     } option_;
 };
 

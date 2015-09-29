@@ -25,12 +25,11 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(script_to_address__invoke)
 
-#ifndef ENABLE_TESTNET
-
 // Vector: www.reddit.com/r/Bitcoin/comments/2h4ic8/why_dont_rbitcoin_community_donate_towards/
-BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__expected_output)
+BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_mainnet__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
+    command.set_version_option(5);
     command.set_script_argument(
     { 
         {
@@ -46,10 +45,10 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig__expected_output)
     BX_REQUIRE_OUTPUT("3CS58tZGJtjz4qBFyNgQRtneKaWUjeEZVM\n");
 }
 
-BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_version_42__expected_output)
+BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_testnet__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
-    command.set_version_option(42);
+    command.set_version_option(196);
     command.set_script_argument(
     {
         {
@@ -62,10 +61,8 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_version_42__expected_ou
         }
     });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("J5wPZuavaZtQKsLTsu1CNXrkcF3P1h2jMG\n");
+    BX_REQUIRE_OUTPUT("2N3zHCdVHvMFLGcooeWJH3qmuXvieWfEFKG\n");
 }
-
-#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

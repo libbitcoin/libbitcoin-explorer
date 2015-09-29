@@ -35,29 +35,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -257,7 +249,7 @@ public:
         )
         (
             "mainnet.url",
-            value<primitives::uri>(&setting_.mainnet.url)->default_value({ "tcp://obelisk.airbitz.co:9091" }),
+            value<bc::config::endpoint>(&setting_.mainnet.url)->default_value({ "tcp://obelisk.airbitz.co:9091" }),
             "The URL of the Libbitcoin/Obelisk mainnet server."
         )
         (
@@ -272,7 +264,7 @@ public:
         )
         (
             "testnet.url",
-            value<primitives::uri>(&setting_.testnet.url)->default_value({ "tcp://obelisk-testnet.airbitz.co:9091" }),
+            value<bc::config::endpoint>(&setting_.testnet.url)->default_value({ "tcp://obelisk-testnet.airbitz.co:9091" }),
             "The URL of the Libbitcoin/Obelisk testnet server."
         )
         (
@@ -443,7 +435,7 @@ public:
     /**
      * Get the value of the mainnet.url setting.
      */
-    BCX_API virtual primitives::uri get_mainnet_url_setting() const
+    BCX_API virtual bc::config::endpoint get_mainnet_url_setting() const
     {
         return setting_.mainnet.url;
     }
@@ -451,7 +443,7 @@ public:
     /**
      * Set the value of the mainnet.url setting.
      */
-    BCX_API virtual void set_mainnet_url_setting(primitives::uri value)
+    BCX_API virtual void set_mainnet_url_setting(bc::config::endpoint value)
     {
         setting_.mainnet.url = value;
     }
@@ -491,7 +483,7 @@ public:
     /**
      * Get the value of the testnet.url setting.
      */
-    BCX_API virtual primitives::uri get_testnet_url_setting() const
+    BCX_API virtual bc::config::endpoint get_testnet_url_setting() const
     {
         return setting_.testnet.url;
     }
@@ -499,7 +491,7 @@ public:
     /**
      * Set the value of the testnet.url setting.
      */
-    BCX_API virtual void set_testnet_url_setting(primitives::uri value)
+    BCX_API virtual void set_testnet_url_setting(bc::config::endpoint value)
     {
         setting_.testnet.url = value;
     }
@@ -617,7 +609,7 @@ private:
             {
             }
 
-            primitives::uri url;
+            bc::config::endpoint url;
             primitives::cert_key server_cert_key;
             boost::filesystem::path cert_file;
         } mainnet;
@@ -631,7 +623,7 @@ private:
             {
             }
 
-            primitives::uri url;
+            bc::config::endpoint url;
             primitives::cert_key server_cert_key;
             boost::filesystem::path cert_file;
         } testnet;

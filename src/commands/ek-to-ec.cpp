@@ -20,14 +20,15 @@
 #include <bitcoin/explorer/commands/ek-to-ec.hpp>
 
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
+#include <bitcoin/explorer/primitives/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 using namespace bc::wallet;
 
 console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
@@ -38,14 +39,14 @@ console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
 
     bool unused1;
     uint8_t unused2;
-    ec_private secret;
-    if (!decrypt(secret.data(), unused2, unused1, key, passphrase))
+    ec_secret secret;
+    if (!decrypt(secret, unused2, unused1, key, passphrase))
     {
         error << BX_EK_TO_EC_INVALID_PASSPHRASE << std::endl;
         return console_result::failure;
     }
 
-    output << secret << std::endl;
+    output << primitives::ec_private(secret) << std::endl;
     return console_result::okay;
 #else
     error << BX_EK_TO_EC_REQUIRES_ICU << std::endl;

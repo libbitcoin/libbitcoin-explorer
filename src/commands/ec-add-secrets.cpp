@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 
 #include <iostream>
@@ -28,32 +27,32 @@
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& secrets = get_secrets_argument();
 
-    ec_private sum;
+    ec_secret sum(null_hash);
     for (auto const& secret: secrets)
     {
         // Initialize sum on first pass.
-        if ((ec_secret)sum == null_hash)
+        if (sum == null_hash)
         {
-            sum.data() = secret;
+            sum = secret;
             continue;
         }
 
         // Elliptic curve function (INTEGER + INTEGER) % curve-order.
-        if (!bc::ec_add(sum.data(), secret))
+        if (!bc::ec_add(sum, secret))
         {
             error << BX_EC_ADD_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }
 
-    output << sum << std::endl;
+    // We don't use bc::ec_private serialization (WIF) here.
+    output << primitives::ec_private(sum) << std::endl;
     return console_result::okay;
 }
 

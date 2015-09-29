@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -169,7 +161,7 @@ public:
         )
         (
             "SPEND_PUBKEY",
-            value<primitives::ec_public>(&argument_.spend_pubkey)->required(),
+            value<bc::wallet::ec_public>(&argument_.spend_pubkey)->required(),
             "The Base16 EC spend public key of a stealth address."
         )
         (
@@ -195,7 +187,7 @@ public:
     /**
      * Get the value of the SPEND_PUBKEY argument.
      */
-    BCX_API virtual primitives::ec_public& get_spend_pubkey_argument()
+    BCX_API virtual bc::wallet::ec_public& get_spend_pubkey_argument()
     {
         return argument_.spend_pubkey;
     }
@@ -204,7 +196,7 @@ public:
      * Set the value of the SPEND_PUBKEY argument.
      */
     BCX_API virtual void set_spend_pubkey_argument(
-        const primitives::ec_public& value)
+        const bc::wallet::ec_public& value)
     {
         argument_.spend_pubkey = value;
     }
@@ -241,7 +233,7 @@ private:
         {
         }
 
-        primitives::ec_public spend_pubkey;
+        bc::wallet::ec_public spend_pubkey;
         primitives::ec_private shared_secret;
     } argument_;
 

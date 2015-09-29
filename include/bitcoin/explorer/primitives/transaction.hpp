@@ -36,44 +36,44 @@ namespace primitives {
  * Serialization helper to convert between serialized and deserialized satoshi 
  * transaction.
  */
-class transaction
+class BCX_API transaction
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API transaction();
+    transaction();
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    BCX_API transaction(const std::string& hexcode);
+    transaction(const std::string& hexcode);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API transaction(const tx_type& value);
+    transaction(const tx_type& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API transaction(const transaction& other);
+    transaction(const transaction& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    BCX_API tx_type& data();
+    tx_type& data();
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const tx_type&() const;
+    operator const tx_type&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -81,7 +81,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         transaction& argument);
 
     /**
@@ -90,7 +90,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const transaction& argument);
 
 private:

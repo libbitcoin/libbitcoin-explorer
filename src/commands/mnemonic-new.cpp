@@ -17,19 +17,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/mnemonic-new.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace bc;
 using namespace bc::wallet;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result mnemonic_new::invoke(std::ostream& output,
     std::ostream& error)
@@ -46,11 +43,8 @@ console_result mnemonic_new::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    // If 'any' is indicated, default to 'en', otherwise use as specified.
-    auto dictionary = &bc::wallet::language::en;
-    if (language.size() == 1)
-        dictionary = language.front();
-
+    // If 'any' default to first ('en'), otherwise the one specified.
+    const auto dictionary = language.front();
     const auto words = create_mnemonic(entropy, *dictionary);
 
     output << join(words) << std::endl;

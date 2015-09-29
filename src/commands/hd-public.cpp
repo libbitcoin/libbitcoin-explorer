@@ -17,43 +17,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/hd-public.hpp>
 
 #include <iostream>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+
+#define BX_HD_PUBLIC_HARD_OPTION_CONFLICT "The hard option requires a private key."
 
 console_result hd_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto hard = get_hard_option();
     const auto index = get_index_option();
-    const auto& key = get_hd_public_key_argument();
+    const auto& key = get_hd_key_argument();
 
-    bc::wallet::hd_public_key child_key;
-    const bc::wallet::hd_public_key& public_key = key;
-    const bc::wallet::hd_private_key& private_key = key;
+    const bc::wallet::hd_public& public_key = key;
+    const bc::wallet::hd_private& private_key = key;
 
-    if (!private_key.valid() && hard)
+    if (!private_key && hard)
     {
         error << BX_HD_PUBLIC_HARD_OPTION_CONFLICT << std::endl;
         return console_result::failure;
     }
 
-    const auto position = if_else(hard, index + bc::wallet::first_hardened_key, index);
+    static constexpr auto first = bc::wallet::hd_first_hardened_key;
+    const auto position = hard ? first + index : index;
 
-    if (private_key.valid())
-        child_key = private_key.generate_public_key(position);
-    else
-        child_key = public_key.generate_public_key(position);
+    const auto child_public_key = private_key ?
+        private_key.derive_public(position) :
+        public_key.derive_public(position);
 
-    output << hd_pub(child_key) << std::endl;
+    output << child_public_key << std::endl;
     return console_result::okay;
 }

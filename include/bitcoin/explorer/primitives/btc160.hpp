@@ -34,38 +34,38 @@ namespace primitives {
 /**
  * Serialization helper to convert between base16 string and short_hash.
  */
-class btc160
+class BCX_API btc160
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API btc160();
+    btc160();
 
     /**
      * Initialization constructor.
      * @param[in]  hexcode  The value to initialize with.
      */
-    BCX_API btc160(const std::string& hexcode);
+    btc160(const std::string& hexcode);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API btc160(const short_hash& value);
+    btc160(const short_hash& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API btc160(const btc160& other);
+    btc160(const btc160& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const short_hash&() const;
+    operator const short_hash&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -73,7 +73,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         btc160& argument);
 
     /**
@@ -82,7 +82,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const btc160& argument);
 
 private:

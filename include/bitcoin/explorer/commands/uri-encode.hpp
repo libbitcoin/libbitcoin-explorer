@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -68,12 +60,6 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-
-/**
- * Various localizable strings.
- */
-#define BX_URI_ENCODE_ADDRESS_CONFLICT \
-    "Only one payment address or stealth address may specified."
 
 /**
  * Class to implement the uri-encode command.
@@ -124,7 +110,7 @@ public:
     BCX_API virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1);
+            .add("ADDRESS", 1);
     }
 
 	/**
@@ -174,18 +160,13 @@ public:
         )
         (
             "request,r",
-            value<primitives::uri>(&option_.request),
+            value<bc::config::endpoint>(&option_.request),
             "The value of the payment request parameter."
         )
         (
-            "stealth,s",
-            value<primitives::stealth>(&option_.stealth),
-            "The stealth address for the address part."
-        )
-        (
-            "PAYMENT_ADDRESS",
-            value<primitives::address>(&argument_.payment_address),
-            "The payment address for the address part."
+            "ADDRESS",
+            value<primitives::address>(&argument_.address),
+            "The payment address or stealth address for the address part."
         );
 
         return options;
@@ -203,20 +184,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PAYMENT_ADDRESS argument.
+     * Get the value of the ADDRESS argument.
      */
-    BCX_API virtual primitives::address& get_payment_address_argument()
+    BCX_API virtual primitives::address& get_address_argument()
     {
-        return argument_.payment_address;
+        return argument_.address;
     }
 
     /**
-     * Set the value of the PAYMENT_ADDRESS argument.
+     * Set the value of the ADDRESS argument.
      */
-    BCX_API virtual void set_payment_address_argument(
+    BCX_API virtual void set_address_argument(
         const primitives::address& value)
     {
-        argument_.payment_address = value;
+        argument_.address = value;
     }
 
     /**
@@ -273,7 +254,7 @@ public:
     /**
      * Get the value of the request option.
      */
-    BCX_API virtual primitives::uri& get_request_option()
+    BCX_API virtual bc::config::endpoint& get_request_option()
     {
         return option_.request;
     }
@@ -282,26 +263,9 @@ public:
      * Set the value of the request option.
      */
     BCX_API virtual void set_request_option(
-        const primitives::uri& value)
+        const bc::config::endpoint& value)
     {
         option_.request = value;
-    }
-
-    /**
-     * Get the value of the stealth option.
-     */
-    BCX_API virtual primitives::stealth& get_stealth_option()
-    {
-        return option_.stealth;
-    }
-
-    /**
-     * Set the value of the stealth option.
-     */
-    BCX_API virtual void set_stealth_option(
-        const primitives::stealth& value)
-    {
-        option_.stealth = value;
     }
 
 private:
@@ -314,11 +278,11 @@ private:
     struct argument
     {
         argument()
-          : payment_address()
+          : address()
         {
         }
 
-        primitives::address payment_address;
+        primitives::address address;
     } argument_;
 
     /**
@@ -332,16 +296,14 @@ private:
           : amount(),
             label(),
             message(),
-            request(),
-            stealth()
+            request()
         {
         }
 
         primitives::btc amount;
         std::string label;
         std::string message;
-        primitives::uri request;
-        primitives::stealth stealth;
+        bc::config::endpoint request;
     } option_;
 };
 

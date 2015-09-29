@@ -20,23 +20,14 @@
 
 #include <bitcoin/explorer/commands/hd-to-address.hpp>
 
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
 
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result hd_to_address::invoke(std::ostream& output, std::ostream& error)
 {
-    // Bound parameters.
-    const auto& key = get_hd_key_argument();
-
-    // Get public from private and otherwise get public.
-    const auto public_key = key.derived_public_key();
-
-    // RECOMPILE REQUIRED FOR TESTNET.
-
-    output << address(public_key) << std::endl;
-    return console_result::okay;
+    error << BX_HD_TO_ADDRESS_OBSOLETE << std::endl;
+    return console_result::failure;
 }

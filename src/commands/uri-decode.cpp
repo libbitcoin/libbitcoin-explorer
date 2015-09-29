@@ -24,8 +24,9 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
- using namespace bc::explorer;
- using namespace bc::explorer::commands;
+using namespace bc::explorer;
+using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
  console_result uri_decode::invoke(std::ostream& output, std::ostream& error)
  {
@@ -33,13 +34,6 @@
      const auto& encoding = get_format_option();
      const auto& uri = get_uri_argument();
 
-     // The uri primitive type is not currently restricted to bitcoin uris.
-     if (!starts_with(uri.to_string(), "bitcoin:"))
-     {
-         error << BX_URI_DECODE_NOT_BITCOIN << std::endl;
-         return console_result::failure;
-     }
-     
      write_stream(output, prop_tree(uri), encoding);
      return console_result::okay;
  }

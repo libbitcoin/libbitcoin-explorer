@@ -47,6 +47,7 @@ BOOST_AUTO_TEST_SUITE(stealth_encode__invoke)
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key__okay_output)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(STEALTH_ENCODE_ADDRESS_A "\n");
@@ -55,6 +56,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key__okay_output)
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_spend_key__okay_output)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SPEND_PUBKEY_B } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -64,6 +66,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_spend_key__okay_output)
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key__okay_output_error)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ENCODE_SPEND_PUBKEY_B } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -74,6 +77,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key__okay_output_e
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature__okay_output_error)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_signatures_option(1);
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ENCODE_SPEND_PUBKEY_B } });
@@ -85,6 +89,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature__o
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_signatures_overflow__failure_error)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_signatures_option(42);
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ENCODE_SPEND_PUBKEY_B } });
@@ -95,6 +100,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_signatures_ove
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_max_prefix__okay_output_error)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_prefix_option({ STEALTH_ENCODE_MAX_PREFIX_LENGTH });
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -104,6 +110,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_max_prefix__okay_output_er
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_prefix_too_long__failure_errors)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_prefix_option({ STEALTH_ENCODE_MAX_PREFIX_LENGTH "1" });
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
@@ -113,6 +120,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_prefix_too_long__failure_e
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_leading_0_prefix__okay_output_errors)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_signatures_option(1);
     command.set_prefix_option({ STEALTH_ENCODE_LEADING0_PREFIX });
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
@@ -125,6 +133,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_le
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signaturebaadf00d_prefix__okay_output_errors)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(42);
     command.set_signatures_option(1);
     command.set_prefix_option({ STEALTH_ENCODE_BAADF00D_PREFIX });
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
@@ -137,8 +146,8 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signaturebaa
 BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_baadf00d_prefix_testnet__okay_output_errors)
 {
     BX_DECLARE_COMMAND(stealth_encode);
+    command.set_version_option(43);
     command.set_signatures_option(1);
-    command.set_general_network_setting("testnet");
     command.set_prefix_option({ STEALTH_ENCODE_BAADF00D_PREFIX });
     command.set_scan_pubkey_argument({ STEALTH_ENCODE_SCAN_PUBKEY_A });
     command.set_spend_pubkeys_argument({ { STEALTH_ENCODE_SCAN_PUBKEY_A }, { STEALTH_ENCODE_SPEND_PUBKEY_B } });

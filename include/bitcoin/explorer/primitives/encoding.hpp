@@ -31,38 +31,38 @@ namespace primitives {
 /**
  * Serialization helper to convert between text and encoding engine.
  */
-class encoding
+class BCX_API encoding
 {
 public:
 
     /**
      * Default constructor, sets encoding_engine::info.
      */
-    BCX_API encoding();
+    encoding();
 
     /**
      * Initialization constructor.
      * @param[in]  token  The value to initialize with.
      */
-    BCX_API encoding(const std::string& token);
+    encoding(const std::string& token);
 
     /**
      * Initialization constructor.
      * @param[in]  engine  The value to initialize with.
      */
-    BCX_API encoding(encoding_engine engine);
+    encoding(encoding_engine engine);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API encoding(const encoding& other);
+    encoding(const encoding& other);
 
     /**
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    BCX_API operator encoding_engine() const;
+    operator encoding_engine() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -70,7 +70,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         encoding& argument);
 
     /**
@@ -79,7 +79,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const encoding& argument);
 
 private:

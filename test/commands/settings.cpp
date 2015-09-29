@@ -45,13 +45,13 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "    {\n" \
 "        cert_file \"\"\n" \
 "        server_cert_key \"\"\n" \
-"        url \"\"\n" \
+"        url localhost\n" \
 "    }\n" \
 "    testnet\n" \
 "    {\n" \
 "        cert_file \"\"\n" \
 "        server_cert_key \"\"\n" \
-"        url \"\"\n" \
+"        url localhost\n" \
 "    }\n" \
 "}\n"
 

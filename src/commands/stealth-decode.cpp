@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/stealth-decode.hpp>
 
 #include <iostream>
@@ -25,9 +24,9 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace pt;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
+using namespace bc::explorer::primitives;
 
 console_result stealth_decode::invoke(std::ostream& output,
     std::ostream& error)
@@ -39,4 +38,3 @@ console_result stealth_decode::invoke(std::ostream& output,
     write_stream(output, prop_tree(address), encoding);
     return console_result::okay;
 }
-

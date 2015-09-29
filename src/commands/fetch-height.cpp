@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/commands/fetch-height.hpp>
 
+#include <cstddef>
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
@@ -67,7 +68,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
         state.output(height);
     };
 
-    auto on_error = [&state](const std::error_code& error)
+    auto on_error = [&state](const code& error)
     {
         state.succeeded(error);
     };

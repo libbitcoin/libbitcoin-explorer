@@ -31,7 +31,6 @@
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
 #include <bitcoin/explorer/primitives/point.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 
@@ -41,13 +40,10 @@ namespace libbitcoin {
 namespace explorer {
 namespace primitives {
     
-class address;
 class base2;
 class header;
 class input;
 class output;
-class point;
-class stealth;
 class transaction;
 class wrapper;
 
@@ -202,33 +198,6 @@ BCX_API pt::ptree prop_tree(const tx_output_type& tx_output);
 BCX_API pt::ptree prop_tree(const std::vector<tx_output_type>& tx_outputs);
 
 /**
- * Generate a property list for an output.
- * Need a dedicated override here becuase output doesn't cast to 
- * tx_output_type, but instead vector<tx_output_type>.
- * @param[in]  output  The output.
- * @return             A property list.
- */
-BCX_API pt::ptree prop_list(const output& output);
-
-/**
- * Generate a property tree for an output.
- * Need a dedicated override here becuase output doesn't cast to 
- * tx_output_type, but instead vector<tx_output_type>.
- * @param[in]  output  The output.
- * @return             A property tree.
- */
-BCX_API pt::ptree prop_tree(const output& output);
-
-/**
- * Generate a property tree for a set of outputs.
- * This must pass the property tree call to the output override so that
- * it can split up the individual transaction outputs.
- * @param[in]  outputs  The set of outputs.
- * @return              A property tree.
- */
-BCX_API pt::ptree prop_tree(const std::vector<output>& outputs);
-
-/**
  * Generate a property list for a transaction.
  * @param[in]  transaction  The transaction.
  * @return                  A property list.
@@ -308,14 +277,14 @@ BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
  * @param[in]  stealth_address  The stealth address.
  * @return                      A property list.
  */
-BCX_API pt::ptree prop_list(const stealth& stealth_address);
+BCX_API pt::ptree prop_list(const wallet::stealth_address& stealth);
 
 /**
  * Generate a property tree for a stealth address.
  * @param[in]  stealth_address  The stealth address.
  * @return                      A property tree.
  */
-BCX_API pt::ptree prop_tree(const stealth& stealth_address);
+BCX_API pt::ptree prop_tree(const wallet::stealth_address& stealth);
 
 /**
  * Generate a property list for a stealth metadata row.
@@ -370,7 +339,7 @@ BCX_API pt::ptree prop_tree(const settings_list& settings);
  * @param[in]  uri   The parsed uri.
  * @returns          A new property tree containing the settings.
  */
-BCX_API pt::ptree prop_tree(const wallet::uri_parse_result& uri);
+BCX_API pt::ptree prop_tree(const wallet::bitcoin_uri& uri);
 
 } // namespace primitives
 } // namespace explorer

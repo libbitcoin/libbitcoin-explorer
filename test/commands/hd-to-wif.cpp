@@ -17,25 +17,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include "command.hpp"
 
 BX_USING_NAMESPACES()
 
-BOOST_AUTO_TEST_SUITE(offline)
+BOOST_AUTO_TEST_SUITE(obsolete)
 BOOST_AUTO_TEST_SUITE(hd_to_wif__invoke)
 
-#ifndef ENABLE_TESTNET
-
-BOOST_AUTO_TEST_CASE(hd_to_wif__invoke__mainnet_key__okay_output)
+BOOST_AUTO_TEST_CASE(hd_to_wif__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(hd_to_wif);
-    command.set_hd_private_key_argument({ "xprv9s21ZrQH143K27rVid1zpeyqZygAX7W7AQ4cctwrSB4A2EoPNT22nR2FCm42oc6UmTNGnjwLscDdkof6dyRVwoG8nU6uY8XTGNHiNzAx3TD" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("KxL385uvhm2PhgTjk6gvHPE81xNwCDd1WeQXPMR4DMZfVNJRSvwF\n");
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_HD_TO_WIF_OBSOLETE "\n");
 }
-
-#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

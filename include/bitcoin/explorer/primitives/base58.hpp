@@ -34,44 +34,44 @@ namespace primitives {
 /**
  * Serialization helper to convert between data_chunk and base58.
  */
-class base58
+class BCX_API base58
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API base58();
+    base58();
 
     /**
      * Initialization constructor.
      * @param[in]  base58  The value to initialize with.
      */
-    BCX_API base58(const std::string& base58);
+    base58(const std::string& base58);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API base58(const data_chunk& value);
+    base58(const data_chunk& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API base58(const base58& other);
+    base58(const base58& other);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const data_chunk&() const;
+    operator const data_chunk&() const;
 
     /**
      * Overload cast to generic data reference.
      * @return  This object's value cast to a generic data reference.
      */
-    BCX_API operator data_slice() const;
+    operator data_slice() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -79,7 +79,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         base58& argument);
 
     /**
@@ -88,7 +88,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const base58& argument);
 
 private:

@@ -31,38 +31,38 @@ namespace primitives {
 /**
  * Serialization helper to convert between btc and satoshi.
  */
-class btc
+class BCX_API btc
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API btc();
+    btc();
 
     /**
      * Initialization constructor.
      * @param[in]  btc  The number of btc to initialize with.
      */
-    BCX_API btc(const std::string& btc);
+    btc(const std::string& btc);
 
     /**
      * Initialization constructor.
      * @param[in]  satoshi  The number of satoshi to initialize with.
      */
-    BCX_API btc(uint64_t satoshi);
+    btc(uint64_t satoshi);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API btc(const btc& other);
+    btc(const btc& other);
 
     /**
      * Return a reference to the data member cast as satoshi.
      * @return  A reference to the object's internal data.
      */
-    BCX_API operator uint64_t() const;
+    operator uint64_t() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -70,7 +70,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         btc& argument);
 
     /**
@@ -79,7 +79,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const btc& argument);
 
 private:

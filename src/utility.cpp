@@ -19,6 +19,7 @@
  */
 #include <bitcoin/explorer/utility.hpp>
 
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <random>
@@ -136,22 +137,10 @@ connection_type get_connection(const command& cmd)
 }
 
 // The key may be invalid, caller may test for null secret.
-ec_secret new_key(data_slice seed)
+ec_secret new_key(const data_chunk& seed)
 {
-    // The testnet value is not relevant to the secret.
-    constexpr bool testnet = false;
-
-    // This is retained in order to preserve test cases and docs.
-    // Using HD key generation because we don't have helper for EC.
-    const wallet::hd_private_key hd_key(seed, testnet);
-
-    if (!hd_key.valid())
-    {
-        // bc::cerr << "You just won the lottery!" << std::endl;
-        return ec_secret();
-    }
-
-    return hd_key.private_key();
+    const wallet::hd_private key(seed);
+    return key.secret();
 }
 
 // Not testable due to lack of random engine injection.
@@ -195,13 +184,6 @@ std::string read_stream(std::istream& stream)
     return result;
 }
 
-chain::script script_to_raw_data_script(const chain::script& script)
-{
-    chain::script duplicate(script);
-//    duplicate.from_data(script.to_data(false), false, true);
-    return duplicate;
-}
-
 name_value_pairs split_pairs(const std::vector<std::string> tokens,
     const std::string delimiter)
 {
@@ -210,8 +192,8 @@ name_value_pairs split_pairs(const std::vector<std::string> tokens,
     for (const auto& token: tokens)
     {
         const auto words = split(token, delimiter);
-
         const auto& left = words[0];
+
         std::string right;
         if (words.size() > 1)
             right = words[1];
@@ -240,15 +222,28 @@ bool starts_with(const std::string& value, const std::string& prefix)
     }
 }
 
+// This verifies the checksum.
 bool unwrap(wrapped_data& data, data_slice wrapped)
 {
-    return bc::wallet::unwrap(
-        data.version, data.payload, data.checksum, wrapped);
+    if (!verify_checksum(wrapped))
+        return false;
+
+    data.version = wrapped.data()[0];
+    const auto payload_begin = std::begin(wrapped) + 1;
+    const auto checksum_begin = std::end(wrapped) - checksum_size;
+    data.payload.resize(checksum_begin - payload_begin);
+    std::copy(payload_begin, checksum_begin, data.payload.begin());
+    data.checksum = from_little_endian_unsafe<uint32_t>(checksum_begin);
+    return true;
 }
 
+// This recalculates the checksum, ignoring what is in data.checksum.
 data_chunk wrap(const wrapped_data& data)
 {
-    return bc::wallet::wrap(data.version, data.payload);
+    auto bytes = to_chunk(data.version);
+    extend_data(bytes, data.payload);
+    append_checksum(bytes);
+    return bytes;
 }
 
 // We aren't yet using a reader, although it is possible using ptree.

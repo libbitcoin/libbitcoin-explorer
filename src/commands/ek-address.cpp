@@ -23,12 +23,9 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 using namespace bc::wallet;
 
 console_result ek_address::invoke(std::ostream& output, std::ostream& error)
@@ -46,13 +43,15 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
     
     ek_seed bytes;
     std::copy(seed.begin(), seed.begin() + ek_seed_size, bytes.begin());
+    const auto compressed = !uncompressed;
 
-    ec_point point;
-    ek_private unused;
-    create_key_pair(unused, point, token, bytes, version, !uncompressed);
+    // TODO: if not set default version from config.
 
-    const address payment_address(version, point);
-
-    output << payment_address << std::endl;
+    ec_compressed point;
+    bc::wallet::ek_private unused;
+    create_key_pair(unused, point, token, bytes, version, compressed);
+    const payment_address address({ point, compressed }, version);
+    
+    output << address << std::endl;
     return console_result::okay;
 }

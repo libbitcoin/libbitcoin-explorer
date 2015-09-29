@@ -35,62 +35,62 @@ namespace primitives {
 /**
  * Serialization helper to convert between base16/raw script and script_type.
  */
-class script
+class BCX_API script
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API script();
+    script();
 
     /**
      * Initialization constructor.
      * @param[in]  mnemonic  The value to initialize with.
      */
-    BCX_API script(const std::string& mnemonic);
+    script(const std::string& mnemonic);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API script(const chain::script& value);
+    script(const chain::script& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API script(const data_chunk& value);
+    script(const data_chunk& value);
 
     /**
      * Initialization constructor.
      * @param[in]  tokens  The mnemonic tokens to initialize with.
      */
-    BCX_API script(const std::vector<std::string>& tokens);
+    script(const std::vector<std::string>& tokens);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API script(const script& other);
+    script(const script& other);
 
     /**
      * Serialize the script to bytes according to the wire protocol.
      * @return  The byte serialized copy of the script.
      */
-    BCX_API const bc::data_chunk to_data() const;
+    const bc::data_chunk to_data() const;
 
     /**
      * Return a pretty-printed copy of the script.
      * @return  A mnemonic-printed copy of the internal script.
      */
-    BCX_API const std::string to_string() const;
+    const std::string to_string() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const chain::script&() const;
+    operator const chain::script&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -98,7 +98,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         script& argument);
 
     /**
@@ -107,7 +107,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const script& argument);
 
 private:

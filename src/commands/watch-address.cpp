@@ -21,6 +21,7 @@
 #include <bitcoin/explorer/commands/watch-address.hpp>
 
 #include <csignal>
+#include <cstddef>
 #include <iostream>
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/bitcoin.hpp>
@@ -28,7 +29,6 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
@@ -40,6 +40,7 @@ using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 static void handle_signal(int signal)
 {
@@ -55,7 +56,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& payment_address = get_payment_address_argument();
+    const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection);
@@ -68,25 +69,25 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_update = [&state](const address& payment_address, size_t,
+    auto on_update = [&state](const payment_address& address, size_t,
         const hash_digest& block_hash, const tx_type& tx)
     {
-        state.output(prop_tree(tx, block_hash, payment_address));
+        state.output(prop_tree(tx, block_hash, address));
     };
 
-    auto on_subscribed = [&state, &payment_address]()
+    auto on_subscribed = [&state, &address]()
     {
-        state.output(format(BX_WATCH_ADDRESS_WAITING) % payment_address);
+        state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
         ++state;
     };
 
-    auto on_error = [&state](const std::error_code& error)
+    auto on_error = [&state](const code& error)
     {
         state.succeeded(error);
     };
 
     client.get_codec()->set_on_update(on_update);
-    client.get_codec()->subscribe(on_error, on_subscribed, payment_address);
+    client.get_codec()->subscribe(on_error, on_subscribed, address);
 
     // Catch C signals for stopping the program.
     signal(SIGABRT, handle_signal);

@@ -139,7 +139,7 @@ std::string serialize(const Value& value, const std::string& fallback)
     std::stringstream stream;
     stream << value;
     const auto& text = stream.str();
-    return if_else(text.empty(), fallback, text);
+    return text.empty() ? fallback : text;
 }
 
 template <typename Item>

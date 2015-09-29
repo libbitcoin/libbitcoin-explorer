@@ -35,42 +35,42 @@ namespace primitives {
 /**
  * Serialization helper to convert between binary string and bitset.
  */
-class base2
+class BCX_API base2
 {
 public:
 
     /**
      * Default constructor.
      */
-    BCX_API base2();
+    base2();
 
     /**
      * Initialization constructor.
      * @param[in]  bin  The value to initialize with.
      */
-    BCX_API base2(const std::string& binary);
+    base2(const std::string& binary);
 
     /**
      * @param[in]  value  The value to initialize with.
      */
-    BCX_API base2(const bc::binary_type& value);
+    base2(const bc::binary_type& value);
 
     /**
      * Copy constructor.
      * @param[in]  other  The object to copy into self on construct.
      */
-    BCX_API base2(const base2& other);
+    base2(const base2& other);
 
     /**
      * Get number of bits in value.
      */
-    BCX_API size_t size() const;
+    size_t size() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    BCX_API operator const bc::binary_type&() const;
+    operator const bc::binary_type&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -78,7 +78,7 @@ public:
      * @param[out]  argument  The object to receive the read value.
      * @return                The input stream reference.
      */
-    BCX_API friend std::istream& operator>>(std::istream& input,
+    friend std::istream& operator>>(std::istream& input,
         base2& argument);
 
     /**
@@ -87,7 +87,7 @@ public:
      * @param[out]  argument  The object from which to obtain the value.
      * @return                The output stream reference.
      */
-    BCX_API friend std::ostream& operator<<(std::ostream& output,
+    friend std::ostream& operator<<(std::ostream& output,
         const base2& argument);
 
 private:

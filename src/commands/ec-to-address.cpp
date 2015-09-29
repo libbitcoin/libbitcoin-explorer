@@ -17,18 +17,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/ec-to-address.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
 
-using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 console_result ec_to_address::invoke(std::ostream& output, std::ostream& error)
 {
@@ -36,12 +33,8 @@ console_result ec_to_address::invoke(std::ostream& output, std::ostream& error)
     const auto& point = get_ec_public_key_argument();
     const auto version = get_version_option();
 
-    // Get the public key's payment address.
-    const auto ripemd160 = bitcoin_short_hash(point);
+    // TODO: if not set default version from config.
 
-    // TESTNET VERSION MAY REQUIRE RECOMPILE
-    bc::wallet::payment_address pay_address(version, ripemd160);
-
-    output << address(pay_address) << std::endl;
+    output << payment_address(point, version) << std::endl;
     return console_result::okay;
 }

@@ -37,29 +37,21 @@
 #include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 #include <bitcoin/explorer/primitives/btc160.hpp>
-#include <bitcoin/explorer/primitives/btc256.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/ec_public.hpp>
 #include <bitcoin/explorer/primitives/encoding.hpp>
 #include <bitcoin/explorer/primitives/endorsement.hpp>
 #include <bitcoin/explorer/primitives/hashtype.hpp>
 #include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
-#include <bitcoin/explorer/primitives/hd_pub.hpp>
 #include <bitcoin/explorer/primitives/header.hpp>
 #include <bitcoin/explorer/primitives/input.hpp>
 #include <bitcoin/explorer/primitives/language.hpp>
 #include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/stealth.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/uri.hpp>
-#include <bitcoin/explorer/primitives/wif.hpp>
 #include <bitcoin/explorer/primitives/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -72,10 +64,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_ADDRESS_VALIDATE_VALID_ADDRESS \
-    "The address is valid."
-#define BX_ADDRESS_VALIDATE_INVALID_ADDRESS \
-    "The address is not valid."
+#define BX_ADDRESS_VALIDATE_OBSOLETE \
+    "This command is no longer supported. Use address-decode."
 
 /**
  * Class to implement the address-validate command.
@@ -126,14 +116,22 @@ public:
     }
 
     /**
+     * Declare whether the command has been obsoleted.
+     * @return  True if the command is obsolete
+     */
+    BCX_API virtual bool obsolete()
+    {
+        return true;
+    }
+
+    /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
     BCX_API virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1);
+        return get_argument_metadata();
     }
 
 	/**
@@ -144,8 +142,6 @@ public:
     BCX_API virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
     }
 
     /**
@@ -167,11 +163,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "PAYMENT_ADDRESS",
-            value<std::string>(&argument_.payment_address),
-            "The payment address to validate. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -188,23 +179,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the PAYMENT_ADDRESS argument.
-     */
-    BCX_API virtual std::string& get_payment_address_argument()
-    {
-        return argument_.payment_address;
-    }
-
-    /**
-     * Set the value of the PAYMENT_ADDRESS argument.
-     */
-    BCX_API virtual void set_payment_address_argument(
-        const std::string& value)
-    {
-        argument_.payment_address = value;
-    }
-
 private:
 
     /**
@@ -215,11 +189,9 @@ private:
     struct argument
     {
         argument()
-          : payment_address()
         {
         }
 
-        std::string payment_address;
     } argument_;
 
     /**

@@ -17,29 +17,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <bitcoin/explorer/commands/hd-private.hpp>
 
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/hd_priv.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result hd_private::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto hard = get_hard_option();
     const auto index = get_index_option();
-    const bc::wallet::hd_private_key& secret = get_hd_private_key_argument();
+    const auto& private_key = get_hd_private_key_argument();
+    
+    static constexpr auto first = bc::wallet::hd_first_hardened_key;
+    const auto position = hard ? first + index : index;
+    const auto child_private_key = private_key.derive_private(position);
 
-    const auto position = if_else(hard, index + bc::wallet::first_hardened_key, index);
-    const auto child_key = secret.generate_private_key(position);
-
-    output << hd_priv(child_key) << std::endl;
+    output << child_private_key << std::endl;
     return console_result::okay;
 }
