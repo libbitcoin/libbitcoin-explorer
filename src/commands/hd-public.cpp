@@ -34,6 +34,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto hard = get_hard_option();
     const auto index = get_index_option();
+    const auto version = get_version_option();
     const auto& key = get_hd_key_argument();
 
     const bc::wallet::hd_public& public_key = key;
@@ -48,11 +49,13 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     static constexpr auto first = bc::wallet::hd_first_hardened_key;
     const auto position = hard ? first + index : index;
 
-    // LIMITED TO GENERATING MAINNET KEYS FROM PRIVATE KEYS.
-    // TODO: deriving public form private requires prefix configuration.
+    // TODO: obtain version from config if not set.
+
+    bc::wallet::hd_private versioned(private_key.to_hd_key(),
+        bc::wallet::hd_private::to_prefixes(0, version));
 
     const auto child_public_key = private_key ?
-        private_key.derive_public(position) :
+        versioned.derive_public(position) :
         public_key.derive_public(position);
 
     output << child_public_key << std::endl;

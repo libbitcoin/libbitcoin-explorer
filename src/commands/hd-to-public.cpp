@@ -31,11 +31,14 @@ using namespace bc::wallet;
 console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
+    const auto version = get_version_option();
     const auto& private_key = get_hd_private_key_argument();
 
-    // LIMITED TO GENERATING MAINNET KEYS FROM PRIVATE KEYS.
-    // TODO: deriving public form private requires prefix configuration.
-    
-    output << private_key.to_public() << std::endl;
+    // TODO: deriving public from private requires prefix configuration.
+
+    bc::wallet::hd_private versioned(private_key.to_hd_key(),
+        bc::wallet::hd_private::to_prefixes(0, version));
+
+    output << versioned.to_public() << std::endl;
     return console_result::okay;
 }
