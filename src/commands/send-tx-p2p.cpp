@@ -53,6 +53,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto nodes = get_nodes_option();
     const tx_type& transaction = get_transaction_argument();
+    const auto& network = get_general_network_setting();
     const auto& debug_file = get_logging_debug_file_setting();
     const auto& error_file = get_logging_error_file_setting();
     const auto& hosts_file = get_general_hosts_file_setting();
@@ -72,11 +73,12 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     static constexpr bool relay = false;
     static constexpr size_t threads = 4;
     static constexpr uint16_t listen = 0;
-    const network::timeout timeouts(connect, handshake);
+    static const network::timeout timeouts(connect, handshake);
+    static const uint32_t magic = is_testnet(network) ? 0x709110B : 0xd9b4bef9;
 
     async_client client(threads);
     network::hosts hosts(client.pool(), hosts_file);
-    network::initiator net(client.pool(), timeouts);
+    network::initiator net(client.pool(), magic, timeouts);
     network::protocol proto(client.pool(), hosts, net, listen, relay);
 
     callback_state state(error, output);
