@@ -54,9 +54,9 @@ public:
     uint64_t amount() const;
     uint8_t payment_version() const;
     uint8_t stealth_version() const;
-    chain::script script() const;
-    short_hash pay_to_hash() const;
-    ec_compressed ephemeral_key() const;
+    const chain::script& script() const;
+    const short_hash& pay_to_hash() const;
+    const data_chunk& ephemeral_script_data() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -78,7 +78,7 @@ private:
     uint8_t stealth_version_;
     chain::script script_;
     short_hash pay_to_hash_;
-    ec_compressed ephemeral_key_;
+    data_chunk ephemeral_script_data_;
 };
 
 } // namespace explorer
