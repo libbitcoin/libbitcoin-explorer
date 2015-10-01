@@ -69,25 +69,6 @@
 #define BX_STDIO_PATH_SENTINEL "-"
 
 /**
- * Configuration value for mainnet.
- */
-#define BX_MAINNET "mainnet"
-
-/**
- * Configuration value for testnet.
- */
-#define BX_TESTNET "testnet"
-
-/**
- * Configuration value for default network.
- */
-#ifdef ENABLE_TESTNET
-#define BX_NETWORK BX_TESTNET
-#else
-#define BX_NETWORK BX_MAINNET
-#endif
-
-/**
  * Space-saving namespaces.
  */
 namespace ph = std::placeholders;

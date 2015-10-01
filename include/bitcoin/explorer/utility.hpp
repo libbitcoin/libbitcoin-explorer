@@ -204,13 +204,6 @@ BCX_API void bind_error_log(std::ofstream& error);
 BCX_API connection_type get_connection(const command& cmd);
 
 /**
- * Determine if a network token represents testnet.
- * @param[in]  network  The string to test.
- * @return              True if text represents testnet.
- */
-BCX_API bool is_testnet(const std::string& network);
-
-/**
  * Determine if a string is base2.
  * @param[in]  text  The string to test.
  * @return           True if text is base2.

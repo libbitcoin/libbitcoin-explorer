@@ -53,12 +53,15 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto nodes = get_nodes_option();
     const tx_type& transaction = get_transaction_argument();
-    const auto& network = get_general_network_setting();
-    const auto& debug_file = get_logging_debug_file_setting();
-    const auto& error_file = get_logging_error_file_setting();
-    const auto& hosts_file = get_general_hosts_file_setting();
-    const auto connect = get_general_connect_timeout_seconds_setting();
-    const auto handshake = get_general_channel_handshake_seconds_setting();
+
+    const auto& seeds = get_network_seeds_setting();
+    const auto identifier = get_network_identifier_setting();
+    const auto retries = get_network_connect_retries_setting();
+    const auto connect = get_network_connect_timeout_seconds_setting();
+    const auto handshake = get_network_channel_handshake_seconds_setting();
+    const auto& hosts_file = get_network_hosts_file_setting();
+    const auto& debug_file = get_network_debug_file_setting();
+    const auto& error_file = get_network_error_file_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();
@@ -69,17 +72,21 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     bind_error_log(error_log);
     log_error(LOG_NETWORK) << header;
 
-    // Not listening, no relay.
-    static constexpr bool relay = false;
+    // Not listening, no relay/port/inbound.
+    static constexpr auto relay = false;
+    static constexpr uint16_t port = 0;
+    static constexpr size_t inbound = 0;
+    static const auto self = bc::unspecified_network_address;
+
     static constexpr size_t threads = 4;
-    static constexpr uint16_t listen = 0;
+    static constexpr size_t host_capacity = 1000;
     static const network::timeout timeouts(connect, handshake);
-    static const uint32_t magic = is_testnet(network) ? 0x709110B : 0xd9b4bef9;
 
     async_client client(threads);
-    network::hosts hosts(client.pool(), hosts_file);
-    network::initiator net(client.pool(), magic, timeouts);
-    network::protocol proto(client.pool(), hosts, net, listen, relay);
+    network::hosts hosts(client.pool(), hosts_file, host_capacity);
+    network::initiator net(client.pool(), identifier, timeouts);
+    network::protocol proto(client.pool(), hosts, net, port, relay, nodes,
+        inbound, seeds, self, timeouts);
 
     callback_state state(error, output);
     network::protocol::channel_handler handle_connect;

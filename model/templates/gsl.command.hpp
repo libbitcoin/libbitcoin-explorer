@@ -185,11 +185,6 @@ public:
     {
         using namespace po;
         definitions.add_options()
-        (
-            "general.network",
-            value<std::string>(&setting_.general.network)->default_value(BX_NETWORK),
-            "The network to use, either 'mainnet' or 'testnet'. Defaults to match the build."
-        )
 .for configuration
 .   is_last_configuration = last()
 .   for setting where !(configuration.section = "general" & setting.name = "network")

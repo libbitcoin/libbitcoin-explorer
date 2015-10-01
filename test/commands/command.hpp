@@ -53,15 +53,13 @@ using namespace bc::explorer::primitives;
 #define BX_NETWORK_TIMEOUT 3
 #define BX_MAINNET_HOST "72.74.150.204"
 #define BX_MAINNET_PORT 8333
-//#define BX_TESTNET_HOST ""
-//#define BX_TESTNET_PORT 18333
 
 // Libbitcoin Server (production)
-#define BX_MAINNET_SERVER "tcp://obelisk.airbitz.co:9091"           // alive
+#define BX_MAINNET_SERVER "tcp://obelisk.airbitz.co:9091"
 
 // Libbitcoin Server (testnet)
-#define BX_TESTNET_SERVER "tcp://obelisk-testnet.airbitz.co:9091"   // alive
-//#define BX_TESTNET_SERVER "tcp://obelisk.veox.pw:9091"            // alive
+#define BX_TESTNET_SERVER "tcp://obelisk-testnet.airbitz.co:9091"
+//#define BX_TESTNET_SERVER "tcp://obelisk.veox.pw:9091"
 
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \
@@ -69,9 +67,9 @@ using namespace bc::explorer::primitives;
 
 #define BX_DECLARE_NETWORK_COMMAND(extension) \
     BX_DECLARE_COMMAND(extension); \
-    command.set_general_connect_retries_setting(BX_NETWORK_RETRY); \
-    command.set_general_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT); \
-    command.set_mainnet_url_setting({ BX_MAINNET_SERVER })
+    command.set_server_url_setting({ BX_MAINNET_SERVER }); \
+    command.set_server_connect_retries_setting(BX_NETWORK_RETRY); \
+    command.set_server_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT)
 
 // serializer results
 #define BX_SERIALIZE_COPY_ROUND_TRIP(serializer, value) \

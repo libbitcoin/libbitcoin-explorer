@@ -15,7 +15,7 @@
     <shorthand name="PREVOUT" description="Previous Output" />
     <shorthand name="PUBKEY" description="EC Public Key" />
     <shorthand name="QRCODE" description="Quick Response Code" />
-    <shorthand name="RACE" description="Research and development in Advanced Communications Technologies" />
+    <shorthand name="RACE" description="Research in Advanced Communications for Europe" />
     <shorthand name="RIPEMD" description="RACE Integrity Primitives Evaluation Message Digest" />
     <shorthand name="SHA" description="Secure Hash Algorithm" />
     <shorthand name="SOCKS" description="Socket Secure (proxy protocol)" />
@@ -28,28 +28,30 @@
 
   <!-- Configuration file sections. -->
   <!-- IMPORTANT: update the 'settings' command when these change. -->
-
-  <configuration section="general">
-    <setting name="network" description="The network to use, either 'mainnet' or 'testnet'. Defaults to match the build." />
-    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a server or node, defaults to 0." />
-    <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
-    <setting name="channel_handshake_seconds" default="30" type="uint32_t" description="The time limit to complete the connection handshake, defaults to 30." />
-    <setting name="hosts_file" type="path" default="hosts.cache" description="The peer hosts cache file path, defaults to 'hosts.cache'." />
+  
+  <configuration section="wallet">
+    <setting name="wif_version" type="byte" default="128" description="The wallet import format (WIF) key version, defaults to 128." />
+    <setting name="hd_public_version" type="uint32_t" default="76067358" description="The hierarchical deterministic (HD) public key version, defaults to 76067358." />
+    <setting name="hd_private_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
+    <setting name="pay_to_public_key_hash_version" type="byte" description="The pay-to-public-key-hash address version, defaults to 0." />
+    <setting name="pay_to_script_hash_version" type="byte" default="5" description="The pay-to-script-hash address version, defaults to 5." />
   </configuration>
 
-  <configuration section="logging">
+  <configuration section="network">
+    <setting name="identifier" type="uint32_t" default="3652501241" description="The magic number for message headers, defaults to 3652501241." />
+    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a node, defaults to 0." />
+    <setting name="connect_timeout_seconds" type="uint32_t" default="5" description="The time limit for connection establishment, defaults to 5." />
+    <setting name="channel_handshake_seconds" type="uint32_t" default="30" description="The time limit to complete the connection handshake, defaults to 30." />
+    <setting name="hosts_file" type="path" default="hosts.cache" description="The peer hosts cache file path, defaults to 'hosts.cache'." />
     <setting name="debug_file" type="path" default="debug.log" description="The debug log file path, defaults to 'debug.log'." />
     <setting name="error_file" type="path" default="error.log" description="The error log file path, defaults to 'error.log'." />
+    <setting name="seed" type="endpoint" multiple="true" description="A seed node for initializing the host pool, multiple entries allowed." />
   </configuration>
 
-  <configuration section="mainnet">
-    <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk mainnet server." />
-    <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
-    <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
-  </configuration>
-
-  <configuration section="testnet">
-    <setting name="url" type="endpoint" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk testnet server." />
+  <configuration section="server">
+    <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk server." />
+    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a server, defaults to 0." />
+    <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
@@ -499,7 +501,7 @@
   </command>
 
   <command symbol="send-tx-p2p" formerly="sendtx-p2p" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.">
-    <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to two." />
+    <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to 2." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
     <define name="BX_SEND_TX_P2P_OUTPUT" value="Sent transaction at %1%." />
   </command>
