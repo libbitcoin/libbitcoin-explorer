@@ -73,7 +73,7 @@
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
     <string name="BX_CONFIG_DESCRIPTION" value="The path to the configuration settings file." />
     <string name="BX_HELP_DESCRIPTION" value="Get a description and instructions for this command." />
-    <string name="BX_VERSION_MESSAGE" value="Version: %1% [%2%]" />
+    <string name="BX_VERSION_MESSAGE" value="Version: %1%" />
   </resource>
 
   <!-- Bitcoin Explorer Commands -->
