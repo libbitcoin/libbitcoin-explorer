@@ -37,9 +37,9 @@ BOOST_AUTO_TEST_SUITE(tx_encode__invoke)
 
 BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_no_output_version_1__okay_output)
 {
-    // Defaults are not established by the library, so 'version' is set explicitly here.
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
+    command.set_script_version_option(5);
     command.set_inputs_option({ { TX_ENCODE_INPUT_B } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(TX_ENCODE_TX_BV1_BASE16 "\n");
@@ -47,9 +47,9 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_no_output_version_1__okay_outp
 
 BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_1__okay_output)
 {
-    // Defaults are not established by the library, so 'version' is set explicitly here.
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
+    command.set_script_version_option(5);
     command.set_inputs_option({ { TX_ENCODE_INPUT_B } });
     command.set_outputs_option({ { TX_ENCODE_OUTPUT_C } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -58,9 +58,9 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_1__okay_out
 
 BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_42__okay_output)
 {
-    // Defaults are not established by the library, so 'version' is set explicitly here.
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(42);
+    command.set_script_version_option(5);
     command.set_inputs_option({ { TX_ENCODE_INPUT_B } });
     command.set_outputs_option({ { TX_ENCODE_OUTPUT_C } });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -69,9 +69,9 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_42__okay_ou
 
 BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_1_locktime_42__failure_error)
 {
-    // Defaults are not established by the library, so 'version' is set explicitly here.
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
+    command.set_script_version_option(5);
     command.set_lock_time_option(42);
     command.set_inputs_option({ { TX_ENCODE_INPUT_B } });
     command.set_outputs_option({ { TX_ENCODE_OUTPUT_C } });
@@ -81,9 +81,9 @@ BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_1_locktime_
 
 BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_one_output_version_1_locktime_42_sequence_7__okay_output)
 {
-    // Defaults are not established by the library, so 'version' is set explicitly here.
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
+    command.set_script_version_option(5);
     command.set_lock_time_option(42);
     command.set_inputs_option({ { TX_ENCODE_INPUT_A } });
     command.set_outputs_option({ { TX_ENCODE_OUTPUT_C } });
