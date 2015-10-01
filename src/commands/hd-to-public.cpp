@@ -36,8 +36,14 @@ console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
 
     // TODO: deriving public from private requires prefix configuration.
 
-    bc::wallet::hd_private versioned(private_key.to_hd_key(),
-        bc::wallet::hd_private::to_prefixes(0, version));
+    // Obtain private version and combine with specified public version.
+    using secret = bc::wallet::hd_private;
+    const auto private_hd_key = private_key.to_hd_key();
+    const auto prefix = secret::to_prefix(private_key.lineage().prefixes);
+    const auto prefixes = secret::to_prefixes(prefix, version);
+
+    // Derive the public key from new private key with the public version.
+    const secret versioned(private_hd_key, prefixes);
 
     output << versioned.to_public() << std::endl;
     return console_result::okay;

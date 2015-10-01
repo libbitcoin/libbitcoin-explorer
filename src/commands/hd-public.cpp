@@ -27,8 +27,6 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-#define BX_HD_PUBLIC_HARD_OPTION_CONFLICT "The hard option requires a private key."
-
 console_result hd_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -51,13 +49,24 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
 
     // TODO: obtain version from config if not set.
 
-    bc::wallet::hd_private versioned(private_key.to_hd_key(),
-        bc::wallet::hd_private::to_prefixes(0, version));
+    if (private_key)
+    {
+        // Obtain private version and combine with specified public version.
+        using secret = bc::wallet::hd_private;
+        const auto private_hd_key = private_key.to_hd_key();
+        const auto prefix = secret::to_prefix(private_key.lineage().prefixes);
+        const auto prefixes = secret::to_prefixes(prefix, version);
+        const secret versioned(private_hd_key, prefixes);
 
-    const auto child_public_key = private_key ?
-        versioned.derive_public(position) :
-        public_key.derive_public(position);
+        // Derive the public key from new private key with the public version.
+        const auto child_public_key = versioned.derive_public(position);
+        output << child_public_key << std::endl;
+    }
+    else
+    {
+        const auto child_public_key = public_key.derive_public(position);
+        output << child_public_key << std::endl;
+    }
 
-    output << child_public_key << std::endl;
     return console_result::okay;
 }
