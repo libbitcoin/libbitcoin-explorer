@@ -85,32 +85,32 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "    }\n" \
 "}\n"
 
-BOOST_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
-{
-    BX_DECLARE_COMMAND(settings);
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_SETTINGS_EMPTY);
-}
-
-BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
-{
-    BX_DECLARE_COMMAND(settings);
-    command.set_general_channel_handshake_seconds_setting(9);
-    command.set_general_connect_retries_setting(42);
-    command.set_general_connect_timeout_seconds_setting(7);
-    command.set_general_network_setting("testnet");
-    command.set_general_hosts_file_setting("my.hosts");
-    command.set_mainnet_url_setting({ "https://mainnet.obelisk.net:42" });
-    command.set_mainnet_cert_file_setting("mainnet.certificate.zpl");
-    command.set_mainnet_server_cert_key_setting({ "CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });
-    command.set_testnet_url_setting({ "https://testnet.obelisk.net:42" });
-    command.set_testnet_cert_file_setting("testnet.certificate.zpl");
-    command.set_testnet_server_cert_key_setting({ "DrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });
-    command.set_logging_debug_file_setting("debug.log");
-    command.set_logging_error_file_setting("error.log");
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_SETTINGS_TEST_VALUES);
-}
+//BOOST_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
+//{
+//    BX_DECLARE_COMMAND(settings);
+//    BX_REQUIRE_OKAY(command.invoke(output, error));
+//    BX_REQUIRE_OUTPUT(BX_SETTINGS_EMPTY);
+//}
+//
+//BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
+//{
+//    BX_DECLARE_COMMAND(settings);
+//    command.set_general_channel_handshake_seconds_setting(9);
+//    command.set_general_connect_retries_setting(42);
+//    command.set_general_connect_timeout_seconds_setting(7);
+//    command.set_general_network_setting("testnet");
+//    command.set_general_hosts_file_setting("my.hosts");
+//    command.set_mainnet_url_setting({ "https://mainnet.obelisk.net:42" });
+//    command.set_mainnet_cert_file_setting("mainnet.certificate.zpl");
+//    command.set_mainnet_server_cert_key_setting({ "CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });
+//    command.set_testnet_url_setting({ "https://testnet.obelisk.net:42" });
+//    command.set_testnet_cert_file_setting("testnet.certificate.zpl");
+//    command.set_testnet_server_cert_key_setting({ "DrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });
+//    command.set_logging_debug_file_setting("debug.log");
+//    command.set_logging_error_file_setting("error.log");
+//    BX_REQUIRE_OKAY(command.invoke(output, error));
+//    BX_REQUIRE_OUTPUT(BX_SETTINGS_TEST_VALUES);
+//}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
