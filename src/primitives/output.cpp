@@ -44,6 +44,7 @@ output::output()
 }
 
 output::output(const std::string& tuple)
+  : output()
 {
     std::stringstream(tuple) >> *this;
 }
@@ -89,10 +90,15 @@ std::istream& operator>>(std::istream& input, output& argument)
         BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
     }
 
-    const auto& target = tokens.front();
+    uint64_t amount;
+    deserialize(amount, tokens[1], true);
+    if (amount > max_money())
+    {
+        BOOST_THROW_EXCEPTION(invalid_option_value(tuple));
+    }
 
-    // TODO: validate amount <= max money (and > 0 ?).
-    deserialize(argument.amount_, tokens[1], true);
+    argument.amount_ = amount;
+    const auto& target = tokens.front();
 
     // Is the target a payment address?
     const wallet::payment_address payment(target);
@@ -107,9 +113,9 @@ std::istream& operator>>(std::istream& input, output& argument)
     const wallet::stealth_address stealth(target);
     if (stealth)
     {
-        // TODO: finish stealth multisig implemetation.
-        if (stealth.spend_keys().size() != 1 || tokens.size() != 3 ||
-            tokens[2].size() < minimum_seed_size * 2)
+        // TODO: finish stealth multisig implemetation and remove this guard.
+        if (stealth.spend_keys().size() != 1 ||
+            tokens.size() != 3 || tokens[2].size() < minimum_seed_size * 2)
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
@@ -134,9 +140,13 @@ std::istream& operator>>(std::istream& input, output& argument)
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
 
-        argument.ephemeral_key_ = ephemeral_point;
-        argument.stealth_version_ = stealth.version();
+        // TODO: implement support for stealth multisig (p2sh) above.
+        // This implies only p2kh support, need to hash the multisig script.
         argument.pay_to_hash_ = bitcoin_short_hash(stealth_key);
+        argument.ephemeral_key_ = ephemeral_point;
+
+        // TODO: align with payment version and use here instead.
+        argument.stealth_version_ = stealth.version();
         return input;
     }
 

@@ -47,17 +47,16 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
 
     chain::operation::stack payment_ops;
     const auto hash = output.pay_to_hash();
+    const auto is_stealth = output.ephemeral_key() != null_compressed_point;
 
-    // This requries a change to the stealth address version standard.
-    auto is_stealth = /* output.stealth_version() == address_version && */
-        output.ephemeral_key() != null_compressed_point;
-
-    if (is_stealth)
+    if (is_stealth /*&& output.stealth_version() != script_version*/)
         payment_ops = chain::operation::to_pay_key_hash_pattern(hash);
-    else if (output.payment_version() == script_version)
+    else if (is_stealth /*&& output.stealth_version() == address_version*/)
         payment_ops = chain::operation::to_pay_script_hash_pattern(hash);
     else if (output.payment_version() != script_version)
         payment_ops = chain::operation::to_pay_key_hash_pattern(hash);
+    else if (output.payment_version() == script_version)
+        payment_ops = chain::operation::to_pay_script_hash_pattern(hash);
     else
         return false;
 
