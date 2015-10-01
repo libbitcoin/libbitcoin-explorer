@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/prop_tree.hpp>
 
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
@@ -226,7 +227,7 @@ ptree prop_list(const tx_output_type& tx_output)
 
     if (!address)
     {
-        binary_type stealth_prefix;
+        uint32_t stealth_prefix;
         ec_compressed ephemeral_key;
         if (to_stealth_prefix(stealth_prefix, tx_output.script) &&
             extract_ephemeral_key(ephemeral_key, tx_output.script))
