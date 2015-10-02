@@ -74,7 +74,7 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
         seeds.push_back(seed.to_string());
     }
 
-    list["network.seed"] = "{ " + join(seeds, ",") + " }";
+    list["network.seed"] = join(seeds, ",");
 
     // [server]
     list["server.url"] =
