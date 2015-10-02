@@ -77,16 +77,6 @@ struct BCX_API connection_type
 class command;
 
 /**
- * Cast vector/enumerable elements into a new vector.
- * @param      <Source>  The source element type.
- * @param      <Target>  The target element type.
- * @param[in]  source    The enumeration of Source elements to cast.
- * @returns              A new enumeration with elements cast to Target.
- */
-template <typename Source, typename Target>
-std::vector<Target> cast(const std::vector<Source>& source);
-
-/**
  * Convert a text string to the specified type.
  * @param      <Value>  The converted type.
  * @param[out] value    The parsed value.

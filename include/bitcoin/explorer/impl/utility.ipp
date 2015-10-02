@@ -53,14 +53,6 @@
 namespace libbitcoin {
 namespace explorer {
 
-template <typename Source, typename Target>
-std::vector<Target> cast(const std::vector<Source>& source)
-{
-    std::vector<Target> target(source.size());
-    target.assign(source.begin(), source.end());
-    return target;
-}
-
 template <typename Value>
 void deserialize(Value& value, const std::string& text, bool trim)
 {
