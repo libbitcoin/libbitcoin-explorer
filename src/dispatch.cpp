@@ -203,6 +203,12 @@ void load_environment_variables(variables_map& variables, command& instance)
     store(environment, variables);
 }
 
+void set_variable_values(variables_map& variables, command& instance)
+{
+    notify(variables);
+    instance.set_defaults_from_config(variables);
+}
+
 bool load_variables(variables_map& variables, std::string& message,
     command& instance, std::istream& input, int argc, const char* argv[])
 {
@@ -221,8 +227,8 @@ bool load_variables(variables_map& variables, std::string& message,
             // composition between them, which therefore should be avoided.
             load_configuration_variables(variables, instance);
 
-            // Send notifications and update bound variables.
-            notify(variables);
+            // Set defaults, send notifications and update bound variables.
+            set_variable_values(variables, instance);
         }
     }
     catch (const po::error& e)

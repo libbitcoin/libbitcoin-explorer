@@ -70,15 +70,15 @@ namespace commands {
 /**
  * Class to implement the send-tx-node command.
  */
-class send_tx_node 
-    : public command
+class BCX_API send_tx_node 
+  : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    BCX_API static const char* symbol()
+    static const char* symbol()
     {
         return "send-tx-node";
     }
@@ -86,7 +86,7 @@ public:
     /**
      * The symbolic (not localizable) former command name, lower case.
      */
-    BCX_API static const char* formerly()
+    static const char* formerly()
     {
         return "sendtx-node";
     }
@@ -94,7 +94,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    BCX_API virtual const char* name()
+    virtual const char* name()
     {
         return send_tx_node::symbol();
     }
@@ -102,7 +102,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    BCX_API virtual const char* category()
+    virtual const char* category()
     {
         return "ONLINE";
     }
@@ -110,7 +110,7 @@ public:
     /**
      * The localizable command description.
      */
-    BCX_API virtual const char* description()
+    virtual const char* description()
     {
         return "Broadcast a transaction to the Bitcoin network via a single Bitcoin network node.";
     }
@@ -120,7 +120,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    BCX_API virtual arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("TRANSACTION", 1);
@@ -131,7 +131,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
@@ -143,7 +143,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    BCX_API virtual options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -178,12 +178,20 @@ public:
     }
 
     /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map& variables)
+    {
+    }
+
+    /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    BCX_API virtual console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -191,7 +199,7 @@ public:
     /**
      * Get the value of the TRANSACTION argument.
      */
-    BCX_API virtual primitives::transaction& get_transaction_argument()
+    virtual primitives::transaction& get_transaction_argument()
     {
         return argument_.transaction;
     }
@@ -199,7 +207,7 @@ public:
     /**
      * Set the value of the TRANSACTION argument.
      */
-    BCX_API virtual void set_transaction_argument(
+    virtual void set_transaction_argument(
         const primitives::transaction& value)
     {
         argument_.transaction = value;
@@ -208,7 +216,7 @@ public:
     /**
      * Get the value of the host option.
      */
-    BCX_API virtual std::string& get_host_option()
+    virtual std::string& get_host_option()
     {
         return option_.host;
     }
@@ -216,7 +224,7 @@ public:
     /**
      * Set the value of the host option.
      */
-    BCX_API virtual void set_host_option(
+    virtual void set_host_option(
         const std::string& value)
     {
         option_.host = value;
@@ -225,7 +233,7 @@ public:
     /**
      * Get the value of the port option.
      */
-    BCX_API virtual uint16_t& get_port_option()
+    virtual uint16_t& get_port_option()
     {
         return option_.port;
     }
@@ -233,7 +241,7 @@ public:
     /**
      * Set the value of the port option.
      */
-    BCX_API virtual void set_port_option(
+    virtual void set_port_option(
         const uint16_t& value)
     {
         option_.port = value;

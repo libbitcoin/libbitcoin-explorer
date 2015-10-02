@@ -70,15 +70,15 @@ namespace commands {
 /**
  * Class to implement the ek-address command.
  */
-class ek_address 
-    : public command
+class BCX_API ek_address 
+  : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    BCX_API static const char* symbol()
+    static const char* symbol()
     {
         return "ek-address";
     }
@@ -87,7 +87,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    BCX_API virtual const char* name()
+    virtual const char* name()
     {
         return ek_address::symbol();
     }
@@ -95,7 +95,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    BCX_API virtual const char* category()
+    virtual const char* category()
     {
         return "KEY_ENCRYPTION";
     }
@@ -103,7 +103,7 @@ public:
     /**
      * The localizable command description.
      */
-    BCX_API virtual const char* description()
+    virtual const char* description()
     {
         return "Create a payment address derived from an intermediate passphrase token (BIP38).";
     }
@@ -113,7 +113,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    BCX_API virtual arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("TOKEN", 1)
@@ -125,7 +125,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
@@ -137,7 +137,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    BCX_API virtual options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -159,7 +159,7 @@ public:
         )
         (
             "version,v",
-            value<primitives::byte>(&option_.version),
+            value<primitives::byte>(&option_.version)->default_value(0),
             "The desired payment address version used to create the corresponding encrypted private key."
         )
         (
@@ -177,12 +177,26 @@ public:
     }
 
     /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map& variables)
+    {
+        const auto& option_version = variables["version"];
+        const auto& option_version_config = variables["wallet.pay_to_public_key_hash_version"];
+        if (option_version.defaulted() && !option_version_config.defaulted())
+        {
+            option_.version = option_version_config.as<primitives::byte>();
+        }
+    }
+
+    /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    BCX_API virtual console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -190,7 +204,7 @@ public:
     /**
      * Get the value of the TOKEN argument.
      */
-    BCX_API virtual bc::wallet::ek_token& get_token_argument()
+    virtual bc::wallet::ek_token& get_token_argument()
     {
         return argument_.token;
     }
@@ -198,7 +212,7 @@ public:
     /**
      * Set the value of the TOKEN argument.
      */
-    BCX_API virtual void set_token_argument(
+    virtual void set_token_argument(
         const bc::wallet::ek_token& value)
     {
         argument_.token = value;
@@ -207,7 +221,7 @@ public:
     /**
      * Get the value of the SEED argument.
      */
-    BCX_API virtual primitives::base16& get_seed_argument()
+    virtual primitives::base16& get_seed_argument()
     {
         return argument_.seed;
     }
@@ -215,7 +229,7 @@ public:
     /**
      * Set the value of the SEED argument.
      */
-    BCX_API virtual void set_seed_argument(
+    virtual void set_seed_argument(
         const primitives::base16& value)
     {
         argument_.seed = value;
@@ -224,7 +238,7 @@ public:
     /**
      * Get the value of the uncompressed option.
      */
-    BCX_API virtual bool& get_uncompressed_option()
+    virtual bool& get_uncompressed_option()
     {
         return option_.uncompressed;
     }
@@ -232,7 +246,7 @@ public:
     /**
      * Set the value of the uncompressed option.
      */
-    BCX_API virtual void set_uncompressed_option(
+    virtual void set_uncompressed_option(
         const bool& value)
     {
         option_.uncompressed = value;
@@ -241,7 +255,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    BCX_API virtual primitives::byte& get_version_option()
+    virtual primitives::byte& get_version_option()
     {
         return option_.version;
     }
@@ -249,7 +263,7 @@ public:
     /**
      * Set the value of the version option.
      */
-    BCX_API virtual void set_version_option(
+    virtual void set_version_option(
         const primitives::byte& value)
     {
         option_.version = value;

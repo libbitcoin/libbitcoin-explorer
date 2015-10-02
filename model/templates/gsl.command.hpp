@@ -52,14 +52,14 @@ static boost::filesystem::path default_config_path()
 /**
  * Base class for definition of each Bitcoin Explorer command.
  */
-class command
+class BCX_API command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    BCX_API static const char* symbol()
+    static const char* symbol()
     {
         return "not-implemented";
     }
@@ -68,7 +68,7 @@ public:
      * The symbolic (not localizable) command name, lower case.
      * @return  Example: "fetch-transaction"
      */
-    BCX_API virtual const char* name()
+    virtual const char* name()
     {
         return symbol();
     }
@@ -77,7 +77,7 @@ public:
      * The localizable command category name, upper case.
      * @return  Example: "ONLINE"
      */
-    BCX_API virtual const char* category()
+    virtual const char* category()
     {
         return "not-implemented";
     }
@@ -86,7 +86,7 @@ public:
      * The localizable command description.
      * @return  Example: "Get transactions by hash."
      */
-    BCX_API virtual const char* description()
+    virtual const char* description()
     {
         return "not-implemented";
     }
@@ -95,7 +95,7 @@ public:
      * Declare whether the command has been obsoleted.
      * @return  True if the command is obsolete
      */
-    BCX_API virtual bool obsolete()
+    virtual bool obsolete()
     {
         return false;
     }
@@ -104,7 +104,7 @@ public:
      * Determines if STDIN is required to be raw.
      * @return  True if the type of the STDIN argument is primitive::raw.
      */
-    BCX_API virtual bool requires_raw_input()
+    virtual bool requires_raw_input()
     {
         return false;
     }
@@ -113,7 +113,7 @@ public:
      * Determines if STDOUT is required to be raw.
      * @return  True if the type of the STDOUT argument is primitive::raw.
      */
-    BCX_API virtual bool requires_raw_output()
+    virtual bool requires_raw_output()
     {
         return false;
     }
@@ -124,7 +124,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    BCX_API virtual console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& error)
     {
         return console_result::failure;
@@ -135,7 +135,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    BCX_API virtual arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -144,7 +144,7 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    BCX_API virtual void load_environment(options_metadata& definitions)
+    virtual void load_environment(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -172,7 +172,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    BCX_API virtual options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         return option_metadata_;
     }
@@ -181,7 +181,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    BCX_API virtual void load_settings(options_metadata& definitions)
+    virtual void load_settings(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -207,7 +207,15 @@ public:
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
-    BCX_API virtual void load_stream(std::istream& input, po::variables_map& variables)
+    virtual void load_stream(std::istream& input, po::variables_map& variables)
+    {
+    }
+
+    /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map& variables)
     {
     }
 
@@ -215,7 +223,7 @@ public:
      * Write the help for this command to the specified stream.
      * @param[out] output  The output stream.
      */
-    BCX_API virtual void write_help(std::ostream& output)
+    virtual void write_help(std::ostream& output)
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
@@ -230,7 +238,7 @@ public:
     /**
      * Get command line argument metadata.
      */
-    BCX_API virtual arguments_metadata& get_argument_metadata()
+    virtual arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -238,7 +246,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    BCX_API virtual options_metadata& get_option_metadata()
+    virtual options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -253,7 +261,7 @@ public:
     /**
      * Get the value of the $(section:c).$(name) $(pluralized_setting).
      */
-    BCX_API virtual $(vectored_type) get_$(section:c)_$(pluralized_name:c)_setting() const
+    virtual $(vectored_type) get_$(section:c)_$(pluralized_name:c)_setting() const
     {
         return setting_.$(section:c).$(pluralized_name:c);
     }
@@ -261,7 +269,7 @@ public:
     /**
      * Set the value of the $(section:c).$(name) $(pluralized_setting).
      */
-    BCX_API virtual void set_$(section:c)_$(pluralized_name:c)_setting($(vectored_type) value)
+    virtual void set_$(section:c)_$(pluralized_name:c)_setting($(vectored_type) value)
     {
         setting_.$(section:c).$(pluralized_name:c) = value;
     }
@@ -274,7 +282,7 @@ protected:
      * This base class is abstract but not pure virtual, so prevent direct 
      * construction here.
      */
-    BCX_API command()
+    command()
     {
     }
 

@@ -54,7 +54,6 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const auto nodes = get_nodes_option();
     const tx_type& transaction = get_transaction_argument();
 
-    const auto& seeds = get_network_seeds_setting();
     const auto identifier = get_network_identifier_setting();
     const auto retries = get_network_connect_retries_setting();
     const auto connect = get_network_connect_timeout_seconds_setting();
@@ -62,6 +61,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const auto& hosts_file = get_network_hosts_file_setting();
     const auto& debug_file = get_network_debug_file_setting();
     const auto& error_file = get_network_error_file_setting();
+    const auto& seeds = get_network_seeds_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();

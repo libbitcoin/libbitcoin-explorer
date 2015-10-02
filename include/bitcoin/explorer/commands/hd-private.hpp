@@ -64,15 +64,15 @@ namespace commands {
 /**
  * Class to implement the hd-private command.
  */
-class hd_private 
-    : public command
+class BCX_API hd_private 
+  : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    BCX_API static const char* symbol()
+    static const char* symbol()
     {
         return "hd-private";
     }
@@ -81,7 +81,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    BCX_API virtual const char* name()
+    virtual const char* name()
     {
         return hd_private::symbol();
     }
@@ -89,7 +89,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    BCX_API virtual const char* category()
+    virtual const char* category()
     {
         return "WALLET";
     }
@@ -97,7 +97,7 @@ public:
     /**
      * The localizable command description.
      */
-    BCX_API virtual const char* description()
+    virtual const char* description()
     {
         return "Derive a child HD (BIP32) private key from another HD private key.";
     }
@@ -107,7 +107,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    BCX_API virtual arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("HD_PRIVATE_KEY", 1);
@@ -118,7 +118,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
@@ -130,7 +130,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    BCX_API virtual options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -165,12 +165,20 @@ public:
     }
 
     /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map& variables)
+    {
+    }
+
+    /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    BCX_API virtual console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -178,7 +186,7 @@ public:
     /**
      * Get the value of the HD_PRIVATE_KEY argument.
      */
-    BCX_API virtual bc::wallet::hd_private& get_hd_private_key_argument()
+    virtual bc::wallet::hd_private& get_hd_private_key_argument()
     {
         return argument_.hd_private_key;
     }
@@ -186,7 +194,7 @@ public:
     /**
      * Set the value of the HD_PRIVATE_KEY argument.
      */
-    BCX_API virtual void set_hd_private_key_argument(
+    virtual void set_hd_private_key_argument(
         const bc::wallet::hd_private& value)
     {
         argument_.hd_private_key = value;
@@ -195,7 +203,7 @@ public:
     /**
      * Get the value of the hard option.
      */
-    BCX_API virtual bool& get_hard_option()
+    virtual bool& get_hard_option()
     {
         return option_.hard;
     }
@@ -203,7 +211,7 @@ public:
     /**
      * Set the value of the hard option.
      */
-    BCX_API virtual void set_hard_option(
+    virtual void set_hard_option(
         const bool& value)
     {
         option_.hard = value;
@@ -212,7 +220,7 @@ public:
     /**
      * Get the value of the index option.
      */
-    BCX_API virtual uint32_t& get_index_option()
+    virtual uint32_t& get_index_option()
     {
         return option_.index;
     }
@@ -220,7 +228,7 @@ public:
     /**
      * Set the value of the index option.
      */
-    BCX_API virtual void set_index_option(
+    virtual void set_index_option(
         const uint32_t& value)
     {
         option_.index = value;

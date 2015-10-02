@@ -51,6 +51,8 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
         serialize(get_wallet_pay_to_public_key_hash_version_setting());
     list["wallet.pay_to_script_hash_version"] =
         serialize(get_wallet_pay_to_script_hash_version_setting());
+    list["wallet.transaction_version"] =
+        serialize(get_wallet_transaction_version_setting());
 
     // [network]
     list["network.identifier"] =
