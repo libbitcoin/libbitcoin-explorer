@@ -64,7 +64,8 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
         static constexpr uint64_t no_amount = 0;
         const auto data = output.ephemeral_data();
         const auto null_data = chain::operation::to_null_data_pattern(data);
-        outputs.push_back({ no_amount, chain::script{ null_data } });
+        const auto null_data_script = chain::script{ null_data };
+        outputs.push_back({ no_amount, null_data_script });
     }
 
     const auto payment_script = chain::script{ payment_ops };
