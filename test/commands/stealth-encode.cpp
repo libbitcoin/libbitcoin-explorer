@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_le
     BOOST_REQUIRE_EQUAL(error.str(), BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED "\n");
 }
 
-BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signaturebaadf00d_prefix__okay_output_errors)
+BOOST_AUTO_TEST_CASE(stealth_encode__invoke__scan_key_2_spend_key_1_signature_baadf00d_prefix__okay_output_errors)
 {
     BX_DECLARE_COMMAND(stealth_encode);
     command.set_version_option(42);

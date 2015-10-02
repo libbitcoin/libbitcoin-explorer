@@ -232,25 +232,25 @@ BCX_API pt::ptree prop_list(const wrapped_data& wrapper);
  */
 BCX_API pt::ptree prop_tree(const wrapped_data& wrapper);
 
-/**
- * Generate a property list for transaction with extended data.
- * @param[in]  tx          The transaction.
- * @param[in]  block_hash  The block_hash of the transaction.
- * @param[in]  prefix      The prefix used to locate the transaction.
- * @return                 A property list.
- */
-BCX_API pt::ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const base2& prefix);
-
-/**
- * Generate a property tree for transaction with extended data.
- * @param[in]  tx          The transaction.
- * @param[in]  block_hash  The block_hash of the transaction.
- * @param[in]  prefix      The prefix used to locate the transaction.
- * @return                 A property tree.
- */
-BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const base2& prefix);
+///**
+// * Generate a property list for transaction with extended data.
+// * @param[in]  tx          The transaction.
+// * @param[in]  block_hash  The block_hash of the transaction.
+// * @param[in]  filter      The filter used to locate the transaction.
+// * @return                 A property list.
+// */
+//BCX_API pt::ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
+//    const base2& filter);
+//
+///**
+// * Generate a property tree for transaction with extended data.
+// * @param[in]  tx          The transaction.
+// * @param[in]  block_hash  The block_hash of the transaction.
+// * @param[in]  filter      The filter used to locate the transaction.
+// * @return                 A property tree.
+// */
+//BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
+//    const base2& filter);
 
 /**
  * Generate a property list for transaction with extended data.

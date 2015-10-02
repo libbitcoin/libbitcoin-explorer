@@ -15,7 +15,7 @@
     <shorthand name="PREVOUT" description="Previous Output" />
     <shorthand name="PUBKEY" description="EC Public Key" />
     <shorthand name="QRCODE" description="Quick Response Code" />
-    <shorthand name="RACE" description="Research and development in Advanced Communications Technologies" />
+    <shorthand name="RACE" description="Research in Advanced Communications for Europe" />
     <shorthand name="RIPEMD" description="RACE Integrity Primitives Evaluation Message Digest" />
     <shorthand name="SHA" description="Secure Hash Algorithm" />
     <shorthand name="SOCKS" description="Socket Secure (proxy protocol)" />
@@ -28,28 +28,30 @@
 
   <!-- Configuration file sections. -->
   <!-- IMPORTANT: update the 'settings' command when these change. -->
-
-  <configuration section="general">
-    <setting name="network" description="The network to use, either 'mainnet' or 'testnet'. Defaults to match the build." />
-    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a server or node, defaults to 0." />
-    <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
-    <setting name="channel_handshake_seconds" default="30" type="uint32_t" description="The time limit to complete the connection handshake, defaults to 30." />
-    <setting name="hosts_file" type="path" default="hosts.cache" description="The peer hosts cache file path, defaults to 'hosts.cache'." />
+  
+  <configuration section="wallet">
+    <setting name="wif_version" type="byte" default="128" description="The wallet import format (WIF) key version, defaults to 128." />
+    <setting name="hd_public_version" type="uint32_t" default="76067358" description="The hierarchical deterministic (HD) public key version, defaults to 76067358." />
+    <setting name="hd_private_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
+    <setting name="pay_to_public_key_hash_version" type="byte" description="The pay-to-public-key-hash address version, defaults to 0." />
+    <setting name="pay_to_script_hash_version" type="byte" default="5" description="The pay-to-script-hash address version, defaults to 5." />
   </configuration>
 
-  <configuration section="logging">
+  <configuration section="network">
+    <setting name="identifier" type="uint32_t" default="3652501241" description="The magic number for message headers, defaults to 3652501241." />
+    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a node, defaults to 0." />
+    <setting name="connect_timeout_seconds" type="uint32_t" default="5" description="The time limit for connection establishment, defaults to 5." />
+    <setting name="channel_handshake_seconds" type="uint32_t" default="30" description="The time limit to complete the connection handshake, defaults to 30." />
+    <setting name="hosts_file" type="path" default="hosts.cache" description="The peer hosts cache file path, defaults to 'hosts.cache'." />
     <setting name="debug_file" type="path" default="debug.log" description="The debug log file path, defaults to 'debug.log'." />
     <setting name="error_file" type="path" default="error.log" description="The error log file path, defaults to 'error.log'." />
+    <setting name="seed" type="endpoint" multiple="true" description="A seed node for initializing the host pool, multiple entries allowed." />
   </configuration>
 
-  <configuration section="mainnet">
-    <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk mainnet server." />
-    <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
-    <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
-  </configuration>
-
-  <configuration section="testnet">
-    <setting name="url" type="endpoint" default="tcp://obelisk-testnet.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk testnet server." />
+  <configuration section="server">
+    <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk server." />
+    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a server, defaults to 0." />
+    <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
@@ -71,7 +73,7 @@
     <string name="BX_INVALID_PARAMETER" value="Error: %1%" />
     <string name="BX_CONFIG_DESCRIPTION" value="The path to the configuration settings file." />
     <string name="BX_HELP_DESCRIPTION" value="Get a description and instructions for this command." />
-    <string name="BX_VERSION_MESSAGE" value="Version: %1% [%2%]" />
+    <string name="BX_VERSION_MESSAGE" value="Version: %1%" />
   </resource>
 
   <!-- Bitcoin Explorer Commands -->
@@ -351,6 +353,7 @@
   <command symbol="hd-public" output="hd_public" category="WALLET" description="Derive a child HD (BIP32) public key from another HD public or private key.">
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
+    <option name="version" type="uint32_t" default="76067358" description="The desired HD public key version, defaults to 76067358. This is used only when the HD key is private." />
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The parent HD public or private key. If not specified the key is read from STDIN." />
     <define name="BX_HD_PUBLIC_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
@@ -364,6 +367,7 @@
   </command>
   
   <command symbol="hd-to-public" output="hd_public" category="WALLET" description="Derive the HD (BIP32) public key of a HD private key.">
+    <option name="version" type="uint32_t" default="76067358" description="The desired HD public key version, defaults to 76067358." />
     <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The HD private key. If not specified the key is read from STDIN." />
   </command>
 
@@ -497,7 +501,7 @@
   </command>
 
   <command symbol="send-tx-p2p" formerly="sendtx-p2p" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.">
-    <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to two." />
+    <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to 2." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
     <define name="BX_SEND_TX_P2P_OUTPUT" value="Sent transaction at %1%." />
   </command>
@@ -534,7 +538,7 @@
   <command symbol="stealth-encode" output="stealth_address" category="STEALTH" description="Encode a stealth payment address.">
     <option name="prefix" type="base2" description="The Base2 stealth prefix that will be used to locate payments." />
     <option name="signatures" type="byte" description="The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
-    <option name="version" type="byte" default="43" description="The stealth address version, defaults to 42." />
+    <option name="version" type="byte" default="42" description="The stealth address version, defaults to 42." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to create a payment." />
     <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
     <define name="BX_STEALTH_ENCODE_PREFIX_TOO_LONG" value="The prefix is limited to 32 bits." />
@@ -586,6 +590,7 @@
   </command>
 
   <command symbol="tx-encode" output="transaction" category="TRANSACTION" description="Encode an unsigned transaction as Base16.">
+    <option name="script_version" type="byte" default="5" description="The pay-to-script-hash payment address version, defaults to 5. This is used only to differentiate output payment address." />
     <option name="lock_time" type="uint32_t" description="The transaction lock time." />
     <option name="version" type="uint32_t" default="1" description="The transaction version, defaults to 1." />
     <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value." />

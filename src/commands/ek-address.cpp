@@ -48,7 +48,7 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
     // TODO: if not set default version from config.
 
     ec_compressed point;
-    bc::wallet::ek_private unused;
+    encrypted_private unused;
     create_key_pair(unused, point, token, bytes, version, compressed);
     const payment_address address({ point, compressed }, version);
     

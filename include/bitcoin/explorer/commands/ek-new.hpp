@@ -164,7 +164,7 @@ public:
         )
         (
             "TOKEN",
-            value<bc::config::ek_token>(&argument_.token)->required(),
+            value<bc::wallet::ek_token>(&argument_.token)->required(),
             "The intermediate passphrase token."
         )
         (
@@ -190,7 +190,7 @@ public:
     /**
      * Get the value of the TOKEN argument.
      */
-    BCX_API virtual bc::config::ek_token& get_token_argument()
+    BCX_API virtual bc::wallet::ek_token& get_token_argument()
     {
         return argument_.token;
     }
@@ -199,7 +199,7 @@ public:
      * Set the value of the TOKEN argument.
      */
     BCX_API virtual void set_token_argument(
-        const bc::config::ek_token& value)
+        const bc::wallet::ek_token& value)
     {
         argument_.token = value;
     }
@@ -270,7 +270,7 @@ private:
         {
         }
 
-        bc::config::ek_token token;
+        bc::wallet::ek_token token;
         primitives::base16 seed;
     } argument_;
 

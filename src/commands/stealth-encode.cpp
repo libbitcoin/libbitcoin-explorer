@@ -39,7 +39,6 @@ console_result stealth_encode::invoke(std::ostream& output,
     const auto& scan_pubkey = get_scan_pubkey_argument();
     const auto& spend_pubkeys = get_spend_pubkeys_argument();
     const auto& signatures = get_signatures_option();
-    const auto& network = get_general_network_setting();
 
     const size_t maximum = std::max(size_t(1), spend_pubkeys.size());
 

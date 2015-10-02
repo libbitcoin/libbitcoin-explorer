@@ -161,7 +161,7 @@ public:
         (
             "nodes,n",
             value<size_t>(&option_.nodes)->default_value(2),
-            "The number of network nodes to send the transaction to, defaults to two."
+            "The number of network nodes to send the transaction to, defaults to 2."
         )
         (
             "TRANSACTION",

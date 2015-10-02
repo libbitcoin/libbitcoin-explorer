@@ -151,6 +151,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "script_version,s",
+            value<primitives::byte>(&option_.script_version)->default_value(5),
+            "The pay-to-script-hash payment address version, defaults to 5. This is used only to differentiate output payment address."
+        )
+        (
             "lock_time,l",
             value<uint32_t>(&option_.lock_time),
             "The transaction lock time."
@@ -184,6 +189,23 @@ public:
         std::ostream& cerr);
 
     /* Properties */
+
+    /**
+     * Get the value of the script_version option.
+     */
+    BCX_API virtual primitives::byte& get_script_version_option()
+    {
+        return option_.script_version;
+    }
+
+    /**
+     * Set the value of the script_version option.
+     */
+    BCX_API virtual void set_script_version_option(
+        const primitives::byte& value)
+    {
+        option_.script_version = value;
+    }
 
     /**
      * Get the value of the lock_time option.
@@ -276,13 +298,15 @@ private:
     struct option
     {
         option()
-          : lock_time(),
+          : script_version(),
+            lock_time(),
             version(),
             inputs(),
             outputs()
         {
         }
 
+        primitives::byte script_version;
         uint32_t lock_time;
         uint32_t version;
         std::vector<primitives::input> inputs;

@@ -166,7 +166,7 @@ public:
         )
         (
             "version,v",
-            value<primitives::byte>(&option_.version)->default_value(43),
+            value<primitives::byte>(&option_.version)->default_value(42),
             "The stealth address version, defaults to 42."
         )
         (

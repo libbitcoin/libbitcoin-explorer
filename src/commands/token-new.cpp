@@ -55,7 +55,7 @@ console_result token_new::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    ek_token token;
+    encrypted_token token;
     if (lot == 0 && sequence == 0 && salt.size() >= ek_entropy_size)
     {
         ek_entropy bytes;
@@ -69,7 +69,7 @@ console_result token_new::invoke(std::ostream& output, std::ostream& error)
         create_token(token, passphrase, bytes, lot, sequence);
     }
 
-    output << bc::config::ek_token(token) << std::endl;
+    output << ek_token(token) << std::endl;
     return console_result::okay;
 #else
     error << BX_TOKEN_NEW_REQUIRES_ICU << std::endl;

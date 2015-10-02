@@ -52,12 +52,14 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const auto& host = get_host_option();
     const auto& port = get_port_option();
     const tx_type& transaction = get_transaction_argument();
-    const auto& debug_file = get_logging_debug_file_setting();
-    const auto& error_file = get_logging_error_file_setting();
-    const auto& hosts_file = get_general_hosts_file_setting();
-    const auto retries = get_general_connect_retries_setting();
-    const auto connect = get_general_connect_timeout_seconds_setting();
-    const auto handshake = get_general_channel_handshake_seconds_setting();
+
+    const auto identifier = get_network_identifier_setting();
+    const auto retries = get_network_connect_retries_setting();
+    const auto connect = get_network_connect_timeout_seconds_setting();
+    const auto handshake = get_network_channel_handshake_seconds_setting();
+    const auto& hosts_file = get_network_hosts_file_setting();
+    const auto& debug_file = get_network_debug_file_setting();
+    const auto& error_file = get_network_error_file_setting();
 
     // TODO: give option to send errors to console vs. file.
     static const auto header = format("=========== %1% ==========") % symbol();
@@ -68,17 +70,23 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     bind_error_log(error_log);
     log_error(LOG_NETWORK) << header;
 
-    // Not listening, no tx relay, no seeded host pool or address requests.
-    static constexpr bool relay = false;
-    static constexpr size_t threads = 2;
+    // Not listening or peering, no relay/port/inbound/seeds/hosts/outbound.
+    static constexpr auto relay = false;
     static constexpr uint16_t listen = 0;
-    static constexpr size_t host_pool_size = 0;
-    const network::timeout timeouts(connect, handshake);
+    static constexpr size_t inbound = 0;
+    static constexpr size_t host_capacity = 0;
+    static constexpr size_t outbound = 0;
+    static const config::endpoint::list seeds;
+    static const auto self = bc::unspecified_network_address;
+
+    static constexpr size_t threads = 2;
+    static const network::timeout timeouts(connect, handshake);
 
     async_client client(threads);
-    network::hosts hosts(client.pool(), hosts_file, host_pool_size);
-    network::initiator net(client.pool(), timeouts);
-    network::protocol proto(client.pool(), hosts, net, listen);
+    network::hosts hosts(client.pool(), hosts_file, host_capacity);
+    network::initiator net(client.pool(), identifier, timeouts);
+    network::protocol proto(client.pool(), hosts, net, listen, relay, outbound,
+        inbound, seeds, self, timeouts);
 
     callback_state state(error, output);
 

@@ -162,6 +162,11 @@ public:
             "The HD index, defaults to zero."
         )
         (
+            "version,v",
+            value<uint32_t>(&option_.version)->default_value(76067358),
+            "The desired HD public key version, defaults to 76067358. This is used only when the HD key is private."
+        )
+        (
             "HD_KEY",
             value<primitives::hd_key>(&argument_.hd_key),
             "The parent HD public or private key. If not specified the key is read from STDIN."
@@ -232,6 +237,23 @@ public:
         option_.index = value;
     }
 
+    /**
+     * Get the value of the version option.
+     */
+    BCX_API virtual uint32_t& get_version_option()
+    {
+        return option_.version;
+    }
+
+    /**
+     * Set the value of the version option.
+     */
+    BCX_API virtual void set_version_option(
+        const uint32_t& value)
+    {
+        option_.version = value;
+    }
+
 private:
 
     /**
@@ -258,12 +280,14 @@ private:
     {
         option()
           : hard(),
-            index()
+            index(),
+            version()
         {
         }
 
         bool hard;
         uint32_t index;
+        uint32_t version;
     } option_;
 };
 

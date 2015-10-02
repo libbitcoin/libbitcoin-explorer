@@ -32,22 +32,6 @@ using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 using namespace bc::wallet;
 
-// TODO: why not use p2sh or null_data script?
-static chain::script to_p2kh_script(const short_hash& key_hash)
-{
-    using namespace chain;
-    const operation::stack ops
-    {
-        operation{ opcode::dup, data_chunk() },
-        operation{ opcode::hash160, data_chunk() },
-        operation{ opcode::special, to_chunk(key_hash) },
-        operation{ opcode::equalverify, data_chunk() },
-        operation{ opcode::checksig, data_chunk() }
-    };
-
-    return chain::script{ ops };
-}
-
 console_result address_embed::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -55,7 +39,9 @@ console_result address_embed::invoke(std::ostream& output, std::ostream& error)
     const auto& version = get_version_option();
 
     // Create script from hash of data.
-    const auto script = to_p2kh_script(ripemd160_hash(data));
+    const auto hashed = ripemd160_hash(data);
+    const auto ops = chain::operation::to_pay_key_hash_pattern(hashed);
+    const auto script = chain::script{ ops };
 
     // Make ripemd hash of serialized script.
     const auto hash = ripemd160_hash(script.to_data(false));

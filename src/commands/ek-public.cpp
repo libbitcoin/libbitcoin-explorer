@@ -49,11 +49,11 @@ console_result commands::ek_public::invoke(std::ostream& output,
 
     // TODO: if not set default version from config.
 
-    bc::wallet::ek_private unused1;
-    bc::wallet::ek_public key;
+    encrypted_private unused1;
+    encrypted_public key;
     ec_compressed unused2;
     create_key_pair(unused1, key, unused2, token, bytes, version, compressed);
     
-    output << config::ek_public(key) << std::endl;
+    output << bc::wallet::ek_public(key) << std::endl;
     return console_result::okay;
 }

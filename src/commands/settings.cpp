@@ -34,45 +34,59 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     // bound parameters
     const auto& encoding = get_format_option();
 
+    // TODO: look into serializer object quoting.
     // TODO: load from metadata into settings list.
+
     // This must be updated for any settings metadata change.
     settings_list list;
 
-    // [general]
-    list["general.channel_handshake_seconds"] =
-        serialize(get_general_channel_handshake_seconds_setting());
-    list["general.connect_retries"] =
-        serialize(get_general_connect_retries_setting());
-    list["general.connect_timeout_seconds"] = 
-        serialize(get_general_connect_timeout_seconds_setting());
-    list["general.hosts_file"] =
-        get_general_hosts_file_setting().string();
-    list["general.network"] =
-        get_general_network_setting();
+    // [wallet]
+    list["wallet.wif_version"] =
+        serialize(get_wallet_wif_version_setting());
+    list["wallet.hd_public_version"] =
+        serialize(get_wallet_hd_public_version_setting());
+    list["wallet.hd_private_version"] =
+        serialize(get_wallet_hd_private_version_setting());
+    list["wallet.pay_to_public_key_hash_version"] =
+        serialize(get_wallet_pay_to_public_key_hash_version_setting());
+    list["wallet.pay_to_script_hash_version"] =
+        serialize(get_wallet_pay_to_script_hash_version_setting());
 
-    // [logging]
-    list["logging.debug_file"] = 
-        get_logging_debug_file_setting().string();
-    list["logging.error_file"] = 
-        get_logging_error_file_setting().string();
+    // [network]
+    list["network.identifier"] =
+        serialize(get_network_identifier_setting());
+    list["network.connect_retries"] =
+        serialize(get_network_connect_retries_setting());
+    list["network.connect_timeout_seconds"] = 
+        serialize(get_network_connect_timeout_seconds_setting());
+    list["network.channel_handshake_seconds"] =
+        serialize(get_network_channel_handshake_seconds_setting());
+    list["network.hosts_file"] =
+        get_network_hosts_file_setting().string();
+    list["network.debug_file"] = 
+        get_network_debug_file_setting().string();
+    list["network.error_file"] = 
+        get_network_error_file_setting().string();
 
-    // TODO: look into serializer object quoting.
+    std::vector<std::string> seeds;
+    for (const auto& seed: get_network_seeds_setting())
+    {
+        seeds.push_back(seed.to_string());
+    }
 
-    // [mainnet]
-    list["mainnet.cert_file"] = 
-        get_mainnet_cert_file_setting().string();
-    list["mainnet.server_cert_key"] = 
-        get_mainnet_server_cert_key_setting().get_base85();
-    list["mainnet.url"] = 
-        get_mainnet_url_setting().to_string();
+    list["network.seed"] = join(seeds, ",");
 
-    // [testnet]
-    list["testnet.cert_file"] = 
-        get_testnet_cert_file_setting().string();
-    list["testnet.server_cert_key"] = 
-        get_testnet_server_cert_key_setting().get_base85();
-    list["testnet.url"] = 
-        get_testnet_url_setting().to_string();
+    // [server]
+    list["server.url"] =
+        get_server_url_setting().to_string();
+    list["server.connect_retries"] =
+        serialize(get_server_connect_retries_setting());
+    list["server.connect_timeout_seconds"] =
+        serialize(get_server_connect_timeout_seconds_setting());
+    list["server.server_cert_key"] =
+        get_server_server_cert_key_setting().get_base85();
+    list["server.cert_file"] = 
+        get_server_cert_file_setting().string();
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;

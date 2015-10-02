@@ -161,7 +161,7 @@ public:
         )
         (
             "EK_PRIVATE_KEY",
-            value<bc::config::ek_private>(&argument_.ek_private_key),
+            value<bc::wallet::ek_private>(&argument_.ek_private_key),
             "The encrypted private key to decrypt. If not specified the key is read from STDIN."
         );
 
@@ -199,7 +199,7 @@ public:
     /**
      * Get the value of the EK_PRIVATE_KEY argument.
      */
-    BCX_API virtual bc::config::ek_private& get_ek_private_key_argument()
+    BCX_API virtual bc::wallet::ek_private& get_ek_private_key_argument()
     {
         return argument_.ek_private_key;
     }
@@ -208,7 +208,7 @@ public:
      * Set the value of the EK_PRIVATE_KEY argument.
      */
     BCX_API virtual void set_ek_private_key_argument(
-        const bc::config::ek_private& value)
+        const bc::wallet::ek_private& value)
     {
         argument_.ek_private_key = value;
     }
@@ -229,7 +229,7 @@ private:
         }
 
         std::string passphrase;
-        bc::config::ek_private ek_private_key;
+        bc::wallet::ek_private ek_private_key;
     } argument_;
 
     /**

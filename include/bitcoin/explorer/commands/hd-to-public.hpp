@@ -146,6 +146,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "version,v",
+            value<uint32_t>(&option_.version)->default_value(76067358),
+            "The desired HD public key version, defaults to 76067358."
+        )
+        (
             "HD_PRIVATE_KEY",
             value<bc::wallet::hd_private>(&argument_.hd_private_key),
             "The HD private key. If not specified the key is read from STDIN."
@@ -182,6 +187,23 @@ public:
         argument_.hd_private_key = value;
     }
 
+    /**
+     * Get the value of the version option.
+     */
+    BCX_API virtual uint32_t& get_version_option()
+    {
+        return option_.version;
+    }
+
+    /**
+     * Set the value of the version option.
+     */
+    BCX_API virtual void set_version_option(
+        const uint32_t& value)
+    {
+        option_.version = value;
+    }
+
 private:
 
     /**
@@ -207,9 +229,11 @@ private:
     struct option
     {
         option()
+          : version()
         {
         }
 
+        uint32_t version;
     } option_;
 };
 

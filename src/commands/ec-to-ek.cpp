@@ -38,10 +38,10 @@ console_result ec_to_ek::invoke(std::ostream& output, std::ostream& error)
 
     // TODO: if not set default version from config.
 
-    bc::wallet::ek_private point;
+    encrypted_private point;
     encrypt(point, secret, passphrase, version, !uncompressed);
 
-    output << config::ek_private(point) << std::endl;
+    output << ek_private(point) << std::endl;
     return console_result::okay;
 #else
     error << BX_EC_TO_EK_REQUIRES_ICU << std::endl;

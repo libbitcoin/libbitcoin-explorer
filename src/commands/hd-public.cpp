@@ -27,13 +27,12 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
-#define BX_HD_PUBLIC_HARD_OPTION_CONFLICT "The hard option requires a private key."
-
 console_result hd_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto hard = get_hard_option();
     const auto index = get_index_option();
+    const auto version = get_version_option();
     const auto& key = get_hd_key_argument();
 
     const bc::wallet::hd_public& public_key = key;
@@ -48,10 +47,26 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     static constexpr auto first = bc::wallet::hd_first_hardened_key;
     const auto position = hard ? first + index : index;
 
-    const auto child_public_key = private_key ?
-        private_key.derive_public(position) :
-        public_key.derive_public(position);
+    // TODO: obtain version from config if not set.
 
-    output << child_public_key << std::endl;
+    if (private_key)
+    {
+        // Obtain private version and combine with specified public version.
+        using secret = bc::wallet::hd_private;
+        const auto private_hd_key = private_key.to_hd_key();
+        const auto prefix = secret::to_prefix(private_key.lineage().prefixes);
+        const auto prefixes = secret::to_prefixes(prefix, version);
+        const secret versioned(private_hd_key, prefixes);
+
+        // Derive the public key from new private key with the public version.
+        const auto child_public_key = versioned.derive_public(position);
+        output << child_public_key << std::endl;
+    }
+    else
+    {
+        const auto child_public_key = public_key.derive_public(position);
+        output << child_public_key << std::endl;
+    }
+
     return console_result::okay;
 }

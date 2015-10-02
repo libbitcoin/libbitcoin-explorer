@@ -213,68 +213,93 @@ public:
         using namespace po;
         definitions.add_options()
         (
-            "general.network",
-            value<std::string>(&setting_.general.network)->default_value(BX_NETWORK),
-            "The network to use, either 'mainnet' or 'testnet'. Defaults to match the build."
+            "wallet.wif_version",
+            value<primitives::byte>(&setting_.wallet.wif_version)->default_value(128),
+            "The wallet import format (WIF) key version, defaults to 128."
         )
         (
-            "general.connect_retries",
-            value<primitives::byte>(&setting_.general.connect_retries),
-            "The number of times to retry contacting a server or node, defaults to 0."
+            "wallet.hd_public_version",
+            value<uint32_t>(&setting_.wallet.hd_public_version)->default_value(76067358),
+            "The hierarchical deterministic (HD) public key version, defaults to 76067358."
         )
         (
-            "general.connect_timeout_seconds",
-            value<uint32_t>(&setting_.general.connect_timeout_seconds)->default_value(5),
+            "wallet.hd_private_version",
+            value<uint32_t>(&setting_.wallet.hd_private_version)->default_value(76066276),
+            "The hierarchical deterministic (HD) private key version, defaults to 76066276."
+        )
+        (
+            "wallet.pay_to_public_key_hash_version",
+            value<primitives::byte>(&setting_.wallet.pay_to_public_key_hash_version),
+            "The pay-to-public-key-hash address version, defaults to 0."
+        )
+        (
+            "wallet.pay_to_script_hash_version",
+            value<primitives::byte>(&setting_.wallet.pay_to_script_hash_version)->default_value(5),
+            "The pay-to-script-hash address version, defaults to 5."
+        )
+        (
+            "network.identifier",
+            value<uint32_t>(&setting_.network.identifier)->default_value(3652501241),
+            "The magic number for message headers, defaults to 3652501241."
+        )
+        (
+            "network.connect_retries",
+            value<primitives::byte>(&setting_.network.connect_retries),
+            "The number of times to retry contacting a node, defaults to 0."
+        )
+        (
+            "network.connect_timeout_seconds",
+            value<uint32_t>(&setting_.network.connect_timeout_seconds)->default_value(5),
             "The time limit for connection establishment, defaults to 5."
         )
         (
-            "general.channel_handshake_seconds",
-            value<uint32_t>(&setting_.general.channel_handshake_seconds)->default_value(30),
+            "network.channel_handshake_seconds",
+            value<uint32_t>(&setting_.network.channel_handshake_seconds)->default_value(30),
             "The time limit to complete the connection handshake, defaults to 30."
         )
         (
-            "general.hosts_file",
-            value<boost::filesystem::path>(&setting_.general.hosts_file)->default_value("hosts.cache"),
+            "network.hosts_file",
+            value<boost::filesystem::path>(&setting_.network.hosts_file)->default_value("hosts.cache"),
             "The peer hosts cache file path, defaults to 'hosts.cache'."
         )
         (
-            "logging.debug_file",
-            value<boost::filesystem::path>(&setting_.logging.debug_file)->default_value("debug.log"),
+            "network.debug_file",
+            value<boost::filesystem::path>(&setting_.network.debug_file)->default_value("debug.log"),
             "The debug log file path, defaults to 'debug.log'."
         )
         (
-            "logging.error_file",
-            value<boost::filesystem::path>(&setting_.logging.error_file)->default_value("error.log"),
+            "network.error_file",
+            value<boost::filesystem::path>(&setting_.network.error_file)->default_value("error.log"),
             "The error log file path, defaults to 'error.log'."
         )
         (
-            "mainnet.url",
-            value<bc::config::endpoint>(&setting_.mainnet.url)->default_value({ "tcp://obelisk.airbitz.co:9091" }),
-            "The URL of the Libbitcoin/Obelisk mainnet server."
+            "network.seed",
+            value<std::vector<bc::config::endpoint>>(&setting_.network.seeds),
+            "A seed node for initializing the host pool, multiple entries allowed."
         )
         (
-            "mainnet.server_cert_key",
-            value<primitives::cert_key>(&setting_.mainnet.server_cert_key),
+            "server.url",
+            value<bc::config::endpoint>(&setting_.server.url)->default_value({ "tcp://obelisk.airbitz.co:9091" }),
+            "The URL of the Libbitcoin/Obelisk server."
+        )
+        (
+            "server.connect_retries",
+            value<primitives::byte>(&setting_.server.connect_retries),
+            "The number of times to retry contacting a server, defaults to 0."
+        )
+        (
+            "server.connect_timeout_seconds",
+            value<uint32_t>(&setting_.server.connect_timeout_seconds)->default_value(5),
+            "The time limit for connection establishment, defaults to 5."
+        )
+        (
+            "server.server_cert_key",
+            value<primitives::cert_key>(&setting_.server.server_cert_key),
             "The Z85-encoded public key of the server certificate."
         )
         (
-            "mainnet.cert_file",
-            value<boost::filesystem::path>(&setting_.mainnet.cert_file),
-            "The path to the ZPL-encoded client private certificate file."
-        )
-        (
-            "testnet.url",
-            value<bc::config::endpoint>(&setting_.testnet.url)->default_value({ "tcp://obelisk-testnet.airbitz.co:9091" }),
-            "The URL of the Libbitcoin/Obelisk testnet server."
-        )
-        (
-            "testnet.server_cert_key",
-            value<primitives::cert_key>(&setting_.testnet.server_cert_key),
-            "The Z85-encoded public key of the server certificate."
-        )
-        (
-            "testnet.cert_file",
-            value<boost::filesystem::path>(&setting_.testnet.cert_file),
+            "server.cert_file",
+            value<boost::filesystem::path>(&setting_.server.cert_file),
             "The path to the ZPL-encoded client private certificate file."
         );
     }
@@ -321,211 +346,291 @@ public:
     }
 
     /**
-     * Get the value of the general.network setting.
+     * Get the value of the wallet.wif_version setting.
      */
-    BCX_API virtual std::string get_general_network_setting() const
+    BCX_API virtual primitives::byte get_wallet_wif_version_setting() const
     {
-        return setting_.general.network;
+        return setting_.wallet.wif_version;
     }
 
     /**
-     * Set the value of the general.network setting.
+     * Set the value of the wallet.wif_version setting.
      */
-    BCX_API virtual void set_general_network_setting(std::string value)
+    BCX_API virtual void set_wallet_wif_version_setting(primitives::byte value)
     {
-        setting_.general.network = value;
+        setting_.wallet.wif_version = value;
     }
 
     /**
-     * Get the value of the general.connect_retries setting.
+     * Get the value of the wallet.hd_public_version setting.
      */
-    BCX_API virtual primitives::byte get_general_connect_retries_setting() const
+    BCX_API virtual uint32_t get_wallet_hd_public_version_setting() const
     {
-        return setting_.general.connect_retries;
+        return setting_.wallet.hd_public_version;
     }
 
     /**
-     * Set the value of the general.connect_retries setting.
+     * Set the value of the wallet.hd_public_version setting.
      */
-    BCX_API virtual void set_general_connect_retries_setting(primitives::byte value)
+    BCX_API virtual void set_wallet_hd_public_version_setting(uint32_t value)
     {
-        setting_.general.connect_retries = value;
+        setting_.wallet.hd_public_version = value;
     }
 
     /**
-     * Get the value of the general.connect_timeout_seconds setting.
+     * Get the value of the wallet.hd_private_version setting.
      */
-    BCX_API virtual uint32_t get_general_connect_timeout_seconds_setting() const
+    BCX_API virtual uint32_t get_wallet_hd_private_version_setting() const
     {
-        return setting_.general.connect_timeout_seconds;
+        return setting_.wallet.hd_private_version;
     }
 
     /**
-     * Set the value of the general.connect_timeout_seconds setting.
+     * Set the value of the wallet.hd_private_version setting.
      */
-    BCX_API virtual void set_general_connect_timeout_seconds_setting(uint32_t value)
+    BCX_API virtual void set_wallet_hd_private_version_setting(uint32_t value)
     {
-        setting_.general.connect_timeout_seconds = value;
+        setting_.wallet.hd_private_version = value;
     }
 
     /**
-     * Get the value of the general.channel_handshake_seconds setting.
+     * Get the value of the wallet.pay_to_public_key_hash_version setting.
      */
-    BCX_API virtual uint32_t get_general_channel_handshake_seconds_setting() const
+    BCX_API virtual primitives::byte get_wallet_pay_to_public_key_hash_version_setting() const
     {
-        return setting_.general.channel_handshake_seconds;
+        return setting_.wallet.pay_to_public_key_hash_version;
     }
 
     /**
-     * Set the value of the general.channel_handshake_seconds setting.
+     * Set the value of the wallet.pay_to_public_key_hash_version setting.
      */
-    BCX_API virtual void set_general_channel_handshake_seconds_setting(uint32_t value)
+    BCX_API virtual void set_wallet_pay_to_public_key_hash_version_setting(primitives::byte value)
     {
-        setting_.general.channel_handshake_seconds = value;
+        setting_.wallet.pay_to_public_key_hash_version = value;
     }
 
     /**
-     * Get the value of the general.hosts_file setting.
+     * Get the value of the wallet.pay_to_script_hash_version setting.
      */
-    BCX_API virtual boost::filesystem::path get_general_hosts_file_setting() const
+    BCX_API virtual primitives::byte get_wallet_pay_to_script_hash_version_setting() const
     {
-        return setting_.general.hosts_file;
+        return setting_.wallet.pay_to_script_hash_version;
     }
 
     /**
-     * Set the value of the general.hosts_file setting.
+     * Set the value of the wallet.pay_to_script_hash_version setting.
      */
-    BCX_API virtual void set_general_hosts_file_setting(boost::filesystem::path value)
+    BCX_API virtual void set_wallet_pay_to_script_hash_version_setting(primitives::byte value)
     {
-        setting_.general.hosts_file = value;
+        setting_.wallet.pay_to_script_hash_version = value;
     }
 
     /**
-     * Get the value of the logging.debug_file setting.
+     * Get the value of the network.identifier setting.
      */
-    BCX_API virtual boost::filesystem::path get_logging_debug_file_setting() const
+    BCX_API virtual uint32_t get_network_identifier_setting() const
     {
-        return setting_.logging.debug_file;
+        return setting_.network.identifier;
     }
 
     /**
-     * Set the value of the logging.debug_file setting.
+     * Set the value of the network.identifier setting.
      */
-    BCX_API virtual void set_logging_debug_file_setting(boost::filesystem::path value)
+    BCX_API virtual void set_network_identifier_setting(uint32_t value)
     {
-        setting_.logging.debug_file = value;
+        setting_.network.identifier = value;
     }
 
     /**
-     * Get the value of the logging.error_file setting.
+     * Get the value of the network.connect_retries setting.
      */
-    BCX_API virtual boost::filesystem::path get_logging_error_file_setting() const
+    BCX_API virtual primitives::byte get_network_connect_retries_setting() const
     {
-        return setting_.logging.error_file;
+        return setting_.network.connect_retries;
     }
 
     /**
-     * Set the value of the logging.error_file setting.
+     * Set the value of the network.connect_retries setting.
      */
-    BCX_API virtual void set_logging_error_file_setting(boost::filesystem::path value)
+    BCX_API virtual void set_network_connect_retries_setting(primitives::byte value)
     {
-        setting_.logging.error_file = value;
+        setting_.network.connect_retries = value;
     }
 
     /**
-     * Get the value of the mainnet.url setting.
+     * Get the value of the network.connect_timeout_seconds setting.
      */
-    BCX_API virtual bc::config::endpoint get_mainnet_url_setting() const
+    BCX_API virtual uint32_t get_network_connect_timeout_seconds_setting() const
     {
-        return setting_.mainnet.url;
+        return setting_.network.connect_timeout_seconds;
     }
 
     /**
-     * Set the value of the mainnet.url setting.
+     * Set the value of the network.connect_timeout_seconds setting.
      */
-    BCX_API virtual void set_mainnet_url_setting(bc::config::endpoint value)
+    BCX_API virtual void set_network_connect_timeout_seconds_setting(uint32_t value)
     {
-        setting_.mainnet.url = value;
+        setting_.network.connect_timeout_seconds = value;
     }
 
     /**
-     * Get the value of the mainnet.server_cert_key setting.
+     * Get the value of the network.channel_handshake_seconds setting.
      */
-    BCX_API virtual primitives::cert_key get_mainnet_server_cert_key_setting() const
+    BCX_API virtual uint32_t get_network_channel_handshake_seconds_setting() const
     {
-        return setting_.mainnet.server_cert_key;
+        return setting_.network.channel_handshake_seconds;
     }
 
     /**
-     * Set the value of the mainnet.server_cert_key setting.
+     * Set the value of the network.channel_handshake_seconds setting.
      */
-    BCX_API virtual void set_mainnet_server_cert_key_setting(primitives::cert_key value)
+    BCX_API virtual void set_network_channel_handshake_seconds_setting(uint32_t value)
     {
-        setting_.mainnet.server_cert_key = value;
+        setting_.network.channel_handshake_seconds = value;
     }
 
     /**
-     * Get the value of the mainnet.cert_file setting.
+     * Get the value of the network.hosts_file setting.
      */
-    BCX_API virtual boost::filesystem::path get_mainnet_cert_file_setting() const
+    BCX_API virtual boost::filesystem::path get_network_hosts_file_setting() const
     {
-        return setting_.mainnet.cert_file;
+        return setting_.network.hosts_file;
     }
 
     /**
-     * Set the value of the mainnet.cert_file setting.
+     * Set the value of the network.hosts_file setting.
      */
-    BCX_API virtual void set_mainnet_cert_file_setting(boost::filesystem::path value)
+    BCX_API virtual void set_network_hosts_file_setting(boost::filesystem::path value)
     {
-        setting_.mainnet.cert_file = value;
+        setting_.network.hosts_file = value;
     }
 
     /**
-     * Get the value of the testnet.url setting.
+     * Get the value of the network.debug_file setting.
      */
-    BCX_API virtual bc::config::endpoint get_testnet_url_setting() const
+    BCX_API virtual boost::filesystem::path get_network_debug_file_setting() const
     {
-        return setting_.testnet.url;
+        return setting_.network.debug_file;
     }
 
     /**
-     * Set the value of the testnet.url setting.
+     * Set the value of the network.debug_file setting.
      */
-    BCX_API virtual void set_testnet_url_setting(bc::config::endpoint value)
+    BCX_API virtual void set_network_debug_file_setting(boost::filesystem::path value)
     {
-        setting_.testnet.url = value;
+        setting_.network.debug_file = value;
     }
 
     /**
-     * Get the value of the testnet.server_cert_key setting.
+     * Get the value of the network.error_file setting.
      */
-    BCX_API virtual primitives::cert_key get_testnet_server_cert_key_setting() const
+    BCX_API virtual boost::filesystem::path get_network_error_file_setting() const
     {
-        return setting_.testnet.server_cert_key;
+        return setting_.network.error_file;
     }
 
     /**
-     * Set the value of the testnet.server_cert_key setting.
+     * Set the value of the network.error_file setting.
      */
-    BCX_API virtual void set_testnet_server_cert_key_setting(primitives::cert_key value)
+    BCX_API virtual void set_network_error_file_setting(boost::filesystem::path value)
     {
-        setting_.testnet.server_cert_key = value;
+        setting_.network.error_file = value;
     }
 
     /**
-     * Get the value of the testnet.cert_file setting.
+     * Get the value of the network.seed settings.
      */
-    BCX_API virtual boost::filesystem::path get_testnet_cert_file_setting() const
+    BCX_API virtual std::vector<bc::config::endpoint> get_network_seeds_setting() const
     {
-        return setting_.testnet.cert_file;
+        return setting_.network.seeds;
     }
 
     /**
-     * Set the value of the testnet.cert_file setting.
+     * Set the value of the network.seed settings.
      */
-    BCX_API virtual void set_testnet_cert_file_setting(boost::filesystem::path value)
+    BCX_API virtual void set_network_seeds_setting(std::vector<bc::config::endpoint> value)
     {
-        setting_.testnet.cert_file = value;
+        setting_.network.seeds = value;
+    }
+
+    /**
+     * Get the value of the server.url setting.
+     */
+    BCX_API virtual bc::config::endpoint get_server_url_setting() const
+    {
+        return setting_.server.url;
+    }
+
+    /**
+     * Set the value of the server.url setting.
+     */
+    BCX_API virtual void set_server_url_setting(bc::config::endpoint value)
+    {
+        setting_.server.url = value;
+    }
+
+    /**
+     * Get the value of the server.connect_retries setting.
+     */
+    BCX_API virtual primitives::byte get_server_connect_retries_setting() const
+    {
+        return setting_.server.connect_retries;
+    }
+
+    /**
+     * Set the value of the server.connect_retries setting.
+     */
+    BCX_API virtual void set_server_connect_retries_setting(primitives::byte value)
+    {
+        setting_.server.connect_retries = value;
+    }
+
+    /**
+     * Get the value of the server.connect_timeout_seconds setting.
+     */
+    BCX_API virtual uint32_t get_server_connect_timeout_seconds_setting() const
+    {
+        return setting_.server.connect_timeout_seconds;
+    }
+
+    /**
+     * Set the value of the server.connect_timeout_seconds setting.
+     */
+    BCX_API virtual void set_server_connect_timeout_seconds_setting(uint32_t value)
+    {
+        setting_.server.connect_timeout_seconds = value;
+    }
+
+    /**
+     * Get the value of the server.server_cert_key setting.
+     */
+    BCX_API virtual primitives::cert_key get_server_server_cert_key_setting() const
+    {
+        return setting_.server.server_cert_key;
+    }
+
+    /**
+     * Set the value of the server.server_cert_key setting.
+     */
+    BCX_API virtual void set_server_server_cert_key_setting(primitives::cert_key value)
+    {
+        setting_.server.server_cert_key = value;
+    }
+
+    /**
+     * Get the value of the server.cert_file setting.
+     */
+    BCX_API virtual boost::filesystem::path get_server_cert_file_setting() const
+    {
+        return setting_.server.cert_file;
+    }
+
+    /**
+     * Set the value of the server.cert_file setting.
+     */
+    BCX_API virtual void set_server_cert_file_setting(boost::filesystem::path value)
+    {
+        setting_.server.cert_file = value;
     }
 
 protected:
@@ -570,69 +675,70 @@ private:
      */
     struct setting
     {
-        struct general
+        struct wallet
         {
-            general()
-              : network(),
-                connect_retries(),
-                connect_timeout_seconds(),
-                channel_handshake_seconds(),
-                hosts_file()
+            wallet()
+              : wif_version(),
+                hd_public_version(),
+                hd_private_version(),
+                pay_to_public_key_hash_version(),
+                pay_to_script_hash_version()
             {
             }
 
-            std::string network;
+            primitives::byte wif_version;
+            uint32_t hd_public_version;
+            uint32_t hd_private_version;
+            primitives::byte pay_to_public_key_hash_version;
+            primitives::byte pay_to_script_hash_version;
+        } wallet;
+
+        struct network
+        {
+            network()
+              : identifier(),
+                connect_retries(),
+                connect_timeout_seconds(),
+                channel_handshake_seconds(),
+                hosts_file(),
+                debug_file(),
+                error_file(),
+                seeds()
+            {
+            }
+
+            uint32_t identifier;
             primitives::byte connect_retries;
             uint32_t connect_timeout_seconds;
             uint32_t channel_handshake_seconds;
             boost::filesystem::path hosts_file;
-        } general;
-
-        struct logging
-        {
-            logging()
-              : debug_file(),
-                error_file()
-            {
-            }
-
             boost::filesystem::path debug_file;
             boost::filesystem::path error_file;
-        } logging;
+            std::vector<bc::config::endpoint> seeds;
+        } network;
 
-        struct mainnet
+        struct server
         {
-            mainnet()
+            server()
               : url(),
+                connect_retries(),
+                connect_timeout_seconds(),
                 server_cert_key(),
                 cert_file()
             {
             }
 
             bc::config::endpoint url;
+            primitives::byte connect_retries;
+            uint32_t connect_timeout_seconds;
             primitives::cert_key server_cert_key;
             boost::filesystem::path cert_file;
-        } mainnet;
-
-        struct testnet
-        {
-            testnet()
-              : url(),
-                server_cert_key(),
-                cert_file()
-            {
-            }
-
-            bc::config::endpoint url;
-            primitives::cert_key server_cert_key;
-            boost::filesystem::path cert_file;
-        } testnet;
+        } server;
 
         setting()
-          : general(),
-            logging(),
-            mainnet(),
-            testnet()
+          : wallet(),
+            network(),
+            server()
         {
         }
     } setting_;

@@ -84,7 +84,7 @@ void display_usage(std::ostream& stream)
     stream 
         << std::endl << BX_COMMAND_USAGE << std::endl
         << std::endl << format(BX_VERSION_MESSAGE) % 
-            LIBBITCOIN_EXPLORER_VERSION % BX_NETWORK << std::endl
+            LIBBITCOIN_EXPLORER_VERSION << std::endl
         << std::endl << BX_COMMANDS_HEADER << std::endl
         << std::endl;
 

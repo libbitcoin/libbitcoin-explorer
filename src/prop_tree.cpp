@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/prop_tree.hpp>
 
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
@@ -224,13 +225,16 @@ ptree prop_list(const tx_output_type& tx_output)
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
 
-    binary_type stealth_prefix;
-    ec_compressed ephemeral_key;
-    if (to_stealth_prefix(stealth_prefix, tx_output.script) &&
-        extract_ephemeral_key(ephemeral_key, tx_output.script))
+    if (!address)
     {
-        tree.put("stealth.prefix", stealth_prefix);
-        tree.put("stealth.ephemeral_public_key", ec_public(ephemeral_key));
+        uint32_t stealth_prefix;
+        ec_compressed ephemeral_key;
+        if (to_stealth_prefix(stealth_prefix, tx_output.script) &&
+            extract_ephemeral_key(ephemeral_key, tx_output.script))
+        {
+            tree.put("stealth.prefix", stealth_prefix);
+            tree.put("stealth.ephemeral_public_key", ec_public(ephemeral_key));
+        }
     }
 
     tree.put("value", tx_output.value);
@@ -294,24 +298,24 @@ ptree prop_tree(const wrapped_data& wrapper)
     return tree;
 }
 
-// watch_prefix
-
-ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const base2& prefix)
-{
-    ptree tree;
-    tree.add("block", btc256(block_hash));
-    tree.add("prefix", prefix);
-    tree.add_child("transaction", prop_list(tx));
-    return tree;
-}
-ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const base2& prefix)
-{
-    ptree tree;
-    tree.add_child("watch_prefix", prop_list(tx, block_hash, prefix));
-    return tree;
-}
+//// watch_filter
+//
+//ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
+//    const base2& filter)
+//{
+//    ptree tree;
+//    tree.add("block", btc256(block_hash));
+//    tree.add("filter", filter);
+//    tree.add_child("transaction", prop_list(tx));
+//    return tree;
+//}
+//ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
+//    const base2& filter)
+//{
+//    ptree tree;
+//    tree.add_child("watch_filter", prop_list(tx, block_hash, filter));
+//    return tree;
+//}
 
 // watch_address
 
@@ -347,7 +351,7 @@ ptree prop_list(const stealth_address& stealth)
 
     ptree tree;
     tree.put("encoded", stealth);
-    tree.put("prefix", stealth.filter());
+    tree.put("filter", stealth.filter());
     tree.put("scan_public_key", ec_public(stealth.scan_key()));
     tree.put("signatures", stealth.signatures());
     tree.add_child("spend", spend_keys_prop_values);

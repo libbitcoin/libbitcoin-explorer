@@ -77,16 +77,6 @@ struct BCX_API connection_type
 class command;
 
 /**
- * Cast vector/enumerable elements into a new vector.
- * @param      <Source>  The source element type.
- * @param      <Target>  The target element type.
- * @param[in]  source    The enumeration of Source elements to cast.
- * @returns              A new enumeration with elements cast to Target.
- */
-template <typename Source, typename Target>
-std::vector<Target> cast(const std::vector<Source>& source);
-
-/**
  * Convert a text string to the specified type.
  * @param      <Value>  The converted type.
  * @param[out] value    The parsed value.
@@ -202,13 +192,6 @@ BCX_API void bind_error_log(std::ofstream& error);
  * @returns       A structure containing the connection settings.
  */
 BCX_API connection_type get_connection(const command& cmd);
-
-/**
- * Determine if a network token represents testnet.
- * @param[in]  network  The string to test.
- * @return              True if text represents testnet.
- */
-BCX_API bool is_testnet(const std::string& network);
 
 /**
  * Determine if a string is base2.

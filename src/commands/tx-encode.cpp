@@ -29,10 +29,10 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::wallet;
 
 static bool push_scripts(std::vector<tx_output_type>& outputs,
-    const primitives::output& output, uint8_t p2kh_version,
-    uint8_t p2sh_version, uint8_t stealth_version)
+    const primitives::output& output, uint8_t script_version)
 {
     // explicit script
     if (!output.script().operations.empty())
@@ -47,14 +47,12 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
 
     chain::operation::stack payment_ops;
     const auto hash = output.pay_to_hash();
-    auto is_stealth = output.stealth_version() == stealth_version &&
-        output.ephemeral_key() != null_compressed_point;
+    const auto is_stealth = !output.ephemeral_data().empty();
 
-    if (is_stealth)
+    // This presumes stealth versions are the same as non-stealth.
+    if (output.version() != script_version)
         payment_ops = chain::operation::to_pay_key_hash_pattern(hash);
-    else if (output.payment_version() == p2kh_version)
-        payment_ops = chain::operation::to_pay_key_hash_pattern(hash);
-    else if (output.payment_version() == p2sh_version)
+    else if (output.version() == script_version)
         payment_ops = chain::operation::to_pay_script_hash_pattern(hash);
     else
         return false;
@@ -63,10 +61,11 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
     {
         // Stealth indexing requires an ordered script tuple.
         // The null data script must be pushed before the pay script.
-        static constexpr uint64_t no_satoshis = 0;
-        const auto key = slice<1, hash_size + 1>(output.ephemeral_key());
-        const auto null_data = chain::operation::to_null_data_pattern(key);
-        outputs.push_back({ no_satoshis, chain::script{ null_data } });
+        static constexpr uint64_t no_amount = 0;
+        const auto data = output.ephemeral_data();
+        const auto null_data = chain::operation::to_null_data_pattern(data);
+        const auto null_data_script = chain::script{ null_data };
+        outputs.push_back({ no_amount, null_data_script });
     }
 
     const auto payment_script = chain::script{ payment_ops };
@@ -78,17 +77,15 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto locktime = get_lock_time_option();
-    const auto version = get_version_option();
+    const auto tx_version = get_version_option();
+    const auto script_version = get_script_version_option();
     const auto& inputs = get_inputs_option();
     const auto& outputs = get_outputs_option();
 
-    // TODO: obtain from config.
-    static const auto p2kh = bc::wallet::payment_address::mainnet_p2kh;
-    static const auto p2sh = bc::wallet::payment_address::mainnet_p2sh;
-    static const auto stealth = bc::wallet::stealth_address::mainnet_p2kh;
+    // TODO: if not set derive script_version from config.
 
     tx_type tx;
-    tx.version = version;
+    tx.version = tx_version;
     tx.locktime = locktime;
 
     for (const tx_input_type& input: inputs)
@@ -96,7 +93,7 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
 
     for (const auto& output: outputs)
     {
-        if (!push_scripts(tx.outputs, output, p2kh, p2sh, stealth))
+        if (!push_scripts(tx.outputs, output, script_version))
         {
             error << BX_TX_ENCODE_INVALID_OUTPUT << std::endl;
             return console_result::failure;
