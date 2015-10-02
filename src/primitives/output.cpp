@@ -38,8 +38,8 @@ namespace explorer {
 namespace primitives {
 
 output::output()
-  : amount_(0), payment_version_(0), stealth_version_(0), script_(),
-    pay_to_hash_(null_short_hash), ephemeral_script_data_({})
+  : amount_(0), version_(0), script_(), pay_to_hash_(null_short_hash),
+    ephemeral_data_({})
 {
 }
 
@@ -54,29 +54,24 @@ uint64_t output::amount() const
     return amount_;
 }
 
-uint8_t output::payment_version() const
+uint8_t output::version() const
 {
-    return payment_version_;
+    return version_;
 }
 
-uint8_t output::stealth_version() const
-{
-    return stealth_version_;
-}
-
-chain::script output::script() const
+const chain::script& output::script() const
 {
     return script_;
 }
 
-short_hash output::pay_to_hash() const
+const short_hash& output::pay_to_hash() const
 {
     return pay_to_hash_;
 }
 
-const data_chunk& output::ephemeral_script_data() const
+const data_chunk& output::ephemeral_data() const
 {
-    return ephemeral_script_data_;
+    return ephemeral_data_;
 }
 
 std::istream& operator>>(std::istream& input, output& argument)
@@ -104,7 +99,7 @@ std::istream& operator>>(std::istream& input, output& argument)
     const wallet::payment_address payment(target);
     if (payment)
     {
-        argument.payment_version_ = payment.version();
+        argument.version_ = payment.version();
         argument.pay_to_hash_ = payment.hash();
         return input;
     }
@@ -113,24 +108,22 @@ std::istream& operator>>(std::istream& input, output& argument)
     const wallet::stealth_address stealth(target);
     if (stealth)
     {
-        // TODO: finish stealth multisig implemetation and remove this guard.
-        if (stealth.spend_keys().size() != 1 ||
-            tokens.size() != 3 || tokens[2].size() < minimum_seed_size * 2)
+        // TODO: finish stealth multisig implemetation (p2sh and !p2sh).
+
+        if (stealth.spend_keys().size() != 1 || tokens.size() != 3)
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
 
         data_chunk seed;
-        if (!decode_base16(seed, tokens[2]))
+        if (!decode_base16(seed, tokens[2]) || seed.size() < minimum_seed_size)
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
 
         ec_secret ephemeral_secret;
-        ec_compressed ephemeral_point;
-        data_chunk ephemeral_script_data;
-        if (!create_shealth_script(ephemeral_script_data, ephemeral_secret,
-            ephemeral_point, stealth.filter(), seed))
+        if (!create_stealth_data(argument.ephemeral_data_, ephemeral_secret,
+            stealth.filter(), seed))
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
@@ -142,18 +135,19 @@ std::istream& operator>>(std::istream& input, output& argument)
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
 
-        // TODO: implement support for stealth multisig (p2sh) above.
-        // This implies only p2kh support, need to hash the multisig script.
         argument.pay_to_hash_ = bitcoin_short_hash(stealth_key);
-        argument.ephemeral_script_data_ = ephemeral_script_data;
-
-        // TODO: align with payment version and use here instead.
-        argument.stealth_version_ = stealth.version();
+        argument.version_ = stealth.version();
         return input;
     }
 
     // The target must be a serialized script.
-    argument.script_ = script(target);
+    data_chunk decoded;
+    if (!decode_base16(decoded, target))
+    {
+        BOOST_THROW_EXCEPTION(invalid_option_value(target));
+    }
+
+    argument.script_ = script(decoded);
     return input;
 }
 

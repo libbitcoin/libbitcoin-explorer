@@ -47,15 +47,12 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
 
     chain::operation::stack payment_ops;
     const auto hash = output.pay_to_hash();
-    const auto is_stealth = !output.ephemeral_script_data().empty();
+    const auto is_stealth = !output.ephemeral_data().empty();
 
-    if (is_stealth /*&& output.stealth_version() != script_version*/)
+    // This presumes stealth versions are the same as non-stealth.
+    if (output.version() != script_version)
         payment_ops = chain::operation::to_pay_key_hash_pattern(hash);
-    else if (is_stealth /*&& output.stealth_version() == address_version*/)
-        payment_ops = chain::operation::to_pay_script_hash_pattern(hash);
-    else if (output.payment_version() != script_version)
-        payment_ops = chain::operation::to_pay_key_hash_pattern(hash);
-    else if (output.payment_version() == script_version)
+    else if (output.version() == script_version)
         payment_ops = chain::operation::to_pay_script_hash_pattern(hash);
     else
         return false;
@@ -64,10 +61,10 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
     {
         // Stealth indexing requires an ordered script tuple.
         // The null data script must be pushed before the pay script.
-        static constexpr uint64_t no_satoshis = 0;
-        const auto data = output.ephemeral_script_data();
+        static constexpr uint64_t no_amount = 0;
+        const auto data = output.ephemeral_data();
         const auto null_data = chain::operation::to_null_data_pattern(data);
-        outputs.push_back({ no_satoshis, chain::script{ null_data } });
+        outputs.push_back({ no_amount, chain::script{ null_data } });
     }
 
     const auto payment_script = chain::script{ payment_ops };
