@@ -35,7 +35,7 @@ console_result stealth_encode::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto version = get_version_option();
-    const auto& filter = get_prefix_option();
+    const auto& filter = get_filter_option();
     const auto& scan_pubkey = get_scan_pubkey_argument();
     const auto& spend_pubkeys = get_spend_pubkeys_argument();
     const auto& signatures = get_signatures_option();
@@ -55,7 +55,7 @@ console_result stealth_encode::invoke(std::ostream& output,
 
     if (filter.size() > stealth_address::max_filter_bits)
     {
-        error << BX_STEALTH_ENCODE_PREFIX_TOO_LONG << std::endl;
+        error << BX_STEALTH_ENCODE_FILTER_TOO_LONG << std::endl;
         return console_result::failure;
     }
 

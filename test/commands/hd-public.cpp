@@ -256,5 +256,16 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
     BX_REQUIRE_OUTPUT("xpub6FnCn6nSzZAw5Tw7cgR9bi15UV96gLZhjDstkXXxvCLsUXBGXPdSnLFbdpq8p9HmGsApME5hQTZ3emM2rnY5agb9rXpVGyy3bdW6EEgAtqt\n");
 }
 
+BOOST_AUTO_TEST_CASE(hd_public__invoke__private_derivation_index_1_testnet__okay_output)
+{
+    BX_DECLARE_COMMAND(hd_public);
+    command.set_hard_option(false);
+    command.set_index_option(1);
+    command.set_version_option(70617039);
+    command.set_hd_key_argument({ "xprv9uHRZZhk6KAJC1avXpDAp4MDc3sQKNxDiPvvkX8Br5ngLNv1TxvUxt4cV1rGL5hj6KCesnDYUhd7oWgT11eZG7XnxHrnYeSvkzY7d2bhkJ7" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("tpubDApXh6cD2fZ7WjtgpHd8yrWyYaneiFuRZa7fVjMkgxsmC1QzoXW8cgx9zQFJ81Jx4deRGfRE7yXA9A3STsxXj4CKEZJHYgpMYikkas9DBTP\n");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

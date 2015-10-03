@@ -156,7 +156,7 @@ public:
         (
             "message,m",
             value<std::string>(&option_.message),
-            "The value of the label parameter."
+            "The value of the message parameter."
         )
         (
             "request,r",

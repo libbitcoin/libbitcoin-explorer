@@ -82,11 +82,11 @@ BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_6_testnet__okay)
     BX_REQUIRE_OUTPUT("037b49ab1aadf965a885932451c87de4265799cb29749f5713c2f8ace9d7e83875\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_7_litecoin_uncompressed__okay)
+BOOST_AUTO_TEST_CASE(ek_public_to_ec__invoke__example_7_testnet_uncompressed__okay)
 {
     BX_DECLARE_COMMAND(ek_public_to_ec);
     command.set_passphrase_argument({ "my passphrase" });
-    command.set_ek_public_key_argument({ "cfrm3B6UzSYXiZ36wznhsBGA2YdMrPq9VdxGetyK1VQ3o4A4bxiCY1h9XmUaK7M7tonUhBVyHBw" });
+    command.set_ek_public_key_argument({ "cfrm2zbi4iuQJ7cY69uJZsxhYLk4wLY7UWQiZ1wH5b3pEnzczSH3GHY3hAyV5AiWmU7mpk2Bqqc" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("047b49ab1aadf965a885932451c87de4265799cb29749f5713c2f8ace9d7e838753b15f90fb4032de40029a80c45bf9d8fc8653d81b4f18d36464840ddce50a4f9\n");
 }

@@ -230,7 +230,7 @@ public:
         (
             "wallet.pay_to_public_key_hash_version",
             value<primitives::byte>(&setting_.wallet.pay_to_public_key_hash_version)->default_value(0),
-            "The pay-to-public-key-hash address version, defaults to 0."
+            "The pay-to-public-key-hash address version, defaults to zero."
         )
         (
             "wallet.pay_to_script_hash_version",
@@ -249,8 +249,8 @@ public:
         )
         (
             "network.connect_retries",
-            value<primitives::byte>(&setting_.network.connect_retries),
-            "The number of times to retry contacting a node, defaults to 0."
+            value<primitives::byte>(&setting_.network.connect_retries)->default_value(0),
+            "The number of times to retry contacting a node, defaults to zero."
         )
         (
             "network.connect_timeout_seconds",
@@ -289,8 +289,8 @@ public:
         )
         (
             "server.connect_retries",
-            value<primitives::byte>(&setting_.server.connect_retries),
-            "The number of times to retry contacting a server, defaults to 0."
+            value<primitives::byte>(&setting_.server.connect_retries)->default_value(0),
+            "The number of times to retry contacting a server, defaults to zero."
         )
         (
             "server.connect_timeout_seconds",

@@ -64,8 +64,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_STEALTH_ENCODE_PREFIX_TOO_LONG \
-    "The prefix is limited to 32 bits."
+#define BX_STEALTH_ENCODE_FILTER_TOO_LONG \
+    "The filter is limited to 32 bits."
 #define BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW \
     "The number of signatures is greater than the number of SPEND_PUBKEYs."
 #define BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED \
@@ -155,9 +155,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "prefix,p",
-            value<primitives::base2>(&option_.prefix),
-            "The Base2 stealth prefix that will be used to locate payments."
+            "filter,f",
+            value<primitives::base2>(&option_.filter),
+            "The Base2 stealth prefix filter that will be used to locate payments."
         )
         (
             "signatures,s",
@@ -167,7 +167,7 @@ public:
         (
             "version,v",
             value<primitives::byte>(&option_.version)->default_value(0),
-            "The desired payment address version, defaults to 0."
+            "The desired payment address version, defaults to zero."
         )
         (
             "SCAN_PUBKEY",
@@ -243,20 +243,20 @@ public:
     }
 
     /**
-     * Get the value of the prefix option.
+     * Get the value of the filter option.
      */
-    virtual primitives::base2& get_prefix_option()
+    virtual primitives::base2& get_filter_option()
     {
-        return option_.prefix;
+        return option_.filter;
     }
 
     /**
-     * Set the value of the prefix option.
+     * Set the value of the filter option.
      */
-    virtual void set_prefix_option(
+    virtual void set_filter_option(
         const primitives::base2& value)
     {
-        option_.prefix = value;
+        option_.filter = value;
     }
 
     /**
@@ -320,13 +320,13 @@ private:
     struct option
     {
         option()
-          : prefix(),
+          : filter(),
             signatures(),
             version()
         {
         }
 
-        primitives::base2 prefix;
+        primitives::base2 filter;
         primitives::byte signatures;
         primitives::byte version;
     } option_;

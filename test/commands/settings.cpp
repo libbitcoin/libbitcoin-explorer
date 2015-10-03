@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        error_file \"\"\n" \
 "        hosts_file \"\"\n" \
 "        identifier 0\n" \
-"        seed \"\"\n" \
+"        seeds seed.bitnodes.io:8333,seed.bitcoinstats.com:8333,seed.bitcoin.sipa.be:8333,dnsseed.bluematt.me:8333,seed.bitcoin.jonasschnelli.ch:8333,dnsseed.bitcoin.dashjr.org:8333\n" \
 "    }\n" \
 "    server\n" \
 "    {\n" \
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        error_file error.log\n" \
 "        hosts_file my.hosts\n" \
 "        identifier 10\n" \
-"        seed seed1.libbitcoin.org:8333,seed2.libbitcoin.org:8333\n" \
+"        seeds seed1.libbitcoin.org:8333,seed2.libbitcoin.org:8333\n" \
 "    }\n" \
 "    server\n" \
 "    {\n" \
