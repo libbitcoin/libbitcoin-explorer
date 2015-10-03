@@ -46,22 +46,21 @@ namespace explorer {
  * Invoke a specified function on all commands.
  * @param[in]  func  The function to invoke on all commands.
  */
-BCX_API void broadcast(
-    const std::function<void(std::shared_ptr<command>)> func);
+void broadcast(const std::function<void(std::shared_ptr<command>)> func);
 
 /**
  * Find the command identified by the specified symbolic command name.
  * @param[in]  symbol  The symbolic command name.
  * @return             An instance of the command or nullptr if not found.
  */
-BCX_API std::shared_ptr<command> find(const std::string& symbol);
+std::shared_ptr<command> find(const std::string& symbol);
 
 /**
  * Find the new name of the formerly-named command.
  * @param[in]  former  The former symbolic command name.
  * @return             The current name of the formerly-named command.
  */
-BCX_API std::string formerly(const std::string& former);
+std::string formerly(const std::string& former);
 
 } // namespace explorer
 } // namespace libbitcoin

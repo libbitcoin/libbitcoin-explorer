@@ -79,14 +79,14 @@ static boost::filesystem::path default_config_path()
 /**
  * Base class for definition of each Bitcoin Explorer command.
  */
-class command
+class BCX_API command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    BCX_API static const char* symbol()
+    static const char* symbol()
     {
         return "not-implemented";
     }
@@ -95,7 +95,7 @@ public:
      * The symbolic (not localizable) command name, lower case.
      * @return  Example: "fetch-transaction"
      */
-    BCX_API virtual const char* name()
+    virtual const char* name()
     {
         return symbol();
     }
@@ -104,7 +104,7 @@ public:
      * The localizable command category name, upper case.
      * @return  Example: "ONLINE"
      */
-    BCX_API virtual const char* category()
+    virtual const char* category()
     {
         return "not-implemented";
     }
@@ -113,7 +113,7 @@ public:
      * The localizable command description.
      * @return  Example: "Get transactions by hash."
      */
-    BCX_API virtual const char* description()
+    virtual const char* description()
     {
         return "not-implemented";
     }
@@ -122,7 +122,7 @@ public:
      * Declare whether the command has been obsoleted.
      * @return  True if the command is obsolete
      */
-    BCX_API virtual bool obsolete()
+    virtual bool obsolete()
     {
         return false;
     }
@@ -131,7 +131,7 @@ public:
      * Determines if STDIN is required to be raw.
      * @return  True if the type of the STDIN argument is primitive::raw.
      */
-    BCX_API virtual bool requires_raw_input()
+    virtual bool requires_raw_input()
     {
         return false;
     }
@@ -140,7 +140,7 @@ public:
      * Determines if STDOUT is required to be raw.
      * @return  True if the type of the STDOUT argument is primitive::raw.
      */
-    BCX_API virtual bool requires_raw_output()
+    virtual bool requires_raw_output()
     {
         return false;
     }
@@ -151,7 +151,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    BCX_API virtual console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& error)
     {
         return console_result::failure;
@@ -162,7 +162,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    BCX_API virtual arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -171,7 +171,7 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    BCX_API virtual void load_environment(options_metadata& definitions)
+    virtual void load_environment(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -199,7 +199,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    BCX_API virtual options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         return option_metadata_;
     }
@@ -208,7 +208,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    BCX_API virtual void load_settings(options_metadata& definitions)
+    virtual void load_settings(options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -229,13 +229,18 @@ public:
         )
         (
             "wallet.pay_to_public_key_hash_version",
-            value<primitives::byte>(&setting_.wallet.pay_to_public_key_hash_version),
+            value<primitives::byte>(&setting_.wallet.pay_to_public_key_hash_version)->default_value(0),
             "The pay-to-public-key-hash address version, defaults to 0."
         )
         (
             "wallet.pay_to_script_hash_version",
             value<primitives::byte>(&setting_.wallet.pay_to_script_hash_version)->default_value(5),
             "The pay-to-script-hash address version, defaults to 5."
+        )
+        (
+            "wallet.transaction_version",
+            value<primitives::byte>(&setting_.wallet.transaction_version)->default_value(1),
+            "The transaction version, defaults to 1."
         )
         (
             "network.identifier",
@@ -309,7 +314,15 @@ public:
      * @param[in]  input      The input stream for loading the parameter.
      * @param[in]  variables  The loaded variables.
      */
-    BCX_API virtual void load_stream(std::istream& input, po::variables_map& variables)
+    virtual void load_stream(std::istream& input, po::variables_map& variables)
+    {
+    }
+
+    /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map& variables)
     {
     }
 
@@ -317,7 +330,7 @@ public:
      * Write the help for this command to the specified stream.
      * @param[out] output  The output stream.
      */
-    BCX_API virtual void write_help(std::ostream& output)
+    virtual void write_help(std::ostream& output)
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
@@ -332,7 +345,7 @@ public:
     /**
      * Get command line argument metadata.
      */
-    BCX_API virtual arguments_metadata& get_argument_metadata()
+    virtual arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -340,7 +353,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    BCX_API virtual options_metadata& get_option_metadata()
+    virtual options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -348,7 +361,7 @@ public:
     /**
      * Get the value of the wallet.wif_version setting.
      */
-    BCX_API virtual primitives::byte get_wallet_wif_version_setting() const
+    virtual primitives::byte get_wallet_wif_version_setting() const
     {
         return setting_.wallet.wif_version;
     }
@@ -356,7 +369,7 @@ public:
     /**
      * Set the value of the wallet.wif_version setting.
      */
-    BCX_API virtual void set_wallet_wif_version_setting(primitives::byte value)
+    virtual void set_wallet_wif_version_setting(primitives::byte value)
     {
         setting_.wallet.wif_version = value;
     }
@@ -364,7 +377,7 @@ public:
     /**
      * Get the value of the wallet.hd_public_version setting.
      */
-    BCX_API virtual uint32_t get_wallet_hd_public_version_setting() const
+    virtual uint32_t get_wallet_hd_public_version_setting() const
     {
         return setting_.wallet.hd_public_version;
     }
@@ -372,7 +385,7 @@ public:
     /**
      * Set the value of the wallet.hd_public_version setting.
      */
-    BCX_API virtual void set_wallet_hd_public_version_setting(uint32_t value)
+    virtual void set_wallet_hd_public_version_setting(uint32_t value)
     {
         setting_.wallet.hd_public_version = value;
     }
@@ -380,7 +393,7 @@ public:
     /**
      * Get the value of the wallet.hd_private_version setting.
      */
-    BCX_API virtual uint32_t get_wallet_hd_private_version_setting() const
+    virtual uint32_t get_wallet_hd_private_version_setting() const
     {
         return setting_.wallet.hd_private_version;
     }
@@ -388,7 +401,7 @@ public:
     /**
      * Set the value of the wallet.hd_private_version setting.
      */
-    BCX_API virtual void set_wallet_hd_private_version_setting(uint32_t value)
+    virtual void set_wallet_hd_private_version_setting(uint32_t value)
     {
         setting_.wallet.hd_private_version = value;
     }
@@ -396,7 +409,7 @@ public:
     /**
      * Get the value of the wallet.pay_to_public_key_hash_version setting.
      */
-    BCX_API virtual primitives::byte get_wallet_pay_to_public_key_hash_version_setting() const
+    virtual primitives::byte get_wallet_pay_to_public_key_hash_version_setting() const
     {
         return setting_.wallet.pay_to_public_key_hash_version;
     }
@@ -404,7 +417,7 @@ public:
     /**
      * Set the value of the wallet.pay_to_public_key_hash_version setting.
      */
-    BCX_API virtual void set_wallet_pay_to_public_key_hash_version_setting(primitives::byte value)
+    virtual void set_wallet_pay_to_public_key_hash_version_setting(primitives::byte value)
     {
         setting_.wallet.pay_to_public_key_hash_version = value;
     }
@@ -412,7 +425,7 @@ public:
     /**
      * Get the value of the wallet.pay_to_script_hash_version setting.
      */
-    BCX_API virtual primitives::byte get_wallet_pay_to_script_hash_version_setting() const
+    virtual primitives::byte get_wallet_pay_to_script_hash_version_setting() const
     {
         return setting_.wallet.pay_to_script_hash_version;
     }
@@ -420,15 +433,31 @@ public:
     /**
      * Set the value of the wallet.pay_to_script_hash_version setting.
      */
-    BCX_API virtual void set_wallet_pay_to_script_hash_version_setting(primitives::byte value)
+    virtual void set_wallet_pay_to_script_hash_version_setting(primitives::byte value)
     {
         setting_.wallet.pay_to_script_hash_version = value;
     }
 
     /**
+     * Get the value of the wallet.transaction_version setting.
+     */
+    virtual primitives::byte get_wallet_transaction_version_setting() const
+    {
+        return setting_.wallet.transaction_version;
+    }
+
+    /**
+     * Set the value of the wallet.transaction_version setting.
+     */
+    virtual void set_wallet_transaction_version_setting(primitives::byte value)
+    {
+        setting_.wallet.transaction_version = value;
+    }
+
+    /**
      * Get the value of the network.identifier setting.
      */
-    BCX_API virtual uint32_t get_network_identifier_setting() const
+    virtual uint32_t get_network_identifier_setting() const
     {
         return setting_.network.identifier;
     }
@@ -436,7 +465,7 @@ public:
     /**
      * Set the value of the network.identifier setting.
      */
-    BCX_API virtual void set_network_identifier_setting(uint32_t value)
+    virtual void set_network_identifier_setting(uint32_t value)
     {
         setting_.network.identifier = value;
     }
@@ -444,7 +473,7 @@ public:
     /**
      * Get the value of the network.connect_retries setting.
      */
-    BCX_API virtual primitives::byte get_network_connect_retries_setting() const
+    virtual primitives::byte get_network_connect_retries_setting() const
     {
         return setting_.network.connect_retries;
     }
@@ -452,7 +481,7 @@ public:
     /**
      * Set the value of the network.connect_retries setting.
      */
-    BCX_API virtual void set_network_connect_retries_setting(primitives::byte value)
+    virtual void set_network_connect_retries_setting(primitives::byte value)
     {
         setting_.network.connect_retries = value;
     }
@@ -460,7 +489,7 @@ public:
     /**
      * Get the value of the network.connect_timeout_seconds setting.
      */
-    BCX_API virtual uint32_t get_network_connect_timeout_seconds_setting() const
+    virtual uint32_t get_network_connect_timeout_seconds_setting() const
     {
         return setting_.network.connect_timeout_seconds;
     }
@@ -468,7 +497,7 @@ public:
     /**
      * Set the value of the network.connect_timeout_seconds setting.
      */
-    BCX_API virtual void set_network_connect_timeout_seconds_setting(uint32_t value)
+    virtual void set_network_connect_timeout_seconds_setting(uint32_t value)
     {
         setting_.network.connect_timeout_seconds = value;
     }
@@ -476,7 +505,7 @@ public:
     /**
      * Get the value of the network.channel_handshake_seconds setting.
      */
-    BCX_API virtual uint32_t get_network_channel_handshake_seconds_setting() const
+    virtual uint32_t get_network_channel_handshake_seconds_setting() const
     {
         return setting_.network.channel_handshake_seconds;
     }
@@ -484,7 +513,7 @@ public:
     /**
      * Set the value of the network.channel_handshake_seconds setting.
      */
-    BCX_API virtual void set_network_channel_handshake_seconds_setting(uint32_t value)
+    virtual void set_network_channel_handshake_seconds_setting(uint32_t value)
     {
         setting_.network.channel_handshake_seconds = value;
     }
@@ -492,7 +521,7 @@ public:
     /**
      * Get the value of the network.hosts_file setting.
      */
-    BCX_API virtual boost::filesystem::path get_network_hosts_file_setting() const
+    virtual boost::filesystem::path get_network_hosts_file_setting() const
     {
         return setting_.network.hosts_file;
     }
@@ -500,7 +529,7 @@ public:
     /**
      * Set the value of the network.hosts_file setting.
      */
-    BCX_API virtual void set_network_hosts_file_setting(boost::filesystem::path value)
+    virtual void set_network_hosts_file_setting(boost::filesystem::path value)
     {
         setting_.network.hosts_file = value;
     }
@@ -508,7 +537,7 @@ public:
     /**
      * Get the value of the network.debug_file setting.
      */
-    BCX_API virtual boost::filesystem::path get_network_debug_file_setting() const
+    virtual boost::filesystem::path get_network_debug_file_setting() const
     {
         return setting_.network.debug_file;
     }
@@ -516,7 +545,7 @@ public:
     /**
      * Set the value of the network.debug_file setting.
      */
-    BCX_API virtual void set_network_debug_file_setting(boost::filesystem::path value)
+    virtual void set_network_debug_file_setting(boost::filesystem::path value)
     {
         setting_.network.debug_file = value;
     }
@@ -524,7 +553,7 @@ public:
     /**
      * Get the value of the network.error_file setting.
      */
-    BCX_API virtual boost::filesystem::path get_network_error_file_setting() const
+    virtual boost::filesystem::path get_network_error_file_setting() const
     {
         return setting_.network.error_file;
     }
@@ -532,7 +561,7 @@ public:
     /**
      * Set the value of the network.error_file setting.
      */
-    BCX_API virtual void set_network_error_file_setting(boost::filesystem::path value)
+    virtual void set_network_error_file_setting(boost::filesystem::path value)
     {
         setting_.network.error_file = value;
     }
@@ -540,7 +569,7 @@ public:
     /**
      * Get the value of the network.seed settings.
      */
-    BCX_API virtual std::vector<bc::config::endpoint> get_network_seeds_setting() const
+    virtual std::vector<bc::config::endpoint> get_network_seeds_setting() const
     {
         return setting_.network.seeds;
     }
@@ -548,7 +577,7 @@ public:
     /**
      * Set the value of the network.seed settings.
      */
-    BCX_API virtual void set_network_seeds_setting(std::vector<bc::config::endpoint> value)
+    virtual void set_network_seeds_setting(std::vector<bc::config::endpoint> value)
     {
         setting_.network.seeds = value;
     }
@@ -556,7 +585,7 @@ public:
     /**
      * Get the value of the server.url setting.
      */
-    BCX_API virtual bc::config::endpoint get_server_url_setting() const
+    virtual bc::config::endpoint get_server_url_setting() const
     {
         return setting_.server.url;
     }
@@ -564,7 +593,7 @@ public:
     /**
      * Set the value of the server.url setting.
      */
-    BCX_API virtual void set_server_url_setting(bc::config::endpoint value)
+    virtual void set_server_url_setting(bc::config::endpoint value)
     {
         setting_.server.url = value;
     }
@@ -572,7 +601,7 @@ public:
     /**
      * Get the value of the server.connect_retries setting.
      */
-    BCX_API virtual primitives::byte get_server_connect_retries_setting() const
+    virtual primitives::byte get_server_connect_retries_setting() const
     {
         return setting_.server.connect_retries;
     }
@@ -580,7 +609,7 @@ public:
     /**
      * Set the value of the server.connect_retries setting.
      */
-    BCX_API virtual void set_server_connect_retries_setting(primitives::byte value)
+    virtual void set_server_connect_retries_setting(primitives::byte value)
     {
         setting_.server.connect_retries = value;
     }
@@ -588,7 +617,7 @@ public:
     /**
      * Get the value of the server.connect_timeout_seconds setting.
      */
-    BCX_API virtual uint32_t get_server_connect_timeout_seconds_setting() const
+    virtual uint32_t get_server_connect_timeout_seconds_setting() const
     {
         return setting_.server.connect_timeout_seconds;
     }
@@ -596,7 +625,7 @@ public:
     /**
      * Set the value of the server.connect_timeout_seconds setting.
      */
-    BCX_API virtual void set_server_connect_timeout_seconds_setting(uint32_t value)
+    virtual void set_server_connect_timeout_seconds_setting(uint32_t value)
     {
         setting_.server.connect_timeout_seconds = value;
     }
@@ -604,7 +633,7 @@ public:
     /**
      * Get the value of the server.server_cert_key setting.
      */
-    BCX_API virtual primitives::cert_key get_server_server_cert_key_setting() const
+    virtual primitives::cert_key get_server_server_cert_key_setting() const
     {
         return setting_.server.server_cert_key;
     }
@@ -612,7 +641,7 @@ public:
     /**
      * Set the value of the server.server_cert_key setting.
      */
-    BCX_API virtual void set_server_server_cert_key_setting(primitives::cert_key value)
+    virtual void set_server_server_cert_key_setting(primitives::cert_key value)
     {
         setting_.server.server_cert_key = value;
     }
@@ -620,7 +649,7 @@ public:
     /**
      * Get the value of the server.cert_file setting.
      */
-    BCX_API virtual boost::filesystem::path get_server_cert_file_setting() const
+    virtual boost::filesystem::path get_server_cert_file_setting() const
     {
         return setting_.server.cert_file;
     }
@@ -628,7 +657,7 @@ public:
     /**
      * Set the value of the server.cert_file setting.
      */
-    BCX_API virtual void set_server_cert_file_setting(boost::filesystem::path value)
+    virtual void set_server_cert_file_setting(boost::filesystem::path value)
     {
         setting_.server.cert_file = value;
     }
@@ -639,7 +668,7 @@ protected:
      * This base class is abstract but not pure virtual, so prevent direct 
      * construction here.
      */
-    BCX_API command()
+    command()
     {
     }
 
@@ -682,7 +711,8 @@ private:
                 hd_public_version(),
                 hd_private_version(),
                 pay_to_public_key_hash_version(),
-                pay_to_script_hash_version()
+                pay_to_script_hash_version(),
+                transaction_version()
             {
             }
 
@@ -691,6 +721,7 @@ private:
             uint32_t hd_private_version;
             primitives::byte pay_to_public_key_hash_version;
             primitives::byte pay_to_script_hash_version;
+            primitives::byte transaction_version;
         } wallet;
 
         struct network

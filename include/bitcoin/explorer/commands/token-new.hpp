@@ -76,15 +76,15 @@ namespace commands {
 /**
  * Class to implement the token-new command.
  */
-class token_new 
-    : public command
+class BCX_API token_new 
+  : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    BCX_API static const char* symbol()
+    static const char* symbol()
     {
         return "token-new";
     }
@@ -93,7 +93,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    BCX_API virtual const char* name()
+    virtual const char* name()
     {
         return token_new::symbol();
     }
@@ -101,7 +101,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    BCX_API virtual const char* category()
+    virtual const char* category()
     {
         return "KEY_ENCRYPTION";
     }
@@ -109,7 +109,7 @@ public:
     /**
      * The localizable command description.
      */
-    BCX_API virtual const char* description()
+    virtual const char* description()
     {
         return "Create an intermediate passphrase token for deferred encrypted key generation (BIP38).";
     }
@@ -119,7 +119,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    BCX_API virtual arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("PASSPHRASE", 1)
@@ -131,7 +131,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
@@ -143,7 +143,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    BCX_API virtual options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -183,12 +183,20 @@ public:
     }
 
     /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map& variables)
+    {
+    }
+
+    /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    BCX_API virtual console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -196,7 +204,7 @@ public:
     /**
      * Get the value of the PASSPHRASE argument.
      */
-    BCX_API virtual std::string& get_passphrase_argument()
+    virtual std::string& get_passphrase_argument()
     {
         return argument_.passphrase;
     }
@@ -204,7 +212,7 @@ public:
     /**
      * Set the value of the PASSPHRASE argument.
      */
-    BCX_API virtual void set_passphrase_argument(
+    virtual void set_passphrase_argument(
         const std::string& value)
     {
         argument_.passphrase = value;
@@ -213,7 +221,7 @@ public:
     /**
      * Get the value of the SALT argument.
      */
-    BCX_API virtual primitives::base16& get_salt_argument()
+    virtual primitives::base16& get_salt_argument()
     {
         return argument_.salt;
     }
@@ -221,7 +229,7 @@ public:
     /**
      * Set the value of the SALT argument.
      */
-    BCX_API virtual void set_salt_argument(
+    virtual void set_salt_argument(
         const primitives::base16& value)
     {
         argument_.salt = value;
@@ -230,7 +238,7 @@ public:
     /**
      * Get the value of the lot option.
      */
-    BCX_API virtual uint32_t& get_lot_option()
+    virtual uint32_t& get_lot_option()
     {
         return option_.lot;
     }
@@ -238,7 +246,7 @@ public:
     /**
      * Set the value of the lot option.
      */
-    BCX_API virtual void set_lot_option(
+    virtual void set_lot_option(
         const uint32_t& value)
     {
         option_.lot = value;
@@ -247,7 +255,7 @@ public:
     /**
      * Get the value of the sequence option.
      */
-    BCX_API virtual uint32_t& get_sequence_option()
+    virtual uint32_t& get_sequence_option()
     {
         return option_.sequence;
     }
@@ -255,7 +263,7 @@ public:
     /**
      * Set the value of the sequence option.
      */
-    BCX_API virtual void set_sequence_option(
+    virtual void set_sequence_option(
         const uint32_t& value)
     {
         option_.sequence = value;

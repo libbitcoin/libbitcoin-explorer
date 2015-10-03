@@ -101,4 +101,30 @@ function global.value_semantic(is_file, is_option, type, required, unlimited, va
     return my.expression
 endfunction
 
+function global.left_token(text)
+    define my.left = ""
+    regexp.match("^(.*)\\\..*$", my.text, my.left)
+    return my.left
+endfunction
+
+function global.right_token(text)
+    define my.right = ""
+    regexp.match("^.*\\\.(.*)$", my.text, my.right)
+    return my.right
+endfunction
+
+function global.get_option_default(option, generate)
+    define my.option = get_option_default.option
+    define my.generate = get_option_default.generate
+    if (defined(my.option.configuration) & !defined(my.option.default))
+        define my.section_name = left_token(my.option.configuration)
+        define my.setting_name = right_token(my.option.configuration)
+        define my.configuration = my.generate->configuration(section = my.section_name)
+        define my.setting = my.configuration->setting(name = my.setting_name)
+        return my.setting.default
+    else
+        return my.option.default
+    endif
+endfunction
+
 .endtemplate

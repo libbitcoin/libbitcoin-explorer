@@ -70,15 +70,15 @@ namespace commands {
 /**
  * Class to implement the qrcode command.
  */
-class qrcode 
-    : public command
+class BCX_API qrcode 
+  : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    BCX_API static const char* symbol()
+    static const char* symbol()
     {
         return "qrcode";
     }
@@ -87,7 +87,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    BCX_API virtual const char* name()
+    virtual const char* name()
     {
         return qrcode::symbol();
     }
@@ -95,7 +95,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    BCX_API virtual const char* category()
+    virtual const char* category()
     {
         return "WALLET";
     }
@@ -103,7 +103,7 @@ public:
     /**
      * The localizable command description.
      */
-    BCX_API virtual const char* description()
+    virtual const char* description()
     {
         return "Create a QR code image file for a payment address.";
     }
@@ -112,7 +112,7 @@ public:
      * Determines if STDOUT is required to be raw.
      * @return  True if the type of the STDOUT argument is primitive::raw.
      */
-    BCX_API virtual bool requires_raw_output()
+    virtual bool requires_raw_output()
     {
         return true;
     }
@@ -122,7 +122,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    BCX_API virtual arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("PAYMENT_ADDRESS", 1);
@@ -133,7 +133,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
@@ -145,7 +145,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    BCX_API virtual options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -170,12 +170,20 @@ public:
     }
 
     /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map& variables)
+    {
+    }
+
+    /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    BCX_API virtual console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -183,7 +191,7 @@ public:
     /**
      * Get the value of the PAYMENT_ADDRESS argument.
      */
-    BCX_API virtual bc::wallet::payment_address& get_payment_address_argument()
+    virtual bc::wallet::payment_address& get_payment_address_argument()
     {
         return argument_.payment_address;
     }
@@ -191,7 +199,7 @@ public:
     /**
      * Set the value of the PAYMENT_ADDRESS argument.
      */
-    BCX_API virtual void set_payment_address_argument(
+    virtual void set_payment_address_argument(
         const bc::wallet::payment_address& value)
     {
         argument_.payment_address = value;

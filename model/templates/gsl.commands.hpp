@@ -31,6 +31,9 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
+.define has_options = count(command.option) > 0
+.define has_arguments = count(command.argument) > 0
+.
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
@@ -48,15 +51,15 @@ namespace commands {
 /**
  * Class to implement the $(symbol) command.
  */
-class $(symbol:c) 
-    : public command
+class BCX_API $(symbol:c) 
+  : public command
 {
 public:
 
     /**
      * The symbolic (not localizable) command name, lower case.
      */
-    BCX_API static const char* symbol()
+    static const char* symbol()
     {
         return "$(symbol)";
     }
@@ -65,7 +68,7 @@ public:
     /**
      * The symbolic (not localizable) former command name, lower case.
      */
-    BCX_API static const char* formerly()
+    static const char* formerly()
     {
         return "$(formerly)";
     }
@@ -74,7 +77,7 @@ public:
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
-    BCX_API virtual const char* name()
+    virtual const char* name()
     {
         return $(symbol:c)::symbol();
     }
@@ -82,7 +85,7 @@ public:
     /**
      * The localizable command category name, upper case.
      */
-    BCX_API virtual const char* category()
+    virtual const char* category()
     {
         return "$(category)";
     }
@@ -90,7 +93,7 @@ public:
     /**
      * The localizable command description.
      */
-    BCX_API virtual const char* description()
+    virtual const char* description()
     {
         return "$(description)";
     }
@@ -100,7 +103,7 @@ public:
      * Declare whether the command has been obsoleted.
      * @return  True if the command is obsolete
      */
-    BCX_API virtual bool obsolete()
+    virtual bool obsolete()
     {
         return true;
     }
@@ -111,7 +114,7 @@ public:
      * Determines if STDIN is required to be raw.
      * @return  True if the type of the STDIN argument is primitive::raw.
      */
-    BCX_API virtual bool requires_raw_input()
+    virtual bool requires_raw_input()
     {
         return true;
     }
@@ -122,31 +125,20 @@ public:
      * Determines if STDOUT is required to be raw.
      * @return  True if the type of the STDOUT argument is primitive::raw.
      */
-    BCX_API virtual bool requires_raw_output()
+    virtual bool requires_raw_output()
     {
         return true;
     }
 .endif
 
-.
-.# HACK: There must be a better way to count a collection.
-.argument_count = 0
-.for argument
-.   argument_count += 1
-.endfor
-.option_count = 0
-.for option
-.   option_count += 1
-.endfor
-.
     /**
      * Load program argument definitions.
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    BCX_API virtual arguments_metadata& load_arguments()
+    virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()$(if_else_empty(argument_count = 0, ";"))
+        return get_argument_metadata()$(if_else_empty(!has_arguments, ";"))
 .for argument
             .add("$(name)", $(limit ? "1"))$(last() ?? ";")
 .endfor
@@ -157,7 +149,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
 .for argument
@@ -197,7 +189,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    BCX_API virtual options_metadata& load_options()
+    virtual options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -211,19 +203,20 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "$(config_description)"
-        )$(((argument_count = 0) & (option_count = 0 )) ?? ";")
+        )$((!has_arguments & !has_options) ?? ";")
 .for option
+.   define default_value = get_option_default(option, generate)?
 .   short_name = shortcut ? first_char(name)
 .   identifiers = name
 .   identifiers += if_else(short_name = "", "", "," + short_name)
 .   variable = "option_.$(name:lower,c)"
 .   expression = value_semantic(is_xml_true(option.file), true(), type,\
-        is_xml_true(required), is_xml_true(multiple), variable, default)
+        is_xml_true(required), is_xml_true(multiple), variable, default_value)
         (
             "$(identifiers)",
             $(expression),
             "$(description)"
-        )$((last() & (argument_count = 0)) ?? ";")
+        )$((last() & !has_arguments) ?? ";")
 .endfor
 .for argument
 .   variable = "argument_.$(name:lower,c)"
@@ -240,12 +233,37 @@ public:
     }
 
     /**
+     * Set variable defaults from configuration variable values.
+     * @param[in]  variables  The loaded variables.
+     */
+    virtual void set_defaults_from_config(po::variables_map& variables)
+    {
+.for option where defined(option.configuration)
+.   is_vector = is_xml_true(multiple)
+.   option_type = normalize_type(true(), !true(), type)
+.   vtype = vectored_type(option_type, is_vector)
+.   pluralized_name = pluralize(name, is_vector)
+.   option_variable = "$(pluralized_name:lower,c)"
+.   option_name = "option_$(option_variable)"
+        const auto& $(option_name) = variables["$(name)"];
+        const auto& $(option_name)_config = variables["$(configuration)"];
+        if ($(option_name).defaulted() && !$(option_name)_config.defaulted())
+        {
+            option_.$(option_variable) = $(option_name)_config.as<$(vtype)>();
+        }
+.   if (!last())
+
+.   endif
+.endfor
+    }
+
+    /**
      * Invoke the command.
      * @param[out]  output  The input stream for the command execution.
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    BCX_API virtual console_result invoke(std::ostream& output,
+    virtual console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -259,7 +277,7 @@ public:
     /**
      * Get the value of the $(name) $(pluralized_argument).
      */
-    BCX_API virtual $(vtype)& get_$(pluralized_name:lower,c)_argument()
+    virtual $(vtype)& get_$(pluralized_name:lower,c)_argument()
     {
         return argument_.$(pluralized_name:lower,c);
     }
@@ -267,7 +285,7 @@ public:
     /**
      * Set the value of the $(name) $(pluralized_argument).
      */
-    BCX_API virtual void set_$(pluralized_name:lower,c)_argument(
+    virtual void set_$(pluralized_name:lower,c)_argument(
         const $(vtype)& value)
     {
         argument_.$(pluralized_name:lower,c) = value;
@@ -283,7 +301,7 @@ public:
     /**
      * Get the value of the $(name) $(pluralized_option).
      */
-    BCX_API virtual $(vtype)& get_$(pluralized_name:lower,c)_option()
+    virtual $(vtype)& get_$(pluralized_name:lower,c)_option()
     {
         return option_.$(pluralized_name:lower,c);
     }
@@ -291,7 +309,7 @@ public:
     /**
      * Set the value of the $(name) $(pluralized_option).
      */
-    BCX_API virtual void set_$(pluralized_name:lower,c)_option(
+    virtual void set_$(pluralized_name:lower,c)_option(
         const $(vtype)& value)
     {
         option_.$(pluralized_name:lower,c) = value;
