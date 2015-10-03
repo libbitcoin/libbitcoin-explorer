@@ -29,12 +29,8 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__mainnet__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
     command.set_version_option(5);
-    command.set_script_argument(
-    {
-        {
-            "dup hash160 [ 89abcdefabbaabbaabbaabbaabbaabbaabbaabba ] equalverify checksig"
-        }
-    });
+    const std::string script("dup hash160 [ 89abcdefabbaabbaabbaabbaabbaabbaabbaabba ] equalverify checksig");
+    command.set_script_argument({ script });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("3F6i6kwkevjR7AsAd4te2YB2zZyASEm1HM\n");
 }
@@ -43,12 +39,8 @@ BOOST_AUTO_TEST_CASE(script_to_address__invoke__testnet__expected_output)
 {
     BX_DECLARE_COMMAND(script_to_address);
     command.set_version_option(196);
-    command.set_script_argument(
-    {
-        {
-            "dup hash160 [ 89abcdefabbaabbaabbaabbaabbaabbaabbaabba ] equalverify checksig"
-        }
-    });
+    const std::string script("dup hash160 [ 89abcdefabbaabbaabbaabbaabbaabbaabbaabba ] equalverify checksig");
+    command.set_script_argument({ script });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("2N6evAVsnGPEmJxViJCWWeVAJCvBLFehT7L\n");
 }
