@@ -37,19 +37,14 @@ hd_key::hd_key(const std::string& base58)
     std::stringstream(base58) >> *this;
 }
 
-const wallet::hd_public& hd_key::to_public() const
+uint32_t hd_key::version() const
 {
-    return private_key_value_? private_key_value_ : public_key_value_;
+    return from_big_endian_unsafe<uint32_t>(value_.begin());
 }
 
-hd_key::operator const wallet::hd_private&() const
+hd_key::operator const wallet::hd_key&() const
 {
-    return private_key_value_;
-}
-
-hd_key::operator const wallet::hd_public&() const
-{
-    return public_key_value_;
+    return value_;
 }
 
 std::istream& operator>>(std::istream& input, hd_key& argument)
@@ -57,23 +52,14 @@ std::istream& operator>>(std::istream& input, hd_key& argument)
     std::string base58;
     input >> base58;
 
-    // First try to read as a private key.
-    wallet::hd_private private_key(base58);
-    if (private_key)
+    data_chunk value;
+    if (!decode_base58(value, base58) || value.size() != wallet::hd_key_size)
     {
-        argument.private_key_value_ = private_key;
-        return input;
+        BOOST_THROW_EXCEPTION(invalid_option_value(base58));
     }
 
-    // Otherwise try to read as a public key.
-    wallet::hd_public public_key(base58);
-    if (public_key)
-    {
-        argument.public_key_value_ = public_key;
-        return input;
-    }
-
-    BOOST_THROW_EXCEPTION(invalid_option_value(base58));
+    std::copy(value.begin(), value.end(), argument.value_.begin());
+    return input;
 }
 
 } // namespace primitives

@@ -32,7 +32,7 @@ using namespace bc::explorer::commands;
 console_result hd_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto prefix = get_version_option();
+    const auto version = get_version_option();
     const data_chunk& seed = get_seed_argument();
 
     if (seed.size() < minimum_seed_size)
@@ -41,12 +41,10 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    // TODO: if not set default version from config.
-
-    // hd_private requires a composite version, but public is unused here.
-    const auto prefixes = bc::wallet::hd_private::to_prefixes(prefix, 0);
-
+    // We require the private version, but public is unused here.
+    const auto prefixes = bc::wallet::hd_private::to_prefixes(version, 0);
     const bc::wallet::hd_private private_key(seed, prefixes);
+
     if (!private_key)
     {
         error << BX_HD_NEW_INVALID_KEY << std::endl;

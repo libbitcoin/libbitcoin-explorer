@@ -34,7 +34,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h__failure_err
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
     command.set_index_option(0);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_HD_PUBLIC_HARD_OPTION_CONFLICT "\n");
@@ -45,7 +46,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1__okay_outp
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(1);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub68Gmy5EdvgibQVfPdqkBBCHxA5htiqg55crXYuXoQRKfDBFA1WEjWgP6LHhwBZeNK1VTsfTFUHCdrfp1bgwQ9xv5ski8PX9rL2dZXvgGDnw" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ\n");
@@ -56,7 +58,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h__failur
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
     command.set_index_option(2);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_HD_PUBLIC_HARD_OPTION_CONFLICT "\n");
@@ -67,7 +70,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h_2__okay
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(2);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub6D4BDPcP2GT577Vvch3R8wDkScZWzQzMMUm3PWbmWvVJrZwQY4VUNgqFJPMM3No2dFDFGTsxxpG5uJh7n7epu4trkrX7x7DogT5Uv6fcLW5" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV\n");
@@ -78,7 +82,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_public_m_0h_1_2h_2_10000
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(1000000000);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6H1LXWLaKsWFhvm6RVpEL9P4KfRZSW7abD2ttkWP3SSQvnyA8FSVqNTEcYFgJS2UaFcxupHiYkro49S8yGasTvXEYBVPamhGW6cFJodrTHy\n");
@@ -91,7 +96,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h__okay_outpu
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
     command.set_index_option(0);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub68Gmy5EdvgibQVfPdqkBBCHxA5htiqg55crXYuXoQRKfDBFA1WEjWgP6LHhwBZeNK1VTsfTFUHCdrfp1bgwQ9xv5ski8PX9rL2dZXvgGDnw\n");
@@ -102,7 +108,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1__okay_out
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(1);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprv9uHRZZhk6KAJC1avXpDAp4MDc3sQKNxDiPvvkX8Br5ngLNv1TxvUxt4cV1rGL5hj6KCesnDYUhd7oWgT11eZG7XnxHrnYeSvkzY7d2bhkJ7" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ\n");
@@ -113,7 +120,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h__okay_
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
     command.set_index_option(2);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprv9wTYmMFdV23N2TdNG573QoEsfRrWKQgWeibmLntzniatZvR9BmLnvSxqu53Kw1UmYPxLgboyZQaXwTCg8MSY3H2EU4pWcQDnRnrVA1xe8fs" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6D4BDPcP2GT577Vvch3R8wDkScZWzQzMMUm3PWbmWvVJrZwQY4VUNgqFJPMM3No2dFDFGTsxxpG5uJh7n7epu4trkrX7x7DogT5Uv6fcLW5\n");
@@ -124,7 +132,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2__oka
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(2);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprv9z4pot5VBttmtdRTWfWQmoH1taj2axGVzFqSb8C9xaxKymcFzXBDptWmT7FwuEzG3ryjH4ktypQSAewRiNMjANTtpgP4mLTj34bhnZX7UiM" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV\n");
@@ -135,7 +144,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector1_private_m_0h_1_2h_2_1000
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(1000000000);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprvA2JDeKCSNNZky6uBCviVfJSKyQ1mDYahRjijr5idH2WwLsEd4Hsb2Tyh8RfQMuPh7f7RtyzTtdrbdqqsunu5Mm3wDvUAKRHSC34sJ7in334" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6H1LXWLaKsWFhvm6RVpEL9P4KfRZSW7abD2ttkWP3SSQvnyA8FSVqNTEcYFgJS2UaFcxupHiYkro49S8yGasTvXEYBVPamhGW6cFJodrTHy\n");
@@ -150,7 +160,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0__okay_output)
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(0);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH\n");
@@ -161,7 +172,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h__
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
     command.set_index_option(2147483647);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_HD_PUBLIC_HARD_OPTION_CONFLICT "\n");
@@ -172,6 +184,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(1);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub6ASAVgeehLbnwdqV6UKMHVzgqAG8Gr6riv3Fxxpj8ksbH9ebxaEyBLZ85ySDhKiLDBrQSARLq1uNRts8RuJiHjaDMBU4Zn9h8LZNnBC5y4a" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6DF8uhdarytz3FWdA8TvFSvvAh8dP3283MY7p2V4SeE2wyWmG5mg5EwVvmdMVCQcoNJxGoWaU9DCWh89LojfZ537wTfunKau47EL2dhHKon\n");
@@ -182,7 +196,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
     command.set_index_option(2147483646);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub6DF8uhdarytz3FWdA8TvFSvvAh8dP3283MY7p2V4SeE2wyWmG5mg5EwVvmdMVCQcoNJxGoWaU9DCWh89LojfZ537wTfunKau47EL2dhHKon" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_HD_PUBLIC_HARD_OPTION_CONFLICT "\n");
@@ -193,7 +208,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_public_m_0_2147483647h_1
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(2);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xpub6ERApfZwUNrhLCkDtcHTcxd75RbzS1ed54G1LkBUHQVHQKqhMkhgbmJbZRkrgZw4koxb5JaHWkY4ALHY2grBGRjaDMzQLcgJvLJuZZvRcEL" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6FnCn6nSzZAw5Tw7cgR9bi15UV96gLZhjDstkXXxvCLsUXBGXPdSnLFbdpq8p9HmGsApME5hQTZ3emM2rnY5agb9rXpVGyy3bdW6EEgAtqt\n");
@@ -206,7 +222,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0__okay_output
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(0);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH\n");
@@ -217,7 +234,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
     command.set_index_option(2147483647);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprv9vHkqa6EV4sPZHYqZznhT2NPtPCjKuDKGY38FBWLvgaDx45zo9WQRUT3dKYnjwih2yJD9mkrocEZXo1ex8G81dwSM1fwqWpWkeS3v86pgKt" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6ASAVgeehLbnwdqV6UKMHVzgqAG8Gr6riv3Fxxpj8ksbH9ebxaEyBLZ85ySDhKiLDBrQSARLq1uNRts8RuJiHjaDMBU4Zn9h8LZNnBC5y4a\n");
@@ -228,7 +246,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(1);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprv9wSp6B7kry3Vj9m1zSnLvN3xH8RdsPP1Mh7fAaR7aRLcQMKTR2vidYEeEg2mUCTAwCd6vnxVrcjfy2kRgVsFawNzmjuHc2YmYRmagcEPdU9" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6DF8uhdarytz3FWdA8TvFSvvAh8dP3283MY7p2V4SeE2wyWmG5mg5EwVvmdMVCQcoNJxGoWaU9DCWh89LojfZ537wTfunKau47EL2dhHKon\n");
@@ -239,7 +258,8 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(true);
     command.set_index_option(2147483646);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprv9zFnWC6h2cLgpmSA46vutJzBcfJ8yaJGg8cX1e5StJh45BBciYTRXSd25UEPVuesF9yog62tGAQtHjXajPPdbRCHuWS6T8XA2ECKADdw4Ef" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6ERApfZwUNrhLCkDtcHTcxd75RbzS1ed54G1LkBUHQVHQKqhMkhgbmJbZRkrgZw4koxb5JaHWkY4ALHY2grBGRjaDMzQLcgJvLJuZZvRcEL\n");
@@ -250,21 +270,37 @@ BOOST_AUTO_TEST_CASE(hd_public__invoke__mainnet_vector2_private_m_0_2147483647h_
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(2);
-    command.set_version_option(76067358);
+    command.set_public_version_option(76067358);
+    command.set_secret_version_option(76066276);
     command.set_hd_key_argument({ "xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAxn8L39njGVyuoseXzU6rcxFLJ8HFsTjSyQbLYnMpCqE2VbFWc" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("xpub6FnCn6nSzZAw5Tw7cgR9bi15UV96gLZhjDstkXXxvCLsUXBGXPdSnLFbdpq8p9HmGsApME5hQTZ3emM2rnY5agb9rXpVGyy3bdW6EEgAtqt\n");
 }
 
-BOOST_AUTO_TEST_CASE(hd_public__invoke__private_derivation_index_1_testnet__okay_output)
+// testnet
+
+BOOST_AUTO_TEST_CASE(hd_public__invoke__private_derivation_testnet__okay_output)
 {
     BX_DECLARE_COMMAND(hd_public);
     command.set_hard_option(false);
     command.set_index_option(1);
-    command.set_version_option(70617039);
-    command.set_hd_key_argument({ "xprv9uHRZZhk6KAJC1avXpDAp4MDc3sQKNxDiPvvkX8Br5ngLNv1TxvUxt4cV1rGL5hj6KCesnDYUhd7oWgT11eZG7XnxHrnYeSvkzY7d2bhkJ7" });
+    command.set_public_version_option(70617039);
+    command.set_secret_version_option(70615956);
+    command.set_hd_key_argument({ "tprv8ZgxMBicQKsPeQXeTomURYYS8ZhysPog3wXLPwStJ9LeiPeGvypYe4y6HhWadxZi4BB2dLSAMXVkoRi8AoeNXmjETeYFiyRi56BhFnkm9uh" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("tpubDApXh6cD2fZ7WjtgpHd8yrWyYaneiFuRZa7fVjMkgxsmC1QzoXW8cgx9zQFJ81Jx4deRGfRE7yXA9A3STsxXj4CKEZJHYgpMYikkas9DBTP\n");
+    BX_REQUIRE_OUTPUT("tpubD9LPrAppw4effqYLPzG23WU3QwanZ63hVPcJXThtDrLL8NeB7qx1rZ1Lage8GLtHHjiJMNFhMS1pL6xBiM2MwpmBpZbDLXZxfUFEg9Fvh4t\n");
+}
+
+BOOST_AUTO_TEST_CASE(hd_public__invoke__public_derivation_testnet__okay_output)
+{
+    BX_DECLARE_COMMAND(hd_public);
+    command.set_hard_option(false);
+    command.set_index_option(1);
+    command.set_public_version_option(70617039);
+    command.set_secret_version_option(70615956);
+    command.set_hd_key_argument({ "tpubD9LPrAppw4effqYLPzG23WU3QwanZ63hVPcJXThtDrLL8NeB7qx1rZ1Lage8GLtHHjiJMNFhMS1pL6xBiM2MwpmBpZbDLXZxfUFEg9Fvh4t" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("tpubDBUXE2QrFFQBfPLxoKD3U1zG294LmLSG3rD9MvREmKcExYBeH4U1gyHcrtZDZe6JFxMFYVzYYhRDWCuJAQE3AbdpD3Qz4FdPVu5UHLT1NKa\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

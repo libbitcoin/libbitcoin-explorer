@@ -80,15 +80,5 @@ BOOST_AUTO_TEST_CASE(hd_new__invoke__64_bit_seed_testnet__failure_error)
     BX_REQUIRE_ERROR(BX_HD_NEW_SHORT_SEED "\n");
 }
 
-// TODO: what seed generates an invalid key so we can cover this code path?
-//BOOST_AUTO_TEST_CASE(hd_new__invoke_128_bit_bad_seed__failure_error)
-//{
-//    BX_DECLARE_COMMAND(hd_new);
-//    command.set_version_option(76066276);
-//    command.set_seed_argument({ "00000000000000000000000000000000" });
-//    BX_REQUIRE_FAILURE(command.invoke(output, error));
-//    BX_REQUIRE_ERROR(BX_HD_NEW_INVALID_KEY "\n");
-//}
-
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

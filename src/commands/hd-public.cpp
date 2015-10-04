@@ -32,41 +32,59 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto hard = get_hard_option();
     const auto index = get_index_option();
-    const auto version = get_version_option();
+    const auto private_version = get_secret_version_option();
+    const auto public_version = get_public_version_option();
     const auto& key = get_hd_key_argument();
+   
+    const auto key_version = key.version();
+    if (key_version != private_version && key_version != public_version)
+    {
+        output << "ERROR_VERSION" << std::endl;
+        return console_result::failure;
+    }
 
-    const bc::wallet::hd_public& public_key = key;
-    const bc::wallet::hd_private& private_key = key;
-
-    if (!private_key && hard)
+    if (hard && key_version != private_version)
     {
         error << BX_HD_PUBLIC_HARD_OPTION_CONFLICT << std::endl;
         return console_result::failure;
     }
-
-    static constexpr auto first = bc::wallet::hd_first_hardened_key;
-    const auto position = hard ? first + index : index;
-
-    // TODO: obtain version from config if not set.
-
-    if (private_key)
+    
+    if (key_version == private_version)
     {
-        // Obtain private version and combine with specified public version.
-        using secret = bc::wallet::hd_private;
-        const auto private_hd_key = private_key.to_hd_key();
-        const auto prefix = secret::to_prefix(private_key.lineage().prefixes);
-        const auto prefixes = secret::to_prefixes(prefix, version);
-        const secret versioned(private_hd_key, prefixes);
+        const auto prefixes = bc::wallet::hd_private::to_prefixes(
+            key.version(), public_version);
 
-        // Derive the public key from new private key with the public version.
-        const auto child_public_key = versioned.derive_public(position);
-        output << child_public_key << std::endl;
+        // Derive the public key from new private key and the public version.
+        const bc::wallet::hd_private private_key(key, prefixes);
+        if (private_key)
+        {
+            static constexpr auto first = bc::wallet::hd_first_hardened_key;
+            const auto position = hard ? first + index : index;
+
+            const auto child_public_key = private_key.derive_public(position);
+            if (child_public_key)
+            {
+                output << child_public_key << std::endl;
+                return console_result::okay;
+            }
+        }
     }
     else
     {
-        const auto child_public_key = public_key.derive_public(position);
-        output << child_public_key << std::endl;
+        // Derive the public key from new private key and the public version.
+        const bc::wallet::hd_public public_key(key, public_version);
+        if (public_key)
+        {
+            const auto child_public_key = public_key.derive_public(index);
+            if (child_public_key)
+            {
+                output << child_public_key << std::endl;
+                return console_result::okay;
+            }
+        }
     }
 
+
+    output << "ERROR_KEY" << std::endl;
     return console_result::okay;
 }

@@ -32,7 +32,7 @@
   <configuration section="wallet">
     <setting name="wif_version" type="byte" default="128" description="The wallet import format (WIF) key version, defaults to 128." />
     <setting name="hd_public_version" type="uint32_t" default="76067358" description="The hierarchical deterministic (HD) public key version, defaults to 76067358." />
-    <setting name="hd_private_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
+    <setting name="hd_secret_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
     <setting name="pay_to_public_key_hash_version" type="byte" default="0" description="The pay-to-public-key-hash address version, defaults to zero." />
     <setting name="pay_to_script_hash_version" type="byte" default="5" description="The pay-to-script-hash address version, defaults to 5." />
     <setting name="transaction_version" type="byte" default="1" description="The transaction version, defaults to 1." />
@@ -339,7 +339,7 @@
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" output="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">
-    <option name="version" type="uint32_t" configuration="wallet.hd_private_version" description="The desired HD private key version, defaults to 76066276." />
+    <option name="version" type="uint32_t" configuration="wallet.hd_secret_version" description="The desired HD private key version, defaults to 76066276." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
     <define name="BX_HD_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
     <define name="BX_HD_NEW_INVALID_KEY" value="The seed produced an invalid key." />
@@ -354,7 +354,8 @@
   <command symbol="hd-public" output="hd_public" category="WALLET" description="Derive a child HD (BIP32) public key from another HD public or private key.">
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
-    <option name="version" type="uint32_t" configuration="wallet.hd_public_version" description="The desired HD public key version, defaults to 76067358. This is used when the HD key is private." />
+    <option name="secret_version" type="uint32_t" configuration="wallet.hd_secret_version" description="The expected version for an HD private key, defaults to 76066276." />
+    <option name="public_version" type="uint32_t" configuration="wallet.hd_public_version" description="The expected version for an HD public key, defaults to 76067358." />
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The parent HD public or private key. If not specified the key is read from STDIN." />
     <define name="BX_HD_PUBLIC_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
@@ -364,6 +365,8 @@
   </command>
 
   <command symbol="hd-to-ec" output="ec_private" category="WALLET" description="Convert a HD (BIP32) public or private key to the equivalent EC public or private key.">
+    <option name="secret_version" type="uint32_t" configuration="wallet.hd_secret_version" description="The expected version for an HD private key, defaults to 76066276." />
+    <option name="public_version" type="uint32_t" configuration="wallet.hd_public_version" description="The expected version for an HD public key, defaults to 76067358." />
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The HD public or private key to convert. If not specified the key is read from STDIN." />
   </command>
   
