@@ -82,8 +82,6 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
     const auto& inputs = get_inputs_option();
     const auto& outputs = get_outputs_option();
 
-    // TODO: if not set derive script_version from config.
-
     tx_type tx;
     tx.version = tx_version;
     tx.locktime = locktime;

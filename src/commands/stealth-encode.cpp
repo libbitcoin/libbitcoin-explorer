@@ -59,8 +59,6 @@ console_result stealth_encode::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    // TODO: if not set default version from config (address_stealth).
-
     const auto spend_points = cast<ec_public, ec_compressed>(spend_pubkeys);
     const stealth_address address(filter, scan_pubkey, spend_points,
         signatures, version);

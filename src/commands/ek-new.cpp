@@ -45,8 +45,6 @@ console_result ek_new::invoke(std::ostream& output, std::ostream& error)
     ek_seed bytes;
     std::copy(seed.begin(), seed.begin() + ek_seed_size, bytes.begin());
 
-    // TODO: if not set default version from config.
-
     ec_compressed unused;
     encrypted_private secret;
     create_key_pair(secret, unused, token, bytes, version, !uncompressed);
