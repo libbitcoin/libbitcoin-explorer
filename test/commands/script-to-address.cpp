@@ -25,6 +25,26 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(script_to_address__invoke)
 
+BOOST_AUTO_TEST_CASE(script_to_address__invoke__mainnet__expected_output)
+{
+    BX_DECLARE_COMMAND(script_to_address);
+    command.set_version_option(5);
+    const std::string script("dup hash160 [ 89abcdefabbaabbaabbaabbaabbaabbaabbaabba ] equalverify checksig");
+    command.set_script_argument({ script });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("3F6i6kwkevjR7AsAd4te2YB2zZyASEm1HM\n");
+}
+
+BOOST_AUTO_TEST_CASE(script_to_address__invoke__testnet__expected_output)
+{
+    BX_DECLARE_COMMAND(script_to_address);
+    command.set_version_option(196);
+    const std::string script("dup hash160 [ 89abcdefabbaabbaabbaabbaabbaabbaabbaabba ] equalverify checksig");
+    command.set_script_argument({ script });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("2N6evAVsnGPEmJxViJCWWeVAJCvBLFehT7L\n");
+}
+
 // Vector: www.reddit.com/r/Bitcoin/comments/2h4ic8/why_dont_rbitcoin_community_donate_towards/
 BOOST_AUTO_TEST_CASE(script_to_address__invoke__multisig_mainnet__expected_output)
 {

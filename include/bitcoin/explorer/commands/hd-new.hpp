@@ -181,7 +181,7 @@ public:
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
         const auto& option_version = variables["version"];
-        const auto& option_version_config = variables["wallet.hd_private_version"];
+        const auto& option_version_config = variables["wallet.hd_secret_version"];
         if (option_version.defaulted() && !option_version_config.defaulted())
         {
             option_.version = option_version_config.as<uint32_t>();

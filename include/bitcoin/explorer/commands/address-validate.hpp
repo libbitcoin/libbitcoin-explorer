@@ -65,7 +65,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_ADDRESS_VALIDATE_OBSOLETE \
-    "This command is no longer supported. Use address-decode."
+    "This command is no longer supported. Use address-decode instead."
 
 /**
  * Class to implement the address-validate command.

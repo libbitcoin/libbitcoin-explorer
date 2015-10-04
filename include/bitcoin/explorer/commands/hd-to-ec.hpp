@@ -146,6 +146,16 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "secret_version,s",
+            value<uint32_t>(&option_.secret_version)->default_value(76066276),
+            "The expected version for an HD private key, defaults to 76066276."
+        )
+        (
+            "public_version,p",
+            value<uint32_t>(&option_.public_version)->default_value(76067358),
+            "The expected version for an HD public key, defaults to 76067358."
+        )
+        (
             "HD_KEY",
             value<primitives::hd_key>(&argument_.hd_key),
             "The HD public or private key to convert. If not specified the key is read from STDIN."
@@ -160,6 +170,19 @@ public:
      */
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
+        const auto& option_secret_version = variables["secret_version"];
+        const auto& option_secret_version_config = variables["wallet.hd_secret_version"];
+        if (option_secret_version.defaulted() && !option_secret_version_config.defaulted())
+        {
+            option_.secret_version = option_secret_version_config.as<uint32_t>();
+        }
+
+        const auto& option_public_version = variables["public_version"];
+        const auto& option_public_version_config = variables["wallet.hd_public_version"];
+        if (option_public_version.defaulted() && !option_public_version_config.defaulted())
+        {
+            option_.public_version = option_public_version_config.as<uint32_t>();
+        }
     }
 
     /**
@@ -190,6 +213,40 @@ public:
         argument_.hd_key = value;
     }
 
+    /**
+     * Get the value of the secret_version option.
+     */
+    virtual uint32_t& get_secret_version_option()
+    {
+        return option_.secret_version;
+    }
+
+    /**
+     * Set the value of the secret_version option.
+     */
+    virtual void set_secret_version_option(
+        const uint32_t& value)
+    {
+        option_.secret_version = value;
+    }
+
+    /**
+     * Get the value of the public_version option.
+     */
+    virtual uint32_t& get_public_version_option()
+    {
+        return option_.public_version;
+    }
+
+    /**
+     * Set the value of the public_version option.
+     */
+    virtual void set_public_version_option(
+        const uint32_t& value)
+    {
+        option_.public_version = value;
+    }
+
 private:
 
     /**
@@ -215,9 +272,13 @@ private:
     struct option
     {
         option()
+          : secret_version(),
+            public_version()
         {
         }
 
+        uint32_t secret_version;
+        uint32_t public_version;
     } option_;
 };
 

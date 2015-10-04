@@ -47,8 +47,6 @@ console_result commands::ek_public::invoke(std::ostream& output,
     std::copy(seed.begin(), seed.begin() + ek_seed_size, bytes.begin());
     const auto compressed = !uncompressed;
 
-    // TODO: if not set default version from config.
-
     encrypted_private unused1;
     encrypted_public key;
     ec_compressed unused2;

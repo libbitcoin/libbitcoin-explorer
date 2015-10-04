@@ -33,8 +33,6 @@ console_result ec_to_address::invoke(std::ostream& output, std::ostream& error)
     const auto& point = get_ec_public_key_argument();
     const auto version = get_version_option();
 
-    // TODO: if not set default version from config.
-
     output << payment_address(point, version) << std::endl;
     return console_result::okay;
 }

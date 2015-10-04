@@ -38,6 +38,12 @@ console_result hd_private::invoke(std::ostream& output, std::ostream& error)
     const auto position = hard ? first + index : index;
     const auto child_private_key = private_key.derive_private(position);
 
+    if (!child_private_key)
+    {
+        output << "ERROR" << std::endl;
+        return console_result::failure;
+    }
+    
     output << child_private_key << std::endl;
     return console_result::okay;
 }

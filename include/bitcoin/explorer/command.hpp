@@ -223,14 +223,14 @@ public:
             "The hierarchical deterministic (HD) public key version, defaults to 76067358."
         )
         (
-            "wallet.hd_private_version",
-            value<uint32_t>(&setting_.wallet.hd_private_version)->default_value(76066276),
+            "wallet.hd_secret_version",
+            value<uint32_t>(&setting_.wallet.hd_secret_version)->default_value(76066276),
             "The hierarchical deterministic (HD) private key version, defaults to 76066276."
         )
         (
             "wallet.pay_to_public_key_hash_version",
             value<primitives::byte>(&setting_.wallet.pay_to_public_key_hash_version)->default_value(0),
-            "The pay-to-public-key-hash address version, defaults to 0."
+            "The pay-to-public-key-hash address version, defaults to zero."
         )
         (
             "wallet.pay_to_script_hash_version",
@@ -249,8 +249,8 @@ public:
         )
         (
             "network.connect_retries",
-            value<primitives::byte>(&setting_.network.connect_retries),
-            "The number of times to retry contacting a node, defaults to 0."
+            value<primitives::byte>(&setting_.network.connect_retries)->default_value(0),
+            "The number of times to retry contacting a node, defaults to zero."
         )
         (
             "network.connect_timeout_seconds",
@@ -289,8 +289,8 @@ public:
         )
         (
             "server.connect_retries",
-            value<primitives::byte>(&setting_.server.connect_retries),
-            "The number of times to retry contacting a server, defaults to 0."
+            value<primitives::byte>(&setting_.server.connect_retries)->default_value(0),
+            "The number of times to retry contacting a server, defaults to zero."
         )
         (
             "server.connect_timeout_seconds",
@@ -391,19 +391,19 @@ public:
     }
 
     /**
-     * Get the value of the wallet.hd_private_version setting.
+     * Get the value of the wallet.hd_secret_version setting.
      */
-    virtual uint32_t get_wallet_hd_private_version_setting() const
+    virtual uint32_t get_wallet_hd_secret_version_setting() const
     {
-        return setting_.wallet.hd_private_version;
+        return setting_.wallet.hd_secret_version;
     }
 
     /**
-     * Set the value of the wallet.hd_private_version setting.
+     * Set the value of the wallet.hd_secret_version setting.
      */
-    virtual void set_wallet_hd_private_version_setting(uint32_t value)
+    virtual void set_wallet_hd_secret_version_setting(uint32_t value)
     {
-        setting_.wallet.hd_private_version = value;
+        setting_.wallet.hd_secret_version = value;
     }
 
     /**
@@ -709,7 +709,7 @@ private:
             wallet()
               : wif_version(),
                 hd_public_version(),
-                hd_private_version(),
+                hd_secret_version(),
                 pay_to_public_key_hash_version(),
                 pay_to_script_hash_version(),
                 transaction_version()
@@ -718,7 +718,7 @@ private:
 
             primitives::byte wif_version;
             uint32_t hd_public_version;
-            uint32_t hd_private_version;
+            uint32_t hd_secret_version;
             primitives::byte pay_to_public_key_hash_version;
             primitives::byte pay_to_script_hash_version;
             primitives::byte transaction_version;

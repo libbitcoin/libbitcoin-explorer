@@ -20,6 +20,7 @@
 #ifndef BX_HD_KEY_HPP
 #define BX_HD_KEY_HPP
 
+#include <cstdint>
 #include <iostream>
 #include <string>
 #include <bitcoin/bitcoin.hpp>
@@ -52,35 +53,16 @@ public:
     hd_key(const std::string& base58);
 
     /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
+     * Get the version/prefix of the key value.
+     * @return  The version of the key.
      */
-    hd_key(const wallet::hd_private& value);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  value  The value to initialize with.
-     */
-    hd_key(const wallet::hd_public& value);
-
-    /**
-     * Return a const reference to the public key of the private key if valid 
-     * and otherwise return the public key.
-     * @return  A reference to the object's internal data.
-     */
-    const wallet::hd_public& to_public() const;
+    uint32_t version() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const wallet::hd_private&() const;
-
-    /**
-     * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
-     */
-    operator const wallet::hd_public&() const;
+    operator const wallet::hd_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -95,12 +77,7 @@ private:
     /**
      * The private key state of this object.
      */
-    wallet::hd_private private_key_value_;
-
-    /**
-    * The public key state of this object.
-    */
-    wallet::hd_public public_key_value_;
+    wallet::hd_key value_;
 };
 
 } // namespace primitives

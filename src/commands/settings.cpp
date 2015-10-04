@@ -45,8 +45,8 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
         serialize(get_wallet_wif_version_setting());
     list["wallet.hd_public_version"] =
         serialize(get_wallet_hd_public_version_setting());
-    list["wallet.hd_private_version"] =
-        serialize(get_wallet_hd_private_version_setting());
+    list["wallet.hd_secret_version"] =
+        serialize(get_wallet_hd_secret_version_setting());
     list["wallet.pay_to_public_key_hash_version"] =
         serialize(get_wallet_pay_to_public_key_hash_version_setting());
     list["wallet.pay_to_script_hash_version"] =
@@ -70,13 +70,16 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     list["network.error_file"] = 
         get_network_error_file_setting().string();
 
-    std::vector<std::string> seeds;
-    for (const auto& seed: get_network_seeds_setting())
+    const auto& nodes = get_network_seeds_setting();
+    const auto& seeds = nodes.empty() ? network::seeder::mainnet : nodes;
+
+    std::vector<std::string> buffer;
+    for (const auto& seed: seeds)
     {
-        seeds.push_back(seed.to_string());
+        buffer.push_back(seed.to_string());
     }
 
-    list["network.seed"] = join(seeds, ",");
+    list["network.seeds"] = join(buffer, ",");
 
     // [server]
     list["server.url"] =

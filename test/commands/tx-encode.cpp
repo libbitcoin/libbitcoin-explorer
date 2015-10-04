@@ -125,13 +125,13 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(tx_encode__invoke__stealth_address_output)
 
-// TODO: add prefix test
+// TODO: add stealth filter test
 
 BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_stealth_output_no_filter_version_1__okay_output)
 {
     BX_DECLARE_COMMAND(tx_encode);
     command.set_version_option(1);
-    command.set_script_version_option(43);
+    command.set_script_version_option(5);
     command.set_inputs_option({ { TX_ENCODE_INPUT_A } });
     command.set_outputs_option({ { TX_ENCODE_STEALTH_OUTPUT_A } });
     BX_REQUIRE_OKAY(command.invoke(output, error));

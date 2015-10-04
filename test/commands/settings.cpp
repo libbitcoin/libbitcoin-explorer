@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        error_file \"\"\n" \
 "        hosts_file \"\"\n" \
 "        identifier 0\n" \
-"        seed \"\"\n" \
+"        seeds seed.bitnodes.io:8333,seed.bitcoinstats.com:8333,seed.bitcoin.sipa.be:8333,dnsseed.bluematt.me:8333,seed.bitcoin.jonasschnelli.ch:8333,dnsseed.bitcoin.dashjr.org:8333\n" \
 "    }\n" \
 "    server\n" \
 "    {\n" \
@@ -49,8 +49,8 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "    }\n" \
 "    wallet\n" \
 "    {\n" \
-"        hd_private_version 0\n" \
 "        hd_public_version 0\n" \
+"        hd_secret_version 0\n" \
 "        pay_to_public_key_hash_version 0\n" \
 "        pay_to_script_hash_version 0\n" \
 "        transaction_version 0\n" \
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        error_file error.log\n" \
 "        hosts_file my.hosts\n" \
 "        identifier 10\n" \
-"        seed seed1.libbitcoin.org:8333,seed2.libbitcoin.org:8333\n" \
+"        seeds seed1.libbitcoin.org:8333,seed2.libbitcoin.org:8333\n" \
 "    }\n" \
 "    server\n" \
 "    {\n" \
@@ -82,8 +82,8 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "    }\n" \
 "    wallet\n" \
 "    {\n" \
-"        hd_private_version 3\n" \
 "        hd_public_version 2\n" \
+"        hd_secret_version 3\n" \
 "        pay_to_public_key_hash_version 4\n" \
 "        pay_to_script_hash_version 5\n" \
 "        transaction_version 6\n" \
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
     BX_DECLARE_COMMAND(settings);
     command.set_wallet_wif_version_setting(1);
     command.set_wallet_hd_public_version_setting(2);
-    command.set_wallet_hd_private_version_setting(3);
+    command.set_wallet_hd_secret_version_setting(3);
     command.set_wallet_pay_to_public_key_hash_version_setting(4);
     command.set_wallet_pay_to_script_hash_version_setting(5);
     command.set_wallet_transaction_version_setting(6);

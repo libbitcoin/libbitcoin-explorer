@@ -36,8 +36,6 @@ console_result ec_to_ek::invoke(std::ostream& output, std::ostream& error)
     const auto& passphrase = get_passphrase_argument();
     const auto& secret = get_ec_private_key_argument();
 
-    // TODO: if not set default version from config.
-
     encrypted_private point;
     encrypt(point, secret, passphrase, version, !uncompressed);
 

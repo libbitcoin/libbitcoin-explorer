@@ -47,5 +47,16 @@ BOOST_AUTO_TEST_CASE(hd_to_public__invoke__mainnet_vector_2__okay_output)
     BX_REQUIRE_OUTPUT("xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB\n");
 }
 
+// testnet
+
+BOOST_AUTO_TEST_CASE(hd_to_public__invoke__testnet__okay_output)
+{
+    BX_DECLARE_COMMAND(hd_to_public);
+    command.set_version_option(70617039);
+    command.set_hd_private_key_argument({ "tprv8ZgxMBicQKsPeQXeTomURYYS8ZhysPog3wXLPwStJ9LeiPeGvypYe4y6HhWadxZi4BB2dLSAMXVkoRi8AoeNXmjETeYFiyRi56BhFnkm9uh" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("tpubD6NzVbkrYhZ4XsZSMTS4pxCYhbDv2izadF87gTVBiR93Ysu3ZNe8pZaxTout4ifQXCUfp2wAChtcHNrbVka3KzfXNRM7gv9pwM57SB7AMFx\n");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

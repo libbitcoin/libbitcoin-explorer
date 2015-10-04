@@ -33,8 +33,6 @@ console_result script_to_address::invoke(std::ostream& output, std::ostream& err
     // Bound parameters.
     const auto& script = get_script_argument();
     const auto version = get_version_option();
-        
-    // TODO: if not set default version from config (address_p2sh).
 
     const payment_address address(script, version);
 

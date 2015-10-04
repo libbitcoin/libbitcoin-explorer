@@ -45,8 +45,6 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
     std::copy(seed.begin(), seed.begin() + ek_seed_size, bytes.begin());
     const auto compressed = !uncompressed;
 
-    // TODO: if not set default version from config.
-
     ec_compressed point;
     encrypted_private unused;
     create_key_pair(unused, point, token, bytes, version, compressed);

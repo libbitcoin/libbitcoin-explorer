@@ -32,15 +32,15 @@
   <configuration section="wallet">
     <setting name="wif_version" type="byte" default="128" description="The wallet import format (WIF) key version, defaults to 128." />
     <setting name="hd_public_version" type="uint32_t" default="76067358" description="The hierarchical deterministic (HD) public key version, defaults to 76067358." />
-    <setting name="hd_private_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
-    <setting name="pay_to_public_key_hash_version" type="byte" default="0" description="The pay-to-public-key-hash address version, defaults to 0." />
+    <setting name="hd_secret_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
+    <setting name="pay_to_public_key_hash_version" type="byte" default="0" description="The pay-to-public-key-hash address version, defaults to zero." />
     <setting name="pay_to_script_hash_version" type="byte" default="5" description="The pay-to-script-hash address version, defaults to 5." />
     <setting name="transaction_version" type="byte" default="1" description="The transaction version, defaults to 1." />
   </configuration>
 
   <configuration section="network">
     <setting name="identifier" type="uint32_t" default="3652501241" description="The magic number for message headers, defaults to 3652501241." />
-    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a node, defaults to 0." />
+    <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a node, defaults to zero." />
     <setting name="connect_timeout_seconds" type="uint32_t" default="5" description="The time limit for connection establishment, defaults to 5." />
     <setting name="channel_handshake_seconds" type="uint32_t" default="30" description="The time limit to complete the connection handshake, defaults to 30." />
     <setting name="hosts_file" type="path" default="hosts.cache" description="The peer hosts cache file path, defaults to 'hosts.cache'." />
@@ -51,7 +51,7 @@
 
   <configuration section="server">
     <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk server." />
-    <setting name="connect_retries" type="byte" description="The number of times to retry contacting a server, defaults to 0." />
+    <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to zero." />
     <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
@@ -96,7 +96,7 @@
   </command>
 
   <command symbol="address-validate" formerly="validaddr" category="WALLET" obsolete="true" description="Validate a payment address.">
-    <define name="BX_ADDRESS_VALIDATE_OBSOLETE" value="This command is no longer supported. Use address-decode." />
+    <define name="BX_ADDRESS_VALIDATE_OBSOLETE" value="This command is no longer supported. Use address-decode instead." />
   </command>
   
   <command symbol="base16-decode" output="raw" category="ENCODING" description="Convert a Base16 value to binary data.">
@@ -339,7 +339,7 @@
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" output="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">
-    <option name="version" type="uint32_t" configuration="wallet.hd_private_version" description="The desired HD private key version, defaults to 76066276." />
+    <option name="version" type="uint32_t" configuration="wallet.hd_secret_version" description="The desired HD private key version, defaults to 76066276." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN." />
     <define name="BX_HD_NEW_SHORT_SEED" value="The seed is less than 128 bits long." />
     <define name="BX_HD_NEW_INVALID_KEY" value="The seed produced an invalid key." />
@@ -354,7 +354,8 @@
   <command symbol="hd-public" output="hd_public" category="WALLET" description="Derive a child HD (BIP32) public key from another HD public or private key.">
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
     <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
-    <option name="version" type="uint32_t" configuration="wallet.hd_public_version" description="The desired HD public key version, defaults to 76067358. This is used when the HD key is private." />
+    <option name="secret_version" type="uint32_t" configuration="wallet.hd_secret_version" description="The expected version for an HD private key, defaults to 76066276." />
+    <option name="public_version" type="uint32_t" configuration="wallet.hd_public_version" description="The expected version for an HD public key, defaults to 76067358." />
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The parent HD public or private key. If not specified the key is read from STDIN." />
     <define name="BX_HD_PUBLIC_HARD_OPTION_CONFLICT" value="The hard option requires a private key." />
   </command>
@@ -364,6 +365,8 @@
   </command>
 
   <command symbol="hd-to-ec" output="ec_private" category="WALLET" description="Convert a HD (BIP32) public or private key to the equivalent EC public or private key.">
+    <option name="secret_version" type="uint32_t" configuration="wallet.hd_secret_version" description="The expected version for an HD private key, defaults to 76066276." />
+    <option name="public_version" type="uint32_t" configuration="wallet.hd_public_version" description="The expected version for an HD public key, defaults to 76067358." />
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The HD public or private key to convert. If not specified the key is read from STDIN." />
   </command>
   
@@ -537,12 +540,12 @@
   </command>
   
   <command symbol="stealth-encode" output="stealth_address" category="STEALTH" description="Encode a stealth payment address.">
-    <option name="prefix" type="base2" description="The Base2 stealth prefix that will be used to locate payments." />
+    <option name="filter" type="base2" description="The Base2 stealth prefix filter that will be used to locate payments." />
     <option name="signatures" type="byte" description="The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to zero." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to create a payment." />
     <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
-    <define name="BX_STEALTH_ENCODE_PREFIX_TOO_LONG" value="The prefix is limited to 32 bits." />
+    <define name="BX_STEALTH_ENCODE_FILTER_TOO_LONG" value="The filter is limited to 32 bits." />
     <define name="BX_STEALTH_ENCODE_SIGNATURES_OVERFLOW" value="The number of signatures is greater than the number of SPEND_PUBKEYs." />
     <define name="BX_STEALTH_ENCODE_MULTISIG_NOT_SUPPORTED" value="WARNING: multiple signature stealth transactions are not yet fully supported." />
   </command>
@@ -615,7 +618,7 @@
   <command symbol="uri-encode" output="uri" category="WALLET" description="Compose a Bitcoin URI from specified parts.">
     <option name="amount" type="btc" description="The value of the amount parameter." />
     <option name="label" type="string" description="The value of the label parameter." />
-    <option name="message" type="string" description="The value of the label parameter." />
+    <option name="message" type="string" description="The value of the message parameter." />
     <option name="request" type="endpoint" description="The value of the payment request parameter." />
     <argument name="ADDRESS" type="address" description="The payment address or stealth address for the address part." />
   </command>

@@ -82,15 +82,15 @@ BOOST_AUTO_TEST_CASE(ek_public__invoke__example_6_testnet__okay)
     BX_REQUIRE_OUTPUT("cfrm2zc7BCp4KwhEE6HzSSxVhUyj2ky8bzvSLEqmAPcakQXb49uFQ87UEg8EhbuwA33t8db2fYW\n");
 }
 
-BOOST_AUTO_TEST_CASE(ek_public__invoke__example_7_litecoin_uncompressed__okay)
+BOOST_AUTO_TEST_CASE(ek_public__invoke__example_7_testnet_uncompressed__okay)
 {
     BX_DECLARE_COMMAND(ek_public);
-    command.set_version_option(48);
+    command.set_version_option(111);
     command.set_uncompressed_option(true);
     command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00dbaadf00dbaadf00d" });
     command.set_token_argument({ "passphraseryQXuRZZQ3Jw5rAT7m6MzxkGSSRmysq3Ayj9vuEHEnbVPJSmRQ2xYFKDKjGYrq" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("cfrm3B6UzSYXiZ36wznhsBGA2YdMrPq9VdxGetyK1VQ3o4A4bxiCY1h9XmUaK7M7tonUhBVyHBw\n");
+    BX_REQUIRE_OUTPUT("cfrm2zbi4iuQJ7cY69uJZsxhYLk4wLY7UWQiZ1wH5b3pEnzczSH3GHY3hAyV5AiWmU7mpk2Bqqc\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

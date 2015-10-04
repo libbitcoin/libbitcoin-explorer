@@ -33,8 +33,6 @@ console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)
     const auto& uncompressed = get_uncompressed_option();
     const auto& wif_version = get_version_option();
 
-    // TODO: if not set default wif_version from config (key_wif).
-
     // Payment address version is unused in this scenario.
     const uint8_t payment_version = 0;
 
