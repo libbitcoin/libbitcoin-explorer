@@ -82,16 +82,16 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     static constexpr size_t host_capacity = 1000;
     static const network::timeout timeouts(connect, handshake);
 
-    const auto seed_nodes = seeds.empty() ? network::seeder::mainnet : seeds;
+    const auto seed_nodes = seeds.empty() ? network::session_seed::mainnet : seeds;
 
     async_client client(threads);
     network::hosts hosts(client.pool(), hosts_file, host_capacity);
-    network::initiator net(client.pool(), identifier, timeouts);
-    network::protocol proto(client.pool(), hosts, net, port, relay, nodes,
+    network::connector net(client.pool(), identifier, timeouts);
+    network::p2p proto(client.pool(), hosts, net, port, relay, nodes,
         inbound, seed_nodes, self, timeouts);
 
     callback_state state(error, output);
-    network::protocol::channel_handler handle_connect;
+    network::p2p::channel_handler handle_connect;
 
     const auto protocol_handler = [&state](const code& code)
     {
