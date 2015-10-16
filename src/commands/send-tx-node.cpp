@@ -84,8 +84,8 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     async_client client(threads);
     network::hosts hosts(client.pool(), hosts_file, host_capacity);
-    network::initiator net(client.pool(), identifier, timeouts);
-    network::protocol proto(client.pool(), hosts, net, listen, relay, outbound,
+    network::connector net(client.pool(), identifier, timeouts);
+    network::p2p proto(client.pool(), hosts, net, listen, relay, outbound,
         inbound, seeds, self, timeouts);
 
     callback_state state(error, output);
