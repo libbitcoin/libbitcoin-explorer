@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        error_file \"\"\n" \
 "        hosts_file \"\"\n" \
 "        identifier 0\n" \
-"        seeds seed.bitnodes.io:8333,seed.bitcoinstats.com:8333,seed.bitcoin.sipa.be:8333,dnsseed.bluematt.me:8333,seed.bitcoin.jonasschnelli.ch:8333,dnsseed.bitcoin.dashjr.org:8333\n" \
+"        seeds seed.bitchannels.io:8333,seed.bitcoinstats.com:8333,seed.bitcoin.sipa.be:8333,dnsseed.bluematt.me:8333,seed.bitcoin.jonasschnelli.ch:8333,dnsseed.bitcoin.dashjr.org:8333\n" \
 "    }\n" \
 "    server\n" \
 "    {\n" \

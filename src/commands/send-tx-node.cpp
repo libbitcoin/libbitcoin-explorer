@@ -23,10 +23,10 @@
 #include <cstddef>
 #include <cstdint>
 #include <csignal>
+#include <future>
 #include <iostream>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
@@ -36,6 +36,7 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::network;
 
 static void handle_signal(int)
 {
@@ -70,58 +71,57 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     bind_error_log(error_log);
     log_error(LOG_NETWORK) << header;
 
-    // Not listening or peering, no relay/port/inbound/seeds/hosts/outbound.
-    static constexpr auto relay = false;
-    static constexpr uint16_t listen = 0;
-    static constexpr size_t inbound = 0;
-    static constexpr size_t host_capacity = 0;
-    static constexpr size_t outbound = 0;
-    static const config::endpoint::list seeds;
-    static const auto self = bc::unspecified_network_address;
+    auto configuration = p2p::mainnet;
 
-    static constexpr size_t threads = 2;
-    static const network::timeout timeouts(connect, handshake);
+    // Fixed non-defaults: not relay/port/inbound/seeds/hosts/outbound.
+    configuration.host_pool_capacity = 0;
+    configuration.outbound_connections = 0;
+    configuration.inbound_port = 0;
+    configuration.inbound_connection_limit = 0;
+    configuration.relay_transactions = false;
+    configuration.seeds.clear();
 
-    async_client client(threads);
-    network::hosts hosts(client.pool(), hosts_file, host_capacity);
-    network::connector net(client.pool(), identifier, timeouts);
-    network::p2p proto(client.pool(), hosts, net, listen, relay, outbound,
-        inbound, seeds, self, timeouts);
+    // Defaulted by bx.
+    configuration.connect_attempts = retries + 1;
+    configuration.connect_timeout_seconds = connect;
+    configuration.channel_handshake_seconds = handshake;
+    configuration.hosts_file = hosts_file;
+    configuration.debug_file = debug_file;
+    configuration.error_file = error_file;
 
+    // Testnet deviations.
+    if (identifier != 0)
+        configuration.identifier = identifier;
+
+    p2p network(configuration);
+    std::promise<code> complete;
     callback_state state(error, output);
 
-    const auto handle_send = [&state](const code& code)
+    const auto send_handler = [&state, &complete](const code& ec)
     {
-        if (state.succeeded(code))
+        if (state.succeeded(ec))
             state.output(format(BX_SEND_TX_NODE_OUTPUT) % now());
 
-        --state;
+        complete.set_value(ec);
     };
 
-    const auto handle_connect = [&state, &transaction, &handle_send](
-        const std::error_code& code, network::channel::ptr node)
+    const auto connect_handler = [&state, &transaction, &send_handler](
+        const std::error_code& ec, network::channel::ptr node)
     {
-        if (state.succeeded(code))
-            node->send(transaction, handle_send);
+        if (state.succeeded(ec))
+            node->send(transaction, send_handler);
     };
 
-    // One node always specified.
-    ++state;
-
-    // Handle each successful connection.
-    proto.subscribe_channel(handle_connect);
-
-    // No need to start or stop the protocol since we only use manual.
-    // Connect to the one specified host and retry up to the specified limit.
-    proto.maintain_connection(host, port, relay, retries);
+    // Connect to the one specified host with retry up to the specified limit.
+    network.connect(host, port, connect_handler);
 
     // Catch C signals for aborting the program.
     signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
-
-    client.poll(state.stopped());
-    client.stop();
+    
+    // Wait until callback indicates completion (connect or timeout).
+    complete.get_future();
 
     return state.get_result();
 }

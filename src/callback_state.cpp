@@ -105,13 +105,12 @@ bool& callback_state::stopped()
     return stopped_;
 }
 
-bool callback_state::succeeded(const std::error_code& code, 
-    const std::string& format)
+bool callback_state::succeeded(const code& ec, const std::string& format)
 {
-    if (code)
+    if (ec)
     {
         // May want to change the behavior to decrement vs. zeroizing refs.
-        error(boost::format(format) % code.message());
+        error(boost::format(format) % ec.message());
         stop(console_result::failure);
         return false;
     }

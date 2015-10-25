@@ -15,7 +15,6 @@
  */
 
 #include <bitcoin/client.hpp>
-#include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>

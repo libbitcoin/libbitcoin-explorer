@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -79,7 +79,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\impl\prop_tree.ipp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\impl\utility.ipp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\async_client.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\callback_state.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\command.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\define.hpp" />
@@ -224,7 +223,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wrap-encode.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\async_client.cpp" />
     <ClCompile Include="..\..\..\..\src\callback_state.cpp" />
     <ClCompile Include="..\..\..\..\src\dispatch.cpp" />
     <ClCompile Include="..\..\..\..\src\display.cpp" />

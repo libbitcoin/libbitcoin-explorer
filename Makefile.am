@@ -35,7 +35,6 @@ lib_LTLIBRARIES = src/libbitcoin-explorer.la
 src_libbitcoin_explorer_la_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
 src_libbitcoin_explorer_la_LIBADD = ${bitcoin_client_LIBS} ${dl_LIBS}
 src_libbitcoin_explorer_la_SOURCES = \
-    src/async_client.cpp \
     src/callback_state.cpp \
     src/dispatch.cpp \
     src/display.cpp \
@@ -320,7 +319,6 @@ include_bitcoin_HEADERS = \
 
 include_bitcoin_explorerdir = ${includedir}/bitcoin/explorer
 include_bitcoin_explorer_HEADERS = \
-    include/bitcoin/explorer/async_client.hpp \
     include/bitcoin/explorer/callback_state.hpp \
     include/bitcoin/explorer/command.hpp \
     include/bitcoin/explorer/define.hpp \
