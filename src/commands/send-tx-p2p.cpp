@@ -63,13 +63,13 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const auto& seeds = get_network_seeds_setting();
 
     // TODO: give option to send errors to console vs. file.
-    static const auto header = format("=========== %1% ==========") % symbol();
     bc::ofstream debug_log(debug_file.string(), log_open_mode);
-    bind_debug_log(debug_log);
-    log_debug(LOG_NETWORK) << header;
     bc::ofstream error_log(error_file.string(), log_open_mode);
-    bind_error_log(error_log);
-    log_error(LOG_NETWORK) << header;
+    initialize_logging(debug_log, error_log, output, error);
+
+    static const auto header = format("=========== %1% ==========") % symbol();
+    log::debug(LOG_NETWORK) << header;
+    log::error(LOG_NETWORK) << header;
 
     auto configuration = p2p::mainnet;
 
@@ -82,8 +82,6 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     configuration.connect_timeout_seconds = connect;
     configuration.channel_handshake_seconds = handshake;
     configuration.hosts_file = hosts_file;
-    configuration.debug_file = debug_file;
-    configuration.error_file = error_file;
 
     // Testnet deviations.
     if (identifier != 0)
