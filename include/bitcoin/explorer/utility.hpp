@@ -48,12 +48,6 @@ namespace libbitcoin {
 namespace explorer {
 
 /**
- * Constant for logging file open mode (append output).
- */
-BC_CONSTEXPR std::ofstream::openmode log_open_mode =
-    std::ofstream::out | std::ofstream::app;
-
-/**
  * Types for defining name-value pair list.
  */
 typedef std::pair<std::string, std::string> name_value_pair;
@@ -173,18 +167,6 @@ data_chunk serialize_satoshi_item(const Item& item);
 template <typename Instance>
 void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
-
-/**
- * Bind the global debug logging handler.
- * @param[in]   debug  The debug log output file stream.
- */
-BCX_API void bind_debug_log(std::ofstream& debug);
-
-/**
- * Bind the global error logging handler.
- * @param[in]   error  The debug log output file stream.
- */
-BCX_API void bind_error_log(std::ofstream& error);
 
 /**
  * Get the connection settings for the configured network.

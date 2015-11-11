@@ -23,11 +23,11 @@
 #include <cstddef>
 #include <cstdint>
 #include <csignal>
+#include <future>
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
@@ -37,6 +37,7 @@ using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::network;
 
 static void handle_signal(int)
 {
@@ -47,7 +48,6 @@ static void handle_signal(int)
     exit(console_result::failure);
 }
 
-// BUGBUG: mainnet/testnet determined by libbitcoin compilation.
 console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -55,7 +55,6 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const tx_type& transaction = get_transaction_argument();
 
     const auto identifier = get_network_identifier_setting();
-    const auto retries = get_network_connect_retries_setting();
     const auto connect = get_network_connect_timeout_seconds_setting();
     const auto handshake = get_network_channel_handshake_seconds_setting();
     const auto& hosts_file = get_network_hosts_file_setting();
@@ -64,56 +63,69 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const auto& seeds = get_network_seeds_setting();
 
     // TODO: give option to send errors to console vs. file.
-    static const auto header = format("=========== %1% ==========") % symbol();
     bc::ofstream debug_log(debug_file.string(), log_open_mode);
-    bind_debug_log(debug_log);
-    log_debug(LOG_NETWORK) << header;
     bc::ofstream error_log(error_file.string(), log_open_mode);
-    bind_error_log(error_log);
-    log_error(LOG_NETWORK) << header;
+    initialize_logging(debug_log, error_log, output, error);
 
-    // Not listening, no relay/port/inbound.
-    static constexpr auto relay = false;
-    static constexpr uint16_t port = 0;
-    static constexpr size_t inbound = 0;
-    static const auto self = bc::unspecified_network_address;
+    static const auto header = format("=========== %1% ==========") % symbol();
+    log::debug(LOG_NETWORK) << header;
+    log::error(LOG_NETWORK) << header;
 
-    static constexpr size_t threads = 4;
-    static constexpr size_t host_capacity = 1000;
-    static const network::timeout timeouts(connect, handshake);
+    auto configuration = p2p::mainnet;
 
-    const auto seed_nodes = seeds.empty() ? network::session_seed::mainnet : seeds;
+    // Fixed non-defaults: not relay/port/inbound.
+    configuration.inbound_port = 0;
+    configuration.inbound_connection_limit = 0;
+    configuration.relay_transactions = false;
 
-    async_client client(threads);
-    network::hosts hosts(client.pool(), hosts_file, host_capacity);
-    network::connector net(client.pool(), identifier, timeouts);
-    network::p2p proto(client.pool(), hosts, net, port, relay, nodes,
-        inbound, seed_nodes, self, timeouts);
+    // Defaulted by bx.
+    configuration.connect_timeout_seconds = connect;
+    configuration.channel_handshake_seconds = handshake;
+    configuration.hosts_file = hosts_file;
 
+    // Testnet deviations.
+    if (identifier != 0)
+        configuration.identifier = identifier;
+
+    if (!seeds.empty())
+        configuration.seeds = seeds;
+
+    p2p network(configuration);
+    std::promise<code> started;
+    std::promise<code> complete;
+    std::promise<code> stopped;
     callback_state state(error, output);
-    network::p2p::channel_handler handle_connect;
+    p2p::channel_handler connect_handler;
 
-    const auto protocol_handler = [&state](const code& code)
+    const auto start_handler = [&started](const code& ec)
     {
-        state.succeeded(code);
+        started.set_value(ec);
     };
 
-    const auto handle_send = [&state, &proto, &transaction, &handle_connect](
-        const std::error_code& code)
+    const auto stop_handler = [&stopped](const code& ec)
     {
-        if (state.succeeded(code))
+        stopped.set_value(ec);
+    };
+
+    const auto handle_send = [&state, &complete, &network, &connect_handler](
+        const code& ec)
+    {
+        if (state.succeeded(ec))
             state.output(format(BX_SEND_TX_P2P_OUTPUT) % now());
 
-        // Success or failed, if not done visiting nodes resubscribe.
         --state;
-        if (!state.stopped())
-            proto.subscribe_channel(handle_connect);
+
+        // If done visiting nodes set complete, otherwise resubscribe.
+        if (state.stopped())
+            complete.set_value(ec);
+        else
+            network.subscribe(connect_handler);
     };
 
-    handle_connect = [&state, &transaction, handle_send](const code& code,
-        network::channel::ptr node)
+    connect_handler = [&state, &transaction, handle_send](const code& ec,
+        channel::ptr node)
     {
-        if (state.succeeded(code))
+        if (state.succeeded(ec))
             node->send(transaction, handle_send);
     };
 
@@ -126,19 +138,26 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         return console_result::okay;
 
     // Handle each successful connection.
-    proto.subscribe_channel(handle_connect);
+    network.subscribe(connect_handler);
 
     // Connect to the specified number of hosts from the host pool.
-    proto.start(protocol_handler);
+    // This attempts to maintain the set of connections, so it will always
+    // eventually achieve the target, and sometimes go over due to the race.
+    network.start(start_handler);
+    started.get_future();
 
     // Catch C signals for aborting the program.
     signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
-    client.poll(state.stopped());
-    proto.stop(protocol_handler);
-    client.stop();
+    // Wait until callback indicates completion.
+    complete.get_future();
+
+    // Ensure successful shutdown.
+    // This call saves the hosts file and blocks until thread coalescence.
+    network.stop(stop_handler);
+    stopped.get_future();
 
     return state.get_result();
 }

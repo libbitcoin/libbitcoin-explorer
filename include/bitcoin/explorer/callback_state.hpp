@@ -118,7 +118,7 @@ public:
      * This overrides any outstanding callback references.
      * @param[in]  result  The desired callback result code, defaults to okay.
      */
-    BCX_API virtual void stop(console_result result = console_result::okay);
+    BCX_API virtual void stop(console_result result=console_result::okay);
     
     /**
      * Get a value indicating whether the callback reference count is zero.
@@ -128,11 +128,11 @@ public:
 
     /**
      * Handle the callback error with standard behavior.
-     * @param[in]  code    The callback error result.
+     * @param[in]  ec      The callback error result.
      * @param[in]  format  A single parameter format string or empty/default.
      * @return             True if no error.   
      */
-    BCX_API  virtual bool succeeded(const std::error_code& code,
+    BCX_API  virtual bool succeeded(const std::error_code& ec,
         const std::string& format="%1%");
 
     /**

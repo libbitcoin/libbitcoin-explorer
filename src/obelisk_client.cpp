@@ -23,7 +23,6 @@
 #include <boost/filesystem.hpp>
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/async_client.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 
 using namespace bc;

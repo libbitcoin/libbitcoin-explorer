@@ -51,53 +51,6 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-// Guard against concurrent file writes.
-static std::mutex logfile_mutex;
-
-static void output_to_file(std::ofstream& file, log_level level, 
-    const std::string& domain, const std::string& body)
-{
-    static const auto form = "%1% %2% [%3%] %4%\n";
-    if (!body.empty())
-    {
-        const auto log = level_repr(level);
-        const auto time = microsec_clock::local_time().time_of_day();
-        const auto message = (format(form) % time % log % domain % body).str();
-
-        std::lock_guard<std::mutex> lock_logfile(logfile_mutex);
-        file << message;
-        file.flush();
-    }
-}
-
-// Bind the global debug logging context.
-void bind_debug_log(std::ofstream& debug)
-{
-    log_debug().set_output_function(
-        std::bind(output_to_file, std::ref(debug),
-        ph::_1, ph::_2, ph::_3));
-
-    log_info().set_output_function(
-        std::bind(output_to_file, std::ref(debug),
-        ph::_1, ph::_2, ph::_3));
-}
-
-// Bind the global error logging context.
-void bind_error_log(std::ofstream& error)
-{
-    log_warning().set_output_function(
-        std::bind(output_to_file, std::ref(error),
-        ph::_1, ph::_2, ph::_3));
-
-    log_error().set_output_function(
-        std::bind(output_to_file, std::ref(error),
-        ph::_1, ph::_2, ph::_3));
-
-    log_fatal().set_output_function(
-        std::bind(output_to_file, std::ref(error),
-        ph::_1, ph::_2, ph::_3));
-}
-
 bool is_base2(const std::string& text)
 {
     for (const auto& character: text)

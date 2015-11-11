@@ -71,13 +71,11 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
         get_network_error_file_setting().string();
 
     const auto& nodes = get_network_seeds_setting();
-    const auto& seeds = nodes.empty() ? network::session_seed::mainnet : nodes;
+    const auto& seeds = nodes.empty() ? network::p2p::mainnet.seeds : nodes;
 
     std::vector<std::string> buffer;
-    for (const auto& seed: seeds)
-    {
-        buffer.push_back(seed.to_string());
-    }
+    for (const auto& node: seeds)
+        buffer.push_back(node.to_string());
 
     list["network.seeds"] = join(buffer, ",");
 

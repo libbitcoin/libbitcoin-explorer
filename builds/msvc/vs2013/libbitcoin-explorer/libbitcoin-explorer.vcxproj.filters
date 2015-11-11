@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -452,9 +452,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\wrapper.hpp">
       <Filter>include\bitcoin\explorer\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\async_client.hpp">
-      <Filter>include\bitcoin\explorer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\callback_state.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
@@ -879,9 +876,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\primitives\wrapper.cpp">
       <Filter>src\primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\async_client.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\callback_state.cpp">
       <Filter>src</Filter>
