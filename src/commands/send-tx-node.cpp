@@ -77,12 +77,12 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     configuration.host_pool_capacity = 0;
     configuration.outbound_connections = 0;
     configuration.inbound_port = 0;
-    configuration.inbound_connection_limit = 0;
+    configuration.connection_limit = 0;
     configuration.relay_transactions = false;
     configuration.seeds.clear();
 
     // Defaulted by bx.
-    configuration.connect_attempts = retries + 1;
+    configuration.manual_retry_limit = retries;
     configuration.connect_timeout_seconds = connect;
     configuration.channel_handshake_seconds = handshake;
     configuration.hosts_file = hosts_file;

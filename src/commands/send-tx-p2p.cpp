@@ -75,7 +75,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Fixed non-defaults: not relay/port/inbound.
     configuration.inbound_port = 0;
-    configuration.inbound_connection_limit = 0;
+    configuration.connection_limit = 0;
     configuration.relay_transactions = false;
 
     // Defaulted by bx.
@@ -95,7 +95,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     std::promise<code> complete;
     std::promise<code> stopped;
     callback_state state(error, output);
-    p2p::channel_handler connect_handler;
+    p2p::connect_handler connect_handler;
 
     const auto start_handler = [&started](const code& ec)
     {
@@ -115,11 +115,9 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
         --state;
 
-        // If done visiting nodes set complete, otherwise resubscribe.
+        // If done visiting nodes set complete.
         if (state.stopped())
             complete.set_value(ec);
-        else
-            network.subscribe(connect_handler);
     };
 
     connect_handler = [&state, &transaction, handle_send](const code& ec,
@@ -127,6 +125,9 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     {
         if (state.succeeded(ec))
             node->send(transaction, handle_send);
+
+        // Always resbscribe (stop will clear).
+        return true;
     };
 
     // Increment state to the required number of node connections.
