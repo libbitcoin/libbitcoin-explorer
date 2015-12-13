@@ -34,7 +34,7 @@ console_result input_validate::invoke(std::ostream& output,
     // Bound parameters.
     const auto index = get_index_option();
     const tx_type& tx = get_transaction_argument();
-    const auto& public_key = get_ec_public_key_argument();
+    const auto& key = get_ec_public_key_argument();
     const auto& contract = get_contract_argument();
     const auto& endorse = get_endorsement_argument();
 
@@ -44,7 +44,13 @@ console_result input_validate::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    if (!check_signature(endorse, public_key, contract, tx, index))
+    data_chunk distinguished = endorse;
+    const auto hash_type = distinguished.back();
+    distinguished.pop_back();
+
+    ec_signature signature;
+    if (!parse_signature(signature, distinguished, false) ||
+        !check_ec_signature(signature, hash_type, key, contract, tx, index))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;
