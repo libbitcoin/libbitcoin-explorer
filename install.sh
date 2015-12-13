@@ -262,7 +262,8 @@ CZMQPP_OPTIONS=\
 # Define secp256k1 options.
 #------------------------------------------------------------------------------
 SECP256K1_OPTIONS=\
-"--disable-tests "
+"--disable-tests "\
+"--enable-module-recovery "
 
 # Define bitcoin options.
 #------------------------------------------------------------------------------
@@ -601,7 +602,7 @@ build_all()
     build_from_github zeromq libzmq master $PARALLEL "$@" $ZMQ_OPTIONS
     build_from_github zeromq czmq master $PARALLEL "$@" $CZMQ_OPTIONS
     build_from_github zeromq czmqpp master $PARALLEL "$@" $CZMQPP_OPTIONS
-    build_from_github libbitcoin secp256k1 version3 $PARALLEL "$@" $SECP256K1_OPTIONS
+    build_from_github libbitcoin secp256k1 version4 $PARALLEL "$@" $SECP256K1_OPTIONS
     build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@" $BITCOIN_OPTIONS
     build_from_github libbitcoin libbitcoin-client version2 $PARALLEL "$@" $BITCOIN_CLIENT_OPTIONS
     build_from_travis libbitcoin libbitcoin-explorer version2 $PARALLEL "$@" $BITCOIN_EXPLORER_OPTIONS
