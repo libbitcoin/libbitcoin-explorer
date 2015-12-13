@@ -49,7 +49,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     }
 
     endorsement endorse;
-    if (!create_signature(endorse, private_key, contract, tx, index,
+    if (!create_endorsement(endorse, private_key, contract, tx, index,
         hash_type))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;

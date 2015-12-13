@@ -184,7 +184,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
 
     result.push_back(output);
     outputs = result;
-    pay_address = pretty(output.script);
+    pay_address = pretty(output.script, script_context::all_enabled);
     return true;
 }
 

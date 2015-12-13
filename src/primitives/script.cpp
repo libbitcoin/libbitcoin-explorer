@@ -80,7 +80,7 @@ const data_chunk script::to_data() const
 
 const std::string script::to_string() const
 {
-    return pretty(value_);
+    return pretty(value_, script_context::all_enabled);
 }
 
 script::operator const script_type&() const
@@ -105,7 +105,7 @@ std::istream& operator>>(std::istream& input, script& argument)
 
 std::ostream& operator<<(std::ostream& output, const script& argument)
 {
-    output << pretty(argument.value_);
+    output << pretty(argument.value_, script_context::all_enabled);
     return output;
 }
 
