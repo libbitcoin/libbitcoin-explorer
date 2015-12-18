@@ -96,6 +96,8 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     {
         if (state.succeeded(code))
             node->send(transaction, handle_send);
+
+        return false;
     };
 
     // One node always specified.
