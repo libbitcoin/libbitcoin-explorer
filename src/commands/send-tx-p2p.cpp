@@ -104,6 +104,9 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     {
         if (state.succeeded(code))
             node->send(transaction, handle_send);
+
+        // Always resubcribe (stop will clear).
+        return true;
     };
 
     // Increment state to the required number of node connections.
