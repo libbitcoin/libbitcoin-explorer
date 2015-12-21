@@ -2,8 +2,6 @@
 
 [![Coverage Status](https://coveralls.io/repos/libbitcoin/libbitcoin-explorer/badge.svg)](https://coveralls.io/r/libbitcoin/libbitcoin-explorer)
 
-[![Synapsi bounty](https://synapsi.com/bb/60/68/c9/c4/21c3b1e7ab53149a830c7b82.png)](https://synapsi.com/questions/how-to-implement-full-dll-export-support-201509051915)
-
 *The automated build often fails on generating test metrics due to performance limits on Travis.*
 
 # Bitcoin Explorer
