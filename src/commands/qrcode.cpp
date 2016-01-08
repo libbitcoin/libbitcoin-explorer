@@ -26,6 +26,7 @@
 #include <bitcoin/explorer/define.hpp>
 
 using namespace bc;
+using namespace bc::wallet;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 
@@ -35,35 +36,35 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_payment_address_argument();
     const auto& prefix = get_prefix_option();
     const auto& image = get_image_option();
-    const auto& size = get_size_option();
+    const auto& casing = !get_ignore_casing_option();
+    const auto& version = get_version_option();
 
 #ifdef WITH_QRENCODE
-    std::string qr_string = prefix + address.encoded();
-    data_chunk qr_data = bc::wallet::qrencode_data(to_chunk(qr_string));
+    const auto qr_string = prefix + address.encoded();
+    const auto qr_data = qr::encode(to_chunk(qr_string),
+        version, qr::level, qr::mode, casing);
 
-    // The image option specifies we're writing output in png format
+    // The image option specifies we're writing output in png format.
     if (image)
     {
 #ifdef WITH_PNG
-        const auto& filename = get_filename_argument();
-        auto ret = false;
-        if (!filename.empty())
-        {
-            ofstream png(filename);
-            ret = write_png(qr_data, size, png);
-            png.close();
-        }
-        else
-            ret = write_png(qr_data, size, output);
+        const auto& size = get_size_option();
+        const auto& density = get_density_option();
+        const auto& margin = get_margin_option();
 
-        return ret ? console_result::okay : console_result::failure;
+        auto result = png::write_png(qr_data, size, density, margin,
+            png::inches_per_meter, png::get_default_foreground(),
+            png::get_default_background(), output);
+
+        return (result ? console_result::okay : console_result::failure);
 #else
         error << BX_QRCODE_REQUIRES_PNG << std::endl;
         return console_result::failure;
 #endif // WITH_PNG
     }
 
-    // Otherwise we're writing output in qrencode format
+    // In this case, the qr data is written to the output stream in
+    // encoded 'qrencode' format.
     bc::ostream_writer sink(output);
     sink.write_data(qr_data);
     output.flush();

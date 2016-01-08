@@ -25,7 +25,7 @@ Version: @PACKAGE_VERSION@
 #==============================================================================
 # Dependencies that publish package configuration.
 #------------------------------------------------------------------------------
-Requires: libbitcoin-client >= 3.0.0 libbitcoin-network >= 3.0.0
+Requires: libbitcoin-client >= 3.0.0 libbitcoin-network >= 3.0.0 @png_PKG@ @qrencode_PKG@
 
 # Include directory and any other required compiler flags.
 #------------------------------------------------------------------------------
