@@ -40,7 +40,7 @@
 #include <boost/property_tree/info_parser.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -99,7 +99,7 @@ ptime now()
     return local_time_in_seconds;
 }
 
-std::vector<std::string> numbers_to_strings(const chain::index_list& indexes)
+std::vector<std::string> numbers_to_strings(const index_list& indexes)
 {
     std::vector<std::string> stringlist;
     for (const auto& index: indexes)

@@ -38,7 +38,7 @@
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 
@@ -202,7 +202,7 @@ BCX_API data_chunk new_seed(size_t bitlength=minimum_seed_bits);
  * @return              The list of strings.
  */
 BCX_API std::vector<std::string> numbers_to_strings(
-    const chain::index_list& indexes);
+    const client::index_list& indexes);
 
 /**
  * Get the local time, second level resolution, based on the time zone settings
