@@ -49,7 +49,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    uint32_t hash_type = (signature_hash_algorithm)sign_type;
+    uint8_t hash_type = (signature_hash_algorithm)sign_type;
     if (anyone_can_pay)
         hash_type |= signature_hash_algorithm::anyone_can_pay;
 
