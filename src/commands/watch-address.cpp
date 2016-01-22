@@ -50,7 +50,8 @@ static void handle_signal(int signal)
     exit(console_result::failure);
 }
 
-// This command only halts on failure.
+// This command only halts on failure or timeout.
+// BUGBUG: the server may drop the connection, which is not presently detected.
 console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
