@@ -50,7 +50,8 @@ static void handle_signal(int signal)
     exit(console_result::failure);
 }
 
-// This command only halts on failure.
+// This command only halts on failure or timeout.
+// BUGBUG: the server may drop the connection, which is not presently detected.
 console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -95,7 +96,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     // poll for subscribe callbacks if any subscriptions were established.
     if (client.resolve_callbacks() && !state.stopped())
-        client.poll_until_timeout_cumulative(std::chrono::minutes(10));
+        client.poll_until_termination();
 
     return state.get_result();
 }
