@@ -99,7 +99,8 @@ ptime now()
     return local_time_in_seconds;
 }
 
-std::vector<std::string> numbers_to_strings(const index_list& indexes)
+std::vector<std::string> numbers_to_strings(
+    const bc::client::index_list& indexes)
 {
     std::vector<std::string> stringlist;
     for (const auto& index: indexes)
