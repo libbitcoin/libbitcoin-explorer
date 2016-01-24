@@ -460,10 +460,13 @@
   <command symbol="newseed" category="ELECTRUM" obsolete="true" description="Create a new Electrum style deterministic wallet seed.">
     <define name="BX_NEWSEED_OBSOLETE" value="Electrum style key functions are obsolete. Use HD (BIP32) commands instead." />
   </command>
-  
+
   <command symbol="qrcode" category="WALLET" output="raw" stub="true" description="Create a QR code image file for a payment address.">
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN."/>
-    <define name="BX_QRCODE_NOT_IMPLEMENTED" value="This command is not yet implemented." />
+    <argument name="filename" required="true" type="string" description="Specifies where to write the QR code image file." />
+    <option name="size" type="uint32_t" default="8" description="Specifies the module size in dots of the generated QR code." />
+    <define name="BX_QRCODE_REQUIRES_QRENCODE_AND_LIBPNG" value="The command requires a qrencode and libpng build." />
+    <define name="BX_QRCODE_WRITE_ERROR" value="Error writing qrcode png image to file." />
   </command>
 
   <command symbol="ripemd160" formerly="ripemd-hash" output="base16" category="HASH" description="Perform a RIPEMD160 hash of Base16 data.">
