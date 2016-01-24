@@ -43,7 +43,7 @@ base2::base2(const std::string& binary)
     std::stringstream(binary) >> *this;
 }
 
-base2::base2(const binary_type& value)
+base2::base2(const binary& value)
     : value_(value)
 {
 }
@@ -58,7 +58,7 @@ size_t base2::size() const
     return value_.size();
 }
 
-base2::operator const bc::binary_type&() const
+base2::operator const bc::binary&() const
 {
     return value_; 
 }
