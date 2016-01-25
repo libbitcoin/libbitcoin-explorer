@@ -237,7 +237,7 @@
       <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\qrcode.cpp">
-      <Filter>src\tests\commands\stub</Filter>
+      <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ripemd160.cpp">
       <Filter>src\tests\commands</Filter>

@@ -64,8 +64,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_QRCODE_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
+#define BX_QRCODE_REQUIRES_QRENCODE_AND_LIBPNG \
+    "The command requires a qrencode and libpng build."
+#define BX_QRCODE_WRITE_ERROR \
+    "Error writing qrcode png image to file."
 
 /**
  * Class to implement the qrcode command.
@@ -125,7 +127,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1);
+            .add("PAYMENT_ADDRESS", 1)
+            .add("filename", 1);
     }
 
 	/**
@@ -161,9 +164,19 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "size,s",
+            value<uint32_t>(&option_.size)->default_value(8),
+            "Specifies the module size in dots of the generated QR code."
+        )
+        (
             "PAYMENT_ADDRESS",
             value<bc::wallet::payment_address>(&argument_.payment_address),
             "The payment address. If not specified the address is read from STDIN."
+        )
+        (
+            "filename",
+            value<std::string>(&argument_.filename)->required(),
+            "Specifies where to write the QR code image file."
         );
 
         return options;
@@ -205,6 +218,40 @@ public:
         argument_.payment_address = value;
     }
 
+    /**
+     * Get the value of the filename argument.
+     */
+    virtual std::string& get_filename_argument()
+    {
+        return argument_.filename;
+    }
+
+    /**
+     * Set the value of the filename argument.
+     */
+    virtual void set_filename_argument(
+        const std::string& value)
+    {
+        argument_.filename = value;
+    }
+
+    /**
+     * Get the value of the size option.
+     */
+    virtual uint32_t& get_size_option()
+    {
+        return option_.size;
+    }
+
+    /**
+     * Set the value of the size option.
+     */
+    virtual void set_size_option(
+        const uint32_t& value)
+    {
+        option_.size = value;
+    }
+
 private:
 
     /**
@@ -215,11 +262,13 @@ private:
     struct argument
     {
         argument()
-          : payment_address()
+          : payment_address(),
+            filename()
         {
         }
 
         bc::wallet::payment_address payment_address;
+        std::string filename;
     } argument_;
 
     /**
@@ -230,9 +279,11 @@ private:
     struct option
     {
         option()
+          : size()
         {
         }
 
+        uint32_t size;
     } option_;
 };
 

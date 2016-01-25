@@ -10,6 +10,8 @@
 # Script options:
 # --build-icu              Builds ICU libraries.
 # --build-boost            Builds Boost libraries.
+# --build-qrencode         Builds QREncode libraries.
+# --build-libpng           Builds LIBPNG libraries.
 # --build-dir=<path>       Location of downloaded and intermediate files.
 # --prefix=<absolute-path> Library install location (defaults to /usr/local).
 # --disable-shared         Disables shared library builds.
@@ -36,6 +38,20 @@ BUILD_DIR="build-libbitcoin-explorer"
 ICU_URL="http://download.icu-project.org/files/icu4c/55.1/icu4c-55_1-src.tgz"
 ICU_ARCHIVE="icu4c-55_1-src.tgz"
 ICU_STANDARD=\
+"CXXFLAGS=-std=c++0x"
+
+# QRENCODE archive.
+#------------------------------------------------------------------------------
+QRENCODE_URL="http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.bz2"
+QRENCODE_ARCHIVE="qrencode-3.4.4.tar.bz2"
+QRENCODE_STANDARD=\
+"CXXFLAGS=-std=c++0x"
+
+# LIBPNG archive.
+#------------------------------------------------------------------------------
+LIBPNG_URL="http://downloads.sourceforge.net/project/libpng/libpng16/1.6.21/libpng-1.6.21.tar.xz"
+LIBPNG_ARCHIVE="libpng-1.6.21.tar.xz"
+LIBPNG_STANDARD=\
 "CXXFLAGS=-std=c++0x"
 
 # Boost archive for gcc.
@@ -113,13 +129,17 @@ for OPTION in "$@"; do
         # Custom build options (in the form of --build-<option>).
         (--build-icu)      BUILD_ICU="yes";;
         (--build-boost)    BUILD_BOOST="yes";;
+        (--build-qrencode) BUILD_QRENCODE="yes";;
+        (--build-libpng)   BUILD_LIBPNG="yes";;
         (--build-dir=*)    BUILD_DIR="${OPTION#*=}";;
-        
+
         # Standard build options.
         (--prefix=*)       PREFIX="${OPTION#*=}";;
         (--disable-shared) DISABLE_SHARED="yes";;
         (--disable-static) DISABLE_STATIC="yes";;
         (--with-icu)       WITH_ICU="yes";;
+        (--with-qrencode)  WITH_QRENCODE="yes";;
+        (--with-libpng)    WITH_LIBPNG="yes";;
     esac
 done
 echo "Build directory: $BUILD_DIR"
@@ -135,6 +155,22 @@ if [[ $BUILD_ICU == yes ]]; then
         echo "Warning: --disable-shared recommended when building ICU."
     fi
 fi
+if [[ $BUILD_QRENCODE == yes ]]; then
+    if [[ !($PREFIX)]]; then    
+        echo "Warning: --prefix recommended when building QRENCODE."
+    fi
+    if [[ !($DISABLE_SHARED) ]]; then
+        echo "Warning: --disable-shared recommended when building QRENCODE."
+    fi
+fi
+if [[ $BUILD_LIBPNG == yes ]]; then
+    if [[ !($PREFIX)]]; then    
+        echo "Warning: --prefix recommended when building LIBPNG."
+    fi
+    if [[ !($DISABLE_SHARED) ]]; then
+        echo "Warning: --disable-shared recommended when building LIBPNG."
+    fi
+fi
 if [[ $BUILD_BOOST == yes ]]; then
     if [[ !($PREFIX)]]; then    
         echo "Warning: --prefix recommended when building boost."
@@ -147,7 +183,7 @@ fi
 # Purge custom options so they don't go to configure.
 #------------------------------------------------------------------------------
 CONFIGURE_OPTIONS=( "$@" )
-CUSTOM_OPTIONS=( "--build-icu" "--build-boost" "--build-dir=$BUILD_DIR" )
+CUSTOM_OPTIONS=( "--build-icu" "--build-qrencode" "--build-libpng" "--build-boost" "--build-dir=$BUILD_DIR" )
 for CUSTOM_OPTION in "${CUSTOM_OPTIONS[@]}"; do
     CONFIGURE_OPTIONS=( "${CONFIGURE_OPTIONS[@]/$CUSTOM_OPTION}" )
 done
@@ -157,12 +193,18 @@ done
 if [[ $DISABLE_STATIC == yes ]]; then
     BOOST_LINK="link=shared"
     ICU_LINK="--enable-shared --disable-static"
+    QRENCODE_LINK="--enable-shared --disable-static"
+    LIBPNG_LINK="--enable-shared --disable-static"
 elif [[ $DISABLE_SHARED == yes ]]; then
     BOOST_LINK="link=static"
     ICU_LINK="--disable-shared --enable-static"
+    QRENCODE_LINK="--disable-shared --enable-static"
+    LIBPNG_LINK="--disable-shared --enable-static"
 else
     BOOST_LINK="link=static,shared"
     ICU_LINK="--enable-shared --enable-static"
+    QRENCODE_LINK="--enable-shared --enable-static"
+    LIBPNG_LINK="--enable-shared --enable-static"
 fi
 
 # Incorporate the prefix.
@@ -209,6 +251,16 @@ ICU_OPTIONS=\
 "--disable-layoutex "\
 "--disable-tests "\
 "--disable-samples "
+
+# Define qrencode options.
+#------------------------------------------------------------------------------
+QRENCODE_OPTIONS=\
+"-lqrencode "
+
+# Define libpng options.
+#------------------------------------------------------------------------------
+LIBPNG_OPTIONS=\
+"-lpng "
 
 # Define boost options for gcc.
 #------------------------------------------------------------------------------
@@ -380,6 +432,40 @@ initialize_icu_packages()
     fi
 }
 
+initialize_qrencode_packages()
+{
+    if [[ $OS == Darwin && !($BUILD_QRENCODE) ]]; then
+        # Update PKG_CONFIG_PATH for QRENCODE package installations on OSX.
+        # OSX provides libqrencodecore.dylib with no pkgconfig and doesn't support
+        # renaming or important features, so we can't use that.
+        HOMEBREW_QRENCODE_PKG_CONFIG="/usr/local/opt/qrencode/lib/pkgconfig"
+        MACPORTS_QRENCODE_PKG_CONFIG="/opt/local/lib/pkgconfig"
+
+        if [[ -d "$HOMEBREW_QRENCODE_PKG_CONFIG" ]]; then
+            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOMEBREW_QRENCODE_PKG_CONFIG"
+        elif [[ -d "$MACPORTS_QRENCODE_PKG_CONFIG" ]]; then
+            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$MACPORTS_QRENCODE_PKG_CONFIG"
+        fi
+    fi
+}
+
+initialize_libpng_packages()
+{
+    if [[ $OS == Darwin && !($BUILD_LIBPNG) ]]; then
+        # Update PKG_CONFIG_PATH for LIBPNG package installations on OSX.
+        # OSX provides liblibpngcore.dylib with no pkgconfig and doesn't support
+        # renaming or important features, so we can't use that.
+        HOMEBREW_LIBPNG_PKG_CONFIG="/usr/local/opt/libpng/lib/pkgconfig"
+        MACPORTS_LIBPNG_PKG_CONFIG="/opt/local/lib/pkgconfig"
+
+        if [[ -d "$HOMEBREW_LIBPNG_PKG_CONFIG" ]]; then
+            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$HOMEBREW_LIBPNG_PKG_CONFIG"
+        elif [[ -d "$MACPORTS_LIBPNG_PKG_CONFIG" ]]; then
+            export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$MACPORTS_LIBPNG_PKG_CONFIG"
+        fi
+    fi
+}
+
 initialize_options()
 {
     if [[ !($BOOST_OPTIONS) ]]; then
@@ -491,6 +577,70 @@ build_from_tarball_icu()
     pop_directory
 }
 
+build_from_tarball_libpng()
+{
+    local URL=$1
+    local ARCHIVE=$2
+    local REPO=$3
+    local JOBS=$4
+    shift 4
+
+    if [[ !($BUILD_LIBPNG) ]]; then
+        initialize_libpng_packages
+        display_message "LIBPNG build not enabled"
+        return
+    fi
+
+    display_message "Download $ARCHIVE"
+
+    create_directory $REPO
+    push_directory $REPO
+
+    # Extract the source locally.
+    wget --output-document $ARCHIVE $URL
+    tar --extract --file $ARCHIVE --xz --strip-components=1
+
+    # Build and install.
+    configure_options $LIBPNG_LINK $LIBPNG_STANDARD ${prefix} "$@"
+    make_jobs $JOBS --silent
+    make install
+    configure_links
+
+    pop_directory
+}
+
+build_from_tarball_qrencode()
+{
+    local URL=$1
+    local ARCHIVE=$2
+    local REPO=$3
+    local JOBS=$4
+    shift 4
+
+    if [[ !($BUILD_QRENCODE) ]]; then
+        initialize_qrencode_packages
+        display_message "QRENCODE build not enabled"
+        return
+    fi
+
+    display_message "Download $ARCHIVE"
+
+    create_directory $REPO
+    push_directory $REPO
+
+    # Extract the source locally.
+    wget --output-document $ARCHIVE $URL
+    tar --extract --file $ARCHIVE --bzip2 --strip-components=1
+
+    # Build and install.
+    configure_options $QRENCODE_LINK $QRENCODE_STANDARD ${prefix} "$@"
+    make_jobs $JOBS --silent
+    make install
+    configure_links
+
+    pop_directory
+}
+
 build_from_tarball_boost()
 {
     local URL=$1
@@ -598,6 +748,8 @@ build_from_travis()
 build_all()
 {
     build_from_tarball_icu $ICU_URL $ICU_ARCHIVE icu $PARALLEL $ICU_OPTIONS
+    build_from_tarball_qrencode $QRENCODE_URL $QRENCODE_ARCHIVE qrencode $PARALLEL $QRENCODE_OPTIONS
+    build_from_tarball_libpng $LIBPNG_URL $LIBPNG_ARCHIVE libpng $PARALLEL $LIBPNG_OPTIONS
     build_from_tarball_boost $BOOST_URL $BOOST_ARCHIVE boost $PARALLEL $BOOST_OPTIONS
     build_from_github jedisct1 libsodium master $PARALLEL "$@" $SODIUM_OPTIONS
     build_from_github zeromq libzmq master $PARALLEL "$@" $ZMQ_OPTIONS

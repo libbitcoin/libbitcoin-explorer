@@ -93,7 +93,6 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\prop_tree.ipp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\impl\\utility.ipp" />
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\async_client.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\callback_state.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\command.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\define.hpp" />
@@ -136,7 +135,6 @@
 .endfor
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\\..\\..\\..\\src\\async_client.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\callback_state.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\dispatch.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
