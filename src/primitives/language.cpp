@@ -33,12 +33,12 @@ namespace explorer {
 namespace primitives {
 
 // DRY
-static const char* language_en = "en";
-static const char* language_es = "es";
-static const char* language_ja = "ja";
-static const char* language_zh_Hans = "zh_Hans";
-static const char* language_zh_Hant = "zh_Hant";
-static const char* language_any = "any";
+static auto language_en = "en";
+static auto language_es = "es";
+static auto language_ja = "ja";
+static auto language_zh_Hans = "zh_Hans";
+static auto language_zh_Hant = "zh_Hant";
+static auto language_any = "any";
 
 language::language()
     : value_(bc::wallet::language::all)
