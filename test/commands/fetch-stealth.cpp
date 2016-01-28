@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__okay)
 }
 
 // requires libbitcoin-server.
-// This test is fragile, will eventually break.
+// This test is fragile, will eventually break (due to expansion of the returned result).
 ////BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010101__okay_output)
 ////{
 ////    BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
