@@ -28,7 +28,6 @@
 #include <bitcoin/explorer/commands/address-decode.hpp>
 #include <bitcoin/explorer/commands/address-embed.hpp>
 #include <bitcoin/explorer/commands/address-encode.hpp>
-#include <bitcoin/explorer/commands/address-validate.hpp>
 #include <bitcoin/explorer/commands/base16-decode.hpp>
 #include <bitcoin/explorer/commands/base16-encode.hpp>
 #include <bitcoin/explorer/commands/base58-decode.hpp>
@@ -37,11 +36,8 @@
 #include <bitcoin/explorer/commands/base58check-encode.hpp>
 #include <bitcoin/explorer/commands/base64-decode.hpp>
 #include <bitcoin/explorer/commands/base64-encode.hpp>
-#include <bitcoin/explorer/commands/bci-fetch-last-height.hpp>
-#include <bitcoin/explorer/commands/bci-history.hpp>
 #include <bitcoin/explorer/commands/bitcoin160.hpp>
 #include <bitcoin/explorer/commands/bitcoin256.hpp>
-#include <bitcoin/explorer/commands/blke-fetch-transaction.hpp>
 #include <bitcoin/explorer/commands/btc-to-satoshi.hpp>
 #include <bitcoin/explorer/commands/cert-new.hpp>
 #include <bitcoin/explorer/commands/cert-public.hpp>
@@ -70,9 +66,6 @@
 #include <bitcoin/explorer/commands/fetch-tx-index.hpp>
 #include <bitcoin/explorer/commands/fetch-tx.hpp>
 #include <bitcoin/explorer/commands/fetch-utxo.hpp>
-#include <bitcoin/explorer/commands/genaddr.hpp>
-#include <bitcoin/explorer/commands/genpriv.hpp>
-#include <bitcoin/explorer/commands/genpub.hpp>
 #include <bitcoin/explorer/commands/hd-new.hpp>
 #include <bitcoin/explorer/commands/hd-private.hpp>
 #include <bitcoin/explorer/commands/hd-public.hpp>
@@ -81,7 +74,6 @@
 #include <bitcoin/explorer/commands/hd-to-public.hpp>
 #include <bitcoin/explorer/commands/hd-to-wif.hpp>
 #include <bitcoin/explorer/commands/help.hpp>
-#include <bitcoin/explorer/commands/initchain.hpp>
 #include <bitcoin/explorer/commands/input-set.hpp>
 #include <bitcoin/explorer/commands/input-sign.hpp>
 #include <bitcoin/explorer/commands/input-validate.hpp>
@@ -91,8 +83,6 @@
 #include <bitcoin/explorer/commands/mnemonic-encode.hpp>
 #include <bitcoin/explorer/commands/mnemonic-new.hpp>
 #include <bitcoin/explorer/commands/mnemonic-to-seed.hpp>
-#include <bitcoin/explorer/commands/mpk.hpp>
-#include <bitcoin/explorer/commands/newseed.hpp>
 #include <bitcoin/explorer/commands/qrcode.hpp>
 #include <bitcoin/explorer/commands/ripemd160.hpp>
 #include <bitcoin/explorer/commands/satoshi-to-btc.hpp>
@@ -103,16 +93,12 @@
 #include <bitcoin/explorer/commands/send-tx-node.hpp>
 #include <bitcoin/explorer/commands/send-tx-p2p.hpp>
 #include <bitcoin/explorer/commands/send-tx.hpp>
-#include <bitcoin/explorer/commands/sendtx-bci.hpp>
 #include <bitcoin/explorer/commands/settings.hpp>
 #include <bitcoin/explorer/commands/sha160.hpp>
 #include <bitcoin/explorer/commands/sha256.hpp>
 #include <bitcoin/explorer/commands/sha512.hpp>
-#include <bitcoin/explorer/commands/showblkhead.hpp>
 #include <bitcoin/explorer/commands/stealth-decode.hpp>
 #include <bitcoin/explorer/commands/stealth-encode.hpp>
-#include <bitcoin/explorer/commands/stealth-initiate.hpp>
-#include <bitcoin/explorer/commands/stealth-newkey.hpp>
 #include <bitcoin/explorer/commands/stealth-public.hpp>
 #include <bitcoin/explorer/commands/stealth-secret.hpp>
 #include <bitcoin/explorer/commands/stealth-shared.hpp>
@@ -123,7 +109,6 @@
 #include <bitcoin/explorer/commands/uri-decode.hpp>
 #include <bitcoin/explorer/commands/uri-encode.hpp>
 #include <bitcoin/explorer/commands/validate-tx.hpp>
-#include <bitcoin/explorer/commands/wallet.hpp>
 #include <bitcoin/explorer/commands/watch-address.hpp>
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>

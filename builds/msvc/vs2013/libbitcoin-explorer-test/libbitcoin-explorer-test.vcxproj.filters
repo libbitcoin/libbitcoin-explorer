@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -41,9 +41,6 @@
     <ClCompile Include="..\..\..\..\test\commands\address-encode.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\address-validate.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\base16-decode.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
@@ -68,20 +65,11 @@
     <ClCompile Include="..\..\..\..\test\commands\base64-encode.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\bci-fetch-last-height.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\bci-history.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\bitcoin160.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\bitcoin256.cpp">
       <Filter>src\tests\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\blke-fetch-transaction.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp">
       <Filter>src\tests\commands</Filter>
@@ -167,15 +155,6 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-utxo.cpp">
       <Filter>src\tests\commands\stub</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\genaddr.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\genpriv.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\genpub.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
@@ -200,9 +179,6 @@
     <ClCompile Include="..\..\..\..\test\commands\help.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\initchain.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\input-set.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
@@ -218,23 +194,11 @@
     <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-new.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-to-seed.cpp">
       <Filter>src\tests\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\mpk.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\newseed.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\qrcode.cpp">
       <Filter>src\tests\commands</Filter>
@@ -266,9 +230,6 @@
     <ClCompile Include="..\..\..\..\test\commands\send-tx-p2p.cpp">
       <Filter>src\tests\commands\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\sendtx-bci.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\settings.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
@@ -281,20 +242,11 @@
     <ClCompile Include="..\..\..\..\test\commands\sha512.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\showblkhead.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\stealth-decode.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\stealth-encode.cpp">
       <Filter>src\tests\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-initiate.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\stealth-newkey.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\stealth-public.cpp">
       <Filter>src\tests\commands</Filter>
@@ -325,9 +277,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp">
       <Filter>src\tests\commands\network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\wallet.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\watch-address.cpp">
       <Filter>src\tests\commands\network</Filter>
@@ -367,6 +316,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\main.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp">
+      <Filter>src\tests\commands\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp">
+      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -44,11 +44,6 @@ BOOST_AUTO_TEST_CASE(generated__find__address_encode__returns_object)
     BOOST_REQUIRE(find("address-encode") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__address_validate__returns_object)
-{
-    BOOST_REQUIRE(find("address-validate") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__base16_decode__returns_object)
 {
     BOOST_REQUIRE(find("base16-decode") != nullptr);
@@ -89,16 +84,6 @@ BOOST_AUTO_TEST_CASE(generated__find__base64_encode__returns_object)
     BOOST_REQUIRE(find("base64-encode") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__bci_fetch_last_height__returns_object)
-{
-    BOOST_REQUIRE(find("bci-fetch-last-height") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__bci_history__returns_object)
-{
-    BOOST_REQUIRE(find("bci-history") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__bitcoin160__returns_object)
 {
     BOOST_REQUIRE(find("bitcoin160") != nullptr);
@@ -107,11 +92,6 @@ BOOST_AUTO_TEST_CASE(generated__find__bitcoin160__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__bitcoin256__returns_object)
 {
     BOOST_REQUIRE(find("bitcoin256") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__blke_fetch_transaction__returns_object)
-{
-    BOOST_REQUIRE(find("blke-fetch-transaction") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__btc_to_satoshi__returns_object)
@@ -254,21 +234,6 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_utxo__returns_object)
     BOOST_REQUIRE(find("fetch-utxo") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__genaddr__returns_object)
-{
-    BOOST_REQUIRE(find("genaddr") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__genpriv__returns_object)
-{
-    BOOST_REQUIRE(find("genpriv") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__genpub__returns_object)
-{
-    BOOST_REQUIRE(find("genpub") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__hd_new__returns_object)
 {
     BOOST_REQUIRE(find("hd-new") != nullptr);
@@ -307,11 +272,6 @@ BOOST_AUTO_TEST_CASE(generated__find__hd_to_wif__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__help__returns_object)
 {
     BOOST_REQUIRE(find("help") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__initchain__returns_object)
-{
-    BOOST_REQUIRE(find("initchain") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__input_set__returns_object)
@@ -357,16 +317,6 @@ BOOST_AUTO_TEST_CASE(generated__find__mnemonic_new__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__mnemonic_to_seed__returns_object)
 {
     BOOST_REQUIRE(find("mnemonic-to-seed") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__mpk__returns_object)
-{
-    BOOST_REQUIRE(find("mpk") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__newseed__returns_object)
-{
-    BOOST_REQUIRE(find("newseed") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__qrcode__returns_object)
@@ -419,11 +369,6 @@ BOOST_AUTO_TEST_CASE(generated__find__send_tx_p2p__returns_object)
     BOOST_REQUIRE(find("send-tx-p2p") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__sendtx_bci__returns_object)
-{
-    BOOST_REQUIRE(find("sendtx-bci") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__settings__returns_object)
 {
     BOOST_REQUIRE(find("settings") != nullptr);
@@ -444,11 +389,6 @@ BOOST_AUTO_TEST_CASE(generated__find__sha512__returns_object)
     BOOST_REQUIRE(find("sha512") != nullptr);
 }
 
-BOOST_AUTO_TEST_CASE(generated__find__showblkhead__returns_object)
-{
-    BOOST_REQUIRE(find("showblkhead") != nullptr);
-}
-
 BOOST_AUTO_TEST_CASE(generated__find__stealth_decode__returns_object)
 {
     BOOST_REQUIRE(find("stealth-decode") != nullptr);
@@ -457,16 +397,6 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_decode__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__stealth_encode__returns_object)
 {
     BOOST_REQUIRE(find("stealth-encode") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__stealth_initiate__returns_object)
-{
-    BOOST_REQUIRE(find("stealth-initiate") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__stealth_newkey__returns_object)
-{
-    BOOST_REQUIRE(find("stealth-newkey") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__stealth_public__returns_object)
@@ -517,11 +447,6 @@ BOOST_AUTO_TEST_CASE(generated__find__uri_encode__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__validate_tx__returns_object)
 {
     BOOST_REQUIRE(find("validate-tx") != nullptr);
-}
-
-BOOST_AUTO_TEST_CASE(generated__find__wallet__returns_object)
-{
-    BOOST_REQUIRE(find("wallet") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__watch_address__returns_object)

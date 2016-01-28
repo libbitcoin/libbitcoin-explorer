@@ -10,7 +10,7 @@
     <PlatformToolset>v120</PlatformToolset>
     <ProjectGuid>{1A0E5EDD-E803-4268-9DFB-044EB80BB0F1}</ProjectGuid>
     <ProjectName>libbitcoin-explorer-test</ProjectName>
-    <NuGetPackageImportStamp>3782b989</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>4fc3919d</NuGetPackageImportStamp>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDEXE|Win32">
@@ -70,6 +70,8 @@
     <Import Project="$(ProjectDir)$(ProjectName).props" />
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\primitives\address.cpp" />
     <ClCompile Include="..\..\..\..\test\primitives\base58.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
@@ -82,7 +84,6 @@
     <ClCompile Include="..\..\..\..\test\commands\address-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\address-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base16-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base16-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58-decode.cpp" />
@@ -91,11 +92,8 @@
     <ClCompile Include="..\..\..\..\test\commands\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base64-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base64-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\bci-fetch-last-height.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bitcoin160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\bitcoin256.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\btc-to-satoshi.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\cert-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp" />
@@ -124,9 +122,6 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-tx-index.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-utxo.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\genaddr.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\genpriv.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\genpub.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-private.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-public.cpp" />
@@ -135,18 +130,13 @@
     <ClCompile Include="..\..\..\..\test\commands\hd-to-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\help.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\initchain.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\message-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-to-seed.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\mpk.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\newseed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\satoshi-to-btc.cpp" />
@@ -157,16 +147,12 @@
     <ClCompile Include="..\..\..\..\test\commands\send-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\send-tx-node.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\send-tx-p2p.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\sendtx-bci.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\settings.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\sha512.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\showblkhead.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-encode.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\stealth-initiate.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\stealth-newkey.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-shared.cpp" />
@@ -177,7 +163,6 @@
     <ClCompile Include="..\..\..\..\test\commands\uri-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\uri-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\wallet.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\watch-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-ec.cpp" />

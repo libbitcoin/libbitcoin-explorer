@@ -40,7 +40,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<address_decode>());
     func(make_shared<address_embed>());
     func(make_shared<address_encode>());
-    func(make_shared<address_validate>());
     func(make_shared<base16_decode>());
     func(make_shared<base16_encode>());
     func(make_shared<base58_decode>());
@@ -49,11 +48,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<base58check_encode>());
     func(make_shared<base64_decode>());
     func(make_shared<base64_encode>());
-    func(make_shared<bci_fetch_last_height>());
-    func(make_shared<bci_history>());
     func(make_shared<bitcoin160>());
     func(make_shared<bitcoin256>());
-    func(make_shared<blke_fetch_transaction>());
     func(make_shared<btc_to_satoshi>());
     func(make_shared<cert_new>());
     func(make_shared<cert_public>());
@@ -82,9 +78,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_tx>());
     func(make_shared<fetch_tx_index>());
     func(make_shared<fetch_utxo>());
-    func(make_shared<genaddr>());
-    func(make_shared<genpriv>());
-    func(make_shared<genpub>());
     func(make_shared<hd_new>());
     func(make_shared<hd_private>());
     func(make_shared<hd_public>());
@@ -93,7 +86,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<hd_to_public>());
     func(make_shared<hd_to_wif>());
     func(make_shared<help>());
-    func(make_shared<initchain>());
     func(make_shared<input_set>());
     func(make_shared<input_sign>());
     func(make_shared<input_validate>());
@@ -103,8 +95,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<mnemonic_encode>());
     func(make_shared<mnemonic_new>());
     func(make_shared<mnemonic_to_seed>());
-    func(make_shared<mpk>());
-    func(make_shared<newseed>());
     func(make_shared<qrcode>());
     func(make_shared<ripemd160>());
     func(make_shared<satoshi_to_btc>());
@@ -115,16 +105,12 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<send_tx>());
     func(make_shared<send_tx_node>());
     func(make_shared<send_tx_p2p>());
-    func(make_shared<sendtx_bci>());
     func(make_shared<settings>());
     func(make_shared<sha160>());
     func(make_shared<sha256>());
     func(make_shared<sha512>());
-    func(make_shared<showblkhead>());
     func(make_shared<stealth_decode>());
     func(make_shared<stealth_encode>());
-    func(make_shared<stealth_initiate>());
-    func(make_shared<stealth_newkey>());
     func(make_shared<stealth_public>());
     func(make_shared<stealth_secret>());
     func(make_shared<stealth_shared>());
@@ -135,7 +121,6 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<uri_decode>());
     func(make_shared<uri_encode>());
     func(make_shared<validate_tx>());
-    func(make_shared<wallet>());
     func(make_shared<watch_address>());
     func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
@@ -152,8 +137,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<address_embed>();
     if (symbol == address_encode::symbol())
         return make_shared<address_encode>();
-    if (symbol == address_validate::symbol())
-        return make_shared<address_validate>();
     if (symbol == base16_decode::symbol())
         return make_shared<base16_decode>();
     if (symbol == base16_encode::symbol())
@@ -170,16 +153,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<base64_decode>();
     if (symbol == base64_encode::symbol())
         return make_shared<base64_encode>();
-    if (symbol == bci_fetch_last_height::symbol())
-        return make_shared<bci_fetch_last_height>();
-    if (symbol == bci_history::symbol())
-        return make_shared<bci_history>();
     if (symbol == bitcoin160::symbol())
         return make_shared<bitcoin160>();
     if (symbol == bitcoin256::symbol())
         return make_shared<bitcoin256>();
-    if (symbol == blke_fetch_transaction::symbol())
-        return make_shared<blke_fetch_transaction>();
     if (symbol == btc_to_satoshi::symbol())
         return make_shared<btc_to_satoshi>();
     if (symbol == cert_new::symbol())
@@ -236,12 +213,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_tx_index>();
     if (symbol == fetch_utxo::symbol())
         return make_shared<fetch_utxo>();
-    if (symbol == genaddr::symbol())
-        return make_shared<genaddr>();
-    if (symbol == genpriv::symbol())
-        return make_shared<genpriv>();
-    if (symbol == genpub::symbol())
-        return make_shared<genpub>();
     if (symbol == hd_new::symbol())
         return make_shared<hd_new>();
     if (symbol == hd_private::symbol())
@@ -258,8 +229,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<hd_to_wif>();
     if (symbol == help::symbol())
         return make_shared<help>();
-    if (symbol == initchain::symbol())
-        return make_shared<initchain>();
     if (symbol == input_set::symbol())
         return make_shared<input_set>();
     if (symbol == input_sign::symbol())
@@ -278,10 +247,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<mnemonic_new>();
     if (symbol == mnemonic_to_seed::symbol())
         return make_shared<mnemonic_to_seed>();
-    if (symbol == mpk::symbol())
-        return make_shared<mpk>();
-    if (symbol == newseed::symbol())
-        return make_shared<newseed>();
     if (symbol == qrcode::symbol())
         return make_shared<qrcode>();
     if (symbol == ripemd160::symbol())
@@ -302,8 +267,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<send_tx_node>();
     if (symbol == send_tx_p2p::symbol())
         return make_shared<send_tx_p2p>();
-    if (symbol == sendtx_bci::symbol())
-        return make_shared<sendtx_bci>();
     if (symbol == settings::symbol())
         return make_shared<settings>();
     if (symbol == sha160::symbol())
@@ -312,16 +275,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<sha256>();
     if (symbol == sha512::symbol())
         return make_shared<sha512>();
-    if (symbol == showblkhead::symbol())
-        return make_shared<showblkhead>();
     if (symbol == stealth_decode::symbol())
         return make_shared<stealth_decode>();
     if (symbol == stealth_encode::symbol())
         return make_shared<stealth_encode>();
-    if (symbol == stealth_initiate::symbol())
-        return make_shared<stealth_initiate>();
-    if (symbol == stealth_newkey::symbol())
-        return make_shared<stealth_newkey>();
     if (symbol == stealth_public::symbol())
         return make_shared<stealth_public>();
     if (symbol == stealth_secret::symbol())
@@ -342,8 +299,6 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<uri_encode>();
     if (symbol == validate_tx::symbol())
         return make_shared<validate_tx>();
-    if (symbol == wallet::symbol())
-        return make_shared<wallet>();
     if (symbol == watch_address::symbol())
         return make_shared<watch_address>();
     if (symbol == watch_tx::symbol())
@@ -368,8 +323,6 @@ std::string formerly(const string& former)
         return address_embed::symbol();
     if (former == address_encode::formerly())
         return address_encode::symbol();
-    if (former == address_validate::formerly())
-        return address_validate::symbol();
     if (former == btc_to_satoshi::formerly())
         return btc_to_satoshi::symbol();
     if (former == ec_add_secrets::formerly())
