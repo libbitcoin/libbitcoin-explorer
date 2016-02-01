@@ -423,9 +423,16 @@
 
   <command symbol="qrcode" category="WALLET" output="raw" description="Create a QR code image file for a payment address.">
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN."/>
-    <argument name="filename" required="true" type="string" description="Specifies where to write the QR code image file." />
-    <option name="size" type="uint32_t" default="8" description="Specifies the module size in dots of the generated QR code." />
-    <define name="BX_QRCODE_REQUIRES_QRENCODE_AND_LIBPNG" value="The command requires a qrencode and libpng build." />
+    <argument name="filename" type="string" description="Specifies where to write the QR code image file." />
+    <option name="image" type="bool" default="false" description="Specifies that the QR code should be output in png format." />
+    <option name="size" type="uint32_t" default="8" description="Specifies the module size in dots (pixles) of the generated QR code." />
+    <option name="margin" type="uint32_t" default="2" description="Specifies the margin size of the generated QR code." />
+    <option name="dpi" type="uint32_t" default="72" description="Specifies the dpi of the generated QR code." />
+    <option name="version" type="uint32_t" default="0" description="Specifies the version of the generated QR code." />
+    <option name="casesensitive" type="uint32_t" default="1" description="Specifies the case sensitivity of the generated QR code." />
+    <option name="prefix" type="string" default="bitcoin:" description="Specifies the prefix used in the QR code data (e.g. 'bitcoin:')." />
+    <define name="BX_QRCODE_REQUIRES_QRENCODE" value="The command requires a qrencode build." />
+    <define name="BX_QRCODE_REQUIRES_PNG" value="The command requires a png build." />
     <define name="BX_QRCODE_WRITE_ERROR" value="Error writing qrcode png image to file." />
   </command>
 
