@@ -139,7 +139,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         return console_result::okay;
 
     // Handle each successful connection.
-    network.subscribe(connect_handler);
+    network.subscribe_connections(connect_handler);
 
     // Connect to the specified number of hosts from the host pool.
     // This attempts to maintain the set of connections, so it will always
