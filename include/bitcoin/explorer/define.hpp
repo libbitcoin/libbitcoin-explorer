@@ -97,16 +97,6 @@ BC_CONSTEXPR size_t minimum_seed_bits = 128;
 BC_CONSTEXPR size_t minimum_seed_size = minimum_seed_bits / bc::byte_bits;
 
 /**
-* Result codes for int main().
-*/
-enum console_result : int
-{
-    failure = -1,
-    okay = 0,
-    invalid = 1
-};
-
-/**
  * Suppported output encoding engines.
  */
 enum class encoding_engine
