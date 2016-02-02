@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #################################################################
 #   GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY    #
@@ -194,6 +194,12 @@
     <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp">
+      <Filter>src\tests\commands\obsolete</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp">
+      <Filter>src\tests\commands\obsolete</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-new.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
@@ -316,12 +322,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\main.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\mnemonic-encode.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp">
-      <Filter>src\tests\commands\obsolete</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

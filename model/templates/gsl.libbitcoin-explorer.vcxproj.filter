@@ -164,9 +164,6 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\wrapper.hpp">
       <Filter>include\\bitcoin\\explorer\\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\async_client.hpp">
-      <Filter>include\\bitcoin\\explorer</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\callback_state.hpp">
       <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
@@ -186,6 +183,9 @@
       <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\obelisk_client.hpp">
+      <Filter>include\\bitcoin\\explorer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\parser.hpp">
       <Filter>include\\bitcoin\\explorer</Filter>
     </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\prop_tree.hpp">
@@ -290,9 +290,6 @@
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\wrapper.cpp">
       <Filter>src\\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\\..\\..\\..\\src\\async_client.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\callback_state.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -306,6 +303,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\parser.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp">

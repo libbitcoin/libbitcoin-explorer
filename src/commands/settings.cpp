@@ -71,7 +71,8 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
         get_network_error_file_setting().string();
 
     const auto& nodes = get_network_seeds_setting();
-    const auto& seeds = nodes.empty() ? network::p2p::mainnet.seeds : nodes;
+    const auto& seeds = nodes.empty() ? network::settings::mainnet.seeds :
+        nodes;
 
     std::vector<std::string> buffer;
     for (const auto& node: seeds)

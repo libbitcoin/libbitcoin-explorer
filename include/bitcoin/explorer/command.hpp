@@ -58,23 +58,10 @@
 namespace libbitcoin {
 namespace explorer {
 
-#define BX_CONFIG_VARIABLE "config"
-#define BX_HELP_VARIABLE "help"
 #define BX_PROGRAM_NAME "bx"
-
-static boost::filesystem::path default_config_path()
-{
-#ifdef _MSC_VER
-    const auto directory = config::windows_config_directory();
-#else
-    // SYSCONFDIR must be defined at compile for this project, so do not move
-    // this definition into libbitcoin.
-    const auto directory = std::string(SYSCONFDIR);
-#endif
-    // This subdirectory and file name must stay in sync with the path for the
-    // configuration file distributed via the build.
-    return boost::filesystem::path(directory) / "libbitcoin" / "bx.cfg";
-}
+#define BX_HELP_VARIABLE "help"
+#define BX_CONFIG_VARIABLE "config"
+BC_DECLARE_CONFIG_DEFAULT_PATH("libbitcoin" / BX_PROGRAM_NAME ".cfg")
 
 /**
  * Base class for definition of each Bitcoin Explorer command.
@@ -179,7 +166,7 @@ public:
             /* This composes with the command line options. */
             BX_CONFIG_VARIABLE, 
             value<boost::filesystem::path>()
-                ->composing()->default_value(default_config_path()),
+                ->composing()->default_value(config_default_path()),
             "The path to the configuration settings file."
         );
     }

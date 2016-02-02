@@ -100,6 +100,7 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\display.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\generated.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\obelisk_client.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\parser.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\prop_tree.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\address.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\primitives\\base16.hpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="..\\..\\..\\..\\src\\display.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\generated.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\obelisk_client.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\parser.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\prop_tree.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\address.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\primitives\\base16.cpp" />

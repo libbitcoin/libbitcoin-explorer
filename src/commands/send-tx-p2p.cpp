@@ -71,26 +71,26 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     log::debug(LOG_NETWORK) << header;
     log::error(LOG_NETWORK) << header;
 
-    auto configuration = p2p::mainnet;
+    auto settings = network::settings::mainnet;
 
     // Fixed non-defaults: not relay/port/inbound.
-    configuration.inbound_port = 0;
-    configuration.connection_limit = 0;
-    configuration.relay_transactions = false;
+    settings.inbound_port = 0;
+    settings.connection_limit = 0;
+    settings.relay_transactions = false;
 
     // Defaulted by bx.
-    configuration.connect_timeout_seconds = connect;
-    configuration.channel_handshake_seconds = handshake;
-    configuration.hosts_file = hosts_file;
+    settings.connect_timeout_seconds = connect;
+    settings.channel_handshake_seconds = handshake;
+    settings.hosts_file = hosts_file;
 
     // Testnet deviations.
     if (identifier != 0)
-        configuration.identifier = identifier;
+        settings.identifier = identifier;
 
     if (!seeds.empty())
-        configuration.seeds = seeds;
+        settings.seeds = seeds;
 
-    p2p network(configuration);
+    p2p network(settings);
     std::promise<code> started;
     std::promise<code> complete;
     std::promise<code> stopped;

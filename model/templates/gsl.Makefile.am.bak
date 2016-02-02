@@ -47,7 +47,6 @@ bitcoin_include_HEADERS = \\
     
 bitcoin_explorer_includedir = ${includedir}/bitcoin/explorer
 bitcoin_explorer_include_HEADERS = \\
-    include/bitcoin/explorer/async_client.hpp \\
     include/bitcoin/explorer/callback_state.hpp \\
     include/bitcoin/explorer/command.hpp \\
     include/bitcoin/explorer/config.hpp \\
@@ -56,6 +55,7 @@ bitcoin_explorer_include_HEADERS = \\
     include/bitcoin/explorer/display.hpp \\
     include/bitcoin/explorer/generated.hpp \\
     include/bitcoin/explorer/obelisk_client.hpp \\
+    include/bitcoin/explorer/parser.hpp \\
     include/bitcoin/explorer/prop_tree.hpp \\
     include/bitcoin/explorer/utility.hpp \\
     include/bitcoin/explorer/version.hpp
@@ -108,13 +108,13 @@ bitcoin_explorer_commands_include_HEADERS = \\
 .endfor
 
 src_libbitcoin_explorer_la_SOURCES = \\
-    src/async_client.cpp \\
     src/callback_state.cpp \\
     src/config.cpp \\
     src/dispatch.cpp \\
     src/display.cpp \\
     src/generated.cpp \\
     src/obelisk_client.cpp \\
+    src/parser.cpp \\
     src/prop_tree.cpp \\
     src/primitives/address.cpp \\
     src/primitives/base16.cpp \\
