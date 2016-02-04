@@ -291,6 +291,13 @@ BITCOIN_CLIENT_OPTIONS=\
 "${with_boost} "\
 "${with_pkgconfigdir} "
 
+# Define bitcoin-network options.
+#------------------------------------------------------------------------------
+BITCOIN_NETWORK_OPTIONS=\
+"--without-tests "\
+"${with_boost} "\
+"${with_pkgconfigdir} "
+
 # Define bitcoin-explorer options.
 #------------------------------------------------------------------------------
 BITCOIN_EXPLORER_OPTIONS=\
@@ -615,6 +622,7 @@ build_all()
     build_from_github libbitcoin secp256k1 version4 $PARALLEL "$@" $SECP256K1_OPTIONS
     build_from_github libbitcoin libbitcoin sync $PARALLEL "$@" $BITCOIN_OPTIONS
     build_from_github libbitcoin libbitcoin-client sync $PARALLEL "$@" $BITCOIN_CLIENT_OPTIONS
+    build_from_github libbitcoin libbitcoin-network master $PARALLEL "$@" $BITCOIN_NETWORK_OPTIONS
     build_from_travis libbitcoin libbitcoin-explorer sync $PARALLEL "$@" $BITCOIN_EXPLORER_OPTIONS
 }
 
