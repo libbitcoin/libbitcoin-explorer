@@ -104,7 +104,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     };
 
     const auto connect_handler = [&state, &transaction, &send_handler](
-        const std::error_code& ec, network::channel::ptr node)
+        const code& ec, network::channel::ptr node)
     {
         if (state.succeeded(ec))
             node->send(transaction, send_handler);
