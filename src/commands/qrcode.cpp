@@ -21,6 +21,7 @@
 #include <bitcoin/explorer/commands/qrcode.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 #if defined WITH_QRENCODE && defined WITH_LIBPNG
@@ -28,6 +29,7 @@
 #include "qrencode.h"
 #endif
 
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 

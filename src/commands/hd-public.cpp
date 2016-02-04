@@ -20,8 +20,8 @@
 #include <bitcoin/explorer/commands/hd-public.hpp>
 
 #include <iostream>
-#include <bitcoin/explorer/define.hpp>
 #include <bitcoin/bitcoin.hpp>
+#include <bitcoin/explorer/define.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

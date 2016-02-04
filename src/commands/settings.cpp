@@ -21,9 +21,11 @@
 
 #include <iostream>
 #include <map>
+#include <bitcoin/network.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;

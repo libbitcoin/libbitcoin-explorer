@@ -20,8 +20,10 @@
 #include <bitcoin/explorer/commands/ec-to-wif.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::wallet;
