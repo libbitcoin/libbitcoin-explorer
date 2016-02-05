@@ -20,6 +20,8 @@
 #ifndef BX_DEFINE_HPP
 #define BX_DEFINE_HPP
 
+#include <cstdint>
+#include <cstddef>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
@@ -32,14 +34,14 @@
 // used for non-api symbols.
 
 #if defined BCX_STATIC
-#define BCX_API
-#define BCX_INTERNAL
+    #define BCX_API
+    #define BCX_INTERNAL
 #elif defined BCX_DLL
-#define BCX_API      BC_HELPER_DLL_EXPORT
-#define BCX_INTERNAL BC_HELPER_DLL_LOCAL
+    #define BCX_API      BC_HELPER_DLL_EXPORT
+    #define BCX_INTERNAL BC_HELPER_DLL_LOCAL
 #else
-#define BCX_API      BC_HELPER_DLL_IMPORT
-#define BCX_INTERNAL BC_HELPER_DLL_LOCAL
+    #define BCX_API      BC_HELPER_DLL_IMPORT
+    #define BCX_INTERNAL BC_HELPER_DLL_LOCAL
 #endif
 
 /**
@@ -78,34 +80,21 @@ namespace pt = boost::property_tree;
 /**
  * Space-saving, clarifying and/or differentiating external type equivalents.
  */
+typedef boost::format format;
 typedef bc::chain::transaction tx_type;
 typedef bc::chain::input tx_input_type;
 typedef bc::chain::output tx_output_type;
 typedef bc::client::history_row balance_row;
-typedef boost::format format;
-typedef po::option_description option_metadata;
-typedef po::options_description options_metadata;
-typedef po::positional_options_description arguments_metadata;
 
 /**
- * The minimum safe length of a seed in bits.
+ * The minimum safe length of a seed in bits (multiple of 8).
  */
 BC_CONSTEXPR size_t minimum_seed_bits = 128;
 
 /**
  * The minimum safe length of a seed in bytes (16).
  */
-BC_CONSTEXPR size_t minimum_seed_size = 128 / bc::byte_bits;
-
-/**
-* Result codes for int main().
-*/
-enum console_result : int
-{
-    failure = -1,
-    okay = 0,
-    invalid = 1
-};
+BC_CONSTEXPR size_t minimum_seed_size = minimum_seed_bits / bc::byte_bits;
 
 /**
  * Suppported output encoding engines.

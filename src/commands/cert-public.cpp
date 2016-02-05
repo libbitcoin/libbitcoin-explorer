@@ -20,12 +20,14 @@
 #include <bitcoin/explorer/commands/cert-public.hpp>
 
 #include <boost/format.hpp>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/utility.hpp>
 #include <czmq++/czmqpp.hpp>
 
 using namespace czmqpp;
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;

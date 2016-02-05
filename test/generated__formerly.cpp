@@ -44,11 +44,6 @@ BOOST_AUTO_TEST_CASE(generated__formerly__address_encode_was_encode_addr__return
     BOOST_REQUIRE_EQUAL(formerly("encode-addr"), address_encode::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__address_validate_was_validaddr__returns_object)
-{
-    BOOST_REQUIRE_EQUAL(formerly("validaddr"), address_validate::symbol());
-}
-
 BOOST_AUTO_TEST_CASE(generated__formerly__btc_to_satoshi_was_satoshi__returns_object)
 {
     BOOST_REQUIRE_EQUAL(formerly("satoshi"), btc_to_satoshi::symbol());

@@ -168,14 +168,10 @@ void obelisk_client::poll_until_timeout_cumulative(const period_ms& timeout)
         poller.wait(static_cast<int>(max_wait_interval.count()));
 
         if (poller.terminated())
-        {
             break;
-        }
 
         if (!poller.expired())
-        {
             stream_->signal_response(codec_);
-        }
     }
 }
 

@@ -86,6 +86,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\display.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\generated.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\obelisk_client.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\parser.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\prop_tree.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\primitives\base16.hpp" />
@@ -119,7 +120,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-embed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-encode.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-validate.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58-decode.hpp" />
@@ -128,11 +128,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58check-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base64-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base64-encode.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bci-fetch-last-height.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bci-history.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bitcoin160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\bitcoin256.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\blke-fetch-transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\btc-to-satoshi.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\cert-public.hpp" />
@@ -161,9 +158,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-tx-index.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-utxo.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\genaddr.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\genpriv.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\genpub.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-private.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-public.hpp" />
@@ -172,7 +166,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-to-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-to-wif.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\help.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\initchain.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-set.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-sign.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\input-validate.hpp" />
@@ -182,8 +175,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mnemonic-to-seed.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\mpk.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\newseed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\qrcode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ripemd160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\satoshi-to-btc.hpp" />
@@ -194,16 +185,12 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\send-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\send-tx-node.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\send-tx-p2p.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sendtx-bci.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\settings.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha160.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha256.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\sha512.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\showblkhead.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-encode.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-initiate.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-newkey.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-shared.hpp" />
@@ -214,7 +201,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\uri-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\uri-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\validate-tx.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wallet.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-ec.hpp" />
@@ -228,6 +214,7 @@
     <ClCompile Include="..\..\..\..\src\display.cpp" />
     <ClCompile Include="..\..\..\..\src\generated.cpp" />
     <ClCompile Include="..\..\..\..\src\obelisk_client.cpp" />
+    <ClCompile Include="..\..\..\..\src\parser.cpp" />
     <ClCompile Include="..\..\..\..\src\prop_tree.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\address.cpp" />
     <ClCompile Include="..\..\..\..\src\primitives\base16.cpp" />
@@ -260,7 +247,6 @@
     <ClCompile Include="..\..\..\..\src\commands\address-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\address-validate.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base16-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base16-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58-decode.cpp" />
@@ -269,11 +255,8 @@
     <ClCompile Include="..\..\..\..\src\commands\base58check-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base64-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base64-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\bci-fetch-last-height.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\bci-history.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\bitcoin160.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\bitcoin256.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\blke-fetch-transaction.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\btc-to-satoshi.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\cert-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\cert-public.cpp" />
@@ -302,9 +285,6 @@
     <ClCompile Include="..\..\..\..\src\commands\fetch-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-tx-index.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-utxo.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\genaddr.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\genpriv.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\genpub.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-private.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-public.cpp" />
@@ -313,7 +293,6 @@
     <ClCompile Include="..\..\..\..\src\commands\hd-to-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\hd-to-wif.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\help.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\initchain.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\input-sign.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\input-validate.cpp" />
@@ -323,8 +302,6 @@
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\mnemonic-to-seed.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\mpk.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\newseed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\qrcode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ripemd160.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\satoshi-to-btc.cpp" />
@@ -335,16 +312,12 @@
     <ClCompile Include="..\..\..\..\src\commands\send-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\send-tx-node.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\send-tx-p2p.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\sendtx-bci.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\settings.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha160.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha256.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\sha512.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\showblkhead.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-encode.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\stealth-initiate.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\stealth-newkey.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-shared.cpp" />
@@ -355,7 +328,6 @@
     <ClCompile Include="..\..\..\..\src\commands\uri-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\uri-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\validate-tx.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\wallet.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\watch-address.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-ec.cpp" />
@@ -376,7 +348,7 @@
     <Import Project="..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets')" />
     <Import Project="..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets')" />
-    <Import Project="..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.8\build\native\secp256k1_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.8\build\native\secp256k1_vc120.targets')" />
+    <Import Project="..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.13\build\native\secp256k1_vc120.targets" Condition="Exists('..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.13\build\native\secp256k1_vc120.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -392,6 +364,6 @@
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\czmqpp_vc120.1.1.0.0\build\native\czmqpp_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libsodium_vc120.1.0.0.0\build\native\libsodium_vc120.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\libzmq_vc120.4.2.0.0\build\native\libzmq_vc120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.8\build\native\secp256k1_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.8\build\native\secp256k1_vc120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.13\build\native\secp256k1_vc120.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\nuget\secp256k1_vc120.0.1.0.13\build\native\secp256k1_vc120.targets'))" />
   </Target>
 </Project>

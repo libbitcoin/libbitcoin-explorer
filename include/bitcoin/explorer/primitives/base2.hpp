@@ -53,7 +53,7 @@ public:
     /**
      * @param[in]  value  The value to initialize with.
      */
-    base2(const bc::binary_type& value);
+    base2(const bc::binary& value);
 
     /**
      * Copy constructor.
@@ -70,7 +70,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::binary_type&() const;
+    operator const bc::binary&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -95,7 +95,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::binary_type value_;
+    bc::binary value_;
 };
 
 } // namespace explorer

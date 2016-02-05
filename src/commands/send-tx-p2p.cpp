@@ -27,7 +27,7 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/network.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
@@ -71,31 +71,31 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     log::debug(LOG_NETWORK) << header;
     log::error(LOG_NETWORK) << header;
 
-    auto configuration = p2p::mainnet;
+    auto settings = network::settings::mainnet;
 
     // Fixed non-defaults: not relay/port/inbound.
-    configuration.inbound_port = 0;
-    configuration.inbound_connection_limit = 0;
-    configuration.relay_transactions = false;
+    settings.inbound_port = 0;
+    settings.connection_limit = 0;
+    settings.relay_transactions = false;
 
     // Defaulted by bx.
-    configuration.connect_timeout_seconds = connect;
-    configuration.channel_handshake_seconds = handshake;
-    configuration.hosts_file = hosts_file;
+    settings.connect_timeout_seconds = connect;
+    settings.channel_handshake_seconds = handshake;
+    settings.hosts_file = hosts_file;
 
     // Testnet deviations.
     if (identifier != 0)
-        configuration.identifier = identifier;
+        settings.identifier = identifier;
 
     if (!seeds.empty())
-        configuration.seeds = seeds;
+        settings.seeds = seeds;
 
-    p2p network(configuration);
+    p2p network(settings);
     std::promise<code> started;
     std::promise<code> complete;
     std::promise<code> stopped;
     callback_state state(error, output);
-    p2p::channel_handler connect_handler;
+    p2p::connect_handler connect_handler;
 
     const auto start_handler = [&started](const code& ec)
     {
@@ -115,11 +115,9 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
         --state;
 
-        // If done visiting nodes set complete, otherwise resubscribe.
+        // If done visiting nodes set complete.
         if (state.stopped())
             complete.set_value(ec);
-        else
-            network.subscribe(connect_handler);
     };
 
     connect_handler = [&state, &transaction, handle_send](const code& ec,
@@ -127,6 +125,9 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     {
         if (state.succeeded(ec))
             node->send(transaction, handle_send);
+
+        // Always resbscribe (stop will clear).
+        return true;
     };
 
     // Increment state to the required number of node connections.
@@ -138,7 +139,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         return console_result::okay;
 
     // Handle each successful connection.
-    network.subscribe(connect_handler);
+    network.subscribe_connections(connect_handler);
 
     // Connect to the specified number of hosts from the host pool.
     // This attempts to maintain the set of connections, so it will always

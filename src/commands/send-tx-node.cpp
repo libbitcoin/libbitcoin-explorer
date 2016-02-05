@@ -26,7 +26,7 @@
 #include <future>
 #include <iostream>
 #include <boost/format.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/network.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/transaction.hpp>
@@ -71,27 +71,27 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     log::debug(LOG_NETWORK) << header;
     log::error(LOG_NETWORK) << header;
 
-    auto configuration = p2p::mainnet;
+    auto settings = network::settings::mainnet;
 
     // Fixed non-defaults: not relay/port/inbound/seeds/hosts/outbound.
-    configuration.host_pool_capacity = 0;
-    configuration.outbound_connections = 0;
-    configuration.inbound_port = 0;
-    configuration.inbound_connection_limit = 0;
-    configuration.relay_transactions = false;
-    configuration.seeds.clear();
+    settings.host_pool_capacity = 0;
+    settings.outbound_connections = 0;
+    settings.inbound_port = 0;
+    settings.connection_limit = 0;
+    settings.relay_transactions = false;
+    settings.seeds.clear();
 
     // Defaulted by bx.
-    configuration.connect_attempts = retries + 1;
-    configuration.connect_timeout_seconds = connect;
-    configuration.channel_handshake_seconds = handshake;
-    configuration.hosts_file = hosts_file;
+    settings.manual_retry_limit = retries;
+    settings.connect_timeout_seconds = connect;
+    settings.channel_handshake_seconds = handshake;
+    settings.hosts_file = hosts_file;
 
     // Testnet deviations.
     if (identifier != 0)
-        configuration.identifier = identifier;
+        settings.identifier = identifier;
 
-    p2p network(configuration);
+    p2p network(settings);
     std::promise<code> complete;
     callback_state state(error, output);
 
@@ -104,7 +104,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     };
 
     const auto connect_handler = [&state, &transaction, &send_handler](
-        const std::error_code& ec, network::channel::ptr node)
+        const code& ec, network::channel::ptr node)
     {
         if (state.succeeded(ec))
             node->send(transaction, send_handler);

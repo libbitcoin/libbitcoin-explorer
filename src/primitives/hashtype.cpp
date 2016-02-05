@@ -32,9 +32,9 @@ namespace explorer {
 namespace primitives {
 
 // DRY
-static const char* hashtype_all = "all";
-static const char* hashtype_none = "none";
-static const char* hashtype_single = "single";
+static auto hashtype_all = "all";
+static auto hashtype_none = "none";
+static auto hashtype_single = "single";
 
 hashtype::hashtype()
   : hashtype(chain::signature_hash_algorithm::all)

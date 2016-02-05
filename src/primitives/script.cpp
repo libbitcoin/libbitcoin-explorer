@@ -73,7 +73,8 @@ const data_chunk script::to_data() const
 
 const std::string script::to_string() const
 {
-    return value_.to_string();
+    static constexpr auto flags = chain::script_context::all_enabled;
+    return value_.to_string(flags);
 }
 
 script::operator const chain::script&() const
@@ -98,7 +99,8 @@ std::istream& operator>>(std::istream& input, script& argument)
 
 std::ostream& operator<<(std::ostream& output, const script& argument)
 {
-    output << argument.value_.to_string();
+    static constexpr auto flags = chain::script_context::all_enabled;
+    output << argument.value_.to_string(flags);
     return output;
 }
 

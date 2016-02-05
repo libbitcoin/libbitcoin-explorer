@@ -32,9 +32,9 @@ namespace explorer {
 namespace primitives {
 
 // DRY
-static const char* encoding_info = "info";
-static const char* encoding_json = "json";
-static const char* encoding_xml = "xml";
+static auto encoding_info = "info";
+static auto encoding_json = "json";
+static auto encoding_xml = "xml";
 
 encoding::encoding()
     : encoding(encoding_engine::info)

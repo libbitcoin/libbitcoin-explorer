@@ -26,6 +26,7 @@
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
+using namespace bc::chain;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
@@ -48,12 +49,12 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    uint32_t hash_type = (chain::signature_hash_algorithm)sign_type;
+    uint8_t hash_type = (signature_hash_algorithm)sign_type;
     if (anyone_can_pay)
-        hash_type |= chain::signature_hash_algorithm::anyone_can_pay;
+        hash_type |= signature_hash_algorithm::anyone_can_pay;
 
     endorsement endorse;
-    if (!bc::chain::script::create_signature(endorse, private_key,
+    if (!chain::script::create_endorsement(endorse, private_key,
         contract, tx, index, hash_type))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;

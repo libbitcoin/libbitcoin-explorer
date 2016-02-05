@@ -32,20 +32,20 @@ doc_DATA = \
 # src/libbitcoin-explorer.la => ${libdir}
 #------------------------------------------------------------------------------
 lib_LTLIBRARIES = src/libbitcoin-explorer.la
-src_libbitcoin_explorer_la_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
-src_libbitcoin_explorer_la_LIBADD = ${bitcoin_client_LIBS} ${dl_LIBS}
+src_libbitcoin_explorer_la_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS} ${bitcoin_network_CPPFLAGS}
+src_libbitcoin_explorer_la_LIBADD = ${bitcoin_client_LIBS} ${bitcoin_network_LIBS} ${dl_LIBS}
 src_libbitcoin_explorer_la_SOURCES = \
     src/callback_state.cpp \
     src/dispatch.cpp \
     src/display.cpp \
     src/generated.cpp \
     src/obelisk_client.cpp \
+    src/parser.cpp \
     src/prop_tree.cpp \
     src/utility.cpp \
     src/commands/address-decode.cpp \
     src/commands/address-embed.cpp \
     src/commands/address-encode.cpp \
-    src/commands/address-validate.cpp \
     src/commands/base16-decode.cpp \
     src/commands/base16-encode.cpp \
     src/commands/base58-decode.cpp \
@@ -54,11 +54,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/base58check-encode.cpp \
     src/commands/base64-decode.cpp \
     src/commands/base64-encode.cpp \
-    src/commands/bci-fetch-last-height.cpp \
-    src/commands/bci-history.cpp \
     src/commands/bitcoin160.cpp \
     src/commands/bitcoin256.cpp \
-    src/commands/blke-fetch-transaction.cpp \
     src/commands/btc-to-satoshi.cpp \
     src/commands/cert-new.cpp \
     src/commands/cert-public.cpp \
@@ -87,9 +84,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/fetch-tx-index.cpp \
     src/commands/fetch-tx.cpp \
     src/commands/fetch-utxo.cpp \
-    src/commands/genaddr.cpp \
-    src/commands/genpriv.cpp \
-    src/commands/genpub.cpp \
     src/commands/hd-new.cpp \
     src/commands/hd-private.cpp \
     src/commands/hd-public.cpp \
@@ -98,7 +92,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/hd-to-public.cpp \
     src/commands/hd-to-wif.cpp \
     src/commands/help.cpp \
-    src/commands/initchain.cpp \
     src/commands/input-set.cpp \
     src/commands/input-sign.cpp \
     src/commands/input-validate.cpp \
@@ -108,8 +101,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/mnemonic-encode.cpp \
     src/commands/mnemonic-new.cpp \
     src/commands/mnemonic-to-seed.cpp \
-    src/commands/mpk.cpp \
-    src/commands/newseed.cpp \
     src/commands/qrcode.cpp \
     src/commands/ripemd160.cpp \
     src/commands/satoshi-to-btc.cpp \
@@ -120,16 +111,12 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/send-tx-node.cpp \
     src/commands/send-tx-p2p.cpp \
     src/commands/send-tx.cpp \
-    src/commands/sendtx-bci.cpp \
     src/commands/settings.cpp \
     src/commands/sha160.cpp \
     src/commands/sha256.cpp \
     src/commands/sha512.cpp \
-    src/commands/showblkhead.cpp \
     src/commands/stealth-decode.cpp \
     src/commands/stealth-encode.cpp \
-    src/commands/stealth-initiate.cpp \
-    src/commands/stealth-newkey.cpp \
     src/commands/stealth-public.cpp \
     src/commands/stealth-secret.cpp \
     src/commands/stealth-shared.cpp \
@@ -140,7 +127,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/uri-decode.cpp \
     src/commands/uri-encode.cpp \
     src/commands/validate-tx.cpp \
-    src/commands/wallet.cpp \
     src/commands/watch-address.cpp \
     src/commands/watch-tx.cpp \
     src/commands/wif-to-ec.cpp \
@@ -178,8 +164,8 @@ src_libbitcoin_explorer_la_SOURCES = \
 if WITH_CONSOLE
 
 bin_PROGRAMS = console/bx
-console_bx_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
-console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS} ${dl_LIBS}
+console_bx_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS} ${bitcoin_network_CPPFLAGS}
+console_bx_LDADD = src/libbitcoin-explorer.la ${bitcoin_client_LIBS} ${bitcoin_network_LIBS} ${dl_LIBS}
 console_bx_SOURCES = \
     console/main.cpp
 
@@ -192,8 +178,8 @@ if WITH_TESTS
 TESTS = libbitcoin_explorer_test_runner.sh
 
 check_PROGRAMS = test/libbitcoin_explorer_test
-test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS}
-test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${boost_unit_test_framework_LIBS} ${bitcoin_client_LIBS} ${dl_LIBS}
+test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS} ${bitcoin_network_CPPFLAGS}
+test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${boost_unit_test_framework_LIBS} ${bitcoin_client_LIBS} ${bitcoin_network_LIBS} ${dl_LIBS}
 test_libbitcoin_explorer_test_SOURCES = \
     test/generated__broadcast.cpp \
     test/generated__find.cpp \
@@ -203,7 +189,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/address-decode.cpp \
     test/commands/address-embed.cpp \
     test/commands/address-encode.cpp \
-    test/commands/address-validate.cpp \
     test/commands/base16-decode.cpp \
     test/commands/base16-encode.cpp \
     test/commands/base58-decode.cpp \
@@ -212,11 +197,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/base58check-encode.cpp \
     test/commands/base64-decode.cpp \
     test/commands/base64-encode.cpp \
-    test/commands/bci-fetch-last-height.cpp \
-    test/commands/bci-history.cpp \
     test/commands/bitcoin160.cpp \
     test/commands/bitcoin256.cpp \
-    test/commands/blke-fetch-transaction.cpp \
     test/commands/btc-to-satoshi.cpp \
     test/commands/cert-new.cpp \
     test/commands/cert-public.cpp \
@@ -246,9 +228,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/fetch-tx-index.cpp \
     test/commands/fetch-tx.cpp \
     test/commands/fetch-utxo.cpp \
-    test/commands/genaddr.cpp \
-    test/commands/genpriv.cpp \
-    test/commands/genpub.cpp \
     test/commands/hd-new.cpp \
     test/commands/hd-private.cpp \
     test/commands/hd-public.cpp \
@@ -257,7 +236,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/hd-to-public.cpp \
     test/commands/hd-to-wif.cpp \
     test/commands/help.cpp \
-    test/commands/initchain.cpp \
     test/commands/input-set.cpp \
     test/commands/input-sign.cpp \
     test/commands/input-validate.cpp \
@@ -267,8 +245,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/mnemonic-encode.cpp \
     test/commands/mnemonic-new.cpp \
     test/commands/mnemonic-to-seed.cpp \
-    test/commands/mpk.cpp \
-    test/commands/newseed.cpp \
     test/commands/qrcode.cpp \
     test/commands/ripemd160.cpp \
     test/commands/satoshi-to-btc.cpp \
@@ -279,16 +255,12 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/send-tx-node.cpp \
     test/commands/send-tx-p2p.cpp \
     test/commands/send-tx.cpp \
-    test/commands/sendtx-bci.cpp \
     test/commands/settings.cpp \
     test/commands/sha160.cpp \
     test/commands/sha256.cpp \
     test/commands/sha512.cpp \
-    test/commands/showblkhead.cpp \
     test/commands/stealth-decode.cpp \
     test/commands/stealth-encode.cpp \
-    test/commands/stealth-initiate.cpp \
-    test/commands/stealth-newkey.cpp \
     test/commands/stealth-public.cpp \
     test/commands/stealth-secret.cpp \
     test/commands/stealth-shared.cpp \
@@ -299,7 +271,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/uri-decode.cpp \
     test/commands/uri-encode.cpp \
     test/commands/validate-tx.cpp \
-    test/commands/wallet.cpp \
     test/commands/watch-address.cpp \
     test/commands/watch-tx.cpp \
     test/commands/wif-to-ec.cpp \
@@ -326,6 +297,7 @@ include_bitcoin_explorer_HEADERS = \
     include/bitcoin/explorer/display.hpp \
     include/bitcoin/explorer/generated.hpp \
     include/bitcoin/explorer/obelisk_client.hpp \
+    include/bitcoin/explorer/parser.hpp \
     include/bitcoin/explorer/prop_tree.hpp \
     include/bitcoin/explorer/utility.hpp \
     include/bitcoin/explorer/version.hpp
@@ -335,7 +307,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/address-decode.hpp \
     include/bitcoin/explorer/commands/address-embed.hpp \
     include/bitcoin/explorer/commands/address-encode.hpp \
-    include/bitcoin/explorer/commands/address-validate.hpp \
     include/bitcoin/explorer/commands/base16-decode.hpp \
     include/bitcoin/explorer/commands/base16-encode.hpp \
     include/bitcoin/explorer/commands/base58-decode.hpp \
@@ -344,11 +315,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/base58check-encode.hpp \
     include/bitcoin/explorer/commands/base64-decode.hpp \
     include/bitcoin/explorer/commands/base64-encode.hpp \
-    include/bitcoin/explorer/commands/bci-fetch-last-height.hpp \
-    include/bitcoin/explorer/commands/bci-history.hpp \
     include/bitcoin/explorer/commands/bitcoin160.hpp \
     include/bitcoin/explorer/commands/bitcoin256.hpp \
-    include/bitcoin/explorer/commands/blke-fetch-transaction.hpp \
     include/bitcoin/explorer/commands/btc-to-satoshi.hpp \
     include/bitcoin/explorer/commands/cert-new.hpp \
     include/bitcoin/explorer/commands/cert-public.hpp \
@@ -377,9 +345,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/fetch-tx-index.hpp \
     include/bitcoin/explorer/commands/fetch-tx.hpp \
     include/bitcoin/explorer/commands/fetch-utxo.hpp \
-    include/bitcoin/explorer/commands/genaddr.hpp \
-    include/bitcoin/explorer/commands/genpriv.hpp \
-    include/bitcoin/explorer/commands/genpub.hpp \
     include/bitcoin/explorer/commands/hd-new.hpp \
     include/bitcoin/explorer/commands/hd-private.hpp \
     include/bitcoin/explorer/commands/hd-public.hpp \
@@ -388,7 +353,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/hd-to-public.hpp \
     include/bitcoin/explorer/commands/hd-to-wif.hpp \
     include/bitcoin/explorer/commands/help.hpp \
-    include/bitcoin/explorer/commands/initchain.hpp \
     include/bitcoin/explorer/commands/input-set.hpp \
     include/bitcoin/explorer/commands/input-sign.hpp \
     include/bitcoin/explorer/commands/input-validate.hpp \
@@ -398,8 +362,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/mnemonic-encode.hpp \
     include/bitcoin/explorer/commands/mnemonic-new.hpp \
     include/bitcoin/explorer/commands/mnemonic-to-seed.hpp \
-    include/bitcoin/explorer/commands/mpk.hpp \
-    include/bitcoin/explorer/commands/newseed.hpp \
     include/bitcoin/explorer/commands/qrcode.hpp \
     include/bitcoin/explorer/commands/ripemd160.hpp \
     include/bitcoin/explorer/commands/satoshi-to-btc.hpp \
@@ -410,16 +372,12 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/send-tx-node.hpp \
     include/bitcoin/explorer/commands/send-tx-p2p.hpp \
     include/bitcoin/explorer/commands/send-tx.hpp \
-    include/bitcoin/explorer/commands/sendtx-bci.hpp \
     include/bitcoin/explorer/commands/settings.hpp \
     include/bitcoin/explorer/commands/sha160.hpp \
     include/bitcoin/explorer/commands/sha256.hpp \
     include/bitcoin/explorer/commands/sha512.hpp \
-    include/bitcoin/explorer/commands/showblkhead.hpp \
     include/bitcoin/explorer/commands/stealth-decode.hpp \
     include/bitcoin/explorer/commands/stealth-encode.hpp \
-    include/bitcoin/explorer/commands/stealth-initiate.hpp \
-    include/bitcoin/explorer/commands/stealth-newkey.hpp \
     include/bitcoin/explorer/commands/stealth-public.hpp \
     include/bitcoin/explorer/commands/stealth-secret.hpp \
     include/bitcoin/explorer/commands/stealth-shared.hpp \
@@ -430,7 +388,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/uri-decode.hpp \
     include/bitcoin/explorer/commands/uri-encode.hpp \
     include/bitcoin/explorer/commands/validate-tx.hpp \
-    include/bitcoin/explorer/commands/wallet.hpp \
     include/bitcoin/explorer/commands/watch-address.hpp \
     include/bitcoin/explorer/commands/watch-tx.hpp \
     include/bitcoin/explorer/commands/wif-to-ec.hpp \

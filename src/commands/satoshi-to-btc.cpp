@@ -24,6 +24,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
 
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;

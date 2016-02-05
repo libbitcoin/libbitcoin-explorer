@@ -23,12 +23,12 @@
 #include <string>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include <boost/throw_exception.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/utility.hpp>
+#include <bitcoin/explorer/parser.hpp>
+#include <bitcoin/bitcoin.hpp>
 
 using namespace boost::filesystem;
 using namespace boost::program_options;
@@ -36,19 +36,6 @@ using namespace boost::system;
 
 namespace libbitcoin {
 namespace explorer {
-
-// Not unit testable (reliance on untestable function).
-console_result dispatch(int argc, const char* argv[], 
-    std::istream& input, std::ostream& output, std::ostream& error)
-{
-    if (argc == 1)
-    {
-        display_usage(output);
-        return console_result::okay;
-    }
-
-    return dispatch_invoke(argc - 1, &argv[1], input, output, error);
-}
 
 // Swap Unicode input stream for binary stream in Windows builds.
 static std::istream& get_command_input(command& command, std::istream& input)
@@ -89,8 +76,19 @@ static std::ostream& get_command_error(command& command, std::ostream& error)
     return error;
 }
 
-// Not unit testable (reliance on untestable functions).
-console_result dispatch_invoke(int argc, const char* argv[],
+console_result dispatch(int argc, const char* argv[], 
+    std::istream& input, std::ostream& output, std::ostream& error)
+{
+    if (argc == 1)
+    {
+        display_usage(output);
+        return console_result::okay;
+    }
+
+    return dispatch_command(argc - 1, &argv[1], input, output, error);
+}
+
+console_result dispatch_command(int argc, const char* argv[],
     std::istream& input, std::ostream& output, std::ostream& error)
 {
     const std::string target(argv[0]);
@@ -103,142 +101,26 @@ console_result dispatch_invoke(int argc, const char* argv[],
         return console_result::failure;
     }
 
-    std::string message;
-    variables_map variables;
-
     auto& in = get_command_input(*command, input);
-    if (!load_variables(variables, message, *command, in, argc, argv))
+    auto& err = get_command_error(*command, error);
+    auto& out = get_command_output(*command, output);
+
+    parser metadata(*command);
+    std::string error_message;
+
+    if (!metadata.parse(error_message, in, argc, argv))
     {
-        display_invalid_parameter(error, message);
+        display_invalid_parameter(error, error_message);
         return console_result::failure;
     }
 
-    if (get_help_option(variables))
+    if (metadata.help())
     {
         command->write_help(output);
         return console_result::okay;
     }
 
-    auto& err = get_command_error(*command, error);
-    auto& out = get_command_output(*command, output);
     return command->invoke(out, err);
-}
-
-path get_config_option(variables_map& variables)
-{
-    // Read config from the map so we don't require an early notify call.
-    const auto& config = variables[BX_CONFIG_VARIABLE];
-
-    // prevent exception in the case where the config variable is not set.
-    if (config.empty())
-        return path();
-
-    return config.as<path>();
-}
-
-bool get_help_option(variables_map& variables)
-{
-    // Read help from the map so we don't require an early notify call.
-    const auto& help = variables[BX_HELP_VARIABLE];
-
-    // prevent exception in the case where the help variable is not set.
-    if (help.empty())
-        return false;
-
-    return help.as<bool>();
-}
-
-void load_command_variables(variables_map& variables, command& instance,
-    std::istream& input, int argc, const char* argv[])
-{
-    // commands metadata is preserved on members for later usage presentation
-    const auto& options = instance.load_options();
-    const auto& arguments = instance.load_arguments();
-
-    auto command_parser = command_line_parser(argc, argv).options(options)
-        .allow_unregistered().positional(arguments);
-    store(command_parser.run(), variables);
-
-    // Don't load rest if help is specified.
-    // For variable with stdin or file fallback load the input stream.
-    if (!get_help_option(variables))
-        instance.load_fallbacks(input, variables);
-}
-
-void load_configuration_variables(variables_map& variables, command& instance)
-{
-    options_description config_settings("settings");
-    instance.load_settings(config_settings);
-    const auto config_path = get_config_option(variables);
-
-    // If the existence test errors out we pretend there's no file :/.
-    error_code code;
-    if (!config_path.empty() && exists(config_path, code))
-    {
-        const auto& path = config_path.string();
-
-        std::ifstream file(path, std::ios::binary);
-        if (!file.good())
-        {
-            BOOST_THROW_EXCEPTION(reading_file(path.c_str()));
-        }
-
-        const auto configuration = parse_config_file(file, config_settings);
-        store(configuration, variables);
-        return;
-    }
-
-    // loading from an empty stream causes the defaults to populate.
-    std::stringstream stream;
-    const auto configuration = parse_config_file(stream, config_settings);
-    store(configuration, variables);
-}
-
-void load_environment_variables(variables_map& variables, command& instance)
-{
-    options_description environment_variables("environment");
-    instance.load_environment(environment_variables);
-    const auto environment = parse_environment(environment_variables,
-        BX_ENVIRONMENT_VARIABLE_PREFIX);
-    store(environment, variables);
-}
-
-void set_variable_values(variables_map& variables, command& instance)
-{
-    notify(variables);
-    instance.set_defaults_from_config(variables);
-}
-
-bool load_variables(variables_map& variables, std::string& message,
-    command& instance, std::istream& input, int argc, const char* argv[])
-{
-    try
-    {
-        // Must store before environment in order for commands to supercede.
-        load_command_variables(variables, instance, input, argc, argv);
-
-        // Don't load rest if help is specified.
-        if (!get_help_option(variables))
-        {
-            // Must store before configuration in order to specify the path.
-            load_environment_variables(variables, instance);
-
-            // Is lowest priority, which will cause confusion if there is
-            // composition between them, which therefore should be avoided.
-            load_configuration_variables(variables, instance);
-
-            // Set defaults, send notifications and update bound variables.
-            set_variable_values(variables, instance);
-        }
-    }
-    catch (const po::error& e)
-    {
-        // This is obtained from boost, which circumvents our localization.
-        message = e.what();
-        return false;
-    }
-
-    return true;
 }
 
 } // namespace explorer

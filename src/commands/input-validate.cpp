@@ -33,20 +33,26 @@ console_result input_validate::invoke(std::ostream& output,
 {
     // Bound parameters.
     const auto index = get_index_option();
+    const auto strict = false; //// get_strict_option();
     const tx_type& tx = get_transaction_argument();
     const auto& public_key = get_ec_public_key_argument();
     const auto& contract = get_contract_argument();
-    const auto& endorse = get_endorsement_argument();
+    const endorsement& endorse = get_endorsement_argument();
 
     if (index >= tx.inputs.size())
     {
         error << BX_INPUT_VALIDATE_INDEX_OUT_OF_RANGE << std::endl;
         return console_result::failure;
     }
-    
+
     data_chunk point;
-    if (!public_key.to_data(point) || 
-        !script::check_signature(endorse, point, contract, tx, index))
+    ec_signature signature;
+
+    if (endorse.empty() || !public_key.to_data(point) ||
+        !parse_signature(signature, { endorse.begin(), endorse.end() - 1 },
+            strict) ||
+        !script::check_signature(signature, endorse.back(), point, contract, tx,
+            index))
     {
         // We do not return a failure here, as this is a validity test.
         output << BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT << std::endl;

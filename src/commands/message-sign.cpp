@@ -25,6 +25,7 @@
 #include <bitcoin/explorer/primitives/signature.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
+using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
