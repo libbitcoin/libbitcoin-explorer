@@ -64,8 +64,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_QRCODE_REQUIRES_QRENCODE_AND_LIBPNG \
-    "The command requires a qrencode and libpng build."
+#define BX_QRCODE_REQUIRES_QRENCODE \
+    "The command requires a qrencode build."
+#define BX_QRCODE_REQUIRES_PNG \
+    "The command requires a png build."
 #define BX_QRCODE_WRITE_ERROR \
     "Error writing qrcode png image to file."
 
@@ -164,9 +166,39 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "image,i",
+            value<bool>(&option_.image)->default_value(false)->zero_tokens(),
+            "Specifies that the QR code should be output in png format."
+        )
+        (
             "size,s",
             value<uint32_t>(&option_.size)->default_value(8),
-            "Specifies the module size in dots of the generated QR code."
+            "Specifies the module size in dots (pixles) of the generated QR code."
+        )
+        (
+            "margin,m",
+            value<uint32_t>(&option_.margin)->default_value(2),
+            "Specifies the margin size of the generated QR code."
+        )
+        (
+            "dpi,d",
+            value<uint32_t>(&option_.dpi)->default_value(72),
+            "Specifies the dpi of the generated QR code."
+        )
+        (
+            "version,v",
+            value<uint32_t>(&option_.version)->default_value(0),
+            "Specifies the version of the generated QR code."
+        )
+        (
+            "casesensitive,c",
+            value<uint32_t>(&option_.casesensitive)->default_value(1),
+            "Specifies the case sensitivity of the generated QR code."
+        )
+        (
+            "prefix,p",
+            value<std::string>(&option_.prefix)->default_value("bitcoin:"),
+            "Specifies the prefix used in the QR code data (e.g. 'bitcoin:')."
         )
         (
             "PAYMENT_ADDRESS",
@@ -175,7 +207,7 @@ public:
         )
         (
             "filename",
-            value<std::string>(&argument_.filename)->required(),
+            value<std::string>(&argument_.filename),
             "Specifies where to write the QR code image file."
         );
 
@@ -236,6 +268,23 @@ public:
     }
 
     /**
+     * Get the value of the image option.
+     */
+    virtual bool& get_image_option()
+    {
+        return option_.image;
+    }
+
+    /**
+     * Set the value of the image option.
+     */
+    virtual void set_image_option(
+        const bool& value)
+    {
+        option_.image = value;
+    }
+
+    /**
      * Get the value of the size option.
      */
     virtual uint32_t& get_size_option()
@@ -250,6 +299,91 @@ public:
         const uint32_t& value)
     {
         option_.size = value;
+    }
+
+    /**
+     * Get the value of the margin option.
+     */
+    virtual uint32_t& get_margin_option()
+    {
+        return option_.margin;
+    }
+
+    /**
+     * Set the value of the margin option.
+     */
+    virtual void set_margin_option(
+        const uint32_t& value)
+    {
+        option_.margin = value;
+    }
+
+    /**
+     * Get the value of the dpi option.
+     */
+    virtual uint32_t& get_dpi_option()
+    {
+        return option_.dpi;
+    }
+
+    /**
+     * Set the value of the dpi option.
+     */
+    virtual void set_dpi_option(
+        const uint32_t& value)
+    {
+        option_.dpi = value;
+    }
+
+    /**
+     * Get the value of the version option.
+     */
+    virtual uint32_t& get_version_option()
+    {
+        return option_.version;
+    }
+
+    /**
+     * Set the value of the version option.
+     */
+    virtual void set_version_option(
+        const uint32_t& value)
+    {
+        option_.version = value;
+    }
+
+    /**
+     * Get the value of the casesensitive option.
+     */
+    virtual uint32_t& get_casesensitive_option()
+    {
+        return option_.casesensitive;
+    }
+
+    /**
+     * Set the value of the casesensitive option.
+     */
+    virtual void set_casesensitive_option(
+        const uint32_t& value)
+    {
+        option_.casesensitive = value;
+    }
+
+    /**
+     * Get the value of the prefix option.
+     */
+    virtual std::string& get_prefix_option()
+    {
+        return option_.prefix;
+    }
+
+    /**
+     * Set the value of the prefix option.
+     */
+    virtual void set_prefix_option(
+        const std::string& value)
+    {
+        option_.prefix = value;
     }
 
 private:
@@ -279,11 +413,23 @@ private:
     struct option
     {
         option()
-          : size()
+          : image(),
+            size(),
+            margin(),
+            dpi(),
+            version(),
+            casesensitive(),
+            prefix()
         {
         }
 
+        bool image;
         uint32_t size;
+        uint32_t margin;
+        uint32_t dpi;
+        uint32_t version;
+        uint32_t casesensitive;
+        std::string prefix;
     } option_;
 };
 
