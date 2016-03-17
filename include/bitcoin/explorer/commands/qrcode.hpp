@@ -69,7 +69,7 @@ namespace commands {
 #define BX_QRCODE_REQUIRES_PNG \
     "The command requires a png build."
 #define BX_QRCODE_WRITE_ERROR \
-    "Error writing qrcode png image to file."
+    "Error writing qr encoded data."
 
 /**
  * Class to implement the qrcode command.
@@ -129,8 +129,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1)
-            .add("filename", 1);
+            .add("PAYMENT_ADDRESS", 1);
     }
 
 	/**
@@ -168,47 +167,42 @@ public:
         (
             "image,i",
             value<bool>(&option_.image)->default_value(false)->zero_tokens(),
-            "Specifies that the QR code should be output in png format."
+            "Write the QR code in png format."
+        )
+        (
+            "ignore_casing,i",
+            value<bool>(&option_.ignore_casing)->default_value(false)->zero_tokens(),
+            "Ignore case sensitivity of the generated QR code."
         )
         (
             "size,s",
             value<uint32_t>(&option_.size)->default_value(8),
-            "Specifies the module size in dots (pixles) of the generated QR code."
+            "The module size in dots (pixels) of the generated QR code."
         )
         (
             "margin,m",
             value<uint32_t>(&option_.margin)->default_value(2),
-            "Specifies the margin size of the generated QR code."
+            "The margin size of the generated QR code."
         )
         (
-            "dpi,d",
-            value<uint32_t>(&option_.dpi)->default_value(72),
-            "Specifies the dpi of the generated QR code."
+            "density,d",
+            value<uint32_t>(&option_.density)->default_value(72),
+            "The dots per inch of the generated QR code."
         )
         (
             "version,v",
             value<uint32_t>(&option_.version)->default_value(0),
-            "Specifies the version of the generated QR code."
-        )
-        (
-            "casesensitive,c",
-            value<uint32_t>(&option_.casesensitive)->default_value(1),
-            "Specifies the case sensitivity of the generated QR code."
+            "The version of the generated QR code."
         )
         (
             "prefix,p",
             value<std::string>(&option_.prefix)->default_value("bitcoin:"),
-            "Specifies the prefix used in the QR code data (e.g. 'bitcoin:')."
+            "The prefix used in the QR code data (e.g. 'bitcoin:', '', or 'litecoin:')."
         )
         (
             "PAYMENT_ADDRESS",
-            value<bc::wallet::payment_address>(&argument_.payment_address),
+            value<bc::wallet::payment_address>(&argument_.payment_address)->required(),
             "The payment address. If not specified the address is read from STDIN."
-        )
-        (
-            "filename",
-            value<std::string>(&argument_.filename),
-            "Specifies where to write the QR code image file."
         );
 
         return options;
@@ -251,23 +245,6 @@ public:
     }
 
     /**
-     * Get the value of the filename argument.
-     */
-    virtual std::string& get_filename_argument()
-    {
-        return argument_.filename;
-    }
-
-    /**
-     * Set the value of the filename argument.
-     */
-    virtual void set_filename_argument(
-        const std::string& value)
-    {
-        argument_.filename = value;
-    }
-
-    /**
      * Get the value of the image option.
      */
     virtual bool& get_image_option()
@@ -282,6 +259,23 @@ public:
         const bool& value)
     {
         option_.image = value;
+    }
+
+    /**
+     * Get the value of the ignore_casing option.
+     */
+    virtual bool& get_ignore_casing_option()
+    {
+        return option_.ignore_casing;
+    }
+
+    /**
+     * Set the value of the ignore_casing option.
+     */
+    virtual void set_ignore_casing_option(
+        const bool& value)
+    {
+        option_.ignore_casing = value;
     }
 
     /**
@@ -319,20 +313,20 @@ public:
     }
 
     /**
-     * Get the value of the dpi option.
+     * Get the value of the density option.
      */
-    virtual uint32_t& get_dpi_option()
+    virtual uint32_t& get_density_option()
     {
-        return option_.dpi;
+        return option_.density;
     }
 
     /**
-     * Set the value of the dpi option.
+     * Set the value of the density option.
      */
-    virtual void set_dpi_option(
+    virtual void set_density_option(
         const uint32_t& value)
     {
-        option_.dpi = value;
+        option_.density = value;
     }
 
     /**
@@ -350,23 +344,6 @@ public:
         const uint32_t& value)
     {
         option_.version = value;
-    }
-
-    /**
-     * Get the value of the casesensitive option.
-     */
-    virtual uint32_t& get_casesensitive_option()
-    {
-        return option_.casesensitive;
-    }
-
-    /**
-     * Set the value of the casesensitive option.
-     */
-    virtual void set_casesensitive_option(
-        const uint32_t& value)
-    {
-        option_.casesensitive = value;
     }
 
     /**
@@ -396,13 +373,11 @@ private:
     struct argument
     {
         argument()
-          : payment_address(),
-            filename()
+          : payment_address()
         {
         }
 
         bc::wallet::payment_address payment_address;
-        std::string filename;
     } argument_;
 
     /**
@@ -414,21 +389,21 @@ private:
     {
         option()
           : image(),
+            ignore_casing(),
             size(),
             margin(),
-            dpi(),
+            density(),
             version(),
-            casesensitive(),
             prefix()
         {
         }
 
         bool image;
+        bool ignore_casing;
         uint32_t size;
         uint32_t margin;
-        uint32_t dpi;
+        uint32_t density;
         uint32_t version;
-        uint32_t casesensitive;
         std::string prefix;
     } option_;
 };
