@@ -54,23 +54,41 @@ typedef std::map<std::string, std::string> settings_list;
 
 /**
  * Create a property tree array of property tree elements.
+ * The child elements of Value contain no arrays.
  * @param      <Values>  The array element type.
  * @param[in]  name      The name of the list elements.
  * @param[in]  values    The enumerable with elements of type Values.
+ * @param[in]  json      Use json array formating.
  * @returns              A new property tree containing the list.
  */
 template <typename Values>
-pt::ptree prop_tree_list(const std::string& name, const Values& values);
+pt::ptree prop_tree_list(const std::string& name, const Values& values,
+    bool json);
+
+/**
+ * Create a property tree array of property tree elements.
+ * The child elements of Value contain arrays.
+ * @param      <Values>  The array element type.
+ * @param[in]  name      The name of the list elements.
+ * @param[in]  values    The enumerable with elements of type Values.
+ * @param[in]  json      Use json array formating.
+ * @returns              A new property tree containing the list.
+ */
+template <typename Values>
+pt::ptree prop_tree_list_of_lists(const std::string& name,
+    const Values& values, bool json);
 
 /**
  * Create a property tree array of value elements.
  * @param      <Values>  The array element type.
  * @param[in]  name      The name of the list elements.
  * @param[in]  values    The enumerable with elements of type Values.
+ * @param[in]  json      Use json array formating.
  * @returns              A new property tree containing the list.
  */
 template <typename Values>
-pt::ptree prop_value_list(const std::string& name, const Values& values);
+pt::ptree prop_value_list(const std::string& name, const Values& values,
+    bool json);
 
 /**
  * Generate a property list for a block header.
@@ -111,12 +129,15 @@ BCX_API pt::ptree prop_tree(const client::history_row& row);
  * Generate a property tree for a set of history rows.
  *
  * @param[in]  rows  The set of history rows.
+ * @param[in]  json  Use json array formatting.
  * @return           A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<client::history_row>& rows);
+BCX_API pt::ptree prop_tree(const std::vector<client::history_row>& rows,
+    bool json);
 
 /**
  * Generate a property list from balance rows for an address.
+ * This doesn't require array formatting because it summarizes the rows.
  * @param[in]  rows             The set of balance rows.
  * @param[in]  balance_address  The payment address for the balance rows.
  * @return                      A property list.
@@ -126,6 +147,7 @@ BCX_API pt::ptree prop_list(const std::vector<balance_row>& rows,
 
 /**
  * Generate a property tree from balance rows for an address.
+ * This doesn't require array formatting because it summarizes the rows.
  * @param[in]  rows             The set of balance rows.
  * @param[in]  balance_address  The payment address for the balance rows.
  * @return                      A property tree.
@@ -150,9 +172,11 @@ BCX_API pt::ptree prop_tree(const tx_input_type& tx_input);
 /**
  * Generate a property tree for a set of transaction inputs.
  * @param[in]  tx_inputs  The set of transaction inputs.
+ * @param[in]  json       Use json array formatting.
  * @return                A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<tx_input_type>& tx_inputs);
+BCX_API pt::ptree prop_tree(const std::vector<tx_input_type>& tx_inputs,
+    bool json);
 
 /**
  * Generate a property list for an input.
@@ -171,10 +195,11 @@ BCX_API pt::ptree prop_tree(const explorer::primitives::input& input);
 /**
  * Generate a property tree for a set of inputs.
  * @param[in]  inputs  The set of inputs.
+ * @param[in]  json    Use json array formatting.
  * @return             A property tree.
  */
 BCX_API pt::ptree prop_tree(
-    const std::vector<explorer::primitives::input>& inputs);
+    const std::vector<explorer::primitives::input>& inputs, bool json);
 
 /**
  * Generate a property list for a transaction output.
@@ -193,30 +218,36 @@ BCX_API pt::ptree prop_tree(const tx_output_type& tx_output);
 /**
  * Generate a property tree for a set of transaction outputs.
  * @param[in]  tx_outputs  The set of transaction outputs.
- * @return                  A property tree.
+ * @param[in]  json        Use json array formatting.
+ * @return                 A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<tx_output_type>& tx_outputs);
+BCX_API pt::ptree prop_tree(const std::vector<tx_output_type>& tx_outputs,
+    bool json);
 
 /**
  * Generate a property list for a transaction.
  * @param[in]  transaction  The transaction.
+ * @param[in]  json         Use json array formatting.
  * @return                  A property list.
  */
-BCX_API pt::ptree prop_list(const transaction& transaction);
+BCX_API pt::ptree prop_list(const transaction& transaction, bool json);
 
 /**
  * Generate a property tree for a transaction.
  * @param[in]  transaction  The transaction.
+ * @param[in]  json         Use json array formatting.
  * @return                  A property tree.
  */
-BCX_API pt::ptree prop_tree(const transaction& transaction);
+BCX_API pt::ptree prop_tree(const transaction& transaction, bool json);
 
 /**
  * Generate a property tree for a set of transactions.
  * @param[in]  transactions  The set of transactions.
+ * @param[in]  json          Use json array formatting.
  * @return                   A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<transaction>& transactions);
+BCX_API pt::ptree prop_tree(const std::vector<transaction>& transactions,
+    bool json);
 
 /**
  * Generate a property list for a wrapper.
@@ -237,54 +268,60 @@ BCX_API pt::ptree prop_tree(const wrapped_data& wrapper);
 // * @param[in]  tx          The transaction.
 // * @param[in]  block_hash  The block_hash of the transaction.
 // * @param[in]  filter      The filter used to locate the transaction.
+// * @param[in]  json        Use json array formatting.
 // * @return                 A property list.
 // */
 //BCX_API pt::ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter);
+//    const base2& filter, bool json);
 //
 ///**
 // * Generate a property tree for transaction with extended data.
 // * @param[in]  tx          The transaction.
 // * @param[in]  block_hash  The block_hash of the transaction.
 // * @param[in]  filter      The filter used to locate the transaction.
+// * @param[in]  json        Use json array formatting.
 // * @return                 A property tree.
 // */
 //BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter);
+//    const base2& filter, bool json);
 
 /**
  * Generate a property list for transaction with extended data.
  * @param[in]  tx          The transaction.
  * @param[in]  block_hash  The block_hash of the transaction.
  * @param[in]  address     The address used to locate the transaction.
+ * @param[in]  json        Use json array formatting.
  * @return                 A property list.
  */
 BCX_API pt::ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const wallet::payment_address& address);
+    const wallet::payment_address& address, bool json);
 
 /**
  * Generate a property tree for transaction with extended data.
  * @param[in]  tx          The transaction.
  * @param[in]  block_hash  The block_hash of the transaction.
  * @param[in]  address     The address used to locate the transaction.
+ * @param[in]  json        Use json array formatting.
  * @return                 A property tree.
  */
 BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const wallet::payment_address& address);
+    const wallet::payment_address& address, bool json);
 
 /**
  * Generate a property list for a stealth address.
  * @param[in]  stealth_address  The stealth address.
+ * @param[in]  json             Use json array formatting.
  * @return                      A property list.
  */
-BCX_API pt::ptree prop_list(const wallet::stealth_address& stealth);
+BCX_API pt::ptree prop_list(const wallet::stealth_address& stealth, bool json);
 
 /**
  * Generate a property tree for a stealth address.
  * @param[in]  stealth_address  The stealth address.
+ * @param[in]  json             Use json array formatting.
  * @return                      A property tree.
  */
-BCX_API pt::ptree prop_tree(const wallet::stealth_address& stealth);
+BCX_API pt::ptree prop_tree(const wallet::stealth_address& stealth, bool json);
 
 /**
  * Generate a property list for a stealth metadata row.
@@ -303,9 +340,11 @@ BCX_API pt::ptree prop_tree(const client::stealth_row& row);
 /**
  * Generate a property tree from stealth metadata rows.
  * @param[in]  rows    The set of stealth rows.
+ * @param[in]  json    Use json array formatting.
  * @return             A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<client::stealth_row>& rows);
+BCX_API pt::ptree prop_tree(const std::vector<client::stealth_row>& rows,
+    bool json);
 
 /**
  * Create a property list for the fetch-tx-index command.

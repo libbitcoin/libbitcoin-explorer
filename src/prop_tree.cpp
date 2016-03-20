@@ -77,10 +77,10 @@ ptree prop_tree(const header& header)
     tree.add_child("header", prop_list(header));
     return tree;
 }
-ptree prop_tree(const std::vector<header>& headers)
+ptree prop_tree(const std::vector<header>& headers, bool json)
 {
     ptree tree;
-    tree.add_child("headers", prop_tree_list("header", headers));
+    tree.add_child("headers", prop_tree_list("header", headers, json));
     return tree;
 }
 
@@ -119,10 +119,10 @@ ptree prop_tree(const history_row& row)
     tree.add_child("transfer", prop_list(row));
     return tree;
 }
-ptree prop_tree(const std::vector<history_row>& rows)
+ptree prop_tree(const std::vector<history_row>& rows, bool json)
 {
     ptree tree;
-    tree.add_child("transfers", prop_tree_list("transfer", rows));
+    tree.add_child("transfers", prop_tree_list("transfer", rows, json));
     return tree;
 }
 
@@ -184,10 +184,10 @@ ptree prop_tree(const tx_input_type& tx_input)
     tree.add_child("input", prop_list(tx_input));
     return tree;
 }
-ptree prop_tree(const std::vector<tx_input_type>& tx_inputs)
+ptree prop_tree(const std::vector<tx_input_type>& tx_inputs, bool json)
 {
     ptree tree;
-    tree.add_child("inputs", prop_tree_list("input", tx_inputs));
+    tree.add_child("inputs", prop_tree_list("input", tx_inputs, json));
     return tree;
 }
 
@@ -202,12 +202,12 @@ ptree prop_tree(const input& input)
     tree.add_child("input", prop_list(input));
     return tree;
 }
-ptree prop_tree(const std::vector<input>& inputs)
+ptree prop_tree(const std::vector<input>& inputs, bool json)
 {
-    auto tx_inputs = cast<input, tx_input_type>(inputs);
+    const auto tx_inputs = cast<input, tx_input_type>(inputs);
 
     ptree tree;
-    tree.add_child("inputs", prop_tree_list("input", tx_inputs));
+    tree.add_child("inputs", prop_tree_list("input", tx_inputs, json));
     return tree;
 }
 
@@ -246,38 +246,38 @@ ptree prop_tree(const tx_output_type& tx_output)
     tree.add_child("output", prop_list(tx_output));
     return tree;
 }
-ptree prop_tree(const std::vector<tx_output_type>& tx_outputs)
+ptree prop_tree(const std::vector<tx_output_type>& tx_outputs, bool json)
 {
     ptree tree;
-    tree.add_child("outputs", prop_tree_list("output", tx_outputs));
+    tree.add_child("outputs", prop_tree_list("output", tx_outputs, json));
     return tree;
 }
 
 // transactions
 
-ptree prop_list(const transaction& transaction)
+ptree prop_list(const transaction& transaction, bool json)
 {
     const tx_type& tx = transaction;
 
     ptree tree;
     tree.put("hash", btc256(tx.hash()));
-    tree.add_child("inputs", prop_tree_list("input", tx.inputs));
+    tree.add_child("inputs", prop_tree_list("input", tx.inputs, json));
     tree.put("lock_time", tx.locktime);
-    tree.add_child("outputs", prop_tree_list("output", tx.outputs));
+    tree.add_child("outputs", prop_tree_list("output", tx.outputs, json));
     tree.put("version", tx.version);
     return tree;
 }
-ptree prop_tree(const transaction& transaction)
+ptree prop_tree(const transaction& transaction, bool json)
 {
     ptree tree;
-    tree.add_child("transaction", prop_list(transaction));
+    tree.add_child("transaction", prop_list(transaction, json));
     return tree;
 }
-ptree prop_tree(const std::vector<transaction>& transactions)
+ptree prop_tree(const std::vector<transaction>& transactions, bool json)
 {
     ptree tree;
     tree.add_child("transactions",
-        prop_tree_list("transaction", transactions));
+        prop_tree_list_of_lists("transaction", transactions, json));
     return tree;
 }
 
@@ -301,44 +301,44 @@ ptree prop_tree(const wrapped_data& wrapper)
 //// watch_filter
 //
 //ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter)
+//    const base2& filter, bool json)
 //{
 //    ptree tree;
 //    tree.add("block", btc256(block_hash));
 //    tree.add("filter", filter);
-//    tree.add_child("transaction", prop_list(tx));
+//    tree.add_child("transaction", prop_list(tx, json));
 //    return tree;
 //}
 //ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter)
+//    const base2& filter, bool json)
 //{
 //    ptree tree;
-//    tree.add_child("watch_filter", prop_list(tx, block_hash, filter));
+//    tree.add_child("watch_filter", prop_list(tx, block_hash, filter, json));
 //    return tree;
 //}
 
 // watch_address
 
 ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address)
+    const payment_address& address, bool json)
 {
     ptree tree;
     tree.add("block", btc256(block_hash));
     tree.add("address", address);
-    tree.add_child("transaction", prop_list(tx));
+    tree.add_child("transaction", prop_list(tx, json));
     return tree;
 }
 ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address)
+    const payment_address& address, bool json)
 {
     ptree tree;
-    tree.add_child("watch_address", prop_list(tx, block_hash, address));
+    tree.add_child("watch_address", prop_list(tx, block_hash, address, json));
     return tree;
 }
 
 // stealth_address
 
-ptree prop_list(const stealth_address& stealth)
+ptree prop_list(const stealth_address& stealth, bool json)
 {
     // We don't serialize a "reuse key" value as this is strictly an
     // optimization for the purpose of serialization and otherwise complicates
@@ -346,22 +346,22 @@ ptree prop_list(const stealth_address& stealth)
     // So instead we emit the reused key as one of the spend keys.
     // This means that it is typical to see the same key in scan and spend.
 
-    auto spend_keys = cast<ec_compressed, ec_public>(stealth.spend_keys());
-    auto spend_keys_prop_values = prop_value_list("public_key", spend_keys);
+    const auto spends = cast<ec_compressed, ec_public>(stealth.spend_keys());
+    const auto spends_values = prop_value_list("public_key", spends, json);
 
     ptree tree;
     tree.put("encoded", stealth);
     tree.put("filter", stealth.filter());
     tree.put("scan_public_key", ec_public(stealth.scan_key()));
     tree.put("signatures", stealth.signatures());
-    tree.add_child("spend", spend_keys_prop_values);
+    tree.add_child("spends", spends_values);
     tree.put("version", stealth.version());
     return tree;
 }
-ptree prop_tree(const stealth_address& stealth)
+ptree prop_tree(const stealth_address& stealth, bool json)
 {
     ptree tree;
-    tree.add_child("stealth_address", prop_list(stealth));
+    tree.add_child("stealth_address", prop_list(stealth, json));
     return tree;
 }
 
@@ -382,10 +382,10 @@ ptree prop_tree(const client::stealth_row& row)
     return tree;
 }
 
-ptree prop_tree(const std::vector<client::stealth_row>& rows)
+ptree prop_tree(const std::vector<client::stealth_row>& rows, bool json)
 {
     ptree tree;
-    tree.add_child("stealth", prop_tree_list("match", rows));
+    tree.add_child("stealth", prop_tree_list("match", rows, json));
     return tree;
 }
 

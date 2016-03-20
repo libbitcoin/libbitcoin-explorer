@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    filter \"\"\n" \
     "    scan_public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    signatures 1\n" \
-    "    spend\n" \
+    "    spends\n" \
     "    {\n" \
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    }\n" \
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    filter \"\"\n" \
     "    scan_public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    signatures 1\n" \
-    "    spend\n" \
+    "    spends\n" \
     "    {\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
     "    }\n" \
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    filter \"\"\n" \
     "    scan_public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    signatures 2\n" \
-    "    spend\n" \
+    "    spends\n" \
     "    {\n" \
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    filter \"\"\n" \
     "    scan_public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    signatures 1\n" \
-    "    spend\n" \
+    "    spends\n" \
     "    {\n" \
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
@@ -97,7 +97,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    filter 000000001010\n" \
     "    scan_public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    signatures 1\n" \
-    "    spend\n" \
+    "    spends\n" \
     "    {\n" \
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    filter 10111010101011011111000000001101\n" \
     "    scan_public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    signatures 1\n" \
-    "    spend\n" \
+    "    spends\n" \
     "    {\n" \
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_SUITE(stealth_decode__invoke)
     "    filter 10111010101011011111000000001101\n" \
     "    scan_public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "    signatures 1\n" \
-    "    spend\n" \
+    "    spends\n" \
     "    {\n" \
     "        public_key 031bab84e687e36514eeaf5a017c30d32c1f59dd4ea6629da7970ca374513dd006\n" \
     "        public_key 024c6988f8e64242a1b8f33513f5f27b9e135ad0a11433fc590816ff92a353a969\n" \

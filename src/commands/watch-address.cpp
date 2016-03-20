@@ -70,10 +70,13 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_update = [&state](const payment_address& address, size_t,
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    auto on_update = [&state, json](const payment_address& address, size_t,
         const hash_digest& block_hash, const tx_type& tx)
     {
-        state.output(prop_tree(tx, block_hash, address));
+        state.output(prop_tree(tx, block_hash, address, json));
     };
 
     auto on_subscribed = [&state, &address]()
