@@ -168,7 +168,7 @@ public:
         (
             "index,i",
             value<uint32_t>(&option_.index),
-            "The ordinal position of the input within the transaction, defaults to zero."
+            "The ordinal position of the input within the transaction, defaults to 0."
         )
         (
             "EC_PUBLIC_KEY",

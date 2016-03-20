@@ -159,7 +159,7 @@ public:
         (
             "index,i",
             value<uint32_t>(&option_.index),
-            "The HD index, defaults to zero."
+            "The HD index, defaults to 0."
         )
         (
             "secret_version,s",
