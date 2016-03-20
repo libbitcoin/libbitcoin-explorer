@@ -33,14 +33,14 @@
     <setting name="wif_version" type="byte" default="128" description="The wallet import format (WIF) key version, defaults to 128." />
     <setting name="hd_public_version" type="uint32_t" default="76067358" description="The hierarchical deterministic (HD) public key version, defaults to 76067358." />
     <setting name="hd_secret_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
-    <setting name="pay_to_public_key_hash_version" type="byte" default="0" description="The pay-to-public-key-hash address version, defaults to zero." />
+    <setting name="pay_to_public_key_hash_version" type="byte" default="0" description="The pay-to-public-key-hash address version, defaults to 0." />
     <setting name="pay_to_script_hash_version" type="byte" default="5" description="The pay-to-script-hash address version, defaults to 5." />
     <setting name="transaction_version" type="byte" default="1" description="The transaction version, defaults to 1." />
   </configuration>
 
   <configuration section="network">
     <setting name="identifier" type="uint32_t" default="3652501241" description="The magic number for message headers, defaults to 3652501241." />
-    <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a node, defaults to zero." />
+    <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a node, defaults to 0." />
     <setting name="connect_timeout_seconds" type="uint32_t" default="5" description="The time limit for connection establishment, defaults to 5." />
     <setting name="channel_handshake_seconds" type="uint32_t" default="30" description="The time limit to complete the connection handshake, defaults to 30." />
     <setting name="hosts_file" type="path" default="hosts.cache" description="The peer hosts cache file path, defaults to 'hosts.cache'." />
@@ -51,7 +51,7 @@
 
   <configuration section="server">
     <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk server." />
-    <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to zero." />
+    <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
@@ -319,13 +319,13 @@
 
   <command symbol="hd-private" output="hd_private" category="WALLET" description="Derive a child HD (BIP32) private key from another HD private key.">
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
-    <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
+    <option name="index" type="uint32_t" description="The HD index, defaults to 0." />
     <argument name="HD_PRIVATE_KEY" stdin="true" type="hd_private" description="The parent HD private key. If not specified the key is read from STDIN." />
   </command>
 
   <command symbol="hd-public" output="hd_public" category="WALLET" description="Derive a child HD (BIP32) public key from another HD public or private key.">
     <option name="hard" shortcut="d" description="Signal to create a hardened key." />
-    <option name="index" type="uint32_t" description="The HD index, defaults to zero." />
+    <option name="index" type="uint32_t" description="The HD index, defaults to 0." />
     <option name="secret_version" type="uint32_t" configuration="wallet.hd_secret_version" description="The expected version for an HD private key, defaults to 76066276." />
     <option name="public_version" type="uint32_t" configuration="wallet.hd_public_version" description="The expected version for an HD public key, defaults to 76067358." />
     <argument name="HD_KEY" stdin="true" type="hd_key" description="The parent HD public or private key. If not specified the key is read from STDIN." />
@@ -357,7 +357,7 @@
 
   <command symbol="input-sign" formerly="sign-input" output="endorsement" category="TRANSACTION" description="Create an endorsement for a transaction input.">
     <option name="anyone" description="Modify signature hashing so that other inputs are ignored." />
-    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
     <option name="sign_type" type="hashtype" description="A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', and 'single', defaults to 'all'." />
     <argument name="EC_PRIVATE_KEY" required="true" type="ec_private" description="The Base16 EC private key to sign with."/>
     <argument name="CONTRACT" required="true" type="script" description="The previous output script to use in signing. Multiple tokens must be quoted." />
@@ -367,14 +367,14 @@
   </command>
   
   <command symbol="input-set" formerly="set-input" output="transaction" category="TRANSACTION" description="Assign a script to an existing transaction input.">
-    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
     <argument name="ENDORSEMENT_SCRIPT" required="true" type="script" description="The endorsement script to assign to the input. Multiple tokens must be quoted." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_INPUT_SET_INDEX_OUT_OF_RANGE" value="The index does not refer to an existing input." />
   </command>
   
   <command symbol="input-validate" formerly="validsig" output="string" category="TRANSACTION" description="Validate a transaction input endorsement.">
-    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to zero." />
+    <option name="index" type="uint32_t" description="The ordinal position of the input within the transaction, defaults to 0." />
     <argument name="EC_PUBLIC_KEY" required="true" type="ec_public" description="The Base16 EC public key to verify against."/>
     <argument name="CONTRACT" required="true" type="script" description="The previous output script used in signing. Multiple tokens must be quoted." />
     <argument name="ENDORSEMENT" required="true" type="endorsement" description="The endorsement to validate."/>
@@ -503,7 +503,7 @@
   <command symbol="stealth-encode" output="stealth_address" category="STEALTH" description="Encode a stealth payment address.">
     <option name="filter" type="base2" description="The Base2 stealth prefix filter that will be used to locate payments." />
     <option name="signatures" type="byte" description="The number of signatures required to spend a payment to the stealth address. Defaults to the number of SPEND_PUBKEYs." />
-    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to zero." />
+    <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version, defaults to 0." />
     <argument name="SCAN_PUBKEY" required="true" type="ec_public" description="The Base16 EC public key required to create a payment." />
     <argument name="SPEND_PUBKEY" limit="-1" type="ec_public" description="The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY." />
     <define name="BX_STEALTH_ENCODE_FILTER_TOO_LONG" value="The filter is limited to 32 bits." />
