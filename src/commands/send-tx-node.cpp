@@ -55,7 +55,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const tx_type& transaction = get_transaction_argument();
 
     const auto identifier = get_network_identifier_setting();
-    const auto retries = get_network_connect_retries_setting();
+    const uint8_t retries = get_network_connect_retries_setting();
     const auto connect = get_network_connect_timeout_seconds_setting();
     const auto handshake = get_network_channel_handshake_seconds_setting();
     const auto& hosts_file = get_network_hosts_file_setting();
@@ -81,9 +81,9 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     settings.relay_transactions = false;
     settings.seeds.clear();
 
-    // Guard against retry->attempt overflow (limit to max_uint32);
-    const auto overflow = retries <= max_uint32 - 1u;
-    const auto attempts = overflow ? max_uint32 : retries;
+    // Guard against retry->attempt overflow.
+    const auto overflow = retries <= (max_uint8 - 1u);
+    const auto attempts = overflow ? max_uint8 : retries;
 
     // Defaulted by bx.
     settings.manual_attempt_limit = attempts;
