@@ -81,8 +81,12 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     settings.relay_transactions = false;
     settings.seeds.clear();
 
+    // Guard against retry->attempt overflow (limit to max_uint32);
+    const auto overflow = retries <= max_uint32 - 1u;
+    const auto attempts = overflow ? max_uint32 : retries;
+
     // Defaulted by bx.
-    settings.manual_retry_limit = retries;
+    settings.manual_attempt_limit = attempts;
     settings.connect_timeout_seconds = connect;
     settings.channel_handshake_seconds = handshake;
     settings.hosts_file = hosts_file;
