@@ -53,9 +53,12 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state](const tx_type& tx)
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    auto on_done = [&state, json](const tx_type& tx)
     {
-        state.output(prop_tree(tx));
+        state.output(prop_tree(tx, json));
     };
 
     auto on_error = [&state](const code& error)

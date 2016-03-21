@@ -167,7 +167,7 @@ public:
         (
             "version,v",
             value<primitives::byte>(&option_.version)->default_value(0),
-            "The desired payment address version, defaults to zero."
+            "The desired payment address version, defaults to 0."
         )
         (
             "SCAN_PUBKEY",

@@ -58,9 +58,12 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &address](const client::history_list& rows)
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    auto on_done = [&state, &address, json](const client::history_list& rows)
     {
-        state.output(prop_tree(rows));
+        state.output(prop_tree(rows, json));
     };
 
     auto on_error = [&state](const code& error)

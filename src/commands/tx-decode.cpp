@@ -36,7 +36,10 @@ console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
     const auto& encoding = get_format_option();
     const auto& transaction = get_transaction_argument();
 
-    write_stream(output, prop_tree(transaction), encoding);
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    write_stream(output, prop_tree(transaction, json), encoding);
 
     return console_result::okay;
 }

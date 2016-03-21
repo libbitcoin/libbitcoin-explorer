@@ -60,10 +60,13 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &filter](const client::stealth_list& list)
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    auto on_done = [&state, &filter, json](const client::stealth_list& list)
     {
         // Write out the transaction hashes of *potential* matches.
-        state.output(prop_tree(list));
+        state.output(prop_tree(list, json));
     };
 
     auto on_error = [&state](const std::error_code& error)
