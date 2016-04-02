@@ -111,28 +111,6 @@ AC_ARG_WITH([console],
 AC_MSG_RESULT([$with_console])
 AM_CONDITIONAL([WITH_CONSOLE], [test x$with_console != xno])
 
-# Implement --with-png and output ${png}.
-#------------------------------------------------------------------------------
-AC_MSG_CHECKING([--with-png option])
-AC_ARG_WITH([png],
-    AS_HELP_STRING([--with-png],
-        [Compile with Libpng support. @<:@default=no@:>@]),
-    [with_png=$withval],
-    [with_png=no])
-AC_MSG_RESULT([$with_png])
-AS_CASE([${with_png}], [yes], AC_SUBST([png], [-DWITH_PNG]))
-
-# Implement --with-qrencode and output ${qrencode}.
-#------------------------------------------------------------------------------
-AC_MSG_CHECKING([--with-qrencode option])
-AC_ARG_WITH([qrencode],
-    AS_HELP_STRING([--with-qrencode],
-        [Compile with QREncode. @<:@default=no@:>@]),
-    [with_qrencode=$withval],
-    [with_qrencode=no])
-AC_MSG_RESULT([$with_qrencode])
-AS_CASE([${with_qrencode}], [yes], AC_SUBST([qrencode], [-DWITH_QRENCODE]))
-
 # Implement --enable-ndebug and define NDEBUG.
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING([--enable-ndebug option])
@@ -151,26 +129,6 @@ AS_CASE([${enable_shared}], [yes], AC_DEFINE([BOOST_TEST_DYN_LINK]))
 
 # Check dependencies.
 #==============================================================================
-# Require png of at least version 1.6.2 and output ${png_CPPFLAGS/LIBS/PKG}.
-#------------------------------------------------------------------------------
-AS_CASE([${with_png}], [yes],
-    [PKG_CHECK_MODULES([png], [libpng >= 1.6.2])
-     AC_SUBST([png_PKG], ['libpng >= 1.6.2'])
-     AC_SUBST([png_CPPFLAGS], [${png_CFLAGS}])
-     AC_MSG_NOTICE([png_CPPFLAGS : ${png_CPPFLAGS}])
-     AC_MSG_NOTICE([png_LIBS : ${png_LIBS}])],
-    [AC_SUBST([png_PKG], [])])
-
-# Require qrencode of at least version 3.4.4 and output ${qrencode_CPPFLAGS/LIBS/PKG}.
-#------------------------------------------------------------------------------
-AS_CASE([${with_qrencode}], [yes],
-    [PKG_CHECK_MODULES([qrencode], [libqrencode >= 3.4.4])
-     AC_SUBST([qrencode_PKG], ['libqrencode >= 3.4.4'])
-     AC_SUBST([qrencode_CPPFLAGS], [${qrencode_CFLAGS}])
-     AC_MSG_NOTICE([qrencode_CPPFLAGS : ${qrencode_CPPFLAGS}])
-     AC_MSG_NOTICE([qrencode_LIBS : ${qrencode_LIBS}])],
-    [AC_SUBST([qrencode_PKG], [])])
-
 # Require Boost of at least version 1.55.0 if in gcc and output ${boost_CPPFLAGS/LDFLAGS}.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*gcc*],
@@ -181,15 +139,15 @@ AS_CASE([${CC}], [*gcc*],
          AC_MSG_NOTICE([boost_LDFLAGS : ${boost_LDFLAGS}])],
         [AC_MSG_ERROR([Boost 1.55.0 or later is required but was not found.])])])
 
-# Require Boost of at least version 1.54.0 if in clang and output ${boost_CPPFLAGS/LDFLAGS}.
+# Require Boost of at least version 1.56.0 if in clang and output ${boost_CPPFLAGS/LDFLAGS}.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*clang*],
-    [AX_BOOST_BASE([1.54.0],
+    [AX_BOOST_BASE([1.56.0],
         [AC_SUBST([boost_CPPFLAGS], [${BOOST_CPPFLAGS}])
          AC_SUBST([boost_LDFLAGS], [${BOOST_LDFLAGS}])
          AC_MSG_NOTICE([boost_CPPFLAGS : ${boost_CPPFLAGS}])
          AC_MSG_NOTICE([boost_LDFLAGS : ${boost_LDFLAGS}])],
-        [AC_MSG_ERROR([Boost 1.54.0 or later is required but was not found.])])])
+        [AC_MSG_ERROR([Boost 1.56.0 or later is required but was not found.])])])
 
 AS_CASE([${with_tests}], [yes],
     [AX_BOOST_UNIT_TEST_FRAMEWORK
@@ -274,12 +232,6 @@ AS_CASE([${CC}], [*],
 AS_CASE([${CC}], [*clang*],
     [AX_CHECK_COMPILE_FLAG([-Wno-mismatched-tags],
         [CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags"])])
-
-# Clean up boost 1.54 headers. Enabled in clang only.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*clang*],
-    [AX_CHECK_COMPILE_FLAG([-Wno-deprecated-register],
-        [CXXFLAGS="$CXXFLAGS -Wno-deprecated-register"])])
 
 # Clean up boost 1.55 headers. Enabled in gcc only.
 #------------------------------------------------------------------------------
