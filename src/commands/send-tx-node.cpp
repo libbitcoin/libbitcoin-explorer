@@ -71,7 +71,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     log::debug(LOG_NETWORK) << header;
     log::error(LOG_NETWORK) << header;
 
-    auto settings = network::settings::mainnet;
+    network::settings settings(bc::settings::mainnet);
 
     // Fixed non-defaults: not relay/port/inbound/seeds/hosts/outbound.
     settings.host_pool_capacity = 0;
