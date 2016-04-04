@@ -65,11 +65,11 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_QRCODE_REQUIRES_QRENCODE \
-    "The command requires a qrencode build."
+    "The command requires a QRENCODE build."
 #define BX_QRCODE_REQUIRES_PNG \
-    "The command requires a png build."
+    "The command requires a PNG build."
 #define BX_QRCODE_WRITE_ERROR \
-    "Error writing qr encoded data."
+    "Error writing encoded data."
 
 /**
  * Class to implement the qrcode command.
@@ -109,7 +109,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a QR code image file for a payment address.";
+        return "Create a QRCODE image file for a payment address.";
     }
 
     /**
@@ -165,39 +165,39 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "image,i",
-            value<bool>(&option_.image)->default_value(false)->zero_tokens(),
-            "Write the QR code in png format."
-        )
-        (
-            "ignore_casing,i",
-            value<bool>(&option_.ignore_casing)->default_value(false)->zero_tokens(),
-            "Ignore case sensitivity of the generated QR code."
-        )
-        (
-            "size,s",
-            value<uint32_t>(&option_.size)->default_value(8),
-            "The module size in dots (pixels) of the generated QR code."
-        )
-        (
-            "margin,m",
-            value<uint32_t>(&option_.margin)->default_value(2),
-            "The margin size of the generated QR code."
-        )
-        (
             "density,d",
             value<uint32_t>(&option_.density)->default_value(72),
-            "The dots per inch of the generated QR code."
+            "The pixels per inch of the QRCODE, defaults to 72."
+        )
+        (
+            "insensitive,i",
+            value<bool>(&option_.insensitive)->zero_tokens(),
+            "Do not use use sensitivity."
+        )
+        (
+            "module_size,m",
+            value<uint32_t>(&option_.module_size)->default_value(8),
+            "The module size in pixels of the QRCODE, defaults to 8."
+        )
+        (
+            "margin_size,r",
+            value<uint32_t>(&option_.margin_size)->default_value(2),
+            "The margin size in pixels of the QRCODE, defaults to 2."
+        )
+        (
+            "png,p",
+            value<bool>(&option_.png)->zero_tokens(),
+            "Write the QRCODE in PNG file format."
+        )
+        (
+            "scheme,s",
+            value<std::string>(&option_.scheme)->default_value("bitcoin"),
+            "The URI scheme of the QRCODE data, defaults to bitcoin."
         )
         (
             "version,v",
-            value<uint32_t>(&option_.version)->default_value(0),
-            "The version of the generated QR code."
-        )
-        (
-            "prefix,p",
-            value<std::string>(&option_.prefix)->default_value("bitcoin:"),
-            "The prefix used in the QR code data (e.g. 'bitcoin:', '', or 'litecoin:')."
+            value<uint32_t>(&option_.version),
+            "The version of the QRCODE."
         )
         (
             "PAYMENT_ADDRESS",
@@ -245,74 +245,6 @@ public:
     }
 
     /**
-     * Get the value of the image option.
-     */
-    virtual bool& get_image_option()
-    {
-        return option_.image;
-    }
-
-    /**
-     * Set the value of the image option.
-     */
-    virtual void set_image_option(
-        const bool& value)
-    {
-        option_.image = value;
-    }
-
-    /**
-     * Get the value of the ignore_casing option.
-     */
-    virtual bool& get_ignore_casing_option()
-    {
-        return option_.ignore_casing;
-    }
-
-    /**
-     * Set the value of the ignore_casing option.
-     */
-    virtual void set_ignore_casing_option(
-        const bool& value)
-    {
-        option_.ignore_casing = value;
-    }
-
-    /**
-     * Get the value of the size option.
-     */
-    virtual uint32_t& get_size_option()
-    {
-        return option_.size;
-    }
-
-    /**
-     * Set the value of the size option.
-     */
-    virtual void set_size_option(
-        const uint32_t& value)
-    {
-        option_.size = value;
-    }
-
-    /**
-     * Get the value of the margin option.
-     */
-    virtual uint32_t& get_margin_option()
-    {
-        return option_.margin;
-    }
-
-    /**
-     * Set the value of the margin option.
-     */
-    virtual void set_margin_option(
-        const uint32_t& value)
-    {
-        option_.margin = value;
-    }
-
-    /**
      * Get the value of the density option.
      */
     virtual uint32_t& get_density_option()
@@ -330,6 +262,91 @@ public:
     }
 
     /**
+     * Get the value of the insensitive option.
+     */
+    virtual bool& get_insensitive_option()
+    {
+        return option_.insensitive;
+    }
+
+    /**
+     * Set the value of the insensitive option.
+     */
+    virtual void set_insensitive_option(
+        const bool& value)
+    {
+        option_.insensitive = value;
+    }
+
+    /**
+     * Get the value of the module_size option.
+     */
+    virtual uint32_t& get_module_size_option()
+    {
+        return option_.module_size;
+    }
+
+    /**
+     * Set the value of the module_size option.
+     */
+    virtual void set_module_size_option(
+        const uint32_t& value)
+    {
+        option_.module_size = value;
+    }
+
+    /**
+     * Get the value of the margin_size option.
+     */
+    virtual uint32_t& get_margin_size_option()
+    {
+        return option_.margin_size;
+    }
+
+    /**
+     * Set the value of the margin_size option.
+     */
+    virtual void set_margin_size_option(
+        const uint32_t& value)
+    {
+        option_.margin_size = value;
+    }
+
+    /**
+     * Get the value of the png option.
+     */
+    virtual bool& get_png_option()
+    {
+        return option_.png;
+    }
+
+    /**
+     * Set the value of the png option.
+     */
+    virtual void set_png_option(
+        const bool& value)
+    {
+        option_.png = value;
+    }
+
+    /**
+     * Get the value of the scheme option.
+     */
+    virtual std::string& get_scheme_option()
+    {
+        return option_.scheme;
+    }
+
+    /**
+     * Set the value of the scheme option.
+     */
+    virtual void set_scheme_option(
+        const std::string& value)
+    {
+        option_.scheme = value;
+    }
+
+    /**
      * Get the value of the version option.
      */
     virtual uint32_t& get_version_option()
@@ -344,23 +361,6 @@ public:
         const uint32_t& value)
     {
         option_.version = value;
-    }
-
-    /**
-     * Get the value of the prefix option.
-     */
-    virtual std::string& get_prefix_option()
-    {
-        return option_.prefix;
-    }
-
-    /**
-     * Set the value of the prefix option.
-     */
-    virtual void set_prefix_option(
-        const std::string& value)
-    {
-        option_.prefix = value;
     }
 
 private:
@@ -388,23 +388,23 @@ private:
     struct option
     {
         option()
-          : image(),
-            ignore_casing(),
-            size(),
-            margin(),
-            density(),
-            version(),
-            prefix()
+          : density(),
+            insensitive(),
+            module_size(),
+            margin_size(),
+            png(),
+            scheme(),
+            version()
         {
         }
 
-        bool image;
-        bool ignore_casing;
-        uint32_t size;
-        uint32_t margin;
         uint32_t density;
+        bool insensitive;
+        uint32_t module_size;
+        uint32_t margin_size;
+        bool png;
+        std::string scheme;
         uint32_t version;
-        std::string prefix;
     } option_;
 };
 

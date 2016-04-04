@@ -33,26 +33,27 @@ using namespace bc::explorer::commands;
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& address = get_payment_address_argument();
-    const auto& prefix = get_prefix_option();
-    const auto& image = get_image_option();
-    const auto& casing = !get_ignore_casing_option();
+    const auto& image = get_png_option();
+    const auto& insensitive = get_insensitive_option();
+    const auto& scheme = get_scheme_option();
     const auto& version = get_version_option();
+    const auto& address = get_payment_address_argument();
 
 #ifdef WITH_QRENCODE
-    const auto qr_string = prefix + address.encoded();
-    const auto qr_data = qr::encode(to_chunk(qr_string),
-        version, qr::level, qr::mode, casing);
+    const auto delimiter = scheme.empty() ? "" : ":";
+    const auto qr_string = scheme + delimiter + address.encoded();
+    const auto qr_data = qr::encode(to_chunk(qr_string), version, qr::level,
+        qr::mode, !insensitive);
 
     // The image option specifies we're writing output in png format.
     if (image)
     {
 #ifdef WITH_PNG
-        const auto& size = get_size_option();
         const auto& density = get_density_option();
-        const auto& margin = get_margin_option();
+        const auto& margin = get_margin_size_option();
+        const auto& module = get_module_size_option();
 
-        auto result = png::write_png(qr_data, size, density, margin,
+        const auto result = png::write_png(qr_data, module, density, margin,
             png::inches_per_meter, png::get_default_foreground(),
             png::get_default_background(), output);
 
@@ -63,8 +64,7 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 #endif // WITH_PNG
     }
 
-    // In this case, the qr data is written to the output stream in
-    // encoded 'qrencode' format.
+    // The qr data is written to the output stream in 'qrencode' format.
     bc::ostream_writer sink(output);
     sink.write_data(qr_data);
     output.flush();
