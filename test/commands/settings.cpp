@@ -93,14 +93,14 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 
 BOOST_AUTO_TEST_CASE(settings__invoke__empty__okay_output)
 {
-    BX_DECLARE_COMMAND(settings);
+    BX_DECLARE_COMMAND(commands::settings);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SETTINGS_EMPTY);
 }
 
 BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
 {
-    BX_DECLARE_COMMAND(settings);
+    BX_DECLARE_COMMAND(commands::settings);
     command.set_wallet_wif_version_setting(1);
     command.set_wallet_hd_public_version_setting(2);
     command.set_wallet_hd_secret_version_setting(3);

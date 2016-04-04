@@ -31,7 +31,8 @@ using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
 using namespace pt;
 
-console_result settings::invoke(std::ostream& output, std::ostream& error)
+console_result commands::settings::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // bound parameters
     const auto& encoding = get_format_option();
@@ -72,9 +73,9 @@ console_result settings::invoke(std::ostream& output, std::ostream& error)
     list["network.error_file"] = 
         get_network_error_file_setting().string();
 
+    network::settings settings(bc::settings::mainnet);
     const auto& nodes = get_network_seeds_setting();
-    const auto& seeds = nodes.empty() ? network::settings::mainnet.seeds :
-        nodes;
+    const auto& seeds = nodes.empty() ? settings.seeds : nodes;
 
     std::vector<std::string> buffer;
     for (const auto& node: seeds)
