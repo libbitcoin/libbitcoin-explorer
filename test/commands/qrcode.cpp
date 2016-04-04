@@ -29,8 +29,8 @@ BOOST_AUTO_TEST_SUITE(qrcode__invoke)
 BOOST_AUTO_TEST_CASE(qrcode__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(qrcode);
-    command.set_size_option(0);
-    command.set_image_option(true);
+    command.set_module_size_option(0);
+    command.set_png_option(true);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 }
 
@@ -38,7 +38,8 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__size_one__success)
 {
     BX_DECLARE_COMMAND(qrcode);
 
-    const uint8_t qr_png_data[] = {
+    static const uint8_t qr_png_data[]
+    {
         0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00,
         0x0d, 0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x1d, 0x00, 0x00,
         0x00, 0x1d, 0x01, 0x03, 0x00, 0x00, 0x00, 0x6c, 0x5d, 0xf5, 0x4c,
@@ -64,30 +65,25 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__size_one__success)
         0xcb, 0x01, 0x45, 0x5a, 0x35, 0x29, 0x97, 0x41, 0x52, 0x77, 0x00,
         0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82
     };
-    static const uint32_t qr_png_data_length = 264;
+    static const auto qr_png_data_length = sizeof(qr_png_data) / sizeof(uint8_t);
 
-    command.set_size_option(1);
-    command.set_image_option(true);
-    command.set_payment_address_argument(libbitcoin::wallet::payment_address(
-        "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg"));
-
+    command.set_module_size_option(1);
+    command.set_png_option(true);
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
-    //Read in the generated qrcode png output stream and compare to
-    // known good output stored above
     istream_reader in(output);
-    data_chunk data = in.read_data_to_eof();
-
-    BOOST_REQUIRE(data.size() == qr_png_data_length);
-    BOOST_REQUIRE(std::memcmp(qr_png_data, data.data(),
-        qr_png_data_length) == 0);
+    const auto data = in.read_data_to_eof();
+    BOOST_REQUIRE_EQUAL(data.size(), qr_png_data_length);
+    BOOST_REQUIRE(std::memcmp(qr_png_data, data.data(), qr_png_data_length) == 0);
 }
 
 BOOST_AUTO_TEST_CASE(qrcode__invoke__optional_args__success)
 {
     BX_DECLARE_COMMAND(qrcode);
 
-    const uint8_t qr_png_data[] = {
+    const uint8_t qr_png_data[]
+    {
         0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00,
         0x0d, 0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x27, 0x00, 0x00,
         0x00, 0x27, 0x01, 0x03, 0x00, 0x00, 0x00, 0xb6, 0x6d, 0xc3, 0x76,
@@ -116,36 +112,30 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__optional_args__success)
         0xf2, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae, 0x42,
         0x60, 0x82
     };
-    static const uint32_t qr_png_data_length = 288;
+    static const auto qr_png_data_length = sizeof(qr_png_data) / sizeof(uint8_t);
 
-    command.set_size_option(1);
-    command.set_prefix_option("");
-    command.set_image_option(true);
-    command.set_ignore_casing_option(false);
+    command.set_module_size_option(1);
+    command.set_scheme_option("");
+    command.set_png_option(true);
+    command.set_insensitive_option(false);
     command.set_version_option(0);
     command.set_density_option(73);
-    command.set_margin_option(5);
-
-    command.set_payment_address_argument(libbitcoin::wallet::payment_address(
-        "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg"));
-
+    command.set_margin_size_option(5);
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
-    //Read in the generated qrcode png output stream and compare to
-    // known good output stored above
     istream_reader in(output);
-    data_chunk data = in.read_data_to_eof();
-
-    BOOST_REQUIRE(data.size() == qr_png_data_length);
-    BOOST_REQUIRE(std::memcmp(qr_png_data, data.data(),
-        qr_png_data_length) == 0);
+    const auto data = in.read_data_to_eof();
+    BOOST_REQUIRE_EQUAL(data.size(), qr_png_data_length);
+    BOOST_REQUIRE(std::memcmp(qr_png_data, data.data(), qr_png_data_length) == 0);
 }
 
 BOOST_AUTO_TEST_CASE(qrcode__invoke__qr_encode__success)
 {
     BX_DECLARE_COMMAND(qrcode);
 
-    const uint8_t raw_qr_data[] = {
+    const uint8_t raw_qr_data[]
+    {
         0x03, 0x00, 0x00, 0x00, 0x1d, 0x00, 0x00, 0x00, 0xc1, 0xc1, 0xc1,
         0xc1, 0xc1, 0xc1, 0xc1, 0xc0, 0x84, 0x03, 0x02, 0x02, 0x03, 0x03,
         0x02, 0x02, 0x03, 0x03, 0x03, 0x03, 0x02, 0xc0, 0xc1, 0xc1, 0xc1,
@@ -225,23 +215,17 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__qr_encode__success)
         0x03, 0x03, 0x02, 0x03, 0x03, 0x03, 0x03, 0x02, 0x02, 0x03, 0x02,
         0x03, 0x03
     };
-    static const uint32_t raw_qr_data_length = 849;
+    static const auto raw_qr_data_length = sizeof(raw_qr_data) / sizeof(uint8_t);
 
-    command.set_size_option(1);
-    command.set_image_option(false);
-    command.set_payment_address_argument(libbitcoin::wallet::payment_address(
-        "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg"));
-
+    command.set_module_size_option(1);
+    command.set_png_option(false);
+    command.set_payment_address_argument({ "12u8rC4Pxih4m59eApanRDodXcPxWiaKgg" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
-    //Read in the generated qr encoded output stream and compare to
-    // known good output stored above
     istream_reader in(output);
-    data_chunk data = in.read_data_to_eof();
-
-    BOOST_REQUIRE(data.size() == raw_qr_data_length);
-    BOOST_REQUIRE(std::memcmp(raw_qr_data, data.data(),
-        raw_qr_data_length) == 0);
+    const auto data = in.read_data_to_eof();
+    BOOST_REQUIRE_EQUAL(data.size(), raw_qr_data_length);
+    BOOST_REQUIRE(std::memcmp(raw_qr_data, data.data(), raw_qr_data_length) == 0);
 }
 
 #else
