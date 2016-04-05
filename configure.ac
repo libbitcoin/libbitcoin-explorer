@@ -89,6 +89,28 @@ AC_ARG_WITH([pkgconfigdir],
 AC_MSG_RESULT([$pkgconfigdir])
 AC_SUBST([pkgconfigdir])
 
+# Implement --with-png and output ${png}.
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING([--with-png option])
+AC_ARG_WITH([png],
+    AS_HELP_STRING([--with-png],
+        [Compile with Libpng support. @<:@default=no@:>@]),
+    [with_png=$withval],
+    [with_png=no])
+AC_MSG_RESULT([$with_png])
+AS_CASE([${with_png}], [yes], AC_SUBST([png], [-DWITH_PNG]))
+
+# Implement --with-qrencode and output ${qrencode}.
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING([--with-qrencode option])
+AC_ARG_WITH([qrencode],
+    AS_HELP_STRING([--with-qrencode],
+        [Compile with QREncode. @<:@default=no@:>@]),
+    [with_qrencode=$withval],
+    [with_qrencode=no])
+AC_MSG_RESULT([$with_qrencode])
+AS_CASE([${with_qrencode}], [yes], AC_SUBST([qrencode], [-DWITH_QRENCODE]))
+
 # Implement --with-tests and declare WITH_TESTS.
 #------------------------------------------------------------------------------
 AC_MSG_CHECKING([--with-tests option])
