@@ -730,11 +730,11 @@ build_from_travis()
 #==============================================================================
 build_all()
 {
-    build_from_tarball       $ICU_URL      $ICU_ARCHIVE      gzip  source $PARALLEL  "$BUILD_ICU"      "${ICU_OPTIONS[@]}"       "$@"
-    build_from_tarball       $ZLIB_URL     $ZLIB_ARCHIVE     xz    .      $PARALLEL  "$BUILD_ZLIB"     "${ZLIB_OPTIONS[@]}"      "$@"
-    build_from_tarball       $PNG_URL      $PNG_ARCHIVE      xz    .      $PARALLEL  "$BUILD_PNG"      "${PNG_OPTIONS[@]}"       "$@"
-    build_from_tarball       $QRENCODE_URL $QRENCODE_ARCHIVE bzip2 .      $PARALLEL  "$BUILD_QRENCODE" "${QRENCODE_OPTIONS[@]}"  "$@"
-    build_from_tarball_boost $BOOST_URL    $BOOST_ARCHIVE    bzip2 .      $PARALLEL  "$BUILD_BOOST"    "${BOOST_OPTIONS[@]}"
+    build_from_tarball $ICU_URL $ICU_ARCHIVE gzip source $PARALLEL "$BUILD_ICU" "${ICU_OPTIONS[@]}" "$@"
+    build_from_tarball $ZLIB_URL $ZLIB_ARCHIVE xz . $PARALLEL "$BUILD_ZLIB" "${ZLIB_OPTIONS[@]}" "$@"
+    build_from_tarball $PNG_URL $PNG_ARCHIVE xz . $PARALLEL "$BUILD_PNG" "${PNG_OPTIONS[@]}" "$@"
+    build_from_tarball $QRENCODE_URL $QRENCODE_ARCHIVE bzip2 . $PARALLEL "$BUILD_QRENCODE" "${QRENCODE_OPTIONS[@]}" "$@"
+    build_from_tarball_boost $BOOST_URL $BOOST_ARCHIVE bzip2 . $PARALLEL "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
     build_from_github jedisct1 libsodium master $PARALLEL ${SODIUM_OPTIONS[@]} "$@"
     build_from_github zeromq libzmq master $PARALLEL ${ZMQ_OPTIONS[@]} "$@"
     build_from_github zeromq czmq master $PARALLEL ${CZMQ_OPTIONS[@]} "$@"
