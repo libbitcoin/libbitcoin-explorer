@@ -36,7 +36,7 @@
     <setting name="hd_secret_version" type="uint32_t" default="76066276" description="The hierarchical deterministic (HD) private key version, defaults to 76066276." />
     <setting name="pay_to_public_key_hash_version" type="byte" default="0" description="The pay-to-public-key-hash address version, defaults to 0." />
     <setting name="pay_to_script_hash_version" type="byte" default="5" description="The pay-to-script-hash address version, defaults to 5." />
-    <setting name="transaction_version" type="byte" default="1" description="The transaction version, defaults to 1." />
+    <setting name="transaction_version" type="uint32_t" default="1" description="The transaction version, defaults to 1." />
   </configuration>
 
   <configuration section="network">

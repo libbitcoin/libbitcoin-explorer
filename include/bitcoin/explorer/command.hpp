@@ -226,7 +226,7 @@ public:
         )
         (
             "wallet.transaction_version",
-            value<primitives::byte>(&setting_.wallet.transaction_version)->default_value(1),
+            value<uint32_t>(&setting_.wallet.transaction_version)->default_value(1),
             "The transaction version, defaults to 1."
         )
         (
@@ -428,7 +428,7 @@ public:
     /**
      * Get the value of the wallet.transaction_version setting.
      */
-    virtual primitives::byte get_wallet_transaction_version_setting() const
+    virtual uint32_t get_wallet_transaction_version_setting() const
     {
         return setting_.wallet.transaction_version;
     }
@@ -436,7 +436,7 @@ public:
     /**
      * Set the value of the wallet.transaction_version setting.
      */
-    virtual void set_wallet_transaction_version_setting(primitives::byte value)
+    virtual void set_wallet_transaction_version_setting(uint32_t value)
     {
         setting_.wallet.transaction_version = value;
     }
@@ -708,7 +708,7 @@ private:
             uint32_t hd_secret_version;
             primitives::byte pay_to_public_key_hash_version;
             primitives::byte pay_to_script_hash_version;
-            primitives::byte transaction_version;
+            uint32_t transaction_version;
         } wallet;
 
         struct network
