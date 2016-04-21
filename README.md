@@ -165,10 +165,6 @@ Building without building tests:
 ```sh
 $ sudo ./install.sh --without-tests
 ```
-Building for [testnet](https://en.bitcoin.it/wiki/Testnet):
-```sh
-$ sudo ./install.sh --enable-testnet
-```
 Building from a specified directory, such as `/home/me/mybuild`:
 ```sh
 $ sudo ./install.sh --build-dir=/home/me/mybuild
