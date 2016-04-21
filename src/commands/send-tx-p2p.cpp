@@ -75,7 +75,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Fixed non-defaults: not relay/port/inbound.
     settings.inbound_port = 0;
-    settings.connection_limit = 0;
+    settings.inbound_connections = 0;
     settings.relay_transactions = false;
 
     // Defaulted by bx.
