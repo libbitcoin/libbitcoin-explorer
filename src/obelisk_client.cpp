@@ -70,7 +70,9 @@ bool obelisk_client::connect(const uri& address,
     if (!zsys_has_curve())
         return false;
 
+    certificate_.apply(socket_);
     const auto server_key = server_public_cert.get_base85();
+
     if (!server_key.empty())
         socket_.set_curve_serverkey(server_key);
 
@@ -86,12 +88,12 @@ bool obelisk_client::connect(const uri& address,
     const auto& cert_path = client_private_cert_path.string();
     if (!cert_path.empty())
     {
-        certificate cert(cert_path);
-        if (!cert.valid())
-            return false;
+        // TODO: create a czmqpp::reset(path) override to hide this.
+        // Create a new certificate and transfer ownership to the member.
+        certificate_.reset(zcert_load(cert_path.c_str()));
 
-        cert.apply(socket_);
-        socket_.set_curve_server(zmq_curve_enabled);
+        if (!certificate_.valid())
+            return false;
     }
 
     return connect(address, server_public_cert);
