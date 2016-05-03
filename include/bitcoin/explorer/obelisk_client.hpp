@@ -41,7 +41,7 @@ BC_CONSTEXPR int zmq_success = 0;
  * Class to simplify obelisk/libbitcoin-server usage. 
  * This class hides *all* use of czmqpp/czmq/zmq/libsodium.
  */
-class obelisk_client
+class BCX_API obelisk_client
 {
 public:
     /**
@@ -49,7 +49,7 @@ public:
      * @param[in]  timeout  The call timeout, defaults to zero (instant).
      * @param[in]  retries  The number of retries allowed, defaults to zero.
      */
-    BCX_API obelisk_client(
+    obelisk_client(
         const client::period_ms& timeout=client::period_ms(0),
         uint8_t retries=0);
 
@@ -57,14 +57,14 @@ public:
      * Initialization constructor.
      * @param[in]  channel  The channel to initialize.
      */
-    BCX_API obelisk_client(const connection_type& channel);
+    obelisk_client(const connection_type& channel);
 
     /**
      * Connect to the specified server address.
      * @param[in]  address  The server address.
      * @return              True if connected, otherwise false.
      */
-    BCX_API virtual bool connect(const bc::config::endpoint& address);
+    virtual bool connect(const bc::config::endpoint& address);
 
     /**
      * Connect to the specified server address.
@@ -72,7 +72,7 @@ public:
      * @param[in]  server_public_cert  The server public certificate key.
      * @return                         True if connected, otherwise false.
      */
-    BCX_API virtual bool connect(const bc::config::endpoint& address,
+    virtual bool connect(const bc::config::endpoint& address,
         const primitives::cert_key& server_public_cert);
 
     /**
@@ -82,7 +82,7 @@ public:
      * @param[in]  client_private_cert_path  The client private cert file path.
      * @return                               True if connected, otherwise false.
      */
-    BCX_API virtual bool connect(const bc::config::endpoint& address,
+    virtual bool connect(const bc::config::endpoint& address,
         const primitives::cert_key& server_public_cert,
         const boost::filesystem::path& client_private_cert_path);
 
@@ -91,38 +91,39 @@ public:
      * @param[in]  channel  The channel to connect.
      * @return              True if connected, otherwise false.
      */
-    BCX_API virtual bool connect(const connection_type& channel);
+    virtual bool connect(const connection_type& channel);
 
     /**
      * Get the value of the codec property.
      * @return The codec.
      */
-    BCX_API virtual std::shared_ptr<client::obelisk_codec> get_codec();
+    virtual std::shared_ptr<client::obelisk_codec> get_codec();
     
     /**
      * Resolve callback functions.
      * @return True if not terminated before completion.
      */
-    BCX_API virtual bool resolve_callbacks();
+    virtual bool resolve_callbacks();
 
     /**
      * Poll the connection until the request terminates.
      * @param[in]  timeout  The poll timeout, defaults to zero.
      */
-    BCX_API virtual void poll_until_termination(
+    virtual void poll_until_termination(
         const client::period_ms& timeout=client::period_ms(0));
 
     /**
      * Poll the connection until the request times out or terminates.
      * @param[in]  timeout  The poll timeout, defaults to zero.
      */
-    BCX_API virtual void poll_until_timeout_cumulative(
+    virtual void poll_until_timeout_cumulative(
         const client::period_ms& timeout=client::period_ms(0));
 
 private:
-
     czmqpp::context context_;
     czmqpp::socket socket_;
+    czmqpp::certificate certificate_;
+
     std::shared_ptr<client::socket_stream> stream_;
     std::shared_ptr<client::obelisk_codec> codec_;
 };
