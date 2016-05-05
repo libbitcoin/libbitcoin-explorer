@@ -123,6 +123,7 @@ private:
     czmqpp::context context_;
     czmqpp::socket socket_;
     czmqpp::certificate certificate_;
+    czmqpp::authenticator authenticate_;
 
     std::shared_ptr<client::socket_stream> stream_;
     std::shared_ptr<client::obelisk_codec> codec_;
