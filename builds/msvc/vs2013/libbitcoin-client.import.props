@@ -19,7 +19,8 @@
       <PreprocessorDefinitions Condition="'$(Linkage-libbitcoin-client)' == 'static' Or '$(Linkage-libbitcoin-client)' == 'ltcg'">BCC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>      
     </ClCompile>
     <Link>
-      <AdditionalDependencies Condition="'$(Linkage-libbitcoin-client)' != ''">libbitcoin-client.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!-- rpcrt4.lib is required for UuidCreate in czmq -->
+      <AdditionalDependencies Condition="'$(Linkage-libbitcoin-client)' != ''">rpcrt4.lib;libbitcoin-client.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <!-- $(PlatformToolset) is hard wired to CTP_Nov2013 to allow for linkage by PlatformToolset=v120 (and CTP_Nov2013) callers. -->
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Debug')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Debug\CTP_Nov2013\$(Linkage-libbitcoin-client)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="$(Configuration.IndexOf('Release')) != -1">$(ProjectDir)..\..\..\..\..\libbitcoin-client\bin\$(PlatformName)\Release\CTP_Nov2013\$(Linkage-libbitcoin-client)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>   
