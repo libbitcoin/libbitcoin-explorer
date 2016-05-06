@@ -39,8 +39,10 @@ static constexpr int zmq_no_linger = 0;
 static constexpr int zmq_curve_enabled = 1;
 
 obelisk_client::obelisk_client(const period_ms& timeout, uint8_t retries)
-  : socket_(context_, ZMQ_DEALER)
+  : socket_(context_, ZMQ_DEALER),
+    authenticate_(context_)
 {
+    BITCOIN_ASSERT(socket_.self() != nullptr);
     stream_ = std::make_shared<socket_stream>(socket_);
     auto base_stream = std::static_pointer_cast<message_stream>(stream_);
     codec_ = std::make_shared<obelisk_codec>(base_stream);
@@ -51,12 +53,19 @@ obelisk_client::obelisk_client(const period_ms& timeout, uint8_t retries)
 obelisk_client::obelisk_client(const connection_type& channel)
   : obelisk_client(channel.wait, channel.retries)
 {
+#ifdef _MSC_VER
+    // Hack to prevent czmq from writing to stdout/stderr on Windows.
+    // This will prevent authentication feedback, but also prevent crashes.
+    // It is necessary to prevent stdio when using our utf8-everywhere pattern.
+    // TODO: provide a FILE* here that we can direct to our own log/console.
+    zsys_set_logstream(NULL);
+#endif
 }
 
 bool obelisk_client::connect(const endpoint& address)
 {
     // ZMQ *only* returns 0 or -1 for this call, so make boolean.
-    bool success = socket_.connect(address.to_string()) == zmq_success;
+    const auto success = socket_.connect(address.to_string()) == zmq_success;
     if (success)
         socket_.set_linger(zmq_no_linger);
 
@@ -66,14 +75,22 @@ bool obelisk_client::connect(const endpoint& address)
 bool obelisk_client::connect(const endpoint& address,
     const cert_key& server_public_cert)
 {
-    if (!zsys_has_curve())
-        return false;
-
-    certificate_.apply(socket_);
     const auto server_key = server_public_cert.get_base85();
 
     if (!server_key.empty())
+    {
+        // If there is no cert loaded this uses a generated one.
+        certificate_.apply(socket_);
         socket_.set_curve_serverkey(server_key);
+
+#ifndef _MSC_VER
+        // Hack to prevent czmq from writing to stdout/stderr on Windows.
+        // This will prevent authentication feedback, but also prevent crashes.
+        // It is necessary to prevent stdio when using our utf8-everywhere pattern.
+        // TODO: modify czmq to not hardcode stdout/stderr for verbose output.
+        authenticate_.set_verbose(true);
+#endif
+    }
 
     return connect(address);
 }
@@ -81,19 +98,19 @@ bool obelisk_client::connect(const endpoint& address,
 bool obelisk_client::connect(const endpoint& address,
     const cert_key& server_public_cert, const path& client_private_cert_path)
 {
-    if (!zsys_has_curve())
-        return false;
-
+    const auto server_key = server_public_cert.get_base85();
     const auto cert_path = client_private_cert_path.string();
 
-    if (!cert_path.empty())
+    // Only apply the client cert if the server key is configured.
+    // This allows connections where neither is required, which is okay.
+    if (!cert_path.empty() && !server_key.empty())
     {
-        // TODO: create a czmqpp::reset(path) override to hide this.
-        // Create a new certificate and transfer ownership to the member.
-        certificate_.reset(zcert_load(cert_path.c_str()));
+        certificate_.reset(cert_path);
 
         if (!certificate_.valid())
             return false;
+
+        certificate_.apply(socket_);
     }
 
     return connect(address, server_public_cert);

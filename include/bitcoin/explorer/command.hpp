@@ -290,8 +290,8 @@ public:
             "The Z85-encoded public key of the server certificate."
         )
         (
-            "server.cert_file",
-            value<boost::filesystem::path>(&setting_.server.cert_file),
+            "server.client_cert_file",
+            value<boost::filesystem::path>(&setting_.server.client_cert_file),
             "The path to the ZPL-encoded client private certificate file."
         );
     }
@@ -634,19 +634,19 @@ public:
     }
 
     /**
-     * Get the value of the server.cert_file setting.
+     * Get the value of the server.client_cert_file setting.
      */
-    virtual boost::filesystem::path get_server_cert_file_setting() const
+    virtual boost::filesystem::path get_server_client_cert_file_setting() const
     {
-        return setting_.server.cert_file;
+        return setting_.server.client_cert_file;
     }
 
     /**
-     * Set the value of the server.cert_file setting.
+     * Set the value of the server.client_cert_file setting.
      */
-    virtual void set_server_cert_file_setting(boost::filesystem::path value)
+    virtual void set_server_client_cert_file_setting(boost::filesystem::path value)
     {
-        setting_.server.cert_file = value;
+        setting_.server.client_cert_file = value;
     }
 
 protected:
@@ -742,7 +742,7 @@ private:
                 connect_retries(),
                 connect_timeout_seconds(),
                 server_cert_key(),
-                cert_file()
+                client_cert_file()
             {
             }
 
@@ -750,7 +750,7 @@ private:
             primitives::byte connect_retries;
             uint32_t connect_timeout_seconds;
             primitives::cert_key server_cert_key;
-            boost::filesystem::path cert_file;
+            boost::filesystem::path client_cert_file;
         } server;
 
         setting()
