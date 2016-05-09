@@ -83,7 +83,7 @@ bool obelisk_client::connect(const endpoint& address)
     static const milliseconds delay(100);
     const auto host_address = address.to_string();
 
-    for (auto retry = 0; retry < retries_; ++retry)
+    for (auto attempt = 0; attempt < 1 + retries_; ++attempt)
     {
         // ZMQ *only* returns 0 or -1 for this connect.
         if (socket_.connect(host_address) == zmq_success)
