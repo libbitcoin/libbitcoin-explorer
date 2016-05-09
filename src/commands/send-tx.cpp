@@ -60,8 +60,8 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.get_codec()->broadcast_transaction(on_error, on_done, transaction);
-    client.resolve_callbacks();
+    client.protocol_broadcast_transaction(on_error, on_done, transaction);
+    client.wait();
 
     return state.get_result();
 }

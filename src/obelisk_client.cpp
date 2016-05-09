@@ -20,6 +20,9 @@
 
 #include <bitcoin/explorer/obelisk_client.hpp>
 
+#include <chrono>
+#include <cstdint>
+#include <thread>
 #include <boost/filesystem.hpp>
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/bitcoin.hpp>
@@ -29,30 +32,32 @@ using namespace bc;
 using namespace bc::client;
 using namespace bc::config;
 using namespace bc::explorer::primitives;
+using namespace std::chrono;
 using namespace czmqpp;
+using namespace std::chrono;
 using boost::filesystem::path;
 
 namespace libbitcoin {
 namespace explorer {
 
+static constexpr uint8_t resends = 0;
 static constexpr int zmq_no_linger = 0;
-static constexpr int zmq_curve_enabled = 1;
+static BC_CONSTFUNC uint32_t sec_to_ms(uint32_t seconds)
+{
+    return seconds * 1000;
+};
 
-obelisk_client::obelisk_client(const period_ms& timeout, uint8_t retries)
+static const auto on_unknown = [](const std::string&){};
+
+obelisk_client::obelisk_client(uint16_t timeout_seconds, uint8_t retries)
   : socket_(context_, ZMQ_DEALER),
-    authenticate_(context_)
+    authenticate_(context_),
+    stream_(socket_),
+    retries_(retries),
+    proxy(stream_, on_unknown, sec_to_ms(timeout_seconds), resends)
 {
     BITCOIN_ASSERT(socket_.self() != nullptr);
-    stream_ = std::make_shared<socket_stream>(socket_);
-    auto base_stream = std::static_pointer_cast<message_stream>(stream_);
-    codec_ = std::make_shared<obelisk_codec>(base_stream);
-    codec_->set_timeout(timeout);
-    codec_->set_retries(retries);
-}
 
-obelisk_client::obelisk_client(const connection_type& channel)
-  : obelisk_client(channel.wait, channel.retries)
-{
 #ifdef _MSC_VER
     // Hack to prevent czmq from writing to stdout/stderr on Windows.
     // This will prevent authentication feedback, but also prevent crashes.
@@ -62,14 +67,35 @@ obelisk_client::obelisk_client(const connection_type& channel)
 #endif
 }
 
+obelisk_client::obelisk_client(const connection_type& channel)
+  : obelisk_client(channel.timeout_seconds, channel.retries)
+{
+}
+
+bool obelisk_client::connect(const connection_type& channel)
+{
+    return connect(channel.server, channel.key, channel.cert_path);
+}
+
 bool obelisk_client::connect(const endpoint& address)
 {
-    // ZMQ *only* returns 0 or -1 for this call, so make boolean.
-    const auto success = socket_.connect(address.to_string()) == zmq_success;
-    if (success)
-        socket_.set_linger(zmq_no_linger);
+    // Arbitrary delay between connection attempts.
+    static const milliseconds delay(100);
+    const auto host_address = address.to_string();
 
-    return success;
+    for (auto retry = 0; retry < retries_; ++retry)
+    {
+        // ZMQ *only* returns 0 or -1 for this connect.
+        if (socket_.connect(host_address) == zmq_success)
+        {
+            socket_.set_linger(zmq_no_linger);
+            return true;
+        }
+
+        std::this_thread::sleep_for(delay);
+    }
+
+    return false;
 }
 
 bool obelisk_client::connect(const endpoint& address,
@@ -116,82 +142,35 @@ bool obelisk_client::connect(const endpoint& address,
     return connect(address, server_public_cert);
 }
 
-bool obelisk_client::connect(const connection_type& channel)
+// Used by fetch-* commands, fires reply, unknown or error handlers.
+void obelisk_client::wait()
 {
-    return connect(channel.server, channel.key, channel.cert_path);
-}
+    poller poller(socket_);
+    auto remainder_ms = refresh();
 
-std::shared_ptr<obelisk_codec> obelisk_client::get_codec()
-{
-    return codec_;
-}
-
-bool obelisk_client::resolve_callbacks()
-{
-    auto delay = static_cast<int>(codec_->wakeup().count());
-    czmqpp::poller poller;
-    poller.add(stream_->get_socket());
-
-    while (delay > 0)
+    while (!empty() && !poller.terminated() && !poller.expired() &&
+        poller.wait(remainder_ms) == socket_)
     {
-        poller.wait(delay);
-
-        if (poller.terminated())
-            return false;
-
-        if (poller.expired())
-        {
-            // recompute the delay and signal the appropriate error callbacks.
-            delay = static_cast<int>(codec_->wakeup().count());
-            continue;
-        }
-
-        stream_->signal_response(codec_);
-        if (codec_->outstanding_call_count() == 0)
-            break;
+        stream_.read(*this);
+        remainder_ms = refresh();
     }
 
-    return true;
+    // Invoke error handlers for any still pending.
+    clear(error::channel_timeout);
 }
 
-void obelisk_client::poll_until_termination(const client::period_ms& timeout)
+// Used by watch-* commands, fires registered update or unknown handlers.
+void obelisk_client::monitor(uint32_t timeout_seconds)
 {
-    czmqpp::poller poller;
-    poller.add(stream_->get_socket());
+    poller poller(socket_);
+    const auto deadline = steady_clock::now() + seconds(timeout_seconds);
+    auto remainder_ms = remaining(deadline);
 
-    while (true)
+    while (!poller.terminated() && !poller.expired() &&
+        poller.wait(remainder_ms) == socket_)
     {
-        poller.wait(static_cast<int>(timeout.count()));
-
-        if (poller.terminated())
-            break;
-
-        if (!poller.expired())
-            stream_->signal_response(codec_);
-    }
-}
-
-void obelisk_client::poll_until_timeout_cumulative(const period_ms& timeout)
-{
-    czmqpp::poller poller;
-    poller.add(stream_->get_socket());
-
-    // calculate expected expiration time
-    auto expiry = std::chrono::steady_clock::now() + timeout;
-
-    while (std::chrono::steady_clock::now() < expiry)
-    {
-        // calculate maximum interval from now to expiration
-        auto max_wait_interval = std::chrono::duration_cast<period_ms>(
-            expiry - std::chrono::steady_clock::now());
-
-        poller.wait(static_cast<int>(max_wait_interval.count()));
-
-        if (poller.terminated())
-            break;
-
-        if (!poller.expired())
-            stream_->signal_response(codec_);
+        stream_.read(*this);
+        remainder_ms = remaining(deadline);
     }
 }
 

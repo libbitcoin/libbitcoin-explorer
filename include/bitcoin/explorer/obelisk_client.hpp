@@ -20,6 +20,7 @@
 #ifndef BX_OBELISK_CLIENT_HPP
 #define BX_OBELISK_CLIENT_HPP
 
+#include <cstdint>
 #include <boost/filesystem.hpp>
 #include <czmq++/czmqpp.hpp>
 #include <bitcoin/client.hpp>
@@ -27,106 +28,44 @@
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in headers. */
-
 namespace libbitcoin {
 namespace explorer {
 
-/**
- * The standard libzmq success code.
- */
-BC_CONSTEXPR int zmq_success = 0;
+static BC_CONSTEXPR int zmq_success = 0;
 
-/**
- * Class to simplify obelisk/libbitcoin-server usage. 
- * This class hides *all* use of czmqpp/czmq/zmq/libsodium.
- */
+/// Class to simplify obelisk/libbitcoin-server usage. 
+/// This class hides *all* use of czmqpp/czmq/zmq/libsodium.
 class BCX_API obelisk_client
+  : public client::proxy
 {
 public:
-    /**
-     * Initialization constructor.
-     * @param[in]  timeout  The call timeout, defaults to zero (instant).
-     * @param[in]  retries  The number of retries allowed, defaults to zero.
-     */
-    obelisk_client(
-        const client::period_ms& timeout=client::period_ms(0),
-        uint8_t retries=0);
-
-    /**
-     * Initialization constructor.
-     * @param[in]  channel  The channel to initialize.
-     */
     obelisk_client(const connection_type& channel);
+    obelisk_client(uint16_t timeout_seconds, uint8_t retries);
 
-    /**
-     * Connect to the specified server address.
-     * @param[in]  address  The server address.
-     * @return              True if connected, otherwise false.
-     */
     virtual bool connect(const bc::config::endpoint& address);
 
-    /**
-     * Connect to the specified server address.
-     * @param[in]  address             The server address.
-     * @param[in]  server_public_cert  The server public certificate key.
-     * @return                         True if connected, otherwise false.
-     */
     virtual bool connect(const bc::config::endpoint& address,
         const primitives::cert_key& server_public_cert);
 
-    /**
-     * Connect to the specified server address.
-     * @param[in]  address                   The server address.
-     * @param[in]  server_public_cert        The server public certificate key.
-     * @param[in]  client_private_cert_path  The client private cert file path.
-     * @return                               True if connected, otherwise false.
-     */
     virtual bool connect(const bc::config::endpoint& address,
         const primitives::cert_key& server_public_cert,
         const boost::filesystem::path& client_private_cert_path);
 
-    /**
-     * Connect using the specified server channel.
-     * @param[in]  channel  The channel to connect.
-     * @return              True if connected, otherwise false.
-     */
     virtual bool connect(const connection_type& channel);
 
-    /**
-     * Get the value of the codec property.
-     * @return The codec.
-     */
-    virtual std::shared_ptr<client::obelisk_codec> get_codec();
-    
-    /**
-     * Resolve callback functions.
-     * @return True if not terminated before completion.
-     */
-    virtual bool resolve_callbacks();
+    // Wait for server to respond, until timeout.
+    void wait();
 
-    /**
-     * Poll the connection until the request terminates.
-     * @param[in]  timeout  The poll timeout, defaults to zero.
-     */
-    virtual void poll_until_termination(
-        const client::period_ms& timeout=client::period_ms(0));
-
-    /**
-     * Poll the connection until the request times out or terminates.
-     * @param[in]  timeout  The poll timeout, defaults to zero.
-     */
-    virtual void poll_until_timeout_cumulative(
-        const client::period_ms& timeout=client::period_ms(0));
+    // Monitor for subscription notifications, until timeout.
+    void monitor(uint32_t timeout_seconds);
 
 private:
     czmqpp::context context_;
     czmqpp::socket socket_;
     czmqpp::certificate certificate_;
     czmqpp::authenticator authenticate_;
-
-    std::shared_ptr<client::socket_stream> stream_;
-    std::shared_ptr<client::obelisk_codec> codec_;
+    client::socket_stream stream_;
+    const uint8_t retries_;
 };
 
 } // namespace explorer

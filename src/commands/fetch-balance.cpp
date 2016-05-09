@@ -62,8 +62,8 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.get_codec()->address_fetch_history(on_error, on_done, address);
-    client.resolve_callbacks();
+    client.address_fetch_history2(on_error, on_done, address);
+    client.wait();
 
     return state.get_result();
 }

@@ -73,8 +73,8 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.get_codec()->fetch_last_height(on_error, on_done);
-    client.resolve_callbacks();
+    client.blockchain_fetch_last_height(on_error, on_done);
+    client.wait();
 
     return state.get_result();
 }

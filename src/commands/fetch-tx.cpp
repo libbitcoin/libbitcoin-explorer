@@ -66,8 +66,8 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.get_codec()->fetch_transaction(on_error, on_done, hash);
-    client.resolve_callbacks();
+    client.blockchain_fetch_transaction(on_error, on_done, hash);
+    client.wait();
 
     return state.get_result();
 }

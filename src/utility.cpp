@@ -62,13 +62,10 @@ bool is_base2(const std::string& text)
 
 connection_type get_connection(const command& cmd)
 {
-    const auto connect_timeout_milliseconds = period_ms(
-        cmd.get_server_connect_timeout_seconds_setting() * 1000);
-
     return connection_type
     {
         cmd.get_server_connect_retries_setting(),
-        connect_timeout_milliseconds,
+        cmd.get_server_connect_timeout_seconds_setting(),
         cmd.get_server_client_cert_file_setting(),
         cmd.get_server_url_setting(),
         cmd.get_server_server_cert_key_setting()
