@@ -68,11 +68,11 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     // Height is ignored if both are specified.
     // Use the null_hash as sentinel to determine whether to use height or hash.
     if (hash == null_hash)
-        client.get_codec()->fetch_block_header(on_error, on_done, height);
+        client.blockchain_fetch_block_header(on_error, on_done, height);
     else
-        client.get_codec()->fetch_block_header(on_error, on_done, hash);
+        client.blockchain_fetch_block_header(on_error, on_done, hash);
 
-    client.resolve_callbacks();
+    client.wait();
 
     return state.get_result();
 }

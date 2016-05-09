@@ -53,7 +53,7 @@
   <configuration section="server">
     <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk server." />
     <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
-    <setting name="connect_timeout_seconds" default="5" type="uint32_t" description="The time limit for connection establishment, defaults to 5." />
+    <setting name="connect_timeout_seconds" default="5" type="uint16_t" description="The time limit for connection establishment, defaults to 5." />
     <setting name="server_cert_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
     <setting name="client_cert_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
   </configuration>
@@ -79,7 +79,7 @@
   </resource>
 
   <!-- Bitcoin Explorer Commands -->
-  
+
   <!-- The 'command' element attributes typeX multipleX are currently unused and are intended to eventually provide type information for output bindings. -->
   <command symbol="address-decode" formerly="decode-addr" output="wrapper" category="WALLET" description="Convert a payment address to its component parts.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />

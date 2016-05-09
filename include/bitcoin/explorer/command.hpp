@@ -281,7 +281,7 @@ public:
         )
         (
             "server.connect_timeout_seconds",
-            value<uint32_t>(&setting_.server.connect_timeout_seconds)->default_value(5),
+            value<uint16_t>(&setting_.server.connect_timeout_seconds)->default_value(5),
             "The time limit for connection establishment, defaults to 5."
         )
         (
@@ -604,7 +604,7 @@ public:
     /**
      * Get the value of the server.connect_timeout_seconds setting.
      */
-    virtual uint32_t get_server_connect_timeout_seconds_setting() const
+    virtual uint16_t get_server_connect_timeout_seconds_setting() const
     {
         return setting_.server.connect_timeout_seconds;
     }
@@ -612,7 +612,7 @@ public:
     /**
      * Set the value of the server.connect_timeout_seconds setting.
      */
-    virtual void set_server_connect_timeout_seconds_setting(uint32_t value)
+    virtual void set_server_connect_timeout_seconds_setting(uint16_t value)
     {
         setting_.server.connect_timeout_seconds = value;
     }
@@ -748,7 +748,7 @@ private:
 
             bc::config::endpoint url;
             primitives::byte connect_retries;
-            uint32_t connect_timeout_seconds;
+            uint16_t connect_timeout_seconds;
             primitives::cert_key server_cert_key;
             boost::filesystem::path client_cert_file;
         } server;

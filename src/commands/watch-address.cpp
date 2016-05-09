@@ -45,9 +45,7 @@ using namespace bc::wallet;
 static void handle_signal(int signal)
 {
     // Can't pass args using lambda capture for a simple function pointer.
-    // This means there's no way to terminate without using a global variable
-    // or process termination. Since the variable would screw with testing all 
-    // other methods we opt for process termination here.
+    // This means there's no way to terminate without using a global variable.
     exit(console_result::failure);
 }
 
@@ -60,6 +58,9 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
+    // TODO: add monitoring timeout to command line in seconds, default to 600.
+    const auto timeout = uint32_t(10 * 60); //// get_timeout_option();
+
     obelisk_client client(connection);
 
     if (!client.connect(connection))
@@ -69,15 +70,6 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     }
 
     callback_state state(error, output, encoding);
-
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
-
-    auto on_update = [&state, json](const payment_address& address, size_t,
-        const hash_digest& block_hash, const tx_type& tx)
-    {
-        state.output(prop_tree(tx, block_hash, address, json));
-    };
 
     auto on_subscribed = [&state, &address]()
     {
@@ -90,17 +82,32 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.get_codec()->set_on_update(on_update);
-    client.get_codec()->subscribe(on_error, on_subscribed, address);
+    // The configured timeout is used for the subscription.
+    client.address_subscribe(on_error, on_subscribed, address);
+    client.wait();
 
-    // Catch C signals for stopping the program.
+    // If subscription succeeded, handle updates until monitoring timeout.
+    if (state.stopped())
+        return state.get_result();
+
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    auto on_update = [&state, json](const payment_address& address, size_t,
+        const hash_digest& block_hash, const tx_type& tx)
+    {
+        state.output(prop_tree(tx, block_hash, address, json));
+    };
+
+    client.set_on_update(on_update);
+
+    // Catch C signals for stopping the program before monitoring timeout.
     signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
-    // poll for subscribe callbacks if any subscriptions were established.
-    if (client.resolve_callbacks() && !state.stopped())
-        client.poll_until_timeout_cumulative(std::chrono::minutes(10));
+    // Handle updates until monitoring timeout.
+    client.monitor(timeout);
 
     return state.get_result();
 }
