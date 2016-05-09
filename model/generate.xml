@@ -79,7 +79,7 @@
   </resource>
 
   <!-- Bitcoin Explorer Commands -->
-  
+
   <!-- The 'command' element attributes typeX multipleX are currently unused and are intended to eventually provide type information for output bindings. -->
   <command symbol="address-decode" formerly="decode-addr" output="wrapper" category="WALLET" description="Convert a payment address to its component parts.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
