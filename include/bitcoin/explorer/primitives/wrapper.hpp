@@ -59,7 +59,7 @@ public:
      * Initialization constructor.
      * @param[in]  wrapped  The wrapped value to initialize with.
      */
-    wrapper(const wrapped_data& wrapped);
+    wrapper(const wallet::wrapped_data& wrapped);
 
     /**
      * Initialization constructor.
@@ -90,7 +90,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const wrapped_data&() const;
+    operator const wallet::wrapped_data&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -115,7 +115,7 @@ private:
     /**
      * The state of this object's data.
      */
-    wrapped_data value_;
+    wallet::wrapped_data value_;
 };
 
 } // namespace explorer

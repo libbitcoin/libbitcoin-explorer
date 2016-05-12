@@ -29,6 +29,7 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 
 using namespace bc;
+using namespace bc::chain;
 using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
@@ -61,7 +62,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, &address, json](const client::history_list& rows)
+    auto on_done = [&state, &address, json](const history::list& rows)
     {
         state.output(prop_tree(rows, json));
     };
@@ -71,9 +72,10 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
+    // The v3 client API works with and normalizes either server API.
+    //// client.address_fetch_history(on_error, on_done, address);
     client.address_fetch_history2(on_error, on_done, address);
     client.wait();
 
     return state.get_result();
 }
-
