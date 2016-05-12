@@ -90,20 +90,24 @@ ptree prop_list(const chain::history& row)
 {
     ptree tree;
 
-    tree.put("received.hash", btc256(row.output.hash));
+    // missing output implies output cut off by server's history threshold
+    if (row.output.hash != null_hash)
+    {
+        tree.put("received.hash", btc256(row.output.hash));
 
-    // missing received.height implies pending
-    if (row.output_height != 0)
-        tree.put("received.height", row.output_height);
+        // zeroized received.height implies output unconfirmed (in mempool)
+        if (row.output_height != 0)
+            tree.put("received.height", row.output_height);
 
-    tree.put("received.index", row.output.index);
+        tree.put("received.index", row.output.index);
+    }
 
     // missing input implies unspent
     if (row.spend.hash != null_hash)
     {
         tree.put("spent.hash", btc256(row.spend.hash));
 
-        // missing input.height implies spend unconfirmed
+        // zeroized input.height implies spend unconfirmed (in mempool)
         if (row.spend_height != 0)
             tree.put("spent.height", row.spend_height);
 
