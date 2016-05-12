@@ -41,10 +41,10 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "    }\n" \
 "    server\n" \
 "    {\n" \
-"        client_cert_file \"\"\n" \
+"        client_certificate_file \"\"\n" \
 "        connect_retries 0\n" \
 "        connect_timeout_seconds 0\n" \
-"        server_cert_key \"\"\n" \
+"        server_certificate_key \"\"\n" \
 "        url localhost\n" \
 "    }\n" \
 "    wallet\n" \
@@ -74,10 +74,10 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "    }\n" \
 "    server\n" \
 "    {\n" \
-"        client_cert_file mainnet.certificate.zpl\n" \
+"        client_certificate_file mainnet.certificate.zpl\n" \
 "        connect_retries 21\n" \
 "        connect_timeout_seconds 22\n" \
-"        server_cert_key \"CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom\"\n" \
+"        server_certificate_key \"CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom\"\n" \
 "        url https://mainnet.obelisk.net:42\n" \
 "    }\n" \
 "    wallet\n" \
@@ -118,8 +118,8 @@ BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
     command.set_server_url_setting({ "https://mainnet.obelisk.net:42" });
     command.set_server_connect_retries_setting(21);
     command.set_server_connect_timeout_seconds_setting(22);
-    command.set_server_server_cert_key_setting({ "CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });
-    command.set_server_client_cert_file_setting("mainnet.certificate.zpl");
+    command.set_server_server_certificate_key_setting({ "CrWu}il)+MbqD60BV)v/xt&Xtwj*$[Q}Q{$9}hom" });
+    command.set_server_client_certificate_file_setting("mainnet.certificate.zpl");
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SETTINGS_TEST_VALUES);
 }

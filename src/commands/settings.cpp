@@ -90,10 +90,10 @@ console_result commands::settings::invoke(std::ostream& output,
         serialize(get_server_connect_retries_setting());
     list["server.connect_timeout_seconds"] =
         serialize(get_server_connect_timeout_seconds_setting());
-    list["server.server_cert_key"] =
-        get_server_server_cert_key_setting().get_base85();
-    list["server.client_cert_file"] = 
-        get_server_client_cert_file_setting().string();
+    list["server.server_certificate_key"] =
+        get_server_server_certificate_key_setting().get_base85();
+    list["server.client_certificate_file"] = 
+        get_server_client_certificate_file_setting().string();
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;
