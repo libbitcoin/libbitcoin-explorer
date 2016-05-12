@@ -84,7 +84,6 @@ typedef boost::format format;
 typedef bc::chain::transaction tx_type;
 typedef bc::chain::input tx_input_type;
 typedef bc::chain::output tx_output_type;
-typedef bc::client::history_row balance_row;
 
 /**
  * The minimum safe length of a seed in bits (multiple of 8).
@@ -104,16 +103,6 @@ enum class encoding_engine
     info,
     json,
     xml
-};
-
-/**
- * Definition of the parts of a wrapped payload.
- */
-struct BCX_API wrapped_data
-{
-    uint8_t version;
-    uint32_t checksum;
-    bc::data_chunk payload;
 };
 
 #endif
