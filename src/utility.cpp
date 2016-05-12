@@ -66,9 +66,9 @@ connection_type get_connection(const command& cmd)
     {
         cmd.get_server_connect_retries_setting(),
         cmd.get_server_connect_timeout_seconds_setting(),
-        cmd.get_server_client_cert_file_setting(),
+        cmd.get_server_client_certificate_file_setting(),
         cmd.get_server_url_setting(),
-        cmd.get_server_server_cert_key_setting()
+        cmd.get_server_server_certificate_key_setting()
     };
 }
 

@@ -285,13 +285,13 @@ public:
             "The time limit for connection establishment, defaults to 5."
         )
         (
-            "server.server_cert_key",
-            value<primitives::cert_key>(&setting_.server.server_cert_key),
+            "server.server_certificate_key",
+            value<primitives::cert_key>(&setting_.server.server_certificate_key),
             "The Z85-encoded public key of the server certificate."
         )
         (
-            "server.client_cert_file",
-            value<boost::filesystem::path>(&setting_.server.client_cert_file),
+            "server.client_certificate_file",
+            value<boost::filesystem::path>(&setting_.server.client_certificate_file),
             "The path to the ZPL-encoded client private certificate file."
         );
     }
@@ -618,35 +618,35 @@ public:
     }
 
     /**
-     * Get the value of the server.server_cert_key setting.
+     * Get the value of the server.server_certificate_key setting.
      */
-    virtual primitives::cert_key get_server_server_cert_key_setting() const
+    virtual primitives::cert_key get_server_server_certificate_key_setting() const
     {
-        return setting_.server.server_cert_key;
+        return setting_.server.server_certificate_key;
     }
 
     /**
-     * Set the value of the server.server_cert_key setting.
+     * Set the value of the server.server_certificate_key setting.
      */
-    virtual void set_server_server_cert_key_setting(primitives::cert_key value)
+    virtual void set_server_server_certificate_key_setting(primitives::cert_key value)
     {
-        setting_.server.server_cert_key = value;
+        setting_.server.server_certificate_key = value;
     }
 
     /**
-     * Get the value of the server.client_cert_file setting.
+     * Get the value of the server.client_certificate_file setting.
      */
-    virtual boost::filesystem::path get_server_client_cert_file_setting() const
+    virtual boost::filesystem::path get_server_client_certificate_file_setting() const
     {
-        return setting_.server.client_cert_file;
+        return setting_.server.client_certificate_file;
     }
 
     /**
-     * Set the value of the server.client_cert_file setting.
+     * Set the value of the server.client_certificate_file setting.
      */
-    virtual void set_server_client_cert_file_setting(boost::filesystem::path value)
+    virtual void set_server_client_certificate_file_setting(boost::filesystem::path value)
     {
-        setting_.server.client_cert_file = value;
+        setting_.server.client_certificate_file = value;
     }
 
 protected:
@@ -741,16 +741,16 @@ private:
               : url(),
                 connect_retries(),
                 connect_timeout_seconds(),
-                server_cert_key(),
-                client_cert_file()
+                server_certificate_key(),
+                client_certificate_file()
             {
             }
 
             bc::config::endpoint url;
             primitives::byte connect_retries;
             uint16_t connect_timeout_seconds;
-            primitives::cert_key server_cert_key;
-            boost::filesystem::path client_cert_file;
+            primitives::cert_key server_certificate_key;
+            boost::filesystem::path client_certificate_file;
         } server;
 
         setting()
