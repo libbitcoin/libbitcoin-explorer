@@ -202,7 +202,7 @@ BCX_API data_chunk new_seed(size_t bitlength=minimum_seed_bits);
  * @return              The list of strings.
  */
 BCX_API std::vector<std::string> numbers_to_strings(
-    const client::index_list& indexes);
+    const chain::point::indexes& indexes);
 
 /**
  * Get the local time, second level resolution, based on the time zone settings
@@ -261,14 +261,14 @@ BCX_API bool starts_with(const std::string& value, const std::string& prefix);
  * @param[in]  wrapped  The wrapped data to unwrap.
  * @return              True if input checksum validates.
  */
-BCX_API bool unwrap(wrapped_data& data, data_slice wrapped);
+BCX_API bool unwrap(wallet::wrapped_data& data, data_slice wrapped);
 
 /**
  * Wrap arbitrary data.
  * @param[in]  data  The data structure to wrap.
  * @return           The wrapped data.
  */
-BCX_API data_chunk wrap(const wrapped_data& data);
+BCX_API data_chunk wrap(const wallet::wrapped_data& data);
 
 /**
  * Serialize a property tree using a specified encoding.

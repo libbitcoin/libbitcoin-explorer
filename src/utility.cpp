@@ -97,10 +97,10 @@ ptime now()
 }
 
 std::vector<std::string> numbers_to_strings(
-    const bc::client::index_list& indexes)
+    const chain::point::indexes& indexes)
 {
     std::vector<std::string> stringlist;
-    for (const auto& index: indexes)
+    for (const auto index: indexes)
         stringlist.push_back(std::to_string(index));
 
     return stringlist;
@@ -160,7 +160,7 @@ bool starts_with(const std::string& value, const std::string& prefix)
 }
 
 // This verifies the checksum.
-bool unwrap(wrapped_data& data, data_slice wrapped)
+bool unwrap(wallet::wrapped_data& data, data_slice wrapped)
 {
     if (!verify_checksum(wrapped))
         return false;
@@ -175,7 +175,7 @@ bool unwrap(wrapped_data& data, data_slice wrapped)
 }
 
 // This recalculates the checksum, ignoring what is in data.checksum.
-data_chunk wrap(const wrapped_data& data)
+data_chunk wrap(const wallet::wrapped_data& data)
 {
     auto bytes = to_chunk(data.version);
     extend_data(bytes, data.payload);

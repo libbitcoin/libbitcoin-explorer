@@ -86,24 +86,28 @@ ptree prop_tree(const std::vector<header>& headers, bool json)
 
 // transfers
 
-ptree prop_list(const history_row& row)
+ptree prop_list(const chain::history& row)
 {
     ptree tree;
 
-    tree.put("received.hash", btc256(row.output.hash));
+    // missing output implies output cut off by server's history threshold
+    if (row.output.hash != null_hash)
+    {
+        tree.put("received.hash", btc256(row.output.hash));
 
-    // missing received.height implies pending
-    if (row.output_height != 0)
-        tree.put("received.height", row.output_height);
+        // zeroized received.height implies output unconfirmed (in mempool)
+        if (row.output_height != 0)
+            tree.put("received.height", row.output_height);
 
-    tree.put("received.index", row.output.index);
+        tree.put("received.index", row.output.index);
+    }
 
     // missing input implies unspent
     if (row.spend.hash != null_hash)
     {
         tree.put("spent.hash", btc256(row.spend.hash));
 
-        // missing input.height implies spend unconfirmed
+        // zeroized input.height implies spend unconfirmed (in mempool)
         if (row.spend_height != 0)
             tree.put("spent.height", row.spend_height);
 
@@ -113,13 +117,13 @@ ptree prop_list(const history_row& row)
     tree.put("value", row.value);
     return tree;
 }
-ptree prop_tree(const history_row& row)
+ptree prop_tree(const chain::history& row)
 {
     ptree tree;
     tree.add_child("transfer", prop_list(row));
     return tree;
 }
-ptree prop_tree(const std::vector<history_row>& rows, bool json)
+ptree prop_tree(const chain::history::list& rows, bool json)
 {
     ptree tree;
     tree.add_child("transfers", prop_tree_list("transfer", rows, json));
@@ -128,7 +132,7 @@ ptree prop_tree(const std::vector<history_row>& rows, bool json)
 
 // balance
 
-ptree prop_list(const std::vector<balance_row>& rows,
+ptree prop_list(const chain::history::list& rows,
     const payment_address& balance_address)
 {
     ptree tree;
@@ -155,7 +159,7 @@ ptree prop_list(const std::vector<balance_row>& rows,
     tree.put("unspent", unspent_balance);
     return tree;
 }
-ptree prop_tree(const std::vector<balance_row>& rows,
+ptree prop_tree(const chain::history::list& rows,
     const payment_address& balance_address)
 {
     ptree tree;
@@ -184,7 +188,7 @@ ptree prop_tree(const tx_input_type& tx_input)
     tree.add_child("input", prop_list(tx_input));
     return tree;
 }
-ptree prop_tree(const std::vector<tx_input_type>& tx_inputs, bool json)
+ptree prop_tree(const tx_input_type::list& tx_inputs, bool json)
 {
     ptree tree;
     tree.add_child("inputs", prop_tree_list("input", tx_inputs, json));
@@ -246,7 +250,7 @@ ptree prop_tree(const tx_output_type& tx_output)
     tree.add_child("output", prop_list(tx_output));
     return tree;
 }
-ptree prop_tree(const std::vector<tx_output_type>& tx_outputs, bool json)
+ptree prop_tree(const tx_output_type::list& tx_outputs, bool json)
 {
     ptree tree;
     tree.add_child("outputs", prop_tree_list("output", tx_outputs, json));
@@ -283,7 +287,7 @@ ptree prop_tree(const std::vector<transaction>& transactions, bool json)
 
 // wrapper
 
-ptree prop_list(const wrapped_data& wrapper)
+ptree prop_list(const wallet::wrapped_data& wrapper)
 {
     ptree tree;
     tree.put("checksum", wrapper.checksum);
@@ -291,7 +295,7 @@ ptree prop_list(const wrapped_data& wrapper)
     tree.put("version", wrapper.version);
     return tree;
 }
-ptree prop_tree(const wrapped_data& wrapper)
+ptree prop_tree(const wallet::wrapped_data& wrapper)
 {
     ptree tree;
     tree.add_child("wrapper", prop_list(wrapper));
@@ -367,22 +371,22 @@ ptree prop_tree(const stealth_address& stealth, bool json)
 
 // stealth
 
-ptree prop_list(const client::stealth_row& row)
+ptree prop_list(const chain::stealth& row)
 {
     ptree tree;
-    tree.put("ephemeral_public_key", encode_base16(row.ephemeral_public_key));
+    tree.put("ephemeral_public_key", ec_public(row.ephemeral_public_key));
     tree.put("public_key_hash", btc160(row.public_key_hash));
     tree.put("transaction_hash", btc256(row.transaction_hash));
     return tree;
 }
-ptree prop_tree(const client::stealth_row& row)
+ptree prop_tree(const chain::stealth& row)
 {
     ptree tree;
     tree.add_child("match", prop_list(row));
     return tree;
 }
 
-ptree prop_tree(const std::vector<client::stealth_row>& rows, bool json)
+ptree prop_tree(const chain::stealth::list& rows, bool json)
 {
     ptree tree;
     tree.add_child("stealth", prop_tree_list("match", rows, json));

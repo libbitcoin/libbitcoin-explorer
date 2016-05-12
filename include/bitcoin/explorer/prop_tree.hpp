@@ -116,14 +116,14 @@ BCX_API pt::ptree prop_tree(const std::vector<header>& headers);
 * @param[in]  row  The history row.
 * @return          A property list.
 */
-BCX_API pt::ptree prop_list(const client::history_row& row);
+BCX_API pt::ptree prop_list(const chain::history& row);
 
 /**
  * Generate a property tree for a history row.
  * @param[in]  row  The history row.
  * @return          A property tree.
  */
-BCX_API pt::ptree prop_tree(const client::history_row& row);
+BCX_API pt::ptree prop_tree(const chain::history& row);
 
 /**
  * Generate a property tree for a set of history rows.
@@ -132,8 +132,7 @@ BCX_API pt::ptree prop_tree(const client::history_row& row);
  * @param[in]  json  Use json array formatting.
  * @return           A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<client::history_row>& rows,
-    bool json);
+BCX_API pt::ptree prop_tree(const chain::history::list& rows, bool json);
 
 /**
  * Generate a property list from balance rows for an address.
@@ -142,7 +141,7 @@ BCX_API pt::ptree prop_tree(const std::vector<client::history_row>& rows,
  * @param[in]  balance_address  The payment address for the balance rows.
  * @return                      A property list.
  */
-BCX_API pt::ptree prop_list(const std::vector<balance_row>& rows,
+BCX_API pt::ptree prop_list(const chain::history::list& rows,
     const wallet::payment_address& balance_address);
 
 /**
@@ -152,7 +151,7 @@ BCX_API pt::ptree prop_list(const std::vector<balance_row>& rows,
  * @param[in]  balance_address  The payment address for the balance rows.
  * @return                      A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<balance_row>& rows,
+BCX_API pt::ptree prop_tree(const chain::history::list& rows,
     const wallet::payment_address& balance_address);
 
 /**
@@ -175,8 +174,7 @@ BCX_API pt::ptree prop_tree(const tx_input_type& tx_input);
  * @param[in]  json       Use json array formatting.
  * @return                A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<tx_input_type>& tx_inputs,
-    bool json);
+BCX_API pt::ptree prop_tree(const tx_input_type::list& tx_inputs, bool json);
 
 /**
  * Generate a property list for an input.
@@ -221,7 +219,7 @@ BCX_API pt::ptree prop_tree(const tx_output_type& tx_output);
  * @param[in]  json        Use json array formatting.
  * @return                 A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<tx_output_type>& tx_outputs,
+BCX_API pt::ptree prop_tree(const tx_output_type::list& tx_outputs,
     bool json);
 
 /**
@@ -254,14 +252,14 @@ BCX_API pt::ptree prop_tree(const std::vector<transaction>& transactions,
  * @param[in]  wrapper  The wrapper instance.
  * @return              A property list.
  */
-BCX_API pt::ptree prop_list(const wrapped_data& wrapper);
+BCX_API pt::ptree prop_list(const wallet::wrapped_data& wrapper);
 
 /**
  * Generate a property tree for a wrapper.
  * @param[in]  wrapper  The wrapper instance.
  * @return              A property tree.
  */
-BCX_API pt::ptree prop_tree(const wrapped_data& wrapper);
+BCX_API pt::ptree prop_tree(const wallet::wrapped_data& wrapper);
 
 ///**
 // * Generate a property list for transaction with extended data.
@@ -328,14 +326,14 @@ BCX_API pt::ptree prop_tree(const wallet::stealth_address& stealth, bool json);
  * @param[in]  rows  The stealth row.
  * @return           A property list.
  */
-BCX_API pt::ptree prop_list(const client::stealth_row& row);
+BCX_API pt::ptree prop_list(const chain::stealth& row);
 
 /**
  * Generate a property tree for a stealth metadata row.
  * @param[in]  rows  The stealth row.
  * @return           A property tree.
  */
-BCX_API pt::ptree prop_tree(const client::stealth_row& row);
+BCX_API pt::ptree prop_tree(const chain::stealth& row);
 
 /**
  * Generate a property tree from stealth metadata rows.
@@ -343,8 +341,7 @@ BCX_API pt::ptree prop_tree(const client::stealth_row& row);
  * @param[in]  json    Use json array formatting.
  * @return             A property tree.
  */
-BCX_API pt::ptree prop_tree(const std::vector<client::stealth_row>& rows,
-    bool json);
+BCX_API pt::ptree prop_tree(const chain::stealth::list& rows, bool json);
 
 /**
  * Create a property list for the fetch-tx-index command.

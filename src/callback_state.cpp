@@ -49,7 +49,7 @@ callback_state::callback_state(std::ostream& error, std::ostream& output)
 }
 
 // std::endl adds "/n" and flushes the stream.
-void callback_state::error(const ptree tree)
+void callback_state::error(const ptree& tree)
 {
     write_stream(error_, tree, engine_);
 }
@@ -65,7 +65,7 @@ void callback_state::error(const std::string& message)
     error(format(message));
 }
 
-void callback_state::output(const pt::ptree tree)
+void callback_state::output(const pt::ptree& tree)
 {
     write_stream(output_, tree, engine_);
 }

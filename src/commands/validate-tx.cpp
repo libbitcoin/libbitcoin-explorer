@@ -52,7 +52,7 @@ console_result validate_tx::invoke(std::ostream& output,
 
     callback_state state(error, output);
 
-    auto on_done = [&state](const bc::client::index_list& indexes)
+    auto on_done = [&state](const chain::point::indexes& indexes)
     {
         if (indexes.empty())
         {

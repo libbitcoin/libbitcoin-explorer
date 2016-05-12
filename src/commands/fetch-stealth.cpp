@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 
 using namespace bc;
+using namespace bc::chain;
 using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
@@ -63,7 +64,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, &filter, json](const client::stealth_list& list)
+    auto on_done = [&state, &filter, json](const stealth::list& list)
     {
         // Write out the transaction hashes of *potential* matches.
         state.output(prop_tree(list, json));

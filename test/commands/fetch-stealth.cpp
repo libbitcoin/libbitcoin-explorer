@@ -82,21 +82,27 @@ BOOST_AUTO_TEST_SUITE(fetch_stealth__invoke)
 BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
+
+    // We need to set a high filter becuase the reference server restricts response size.
+    command.set_filter_argument({ "1010101010101010" });
     command.set_server_url_setting({ BX_MAINNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
 // requires libbitcoin-server.
-BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_323557__okay)
+BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_400000__okay)
 {
     BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
-    command.set_height_option(323557);
+    command.set_height_option(400000);
+
+    // We need to set a high filter becuase the reference server restricts response size.
+    command.set_filter_argument({ "1010101010101010" });
     command.set_server_url_setting({ BX_MAINNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
-// requires libbitcoin-server.
-// This test is fragile, will eventually break (due to expansion of the returned result).
+////// requires libbitcoin-server.
+////// This test is fragile, will eventually break (due to expansion of the returned result).
 ////BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_10101010101__okay_output)
 ////{
 ////    BX_DECLARE_NETWORK_COMMAND(fetch_stealth);
