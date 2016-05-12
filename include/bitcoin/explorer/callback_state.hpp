@@ -64,7 +64,7 @@ public:
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
      */
-    BCX_API virtual void error(const pt::ptree tree);
+    BCX_API virtual void error(const pt::ptree& tree);
 
     /**
      * Write a line to the error stream. The stream must be flushed before 
@@ -85,7 +85,7 @@ public:
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
      */
-    BCX_API virtual void output(const pt::ptree tree);
+    BCX_API virtual void output(const pt::ptree& tree);
 
     /**
      * Write a line to the output stream. The stream must be flushed before 
