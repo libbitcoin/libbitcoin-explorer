@@ -62,12 +62,6 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
- */
-#define BX_FETCH_UTXO_NOT_IMPLEMENTED \
-    "This command is not yet implemented."
-
-/**
  * Class to implement the fetch-utxo command.
  */
 class BCX_API fetch_utxo 
@@ -112,7 +106,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get enough unspent transaction outputs from a payment addresses to pay a number of satoshi. Requires a Libbitcoin/Obelisk server connection.";
+        return "Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.";
     }
 
     /**

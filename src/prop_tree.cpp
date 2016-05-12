@@ -136,13 +136,13 @@ ptree prop_list(const chain::history::list& rows,
     const payment_address& balance_address)
 {
     ptree tree;
-    uint64_t total_recieved = 0;
+    uint64_t total_received = 0;
     uint64_t confirmed_balance = 0;
     uint64_t unspent_balance = 0;
 
     for (const auto& row: rows)
     {
-        total_recieved += row.value;
+        total_received += row.value;
 
         // spend unconfirmed (or no spend attempted)
         if (row.spend.hash == null_hash)
@@ -155,7 +155,7 @@ ptree prop_list(const chain::history::list& rows,
 
     tree.put("address", balance_address);
     tree.put("confirmed", confirmed_balance);
-    tree.put("received", total_recieved);
+    tree.put("received", total_received);
     tree.put("unspent", unspent_balance);
     return tree;
 }
@@ -254,6 +254,32 @@ ptree prop_tree(const tx_output_type::list& tx_outputs, bool json)
 {
     ptree tree;
     tree.add_child("outputs", prop_tree_list("output", tx_outputs, json));
+    return tree;
+}
+
+// points
+
+ptree prop_list(const chain::point& point)
+{
+    ptree tree;
+    tree.put("hash", btc256(point.hash));
+    tree.put("index", point.index);
+    return tree;
+}
+
+ptree prop_tree(const chain::point::list& points, bool json)
+{
+    ptree tree;
+    for (const auto& point: points)
+        tree.add_child("points", prop_list(point));
+    return tree;
+}
+
+ptree prop_tree(const chain::points_info& points_info, bool json)
+{
+    ptree tree;
+    tree.add_child("points", prop_tree_list("points", points_info.points, json));
+    tree.put("change", points_info.change);
     return tree;
 }
 
