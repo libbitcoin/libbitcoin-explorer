@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/algorithm.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>
@@ -118,7 +119,8 @@ public:
     {
         return get_argument_metadata()
             .add("SATOSHI", 1)
-            .add("PAYMENT_ADDRESS", 1);
+            .add("PAYMENT_ADDRESS", 1)
+            .add("ALGORITHM", 1);
     }
 
 	/**
@@ -167,6 +169,11 @@ public:
             "PAYMENT_ADDRESS",
             value<bc::wallet::payment_address>(&argument_.payment_address),
             "The payment address. If not specified the address is read from STDIN."
+        )
+        (
+            "ALGORITHM",
+            value<primitives::algorithm>(&argument_.algorithm),
+            "The algorithm for unspent output selection."
         );
 
         return options;
@@ -226,6 +233,23 @@ public:
     }
 
     /**
+     * Get the value of the ALGORITHM argument.
+     */
+    virtual primitives::algorithm& get_algorithm_argument()
+    {
+        return argument_.algorithm;
+    }
+
+    /**
+     * Set the value of the ALGORITHM argument.
+     */
+    virtual void set_algorithm_argument(
+        const primitives::algorithm& value)
+    {
+        argument_.algorithm = value;
+    }
+
+    /**
      * Get the value of the format option.
      */
     virtual primitives::encoding& get_format_option()
@@ -253,12 +277,14 @@ private:
     {
         argument()
           : satoshi(),
-            payment_address()
+            payment_address(),
+            algorithm()
         {
         }
 
         uint64_t satoshi;
         bc::wallet::payment_address payment_address;
+        primitives::algorithm algorithm;
     } argument_;
 
     /**
