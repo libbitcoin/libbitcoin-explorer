@@ -118,6 +118,7 @@
 #include <bitcoin/explorer/commands/wrap-decode.hpp>
 #include <bitcoin/explorer/commands/wrap-encode.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/algorithm.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>

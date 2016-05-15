@@ -30,6 +30,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/algorithm.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>

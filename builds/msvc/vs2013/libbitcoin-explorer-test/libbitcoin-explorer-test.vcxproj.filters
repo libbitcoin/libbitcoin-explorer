@@ -153,7 +153,7 @@
       <Filter>src\tests\commands\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-utxo.cpp">
-      <Filter>src\tests\commands\stub</Filter>
+      <Filter>src\tests\commands\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\hd-new.cpp">
       <Filter>src\tests\commands</Filter>
