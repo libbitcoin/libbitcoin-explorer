@@ -177,7 +177,7 @@
       <Filter>include\bitcoin\explorer\commands\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-utxo.hpp">
-      <Filter>include\bitcoin\explorer\commands\stub</Filter>
+      <Filter>include\bitcoin\explorer\commands\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\hd-new.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
@@ -566,7 +566,7 @@
       <Filter>src\commands\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\fetch-utxo.cpp">
-      <Filter>src\commands\stub</Filter>
+      <Filter>src\commands\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\hd-new.cpp">
       <Filter>src\commands</Filter>

@@ -74,6 +74,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
 
     // The v3 client API works with and normalizes either server API.
     //// client.address_fetch_history(on_error, on_done, address);
+    /* client.address_fetch_history2(on_error, on_done, address); */
     client.address_fetch_history2(on_error, on_done, address);
     client.wait();
 

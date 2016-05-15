@@ -134,6 +134,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp \
     src/primitives/address.cpp \
+    src/primitives/algorithm.cpp \
     src/primitives/base16.cpp \
     src/primitives/base2.cpp \
     src/primitives/base58.cpp \
@@ -403,6 +404,7 @@ include_bitcoin_explorer_impl_HEADERS = \
 include_bitcoin_explorer_primitivesdir = ${includedir}/bitcoin/explorer/primitives
 include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/address.hpp \
+    include/bitcoin/explorer/primitives/algorithm.hpp \
     include/bitcoin/explorer/primitives/base16.hpp \
     include/bitcoin/explorer/primitives/base2.hpp \
     include/bitcoin/explorer/primitives/base58.hpp \
