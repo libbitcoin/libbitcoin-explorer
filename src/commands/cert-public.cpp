@@ -20,17 +20,16 @@
 #include <bitcoin/explorer/commands/cert-public.hpp>
 
 #include <boost/format.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/protocol.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/utility.hpp>
-#include <czmq++/czmqpp.hpp>
 
-using namespace czmqpp;
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::explorer::primitives;
+using namespace bc::protocol;
 
 // CZMQ only has a file system interface, otherwise would send to stdout.
 console_result cert_public::invoke(std::ostream& output, std::ostream& error)
@@ -41,8 +40,9 @@ console_result cert_public::invoke(std::ostream& output, std::ostream& error)
     const auto& metadata = get_metadatas_option();
 
     // Create a new Curve ZMQ certificate.
-    auto cert = certificate(private_cert.string());
-    if (!cert.valid())
+    zmq::certificate cert(private_cert.string());
+
+    if (!cert)
     {
         error << format(BX_CERT_PUBLIC_INVALID) % private_cert << std::endl;
         return console_result::failure;

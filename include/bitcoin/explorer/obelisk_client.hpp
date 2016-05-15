@@ -22,7 +22,6 @@
 
 #include <cstdint>
 #include <boost/filesystem.hpp>
-#include <czmq++/czmqpp.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
@@ -33,8 +32,8 @@ namespace explorer {
 
 static BC_CONSTEXPR int zmq_success = 0;
 
+/// This class hides all libbitcoin-protocol.
 /// Class to simplify obelisk/libbitcoin-server usage. 
-/// This class hides *all* use of czmqpp/czmq/zmq/libsodium.
 class BCX_API obelisk_client
   : public client::proxy
 {
@@ -42,12 +41,12 @@ public:
     obelisk_client(const connection_type& channel);
     obelisk_client(uint16_t timeout_seconds, uint8_t retries);
 
-    virtual bool connect(const bc::config::endpoint& address);
+    virtual bool connect(const config::endpoint& address);
 
-    virtual bool connect(const bc::config::endpoint& address,
+    virtual bool connect(const config::endpoint& address,
         const primitives::cert_key& server_public_cert);
 
-    virtual bool connect(const bc::config::endpoint& address,
+    virtual bool connect(const config::endpoint& address,
         const primitives::cert_key& server_public_cert,
         const boost::filesystem::path& client_private_cert_path);
 
@@ -60,10 +59,10 @@ public:
     void monitor(uint32_t timeout_seconds);
 
 private:
-    czmqpp::context context_;
-    czmqpp::socket socket_;
-    czmqpp::certificate certificate_;
-    czmqpp::authenticator authenticate_;
+    protocol::zmq::context context_;
+    protocol::zmq::socket socket_;
+    protocol::zmq::certificate certificate_;
+    protocol::zmq::authenticator authenticate_;
     client::socket_stream stream_;
     const uint8_t retries_;
 };
