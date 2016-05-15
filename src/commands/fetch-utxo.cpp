@@ -27,6 +27,7 @@
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
+#include <bitcoin/explorer/primitives/algorithm.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -39,6 +40,7 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
     const auto& encoding = get_format_option();
     const auto& address = get_payment_address_argument();
     const auto satoshi = get_satoshi_argument();
+    const auto algorithm = get_algorithm_argument();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection);
@@ -54,17 +56,8 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, address, satoshi, json](
-        const client::history_list& rows)
+    auto on_done = [&state, json](const bc::chain::points_info& selected_utxos)
     {
-        chain::output_info::list unspent;
-        for(auto& row : rows)
-            if (row.spend.hash == null_hash)
-                unspent.push_back({row.output, row.value});
-
-        chain::points_info selected_utxos;
-        wallet::select_outputs::select(selected_utxos, unspent, satoshi);
-
         state.output(prop_tree(selected_utxos, json));
     };
 
@@ -73,7 +66,8 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.address_fetch_history(on_error, on_done, address);
+    client.address_fetch_unspent_outputs(
+        on_error, on_done, address, satoshi, algorithm);
     client.wait();
 
     return state.get_result();

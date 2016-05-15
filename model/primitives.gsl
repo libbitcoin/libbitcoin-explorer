@@ -15,6 +15,7 @@ function global.map_type(type)
 
     # Local type constants.
     my.type_address = "address"
+    my.type_algorithm = "algorithm"
     my.type_bool = "bool"
     my.type_base16 = "base16"
     my.type_base2 = "base2"
@@ -57,6 +58,7 @@ function global.map_type(type)
     my.type_wrapper = "wrapper"
 
     my.type_address_bx = "primitives::address"
+    my.type_algorithm_bx = "primitives::algorithm"
     my.type_base16_bx = "primitives::base16"
     my.type_base2_bx = "primitives::base2"
     my.type_base58_bx = "primitives::base58"
@@ -99,6 +101,8 @@ function global.map_type(type)
 
     if my.type = my.type_address
         return my.type_address_bx
+    elsif my.type = my.type_algorithm
+        return my.type_algorithm_bx
     elsif my.type = my.type_base16
         return my.type_base16_bx
     elsif my.type = my.type_base2
@@ -246,6 +250,7 @@ endfunction
 .
 .macro global.primitives
 #include <bitcoin/explorer/primitives/address.hpp>
+#include <bitcoin/explorer/primitives/algorithm.hpp>
 #include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/base2.hpp>
 #include <bitcoin/explorer/primitives/base58.hpp>

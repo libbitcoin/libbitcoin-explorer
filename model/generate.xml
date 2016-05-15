@@ -308,6 +308,7 @@
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="SATOSHI" type="uint64_t" required="true" description="The whole number of satoshi." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
+    <argument name="ALGORITHM" type="algorithm" description="The algorithm for unspent output selection." />
   </command>
 
   <command symbol="hd-new" formerly="hd-seed" output="hd_private" category="WALLET" description="Create a new HD (BIP32) private key from entropy.">
