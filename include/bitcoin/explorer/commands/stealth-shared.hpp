@@ -129,6 +129,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_pubkey_argument(), "PUBKEY", variables, input, raw);
     }
 
     /**
@@ -158,8 +160,8 @@ public:
         )
         (
             "PUBKEY",
-            value<bc::wallet::ec_public>(&argument_.pubkey)->required(),
-            "A Base16 EC public key. Either the scan or ephemeral public key."
+            value<bc::wallet::ec_public>(&argument_.pubkey),
+            "A Base16 EC public key. Either the scan or ephemeral public key. If not specified the key is read from STDIN."
         );
 
         return options;

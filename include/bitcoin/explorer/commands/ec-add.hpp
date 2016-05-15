@@ -129,6 +129,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_secret_argument(), "SECRET", variables, input, raw);
     }
 
     /**
@@ -158,8 +160,8 @@ public:
         )
         (
             "SECRET",
-            value<primitives::ec_private>(&argument_.secret)->required(),
-            "The Base16 EC secret to add."
+            value<primitives::ec_private>(&argument_.secret),
+            "The Base16 EC secret to add. If not specified the secret is read from STDIN."
         );
 
         return options;

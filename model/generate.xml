@@ -143,22 +143,24 @@
   </command>
 
   <command symbol="cert-new" category="MATH" description="Create a private Curve ZMQ certificate for use with a Libbitcoin/Obelisk server. WARNING: entropy is obtained from the underlying platform.">
-    <argument name="PRIVATE_CERT" required="true" type="path" description="The path to write the certificate file." />
     <option name="metadata" type="string" multiple="true" description="The set of name-value pairs to add as metadata to the certificate, encoded as NAME:VALUE." />
+    <argument name="PRIVATE_CERT" required="true" type="path" description="The path to write the certificate file." />
     <define name="BX_CERT_NEW_SAVE_FAIL" value="Failed to save certificate file: %1%." />
   </command>
 
+  <!-- TODO: document change of secret to stdin. -->
   <command symbol="cert-public" category="MATH" description="Create a derived public Curve ZMQ certificate for use with a Libbitcoin/Obelisk server.">
+    <option name="metadata" type="string" multiple="true" description="The set of name-value pairs to add as metadata to the new certificate, encoded as NAME:VALUE." />
     <argument name="PRIVATE_CERT" required="true" type="path" description="The path to read the private certificate file." />
     <argument name="PUBLIC_CERT" required="true" type="path" description="The path to write the public certificate file." />
-    <option name="metadata" type="string" multiple="true" description="The set of name-value pairs to add as metadata to the new certificate, encoded as NAME:VALUE." />
     <define name="BX_CERT_PUBLIC_INVALID" value="Certificate is not valid: %1%." />
     <define name="BX_CERT_PUBLIC_SAVE_FAIL" value="Failed to save certificate file: %1%." />
   </command>
    
+  <!-- TODO: document change of secret to stdin. -->
   <command symbol="ec-add" output="ec_public" category="MATH" description="Calculate the EC function POINT + (SECRET * curve-generator-point).">
     <argument name="POINT" required="true" type="ec_public" description="The Base16 EC point to add."/>
-    <argument name="SECRET" required="true" type="ec_private" description="The Base16 EC secret to add."/>
+    <argument name="SECRET" stdin="true" type="ec_private" description="The Base16 EC secret to add. If not specified the secret is read from STDIN."/>
     <define name="BX_EC_ADD_OUT_OF_RANGE" value="Function exceeds valid range." />
   </command>
 
@@ -167,9 +169,10 @@
     <define name="BX_EC_ADD_SECRETS_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
 
+  <!-- TODO: document change of secret to stdin. -->
   <command symbol="ec-multiply" output="ec_public" category="MATH" description="Calculate the EC product (POINT * SECRET).">
     <argument name="POINT" required="true" type="ec_public" description="The Base16 EC point to multiply."/>
-    <argument name="SECRET" required="true" type="ec_private" description="The Base16 EC secret to multiply."/>
+    <argument name="SECRET" stdin="true" type="ec_private" description="The Base16 EC secret to multiply. If not specified the secret is read from STDIN."/>
     <define name="BX_EC_MULITPLY_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
   
@@ -423,7 +426,6 @@
   </command>
 
   <command symbol="qrcode" category="WALLET" output="raw" description="Create a QRCODE image file for a payment address.">
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" required="true" description="The payment address. If not specified the address is read from STDIN."/>
     <option name="density" type="uint32_t" default="72" description="The pixels per inch of the QRCODE, defaults to 72." />
     <option name="insensitive" description="Do not use use sensitivity." />
     <option name="module_size" type="uint32_t" default="8" description="The module size in pixels of the QRCODE, defaults to 8." />
@@ -431,6 +433,7 @@
     <option name="png" description="Write the QRCODE in PNG file format." />
     <option name="scheme" type="string" default="bitcoin" description="The URI scheme of the QRCODE data, defaults to bitcoin." />
     <option name="version" type="uint32_t" description="The version of the QRCODE." />
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" required="true" description="The payment address. If not specified the address is read from STDIN."/>
     <define name="BX_QRCODE_REQUIRES_QRENCODE" value="The command requires a QRENCODE build." />
     <define name="BX_QRCODE_REQUIRES_PNG" value="The command requires a PNG build." />
     <define name="BX_QRCODE_WRITE_ERROR" value="Error writing encoded data." />
@@ -524,9 +527,10 @@
     <define name="BX_STEALTH_SECRET_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
 
+  <!-- TODO: document change of PUBKEY to stdin. -->
   <command symbol="stealth-shared" output="ec_private" category="STEALTH" description="Derive the secret shared between an ephemeral key pair and a scan key pair. Provide scan SECRET and ephemeral PUBKEY, or ephemeral SECRET and scan PUBKEY.">
     <argument name="SECRET" required="true" type="ec_private" description="A Base16 EC private key. Either the scan or ephemeral secret." />
-    <argument name="PUBKEY" required="true" type="ec_public" description="A Base16 EC public key. Either the scan or ephemeral public key." />
+    <argument name="PUBKEY" stdin="true" type="ec_public" description="A Base16 EC public key. Either the scan or ephemeral public key. If not specified the key is read from STDIN." />
     <define name="BX_STEALTH_SHARED_OUT_OF_RANGE" value="Product exceeds valid range." />
   </command>
 
@@ -566,7 +570,7 @@
   
   <command symbol="uri-decode" output="uri" category="WALLET" description="Decompose a Bitcoin URI into its parts.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="URI" type="uri" stdin="true"  description="The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN." />
+    <argument name="URI" type="uri" stdin="true" description="The Bitcoin URI to decode. The URI should be quoted when entered on the command line. If not specified the URI is read from STDIN." />
   </command>
   
   <command symbol="uri-encode" output="uri" category="WALLET" description="Compose a Bitcoin URI from specified parts.">
