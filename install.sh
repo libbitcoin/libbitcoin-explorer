@@ -238,11 +238,6 @@ CZMQ_OPTIONS=(
 "--disable-czmq_selftest" \
 "${with_pkgconfigdir}")
 
-# Define czmqpp options.
-#------------------------------------------------------------------------------
-CZMQPP_OPTIONS=(
-"${with_pkgconfigdir}")
-
 # Define secp256k1 options.
 #------------------------------------------------------------------------------
 SECP256K1_OPTIONS=(
@@ -252,6 +247,14 @@ SECP256K1_OPTIONS=(
 # Define bitcoin options.
 #------------------------------------------------------------------------------
 BITCOIN_OPTIONS=(
+"--without-tests" \
+"--without-examples" \
+"${with_boost}" \
+"${with_pkgconfigdir}")
+
+# Define bitcoin-protocol options.
+#------------------------------------------------------------------------------
+BITCOIN_PROTOCOL_OPTIONS=(
 "--without-tests" \
 "--without-examples" \
 "${with_boost}" \
@@ -731,9 +734,9 @@ build_all()
     build_from_tarball_boost $BOOST_URL $BOOST_ARCHIVE bzip2 . $PARALLEL "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
     build_from_github zeromq libzmq master $PARALLEL ${ZMQ_OPTIONS[@]} "$@"
     build_from_github zeromq czmq master $PARALLEL ${CZMQ_OPTIONS[@]} "$@"
-    build_from_github zeromq czmqpp master $PARALLEL ${CZMQPP_OPTIONS[@]} "$@"
     build_from_github libbitcoin secp256k1 version4 $PARALLEL ${SECP256K1_OPTIONS[@]} "$@"
     build_from_github libbitcoin libbitcoin master $PARALLEL ${BITCOIN_OPTIONS[@]} "$@"
+    build_from_github libbitcoin libbitcoin-protocol master $PARALLEL ${BITCOIN_PROTOCOL_OPTIONS[@]} "$@"
     build_from_github libbitcoin libbitcoin-client master $PARALLEL ${BITCOIN_CLIENT_OPTIONS[@]} "$@"
     build_from_github libbitcoin libbitcoin-network master $PARALLEL ${BITCOIN_NETWORK_OPTIONS[@]} "$@"
     build_from_travis libbitcoin libbitcoin-explorer master $PARALLEL ${BITCOIN_EXPLORER_OPTIONS[@]} "$@"

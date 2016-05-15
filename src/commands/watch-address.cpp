@@ -23,7 +23,6 @@
 #include <csignal>
 #include <cstddef>
 #include <iostream>
-#include <czmq++/czmqpp.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
