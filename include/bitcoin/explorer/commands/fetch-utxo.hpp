@@ -118,7 +118,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("satoshi", 1)
+            .add("SATOSHI", 1)
             .add("PAYMENT_ADDRESS", 1);
     }
 
@@ -165,7 +165,7 @@ public:
             "The algorithm for unspent output selection. Options are 'greedy', defaults to 'greedy'"
         )
         (
-            "satoshi",
+            "SATOSHI",
             value<uint64_t>(&argument_.satoshi)->required(),
             "The whole number of satoshi."
         )
@@ -198,7 +198,7 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the satoshi argument.
+     * Get the value of the SATOSHI argument.
      */
     virtual uint64_t& get_satoshi_argument()
     {
@@ -206,7 +206,7 @@ public:
     }
 
     /**
-     * Set the value of the satoshi argument.
+     * Set the value of the SATOSHI argument.
      */
     virtual void set_satoshi_argument(
         const uint64_t& value)
