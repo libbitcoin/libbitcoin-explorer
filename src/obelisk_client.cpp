@@ -38,7 +38,6 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-static constexpr uint8_t resends = 0;
 static BC_CONSTFUNC uint32_t sec_to_ms(uint32_t seconds)
 {
     return seconds * 1000;
@@ -46,12 +45,13 @@ static BC_CONSTFUNC uint32_t sec_to_ms(uint32_t seconds)
 
 static const auto on_unknown = [](const std::string&){};
 
+// Retries is overloaded as configuration for retries as well.
 obelisk_client::obelisk_client(uint16_t timeout_seconds, uint8_t retries)
   : socket_(context_, ZMQ_DEALER),
     authenticate_(context_),
     stream_(socket_),
     retries_(retries),
-    proxy(stream_, on_unknown, sec_to_ms(timeout_seconds), resends)
+    proxy(stream_, on_unknown, sec_to_ms(timeout_seconds), retries)
 {
     BITCOIN_ASSERT(socket_.self() != nullptr);
 }
