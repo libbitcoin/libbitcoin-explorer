@@ -118,9 +118,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SATOSHI", 1)
-            .add("PAYMENT_ADDRESS", 1)
-            .add("ALGORITHM", 1);
+            .add("satoshi", 1)
+            .add("PAYMENT_ADDRESS", 1);
     }
 
 	/**
@@ -161,7 +160,12 @@ public:
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "SATOSHI",
+            "algorithm,a",
+            value<primitives::algorithm>(&option_.algorithm),
+            "The algorithm for unspent output selection. Options are 'greedy', defaults to 'greedy'"
+        )
+        (
+            "satoshi",
             value<uint64_t>(&argument_.satoshi)->required(),
             "The whole number of satoshi."
         )
@@ -169,11 +173,6 @@ public:
             "PAYMENT_ADDRESS",
             value<bc::wallet::payment_address>(&argument_.payment_address),
             "The payment address. If not specified the address is read from STDIN."
-        )
-        (
-            "ALGORITHM",
-            value<primitives::algorithm>(&argument_.algorithm),
-            "The algorithm for unspent output selection."
         );
 
         return options;
@@ -199,7 +198,7 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SATOSHI argument.
+     * Get the value of the satoshi argument.
      */
     virtual uint64_t& get_satoshi_argument()
     {
@@ -207,7 +206,7 @@ public:
     }
 
     /**
-     * Set the value of the SATOSHI argument.
+     * Set the value of the satoshi argument.
      */
     virtual void set_satoshi_argument(
         const uint64_t& value)
@@ -233,23 +232,6 @@ public:
     }
 
     /**
-     * Get the value of the ALGORITHM argument.
-     */
-    virtual primitives::algorithm& get_algorithm_argument()
-    {
-        return argument_.algorithm;
-    }
-
-    /**
-     * Set the value of the ALGORITHM argument.
-     */
-    virtual void set_algorithm_argument(
-        const primitives::algorithm& value)
-    {
-        argument_.algorithm = value;
-    }
-
-    /**
      * Get the value of the format option.
      */
     virtual primitives::encoding& get_format_option()
@@ -266,6 +248,23 @@ public:
         option_.format = value;
     }
 
+    /**
+     * Get the value of the algorithm option.
+     */
+    virtual primitives::algorithm& get_algorithm_option()
+    {
+        return option_.algorithm;
+    }
+
+    /**
+     * Set the value of the algorithm option.
+     */
+    virtual void set_algorithm_option(
+        const primitives::algorithm& value)
+    {
+        option_.algorithm = value;
+    }
+
 private:
 
     /**
@@ -277,14 +276,12 @@ private:
     {
         argument()
           : satoshi(),
-            payment_address(),
-            algorithm()
+            payment_address()
         {
         }
 
         uint64_t satoshi;
         bc::wallet::payment_address payment_address;
-        primitives::algorithm algorithm;
     } argument_;
 
     /**
@@ -295,11 +292,13 @@ private:
     struct option
     {
         option()
-          : format()
+          : format(),
+            algorithm()
         {
         }
 
         primitives::encoding format;
+        primitives::algorithm algorithm;
     } option_;
 };
 

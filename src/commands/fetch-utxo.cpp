@@ -38,9 +38,9 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& address = get_payment_address_argument();
+    const auto algorithm = get_algorithm_option();
     const auto satoshi = get_satoshi_argument();
-    const auto algorithm = get_algorithm_argument();
+    const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection);
