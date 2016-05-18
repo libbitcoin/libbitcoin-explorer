@@ -54,8 +54,9 @@
     <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk server." />
     <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint16_t" description="The time limit for connection establishment, defaults to 5." />
-    <setting name="server_certificate_key" type="cert_key" description="The Z85-encoded public key of the server certificate." />
-    <setting name="client_certificate_file" type="path" description="The path to the ZPL-encoded client private certificate file." />
+    <!-- TODO: change cert primitive (unused) to key primitive and use here and in cert-public command in place of string type. -->
+    <setting name="server_public_key" type="string" description="The Z85-encoded public key of the server." />
+    <setting name="client_private_key" type="string" description="The Z85-encoded private key of the client." />
   </configuration>
 
   <!-- General resources. -->
@@ -142,19 +143,15 @@
     <argument name="BTC" stdin="true" type="btc" description="The number of BTC to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="cert-new" category="MATH" description="Create a private Curve ZMQ certificate for use with a Libbitcoin/Obelisk server. WARNING: entropy is obtained from the underlying platform.">
-    <option name="metadata" type="string" multiple="true" description="The set of name-value pairs to add as metadata to the certificate, encoded as NAME:VALUE." />
-    <argument name="PRIVATE_CERT" required="true" type="path" description="The path to write the certificate file." />
-    <define name="BX_CERT_NEW_SAVE_FAIL" value="Failed to save certificate file: %1%." />
+  <!-- TODO: document compatability break from v2.x to v3.0. -->
+  <command symbol="cert-new" category="MATH" description="Create a Curve ZMQ private key for use with a Libbitcoin/Obelisk server. WARNING: entropy is obtained from the underlying platform.">
+    <define name="BX_CERT_NEW_FAILURE" value="The key generation failed." />
   </command>
 
-  <!-- TODO: document change of secret to stdin. -->
-  <command symbol="cert-public" category="MATH" description="Create a derived public Curve ZMQ certificate for use with a Libbitcoin/Obelisk server.">
-    <option name="metadata" type="string" multiple="true" description="The set of name-value pairs to add as metadata to the new certificate, encoded as NAME:VALUE." />
-    <argument name="PRIVATE_CERT" required="true" type="path" description="The path to read the private certificate file." />
-    <argument name="PUBLIC_CERT" required="true" type="path" description="The path to write the public certificate file." />
-    <define name="BX_CERT_PUBLIC_INVALID" value="Certificate is not valid: %1%." />
-    <define name="BX_CERT_PUBLIC_SAVE_FAIL" value="Failed to save certificate file: %1%." />
+  <!-- TODO: document compatability break from v2.x to v3.0. -->
+  <command symbol="cert-public" category="MATH" description="Derive a Curve ZMQ public key for use with a Libbitcoin/Obelisk server.">
+    <argument name="PRIVATE_KEY" stdin="true" description="The private key from which to derive the public key." />
+    <define name="BX_CERT_PUBLIC_INVALID" value="The private key is not valid." />
   </command>
    
   <!-- TODO: document change of secret to stdin. -->
@@ -483,6 +480,7 @@
     <define name="BX_SEND_TX_P2P_OUTPUT" value="Sent transaction at %1%." />
   </command>
   
+  <!-- TODO: update documentation for settings changes in 3.0. -->
   <command symbol="settings" output="string" multipleX="true" category="META" description="Display the loaded configuration settings.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />  
   </command>

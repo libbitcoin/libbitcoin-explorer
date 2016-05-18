@@ -286,14 +286,14 @@ public:
             "The time limit for connection establishment, defaults to 5."
         )
         (
-            "server.server_certificate_key",
-            value<primitives::cert_key>(&setting_.server.server_certificate_key),
-            "The Z85-encoded public key of the server certificate."
+            "server.server_public_key",
+            value<std::string>(&setting_.server.server_public_key),
+            "The Z85-encoded public key of the server."
         )
         (
-            "server.client_certificate_file",
-            value<boost::filesystem::path>(&setting_.server.client_certificate_file),
-            "The path to the ZPL-encoded client private certificate file."
+            "server.client_private_key",
+            value<std::string>(&setting_.server.client_private_key),
+            "The Z85-encoded private key of the client."
         );
     }
 
@@ -619,35 +619,35 @@ public:
     }
 
     /**
-     * Get the value of the server.server_certificate_key setting.
+     * Get the value of the server.server_public_key setting.
      */
-    virtual primitives::cert_key get_server_server_certificate_key_setting() const
+    virtual std::string get_server_server_public_key_setting() const
     {
-        return setting_.server.server_certificate_key;
+        return setting_.server.server_public_key;
     }
 
     /**
-     * Set the value of the server.server_certificate_key setting.
+     * Set the value of the server.server_public_key setting.
      */
-    virtual void set_server_server_certificate_key_setting(primitives::cert_key value)
+    virtual void set_server_server_public_key_setting(std::string value)
     {
-        setting_.server.server_certificate_key = value;
+        setting_.server.server_public_key = value;
     }
 
     /**
-     * Get the value of the server.client_certificate_file setting.
+     * Get the value of the server.client_private_key setting.
      */
-    virtual boost::filesystem::path get_server_client_certificate_file_setting() const
+    virtual std::string get_server_client_private_key_setting() const
     {
-        return setting_.server.client_certificate_file;
+        return setting_.server.client_private_key;
     }
 
     /**
-     * Set the value of the server.client_certificate_file setting.
+     * Set the value of the server.client_private_key setting.
      */
-    virtual void set_server_client_certificate_file_setting(boost::filesystem::path value)
+    virtual void set_server_client_private_key_setting(std::string value)
     {
-        setting_.server.client_certificate_file = value;
+        setting_.server.client_private_key = value;
     }
 
 protected:
@@ -742,16 +742,16 @@ private:
               : url(),
                 connect_retries(),
                 connect_timeout_seconds(),
-                server_certificate_key(),
-                client_certificate_file()
+                server_public_key(),
+                client_private_key()
             {
             }
 
             bc::config::endpoint url;
             primitives::byte connect_retries;
             uint16_t connect_timeout_seconds;
-            primitives::cert_key server_certificate_key;
-            boost::filesystem::path client_certificate_file;
+            std::string server_public_key;
+            std::string client_private_key;
         } server;
 
         setting()

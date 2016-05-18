@@ -25,15 +25,14 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(cert_new__invoke)
 
-// Because zcert doesn't support cert streaming, and we can't add arbitrary
-// virutal methods to generated command headers, we have a test limitation.
+// Because this uses interal random generation we cannot test value result.
 
-BOOST_AUTO_TEST_CASE(cert_new__invoke__invalid_path__okay_output)
+// TODO: update this once certificate construction is implemented.
+BOOST_AUTO_TEST_CASE(cert_new__invoke__always__failure_error)
 {
     BX_DECLARE_COMMAND(cert_new);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    const auto message = format(BX_CERT_NEW_SAVE_FAIL) % "\"\"";
-    BX_REQUIRE_ERROR(message.str() + "\n");
+    BX_REQUIRE_ERROR(BX_CERT_NEW_FAILURE "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

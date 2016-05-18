@@ -65,8 +65,8 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_CERT_NEW_SAVE_FAIL \
-    "Failed to save certificate file: %1%."
+#define BX_CERT_NEW_FAILURE \
+    "The key generation failed."
 
 /**
  * Class to implement the cert-new command.
@@ -106,7 +106,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a private Curve ZMQ certificate for use with a Libbitcoin/Obelisk server. WARNING: entropy is obtained from the underlying platform.";
+        return "Create a Curve ZMQ private key for use with a Libbitcoin/Obelisk server. WARNING: entropy is obtained from the underlying platform.";
     }
 
     /**
@@ -116,8 +116,7 @@ public:
      */
     virtual arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("PRIVATE_CERT", 1);
+        return get_argument_metadata();
     }
 
 	/**
@@ -149,16 +148,6 @@ public:
             BX_CONFIG_VARIABLE ",c",
             value<boost::filesystem::path>(),
             "The path to the configuration settings file."
-        )
-        (
-            "metadata,m",
-            value<std::vector<std::string>>(&option_.metadatas),
-            "The set of name-value pairs to add as metadata to the certificate, encoded as NAME:VALUE."
-        )
-        (
-            "PRIVATE_CERT",
-            value<boost::filesystem::path>(&argument_.private_cert)->required(),
-            "The path to write the certificate file."
         );
 
         return options;
@@ -183,40 +172,6 @@ public:
 
     /* Properties */
 
-    /**
-     * Get the value of the PRIVATE_CERT argument.
-     */
-    virtual boost::filesystem::path& get_private_cert_argument()
-    {
-        return argument_.private_cert;
-    }
-
-    /**
-     * Set the value of the PRIVATE_CERT argument.
-     */
-    virtual void set_private_cert_argument(
-        const boost::filesystem::path& value)
-    {
-        argument_.private_cert = value;
-    }
-
-    /**
-     * Get the value of the metadata options.
-     */
-    virtual std::vector<std::string>& get_metadatas_option()
-    {
-        return option_.metadatas;
-    }
-
-    /**
-     * Set the value of the metadata options.
-     */
-    virtual void set_metadatas_option(
-        const std::vector<std::string>& value)
-    {
-        option_.metadatas = value;
-    }
-
 private:
 
     /**
@@ -227,11 +182,9 @@ private:
     struct argument
     {
         argument()
-          : private_cert()
         {
         }
 
-        boost::filesystem::path private_cert;
     } argument_;
 
     /**
@@ -242,11 +195,9 @@ private:
     struct option
     {
         option()
-          : metadatas()
         {
         }
 
-        std::vector<std::string> metadatas;
     } option_;
 };
 

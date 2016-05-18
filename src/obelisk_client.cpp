@@ -64,7 +64,8 @@ obelisk_client::obelisk_client(const connection_type& channel)
 
 bool obelisk_client::connect(const connection_type& channel)
 {
-    return connect(channel.server, channel.key, channel.cert_path);
+    return connect(channel.server, channel.server_public_key,
+        channel.client_private_key);
 }
 
 bool obelisk_client::connect(const endpoint& address)
@@ -85,39 +86,19 @@ bool obelisk_client::connect(const endpoint& address)
 }
 
 bool obelisk_client::connect(const endpoint& address,
-    const cert_key& server_public_cert)
+    const std::string& server_public_key,
+    const std::string& client_private_key)
 {
-    const auto server_key = server_public_cert.get_base85();
-
-    if (!server_key.empty())
+    if (!server_public_key.empty())
     {
-        // If there is no cert loaded this uses the generated one.
-        socket_.set_certificate(certificate_);
-        socket_.set_curve_client(server_key);
+        socket_.set_curve_client(server_public_key);
+
+        // Only apply the client cert if the server key is configured.
+        if (!client_private_key.empty())
+            socket_.set_private_key(client_private_key);
     }
 
     return connect(address);
-}
-
-bool obelisk_client::connect(const endpoint& address,
-    const cert_key& server_public_cert, const path& client_private_cert_path)
-{
-    const auto server_key = server_public_cert.get_base85();
-    const auto cert_path = client_private_cert_path.string();
-
-    // Only apply the client cert if the server key is configured.
-    // This allows connections where neither is required, which is okay.
-    if (!cert_path.empty() && !server_key.empty())
-    {
-        certificate_.load(cert_path);
-
-        if (!certificate_)
-            return false;
-
-        socket_.set_certificate(certificate_);
-    }
-
-    return connect(address, server_public_cert);
 }
 
 // Used by fetch-* commands, fires reply, unknown or error handlers.

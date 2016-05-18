@@ -66,9 +66,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_CERT_PUBLIC_INVALID \
-    "Certificate is not valid: %1%."
-#define BX_CERT_PUBLIC_SAVE_FAIL \
-    "Failed to save certificate file: %1%."
+    "The private key is not valid."
 
 /**
  * Class to implement the cert-public command.
@@ -108,7 +106,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a derived public Curve ZMQ certificate for use with a Libbitcoin/Obelisk server.";
+        return "Derive a Curve ZMQ public key for use with a Libbitcoin/Obelisk server.";
     }
 
     /**
@@ -119,8 +117,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PRIVATE_CERT", 1)
-            .add("PUBLIC_CERT", 1);
+            .add("PRIVATE_KEY", 1);
     }
 
 	/**
@@ -131,6 +128,8 @@ public:
     virtual void load_fallbacks(std::istream& input, 
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_private_key_argument(), "PRIVATE_KEY", variables, input, raw);
     }
 
     /**
@@ -154,19 +153,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "metadata,m",
-            value<std::vector<std::string>>(&option_.metadatas),
-            "The set of name-value pairs to add as metadata to the new certificate, encoded as NAME:VALUE."
-        )
-        (
-            "PRIVATE_CERT",
-            value<boost::filesystem::path>(&argument_.private_cert)->required(),
-            "The path to read the private certificate file."
-        )
-        (
-            "PUBLIC_CERT",
-            value<boost::filesystem::path>(&argument_.public_cert)->required(),
-            "The path to write the public certificate file."
+            "PRIVATE_KEY",
+            value<std::string>(&argument_.private_key),
+            "The private key from which to derive the public key."
         );
 
         return options;
@@ -192,54 +181,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PRIVATE_CERT argument.
+     * Get the value of the PRIVATE_KEY argument.
      */
-    virtual boost::filesystem::path& get_private_cert_argument()
+    virtual std::string& get_private_key_argument()
     {
-        return argument_.private_cert;
+        return argument_.private_key;
     }
 
     /**
-     * Set the value of the PRIVATE_CERT argument.
+     * Set the value of the PRIVATE_KEY argument.
      */
-    virtual void set_private_cert_argument(
-        const boost::filesystem::path& value)
+    virtual void set_private_key_argument(
+        const std::string& value)
     {
-        argument_.private_cert = value;
-    }
-
-    /**
-     * Get the value of the PUBLIC_CERT argument.
-     */
-    virtual boost::filesystem::path& get_public_cert_argument()
-    {
-        return argument_.public_cert;
-    }
-
-    /**
-     * Set the value of the PUBLIC_CERT argument.
-     */
-    virtual void set_public_cert_argument(
-        const boost::filesystem::path& value)
-    {
-        argument_.public_cert = value;
-    }
-
-    /**
-     * Get the value of the metadata options.
-     */
-    virtual std::vector<std::string>& get_metadatas_option()
-    {
-        return option_.metadatas;
-    }
-
-    /**
-     * Set the value of the metadata options.
-     */
-    virtual void set_metadatas_option(
-        const std::vector<std::string>& value)
-    {
-        option_.metadatas = value;
+        argument_.private_key = value;
     }
 
 private:
@@ -252,13 +207,11 @@ private:
     struct argument
     {
         argument()
-          : private_cert(),
-            public_cert()
+          : private_key()
         {
         }
 
-        boost::filesystem::path private_cert;
-        boost::filesystem::path public_cert;
+        std::string private_key;
     } argument_;
 
     /**
@@ -269,11 +222,9 @@ private:
     struct option
     {
         option()
-          : metadatas()
         {
         }
 
-        std::vector<std::string> metadatas;
     } option_;
 };
 

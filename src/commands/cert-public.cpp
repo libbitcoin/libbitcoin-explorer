@@ -19,47 +19,30 @@
  */
 #include <bitcoin/explorer/commands/cert-public.hpp>
 
-#include <boost/format.hpp>
 #include <bitcoin/protocol.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 using namespace bc::protocol;
 
 // CZMQ only has a file system interface, otherwise would send to stdout.
 console_result cert_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& private_cert = get_private_cert_argument();
-    const auto& public_cert = get_public_cert_argument();
-    const auto& metadata = get_metadatas_option();
+    const auto& private_key = get_private_key_argument();
 
-    // Create a new Curve ZMQ certificate.
-    zmq::certificate certificate(private_cert);
+    // Generate the public key from the private key (if valid).
+    zmq::certificate certificate(private_key);
 
     if (!certificate)
     {
-        error << format(BX_CERT_PUBLIC_INVALID) % private_cert << std::endl;
+        error << BX_CERT_PUBLIC_INVALID << std::endl;
         return console_result::failure;
     }
 
-    // Add optional name-value pairs metadata to certificate.
-    // Each only gets applied if no conflict with the original cert metadata.
-    for (const auto pair: split_pairs(metadata))
-        certificate.add_metadata(pair);
-
-    // The directory must exist, the file must not.
-    // Export the PUBLIC certificate to the specified file.
-    if (exists(public_cert) || !certificate.export_public(public_cert))
-    {
-        error << format(BX_CERT_PUBLIC_SAVE_FAIL) % public_cert << std::endl;
-        return console_result::failure;
-    }
-
+    output << certificate.public_key() << std::endl;
     return console_result::okay;
 }
