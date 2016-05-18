@@ -224,9 +224,6 @@ The required set of NuGet packages can be viewed using the [NuGet package manage
    * [boost\_thread-vc120](http://www.nuget.org/packages/boost_thread-vc120)
    * [boost\_unit\_test\_framework-vc120](http://www.nuget.org/packages/boost_unit_test_framework-vc120)
 * Packages maintained by [evoskuil](http://www.nuget.org/profiles/evoskuil)
-   * [czmq\_vc120](http://www.nuget.org/packages/czmq_vc120)
-   * [czmqpp\_vc120](http://www.nuget.org/packages/czmqpp_vc120)
-   * [libsodium\_vc120](http://www.nuget.org/packages/libsodium_vc120)
    * [libzmq\_vc120](http://www.nuget.org/packages/libzmq_vc120)
    * [secp256k1\_vc120](http://www.nuget.org/packages/secp256k1_vc120)
 
@@ -252,12 +249,9 @@ Configuration options are exposed in the Visual Studio property pages.
 The non-boost packages above are all sourced from GitHub repositories maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as the libbitcoin libraries. If so desired each of these can be built locally, in the same manner as the libbitcoin libraries above. This allows you to avoid using the pre-built NuGet packages. The repositories for each dependency are as follows:
 
 * Cryptography
-   * [jedisct1/libsodium](https://github.com/jedisct1/libsodium)
    * [libbitcoin/secp256k1](https://github.com/libbitcoin/secp256k1)
 * Zero Message Queue
    * [zeromq/libzmq](https://github.com/zeromq/libzmq)
-   * [zeromq/czmq](https://github.com/zeromq/czmq)
-   * [zeromq/czmqpp](https://github.com/zeromq/czmqpp)
 
 This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface for each libbitcoin project and then importing the `.import.props` file(s) for the corresponding dependencies.
 
