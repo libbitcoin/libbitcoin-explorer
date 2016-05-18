@@ -54,7 +54,7 @@ obelisk_client::obelisk_client(uint16_t timeout_seconds, uint8_t retries)
     retries_(retries),
     proxy(stream_, on_unknown, seconds_to_micro(timeout_seconds), retries)
 {
-    BITCOIN_ASSERT(socket_.self() != nullptr);
+    BITCOIN_ASSERT((bool)socket_);
 }
 
 obelisk_client::obelisk_client(const connection_type& channel)
@@ -75,7 +75,7 @@ bool obelisk_client::connect(const endpoint& address)
 
     for (auto attempt = 0; attempt < 1 + retries_; ++attempt)
     {
-        if (!socket_.connect(host_address))
+        if (socket_.connect(host_address))
             return true;
 
         std::this_thread::sleep_for(delay);
