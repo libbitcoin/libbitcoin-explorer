@@ -289,8 +289,8 @@ A better configuration is to centralize the NuGet repository outside of your `gi
         +boost_system-vc120.1.56.0.0
         +boost_thread-vc120.1.56.0.0
         +boost_unit_test_framework-vc120.1.56.0.0
-        +libzmq_vc120.4.1.0.7
-        +secp256k1_vc120.0.1.0.3
+        +libzmq_vc120.4.2.2.0
+        +secp256k1_vc120.0.1.0.13
 ```
 
 If properly configured the NuGet Package Manager will share this NuGet repository across all solutions within the `git` directory. There are three steps required in this configuration:
