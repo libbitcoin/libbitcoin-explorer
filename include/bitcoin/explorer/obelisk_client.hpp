@@ -30,8 +30,6 @@
 namespace libbitcoin {
 namespace explorer {
 
-static BC_CONSTEXPR int zmq_success = 0;
-
 /// This class hides all libbitcoin-protocol.
 /// Class to simplify obelisk/libbitcoin-server usage. 
 class BCX_API obelisk_client

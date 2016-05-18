@@ -39,17 +39,16 @@ console_result cert_new::invoke(std::ostream& output, std::ostream& error)
     const auto& metadata = get_metadatas_option();
 
     // Create a new Curve ZMQ certificate.
-    zmq::certificate cert;
+    zmq::certificate certificate;
 
     // Add optional name-value pairs metadata to certificate.
     // These will be coppied to the public certificate by cert-public.
     for (const auto pair: split_pairs(metadata))
-        cert.set_meta(pair.first, pair.second);
+        certificate.add_metadata(pair.first, pair.second);
 
     // The directory must exist, the file must not.
     // Export the PRIVATE certificate to the specified file.
-    if (exists(private_cert) || 
-        cert.save_secret(private_cert.string()) != zmq_success)
+    if (exists(private_cert) || !certificate.export_secret(private_cert))
     {
         error << format(BX_CERT_NEW_SAVE_FAIL) % private_cert << std::endl;
         return console_result::failure;

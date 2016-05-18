@@ -38,20 +38,21 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-static BC_CONSTFUNC uint32_t sec_to_ms(uint32_t seconds)
+static BC_CONSTFUNC uint32_t seconds_to_micro(uint16_t seconds)
 {
-    return seconds * 1000;
+    // This cannot overflow uint32.
+    return seconds * 1000000;
 };
 
 static const auto on_unknown = [](const std::string&){};
 
 // Retries is overloaded as configuration for retries as well.
 obelisk_client::obelisk_client(uint16_t timeout_seconds, uint8_t retries)
-  : socket_(context_, ZMQ_DEALER),
+  : socket_(context_, zmq::socket::role::dealer),
     authenticate_(context_),
     stream_(socket_),
     retries_(retries),
-    proxy(stream_, on_unknown, sec_to_ms(timeout_seconds), retries)
+    proxy(stream_, on_unknown, seconds_to_micro(timeout_seconds), retries)
 {
     BITCOIN_ASSERT(socket_.self() != nullptr);
 }
@@ -74,7 +75,7 @@ bool obelisk_client::connect(const endpoint& address)
 
     for (auto attempt = 0; attempt < 1 + retries_; ++attempt)
     {
-        if (socket_.connect(host_address) == zmq_success)
+        if (!socket_.connect(host_address))
             return true;
 
         std::this_thread::sleep_for(delay);
@@ -90,12 +91,9 @@ bool obelisk_client::connect(const endpoint& address,
 
     if (!server_key.empty())
     {
-        // If there is no cert loaded this uses a generated one.
-        certificate_.apply(socket_);
-        socket_.set_curve_serverkey(server_key);
-
-        // TODO: make configurable.
-        authenticate_.set_verbose(true);
+        // If there is no cert loaded this uses the generated one.
+        socket_.set_certificate(certificate_);
+        socket_.set_curve_client(server_key);
     }
 
     return connect(address);
@@ -111,12 +109,12 @@ bool obelisk_client::connect(const endpoint& address,
     // This allows connections where neither is required, which is okay.
     if (!cert_path.empty() && !server_key.empty())
     {
-        certificate_.reset(cert_path);
+        certificate_.load(cert_path);
 
         if (!certificate_)
             return false;
 
-        certificate_.apply(socket_);
+        socket_.set_certificate(certificate_);
     }
 
     return connect(address, server_public_cert);
@@ -125,14 +123,17 @@ bool obelisk_client::connect(const endpoint& address,
 // Used by fetch-* commands, fires reply, unknown or error handlers.
 void obelisk_client::wait()
 {
-    zmq::poller poller(socket_);
-    auto remainder_ms = refresh();
+    const auto socket_id = socket_.id();
+
+    zmq::poller poller;
+    poller.add(socket_);
+    auto delay = refresh();
 
     while (!empty() && !poller.terminated() && !poller.expired() &&
-        poller.wait(remainder_ms) == socket_)
+        poller.wait(delay) == socket_id)
     {
         stream_.read(*this);
-        remainder_ms = refresh();
+        delay = refresh();
     }
 
     // Invoke error handlers for any still pending.
@@ -142,15 +143,18 @@ void obelisk_client::wait()
 // Used by watch-* commands, fires registered update or unknown handlers.
 void obelisk_client::monitor(uint32_t timeout_seconds)
 {
-    zmq::poller poller(socket_);
+    const auto socket_id = socket_.id();
     const auto deadline = steady_clock::now() + seconds(timeout_seconds);
-    auto remainder_ms = remaining(deadline);
+
+    zmq::poller poller;
+    poller.add(socket_);
+    auto delay = remaining(deadline);
 
     while (!poller.terminated() && !poller.expired() &&
-        poller.wait(remainder_ms) == socket_)
+        poller.wait(delay) == socket_id)
     {
         stream_.read(*this);
-        remainder_ms = remaining(deadline);
+        delay = remaining(deadline);
     }
 }
 
