@@ -31,7 +31,6 @@ using namespace bc::protocol;
 console_result cert_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Create a new Curve ZMQ certificate.
-    // TODO: inject seed via required command line argument.
     zmq::certificate certificate;
 
     if (!certificate)

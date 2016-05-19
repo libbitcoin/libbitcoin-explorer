@@ -35,19 +35,34 @@ BOOST_AUTO_TEST_CASE(cert_public__invoke__empty_private_key__failure_error)
 BOOST_AUTO_TEST_CASE(cert_public__invoke__bogus_private_key__failure_error)
 {
     BX_DECLARE_COMMAND(cert_public);
-    command.set_private_key_argument("bogus");
+    command.set_private_key_argument("");
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_CERT_PUBLIC_INVALID "\n");
 }
 
-// TODO: enable this once certificate construction is implemented.
-////BOOST_AUTO_TEST_CASE(cert_public__invoke__valid_private_key__success_output)
-////{
-////    BX_DECLARE_COMMAND(cert_public);
-////    command.set_private_key_argument("v=Y(Y-lrKbs[DwQ.Po.y*(5PQ]-!u*naPPVq8/15");
-////    BX_REQUIRE_OKAY(command.invoke(output, error));
-////    BX_REQUIRE_OUTPUT(")^^(VJ98$c[i?z%>R0=0?}>M/L)Tu/{g@yyFrcED" "\n");
-////}
+BOOST_AUTO_TEST_CASE(cert_public__invoke__shakespeare_private_key__success_output)
+{
+    BX_DECLARE_COMMAND(cert_public);
+    command.set_private_key_argument("Life is but a walking shadow a poor play");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("]RzoywK*RWOVWRQ*HX!tejV!<O)TWsFjsKa-JR6E" "\n");
+}
+
+BOOST_AUTO_TEST_CASE(cert_public__invoke__valid_private_key1__success_output)
+{
+    BX_DECLARE_COMMAND(cert_public);
+    command.set_private_key_argument("JTKVSB%%)wK0E.X)V>+}o?pNmC{O&4W4b!Ni{Lh6");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("rq:rM>}U?@Lns47E1%kR.o@n%FcmmsL/@{H8]yf7" "\n");
+}
+
+BOOST_AUTO_TEST_CASE(cert_public__invoke__valid_private_key2__success_output)
+{
+    BX_DECLARE_COMMAND(cert_public);
+    command.set_private_key_argument("v=Y(Y-lrKbs[DwQ.Po.y*(5PQ]-!u*naPPVq8/15");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(")^^(VJ98$c[i?z%>R0=0?}>M/L)Tu/{g@yyFrcED" "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

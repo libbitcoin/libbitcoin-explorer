@@ -28,7 +28,6 @@ using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::protocol;
 
-// CZMQ only has a file system interface, otherwise would send to stdout.
 console_result cert_public::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
