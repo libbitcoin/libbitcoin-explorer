@@ -91,11 +91,16 @@ bool obelisk_client::connect(const endpoint& address,
 {
     if (!server_public_key.empty())
     {
-        socket_.set_curve_client(server_public_key);
+        if (!socket_.set_curve_client(server_public_key))
+            return false;
 
-        // Only apply the client cert if the server key is configured.
+        // Only apply the client key if the server key is configured.
         if (!client_private_key.empty())
-            socket_.set_private_key(client_private_key);
+        {
+            // The certicate construction generates the client public key.
+            if (!socket_.set_certificate({ client_private_key }))
+                return false;
+        }
     }
 
     return connect(address);
