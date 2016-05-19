@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/obelisk_client.hpp>
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <thread>
@@ -38,10 +39,10 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-static BC_CONSTFUNC uint32_t seconds_to_micro(uint16_t seconds)
+static uint32_t to_milliseconds(uint16_t seconds)
 {
-    // This cannot overflow uint32.
-    return seconds * 1000000;
+    const auto milliseconds = static_cast<uint32_t>(seconds) * 1000;
+    return std::min(milliseconds, max_uint32);
 };
 
 static const auto on_unknown = [](const std::string&){};
@@ -52,7 +53,7 @@ obelisk_client::obelisk_client(uint16_t timeout_seconds, uint8_t retries)
     authenticate_(context_),
     stream_(socket_),
     retries_(retries),
-    proxy(stream_, on_unknown, seconds_to_micro(timeout_seconds), retries)
+    proxy(stream_, on_unknown, to_milliseconds(timeout_seconds), retries)
 {
     BITCOIN_ASSERT((bool)socket_);
 }
@@ -89,18 +90,15 @@ bool obelisk_client::connect(const endpoint& address,
     const std::string& server_public_key,
     const std::string& client_private_key)
 {
+    // Only apply the client (and server) key if the server key is configured.
     if (!server_public_key.empty())
     {
         if (!socket_.set_curve_client(server_public_key))
             return false;
 
-        // Only apply the client key if the server key is configured.
-        if (!client_private_key.empty())
-        {
-            // The certicate construction generates the client public key.
-            if (!socket_.set_certificate({ client_private_key }))
-                return false;
-        }
+        // Certificate construction generates client keys if private key empty.
+        if (!socket_.set_certificate({ client_private_key }))
+            return false;
     }
 
     return connect(address);
