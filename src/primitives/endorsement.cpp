@@ -53,7 +53,7 @@ static std::string encode_endorsement(data_slice signature)
 }
 
 endorsement::endorsement()
-    : value_()
+  : value_()
 {
 }
 
@@ -63,12 +63,12 @@ endorsement::endorsement(const std::string& hexcode)
 }
 
 endorsement::endorsement(const data_chunk& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 endorsement::endorsement(const endorsement& other)
-    : endorsement(other.value_)
+  : endorsement(other.value_)
 {
 }
 

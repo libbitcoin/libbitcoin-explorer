@@ -35,7 +35,7 @@ namespace explorer {
 namespace primitives {
 
 base16::base16()
-    : value_()
+  : value_()
 {
 }
 
@@ -45,12 +45,12 @@ base16::base16(const std::string& hexcode)
 }
 
 base16::base16(const data_chunk& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 base16::base16(const base16& other)
-    : base16(other.value_)
+  : base16(other.value_)
 {
 }
 

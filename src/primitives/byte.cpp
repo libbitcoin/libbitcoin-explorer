@@ -34,7 +34,7 @@ namespace explorer {
 namespace primitives {
 
     byte::byte()
-        : value_(0)
+      : value_(0)
     {
     }
 
@@ -44,12 +44,12 @@ namespace primitives {
     }
 
     byte::byte(uint8_t byte)
-        : value_(byte)
+      : value_(byte)
     {
     }
 
     byte::byte(const byte& other)
-        : byte(other.value_)
+      : byte(other.value_)
     {
     }
 

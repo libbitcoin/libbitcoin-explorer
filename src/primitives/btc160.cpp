@@ -33,7 +33,7 @@ namespace explorer {
 namespace primitives {
 
 btc160::btc160()
-    : value_()
+  : value_()
 {
 }
 
@@ -43,12 +43,12 @@ btc160::btc160(const std::string& hexcode)
 }
 
 btc160::btc160(const short_hash& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 btc160::btc160(const btc160& other)
-    : btc160(other.value_)
+  : btc160(other.value_)
 {
 }
 

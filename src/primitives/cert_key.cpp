@@ -36,7 +36,7 @@ namespace primitives {
 constexpr uint8_t cert_key_string_length = 40;
 
 cert_key::cert_key()
-    : value_()
+  : value_()
 {
 }
 
@@ -46,7 +46,7 @@ cert_key::cert_key(const std::string& base85)
 }
 
 cert_key::cert_key(const cert_key& other)
-    : value_(other.value_)
+  : value_(other.value_)
 {
 }
 

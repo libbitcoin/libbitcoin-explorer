@@ -35,7 +35,7 @@ namespace explorer {
 namespace primitives {
 
 header::header()
-    : value_()
+  : value_()
 {
 }
 
@@ -45,12 +45,12 @@ header::header(const std::string& hexcode)
 }
 
 header::header(const chain::header& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 header::header(const header& other)
-    : header(other.value_)
+  : header(other.value_)
 {
 }
 

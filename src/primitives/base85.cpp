@@ -33,7 +33,7 @@ namespace explorer {
 namespace primitives {
 
 base85::base85()
-    : value_()
+  : value_()
 {
 }
 
@@ -44,7 +44,7 @@ base85::base85(const std::string& base85)
 
 // Z85 is unusual in that it requires four byte alignment.
 base85::base85(const data_chunk& value)
-    : value_(value)
+  : value_(value)
 {
     std::string encoded;
     if (!encode_base85(encoded, value))
@@ -55,7 +55,7 @@ base85::base85(const data_chunk& value)
 }
 
 base85::base85(const base85& other)
-    : base85(other.value_)
+  : base85(other.value_)
 {
 }
 

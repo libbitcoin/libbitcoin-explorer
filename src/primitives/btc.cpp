@@ -32,7 +32,7 @@ namespace explorer {
 namespace primitives {
 
 btc::btc()
-    : value_(0)
+  : value_(0)
 {
 }
 
@@ -42,12 +42,12 @@ btc::btc(const std::string& btc)
 }
 
 btc::btc(uint64_t satoshi)
-    : value_(satoshi)
+  : value_(satoshi)
 {
 }
 
 btc::btc(const btc& other)
-    : value_(other.value_)
+  : value_(other.value_)
 {
 }
 

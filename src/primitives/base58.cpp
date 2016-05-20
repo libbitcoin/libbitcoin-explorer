@@ -33,7 +33,7 @@ namespace explorer {
 namespace primitives {
 
 base58::base58()
-    : value_()
+  : value_()
 {
 }
 
@@ -43,12 +43,12 @@ base58::base58(const std::string& base58)
 }
 
 base58::base58(const data_chunk& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 base58::base58(const base58& other)
-    : base58(other.value_)
+  : base58(other.value_)
 {
 }
 

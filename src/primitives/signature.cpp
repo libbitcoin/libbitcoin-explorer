@@ -54,7 +54,7 @@ static std::string encode_signature(const wallet::message_signature& signature)
 }
 
 signature::signature()
-    : value_()
+  : value_()
 {
 }
 
@@ -64,12 +64,12 @@ signature::signature(const std::string& hexcode)
 }
 
 signature::signature(const wallet::message_signature& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 signature::signature(const signature& other)
-    : signature(other.value_)
+  : signature(other.value_)
 {
 }
 

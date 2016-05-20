@@ -35,7 +35,7 @@ namespace explorer {
 namespace primitives {
 
 transaction::transaction()
-    : value_()
+  : value_()
 {
 }
 
@@ -45,12 +45,12 @@ transaction::transaction(const std::string& hexcode)
 }
 
 transaction::transaction(const tx_type& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 transaction::transaction(const transaction& other)
-    : transaction(other.value_)
+  : transaction(other.value_)
 {
 }
 

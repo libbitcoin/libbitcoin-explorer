@@ -34,7 +34,7 @@ namespace explorer {
 namespace primitives {
 
 base2::base2()
-    : value_()
+  : value_()
 {
 }
 
@@ -44,12 +44,12 @@ base2::base2(const std::string& binary)
 }
 
 base2::base2(const binary& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 base2::base2(const base2& other)
-    : base2(other.value_)
+  : base2(other.value_)
 {
 }
 

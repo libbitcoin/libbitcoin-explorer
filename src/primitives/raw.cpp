@@ -29,7 +29,7 @@ namespace explorer {
 namespace primitives {
 
 raw::raw()
-    : value_()
+  : value_()
 {
 }
 
@@ -39,12 +39,12 @@ raw::raw(const std::string& hexcode)
 }
 
 raw::raw(const data_chunk& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 raw::raw(const raw& other)
-    : raw(other.value_)
+  : raw(other.value_)
 {
 }
 

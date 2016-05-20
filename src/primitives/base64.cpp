@@ -33,7 +33,7 @@ namespace explorer {
 namespace primitives {
 
 base64::base64()
-    : value_()
+  : value_()
 {
 }
 
@@ -43,12 +43,12 @@ base64::base64(const std::string& base64)
 }
 
 base64::base64(const data_chunk& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 base64::base64(const base64& other)
-    : base64(other.value_)
+  : base64(other.value_)
 {
 }
 
