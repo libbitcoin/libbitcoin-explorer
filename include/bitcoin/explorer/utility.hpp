@@ -175,13 +175,6 @@ void write_file(std::ostream& output, const std::string& path,
 BCX_API connection_type get_connection(const command& cmd);
 
 /**
- * Determine if a string is base2.
- * @param[in]  text  The string to test.
- * @return           True if text is base2.
- */
-BCX_API bool is_base2(const std::string& text);
-
-/**
  * Generate a new ec key from a seed.
  * @param[in]  seed  The seed for key randomness.
  * @return           The new key.

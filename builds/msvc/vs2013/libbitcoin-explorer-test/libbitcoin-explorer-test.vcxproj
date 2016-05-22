@@ -71,7 +71,6 @@
   </ImportGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\test\primitives\address.cpp" />
-    <ClCompile Include="..\..\..\..\test\primitives\base58.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__find.cpp" />
     <ClCompile Include="..\..\..\..\test\generated__formerly.cpp" />

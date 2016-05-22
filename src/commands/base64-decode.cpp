@@ -22,7 +22,6 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
 #include <bitcoin/explorer/primitives/raw.hpp>
 
 using namespace bc;

@@ -54,7 +54,7 @@ public:
     
     /**
      * Overload cast to internal type.
-     * @return  This object's value cast to internal type.
+     * @return  This object's value cast to internal type reference.
      */
     operator const std::string&() const;
 

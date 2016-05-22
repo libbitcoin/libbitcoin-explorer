@@ -22,14 +22,13 @@
 #include <iostream>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::chain;
+using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 // The BX_INPUT_SIGN_FAILED condition uncovered by test.
 // This is because a vector to produce the failure is not known.

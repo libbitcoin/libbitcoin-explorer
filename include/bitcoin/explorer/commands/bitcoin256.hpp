@@ -31,13 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
@@ -148,7 +142,7 @@ public:
         )
         (
             "BASE16",
-            value<primitives::base16>(&argument_.base16),
+            value<bc::config::base16>(&argument_.base16),
             "The Base16 data to hash. If not specified the data is read from STDIN."
         );
 
@@ -177,7 +171,7 @@ public:
     /**
      * Get the value of the BASE16 argument.
      */
-    virtual primitives::base16& get_base16_argument()
+    virtual bc::config::base16& get_base16_argument()
     {
         return argument_.base16;
     }
@@ -186,7 +180,7 @@ public:
      * Set the value of the BASE16 argument.
      */
     virtual void set_base16_argument(
-        const primitives::base16& value)
+        const bc::config::base16& value)
     {
         argument_.base16 = value;
     }
@@ -205,7 +199,7 @@ private:
         {
         }
 
-        primitives::base16 base16;
+        bc::config::base16 base16;
     } argument_;
 
     /**

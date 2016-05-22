@@ -31,13 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
@@ -157,7 +151,7 @@ public:
         )
         (
             "filter,f",
-            value<primitives::base2>(&option_.filter),
+            value<bc::config::base2>(&option_.filter),
             "The Base2 stealth prefix filter that will be used to locate payments."
         )
         (
@@ -246,7 +240,7 @@ public:
     /**
      * Get the value of the filter option.
      */
-    virtual primitives::base2& get_filter_option()
+    virtual bc::config::base2& get_filter_option()
     {
         return option_.filter;
     }
@@ -255,7 +249,7 @@ public:
      * Set the value of the filter option.
      */
     virtual void set_filter_option(
-        const primitives::base2& value)
+        const bc::config::base2& value)
     {
         option_.filter = value;
     }
@@ -327,7 +321,7 @@ private:
         {
         }
 
-        primitives::base2 filter;
+        bc::config::base2 filter;
         primitives::byte signatures;
         primitives::byte version;
     } option_;

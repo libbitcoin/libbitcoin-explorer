@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(cert_public__invoke__empty_private_key__failure_error)
 BOOST_AUTO_TEST_CASE(cert_public__invoke__bogus_private_key__failure_error)
 {
     BX_DECLARE_COMMAND(cert_public);
-    command.set_private_key_argument("");
+    command.set_private_key_argument("bogus");
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_CERT_PUBLIC_INVALID "\n");
 }

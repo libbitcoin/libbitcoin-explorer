@@ -31,13 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
@@ -148,7 +142,7 @@ public:
         )
         (
             "BASE58",
-            value<primitives::base58>(&argument_.base58),
+            value<bc::config::base58>(&argument_.base58),
             "The Base58 value to decode as Base16. If not specified the value is read from STDIN."
         );
 
@@ -177,7 +171,7 @@ public:
     /**
      * Get the value of the BASE58 argument.
      */
-    virtual primitives::base58& get_base58_argument()
+    virtual bc::config::base58& get_base58_argument()
     {
         return argument_.base58;
     }
@@ -186,7 +180,7 @@ public:
      * Set the value of the BASE58 argument.
      */
     virtual void set_base58_argument(
-        const primitives::base58& value)
+        const bc::config::base58& value)
     {
         argument_.base58 = value;
     }
@@ -205,7 +199,7 @@ private:
         {
         }
 
-        primitives::base58 base58;
+        bc::config::base58 base58;
     } argument_;
 
     /**

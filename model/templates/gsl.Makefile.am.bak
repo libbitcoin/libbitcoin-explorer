@@ -69,15 +69,8 @@ bitcoin_explorer_primitives_includedir = ${includedir}/bitcoin/explorer/primitiv
 bitcoin_explorer_primitives_include_HEADERS = \\
     include/bitcoin/explorer/primitives/address.hpp \\
     include/bitcoin/explorer/primitives/algorithm.hpp \\
-    include/bitcoin/explorer/primitives/base16.hpp \\
-    include/bitcoin/explorer/primitives/base2.hpp \\
-    include/bitcoin/explorer/primitives/base58.hpp \\
-    include/bitcoin/explorer/primitives/base64.hpp \\
-    include/bitcoin/explorer/primitives/base85.hpp \\
     include/bitcoin/explorer/primitives/language.hpp \\
     include/bitcoin/explorer/primitives/btc.hpp \\
-    include/bitcoin/explorer/primitives/btc160.hpp \\
-    include/bitcoin/explorer/primitives/btc256.hpp \\
     include/bitcoin/explorer/primitives/byte.hpp \\
     include/bitcoin/explorer/primitives/cert_key.hpp \\
     include/bitcoin/explorer/primitives/ec_private.hpp \\
@@ -119,15 +112,8 @@ src_libbitcoin_explorer_la_SOURCES = \\
     src/prop_tree.cpp \\
     src/primitives/address.cpp \\
     src/primitives/algorithm.cpp \\
-    src/primitives/base16.cpp \\
-    src/primitives/base2.cpp \\
-    src/primitives/base58.cpp \\
-    src/primitives/base64.cpp \\
-    src/primitives/base85.cpp \\
     src/primitives/language.cpp \\
     src/primitives/btc.cpp \\
-    src/primitives/btc160.cpp \\
-    src/primitives/btc256.cpp \\
     src/primitives/byte.cpp \\
     src/primitives/cert_key.cpp \\
     src/primitives/ec_private.cpp \\
@@ -215,7 +201,6 @@ test_libbitcoin_explorer_test_LDADD = \\
 
 test_libbitcoin_explorer_test_SOURCES = \\
     test/primitives/address.cpp \\
-    test/primitives/base58.cpp \\
     test/generated__broadcast.cpp \\
     test/generated__find.cpp \\
     test/generated__formerly.cpp \\
