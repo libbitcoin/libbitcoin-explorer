@@ -30,8 +30,12 @@ using namespace bc::protocol;
 
 console_result cert_new::invoke(std::ostream& output, std::ostream& error)
 {
+    // TODO: update settings implementation so hash can be allowed.
+    // Removal of the hash character reduces keyspace/security.
+    static const bool disallow_hash_character = true;
+
     // Create a new Curve ZMQ certificate.
-    zmq::certificate certificate;
+    zmq::certificate certificate(disallow_hash_character);
 
     if (!certificate)
     {

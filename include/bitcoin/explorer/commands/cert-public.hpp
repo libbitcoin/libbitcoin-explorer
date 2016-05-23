@@ -148,7 +148,7 @@ public:
         )
         (
             "PRIVATE_KEY",
-            value<std::string>(&argument_.private_key),
+            value<bc::config::base85>(&argument_.private_key),
             "The private key from which to derive the public key."
         );
 
@@ -177,7 +177,7 @@ public:
     /**
      * Get the value of the PRIVATE_KEY argument.
      */
-    virtual std::string& get_private_key_argument()
+    virtual bc::config::base85& get_private_key_argument()
     {
         return argument_.private_key;
     }
@@ -186,7 +186,7 @@ public:
      * Set the value of the PRIVATE_KEY argument.
      */
     virtual void set_private_key_argument(
-        const std::string& value)
+        const bc::config::base85& value)
     {
         argument_.private_key = value;
     }
@@ -205,7 +205,7 @@ private:
         {
         }
 
-        std::string private_key;
+        bc::config::base85 private_key;
     } argument_;
 
     /**
