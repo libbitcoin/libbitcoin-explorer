@@ -25,17 +25,17 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
+using namespace bc::config;
 
 namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
 transaction::transaction()
-    : value_()
+  : value_()
 {
 }
 
@@ -45,12 +45,12 @@ transaction::transaction(const std::string& hexcode)
 }
 
 transaction::transaction(const tx_type& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 transaction::transaction(const transaction& other)
-    : transaction(other.value_)
+  : transaction(other.value_)
 {
 }
 

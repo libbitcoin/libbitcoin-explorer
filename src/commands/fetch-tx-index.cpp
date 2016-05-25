@@ -27,7 +27,6 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 

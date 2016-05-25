@@ -25,15 +25,14 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(cert_new__invoke)
 
-// Because zcert doesn't support cert streaming, and we can't add arbitrary
-// virutal methods to generated command headers, we have a test limitation.
-
-BOOST_AUTO_TEST_CASE(cert_new__invoke__invalid_path__okay_output)
+// Because this uses interal random generation we cannot test value result.
+BOOST_AUTO_TEST_CASE(cert_new__invoke__always__okay)
 {
     BX_DECLARE_COMMAND(cert_new);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    const auto message = format(BX_CERT_NEW_SAVE_FAIL) % "\"\"";
-    BX_REQUIRE_ERROR(message.str() + "\n");
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+
+    // zeromq base85 encoded keys are 40 characters and we add a line feed.
+    BOOST_REQUIRE_EQUAL(output.str().size(), 41u);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

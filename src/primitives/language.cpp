@@ -41,7 +41,7 @@ static auto language_zh_Hant = "zh_Hant";
 static auto language_any = "any";
 
 language::language()
-    : value_(bc::wallet::language::all)
+  : value_(bc::wallet::language::all)
 {
 }
 
@@ -51,12 +51,12 @@ language::language(const std::string& token)
 }
 
 language::language(bc::wallet::dictionary_list& languages)
-    : value_(languages)
+  : value_(languages)
 {
 }
 
 language::language(const language& other)
-    : value_(other.value_)
+  : value_(other.value_)
 {
 }
 

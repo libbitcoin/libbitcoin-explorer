@@ -37,7 +37,7 @@ static auto encoding_json = "json";
 static auto encoding_xml = "xml";
 
 encoding::encoding()
-    : encoding(encoding_engine::info)
+  : encoding(encoding_engine::info)
 {
 }
 
@@ -47,12 +47,12 @@ encoding::encoding(const std::string& token)
 }
 
 encoding::encoding(encoding_engine engine)
-    : value_(engine)
+  : value_(engine)
 {
 }
 
 encoding::encoding(const encoding& other)
-    : value_(other.value_)
+  : value_(other.value_)
 {
 }
 

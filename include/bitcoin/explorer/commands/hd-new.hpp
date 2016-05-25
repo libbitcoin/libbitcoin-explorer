@@ -31,13 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
@@ -168,7 +162,7 @@ public:
         )
         (
             "SEED",
-            value<primitives::base16>(&argument_.seed),
+            value<bc::config::base16>(&argument_.seed),
             "The Base16 entropy for the new key. Must be at least 128 bits in length. If not specified the seed is read from STDIN."
         );
 
@@ -203,7 +197,7 @@ public:
     /**
      * Get the value of the SEED argument.
      */
-    virtual primitives::base16& get_seed_argument()
+    virtual bc::config::base16& get_seed_argument()
     {
         return argument_.seed;
     }
@@ -212,7 +206,7 @@ public:
      * Set the value of the SEED argument.
      */
     virtual void set_seed_argument(
-        const primitives::base16& value)
+        const bc::config::base16& value)
     {
         argument_.seed = value;
     }
@@ -248,7 +242,7 @@ private:
         {
         }
 
-        primitives::base16 seed;
+        bc::config::base16 seed;
     } argument_;
 
     /**

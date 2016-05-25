@@ -35,7 +35,7 @@ namespace explorer {
 namespace primitives {
 
 script::script()
-    : value_()
+  : value_()
 {
 }
 
@@ -45,7 +45,7 @@ script::script(const std::string& mnemonic)
 }
 
 script::script(const chain::script& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
@@ -62,7 +62,7 @@ script::script(const std::vector<std::string>& tokens)
 }
 
 script::script(const script& other)
-    : script(other.value_)
+  : script(other.value_)
 {
 }
 

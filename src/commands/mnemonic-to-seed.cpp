@@ -22,13 +22,12 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 
 using namespace bc;
+using namespace bc::config;
 using namespace bc::wallet;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result mnemonic_to_seed::invoke(std::ostream& output,
     std::ostream& error)

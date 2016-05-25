@@ -135,13 +135,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/wrap-encode.cpp \
     src/primitives/address.cpp \
     src/primitives/algorithm.cpp \
-    src/primitives/base16.cpp \
-    src/primitives/base2.cpp \
-    src/primitives/base58.cpp \
-    src/primitives/base64.cpp \
-    src/primitives/base85.cpp \
     src/primitives/btc.cpp \
-    src/primitives/btc160.cpp \
     src/primitives/byte.cpp \
     src/primitives/cert_key.cpp \
     src/primitives/ec_private.cpp \
@@ -278,8 +272,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/wif-to-public.cpp \
     test/commands/wrap-decode.cpp \
     test/commands/wrap-encode.cpp \
-    test/primitives/address.cpp \
-    test/primitives/base58.cpp
+    test/primitives/address.cpp
 
 endif WITH_TESTS
 
@@ -405,13 +398,7 @@ include_bitcoin_explorer_primitivesdir = ${includedir}/bitcoin/explorer/primitiv
 include_bitcoin_explorer_primitives_HEADERS = \
     include/bitcoin/explorer/primitives/address.hpp \
     include/bitcoin/explorer/primitives/algorithm.hpp \
-    include/bitcoin/explorer/primitives/base16.hpp \
-    include/bitcoin/explorer/primitives/base2.hpp \
-    include/bitcoin/explorer/primitives/base58.hpp \
-    include/bitcoin/explorer/primitives/base64.hpp \
-    include/bitcoin/explorer/primitives/base85.hpp \
     include/bitcoin/explorer/primitives/btc.hpp \
-    include/bitcoin/explorer/primitives/btc160.hpp \
     include/bitcoin/explorer/primitives/byte.hpp \
     include/bitcoin/explorer/primitives/cert_key.hpp \
     include/bitcoin/explorer/primitives/ec_private.hpp \

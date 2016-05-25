@@ -30,7 +30,6 @@
   
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
     <Linkage-secp256k1>dynamic</Linkage-secp256k1>
-    <Linkage-czmq>dynamic</Linkage-czmq>
     <Linkage-libzmq>dynamic</Linkage-libzmq>
     <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
     <Linkage-libbitcoin-protocol>dynamic</Linkage-libbitcoin-protocol>
@@ -40,7 +39,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
     <Linkage-secp256k1>ltcg</Linkage-secp256k1>
-    <Linkage-czmq>ltcg</Linkage-czmq>
     <Linkage-libzmq>ltcg</Linkage-libzmq>
     <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
     <Linkage-libbitcoin-protocol>ltcg</Linkage-libbitcoin-protocol>
@@ -50,7 +48,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
     <Linkage-secp256k1>static</Linkage-secp256k1>
-    <Linkage-czmq>static</Linkage-czmq>
     <Linkage-libzmq>static</Linkage-libzmq>
     <Linkage-libbitcoin>static</Linkage-libbitcoin>
     <Linkage-libbitcoin-protocol>static</Linkage-libbitcoin-protocol>
@@ -63,7 +60,6 @@
 
   <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
     <Message Text="Linkage-secp256k1 : $(Linkage-secp256k1)" Importance="high"/>
-    <Message Text="Linkage-czmq      : $(Linkage-czmq)" Importance="high"/>
     <Message Text="Linkage-libzmq    : $(Linkage-libzmq)" Importance="high"/>
     <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
     <Message Text="Linkage-_protocol : $(Linkage-libbitcoin-protocol)" Importance="high"/>

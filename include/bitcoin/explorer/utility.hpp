@@ -40,7 +40,6 @@
 #include <boost/lexical_cast.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
@@ -58,11 +57,11 @@ typedef std::vector<name_value_pair> name_value_pairs;
  */
 struct BCX_API connection_type
 {
+    config::endpoint server;
     uint8_t retries;
     uint16_t timeout_seconds;
-    boost::filesystem::path cert_path;
-    config::endpoint server;
-    primitives::cert_key key;
+    std::string server_public_key;
+    std::string client_private_key;
 };
 
 /**
@@ -174,13 +173,6 @@ void write_file(std::ostream& output, const std::string& path,
  * @returns       A structure containing the connection settings.
  */
 BCX_API connection_type get_connection(const command& cmd);
-
-/**
- * Determine if a string is base2.
- * @param[in]  text  The string to test.
- * @return           True if text is base2.
- */
-BCX_API bool is_base2(const std::string& text);
 
 /**
  * Generate a new ec key from a seed.

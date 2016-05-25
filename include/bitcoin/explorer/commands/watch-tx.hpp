@@ -31,13 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>

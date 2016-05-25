@@ -20,6 +20,7 @@
 
 #include <bitcoin/explorer/obelisk_client.hpp>
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <thread>
@@ -38,22 +39,22 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-static BC_CONSTFUNC uint32_t sec_to_ms(uint32_t seconds)
+static uint32_t to_milliseconds(uint16_t seconds)
 {
-    return seconds * 1000;
+    const auto milliseconds = static_cast<uint32_t>(seconds) * 1000;
+    return std::min(milliseconds, max_uint32);
 };
 
 static const auto on_unknown = [](const std::string&){};
 
 // Retries is overloaded as configuration for retries as well.
 obelisk_client::obelisk_client(uint16_t timeout_seconds, uint8_t retries)
-  : socket_(context_, ZMQ_DEALER),
-    authenticate_(context_),
+  : socket_(context_, zmq::socket::role::dealer),
     stream_(socket_),
     retries_(retries),
-    proxy(stream_, on_unknown, sec_to_ms(timeout_seconds), retries)
+    proxy(stream_, on_unknown, to_milliseconds(timeout_seconds), retries)
 {
-    BITCOIN_ASSERT(socket_.self() != nullptr);
+    BITCOIN_ASSERT((bool)socket_);
 }
 
 obelisk_client::obelisk_client(const connection_type& channel)
@@ -63,76 +64,58 @@ obelisk_client::obelisk_client(const connection_type& channel)
 
 bool obelisk_client::connect(const connection_type& channel)
 {
-    return connect(channel.server, channel.key, channel.cert_path);
+    return connect(channel.server, channel.server_public_key,
+        channel.client_private_key);
 }
 
 bool obelisk_client::connect(const endpoint& address)
 {
-    // Arbitrary delay between connection attempts.
-    static const milliseconds delay(100);
     const auto host_address = address.to_string();
 
     for (auto attempt = 0; attempt < 1 + retries_; ++attempt)
     {
-        if (socket_.connect(host_address) == zmq_success)
+        if (socket_.connect(host_address))
             return true;
 
-        std::this_thread::sleep_for(delay);
+        // Arbitrary delay between connection attempts.
+        std::this_thread::sleep_for(milliseconds(100));
     }
 
     return false;
 }
 
 bool obelisk_client::connect(const endpoint& address,
-    const cert_key& server_public_cert)
+    const std::string& server_public_key,
+    const std::string& client_private_key)
 {
-    const auto server_key = server_public_cert.get_base85();
-
-    if (!server_key.empty())
+    // Only apply the client (and server) key if the server key is configured.
+    if (!server_public_key.empty())
     {
-        // If there is no cert loaded this uses a generated one.
-        certificate_.apply(socket_);
-        socket_.set_curve_serverkey(server_key);
+        if (!socket_.set_curve_client(server_public_key))
+            return false;
 
-        // TODO: make configurable.
-        authenticate_.set_verbose(true);
+        // Certificate construction generates client keys if private key empty.
+        if (!socket_.set_certificate({ client_private_key }))
+            return false;
     }
 
     return connect(address);
 }
 
-bool obelisk_client::connect(const endpoint& address,
-    const cert_key& server_public_cert, const path& client_private_cert_path)
-{
-    const auto server_key = server_public_cert.get_base85();
-    const auto cert_path = client_private_cert_path.string();
-
-    // Only apply the client cert if the server key is configured.
-    // This allows connections where neither is required, which is okay.
-    if (!cert_path.empty() && !server_key.empty())
-    {
-        certificate_.reset(cert_path);
-
-        if (!certificate_)
-            return false;
-
-        certificate_.apply(socket_);
-    }
-
-    return connect(address, server_public_cert);
-}
-
 // Used by fetch-* commands, fires reply, unknown or error handlers.
 void obelisk_client::wait()
 {
-    zmq::poller poller(socket_);
-    auto remainder_ms = refresh();
+    const auto socket_id = socket_.id();
+
+    zmq::poller poller;
+    poller.add(socket_);
+    auto delay = refresh();
 
     while (!empty() && !poller.terminated() && !poller.expired() &&
-        poller.wait(remainder_ms) == socket_)
+        poller.wait(delay) == socket_id)
     {
         stream_.read(*this);
-        remainder_ms = refresh();
+        delay = refresh();
     }
 
     // Invoke error handlers for any still pending.
@@ -142,15 +125,18 @@ void obelisk_client::wait()
 // Used by watch-* commands, fires registered update or unknown handlers.
 void obelisk_client::monitor(uint32_t timeout_seconds)
 {
-    zmq::poller poller(socket_);
+    const auto socket_id = socket_.id();
     const auto deadline = steady_clock::now() + seconds(timeout_seconds);
-    auto remainder_ms = remaining(deadline);
+
+    zmq::poller poller;
+    poller.add(socket_);
+    auto delay = remaining(deadline);
 
     while (!poller.terminated() && !poller.expired() &&
-        poller.wait(remainder_ms) == socket_)
+        poller.wait(delay) == socket_id)
     {
         stream_.read(*this);
-        remainder_ms = remaining(deadline);
+        delay = remaining(deadline);
     }
 }
 

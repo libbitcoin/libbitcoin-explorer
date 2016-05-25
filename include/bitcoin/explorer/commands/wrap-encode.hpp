@@ -31,13 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
@@ -160,7 +154,7 @@ public:
         )
         (
             "PAYLOAD",
-            value<primitives::base16>(&argument_.payload),
+            value<bc::config::base16>(&argument_.payload),
             "The Base16 data to wrap. If not specified the value is read from STDIN."
         );
 
@@ -195,7 +189,7 @@ public:
     /**
      * Get the value of the PAYLOAD argument.
      */
-    virtual primitives::base16& get_payload_argument()
+    virtual bc::config::base16& get_payload_argument()
     {
         return argument_.payload;
     }
@@ -204,7 +198,7 @@ public:
      * Set the value of the PAYLOAD argument.
      */
     virtual void set_payload_argument(
-        const primitives::base16& value)
+        const bc::config::base16& value)
     {
         argument_.payload = value;
     }
@@ -240,7 +234,7 @@ private:
         {
         }
 
-        primitives::base16 payload;
+        bc::config::base16 payload;
     } argument_;
 
     /**

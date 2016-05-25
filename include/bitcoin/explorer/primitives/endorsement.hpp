@@ -63,7 +63,7 @@ public:
      */
     template<size_t Size>
     endorsement(const byte_array<Size>& value)
-        : value_(value.begin(), value.end())
+      : value_(value.begin(), value.end())
     {
     }
 

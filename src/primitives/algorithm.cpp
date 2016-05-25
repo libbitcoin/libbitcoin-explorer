@@ -35,7 +35,7 @@ namespace primitives {
 static auto algorithm_greedy = "greedy";
 
 algorithm::algorithm()
-    : value_(bc::wallet::select_outputs::algorithm::greedy)
+  : value_(bc::wallet::select_outputs::algorithm::greedy)
 {
 }
 
@@ -45,12 +45,12 @@ algorithm::algorithm(const std::string& token)
 }
 
 algorithm::algorithm(bc::wallet::select_outputs::algorithm& algorithm)
-    : value_(algorithm)
+  : value_(algorithm)
 {
 }
 
 algorithm::algorithm(const algorithm& other)
-    : value_(other.value_)
+  : value_(other.value_)
 {
 }
 

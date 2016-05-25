@@ -19,41 +19,30 @@
  */
 #include <bitcoin/explorer/commands/cert-new.hpp>
 
-#include <boost/format.hpp>
 #include <bitcoin/protocol.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 using namespace bc::protocol;
 
-// CZMQ only has a file system interface, otherwise would send to stdout.
 console_result cert_new::invoke(std::ostream& output, std::ostream& error)
 {
-    // Bound parameters.
-    const auto& private_cert = get_private_cert_argument();
-    const auto& metadata = get_metadatas_option();
+    // TODO: update settings implementation so hash can be allowed.
+    // Removal of the hash character reduces keyspace/security.
+    static const bool disallow_hash_character = true;
 
     // Create a new Curve ZMQ certificate.
-    zmq::certificate cert;
+    zmq::certificate certificate(disallow_hash_character);
 
-    // Add optional name-value pairs metadata to certificate.
-    // These will be coppied to the public certificate by cert-public.
-    for (const auto pair: split_pairs(metadata))
-        cert.set_meta(pair.first, pair.second);
-
-    // The directory must exist, the file must not.
-    // Export the PRIVATE certificate to the specified file.
-    if (exists(private_cert) || 
-        cert.save_secret(private_cert.string()) != zmq_success)
+    if (!certificate)
     {
-        error << format(BX_CERT_NEW_SAVE_FAIL) % private_cert << std::endl;
+        error << BX_CERT_NEW_FAILURE << std::endl;
         return console_result::failure;
     }
 
+    output << certificate.private_key() << std::endl;
     return console_result::okay;
 }

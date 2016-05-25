@@ -31,13 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
@@ -160,7 +154,7 @@ public:
         )
         (
             "RIPEMD160",
-            value<primitives::btc160>(&argument_.ripemd160),
+            value<bc::config::btc160>(&argument_.ripemd160),
             "The Base16 hash to convert. If not specified the value is read from STDIN."
         );
 
@@ -195,7 +189,7 @@ public:
     /**
      * Get the value of the RIPEMD160 argument.
      */
-    virtual primitives::btc160& get_ripemd160_argument()
+    virtual bc::config::btc160& get_ripemd160_argument()
     {
         return argument_.ripemd160;
     }
@@ -204,7 +198,7 @@ public:
      * Set the value of the RIPEMD160 argument.
      */
     virtual void set_ripemd160_argument(
-        const primitives::btc160& value)
+        const bc::config::btc160& value)
     {
         argument_.ripemd160 = value;
     }
@@ -240,7 +234,7 @@ private:
         {
         }
 
-        primitives::btc160 ripemd160;
+        bc::config::btc160 ripemd160;
     } argument_;
 
     /**

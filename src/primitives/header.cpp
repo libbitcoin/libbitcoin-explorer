@@ -25,17 +25,17 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace po;
+using namespace bc::config;
 
 namespace libbitcoin {
 namespace explorer {
 namespace primitives {
 
 header::header()
-    : value_()
+  : value_()
 {
 }
 
@@ -45,12 +45,12 @@ header::header(const std::string& hexcode)
 }
 
 header::header(const chain::header& value)
-    : value_(value)
+  : value_(value)
 {
 }
 
 header::header(const header& other)
-    : header(other.value_)
+  : header(other.value_)
 {
 }
 

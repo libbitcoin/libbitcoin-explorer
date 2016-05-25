@@ -25,15 +25,20 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(cert_public__invoke)
 
-// Because zcert doesn't support cert streaming, and we can't add arbitrary
-// virutal methods to generated command headers, we have a test limitation.
-
-BOOST_AUTO_TEST_CASE(cert_public__invoke__invalid_path__okay_output)
+BOOST_AUTO_TEST_CASE(cert_public__invoke__valid_private_key1__success_output)
 {
     BX_DECLARE_COMMAND(cert_public);
-    BX_REQUIRE_FAILURE(command.invoke(output, error));
-    const auto message = format(BX_CERT_PUBLIC_INVALID) % "\"\"";
-    BX_REQUIRE_ERROR(message.str() + "\n");
+    command.set_private_key_argument({ "JTKVSB%%)wK0E.X)V>+}o?pNmC{O&4W4b!Ni{Lh6" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("rq:rM>}U?@Lns47E1%kR.o@n%FcmmsL/@{H8]yf7" "\n");
+}
+
+BOOST_AUTO_TEST_CASE(cert_public__invoke__valid_private_key2__success_output)
+{
+    BX_DECLARE_COMMAND(cert_public);
+    command.set_private_key_argument({ "v=Y(Y-lrKbs[DwQ.Po.y*(5PQ]-!u*naPPVq8/15" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(")^^(VJ98$c[i?z%>R0=0?}>M/L)Tu/{g@yyFrcED" "\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

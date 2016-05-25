@@ -27,7 +27,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/primitives/script.hpp>
 #include <bitcoin/explorer/utility.hpp>
 

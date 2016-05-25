@@ -22,13 +22,12 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
+using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
 
 console_result seed::invoke(std::ostream& output, std::ostream& error)
 {

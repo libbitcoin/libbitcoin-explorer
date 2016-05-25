@@ -31,13 +31,7 @@
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
@@ -157,7 +151,7 @@ public:
         )
         (
             "BASE64",
-            value<primitives::base64>(&argument_.base64),
+            value<bc::config::base64>(&argument_.base64),
             "The Base64 value to decode as binary data. If not specified the value is read from STDIN."
         );
 
@@ -186,7 +180,7 @@ public:
     /**
      * Get the value of the BASE64 argument.
      */
-    virtual primitives::base64& get_base64_argument()
+    virtual bc::config::base64& get_base64_argument()
     {
         return argument_.base64;
     }
@@ -195,7 +189,7 @@ public:
      * Set the value of the BASE64 argument.
      */
     virtual void set_base64_argument(
-        const primitives::base64& value)
+        const bc::config::base64& value)
     {
         argument_.base64 = value;
     }
@@ -214,7 +208,7 @@ private:
         {
         }
 
-        primitives::base64 base64;
+        bc::config::base64 base64;
     } argument_;
 
     /**

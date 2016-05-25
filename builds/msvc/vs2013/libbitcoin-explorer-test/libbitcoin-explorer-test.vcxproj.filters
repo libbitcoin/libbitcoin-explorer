@@ -305,9 +305,6 @@
     <ClCompile Include="..\..\..\..\test\primitives\address.cpp">
       <Filter>src\tests\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\primitives\base58.cpp">
-      <Filter>src\tests\primitives</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp">
       <Filter>src\tests</Filter>
     </ClCompile>

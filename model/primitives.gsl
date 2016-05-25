@@ -59,13 +59,13 @@ function global.map_type(type)
 
     my.type_address_bx = "primitives::address"
     my.type_algorithm_bx = "primitives::algorithm"
-    my.type_base16_bx = "primitives::base16"
-    my.type_base2_bx = "primitives::base2"
-    my.type_base58_bx = "primitives::base58"
-    my.type_base64_bx = "primitives::base64"
-    my.type_base85_bx = "primitives::base85"
+    my.type_base16_bx = "bc::config::base16"
+    my.type_base2_bx = "bc::config::base2"
+    my.type_base58_bx = "bc::config::base58"
+    my.type_base64_bx = "bc::config::base64"
+    my.type_base85_bx = "bc::config::base85"
     my.type_btc_bx = "primitives::btc"
-    my.type_btc160_bx = "primitives::btc160"
+    my.type_btc160_bx = "bc::config::btc160"
     my.type_btc256_bx = "bc::config::btc256"
     my.type_byte_bx = "primitives::byte"
     my.type_cert_key_bx = "primitives::cert_key"
@@ -251,13 +251,7 @@ endfunction
 .macro global.primitives
 #include <bitcoin/explorer/primitives/address.hpp>
 #include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/base16.hpp>
-#include <bitcoin/explorer/primitives/base2.hpp>
-#include <bitcoin/explorer/primitives/base58.hpp>
-#include <bitcoin/explorer/primitives/base64.hpp>
-#include <bitcoin/explorer/primitives/base85.hpp>
 #include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/btc160.hpp>
 #include <bitcoin/explorer/primitives/byte.hpp>
 #include <bitcoin/explorer/primitives/cert_key.hpp>
 #include <bitcoin/explorer/primitives/ec_private.hpp>
