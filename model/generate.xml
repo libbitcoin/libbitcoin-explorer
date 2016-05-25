@@ -149,8 +149,8 @@
   </command>
 
   <!-- TODO: document compatability break from v2.x to v3.0. -->
-  <command symbol="cert-public" category="MATH" description="Derive a Curve ZMQ public key for use with a Libbitcoin/Obelisk server.">
-    <argument name="PRIVATE_KEY" stdin="true" description="The private key from which to derive the public key." />
+  <command symbol="cert-public" output="base85" category="MATH" description="Derive a Curve ZMQ public key for use with a Libbitcoin/Obelisk server.">
+    <argument name="PRIVATE_KEY" stdin="true" type="base85" description="The private key from which to derive the public key." />
     <define name="BX_CERT_PUBLIC_INVALID" value="The private key is not valid." />
   </command>
    
