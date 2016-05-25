@@ -50,7 +50,6 @@ static const auto on_unknown = [](const std::string&){};
 // Retries is overloaded as configuration for retries as well.
 obelisk_client::obelisk_client(uint16_t timeout_seconds, uint8_t retries)
   : socket_(context_, zmq::socket::role::dealer),
-    authenticate_(context_),
     stream_(socket_),
     retries_(retries),
     proxy(stream_, on_unknown, to_milliseconds(timeout_seconds), retries)
@@ -71,8 +70,6 @@ bool obelisk_client::connect(const connection_type& channel)
 
 bool obelisk_client::connect(const endpoint& address)
 {
-    // Arbitrary delay between connection attempts.
-    static const milliseconds delay(100);
     const auto host_address = address.to_string();
 
     for (auto attempt = 0; attempt < 1 + retries_; ++attempt)
@@ -80,7 +77,8 @@ bool obelisk_client::connect(const endpoint& address)
         if (socket_.connect(host_address))
             return true;
 
-        std::this_thread::sleep_for(delay);
+        // Arbitrary delay between connection attempts.
+        std::this_thread::sleep_for(milliseconds(100));
     }
 
     return false;

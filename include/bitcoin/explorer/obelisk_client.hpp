@@ -54,7 +54,6 @@ public:
 private:
     protocol::zmq::context context_;
     protocol::zmq::socket socket_;
-    protocol::zmq::authenticator authenticate_;
     client::socket_stream stream_;
     const uint8_t retries_;
 };
