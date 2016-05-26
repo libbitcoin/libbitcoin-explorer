@@ -94,8 +94,11 @@ bool obelisk_client::connect(const endpoint& address,
         if (!socket_.set_curve_client(server_public_key))
             return false;
 
-        // Certificate construction generates client keys if private key empty.
-        if (!socket_.set_certificate({ client_private_key }))
+        // Generate client keys if private key empty.
+        const auto certificate = client_private_key.empty() ?
+            zmq::certificate() : zmq::certificate(client_private_key);
+
+        if (!socket_.set_certificate(certificate))
             return false;
     }
 
