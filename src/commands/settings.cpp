@@ -28,7 +28,7 @@
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 using namespace pt;
 
 console_result commands::settings::invoke(std::ostream& output,
@@ -91,9 +91,9 @@ console_result commands::settings::invoke(std::ostream& output,
     list["server.connect_timeout_seconds"] =
         serialize(get_server_connect_timeout_seconds_setting());
     list["server.server_public_key"] =
-        get_server_server_public_key_setting();
+        serialize(get_server_server_public_key_setting());
     list["server.client_private_key"] = 
-        get_server_client_private_key_setting();
+        serialize(get_server_client_private_key_setting());
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;

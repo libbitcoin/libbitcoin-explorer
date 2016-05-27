@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -172,17 +172,17 @@ public:
         )
         (
             "CONTRACT",
-            value<primitives::script>(&argument_.contract)->required(),
+            value<explorer::config::script>(&argument_.contract)->required(),
             "The previous output script used in signing. Multiple tokens must be quoted."
         )
         (
             "ENDORSEMENT",
-            value<primitives::endorsement>(&argument_.endorsement)->required(),
+            value<explorer::config::endorsement>(&argument_.endorsement)->required(),
             "The endorsement to validate."
         )
         (
             "TRANSACTION",
-            value<primitives::transaction>(&argument_.transaction),
+            value<explorer::config::transaction>(&argument_.transaction),
             "The Base16 transaction. If not specified the transaction is read from STDIN."
         );
 
@@ -228,7 +228,7 @@ public:
     /**
      * Get the value of the CONTRACT argument.
      */
-    virtual primitives::script& get_contract_argument()
+    virtual explorer::config::script& get_contract_argument()
     {
         return argument_.contract;
     }
@@ -237,7 +237,7 @@ public:
      * Set the value of the CONTRACT argument.
      */
     virtual void set_contract_argument(
-        const primitives::script& value)
+        const explorer::config::script& value)
     {
         argument_.contract = value;
     }
@@ -245,7 +245,7 @@ public:
     /**
      * Get the value of the ENDORSEMENT argument.
      */
-    virtual primitives::endorsement& get_endorsement_argument()
+    virtual explorer::config::endorsement& get_endorsement_argument()
     {
         return argument_.endorsement;
     }
@@ -254,7 +254,7 @@ public:
      * Set the value of the ENDORSEMENT argument.
      */
     virtual void set_endorsement_argument(
-        const primitives::endorsement& value)
+        const explorer::config::endorsement& value)
     {
         argument_.endorsement = value;
     }
@@ -262,7 +262,7 @@ public:
     /**
      * Get the value of the TRANSACTION argument.
      */
-    virtual primitives::transaction& get_transaction_argument()
+    virtual explorer::config::transaction& get_transaction_argument()
     {
         return argument_.transaction;
     }
@@ -271,7 +271,7 @@ public:
      * Set the value of the TRANSACTION argument.
      */
     virtual void set_transaction_argument(
-        const primitives::transaction& value)
+        const explorer::config::transaction& value)
     {
         argument_.transaction = value;
     }
@@ -311,9 +311,9 @@ private:
         }
 
         bc::wallet::ec_public ec_public_key;
-        primitives::script contract;
-        primitives::endorsement endorsement;
-        primitives::transaction transaction;
+        explorer::config::script contract;
+        explorer::config::endorsement endorsement;
+        explorer::config::transaction transaction;
     } argument_;
 
     /**

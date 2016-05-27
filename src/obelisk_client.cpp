@@ -26,12 +26,12 @@
 #include <thread>
 #include <boost/filesystem.hpp>
 #include <bitcoin/client.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
 
 using namespace bc;
 using namespace bc::client;
 using namespace bc::config;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 using namespace bc::protocol;
 using namespace std::chrono;
 using boost::filesystem::path;
@@ -85,20 +85,16 @@ bool obelisk_client::connect(const endpoint& address)
 }
 
 bool obelisk_client::connect(const endpoint& address,
-    const std::string& server_public_key,
-    const std::string& client_private_key)
+    const sodium& server_public_key, const sodium& client_private_key)
 {
-    // Only apply the client (and server) key if the server key is configured.
-    if (!server_public_key.empty())
+    // Only apply the client (and server) key if server key is configured.
+    if (server_public_key)
     {
         if (!socket_.set_curve_client(server_public_key))
             return false;
 
-        // Generate client keys if private key empty.
-        const auto certificate = client_private_key.empty() ?
-            zmq::certificate() : zmq::certificate(client_private_key);
-
-        if (!socket_.set_certificate(certificate))
+        // Generates arbitrary client keys if private key is not configured.
+        if (!socket_.set_certificate({ client_private_key }))
             return false;
     }
 
@@ -108,14 +104,12 @@ bool obelisk_client::connect(const endpoint& address,
 // Used by fetch-* commands, fires reply, unknown or error handlers.
 void obelisk_client::wait()
 {
-    const auto socket_id = socket_.id();
-
     zmq::poller poller;
     poller.add(socket_);
     auto delay = refresh();
 
     while (!empty() && !poller.terminated() && !poller.expired() &&
-        poller.wait(delay) == socket_id)
+        poller.wait(delay) == socket_.id())
     {
         stream_.read(*this);
         delay = refresh();
@@ -128,7 +122,6 @@ void obelisk_client::wait()
 // Used by watch-* commands, fires registered update or unknown handlers.
 void obelisk_client::monitor(uint32_t timeout_seconds)
 {
-    const auto socket_id = socket_.id();
     const auto deadline = steady_clock::now() + seconds(timeout_seconds);
 
     zmq::poller poller;
@@ -136,7 +129,7 @@ void obelisk_client::monitor(uint32_t timeout_seconds)
     auto delay = remaining(deadline);
 
     while (!poller.terminated() && !poller.expired() &&
-        poller.wait(delay) == socket_id)
+        poller.wait(delay) == socket_.id())
     {
         stream_.read(*this);
         delay = remaining(deadline);

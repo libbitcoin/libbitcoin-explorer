@@ -28,7 +28,7 @@
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 
 console_result stealth_decode::invoke(std::ostream& output,
     std::ostream& error)

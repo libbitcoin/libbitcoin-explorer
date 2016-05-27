@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -161,7 +161,7 @@ public:
         )
         (
             "SHARED_SECRET",
-            value<primitives::ec_private>(&argument_.shared_secret),
+            value<explorer::config::ec_private>(&argument_.shared_secret),
             "The Base16 EC shared secret corresponding to the SPEND_PUBKEY. If not specified the key is read from STDIN."
         );
 
@@ -207,7 +207,7 @@ public:
     /**
      * Get the value of the SHARED_SECRET argument.
      */
-    virtual primitives::ec_private& get_shared_secret_argument()
+    virtual explorer::config::ec_private& get_shared_secret_argument()
     {
         return argument_.shared_secret;
     }
@@ -216,7 +216,7 @@ public:
      * Set the value of the SHARED_SECRET argument.
      */
     virtual void set_shared_secret_argument(
-        const primitives::ec_private& value)
+        const explorer::config::ec_private& value)
     {
         argument_.shared_secret = value;
     }
@@ -237,7 +237,7 @@ private:
         }
 
         bc::wallet::ec_public spend_pubkey;
-        primitives::ec_private shared_secret;
+        explorer::config::ec_private shared_secret;
     } argument_;
 
     /**

@@ -28,7 +28,7 @@
 
 namespace libbitcoin {
 namespace explorer {
-namespace primitives {
+namespace config {
 
 template <typename Values>
 pt::ptree prop_tree_list(const std::string& name, const Values& values,
@@ -73,7 +73,7 @@ pt::ptree prop_value_list(const std::string& name, const Values& values,
     return list;
 }
 
-} // namespace primitives
+} // namespace config
 } // namespace explorer
 } // namespace libbitcoin
 

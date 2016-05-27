@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -166,12 +166,12 @@ public:
         )
         (
             "SIGNATURE",
-            value<primitives::signature>(&argument_.signature)->required(),
+            value<explorer::config::signature>(&argument_.signature)->required(),
             "The message signature."
         )
         (
             "MESSAGE",
-            value<primitives::raw>(&argument_.message),
+            value<explorer::config::raw>(&argument_.message),
             "The binary message data for which the signature applies. If not specified the message is read from STDIN."
         );
 
@@ -217,7 +217,7 @@ public:
     /**
      * Get the value of the SIGNATURE argument.
      */
-    virtual primitives::signature& get_signature_argument()
+    virtual explorer::config::signature& get_signature_argument()
     {
         return argument_.signature;
     }
@@ -226,7 +226,7 @@ public:
      * Set the value of the SIGNATURE argument.
      */
     virtual void set_signature_argument(
-        const primitives::signature& value)
+        const explorer::config::signature& value)
     {
         argument_.signature = value;
     }
@@ -234,7 +234,7 @@ public:
     /**
      * Get the value of the MESSAGE argument.
      */
-    virtual primitives::raw& get_message_argument()
+    virtual explorer::config::raw& get_message_argument()
     {
         return argument_.message;
     }
@@ -243,7 +243,7 @@ public:
      * Set the value of the MESSAGE argument.
      */
     virtual void set_message_argument(
-        const primitives::raw& value)
+        const explorer::config::raw& value)
     {
         argument_.message = value;
     }
@@ -265,8 +265,8 @@ private:
         }
 
         bc::wallet::payment_address payment_address;
-        primitives::signature signature;
-        primitives::raw message;
+        explorer::config::signature signature;
+        explorer::config::raw message;
     } argument_;
 
     /**

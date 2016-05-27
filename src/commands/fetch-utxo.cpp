@@ -27,12 +27,12 @@
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 
 console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
 {

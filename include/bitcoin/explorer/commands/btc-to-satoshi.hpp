@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -149,7 +149,7 @@ public:
         )
         (
             "BTC",
-            value<primitives::btc>(&argument_.btc),
+            value<explorer::config::btc>(&argument_.btc),
             "The number of BTC to convert. If not specified the value is read from STDIN."
         );
 
@@ -178,7 +178,7 @@ public:
     /**
      * Get the value of the BTC argument.
      */
-    virtual primitives::btc& get_btc_argument()
+    virtual explorer::config::btc& get_btc_argument()
     {
         return argument_.btc;
     }
@@ -187,7 +187,7 @@ public:
      * Set the value of the BTC argument.
      */
     virtual void set_btc_argument(
-        const primitives::btc& value)
+        const explorer::config::btc& value)
     {
         argument_.btc = value;
     }
@@ -206,7 +206,7 @@ private:
         {
         }
 
-        primitives::btc btc;
+        explorer::config::btc btc;
     } argument_;
 
     /**

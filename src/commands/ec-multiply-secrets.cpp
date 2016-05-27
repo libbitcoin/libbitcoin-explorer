@@ -22,7 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -52,7 +52,7 @@ console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& e
     }
 
     // We don't use bc::ec_private serialization (WIF) here.
-    output << primitives::ec_private(product) << std::endl;
+    output << config::ec_private(product) << std::endl;
     return console_result::okay;
 }
 

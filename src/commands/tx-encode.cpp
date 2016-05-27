@@ -23,16 +23,16 @@
 #include <vector>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 using namespace bc::wallet;
 
 static bool push_scripts(std::vector<tx_output_type>& outputs,
-    const primitives::output& output, uint8_t script_version)
+    const explorer::config::output& output, uint8_t script_version)
 {
     // explicit script
     if (!output.script().operations.empty())

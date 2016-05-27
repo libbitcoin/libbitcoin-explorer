@@ -22,12 +22,12 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 
 console_result wrap_encode::invoke(std::ostream& output, std::ostream& error)
 {

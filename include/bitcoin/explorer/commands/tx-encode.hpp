@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -147,7 +147,7 @@ public:
         )
         (
             "script_version,s",
-            value<primitives::byte>(&option_.script_version)->default_value(5),
+            value<explorer::config::byte>(&option_.script_version)->default_value(5),
             "The pay-to-script-hash payment address version, defaults to 5. This is used to differentiate output addresses."
         )
         (
@@ -162,12 +162,12 @@ public:
         )
         (
             "input,i",
-            value<std::vector<primitives::input>>(&option_.inputs),
+            value<std::vector<explorer::config::input>>(&option_.inputs),
             "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
         )
         (
             "output,o",
-            value<std::vector<primitives::output>>(&option_.outputs),
+            value<std::vector<explorer::config::output>>(&option_.outputs),
             "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs."
         );
 
@@ -184,7 +184,7 @@ public:
         const auto& option_script_version_config = variables["wallet.pay_to_script_hash_version"];
         if (option_script_version.defaulted() && !option_script_version_config.defaulted())
         {
-            option_.script_version = option_script_version_config.as<primitives::byte>();
+            option_.script_version = option_script_version_config.as<explorer::config::byte>();
         }
 
         const auto& option_version = variables["version"];
@@ -209,7 +209,7 @@ public:
     /**
      * Get the value of the script_version option.
      */
-    virtual primitives::byte& get_script_version_option()
+    virtual explorer::config::byte& get_script_version_option()
     {
         return option_.script_version;
     }
@@ -218,7 +218,7 @@ public:
      * Set the value of the script_version option.
      */
     virtual void set_script_version_option(
-        const primitives::byte& value)
+        const explorer::config::byte& value)
     {
         option_.script_version = value;
     }
@@ -260,7 +260,7 @@ public:
     /**
      * Get the value of the input options.
      */
-    virtual std::vector<primitives::input>& get_inputs_option()
+    virtual std::vector<explorer::config::input>& get_inputs_option()
     {
         return option_.inputs;
     }
@@ -269,7 +269,7 @@ public:
      * Set the value of the input options.
      */
     virtual void set_inputs_option(
-        const std::vector<primitives::input>& value)
+        const std::vector<explorer::config::input>& value)
     {
         option_.inputs = value;
     }
@@ -277,7 +277,7 @@ public:
     /**
      * Get the value of the output options.
      */
-    virtual std::vector<primitives::output>& get_outputs_option()
+    virtual std::vector<explorer::config::output>& get_outputs_option()
     {
         return option_.outputs;
     }
@@ -286,7 +286,7 @@ public:
      * Set the value of the output options.
      */
     virtual void set_outputs_option(
-        const std::vector<primitives::output>& value)
+        const std::vector<explorer::config::output>& value)
     {
         option_.outputs = value;
     }
@@ -322,11 +322,11 @@ private:
         {
         }
 
-        primitives::byte script_version;
+        explorer::config::byte script_version;
         uint32_t lock_time;
         uint32_t version;
-        std::vector<primitives::input> inputs;
-        std::vector<primitives::output> outputs;
+        std::vector<explorer::config::input> inputs;
+        std::vector<explorer::config::output> outputs;
     } option_;
 };
 

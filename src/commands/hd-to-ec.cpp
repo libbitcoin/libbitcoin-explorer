@@ -22,7 +22,7 @@
 
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;

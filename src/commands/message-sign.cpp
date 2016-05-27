@@ -22,13 +22,13 @@
 #include <iostream>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 using namespace bc::wallet;
 
 // This doesn't have to be WIF, but it incorporates the compression context.

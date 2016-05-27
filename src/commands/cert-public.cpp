@@ -24,6 +24,7 @@
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
+using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::protocol;
@@ -36,7 +37,9 @@ console_result cert_public::invoke(std::ostream& output, std::ostream& error)
     // Generate the public key from the private key (if valid).
     zmq::certificate certificate(private_key);
 
-    if (!certificate)
+    // Certificate generation uses null_hash key as a sentinel for generation
+    // of a new keypair, so it must be excluded here if the user entered it.
+    if (!private_key || !certificate)
     {
         error << BX_CERT_PUBLIC_INVALID << std::endl;
         return console_result::failure;

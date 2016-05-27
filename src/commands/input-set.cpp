@@ -22,13 +22,13 @@
 #include <iostream>
 #include <cstdint>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 
 console_result input_set::invoke(std::ostream& output, std::ostream& error)
 {

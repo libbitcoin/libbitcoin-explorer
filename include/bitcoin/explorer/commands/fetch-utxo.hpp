@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -150,12 +150,12 @@ public:
         )
         (
             "format,f",
-            value<primitives::encoding>(&option_.format),
+            value<explorer::config::encoding>(&option_.format),
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
             "algorithm,a",
-            value<primitives::algorithm>(&option_.algorithm),
+            value<explorer::config::algorithm>(&option_.algorithm),
             "The algorithm for unspent output selection. Options are 'greedy', defaults to 'greedy'"
         )
         (
@@ -228,7 +228,7 @@ public:
     /**
      * Get the value of the format option.
      */
-    virtual primitives::encoding& get_format_option()
+    virtual explorer::config::encoding& get_format_option()
     {
         return option_.format;
     }
@@ -237,7 +237,7 @@ public:
      * Set the value of the format option.
      */
     virtual void set_format_option(
-        const primitives::encoding& value)
+        const explorer::config::encoding& value)
     {
         option_.format = value;
     }
@@ -245,7 +245,7 @@ public:
     /**
      * Get the value of the algorithm option.
      */
-    virtual primitives::algorithm& get_algorithm_option()
+    virtual explorer::config::algorithm& get_algorithm_option()
     {
         return option_.algorithm;
     }
@@ -254,7 +254,7 @@ public:
      * Set the value of the algorithm option.
      */
     virtual void set_algorithm_option(
-        const primitives::algorithm& value)
+        const explorer::config::algorithm& value)
     {
         option_.algorithm = value;
     }
@@ -291,8 +291,8 @@ private:
         {
         }
 
-        primitives::encoding format;
-        primitives::algorithm algorithm;
+        explorer::config::encoding format;
+        explorer::config::algorithm algorithm;
     } option_;
 };
 

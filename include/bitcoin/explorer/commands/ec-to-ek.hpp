@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -161,7 +161,7 @@ public:
         )
         (
             "version,v",
-            value<primitives::byte>(&option_.version)->default_value(0),
+            value<explorer::config::byte>(&option_.version)->default_value(0),
             "The desired payment address version."
         )
         (
@@ -171,7 +171,7 @@ public:
         )
         (
             "EC_PRIVATE_KEY",
-            value<primitives::ec_private>(&argument_.ec_private_key),
+            value<explorer::config::ec_private>(&argument_.ec_private_key),
             "The EC private key to encrypt. If not specified the key is read from STDIN."
         );
 
@@ -188,7 +188,7 @@ public:
         const auto& option_version_config = variables["wallet.pay_to_public_key_hash_version"];
         if (option_version.defaulted() && !option_version_config.defaulted())
         {
-            option_.version = option_version_config.as<primitives::byte>();
+            option_.version = option_version_config.as<explorer::config::byte>();
         }
     }
 
@@ -223,7 +223,7 @@ public:
     /**
      * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual primitives::ec_private& get_ec_private_key_argument()
+    virtual explorer::config::ec_private& get_ec_private_key_argument()
     {
         return argument_.ec_private_key;
     }
@@ -232,7 +232,7 @@ public:
      * Set the value of the EC_PRIVATE_KEY argument.
      */
     virtual void set_ec_private_key_argument(
-        const primitives::ec_private& value)
+        const explorer::config::ec_private& value)
     {
         argument_.ec_private_key = value;
     }
@@ -257,7 +257,7 @@ public:
     /**
      * Get the value of the version option.
      */
-    virtual primitives::byte& get_version_option()
+    virtual explorer::config::byte& get_version_option()
     {
         return option_.version;
     }
@@ -266,7 +266,7 @@ public:
      * Set the value of the version option.
      */
     virtual void set_version_option(
-        const primitives::byte& value)
+        const explorer::config::byte& value)
     {
         option_.version = value;
     }
@@ -287,7 +287,7 @@ private:
         }
 
         std::string passphrase;
-        primitives::ec_private ec_private_key;
+        explorer::config::ec_private ec_private_key;
     } argument_;
 
     /**
@@ -304,7 +304,7 @@ private:
         }
 
         bool uncompressed;
-        primitives::byte version;
+        explorer::config::byte version;
     } option_;
 };
 

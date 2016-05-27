@@ -27,7 +27,7 @@ using namespace bc;
 using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 
 console_result bitcoin256::invoke(std::ostream& output, std::ostream& error)
 {
@@ -36,6 +36,6 @@ console_result bitcoin256::invoke(std::ostream& output, std::ostream& error)
 
     const auto hash = bitcoin_hash(data);
 
-    output << btc256(hash) << std::endl;
+    output << hash256(hash) << std::endl;
     return console_result::okay;
 }

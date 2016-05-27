@@ -26,7 +26,7 @@
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 

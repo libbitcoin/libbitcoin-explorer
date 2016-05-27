@@ -54,9 +54,9 @@ namespace explorer {
 connection_type get_connection(const command& cmd)
 {
     connection_type connection;
-    connection.server = cmd.get_server_url_setting();
     connection.retries = cmd.get_server_connect_retries_setting();
     connection.timeout_seconds = cmd.get_server_connect_timeout_seconds_setting();
+    connection.server = cmd.get_server_url_setting();
     connection.server_public_key = cmd.get_server_server_public_key_setting();
     connection.client_private_key = cmd.get_server_client_private_key_setting();
     return connection;

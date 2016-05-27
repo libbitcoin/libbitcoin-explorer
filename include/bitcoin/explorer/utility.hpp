@@ -57,11 +57,11 @@ typedef std::vector<name_value_pair> name_value_pairs;
  */
 struct BCX_API connection_type
 {
-    config::endpoint server;
     uint8_t retries;
     uint16_t timeout_seconds;
-    std::string server_public_key;
-    std::string client_private_key;
+    bc::config::endpoint server;
+    bc::config::sodium server_public_key;
+    bc::config::sodium client_private_key;
 };
 
 /**

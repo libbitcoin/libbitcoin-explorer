@@ -28,8 +28,8 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/obelisk_client.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -37,7 +37,7 @@ using namespace bc;
 using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 using namespace bc::wallet;
 
 static void handle_signal(int signal)

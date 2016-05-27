@@ -84,7 +84,7 @@
     <Import Project="$\(ProjectDir)$\(ProjectName).props" />
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="..\\..\\..\\..\\test\\primitives\\address.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\test\\config\\address.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__broadcast.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__find.cpp" />
     <ClCompile Include="..\\..\\..\\..\\test\\generated__formerly.cpp" />

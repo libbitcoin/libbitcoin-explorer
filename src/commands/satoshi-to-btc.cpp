@@ -22,12 +22,12 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 
 console_result satoshi_to_btc::invoke(std::ostream& output,
     std::ostream& error)

@@ -26,13 +26,13 @@
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/point.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 
 using namespace pt;
 using namespace bc::client;
@@ -41,7 +41,7 @@ using namespace bc::wallet;
 
 namespace libbitcoin {
 namespace explorer {
-namespace primitives {
+namespace config {
 
 // property_tree is very odd in that what one might consider a node or element,
 // having a "containing" name cannot be added into another node without
@@ -60,10 +60,10 @@ ptree prop_list(const header& header)
 
     ptree tree;
     tree.put("bits", block_header.bits);
-    tree.put("hash", btc256(block_header.hash()));
-    tree.put("merkle_tree_hash", btc256(block_header.merkle));
+    tree.put("hash", hash256(block_header.hash()));
+    tree.put("merkle_tree_hash", hash256(block_header.merkle));
     tree.put("nonce", block_header.nonce);
-    tree.put("previous_block_hash", btc256(block_header.previous_block_hash));
+    tree.put("previous_block_hash", hash256(block_header.previous_block_hash));
     tree.put("time_stamp", block_header.timestamp);
     tree.put("version", block_header.version);
     return tree;
@@ -90,7 +90,7 @@ ptree prop_list(const chain::history& row)
     // missing output implies output cut off by server's history threshold
     if (row.output.hash != null_hash)
     {
-        tree.put("received.hash", btc256(row.output.hash));
+        tree.put("received.hash", hash256(row.output.hash));
 
         // zeroized received.height implies output unconfirmed (in mempool)
         if (row.output_height != 0)
@@ -102,7 +102,7 @@ ptree prop_list(const chain::history& row)
     // missing input implies unspent
     if (row.spend.hash != null_hash)
     {
-        tree.put("spent.hash", btc256(row.spend.hash));
+        tree.put("spent.hash", hash256(row.spend.hash));
 
         // zeroized input.height implies spend unconfirmed (in mempool)
         if (row.spend_height != 0)
@@ -173,7 +173,7 @@ ptree prop_list(const tx_input_type& tx_input)
     if (script_address)
         tree.put("address", script_address);
 
-    tree.put("previous_output.hash", btc256(tx_input.previous_output.hash));
+    tree.put("previous_output.hash", hash256(tx_input.previous_output.hash));
     tree.put("previous_output.index", tx_input.previous_output.index);
     tree.put("script", script(tx_input.script).to_string());
     tree.put("sequence", tx_input.sequence);
@@ -259,7 +259,7 @@ ptree prop_tree(const tx_output_type::list& tx_outputs, bool json)
 ptree prop_list(const chain::point& point)
 {
     ptree tree;
-    tree.put("hash", btc256(point.hash));
+    tree.put("hash", hash256(point.hash));
     tree.put("index", point.index);
     return tree;
 }
@@ -287,7 +287,7 @@ ptree prop_list(const transaction& transaction, bool json)
     const tx_type& tx = transaction;
 
     ptree tree;
-    tree.put("hash", btc256(tx.hash()));
+    tree.put("hash", hash256(tx.hash()));
     tree.add_child("inputs", prop_tree_list("input", tx.inputs, json));
     tree.put("lock_time", tx.locktime);
     tree.add_child("outputs", prop_tree_list("output", tx.outputs, json));
@@ -331,7 +331,7 @@ ptree prop_tree(const wallet::wrapped_data& wrapper)
 //    const base2& filter, bool json)
 //{
 //    ptree tree;
-//    tree.add("block", btc256(block_hash));
+//    tree.add("block", hash256(block_hash));
 //    tree.add("filter", filter);
 //    tree.add_child("transaction", prop_list(tx, json));
 //    return tree;
@@ -350,7 +350,7 @@ ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
     const payment_address& address, bool json)
 {
     ptree tree;
-    tree.add("block", btc256(block_hash));
+    tree.add("block", hash256(block_hash));
     tree.add("address", address);
     tree.add_child("transaction", prop_list(tx, json));
     return tree;
@@ -398,8 +398,8 @@ ptree prop_list(const chain::stealth& row)
 {
     ptree tree;
     tree.put("ephemeral_public_key", ec_public(row.ephemeral_public_key));
-    tree.put("public_key_hash", btc160(row.public_key_hash));
-    tree.put("transaction_hash", btc256(row.transaction_hash));
+    tree.put("public_key_hash", hash160(row.public_key_hash));
+    tree.put("transaction_hash", hash256(row.transaction_hash));
     return tree;
 }
 ptree prop_tree(const chain::stealth& row)
@@ -421,7 +421,7 @@ ptree prop_tree(const chain::stealth::list& rows, bool json)
 ptree prop_list(const hash_digest& hash, size_t height, size_t index)
 {
     ptree tree;
-    tree.put("hash", btc256(hash));
+    tree.put("hash", hash256(hash));
     tree.put("height", height);
     tree.put("index", index);
     return tree;
@@ -474,6 +474,6 @@ ptree prop_tree(const bitcoin_uri& uri)
     return tree;
 }
 
-} // namespace primitives
+} // namespace config
 } // namespace explorer
 } // namespace libbitcoin

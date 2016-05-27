@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -140,7 +140,7 @@ public:
         )
         (
             "amount,a",
-            value<primitives::btc>(&option_.amount),
+            value<explorer::config::btc>(&option_.amount),
             "The value of the amount parameter."
         )
         (
@@ -160,7 +160,7 @@ public:
         )
         (
             "ADDRESS",
-            value<primitives::address>(&argument_.address),
+            value<explorer::config::address>(&argument_.address),
             "The payment address or stealth address for the address part."
         );
 
@@ -189,7 +189,7 @@ public:
     /**
      * Get the value of the ADDRESS argument.
      */
-    virtual primitives::address& get_address_argument()
+    virtual explorer::config::address& get_address_argument()
     {
         return argument_.address;
     }
@@ -198,7 +198,7 @@ public:
      * Set the value of the ADDRESS argument.
      */
     virtual void set_address_argument(
-        const primitives::address& value)
+        const explorer::config::address& value)
     {
         argument_.address = value;
     }
@@ -206,7 +206,7 @@ public:
     /**
      * Get the value of the amount option.
      */
-    virtual primitives::btc& get_amount_option()
+    virtual explorer::config::btc& get_amount_option()
     {
         return option_.amount;
     }
@@ -215,7 +215,7 @@ public:
      * Set the value of the amount option.
      */
     virtual void set_amount_option(
-        const primitives::btc& value)
+        const explorer::config::btc& value)
     {
         option_.amount = value;
     }
@@ -285,7 +285,7 @@ private:
         {
         }
 
-        primitives::address address;
+        explorer::config::address address;
     } argument_;
 
     /**
@@ -303,7 +303,7 @@ private:
         {
         }
 
-        primitives::btc amount;
+        explorer::config::btc amount;
         std::string label;
         std::string message;
         bc::config::endpoint request;

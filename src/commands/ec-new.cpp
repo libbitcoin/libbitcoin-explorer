@@ -23,7 +23,7 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -50,6 +50,6 @@ console_result ec_new::invoke(std::ostream& output, std::ostream& error)
     }
 
     // We don't use bc::ec_private serialization (WIF) here.
-    output << primitives::ec_private(secret) << std::endl;
+    output << config::ec_private(secret) << std::endl;
     return console_result::okay;
 }
