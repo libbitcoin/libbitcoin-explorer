@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -169,22 +169,22 @@ public:
         )
         (
             "sign_type,s",
-            value<primitives::hashtype>(&option_.sign_type),
+            value<explorer::config::hashtype>(&option_.sign_type),
             "A token that indicates how the transaction should be hashed for signing. Options are 'all', 'none', and 'single', defaults to 'all'."
         )
         (
             "EC_PRIVATE_KEY",
-            value<primitives::ec_private>(&argument_.ec_private_key)->required(),
+            value<explorer::config::ec_private>(&argument_.ec_private_key)->required(),
             "The Base16 EC private key to sign with."
         )
         (
             "CONTRACT",
-            value<primitives::script>(&argument_.contract)->required(),
+            value<explorer::config::script>(&argument_.contract)->required(),
             "The previous output script to use in signing. Multiple tokens must be quoted."
         )
         (
             "TRANSACTION",
-            value<primitives::transaction>(&argument_.transaction),
+            value<explorer::config::transaction>(&argument_.transaction),
             "The Base16 transaction. If not specified the transaction is read from STDIN."
         );
 
@@ -213,7 +213,7 @@ public:
     /**
      * Get the value of the EC_PRIVATE_KEY argument.
      */
-    virtual primitives::ec_private& get_ec_private_key_argument()
+    virtual explorer::config::ec_private& get_ec_private_key_argument()
     {
         return argument_.ec_private_key;
     }
@@ -222,7 +222,7 @@ public:
      * Set the value of the EC_PRIVATE_KEY argument.
      */
     virtual void set_ec_private_key_argument(
-        const primitives::ec_private& value)
+        const explorer::config::ec_private& value)
     {
         argument_.ec_private_key = value;
     }
@@ -230,7 +230,7 @@ public:
     /**
      * Get the value of the CONTRACT argument.
      */
-    virtual primitives::script& get_contract_argument()
+    virtual explorer::config::script& get_contract_argument()
     {
         return argument_.contract;
     }
@@ -239,7 +239,7 @@ public:
      * Set the value of the CONTRACT argument.
      */
     virtual void set_contract_argument(
-        const primitives::script& value)
+        const explorer::config::script& value)
     {
         argument_.contract = value;
     }
@@ -247,7 +247,7 @@ public:
     /**
      * Get the value of the TRANSACTION argument.
      */
-    virtual primitives::transaction& get_transaction_argument()
+    virtual explorer::config::transaction& get_transaction_argument()
     {
         return argument_.transaction;
     }
@@ -256,7 +256,7 @@ public:
      * Set the value of the TRANSACTION argument.
      */
     virtual void set_transaction_argument(
-        const primitives::transaction& value)
+        const explorer::config::transaction& value)
     {
         argument_.transaction = value;
     }
@@ -298,7 +298,7 @@ public:
     /**
      * Get the value of the sign_type option.
      */
-    virtual primitives::hashtype& get_sign_type_option()
+    virtual explorer::config::hashtype& get_sign_type_option()
     {
         return option_.sign_type;
     }
@@ -307,7 +307,7 @@ public:
      * Set the value of the sign_type option.
      */
     virtual void set_sign_type_option(
-        const primitives::hashtype& value)
+        const explorer::config::hashtype& value)
     {
         option_.sign_type = value;
     }
@@ -328,9 +328,9 @@ private:
         {
         }
 
-        primitives::ec_private ec_private_key;
-        primitives::script contract;
-        primitives::transaction transaction;
+        explorer::config::ec_private ec_private_key;
+        explorer::config::script contract;
+        explorer::config::transaction transaction;
     } argument_;
 
     /**
@@ -349,7 +349,7 @@ private:
 
         bool anyone;
         uint32_t index;
-        primitives::hashtype sign_type;
+        explorer::config::hashtype sign_type;
     } option_;
 };
 

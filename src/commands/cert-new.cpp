@@ -24,18 +24,18 @@
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
+using namespace bc::config;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::protocol;
 
 console_result cert_new::invoke(std::ostream& output, std::ostream& error)
 {
-    // TODO: update settings implementation so hash can be allowed.
-    // Removal of the hash character reduces keyspace/security.
-    static const bool disallow_hash_character = true;
+    // TODO: update settings implementation so '#' character can be allowed.
+    // BUGBUG: Removal of '#' by certificate reduces keyspace/security.
 
     // Create a new Curve ZMQ certificate.
-    zmq::certificate certificate(disallow_hash_character);
+    zmq::certificate certificate;
 
     if (!certificate)
     {

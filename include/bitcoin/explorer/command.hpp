@@ -27,25 +27,25 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -196,7 +196,7 @@ public:
         definitions.add_options()
         (
             "wallet.wif_version",
-            value<primitives::byte>(&setting_.wallet.wif_version)->default_value(128),
+            value<explorer::config::byte>(&setting_.wallet.wif_version)->default_value(128),
             "The wallet import format (WIF) key version, defaults to 128."
         )
         (
@@ -211,12 +211,12 @@ public:
         )
         (
             "wallet.pay_to_public_key_hash_version",
-            value<primitives::byte>(&setting_.wallet.pay_to_public_key_hash_version)->default_value(0),
+            value<explorer::config::byte>(&setting_.wallet.pay_to_public_key_hash_version)->default_value(0),
             "The pay-to-public-key-hash address version, defaults to 0."
         )
         (
             "wallet.pay_to_script_hash_version",
-            value<primitives::byte>(&setting_.wallet.pay_to_script_hash_version)->default_value(5),
+            value<explorer::config::byte>(&setting_.wallet.pay_to_script_hash_version)->default_value(5),
             "The pay-to-script-hash address version, defaults to 5."
         )
         (
@@ -231,7 +231,7 @@ public:
         )
         (
             "network.connect_retries",
-            value<primitives::byte>(&setting_.network.connect_retries)->default_value(0),
+            value<explorer::config::byte>(&setting_.network.connect_retries)->default_value(0),
             "The number of times to retry contacting a node, defaults to 0."
         )
         (
@@ -271,7 +271,7 @@ public:
         )
         (
             "server.connect_retries",
-            value<primitives::byte>(&setting_.server.connect_retries)->default_value(0),
+            value<explorer::config::byte>(&setting_.server.connect_retries)->default_value(0),
             "The number of times to retry contacting a server, defaults to 0."
         )
         (
@@ -281,12 +281,12 @@ public:
         )
         (
             "server.server_public_key",
-            value<std::string>(&setting_.server.server_public_key),
+            value<bc::config::sodium>(&setting_.server.server_public_key),
             "The Z85-encoded public key of the server."
         )
         (
             "server.client_private_key",
-            value<std::string>(&setting_.server.client_private_key),
+            value<bc::config::sodium>(&setting_.server.client_private_key),
             "The Z85-encoded private key of the client."
         );
     }
@@ -316,8 +316,8 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        config::printer help(options, arguments, BX_PROGRAM_NAME, description(),
-            name());
+        bc::config::printer help(options, arguments, BX_PROGRAM_NAME,
+            description(), name());
         help.initialize();
         help.commandline(output);
     }
@@ -343,7 +343,7 @@ public:
     /**
      * Get the value of the wallet.wif_version setting.
      */
-    virtual primitives::byte get_wallet_wif_version_setting() const
+    virtual explorer::config::byte get_wallet_wif_version_setting() const
     {
         return setting_.wallet.wif_version;
     }
@@ -351,7 +351,7 @@ public:
     /**
      * Set the value of the wallet.wif_version setting.
      */
-    virtual void set_wallet_wif_version_setting(primitives::byte value)
+    virtual void set_wallet_wif_version_setting(explorer::config::byte value)
     {
         setting_.wallet.wif_version = value;
     }
@@ -391,7 +391,7 @@ public:
     /**
      * Get the value of the wallet.pay_to_public_key_hash_version setting.
      */
-    virtual primitives::byte get_wallet_pay_to_public_key_hash_version_setting() const
+    virtual explorer::config::byte get_wallet_pay_to_public_key_hash_version_setting() const
     {
         return setting_.wallet.pay_to_public_key_hash_version;
     }
@@ -399,7 +399,7 @@ public:
     /**
      * Set the value of the wallet.pay_to_public_key_hash_version setting.
      */
-    virtual void set_wallet_pay_to_public_key_hash_version_setting(primitives::byte value)
+    virtual void set_wallet_pay_to_public_key_hash_version_setting(explorer::config::byte value)
     {
         setting_.wallet.pay_to_public_key_hash_version = value;
     }
@@ -407,7 +407,7 @@ public:
     /**
      * Get the value of the wallet.pay_to_script_hash_version setting.
      */
-    virtual primitives::byte get_wallet_pay_to_script_hash_version_setting() const
+    virtual explorer::config::byte get_wallet_pay_to_script_hash_version_setting() const
     {
         return setting_.wallet.pay_to_script_hash_version;
     }
@@ -415,7 +415,7 @@ public:
     /**
      * Set the value of the wallet.pay_to_script_hash_version setting.
      */
-    virtual void set_wallet_pay_to_script_hash_version_setting(primitives::byte value)
+    virtual void set_wallet_pay_to_script_hash_version_setting(explorer::config::byte value)
     {
         setting_.wallet.pay_to_script_hash_version = value;
     }
@@ -455,7 +455,7 @@ public:
     /**
      * Get the value of the network.connect_retries setting.
      */
-    virtual primitives::byte get_network_connect_retries_setting() const
+    virtual explorer::config::byte get_network_connect_retries_setting() const
     {
         return setting_.network.connect_retries;
     }
@@ -463,7 +463,7 @@ public:
     /**
      * Set the value of the network.connect_retries setting.
      */
-    virtual void set_network_connect_retries_setting(primitives::byte value)
+    virtual void set_network_connect_retries_setting(explorer::config::byte value)
     {
         setting_.network.connect_retries = value;
     }
@@ -583,7 +583,7 @@ public:
     /**
      * Get the value of the server.connect_retries setting.
      */
-    virtual primitives::byte get_server_connect_retries_setting() const
+    virtual explorer::config::byte get_server_connect_retries_setting() const
     {
         return setting_.server.connect_retries;
     }
@@ -591,7 +591,7 @@ public:
     /**
      * Set the value of the server.connect_retries setting.
      */
-    virtual void set_server_connect_retries_setting(primitives::byte value)
+    virtual void set_server_connect_retries_setting(explorer::config::byte value)
     {
         setting_.server.connect_retries = value;
     }
@@ -615,7 +615,7 @@ public:
     /**
      * Get the value of the server.server_public_key setting.
      */
-    virtual std::string get_server_server_public_key_setting() const
+    virtual bc::config::sodium get_server_server_public_key_setting() const
     {
         return setting_.server.server_public_key;
     }
@@ -623,7 +623,7 @@ public:
     /**
      * Set the value of the server.server_public_key setting.
      */
-    virtual void set_server_server_public_key_setting(std::string value)
+    virtual void set_server_server_public_key_setting(bc::config::sodium value)
     {
         setting_.server.server_public_key = value;
     }
@@ -631,7 +631,7 @@ public:
     /**
      * Get the value of the server.client_private_key setting.
      */
-    virtual std::string get_server_client_private_key_setting() const
+    virtual bc::config::sodium get_server_client_private_key_setting() const
     {
         return setting_.server.client_private_key;
     }
@@ -639,7 +639,7 @@ public:
     /**
      * Set the value of the server.client_private_key setting.
      */
-    virtual void set_server_client_private_key_setting(std::string value)
+    virtual void set_server_client_private_key_setting(bc::config::sodium value)
     {
         setting_.server.client_private_key = value;
     }
@@ -698,11 +698,11 @@ private:
             {
             }
 
-            primitives::byte wif_version;
+            explorer::config::byte wif_version;
             uint32_t hd_public_version;
             uint32_t hd_secret_version;
-            primitives::byte pay_to_public_key_hash_version;
-            primitives::byte pay_to_script_hash_version;
+            explorer::config::byte pay_to_public_key_hash_version;
+            explorer::config::byte pay_to_script_hash_version;
             uint32_t transaction_version;
         } wallet;
 
@@ -721,7 +721,7 @@ private:
             }
 
             uint32_t identifier;
-            primitives::byte connect_retries;
+            explorer::config::byte connect_retries;
             uint32_t connect_timeout_seconds;
             uint32_t channel_handshake_seconds;
             boost::filesystem::path hosts_file;
@@ -742,10 +742,10 @@ private:
             }
 
             bc::config::endpoint url;
-            primitives::byte connect_retries;
+            explorer::config::byte connect_retries;
             uint16_t connect_timeout_seconds;
-            std::string server_public_key;
-            std::string client_private_key;
+            bc::config::sodium server_public_key;
+            bc::config::sodium client_private_key;
         } server;
 
         setting()

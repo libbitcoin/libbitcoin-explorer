@@ -37,11 +37,11 @@ public:
     obelisk_client(const connection_type& channel);
     obelisk_client(uint16_t timeout_seconds, uint8_t retries);
 
-    virtual bool connect(const config::endpoint& address);
+    virtual bool connect(const bc::config::endpoint& address);
 
-    virtual bool connect(const config::endpoint& address,
-        const std::string& server_public_key,
-        const std::string& client_private_key);
+    virtual bool connect(const bc::config::endpoint& address,
+        const bc::config::sodium& server_public_key,
+        const bc::config::sodium& client_private_key);
 
     virtual bool connect(const connection_type& channel);
 

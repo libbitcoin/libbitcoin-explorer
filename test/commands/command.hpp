@@ -32,7 +32,7 @@ using namespace bc; \
 using namespace bc::client; \
 using namespace bc::explorer; \
 using namespace bc::explorer::commands; \
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 
 // Libbitcoin error messsages (see error.cpp).
 #define BX_ERROR_MESSAGE(ec) \

@@ -214,8 +214,8 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        config::printer help(options, arguments, BX_PROGRAM_NAME, description(),
-            name());
+        bc::config::printer help(options, arguments, BX_PROGRAM_NAME,
+            description(), name());
         help.initialize();
         help.commandline(output);
     }

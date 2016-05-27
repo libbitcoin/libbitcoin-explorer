@@ -27,7 +27,7 @@
     <Filter Include="src\tests\commands\stub">
       <UniqueIdentifier>{44ca92b4-d241-4677-aac2-0bb85bd9a990}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\tests\primitives">
+    <Filter Include="src\tests\config">
       <UniqueIdentifier>{14f110d7-6526-4899-bddb-d390b0ca55ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -302,8 +302,8 @@
     <ClCompile Include="..\..\..\..\test\commands\wrap-encode.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\primitives\address.cpp">
-      <Filter>src\tests\primitives</Filter>
+    <ClCompile Include="..\..\..\..\test\config\address.cpp">
+      <Filter>src\tests\config</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\generated__broadcast.cpp">
       <Filter>src\tests</Filter>

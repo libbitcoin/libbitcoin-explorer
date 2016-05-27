@@ -35,7 +35,7 @@ namespace explorer {
 /// Parse configurable values from environment variables, settings file, and
 /// command line positional and non-positional options.
 class BCX_API parser
-  : public config::parser
+  : public bc::config::parser
 {
 public:
     /// Construct the parser for the given command.

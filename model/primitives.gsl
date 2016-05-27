@@ -23,8 +23,6 @@ function global.map_type(type)
     my.type_base64 = "base64"
     my.type_base85 = "base85"
     my.type_btc = "btc"
-    my.type_btc160 = "btc160"
-    my.type_btc256 = "btc256"
     my.type_byte = "byte"
     my.type_cert_key = "cert_key"
     my.type_ec_private = "ec_private"
@@ -36,6 +34,8 @@ function global.map_type(type)
     my.type_endorsement = "endorsement"
     my.type_endpoint = "endpoint"
     my.type_file = "file"
+    my.type_hash160 = "hash160"
+    my.type_hash256 = "hash256"
     my.type_hashtype = "hashtype"
     my.type_hd_key = "hd_key"
     my.type_hd_private = "hd_private"
@@ -50,6 +50,7 @@ function global.map_type(type)
     my.type_raw = "raw"
     my.type_script = "script"
     my.type_signature = "signature"
+    my.type_sodium = "sodium"
     my.type_stealth_address = "stealth_address"
     my.type_string = "string"
     my.type_transaction = "transaction"
@@ -57,47 +58,48 @@ function global.map_type(type)
     my.type_wif = "wif"
     my.type_wrapper = "wrapper"
 
-    my.type_address_bx = "primitives::address"
-    my.type_algorithm_bx = "primitives::algorithm"
+    my.type_address_bx = "explorer::config::address"
+    my.type_algorithm_bx = "explorer::config::algorithm"
     my.type_base16_bx = "bc::config::base16"
     my.type_base2_bx = "bc::config::base2"
     my.type_base58_bx = "bc::config::base58"
     my.type_base64_bx = "bc::config::base64"
     my.type_base85_bx = "bc::config::base85"
-    my.type_btc_bx = "primitives::btc"
-    my.type_btc160_bx = "bc::config::btc160"
-    my.type_btc256_bx = "bc::config::btc256"
-    my.type_byte_bx = "primitives::byte"
-    my.type_cert_key_bx = "primitives::cert_key"
-    my.type_ec_private_bx = "primitives::ec_private"
+    my.type_btc_bx = "explorer::config::btc"
+    my.type_byte_bx = "explorer::config::byte"
+    my.type_cert_key_bx = "explorer::config::cert_key"
+    my.type_ec_private_bx = "explorer::config::ec_private"
     my.type_ec_public_bx = "bc::wallet::ec_public"
     my.type_ek_private_bx = "bc::wallet::ek_private"
     my.type_ek_public_bx = "bc::wallet::ek_public"
     my.type_ek_token_bx = "bc::wallet::ek_token"
-    my.type_encoding_bx = "primitives::encoding"
-    my.type_endorsement_bx = "primitives::endorsement"
+    my.type_encoding_bx = "explorer::config::encoding"
+    my.type_endorsement_bx = "explorer::config::endorsement"
     my.type_endpoint_bx = "bc::config::endpoint"
-    my.type_file_bx = "primitives::file"
-    my.type_hashtype_bx = "primitives::hashtype"
-    my.type_hd_key_bx = "primitives::hd_key"
+    my.type_file_bx = "explorer::config::file"
+    my.type_hash160_bx = "bc::config::hash160"
+    my.type_hash256_bx = "bc::config::hash256"
+    my.type_hashtype_bx = "explorer::config::hashtype"
+    my.type_hd_key_bx = "explorer::config::hd_key"
     my.type_hd_private_bx = "bc::wallet::hd_private"
     my.type_hd_public_bx = "bc::wallet::hd_public"
-    my.type_header_bx = "primitives::header"
-    my.type_input_bx = "primitives::input"
-    my.type_language_bx = "primitives::language"
-    my.type_output_bx = "primitives::output"
+    my.type_header_bx = "explorer::config::header"
+    my.type_input_bx = "explorer::config::input"
+    my.type_language_bx = "explorer::config::language"
+    my.type_output_bx = "explorer::config::output"
     my.type_path_boost = "boost::filesystem::path"
     my.type_payment_address_bx = "bc::wallet::payment_address"
-    my.type_point_bx = "primitives::point"
-    my.type_raw_bx = "primitives::raw"
-    my.type_script_bx = "primitives::script"
-    my.type_signature_bx = "primitives::signature"
+    my.type_point_bx = "explorer::config::point"
+    my.type_raw_bx = "explorer::config::raw"
+    my.type_script_bx = "explorer::config::script"
+    my.type_signature_bx = "explorer::config::signature"
+    my.type_sodium_bx = "bc::config::sodium"
     my.type_stealth_address_bx = "bc::wallet::stealth_address"
     my.type_string_std = "std::string"
-    my.type_transaction_bx = "primitives::transaction"
+    my.type_transaction_bx = "explorer::config::transaction"
     my.type_uri_bx = "bc::wallet::bitcoin_uri"
     my.type_wif_bx = "bc::wallet::ec_private"
-    my.type_wrapper_bx = "primitives::wrapper"
+    my.type_wrapper_bx = "explorer::config::wrapper"
 
     if my.type = my.type_address
         return my.type_address_bx
@@ -115,10 +117,6 @@ function global.map_type(type)
         return my.type_base85_bx
     elsif my.type = my.type_btc
         return my.type_btc_bx
-    elsif my.type = my.type_btc160
-        return my.type_btc160_bx
-    elsif my.type = my.type_btc256
-        return my.type_btc256_bx
     elsif my.type = my.type_byte
         return my.type_byte_bx
     elsif my.type = my.type_cert_key
@@ -141,6 +139,10 @@ function global.map_type(type)
         return my.type_endpoint_bx
     elsif my.type = my.type_file
         return my.type_file_bx
+    elsif my.type = my.type_hash160
+        return my.type_hash160_bx
+    elsif my.type = my.type_hash256
+        return my.type_hash256_bx
     elsif my.type = my.type_hashtype
         return my.type_hashtype_bx
     elsif my.type = my.type_hd_key
@@ -169,6 +171,8 @@ function global.map_type(type)
         return my.type_script_bx
     elsif my.type = my.type_signature
         return my.type_signature_bx
+    elsif my.type = my.type_sodium
+        return my.type_sodium_bx
     elsif my.type = my.type_stealth_address
         return my.type_stealth_address_bx
     elsif my.type = my.type_string
@@ -211,12 +215,12 @@ function global.is_raw_type(type)
 endfunction
 
 function global.is_braced_type(type)
-    return (my.type = "primitives::uri") | (my.type = "bc::config::endpoint")
+    return (my.type = "explorer::config::uri") | (my.type = "bc::config::endpoint")
 endfunction
 
 function global.is_quoted_type(type)
     return ((my.type = "boost::filesystem::path") | \
-        (my.type = "std::string") | (my.type = "primitives::uri") | \
+        (my.type = "std::string") | (my.type = "explorer::config::uri") | \
         (my.type = "bc::config::endpoint"))
 endfunction
 
@@ -249,25 +253,25 @@ endfunction
 .endmacro
 .
 .macro global.primitives
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 .endmacro
 .
 .endtemplate

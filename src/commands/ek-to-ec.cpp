@@ -24,7 +24,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -46,7 +46,7 @@ console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    output << primitives::ec_private(secret) << std::endl;
+    output << config::ec_private(secret) << std::endl;
     return console_result::okay;
 #else
     error << BX_EK_TO_EC_REQUIRES_ICU << std::endl;

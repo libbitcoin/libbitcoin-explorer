@@ -54,9 +54,8 @@
     <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk server." />
     <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint16_t" description="The time limit for connection establishment, defaults to 5." />
-    <!-- TODO: change cert primitive (unused) to key primitive and use here and in cert-public command in place of string type. -->
-    <setting name="server_public_key" type="string" description="The Z85-encoded public key of the server." />
-    <setting name="client_private_key" type="string" description="The Z85-encoded private key of the client." />
+    <setting name="server_public_key" type="sodium" description="The Z85-encoded public key of the server." />
+    <setting name="client_private_key" type="sodium" description="The Z85-encoded private key of the client." />
   </configuration>
 
   <!-- General resources. -->
@@ -94,7 +93,7 @@
 
   <command symbol="address-encode" formerly="encode-addr" output="payment_address" category="WALLET" description="Convert a RIPEMD160 value to a payment address.">
     <option name="version" type="byte" configuration="wallet.pay_to_public_key_hash_version" description="The desired payment address version." />
-    <argument name="RIPEMD160" stdin="true" type="btc160" description="The Base16 hash to convert. If not specified the value is read from STDIN."/>
+    <argument name="RIPEMD160" stdin="true" type="hash160" description="The Base16 hash to convert. If not specified the value is read from STDIN."/>
   </command>
   
   <command symbol="base16-decode" output="raw" category="ENCODING" description="Convert a Base16 value to binary data.">
@@ -149,8 +148,8 @@
   </command>
 
   <!-- TODO: document compatability break from v2.x to v3.0. -->
-  <command symbol="cert-public" output="base85" category="MATH" description="Derive a Curve ZMQ public key for use with a Libbitcoin/Obelisk server.">
-    <argument name="PRIVATE_KEY" stdin="true" type="base85" description="The private key from which to derive the public key." />
+  <command symbol="cert-public" output="sodium" category="MATH" description="Derive a Curve ZMQ public key for use with a Libbitcoin/Obelisk server.">
+    <argument name="PRIVATE_KEY" stdin="true" type="sodium" description="The private key from which to derive the public key." />
     <define name="BX_CERT_PUBLIC_INVALID" value="The private key is not valid." />
   </command>
    
@@ -267,7 +266,7 @@
 
   <command symbol="fetch-header" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <option name="hash" shortcut="s" type="btc256" description="The Base16 block hash."/>
+    <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
   </command>
 
@@ -296,12 +295,12 @@
 
   <command symbol="fetch-tx" formerly="fetch-transaction" output="transaction" category="ONLINE" network="true" description="Get a transaction by its hash. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN." />
+    <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN." />
   </command>
 
   <command symbol="fetch-tx-index" formerly="fetch-transaction-index" output="string" multipleX="true" category="ONLINE" network="true" description="Get the block height and index of a transaction. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash of the transaction index to get. If not specified the transaction hash is read from STDIN." />
+    <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash of the transaction index to get. If not specified the transaction hash is read from STDIN." />
   </command>
 
   <command symbol="fetch-utxo" formerly="get-utxo" output="output" multipleX="true" category="ONLINE" network="true" description="Get enough unspent transaction outputs from a payment address to pay a number of satoshi. Requires a Libbitcoin server connection.">
@@ -602,7 +601,7 @@
 
   <command symbol="watch-tx" formerly="watchtx" output="transaction" category="ONLINE" network="true" stub="true" description="Watch the network for a transaction by hash. Requires a Libbitcoin/Obelisk server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <argument name="HASH" stdin="true" type="btc256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
+    <argument name="HASH" stdin="true" type="hash256" description="The Base16 transaction hash to watch. If not specified the hash is read from STDIN." />
     <define name="BX_WATCH_TX_WAITING" value="Watching transaction: %1%..." />
     <define name="BX_WATCH_TX_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>

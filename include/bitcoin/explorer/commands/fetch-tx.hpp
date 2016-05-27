@@ -29,25 +29,25 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
-#include <bitcoin/explorer/primitives/address.hpp>
-#include <bitcoin/explorer/primitives/algorithm.hpp>
-#include <bitcoin/explorer/primitives/btc.hpp>
-#include <bitcoin/explorer/primitives/byte.hpp>
-#include <bitcoin/explorer/primitives/cert_key.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
-#include <bitcoin/explorer/primitives/endorsement.hpp>
-#include <bitcoin/explorer/primitives/hashtype.hpp>
-#include <bitcoin/explorer/primitives/hd_key.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/language.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/raw.hpp>
-#include <bitcoin/explorer/primitives/script.hpp>
-#include <bitcoin/explorer/primitives/signature.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/algorithm.hpp>
+#include <bitcoin/explorer/config/btc.hpp>
+#include <bitcoin/explorer/config/byte.hpp>
+#include <bitcoin/explorer/config/cert_key.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
+#include <bitcoin/explorer/config/endorsement.hpp>
+#include <bitcoin/explorer/config/hashtype.hpp>
+#include <bitcoin/explorer/config/hd_key.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/language.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/raw.hpp>
+#include <bitcoin/explorer/config/script.hpp>
+#include <bitcoin/explorer/config/signature.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
@@ -149,12 +149,12 @@ public:
         )
         (
             "format,f",
-            value<primitives::encoding>(&option_.format),
+            value<explorer::config::encoding>(&option_.format),
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
             "HASH",
-            value<bc::config::btc256>(&argument_.hash),
+            value<bc::config::hash256>(&argument_.hash),
             "The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN."
         );
 
@@ -183,7 +183,7 @@ public:
     /**
      * Get the value of the HASH argument.
      */
-    virtual bc::config::btc256& get_hash_argument()
+    virtual bc::config::hash256& get_hash_argument()
     {
         return argument_.hash;
     }
@@ -192,7 +192,7 @@ public:
      * Set the value of the HASH argument.
      */
     virtual void set_hash_argument(
-        const bc::config::btc256& value)
+        const bc::config::hash256& value)
     {
         argument_.hash = value;
     }
@@ -200,7 +200,7 @@ public:
     /**
      * Get the value of the format option.
      */
-    virtual primitives::encoding& get_format_option()
+    virtual explorer::config::encoding& get_format_option()
     {
         return option_.format;
     }
@@ -209,7 +209,7 @@ public:
      * Set the value of the format option.
      */
     virtual void set_format_option(
-        const primitives::encoding& value)
+        const explorer::config::encoding& value)
     {
         option_.format = value;
     }
@@ -228,7 +228,7 @@ private:
         {
         }
 
-        bc::config::btc256 hash;
+        bc::config::hash256 hash;
     } argument_;
 
     /**
@@ -243,7 +243,7 @@ private:
         {
         }
 
-        primitives::encoding format;
+        explorer::config::encoding format;
     } option_;
 };
 

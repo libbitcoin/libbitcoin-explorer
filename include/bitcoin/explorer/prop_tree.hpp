@@ -26,18 +26,18 @@
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/header.hpp>
-#include <bitcoin/explorer/primitives/input.hpp>
-#include <bitcoin/explorer/primitives/output.hpp>
-#include <bitcoin/explorer/primitives/point.hpp>
-#include <bitcoin/explorer/primitives/transaction.hpp>
-#include <bitcoin/explorer/primitives/wrapper.hpp>
+#include <bitcoin/explorer/config/header.hpp>
+#include <bitcoin/explorer/config/input.hpp>
+#include <bitcoin/explorer/config/output.hpp>
+#include <bitcoin/explorer/config/point.hpp>
+#include <bitcoin/explorer/config/transaction.hpp>
+#include <bitcoin/explorer/config/wrapper.hpp>
 
 /* NOTE: don't declare 'using namespace foo' in headers. */
 
 namespace libbitcoin {
 namespace explorer {
-namespace primitives {
+namespace config {
     
 class base2;
 class header;
@@ -180,14 +180,14 @@ BCX_API pt::ptree prop_tree(const tx_input_type::list& tx_inputs, bool json);
  * @param[in]  input  The input.
  * @return            A property list.
  */
-BCX_API pt::ptree prop_list(const explorer::primitives::input& input);
+BCX_API pt::ptree prop_list(const explorer::config::input& input);
 
 /**
  * Generate a property tree for an input.
  * @param[in]  input  The input.
  * @return            A property tree.
  */
-BCX_API pt::ptree prop_tree(const explorer::primitives::input& input);
+BCX_API pt::ptree prop_tree(const explorer::config::input& input);
 
 /**
  * Generate a property tree for a set of inputs.
@@ -196,7 +196,7 @@ BCX_API pt::ptree prop_tree(const explorer::primitives::input& input);
  * @return             A property tree.
  */
 BCX_API pt::ptree prop_tree(
-    const std::vector<explorer::primitives::input>& inputs, bool json);
+    const std::vector<explorer::config::input>& inputs, bool json);
 
 /**
  * Generate a property list for a transaction output.
@@ -399,7 +399,7 @@ BCX_API pt::ptree prop_tree(const settings_list& settings);
  */
 BCX_API pt::ptree prop_tree(const wallet::bitcoin_uri& uri);
 
-} // namespace primitives
+} // namespace config
 } // namespace explorer
 } // namespace libbitcoin
 

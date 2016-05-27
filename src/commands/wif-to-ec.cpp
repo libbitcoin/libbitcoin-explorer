@@ -22,7 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -33,6 +33,6 @@ console_result wif_to_ec::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& secret = get_wif_argument();
 
-    output << primitives::ec_private(secret) << std::endl;
+    output << config::ec_private(secret) << std::endl;
     return console_result::okay;
 }

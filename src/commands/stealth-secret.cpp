@@ -22,7 +22,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/primitives/ec_private.hpp>
+#include <bitcoin/explorer/config/ec_private.hpp>
 
 using namespace bc;
 using namespace bc::explorer;
@@ -43,6 +43,6 @@ console_result stealth_secret::invoke(std::ostream& output,
         return console_result::failure;
     }
 
-    output << primitives::ec_private(sum) << std::endl;
+    output << config::ec_private(sum) << std::endl;
     return console_result::okay;
 }

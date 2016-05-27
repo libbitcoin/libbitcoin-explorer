@@ -25,7 +25,7 @@
 #include <string>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <bitcoin/explorer/primitives/encoding.hpp>
+#include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>

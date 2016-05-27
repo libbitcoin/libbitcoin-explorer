@@ -33,7 +33,7 @@ using namespace bc::chain;
 using namespace bc::client;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
-using namespace bc::explorer::primitives;
+using namespace bc::explorer::config;
 
 // When you restore your wallet, you should use fetch_history(). 
 // But for updating the wallet, use the [new] scan() method- 

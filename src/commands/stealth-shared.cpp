@@ -45,6 +45,6 @@ console_result stealth_shared::invoke(std::ostream& output,
 
     const auto hash = sha256_hash(product);
 
-    output << primitives::ec_private(hash) << std::endl;
+    output << config::ec_private(hash) << std::endl;
     return console_result::okay;
 }

@@ -70,7 +70,7 @@ options_metadata parser::load_environment()
 void parser::load_command_variables(variables_map& variables,
     std::istream& input, int argc, const char* argv[])
 {
-    config::parser::load_command_variables(variables, argc, argv);
+    bc::config::parser::load_command_variables(variables, argc, argv);
 
     // Don't load rest if help is specified.
     // For variable with stdin or file fallback load the input stream.
