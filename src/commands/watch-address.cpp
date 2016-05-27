@@ -23,11 +23,10 @@
 #include <csignal>
 #include <cstddef>
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/obelisk_client.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>

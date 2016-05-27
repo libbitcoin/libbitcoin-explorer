@@ -53,18 +53,6 @@ typedef std::pair<std::string, std::string> name_value_pair;
 typedef std::vector<name_value_pair> name_value_pairs;
 
 /**
- * Structure used for passing connection settings for a server.
- */
-struct BCX_API connection_type
-{
-    uint8_t retries;
-    uint16_t timeout_seconds;
-    bc::config::endpoint server;
-    bc::config::sodium server_public_key;
-    bc::config::sodium client_private_key;
-};
-
-/**
  * Forward declaration to break header cycle.
  */
 class command;
@@ -172,7 +160,7 @@ void write_file(std::ostream& output, const std::string& path,
  * @param    cmd  The command.
  * @returns       A structure containing the connection settings.
  */
-BCX_API connection_type get_connection(const command& cmd);
+BCX_API client::connection_type get_connection(const command& cmd);
 
 /**
  * Generate a new ec key from a seed.
