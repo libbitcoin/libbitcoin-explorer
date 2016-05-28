@@ -407,9 +407,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\generated.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\obelisk_client.hpp">
-      <Filter>include\bitcoin\explorer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\parser.hpp">
       <Filter>include\bitcoin\explorer</Filter>
     </ClInclude>
@@ -764,9 +761,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\generated.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\obelisk_client.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\parser.cpp">

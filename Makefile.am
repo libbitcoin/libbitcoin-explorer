@@ -39,7 +39,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/dispatch.cpp \
     src/display.cpp \
     src/generated.cpp \
-    src/obelisk_client.cpp \
     src/parser.cpp \
     src/prop_tree.cpp \
     src/utility.cpp \
@@ -290,7 +289,6 @@ include_bitcoin_explorer_HEADERS = \
     include/bitcoin/explorer/dispatch.hpp \
     include/bitcoin/explorer/display.hpp \
     include/bitcoin/explorer/generated.hpp \
-    include/bitcoin/explorer/obelisk_client.hpp \
     include/bitcoin/explorer/parser.hpp \
     include/bitcoin/explorer/prop_tree.hpp \
     include/bitcoin/explorer/utility.hpp \
