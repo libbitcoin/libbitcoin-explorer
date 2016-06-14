@@ -102,8 +102,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         started.set_value(ec);
     };
 
-    const auto stop_handler = [&stopped](const code& ec)
-    {
+    const auto stop_handler = [&stopped](const code& ec) {
         stopped.set_value(ec);
     };
 
@@ -141,6 +140,8 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // Handle each successful connection.
     network.subscribe_connection(connect_handler);
 
+    network.subscribe_stop(stop_handler);
+
     // Connect to the specified number of hosts from the host pool.
     // This attempts to maintain the set of connections, so it will always
     // eventually achieve the target, and sometimes go over due to the race.
@@ -157,7 +158,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Ensure successful shutdown.
     // This call saves the hosts file and blocks until thread coalescence.
-    network.stop(stop_handler);
+    network.stop();
     stopped.get_future();
 
     return state.get_result();
