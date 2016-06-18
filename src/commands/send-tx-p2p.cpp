@@ -93,18 +93,12 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     p2p network(settings);
     std::promise<code> started;
     std::promise<code> complete;
-    std::promise<code> stopped;
     callback_state state(error, output);
     p2p::connect_handler connect_handler;
 
     const auto start_handler = [&started](const code& ec)
     {
         started.set_value(ec);
-    };
-
-    const auto stop_handler = [&stopped](const code& ec)
-    {
-        stopped.set_value(ec);
     };
 
     const auto handle_send = [&state, &complete, &network, &connect_handler](
@@ -145,7 +139,9 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // This attempts to maintain the set of connections, so it will always
     // eventually achieve the target, and sometimes go over due to the race.
     network.start(start_handler);
-    started.get_future();
+
+    if (started.get_future().get())
+        return console_result::failure;
 
     // Catch C signals for aborting the program.
     signal(SIGABRT, handle_signal);
@@ -157,8 +153,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
 
     // Ensure successful shutdown.
     // This call saves the hosts file and blocks until thread coalescence.
-    network.stop(stop_handler);
-    stopped.get_future();
+    network.close();
 
     return state.get_result();
 }

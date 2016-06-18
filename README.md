@@ -342,3 +342,4 @@ The `nuget.config` should have the [documented structure](http://docs.nuget.org/
 ```
 
 With this configuration in place you should experience the following behavior. When you open one of these Visual Studio projects and then open the Package Manager, you may be informed that there are missing packages. Upon authorizing download of the packages you will see them appear in the `nuget` directory. You will then be able to compile the project(s).
+
