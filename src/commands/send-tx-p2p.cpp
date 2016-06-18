@@ -139,7 +139,9 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     // This attempts to maintain the set of connections, so it will always
     // eventually achieve the target, and sometimes go over due to the race.
     network.start(start_handler);
-    started.get_future();
+
+    if (started.get_future().get())
+        return console_result::failure;
 
     // Catch C signals for aborting the program.
     signal(SIGABRT, handle_signal);
