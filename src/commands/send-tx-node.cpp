@@ -102,7 +102,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     const auto send_handler = [&state, &complete](const code& ec)
     {
         if (state.succeeded(ec))
-            state.output(format(BX_SEND_TX_NODE_OUTPUT) % now());
+            state.output(BX_SEND_TX_NODE_OUTPUT);
 
         complete.set_value(ec);
     };

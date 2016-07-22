@@ -60,7 +60,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_SEND_TX_P2P_OUTPUT \
-    "Sent transaction at %1%."
+    "Sent transaction."
 
 /**
  * Class to implement the send-tx-p2p command.
