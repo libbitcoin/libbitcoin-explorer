@@ -34,7 +34,6 @@
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
@@ -185,13 +184,6 @@ BCX_API std::vector<std::string> numbers_to_strings(
     const chain::point::indexes& indexes);
 
 /**
- * Get the local time, second level resolution, based on the time zone settings
- * of the computer.
- * @return  The local time.
- */
-BCX_API boost::posix_time::ptime now();
-
-/**
  * DEPRECATED in favor of libbitcoin::pseudo_random_fill.
  * Fill a buffer with randomness using the default random engine.
  * @param[in]  chunk  The buffer to fill with randomness.
@@ -211,12 +203,6 @@ BCX_API std::string read_stream(std::istream& stream);
  * @return             The data script.
  */
 BCX_API chain::script script_to_raw_data_script(const chain::script& script);
-
-/**
- * Sleep for the specified number of milliseconds.
- * @param[in]  milliseconds  The number of milliseconds to sleep.
- */
-BCX_API void sleep_ms(uint32_t milliseconds);
 
 /**
  * Split a list of tokens with delimiters into a name-value pair list.

@@ -105,7 +105,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         const code& ec)
     {
         if (state.succeeded(ec))
-            state.output(format(BX_SEND_TX_P2P_OUTPUT) % now());
+            state.output(BX_SEND_TX_P2P_OUTPUT);
 
         --state;
 

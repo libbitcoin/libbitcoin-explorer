@@ -463,20 +463,20 @@
   
   <command symbol="send-tx" formerly="sendtx-obelisk" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via an Libbitcoin/Obelisk server.">
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
-    <define name="BX_SEND_TX_OUTPUT" value="Sent transaction at %1%." />
+    <define name="BX_SEND_TX_OUTPUT" value="Sent transaction." />
   </command>
   
   <command symbol="send-tx-node" formerly="sendtx-node" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via a single Bitcoin network node.">
     <option name="host" shortcut="t" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
-    <define name="BX_SEND_TX_NODE_OUTPUT" value="Sent transaction at %1%." />
+    <define name="BX_SEND_TX_NODE_OUTPUT" value="Sent transaction." />
   </command>
 
   <command symbol="send-tx-p2p" formerly="sendtx-p2p" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via the Bitcoin peer-to-peer network.">
     <option name="nodes" type="size_t" default="2" description="The number of network nodes to send the transaction to, defaults to 2." />
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
-    <define name="BX_SEND_TX_P2P_OUTPUT" value="Sent transaction at %1%." />
+    <define name="BX_SEND_TX_P2P_OUTPUT" value="Sent transaction." />
   </command>
   
   <!-- TODO: update documentation for settings changes in 3.0. -->

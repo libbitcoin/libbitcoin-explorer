@@ -35,7 +35,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/info_parser.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -44,7 +43,6 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace boost::posix_time;
 using namespace bc::client;
 using boost::filesystem::path;
 
@@ -76,14 +74,6 @@ data_chunk new_seed(size_t bitlength)
     data_chunk seed(fill_seed_size);
     random_fill(seed);
     return seed;
-}
-
-// Not testable due to lack of clock injection.
-ptime now()
-{
-    using namespace boost::posix_time;
-    ptime local_time_in_seconds(second_clock::local_time());
-    return local_time_in_seconds;
 }
 
 std::vector<std::string> numbers_to_strings(
@@ -129,12 +119,6 @@ name_value_pairs split_pairs(const std::vector<std::string> tokens,
     }
 
     return list;
-}
-
-// Not unit testable (sleep).
-void sleep_ms(uint32_t milliseconds)
-{
-    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
 bool starts_with(const std::string& value, const std::string& prefix)
