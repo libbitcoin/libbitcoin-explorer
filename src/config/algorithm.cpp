@@ -33,6 +33,7 @@ namespace explorer {
 namespace config {
 
 static auto algorithm_greedy = "greedy";
+static auto algorithm_individual = "individual";
 
 algorithm::algorithm()
   : value_(bc::wallet::select_outputs::algorithm::greedy)
@@ -65,9 +66,17 @@ std::istream& operator>>(std::istream& input, algorithm& argument)
     input >> text;
 
     if (text == algorithm_greedy)
+    {
         argument.value_ = bc::wallet::select_outputs::algorithm::greedy;
+    }
+    else if (text == algorithm_individual)
+    {
+        argument.value_ = bc::wallet::select_outputs::algorithm::individual;
+    }
     else
+    {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
+    }
 
     return input;
 }
@@ -76,10 +85,18 @@ std::ostream& operator<<(std::ostream& output, const algorithm& argument)
 {
     std::string text;
 
-    if(argument.value_ == bc::wallet::select_outputs::algorithm::greedy)
+    if (argument.value_ == bc::wallet::select_outputs::algorithm::greedy)
+    {
         text = algorithm_greedy;
+    }
+    else if (argument.value_ == bc::wallet::select_outputs::algorithm::individual)
+    {
+        text = algorithm_individual;
+    }
     else
-        BITCOIN_ASSERT_MSG(false, "Unexpected encoding value.");
+    {
+        BITCOIN_ASSERT_MSG(false, "Unexpected algorithm value.");
+    }
 
     output << text;
     return output;

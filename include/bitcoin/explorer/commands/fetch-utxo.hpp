@@ -156,7 +156,7 @@ public:
         (
             "algorithm,a",
             value<explorer::config::algorithm>(&option_.algorithm),
-            "The algorithm for unspent output selection. Options are 'greedy', defaults to 'greedy'"
+            "The algorithm for unspent output selection. Options are 'greedy' and 'individual', defaults to 'greedy'."
         )
         (
             "SATOSHI",
