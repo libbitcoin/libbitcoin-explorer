@@ -107,11 +107,13 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
         complete.set_value(ec);
     };
 
-    const auto connect_handler = [&state, &transaction, &send_handler](
+    message::transaction_message tx_msg(transaction);
+
+    const auto connect_handler = [&state, &tx_msg, &send_handler](
         const code& ec, network::channel::ptr node)
     {
         if (state.succeeded(ec))
-            node->send(transaction, send_handler);
+            node->send(tx_msg, send_handler);
     };
 
     // Connect to the one specified host with retry up to the specified limit.
