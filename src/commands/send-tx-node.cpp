@@ -73,13 +73,8 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
 
     network::settings settings(bc::settings::mainnet);
 
-    // Fixed non-defaults: not relay/port/inbound/seeds/hosts/outbound.
-    settings.host_pool_capacity = 0;
+    // Manual connection only.
     settings.outbound_connections = 0;
-    settings.inbound_port = 0;
-    settings.inbound_connections = 0;
-    settings.relay_transactions = false;
-    settings.seeds.clear();
 
     // Guard against retry->attempt overflow.
     const auto overflow = retries <= (max_uint8 - 1u);
