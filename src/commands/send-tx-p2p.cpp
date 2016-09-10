@@ -71,12 +71,8 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     log::debug(LOG_NETWORK) << header;
     log::error(LOG_NETWORK) << header;
 
+    // Defaults to 8 outbound connections.
     network::settings settings(bc::settings::mainnet);
-
-    // Fixed non-defaults: not relay/port/inbound.
-    settings.inbound_port = 0;
-    settings.inbound_connections = 0;
-    settings.relay_transactions = false;
 
     // Defaulted by bx.
     settings.connect_timeout_seconds = connect;
