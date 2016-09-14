@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__0_satoshi__okay_output)
 BOOST_AUTO_TEST_CASE(satoshi_to_btc__invoke__4200000000_satoshi__okay_output)
 {
     BX_DECLARE_COMMAND(commands::satoshi_to_btc);
-    auto satoshi = 42 * coin_price(1);
+    auto satoshi = 42 * bitcoin_to_satoshi(1);
     command.set_satoshi_argument(satoshi);
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("42\n");
