@@ -73,7 +73,7 @@ console_result commands::settings::invoke(std::ostream& output,
     list["network.error_file"] = 
         get_network_error_file_setting().string();
 
-    network::settings settings(bc::settings::mainnet);
+    network::settings settings(bc::config::settings::mainnet);
     const auto& nodes = get_network_seeds_setting();
     const auto& seeds = nodes.empty() ? settings.seeds : nodes;
 
