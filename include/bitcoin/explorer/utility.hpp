@@ -59,6 +59,26 @@ class command;
 /**
  * Convert a text string to the specified type.
  * @param      <Value>  The converted type.
+ * @param[in]  text     The text to convert.
+ * @param[in]  trim     True if value should be trimmed before conversion.
+ * return               The parsed value.
+ */
+template <typename Value>
+Value deserialize(const std::string& text, bool trim);
+
+/**
+ * Read an input stream to the specified type.
+ * @param      <Value>  The converted type.
+ * @param[in]  input    The stream to convert.
+ * @param[in]  trim     True if value should be trimmed before conversion.
+ * return               The parsed value.
+ */
+template <typename Value>
+Value deserialize(std::istream& input, bool trim);
+
+/**
+ * Convert a text string to the specified type.
+ * @param      <Value>  The converted type.
  * @param[out] value    The parsed value.
  * @param[in]  text     The text to convert.
  * @param[in]  trim     True if value should be trimmed before conversion.
