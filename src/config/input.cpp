@@ -42,11 +42,11 @@ static bool decode_input(tx_input_type& input, const std::string& tuple)
     if (tokens.size() != 2 && tokens.size() != 3)
         return false;
 
-    input.sequence = max_input_sequence;
-    input.previous_output = point(tokens[0] + ":" + tokens[1]);
+    input.set_sequence(max_input_sequence);
+    input.set_previous_output(point(tokens[0] + ":" + tokens[1]));
 
     if (tokens.size() == 3)
-        deserialize(input.sequence, tokens[2], true);
+        input.set_sequence(deserialize<uint32_t>(tokens[2], true));
 
     return true;
 }
@@ -55,8 +55,9 @@ static bool decode_input(tx_input_type& input, const std::string& tuple)
 static std::string encode_input(const tx_input_type& input)
 {
     std::stringstream result;
-    result << point(input.previous_output) << BX_TX_POINT_DELIMITER <<
-        input.sequence;
+    result << point(input.previous_output()) << BX_TX_POINT_DELIMITER
+        << input.sequence();
+
     return result.str();
 }
 

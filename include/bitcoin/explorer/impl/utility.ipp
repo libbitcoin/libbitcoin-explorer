@@ -53,6 +53,21 @@ namespace libbitcoin {
 namespace explorer {
 
 template <typename Value>
+Value deserialize(const std::string& text, bool trim)
+{
+    if (trim)
+        return boost::lexical_cast<Value>(boost::trim_copy(text));
+    else
+        return boost::lexical_cast<Value>(text);
+}
+
+template <typename Value>
+Value deserialize(std::istream& input, bool trim)
+{
+    return deserialize<Value>(read_stream(input), trim);
+}
+
+template <typename Value>
 void deserialize(Value& value, const std::string& text, bool trim)
 {
     if (trim)

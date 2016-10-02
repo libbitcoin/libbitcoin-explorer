@@ -35,7 +35,7 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
     const explorer::config::output& output, uint8_t script_version)
 {
     // explicit script
-    if (!output.script().operations.empty())
+    if (!output.script().operations().empty())
     {
         outputs.push_back({ output.amount(), output.script() });
         return true;
@@ -83,15 +83,15 @@ console_result tx_encode::invoke(std::ostream& output, std::ostream& error)
     const auto& outputs = get_outputs_option();
 
     tx_type tx;
-    tx.version = tx_version;
-    tx.locktime = locktime;
+    tx.set_version(tx_version);
+    tx.set_locktime(locktime);
 
     for (const tx_input_type& input: inputs)
-        tx.inputs.push_back(input);
+        tx.inputs().push_back(input);
 
     for (const auto& output: outputs)
     {
-        if (!push_scripts(tx.outputs, output, script_version))
+        if (!push_scripts(tx.outputs(), output, script_version))
         {
             error << BX_TX_ENCODE_INVALID_OUTPUT << std::endl;
             return console_result::failure;

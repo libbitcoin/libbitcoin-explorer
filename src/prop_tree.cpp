@@ -59,13 +59,13 @@ ptree prop_list(const header& header)
     const chain::header& block_header = header;
 
     ptree tree;
-    tree.put("bits", block_header.bits);
+    tree.put("bits", block_header.bits());
     tree.put("hash", hash256(block_header.hash()));
-    tree.put("merkle_tree_hash", hash256(block_header.merkle));
-    tree.put("nonce", block_header.nonce);
-    tree.put("previous_block_hash", hash256(block_header.previous_block_hash));
-    tree.put("time_stamp", block_header.timestamp);
-    tree.put("version", block_header.version);
+    tree.put("merkle_tree_hash", hash256(block_header.merkle()));
+    tree.put("nonce", block_header.nonce());
+    tree.put("previous_block_hash", hash256(block_header.previous_block_hash()));
+    tree.put("time_stamp", block_header.timestamp());
+    tree.put("version", block_header.version());
     return tree;
 }
 ptree prop_tree(const header& header)
@@ -88,27 +88,27 @@ ptree prop_list(const chain::history& row)
     ptree tree;
 
     // missing output implies output cut off by server's history threshold
-    if (row.output.hash != null_hash)
+    if (row.output.hash() != null_hash)
     {
-        tree.put("received.hash", hash256(row.output.hash));
+        tree.put("received.hash", hash256(row.output.hash()));
 
         // zeroized received.height implies output unconfirmed (in mempool)
         if (row.output_height != 0)
             tree.put("received.height", row.output_height);
 
-        tree.put("received.index", row.output.index);
+        tree.put("received.index", row.output.index());
     }
 
     // missing input implies unspent
-    if (row.spend.hash != null_hash)
+    if (row.spend.hash() != null_hash)
     {
-        tree.put("spent.hash", hash256(row.spend.hash));
+        tree.put("spent.hash", hash256(row.spend.hash()));
 
         // zeroized input.height implies spend unconfirmed (in mempool)
         if (row.spend_height != 0)
             tree.put("spent.height", row.spend_height);
 
-        tree.put("spent.index", row.spend.index);
+        tree.put("spent.index", row.spend.index());
     }
 
     tree.put("value", row.value);
@@ -142,11 +142,11 @@ ptree prop_list(const chain::history::list& rows,
         total_received += row.value;
 
         // spend unconfirmed (or no spend attempted)
-        if (row.spend.hash == null_hash)
+        if (row.spend.hash() == null_hash)
             unspent_balance += row.value;
 
         if (row.output_height != 0 &&
-            (row.spend.hash == null_hash || row.spend_height == 0))
+            (row.spend.hash() == null_hash || row.spend_height == 0))
             confirmed_balance += row.value;
     }
 
@@ -169,14 +169,14 @@ ptree prop_tree(const chain::history::list& rows,
 ptree prop_list(const tx_input_type& tx_input)
 {
     ptree tree;
-    const auto script_address = payment_address::extract(tx_input.script);
+    const auto script_address = payment_address::extract(tx_input.script());
     if (script_address)
         tree.put("address", script_address);
 
-    tree.put("previous_output.hash", hash256(tx_input.previous_output.hash));
-    tree.put("previous_output.index", tx_input.previous_output.index);
-    tree.put("script", script(tx_input.script).to_string());
-    tree.put("sequence", tx_input.sequence);
+    tree.put("previous_output.hash", hash256(tx_input.previous_output().hash()));
+    tree.put("previous_output.index", tx_input.previous_output().index());
+    tree.put("script", script(tx_input.script()).to_string());
+    tree.put("sequence", tx_input.sequence());
     return tree;
 }
 ptree prop_tree(const tx_input_type& tx_input)
@@ -217,11 +217,11 @@ ptree prop_tree(const std::vector<input>& inputs, bool json)
 ptree prop_list(const tx_output_type& tx_output)
 {
     ptree tree;
-    const auto address = payment_address::extract(tx_output.script);
+    const auto address = payment_address::extract(tx_output.script());
     if (address)
         tree.put("address", address);
 
-    tree.put("script", script(tx_output.script).to_string());
+    tree.put("script", script(tx_output.script()).to_string());
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
@@ -230,15 +230,15 @@ ptree prop_list(const tx_output_type& tx_output)
     {
         uint32_t stealth_prefix;
         ec_compressed ephemeral_key;
-        if (to_stealth_prefix(stealth_prefix, tx_output.script) &&
-            extract_ephemeral_key(ephemeral_key, tx_output.script))
+        if (to_stealth_prefix(stealth_prefix, tx_output.script()) &&
+            extract_ephemeral_key(ephemeral_key, tx_output.script()))
         {
             tree.put("stealth.prefix", stealth_prefix);
             tree.put("stealth.ephemeral_public_key", ec_public(ephemeral_key));
         }
     }
 
-    tree.put("value", tx_output.value);
+    tree.put("value", tx_output.value());
     return tree;
 }
 ptree prop_tree(const tx_output_type& tx_output)
@@ -259,8 +259,8 @@ ptree prop_tree(const tx_output_type::list& tx_outputs, bool json)
 ptree prop_list(const chain::point& point)
 {
     ptree tree;
-    tree.put("hash", hash256(point.hash));
-    tree.put("index", point.index);
+    tree.put("hash", hash256(point.hash()));
+    tree.put("index", point.index());
     return tree;
 }
 
@@ -288,10 +288,10 @@ ptree prop_list(const transaction& transaction, bool json)
 
     ptree tree;
     tree.put("hash", hash256(tx.hash()));
-    tree.add_child("inputs", prop_tree_list("input", tx.inputs, json));
-    tree.put("lock_time", tx.locktime);
-    tree.add_child("outputs", prop_tree_list("output", tx.outputs, json));
-    tree.put("version", tx.version);
+    tree.add_child("inputs", prop_tree_list("input", tx.inputs(), json));
+    tree.put("lock_time", tx.locktime());
+    tree.add_child("outputs", prop_tree_list("output", tx.outputs(), json));
+    tree.put("version", tx.version());
     return tree;
 }
 ptree prop_tree(const transaction& transaction, bool json)
