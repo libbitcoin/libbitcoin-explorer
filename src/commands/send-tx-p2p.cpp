@@ -62,14 +62,14 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const auto& error_file = get_network_error_file_setting();
     const auto& seeds = get_network_seeds_setting();
 
-    // TODO: give option to send errors to console vs. file.
-    bc::ofstream debug_log(debug_file.string(), log::append);
-    bc::ofstream error_log(error_file.string(), log::append);
-    initialize_logging(debug_log, error_log, output, error);
+//    // TODO: give option to send errors to console vs. file.
+//    bc::ofstream debug_log(debug_file.string(), log::append);
+//    bc::ofstream error_log(error_file.string(), log::append);
+//    initialize_logging(debug_log, error_log, output, error);
 
     static const auto header = format("=========== %1% ==========") % symbol();
-    log::debug(LOG_NETWORK) << header;
-    log::error(LOG_NETWORK) << header;
+    LOG_DEBUG(LOG_NETWORK) << header;
+    LOG_ERROR(LOG_NETWORK) << header;
 
     // Defaults to 8 outbound connections.
     network::settings settings(bc::config::settings::mainnet);
