@@ -218,6 +218,8 @@ The required set of NuGet packages can be viewed using the [NuGet package manage
    * [boost\_date\_time-vc120](http://www.nuget.org/packages/boost_date_time-vc120)
    * [boost\_filesystem-vc120](http://www.nuget.org/packages/boost_filesystem-vc120)
    * [boost\_iostreams-vc120](http://www.nuget.org/packages/boost_iostreams-vc120)
+   * [boost\_locale-vc120](http://www.nuget.org/packages/boost_locale-vc120)
+   * [boost\_log-vc120](http://www.nuget.org/packages/boost_log-vc120)
    * [boost\_program\_options-vc120](http://www.nuget.org/packages/boost_program_options-vc120)
    * [boost\_regex-vc120](http://www.nuget.org/packages/boost_regex-vc120)
    * [boost\_system-vc120](http://www.nuget.org/packages/boost_system-vc120)
@@ -238,6 +240,7 @@ Build these solutions in order:
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
 2. [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
 2. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
+2. [libbitcoin/libbitcoin-network](https://github.com/libbitcoin/libbitcoin-network])
 3. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
 
 > The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
@@ -284,6 +287,8 @@ A better configuration is to centralize the NuGet repository outside of your `gi
         +boost_date_time-vc120.1.56.0.0
         +boost_filesystem-vc120.1.56.0.0
         +boost_iostreams-vc120.1.56.0.0
+        +boost_locale-vc120.1.56.0.0
+        +boost_log-vc120.1.56.0.0
         +boost_program_options-vc120.1.56.0.0
         +boost_regex-vc120.1.56.0.0
         +boost_system-vc120.1.56.0.0
