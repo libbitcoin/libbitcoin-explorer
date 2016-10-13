@@ -17,6 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <boost/filesystem.hpp>
+#include <boost/format.hpp>
 #include <iostream>
 #include <bitcoin/explorer.hpp>
 
@@ -31,6 +33,7 @@ BC_USE_LIBBITCOIN_MAIN
  */
 int bc::main(int argc, char* argv[])
 {
+
     return bc::explorer::dispatch(argc, const_cast<const char**>(argv),
         bc::cin, bc::cout, bc::cerr);
 }
