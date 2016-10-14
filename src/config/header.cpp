@@ -65,7 +65,7 @@ std::istream& operator>>(std::istream& input, header& argument)
     input >> hexcode;
 
     // header base16 is a private encoding in bx, used to pass between commands.
-    if (!argument.value_.from_data(base16(hexcode), false))
+    if (!argument.value_.from_data(base16(hexcode)))
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
     }
@@ -75,7 +75,7 @@ std::istream& operator>>(std::istream& input, header& argument)
 
 std::ostream& operator<<(std::ostream& output, const header& argument)
 {
-    const auto bytes = argument.value_.to_data(false);
+    const auto bytes = argument.value_.to_data();
 
     // header base16 is a private encoding in bx, used to pass between commands.
     output << base16(bytes);
