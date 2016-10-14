@@ -33,7 +33,6 @@ BC_USE_LIBBITCOIN_MAIN
  */
 int bc::main(int argc, char* argv[])
 {
-
     return bc::explorer::dispatch(argc, const_cast<const char**>(argv),
         bc::cin, bc::cout, bc::cerr);
 }
