@@ -176,10 +176,10 @@ void write_file(std::ostream& output, const std::string& path,
 
 /**
  * Get the connection settings for the configured network.
- * @param    cmd  The command.
- * @returns       A structure containing the connection settings.
+ * @param    command  The command.
+ * @returns           A structure containing the connection settings.
  */
-BCX_API client::connection_type get_connection(const command& cmd);
+BCX_API client::connection_type get_connection(const command& command);
 
 /**
  * Generate a new ec key from a seed.
@@ -193,15 +193,14 @@ BCX_API ec_secret new_key(const data_chunk& seed);
  * @param[in]  seed  The seed length in bits. Will be aligned to nearest byte.
  * @return           The new key.
  */
-BCX_API data_chunk new_seed(size_t bitlength=minimum_seed_bits);
+BCX_API data_chunk new_seed(size_t bit_length=minimum_seed_bits);
 
 /**
  * Convert a list of indexes to a list of strings. This could be generalized.
  * @param[in]  indexes  The list of indexes to convert.
  * @return              The list of strings.
  */
-BCX_API std::vector<std::string> numbers_to_strings(
-    const chain::point::indexes& indexes);
+BCX_API string_list numbers_to_strings(const chain::point::indexes& indexes);
 
 /**
  * DEPRECATED in favor of libbitcoin::pseudo_random_fill.

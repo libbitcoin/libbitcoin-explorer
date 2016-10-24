@@ -86,6 +86,8 @@ console_result commands::settings::invoke(std::ostream& output,
     // [server]
     list["server.url"] =
         get_server_url_setting().to_string();
+    list["server.socks_proxy"] =
+        get_server_socks_proxy_setting().to_string();
     list["server.connect_retries"] =
         serialize(get_server_connect_retries_setting());
     list["server.connect_timeout_seconds"] =

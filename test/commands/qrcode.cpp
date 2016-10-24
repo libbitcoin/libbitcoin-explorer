@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__size_one__success)
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
     istream_reader in(output);
-    const auto data = in.read_data_to_eof();
+    const auto data = in.read_bytes();
     BOOST_REQUIRE_EQUAL(data.size(), qr_png_data_length);
     BOOST_REQUIRE(std::memcmp(qr_png_data, data.data(), qr_png_data_length) == 0);
 }
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__optional_args__success)
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
     istream_reader in(output);
-    const auto data = in.read_data_to_eof();
+    const auto data = in.read_bytes();
     BOOST_REQUIRE_EQUAL(data.size(), qr_png_data_length);
     BOOST_REQUIRE(std::memcmp(qr_png_data, data.data(), qr_png_data_length) == 0);
 }
@@ -223,7 +223,7 @@ BOOST_AUTO_TEST_CASE(qrcode__invoke__qr_encode__success)
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
     istream_reader in(output);
-    const auto data = in.read_data_to_eof();
+    const auto data = in.read_bytes();
     BOOST_REQUIRE_EQUAL(data.size(), raw_qr_data_length);
     BOOST_REQUIRE(std::memcmp(raw_qr_data, data.data(), raw_qr_data_length) == 0);
 }
