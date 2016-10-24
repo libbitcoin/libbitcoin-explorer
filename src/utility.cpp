@@ -49,14 +49,19 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-connection_type get_connection(const command& cmd)
+connection_type get_connection(const command& command)
 {
+    const auto public_key = command.get_server_server_public_key_setting();
+    const auto private_key = command.get_server_client_private_key_setting();
+    const auto timeout = command.get_server_connect_timeout_seconds_setting();
+
     connection_type connection;
-    connection.retries = cmd.get_server_connect_retries_setting();
-    connection.timeout_seconds = cmd.get_server_connect_timeout_seconds_setting();
-    connection.server = cmd.get_server_url_setting();
-    connection.server_public_key = cmd.get_server_server_public_key_setting();
-    connection.client_private_key = cmd.get_server_client_private_key_setting();
+    connection.retries = command.get_server_connect_retries_setting();
+    connection.timeout_seconds = timeout;
+    connection.server = command.get_server_url_setting();
+    connection.socks = command.get_server_socks_proxy_setting();
+    connection.server_public_key = public_key;
+    connection.client_private_key = private_key;
     return connection;
 }
 
@@ -68,18 +73,18 @@ ec_secret new_key(const data_chunk& seed)
 }
 
 // Not testable due to lack of random engine injection.
-data_chunk new_seed(size_t bitlength)
+data_chunk new_seed(size_t bit_length)
 {
-    size_t fill_seed_size = bitlength / byte_bits;
+    size_t fill_seed_size = bit_length / byte_bits;
     data_chunk seed(fill_seed_size);
     random_fill(seed);
     return seed;
 }
 
-std::vector<std::string> numbers_to_strings(
-    const chain::point::indexes& indexes)
+string_list numbers_to_strings(const chain::point::indexes& indexes)
 {
-    std::vector<std::string> stringlist;
+    string_list stringlist;
+
     for (const auto index: indexes)
         stringlist.push_back(std::to_string(index));
 
