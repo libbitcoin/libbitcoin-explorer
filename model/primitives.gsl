@@ -16,6 +16,7 @@ function global.map_type(type)
     # Local type constants.
     my.type_address = "address"
     my.type_algorithm = "algorithm"
+    my.type_authority = "authority"
     my.type_bool = "bool"
     my.type_base16 = "base16"
     my.type_base2 = "base2"
@@ -60,6 +61,7 @@ function global.map_type(type)
 
     my.type_address_bx = "explorer::config::address"
     my.type_algorithm_bx = "explorer::config::algorithm"
+    my.type_authority_bx = "bc::config::authority"
     my.type_base16_bx = "bc::config::base16"
     my.type_base2_bx = "bc::config::base2"
     my.type_base58_bx = "bc::config::base58"
@@ -105,6 +107,8 @@ function global.map_type(type)
         return my.type_address_bx
     elsif my.type = my.type_algorithm
         return my.type_algorithm_bx
+    elsif my.type = my.type_authority
+        return my.type_authority_bx
     elsif my.type = my.type_base16
         return my.type_base16_bx
     elsif my.type = my.type_base2
@@ -215,13 +219,17 @@ function global.is_raw_type(type)
 endfunction
 
 function global.is_braced_type(type)
-    return (my.type = "explorer::config::uri") | (my.type = "bc::config::endpoint")
+    return (my.type = "explorer::config::uri") | \
+        (my.type = "bc::config::endpoint") | \
+        (my.type = "bc::config::authority")
 endfunction
 
 function global.is_quoted_type(type)
     return ((my.type = "boost::filesystem::path") | \
-        (my.type = "std::string") | (my.type = "explorer::config::uri") | \
-        (my.type = "bc::config::endpoint"))
+        (my.type = "std::string") | \
+        (my.type = "explorer::config::uri") | \
+        (my.type = "bc::config::endpoint") | \
+        (my.type = "bc::config::authority"))
 endfunction
 
 ###############################################################################
