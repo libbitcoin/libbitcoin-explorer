@@ -66,7 +66,7 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 
     // The qr data is written to the output stream in 'qrencode' format.
     bc::ostream_writer sink(output);
-    sink.write_data(qr_data);
+    sink.write_bytes(qr_data);
     output.flush();
 
     return console_result::okay;
