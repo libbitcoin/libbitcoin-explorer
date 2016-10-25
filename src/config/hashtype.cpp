@@ -37,7 +37,7 @@ static auto hashtype_none = "none";
 static auto hashtype_single = "single";
 
 hashtype::hashtype()
-  : hashtype(chain::signature_hash_algorithm::all)
+  : hashtype(chain::sighash_algorithm::all)
 {
 }
 
@@ -46,7 +46,7 @@ hashtype::hashtype(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-hashtype::hashtype(const chain::signature_hash_algorithm& value)
+hashtype::hashtype(const chain::sighash_algorithm& value)
   : value_(value)
 {
 }
@@ -56,7 +56,7 @@ hashtype::hashtype(const hashtype& other)
 {
 }
 
-hashtype::operator chain::signature_hash_algorithm() const
+hashtype::operator chain::sighash_algorithm() const
 {
     return value_;
 }
@@ -67,11 +67,11 @@ std::istream& operator>>(std::istream& input, hashtype& argument)
     input >> text;
 
     if (text == hashtype_all)
-        argument.value_ = chain::signature_hash_algorithm::all;
+        argument.value_ = chain::sighash_algorithm::all;
     else if (text == hashtype_none)
-        argument.value_ = chain::signature_hash_algorithm::none;
+        argument.value_ = chain::sighash_algorithm::none;
     else if (text == hashtype_single)
-        argument.value_ = chain::signature_hash_algorithm::single;
+        argument.value_ = chain::sighash_algorithm::single;
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -86,13 +86,13 @@ std::ostream& operator<<(std::ostream& output, const hashtype& argument)
 
     switch (argument.value_)
     {
-        case chain::signature_hash_algorithm::all:
+        case chain::sighash_algorithm::all:
             value = hashtype_all;
             break;
-        case chain::signature_hash_algorithm::none:
+        case chain::sighash_algorithm::none:
             value = hashtype_none;
             break;
-        case chain::signature_hash_algorithm::single:
+        case chain::sighash_algorithm::single:
             value = hashtype_single;
             break;
         default:
