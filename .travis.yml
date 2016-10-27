@@ -73,10 +73,10 @@ script:
     # Download and build libbitcoin-explorer and all dependencies.
     - if [[ $OSX   && $CLANG && $STATIC  ]]; then ./install.sh --with-icu --with-png --with-qrencode --build-icu --build-png --build-qrencode --build-boost --disable-shared --prefix=$TRAVIS_BUILD_DIR/my-prefix; fi
     - if [[ $LINUX && $CLANG && $STATIC  ]]; then ./install.sh --with-png --with-qrencode --build-png --build-qrencode --build-boost --disable-shared --prefix=$TRAVIS_BUILD_DIR/my-prefix CFLAGS='-Os' CXXFLAGS='-Os'; fi
-    - if [[ $LINUX && $GCC   && $STATIC  ]]; then ./install.sh --with-png --with-qrencode --build-png --build-qrencode --build-boost --disable-shared --build-dir=my-build --prefix=$TRAVIS_BUILD_DIR/my-prefix --with-bash-completiondir CFLAGS='-O0 -g --coverage' CXXFLAGS='-O0 -g --coverage'; fi
+    - if [[ $LINUX && $GCC   && $STATIC  ]]; then ./install.sh --with-png --with-qrencode --build-png --build-qrencode --build-boost --disable-shared --build-dir=my-build --prefix=$TRAVIS_BUILD_DIR/my-prefix --with-bash-completiondir CFLAGS='-O3 -g --coverage' CXXFLAGS='-O3 -g --coverage'; fi
     - if [[ $OSX   && $CLANG && $DYNAMIC ]]; then ./install.sh --with-bash-completiondir; fi
     - if [[ $LINUX && $CLANG && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --with-png --with-qrencode --build-png --build-qrencode --build-boost --disable-ndebug --disable-static CFLAGS='-Os' CXXFLAGS='-Os'; fi
-    - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --with-png --with-qrencode --build-png --build-qrencode --build-boost --disable-static --with-bash-completiondir CFLAGS='-Os -s' CXXFLAGS='-Os -s'; fi
+    - if [[ $LINUX && $GCC   && $DYNAMIC ]]; then sudo CXX=$CXX CC=$CC ./install.sh --with-png --with-qrencode --build-png --build-qrencode --build-boost --disable-static --with-bash-completiondir CFLAGS='-O3 -g' CXXFLAGS='-O3 -g'; fi
 
 after_success:
 
