@@ -554,7 +554,7 @@
     <option name="lock_time" type="uint32_t" description="The transaction lock time." />
     <option name="version" type="uint32_t" configuration="wallet.transaction_version" description="The transaction version, defaults to 1." />
     <option name="input" multiple="true" type="input" description="The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value." />
-    <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 32 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs." />
+    <option name="output" multiple="true" type="output" description="The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs." />
     <define name="BX_TX_ENCODE_INVALID_OUTPUT" value="An output is not valid." />
     <define name="BX_TX_ENCODE_LOCKTIME_CONFLICT" value="The specified lock time is ineffective because all sequences are set to the maximum value." />
   </command>
