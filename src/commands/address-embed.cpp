@@ -20,12 +20,14 @@
 #include <bitcoin/explorer/commands/address-embed.hpp>
 
 #include <iostream>
+#include <utility>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/script.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 using namespace bc;
+using namespace bc::chain;
 using namespace bc::explorer;
 using namespace bc::explorer::commands;
 using namespace bc::wallet;
@@ -37,9 +39,8 @@ console_result address_embed::invoke(std::ostream& output, std::ostream& error)
     const auto& version = get_version_option();
 
     // Create script from hash of data.
-    const auto hashed = ripemd160_hash(data);
-    const auto ops = chain::operation::to_pay_key_hash_pattern(hashed);
-    const auto script = chain::script{ ops };
+    const auto ops = to_pay_key_hash_pattern(ripemd160_hash(data));
+    const auto script = chain::script(std::move(ops));
 
     // Make ripemd hash of serialized script.
     const auto hash = ripemd160_hash(script.to_data(false));
