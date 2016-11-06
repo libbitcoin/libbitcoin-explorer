@@ -68,7 +68,7 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ sudo apt-get install build-essential autoconf automake libtool pkg-config git
 ```
-Next install the [Boost](http://www.boost.org) (minimum 1.56.0) development package:
+Next install the [Boost](http://www.boost.org) (minimum 1.57.0) development package:
 ```sh
 $ sudo apt-get install libboost-all-dev
 ```
@@ -115,7 +115,7 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ brew install autoconf automake libtool pkgconfig wget
 ```
-Next install the [Boost](http://www.boost.org) (1.56.0 or newer) development package:
+Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package:
 ```sh
 $ brew install boost
 ```
@@ -138,7 +138,7 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ sudo port install autoconf automake libtool pkgconfig wget
 ```
-Next install the [Boost](http://www.boost.org) (1.56.0 or newer) development package. The `-` options remove MacPort defaults that are not Boost defaults:
+Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package. The `-` options remove MacPort defaults that are not Boost defaults:
 ```sh
 $ sudo port install boost -no_single -no_static -python27
 ```
@@ -282,18 +282,18 @@ A better configuration is to centralize the NuGet repository outside of your `gi
         -libbitcoin-protocol
     -nuget
         repositories.config
-        +boost.1.56.0.0
-        +boost_chrono-vc120.1.56.0.0
-        +boost_date_time-vc120.1.56.0.0
-        +boost_filesystem-vc120.1.56.0.0
-        +boost_iostreams-vc120.1.56.0.0
-        +boost_locale-vc120.1.56.0.0
-        +boost_log-vc120.1.56.0.0
-        +boost_program_options-vc120.1.56.0.0
-        +boost_regex-vc120.1.56.0.0
-        +boost_system-vc120.1.56.0.0
-        +boost_thread-vc120.1.56.0.0
-        +boost_unit_test_framework-vc120.1.56.0.0
+        +boost.1.57.0.0
+        +boost_chrono-vc120.1.57.0.0
+        +boost_date_time-vc120.1.57.0.0
+        +boost_filesystem-vc120.1.57.0.0
+        +boost_iostreams-vc120.1.57.0.0
+        +boost_locale-vc120.1.57.0.0
+        +boost_log-vc120.1.57.0.0
+        +boost_program_options-vc120.1.57.0.0
+        +boost_regex-vc120.1.57.0.0
+        +boost_system-vc120.1.57.0.0
+        +boost_thread-vc120.1.57.0.0
+        +boost_unit_test_framework-vc120.1.57.0.0
         +libzmq_vc120.4.2.2.0
         +secp256k1_vc120.0.1.0.13
 ```
