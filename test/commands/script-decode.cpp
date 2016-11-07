@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(script_decode__invoke__data__okay_output)
     BX_DECLARE_COMMAND(script_decode);
     command.set_base16_argument({ "04cf2e5b02d6f02340f5a9defbbf710c388b8451c82145b1419fe9696837b1cdefc569a2a79baa6da2f747c3b25a102a081dfd5e799abc41262103e0d17114770b" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("[04cf2e5b02d6f02340f5a9defbbf710c388b8451c82145b1419fe9696837b1cdefc569a2a79baa6da2f747c3b25a102a081dfd5e799abc41262103e0d17114770b]\n");
+    BX_REQUIRE_OUTPUT("[cf2e5b02] 0xd6 0xf0 [40f5a9defbbf710c388b8451c82145b1419fe9696837b1cdefc569a2a79baa6da2f747] 0xc3 nop3 10 [2a081dfd5e799abc41262103e0d17114] nip <invalid>\n");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

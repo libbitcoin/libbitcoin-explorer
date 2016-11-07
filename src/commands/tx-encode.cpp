@@ -45,15 +45,15 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
     if (output.pay_to_hash() == null_short_hash)
         return false;
 
-    chain::operation::sequence payment_ops;
+    chain::operation::list payment_ops;
     const auto hash = output.pay_to_hash();
     const auto is_stealth = !output.ephemeral_data().empty();
 
     // This presumes stealth versions are the same as non-stealth.
     if (output.version() != script_version)
-        payment_ops = chain::to_pay_key_hash_pattern(hash);
+        payment_ops = chain::script::to_pay_key_hash_pattern(hash);
     else if (output.version() == script_version)
-        payment_ops = chain::to_pay_script_hash_pattern(hash);
+        payment_ops = chain::script::to_pay_script_hash_pattern(hash);
     else
         return false;
 
@@ -63,7 +63,7 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
         // The null data script must be pushed before the pay script.
         static constexpr uint64_t no_amount = 0;
         const auto data = output.ephemeral_data();
-        const auto null_data = chain::to_null_data_pattern(data);
+        const auto null_data = chain::script::to_null_data_pattern(data);
         const auto null_data_script = chain::script{ null_data };
         outputs.push_back({ no_amount, null_data_script });
     }
