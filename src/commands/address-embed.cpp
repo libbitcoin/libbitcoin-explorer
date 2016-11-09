@@ -39,7 +39,8 @@ console_result address_embed::invoke(std::ostream& output, std::ostream& error)
     const auto& version = get_version_option();
 
     // Create script from hash of data.
-    const auto ops = to_pay_key_hash_pattern(ripemd160_hash(data));
+    const auto ops =
+        chain::script::to_pay_key_hash_pattern(ripemd160_hash(data));
     const auto script = chain::script(std::move(ops));
 
     // Make ripemd hash of serialized script.

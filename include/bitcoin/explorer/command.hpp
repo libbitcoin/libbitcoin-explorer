@@ -266,7 +266,7 @@ public:
         )
         (
             "server.url",
-            value<bc::config::endpoint>(&setting_.server.url)->default_value({ "tcp://obelisk.airbitz.co:9091" }),
+            value<bc::config::endpoint>(&setting_.server.url)->default_value({ "tcp://libbitcoin1.thecodefactory.org:9091" }),
             "The URL of the Libbitcoin/Obelisk server."
         )
         (

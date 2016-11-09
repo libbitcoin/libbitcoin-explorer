@@ -10,7 +10,7 @@
 #==============================================================================
 BOOST_UNIT_TEST_OPTIONS=\
 "--run_test=generated,obsolete,offline,config,stub "\
-"--show_progress=no "\
+"--show_progress=yes "\
 "--detect_memory_leak=0 "\
 "--report_level=no "\
 "--build_info=yes"

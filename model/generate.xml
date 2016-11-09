@@ -51,7 +51,7 @@
   </configuration>
 
   <configuration section="server">
-    <setting name="url" type="endpoint" default="tcp://obelisk.airbitz.co:9091" description="The URL of the Libbitcoin/Obelisk server." />
+    <setting name="url" type="endpoint" default="tcp://libbitcoin1.thecodefactory.org:9091" description="The URL of the Libbitcoin/Obelisk server." />
     <setting name="socks_proxy" type="authority" default="0.0.0.0:0" description="The address of a SOCKS5 proxy to use, defaults to none." />
     <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint16_t" description="The time limit for connection establishment, defaults to 5." />
