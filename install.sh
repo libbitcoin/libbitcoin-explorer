@@ -10,6 +10,8 @@
 # Script options:
 # --build-icu              Builds ICU libraries.
 # --build-boost            Builds Boost libraries.
+# --build-zeromq           Builds ZEROMQ libraries.
+# --build-czmq             Builds CZMQ libraries.
 # --build-dir=<path>       Location of downloaded and intermediate files.
 # --prefix=<absolute-path> Library install location (defaults to /usr/local).
 # --disable-shared         Disables shared library builds.
@@ -57,6 +59,16 @@ BOOST_STANDARD_CLANG=\
 "variant=release "\
 "-d0 "\
 "-q"
+
+# ZeroMQ archive.
+#------------------------------------------------------------------------------
+ZEROMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.2.0/zeromq-4.2.0.tar.gz"
+ZEROMQ_ARCHIVE="zeromq-4.2.0.tar.gz"
+
+# CZMQ archive.
+#------------------------------------------------------------------------------
+CZMQ_URL="https://github.com/zeromq/czmq/releases/download/v3.0.2/czmq-3.0.2.tar.gz"
+CZMQ_ARCHIVE="czmq-3.0.2.tar.gz"
 
 
 # Initialize the build environment.
@@ -121,6 +133,8 @@ for OPTION in "$@"; do
         # Custom build options (in the form of --build-<option>).
         (--build-icu)      BUILD_ICU="yes";;
         (--build-boost)    BUILD_BOOST="yes";;
+        (--build-zeromq)   BUILD_ZEROMQ="yes";;
+        (--build-czmq)     BUILD_CZMQ="yes";;
         (--build-dir=*)    BUILD_DIR="${OPTION#*=}";;
         
         # Standard build options.
@@ -155,7 +169,7 @@ fi
 # Purge custom options so they don't go to configure.
 #------------------------------------------------------------------------------
 CONFIGURE_OPTIONS=( "$@" )
-CUSTOM_OPTIONS=( "--build-icu" "--build-boost" "--build-dir=$BUILD_DIR" )
+CUSTOM_OPTIONS=( "--build-icu" "--build-boost" "--build-zeromq" "--build-czmq" "--build-dir=$BUILD_DIR" )
 for CUSTOM_OPTION in "${CUSTOM_OPTIONS[@]}"; do
     CONFIGURE_OPTIONS=( "${CONFIGURE_OPTIONS[@]/$CUSTOM_OPTION}" )
 done
@@ -249,18 +263,22 @@ BOOST_OPTIONS_CLANG=\
 SODIUM_OPTIONS=\
 "${with_pkgconfigdir} "
 
-# Define zmq options.
+# Define zeromq options.
 #------------------------------------------------------------------------------
-ZMQ_OPTIONS=\
+ZEROMQ_OPTIONS=\
+"--disable-perf "\
+"--disable-drafts "\
+"--disable-curve-keygen "\
 "--with-libsodium "\
 "${with_pkgconfigdir} "
 
 # Define czmq options.
 #------------------------------------------------------------------------------
 CZMQ_OPTIONS=\
-"--without-zmakecert "\
-"--without-czmq_selftest "\
-"${with_pkgconfigdir} "
+"--without-makecert "\
+"--without-test_zgossip "\
+"${with_pkgconfigdir} "\
+"CFLAGS=-Wno-unknown-pragmas "
 
 # Define czmqpp options.
 #------------------------------------------------------------------------------
@@ -545,6 +563,39 @@ build_from_tarball_boost()
     pop_directory
 }
 
+build_from_tarball_github()
+{
+    local URL=$1
+    local ARCHIVE=$2
+    local REPO=$3
+    local JOBS=$4
+    local BUILD=$5
+    shift 5
+
+    if [[ !($BUILD) ]]; then
+        display_message "$REPO build not enabled"
+        return
+    fi
+
+    display_message "Download $ARCHIVE"
+
+    create_directory $REPO
+    push_directory $REPO
+
+    # Extract the source locally.
+    wget --output-document $ARCHIVE $URL
+    tar --extract --file $ARCHIVE --strip-components=1
+
+    # Build and install (czmq lacks autogen.sh).
+    autoreconf -i
+    configure_options "$@"
+    make_jobs $JOBS
+    make install
+    configure_links
+
+    pop_directory
+}
+
 build_from_github()
 {
     local ACCOUNT=$1
@@ -607,8 +658,8 @@ build_all()
     build_from_tarball_icu $ICU_URL $ICU_ARCHIVE icu $PARALLEL $ICU_OPTIONS
     build_from_tarball_boost $BOOST_URL $BOOST_ARCHIVE boost $PARALLEL $BOOST_OPTIONS
     build_from_github jedisct1 libsodium master $PARALLEL "$@" $SODIUM_OPTIONS
-    build_from_github zeromq libzmq master $PARALLEL "$@" $ZMQ_OPTIONS
-    build_from_github zeromq czmq master $PARALLEL "$@" $CZMQ_OPTIONS
+    build_from_tarball_github $ZEROMQ_URL $ZEROMQ_ARCHIVE zeromq $PARALLEL "$BUILD_ZEROMQ" "$@" $ZEROMQ_OPTIONS
+    build_from_tarball_github $CZMQ_URL $CZMQ_ARCHIVE czmq $PARALLEL "$BUILD_CZMQ" "$@" $CZMQ_OPTIONS
     build_from_github zeromq czmqpp master $PARALLEL "$@" $CZMQPP_OPTIONS
     build_from_github libbitcoin secp256k1 version4 $PARALLEL "$@" $SECP256K1_OPTIONS
     build_from_github libbitcoin libbitcoin version2 $PARALLEL "$@" $BITCOIN_OPTIONS
