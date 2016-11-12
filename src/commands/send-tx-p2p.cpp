@@ -110,7 +110,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
             complete.set_value(ec);
     };
 
-    message::transaction_message tx_msg(transaction);
+    message::transaction tx_msg(transaction);
 
     connect_handler = [&state, &tx_msg, handle_send](
         const code& ec, channel::ptr node)
