@@ -221,7 +221,8 @@ ptree prop_list(const tx_output_type& tx_output)
     if (address)
         tree.put("address", address);
 
-    tree.put("script", script(tx_output.script()).to_string());
+    tree.put("script", tx_output.script().to_string(
+        chain::rule_fork::all_rules));
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
