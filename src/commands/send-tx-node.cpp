@@ -102,7 +102,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
         complete.set_value(ec);
     };
 
-    message::transaction_message tx_msg(transaction);
+    message::transaction tx_msg(transaction);
 
     const auto connect_handler = [&state, &tx_msg, &send_handler](
         const code& ec, network::channel::ptr node)

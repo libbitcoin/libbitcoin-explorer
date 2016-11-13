@@ -50,7 +50,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hashtype(const chain::sighash_algorithm& value);
+    hashtype(const machine::sighash_algorithm& value);
 
     /**
      * Copy constructor.
@@ -62,7 +62,7 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    operator chain::sighash_algorithm() const;
+    operator machine::sighash_algorithm() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -87,7 +87,7 @@ private:
     /**
      * The state of this object's sighash engine data.
      */
-    chain::sighash_algorithm value_;
+    machine::sighash_algorithm value_;
 };
 
 } // namespace config

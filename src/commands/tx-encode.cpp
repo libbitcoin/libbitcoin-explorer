@@ -45,7 +45,7 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
     if (output.pay_to_hash() == null_short_hash)
         return false;
 
-    chain::operation::list payment_ops;
+    machine::operation::list payment_ops;
     const auto hash = output.pay_to_hash();
     const auto is_stealth = !output.ephemeral_data().empty();
 

@@ -72,7 +72,7 @@ const data_chunk script::to_data() const
 
 const std::string script::to_string() const
 {
-    static constexpr auto flags = chain::rule_fork::all_rules;
+    static constexpr auto flags = machine::rule_fork::all_rules;
     return value_.to_string(flags);
 }
 
@@ -98,7 +98,7 @@ std::istream& operator>>(std::istream& input, script& argument)
 
 std::ostream& operator<<(std::ostream& output, const script& argument)
 {
-    static constexpr auto flags = chain::rule_fork::all_rules;
+    static constexpr auto flags = machine::rule_fork::all_rules;
     output << argument.value_.to_string(flags);
     return output;
 }

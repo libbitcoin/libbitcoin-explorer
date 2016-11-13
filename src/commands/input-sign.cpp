@@ -40,7 +40,7 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
     const auto sign_type = get_sign_type_option();
     const tx_type& tx = get_transaction_argument();
     const ec_secret& private_key = get_ec_private_key_argument();
-    const chain::script& contract = get_contract_argument();
+    const script& contract = get_contract_argument();
 
     if (index >= tx.inputs().size())
     {
@@ -48,13 +48,13 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    uint8_t hash_type = (sighash_algorithm)sign_type;
+    uint8_t hash_type = (machine::sighash_algorithm)sign_type;
     if (anyone_can_pay)
-        hash_type |= sighash_algorithm::anyone_can_pay;
+        hash_type |= machine::sighash_algorithm::anyone_can_pay;
 
     endorsement endorse;
-    if (!chain::script::create_endorsement(endorse, private_key,
-        contract, tx, index, hash_type))
+    if (!script::create_endorsement(endorse, private_key, contract, tx, index,
+        hash_type))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;
         return console_result::failure;
