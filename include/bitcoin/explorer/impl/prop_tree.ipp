@@ -34,11 +34,17 @@ template <typename Values>
 pt::ptree prop_tree_list(const std::string& name, const Values& values,
     bool json)
 {
-    const auto denormalized_name = json ? "" : name;
-
     pt::ptree list;
-    for (const auto& value: values)
-        list.add_child(denormalized_name, prop_list(value));
+    if (json)
+    {
+        for (const auto& value: values)
+            list.push_back({"", prop_list(value)});
+    }
+    else
+    {
+        for (const auto& value: values)
+            list.add_child(name, prop_list(value));
+    }
 
     return list;
 }
@@ -47,11 +53,17 @@ template <typename Values>
 pt::ptree prop_tree_list_of_lists(const std::string& name,
     const Values& values, bool json)
 {
-    const auto denormalized_name = json ? "" : name;
-
     pt::ptree list;
-    for (const auto& value: values)
-        list.add_child(denormalized_name, prop_list(value, json));
+    if (json)
+    {
+        for (const auto& value: values)
+            list.push_back({"", prop_list(value, json)});
+    }
+    else
+    {
+        for (const auto& value: values)
+            list.add_child(name, prop_list(value, json));
+    }
 
     return list;
 }
@@ -60,14 +72,23 @@ template <typename Values>
 pt::ptree prop_value_list(const std::string& name, const Values& values,
     bool json)
 {
-    const auto denormalized_name = json ? "" : name;
-
     pt::ptree list;
     pt::ptree element;
-    for (const auto& value: values)
+    if (json)
     {
-        element.put_value(value);
-        list.add_child(denormalized_name, element);
+        for (const auto& value: values)
+        {
+            element.put_value(value);
+            list.push_back({"", element});
+        }
+    }
+    else
+    {
+        for (const auto& value: values)
+        {
+            element.put_value(value);
+            list.add_child(name, element);
+        }
     }
 
     return list;
