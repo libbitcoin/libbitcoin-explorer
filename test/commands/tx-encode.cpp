@@ -42,7 +42,8 @@ BOOST_AUTO_TEST_SUITE(tx_encode__invoke)
 #define TX_ENCODE_SEED "baadf00dbaadf00dbaadf00dbaadf00d"
 #define TX_ENCODE_STEALTH_ADDRESS_A "hfFGUXFPKkQ5M6LC6aEUKMsURdhw93bUdYdacEtBA8XttLv7evZkira2i"
 #define TX_ENCODE_STEALTH_OUTPUT_A TX_ENCODE_STEALTH_ADDRESS_A ":42:" TX_ENCODE_SEED
-#define TX_ENCODE_TX_STEALTH_A "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000070000000200000000000000003a6a3814576f496f20b0befe21f39f765e81543ebd1790ec4a03d1b5a1c2e912749d90d0fd7b16322749e301a2b0dbfe27850901156459000000002a000000000000001976a914cc04492c12d0ddeb4cf88cfccb0d6d78d0fcd39d88ac00000000"
+//#define TX_ENCODE_TX_STEALTH_A "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000070000000200000000000000003a6a3814576f496f20b0befe21f39f765e81543ebd1790ec4a03d1b5a1c2e912749d90d0fd7b16322749e301a2b0dbfe27850901156459000000002a000000000000001976a914cc04492c12d0ddeb4cf88cfccb0d6d78d0fcd39d88ac00000000"
+#define TX_ENCODE_TX_STEALTH_A "0100000001b3807042c92f449bbf79b33ca59d7dfec7f4cc71096704a9c526dddf496ee0970100000000070000000200000000000000003a6a3814576f496f20b0befe21f39f765e81543ebd1790ec4a03d1b5a1c2e912749d90d0fd7b16322749e301a2b0dbfe278509011564590412b2772a000000000000001976a914cc04492c12d0ddeb4cf88cfccb0d6d78d0fcd39d88ac00000000"
 
 BOOST_AUTO_TEST_SUITE(tx_encode__invoke__no_output)
 
@@ -127,16 +128,16 @@ BOOST_AUTO_TEST_SUITE(tx_encode__invoke__stealth_address_output)
 
 // TODO: add stealth filter test
 
-/* BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_stealth_output_no_filter_version_1__okay_output) */
-/* { */
-/*     BX_DECLARE_COMMAND(tx_encode); */
-/*     command.set_version_option(1); */
-/*     command.set_script_version_option(5); */
-/*     command.set_inputs_option({ { TX_ENCODE_INPUT_A } }); */
-/*     command.set_outputs_option({ { TX_ENCODE_STEALTH_OUTPUT_A } }); */
-/*     BX_REQUIRE_OKAY(command.invoke(output, error)); */
-/*     BX_REQUIRE_OUTPUT(TX_ENCODE_TX_STEALTH_A "\n"); */
-/* } */
+BOOST_AUTO_TEST_CASE(tx_encode__invoke__one_input_stealth_output_no_filter_version_1__okay_output)
+{
+    BX_DECLARE_COMMAND(tx_encode);
+    command.set_version_option(1);
+    command.set_script_version_option(5);
+    command.set_inputs_option({ { TX_ENCODE_INPUT_A } });
+    command.set_outputs_option({ { TX_ENCODE_STEALTH_OUTPUT_A } });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(TX_ENCODE_TX_STEALTH_A "\n");
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 
