@@ -73,7 +73,7 @@ void callback_state::output(const pt::ptree& tree)
 // std::endl adds "/n" and flushes the stream.
 void callback_state::output(const format& message)
 {
-    output_ << message  << std::endl;
+    output_ << message << std::endl;
 }
 
 void callback_state::output(const std::string& message)
