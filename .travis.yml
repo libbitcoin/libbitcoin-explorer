@@ -20,6 +20,12 @@ addons:
 
 matrix:
     include:
+        - os: osx
+          compiler: clang
+          env: LINK=dynamic
+        - os: osx
+          compiler: clang
+          env: LINK=static
         - os: linux
           compiler: clang
           env: LINK=dynamic
@@ -49,12 +55,6 @@ matrix:
             packages:
                 - lcov
                 - bash-completion
-        - os: osx
-          compiler: clang
-          env: LINK=dynamic
-        - os: osx
-          compiler: clang
-          env: LINK=static
     fast_finish:
         - true
 
