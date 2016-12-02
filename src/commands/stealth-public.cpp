@@ -23,9 +23,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::wallet;
 
 // This is nearly the same as ec-add.
@@ -46,3 +46,7 @@ console_result stealth_public::invoke(std::ostream& output,
     output << ec_public(sum) << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

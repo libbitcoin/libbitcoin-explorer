@@ -23,9 +23,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::wallet;
 
 // In the case of failure this produces ec_compressed_null.
@@ -41,3 +41,7 @@ console_result ec_to_public::invoke(std::ostream& output, std::ostream& error)
     output << ec_public(point, !uncompressed) << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

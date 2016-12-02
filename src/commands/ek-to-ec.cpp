@@ -26,9 +26,9 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::wallet;
 
 console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
@@ -53,3 +53,7 @@ console_result ek_to_ec::invoke(std::ostream& output, std::ostream& error)
     return console_result::failure;
 #endif
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

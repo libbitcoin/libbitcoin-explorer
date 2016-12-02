@@ -25,9 +25,9 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::explorer::config;
 
 console_result base58check_decode::invoke(std::ostream& output,
@@ -43,3 +43,7 @@ console_result base58check_decode::invoke(std::ostream& output,
     write_stream(output, tree, encoding);
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

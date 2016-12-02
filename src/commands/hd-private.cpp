@@ -23,9 +23,10 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 
 console_result hd_private::invoke(std::ostream& output, std::ostream& error)
 {
@@ -47,3 +48,7 @@ console_result hd_private::invoke(std::ostream& output, std::ostream& error)
     output << child_private_key << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

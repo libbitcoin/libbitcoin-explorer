@@ -24,9 +24,10 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 
 console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& error)
 {
@@ -56,3 +57,7 @@ console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& e
     return console_result::okay;
 }
 
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

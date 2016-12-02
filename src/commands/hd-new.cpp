@@ -23,12 +23,13 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
 
 // The BX_HD_NEW_INVALID_KEY condition is uncovered by test.
 // This is because is not known what seed will produce an invalid key.
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
+
 console_result hd_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -54,3 +55,7 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
     output << private_key << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

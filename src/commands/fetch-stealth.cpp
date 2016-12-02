@@ -27,11 +27,11 @@
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 
-using namespace bc;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::chain;
 using namespace bc::client;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
 using namespace bc::explorer::config;
 using namespace bc::wallet;
 
@@ -78,3 +78,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     return state.get_result();
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

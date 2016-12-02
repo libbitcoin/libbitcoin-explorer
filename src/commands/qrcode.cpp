@@ -25,10 +25,10 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::wallet;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
 
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
@@ -75,3 +75,7 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
     return console_result::failure;
 #endif // WITH_QRENCODE
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

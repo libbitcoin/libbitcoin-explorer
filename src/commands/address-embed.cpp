@@ -26,10 +26,10 @@
 #include <bitcoin/explorer/config/script.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace bc;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::chain;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
 using namespace bc::wallet;
 
 console_result address_embed::invoke(std::ostream& output, std::ostream& error)
@@ -49,3 +49,7 @@ console_result address_embed::invoke(std::ostream& output, std::ostream& error)
     output << payment_address(hash, version) << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

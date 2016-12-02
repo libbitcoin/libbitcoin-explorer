@@ -24,11 +24,12 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
 
 // This is nearly the same as ec-add-secrets.
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
+
 console_result stealth_secret::invoke(std::ostream& output,
     std::ostream& error)
 {
@@ -46,3 +47,7 @@ console_result stealth_secret::invoke(std::ostream& output,
     output << config::ec_private(sum) << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 
