@@ -25,9 +25,10 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 
 console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
 {
@@ -40,3 +41,7 @@ console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
     write_stream(output, tree, encoding);
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

@@ -23,9 +23,10 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 
 console_result hd_public::invoke(std::ostream& output, std::ostream& error)
 {
@@ -88,3 +89,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     output << "ERROR_KEY" << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

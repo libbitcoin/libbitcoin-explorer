@@ -23,12 +23,17 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 
 console_result hd_to_address::invoke(std::ostream& output, std::ostream& error)
 {
     error << BX_HD_TO_ADDRESS_OBSOLETE << std::endl;
     return console_result::failure;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

@@ -24,9 +24,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::wallet;
 
 console_result ek_address::invoke(std::ostream& output, std::ostream& error)
@@ -54,3 +54,7 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
     output << address << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

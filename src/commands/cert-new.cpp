@@ -23,10 +23,10 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace bc;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::config;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
 using namespace bc::protocol;
 
 console_result cert_new::invoke(std::ostream& output, std::ostream& error)
@@ -46,3 +46,7 @@ console_result cert_new::invoke(std::ostream& output, std::ostream& error)
     output << certificate.private_key() << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

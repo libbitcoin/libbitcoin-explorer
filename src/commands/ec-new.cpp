@@ -25,12 +25,13 @@
 #include <bitcoin/explorer/utility.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
 
 // The BX_EC_NEW_INVALID_KEY condition is not covered by test.
 // This is because is not known what seed will produce an invalid key.
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
+
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
@@ -53,3 +54,7 @@ console_result ec_new::invoke(std::ostream& output, std::ostream& error)
     output << config::ec_private(secret) << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

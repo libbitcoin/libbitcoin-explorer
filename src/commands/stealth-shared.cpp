@@ -23,12 +23,13 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
 
 // This is nearly the same as ec-multiply + sha256.
 // Pass either (ephem_secret, scan_pubkey) or (scan_secret, ephem_pubkey).
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
+
 console_result stealth_shared::invoke(std::ostream& output,
     std::ostream& error)
 {
@@ -48,3 +49,7 @@ console_result stealth_shared::invoke(std::ostream& output,
     output << config::ec_private(hash) << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

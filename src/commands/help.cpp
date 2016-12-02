@@ -26,9 +26,10 @@
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/generated.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 
 console_result help::invoke(std::ostream& output, std::ostream& error)
 {
@@ -53,3 +54,7 @@ console_result help::invoke(std::ostream& output, std::ostream& error)
     command->write_help(output);
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

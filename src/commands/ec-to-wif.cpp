@@ -23,9 +23,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::wallet;
 
 console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)
@@ -44,3 +44,7 @@ console_result ec_to_wif::invoke(std::ostream& output, std::ostream& error)
     output << ec_private(secret, version, !uncompressed) << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 

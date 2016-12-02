@@ -22,9 +22,9 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 
-using namespace bc;
-using namespace bc::explorer;
-using namespace bc::explorer::commands;
+namespace libbitcoin {
+namespace explorer {
+namespace commands {
 using namespace bc::wallet;
 
 console_result message_validate::invoke(std::ostream& output,
@@ -45,3 +45,7 @@ console_result message_validate::invoke(std::ostream& output,
     output << BX_MESSAGE_VALIDATE_INDEX_VALID_SIGNATURE << std::endl;
     return console_result::okay;
 }
+
+} //namespace commands 
+} //namespace explorer 
+} //namespace libbitcoin 
