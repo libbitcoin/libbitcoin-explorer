@@ -49,6 +49,8 @@ IF %ERRORLEVEL% NEQ 0 (
 call :success "Build complete."
 exit /b 0
 
+
+
 :init
 call :pending "Initializing repository %~1/%~2/%~3..."
 IF NOT EXIST "%path_base%\%~2" (
@@ -63,7 +65,7 @@ IF NOT EXIST "%path_base%\%~2" (
 
 call :bld_proj %~2
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "build_repository_project %~2 failed."
+  call :failure "Building project %~2 failed."
   exit /b 1
 )
 call :success "Initialization of %~1/%~2/%~3 complete."
@@ -73,7 +75,7 @@ exit /b 0
 call :pending "Building respository %~1..."
 call :depends "%~1"
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "init_dependencies %~1 failed."
+  call :failure "Initializing dependencies %~1 failed."
   exit /b 1
 )
 call cd /d "%path_base%\%~1\builds\msvc\vs2013"
@@ -82,7 +84,7 @@ IF %ERRORLEVEL% NEQ 0 (
   call :failure "msbuild %msbuild_args% %~1.sln failed."
   exit /b 1
 )
-call :success "Build repository %~1 execution complete."
+call :success "Building repository %~1 execution complete."
 call cd /d "%path_base%"
 exit /b 0
 
@@ -90,7 +92,7 @@ exit /b 0
 call :pending "Building respository project %~1..."
 call :depends %~1
 IF %ERRORLEVEL% NEQ 0 (
-  call :failure "init_dependencies %~1 failed."
+  call :failure "Initializing dependencies %~1 failed."
   exit /b 1
 )
 call cd /d "%path_base%\%~1\builds\msvc\vs2013"
@@ -99,7 +101,7 @@ IF %ERRORLEVEL% NEQ 0 (
   call :failure "msbuildl %msbuild_args% /target:%~1:Rebuild %~1.sln"
   exit /b 1
 )
-call :success "Build repository project %~1 execution complete."
+call :success "Building repository project %~1 execution complete."
 call cd /d "%path_base%"
 exit /b 0
 
