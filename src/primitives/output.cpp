@@ -180,7 +180,7 @@ static bool decode_outputs(std::vector<tx_output_type>& outputs,
     }
 
     // Otherwise the token is assumed to be a base16-encoded script.
-    output.script = script(target);
+    output.script = script(base16(target));
 
     result.push_back(output);
     outputs = result;
