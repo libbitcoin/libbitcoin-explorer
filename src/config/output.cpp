@@ -140,6 +140,8 @@ std::istream& operator>>(std::istream& input, output& argument)
     }
 
     // The target must be a serialized script.
+    // Note that it is possible for a base16 encoded script to be interpreted
+    // as an address above. That is unlikely but consider intended behavior.
     data_chunk decoded;
     if (!decode_base16(decoded, target))
     {
