@@ -27,12 +27,12 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace po;
-using namespace bc::config;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace po;
+using namespace bc::config;
 
 header::header()
   : value_()
@@ -78,7 +78,7 @@ std::ostream& operator<<(std::ostream& output, const header& argument)
     const auto bytes = argument.value_.to_data();
 
     // header base16 is a private encoding in bx, used to pass between commands.
-    output << base16(bytes);
+    output << bc::config::base16(bytes);
     return output;
 }
 

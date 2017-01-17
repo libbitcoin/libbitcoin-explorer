@@ -27,12 +27,12 @@
 
 /********* GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY **********/
 
-using namespace po;
-using namespace std;
-using namespace boost::filesystem;
-    
 namespace libbitcoin {
 namespace explorer {
+
+using namespace std;
+using namespace po;
+using namespace boost::filesystem;
 using namespace commands;
 
 void broadcast(const function<void(shared_ptr<command>)> func)

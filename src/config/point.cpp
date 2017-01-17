@@ -28,12 +28,11 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace po;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace po;
 using namespace bc::config;
 
 // point format is currently private to bx.

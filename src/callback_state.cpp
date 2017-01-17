@@ -30,16 +30,15 @@
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace pt;
-
 namespace libbitcoin {
 namespace explorer {
-    
+
+using namespace pt;
+
 callback_state::callback_state(std::ostream& error, std::ostream& output,
     const encoding_engine engine)
   : stopped_(true), refcount_(0), result_(console_result::okay), 
     engine_(engine), error_(error), output_(output)
-    
 {
 }
 

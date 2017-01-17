@@ -70,6 +70,9 @@
  */
 #define BX_STDIO_PATH_SENTINEL "-"
 
+namespace libbitcoin {
+namespace explorer {
+
 /**
  * Space-saving namespaces.
  */
@@ -104,5 +107,8 @@ enum class encoding_engine
     json,
     xml
 };
+
+} // namespace explorer
+} // namespace libbitcoin
 
 #endif

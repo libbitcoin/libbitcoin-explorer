@@ -26,11 +26,11 @@
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace po;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace po;
 
 //constexpr uint8_t cert_key_byte_size = 32;
 constexpr uint8_t cert_key_string_length = 40;
