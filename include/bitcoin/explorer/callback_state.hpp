@@ -28,8 +28,6 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in headers. */
-
 namespace libbitcoin {
 namespace explorer {
 

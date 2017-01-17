@@ -24,11 +24,9 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in headers. */
-
 namespace libbitcoin {
 namespace explorer {
-   
+
 /**
  * Dispatch the command with the raw arguments as provided on the command line.
  * @param[in]  argc    The number of elements in the argv array.

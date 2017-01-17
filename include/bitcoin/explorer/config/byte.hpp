@@ -25,8 +25,6 @@
 #include <cstdint>
 #include <bitcoin/explorer/define.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in headers. */
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
