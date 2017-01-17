@@ -582,7 +582,6 @@
   <command symbol="validate-tx" formerly="validtx" output="string" category="ONLINE" network="true" description="Determine if a transaction is valid for submission to the blockchain. Requires a Libbitcoin/Obelisk server connection.">
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction. If not specified the transaction is read from STDIN."/>
     <define name="BX_VALIDATE_TX_VALID" value="The transaction is valid." />
-    <define name="BX_VALIDATE_TX_UNCONFIRMED_INPUTS" value="The transaction is valid, with unconfirmed inputs at index: %1%." />
   </command>
 
   <command symbol="watch-address" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires a Libbitcoin server connection.">
