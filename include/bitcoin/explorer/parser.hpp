@@ -27,8 +27,6 @@
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in headers. */
-
 namespace libbitcoin {
 namespace explorer {
 

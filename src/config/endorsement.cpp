@@ -28,11 +28,11 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace po;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace po;
 
 // endorsement format is currently private to bx.
 static bool decode_endorsement(bc::endorsement& endorsement,

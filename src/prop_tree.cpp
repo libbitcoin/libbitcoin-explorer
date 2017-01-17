@@ -34,14 +34,14 @@
 #include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 
+namespace libbitcoin {
+namespace explorer {
+namespace config {
+
 using namespace pt;
 using namespace bc::client;
 using namespace bc::config;
 using namespace bc::wallet;
-
-namespace libbitcoin {
-namespace explorer {
-namespace config {
 
 // property_tree is very odd in that what one might consider a node or element,
 // having a "containing" name cannot be added into another node without
@@ -68,12 +68,14 @@ ptree prop_list(const header& header)
     tree.put("version", block_header.version());
     return tree;
 }
+
 ptree prop_tree(const header& header)
 {
     ptree tree;
     tree.add_child("header", prop_list(header));
     return tree;
 }
+
 ptree prop_tree(const std::vector<header>& headers, bool json)
 {
     ptree tree;
@@ -114,12 +116,14 @@ ptree prop_list(const chain::history& row)
     tree.put("value", row.value);
     return tree;
 }
+
 ptree prop_tree(const chain::history& row)
 {
     ptree tree;
     tree.add_child("transfer", prop_list(row));
     return tree;
 }
+
 ptree prop_tree(const chain::history::list& rows, bool json)
 {
     ptree tree;
@@ -156,6 +160,7 @@ ptree prop_list(const chain::history::list& rows,
     tree.put("unspent", unspent_balance);
     return tree;
 }
+
 ptree prop_tree(const chain::history::list& rows,
     const payment_address& balance_address)
 {
@@ -179,12 +184,14 @@ ptree prop_list(const tx_input_type& tx_input)
     tree.put("sequence", tx_input.sequence());
     return tree;
 }
+
 ptree prop_tree(const tx_input_type& tx_input)
 {
     ptree tree;
     tree.add_child("input", prop_list(tx_input));
     return tree;
 }
+
 ptree prop_tree(const tx_input_type::list& tx_inputs, bool json)
 {
     ptree tree;
@@ -197,12 +204,14 @@ ptree prop_list(const input& input)
     const tx_input_type& tx_input = input;
     return prop_list(tx_input);
 }
+
 ptree prop_tree(const input& input)
 {
     ptree tree;
     tree.add_child("input", prop_list(input));
     return tree;
 }
+
 ptree prop_tree(const std::vector<input>& inputs, bool json)
 {
     const auto tx_inputs = cast<input, tx_input_type>(inputs);
@@ -242,12 +251,14 @@ ptree prop_list(const tx_output_type& tx_output)
     tree.put("value", tx_output.value());
     return tree;
 }
+
 ptree prop_tree(const tx_output_type& tx_output)
 {
     ptree tree;
     tree.add_child("output", prop_list(tx_output));
     return tree;
 }
+
 ptree prop_tree(const tx_output_type::list& tx_outputs, bool json)
 {
     ptree tree;
@@ -295,12 +306,14 @@ ptree prop_list(const transaction& transaction, bool json)
     tree.put("version", tx.version());
     return tree;
 }
+
 ptree prop_tree(const transaction& transaction, bool json)
 {
     ptree tree;
     tree.add_child("transaction", prop_list(transaction, json));
     return tree;
 }
+
 ptree prop_tree(const std::vector<transaction>& transactions, bool json)
 {
     ptree tree;
@@ -319,6 +332,7 @@ ptree prop_list(const wallet::wrapped_data& wrapper)
     tree.put("version", wrapper.version);
     return tree;
 }
+
 ptree prop_tree(const wallet::wrapped_data& wrapper)
 {
     ptree tree;
@@ -337,6 +351,7 @@ ptree prop_tree(const wallet::wrapped_data& wrapper)
 //    tree.add_child("transaction", prop_list(tx, json));
 //    return tree;
 //}
+//
 //ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
 //    const base2& filter, bool json)
 //{
@@ -356,6 +371,7 @@ ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
     tree.add_child("transaction", prop_list(tx, json));
     return tree;
 }
+
 ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
     const payment_address& address, bool json)
 {
@@ -386,6 +402,7 @@ ptree prop_list(const stealth_address& stealth, bool json)
     tree.put("version", stealth.version());
     return tree;
 }
+
 ptree prop_tree(const stealth_address& stealth, bool json)
 {
     ptree tree;
@@ -403,6 +420,7 @@ ptree prop_list(const chain::stealth& row)
     tree.put("transaction_hash", hash256(row.transaction_hash));
     return tree;
 }
+
 ptree prop_tree(const chain::stealth& row)
 {
     ptree tree;
@@ -427,6 +445,7 @@ ptree prop_list(const hash_digest& hash, size_t height, size_t index)
     tree.put("index", index);
     return tree;
 }
+
 ptree prop_tree(const hash_digest& hash, size_t height, size_t index)
 {
     ptree tree;

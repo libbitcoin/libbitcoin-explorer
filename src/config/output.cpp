@@ -30,11 +30,11 @@
 #include <bitcoin/explorer/config/script.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace po;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace po;
 
 output::output()
   : amount_(0), version_(0), script_(), pay_to_hash_(null_short_hash),

@@ -33,12 +33,10 @@
 #include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 
-/* NOTE: don't declare 'using namespace foo' in headers. */
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
-    
+
 class base2;
 class header;
 class input;

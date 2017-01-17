@@ -25,12 +25,12 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace po;
-using namespace bc::config;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace po;
+using namespace bc::config;
 
 wrapper::wrapper()
   : value_()

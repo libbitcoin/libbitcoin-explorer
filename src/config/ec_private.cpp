@@ -26,11 +26,11 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace po;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace po;
 
 // ec_secret base16 format is private to bx.
 static bool decode_secret(ec_secret& secret, const std::string& encoded)

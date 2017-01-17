@@ -26,11 +26,11 @@
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
-using namespace po;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace po;
 
 hd_key::hd_key(const std::string& base58)
 {

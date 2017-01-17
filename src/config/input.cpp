@@ -29,11 +29,11 @@
 #include <bitcoin/explorer/config/point.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
-using namespace po;
-
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace po;
 
 // input is currently a private encoding in bx.
 static bool decode_input(tx_input_type& input, const std::string& tuple)
