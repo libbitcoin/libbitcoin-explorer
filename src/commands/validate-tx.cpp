@@ -51,24 +51,17 @@ console_result validate_tx::invoke(std::ostream& output,
 
     callback_state state(error, output);
 
-    auto on_done = [&state](const chain::point::indexes& indexes)
+    auto on_done = [&state](const code& error)
     {
-        if (indexes.empty())
-        {
+        if (error)
+            state.output(format(BX_VALIDATE_TX_INVALID) % error.message());
+        else
             state.output(BX_VALIDATE_TX_VALID);
-            return;
-        }
-
-        const auto unconfirmed = join(numbers_to_strings(indexes), ", ");
-        state.output(format(BX_VALIDATE_TX_UNCONFIRMED_INPUTS) % unconfirmed);
     };
 
     auto on_error = [&state](const code& error)
     {
-        // BX_VALIDATE_TX_INVALID_INPUT is not currently utilized.
-        // The client suppresses an index list which may have 0 or one element.
-        // The list contains the index of the input which caused the failure.
-        state.succeeded(error);
+        state.output(format(BX_VALIDATE_TX_INVALID) % error.message());
     };
 
     client.transaction_pool_validate(on_error, on_done, transaction);
