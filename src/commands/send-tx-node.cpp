@@ -40,10 +40,7 @@ using namespace bc::network;
 
 static void handle_signal(int)
 {
-    // Can't pass args using lambda capture for a simple function pointer.
-    // This means there's no way to terminate without using a global variable
-    // or process termination. Since the variable would screw with testing all 
-    // other methods we opt for process termination here.
+    // TODO: exit without process termination.
     exit(console_result::failure);
 }
 

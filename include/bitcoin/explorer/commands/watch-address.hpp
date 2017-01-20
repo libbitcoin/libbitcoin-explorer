@@ -154,6 +154,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "duration,d",
+            value<uint32_t>(&option_.duration)->default_value(600),
+            "The duration of the watch in seconds, defaults to 600."
+        )
+        (
             "format,f",
             value<explorer::config::encoding>(&option_.format),
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
@@ -204,6 +209,23 @@ public:
     }
 
     /**
+     * Get the value of the duration option.
+     */
+    virtual uint32_t& get_duration_option()
+    {
+        return option_.duration;
+    }
+
+    /**
+     * Set the value of the duration option.
+     */
+    virtual void set_duration_option(
+        const uint32_t& value)
+    {
+        option_.duration = value;
+    }
+
+    /**
      * Get the value of the format option.
      */
     virtual explorer::config::encoding& get_format_option()
@@ -245,10 +267,12 @@ private:
     struct option
     {
         option()
-          : format()
+          : duration(),
+            format()
         {
         }
 
+        uint32_t duration;
         explorer::config::encoding format;
     } option_;
 };
