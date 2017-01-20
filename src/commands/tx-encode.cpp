@@ -37,7 +37,7 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
     static constexpr uint64_t no_amount = 0;
 
     // explicit script
-    if (output.script().is_valid())
+    if (!output.is_stealth() && output.script().is_valid())
     {
         outputs.push_back({ output.amount(), output.script() });
         return true;
