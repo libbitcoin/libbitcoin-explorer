@@ -34,6 +34,8 @@ using namespace bc::wallet;
 static bool push_scripts(std::vector<tx_output_type>& outputs,
     const explorer::config::output& output, uint8_t script_version)
 {
+    static constexpr uint64_t no_amount = 0;
+
     // explicit script
     if (output.script().is_valid())
     {
@@ -47,7 +49,6 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
 
     machine::operation::list payment_ops;
     const auto hash = output.pay_to_hash();
-    const auto is_stealth = !output.ephemeral_data().empty();
 
     // This presumes stealth versions are the same as non-stealth.
     if (output.version() != script_version)
@@ -57,19 +58,11 @@ static bool push_scripts(std::vector<tx_output_type>& outputs,
     else
         return false;
 
-    if (is_stealth)
-    {
-        // Stealth indexing requires an ordered script tuple.
-        // The null data script must be pushed before the pay script.
-        static constexpr uint64_t no_amount = 0;
-        const auto data = output.ephemeral_data();
-        const auto null_data = chain::script::to_null_data_pattern(data);
-        const auto null_data_script = chain::script{ null_data };
-        outputs.push_back({ no_amount, null_data_script });
-    }
+    // If stealth add null data stealth output immediately before payment.
+    if (output.is_stealth())
+        outputs.push_back({ no_amount, output.script() });
 
-    const auto payment_script = chain::script{ payment_ops };
-    outputs.push_back({ output.amount(), payment_script });
+    outputs.push_back({ output.amount(), { payment_ops } });
     return true;
 }
 

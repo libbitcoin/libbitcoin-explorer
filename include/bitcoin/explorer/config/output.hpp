@@ -49,6 +49,7 @@ public:
     output(const std::string& tuple);
 
     /// Parsed properties
+    bool is_stealth() const;
     uint64_t amount() const;
     uint8_t version() const;
     const chain::script& script() const;
@@ -70,11 +71,11 @@ private:
      * The transaction output state of this object.
      * This data is translated to an output given expected version information.
      */
+    bool is_stealth_;
     uint64_t amount_;
     uint8_t version_;
     chain::script script_;
     short_hash pay_to_hash_;
-    data_chunk ephemeral_data_;
 };
 
 } // namespace explorer

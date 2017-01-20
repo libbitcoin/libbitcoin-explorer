@@ -37,8 +37,8 @@ namespace config {
 using namespace po;
 
 output::output()
-  : amount_(0), version_(0), script_(), pay_to_hash_(null_short_hash),
-    ephemeral_data_({})
+  : is_stealth_(false), amount_(0), version_(0), script_(),
+    pay_to_hash_(null_short_hash)
 {
 }
 
@@ -46,6 +46,11 @@ output::output(const std::string& tuple)
   : output()
 {
     std::stringstream(tuple) >> *this;
+}
+
+bool output::is_stealth() const
+{
+    return is_stealth_;
 }
 
 uint64_t output::amount() const
@@ -66,11 +71,6 @@ const chain::script& output::script() const
 const short_hash& output::pay_to_hash() const
 {
     return pay_to_hash_;
-}
-
-const data_chunk& output::ephemeral_data() const
-{
-    return ephemeral_data_;
 }
 
 std::istream& operator>>(std::istream& input, output& argument)
@@ -121,7 +121,7 @@ std::istream& operator>>(std::istream& input, output& argument)
         }
 
         ec_secret ephemeral_secret;
-        if (!create_stealth_data(argument.ephemeral_data_, ephemeral_secret,
+        if (!create_stealth_script(argument.script_, ephemeral_secret,
             stealth.filter(), seed))
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
@@ -134,6 +134,7 @@ std::istream& operator>>(std::istream& input, output& argument)
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
         }
 
+        argument.is_stealth_ = true;
         argument.pay_to_hash_ = bitcoin_short_hash(stealth_key);
         argument.version_ = stealth.version();
         return input;
