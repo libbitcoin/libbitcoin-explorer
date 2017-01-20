@@ -40,10 +40,7 @@ using namespace bc::network;
 
 static void handle_signal(int)
 {
-    // Can't pass args using lambda capture for a simple function pointer.
-    // This means there's no way to terminate without using a global variable
-    // or process termination. Since the variable would screw with testing all 
-    // other methods we opt for process termination here.
+    // TODO: exit without process termination.
     exit(console_result::failure);
 }
 
@@ -115,7 +112,6 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     network.connect(host, port, connect_handler);
 
     // Catch C signals for aborting the program.
-    signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
     

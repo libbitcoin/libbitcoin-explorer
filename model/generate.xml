@@ -585,7 +585,9 @@
     <define name="BX_VALIDATE_TX_INVALID" value="The transaction is invalid for the current state of the node: %1%." />
   </command>
 
+  <!-- TODO: update documentation for settings change (duration) in 3.0. -->
   <command symbol="watch-address" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires a Libbitcoin server connection.">
+    <option name="duration" type="uint32_t" default="600" description="The duration of the watch in seconds, defaults to 600." />
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The participating payment address. If not specified the address is read from STDIN." />
     <define name="BX_WATCH_ADDRESS_WAITING" value="Watching address: %1%..." />

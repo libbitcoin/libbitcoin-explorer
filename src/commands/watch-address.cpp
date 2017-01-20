@@ -41,8 +41,7 @@ using namespace bc::wallet;
 
 static void handle_signal(int signal)
 {
-    // Can't pass args using lambda capture for a simple function pointer.
-    // This means there's no way to terminate without using a global variable.
+    // TODO: exit without process termination.
     exit(console_result::failure);
 }
 
@@ -54,9 +53,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     const auto& encoding = get_format_option();
     const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
-
-    // TODO: add monitoring timeout to command line in seconds, default to 600.
-    const auto timeout = uint32_t(10 * 60); //// get_timeout_option();
+    const auto duration = get_duration_option();
 
     obelisk_client client(connection);
 
@@ -79,11 +76,9 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    // The configured timeout is used for the subscription.
     client.address_subscribe(on_error, on_subscribed, address);
     client.wait();
 
-    // If subscription succeeded, handle updates until monitoring timeout.
     if (state.stopped())
         return state.get_result();
 
@@ -100,12 +95,11 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     client.set_on_update(on_update);
 
     // Catch C signals for stopping the program before monitoring timeout.
-    signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
-    // Handle updates until monitoring timeout.
-    client.monitor(timeout);
+    // Handle updates until monitoring duration expires.
+    client.monitor(duration);
 
     return state.get_result();
 }
