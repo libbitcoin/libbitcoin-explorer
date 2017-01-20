@@ -61,8 +61,8 @@ namespace commands {
  */
 #define BX_VALIDATE_TX_VALID \
     "The transaction is valid."
-#define BX_VALIDATE_TX_UNCONFIRMED_INPUTS \
-    "The transaction is valid, with unconfirmed inputs at index: %1%."
+#define BX_VALIDATE_TX_INVALID \
+    "The transaction is invalid for the current state of the node: %1%."
 
 /**
  * Class to implement the validate-tx command.
