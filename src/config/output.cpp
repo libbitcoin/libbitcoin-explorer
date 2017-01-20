@@ -121,7 +121,7 @@ std::istream& operator>>(std::istream& input, output& argument)
         }
 
         ec_secret ephemeral_secret;
-        if (!create_stealth_script(argument.script_, ephemeral_secret,
+        if (!create_stealth_data(argument.script_, ephemeral_secret,
             stealth.filter(), seed))
         {
             BOOST_THROW_EXCEPTION(invalid_option_value(target));
