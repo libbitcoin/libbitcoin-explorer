@@ -61,7 +61,7 @@ console_result validate_tx::invoke(std::ostream& output,
 
     auto on_error = [&state](const code& error)
     {
-        state.output(format(BX_VALIDATE_TX_INVALID) % error.message());
+        state.succeeded(error);
     };
 
     client.transaction_pool_validate(on_error, on_done, transaction);
