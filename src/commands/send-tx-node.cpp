@@ -115,7 +115,6 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     network.connect(host, port, connect_handler);
 
     // Catch C signals for aborting the program.
-    signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
     

@@ -142,7 +142,6 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
 
     // Catch C signals for aborting the program.
-    signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 

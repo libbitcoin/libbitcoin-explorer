@@ -100,7 +100,6 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     client.set_on_update(on_update);
 
     // Catch C signals for stopping the program before monitoring timeout.
-    signal(SIGABRT, handle_signal);
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
