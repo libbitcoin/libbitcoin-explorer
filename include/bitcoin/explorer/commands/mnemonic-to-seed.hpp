@@ -155,7 +155,7 @@ public:
         (
             "language,l",
             value<explorer::config::language>(&option_.language),
-            "The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'any'."
+            "The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'fr', 'it', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'any'."
         )
         (
             "passphrase,p",

@@ -149,7 +149,7 @@ public:
         (
             "language,l",
             value<explorer::config::language>(&option_.language),
-            "The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'."
+            "The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'ja', 'it', 'fr', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'."
         )
         (
             "SEED",

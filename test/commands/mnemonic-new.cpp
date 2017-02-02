@@ -84,6 +84,24 @@ BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_es__okay_output)
     BX_REQUIRE_OUTPUT("previo humilde actuar jarabe tabique ahorro tope pulpo anís señal lavar bahía\n");
 }
 
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_it__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "it" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("rizoma lastra affabile lucidato sultano algebra tramonto rupe annuncio sonda mega bavosa\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_fr__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "fr" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("placard garantir acerbe gratuit soluble affaire théorie ponctuel anguleux salon horrible bateau\n");
+}
+
 BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_ja__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
