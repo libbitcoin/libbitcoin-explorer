@@ -65,7 +65,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_subscribed = [&state, &address]()
+    auto on_subscribed = [&state, &address](const code& error)
     {
         state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
         ++state;

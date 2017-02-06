@@ -49,7 +49,7 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    auto on_done = [&state]()
+    auto on_done = [&state](const code& error)
     {
         state.output(BX_SEND_TX_OUTPUT);
     };
@@ -59,7 +59,8 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.protocol_broadcast_transaction(on_error, on_done, transaction);
+    // This validates the tx, submits it to local tx pool, and notifies peers.
+    client.transaction_pool_broadcast(on_error, on_done, transaction);
     client.wait();
 
     return state.get_result();
