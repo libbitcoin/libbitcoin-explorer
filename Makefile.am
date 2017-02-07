@@ -428,7 +428,6 @@ endif BASH_COMPLETIONDIR
 #------------------------------------------------------------------------------
 sysconf_libbitcoindir = ${sysconfdir}/libbitcoin
 sysconf_libbitcoin_DATA = \
-    data/bx-testnet.cfg \
     data/bx.cfg
 
 
