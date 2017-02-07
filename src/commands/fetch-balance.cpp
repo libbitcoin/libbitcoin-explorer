@@ -63,9 +63,8 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    // The v3 client API works with and normalizes either server API.
-    //// client.address_fetch_history(on_error, on_done, address);
-    client.address_fetch_history2(on_error, on_done, address);
+    // This does not include unconfirmed transactions.
+    client.blockchain_fetch_history(on_error, on_done, address);
     client.wait();
 
     return state.get_result();
