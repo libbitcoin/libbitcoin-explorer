@@ -1,21 +1,20 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
- * This file is part of libbitcoin-explorer.
+ * This file is part of libbitcoin.
  *
- * libbitcoin-explorer is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #ifndef BX_UTILITY_IPP
 #define BX_UTILITY_IPP
@@ -23,7 +22,7 @@
 #ifdef _MSC_VER
 // Suppressing msvc warnings from boost that are heard to deal with
 // because boost/algorithm carelessly defines _SCL_SECURE_NO_WARNINGS
-// without sampling it first. 
+// without sampling it first.
 #pragma warning(push)
 #pragma warning(disable : 4996)
 #endif
@@ -84,7 +83,7 @@ template <typename Value>
 void deserialize(std::vector<Value>& collection, const std::string& text,
     bool trim)
 {
-    // This had problems with the inclusion of the ideographic (CJK) space 
+    // This had problems with the inclusion of the ideographic (CJK) space
     // (0xe3,0x80, 0x80). Need to infuse the local in bc::split().
     const auto tokens = split(text, " \n\r\t");
     for (const auto& token: tokens)
@@ -120,7 +119,7 @@ void load_path(Value& parameter, const std::string& name,
 
     // Get the argument value as a string.
     const auto path = boost::any_cast<std::string>(variable->second.value());
-    
+
     // The path is the stdio sentinal, so clear parameter and don't read file.
     if (path == BX_STDIO_PATH_SENTINEL)
     {
@@ -155,7 +154,7 @@ data_chunk serialize_satoshi_item(const Item& item)
 template <typename Instance>
 void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate)
-{        
+{
     if (path.empty() || path == BX_STDIO_PATH_SENTINEL)
     {
         output << instance;

@@ -1,21 +1,20 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
- * This file is part of libbitcoin-explorer.
+ * This file is part of libbitcoin.
  *
- * libbitcoin-explorer is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <bitcoin/explorer/commands/help.hpp>
 
@@ -62,15 +61,15 @@ console_result commands::settings::invoke(std::ostream& output,
         serialize(get_network_identifier_setting());
     list["network.connect_retries"] =
         serialize(get_network_connect_retries_setting());
-    list["network.connect_timeout_seconds"] = 
+    list["network.connect_timeout_seconds"] =
         serialize(get_network_connect_timeout_seconds_setting());
     list["network.channel_handshake_seconds"] =
         serialize(get_network_channel_handshake_seconds_setting());
     list["network.hosts_file"] =
         get_network_hosts_file_setting().string();
-    list["network.debug_file"] = 
+    list["network.debug_file"] =
         get_network_debug_file_setting().string();
-    list["network.error_file"] = 
+    list["network.error_file"] =
         get_network_error_file_setting().string();
 
     network::settings settings(bc::config::settings::mainnet);
@@ -94,13 +93,13 @@ console_result commands::settings::invoke(std::ostream& output,
         serialize(get_server_connect_timeout_seconds_setting());
     list["server.server_public_key"] =
         serialize(get_server_server_public_key_setting());
-    list["server.client_private_key"] = 
+    list["server.client_private_key"] =
         serialize(get_server_client_private_key_setting());
 
     write_stream(output, prop_tree(list), encoding);
     return console_result::okay;
 }
 
-} //namespace commands 
-} //namespace explorer 
-} //namespace libbitcoin 
+} //namespace commands
+} //namespace explorer
+} //namespace libbitcoin
