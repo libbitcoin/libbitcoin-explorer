@@ -1,21 +1,20 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
- * This file is part of libbitcoin-explorer.
+ * This file is part of libbitcoin.
  *
- * libbitcoin-explorer is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <bitcoin/explorer/display.hpp>
@@ -72,7 +71,7 @@ static std::string fixup_boost_po_what_en(const std::string& what)
     return message;
 }
 
-void display_invalid_parameter(std::ostream& stream, 
+void display_invalid_parameter(std::ostream& stream,
     const std::string& message)
 {
     stream << format(BX_INVALID_PARAMETER) % fixup_boost_po_what_en(message)
@@ -81,9 +80,9 @@ void display_invalid_parameter(std::ostream& stream,
 
 void display_usage(std::ostream& stream)
 {
-    stream 
+    stream
         << std::endl << BX_COMMAND_USAGE << std::endl
-        << std::endl << format(BX_VERSION_MESSAGE) % 
+        << std::endl << format(BX_VERSION_MESSAGE) %
             LIBBITCOIN_EXPLORER_VERSION << std::endl
         << std::endl << BX_COMMANDS_HEADER << std::endl
         << std::endl;

@@ -1,21 +1,20 @@
 /**
- * Copyright (c) 2011-2015 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
- * This file is part of libbitcoin-explorer.
+ * This file is part of libbitcoin.
  *
- * libbitcoin-explorer is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Affero General Public License with
- * additional permissions to the one published by the Free Software
- * Foundation, either version 3 of the License, or (at your option)
- * any later version. For more information see LICENSE.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <bitcoin/explorer/commands/hd-public.hpp>
 
@@ -36,7 +35,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     const auto private_version = get_secret_version_option();
     const auto public_version = get_public_version_option();
     const auto& key = get_hd_key_argument();
-   
+
     const auto key_version = key.version();
     if (key_version != private_version && key_version != public_version)
     {
@@ -49,7 +48,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
         error << BX_HD_PUBLIC_HARD_OPTION_CONFLICT << std::endl;
         return console_result::failure;
     }
-    
+
     if (key_version == private_version)
     {
         const auto prefixes = bc::wallet::hd_private::to_prefixes(
@@ -90,6 +89,6 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     return console_result::okay;
 }
 
-} //namespace commands 
-} //namespace explorer 
-} //namespace libbitcoin 
+} //namespace commands
+} //namespace explorer
+} //namespace libbitcoin

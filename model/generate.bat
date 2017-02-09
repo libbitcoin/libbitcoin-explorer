@@ -1,9 +1,9 @@
 @echo off
 REM ###########################################################################
-REM  Copyright (c) 2014-2015 libbitcoin developers (see COPYING).
-REM 
+REM  Copyright (c) 2014-2017 libbitcoin developers (see COPYING).
+REM
 REM  Generate libbitcoin explorer artifacts from XML + GSL.
-REM 
+REM
 REM  This executes the iMatix GSL code generator.
 REM  See https://github.com/imatix/gsl for details.
 REM
