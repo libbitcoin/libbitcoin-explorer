@@ -64,7 +64,7 @@ namespace commands {
 /**
  * Class to implement the fetch-public-key command.
  */
-class BCX_API fetch_public_key 
+class BCX_API fetch_public_key
   : public command
 {
 public:
@@ -125,7 +125,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();

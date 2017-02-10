@@ -58,7 +58,7 @@ namespace commands {
 /**
  * Class to implement the base16-decode command.
  */
-class BCX_API base16_decode 
+class BCX_API base16_decode
   : public command
 {
 public:
@@ -121,7 +121,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();

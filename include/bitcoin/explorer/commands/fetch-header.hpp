@@ -58,7 +58,7 @@ namespace commands {
 /**
  * Class to implement the fetch-header command.
  */
-class BCX_API fetch_header 
+class BCX_API fetch_header
   : public command
 {
 public:
@@ -111,7 +111,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
     }

@@ -58,7 +58,7 @@ namespace commands {
 /**
  * Class to implement the ripemd160 command.
  */
-class BCX_API ripemd160 
+class BCX_API ripemd160
   : public command
 {
 public:
@@ -119,7 +119,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();

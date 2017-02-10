@@ -170,7 +170,7 @@ public:
      * @param[in]  input      The input stream for loading the parameters.
      * @param[in]  variables  The loaded variables.
      */
-    BCX_API virtual void load_fallbacks(std::istream& input, 
+    BCX_API virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
     }

@@ -66,7 +66,7 @@ namespace commands {
 /**
  * Class to implement the ek-to-ec command.
  */
-class BCX_API ek_to_ec 
+class BCX_API ek_to_ec
   : public command
 {
 public:
@@ -121,7 +121,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();

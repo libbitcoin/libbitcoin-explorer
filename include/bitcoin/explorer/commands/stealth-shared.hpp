@@ -64,7 +64,7 @@ namespace commands {
 /**
  * Class to implement the stealth-shared command.
  */
-class BCX_API stealth_shared 
+class BCX_API stealth_shared
   : public command
 {
 public:
@@ -119,7 +119,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();

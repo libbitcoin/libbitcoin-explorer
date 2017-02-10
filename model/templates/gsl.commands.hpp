@@ -51,7 +51,7 @@ namespace commands {
 /**
  * Class to implement the $(symbol) command.
  */
-class BCX_API $(symbol:c) 
+class BCX_API $(symbol:c)
   : public command
 {
 public:
@@ -149,7 +149,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
 .for argument

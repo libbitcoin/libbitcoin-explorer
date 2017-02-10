@@ -66,7 +66,7 @@ namespace commands {
 /**
  * Class to implement the tx-encode command.
  */
-class BCX_API tx_encode 
+class BCX_API tx_encode
   : public command
 {
 public:
@@ -119,7 +119,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
     }

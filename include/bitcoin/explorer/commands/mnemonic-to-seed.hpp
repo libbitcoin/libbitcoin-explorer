@@ -70,7 +70,7 @@ namespace commands {
 /**
  * Class to implement the mnemonic-to-seed command.
  */
-class BCX_API mnemonic_to_seed 
+class BCX_API mnemonic_to_seed
   : public command
 {
 public:
@@ -124,7 +124,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();

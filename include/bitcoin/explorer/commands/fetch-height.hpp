@@ -58,7 +58,7 @@ namespace commands {
 /**
  * Class to implement the fetch-height command.
  */
-class BCX_API fetch_height 
+class BCX_API fetch_height
   : public command
 {
 public:
@@ -119,7 +119,7 @@ public:
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
      */
-    virtual void load_fallbacks(std::istream& input, 
+    virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
     }
