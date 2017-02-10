@@ -50,14 +50,14 @@ using namespace bc::explorer::config;
 // Default network parameters.
 #define BX_NETWORK_RETRY 0
 #define BX_NETWORK_TIMEOUT 3
-#define BX_MAINNET_HOST "50.244.13.28"
+#define BX_MAINNET_HOST "50.244.13.27"
 #define BX_MAINNET_PORT 8333
 
-// Libbitcoin Server (production)
-#define BX_MAINNET_SERVER "tcp://libbitcoin1.thecodefactory.org:9091"
+// Libbitcoin Server (mainnet)
+#define BX_MAINNET_SERVER "tcp://mainnet1.libbitcoin.net:9091"
 
 // Libbitcoin Server (testnet)
-#define BX_TESTNET_SERVER "tcp://libbitcoin1.thecodefactory.org:19091"
+#define BX_TESTNET_SERVER "tcp://testnet1.libbitcoin.net:19091"
 
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \
