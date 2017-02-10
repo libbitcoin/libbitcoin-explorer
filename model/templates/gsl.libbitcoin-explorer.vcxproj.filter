@@ -92,6 +92,9 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\address.hpp">
       <Filter>include\\bitcoin\\explorer\\config</Filter>
     </ClInclude>
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\algorithm.hpp">
+      <Filter>include\\bitcoin\\explorer\\config</Filter>
+    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\btc.hpp">
       <Filter>include\\bitcoin\\explorer\\config</Filter>
     </ClInclude>
@@ -195,6 +198,9 @@
     </ClCompile>
 .endfor
     <ClCompile Include="..\\..\\..\\..\\src\\config\\address.cpp">
+      <Filter>src\\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\\..\\..\\..\\src\\config\\algorithm.cpp">
       <Filter>src\\config</Filter>
     </ClCompile>
     <ClCompile Include="..\\..\\..\\..\\src\\config\\btc.cpp">
