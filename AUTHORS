@@ -1,32 +1,32 @@
-Authors:
-   
- * Eric Voskuil <evoskuil>
- * Phillip Mienk <pmienk>
- * Neill Miller <viasil>
-
-Credit to the SX developers for the original design and implementation:
-   
- * Amir Taaki <genjix>
-   Development
-   amir@unsystem.net
-
- * Santiago Mendez
-   Feedback, testing and improvements.
-
- * Vitalik Buterin
-   Development
-   vitalik@bitcoinmagazine.com
-
- * Pablo Castellano <pablo@anche.no>
-   Debian developer, build system work, and improving project quality.
-
- * Andres Vargas <andres@opensrc.mx>
-   Dockerfile container
-
- * Dr Washington Y. Sanchez <drwasho>
-   GUI design and development
-   washington.sanchez@gmail.com
-
-Special thanks to Andrew Day for the early SX inspiration.
-
-
+commits  libbitcoin developers
+--------------------------------------------
+   1562  Eric Voskuil (evoskuil)
+    307  Amir Taaki (genjix)
+    101  Phillip Mienk (pmienk)
+     52  Neill Miller (thecodefactory)
+     39  Dr Washington Sanchez (drwasho)
+     26  Noel Maersk (veox)
+     23  Vu Bui (vub)
+      9  William Swanson (swansontec)
+      8  Thomas Hartman
+      7  Robert Williamson (bobalot)
+      6  Grazcoin
+      5  Andres Vargas
+      5  Pablo Castellano (pablog)
+      4  Drak
+      2  David Stark
+      2  Kamil Domański (kdomanski)
+      2  RyanC
+      2  hao.chen
+      1  ABIS
+      1  Agustin K-ballo Berge
+      1  BMF
+      1  Hugh Pearse
+      1  Johannes
+      1  Jon Lund Steffensen
+      1  Ramon Tayag
+      1  Tikhon Bernstam
+      1  betachen
+      1  gehlm
+      1  skaht
+      1  wozz
