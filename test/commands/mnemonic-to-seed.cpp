@@ -123,6 +123,24 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words__o
 #endif
 }
 
+BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_any_spanish__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_to_seed);
+    command.set_language_option({ "any" });
+    command.set_passphrase_option("博 肉 地 危 惜 多 陪 荒 因 患 伊 基");
+    command.set_words_argument(
+    {
+        "previo", "humilde", "actuar", "jarabe", "tabique", "ahorro", "tope", "pulpo", "anís", "señal", "lavar", "bahía"
+    });
+#ifdef WITH_ICU
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("e72505021b97e15171fe09e996898888579c4196c445d7629762c5b09586e3fb3d68380120b8d8a6ed6f9a73306dab7bf54127f3a610ede2a2d5b4e59916ac73\n");
+#else
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED "\n");
+#endif
+}
+
 BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_es__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_to_seed);
@@ -135,6 +153,24 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_es
 #ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("e72505021b97e15171fe09e996898888579c4196c445d7629762c5b09586e3fb3d68380120b8d8a6ed6f9a73306dab7bf54127f3a610ede2a2d5b4e59916ac73\n");
+#else
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED "\n");
+#endif
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_any_french__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_to_seed);
+    command.set_language_option({ "any" });
+    command.set_passphrase_option("博 肉 地 危 惜 多 陪 荒 因 患 伊 基");
+    command.set_words_argument(
+    {
+        "placard", "garantir", "acerbe", "gratuit", "soluble", "affaire", "théorie", "ponctuel", "anguleux", "salon", "horrible", "bateau"
+    });
+#ifdef WITH_ICU
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("a92538e2827914d13ead2b426aa45ebd0b16590318e04b6ef78780c8eb803269f08662dd74bc4982e7cbb71f15c71f310168457d570ad5fd89c98a6095bac560\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED "\n");
@@ -159,10 +195,10 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_fr
 #endif
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_it__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_any_italian__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_to_seed);
-    command.set_language_option({ "it" });
+    command.set_language_option({ "any" });
     command.set_passphrase_option("博 肉 地 危 惜 多 陪 荒 因 患 伊 基");
     command.set_words_argument(
     {
@@ -177,18 +213,18 @@ BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_it
 #endif
 }
 
-BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_any__okay_output)
+BOOST_AUTO_TEST_CASE(mnemonic_to_seed__invoke__non_ascii_passphrase_and_words_it__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_to_seed);
-    command.set_language_option({ "any" });
+    command.set_language_option({ "it" });
     command.set_passphrase_option("博 肉 地 危 惜 多 陪 荒 因 患 伊 基");
     command.set_words_argument(
     {
-        "previo", "humilde", "actuar", "jarabe", "tabique", "ahorro", "tope", "pulpo", "anís", "señal", "lavar", "bahía"
+        "rizoma", "lastra", "affabile", "lucidato", "sultano", "algebra", "tramonto", "rupe", "annuncio", "sonda", "mega", "bavosa"
     });
 #ifdef WITH_ICU
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("e72505021b97e15171fe09e996898888579c4196c445d7629762c5b09586e3fb3d68380120b8d8a6ed6f9a73306dab7bf54127f3a610ede2a2d5b4e59916ac73\n");
+    BX_REQUIRE_OUTPUT("b145e13882dc52b64a868ba35c3a95de5f468f2963d9feca9a8b345e3a60ef02af42347f99bc35a72d88bdabe8d63a4f5b61a63d6cd549461b5dd11027b66cf7\n");
 #else
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED "\n");
