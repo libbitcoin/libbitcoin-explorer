@@ -108,7 +108,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Determine if a transaction is valid for submission to the blockchain. Requires a Libbitcoin/Obelisk server connection.";
+        return "Determine if a transaction is valid for submission to the blockchain. Requires a Libbitcoin server connection.";
     }
 
     /**

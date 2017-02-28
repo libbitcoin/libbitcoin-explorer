@@ -100,7 +100,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the last block height. Requires a Libbitcoin/Obelisk server connection.";
+        return "Get the last block height. Requires a Libbitcoin server connection.";
     }
 
     /**
@@ -147,7 +147,7 @@ public:
         (
             "server-url",
             value<std::string>(&argument_.server_url),
-            "The URL of the Libbitcoin/Obelisk server to use. If not specified the URL is obtained from configuration settings or defaults."
+            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
         );
 
         return options;
