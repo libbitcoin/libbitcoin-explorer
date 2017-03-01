@@ -30,6 +30,7 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+using namespace bc::chain;
 using namespace bc::client;
 using namespace bc::explorer::config;
 
@@ -55,9 +56,9 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, json](const bc::chain::points_info& selected_utxos)
+    auto on_done = [&state, json](const points_info& unspent_outputs)
     {
-        state.output(prop_tree(selected_utxos, json));
+        state.output(prop_tree(unspent_outputs, json));
     };
 
     auto on_error = [&state](const code& error)
@@ -65,8 +66,8 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.address_fetch_unspent_outputs(
-        on_error, on_done, address, satoshi, algorithm);
+    client.address_fetch_unspent_outputs(on_error, on_done, address, satoshi,
+        algorithm);
     client.wait();
 
     return state.get_result();
