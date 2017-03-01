@@ -174,6 +174,7 @@ ptree prop_list(const tx_input_type& tx_input)
 {
     ptree tree;
     const auto script_address = payment_address::extract(tx_input.script());
+
     if (script_address)
         tree.put("address", script_address);
 
@@ -226,6 +227,7 @@ ptree prop_list(const tx_output_type& tx_output)
 {
     ptree tree;
     const auto address = payment_address::extract(tx_output.script());
+
     if (address)
         tree.put("address", address);
 
@@ -239,6 +241,7 @@ ptree prop_list(const tx_output_type& tx_output)
     {
         uint32_t stealth_prefix;
         ec_compressed ephemeral_key;
+
         if (to_stealth_prefix(stealth_prefix, tx_output.script()) &&
             extract_ephemeral_key(ephemeral_key, tx_output.script()))
         {
@@ -275,19 +278,18 @@ ptree prop_list(const chain::point& point)
     return tree;
 }
 
-ptree prop_tree(const chain::point::list& points, bool json)
+ptree prop_list(const chain::points_info& info, bool json)
 {
     ptree tree;
-    for (const auto& point: points)
-        tree.add_child("points", prop_list(point));
+    tree.put("change", info.change);
+    tree.add_child("points", prop_tree_list("point", info.points, json));
     return tree;
 }
 
-ptree prop_tree(const chain::points_info& points_info, bool json)
+ptree prop_tree(const chain::points_info& info, bool json)
 {
     ptree tree;
-    tree.add_child("points", prop_tree_list("points", points_info.points, json));
-    tree.put("change", points_info.change);
+    tree.add_child("selection", prop_list(info, json));
     return tree;
 }
 
@@ -316,8 +318,8 @@ ptree prop_tree(const transaction& transaction, bool json)
 ptree prop_tree(const std::vector<transaction>& transactions, bool json)
 {
     ptree tree;
-    tree.add_child("transactions",
-        prop_tree_list_of_lists("transaction", transactions, json));
+    tree.add_child("transactions", prop_tree_list_of_lists("transaction",
+        transactions, json));
     return tree;
 }
 
@@ -457,6 +459,7 @@ ptree prop_tree(const hash_digest& hash, size_t height, size_t index)
 ptree prop_tree(const settings_list& settings)
 {
     ptree list;
+
     for (const auto& setting: settings)
         list.put(setting.first, setting.second);
 

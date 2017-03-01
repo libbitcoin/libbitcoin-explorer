@@ -220,26 +220,26 @@ BCX_API pt::ptree prop_tree(const tx_output_type::list& tx_outputs,
 
 /**
  * Generate a property list for a point.
- * @param[in]  p          The point.
- * @return                A property list.
+ * @param[in]  point  The point.
+ * @return            A property list.
  */
 BCX_API pt::ptree prop_list(const chain::point& point);
 
 /**
- * Generate a property tree for a set of points.
- * @param[in]  points  The set of points.
- * @param[in]  json        Use json array formatting.
- * @return                 A property tree.
+ * Generate a property list for points information.s
+ * @param[in]  info  The points information.
+ * @param[in]  json  Use json array formatting.
+ * @return           A property list.
  */
-BCX_API pt::ptree prop_tree(const chain::point::list& points, bool json);
+BCX_API pt::ptree prop_list(const chain::points_info& info, bool json);
 
 /**
- * Generate a property tree for a points_info.
- * @param[in]  p_info       The points_info.
- * @param[in]  json         Use json array formatting.
- * @return                  A property tree.
+ * Generate a property tree for points information.
+ * @param[in]  info  The points information.
+ * @param[in]  json  Use json array formatting.
+ * @return           A property tree.
  */
-BCX_API pt::ptree prop_tree(const chain::points_info& points_info, bool json);
+BCX_API pt::ptree prop_tree(const chain::points_info& info, bool json);
 
 /**
  * Generate a property list for a transaction.
