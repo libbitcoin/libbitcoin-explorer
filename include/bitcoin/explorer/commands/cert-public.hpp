@@ -99,7 +99,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Derive a Curve ZMQ public key for use with a Libbitcoin/Obelisk server.";
+        return "Derive a Curve ZMQ public key for use with a Libbitcoin server.";
     }
 
     /**

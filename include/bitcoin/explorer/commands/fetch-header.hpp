@@ -93,7 +93,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin/Obelisk server connection.";
+        return "Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.";
     }
 
     /**

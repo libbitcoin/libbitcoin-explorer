@@ -100,7 +100,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get a transaction by its hash. Requires a Libbitcoin/Obelisk server connection.";
+        return "Get a transaction by its hash. Requires a Libbitcoin server connection.";
     }
 
     /**

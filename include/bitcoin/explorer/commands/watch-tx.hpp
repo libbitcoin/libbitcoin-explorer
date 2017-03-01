@@ -108,7 +108,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Watch the network for a transaction by hash. Requires a Libbitcoin/Obelisk server connection.";
+        return "Watch the network for a transaction by hash. Requires a Libbitcoin server connection.";
     }
 
     /**

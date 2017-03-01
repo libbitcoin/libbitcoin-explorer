@@ -93,7 +93,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get list of output points, values, and spends for a payment address. Requires a Libbitcoin/Obelisk server connection.";
+        return "Get list of output points, values, and spends for a payment address. Requires a Libbitcoin server connection.";
     }
 
     /**

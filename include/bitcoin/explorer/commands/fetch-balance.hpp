@@ -93,7 +93,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the balance in satoshi of a payment address. Requires a Libbitcoin/Obelisk server connection.";
+        return "Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.";
     }
 
     /**

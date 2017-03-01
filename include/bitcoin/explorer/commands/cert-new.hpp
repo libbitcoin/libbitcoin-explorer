@@ -99,7 +99,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a Curve ZMQ private key for use with a Libbitcoin/Obelisk server. WARNING: entropy is obtained from the underlying platform.";
+        return "Create a Curve ZMQ private key for use with a Libbitcoin server. WARNING: entropy is obtained from the underlying platform.";
     }
 
     /**
