@@ -106,7 +106,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Broadcast a transaction to the Bitcoin network via an Libbitcoin server.";
+        return "Broadcast a transaction to the Bitcoin network via a Libbitcoin server.";
     }
 
     /**

@@ -458,7 +458,7 @@
     <define name="BX_SEED_BIT_LENGTH_UNSUPPORTED" value="The seed size is not supported." />
   </command>
   
-  <command symbol="send-tx" formerly="sendtx-obelisk" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via an Libbitcoin server.">
+  <command symbol="send-tx" formerly="sendtx-obelisk" output="string" category="ONLINE" network="true" description="Broadcast a transaction to the Bitcoin network via a Libbitcoin server.">
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
     <define name="BX_SEND_TX_OUTPUT" value="Sent transaction." />
   </command>
@@ -475,8 +475,7 @@
     <argument name="TRANSACTION" fileX="true" stdin="true" type="transaction" description="The Base16 transaction to send. If not specified the transaction is read from STDIN."/>
     <define name="BX_SEND_TX_P2P_OUTPUT" value="Sent transaction." />
   </command>
-  
-  <!-- TODO: update documentation for settings changes in 3.0. -->
+
   <command symbol="settings" output="string" multipleX="true" category="META" description="Display the loaded configuration settings.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />  
   </command>
@@ -521,7 +520,6 @@
     <define name="BX_STEALTH_SECRET_OUT_OF_RANGE" value="Sum exceeds valid range." />
   </command>
 
-  <!-- TODO: document change of PUBKEY to stdin. -->
   <command symbol="stealth-shared" output="ec_private" category="STEALTH" description="Derive the secret shared between an ephemeral key pair and a scan key pair. Provide scan SECRET and ephemeral PUBKEY, or ephemeral SECRET and scan PUBKEY.">
     <argument name="SECRET" required="true" type="ec_private" description="A Base16 EC private key. Either the scan or ephemeral secret." />
     <argument name="PUBKEY" stdin="true" type="ec_public" description="A Base16 EC public key. Either the scan or ephemeral public key. If not specified the key is read from STDIN." />
@@ -581,7 +579,6 @@
     <define name="BX_VALIDATE_TX_INVALID" value="The transaction is invalid for the current state of the node: %1%." />
   </command>
 
-  <!-- TODO: update documentation for settings change (duration) in 3.0. -->
   <command symbol="watch-address" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires a Libbitcoin server connection.">
     <option name="duration" type="uint32_t" default="600" description="The duration of the watch in seconds, defaults to 600." />
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
