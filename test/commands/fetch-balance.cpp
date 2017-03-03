@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 // This test disabled because people are always sending change to Satoshi.
 //BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_first_address_info__okay_output)
 //{
-//    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
+//    BX_DECLARE_CLIENT_COMMAND(fetch_balance);
 //    command.set_format_option({ "info" });
 //    command.set_payment_address_argument({ { BX_FIRST_ADDRESS } });
 //    BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
 BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo1_xml__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
+    BX_DECLARE_CLIENT_COMMAND(fetch_balance);
     command.set_format_option({ "xml" });
     command.set_payment_address_argument({ BX_FETCH_BALANCE_SX_DEMO1_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo1_xml__okay_output)
 
 BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo2_xml__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_balance);
+    BX_DECLARE_CLIENT_COMMAND(fetch_balance);
     command.set_format_option({ "xml" });
     command.set_payment_address_argument({ BX_FETCH_BALANCE_SX_DEMO2_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));

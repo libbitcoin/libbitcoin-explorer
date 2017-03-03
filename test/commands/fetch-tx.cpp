@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 
 BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_satoshis_words_tx_info__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_tx);
+    BX_DECLARE_CLIENT_COMMAND(fetch_tx);
     command.set_format_option({ "info" });
     command.set_hash_argument({ BX_SATOSHIS_WORDS_TX_HASH });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_satoshis_words_tx_info__okay_outp
 
 BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_satoshis_words_tx_xml__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_tx);
+    BX_DECLARE_CLIENT_COMMAND(fetch_tx);
     command.set_format_option({ "xml" });
     command.set_hash_argument({ BX_SATOSHIS_WORDS_TX_HASH });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_satoshis_words_tx_xml__okay_outpu
 
 BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_second_tx_info__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_tx);
+    BX_DECLARE_CLIENT_COMMAND(fetch_tx);
     command.set_format_option({ "info" });
     command.set_hash_argument({ FETCH_TX_SECOND_TX_HASH });
     BX_REQUIRE_OKAY(command.invoke(output, error));

@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_SUITE(send_tx__invoke)
 
 BOOST_AUTO_TEST_CASE(send_tx__invoke__mainnet_tx_A__failure_error)
 {
-    BX_DECLARE_NETWORK_COMMAND(send_tx);
+    BX_DECLARE_CLIENT_COMMAND(send_tx);
     command.set_transaction_argument({ SEND_TX_A });
 
     // TODO: With store commit and robust error reporting this now returns

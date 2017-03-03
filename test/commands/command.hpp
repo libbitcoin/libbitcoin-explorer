@@ -47,23 +47,33 @@ using namespace bc::explorer::config;
 #define BX_SATOSHIS_WORDS_TX_BASE16 \
 "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000"
 
-// Default network parameters.
-#define BX_NETWORK_RETRY 0
-#define BX_NETWORK_TIMEOUT 3
-#define BX_MAINNET_HOST "50.244.13.27"
+// Default network parameters, uses libbitcoin community node.
+#define BX_MAINNET_HOST "mainnet1.libbitcoin.net"
 #define BX_MAINNET_PORT 8333
+#define BX_NETWORK_RETRY 0
+#define BX_NETWORK_TIMEOUT 5
+#define BX_NETWORK_HANDSHAKE 15
 
-// Libbitcoin Server (mainnet)
+// Libbitcoin Server (mainnet), uses libbitcoin community server.
 #define BX_MAINNET_SERVER "tcp://mainnet1.libbitcoin.net:9091"
 
-// Libbitcoin Server (testnet)
+// Libbitcoin Server (testnet), uses libbitcoin community server.
 #define BX_TESTNET_SERVER "tcp://testnet1.libbitcoin.net:19091"
 
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \
     extension command
 
-#define BX_DECLARE_NETWORK_COMMAND(extension) \
+#define BX_DECLARE_PEER_COMMAND(extension) \
+    BX_DECLARE_COMMAND(extension); \
+    command.set_network_debug_file_setting({ "debug.log" }); \
+    command.set_network_error_file_setting({ "error.log" }); \
+    command.set_network_hosts_file_setting({ "hosts.cache" }); \
+    command.set_network_connect_retries_setting(BX_NETWORK_RETRY); \
+    command.set_network_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT); \
+    command.set_network_channel_handshake_seconds_setting(BX_NETWORK_HANDSHAKE);
+
+#define BX_DECLARE_CLIENT_COMMAND(extension) \
     BX_DECLARE_COMMAND(extension); \
     command.set_server_url_setting({ BX_MAINNET_SERVER }); \
     command.set_server_connect_retries_setting(BX_NETWORK_RETRY); \

@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(message_sign__invoke)
 
 BOOST_AUTO_TEST_CASE(message_sign__invoke__compressed__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(message_sign);
+    BX_DECLARE_CLIENT_COMMAND(message_sign);
     command.set_message_argument({ "Nakomoto" });
     command.set_wif_argument({ MESSAGE_SIGN_WIF_COMPRESSED });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(message_sign__invoke__compressed__okay_output)
 
 BOOST_AUTO_TEST_CASE(message_sign__invoke__uncompressed__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(message_sign);
+    BX_DECLARE_CLIENT_COMMAND(message_sign);
     command.set_message_argument({ "Nakomoto" });
     command.set_wif_argument({ MESSAGE_SIGN_WIF_UNCOMPRESSED });
     BX_REQUIRE_OKAY(command.invoke(output, error));

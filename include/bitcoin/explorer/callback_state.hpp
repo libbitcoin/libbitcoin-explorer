@@ -19,6 +19,7 @@
 #ifndef BX_CALLBACK_STATE_HPP
 #define BX_CALLBACK_STATE_HPP
 
+#include <atomic>
 #include <iostream>
 #include <cstdint>
 #include <string>
@@ -33,7 +34,7 @@ namespace explorer {
 /**
  * Shared state wrapper to manage non-global shared call state.
  */
-class callback_state
+class BCX_API callback_state
 {
 public:
 
@@ -46,7 +47,7 @@ public:
      * @param[in]  output  The output stream for the callback handler.
      * @param[in]  engine  The desired output format.
      */
-    BCX_API callback_state(std::ostream& error, std::ostream& output,
+    callback_state(std::ostream& error, std::ostream& output,
         const encoding_engine engine);
 
     /**
@@ -54,74 +55,74 @@ public:
      * @param[in]  error   The error stream for the callback handler.
      * @param[in]  output  The output stream for the callback handler.
      */
-    BCX_API  callback_state(std::ostream& error, std::ostream& output);
+    callback_state(std::ostream& error, std::ostream& output);
 
     /**
      * Serialize a property tree to output. The stream must be flushed before
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
      */
-    BCX_API virtual void error(const pt::ptree& tree);
+    virtual void error(const pt::ptree& tree);
 
     /**
      * Write a line to the error stream. The stream must be flushed before
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated error message to write.
      */
-    BCX_API virtual void error(const format& message);
+    virtual void error(const format& message);
 
     /**
      * Write a line to the error stream. The stream must be flushed before
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated error message to write.
      */
-    BCX_API virtual void error(const std::string& message);
+    virtual void error(const std::string& message);
 
     /**
      * Serialize a property tree to output. The stream must be flushed before
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  tree  The property tree to write to output.
      */
-    BCX_API virtual void output(const pt::ptree& tree);
+    virtual void output(const pt::ptree& tree);
 
     /**
      * Write a line to the output stream. The stream must be flushed before
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated output message to write.
      */
-    BCX_API virtual void output(const format& message);
+    virtual void output(const format& message);
 
     /**
      * Write a line to the output stream. The stream must be flushed before
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  message  The unterminated output message to write.
      */
-    BCX_API virtual void output(const std::string& message);
+    virtual void output(const std::string& message);
 
     /**
      * Write a number to the output stream. The stream must be flushed before
      * returning in order to prevent interleaving on the shared stream.
      * @param[in]  value  The numeric value to write.
      */
-    BCX_API virtual void output(uint64_t value);
+    virtual void output(uint64_t value);
 
     /**
      * Set the callback refcount to one and reset result to okay.
      */
-    BCX_API virtual void start();
+    virtual void start();
 
     /**
      * Set the callback refcount to zero and assign the result.
      * This overrides any outstanding callback references.
      * @param[in]  result  The desired callback result code, defaults to okay.
      */
-    BCX_API virtual void stop(console_result result=console_result::okay);
+    virtual void stop(console_result result=console_result::okay);
 
     /**
      * Get a value indicating whether the callback reference count is zero.
      * @return  True if the reference count is zero.
      */
-    BCX_API virtual bool& stopped();
+    virtual bool stopped();
 
     /**
      * Handle the callback error with standard behavior.
@@ -129,56 +130,56 @@ public:
      * @param[in]  format  A single parameter format string or empty/default.
      * @return             True if no error.
      */
-    BCX_API  virtual bool succeeded(const std::error_code& ec,
+    virtual bool succeeded(const std::error_code& ec,
         const std::string& format="%1%");
 
     /**
      * Get the engine enumeration value.
      */
-    BCX_API virtual encoding_engine get_engine();
+    virtual encoding_engine get_engine();
 
     /**
      * Get the callback result code.
      */
-    BCX_API virtual console_result get_result();
+    virtual console_result get_result();
 
     /**
      * Set the callback result code.
      */
-    BCX_API virtual void set_result(console_result result);
+    virtual void set_result(console_result result);
 
     /**
      * Increment the callback synchronization reference count.
      * @return  The callback synchronization counter value.
      */
-    BCX_API virtual size_t increment();
+    virtual size_t increment();
 
     /**
      * Decrement the callback synchronization reference count.
      * @return  The callback synchronization counter value.
      */
-    BCX_API virtual size_t decrement();
+    virtual size_t decrement();
 
     /**
      * Overload numeric cast to return the reference count.
      */
-    BCX_API virtual operator size_t() const;
+    virtual operator size_t() const;
 
     /**
      * Overload ++ operator to increment the reference count.
      */
-    BCX_API virtual callback_state& operator++();
+    virtual callback_state& operator++();
 
     /**
      * Overload ++ operator to decrement the reference count.
      */
-    BCX_API virtual callback_state& operator--();
+    virtual callback_state& operator--();
 
 private:
-    bool stopped_;
-    size_t refcount_;
-    console_result result_;
-    encoding_engine engine_;
+    std::atomic<bool> stopped_;
+    std::atomic<size_t> refcount_;
+    std::atomic<console_result> result_;
+    const encoding_engine engine_;
     std::ostream& error_;
     std::ostream& output_;
 };

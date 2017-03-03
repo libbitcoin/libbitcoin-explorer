@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(message_validate__invoke)
 
 BOOST_AUTO_TEST_CASE(message_validate__invoke__compressed__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(message_validate);
+    BX_DECLARE_CLIENT_COMMAND(message_validate);
     command.set_message_argument({ "Nakomoto" });
     command.set_signature_argument({ MESSAGE_VALIDATE_SIGNATURE_COMPRESSED });
     command.set_payment_address_argument({ MESSAGE_VALIDATE_ADDRESS_COMPRESSED });
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(message_validate__invoke__compressed__okay_output)
 
 BOOST_AUTO_TEST_CASE(message_validate__invoke__uncompressed__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(message_validate);
+    BX_DECLARE_CLIENT_COMMAND(message_validate);
     command.set_message_argument({ "Nakomoto" });
     command.set_signature_argument({ MESSAGE_VALIDATE_SIGNATURE_UNCOMPRESSED });
     command.set_payment_address_argument({ MESSAGE_VALIDATE_ADDRESS_UNCOMPRESSED });
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(message_validate__invoke__uncompressed__okay_output)
 
 BOOST_AUTO_TEST_CASE(message_validate__invoke__bogus__invalid_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(message_validate);
+    BX_DECLARE_CLIENT_COMMAND(message_validate);
     command.set_message_argument({ "Satoshi" });
     command.set_signature_argument({ MESSAGE_VALIDATE_SIGNATURE_COMPRESSED });
     command.set_payment_address_argument({ MESSAGE_VALIDATE_ADDRESS_COMPRESSED });
