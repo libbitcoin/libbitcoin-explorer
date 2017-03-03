@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_SUITE(fetch_height__invoke)
 
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet_wait_0__failure)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_height);
+    BX_DECLARE_CLIENT_COMMAND(fetch_height);
     command.set_server_connect_timeout_seconds_setting(0);
     BX_REQUIRE_FAILURE(command.invoke(output, error));
     BX_REQUIRE_ERROR(BX_ERROR_MESSAGE(channel_timeout) + "\n");
@@ -34,27 +34,27 @@ BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet_wait_0__failure)
 
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__mainnet__okay)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_height);
+    BX_DECLARE_CLIENT_COMMAND(fetch_height);
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__testnet__okay)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_height);
+    BX_DECLARE_CLIENT_COMMAND(fetch_height);
     command.set_server_url_setting({ BX_TESTNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__bogus_server_url_argument__failure)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_height);
+    BX_DECLARE_CLIENT_COMMAND(fetch_height);
     command.set_server_url_argument("bogus");
     BX_REQUIRE_FAILURE(command.invoke(output, error));
 }
 
 BOOST_AUTO_TEST_CASE(fetch_height__invoke__testnet_server_url_argument__okay)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_height);
+    BX_DECLARE_CLIENT_COMMAND(fetch_height);
     command.set_server_url_setting({ BX_TESTNET_SERVER });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }

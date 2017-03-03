@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(watch_address__invoke)
 // so it's disabled here.
 //BOOST_AUTO_TEST_CASE(watch_address__invoke__fist_address_info__okay)
 //{
-//    BX_DECLARE_NETWORK_COMMAND(watch_address);
+//    BX_DECLARE_CLIENT_COMMAND(watch_address);
 //    command.set_duration_option(42);
 //    command.set_format_option({ "info" });
 //    command.set_payment_address_argument({ BX_FIRST_ADDRESS });

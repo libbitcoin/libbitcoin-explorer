@@ -270,26 +270,19 @@ ptree prop_tree(const tx_output_type::list& tx_outputs, bool json)
 
 // points
 
-ptree prop_list(const chain::point& point)
+ptree prop_list(const chain::point_value& point)
 {
     ptree tree;
     tree.put("hash", hash256(point.hash()));
     tree.put("index", point.index());
+    tree.put("value", point.value());
     return tree;
 }
 
-ptree prop_list(const chain::points_info& info, bool json)
+ptree prop_tree(const chain::points_value& values, bool json)
 {
     ptree tree;
-    tree.put("change", info.change);
-    tree.add_child("points", prop_tree_list("point", info.points, json));
-    return tree;
-}
-
-ptree prop_tree(const chain::points_info& info, bool json)
-{
-    ptree tree;
-    tree.add_child("selection", prop_list(info, json));
+    tree.add_child("points", prop_tree_list("point", values.points, json));
     return tree;
 }
 

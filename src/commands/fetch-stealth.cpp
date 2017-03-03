@@ -72,7 +72,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.blockchain_fetch_stealth(on_error, on_done, filter, height);
+    client.blockchain_fetch_stealth2(on_error, on_done, filter, height);
     client.wait();
 
     return state.get_result();

@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_SUITE(fetch_header__invoke)
 
 BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_0_info__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_header);
+    BX_DECLARE_CLIENT_COMMAND(fetch_header);
     command.set_height_option(0);
     command.set_format_option({ "info" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_0_info__okay_out
 
 BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_1_xml__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_header);
+    BX_DECLARE_CLIENT_COMMAND(fetch_header);
     command.set_height_option(1);
     command.set_format_option({ "xml" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_1_xml__okay_outp
 
 BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_hash_genesis_info__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_header);
+    BX_DECLARE_CLIENT_COMMAND(fetch_header);
     command.set_hash_option({ BX_GENESIS_BLOCK_HASH });
     command.set_format_option({ "info" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_hash_genesis_info__okay
 
 BOOST_AUTO_TEST_CASE(fetch_header__invoke__mainnet_block_height_42_block_hash_genesis_info__okay_output)
 {
-    BX_DECLARE_NETWORK_COMMAND(fetch_header);
+    BX_DECLARE_CLIENT_COMMAND(fetch_header);
     command.set_height_option(42);
     command.set_format_option({ "info" });
     command.set_hash_option({ BX_GENESIS_BLOCK_HASH });

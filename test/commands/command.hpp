@@ -51,7 +51,8 @@ using namespace bc::explorer::config;
 #define BX_MAINNET_HOST "mainnet1.libbitcoin.net"
 #define BX_MAINNET_PORT 8333
 #define BX_NETWORK_RETRY 0
-#define BX_NETWORK_TIMEOUT 3
+#define BX_NETWORK_TIMEOUT 5
+#define BX_NETWORK_HANDSHAKE 15
 
 // Libbitcoin Server (mainnet), uses libbitcoin community server.
 #define BX_MAINNET_SERVER "tcp://mainnet1.libbitcoin.net:9091"
@@ -63,7 +64,16 @@ using namespace bc::explorer::config;
     std::stringstream output, error; \
     extension command
 
-#define BX_DECLARE_NETWORK_COMMAND(extension) \
+#define BX_DECLARE_PEER_COMMAND(extension) \
+    BX_DECLARE_COMMAND(extension); \
+    command.set_network_debug_file_setting({ "debug.log" }); \
+    command.set_network_error_file_setting({ "error.log" }); \
+    command.set_network_hosts_file_setting({ "hosts.cache" }); \
+    command.set_network_connect_retries_setting(BX_NETWORK_RETRY); \
+    command.set_network_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT); \
+    command.set_network_channel_handshake_seconds_setting(BX_NETWORK_HANDSHAKE);
+
+#define BX_DECLARE_CLIENT_COMMAND(extension) \
     BX_DECLARE_COMMAND(extension); \
     command.set_server_url_setting({ BX_MAINNET_SERVER }); \
     command.set_server_connect_retries_setting(BX_NETWORK_RETRY); \

@@ -98,7 +98,7 @@ void callback_state::stop(console_result result)
     result_ = result;
 }
 
-bool& callback_state::stopped()
+bool callback_state::stopped()
 {
     return stopped_;
 }

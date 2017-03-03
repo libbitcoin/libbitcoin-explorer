@@ -56,9 +56,9 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, json](const points_info& unspent_outputs)
+    auto on_done = [&state, json](const points_value& unspent)
     {
-        state.output(prop_tree(unspent_outputs, json));
+        state.output(prop_tree(unspent, json));
     };
 
     auto on_error = [&state](const code& error)
@@ -66,8 +66,8 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    client.address_fetch_unspent_outputs(on_error, on_done, address, satoshi,
-        algorithm);
+    client.blockchain_fetch_unspent_outputs(on_error, on_done, address,
+        satoshi, algorithm);
     client.wait();
 
     return state.get_result();
