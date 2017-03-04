@@ -98,6 +98,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     signal(SIGINT, handle_signal);
 
     // Handle updates until monitoring duration expires.
+    // TODO: revise client to allow for stop notification from another thread.
     client.monitor(duration);
 
     return state.get_result();
