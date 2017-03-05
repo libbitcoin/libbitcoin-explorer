@@ -50,7 +50,8 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 
     auto on_done = [&state](const code& error)
     {
-        state.output(BX_SEND_TX_OUTPUT);
+        if (state.succeeded(error))
+            state.output(BX_SEND_TX_OUTPUT);
     };
 
     auto on_error = [&state](const code& error)

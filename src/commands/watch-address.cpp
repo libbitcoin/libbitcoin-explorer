@@ -66,20 +66,17 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     auto on_subscribed = [&state, &address](const code& error)
     {
-        state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
-        ++state;
+        if (state.succeeded(error))
+        {
+            state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
+            ++state;
+        }
     };
 
     auto on_error = [&state](const code& error)
     {
         state.succeeded(error);
     };
-
-    client.address_subscribe(on_error, on_subscribed, address);
-    client.wait();
-
-    if (state.stopped())
-        return state.get_result();
 
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
@@ -92,6 +89,11 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     };
 
     client.set_on_update(on_update);
+    client.address_subscribe(on_error, on_subscribed, address);
+    client.wait();
+
+    if (state.stopped())
+        return state.get_result();
 
     // Catch C signals for stopping the program before monitoring timeout.
     signal(SIGTERM, handle_signal);
