@@ -81,11 +81,15 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_update = [&output, &state, json](const payment_address& address,
-        size_t, const hash_digest& block_hash, const tx_type& tx)
+    auto on_update = [&output, &state, &address, json](const code& error,
+        uint16_t /*sequence*/, size_t /*height*/,
+        const hash_digest& block_hash, const tx_type& tx)
     {
-        state.output(prop_tree(tx, block_hash, address, json));
-        output << std::endl;
+        if (state.succeeded(error))
+        {
+            state.output(prop_tree(tx, block_hash, address, json));
+            output << std::endl;
+        }
     };
 
     client.set_on_update(on_update);
