@@ -52,10 +52,10 @@ console_result validate_tx::invoke(std::ostream& output,
 
     auto on_done = [&state](const code& error)
     {
-        if (error)
-            state.output(format(BX_VALIDATE_TX_INVALID) % error.message());
-        else
+        if (state.succeeded(error))
             state.output(BX_VALIDATE_TX_VALID);
+        else
+            state.output(format(BX_VALIDATE_TX_INVALID) % error.message());
     };
 
     auto on_error = [&state](const code& error)

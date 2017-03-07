@@ -66,8 +66,11 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     auto on_subscribed = [&state, &address](const code& error)
     {
-        state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
-        ++state;
+        if (state.succeeded(error))
+        {
+            state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
+            ++state;
+        }
     };
 
     auto on_error = [&state](const code& error)
@@ -75,23 +78,26 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
+    // This enables json-style array formatting.
+    const auto json = encoding == encoding_engine::json;
+
+    auto on_update = [&output, &state, &address, json](const code& error,
+        uint16_t /*sequence*/, size_t /*height*/,
+        const hash_digest& block_hash, const tx_type& tx)
+    {
+        if (state.succeeded(error))
+        {
+            state.output(prop_tree(tx, block_hash, address, json));
+            output << std::endl;
+        }
+    };
+
+    client.set_on_update(on_update);
     client.address_subscribe(on_error, on_subscribed, address);
     client.wait();
 
     if (state.stopped())
         return state.get_result();
-
-    // This enables json-style array formatting.
-    const auto json = encoding == encoding_engine::json;
-
-    auto on_update = [&output, &state, json](const payment_address& address,
-        size_t, const hash_digest& block_hash, const tx_type& tx)
-    {
-        state.output(prop_tree(tx, block_hash, address, json));
-        output << std::endl;
-    };
-
-    client.set_on_update(on_update);
 
     // Catch C signals for stopping the program before monitoring timeout.
     signal(SIGTERM, handle_signal);
