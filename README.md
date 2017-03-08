@@ -158,7 +158,14 @@ Any set of `./configure` options can be passed via the build script, several exa
 
 Building for minimum size and with debug symbols stripped:
 ```sh
-$ sudo ./install.sh CXXFLAGS=-Os --enable-ndebug
+$ sudo ./install.sh CXXFLAGS="-Os -s"
+```
+
+> The `-s` option is not supported by the Clang compiler. Instead use the command `$ strip bs` after the build.
+
+Building without NDEBUG (i.e. with debug assertions) defined:
+```sh
+$ sudo ./install.sh --disable-ndebug
 ```
 Building without building tests:
 ```sh
@@ -182,7 +189,7 @@ $ ./install.sh --disable-shared --build-boost --prefix=/home/me/myprefix
 ```
 Building a small statically-linked executable most quickly:
 ```sh
-$ ./install.sh CXXFLAGS=-Os --enable-ndebug --without-tests --disable-shared --build-boost --prefix=/home/me/myprefix
+$ ./install.sh CXXFLAGS="-Os -s" --without-tests --disable-shared --build-boost --prefix=/home/me/myprefix
 ```
 Building with bash-completion support:
 
