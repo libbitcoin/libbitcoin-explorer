@@ -218,6 +218,8 @@ Since the addition of [png](https://github.com/evoskuil/libbitcoin/blob/master/s
 $ ./install.sh --with-png
 ```
 
+> There is a bug in the PNG library when using space optimization levels such as `CXXFLAGS=-Os` which will show up in a test run failure.
+
 #### Building ICU, ZLib, PNG, QREncode and/or Boost
 
 The installer can download and install any or all of these dependencies. ICU is a large package that is not typically preinstalled at a sufficient level. Using these builds ensures compiler and configuration compatibility across all of the build components. It is recommended to use a prefix directory when building these components.
