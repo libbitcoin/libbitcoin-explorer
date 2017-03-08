@@ -192,6 +192,32 @@ Building with bash-completion support:
 $ sudo ./install.sh --with-bash-completion-dir
 ```
 
+#### Compiling with ICU (International Components for Unicode)
+
+Since the addition of [BIP-39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) and later [BIP-38](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki) support, libbitcoin conditionally incorporates [ICU](http://site.icu-project.org). To use the BIP-38 and BIP-39 passphrase normalization features libbitcoin must be compiled with the `--with-icu` option.
+```sh
+$ ./install.sh --with-icu
+```
+
+#### Compiling with QR Code Support
+
+Since the addition of [qrcode](https://github.com/evoskuil/libbitcoin/blob/master/src/wallet/qrcode.cpp) support, libbitcoin conditionally incorporates `qrencode`. This requires compiling with the `--with-qrencode` option.
+```sh
+$ ./install.sh --with-qrencode
+```
+
+Since the addition of [png](https://github.com/evoskuil/libbitcoin/blob/master/src/utility/png.cpp) support, libbitcoin conditionally incorporates `libpng` (which in turn requires `zlib`). This requires compiling with the `--with-png` option.
+```sh
+$ ./install.sh --with-png
+```
+
+#### Building ICU, ZLib, PNG, QREncode and/or Boost
+
+The installer can download and install any or all of these dependencies. ICU is a large package that is not typically preinstalled at a sufficient level. Using these builds ensures compiler and configuration compatibility across all of the build components. It is recommended to use a prefix directory when building these components.
+```sh
+$ ./install.sh --with-icu --with-png --with-qrencode --build-icu --build-zlib --build-png --build-qrencode --build-boost --prefix=/home/me/myprefix
+```
+
 ### Windows
 
 Visual Studio solutions are maintained for all libbitcoin libraries and dependencies. The supported execution environment is `Windows XP Service Pack 2` and newer.
