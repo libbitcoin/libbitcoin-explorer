@@ -51,7 +51,7 @@
   </configuration>
 
   <configuration section="server">
-    <setting name="url" type="endpoint" default="tcp://libbitcoin1.thecodefactory.org:9091" description="The URL of the Libbitcoin server." />
+    <setting name="url" type="endpoint" default="tcp://mainnet.libbitcoin.org:9091" description="The URL of the Libbitcoin server." />
     <setting name="socks_proxy" type="authority" default="0.0.0.0:0" description="The address of a SOCKS5 proxy to use, defaults to none." />
     <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint16_t" description="The time limit for connection establishment, defaults to 5." />
@@ -268,7 +268,8 @@
   </command>
 
   <command symbol="fetch-height" formerly="fetch-last-height" output="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires a Libbitcoin server connection.">
-    <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>  
+    <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
+    <argument name="public-key" description="The public key of the Libbitcoin server. If not specified the key is obtained from configuration settings or defaults."/>
   </command>
   
   <command symbol="fetch-history" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment address. Requires a Libbitcoin server connection.">
