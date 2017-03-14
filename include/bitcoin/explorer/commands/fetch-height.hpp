@@ -111,7 +111,8 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("server-url", 1);
+            .add("server-url", 1)
+            .add("public-key", 1);
     }
 
 	/**
@@ -148,6 +149,11 @@ public:
             "server-url",
             value<std::string>(&argument_.server_url),
             "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
+        )
+        (
+            "public-key",
+            value<std::string>(&argument_.public_key),
+            "The public key of the Libbitcoin server. If not specified the key is obtained from configuration settings or defaults."
         );
 
         return options;
@@ -189,6 +195,23 @@ public:
         argument_.server_url = value;
     }
 
+    /**
+     * Get the value of the public-key argument.
+     */
+    virtual std::string& get_public_key_argument()
+    {
+        return argument_.public_key;
+    }
+
+    /**
+     * Set the value of the public-key argument.
+     */
+    virtual void set_public_key_argument(
+        const std::string& value)
+    {
+        argument_.public_key = value;
+    }
+
 private:
 
     /**
@@ -199,11 +222,13 @@ private:
     struct argument
     {
         argument()
-          : server_url()
+          : server_url(),
+            public_key()
         {
         }
 
         std::string server_url;
+        std::string public_key;
     } argument_;
 
     /**

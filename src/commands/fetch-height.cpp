@@ -37,26 +37,38 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& server_url = get_server_url_argument();
-    const auto connection = get_connection(*this);
-
-    obelisk_client client(connection);
+    const auto& public_key = get_public_key_argument();
+    auto connection = get_connection(*this);
 
     // For this command only, allow command line to override server config.
     if (!server_url.empty())
     {
-        if (!client.connect(server_url))
-        {
-            display_connection_failure(error, server_url);
-            return console_result::failure;
-        }
-    }
-    else
-    {
-        if (!client.connect(connection))
+        connection.server = server_url;
+
+        if (!connection.server)
         {
             display_connection_failure(error, connection.server);
             return console_result::failure;
         }
+
+        if (!public_key.empty())
+        {
+            connection.server_public_key = public_key;
+
+            if (!connection.server_public_key)
+            {
+                display_connection_failure(error, connection.server);
+                return console_result::failure;
+            }
+        }
+    }
+
+    obelisk_client client(connection);
+
+    if (!client.connect(connection))
+    {
+        display_connection_failure(error, connection.server);
+        return console_result::failure;
     }
 
     callback_state state(error, output);
