@@ -142,15 +142,15 @@ ptree prop_list(const chain::history::list& rows,
 
     for (const auto& row: rows)
     {
-        total_received += row.value;
+        total_received = ceiling_add(total_received, row.value);
 
         // spend unconfirmed (or no spend attempted)
         if (row.spend.hash() == null_hash)
-            unspent_balance += row.value;
+            unspent_balance = ceiling_add(unspent_balance, row.value);
 
         if (row.output_height != 0 &&
             (row.spend.hash() == null_hash || row.spend_height == 0))
-            confirmed_balance += row.value;
+            confirmed_balance = ceiling_add(confirmed_balance, row.value);
     }
 
     tree.put("address", balance_address);
