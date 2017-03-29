@@ -22,7 +22,7 @@ The libbitcoin toolkit is a set of cross platform C++ libraries for building bit
 
 **About Libbitcoin Explorer**
 
-BX is a command line tool for working with Bitcoin. It can be built as a single portable executable for Linux, OSX or Windows and is available for download as a signed single executable for each. BX exposes over 80 commands and supports network communication with [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) or its predecessor [Obelisk](https://github.com/spesmilo/obelisk), and the P2P Bitcoin network. BX is well documented and supports simple and advanced scenarios, including stealth and multisig.
+BX is a command line tool for working with Bitcoin. It can be built as a single portable executable for Linux, macOS or Windows and is available for download as a signed single executable for each. BX exposes over 80 commands and supports network communication with [libbitcoin-server](https://github.com/libbitcoin/libbitcoin-server) or its predecessor [Obelisk](https://github.com/spesmilo/obelisk), and the P2P Bitcoin network. BX is well documented and supports simple and advanced scenarios, including stealth and multisig.
 
 ## Installation
 
@@ -77,7 +77,7 @@ Next download the [install script](https://github.com/libbitcoin/libbitcoin-expl
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
 $ chmod +x install.sh
 ```
-Finally install BX:
+Finally install BX with default [build options](#build-notes-for-linux--macos):
 ```sh
 $ sudo ./install.sh
 ```
@@ -85,9 +85,9 @@ Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ b
 
 ### Macintosh
 
-The OSX installation differs from Linux in the installation of the compiler and packaged dependencies. BX supports both [Homebrew](http://brew.sh) and [MacPorts](https://www.macports.org) package managers. Both require Apple's [Xcode](https://developer.apple.com/xcode) command line tools. Neither requires Xcode as the tools may be installed independently.
+The macOS installation differs from Linux in the installation of the compiler and packaged dependencies. BX supports both [Homebrew](http://brew.sh) and [MacPorts](https://www.macports.org) package managers. Both require Apple's [Xcode](https://developer.apple.com/xcode) command line tools. Neither requires Xcode as the tools may be installed independently.
 
-BX compiles with Clang on OSX and requires C++11 support. Installation has been verified using Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html). This version or newer should be installed as part of the Xcode command line tools.
+BX compiles with Clang on macOS and requires C++11 support. Installation has been verified using Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html). This version or newer should be installed as part of the Xcode command line tools.
 
 To see your Clang/LLVM  version:
 ```sh
@@ -106,7 +106,7 @@ $ xcode-select --install
 
 #### Using Homebrew
 
-First install Homebrew. Installation requires [Ruby](https://www.ruby-lang.org/en) and [cURL](http://curl.haxx.se), which are pre-installed on OSX.
+First install [Homebrew](https://brew.sh).
 ```sh
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
@@ -123,7 +123,7 @@ Next download the [install script](https://github.com/libbitcoin/libbitcoin-expl
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
 $ chmod +x install.sh
 ```
-Finally install BX:
+Finally install BX with default [build options](#build-notes-for-linux--macos):
 ```sh
 $ ./install.sh
 ```
@@ -146,13 +146,13 @@ Next download the [install script](https://github.com/libbitcoin/libbitcoin-expl
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
 $ chmod +x install.sh
 ```
-Finally install BX:
+Finally install BX with default [build options](#build-notes-for-linux--macos):
 ```sh
 $ ./install.sh
 ```
 Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
-### Configuration Options
+### Build Notes for Linux / macOS
 
 Any set of `./configure` options can be passed via the build script, several examples follow.
 
