@@ -119,6 +119,33 @@ BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_ja__okay_output)
     BX_REQUIRE_OUTPUT("ねんかん すずしい あひる せたけ ほとんど あんまり めいあん のべる いなか ふとる ぜんりゃく えいせい\n");
 }
 
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_cs__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "cs" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("semeno mudrc babka nasekat uvolnit bazuka vydra skanzen broskev trefit nuget datel\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_ru__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "ru" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("ремарка кривой айсберг лауреат тротуар амнезия фонтан рояль бакалея сухой магазин бунт\n");
+}
+
+BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_uk__okay_output)
+{
+    BX_DECLARE_COMMAND(mnemonic_new);
+    command.set_language_option({ "uk" });
+    command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00d" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("сержант ледачий актив люкс фах арена цемент слон бесіда тротуар мандри верба" "\n");
+}
+
 BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits_zh_Hans__okay_output)
 {
     BX_DECLARE_COMMAND(mnemonic_new);
