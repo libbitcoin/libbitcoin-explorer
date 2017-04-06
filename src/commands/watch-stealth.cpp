@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/watch-address.hpp>
+#include <bitcoin/explorer/commands/watch-stealth.hpp>
 
 #include <csignal>
 #include <cstddef>
@@ -45,12 +45,24 @@ static void handle_signal(int signal)
 
 // This command only halts on failure or timeout.
 // BUGBUG: the server may drop the connection, which is not presently detected.
-console_result watch_address::invoke(std::ostream& output, std::ostream& error)
+console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& address = get_payment_address_argument();
+    const auto& prefix = get_prefix_argument();
     const auto connection = get_connection(*this);
     const auto duration = get_duration_option();
+
+    if (prefix.size() < stealth_address::min_filter_bits)
+    {
+        error << BX_WATCH_STEALTH_PREFIX_TOO_SHORT << std::endl;
+        return console_result::failure;
+    }
+
+    if (prefix.size() > stealth_address::max_filter_bits)
+    {
+        error << BX_WATCH_STEALTH_PREFIX_TOO_LONG << std::endl;
+        return console_result::failure;
+    }
 
     obelisk_client client(connection);
 
@@ -62,11 +74,11 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    auto on_subscribed = [&state, &address](const code& error)
+    auto on_subscribed = [&state, &prefix](const code& error)
     {
         if (state.succeeded(error))
         {
-            state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
+            state.output(format(BX_WATCH_STEALTH_PREFIX_WAITING) % prefix);
             ++state;
         }
     };
@@ -76,7 +88,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
         state.succeeded(error);
     };
 
-    auto on_update = [&output, &state, &address](const code& error,
+    auto on_update = [&output, &state, &prefix](const code& error,
         uint16_t sequence, size_t height, const hash_digest& tx_hash)
     {
         if (state.succeeded(error))
@@ -88,7 +100,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     };
 
     client.set_on_update(on_update);
-    client.subscribe_address(on_error, on_subscribed, address);
+    client.subscribe_stealth(on_error, on_subscribed, prefix);
     client.wait();
 
     if (state.stopped())

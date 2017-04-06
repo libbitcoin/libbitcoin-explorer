@@ -287,6 +287,9 @@
     <ClCompile Include="..\..\..\..\test\commands\watch-address.cpp">
       <Filter>src\tests\commands\network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\watch-stealth.cpp">
+      <Filter>src\tests\commands\network</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\watch-tx.cpp">
       <Filter>src\tests\commands\stub</Filter>
     </ClCompile>

@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_WATCH_ADDRESS_HPP
-#define BX_WATCH_ADDRESS_HPP
+#ifndef BX_WATCH_STEALTH_HPP
+#define BX_WATCH_STEALTH_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -58,13 +58,17 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_WATCH_ADDRESS_WAITING \
-    "Watching address: %1%..."
+#define BX_WATCH_STEALTH_PREFIX_WAITING \
+    "Watching stealth prefix: %1%..."
+#define BX_WATCH_STEALTH_PREFIX_TOO_LONG \
+    "Stealth prefix is limited to 32 bits."
+#define BX_WATCH_STEALTH_PREFIX_TOO_SHORT \
+    "Stealth prefix must be at least 8 bits."
 
 /**
- * Class to implement the watch-address command.
+ * Class to implement the watch-stealth command.
  */
-class BCX_API watch_address
+class BCX_API watch_stealth
   : public command
 {
 public:
@@ -74,23 +78,16 @@ public:
      */
     static const char* symbol()
     {
-        return "watch-address";
+        return "watch-stealth";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "monitor";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return watch_address::symbol();
+        return watch_stealth::symbol();
     }
 
     /**
@@ -106,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Watch the network for transactions in which an address participates. Requires a Libbitcoin server connection.";
+        return "Watch the network for transactions by stealth prefix. Requires a Libbitcoin server connection.";
     }
 
     /**
@@ -117,7 +114,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1);
+            .add("PREFIX", 1);
     }
 
 	/**
@@ -129,7 +126,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
+        load_input(get_prefix_argument(), "PREFIX", variables, input, raw);
     }
 
     /**
@@ -158,9 +155,9 @@ public:
             "The duration of the watch in seconds, defaults to 600."
         )
         (
-            "PAYMENT_ADDRESS",
-            value<bc::wallet::payment_address>(&argument_.payment_address),
-            "The participating payment address. If not specified the address is read from STDIN."
+            "PREFIX",
+            value<bc::config::base2>(&argument_.prefix),
+            "The Base2 stealth prefix to watch. If not specified the prefix is read from STDIN."
         );
 
         return options;
@@ -186,20 +183,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PAYMENT_ADDRESS argument.
+     * Get the value of the PREFIX argument.
      */
-    virtual bc::wallet::payment_address& get_payment_address_argument()
+    virtual bc::config::base2& get_prefix_argument()
     {
-        return argument_.payment_address;
+        return argument_.prefix;
     }
 
     /**
-     * Set the value of the PAYMENT_ADDRESS argument.
+     * Set the value of the PREFIX argument.
      */
-    virtual void set_payment_address_argument(
-        const bc::wallet::payment_address& value)
+    virtual void set_prefix_argument(
+        const bc::config::base2& value)
     {
-        argument_.payment_address = value;
+        argument_.prefix = value;
     }
 
     /**
@@ -229,11 +226,11 @@ private:
     struct argument
     {
         argument()
-          : payment_address()
+          : prefix()
         {
         }
 
-        bc::wallet::payment_address payment_address;
+        bc::config::base2 prefix;
     } argument_;
 
     /**

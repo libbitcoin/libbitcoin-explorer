@@ -42,17 +42,23 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     const auto& filter = get_filter_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
-    if (!client.connect(connection))
+    if (filter.size() < stealth_address::min_filter_bits)
     {
-        display_connection_failure(error, connection.server);
+        error << BX_FETCH_STEALTH_FILTER_TOO_SHORT << std::endl;
         return console_result::failure;
     }
 
     if (filter.size() > stealth_address::max_filter_bits)
     {
-        error << BX_FETCH_STEALTH_FILTER_TOO_LONG << std::endl;
+        error << BX_FETCH_STEALTH_PREFIX_TOO_LONG << std::endl;
+        return console_result::failure;
+    }
+
+    obelisk_client client(connection);
+
+    if (!client.connect(connection))
+    {
+        display_connection_failure(error, connection.server);
         return console_result::failure;
     }
 
