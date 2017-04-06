@@ -196,6 +196,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\uri-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\validate-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-address.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-stealth.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-public.hpp" />
@@ -317,6 +318,7 @@
     <ClCompile Include="..\..\..\..\src\commands\uri-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\validate-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\watch-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\watch-stealth.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-public.cpp" />
