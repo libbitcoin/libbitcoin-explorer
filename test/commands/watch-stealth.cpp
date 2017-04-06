@@ -22,15 +22,15 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(network)
-BOOST_AUTO_TEST_SUITE(watch_address__invoke)
+BOOST_AUTO_TEST_SUITE(watch_stealth__invoke)
 
 // This will hang indefinately unless we fake the network calls,
 // so it's disabled here.
-//BOOST_AUTO_TEST_CASE(watch_address__invoke__fist_address_info__okay)
+//BOOST_AUTO_TEST_CASE(watch_stealth__invoke__todo__okay)
 //{
-//    BX_DECLARE_CLIENT_COMMAND(watch_address);
+//    BX_DECLARE_CLIENT_COMMAND(watch_stealth);
 //    command.set_duration_option(42);
-//    command.set_payment_address_argument({ BX_FIRST_ADDRESS });
+//    command.set_prefix_argument({ "10101010101010101" });
 //    BX_REQUIRE_OKAY(command.invoke(output, error));
 //}
 
