@@ -136,27 +136,20 @@ ptree prop_list(const chain::history::list& rows,
     const payment_address& balance_address)
 {
     ptree tree;
-    uint64_t total_received = 0;
-    uint64_t confirmed_balance = 0;
-    uint64_t unspent_balance = 0;
+    uint64_t spent = 0;
+    uint64_t received = 0;
 
     for (const auto& row: rows)
     {
-        total_received = ceiling_add(total_received, row.value);
+        received = ceiling_add(received, row.value);
 
-        // spend unconfirmed (or no spend attempted)
-        if (row.spend.hash() == null_hash)
-            unspent_balance = ceiling_add(unspent_balance, row.value);
-
-        if (row.output_height != 0 &&
-            (row.spend.hash() == null_hash || row.spend_height == 0))
-            confirmed_balance = ceiling_add(confirmed_balance, row.value);
+        if (row.spend.hash() != null_hash)
+            spent = ceiling_add(spent, row.value);
     }
 
     tree.put("address", balance_address);
-    tree.put("confirmed", confirmed_balance);
-    tree.put("received", total_received);
-    tree.put("unspent", unspent_balance);
+    tree.put("received", received);
+    tree.put("spent", spent);
     return tree;
 }
 
