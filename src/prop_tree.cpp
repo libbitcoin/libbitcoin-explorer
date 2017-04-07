@@ -136,27 +136,20 @@ ptree prop_list(const chain::history::list& rows,
     const payment_address& balance_address)
 {
     ptree tree;
-    uint64_t total_received = 0;
-    uint64_t confirmed_balance = 0;
-    uint64_t unspent_balance = 0;
+    uint64_t spent = 0;
+    uint64_t received = 0;
 
     for (const auto& row: rows)
     {
-        total_received = ceiling_add(total_received, row.value);
+        received = ceiling_add(received, row.value);
 
-        // spend unconfirmed (or no spend attempted)
-        if (row.spend.hash() == null_hash)
-            unspent_balance = ceiling_add(unspent_balance, row.value);
-
-        if (row.output_height != 0 &&
-            (row.spend.hash() == null_hash || row.spend_height == 0))
-            confirmed_balance = ceiling_add(confirmed_balance, row.value);
+        if (row.spend.hash() != null_hash)
+            spent = ceiling_add(spent, row.value);
     }
 
     tree.put("address", balance_address);
-    tree.put("confirmed", confirmed_balance);
-    tree.put("received", total_received);
-    tree.put("unspent", unspent_balance);
+    tree.put("received", received);
+    tree.put("spent", spent);
     return tree;
 }
 
@@ -331,46 +324,6 @@ ptree prop_tree(const wallet::wrapped_data& wrapper)
 {
     ptree tree;
     tree.add_child("wrapper", prop_list(wrapper));
-    return tree;
-}
-
-//// watch_filter
-//
-//ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter, bool json)
-//{
-//    ptree tree;
-//    tree.add("block", hash256(block_hash));
-//    tree.add("filter", filter);
-//    tree.add_child("transaction", prop_list(tx, json));
-//    return tree;
-//}
-//
-//ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter, bool json)
-//{
-//    ptree tree;
-//    tree.add_child("watch_filter", prop_list(tx, block_hash, filter, json));
-//    return tree;
-//}
-
-// watch_address
-
-ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address, bool json)
-{
-    ptree tree;
-    tree.add("block", hash256(block_hash));
-    tree.add("address", address);
-    tree.add_child("transaction", prop_list(tx, json));
-    return tree;
-}
-
-ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address, bool json)
-{
-    ptree tree;
-    tree.add_child("watch_address", prop_list(tx, block_hash, address, json));
     return tree;
 }
 
