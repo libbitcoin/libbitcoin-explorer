@@ -334,46 +334,6 @@ ptree prop_tree(const wallet::wrapped_data& wrapper)
     return tree;
 }
 
-//// watch_filter
-//
-//ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter, bool json)
-//{
-//    ptree tree;
-//    tree.add("block", hash256(block_hash));
-//    tree.add("filter", filter);
-//    tree.add_child("transaction", prop_list(tx, json));
-//    return tree;
-//}
-//
-//ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter, bool json)
-//{
-//    ptree tree;
-//    tree.add_child("watch_filter", prop_list(tx, block_hash, filter, json));
-//    return tree;
-//}
-
-// watch_address
-
-ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address, bool json)
-{
-    ptree tree;
-    tree.add("block", hash256(block_hash));
-    tree.add("address", address);
-    tree.add_child("transaction", prop_list(tx, json));
-    return tree;
-}
-
-ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const payment_address& address, bool json)
-{
-    ptree tree;
-    tree.add_child("watch_address", prop_list(tx, block_hash, address, json));
-    return tree;
-}
-
 // stealth_address
 
 ptree prop_list(const stealth_address& stealth, bool json)

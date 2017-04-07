@@ -272,50 +272,6 @@ BCX_API pt::ptree prop_list(const wallet::wrapped_data& wrapper);
  */
 BCX_API pt::ptree prop_tree(const wallet::wrapped_data& wrapper);
 
-///**
-// * Generate a property list for transaction with extended data.
-// * @param[in]  tx          The transaction.
-// * @param[in]  block_hash  The block_hash of the transaction.
-// * @param[in]  filter      The filter used to locate the transaction.
-// * @param[in]  json        Use json array formatting.
-// * @return                 A property list.
-// */
-//BCX_API pt::ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter, bool json);
-//
-///**
-// * Generate a property tree for transaction with extended data.
-// * @param[in]  tx          The transaction.
-// * @param[in]  block_hash  The block_hash of the transaction.
-// * @param[in]  filter      The filter used to locate the transaction.
-// * @param[in]  json        Use json array formatting.
-// * @return                 A property tree.
-// */
-//BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-//    const base2& filter, bool json);
-
-/**
- * Generate a property list for transaction with extended data.
- * @param[in]  tx          The transaction.
- * @param[in]  block_hash  The block_hash of the transaction.
- * @param[in]  address     The address used to locate the transaction.
- * @param[in]  json        Use json array formatting.
- * @return                 A property list.
- */
-BCX_API pt::ptree prop_list(const tx_type& tx, const hash_digest& block_hash,
-    const wallet::payment_address& address, bool json);
-
-/**
- * Generate a property tree for transaction with extended data.
- * @param[in]  tx          The transaction.
- * @param[in]  block_hash  The block_hash of the transaction.
- * @param[in]  address     The address used to locate the transaction.
- * @param[in]  json        Use json array formatting.
- * @return                 A property tree.
- */
-BCX_API pt::ptree prop_tree(const tx_type& tx, const hash_digest& block_hash,
-    const wallet::payment_address& address, bool json);
-
 /**
  * Generate a property list for a stealth address.
  * @param[in]  stealth_address  The stealth address.
