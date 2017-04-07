@@ -24,15 +24,13 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(watch_address__invoke)
 
-// This will hang indefinately unless we fake the network calls,
-// so it's disabled here.
-//BOOST_AUTO_TEST_CASE(watch_address__invoke__fist_address_info__okay)
-//{
-//    BX_DECLARE_CLIENT_COMMAND(watch_address);
-//    command.set_duration_option(42);
-//    command.set_payment_address_argument({ BX_FIRST_ADDRESS });
-//    BX_REQUIRE_OKAY(command.invoke(output, error));
-//}
+BOOST_AUTO_TEST_CASE(watch_address__invoke__one_second_duration__okay)
+{
+    BX_DECLARE_CLIENT_COMMAND(watch_address);
+    command.set_duration_option(1);
+    command.set_payment_address_argument({ BX_FIRST_ADDRESS });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
