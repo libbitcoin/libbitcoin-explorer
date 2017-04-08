@@ -200,13 +200,6 @@ BCX_API data_chunk new_seed(size_t bit_length=minimum_seed_bits);
 BCX_API string_list numbers_to_strings(const chain::point::indexes& indexes);
 
 /**
- * DEPRECATED in favor of libbitcoin::pseudo_random_fill.
- * Fill a buffer with randomness using the default random engine.
- * @param[in]  chunk  The buffer to fill with randomness.
- */
-BCX_API void random_fill(data_chunk& chunk);
-
-/**
  * Get a message from the specified input stream.
  * @param[in]  stream The input stream to read.
  * @return            The message read from the input stream.

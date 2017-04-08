@@ -76,7 +76,7 @@ data_chunk new_seed(size_t bit_length)
 {
     size_t fill_seed_size = bit_length / byte_bits;
     data_chunk seed(fill_seed_size);
-    random_fill(seed);
+    pseudo_random_fill(seed);
     return seed;
 }
 
@@ -88,13 +88,6 @@ string_list numbers_to_strings(const chain::point::indexes& indexes)
         stringlist.push_back(std::to_string(index));
 
     return stringlist;
-}
-
-// Not testable due to lack of random engine injection.
-// DEPRECATED in favor of libbitcoin::pseudo_random_fill.
-void random_fill(data_chunk& chunk)
-{
-    pseudo_random_fill(chunk);
 }
 
 // TODO: switch to binary for raw (primitive) reads in windows.
