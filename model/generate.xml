@@ -256,6 +256,7 @@
     <define name="BX_EK_TO_EC_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
   
+  <!-- TODO: document no unconfirmed history for 3.0 [done] -->
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
@@ -267,12 +268,13 @@
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
   </command>
 
-  <!-- TODO: document new public-key argument for 3.x -->
+  <!-- TODO: document new public-key argument for 3.1 -->
   <command symbol="fetch-height" formerly="fetch-last-height" output="uint32_t" category="ONLINE" network="true" description="Get the last block height. Requires a Libbitcoin server connection.">
     <argument name="server-url" description="The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."/>
     <argument name="public-key" description="The public key of the Libbitcoin server. If not specified the key is obtained from configuration settings or defaults."/>
   </command>
   
+  <!-- TODO: document simplified output format (3.1) and no unconfirmed history for 3.0 [done] -->
   <command symbol="fetch-history" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment address. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
@@ -283,7 +285,7 @@
     <define name="BX_FETCH_PUBLIC_KEY_NOT_IMPLEMENTED" value="This command is not yet implemented." />
   </command>
 
-  <!-- TODO: document new limit (8 bit filter) for 3.x release. -->
+  <!-- TODO: document new limit (8 bit filter) for 3.1 -->
   <command symbol="fetch-stealth" output="stealth_row" category="ONLINE" network="true" description="Get metadata on potential payment transactions by stealth prefix filter. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="height" shortcut="t" type="uint32_t" description="The minimum block height of transactions to include."/>
