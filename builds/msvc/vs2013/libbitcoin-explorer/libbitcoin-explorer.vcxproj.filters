@@ -311,6 +311,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-address.hpp">
       <Filter>include\bitcoin\explorer\commands\network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-stealth.hpp">
+      <Filter>include\bitcoin\explorer\commands\network</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-tx.hpp">
       <Filter>include\bitcoin\explorer\commands\stub</Filter>
     </ClInclude>
@@ -680,6 +683,9 @@
       <Filter>src\commands\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\watch-address.cpp">
+      <Filter>src\commands\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\commands\watch-stealth.cpp">
       <Filter>src\commands\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\watch-tx.cpp">

@@ -22,13 +22,31 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(network)
-BOOST_AUTO_TEST_SUITE(watch_address__invoke)
+BOOST_AUTO_TEST_SUITE(watch_stealth__invoke)
 
-BOOST_AUTO_TEST_CASE(watch_address__invoke__one_second_duration__okay)
+BOOST_AUTO_TEST_CASE(watch_stealth__invoke__short_address__failure)
 {
-    BX_DECLARE_CLIENT_COMMAND(watch_address);
+    BX_DECLARE_CLIENT_COMMAND(watch_stealth);
     command.set_duration_option(1);
-    command.set_payment_address_argument({ BX_FIRST_ADDRESS });
+    command.set_prefix_argument({ "1010101" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_WATCH_STEALTH_PREFIX_TOO_SHORT "\n");
+}
+
+BOOST_AUTO_TEST_CASE(watch_stealth__invoke__long_address__failure)
+{
+    BX_DECLARE_CLIENT_COMMAND(watch_stealth);
+    command.set_duration_option(1);
+    command.set_prefix_argument({ "101010101010101010101010101010101" });
+    BX_REQUIRE_FAILURE(command.invoke(output, error));
+    BX_REQUIRE_ERROR(BX_WATCH_STEALTH_PREFIX_TOO_LONG "\n");
+}
+
+BOOST_AUTO_TEST_CASE(watch_stealth__invoke__one_second_duration__okay)
+{
+    BX_DECLARE_CLIENT_COMMAND(watch_stealth);
+    command.set_duration_option(1);
+    command.set_prefix_argument({ "10101010" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 

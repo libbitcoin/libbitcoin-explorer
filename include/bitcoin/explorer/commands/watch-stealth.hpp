@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_MNEMONIC_NEW_HPP
-#define BX_MNEMONIC_NEW_HPP
+#ifndef BX_WATCH_STEALTH_HPP
+#define BX_WATCH_STEALTH_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -58,13 +58,17 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_NEW_INVALID_ENTROPY \
-    "The seed length in bytes is not evenly divisible by 32 bits."
+#define BX_WATCH_STEALTH_PREFIX_WAITING \
+    "Watching stealth prefix: %1%..."
+#define BX_WATCH_STEALTH_PREFIX_TOO_LONG \
+    "Stealth prefix is limited to 32 bits."
+#define BX_WATCH_STEALTH_PREFIX_TOO_SHORT \
+    "Stealth prefix must be at least 8 bits."
 
 /**
- * Class to implement the mnemonic-new command.
+ * Class to implement the watch-stealth command.
  */
-class BCX_API mnemonic_new
+class BCX_API watch_stealth
   : public command
 {
 public:
@@ -74,7 +78,7 @@ public:
      */
     static const char* symbol()
     {
-        return "mnemonic-new";
+        return "watch-stealth";
     }
 
 
@@ -83,7 +87,7 @@ public:
      */
     virtual const char* name()
     {
-        return mnemonic_new::symbol();
+        return watch_stealth::symbol();
     }
 
     /**
@@ -91,7 +95,7 @@ public:
      */
     virtual const char* category()
     {
-        return "WALLET";
+        return "ONLINE";
     }
 
     /**
@@ -99,7 +103,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.";
+        return "Watch the network for transactions by stealth prefix. Requires a Libbitcoin server connection.";
     }
 
     /**
@@ -110,7 +114,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("SEED", 1);
+            .add("PREFIX", 1);
     }
 
 	/**
@@ -122,7 +126,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_seed_argument(), "SEED", variables, input, raw);
+        load_input(get_prefix_argument(), "PREFIX", variables, input, raw);
     }
 
     /**
@@ -146,14 +150,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "language,l",
-            value<explorer::config::language>(&option_.language),
-            "The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'fr', 'it', 'ja', 'cs', 'ru', 'uk', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'."
+            "duration,d",
+            value<uint32_t>(&option_.duration)->default_value(600),
+            "The duration of the watch in seconds, defaults to 600."
         )
         (
-            "SEED",
-            value<bc::config::base16>(&argument_.seed),
-            "The Base16 entropy from which the mnemonic is created. The length must be evenly divisible by 32 bits. If not specified the entropy is read from STDIN."
+            "PREFIX",
+            value<bc::config::base2>(&argument_.prefix),
+            "The Base2 stealth prefix to watch. If not specified the prefix is read from STDIN."
         );
 
         return options;
@@ -179,37 +183,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the SEED argument.
+     * Get the value of the PREFIX argument.
      */
-    virtual bc::config::base16& get_seed_argument()
+    virtual bc::config::base2& get_prefix_argument()
     {
-        return argument_.seed;
+        return argument_.prefix;
     }
 
     /**
-     * Set the value of the SEED argument.
+     * Set the value of the PREFIX argument.
      */
-    virtual void set_seed_argument(
-        const bc::config::base16& value)
+    virtual void set_prefix_argument(
+        const bc::config::base2& value)
     {
-        argument_.seed = value;
+        argument_.prefix = value;
     }
 
     /**
-     * Get the value of the language option.
+     * Get the value of the duration option.
      */
-    virtual explorer::config::language& get_language_option()
+    virtual uint32_t& get_duration_option()
     {
-        return option_.language;
+        return option_.duration;
     }
 
     /**
-     * Set the value of the language option.
+     * Set the value of the duration option.
      */
-    virtual void set_language_option(
-        const explorer::config::language& value)
+    virtual void set_duration_option(
+        const uint32_t& value)
     {
-        option_.language = value;
+        option_.duration = value;
     }
 
 private:
@@ -222,11 +226,11 @@ private:
     struct argument
     {
         argument()
-          : seed()
+          : prefix()
         {
         }
 
-        bc::config::base16 seed;
+        bc::config::base2 prefix;
     } argument_;
 
     /**
@@ -237,11 +241,11 @@ private:
     struct option
     {
         option()
-          : language()
+          : duration()
         {
         }
 
-        explorer::config::language language;
+        uint32_t duration;
     } option_;
 };
 

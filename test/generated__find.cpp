@@ -453,6 +453,11 @@ BOOST_AUTO_TEST_CASE(generated__find__watch_address__returns_object)
     BOOST_REQUIRE(find("watch-address") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__watch_stealth__returns_object)
+{
+    BOOST_REQUIRE(find("watch-stealth") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__watch_tx__returns_object)
 {
     BOOST_REQUIRE(find("watch-tx") != nullptr);

@@ -58,8 +58,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_STEALTH_FILTER_TOO_LONG \
-    "Stealth prefix filter is limited to 32 bits."
+#define BX_FETCH_STEALTH_PREFIX_TOO_LONG \
+    "Stealth prefix is limited to 32 bits."
+#define BX_FETCH_STEALTH_FILTER_TOO_SHORT \
+    "Stealth prefix must be at least 8 bits."
 
 /**
  * Class to implement the fetch-stealth command.

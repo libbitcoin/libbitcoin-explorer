@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\..\..\test\commands\uri-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\watch-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\watch-stealth.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp" />

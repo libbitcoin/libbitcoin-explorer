@@ -127,6 +127,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/uri-encode.cpp \
     src/commands/validate-tx.cpp \
     src/commands/watch-address.cpp \
+    src/commands/watch-stealth.cpp \
     src/commands/watch-tx.cpp \
     src/commands/wif-to-ec.cpp \
     src/commands/wif-to-public.cpp \
@@ -266,6 +267,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/uri-encode.cpp \
     test/commands/validate-tx.cpp \
     test/commands/watch-address.cpp \
+    test/commands/watch-stealth.cpp \
     test/commands/watch-tx.cpp \
     test/commands/wif-to-ec.cpp \
     test/commands/wif-to-public.cpp \
@@ -381,6 +383,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/uri-encode.hpp \
     include/bitcoin/explorer/commands/validate-tx.hpp \
     include/bitcoin/explorer/commands/watch-address.hpp \
+    include/bitcoin/explorer/commands/watch-stealth.hpp \
     include/bitcoin/explorer/commands/watch-tx.hpp \
     include/bitcoin/explorer/commands/wif-to-ec.hpp \
     include/bitcoin/explorer/commands/wif-to-public.hpp \

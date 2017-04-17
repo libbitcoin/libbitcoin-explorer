@@ -158,11 +158,6 @@ public:
             "The duration of the watch in seconds, defaults to 600."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
             "PAYMENT_ADDRESS",
             value<bc::wallet::payment_address>(&argument_.payment_address),
             "The participating payment address. If not specified the address is read from STDIN."
@@ -224,23 +219,6 @@ public:
         option_.duration = value;
     }
 
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
 private:
 
     /**
@@ -266,13 +244,11 @@ private:
     struct option
     {
         option()
-          : duration(),
-            format()
+          : duration()
         {
         }
 
         uint32_t duration;
-        explorer::config::encoding format;
     } option_;
 };
 
