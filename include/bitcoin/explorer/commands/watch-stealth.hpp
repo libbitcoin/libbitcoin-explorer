@@ -157,7 +157,7 @@ public:
         (
             "PREFIX",
             value<bc::config::base2>(&argument_.prefix),
-            "The Base2 stealth prefix to watch. If not specified the prefix is read from STDIN."
+            "The Base2 stealth prefix to watch. Must be at least 8 bits in length. If not specified the prefix is read from STDIN."
         );
 
         return options;

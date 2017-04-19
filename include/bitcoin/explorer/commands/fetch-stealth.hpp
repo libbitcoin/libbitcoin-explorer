@@ -158,7 +158,7 @@ public:
         (
             "FILTER",
             value<bc::config::base2>(&argument_.filter),
-            "The Base2 stealth prefix filter used to locate transactions. Defaults to all stealth transactions."
+            "The Base2 stealth prefix filter used to locate transactions. Must be at least 8 bits in length."
         );
 
         return options;
