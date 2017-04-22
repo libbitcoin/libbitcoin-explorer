@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "    {\n" \
 "        output\n" \
 "        {\n" \
-"            address 1966U1pjj15tLxPXZ19U48c99EJDkdXeqb\n" \
+"            address_hash 58b7a60f11a904feef35a639b6048de8dd4d9f1c\n" \
 "            script \"dup hash160 [58b7a60f11a904feef35a639b6048de8dd4d9f1c] equalverify checksig\"\n" \
 "            value 45000\n" \
 "        }\n" \
@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "        }\n" \
 "        output\n" \
 "        {\n" \
-"            address 1KbjyvFBRc2p6dKpTfDAFdT5DqmVLGX3B4\n" \
+"            address_hash cc04492c12d0ddeb4cf88cfccb0d6d78d0fcd39d\n" \
 "            script \"dup hash160 [cc04492c12d0ddeb4cf88cfccb0d6d78d0fcd39d] equalverify checksig\"\n" \
 "            value 42\n" \
 "        }\n" \
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "    {\n" \
 "        output\n" \
 "        {\n" \
-"            address 13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe\n" \
+"            address_hash 18c0bd8d1818f1bf99cb1df2269c645318ef7b73\n" \
 "            script \"dup hash160 [18c0bd8d1818f1bf99cb1df2269c645318ef7b73] equalverify checksig\"\n" \
 "            value 500\n" \
 "        }\n" \
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "    {\n" \
 "        input\n" \
 "        {\n" \
-"            address 1JziqzXeBPyHPeAHrG4DCDW4ASXeGGF6p6\n" \
+"            address_hash c564c740c6900b93afc9f1bdaef0a9d466adf6ee\n" \
 "            previous_output\n" \
 "            {\n" \
 "                hash 7c3e880e7c93a7b01506188c36a239f70b561dfa622d0aa0d8f3b7403c94017d\n" \
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_SUITE(tx_decode__invoke)
 "    {\n" \
 "        output\n" \
 "        {\n" \
-"            address 1966U1pjj15tLxPXZ19U48c99EJDkdXeqb\n" \
+"            address_hash 58b7a60f11a904feef35a639b6048de8dd4d9f1c\n" \
 "            script \"dup hash160 [58b7a60f11a904feef35a639b6048de8dd4d9f1c] equalverify checksig\"\n" \
 "            value 45000\n" \
 "        }\n" \
@@ -190,6 +190,15 @@ BOOST_AUTO_TEST_CASE(tx_decode__invoke__example_4__expected_output)
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(TX_DECODE_EXAMPLE4);
 }
+
+////BOOST_AUTO_TEST_CASE(tx_decode__invoke__issue_477__expected_output)
+////{
+////    BX_DECLARE_COMMAND(tx_decode);
+////    command.set_format_option({ "info" });
+////    command.set_transaction_argument({ "0100000001833d56a22cd88ef7a17d51d30b169a86aa4138f60867a6e21fc88a7b546b5d64010000006a4730440220688fb2aef767f21127b375d50d0ab8f7a1abaecad08e7c4987f7305c90e5a02502203282909b7863149bf4c92589764df80744afb509b949c06bfbeb28864277d88d0121025334b571c11e22967452f195509260f6a6dd10357fc4ad76b1c0aa5981ac254effffffff030000000000000000246a22414243444546917ce6520f0740cd2c373bd506415777bd23e8680123456789abcdef10270000000000001976a914ce5b06176d2572d4fb985747f197c389b8ac64e888ac30750000000000001976a9143c6602137d7f9a68a96aff2d3cf37bbdeeb95b7d88ac00000000" });
+////    BX_REQUIRE_OKAY(command.invoke(output, error));
+////    BX_REQUIRE_OUTPUT(TX_DECODE_EXAMPLE4);
+////}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
