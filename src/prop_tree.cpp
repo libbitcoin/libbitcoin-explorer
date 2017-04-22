@@ -166,10 +166,12 @@ ptree prop_tree(const chain::history::list& rows,
 ptree prop_list(const tx_input_type& tx_input)
 {
     ptree tree;
+
+    // This will have default versioning, but the address version is unused.
     const auto script_address = payment_address::extract(tx_input.script());
 
     if (script_address)
-        tree.put("address", script_address);
+        tree.put("address_hash", hash160(script_address.hash()));
 
     tree.put("previous_output.hash", hash256(tx_input.previous_output().hash()));
     tree.put("previous_output.index", tx_input.previous_output().index());
@@ -219,10 +221,12 @@ ptree prop_tree(const std::vector<input>& inputs, bool json)
 ptree prop_list(const tx_output_type& tx_output)
 {
     ptree tree;
+
+    // This will have default versioning, but the address version is unused.
     const auto address = payment_address::extract(tx_output.script());
 
     if (address)
-        tree.put("address", address);
+        tree.put("address_hash", hash160(address.hash()));
 
     tree.put("script", tx_output.script().to_string(
         machine::rule_fork::all_rules));
