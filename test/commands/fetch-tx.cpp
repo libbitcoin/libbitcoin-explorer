@@ -28,9 +28,9 @@ BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 
 #define FETCH_TX_SATOSHIS_WORDS_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
-"<transaction><hash>4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</hash><inputs><input><previous_output><hash>0000000000000000000000000000000000000000000000000000000000000000</hash><index>4294967295</index></previous_output><script>[ffff001d] [04] [5468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73]</script><sequence>4294967295</sequence></input></inputs><lock_time>0</lock_time><outputs><output><address>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</address><script>[04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f] checksig</script><value>5000000000</value></output></outputs><version>1</version></transaction>\n"
+"<transaction><hash>4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</hash><inputs><input><previous_output><hash>0000000000000000000000000000000000000000000000000000000000000000</hash><index>4294967295</index></previous_output><script>[ffff001d] [04] [5468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73]</script><sequence>4294967295</sequence></input></inputs><lock_time>0</lock_time><outputs><output><address_hash>62e907b15cbf27d5425399ebf6f0fb50ebb88f18</address_hash><script>[04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f] checksig</script><value>5000000000</value></output></outputs><version>1</version></transaction>\n"
 
-#define FETCH_TX_SATOSHIS_WORDS_TX_INFO         \
+#define FETCH_TX_SATOSHIS_WORDS_TX_INFO \
 "transaction\n" \
 "{\n" \
 "    hash 4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\n" \
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 "    {\n" \
 "        output\n" \
 "        {\n" \
-"            address 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n" \
+"            address_hash 62e907b15cbf27d5425399ebf6f0fb50ebb88f18\n" \
 "            script \"[04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f] checksig\"\n" \
 "            value 5000000000\n" \
 "        }\n" \
@@ -62,6 +62,7 @@ BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 
 #define FETCH_TX_SECOND_TX_HASH \
 "0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098"
+
 #define FETCH_TX_SECOND_TX_INFO \
 "transaction\n" \
 "{\n" \
@@ -84,7 +85,7 @@ BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 "    {\n" \
 "        output\n" \
 "        {\n" \
-"            address 12c6DSiU4Rq3P4ZxziKxzrL5LmMBrzjrJX\n" \
+"            address_hash 119b098e2e980a229e139a9ed01a469e518e6f26\n" \
 "            script \"[0496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858ee] checksig\"\n" \
 "            value 5000000000\n" \
 "        }\n" \
