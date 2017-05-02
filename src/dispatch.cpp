@@ -138,7 +138,7 @@ console_result dispatch_command(int argc, const char* argv[],
         log::stream console_out(&output, null_deleter());
         log::stream console_err(&error, null_deleter());
 
-        log::initialize(debug_log, error_log, console_out, console_err);
+        log::initialize(debug_log, error_log, console_out, console_err, false);
     }
 
     return command->invoke(out, err);
