@@ -84,7 +84,7 @@ ptree prop_tree(const std::vector<header>& headers, bool json)
 
 // transfers
 
-ptree prop_list(const chain::history& row)
+ptree prop_list(const client::history& row)
 {
     ptree tree;
 
@@ -116,14 +116,14 @@ ptree prop_list(const chain::history& row)
     return tree;
 }
 
-ptree prop_tree(const chain::history& row)
+ptree prop_tree(const client::history& row)
 {
     ptree tree;
     tree.add_child("transfer", prop_list(row));
     return tree;
 }
 
-ptree prop_tree(const chain::history::list& rows, bool json)
+ptree prop_tree(const client::history::list& rows, bool json)
 {
     ptree tree;
     tree.add_child("transfers", prop_tree_list("transfer", rows, json));
@@ -132,7 +132,7 @@ ptree prop_tree(const chain::history::list& rows, bool json)
 
 // balance
 
-ptree prop_list(const chain::history::list& rows,
+ptree prop_list(const client::history::list& rows,
     const payment_address& balance_address)
 {
     ptree tree;
@@ -153,7 +153,7 @@ ptree prop_list(const chain::history::list& rows,
     return tree;
 }
 
-ptree prop_tree(const chain::history::list& rows,
+ptree prop_tree(const client::history::list& rows,
     const payment_address& balance_address)
 {
     ptree tree;
@@ -167,11 +167,12 @@ ptree prop_list(const tx_input_type& tx_input)
 {
     ptree tree;
 
+    // This does not support pay_multisig or pay_public_key (nonstandard).
     // This will have default versioning, but the address version is unused.
-    const auto script_address = payment_address::extract(tx_input.script());
+    const auto address = tx_input.address();
 
-    if (script_address)
-        tree.put("address_hash", hash160(script_address.hash()));
+    if (address)
+        tree.put("address_hash", hash160(address.hash()));
 
     tree.put("previous_output.hash", hash256(tx_input.previous_output().hash()));
     tree.put("previous_output.index", tx_input.previous_output().index());
@@ -222,8 +223,9 @@ ptree prop_list(const tx_output_type& tx_output)
 {
     ptree tree;
 
+    // This does not support pay_multisig or pay_public_key (nonstandard).
     // This will have default versioning, but the address version is unused.
-    const auto address = payment_address::extract(tx_output.script());
+    const auto address = tx_output.address();
 
     if (address)
         tree.put("address_hash", hash160(address.hash()));
@@ -363,7 +365,7 @@ ptree prop_tree(const stealth_address& stealth, bool json)
 
 // stealth
 
-ptree prop_list(const chain::stealth& row)
+ptree prop_list(const client::stealth& row)
 {
     ptree tree;
     tree.put("ephemeral_public_key", ec_public(row.ephemeral_public_key));
@@ -372,14 +374,14 @@ ptree prop_list(const chain::stealth& row)
     return tree;
 }
 
-ptree prop_tree(const chain::stealth& row)
+ptree prop_tree(const client::stealth& row)
 {
     ptree tree;
     tree.add_child("match", prop_list(row));
     return tree;
 }
 
-ptree prop_tree(const chain::stealth::list& rows, bool json)
+ptree prop_tree(const client::stealth::list& rows, bool json)
 {
     ptree tree;
     tree.add_child("stealth", prop_tree_list("match", rows, json));
