@@ -43,7 +43,6 @@
 #include <bitcoin/explorer/config/language.hpp>
 #include <bitcoin/explorer/config/output.hpp>
 #include <bitcoin/explorer/config/raw.hpp>
-#include <bitcoin/explorer/config/script.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
@@ -153,7 +152,7 @@ public:
         )
         (
             "SCRIPT",
-            value<explorer::config::script>(&argument_.script),
+            value<bc::config::script>(&argument_.script),
             "The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."
         );
 
@@ -188,7 +187,7 @@ public:
     /**
      * Get the value of the SCRIPT argument.
      */
-    virtual explorer::config::script& get_script_argument()
+    virtual bc::config::script& get_script_argument()
     {
         return argument_.script;
     }
@@ -197,7 +196,7 @@ public:
      * Set the value of the SCRIPT argument.
      */
     virtual void set_script_argument(
-        const explorer::config::script& value)
+        const bc::config::script& value)
     {
         argument_.script = value;
     }
@@ -233,7 +232,7 @@ private:
         {
         }
 
-        explorer::config::script script;
+        bc::config::script script;
     } argument_;
 
     /**

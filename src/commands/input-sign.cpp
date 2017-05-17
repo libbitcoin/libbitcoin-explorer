@@ -26,7 +26,6 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::chain;
 using namespace bc::config;
 
 // The BX_INPUT_SIGN_FAILED condition uncovered by test.
@@ -52,8 +51,8 @@ console_result input_sign::invoke(std::ostream& output, std::ostream& error)
         hash_type |= machine::sighash_algorithm::anyone_can_pay;
 
     endorsement endorse;
-    if (!script::create_endorsement(endorse, private_key, contract, tx, index,
-        hash_type))
+    if (!chain::script::create_endorsement(endorse, private_key, contract, tx,
+        index, hash_type))
     {
         error << BX_INPUT_SIGN_FAILED << std::endl;
         return console_result::failure;

@@ -21,7 +21,6 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/script.hpp>
 
 namespace libbitcoin {
 namespace explorer {

@@ -103,7 +103,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\output.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\point.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\raw.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\script.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\signature.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\transaction.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\wrapper.hpp" />
@@ -226,7 +225,6 @@
     <ClCompile Include="..\..\..\..\src\config\output.cpp" />
     <ClCompile Include="..\..\..\..\src\config\point.cpp" />
     <ClCompile Include="..\..\..\..\src\config\raw.cpp" />
-    <ClCompile Include="..\..\..\..\src\config\script.cpp" />
     <ClCompile Include="..\..\..\..\src\config\signature.cpp" />
     <ClCompile Include="..\..\..\..\src\config\transaction.cpp" />
     <ClCompile Include="..\..\..\..\src\config\wrapper.cpp" />

@@ -21,12 +21,11 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/script.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::explorer::config;
+using namespace bc::config;
 
 console_result script_decode::invoke(std::ostream& output, std::ostream& error)
 {

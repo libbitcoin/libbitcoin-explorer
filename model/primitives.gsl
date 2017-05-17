@@ -93,7 +93,7 @@ function global.map_type(type)
     my.type_payment_address_bx = "bc::wallet::payment_address"
     my.type_point_bx = "explorer::config::point"
     my.type_raw_bx = "explorer::config::raw"
-    my.type_script_bx = "explorer::config::script"
+    my.type_script_bx = "bc::config::script"
     my.type_signature_bx = "explorer::config::signature"
     my.type_sodium_bx = "bc::config::sodium"
     my.type_stealth_address_bx = "bc::wallet::stealth_address"
@@ -275,7 +275,6 @@ endfunction
 #include <bitcoin/explorer/config/language.hpp>
 #include <bitcoin/explorer/config/output.hpp>
 #include <bitcoin/explorer/config/raw.hpp>
-#include <bitcoin/explorer/config/script.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>

@@ -43,7 +43,6 @@
 #include <bitcoin/explorer/config/language.hpp>
 #include <bitcoin/explorer/config/output.hpp>
 #include <bitcoin/explorer/config/raw.hpp>
-#include <bitcoin/explorer/config/script.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
@@ -178,7 +177,7 @@ public:
         )
         (
             "CONTRACT",
-            value<explorer::config::script>(&argument_.contract)->required(),
+            value<bc::config::script>(&argument_.contract)->required(),
             "The previous output script to use in signing. Multiple tokens must be quoted."
         )
         (
@@ -229,7 +228,7 @@ public:
     /**
      * Get the value of the CONTRACT argument.
      */
-    virtual explorer::config::script& get_contract_argument()
+    virtual bc::config::script& get_contract_argument()
     {
         return argument_.contract;
     }
@@ -238,7 +237,7 @@ public:
      * Set the value of the CONTRACT argument.
      */
     virtual void set_contract_argument(
-        const explorer::config::script& value)
+        const bc::config::script& value)
     {
         argument_.contract = value;
     }
@@ -328,7 +327,7 @@ private:
         }
 
         explorer::config::ec_private ec_private_key;
-        explorer::config::script contract;
+        bc::config::script contract;
         explorer::config::transaction transaction;
     } argument_;
 

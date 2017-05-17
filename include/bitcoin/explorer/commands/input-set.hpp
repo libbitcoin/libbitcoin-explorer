@@ -43,7 +43,6 @@
 #include <bitcoin/explorer/config/language.hpp>
 #include <bitcoin/explorer/config/output.hpp>
 #include <bitcoin/explorer/config/raw.hpp>
-#include <bitcoin/explorer/config/script.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
@@ -160,7 +159,7 @@ public:
         )
         (
             "ENDORSEMENT_SCRIPT",
-            value<explorer::config::script>(&argument_.endorsement_script)->required(),
+            value<bc::config::script>(&argument_.endorsement_script)->required(),
             "The endorsement script to assign to the input. Multiple tokens must be quoted."
         )
         (
@@ -194,7 +193,7 @@ public:
     /**
      * Get the value of the ENDORSEMENT_SCRIPT argument.
      */
-    virtual explorer::config::script& get_endorsement_script_argument()
+    virtual bc::config::script& get_endorsement_script_argument()
     {
         return argument_.endorsement_script;
     }
@@ -203,7 +202,7 @@ public:
      * Set the value of the ENDORSEMENT_SCRIPT argument.
      */
     virtual void set_endorsement_script_argument(
-        const explorer::config::script& value)
+        const bc::config::script& value)
     {
         argument_.endorsement_script = value;
     }
@@ -257,7 +256,7 @@ private:
         {
         }
 
-        explorer::config::script endorsement_script;
+        bc::config::script endorsement_script;
         explorer::config::transaction transaction;
     } argument_;
 

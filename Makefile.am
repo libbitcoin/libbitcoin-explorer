@@ -149,7 +149,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/config/output.cpp \
     src/config/point.cpp \
     src/config/raw.cpp \
-    src/config/script.cpp \
     src/config/signature.cpp \
     src/config/transaction.cpp \
     src/config/wrapper.cpp
@@ -408,7 +407,6 @@ include_bitcoin_explorer_config_HEADERS = \
     include/bitcoin/explorer/config/output.hpp \
     include/bitcoin/explorer/config/point.hpp \
     include/bitcoin/explorer/config/raw.hpp \
-    include/bitcoin/explorer/config/script.hpp \
     include/bitcoin/explorer/config/signature.hpp \
     include/bitcoin/explorer/config/transaction.hpp \
     include/bitcoin/explorer/config/wrapper.hpp

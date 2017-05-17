@@ -137,9 +137,6 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\raw.hpp">
       <Filter>include\\bitcoin\\explorer\\config</Filter>
     </ClInclude>
-    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\script.hpp">
-      <Filter>include\\bitcoin\\explorer\\config</Filter>
-    </ClInclude>
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\signature.hpp">
       <Filter>include\\bitcoin\\explorer\\config</Filter>
     </ClInclude>
