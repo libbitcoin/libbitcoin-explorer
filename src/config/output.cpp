@@ -26,7 +26,6 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/script.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
@@ -34,6 +33,7 @@ namespace explorer {
 namespace config {
 
 using namespace po;
+using namespace bc::config;
 
 output::output()
   : is_stealth_(false), amount_(0), version_(0), script_(),

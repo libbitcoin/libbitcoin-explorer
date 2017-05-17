@@ -86,7 +86,6 @@ bitcoin_explorer_primitives_include_HEADERS = \\
     include/bitcoin/explorer/primitives/output.hpp \\
     include/bitcoin/explorer/primitives/point.hpp \\
     include/bitcoin/explorer/primitives/raw.hpp \\
-    include/bitcoin/explorer/primitives/script.hpp \\
     include/bitcoin/explorer/primitives/signature.hpp \\
     include/bitcoin/explorer/primitives/stealth.hpp \\
     include/bitcoin/explorer/primitives/transaction.hpp \\
@@ -129,7 +128,6 @@ src_libbitcoin_explorer_la_SOURCES = \\
     src/primitives/output.cpp \\
     src/primitives/point.cpp \\
     src/primitives/raw.cpp \\
-    src/primitives/script.cpp \\
     src/primitives/signature.cpp \\
     src/primitives/stealth.cpp \\
     src/primitives/transaction.cpp \\
