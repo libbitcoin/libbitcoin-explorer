@@ -26,8 +26,6 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 
-#ifndef ENABLE_TESTNET
-
 // These amounts may change at any time, making these particular tests fragile.
 
 /**
@@ -81,7 +79,22 @@ BOOST_AUTO_TEST_CASE(fetch_balance__invoke__mainnet_sx_demo2_xml__okay_output)
     BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_SX_DEMO2_XML);
 }
 
-#endif
+// An even more fragile test since this is guaranteed to break on
+// testnet resets. However, updating then seems reasonable.
+
+#define BX_FETCH_BALANCE_TESTNET_DEMO1_ADDRESS "n3GNqMveyvaPvUbH469vDRadqpJMPc84JA"
+#define BX_FETCH_BALANCE_TESTNET_DEMO1_XML \
+"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
+"<balance><address>n3GNqMveyvaPvUbH469vDRadqpJMPc84JA</address><received>5016930771</received><spent>0</spent></balance>\n"
+
+BOOST_AUTO_TEST_CASE(fetch_balance__invoke__testnet_demo1_xml__okay_output)
+{
+    BX_DECLARE_CLIENT_TESTNET_COMMAND(fetch_balance);
+    command.set_format_option({ "xml" });
+    command.set_payment_address_argument({ BX_FETCH_BALANCE_TESTNET_DEMO1_ADDRESS });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(BX_FETCH_BALANCE_TESTNET_DEMO1_XML);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
