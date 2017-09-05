@@ -24,8 +24,6 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 
-#ifndef ENABLE_TESTNET
-
 #define FETCH_TX_SATOSHIS_WORDS_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
 "<transaction><hash>4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</hash><inputs><input><previous_output><hash>0000000000000000000000000000000000000000000000000000000000000000</hash><index>4294967295</index></previous_output><script>[ffff001d] [04] [5468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73]</script><sequence>4294967295</sequence></input></inputs><lock_time>0</lock_time><outputs><output><address_hash>62e907b15cbf27d5425399ebf6f0fb50ebb88f18</address_hash><script>[04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f] checksig</script><value>5000000000</value></output></outputs><version>1</version></transaction>\n"
@@ -93,6 +91,46 @@ BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 "    version 1\n" \
 "}\n"
 
+#define FETCH_TX_TESTNET_TX_HASH \
+"3fe5373efdada483b5fa7bdf2249d8274f1b8c04ab5a98bce3edfb732d8e2f86"
+
+#define FETCH_TX_TESTNET_TX_INFO \
+"transaction\n" \
+"{\n" \
+"    hash 3fe5373efdada483b5fa7bdf2249d8274f1b8c04ab5a98bce3edfb732d8e2f86\n" \
+"    inputs\n" \
+"    {\n" \
+"        input\n" \
+"        {\n" \
+"            address_hash 4e4158ea8b7d6fbebe998dd00af1463e5ef1b882\n" \
+"            previous_output\n" \
+"            {\n" \
+"                hash 184256d92cb47d96e1e19747e46ee1c0db73cb8fab054989c2974d8282ec22c4\n" \
+"                index 1\n" \
+"            }\n" \
+"            script \"[3046022100f18c97457e00c491d3eed5d9c2c5da33398595adf2708a07f677fb1e3eeeccba022100dc5c886192a9af7a28ab7689e766f3be6b01b61a4c675c97e8d2c99cd8b9d13201] [037928262812eb9e73b9ca8039f8023db84b0a86c5caf6bc28cefb85e9943684ac]\"\n" \
+"            sequence 4294967295\n" \
+"        }\n" \
+"    }\n" \
+"    lock_time 0\n" \
+"    outputs\n" \
+"    {\n" \
+"        output\n" \
+"        {\n" \
+"            address_hash 05e18e90cf803e17b9fa70abd2ad931389cc2cd4\n" \
+"            script \"dup hash160 [05e18e90cf803e17b9fa70abd2ad931389cc2cd4] equalverify checksig\"\n" \
+"            value 283979941\n" \
+"        }\n" \
+"        output\n" \
+"        {\n" \
+"            address_hash 8f3441dd22b15a30dcde56f9b3de7a61b7a3a740\n" \
+"            script \"dup hash160 [8f3441dd22b15a30dcde56f9b3de7a61b7a3a740] equalverify checksig\"\n" \
+"            value 475608021\n" \
+"        }\n" \
+"    }\n" \
+"    version 1\n" \
+"}\n"
+
 BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_satoshis_words_tx_info__okay_output)
 {
     BX_DECLARE_CLIENT_COMMAND(fetch_tx);
@@ -120,7 +158,14 @@ BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_second_tx_info__okay_output)
     BX_REQUIRE_OUTPUT(FETCH_TX_SECOND_TX_INFO);
 }
 
-#endif
+BOOST_AUTO_TEST_CASE(fetch_tx__invoke__testnet_tx_info__okay_output)
+{
+    BX_DECLARE_CLIENT_TESTNET_COMMAND(fetch_tx);
+    command.set_format_option({ "info" });
+    command.set_hash_argument({ FETCH_TX_TESTNET_TX_HASH });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(FETCH_TX_TESTNET_TX_INFO);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
