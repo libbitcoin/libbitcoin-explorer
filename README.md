@@ -129,6 +129,17 @@ $ ./install.sh
 ```
 Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
+##### Installing from Formula
+
+Instead of building, Bitcoin Explorer can be installed from a formula:
+```sh
+$ brew install libbitcoin-explorer
+```
+or
+```sh
+$ brew install bx
+```
+
 #### Using MacPorts
 
 First install [MacPorts](https://www.macports.org/install.php).
