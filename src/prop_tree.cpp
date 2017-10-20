@@ -140,7 +140,8 @@ ptree prop_list(const client::history::list& rows,
 
     for (const auto& row: rows)
     {
-        received = ceiling_add(received, row.value);
+        if (row.output.hash() != null_hash)
+            received = ceiling_add(received, row.value);
 
         if (row.spend.hash() != null_hash)
             spent = ceiling_add(spent, row.value);
