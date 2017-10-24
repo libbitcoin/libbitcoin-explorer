@@ -165,10 +165,10 @@ AC_SUBST([bitcoin_client_CPPFLAGS], [${bitcoin_client_CFLAGS}])
 AC_MSG_NOTICE([bitcoin_client_CPPFLAGS : ${bitcoin_client_CPPFLAGS}])
 AC_MSG_NOTICE([bitcoin_client_LIBS : ${bitcoin_client_LIBS}])
 
-# Require bitcoin-network of at least version 3.2.0 and output ${bitcoin_network_CPPFLAGS/LIBS/PKG}.
+# Require bitcoin-network of at least version 3.3.0 and output ${bitcoin_network_CPPFLAGS/LIBS/PKG}.
 #------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 3.2.0])
-AC_SUBST([bitcoin_network_PKG], ['libbitcoin-network >= 3.2.0'])
+PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 3.3.0])
+AC_SUBST([bitcoin_network_PKG], ['libbitcoin-network >= 3.3.0'])
 AC_SUBST([bitcoin_network_CPPFLAGS], [${bitcoin_network_CFLAGS}])
 AC_MSG_NOTICE([bitcoin_network_CPPFLAGS : ${bitcoin_network_CPPFLAGS}])
 AC_MSG_NOTICE([bitcoin_network_LIBS : ${bitcoin_network_LIBS}])
