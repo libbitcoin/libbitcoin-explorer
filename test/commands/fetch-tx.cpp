@@ -24,8 +24,6 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(network)
 BOOST_AUTO_TEST_SUITE(fetch_tx__invoke)
 
-#ifndef ENABLE_TESTNET
-
 #define FETCH_TX_SATOSHIS_WORDS_TX_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
 "<transaction><hash>4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</hash><inputs><input><address_hash>5b19778555f776292926b8dd581e1b9d2ab7cbbb</address_hash><previous_output><hash>0000000000000000000000000000000000000000000000000000000000000000</hash><index>4294967295</index></previous_output><script>[ffff001d] [04] [5468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73]</script><sequence>4294967295</sequence></input></inputs><lock_time>0</lock_time><outputs><output><address_hash>62e907b15cbf27d5425399ebf6f0fb50ebb88f18</address_hash><script>[04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f] checksig</script><value>5000000000</value></output></outputs><version>1</version></transaction>\n"
@@ -121,8 +119,6 @@ BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_second_tx_info__okay_output)
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(FETCH_TX_SECOND_TX_INFO);
 }
-
-#endif
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
