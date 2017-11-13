@@ -128,6 +128,12 @@
     <ClCompile Include="..\..\..\..\test\commands\ek-to-ec.cpp">
       <Filter>src\tests\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp">
+      <Filter>src\tests\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp">
       <Filter>src\tests\commands\network</Filter>
     </ClCompile>
