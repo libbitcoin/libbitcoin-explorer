@@ -210,6 +210,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/ec-to-public.cpp \
     test/commands/ec-to-wif.cpp \
     test/commands/electrum-new.cpp \
+    test/commands/electrum-to-seed.cpp \
     test/commands/ek-address.cpp \
     test/commands/ek-new.cpp \
     test/commands/ek-public-to-address.cpp \

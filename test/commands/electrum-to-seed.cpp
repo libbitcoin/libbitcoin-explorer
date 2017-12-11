@@ -36,7 +36,6 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__language_en__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_to_seed);
     command.set_language_option({ "en" });
-    command.set_prefix_option({ "standard" });
     command.set_words_argument({ "foobar" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("741b72fd15effece6bfe5a26a52184f66811bd2be363190e07a42cca442b1a5bb22b3ad0eb338197287e6d314866c7fba863ac65d3f156087a5052ebc7157fce\n");
@@ -46,7 +45,6 @@ BOOST_AUTO_TEST_CASE(electrum_to_seed__invoke__12_words__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_to_seed);
     command.set_language_option({ "en" });
-    command.set_prefix_option({ "standard" });
     command.set_words_argument({ "giggle", "crush", "argue", "inflict", "wear", "defy", "combine", "evolve", "tiger", "spatial", "crumble", "fury" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("eb095e70f0eb8d24f2cef276c75b136c2ff41eb72a9291eb22ba45d11fbb875a965bd6ae09873543eea98bf3ae05067203cd56388e0978aebc3a511932704d80\n");
