@@ -107,6 +107,7 @@
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\byte.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\cert_key.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\ec_private.hpp" />
+    <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\electrum.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\encoding.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\endorsement.hpp" />
     <ClInclude Include="..\\..\\..\\..\\include\\bitcoin\\explorer\\config\\hashtype.hpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="..\\..\\..\\..\\src\\config\\byte.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\config\\cert_key.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\config\\ec_private.cpp" />
+    <ClCompile Include="..\\..\\..\\..\\src\\config\\electrum.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\config\\encoding.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\config\\endorsement.cpp" />
     <ClCompile Include="..\\..\\..\\..\\src\\config\\hashtype.cpp" />

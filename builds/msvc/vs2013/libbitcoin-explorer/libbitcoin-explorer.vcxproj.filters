@@ -359,6 +359,9 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\ec_private.hpp">
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\electrum.hpp">
+      <Filter>include\bitcoin\explorer\config</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\encoding.hpp">
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
@@ -731,6 +734,9 @@
       <Filter>src\config</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\config\hashtype.cpp">
+      <Filter>src\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\config\electrum.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\config\encoding.cpp">
