@@ -58,6 +58,8 @@
 #include <bitcoin/explorer/commands/ek-public.hpp>
 #include <bitcoin/explorer/commands/ek-to-address.hpp>
 #include <bitcoin/explorer/commands/ek-to-ec.hpp>
+#include <bitcoin/explorer/commands/electrum-new.hpp>
+#include <bitcoin/explorer/commands/electrum-to-seed.hpp>
 #include <bitcoin/explorer/commands/fetch-balance.hpp>
 #include <bitcoin/explorer/commands/fetch-header.hpp>
 #include <bitcoin/explorer/commands/fetch-height.hpp>
@@ -123,6 +125,7 @@
 #include <bitcoin/explorer/config/byte.hpp>
 #include <bitcoin/explorer/config/cert_key.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
+#include <bitcoin/explorer/config/electrum.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hashtype.hpp>

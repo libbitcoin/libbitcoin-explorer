@@ -142,6 +142,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-public-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-to-ec.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-new.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\electrum-to-seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-balance.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-header.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\fetch-height.hpp" />
@@ -263,6 +265,8 @@
     <ClCompile Include="..\..\..\..\src\commands\ek-public-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-to-address.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-to-ec.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum-new.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\electrum-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-balance.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-header.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\fetch-height.cpp" />

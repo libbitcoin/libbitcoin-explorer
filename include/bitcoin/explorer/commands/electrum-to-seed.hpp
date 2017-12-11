@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_WATCH_STEALTH_HPP
-#define BX_WATCH_STEALTH_HPP
+#ifndef BX_ELECTRUM_TO_SEED_HPP
+#define BX_ELECTRUM_TO_SEED_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -58,17 +58,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_WATCH_STEALTH_PREFIX_WAITING \
-    "Watching stealth prefix: %1%..."
-#define BX_WATCH_STEALTH_PREFIX_TOO_LONG \
-    "Stealth prefix is limited to 32 bits."
-#define BX_WATCH_STEALTH_PREFIX_TOO_SHORT \
-    "Stealth prefix must be at least 8 bits."
+#define BX_EC_ELECTRUM_TO_SEED_PASSPHRASE_UNSUPPORTED \
+    "The passphrase option requires an ICU build."
 
 /**
- * Class to implement the watch-stealth command.
+ * Class to implement the electrum-to-seed command.
  */
-class BCX_API watch_stealth
+class BCX_API electrum_to_seed
   : public command
 {
 public:
@@ -78,7 +74,7 @@ public:
      */
     static const char* symbol()
     {
-        return "watch-stealth";
+        return "electrum-to-seed";
     }
 
 
@@ -87,7 +83,7 @@ public:
      */
     virtual const char* name()
     {
-        return watch_stealth::symbol();
+        return electrum_to_seed::symbol();
     }
 
     /**
@@ -95,7 +91,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "WALLET";
     }
 
     /**
@@ -103,7 +99,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Watch the network for transactions by stealth prefix. Requires a Libbitcoin server connection.";
+        return "Convert a mnemonic seed (Electrum) to its numeric representation.";
     }
 
     /**
@@ -114,7 +110,7 @@ public:
     virtual arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PREFIX", 1);
+            .add("WORD", -1);
     }
 
 	/**
@@ -126,7 +122,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_prefix_argument(), "PREFIX", variables, input, raw);
+        load_input(get_words_argument(), "WORD", variables, input, raw);
     }
 
     /**
@@ -150,14 +146,19 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "duration,d",
-            value<uint32_t>(&option_.duration)->default_value(600),
-            "The duration of the watch in seconds, defaults to 600."
+            "language,l",
+            value<explorer::config::language>(&option_.language),
+            "The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'pt', 'zh_Hans' and 'any', defaults to 'any'."
         )
         (
-            "PREFIX",
-            value<bc::config::base2>(&argument_.prefix),
-            "The Base2 stealth prefix to watch. Must be at least 8 bits in length. If not specified the prefix is read from STDIN."
+            "passphrase,p",
+            value<std::string>(&option_.passphrase),
+            "An optional passphrase for converting the mnemonic to a seed."
+        )
+        (
+            "WORD",
+            value<std::vector<std::string>>(&argument_.words),
+            "The set of words that that make up the mnemonic. If not specified the words are read from STDIN."
         );
 
         return options;
@@ -183,37 +184,54 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PREFIX argument.
+     * Get the value of the WORD arguments.
      */
-    virtual bc::config::base2& get_prefix_argument()
+    virtual std::vector<std::string>& get_words_argument()
     {
-        return argument_.prefix;
+        return argument_.words;
     }
 
     /**
-     * Set the value of the PREFIX argument.
+     * Set the value of the WORD arguments.
      */
-    virtual void set_prefix_argument(
-        const bc::config::base2& value)
+    virtual void set_words_argument(
+        const std::vector<std::string>& value)
     {
-        argument_.prefix = value;
+        argument_.words = value;
     }
 
     /**
-     * Get the value of the duration option.
+     * Get the value of the language option.
      */
-    virtual uint32_t& get_duration_option()
+    virtual explorer::config::language& get_language_option()
     {
-        return option_.duration;
+        return option_.language;
     }
 
     /**
-     * Set the value of the duration option.
+     * Set the value of the language option.
      */
-    virtual void set_duration_option(
-        const uint32_t& value)
+    virtual void set_language_option(
+        const explorer::config::language& value)
     {
-        option_.duration = value;
+        option_.language = value;
+    }
+
+    /**
+     * Get the value of the passphrase option.
+     */
+    virtual std::string& get_passphrase_option()
+    {
+        return option_.passphrase;
+    }
+
+    /**
+     * Set the value of the passphrase option.
+     */
+    virtual void set_passphrase_option(
+        const std::string& value)
+    {
+        option_.passphrase = value;
     }
 
 private:
@@ -226,11 +244,11 @@ private:
     struct argument
     {
         argument()
-          : prefix()
+          : words()
         {
         }
 
-        bc::config::base2 prefix;
+        std::vector<std::string> words;
     } argument_;
 
     /**
@@ -241,11 +259,13 @@ private:
     struct option
     {
         option()
-          : duration()
+          : language(),
+            passphrase()
         {
         }
 
-        uint32_t duration;
+        explorer::config::language language;
+        std::string passphrase;
     } option_;
 };
 

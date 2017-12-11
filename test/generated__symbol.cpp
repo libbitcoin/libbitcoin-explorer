@@ -188,6 +188,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ek_to_ec__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ek_to_ec::symbol(), "ek-to-ec");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__electrum_new__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(electrum_new::symbol(), "electrum-new");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__electrum_to_seed__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(electrum_to_seed::symbol(), "electrum-to-seed");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_balance__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(fetch_balance::symbol(), "fetch-balance");

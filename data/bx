@@ -39,6 +39,8 @@ _bx()
         ek-public-to-ec
         ek-to-address
         ek-to-ec
+        electrum-new
+        electrum-to-seed
         fetch-balance
         fetch-header
         fetch-height
