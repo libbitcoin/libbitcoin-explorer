@@ -39,10 +39,7 @@ console_result electrum_new::invoke(std::ostream& output,
 
     // If 'any' default to first ('en'), otherwise the one specified.
     const auto dictionary = language.front();
-    const auto words = electrum::create_mnemonic(
-        seed, *dictionary, prefix);
-
-    const auto decoded_seed = electrum::decode_mnemonic(words);
+    const auto words = electrum::create_mnemonic(seed, *dictionary, prefix);
 
     output << join(words) << std::endl;
     return console_result::okay;
