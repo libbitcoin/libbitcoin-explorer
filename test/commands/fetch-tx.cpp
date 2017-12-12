@@ -120,5 +120,16 @@ BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_second_tx_info__okay_output)
     BX_REQUIRE_OUTPUT(FETCH_TX_SECOND_TX_INFO);
 }
 
+// Requires server of at least v3.4.
+BOOST_AUTO_TEST_CASE(fetch_tx__invoke__mainnet_second_tx_witness__okay_output)
+{
+    BX_DECLARE_CLIENT_COMMAND(fetch_tx);
+    command.set_witness_option(true);
+    command.set_format_option({ "info" });
+    command.set_hash_argument({ FETCH_TX_SECOND_TX_HASH });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT(FETCH_TX_SECOND_TX_INFO);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
