@@ -152,6 +152,11 @@ public:
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
+            "witness,w",
+            value<bool>(&option_.witness)->zero_tokens(),
+            "Include witness as applicable. Requires a version 3.4 or later Libbitcoin server connection."
+        )
+        (
             "HASH",
             value<bc::config::hash256>(&argument_.hash),
             "The Base16 transaction hash of the transaction to get. If not specified the transaction hash is read from STDIN."
@@ -213,6 +218,23 @@ public:
         option_.format = value;
     }
 
+    /**
+     * Get the value of the witness option.
+     */
+    virtual bool& get_witness_option()
+    {
+        return option_.witness;
+    }
+
+    /**
+     * Set the value of the witness option.
+     */
+    virtual void set_witness_option(
+        const bool& value)
+    {
+        option_.witness = value;
+    }
+
 private:
 
     /**
@@ -238,11 +260,13 @@ private:
     struct option
     {
         option()
-          : format()
+          : format(),
+            witness()
         {
         }
 
         explorer::config::encoding format;
+        bool witness;
     } option_;
 };
 

@@ -39,6 +39,7 @@ namespace config {
 using namespace pt;
 using namespace bc::client;
 using namespace bc::config;
+using namespace bc::machine;
 using namespace bc::wallet;
 
 // property_tree is very odd in that what one might consider a node or element,
@@ -175,8 +176,12 @@ ptree prop_list(const tx_input_type& tx_input)
 
     tree.put("previous_output.hash", hash256(tx_input.previous_output().hash()));
     tree.put("previous_output.index", tx_input.previous_output().index());
-    tree.put("script", script(tx_input.script()).to_string());
+    tree.put("script", tx_input.script().to_string(rule_fork::all_rules));
     tree.put("sequence", tx_input.sequence());
+
+    if (tx_input.is_segregated())
+        tree.put("witness", tx_input.witness().to_string());
+
     return tree;
 }
 
@@ -229,8 +234,7 @@ ptree prop_list(const tx_output_type& tx_output)
     if (address)
         tree.put("address_hash", hash160(address.hash()));
 
-    tree.put("script", tx_output.script().to_string(
-        machine::rule_fork::all_rules));
+    tree.put("script", tx_output.script().to_string(rule_fork::all_rules));
 
     // TODO: this will eventually change due to privacy problems, see:
     // lists.dyne.org/lurker/message/20140812.214120.317490ae.en.html
