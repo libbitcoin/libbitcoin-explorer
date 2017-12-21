@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_PropertySheetDisplayName>Bitcoin Explorer Common Settings</_PropertySheetDisplayName>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+
+  <!-- Configuration -->
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!-- 4503: http://bit.ly/1nOftf3 -->
+      <DisableSpecificWarnings>4503;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <EnablePREfast>false</EnablePREfast>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <!-- Extensions -->
+  
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(SolutionDir)libbitcoin.import.props" />
+    <Import Project="$(SolutionDir)libbitcoin-protocol.import.props" />
+    <Import Project="$(SolutionDir)libbitcoin-client.import.props" />
+    <Import Project="$(SolutionDir)libbitcoin-network.import.props" />
+    <Import Project="$(SolutionDir)libbitcoin-explorer.import.props" />
+  </ImportGroup>
+  
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
+    <Linkage-secp256k1>dynamic</Linkage-secp256k1>
+    <Linkage-libzmq>dynamic</Linkage-libzmq>
+    <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
+    <Linkage-libbitcoin-protocol>dynamic</Linkage-libbitcoin-protocol>
+    <Linkage-libbitcoin-client>dynamic</Linkage-libbitcoin-client>
+    <Linkage-libbitcoin-network>dynamic</Linkage-libbitcoin-network>
+    <Linkage-libbitcoin-explorer>dynamic</Linkage-libbitcoin-explorer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
+    <Linkage-secp256k1>ltcg</Linkage-secp256k1>
+    <Linkage-libzmq>ltcg</Linkage-libzmq>
+    <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
+    <Linkage-libbitcoin-protocol>ltcg</Linkage-libbitcoin-protocol>
+    <Linkage-libbitcoin-client>ltcg</Linkage-libbitcoin-client>
+    <Linkage-libbitcoin-network>ltcg</Linkage-libbitcoin-network>
+    <Linkage-libbitcoin-explorer>ltcg</Linkage-libbitcoin-explorer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
+    <Linkage-secp256k1>static</Linkage-secp256k1>
+    <Linkage-libzmq>static</Linkage-libzmq>
+    <Linkage-libbitcoin>static</Linkage-libbitcoin>
+    <Linkage-libbitcoin-protocol>static</Linkage-libbitcoin-protocol>
+    <Linkage-libbitcoin-client>static</Linkage-libbitcoin-client>
+    <Linkage-libbitcoin-network>static</Linkage-libbitcoin-network>
+    <Linkage-libbitcoin-explorer>static</Linkage-libbitcoin-explorer>
+  </PropertyGroup>
+
+  <!-- Messages -->
+
+  <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
+    <Message Text="Linkage-secp256k1 : $(Linkage-secp256k1)" Importance="high"/>
+    <Message Text="Linkage-libzmq    : $(Linkage-libzmq)" Importance="high"/>
+    <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
+    <Message Text="Linkage-_protocol : $(Linkage-libbitcoin-protocol)" Importance="high"/>
+    <Message Text="Linkage-_client   : $(Linkage-libbitcoin-client)" Importance="high"/>
+    <Message Text="Linkage-_network  : $(Linkage-libbitcoin-network)" Importance="high"/>
+    <Message Text="Linkage-_explorer : $(Linkage-libbitcoin-explorer)" Importance="high"/>
+  </Target>
+
+</Project>
+
+
+
