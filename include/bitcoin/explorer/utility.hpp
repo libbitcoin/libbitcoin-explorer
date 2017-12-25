@@ -105,16 +105,6 @@ void deserialize(std::vector<Value>& collection, const std::string& text,
     bool trim);
 
 /**
- * Deserialize a satoshi item from the specified binary data.
- * @param      <Item>  The type of the item to parse.
- * @param[out] item    The deserialized item.
- * @param[in]  data    The binary data.
- * @return             True if a item was parsed.
- */
-template <typename Item>
-bool deserialize_satoshi_item(Item& item, const data_chunk& data);
-
-/**
  * If the variable is not yet loaded, load from stdin as fallback.
  * @param      <Value>    The type of the parameter to load.
  * @param[in]  name       The parameter name.

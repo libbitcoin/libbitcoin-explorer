@@ -69,7 +69,7 @@ std::istream& operator>>(std::istream& input, transaction& argument)
     input >> hexcode;
 
     // tx base16 is a private encoding in bx, used to pass between commands.
-    if (!deserialize_satoshi_item(argument.value_, base16(hexcode)))
+    if (!argument.value_.from_data(base16(hexcode), true, true))
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(hexcode));
     }
