@@ -178,7 +178,7 @@ AC_MSG_NOTICE([bitcoin_network_LIBS : ${bitcoin_network_LIBS}])
 AS_CASE([${host_os}], [*linux*],
     [AC_CHECK_LIB([dl], [dlopen],
         [AC_SUBST([dl_LIBS], [-ldl])
-         AC_MSG_NOTICE([dl_LIBS : ${dl_LIBS}])], 
+         AC_MSG_NOTICE([dl_LIBS : ${dl_LIBS}])],
         [AC_MSG_ERROR([dl library is required but was not found.])])],
     [AC_SUBST([dl_LIBS], [])])
 
