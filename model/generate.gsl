@@ -29,8 +29,6 @@ gsl from "templates/gsl.command.hpp"
 gsl from "templates/gsl.commands.hpp"
 gsl from "templates/gsl.generated.hpp"
 gsl from "templates/gsl.generated.cpp"
-gsl from "templates/gsl.libbitcoin-explorer.vcxproj.filter"
-gsl from "templates/gsl.libbitcoin-explorer.vcxproj"
 
 gsl from "templates/data/gsl.bx"
 
@@ -38,8 +36,6 @@ gsl from "templates/test/gsl.generated__broadcast.cpp"
 gsl from "templates/test/gsl.generated__find.cpp"
 gsl from "templates/test/gsl.generated__formerly.cpp"
 gsl from "templates/test/gsl.generated__symbol.cpp"
-gsl from "templates/test/gsl.libbitcoin-explorer-test.vcxproj.filter"
-gsl from "templates/test/gsl.libbitcoin-explorer-test.vcxproj"
 
 ###############################################################################
 .endtemplate
