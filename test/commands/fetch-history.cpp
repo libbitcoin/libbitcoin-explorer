@@ -66,6 +66,8 @@ BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 "    }\n" \
 "}\n"
 
+// The f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba receipt
+// (at least) is p2pk and only gets indexed by the server if not checkpointed.
 #define BX_FETCH_HISTORY_TESTNET_DEMO_ADDRESS "n3GNqMveyvaPvUbH469vDRadqpJMPc84JA"
 #define BX_FETCH_HISTORY_TESTNET_DEMO_INFO \
 "transfers\n" \

@@ -40,6 +40,8 @@ BOOST_AUTO_TEST_SUITE(fetch_balance__invoke)
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
 "<balance><address>13Ft7SkreJY9D823NPm4t6D1cBqLYTJtAe</address><received>90000</received><spent>0</spent></balance>\n"
 
+// The f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba receipt
+// (at least) is p2pk and only gets indexed by the server if not checkpointed.
 #define BX_FETCH_BALANCE_TESTNET_DEMO_ADDRESS "n3GNqMveyvaPvUbH469vDRadqpJMPc84JA"
 #define BX_FETCH_BALANCE_TESTNET_DEMO_XML \
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" \
