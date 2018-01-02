@@ -28,7 +28,11 @@
     <Import Project="$(SolutionDir)libbitcoin-protocol.import.props" />
     <Import Project="$(SolutionDir)libbitcoin-client.import.props" />
     <Import Project="$(SolutionDir)libbitcoin-network.import.props" />
-  </ImportGroup>  
+  </ImportGroup>
+
+  <PropertyGroup Condition="'$(NuGetPackageRoot)' == ''">
+    <NuGetPackageRoot>..\..\..\..\..\.nuget\packages\</NuGetPackageRoot>
+  </PropertyGroup>
 
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
     <Linkage-secp256k1>dynamic</Linkage-secp256k1>
