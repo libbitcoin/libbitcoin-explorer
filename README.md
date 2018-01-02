@@ -129,6 +129,17 @@ $ ./install.sh
 ```
 Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
+##### Installing from Formula
+
+Instead of building, Bitcoin Explorer can be installed from a formula:
+```sh
+$ brew install libbitcoin-explorer
+```
+or
+```sh
+$ brew install bx
+```
+
 #### Using MacPorts
 
 First install [MacPorts](https://www.macports.org/install.php).
@@ -229,157 +240,11 @@ $ ./install.sh --with-icu --with-png --with-qrencode --build-icu --build-zlib --
 
 ### Windows
 
-Visual Studio solutions are maintained for all libbitcoin libraries and dependencies. The supported execution environment is `Windows XP Service Pack 2` and newer.
-
-#### Upgrade Compiler
-
-Libbitcoin requires a C++11 compiler, which means **Visual Studio 2013** minimum. Additionally a pre-release compiler must be installed as an update to Visual Studio. Download and install the following tools as necessary. Both are available free of charge:
-
-* [Visual Studio 2013 Express](https://www.microsoft.com/en-us/download/details.aspx?id=44914)
-* [November 2013 CTP Compiler](http://www.microsoft.com/en-us/download/details.aspx?id=41151)
-* See also: [CTP Compiler installation issue](http://stackoverflow.com/a/34548651/1172329)
-
-#### Create Local NuGet Repository
-
-Dependencies apart from the libbitcoin libraries are available as [NuGet packages](https://www.nuget.org/packages?q=evoskuil). The libbitcoin solution files are configured with references to these packages.
-
-> To avoid redundancies and conflicts across libbitcoin repositories these references expect a [NuGet.config](http://docs.nuget.org/docs/release-notes/nuget-2.1) in a central location. Despite flexibility in locating NuGet.config, NuGet writes the individual package paths into project files. As such the central repository should be configured in the same relative location as indicated by these paths within the project files. See [NuGet Repository](#nuget-repository) below.
-
-The required set of NuGet packages can be viewed using the [NuGet package manager](http://docs.nuget.org/docs/start-here/managing-nuget-packages-using-the-dialog) from the BX solution. The NuGet package manager will automatically download missing packages, either from the build scripts or after prompting you in the Visual Studio environment. For your reference these are the required packages:
-
-* Packages maintained by [sergey.shandar](http://www.nuget.org/profiles/sergey.shandar)
-   * [boost](http://www.nuget.org/packages/boost)
-   * [boost\_chrono-vc120](http://www.nuget.org/packages/boost_chrono-vc120)
-   * [boost\_date\_time-vc120](http://www.nuget.org/packages/boost_date_time-vc120)
-   * [boost\_filesystem-vc120](http://www.nuget.org/packages/boost_filesystem-vc120)
-   * [boost\_iostreams-vc120](http://www.nuget.org/packages/boost_iostreams-vc120)
-   * [boost\_locale-vc120](http://www.nuget.org/packages/boost_locale-vc120)
-   * [boost\_log-vc120](http://www.nuget.org/packages/boost_log-vc120)
-   * [boost\_program\_options-vc120](http://www.nuget.org/packages/boost_program_options-vc120)
-   * [boost\_regex-vc120](http://www.nuget.org/packages/boost_regex-vc120)
-   * [boost\_system-vc120](http://www.nuget.org/packages/boost_system-vc120)
-   * [boost\_thread-vc120](http://www.nuget.org/packages/boost_thread-vc120)
-   * [boost\_unit\_test\_framework-vc120](http://www.nuget.org/packages/boost_unit_test_framework-vc120)
-* Packages maintained by [evoskuil](http://www.nuget.org/profiles/evoskuil)
-   * [libzmq\_vc120](http://www.nuget.org/packages/libzmq_vc120)
-   * [secp256k1\_vc120](http://www.nuget.org/packages/secp256k1_vc120)
-
-#### Build Libbitcoin Projects
-
-To build BX you must also download and build its **libbitcoin dependencies**, as these are not yet packaged. The builds can be performed manually (from within Visual Studio) or using the `buildall.bat` script provided in the `builds\msvc\build\` subdirectory of each repository. The scripts automatically download the required NuGet packages.
-
-> Tip: The `buildall.bat` scripts build *all* valid configurations. The build time can be significantly reduced by disabling all but the desired configuration in the `buildbase.bat` of each project.
+Visual Studio solutions are maintained for all libbitcoin libraries and dependencies. See the [libbitcoin](https://github.com/libbitcoin/libbitcoin/blob/master/README.md#windows) repository general information about building the Visual Studio solutions. To build Libbitcoin Explorer you must also download and build its **libbitcoin dependencies**, as these are not yet packaged.
 
 Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
 2. [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
-2. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
-2. [libbitcoin/libbitcoin-network](https://github.com/libbitcoin/libbitcoin-network])
-3. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
-
-> The libbitcoin dynamic (DLL) build configurations do not compile, as the exports have not yet been fully implemented. These are currently disabled in the build scripts but you will encounter numerous errors if you build then manually.
-
-Configuration options are exposed in the Visual Studio property pages.
-
-#### Optional: Build Everything
-
-The non-boost packages above are all sourced from GitHub repositories maintained using the same [Visual Studio template](https://github.com/evoskuil/visual-studio-template) as the libbitcoin libraries. If so desired each of these can be built locally, in the same manner as the libbitcoin libraries above. This allows you to avoid using the pre-built NuGet packages. The repositories for each dependency are as follows:
-
-* Cryptography
-   * [libbitcoin/secp256k1](https://github.com/libbitcoin/secp256k1)
-* Zero Message Queue
-   * [zeromq/libzmq](https://github.com/zeromq/libzmq)
-
-This change is properly accomplished by disabling the "NuGet Dependencies" in the Visual Studio properties user interface for each libbitcoin project and then importing the `.import.props` file(s) for the corresponding dependencies.
-
-#### NuGet Repository
-NuGet packages are downloaded to a local file systems repository. By default the [NuGet Package Manager](http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) uses a repository path within the solution. This can complicate source control and results in multiple repositories across solutions.
-
-A better configuration is to centralize the NuGet repository outside of your `git` directory, for example:
-
-```
--me
-    -git
-        nuget.config
-        -libbitcoin
-        -libbitcoin-client
-        -libbitcoin-explorer
-            -builds
-                -msvc
-                    -vs2013
-                        +bx
-                        -libbitcoin-explorer
-                            libbitcoin-explorer.vcxproj
-                            packages.config
-                        +libbitcoin-explorer-test
-                        libbitcoin-explorer.sln
-        -libbitcoin-protocol
-    -nuget
-        repositories.config
-        +boost.1.57.0.0
-        +boost_chrono-vc120.1.57.0.0
-        +boost_date_time-vc120.1.57.0.0
-        +boost_filesystem-vc120.1.57.0.0
-        +boost_iostreams-vc120.1.57.0.0
-        +boost_locale-vc120.1.57.0.0
-        +boost_log-vc120.1.57.0.0
-        +boost_program_options-vc120.1.57.0.0
-        +boost_regex-vc120.1.57.0.0
-        +boost_system-vc120.1.57.0.0
-        +boost_thread-vc120.1.57.0.0
-        +boost_unit_test_framework-vc120.1.57.0.0
-        +libzmq_vc120.4.2.2.0
-        +secp256k1_vc120.0.1.0.13
-```
-
-If properly configured the NuGet Package Manager will share this NuGet repository across all solutions within the `git` directory. There are three steps required in this configuration:
-
-* Create a `nuget` directory as a sibling to your `git` directory.
-* Create a `nuget.config` file in the root of your `git` directory.
-* Ensure there are no other `nuget.config` files in your `git` directory.
-
-The `nuget.config` should have the [documented structure](http://docs.nuget.org/docs/reference/nuget-config-settings) and should refer to the relative `nuget` directory `..\nuget` as follows:
-
-```xml
-<configuration>
-  <config>
-    <!-- Allows you to install the NuGet packages in the specified folder,
-    instead of the default "$(Solutiondir)\Packages" folder. -->
-    <add key="repositoryPath" value="..\nuget" />
-  </config>
-  <solution>
-    <!-- Disable source control integration for the "Packages" folder. -->
-    <add key="disableSourceControlIntegration" value="true" />
-  </solution>
-  <packageRestore>
-    <!-- Allow NuGet to download missing packages -->
-    <add key="enabled" value="false" />
-    <!-- Automatically check for missing packages during build in Visual Studio -->
-    <add key="automatic" value="false" />
-  </packageRestore>
-  <packageSources>
-    <!-- Allows you to specify the list of sources to be used while looking for packages. -->
-    <add key="NuGet official package source" value="https://nuget.org/api/v2/" />
-  </packageSources>
-  <disabledPackageSources>
-    <!-- "DisabledPackageSources" has the list of sources which are currently disabled. -->
-  </disabledPackageSources>
-  <activePackageSource>
-    <!-- "ActivePackageSource" points to the currently active source. 
-    Specifying "(Aggregate source)" as the source value would imply that
-    all the current package sources except for the disabled ones are active. -->
-    <add key="All" value="(Aggregate source)"  />
-  </activePackageSource>
-  <packageSourceCredentials>
-    <!-- Allows you to set the credentials to access the given package source. -->
-    <!-- <feedName>
-    <add key="Username" value="foobar" />
-    <add key="ClearTextPassword" value="secret" />
-    </feedName> -->
-  </packageSourceCredentials>
-</configuration>
-```
-
-With this configuration in place you should experience the following behavior. When you open one of these Visual Studio projects and then open the Package Manager, you may be informed that there are missing packages. Upon authorizing download of the packages you will see them appear in the `nuget` directory. You will then be able to compile the project(s).
-
+3. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
+4. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
