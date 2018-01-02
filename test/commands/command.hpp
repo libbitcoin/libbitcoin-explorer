@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SETUP_HPP
-#define SETUP_HPP
+#ifndef COMMAND_HPP
+#define COMMAND_HPP
 
 #include <iostream>
 #include <locale>
