@@ -30,6 +30,10 @@ BOOST_AUTO_TEST_SUITE(send_tx_p2p__invoke)
 ////BOOST_AUTO_TEST_CASE(send_tx_p2p__invoke__nodes_3__okay)
 ////{
 ////    BX_DECLARE_PEER_COMMAND(send_tx_p2p);
+////
+////    // Send p2p log output to /dev/null.
+////    log::initialize();
+////
 ////    command.set_nodes_option(3);
 ////    command.set_transaction_argument({ SEND_TX_P2P_A });
 ////    BX_REQUIRE_OKAY(command.invoke(output, error));

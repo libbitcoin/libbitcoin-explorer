@@ -30,6 +30,10 @@ BOOST_AUTO_TEST_SUITE(send_tx_node__invoke)
 BOOST_AUTO_TEST_CASE(send_tx_node__invoke__mainnet__success)
 {
     BX_DECLARE_PEER_COMMAND(send_tx_node);
+
+    // Send p2p log output to /dev/null.
+    log::initialize();
+
     command.set_host_option(BX_MAINNET_HOST);
     command.set_port_option(BX_MAINNET_PORT);
     command.set_transaction_argument({ SEND_TX_NODE_A });
