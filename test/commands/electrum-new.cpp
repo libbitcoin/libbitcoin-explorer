@@ -29,6 +29,7 @@ BOOST_AUTO_TEST_SUITE(electrum_new__invoke)
 BOOST_AUTO_TEST_CASE(electrum_new__invoke__17_bytes__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_new);
+    command.set_bit_length_option(132);
     command.set_seed_argument({ "05e669b4270f4e25bce6fc3736170d423c" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("giggle crush argue inflict wear defy combine evolve tiger spatial crumble fury\n");
@@ -37,6 +38,7 @@ BOOST_AUTO_TEST_CASE(electrum_new__invoke__17_bytes__okay_output)
 BOOST_AUTO_TEST_CASE(electrum_new__invoke__dictionary_prefix__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_new);
+    command.set_bit_length_option(132);
     command.set_seed_argument({ "05e669b4270f4e25bce6fc3736170d423c" });
     command.set_language_option({ "en" });
     command.set_prefix_option({ "standard" });
@@ -47,9 +49,19 @@ BOOST_AUTO_TEST_CASE(electrum_new__invoke__dictionary_prefix__okay_output)
 BOOST_AUTO_TEST_CASE(electrum_new__invoke__32_bytes__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_new);
+    command.set_bit_length_option(132);
     command.set_seed_argument({ "b0756302179e800b182514c729f1d6814c377ff06097569ef540e6c1f1950f08" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("divide february web hire limb run reject nuclear army zone brick below public ladder deer below again cluster divorce ketchup aerobic flee lonely absent\n");
+    BX_REQUIRE_OUTPUT("tube feature web hire limb run reject nuclear army zone brick below\n");
+}
+
+BOOST_AUTO_TEST_CASE(electrum_new__invoke__32_bytes_220_bit_entropy__okay_output)
+{
+    BX_DECLARE_COMMAND(electrum_new);
+    command.set_bit_length_option(220);
+    command.set_seed_argument({ "b0756302179e800b182514c729f1d6814c377ff06097569ef540e6c1f1950f08" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("cruise february web hire limb run reject nuclear army zone brick below public ladder deer below again cluster divorce ketchup\n");
 }
 
 #endif

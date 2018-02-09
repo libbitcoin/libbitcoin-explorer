@@ -58,7 +58,7 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_ELECTRUM_TO_SEED_PASSPHRASE_UNSUPPORTED \
+#define BX_ELECTRUM_TO_SEED_PASSPHRASE_UNSUPPORTED \
     "The passphrase option requires an ICU build."
 
 /**

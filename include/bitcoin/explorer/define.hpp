@@ -98,6 +98,11 @@ BC_CONSTEXPR size_t minimum_seed_bits = 128;
 BC_CONSTEXPR size_t minimum_seed_size = minimum_seed_bits / bc::byte_bits;
 
 /**
+ * The minimum safe length of an electrum seed in bits.
+ */
+BC_CONSTEXPR size_t minimum_electrum_seed_bits = 132;
+
+/**
  * Suppported output encoding engines.
  */
 enum class encoding_engine

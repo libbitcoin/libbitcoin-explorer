@@ -42,7 +42,7 @@ console_result electrum_to_seed::invoke(std::ostream& output,
     // The passphrase requires ICU normalization.
     if (!passphrase.empty())
     {
-        error << BX_EC_ELECTRUM_TO_SEED_PASSPHRASE_UNSUPPORTED << std::endl;
+        error << BX_ELECTRUM_TO_SEED_PASSPHRASE_UNSUPPORTED << std::endl;
         return console_result::failure;
     }
 
