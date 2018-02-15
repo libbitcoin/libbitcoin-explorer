@@ -54,6 +54,11 @@ PNG_ARCHIVE="libpng-1.6.29.tar.xz"
 QRENCODE_URL="http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.bz2"
 QRENCODE_ARCHIVE="qrencode-3.4.4.tar.bz2"
 
+# ZMQ archive.
+#------------------------------------------------------------------------------
+ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.2.3/zeromq-4.2.3.tar.gz"
+ZMQ_ARCHIVE="zeromq-4.2.3.tar.gz"
+
 # Boost archive.
 #------------------------------------------------------------------------------
 BOOST_URL="http://downloads.sourceforge.net/project/boost/boost/1.57.0/boost_1_57_0.tar.bz2"
@@ -236,6 +241,7 @@ for OPTION in "$@"; do
         (--build-zlib)     BUILD_ZLIB="yes";;
         (--build-png)      BUILD_PNG="yes";;
         (--build-qrencode) BUILD_QRENCODE="yes";;
+        (--build-zmq)      BUILD_ZMQ="yes";;
         (--build-boost)    BUILD_BOOST="yes";;
         (--build-dir=*)    BUILD_DIR="${OPTION#*=}";;
 
@@ -315,6 +321,7 @@ display_message "BUILD_ICU             : $BUILD_ICU"
 display_message "BUILD_ZLIB            : $BUILD_ZLIB"
 display_message "BUILD_PNG             : $BUILD_PNG"
 display_message "BUILD_QRENCODE        : $BUILD_QRENCODE"
+display_message "BUILD_ZMQ             : $BUILD_ZMQ"
 display_message "BUILD_BOOST           : $BUILD_BOOST"
 display_message "PREFIX                : $PREFIX"
 display_message "BUILD_DIR             : $BUILD_DIR"
@@ -744,7 +751,7 @@ build_all()
     build_from_tarball $PNG_URL $PNG_ARCHIVE xz . $PARALLEL "$BUILD_PNG" "${PNG_OPTIONS[@]}" "$@"
     build_from_tarball $QRENCODE_URL $QRENCODE_ARCHIVE bzip2 . $PARALLEL "$BUILD_QRENCODE" "${QRENCODE_OPTIONS[@]}" "$@"
     build_from_tarball_boost $BOOST_URL $BOOST_ARCHIVE bzip2 . $PARALLEL "$BUILD_BOOST" "${BOOST_OPTIONS[@]}"
-    build_from_github zeromq libzmq master $PARALLEL ${ZMQ_OPTIONS[@]} "$@"
+    build_from_tarball $ZMQ_URL $ZMQ_ARCHIVE gzip . $PARALLEL "$BUILD_ZMQ" "${ZMQ_OPTIONS[@]}" "$@"
     build_from_github libbitcoin secp256k1 version4 $PARALLEL ${SECP256K1_OPTIONS[@]} "$@"
     build_from_github libbitcoin libbitcoin master $PARALLEL ${BITCOIN_OPTIONS[@]} "$@"
     build_from_github libbitcoin libbitcoin-protocol master $PARALLEL ${BITCOIN_PROTOCOL_OPTIONS[@]} "$@"
