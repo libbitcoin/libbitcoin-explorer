@@ -87,20 +87,20 @@ function global.map_type(type)
     my.type_hd_key_bx = "explorer::config::hd_key"
     my.type_hd_private_bx = "bc::wallet::hd_private"
     my.type_hd_public_bx = "bc::wallet::hd_public"
-    my.type_header_bx = "explorer::config::header"
-    my.type_input_bx = "explorer::config::input"
+    my.type_header_bx = "bc::config::header"
+    my.type_input_bx = "bc::config::input"
     my.type_language_bx = "explorer::config::language"
-    my.type_output_bx = "explorer::config::output"
+    my.type_output_bx = "bc::config::output"
     my.type_path_boost = "boost::filesystem::path"
     my.type_payment_address_bx = "bc::wallet::payment_address"
-    my.type_point_bx = "explorer::config::point"
+    my.type_point_bx = "bc::config::point"
     my.type_raw_bx = "explorer::config::raw"
     my.type_script_bx = "bc::config::script"
     my.type_signature_bx = "explorer::config::signature"
     my.type_sodium_bx = "bc::config::sodium"
     my.type_stealth_address_bx = "bc::wallet::stealth_address"
     my.type_string_std = "std::string"
-    my.type_transaction_bx = "explorer::config::transaction"
+    my.type_transaction_bx = "bc::config::transaction"
     my.type_uri_bx = "bc::wallet::bitcoin_uri"
     my.type_wif_bx = "bc::wallet::ec_private"
     my.type_wrapper_bx = "explorer::config::wrapper"
@@ -275,13 +275,9 @@ endfunction
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
-#include <bitcoin/explorer/config/header.hpp>
-#include <bitcoin/explorer/config/input.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/output.hpp>
 #include <bitcoin/explorer/config/raw.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 .endmacro
 .

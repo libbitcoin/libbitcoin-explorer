@@ -25,11 +25,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/header.hpp>
-#include <bitcoin/explorer/config/input.hpp>
-#include <bitcoin/explorer/config/output.hpp>
-#include <bitcoin/explorer/config/point.hpp>
-#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 
 namespace libbitcoin {

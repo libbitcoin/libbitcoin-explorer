@@ -39,13 +39,9 @@
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
-#include <bitcoin/explorer/config/header.hpp>
-#include <bitcoin/explorer/config/input.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/output.hpp>
 #include <bitcoin/explorer/config/raw.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -165,7 +161,7 @@ public:
         )
         (
             "TRANSACTION",
-            value<explorer::config::transaction>(&argument_.transaction),
+            value<bc::config::transaction>(&argument_.transaction),
             "The Base16 transaction. If not specified the transaction is read from STDIN."
         );
 
@@ -211,7 +207,7 @@ public:
     /**
      * Get the value of the TRANSACTION argument.
      */
-    virtual explorer::config::transaction& get_transaction_argument()
+    virtual bc::config::transaction& get_transaction_argument()
     {
         return argument_.transaction;
     }
@@ -220,7 +216,7 @@ public:
      * Set the value of the TRANSACTION argument.
      */
     virtual void set_transaction_argument(
-        const explorer::config::transaction& value)
+        const bc::config::transaction& value)
     {
         argument_.transaction = value;
     }
@@ -258,7 +254,7 @@ private:
         }
 
         bc::config::script endorsement_script;
-        explorer::config::transaction transaction;
+        bc::config::transaction transaction;
     } argument_;
 
     /**

@@ -20,13 +20,13 @@
 #include <bitcoin/explorer/commands/fetch-header.hpp>
 
 #include <iostream>
+#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
 #include <bitcoin/explorer/config/header.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
@@ -55,7 +55,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 
     auto on_done = [&state](const chain::header& header)
     {
-        state.output(prop_tree(header));
+        state.output(bc::property_tree(header));
     };
 
     auto on_error = [&state](const code& error)

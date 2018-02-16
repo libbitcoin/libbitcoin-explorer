@@ -21,7 +21,7 @@
 #include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
+#include <bitcoin/bitcoin/utility/property_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
@@ -38,7 +38,7 @@ console_result tx_decode::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    write_stream(output, prop_tree(transaction, json), encoding);
+    write_stream(output, property_tree(transaction, json), encoding);
 
     return console_result::okay;
 }
