@@ -24,7 +24,6 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 

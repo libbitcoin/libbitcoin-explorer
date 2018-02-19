@@ -26,7 +26,6 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/config/encoding.hpp>
-#include <bitcoin/explorer/config/header.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
