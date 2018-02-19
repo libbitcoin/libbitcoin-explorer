@@ -58,10 +58,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_ELECTRUM_NEW_BIT_LENGTH_UNSUPPORTED \
+#define BX_ELECTRUM_NEW_INVALID_SEED \
     "The seed size is not supported."
-#define BX_ELECTRUM_NEW_UNSUPPORTED \
-    "The electrum-new command requires an ICU build."
+#define BX_ELECTRUM_REQUIRES_ICU \
+    "The command requires an ICU build."
 
 /**
  * Class to implement the electrum-new command.
@@ -148,11 +148,6 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "bit_length,b",
-            value<uint16_t>(&option_.bit_length)->default_value(132),
-            "The minimum required length of the input seed in bits, defaults to 132."
-        )
-        (
             "prefix,p",
             value<explorer::config::electrum>(&option_.prefix),
             "The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'."
@@ -205,23 +200,6 @@ public:
         const bc::config::base16& value)
     {
         argument_.seed = value;
-    }
-
-    /**
-     * Get the value of the bit_length option.
-     */
-    virtual uint16_t& get_bit_length_option()
-    {
-        return option_.bit_length;
-    }
-
-    /**
-     * Set the value of the bit_length option.
-     */
-    virtual void set_bit_length_option(
-        const uint16_t& value)
-    {
-        option_.bit_length = value;
     }
 
     /**
@@ -283,13 +261,11 @@ private:
     struct option
     {
         option()
-          : bit_length(),
-            prefix(),
+          : prefix(),
             language()
         {
         }
 
-        uint16_t bit_length;
         explorer::config::electrum prefix;
         explorer::config::language language;
     } option_;

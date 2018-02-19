@@ -59,7 +59,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_MNEMONIC_DECODE_OBSOLETE \
-    "Electrum style key functions are obsolete. Use mnemonic-to-seed (BIP39) command instead."
+    "Electrum version 1 functions are obsolete. Use electrum-to-seed or mnemonic-to-seed (BIP39) command instead."
 
 /**
  * Class to implement the mnemonic-decode command.

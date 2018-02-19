@@ -59,7 +59,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_MNEMONIC_ENCODE_OBSOLETE \
-    "Electrum style key functions are obsolete. Use mnemonic-new (BIP39) command instead."
+    "Electrum version 1 functions are obsolete. Use electrum-new or mnemonic-new (BIP39) command instead."
 
 /**
  * Class to implement the mnemonic-encode command.

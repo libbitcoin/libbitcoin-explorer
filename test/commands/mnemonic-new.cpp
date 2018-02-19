@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__136_bits__failure_error)
     BX_DECLARE_COMMAND(mnemonic_new);
     command.set_seed_argument({ "baadf00dbaadf00dbaadf00dbaadf00dff" });
     BX_REQUIRE_FAILURE(command.invoke(output, error));
-    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_NEW_INVALID_ENTROPY "\n");
+    BX_REQUIRE_ERROR(BX_EC_MNEMONIC_NEW_INVALID_SEED "\n");
 }
 
 BOOST_AUTO_TEST_CASE(mnemonic_new__invoke__128_bits__okay_output)
