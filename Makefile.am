@@ -411,6 +411,7 @@ include_bitcoin_explorer_config_HEADERS = \
 
 include_bitcoin_explorer_impldir = ${includedir}/bitcoin/explorer/impl
 include_bitcoin_explorer_impl_HEADERS = \
+    include/bitcoin/explorer/impl/prop_tree.ipp \
     include/bitcoin/explorer/impl/utility.ipp
 
 # files => ${bash_completiondir}
