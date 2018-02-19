@@ -23,7 +23,6 @@
 #include <cstdint>
 #include <boost/program_options.hpp>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/bitcoin/utility/string.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 

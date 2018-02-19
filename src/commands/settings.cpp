@@ -20,7 +20,6 @@
 
 #include <iostream>
 #include <map>
-#include <bitcoin/bitcoin/utility/string.hpp>
 #include <bitcoin/network.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>

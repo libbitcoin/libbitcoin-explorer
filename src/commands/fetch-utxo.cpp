@@ -20,7 +20,6 @@
 #include <bitcoin/explorer/commands/fetch-utxo.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin/utility/property_tree.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>

@@ -22,7 +22,6 @@
 #include <cstdint>
 #include <string>
 #include <vector>
-#include <bitcoin/bitcoin/config/hash256.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>

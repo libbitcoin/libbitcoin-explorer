@@ -36,7 +36,6 @@
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/lexical_cast.hpp>
-#include <bitcoin/bitcoin/utility/string.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/define.hpp>
 
