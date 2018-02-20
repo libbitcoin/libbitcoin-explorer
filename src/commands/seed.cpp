@@ -18,7 +18,6 @@
  */
 #include <bitcoin/explorer/commands/seed.hpp>
 
-#include <iostream>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>

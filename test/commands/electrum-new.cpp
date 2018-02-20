@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(electrum_new__invoke__17_bytes__okay_output)
     BX_REQUIRE_OUTPUT("giggle crush argue inflict wear defy combine evolve tiger spatial crumble fury\n");
 }
 
-BOOST_AUTO_TEST_CASE(electrum_new__invoke__dictionary_prefix__okay_output)
+BOOST_AUTO_TEST_CASE(electrum_new__invoke__en_dictionary_prefix__okay_output)
 {
     BX_DECLARE_COMMAND(electrum_new);
     command.set_seed_argument({ "05e669b4270f4e25bce6fc3736170d423c" });
@@ -42,6 +42,16 @@ BOOST_AUTO_TEST_CASE(electrum_new__invoke__dictionary_prefix__okay_output)
     command.set_prefix_option({ "standard" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT("giggle crush argue inflict wear defy combine evolve tiger spatial crumble fury\n");
+}
+
+BOOST_AUTO_TEST_CASE(electrum_new__invoke__es_dictionary_prefix__okay_output)
+{
+    BX_DECLARE_COMMAND(electrum_new);
+    command.set_seed_argument({ "05e669b4270f4e25bce6fc3736170d423c" });
+    command.set_language_option({ "es" });
+    command.set_prefix_option({ "standard" });
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("gigante codo ámbar insecto verbo cráter celoso entrar tarjeta sala coco frito\n");
 }
 
 BOOST_AUTO_TEST_CASE(electrum_new__invoke__32_bytes__okay_output)

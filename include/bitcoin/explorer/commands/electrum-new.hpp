@@ -58,8 +58,10 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_ELECTRUM_NEW_UNSUPPORTED \
-    "The electrum-new command requires an ICU build."
+#define BX_ELECTRUM_NEW_INVALID_SEED \
+    "The seed size is not supported."
+#define BX_ELECTRUM_REQUIRES_ICU \
+    "The command requires an ICU build."
 
 /**
  * Class to implement the electrum-new command.

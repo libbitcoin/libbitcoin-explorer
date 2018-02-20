@@ -30,3 +30,10 @@ console/bx
 /release/bx
 /release/bx.exe
 *.zpl
+
+build-libbitcoin-explorer
+libbitcoin_explorer_test_runner.sh.log
+libbitcoin_explorer_test_runner.sh.trs
+test-suite.log
+test.log
+test/libbitcoin_explorer_test

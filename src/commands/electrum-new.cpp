@@ -18,9 +18,8 @@
  */
 #include <bitcoin/explorer/commands/electrum-new.hpp>
 
-#include <iostream>
+#include <cmath>
 #include <bitcoin/bitcoin.hpp>
-#include <bitcoin/bitcoin/math/hash.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -28,8 +27,10 @@ namespace explorer {
 namespace commands {
 using namespace bc::wallet;
 
-console_result electrum_new::invoke(std::ostream& output,
-    std::ostream& error)
+// Requires a seed of at least 17 bytes (136 bits).
+static const size_t minimum_electrum_words = 12;
+
+console_result electrum_new::invoke(std::ostream& output, std::ostream& error)
 {
 #ifdef WITH_ICU
     // Bound parameters.
@@ -37,14 +38,30 @@ console_result electrum_new::invoke(std::ostream& output,
     const data_chunk& seed = get_seed_argument();
     const auto prefix = get_prefix_option();
 
+    // trunc(log2(2048)) = 11
+    const auto word_bits = static_cast<size_t>(std::log2(dictionary_size));
+
+    // 17 * 8 = 136
+    const auto seed_bits = seed.size() * byte_bits;
+
+    // 136 / 11 = 12
+    const auto words = seed_bits / word_bits;
+
+    if (words < minimum_electrum_words)
+    {
+        error << BX_ELECTRUM_NEW_INVALID_SEED << std::endl;
+        return console_result::failure;
+    }
+
     // If 'any' default to first ('en'), otherwise the one specified.
     const auto dictionary = language.front();
-    const auto words = electrum::create_mnemonic(seed, *dictionary, prefix);
 
-    output << join(words) << std::endl;
+    auto mnemonic = electrum::create_mnemonic(seed, *dictionary, prefix);
+
+    output << join(mnemonic) << std::endl;
     return console_result::okay;
 #else
-    error << BX_EC_ELECTRUM_NEW_UNSUPPORTED << std::endl;
+    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
     return console_result::failure;
 #endif
 }

@@ -208,14 +208,15 @@
     <option name="prefix" type="electrum" description="The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'." />
     <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'pt', 'ja', 'zh_Hans' and 'any', defaults to 'en'." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. If not specified the entropy is read from STDIN." />
-    <define name="BX_EC_ELECTRUM_NEW_UNSUPPORTED" value="The electrum-new command requires an ICU build." />
+    <define name="BX_ELECTRUM_NEW_INVALID_SEED" value="The seed size is not supported." />
+    <define name="BX_ELECTRUM_REQUIRES_ICU" value="The command requires an ICU build." />
   </command>
 
   <command symbol="electrum-to-seed" output="base16" category="WALLET" description="Convert a mnemonic seed (Electrum) to its numeric representation.">
     <option name="language" type="language" description="The language identifier of the dictionary of the mnemonic. Options are 'en', 'es', 'ja', 'pt', 'zh_Hans' and 'any', defaults to 'any'." />
     <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
-    <define name="BX_EC_ELECTRUM_TO_SEED_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
+    <define name="BX_ELECTRUM_TO_SEED_REQUIRES_ICU" value="The passphrase option requires an ICU build." />
   </command>
 
   <command symbol="ek-address" output="payment_address" category="KEY_ENCRYPTION" description="Create a payment address derived from an intermediate passphrase token (BIP38).">
@@ -412,17 +413,17 @@
   </command>
   
   <command symbol="mnemonic-decode" output="base16" category="ELECTRUM" obsolete="true" description="Convert a seed to its Electrum mnemonic.">
-    <define name="BX_MNEMONIC_DECODE_OBSOLETE" value="Electrum style key functions are obsolete. Use mnemonic-to-seed (BIP39) command instead." />
+    <define name="BX_MNEMONIC_DECODE_OBSOLETE" value="Electrum version 1 functions are obsolete. Use electrum-to-seed or mnemonic-to-seed (BIP39) command instead." />
   </command>
   
   <command symbol="mnemonic-encode" formerly="mnemonic" output="string" multipleX="true" category="ELECTRUM" obsolete="true" description="Convert an Electrum mnemonic to its seed.">
-    <define name="BX_MNEMONIC_ENCODE_OBSOLETE" value="Electrum style key functions are obsolete. Use mnemonic-new (BIP39) command instead." />
+    <define name="BX_MNEMONIC_ENCODE_OBSOLETE" value="Electrum version 1 functions are obsolete. Use electrum-new or mnemonic-new (BIP39) command instead." />
   </command>
 
   <command symbol="mnemonic-new" output="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (BIP39) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'fr', 'it', 'ja', 'cs', 'ru', 'uk', 'zh_Hans', 'zh_Hant' and 'any', defaults to 'en'." />
     <argument name="SEED" stdin="true" type="base16" description="The Base16 entropy from which the mnemonic is created. The length must be evenly divisible by 32 bits. If not specified the entropy is read from STDIN." />
-    <define name="BX_EC_MNEMONIC_NEW_INVALID_ENTROPY" value="The seed length in bytes is not evenly divisible by 32 bits." />
+    <define name="BX_EC_MNEMONIC_NEW_INVALID_SEED" value="The seed length in bytes is not evenly divisible by 32 bits." />
   </command>
 
   <command symbol="mnemonic-to-seed" output="base16" category="WALLET" description="Convert a mnemonic seed (BIP39) to its numeric representation.">
@@ -430,7 +431,7 @@
     <option name="passphrase" type="string" description="An optional passphrase for converting the mnemonic to a seed." />
     <argument name="WORD" stdin="true" limit="-1" type="string" description="The set of words that that make up the mnemonic. If not specified the words are read from STDIN." />
     <define name="BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE" value="The number of words must be divisible by 3." />
-    <define name="BX_EC_MNEMONIC_TO_SEED_PASSPHRASE_UNSUPPORTED" value="The passphrase option requires an ICU build." />
+    <define name="BX_EC_MNEMONIC_TO_SEED_REQUIRES_ICU" value="The passphrase option requires an ICU build." />
     <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE" value="The specified words are not a valid mnemonic in the specified dictionary." />
     <define name="BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES" value="WARNING: The specified words are not a valid mnemonic in any supported dictionary." />
   </command>

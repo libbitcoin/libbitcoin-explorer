@@ -58,7 +58,7 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_NEW_INVALID_ENTROPY \
+#define BX_EC_MNEMONIC_NEW_INVALID_SEED \
     "The seed length in bytes is not evenly divisible by 32 bits."
 
 /**
