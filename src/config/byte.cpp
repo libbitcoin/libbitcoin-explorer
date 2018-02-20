@@ -66,7 +66,7 @@ std::istream& operator>>(std::istream& input, byte& argument)
     // treat 8 bit values as decimal numbers (unlike 16+ bit numbers).
 
     uint16_t number;
-    deserialize(number, decimal, true);
+    bc::deserialize(number, decimal, true);
 
     if (number > max_uint8)
     {

@@ -39,13 +39,9 @@
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
-#include <bitcoin/explorer/config/header.hpp>
-#include <bitcoin/explorer/config/input.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/output.hpp>
 #include <bitcoin/explorer/config/raw.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -161,12 +157,12 @@ public:
         )
         (
             "input,i",
-            value<std::vector<explorer::config::input>>(&option_.inputs),
+            value<std::vector<bc::config::input>>(&option_.inputs),
             "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
         )
         (
             "output,o",
-            value<std::vector<explorer::config::output>>(&option_.outputs),
+            value<std::vector<bc::config::output>>(&option_.outputs),
             "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs."
         );
 
@@ -259,7 +255,7 @@ public:
     /**
      * Get the value of the input options.
      */
-    virtual std::vector<explorer::config::input>& get_inputs_option()
+    virtual std::vector<bc::config::input>& get_inputs_option()
     {
         return option_.inputs;
     }
@@ -268,7 +264,7 @@ public:
      * Set the value of the input options.
      */
     virtual void set_inputs_option(
-        const std::vector<explorer::config::input>& value)
+        const std::vector<bc::config::input>& value)
     {
         option_.inputs = value;
     }
@@ -276,7 +272,7 @@ public:
     /**
      * Get the value of the output options.
      */
-    virtual std::vector<explorer::config::output>& get_outputs_option()
+    virtual std::vector<bc::config::output>& get_outputs_option()
     {
         return option_.outputs;
     }
@@ -285,7 +281,7 @@ public:
      * Set the value of the output options.
      */
     virtual void set_outputs_option(
-        const std::vector<explorer::config::output>& value)
+        const std::vector<bc::config::output>& value)
     {
         option_.outputs = value;
     }
@@ -324,8 +320,8 @@ private:
         explorer::config::byte script_version;
         uint32_t lock_time;
         uint32_t version;
-        std::vector<explorer::config::input> inputs;
-        std::vector<explorer::config::output> outputs;
+        std::vector<bc::config::input> inputs;
+        std::vector<bc::config::output> outputs;
     } option_;
 };
 

@@ -39,13 +39,9 @@
 #include <bitcoin/explorer/config/endorsement.hpp>
 #include <bitcoin/explorer/config/hashtype.hpp>
 #include <bitcoin/explorer/config/hd_key.hpp>
-#include <bitcoin/explorer/config/header.hpp>
-#include <bitcoin/explorer/config/input.hpp>
 #include <bitcoin/explorer/config/language.hpp>
-#include <bitcoin/explorer/config/output.hpp>
 #include <bitcoin/explorer/config/raw.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
-#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -160,7 +156,7 @@ public:
         )
         (
             "TRANSACTION",
-            value<std::vector<explorer::config::transaction>>(&argument_.transactions),
+            value<std::vector<bc::config::transaction>>(&argument_.transactions),
             "The set of Base16 transactions. If not specified the transactions are read from STDIN."
         );
 
@@ -206,7 +202,7 @@ public:
     /**
      * Get the value of the TRANSACTION arguments.
      */
-    virtual std::vector<explorer::config::transaction>& get_transactions_argument()
+    virtual std::vector<bc::config::transaction>& get_transactions_argument()
     {
         return argument_.transactions;
     }
@@ -215,7 +211,7 @@ public:
      * Set the value of the TRANSACTION arguments.
      */
     virtual void set_transactions_argument(
-        const std::vector<explorer::config::transaction>& value)
+        const std::vector<bc::config::transaction>& value)
     {
         argument_.transactions = value;
     }
@@ -236,7 +232,7 @@ private:
         }
 
         explorer::config::ec_private ec_private_key;
-        std::vector<explorer::config::transaction> transactions;
+        std::vector<bc::config::transaction> transactions;
     } argument_;
 
     /**

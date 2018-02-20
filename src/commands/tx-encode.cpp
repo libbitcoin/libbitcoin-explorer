@@ -22,16 +22,15 @@
 #include <vector>
 #include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/transaction.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::explorer::config;
+using namespace bc::config;
 using namespace bc::wallet;
 
 static bool push_scripts(std::vector<tx_output_type>& outputs,
-    const explorer::config::output& output, uint8_t script_version)
+    const bc::config::output& output, uint8_t script_version)
 {
     static constexpr uint64_t no_amount = 0;
 

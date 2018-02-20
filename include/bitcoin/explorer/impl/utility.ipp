@@ -43,61 +43,21 @@
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
-#include <bitcoin/bitcoin.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 
 template <typename Value>
-Value deserialize(const std::string& text, bool trim)
-{
-    if (trim)
-        return boost::lexical_cast<Value>(boost::trim_copy(text));
-    else
-        return boost::lexical_cast<Value>(text);
-}
-
-template <typename Value>
 Value deserialize(std::istream& input, bool trim)
 {
-    return deserialize<Value>(read_stream(input), trim);
-}
-
-template <typename Value>
-void deserialize(Value& value, const std::string& text, bool trim)
-{
-    if (trim)
-        value = boost::lexical_cast<Value>(boost::trim_copy(text));
-    else
-        value = boost::lexical_cast<Value>(text);
+    return bc::deserialize<Value>(read_stream(input), trim);
 }
 
 template <typename Value>
 void deserialize(Value& value, std::istream& input, bool trim)
 {
-    deserialize(value, read_stream(input), trim);
-}
-
-template <typename Value>
-void deserialize(std::vector<Value>& collection, const std::string& text,
-    bool trim)
-{
-    // This had problems with the inclusion of the ideographic (CJK) space
-    // (0xe3,0x80, 0x80). Need to infuse the local in bc::split().
-    const auto tokens = split(text, " \n\r\t");
-    for (const auto& token: tokens)
-    {
-        Value value;
-        deserialize(value, token, true);
-        collection.push_back(value);
-    }
-}
-
-template <typename Item>
-bool deserialize_satoshi_item(Item& item, const data_chunk& data)
-{
-    return item.from_data(data);
+    bc::deserialize(value, read_stream(input), trim);
 }
 
 template <typename Value>
@@ -133,22 +93,7 @@ void load_path(Value& parameter, const std::string& name,
         BOOST_THROW_EXCEPTION(po::invalid_option_value(path));
     }
 
-    deserialize(parameter, file, !raw);
-}
-
-template <typename Value>
-std::string serialize(const Value& value, const std::string& fallback)
-{
-    std::stringstream stream;
-    stream << value;
-    const auto& text = stream.str();
-    return text.empty() ? fallback : text;
-}
-
-template <typename Item>
-data_chunk serialize_satoshi_item(const Item& item)
-{
-    return item.to_data();
+    bc::deserialize(parameter, file, !raw);
 }
 
 template <typename Instance>

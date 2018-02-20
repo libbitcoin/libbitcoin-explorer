@@ -24,7 +24,6 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/config/transaction.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -57,7 +56,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 
     auto on_done = [&state, json](const tx_type& tx)
     {
-        state.output(prop_tree(tx, json));
+        state.output(bc::property_tree(tx, json));
     };
 
     auto on_error = [&state](const code& error)

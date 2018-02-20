@@ -24,7 +24,6 @@
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 
 namespace libbitcoin {
@@ -58,7 +57,7 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
 
     auto on_done = [&state, json](const points_value& unspent)
     {
-        state.output(prop_tree(unspent, json));
+        state.output(bc::property_tree(unspent, json));
     };
 
     auto on_error = [&state](const code& error)
