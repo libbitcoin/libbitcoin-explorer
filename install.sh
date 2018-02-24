@@ -349,6 +349,7 @@ ICU_OPTIONS=(
 # Define boost options.
 #------------------------------------------------------------------------------
 BOOST_OPTIONS=(
+"--with-atomic" \
 "--with-chrono" \
 "--with-date_time" \
 "--with-filesystem" \
