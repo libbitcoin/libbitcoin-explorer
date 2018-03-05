@@ -166,13 +166,13 @@ console_bx_SOURCES = \
 
 endif WITH_CONSOLE
 
-# local: test/libbitcoin_explorer_test
+# local: test/libbitcoin-explorer-test
 #------------------------------------------------------------------------------
 if WITH_TESTS
 
-TESTS = libbitcoin_explorer_test_runner.sh
+TESTS = libbitcoin-explorer-test_runner.sh
 
-check_PROGRAMS = test/libbitcoin_explorer_test
+check_PROGRAMS = test/libbitcoin-explorer-test
 test_libbitcoin_explorer_test_CPPFLAGS = -I${srcdir}/include -DSYSCONFDIR=\"${sysconfdir}\" ${bitcoin_client_CPPFLAGS} ${bitcoin_network_CPPFLAGS}
 test_libbitcoin_explorer_test_LDADD = src/libbitcoin-explorer.la ${boost_unit_test_framework_LIBS} ${bitcoin_client_LIBS} ${bitcoin_network_LIBS} ${dl_LIBS}
 test_libbitcoin_explorer_test_SOURCES = \
