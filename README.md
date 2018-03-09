@@ -68,9 +68,26 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ sudo apt-get install build-essential autoconf automake libtool pkg-config git
 ```
-Next install the [Boost](http://www.boost.org) (minimum 1.57.0) development package:
+Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package:
 ```sh
 $ sudo apt-get install libboost-all-dev
+```
+Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package.
+```sh
+$ sudo apt-get install libzmq5
+```
+If no satisfying libzmq5 package exists in your chosen environment, the compilation can be performed with the following instructions:
+```sh
+$ mkdir build-zeromq-4.2.0
+$ pushd build-zeromq-4.2.0
+$ wget https://github.com/zeromq/libzmq/releases/download/v4.2.0/zeromq-4.2.0.tar.gz
+$ tar --extract --file zeromq-4.2.0.tar.gz --gz --strip-components=1
+$ ./autogen.sh
+$ ./configure
+$ make
+$ sudo make install
+$ sudo ldconfig
+$ popd
 ```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
 ```sh
@@ -118,6 +135,10 @@ Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development pac
 ```sh
 $ brew install boost
 ```
+Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package:
+```sh
+$ brew install zeromq
+```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
@@ -151,6 +172,18 @@ $ sudo port install autoconf automake libtool pkgconfig wget
 Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package. The `-` options remove MacPort defaults that are not Boost defaults:
 ```sh
 $ sudo port install boost -no_single -no_static -python27
+```
+Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package. This package does not appear to be available via MacPorts, and so follows compilation instructions:
+```sh
+$ mkdir build-zeromq-4.2.0
+$ pushd build-zeromq-4.2.0
+$ wget https://github.com/zeromq/libzmq/releases/download/v4.2.0/zeromq-4.2.0.tar.gz
+$ tar --extract --file zeromq-4.2.0.tar.gz --gz --strip-components=1
+$ ./autogen.sh
+$ ./configure
+$ make
+$ sudo make install
+$ popd
 ```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
 ```sh
@@ -194,13 +227,18 @@ Building and linking with a private copy of the Boost dependency:
 ```sh
 $ ./install.sh --build-boost --prefix=/home/me/myprefix
 ```
+Building and linking with a private copy of the ZeroMQ dependency:
+```sh
+$ ./install.sh --build-zmq --prefix=/home/me/myprefix
+```
+
 Building a statically-linked executable:
 ```sh
-$ ./install.sh --disable-shared --build-boost --prefix=/home/me/myprefix
+$ ./install.sh --disable-shared --build-boost --build-zmq --prefix=/home/me/myprefix
 ```
 Building a small statically-linked executable most quickly:
 ```sh
-$ ./install.sh CXXFLAGS="-Os -s" --without-tests --disable-shared --build-boost --prefix=/home/me/myprefix
+$ ./install.sh CXXFLAGS="-Os -s" --without-tests --disable-shared --build-boost --build-zmq --prefix=/home/me/myprefix
 ```
 Building with bash-completion support:
 
@@ -231,11 +269,11 @@ $ ./install.sh --with-png
 
 > There is a bug in the PNG library when using space optimization levels such as `CXXFLAGS=-Os` which will show up in a test run failure.
 
-#### Building ICU, ZLib, PNG, QREncode and/or Boost
+#### Building ICU, ZLib, PNG, QREncode ZeroMQ and/or Boost
 
 The installer can download and install any or all of these dependencies. ICU is a large package that is not typically preinstalled at a sufficient level. Using these builds ensures compiler and configuration compatibility across all of the build components. It is recommended to use a prefix directory when building these components.
 ```sh
-$ ./install.sh --with-icu --with-png --with-qrencode --build-icu --build-zlib --build-png --build-qrencode --build-boost --prefix=/home/me/myprefix
+$ ./install.sh --with-icu --with-png --with-qrencode --build-icu --build-zlib --build-png --build-qrencode --build-boost --build-zmq --prefix=/home/me/myprefix
 ```
 
 ### Windows
