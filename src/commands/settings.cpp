@@ -85,6 +85,10 @@ console_result commands::settings::invoke(std::ostream& output,
     // [server]
     list["server.url"] =
         get_server_url_setting().to_string();
+    list["server.block_url"] =
+        get_server_block_url_setting().to_string();
+    list["server.transaction_url"] =
+        get_server_transaction_url_setting().to_string();
     list["server.socks_proxy"] =
         get_server_socks_proxy_setting().to_string();
     list["server.connect_retries"] =

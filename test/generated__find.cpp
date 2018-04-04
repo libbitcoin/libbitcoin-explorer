@@ -423,6 +423,16 @@ BOOST_AUTO_TEST_CASE(generated__find__stealth_shared__returns_object)
     BOOST_REQUIRE(find("stealth-shared") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__subscribe_block__returns_object)
+{
+    BOOST_REQUIRE(find("subscribe-block") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__subscribe_tx__returns_object)
+{
+    BOOST_REQUIRE(find("subscribe-tx") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__token_new__returns_object)
 {
     BOOST_REQUIRE(find("token-new") != nullptr);

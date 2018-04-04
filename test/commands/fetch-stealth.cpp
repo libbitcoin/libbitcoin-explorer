@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_400000__okay)
     BX_DECLARE_CLIENT_COMMAND(fetch_stealth);
     command.set_height_option(400000);
     command.set_filter_argument({ "101010101010101010" });
-    command.set_server_url_setting({ BX_MAINNET_SERVER });
+    command.set_server_url_setting({ BX_MAINNET_QUERY });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(fetch_stealth__invoke_mainnet_height_0_prefix_1010101010101
     command.set_format_option({ "info" });
     command.set_height_option(0);
     command.set_filter_argument({ "10101010101010101" });
-    command.set_server_url_setting({ BX_MAINNET_SERVER });
+    command.set_server_url_setting({ BX_MAINNET_QUERY });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 
     // Disabled due to network variability.
