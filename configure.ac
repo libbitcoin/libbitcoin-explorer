@@ -63,14 +63,6 @@ AC_ARG_VAR([PKG_CONFIG_PATH], "Additional directories for package discovery.")
 #------------------------------------------------------------------------------
 AX_CXX_COMPILE_STDCXX_11([noext], [mandatory])
 
-# Platform indicators
-platform_linux="no"
-
-AS_CASE([${host_os}],
-    [*linux*],
-    [platform_linux="yes"],
-    [])
-
 
 # Process options.
 #==============================================================================
@@ -184,12 +176,12 @@ AC_MSG_NOTICE([bitcoin_network_LIBS : ${bitcoin_network_LIBS}])
 # Require dl if on linux and output ${dl_LIBS}.
 #------------------------------------------------------------------------------
 
-AS_IF([test "$platform_linux" = "yes"],
+AS_CASE([${host_os}],
+    [*linux*],
     [AC_CHECK_LIB([dl], [dlopen],
         [AC_SUBST([dl_LIBS], [-ldl])],
         [AC_MSG_ERROR([dl library is required but was not found.])])],
-    [AC_MSG_NOTICE([host_os: ${host_os} excludes dl])
-     AC_SUBST([dl_LIBS], [])])
+    [AC_SUBST([dl_LIBS], [])])
 
 AC_MSG_NOTICE([dl_LIBS : ${dl_LIBS}])
 
