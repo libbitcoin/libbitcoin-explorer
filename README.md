@@ -38,6 +38,8 @@ $ sudo make install # optional
 $ sudo ldconfig     # optional
 ```
 
+In general, you should use the install.sh scripts for Linux or MacOS rather than building from source.
+
 Detailed instructions are provided below.
 * [Debian/Ubuntu](#debianubuntu)
 * [Macintosh](#macintosh)
