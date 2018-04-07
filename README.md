@@ -122,7 +122,7 @@ Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development pac
 ```sh
 $ brew install boost
 ```
-Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package (if not available, build with the `--build-zmq` option):
+Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package.
 ```sh
 $ brew install zeromq
 ```
@@ -160,8 +160,10 @@ Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development pac
 ```sh
 $ sudo port install boost -no_single -no_static -python27
 ```
-Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package (not currently available, build with the `--build-zmq` option).
-
+Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package:
+```sh
+$ sudo port install zmq
+```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
