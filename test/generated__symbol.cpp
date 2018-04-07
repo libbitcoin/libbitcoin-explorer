@@ -423,6 +423,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__stealth_shared__returns_expected_value)
     BOOST_REQUIRE_EQUAL(stealth_shared::symbol(), "stealth-shared");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__subscribe_block__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(subscribe_block::symbol(), "subscribe-block");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__subscribe_tx__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(subscribe_tx::symbol(), "subscribe-tx");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__token_new__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(token_new::symbol(), "token-new");

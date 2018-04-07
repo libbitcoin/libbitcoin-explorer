@@ -121,6 +121,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/stealth-public.cpp \
     src/commands/stealth-secret.cpp \
     src/commands/stealth-shared.cpp \
+    src/commands/subscribe-block.cpp \
+    src/commands/subscribe-tx.cpp \
     src/commands/token-new.cpp \
     src/commands/tx-decode.cpp \
     src/commands/tx-encode.cpp \
@@ -258,6 +260,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/stealth-public.cpp \
     test/commands/stealth-secret.cpp \
     test/commands/stealth-shared.cpp \
+    test/commands/subscribe-tx.cpp \
+    test/commands/subscribe-block.cpp \
     test/commands/token-new.cpp \
     test/commands/tx-decode.cpp \
     test/commands/tx-encode.cpp \

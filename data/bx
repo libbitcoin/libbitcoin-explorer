@@ -82,6 +82,8 @@ _bx()
         stealth-public
         stealth-secret
         stealth-shared
+        subscribe-block
+        subscribe-tx
         token-new
         tx-decode
         tx-encode

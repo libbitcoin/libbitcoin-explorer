@@ -60,10 +60,16 @@ using namespace bc::explorer::config;
 #define BX_NETWORK_HANDSHAKE 15
 
 // Libbitcoin Server (mainnet), uses libbitcoin community server.
-#define BX_MAINNET_SERVER "tcp://mainnet.libbitcoin.net:9091"
+#define BX_MAINNET_QUERY "tcp://mainnet.libbitcoin.net:9091"
+#define BX_MAINNET_HEARTBEAT "tcp://mainnet.libbitcoin.net:9092"
+#define BX_MAINNET_BLOCK "tcp://mainnet.libbitcoin.net:9093"
+#define BX_MAINNET_TRANSACTION "tcp://mainnet.libbitcoin.net:9094"
 
 // Libbitcoin Server (testnet), uses libbitcoin community server.
-#define BX_TESTNET_SERVER "tcp://testnet.libbitcoin.net:19091"
+#define BX_TESTNET_QUERY "tcp://testnet.libbitcoin.net:19091"
+#define BX_TESTNET_HEARTBEAT "tcp://mainnet.libbitcoin.net:19092"
+#define BX_TESTNET_BLOCK "tcp://mainnet.libbitcoin.net:19093"
+#define BX_TESTNET_TRANSACTION "tcp://mainnet.libbitcoin.net:19094"
 
 #define BX_DECLARE_COMMAND(extension) \
     std::stringstream output, error; \
@@ -80,13 +86,17 @@ using namespace bc::explorer::config;
 
 #define BX_DECLARE_CLIENT_COMMAND(extension) \
     BX_DECLARE_COMMAND(extension); \
-    command.set_server_url_setting({ BX_MAINNET_SERVER }); \
+    command.set_server_url_setting({ BX_MAINNET_QUERY }); \
+    command.set_server_block_url_setting({ BX_MAINNET_BLOCK }); \
+    command.set_server_transaction_url_setting({ BX_MAINNET_TRANSACTION }); \
     command.set_server_connect_retries_setting(BX_NETWORK_RETRY); \
     command.set_server_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT)
 
 #define BX_DECLARE_CLIENT_TESTNET_COMMAND(extension) \
     BX_DECLARE_COMMAND(extension); \
-    command.set_server_url_setting({ BX_TESTNET_SERVER }); \
+    command.set_server_url_setting({ BX_TESTNET_QUERY }); \
+    command.set_server_block_url_setting({ BX_TESTNET_BLOCK }); \
+    command.set_server_transaction_url_setting({ BX_TESTNET_TRANSACTION }); \
     command.set_server_connect_retries_setting(BX_NETWORK_RETRY); \
     command.set_server_connect_timeout_seconds_setting(BX_NETWORK_TIMEOUT)
 

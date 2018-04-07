@@ -102,6 +102,8 @@
 #include <bitcoin/explorer/commands/stealth-public.hpp>
 #include <bitcoin/explorer/commands/stealth-secret.hpp>
 #include <bitcoin/explorer/commands/stealth-shared.hpp>
+#include <bitcoin/explorer/commands/subscribe-block.hpp>
+#include <bitcoin/explorer/commands/subscribe-tx.hpp>
 #include <bitcoin/explorer/commands/token-new.hpp>
 #include <bitcoin/explorer/commands/tx-decode.hpp>
 #include <bitcoin/explorer/commands/tx-encode.hpp>

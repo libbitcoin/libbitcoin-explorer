@@ -21,12 +21,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
-#include <random>
 #include <cstdint>
-#include <mutex>
-#include <string>
-#include <thread>
-#include <tuple>
 #include <vector>
 #include <boost/date_time.hpp>
 #include <boost/filesystem.hpp>
@@ -58,6 +53,8 @@ connection_type get_connection(const command& command)
     connection.retries = command.get_server_connect_retries_setting();
     connection.timeout_seconds = timeout;
     connection.server = command.get_server_url_setting();
+    connection.block_server = command.get_server_block_url_setting();
+    connection.transaction_server = command.get_server_transaction_url_setting();
     connection.socks = command.get_server_socks_proxy_setting();
     connection.server_public_key = public_key;
     connection.client_private_key = private_key;
