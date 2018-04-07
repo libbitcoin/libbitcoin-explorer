@@ -38,6 +38,8 @@ $ sudo make install # optional
 $ sudo ldconfig     # optional
 ```
 
+> Running the above commands will install v4, which is still in active development. Using the install.sh script as described below is currently the recommended way to install BX on Linux or MacOS.
+
 Detailed instructions are provided below.
 * [Debian/Ubuntu](#debianubuntu)
 * [Macintosh](#macintosh)
