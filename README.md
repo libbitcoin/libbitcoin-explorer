@@ -283,6 +283,7 @@ Visual Studio solutions are maintained for all libbitcoin libraries and dependen
 Build these solutions in order:
 
 1. [libbitcoin/libbitcoin](https://github.com/libbitcoin/libbitcoin)
+2. [libbitcoin/libbitcoin-network](https://github.com/libbitcoin/libbitcoin-network)
 2. [libbitcoin/libbitcoin-protocol](https://github.com/libbitcoin/libbitcoin-protocol)
 3. [libbitcoin/libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client)
 4. [libbitcoin/libbitcoin-explorer](https://github.com/libbitcoin/libbitcoin-explorer)
