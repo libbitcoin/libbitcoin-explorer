@@ -26,9 +26,17 @@ BX is a command line tool for working with Bitcoin. It can be built as a single 
 
 ## Installation
 
-BX can be built from sources or downloaded as a signed portable [single file executable](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download-BX).
+Libbitcoin Explorer can be built from sources or downloaded as a signed portable [single file executable](https://github.com/libbitcoin/libbitcoin-explorer/wiki/Download-BX).
 
-On Linux and Macintosh BX is built using Autotools as follows and depends on [libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client).
+The master branch is a staging area for the next major release and should be used only by libbitcoin developers. The current release branch is version3. Detailed installation instructions are provided below.
+
+* [Debian/Ubuntu](#debianubuntu)
+* [Macintosh](#macintosh)
+* [Windows](#windows)
+
+### Autotools (advanced users)
+
+On Linux and macOS Libbitcoin Explorer is built using Autotools as follows and depends on [libbitcoin-client](https://github.com/libbitcoin/libbitcoin-client).
 
 ```sh
 $ ./autogen.sh
@@ -37,11 +45,6 @@ $ make
 $ sudo make install # optional
 $ sudo ldconfig     # optional
 ```
-
-Detailed instructions are provided below.
-* [Debian/Ubuntu](#debianubuntu)
-* [Macintosh](#macintosh)
-* [Windows](#windows)
 
 ### Debian/Ubuntu
 
