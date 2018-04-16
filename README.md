@@ -77,7 +77,7 @@ $ sudo apt-get install libboost-all-dev
 ```
 Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package (if not available, build with the `--build-zmq` option):
 ```sh
-$ sudo apt-get install libzmq5
+$ sudo apt-get install libzmq3-dev
 ```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
 ```sh
