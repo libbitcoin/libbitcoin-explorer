@@ -74,9 +74,9 @@ $ sudo apt-get install libboost-all-dev
 ```
 Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package.
 ```sh
-$ sudo apt-get install libzmq5
+$ sudo apt-get install libzmq3-dev
 ```
-If no satisfying libzmq5 package exists in your chosen environment, the compilation can be performed with the following instructions:
+If no satisfying libzmq3-dev package exists in your chosen environment, the compilation can be performed with the following instructions:
 ```sh
 $ mkdir build-zeromq-4.2.0
 $ pushd build-zeromq-4.2.0
