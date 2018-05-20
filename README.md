@@ -40,6 +40,7 @@ $ sudo ldconfig     # optional
 
 Detailed instructions are provided below.
 * [Debian/Ubuntu](#debianubuntu)
+* [CentOS7](#centos-7)
 * [Macintosh](#macintosh)
 * [Windows](#windows)
 
@@ -97,6 +98,43 @@ $ chmod +x install.sh
 Finally install BX with default [build options](#build-notes-for-linux--macos):
 ```sh
 $ sudo ./install.sh
+```
+Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
+
+### CentOS 7
+
+Libbitcoin requires a C++11 compiler, currently minimum [GCC 4.8.0](https://gcc.gnu.org/projects/cxx0x.html) or Clang based on [LLVM 3.5](http://llvm.org/releases/3.5.0/docs/ReleaseNotes.html).
+
+Note that CentOS 7 provides an option to install Boost 1.53.0, which is older than the required version.  For this configuration, boost will be compiled by the installer.
+
+Similarly, the default installation of CentOS 7 does not provide an option to install zeromq, so it will also be compiled by the installer.
+
+To see your GCC version:
+```sh
+$ g++ --version
+```
+```
+g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-28)
+Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
+If necessary, upgrade your compiler as follows:
+```sh
+$ sudo yum install gcc-c++
+```
+Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and wget, bzip2 and git:
+```sh
+$ sudo yum install autoconf automake libtool pkgconfig wget bzip2 git
+```
+Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
+```sh
+$ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
+$ chmod +x install.sh
+```
+Finally install BX with the following [build options](#build-notes-for-linux--macos):
+```sh
+$ sudo ./install.sh --build-zmq --build-boost
 ```
 Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
 
