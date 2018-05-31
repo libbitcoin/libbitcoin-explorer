@@ -255,6 +255,12 @@
     <ClCompile Include="..\..\..\..\test\commands\stealth-shared.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\subscribe-block.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\subscribe-tx.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\token-new.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

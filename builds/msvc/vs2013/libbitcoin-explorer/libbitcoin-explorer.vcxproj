@@ -153,6 +153,8 @@
     <ClCompile Include="..\..\..\..\src\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\stealth-shared.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\subscribe-block.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\subscribe-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\token-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\tx-encode.cpp" />
@@ -272,6 +274,8 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-secret.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\stealth-shared.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\subscribe-block.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\subscribe-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\token-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\tx-encode.hpp" />
