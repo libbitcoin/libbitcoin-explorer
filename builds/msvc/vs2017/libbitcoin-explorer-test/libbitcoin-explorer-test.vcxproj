@@ -149,6 +149,8 @@
     <ClCompile Include="..\..\..\..\test\commands\stealth-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-secret.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\stealth-shared.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\subscribe-block.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\subscribe-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\token-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\tx-encode.cpp" />
