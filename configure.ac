@@ -247,6 +247,12 @@ AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-reorder],
         [CXXFLAGS="$CXXFLAGS -Wno-reorder"])])
 
+# Suppress warning for incomplete field initialization.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-missing-field-initializers],
+        [CXXFLAGS="$CXXFLAGS -Wno-missing-field-initializers"])])
+
 # Conform to style.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
