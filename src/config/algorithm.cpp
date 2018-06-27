@@ -54,7 +54,7 @@ algorithm::algorithm(const algorithm& other)
 {
 }
 
-algorithm::operator const bc::wallet::select_outputs::algorithm() const
+algorithm::operator bc::wallet::select_outputs::algorithm() const
 {
     return value_;
 }

@@ -62,7 +62,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::wallet::electrum::seed() const;
+    operator bc::wallet::electrum::seed() const;
 
     /**
      * Overload stream in. Throws if input is invalid.

@@ -55,7 +55,7 @@ electrum::electrum(const electrum& other)
 {
 }
 
-electrum::operator const bc::wallet::electrum::seed() const
+electrum::operator bc::wallet::electrum::seed() const
 {
     return value_;
 }
