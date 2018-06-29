@@ -8,46 +8,34 @@
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="include">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000007}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000003}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\bitcoin">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000008}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000004}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\bitcoin\explorer">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000009}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000005}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\bitcoin\explorer\commands">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000A}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000006}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\bitcoin\explorer\config">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000B}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000007}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\bitcoin\explorer\impl">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000C}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000008}</UniqueIdentifier>
     </Filter>
     <Filter Include="resource">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-00000000000D}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000009}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000000}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\.deps">
+    <Filter Include="src\commands">
       <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000001}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\.libs">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000002}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\commands">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000003}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\commands\.deps">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000005}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\config">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000004}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\config\.deps">
-      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000006}</UniqueIdentifier>
+      <UniqueIdentifier>{4A1D71D5-3DEE-47F0-0000-000000000002}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
