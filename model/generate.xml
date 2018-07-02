@@ -61,6 +61,19 @@
     <setting name="client_private_key" type="sodium" description="The Z85-encoded private key of the client." />
   </configuration>
 
+  <configuration section="bitcoin">
+    <setting name="retargeting_factor" type="uint32_t" default="4" description="The URL of the Libbitcoin server." />
+    <setting name="target_spacing_seconds" type="uint32_t" default="600" description="The URL of the Libbitcoin server." />
+    <setting name="easy_spacing_seconds" type="uint32_t" default="1200" description="The URL of the Libbitcoin server." />
+    <setting name="timestamp_future_seconds" type="uint32_t" default="7200" description="The URL of the Libbitcoin server." />
+    <setting name="target_timespan_seconds" type="uint32_t" default="1209600" description="The URL of the Libbitcoin server." />
+    <setting name="retarget_proof_of_work_limit" type="uint32_t" default="486604799" description="The URL of the Libbitcoin server." />
+    <setting name="no_retarget_proof_of_work_limit" type="uint32_t" default="545259519" description="The URL of the Libbitcoin server." />
+    <setting name="min_timespan" type="uint32_t" default="302400" description="The URL of the Libbitcoin server." />
+    <setting name="max_timespan" type="uint32_t" default="4838400" description="The URL of the Libbitcoin server." />
+    <setting name="retargeting_interval" type="size_t" default="2016" description="The URL of the Libbitcoin server." />
+  </configuration>
+
   <!-- General resources. -->
 
   <resource>

@@ -63,7 +63,9 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
         }
     }
 
-    obelisk_client client(connection);
+    bc::settings bitcoin_settings;
+    populate_bitcoin_settings(bitcoin_settings, *this);
+    obelisk_client client(connection, bitcoin_settings);
 
     if (!client.connect(connection))
     {

@@ -51,7 +51,9 @@ console_result subscribe_tx::invoke(std::ostream& output, std::ostream& error)
         state.output(encode_base16(tx.hash()));
     };
 
-    obelisk_client client(0, 0);
+    bc::settings bitcoin_settings;
+    populate_bitcoin_settings(bitcoin_settings, *this);
+    obelisk_client client(0, 0, bitcoin_settings);
     if (!client.subscribe_transaction(connection.transaction_server,
         on_transaction))
     {
