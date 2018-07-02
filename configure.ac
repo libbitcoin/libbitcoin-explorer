@@ -150,8 +150,10 @@ AC_MSG_RESULT([$enable_isystem])
 AS_CASE([${CC}], [*],
     [AX_BOOST_BASE([1.62.0],
         [AC_SUBST([boost_CPPFLAGS], [${BOOST_CPPFLAGS}])
+         AC_SUBST([boost_ISYS_CPPFLAGS], [`echo ${BOOST_CPPFLAGS} | $SED s/^-I/-isystem/g | $SED s/' -I'/' -isystem'/g`])
          AC_SUBST([boost_LDFLAGS], [${BOOST_LDFLAGS}])
          AC_MSG_NOTICE([boost_CPPFLAGS : ${boost_CPPFLAGS}])
+         AC_MSG_NOTICE([boost_ISYS_CPPFLAGS : ${boost_ISYS_CPPFLAGS}])
          AC_MSG_NOTICE([boost_LDFLAGS : ${boost_LDFLAGS}])],
         [AC_MSG_ERROR([Boost 1.62.0 or later is required but was not found.])])])
 
@@ -180,9 +182,12 @@ AS_CASE([${bash_completiondir}], [yes],
      AC_SUBST([bash_completion_PKG], ['bash-completion >= 2.0.0'])
      AC_SUBST([bash_completion_CPPFLAGS], [${bash_completion_CFLAGS}])
      AS_IF([test x${bash_completion_INCLUDEDIR} != "x"],
-        [AC_SUBST([bash_completion_ISYS_CPPFLAGS], [-isystem${bash_completion_INCLUDEDIR} ${bash_completion_OTHER_CFLAGS}])],
+        [AC_SUBST([bash_completion_ISYS_CPPFLAGS], ["-isystem${bash_completion_INCLUDEDIR} ${bash_completion_OTHER_CFLAGS}"])],
         [AC_SUBST([bash_completion_ISYS_CPPFLAGS], [${bash_completion_OTHER_CFLAGS}])])
      AC_MSG_NOTICE([bash_completion_CPPFLAGS : ${bash_completion_CPPFLAGS}])
+     AC_MSG_NOTICE([bash_completion_ISYS_CPPFLAGS : ${bash_completion_ISYS_CPPFLAGS}])
+     AC_MSG_NOTICE([bash_completion_OTHER_CFLAGS : ${bash_completion_OTHER_CFLAGS}])
+     AC_MSG_NOTICE([bash_completion_INCLUDEDIR : ${bash_completion_INCLUDEDIR}])
      AC_MSG_NOTICE([bash_completion_LIBS : ${bash_completion_LIBS}])],
     [AC_SUBST([bash_completion_PKG], [])])
 
@@ -202,9 +207,12 @@ PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 4.0.0],
 AC_SUBST([bitcoin_client_PKG], ['libbitcoin-client >= 4.0.0'])
 AC_SUBST([bitcoin_client_CPPFLAGS], [${bitcoin_client_CFLAGS}])
 AS_IF([test x${bitcoin_client_INCLUDEDIR} != "x"],
-    [AC_SUBST([bitcoin_client_ISYS_CPPFLAGS], [-isystem${bitcoin_client_INCLUDEDIR} ${bitcoin_client_OTHER_CFLAGS}])],
+    [AC_SUBST([bitcoin_client_ISYS_CPPFLAGS], ["-isystem${bitcoin_client_INCLUDEDIR} ${bitcoin_client_OTHER_CFLAGS}"])],
     [AC_SUBST([bitcoin_client_ISYS_CPPFLAGS], [${bitcoin_client_OTHER_CFLAGS}])])
 AC_MSG_NOTICE([bitcoin_client_CPPFLAGS : ${bitcoin_client_CPPFLAGS}])
+AC_MSG_NOTICE([bitcoin_client_ISYS_CPPFLAGS : ${bitcoin_client_ISYS_CPPFLAGS}])
+AC_MSG_NOTICE([bitcoin_client_OTHER_CFLAGS : ${bitcoin_client_OTHER_CFLAGS}])
+AC_MSG_NOTICE([bitcoin_client_INCLUDEDIR : ${bitcoin_client_INCLUDEDIR}])
 AC_MSG_NOTICE([bitcoin_client_LIBS : ${bitcoin_client_LIBS}])
 
 AS_CASE([${enable_isystem}],[yes],
@@ -223,9 +231,12 @@ PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 4.0.0],
 AC_SUBST([bitcoin_network_PKG], ['libbitcoin-network >= 4.0.0'])
 AC_SUBST([bitcoin_network_CPPFLAGS], [${bitcoin_network_CFLAGS}])
 AS_IF([test x${bitcoin_network_INCLUDEDIR} != "x"],
-    [AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], [-isystem${bitcoin_network_INCLUDEDIR} ${bitcoin_network_OTHER_CFLAGS}])],
+    [AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], ["-isystem${bitcoin_network_INCLUDEDIR} ${bitcoin_network_OTHER_CFLAGS}"])],
     [AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], [${bitcoin_network_OTHER_CFLAGS}])])
 AC_MSG_NOTICE([bitcoin_network_CPPFLAGS : ${bitcoin_network_CPPFLAGS}])
+AC_MSG_NOTICE([bitcoin_network_ISYS_CPPFLAGS : ${bitcoin_network_ISYS_CPPFLAGS}])
+AC_MSG_NOTICE([bitcoin_network_OTHER_CFLAGS : ${bitcoin_network_OTHER_CFLAGS}])
+AC_MSG_NOTICE([bitcoin_network_INCLUDEDIR : ${bitcoin_network_INCLUDEDIR}])
 AC_MSG_NOTICE([bitcoin_network_LIBS : ${bitcoin_network_LIBS}])
 
 AS_CASE([${enable_isystem}],[yes],
