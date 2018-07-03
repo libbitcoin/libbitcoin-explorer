@@ -62,7 +62,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::wallet::select_outputs::algorithm() const;
+    operator bc::wallet::select_outputs::algorithm() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
