@@ -26,6 +26,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
+#include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -41,7 +42,9 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
+    bc::settings bitcoin_settings;
+    populate_bitcoin_settings(bitcoin_settings, *this);
+    obelisk_client client(connection, bitcoin_settings);
 
     if (!client.connect(connection))
     {

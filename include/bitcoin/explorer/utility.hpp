@@ -121,6 +121,16 @@ void write_file(std::ostream& output, const std::string& path,
     const Instance& instance, bool terminate=true);
 
 /**
+ * Populate the bc::settings object with settings from command.
+ * @param      Command           The type of the command.
+ * @param[out] bitcoin_settings  The bitcoin settings.
+ * @param[in]  command           The command.
+ */
+template<typename Command>
+void populate_bitcoin_settings(bc::settings& bitcoin_settings,
+    const Command& command);
+
+/**
  * Get the connection settings for the configured network.
  * @param    command  The command.
  * @returns           A structure containing the connection settings.

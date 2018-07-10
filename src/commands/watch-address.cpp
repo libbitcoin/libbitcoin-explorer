@@ -51,7 +51,9 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     const auto connection = get_connection(*this);
     const auto duration = get_duration_option();
 
-    obelisk_client client(connection);
+    bc::settings bitcoin_settings;
+    populate_bitcoin_settings(bitcoin_settings, *this);
+    obelisk_client client(connection, bitcoin_settings);
 
     if (!client.connect(connection))
     {
