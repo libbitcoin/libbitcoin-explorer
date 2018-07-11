@@ -302,52 +302,52 @@ public:
         (
             "bitcoin.retargeting_factor",
             value<uint32_t>(&setting_.bitcoin.retargeting_factor)->default_value(4),
-            "The URL of the Libbitcoin server."
+            "The retargeting factor."
         )
         (
             "bitcoin.target_spacing_seconds",
             value<uint32_t>(&setting_.bitcoin.target_spacing_seconds)->default_value(600),
-            "The URL of the Libbitcoin server."
+            "The target interval between blocks in seconds."
         )
         (
             "bitcoin.easy_spacing_seconds",
             value<uint32_t>(&setting_.bitcoin.easy_spacing_seconds)->default_value(1200),
-            "The URL of the Libbitcoin server."
+            "The target interval between easy blocks in seconds."
         )
         (
             "bitcoin.timestamp_future_seconds",
             value<uint32_t>(&setting_.bitcoin.timestamp_future_seconds)->default_value(7200),
-            "The URL of the Libbitcoin server."
+            "The amount of seconds a timestamp is allowed to be ahead of time in seconds."
         )
         (
             "bitcoin.target_timespan_seconds",
             value<uint32_t>(&setting_.bitcoin.target_timespan_seconds)->default_value(1209600),
-            "The URL of the Libbitcoin server."
+            "The target timespan in seconds."
         )
         (
             "bitcoin.retarget_proof_of_work_limit",
             value<uint32_t>(&setting_.bitcoin.retarget_proof_of_work_limit)->default_value(486604799),
-            "The URL of the Libbitcoin server."
+            "The proof of work limit when retargeting."
         )
         (
             "bitcoin.no_retarget_proof_of_work_limit",
             value<uint32_t>(&setting_.bitcoin.no_retarget_proof_of_work_limit)->default_value(545259519),
-            "The URL of the Libbitcoin server."
+            "The proof of work limit."
         )
         (
             "bitcoin.min_timespan",
             value<uint32_t>(&setting_.bitcoin.min_timespan)->default_value(302400),
-            "The URL of the Libbitcoin server."
+            "The minimum timespan in seconds."
         )
         (
             "bitcoin.max_timespan",
             value<uint32_t>(&setting_.bitcoin.max_timespan)->default_value(4838400),
-            "The URL of the Libbitcoin server."
+            "The maximum timespan in seconds."
         )
         (
             "bitcoin.retargeting_interval",
             value<size_t>(&setting_.bitcoin.retargeting_interval)->default_value(2016),
-            "The URL of the Libbitcoin server."
+            "The retargeting interval in blocks."
         );
     }
 
