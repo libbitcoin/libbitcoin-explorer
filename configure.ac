@@ -44,6 +44,9 @@ AC_PROG_CXX
 # Enable shared libraries if available, and static if they don't conflict.
 AC_PROG_LIBTOOL
 
+# Enable sed for substitution.
+AC_PROG_SED
+
 # Compute the canonical host-system type variable host, including host_os.
 AC_CANONICAL_HOST
 
@@ -52,6 +55,9 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 # Check for pkg-config.
 PKG_PROG_PKG_CONFIG
+AS_IF([test -n "$PKG_CONFIG"], [],
+    [AC_MSG_ERROR([pkg-config is required but was not found.])])
+
 
 # Declare environment variables that affect the build.
 #------------------------------------------------------------------------------
@@ -126,6 +132,16 @@ AS_CASE([${enable_ndebug}], [yes], AC_DEFINE([NDEBUG]))
 #------------------------------------------------------------------------------
 AS_CASE([${enable_shared}], [yes], AC_DEFINE([BOOST_ALL_DYN_LINK]))
 
+# Implement --enable-isystem.
+#------------------------------------------------------------------------------
+AC_MSG_CHECKING([--enable-isystem option])
+AC_ARG_ENABLE([isystem],
+    AS_HELP_STRING([--enable-isystem],
+        [Substitute -isystem for -I in dependencies. @<:@default=no@:>@]),
+    [enable_isystem=$enableval],
+    [enable_isystem=no])
+AC_MSG_RESULT([$enable_isystem])
+
 
 # Check dependencies.
 #==============================================================================
@@ -134,10 +150,18 @@ AS_CASE([${enable_shared}], [yes], AC_DEFINE([BOOST_ALL_DYN_LINK]))
 AS_CASE([${CC}], [*],
     [AX_BOOST_BASE([1.57.0],
         [AC_SUBST([boost_CPPFLAGS], [${BOOST_CPPFLAGS}])
+         AC_SUBST([boost_ISYS_CPPFLAGS], [`echo ${BOOST_CPPFLAGS} | $SED s/^-I/-isystem/g | $SED s/' -I'/' -isystem'/g`])
          AC_SUBST([boost_LDFLAGS], [${BOOST_LDFLAGS}])
          AC_MSG_NOTICE([boost_CPPFLAGS : ${boost_CPPFLAGS}])
+         AC_MSG_NOTICE([boost_ISYS_CPPFLAGS : ${boost_ISYS_CPPFLAGS}])
          AC_MSG_NOTICE([boost_LDFLAGS : ${boost_LDFLAGS}])],
         [AC_MSG_ERROR([Boost 1.57.0 or later is required but was not found.])])])
+
+AS_CASE([${enable_isystem}],[yes],
+    [AC_SUBST([boost_BUILD_CPPFLAGS], [${boost_ISYS_CPPFLAGS}])],
+    [AC_SUBST([boost_BUILD_CPPFLAGS], [${boost_CPPFLAGS}])])
+
+AC_MSG_NOTICE([boost_BUILD_CPPFLAGS : ${boost_BUILD_CPPFLAGS}])
 
 AS_CASE([${with_tests}], [yes],
     [AX_BOOST_UNIT_TEST_FRAMEWORK
@@ -149,29 +173,77 @@ AS_CASE([${with_tests}], [yes],
 #------------------------------------------------------------------------------
 AS_CASE([${bash_completiondir}], [yes],
     [PKG_CHECK_MODULES([bash_completion], [bash-completion >= 2.0.0],
-        [bash_completiondir="`pkg-config --variable=completionsdir bash-completion`"],
-        [bash_completiondir="${datadir}/bash-completion/completions"])
+        [bash_completion_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "bash-completion >= 2.0.0" 2>/dev/null`"
+         bash_completion_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "bash-completion >= 2.0.0" 2>/dev/null`"
+         bash_completiondir="`$PKG_CONFIG --variable=completionsdir "bash-completion >= 2.0.0" 2>/dev/null`"],
+        [bash_completion_INCLUDEDIR=""
+         bash_completion_OTHER_CFLAGS=""
+         bash_completiondir="${datadir}/bash-completion/completions"])
      AC_SUBST([bash_completion_PKG], ['bash-completion >= 2.0.0'])
      AC_SUBST([bash_completion_CPPFLAGS], [${bash_completion_CFLAGS}])
+     AS_IF([test x${bash_completion_INCLUDEDIR} != "x"],
+        [AC_SUBST([bash_completion_ISYS_CPPFLAGS], ["-isystem${bash_completion_INCLUDEDIR} ${bash_completion_OTHER_CFLAGS}"])],
+        [AC_SUBST([bash_completion_ISYS_CPPFLAGS], [${bash_completion_OTHER_CFLAGS}])])
      AC_MSG_NOTICE([bash_completion_CPPFLAGS : ${bash_completion_CPPFLAGS}])
+     AC_MSG_NOTICE([bash_completion_ISYS_CPPFLAGS : ${bash_completion_ISYS_CPPFLAGS}])
+     AC_MSG_NOTICE([bash_completion_OTHER_CFLAGS : ${bash_completion_OTHER_CFLAGS}])
+     AC_MSG_NOTICE([bash_completion_INCLUDEDIR : ${bash_completion_INCLUDEDIR}])
      AC_MSG_NOTICE([bash_completion_LIBS : ${bash_completion_LIBS}])],
     [AC_SUBST([bash_completion_PKG], [])])
 
+AS_CASE([${enable_isystem}],[yes],
+    [AC_SUBST([bash_completion_BUILD_CPPFLAGS], [${bash_completion_ISYS_CPPFLAGS}])],
+    [AC_SUBST([bash_completion_BUILD_CPPFLAGS], [${bash_completion_CPPFLAGS}])])
+
+AC_MSG_NOTICE([bash_completion_BUILD_CPPFLAGS : ${bash_completion_BUILD_CPPFLAGS}])
+
 # Require bitcoin-client of at least version 3.4.0 and output ${bitcoin_client_CPPFLAGS/LIBS/PKG}.
 #------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 3.4.0])
+PKG_CHECK_MODULES([bitcoin_client], [libbitcoin-client >= 3.4.0],
+    [bitcoin_client_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-client >= 3.4.0" 2>/dev/null`"
+     bitcoin_client_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-client >= 3.4.0" 2>/dev/null`"],
+    [bitcoin_client_INCLUDEDIR=""
+     bitcoin_client_OTHER_CFLAGS=""])
 AC_SUBST([bitcoin_client_PKG], ['libbitcoin-client >= 3.4.0'])
 AC_SUBST([bitcoin_client_CPPFLAGS], [${bitcoin_client_CFLAGS}])
+AS_IF([test x${bitcoin_client_INCLUDEDIR} != "x"],
+    [AC_SUBST([bitcoin_client_ISYS_CPPFLAGS], ["-isystem${bitcoin_client_INCLUDEDIR} ${bitcoin_client_OTHER_CFLAGS}"])],
+    [AC_SUBST([bitcoin_client_ISYS_CPPFLAGS], [${bitcoin_client_OTHER_CFLAGS}])])
 AC_MSG_NOTICE([bitcoin_client_CPPFLAGS : ${bitcoin_client_CPPFLAGS}])
+AC_MSG_NOTICE([bitcoin_client_ISYS_CPPFLAGS : ${bitcoin_client_ISYS_CPPFLAGS}])
+AC_MSG_NOTICE([bitcoin_client_OTHER_CFLAGS : ${bitcoin_client_OTHER_CFLAGS}])
+AC_MSG_NOTICE([bitcoin_client_INCLUDEDIR : ${bitcoin_client_INCLUDEDIR}])
 AC_MSG_NOTICE([bitcoin_client_LIBS : ${bitcoin_client_LIBS}])
+
+AS_CASE([${enable_isystem}],[yes],
+    [AC_SUBST([bitcoin_client_BUILD_CPPFLAGS], [${bitcoin_client_ISYS_CPPFLAGS}])],
+    [AC_SUBST([bitcoin_client_BUILD_CPPFLAGS], [${bitcoin_client_CPPFLAGS}])])
+
+AC_MSG_NOTICE([bitcoin_client_BUILD_CPPFLAGS : ${bitcoin_client_BUILD_CPPFLAGS}])
 
 # Require bitcoin-network of at least version 3.4.0 and output ${bitcoin_network_CPPFLAGS/LIBS/PKG}.
 #------------------------------------------------------------------------------
-PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 3.4.0])
+PKG_CHECK_MODULES([bitcoin_network], [libbitcoin-network >= 3.4.0],
+    [bitcoin_network_INCLUDEDIR="`$PKG_CONFIG --variable=includedir "libbitcoin-network >= 3.4.0" 2>/dev/null`"
+     bitcoin_network_OTHER_CFLAGS="`$PKG_CONFIG --cflags-only-other "libbitcoin-network >= 3.4.0" 2>/dev/null`"],
+    [bitcoin_network_INCLUDEDIR=""
+     bitcoin_network_OTHER_CFLAGS=""])
 AC_SUBST([bitcoin_network_PKG], ['libbitcoin-network >= 3.4.0'])
 AC_SUBST([bitcoin_network_CPPFLAGS], [${bitcoin_network_CFLAGS}])
+AS_IF([test x${bitcoin_network_INCLUDEDIR} != "x"],
+    [AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], ["-isystem${bitcoin_network_INCLUDEDIR} ${bitcoin_network_OTHER_CFLAGS}"])],
+    [AC_SUBST([bitcoin_network_ISYS_CPPFLAGS], [${bitcoin_network_OTHER_CFLAGS}])])
 AC_MSG_NOTICE([bitcoin_network_CPPFLAGS : ${bitcoin_network_CPPFLAGS}])
+AC_MSG_NOTICE([bitcoin_network_ISYS_CPPFLAGS : ${bitcoin_network_ISYS_CPPFLAGS}])
+AC_MSG_NOTICE([bitcoin_network_OTHER_CFLAGS : ${bitcoin_network_OTHER_CFLAGS}])
+AC_MSG_NOTICE([bitcoin_network_INCLUDEDIR : ${bitcoin_network_INCLUDEDIR}])
 AC_MSG_NOTICE([bitcoin_network_LIBS : ${bitcoin_network_LIBS}])
+
+AS_CASE([${enable_isystem}],[yes],
+    [AC_SUBST([bitcoin_network_BUILD_CPPFLAGS], [${bitcoin_network_ISYS_CPPFLAGS}])],
+    [AC_SUBST([bitcoin_network_BUILD_CPPFLAGS], [${bitcoin_network_CPPFLAGS}])])
+
+AC_MSG_NOTICE([bitcoin_network_BUILD_CPPFLAGS : ${bitcoin_network_BUILD_CPPFLAGS}])
 
 # Require dl if on linux and output ${dl_LIBS}.
 #------------------------------------------------------------------------------
@@ -200,11 +272,23 @@ AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wall],
         [CFLAGS="$CFLAGS -Wall"])])
 
+# Warn on all stuff.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wall],
+        [CXXFLAGS="$CXXFLAGS -Wall"])])
+
 # Warn on extra stuff.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wextra],
         [CFLAGS="$CFLAGS -Wextra"])])
+
+# Warn on extra stuff.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wextra],
+        [CXXFLAGS="$CXXFLAGS -Wextra"])])
 
 # Be really annoying.
 #------------------------------------------------------------------------------
@@ -213,6 +297,26 @@ AS_CASE([${CC}], [*],
         [CFLAGS="$CFLAGS -Wpedantic"],
         [AX_CHECK_COMPILE_FLAG([-pedantic],
             [CFLAGS="$CFLAGS -pedantic"])])])
+
+# Be really annoying.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wpedantic],
+        [CXXFLAGS="$CXXFLAGS -Wpedantic"],
+        [AX_CHECK_COMPILE_FLAG([-pedantic],
+            [CXXFLAGS="$CXXFLAGS -pedantic"])])])
+
+# Disallow warning on style order of declarations.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-reorder],
+        [CXXFLAGS="$CXXFLAGS -Wno-reorder"])])
+
+# Suppress warning for incomplete field initialization.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-missing-field-initializers],
+        [CXXFLAGS="$CXXFLAGS -Wno-missing-field-initializers"])])
 
 # Conform to style.
 #------------------------------------------------------------------------------
@@ -225,12 +329,6 @@ AS_CASE([${CC}], [*],
 AS_CASE([${CC}], [*clang*],
     [AX_CHECK_COMPILE_FLAG([-Wno-mismatched-tags],
         [CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags"])])
-
-# Clean up boost 1.55 headers. Enabled in gcc only.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*gcc*],
-    [AX_CHECK_COMPILE_FLAG([-Wno-deprecated-declarations],
-        [CXXFLAGS="$CXXFLAGS -Wno-deprecated-declarations"])])
 
 # Clean up bx generated code.
 #------------------------------------------------------------------------------
@@ -249,12 +347,6 @@ AS_CASE([${CC}], [*],
 AS_CASE([${CC}], [*],
     [AX_CHECK_LINK_FLAG([-fstack-protector-all],
         [LDFLAGS="$LDFLAGS -fstack-protector-all"])])
-
-# Hide internal functions from external libs. Enabled in gcc only.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*gcc*],
-    [AX_CHECK_COMPILE_FLAG([-fvisibility-hidden],
-        [CXXFLAGS="$CXXFLAGS -fvisibility-hidden"])])
 
 # Hide inlines from external libs. Enabled in gcc only.
 #------------------------------------------------------------------------------
