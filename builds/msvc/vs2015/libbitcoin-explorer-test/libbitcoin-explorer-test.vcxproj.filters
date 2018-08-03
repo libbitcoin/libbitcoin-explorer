@@ -72,6 +72,9 @@
     <ClCompile Include="..\..\..\..\test\commands\ec-add.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\ec-decompress.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ec-multiply-secrets.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

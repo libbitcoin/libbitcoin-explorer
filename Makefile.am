@@ -60,6 +60,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/cert-public.cpp \
     src/commands/ec-add-secrets.cpp \
     src/commands/ec-add.cpp \
+    src/commands/ec-decompress.cpp \
     src/commands/ec-multiply-secrets.cpp \
     src/commands/ec-multiply.cpp \
     src/commands/ec-new.cpp \
@@ -199,6 +200,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/command.hpp \
     test/commands/ec-add-secrets.cpp \
     test/commands/ec-add.cpp \
+    test/commands/ec-decompress.cpp \
     test/commands/ec-multiply-secrets.cpp \
     test/commands/ec-multiply.cpp \
     test/commands/ec-new.cpp \
@@ -319,6 +321,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/cert-public.hpp \
     include/bitcoin/explorer/commands/ec-add-secrets.hpp \
     include/bitcoin/explorer/commands/ec-add.hpp \
+    include/bitcoin/explorer/commands/ec-decompress.hpp \
     include/bitcoin/explorer/commands/ec-multiply-secrets.hpp \
     include/bitcoin/explorer/commands/ec-multiply.hpp \
     include/bitcoin/explorer/commands/ec-new.hpp \

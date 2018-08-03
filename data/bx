@@ -25,6 +25,7 @@ _bx()
         cert-public
         ec-add
         ec-add-secrets
+        ec-decompress
         ec-multiply
         ec-multiply-secrets
         ec-new

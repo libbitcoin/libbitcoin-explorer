@@ -88,6 +88,7 @@
     <ClCompile Include="..\..\..\..\test\commands\cert-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-add.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\ec-decompress.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-multiply-secrets.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-multiply.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-new.cpp" />

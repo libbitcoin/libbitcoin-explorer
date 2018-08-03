@@ -118,6 +118,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_add_secrets__returns_object)
     BOOST_REQUIRE(find("ec-add-secrets") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__ec_decompress__returns_object)
+{
+    BOOST_REQUIRE(find("ec-decompress") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ec_multiply__returns_object)
 {
     BOOST_REQUIRE(find("ec-multiply") != nullptr);
