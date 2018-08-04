@@ -324,17 +324,17 @@ AS_CASE([${CC}], [*],
     [AX_CHECK_COMPILE_FLAG([-Wno-missing-braces],
         [CXXFLAGS="$CXXFLAGS -Wno-missing-braces"])])
 
+# Ignore comments within comments or commenting of backslash extended lines.
+#------------------------------------------------------------------------------
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-comment],
+        [CXXFLAGS="$CXXFLAGS -Wno-comment"])])
+
 # Conflict in stdlib under clang. Enabled in clang only.
 #------------------------------------------------------------------------------
 AS_CASE([${CC}], [*clang*],
     [AX_CHECK_COMPILE_FLAG([-Wno-mismatched-tags],
         [CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags"])])
-
-# Clean up bx generated code.
-#------------------------------------------------------------------------------
-AS_CASE([${CC}], [*],
-    [AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
-        [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])])
 
 # Protect stack.
 #------------------------------------------------------------------------------
@@ -348,11 +348,11 @@ AS_CASE([${CC}], [*],
     [AX_CHECK_LINK_FLAG([-fstack-protector-all],
         [LDFLAGS="$LDFLAGS -fstack-protector-all"])])
 
-# Hide inlines from external libs. Enabled in gcc only.
+# Clean up bx generated code.
 #------------------------------------------------------------------------------
-AS_CASE([${CC}], [*gcc*],
-    [AX_CHECK_COMPILE_FLAG([-fvisibility-inlines-hidden],
-        [CXXFLAGS="$CXXFLAGS -fvisibility-inlines-hidden"])])
+AS_CASE([${CC}], [*],
+    [AX_CHECK_COMPILE_FLAG([-Wno-unused-parameter],
+        [CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])])
 
 
 # Process outputs into templates.
