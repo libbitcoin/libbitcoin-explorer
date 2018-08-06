@@ -118,6 +118,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_add_secrets__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ec_add_secrets::symbol(), "ec-add-secrets");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_decompress__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ec_decompress::symbol(), "ec-decompress");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__ec_multiply__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(ec_multiply::symbol(), "ec-multiply");

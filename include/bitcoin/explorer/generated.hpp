@@ -41,6 +41,7 @@
 #include <bitcoin/explorer/commands/cert-public.hpp>
 #include <bitcoin/explorer/commands/ec-add.hpp>
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
+#include <bitcoin/explorer/commands/ec-decompress.hpp>
 #include <bitcoin/explorer/commands/ec-multiply.hpp>
 #include <bitcoin/explorer/commands/ec-multiply-secrets.hpp>
 #include <bitcoin/explorer/commands/ec-new.hpp>
