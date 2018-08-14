@@ -74,7 +74,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     };
 
     // This does not include unconfirmed transactions.
-    client.blockchain_fetch_history3(on_error, on_done, address.hash());
+    client.blockchain_fetch_history4(on_error, on_done, address.hash());
     client.wait();
 
     return state.get_result();
