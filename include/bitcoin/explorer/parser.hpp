@@ -60,6 +60,8 @@ protected:
     virtual void load_command_variables(variables_map& variables,
         std::istream& input, int argc, const char* argv[]);
 
+    using bc::config::parser::load_command_variables;
+
 private:
     static std::string system_config_directory();
     static boost::filesystem::path default_config_path();
