@@ -55,6 +55,8 @@ console_result commands::settings::invoke(std::ostream& output,
         serialize(get_wallet_pay_to_script_hash_version_setting());
     list["wallet.transaction_version"] =
         serialize(get_wallet_transaction_version_setting());
+    list["wallet.rule_fork_flags"] =
+        serialize(get_wallet_rule_fork_flags_setting());
 
     // [network]
     list["network.identifier"] =

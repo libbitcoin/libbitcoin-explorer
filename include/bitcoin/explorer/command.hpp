@@ -220,6 +220,11 @@ public:
             "The transaction version, defaults to 1."
         )
         (
+            "wallet.rule_fork_flags",
+            value<uint32_t>(&setting_.wallet.rule_fork_flags)->default_value(4294967295),
+            "The rule fork flags, defaults to all (4294967295)."
+        )
+        (
             "network.identifier",
             value<uint32_t>(&setting_.network.identifier)->default_value(3652501241),
             "The magic number for message headers, defaults to 3652501241."
@@ -494,6 +499,22 @@ public:
     virtual void set_wallet_transaction_version_setting(uint32_t value)
     {
         setting_.wallet.transaction_version = value;
+    }
+
+    /**
+     * Get the value of the wallet.rule_fork_flags setting.
+     */
+    virtual uint32_t get_wallet_rule_fork_flags_setting() const
+    {
+        return setting_.wallet.rule_fork_flags;
+    }
+
+    /**
+     * Set the value of the wallet.rule_fork_flags setting.
+     */
+    virtual void set_wallet_rule_fork_flags_setting(uint32_t value)
+    {
+        setting_.wallet.rule_fork_flags = value;
     }
 
     /**
@@ -962,7 +983,8 @@ private:
                 hd_secret_version(),
                 pay_to_public_key_hash_version(),
                 pay_to_script_hash_version(),
-                transaction_version()
+                transaction_version(),
+                rule_fork_flags()
             {
             }
 
@@ -972,6 +994,7 @@ private:
             explorer::config::byte pay_to_public_key_hash_version;
             explorer::config::byte pay_to_script_hash_version;
             uint32_t transaction_version;
+            uint32_t rule_fork_flags;
         } wallet;
 
         struct network
