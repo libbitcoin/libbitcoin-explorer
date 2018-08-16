@@ -143,6 +143,11 @@ public:
             "The path to the configuration settings file."
         )
         (
+            "flags,f",
+            value<uint32_t>(&option_.flags)->default_value(4294967295),
+            "The rule fork flags, defaults to all (4294967295)."
+        )
+        (
             "BASE16",
             value<bc::config::base16>(&argument_.base16),
             "The Base16 script. If not specified the script is read from STDIN."
@@ -157,6 +162,12 @@ public:
      */
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
+        const auto& option_flags = variables["flags"];
+        const auto& option_flags_config = variables["wallet.rule_fork_flags"];
+        if (option_flags.defaulted() && !option_flags_config.defaulted())
+        {
+            option_.flags = option_flags_config.as<uint32_t>();
+        }
     }
 
     /**
@@ -187,6 +198,23 @@ public:
         argument_.base16 = value;
     }
 
+    /**
+     * Get the value of the flags option.
+     */
+    virtual uint32_t& get_flags_option()
+    {
+        return option_.flags;
+    }
+
+    /**
+     * Set the value of the flags option.
+     */
+    virtual void set_flags_option(
+        const uint32_t& value)
+    {
+        option_.flags = value;
+    }
+
 private:
 
     /**
@@ -212,9 +240,11 @@ private:
     struct option
     {
         option()
+          : flags()
         {
         }
 
+        uint32_t flags;
     } option_;
 };
 

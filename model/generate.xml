@@ -37,6 +37,7 @@
     <setting name="pay_to_public_key_hash_version" type="byte" default="0" description="The pay-to-public-key-hash address version, defaults to 0." />
     <setting name="pay_to_script_hash_version" type="byte" default="5" description="The pay-to-script-hash address version, defaults to 5." />
     <setting name="transaction_version" type="uint32_t" default="1" description="The transaction version, defaults to 1." />
+    <setting name="rule_fork_flags" type="uint32_t" default="4294967295" description="The rule fork flags, defaults to all (4294967295)." />
   </configuration>
 
   <configuration section="network">
@@ -479,6 +480,7 @@
 
   <command symbol="script-decode" formerly="showscript" output="string" multipleX="true" category="TRANSACTION" description="Decode a script to plain text tokens.">
     <argument name="BASE16" fileX="true" stdin="true" type="base16" description="The Base16 script. If not specified the script is read from STDIN."/>
+    <option name="flags" type="uint32_t" configuration="wallet.rule_fork_flags" description="The rule fork flags, defaults to all (4294967295)." />
   </command>
 
   <command symbol="script-encode" formerly="rawscript" output="base16" category="TRANSACTION" description="Base16 encode a plain text script.">

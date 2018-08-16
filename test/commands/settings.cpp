@@ -55,6 +55,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        hd_secret_version 0\n" \
 "        pay_to_public_key_hash_version 0\n" \
 "        pay_to_script_hash_version 0\n" \
+"        rule_fork_flags 0\n" \
 "        transaction_version 0\n" \
 "        wif_version 0\n" \
 "    }\n" \
@@ -91,6 +92,7 @@ BOOST_AUTO_TEST_SUITE(settings__invoke)
 "        hd_secret_version 3\n" \
 "        pay_to_public_key_hash_version 4\n" \
 "        pay_to_script_hash_version 5\n" \
+"        rule_fork_flags 4294967295\n" \
 "        transaction_version 6\n" \
 "        wif_version 1\n" \
 "    }\n" \
@@ -111,6 +113,7 @@ BOOST_AUTO_TEST_CASE(settings__invoke__test_values__okay_output)
     command.set_wallet_hd_secret_version_setting(3);
     command.set_wallet_pay_to_public_key_hash_version_setting(4);
     command.set_wallet_pay_to_script_hash_version_setting(5);
+    command.set_wallet_rule_fork_flags_setting(4294967295);
     command.set_wallet_transaction_version_setting(6);
     command.set_network_identifier_setting(10);
     command.set_network_connect_retries_setting(11);

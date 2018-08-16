@@ -32,6 +32,24 @@ BOOST_AUTO_TEST_CASE(script_decode__invoke__basic__okay_output)
     BX_REQUIRE_OUTPUT("dup hash160 [18c0bd8d1818f1bf99cb1df2269c645318ef7b73] equalverify checksig\n");
 }
 
+BOOST_AUTO_TEST_CASE(script_decode__invoke__flags_all__okay_output)
+{
+    BX_DECLARE_COMMAND(script_decode);
+    command.set_base16_argument({ "b2" });
+    command.set_flags_option(4294967295);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("checksequenceverify\n");
+}
+
+BOOST_AUTO_TEST_CASE(script_decode__invoke__flags_none__okay_output)
+{
+    BX_DECLARE_COMMAND(script_decode);
+    command.set_base16_argument({ "b2" });
+    command.set_flags_option(0);
+    BX_REQUIRE_OKAY(command.invoke(output, error));
+    BX_REQUIRE_OUTPUT("nop3\n");
+}
+
 BOOST_AUTO_TEST_CASE(script_decode__invoke__data__okay_output)
 {
     BX_DECLARE_COMMAND(script_decode);
