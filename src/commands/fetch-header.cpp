@@ -42,9 +42,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const encoding& encoding = get_format_option();
     const auto connection = get_connection(*this);
 
-    bc::settings bitcoin_settings;
-    populate_bitcoin_settings(bitcoin_settings, *this);
-    obelisk_client client(connection, bitcoin_settings);
+    obelisk_client client(connection);
 
     if (!client.connect(connection))
     {

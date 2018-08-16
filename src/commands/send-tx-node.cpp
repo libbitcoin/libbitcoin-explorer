@@ -129,9 +129,7 @@ console_result send_tx_node::invoke(std::ostream& output, std::ostream& error)
     // Network operations.
     //-------------------------------------------------------------------------
 
-    bc::settings bitcoin_settings;
-    populate_bitcoin_settings(bitcoin_settings, *this);
-    p2p network(settings, bitcoin_settings);
+    p2p network(settings);
     callback_state state(error, output);
     message::transaction tx(transaction);
 
