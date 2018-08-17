@@ -269,6 +269,16 @@ public:
             "The URL of the Libbitcoin server."
         )
         (
+            "server.block_url",
+            value<bc::config::endpoint>(&setting_.server.block_url)->default_value({ "tcp://mainnet.libbitcoin.net:9093" }),
+            "The URL of the Libbitcoin server."
+        )
+        (
+            "server.transaction_url",
+            value<bc::config::endpoint>(&setting_.server.transaction_url)->default_value({ "tcp://mainnet.libbitcoin.net:9094" }),
+            "The URL of the Libbitcoin server."
+        )
+        (
             "server.socks_proxy",
             value<bc::config::authority>(&setting_.server.socks_proxy)->default_value({ "0.0.0.0:0" }),
             "The address of a SOCKS5 proxy to use, defaults to none."
@@ -585,6 +595,38 @@ public:
     }
 
     /**
+     * Get the value of the server.block_url setting.
+     */
+    virtual bc::config::endpoint get_server_block_url_setting() const
+    {
+        return setting_.server.block_url;
+    }
+
+    /**
+     * Set the value of the server.block_url setting.
+     */
+    virtual void set_server_block_url_setting(bc::config::endpoint value)
+    {
+        setting_.server.block_url = value;
+    }
+
+    /**
+     * Get the value of the server.transaction_url setting.
+     */
+    virtual bc::config::endpoint get_server_transaction_url_setting() const
+    {
+        return setting_.server.transaction_url;
+    }
+
+    /**
+     * Set the value of the server.transaction_url setting.
+     */
+    virtual void set_server_transaction_url_setting(bc::config::endpoint value)
+    {
+        setting_.server.transaction_url = value;
+    }
+
+    /**
      * Get the value of the server.socks_proxy setting.
      */
     virtual bc::config::authority get_server_socks_proxy_setting() const
@@ -754,6 +796,8 @@ private:
         {
             server()
               : url(),
+                block_url(),
+                transaction_url(),
                 socks_proxy(),
                 connect_retries(),
                 connect_timeout_seconds(),
@@ -763,6 +807,8 @@ private:
             }
 
             bc::config::endpoint url;
+            bc::config::endpoint block_url;
+            bc::config::endpoint transaction_url;
             bc::config::authority socks_proxy;
             explorer::config::byte connect_retries;
             uint16_t connect_timeout_seconds;
