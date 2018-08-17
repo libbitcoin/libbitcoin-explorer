@@ -52,10 +52,13 @@ namespace explorer {
 template <typename Value>
 Value deserialize(const std::string& text, bool trim)
 {
+    // If the user provides text with multiple tokens for single value
+    // deserialization, we only use the first to avoid throwing.
+    const auto tokens = split(text, " \n\r\t");
     if (trim)
-        return boost::lexical_cast<Value>(boost::trim_copy(text));
+        return boost::lexical_cast<Value>(boost::trim_copy(tokens[0]));
     else
-        return boost::lexical_cast<Value>(text);
+        return boost::lexical_cast<Value>(tokens[0]);
 }
 
 template <typename Value>
@@ -67,10 +70,13 @@ Value deserialize(std::istream& input, bool trim)
 template <typename Value>
 void deserialize(Value& value, const std::string& text, bool trim)
 {
+    // If the user provides text with multiple tokens for single value
+    // deserialization, we only use the first to avoid throwing.
+    const auto tokens = split(text, " \n\r\t");
     if (trim)
-        value = boost::lexical_cast<Value>(boost::trim_copy(text));
+        value = boost::lexical_cast<Value>(boost::trim_copy(tokens[0]));
     else
-        value = boost::lexical_cast<Value>(text);
+        value = boost::lexical_cast<Value>(tokens[0]);
 }
 
 template <typename Value>
