@@ -71,24 +71,16 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ sudo apt-get install build-essential autoconf automake libtool pkg-config git
 ```
-Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package:
-```sh
-$ sudo apt-get install libboost-all-dev
-```
-Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package (if not available, build with the `--build-zmq` option):
-```sh
-$ sudo apt-get install libzmq3-dev
-```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
 $ chmod +x install.sh
 ```
-Finally install BX with default [build options](#build-notes-for-linux--macos):
+Finally install BX with recommended [build options](#build-notes-for-linux--macos):
 ```sh
-$ sudo ./install.sh
+$ ./install.sh --prefix=/home/me/myprefix --build-boost --build-zmq --disable-shared
 ```
-Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
+Bitcoin Explorer is now installed in `/home/me/myprefix` and can be invoked as `$ bx`.
 
 ### Macintosh
 
@@ -121,24 +113,16 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ brew install autoconf automake libtool pkgconfig wget
 ```
-Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package:
-```sh
-$ brew install boost
-```
-Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package.
-```sh
-$ brew install zeromq
-```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
 $ chmod +x install.sh
 ```
-Finally install BX with default [build options](#build-notes-for-linux--macos):
+Finally install BX with recommended [build options](#build-notes-for-linux--macos):
 ```sh
-$ ./install.sh
+$ ./install.sh --prefix=/home/me/myprefix --build-boost --build-zmq --disable-shared
 ```
-Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
+Bitcoin Explorer is now installed in `/home/me/myprefix` and can be invoked as `$ bx`.
 
 ##### Installing from Formula
 
@@ -159,24 +143,16 @@ Next install the [build system](http://wikipedia.org/wiki/GNU_build_system) and 
 ```sh
 $ sudo port install autoconf automake libtool pkgconfig wget
 ```
-Next install the [Boost](http://www.boost.org) (1.57.0 or newer) development package. The `-` options remove MacPort defaults that are not Boost defaults:
-```sh
-$ sudo port install boost -no_single -no_static -python27
-```
-Next install the [ZeroMQ](http://www.zeromq.org) (4.2.0 or newer) development package:
-```sh
-$ sudo port install zmq
-```
 Next download the [install script](https://github.com/libbitcoin/libbitcoin-explorer/blob/version3/install.sh) and enable execution:
 ```sh
 $ wget https://raw.githubusercontent.com/libbitcoin/libbitcoin-explorer/version3/install.sh
 $ chmod +x install.sh
 ```
-Finally install BX with default [build options](#build-notes-for-linux--macos):
+Finally install BX with recommended [build options](#build-notes-for-linux--macos):
 ```sh
-$ ./install.sh
+$ ./install.sh --prefix=/home/me/myprefix --build-boost --build-zmq --disable-shared
 ```
-Bitcoin Explorer is now installed in `/usr/local/bin` and can be invoked as `$ bx`.
+Bitcoin Explorer is now installed in `/home/me/myprefix` and can be invoked as `$ bx`.
 
 ### Build Notes for Linux / macOS
 
@@ -184,22 +160,22 @@ Any set of `./configure` options can be passed via the build script, several exa
 
 Building for minimum size and with debug symbols stripped:
 ```sh
-$ sudo ./install.sh CXXFLAGS="-Os -s"
+$ ./install.sh CXXFLAGS="-Os -s" --prefix=/home/me/myprefix --build-boost --disable-shared
 ```
 
 > The `-s` option is not supported by the Clang compiler. Instead use the command `$ strip bs` after the build.
 
 Building without NDEBUG (i.e. with debug assertions) defined:
 ```sh
-$ sudo ./install.sh --disable-ndebug
+$ ./install.sh --disable-ndebug --prefix=/home/me/myprefix --build-boost --disable-shared
 ```
 Building without building tests:
 ```sh
-$ sudo ./install.sh --without-tests
+$ ./install.sh --without-tests --prefix=/home/me/myprefix --build-boost --disable-shared
 ```
 Building from a specified directory, such as `/home/me/mybuild`:
 ```sh
-$ sudo ./install.sh --build-dir=/home/me/mybuild
+$ ./install.sh --build-dir=/home/me/mybuild --prefix=/home/me/myprefix --build-boost --disable-shared
 ```
 Building into a directory other than `/usr/local`, such as `/home/me/myprefix`:
 ```sh
@@ -227,26 +203,26 @@ Building with bash-completion support:
 > If your target system does not have it pre-installed you must first install the [bash-completion](http://bash-completion.alioth.debian.org) package. Packages are available for common package managers, including apt-get, homebrew and macports.
 
 ```sh
-$ sudo ./install.sh --with-bash-completion-dir
+$ ./install.sh --with-bash-completion-dir --prefix=/home/me/myprefix --build-boost --disable-shared
 ```
 
 #### Compiling with ICU (International Components for Unicode)
 
 Since the addition of [BIP-39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) and later [BIP-38](https://github.com/bitcoin/bips/blob/master/bip-0038.mediawiki) and [Electrum](https://electrum.org) mnemonic support, libbitcoin conditionally incorporates [ICU](http://site.icu-project.org). To use the BIP-38 and BIP-39 passphrase normalization features libbitcoin must be compiled with the `--with-icu` option.
 ```sh
-$ ./install.sh --with-icu
+$ ./install.sh --with-icu --build-icu --build-boost --disable-shared
 ```
 
 #### Compiling with QR Code Support
 
 Since the addition of [qrcode](https://github.com/evoskuil/libbitcoin/blob/master/src/wallet/qrcode.cpp) support, libbitcoin conditionally incorporates `qrencode`. This requires compiling with the `--with-qrencode` option.
 ```sh
-$ ./install.sh --with-qrencode
+$ ./install.sh --with-qrencode --build-qrencode --build-boost --disable-shared
 ```
 
 Since the addition of [png](https://github.com/evoskuil/libbitcoin/blob/master/src/utility/png.cpp) support, libbitcoin conditionally incorporates `libpng` (which in turn requires `zlib`). This requires compiling with the `--with-png` option.
 ```sh
-$ ./install.sh --with-png
+$ ./install.sh --with-png --build-png --build-boost --disable-shared
 ```
 
 > There is a bug in the PNG library when using space optimization levels such as `CXXFLAGS=-Os` which will show up in a test run failure.
