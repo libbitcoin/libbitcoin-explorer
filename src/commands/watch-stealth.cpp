@@ -63,9 +63,7 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    bc::settings bitcoin_settings;
-    populate_bitcoin_settings(bitcoin_settings, *this);
-    obelisk_client client(connection, bitcoin_settings);
+    obelisk_client client(connection);
 
     if (!client.connect(connection))
     {

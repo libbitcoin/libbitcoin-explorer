@@ -51,9 +51,7 @@ console_result subscribe_block::invoke(std::ostream& output, std::ostream& error
         state.output(property_tree(bc::config::header(block.header())));
     };
 
-    bc::settings bitcoin_settings;
-    populate_bitcoin_settings(bitcoin_settings, *this);
-    obelisk_client client(0, 0, bitcoin_settings);
+    obelisk_client client(0, 0);
     if (!client.subscribe_block(connection.block_server, on_block))
     {
         output << BX_SUBSCRIBE_BLOCK_FAILED << std::endl;

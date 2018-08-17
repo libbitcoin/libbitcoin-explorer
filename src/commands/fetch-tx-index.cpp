@@ -42,9 +42,7 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     const auto& hash = get_hash_argument();
     const auto connection = get_connection(*this);
 
-    bc::settings bitcoin_settings;
-    populate_bitcoin_settings(bitcoin_settings, *this);
-    obelisk_client client(connection, bitcoin_settings);
+    obelisk_client client(connection);
 
     if (!client.connect(connection))
     {
