@@ -267,17 +267,17 @@ public:
         (
             "server.url",
             value<bc::config::endpoint>(&setting_.server.url)->default_value({ "tcp://mainnet.libbitcoin.net:9091" }),
-            "The URL of the Libbitcoin server."
+            "The URL of the Libbitcoin query service."
         )
         (
             "server.block_url",
             value<bc::config::endpoint>(&setting_.server.block_url)->default_value({ "tcp://mainnet.libbitcoin.net:9093" }),
-            "The URL of the Libbitcoin server."
+            "The URL of the Libbitcoin block service."
         )
         (
             "server.transaction_url",
             value<bc::config::endpoint>(&setting_.server.transaction_url)->default_value({ "tcp://mainnet.libbitcoin.net:9094" }),
-            "The URL of the Libbitcoin server."
+            "The URL of the Libbitcoin transaction service."
         )
         (
             "server.socks_proxy",
