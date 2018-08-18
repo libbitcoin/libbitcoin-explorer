@@ -52,9 +52,9 @@
   </configuration>
 
   <configuration section="server">
-    <setting name="url" type="endpoint" default="tcp://mainnet.libbitcoin.net:9091" description="The URL of the Libbitcoin server." />
-    <setting name="block_url" type="endpoint" default="tcp://mainnet.libbitcoin.net:9093" description="The URL of the Libbitcoin server." />
-    <setting name="transaction_url" type="endpoint" default="tcp://mainnet.libbitcoin.net:9094" description="The URL of the Libbitcoin server." />
+    <setting name="url" type="endpoint" default="tcp://mainnet.libbitcoin.net:9091" description="The URL of the Libbitcoin query service." />
+    <setting name="block_url" type="endpoint" default="tcp://mainnet.libbitcoin.net:9093" description="The URL of the Libbitcoin block service." />
+    <setting name="transaction_url" type="endpoint" default="tcp://mainnet.libbitcoin.net:9094" description="The URL of the Libbitcoin transaction service." />
     <setting name="socks_proxy" type="authority" default="0.0.0.0:0" description="The address of a SOCKS5 proxy to use, defaults to none." />
     <setting name="connect_retries" type="byte" default="0" description="The number of times to retry contacting a server, defaults to 0." />
     <setting name="connect_timeout_seconds" default="5" type="uint16_t" description="The time limit for connection establishment, defaults to 5." />
