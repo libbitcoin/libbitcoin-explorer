@@ -115,29 +115,6 @@ void write_file(std::ostream& output, const std::string& path,
     }
 }
 
-template<typename Command>
-void populate_bitcoin_settings(bc::settings& bitcoin_settings,
-    const Command& command) {
-    bitcoin_settings.retargeting_factor =
-        command.get_bitcoin_retargeting_factor_setting();
-    bitcoin_settings.target_spacing_seconds =
-        command.get_bitcoin_target_spacing_seconds_setting();
-    bitcoin_settings.easy_spacing_seconds =
-        command.get_bitcoin_easy_spacing_seconds_setting();
-    bitcoin_settings.timestamp_future_seconds =
-        command.get_bitcoin_timestamp_future_seconds_setting();
-    bitcoin_settings.target_timespan_seconds =
-        command.get_bitcoin_target_timespan_seconds_setting();
-    bitcoin_settings.retarget_proof_of_work_limit =
-        command.get_bitcoin_retarget_proof_of_work_limit_setting();
-    bitcoin_settings.no_retarget_proof_of_work_limit =
-        command.get_bitcoin_no_retarget_proof_of_work_limit_setting();
-    bitcoin_settings.min_timespan = command.get_bitcoin_min_timespan_setting();
-    bitcoin_settings.max_timespan = command.get_bitcoin_max_timespan_setting();
-    bitcoin_settings.retargeting_interval =
-        command.get_bitcoin_retargeting_interval_setting();
-}
-
 } // namespace explorer
 } // namespace libbitcoin
 
