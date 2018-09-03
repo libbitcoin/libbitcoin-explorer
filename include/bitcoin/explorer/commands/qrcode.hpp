@@ -162,7 +162,7 @@ public:
         (
             "insensitive,i",
             value<bool>(&option_.insensitive)->zero_tokens(),
-            "Do not use use sensitivity."
+            "Do not use case sensitivity."
         )
         (
             "module_size,m",
