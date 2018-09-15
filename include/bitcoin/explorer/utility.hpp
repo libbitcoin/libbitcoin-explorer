@@ -125,7 +125,7 @@ void write_file(std::ostream& output, const std::string& path,
  * @param    command  The command.
  * @returns           A structure containing the connection settings.
  */
-BCX_API client::connection_type get_connection(const command& command);
+BCX_API client::connection_settings get_connection(const command& command);
 
 /**
  * Generate a new ec key from a seed.

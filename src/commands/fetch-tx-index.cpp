@@ -42,8 +42,7 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
     const auto& hash = get_hash_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -52,17 +51,15 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &hash](size_t height, size_t index)
+    auto on_done = [&state, &hash](const code& ec, size_t height, size_t index)
     {
+        if (!state.succeeded(ec))
+            return;
+
         state.output(prop_tree(hash, height, index));
     };
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
-    client.blockchain_fetch_transaction_index(on_error, on_done, hash);
+    client.blockchain_fetch_transaction_index(on_done, hash);
     client.wait();
 
     return state.get_result();

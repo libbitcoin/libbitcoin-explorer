@@ -42,8 +42,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
     const encoding& encoding = get_format_option();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -52,22 +51,20 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state](const chain::header& header)
+    auto on_done = [&state](const code& ec, const chain::header& header)
     {
-        state.output(bc::property_tree(header));
-    };
+        if (!state.succeeded(ec))
+            return;
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
+        state.output(bc::property_tree(header));
     };
 
     // Height is ignored if both are specified.
     // Use the null_hash as sentinel to determine whether to use height or hash.
     if (hash == null_hash)
-        client.blockchain_fetch_block_header(on_error, on_done, height);
+        client.blockchain_fetch_block_header(on_done, height);
     else
-        client.blockchain_fetch_block_header(on_error, on_done, hash);
+        client.blockchain_fetch_block_header(on_done, hash);
 
     client.wait();
 

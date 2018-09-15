@@ -43,22 +43,18 @@ using boost::filesystem::path;
 namespace libbitcoin {
 namespace explorer {
 
-connection_type get_connection(const command& command)
+connection_settings get_connection(const command& command)
 {
-    const auto public_key = command.get_server_server_public_key_setting();
-    const auto private_key = command.get_server_client_private_key_setting();
-    const auto timeout = command.get_server_connect_timeout_seconds_setting();
-
-    connection_type connection;
-    connection.retries = command.get_server_connect_retries_setting();
-    connection.timeout_seconds = timeout;
-    connection.server = command.get_server_url_setting();
-    connection.block_server = command.get_server_block_url_setting();
-    connection.transaction_server = command.get_server_transaction_url_setting();
-    connection.socks = command.get_server_socks_proxy_setting();
-    connection.server_public_key = public_key;
-    connection.client_private_key = private_key;
-    return connection;
+    return connection_settings
+    {
+        command.get_server_connect_retries_setting(),
+        command.get_server_url_setting(),
+        command.get_server_block_url_setting(),
+        command.get_server_transaction_url_setting(),
+        command.get_server_socks_proxy_setting(),
+        command.get_server_server_public_key_setting(),
+        command.get_server_client_private_key_setting()
+    };
 }
 
 // The key may be invalid, caller may test for null secret.

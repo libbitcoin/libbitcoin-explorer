@@ -43,8 +43,7 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -56,18 +55,16 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, json](const points_value& unspent)
+    auto on_done = [&state, json](const code& ec, const points_value& unspent)
     {
+        if (!state.succeeded(ec))
+            return;
+
         state.output(bc::property_tree(unspent, json));
     };
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
-    client.blockchain_fetch_unspent_outputs(on_error, on_done, address,
-        satoshi, algorithm);
+    client.blockchain_fetch_unspent_outputs(on_done, address, satoshi,
+        algorithm);
     client.wait();
 
     return state.get_result();
