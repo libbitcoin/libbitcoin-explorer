@@ -49,7 +49,7 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& prefix = get_prefix_argument();
     const auto connection = get_connection(*this);
-    const auto duration = get_duration_option();
+    const auto duration_seconds = get_duration_option();
 
     if (prefix.size() < stealth_address::min_filter_bits)
     {
@@ -63,8 +63,7 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -73,33 +72,19 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    auto on_subscribed = [&state, &prefix](const code& error)
-    {
-        if (state.succeeded(error))
-        {
-            state.output(format(BX_WATCH_STEALTH_PREFIX_WAITING) % prefix);
-            ++state;
-        }
-    };
-
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
-    auto on_update = [&output, &state, &prefix](const code& error,
+    auto on_update = [&output, &state, &prefix](const code& ec,
         uint16_t sequence, size_t height, const hash_digest& tx_hash)
     {
-        if (state.succeeded(error))
-        {
+        if (!state.succeeded(ec))
+            return;
+
+        if (sequence > 0 && tx_hash != null_hash)
             output
                 << sequence << " " << height << " " << encode_hash(tx_hash)
                 << std::endl;
-        }
     };
 
-    client.set_on_update(on_update);
-    client.subscribe_stealth(on_error, on_subscribed, prefix);
+    client.subscribe_stealth(on_update, prefix);
     client.wait();
 
     if (state.stopped())
@@ -111,7 +96,7 @@ console_result watch_stealth::invoke(std::ostream& output, std::ostream& error)
 
     // Handle updates until monitoring duration expires.
     // TODO: revise client to allow for stop notification from another thread.
-    client.monitor(duration);
+    client.monitor(duration_seconds * 1000);
 
     return state.get_result();
 }

@@ -49,10 +49,9 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
-    const auto duration = get_duration_option();
+    const auto duration_seconds = get_duration_option();
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -61,33 +60,22 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    auto on_subscribed = [&state, &address](const code& error)
-    {
-        if (state.succeeded(error))
-        {
-            state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
-            ++state;
-        }
-    };
-
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
-    auto on_update = [&output, &state, &address](const code& error,
+    auto on_update = [&output, &state, &address](const code& ec,
         uint16_t sequence, size_t height, const hash_digest& tx_hash)
     {
-        if (state.succeeded(error))
-        {
+        if (!state.succeeded(ec))
+            return;
+
+        state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
+        ++state;
+
+        if (sequence > 0 && tx_hash != null_hash)
             output
                 << sequence << " " << height << " " << encode_hash(tx_hash)
                 << std::endl;
-        }
     };
 
-    client.set_on_update(on_update);
-    client.subscribe_address(on_error, on_subscribed, address);
+    client.subscribe_address(on_update, address);
     client.wait();
 
     if (state.stopped())
@@ -99,7 +87,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     // Handle updates until monitoring duration expires.
     // TODO: revise client to allow for stop notification from another thread.
-    client.monitor(duration);
+    client.monitor(duration_seconds * 1000);
 
     return state.get_result();
 }

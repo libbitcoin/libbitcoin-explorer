@@ -40,8 +40,7 @@ console_result validate_tx::invoke(std::ostream& output,
     const auto& transaction = get_transaction_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -58,12 +57,7 @@ console_result validate_tx::invoke(std::ostream& output,
             state.output(format(BX_VALIDATE_TX_INVALID) % error.message());
     };
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
-    client.transaction_pool_validate2(on_error, on_done, transaction);
+    client.transaction_pool_validate2(on_done, transaction);
     client.wait();
 
     return state.get_result();

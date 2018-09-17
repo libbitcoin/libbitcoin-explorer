@@ -42,8 +42,7 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -52,19 +51,17 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &address](const history::list& rows)
+    auto on_done = [&state, &address](const code& ec, const history::list& rows)
     {
+        if (!state.succeeded(ec))
+            return;
+
         // This override summarizes the history response as balance.
         state.output(prop_tree(rows, address));
     };
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
     // This does not include unconfirmed transactions.
-    client.blockchain_fetch_history4(on_error, on_done, address);
+    client.blockchain_fetch_history4(on_done, address);
     client.wait();
 
     return state.get_result();

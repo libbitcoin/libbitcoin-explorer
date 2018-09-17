@@ -55,8 +55,7 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -68,18 +67,17 @@ console_result fetch_stealth::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, &filter, json](const stealth::list& list)
+    auto on_done = [&state, &filter, json](const code& ec,
+        const stealth::list& list)
     {
+        if (!state.succeeded(ec))
+            return;
+
         // Write out the transaction hashes of *potential* matches.
         state.output(prop_tree(list, json));
     };
 
-    auto on_error = [&state](const std::error_code& error)
-    {
-        state.succeeded(error);
-    };
-
-    client.blockchain_fetch_stealth2(on_error, on_done, filter, height);
+    client.blockchain_fetch_stealth2(on_done, filter, height);
     client.wait();
 
     return state.get_result();

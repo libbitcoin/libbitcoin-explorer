@@ -48,8 +48,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -61,18 +60,17 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, &address, json](const history::list& rows)
+    auto on_done = [&state, &address, json](const code& ec,
+        const history::list& rows)
     {
+        if (!state.succeeded(ec))
+            return;
+
         state.output(prop_tree(rows, json));
     };
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
     // This does not include unconfirmed transactions.
-    client.blockchain_fetch_history4(on_error, on_done, address.hash());
+    client.blockchain_fetch_history4(on_done, address.hash());
     client.wait();
 
     return state.get_result();

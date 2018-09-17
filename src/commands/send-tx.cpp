@@ -38,8 +38,7 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
     const auto& transaction = get_transaction_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -48,19 +47,16 @@ console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    auto on_done = [&state](const code& error)
+    auto on_done = [&state](const code& ec)
     {
-        if (state.succeeded(error))
-            state.output(BX_SEND_TX_OUTPUT);
-    };
+        if (!state.succeeded(ec))
+            return;
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
+        state.output(BX_SEND_TX_OUTPUT);
     };
 
     // This validates the tx, submits it to local tx pool, and notifies peers.
-    client.transaction_pool_broadcast(on_error, on_done, transaction);
+    client.transaction_pool_broadcast(on_done, transaction);
     client.wait();
 
     return state.get_result();

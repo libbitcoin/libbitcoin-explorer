@@ -41,8 +41,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     const auto& hash = get_hash_argument();
     const auto connection = get_connection(*this);
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -54,20 +53,18 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, json](const tx_type& tx)
+    auto on_done = [&state, json](const code& ec, const tx_type& tx)
     {
+        if (!state.succeeded(ec))
+            return;
+
         state.output(bc::property_tree(tx, json));
     };
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
     if (witness)
-        client.transaction_pool_fetch_transaction2(on_error, on_done, hash);
+        client.transaction_pool_fetch_transaction2(on_done, hash);
     else
-        client.transaction_pool_fetch_transaction(on_error, on_done, hash);
+        client.transaction_pool_fetch_transaction(on_done, hash);
 
     client.wait();
 

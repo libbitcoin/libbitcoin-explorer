@@ -63,8 +63,7 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
         }
     }
 
-    obelisk_client client(connection);
-
+    obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {
         display_connection_failure(error, connection.server);
@@ -73,17 +72,15 @@ console_result fetch_height::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    auto on_done = [&state](size_t height)
+    auto on_done = [&state](const code& ec, size_t height)
     {
+        if (!state.succeeded(ec))
+            return;
+
         state.output(height);
     };
 
-    auto on_error = [&state](const code& error)
-    {
-        state.succeeded(error);
-    };
-
-    client.blockchain_fetch_last_height(on_error, on_done);
+    client.blockchain_fetch_last_height(on_done);
     client.wait();
 
     return state.get_result();
