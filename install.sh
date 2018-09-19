@@ -80,13 +80,13 @@ QRENCODE_ARCHIVE="qrencode-3.4.4.tar.bz2"
 
 # ZMQ archive.
 #------------------------------------------------------------------------------
-ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.2.0/zeromq-4.2.0.tar.gz"
-ZMQ_ARCHIVE="zeromq-4.2.0.tar.gz"
+ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.2.5/zeromq-4.2.5.tar.gz"
+ZMQ_ARCHIVE="zeromq-4.2.5.tar.gz"
 
 # Boost archive.
 #------------------------------------------------------------------------------
-BOOST_URL="http://downloads.sourceforge.net/project/boost/boost/1.57.0/boost_1_57_0.tar.bz2"
-BOOST_ARCHIVE="boost_1_57_0.tar.bz2"
+BOOST_URL="http://downloads.sourceforge.net/project/boost/boost/1.62.0/boost_1_62_0.tar.bz2"
+BOOST_ARCHIVE="boost_1_62_0.tar.bz2"
 
 
 # Define utility functions.
