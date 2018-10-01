@@ -43,6 +43,7 @@ _bx()
         electrum-new
         electrum-to-seed
         fetch-balance
+        fetch-block
         fetch-header
         fetch-height
         fetch-history
