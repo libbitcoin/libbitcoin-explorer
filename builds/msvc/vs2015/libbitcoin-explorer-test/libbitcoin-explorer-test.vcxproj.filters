@@ -126,6 +126,9 @@
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\fetch-block.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\fetch-header.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

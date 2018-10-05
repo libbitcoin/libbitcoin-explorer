@@ -106,6 +106,7 @@
     <ClCompile Include="..\..\..\..\test\commands\electrum-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\electrum-to-seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-balance.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\fetch-block.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-header.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-height.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\fetch-history.cpp" />

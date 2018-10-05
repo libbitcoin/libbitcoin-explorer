@@ -208,6 +208,11 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_balance__returns_object)
     BOOST_REQUIRE(find("fetch-balance") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__fetch_block__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-block") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
 {
     BOOST_REQUIRE(find("fetch-header") != nullptr);
