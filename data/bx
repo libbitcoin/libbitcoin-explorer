@@ -44,6 +44,8 @@ _bx()
         electrum-to-seed
         fetch-balance
         fetch-block
+        fetch-block-hashes
+        fetch-block-height
         fetch-header
         fetch-height
         fetch-history

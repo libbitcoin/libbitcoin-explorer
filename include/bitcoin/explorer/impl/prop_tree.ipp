@@ -80,6 +80,21 @@ pt::ptree prop_value_list(const std::string& name, const Values& values,
     return list;
 }
 
+template <typename Values>
+pt::ptree prop_encoded_value_list(const std::string& name, const Values& values,
+    bool json)
+{
+    pt::ptree list;
+    pt::ptree element;
+    for (const auto& value: values)
+    {
+        element.put_value(encode_base16(value));
+        add_child(list, name, element, json);
+    }
+
+    return list;
+}
+
 } // namespace config
 } // namespace explorer
 } // namespace libbitcoin

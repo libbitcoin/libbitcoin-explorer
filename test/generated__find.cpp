@@ -213,6 +213,16 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_block__returns_object)
     BOOST_REQUIRE(find("fetch-block") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__fetch_block_hashes__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-block-hashes") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_block_height__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-block-height") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
 {
     BOOST_REQUIRE(find("fetch-header") != nullptr);

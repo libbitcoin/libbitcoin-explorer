@@ -21,7 +21,6 @@
 #include <iostream>
 #include <map>
 #include <bitcoin/network.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
@@ -102,7 +101,7 @@ console_result commands::settings::invoke(std::ostream& output,
     list["server.client_private_key"] =
         serialize(get_server_client_private_key_setting());
 
-    write_stream(output, prop_tree(list), encoding);
+    write_stream(output, bc::property_tree(list), encoding);
     return console_result::okay;
 }
 
