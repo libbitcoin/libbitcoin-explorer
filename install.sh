@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-#  Copyright (c) 2014-2015 libbitcoin-explorer developers (see COPYING).
+#  Copyright (c) 2014-2018 libbitcoin-explorer developers (see COPYING).
 #
 #         GENERATED SOURCE CODE, DO NOT EDIT EXCEPT EXPERIMENTALLY
 #
@@ -575,9 +575,15 @@ build_from_tarball()
     # Join generated and command line options.
     local CONFIGURATION=("${OPTIONS[@]}" "$@")
 
-    configure_options "${CONFIGURATION[@]}"
-    make_jobs $JOBS --silent
-    make install
+    if [[ $ARCHIVE == $MBEDTLS_ARCHIVE ]]; then
+        make -j $JOBS lib
+        make DESTDIR=$PREFIX install
+    else
+        configure_options "${CONFIGURATION[@]}"
+        make_jobs $JOBS --silent
+        make install
+    fi
+
     configure_links
 
     # Enable shared only zlib build.
