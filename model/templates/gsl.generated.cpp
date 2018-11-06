@@ -1,6 +1,6 @@
 .template 0
 ###############################################################################
-# Copyright (c) 2011-2015 libbitcoin developers (see COPYING).
+# Copyright (c) 2011-2018 libbitcoin developers (see COPYING).
 #
 # GSL generate libbitcoin-explorer source files.
 # This file contains no localizable resources.
