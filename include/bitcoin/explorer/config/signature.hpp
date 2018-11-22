@@ -23,7 +23,7 @@
 #include <iostream>
 #include <string>
 #include <cstdint>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -52,7 +52,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    signature(const wallet::message_signature& value);
+    signature(const system::wallet::message_signature& value);
 
     /**
      * Copy constructor.
@@ -64,7 +64,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const wallet::message_signature&() const;
+    operator const system::wallet::message_signature&() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -89,7 +89,7 @@ private:
     /**
      * The state of this object.
      */
-    wallet::message_signature value_;
+    system::wallet::message_signature value_;
 };
 
 } // namespace config

@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -97,13 +97,13 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("EC_PUBLIC_KEY", 1);
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -120,7 +120,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -137,7 +137,7 @@ public:
         )
         (
             "EC_PUBLIC_KEY",
-            value<bc::wallet::ec_public>(&argument_.ec_public_key),
+            value<system::wallet::ec_public>(&argument_.ec_public_key),
             "The Base16 EC public key to convert. If not specified the key is read from STDIN."
         );
 
@@ -158,7 +158,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -166,7 +166,7 @@ public:
     /**
      * Get the value of the EC_PUBLIC_KEY argument.
      */
-    virtual bc::wallet::ec_public& get_ec_public_key_argument()
+    virtual system::wallet::ec_public& get_ec_public_key_argument()
     {
         return argument_.ec_public_key;
     }
@@ -175,7 +175,7 @@ public:
      * Set the value of the EC_PUBLIC_KEY argument.
      */
     virtual void set_ec_public_key_argument(
-        const bc::wallet::ec_public& value)
+        const system::wallet::ec_public& value)
     {
         argument_.ec_public_key = value;
     }
@@ -194,7 +194,7 @@ private:
         {
         }
 
-        bc::wallet::ec_public ec_public_key;
+        system::wallet::ec_public ec_public_key;
     } argument_;
 
     /**

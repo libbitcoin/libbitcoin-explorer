@@ -22,13 +22,14 @@
 #include <sstream>
 #include <string>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace bc::system;
 using namespace po;
 
 hd_key::hd_key(const std::string& base58)

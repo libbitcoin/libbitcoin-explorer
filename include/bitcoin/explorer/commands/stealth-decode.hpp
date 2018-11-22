@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -104,7 +104,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("STEALTH_ADDRESS", 1);
@@ -127,7 +127,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -149,7 +149,7 @@ public:
         )
         (
             "STEALTH_ADDRESS",
-            value<bc::wallet::stealth_address>(&argument_.stealth_address),
+            value<system::wallet::stealth_address>(&argument_.stealth_address),
             "The stealth payment address. If not specified the address is read from STDIN."
         );
 
@@ -170,7 +170,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -178,7 +178,7 @@ public:
     /**
      * Get the value of the STEALTH_ADDRESS argument.
      */
-    virtual bc::wallet::stealth_address& get_stealth_address_argument()
+    virtual system::wallet::stealth_address& get_stealth_address_argument()
     {
         return argument_.stealth_address;
     }
@@ -187,7 +187,7 @@ public:
      * Set the value of the STEALTH_ADDRESS argument.
      */
     virtual void set_stealth_address_argument(
-        const bc::wallet::stealth_address& value)
+        const system::wallet::stealth_address& value)
     {
         argument_.stealth_address = value;
     }
@@ -223,7 +223,7 @@ private:
         {
         }
 
-        bc::wallet::stealth_address stealth_address;
+        system::wallet::stealth_address stealth_address;
     } argument_;
 
     /**

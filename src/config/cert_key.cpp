@@ -29,6 +29,7 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace bc::system;
 using namespace po;
 
 //constexpr uint8_t cert_key_byte_size = 32;

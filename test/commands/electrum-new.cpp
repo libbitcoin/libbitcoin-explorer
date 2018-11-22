@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(electrum_new__invoke__es_dictionary_prefix__okay_output)
     set_utf8_stdout();
 
     // Verify the UTF8 initialization.
-    BOOST_REQUIRE(bc::wallet::language::es[0] == std::string("ábaco"));
+    BOOST_REQUIRE(bc::system::wallet::language::es[0] == std::string("ábaco"));
 
     BX_DECLARE_COMMAND(electrum_new);
     command.set_seed_argument({ "05e669b4270f4e25bce6fc3736170d423c" });

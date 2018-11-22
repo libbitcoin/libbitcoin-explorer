@@ -116,7 +116,7 @@ public:
      * This overrides any outstanding callback references.
      * @param[in]  result  The desired callback result code, defaults to okay.
      */
-    virtual void stop(console_result result=console_result::okay);
+    virtual void stop(system::console_result result=system::console_result::okay);
 
     /**
      * Get a value indicating whether the callback reference count is zero.
@@ -141,12 +141,12 @@ public:
     /**
      * Get the callback result code.
      */
-    virtual console_result get_result();
+    virtual system::console_result get_result();
 
     /**
      * Set the callback result code.
      */
-    virtual void set_result(console_result result);
+    virtual void set_result(system::console_result result);
 
     /**
      * Increment the callback synchronization reference count.
@@ -178,7 +178,7 @@ public:
 private:
     std::atomic<bool> stopped_;
     std::atomic<size_t> refcount_;
-    std::atomic<console_result> result_;
+    std::atomic<system::console_result> result_;
     const encoding_engine engine_;
     std::ostream& error_;
     std::ostream& output_;

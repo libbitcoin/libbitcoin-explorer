@@ -19,12 +19,14 @@
 #include <bitcoin/explorer/commands/input-validate.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result message_validate::invoke(std::ostream& output,
     std::ostream& error)

@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -105,7 +105,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata();
     }
@@ -125,7 +125,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -157,12 +157,12 @@ public:
         )
         (
             "input,i",
-            value<std::vector<bc::config::input>>(&option_.inputs),
+            value<std::vector<system::config::input>>(&option_.inputs),
             "The set of transaction input points encoded as TXHASH:INDEX:SEQUENCE. TXHASH is a Base16 transaction hash. INDEX is the 32 bit input index in the context of the transaction. SEQUENCE is the optional 32 bit input sequence and defaults to the maximum value."
         )
         (
             "output,o",
-            value<std::vector<bc::config::output>>(&option_.outputs),
+            value<std::vector<system::config::output>>(&option_.outputs),
             "The set of transaction output data encoded as TARGET:SATOSHI:SEED. TARGET is an address (including stealth or pay-to-script-hash) or a Base16 script. SATOSHI is the 64 bit spend amount in satoshi. SEED is required for stealth outputs and not used otherwise. The same seed should NOT be used for multiple outputs."
         );
 
@@ -196,7 +196,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -255,7 +255,7 @@ public:
     /**
      * Get the value of the input options.
      */
-    virtual std::vector<bc::config::input>& get_inputs_option()
+    virtual std::vector<system::config::input>& get_inputs_option()
     {
         return option_.inputs;
     }
@@ -264,7 +264,7 @@ public:
      * Set the value of the input options.
      */
     virtual void set_inputs_option(
-        const std::vector<bc::config::input>& value)
+        const std::vector<system::config::input>& value)
     {
         option_.inputs = value;
     }
@@ -272,7 +272,7 @@ public:
     /**
      * Get the value of the output options.
      */
-    virtual std::vector<bc::config::output>& get_outputs_option()
+    virtual std::vector<system::config::output>& get_outputs_option()
     {
         return option_.outputs;
     }
@@ -281,7 +281,7 @@ public:
      * Set the value of the output options.
      */
     virtual void set_outputs_option(
-        const std::vector<bc::config::output>& value)
+        const std::vector<system::config::output>& value)
     {
         option_.outputs = value;
     }
@@ -320,8 +320,8 @@ private:
         explorer::config::byte script_version;
         uint32_t lock_time;
         uint32_t version;
-        std::vector<bc::config::input> inputs;
-        std::vector<bc::config::output> outputs;
+        std::vector<system::config::input> inputs;
+        std::vector<system::config::output> outputs;
     } option_;
 };
 

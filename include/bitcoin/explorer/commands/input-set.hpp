@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -110,7 +110,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("ENDORSEMENT_SCRIPT", 1)
@@ -134,7 +134,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -156,12 +156,12 @@ public:
         )
         (
             "ENDORSEMENT_SCRIPT",
-            value<bc::config::script>(&argument_.endorsement_script)->required(),
+            value<system::config::script>(&argument_.endorsement_script)->required(),
             "The endorsement script to assign to the input. Multiple tokens must be quoted."
         )
         (
             "TRANSACTION",
-            value<bc::config::transaction>(&argument_.transaction),
+            value<system::config::transaction>(&argument_.transaction),
             "The Base16 transaction. If not specified the transaction is read from STDIN."
         );
 
@@ -182,7 +182,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -190,7 +190,7 @@ public:
     /**
      * Get the value of the ENDORSEMENT_SCRIPT argument.
      */
-    virtual bc::config::script& get_endorsement_script_argument()
+    virtual system::config::script& get_endorsement_script_argument()
     {
         return argument_.endorsement_script;
     }
@@ -199,7 +199,7 @@ public:
      * Set the value of the ENDORSEMENT_SCRIPT argument.
      */
     virtual void set_endorsement_script_argument(
-        const bc::config::script& value)
+        const system::config::script& value)
     {
         argument_.endorsement_script = value;
     }
@@ -207,7 +207,7 @@ public:
     /**
      * Get the value of the TRANSACTION argument.
      */
-    virtual bc::config::transaction& get_transaction_argument()
+    virtual system::config::transaction& get_transaction_argument()
     {
         return argument_.transaction;
     }
@@ -216,7 +216,7 @@ public:
      * Set the value of the TRANSACTION argument.
      */
     virtual void set_transaction_argument(
-        const bc::config::transaction& value)
+        const system::config::transaction& value)
     {
         argument_.transaction = value;
     }
@@ -253,8 +253,8 @@ private:
         {
         }
 
-        bc::config::script endorsement_script;
-        bc::config::transaction transaction;
+        system::config::script endorsement_script;
+        system::config::transaction transaction;
     } argument_;
 
     /**

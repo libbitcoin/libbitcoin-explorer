@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -103,14 +103,14 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("TOKEN", 1)
             .add("SEED", 1);
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -127,7 +127,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -154,12 +154,12 @@ public:
         )
         (
             "TOKEN",
-            value<bc::wallet::ek_token>(&argument_.token)->required(),
+            value<system::wallet::ek_token>(&argument_.token)->required(),
             "The intermediate passphrase token used to create the corresponding encrypted private key."
         )
         (
             "SEED",
-            value<bc::config::base16>(&argument_.seed),
+            value<system::config::base16>(&argument_.seed),
             "The Base16 entropy for the new encrypted public key. Must be at least 192 bits in length (only the first 192 bits are used). If not specified the seed is read from STDIN."
         );
 
@@ -186,7 +186,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -194,7 +194,7 @@ public:
     /**
      * Get the value of the TOKEN argument.
      */
-    virtual bc::wallet::ek_token& get_token_argument()
+    virtual system::wallet::ek_token& get_token_argument()
     {
         return argument_.token;
     }
@@ -203,7 +203,7 @@ public:
      * Set the value of the TOKEN argument.
      */
     virtual void set_token_argument(
-        const bc::wallet::ek_token& value)
+        const system::wallet::ek_token& value)
     {
         argument_.token = value;
     }
@@ -211,7 +211,7 @@ public:
     /**
      * Get the value of the SEED argument.
      */
-    virtual bc::config::base16& get_seed_argument()
+    virtual system::config::base16& get_seed_argument()
     {
         return argument_.seed;
     }
@@ -220,7 +220,7 @@ public:
      * Set the value of the SEED argument.
      */
     virtual void set_seed_argument(
-        const bc::config::base16& value)
+        const system::config::base16& value)
     {
         argument_.seed = value;
     }
@@ -274,8 +274,8 @@ private:
         {
         }
 
-        bc::wallet::ek_token token;
-        bc::config::base16 seed;
+        system::wallet::ek_token token;
+        system::config::base16 seed;
     } argument_;
 
     /**

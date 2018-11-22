@@ -20,12 +20,14 @@
 
 #include <iostream>
 #include <sstream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
+
+using namespace bc::system;
 
 raw::raw()
   : value_()

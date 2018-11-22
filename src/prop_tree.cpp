@@ -33,9 +33,9 @@ namespace config {
 
 using namespace pt;
 using namespace bc::client;
-using namespace bc::config;
-using namespace bc::machine;
-using namespace bc::wallet;
+using namespace bc::system::config;
+using namespace bc::system::machine;
+using namespace bc::system::wallet;
 
 // property_tree is very odd in that what one might consider a node or element,
 // having a "containing" name cannot be added into another node without
@@ -53,7 +53,7 @@ ptree prop_list(const client::history& row)
     ptree tree;
 
     // missing output implies output cut off by server's history threshold
-    if (row.output.hash() != null_hash)
+    if (row.output.hash() != system::null_hash)
     {
         tree.put("received.hash", hash256(row.output.hash()));
 
@@ -65,7 +65,7 @@ ptree prop_list(const client::history& row)
     }
 
     // missing input implies unspent
-    if (row.spend.hash() != null_hash)
+    if (row.spend.hash() != system::null_hash)
     {
         tree.put("spent.hash", hash256(row.spend.hash()));
 
@@ -105,10 +105,10 @@ ptree prop_list(const client::history::list& rows,
 
     for (const auto& row: rows)
     {
-        received = ceiling_add(received, row.value);
+        received = system::ceiling_add(received, row.value);
 
-        if (row.spend.hash() != null_hash)
-            spent = ceiling_add(spent, row.value);
+        if (row.spend.hash() != system::null_hash)
+            spent = system::ceiling_add(spent, row.value);
     }
 
     tree.put("address", balance_address);
@@ -127,7 +127,7 @@ ptree prop_tree(const client::history::list& rows,
 
 // wrapper
 
-ptree prop_list(const wallet::wrapped_data& wrapper)
+ptree prop_list(const system::wallet::wrapped_data& wrapper)
 {
     ptree tree;
     tree.put("checksum", wrapper.checksum);
@@ -136,7 +136,7 @@ ptree prop_list(const wallet::wrapped_data& wrapper)
     return tree;
 }
 
-ptree prop_tree(const wallet::wrapped_data& wrapper)
+ptree prop_tree(const system::wallet::wrapped_data& wrapper)
 {
     ptree tree;
     tree.add_child("wrapper", prop_list(wrapper));
@@ -153,7 +153,8 @@ ptree prop_list(const stealth_address& stealth, bool json)
     // So instead we emit the reused key as one of the spend keys.
     // This means that it is typical to see the same key in scan and spend.
 
-    const auto spends = cast<ec_compressed, ec_public>(stealth.spend_keys());
+    const auto spends = system::cast<system::ec_compressed, ec_public>(
+        stealth.spend_keys());
     const auto spends_values = prop_value_list("public_key", spends, json);
 
     ptree tree;
@@ -200,14 +201,14 @@ ptree prop_tree(const client::stealth::list& rows, bool json)
 
 // hash_list (base16 encoded values)
 
-ptree prop_list(const hash_digest& hash)
+ptree prop_list(const system::hash_digest& hash)
 {
     ptree tree;
     tree.put_value(encode_base16(hash));
     return tree;
 }
 
-ptree prop_tree(const hash_digest& hash)
+ptree prop_tree(const system::hash_digest& hash)
 {
     ptree tree;
     tree.add_child("hash", prop_list(hash));

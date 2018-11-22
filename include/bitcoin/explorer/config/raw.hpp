@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -50,7 +50,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    raw(const data_chunk& value);
+    raw(const system::data_chunk& value);
 
     /**
      * Copy constructor.
@@ -62,13 +62,13 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const data_chunk&() const;
+    operator const system::data_chunk&() const;
 
     /**
      * Overload cast to generic data reference.
      * @return  This object's value cast to a generic data reference.
      */
-    operator data_slice() const;
+    operator system::data_slice() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -93,7 +93,7 @@ private:
     /**
      * The state of this object's raw data.
      */
-    data_chunk value_;
+    system::data_chunk value_;
 };
 
 } // namespace explorer

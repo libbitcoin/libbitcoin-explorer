@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <boost/format.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
@@ -30,8 +30,10 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::client;
 using namespace bc::explorer::config;
+using namespace bc::system;
 
 // This call is deprecated at the server.
 console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)

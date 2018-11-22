@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -106,7 +106,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("WIF", 1)
@@ -130,7 +130,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -147,7 +147,7 @@ public:
         )
         (
             "WIF",
-            value<bc::wallet::ec_private>(&argument_.wif)->required(),
+            value<system::wallet::ec_private>(&argument_.wif)->required(),
             "The WIF private key to use for signing."
         )
         (
@@ -173,7 +173,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -181,7 +181,7 @@ public:
     /**
      * Get the value of the WIF argument.
      */
-    virtual bc::wallet::ec_private& get_wif_argument()
+    virtual system::wallet::ec_private& get_wif_argument()
     {
         return argument_.wif;
     }
@@ -190,7 +190,7 @@ public:
      * Set the value of the WIF argument.
      */
     virtual void set_wif_argument(
-        const bc::wallet::ec_private& value)
+        const system::wallet::ec_private& value)
     {
         argument_.wif = value;
     }
@@ -227,7 +227,7 @@ private:
         {
         }
 
-        bc::wallet::ec_private wif;
+        system::wallet::ec_private wif;
         explorer::config::raw message;
     } argument_;
 

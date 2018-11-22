@@ -19,13 +19,15 @@
 #include <bitcoin/explorer/commands/ec-to-public.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 // In the case of failure this produces ec_compressed_null.
 console_result ec_to_public::invoke(std::ostream& output, std::ostream& error)

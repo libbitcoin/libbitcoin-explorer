@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(address__constructor__default__does_not_throw)
 
 BOOST_AUTO_TEST_CASE(address__constructor__valid_string_cast__round_trips)
 {
-    const wallet::payment_address address(ADDRESS_MAINNET_A);
+    const system::wallet::payment_address address(ADDRESS_MAINNET_A);
     BOOST_REQUIRE_EQUAL(address.encoded(), ADDRESS_MAINNET_A);
 }
 

@@ -32,9 +32,11 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::client;
 using namespace bc::explorer::config;
-using namespace bc::wallet;
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 static void handle_signal(int signal)
 {

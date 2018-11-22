@@ -23,7 +23,7 @@
 #include <boost/program_options.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 
 using namespace boost::filesystem;
 using namespace boost::program_options;
@@ -42,26 +42,26 @@ bool parser::help() const
     return help_;
 }
 
-options_metadata parser::load_options()
+system::options_metadata parser::load_options()
 {
     return instance_.load_options();
 }
 
-arguments_metadata parser::load_arguments()
+system::arguments_metadata parser::load_arguments()
 {
     return instance_.load_arguments();
 }
 
-options_metadata parser::load_settings()
+system::options_metadata parser::load_settings()
 {
-    options_metadata settings("settings");
+    system::options_metadata settings("settings");
     instance_.load_settings(settings);
     return settings;
 }
 
-options_metadata parser::load_environment()
+system::options_metadata parser::load_environment()
 {
-    options_metadata environment("environment");
+    system::options_metadata environment("environment");
     instance_.load_environment(environment);
     return environment;
 }
@@ -69,7 +69,7 @@ options_metadata parser::load_environment()
 void parser::load_command_variables(variables_map& variables,
     std::istream& input, int argc, const char* argv[])
 {
-    bc::config::parser::load_command_variables(variables, argc, argv);
+    system::config::parser::load_command_variables(variables, argc, argv);
 
     // Don't load rest if help is specified.
     // For variable with stdin or file fallback load the input stream.

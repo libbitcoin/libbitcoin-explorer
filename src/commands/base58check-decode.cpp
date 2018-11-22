@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/base58check-decode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
@@ -27,7 +27,9 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::explorer::config;
+using namespace bc::system;
 
 console_result base58check_decode::invoke(std::ostream& output,
     std::ostream& error)

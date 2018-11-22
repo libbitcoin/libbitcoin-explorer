@@ -22,7 +22,7 @@
 #include <iostream>
 #include <string>
 #include <boost/filesystem.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 
@@ -32,7 +32,7 @@ namespace explorer {
 /// Parse configurable values from environment variables, settings file, and
 /// command line positional and non-positional options.
 class BCX_API parser
-  : public bc::config::parser
+  : public system::config::parser
 {
 public:
     /// Construct the parser for the given command.
@@ -45,23 +45,23 @@ public:
     virtual bool help() const;
 
     /// Load command line options (named).
-    virtual options_metadata load_options();
+    virtual system::options_metadata load_options();
 
     /// Load command line arguments (positional).
-    virtual arguments_metadata load_arguments();
+    virtual system::arguments_metadata load_arguments();
 
     /// Load configuration file settings.
-    virtual options_metadata load_settings();
+    virtual system::options_metadata load_settings();
 
     /// Load environment variable settings.
-    virtual options_metadata load_environment();
+    virtual system::options_metadata load_environment();
 
 protected:
-    virtual void load_command_variables(variables_map& variables,
+    virtual void load_command_variables(system::variables_map& variables,
         std::istream& input, int argc, const char* argv[]);
 
     // Expose polymorphic load_command_variables method from base.
-    using bc::config::parser::load_command_variables;
+    using system::config::parser::load_command_variables;
 
 private:
     static std::string system_config_directory();

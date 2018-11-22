@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -97,13 +97,13 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("BASE16", 1);
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -120,7 +120,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -137,7 +137,7 @@ public:
         )
         (
             "BASE16",
-            value<bc::config::base16>(&argument_.base16),
+            value<system::config::base16>(&argument_.base16),
             "The Base16 data to hash. If not specified the data is read from STDIN."
         );
 
@@ -158,7 +158,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -166,7 +166,7 @@ public:
     /**
      * Get the value of the BASE16 argument.
      */
-    virtual bc::config::base16& get_base16_argument()
+    virtual system::config::base16& get_base16_argument()
     {
         return argument_.base16;
     }
@@ -175,7 +175,7 @@ public:
      * Set the value of the BASE16 argument.
      */
     virtual void set_base16_argument(
-        const bc::config::base16& value)
+        const system::config::base16& value)
     {
         argument_.base16 = value;
     }
@@ -194,7 +194,7 @@ private:
         {
         }
 
-        bc::config::base16 base16;
+        system::config::base16 base16;
     } argument_;
 
     /**

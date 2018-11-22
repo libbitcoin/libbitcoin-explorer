@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -97,7 +97,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("HD_PRIVATE_KEY", 1);
@@ -120,7 +120,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -142,7 +142,7 @@ public:
         )
         (
             "HD_PRIVATE_KEY",
-            value<bc::wallet::hd_private>(&argument_.hd_private_key),
+            value<system::wallet::hd_private>(&argument_.hd_private_key),
             "The HD private key. If not specified the key is read from STDIN."
         );
 
@@ -169,7 +169,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -177,7 +177,7 @@ public:
     /**
      * Get the value of the HD_PRIVATE_KEY argument.
      */
-    virtual bc::wallet::hd_private& get_hd_private_key_argument()
+    virtual system::wallet::hd_private& get_hd_private_key_argument()
     {
         return argument_.hd_private_key;
     }
@@ -186,7 +186,7 @@ public:
      * Set the value of the HD_PRIVATE_KEY argument.
      */
     virtual void set_hd_private_key_argument(
-        const bc::wallet::hd_private& value)
+        const system::wallet::hd_private& value)
     {
         argument_.hd_private_key = value;
     }
@@ -222,7 +222,7 @@ private:
         {
         }
 
-        bc::wallet::hd_private hd_private_key;
+        system::wallet::hd_private hd_private_key;
     } argument_;
 
     /**

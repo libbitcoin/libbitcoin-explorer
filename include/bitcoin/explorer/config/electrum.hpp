@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <string>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -50,7 +50,7 @@ public:
      * Initialization constructor.
      * @param[in]  electrum seed types  The value to initialize with.
      */
-    electrum(bc::wallet::electrum::seed& electrum);
+    electrum(system::wallet::electrum::seed& electrum);
 
     /**
      * Copy constructor.
@@ -62,7 +62,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator bc::wallet::electrum::seed() const;
+    operator system::wallet::electrum::seed() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -87,7 +87,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::wallet::electrum::seed value_;
+    system::wallet::electrum::seed value_;
 };
 
 } // namespace config

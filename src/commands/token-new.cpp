@@ -19,14 +19,16 @@
 #include <bitcoin/explorer/commands/token-new.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::explorer::config;
-using namespace bc::wallet;
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result token_new::invoke(std::ostream& output, std::ostream& error)
 {

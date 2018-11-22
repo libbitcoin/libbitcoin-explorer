@@ -58,24 +58,25 @@ connection_settings get_connection(const command& command)
 }
 
 // The key may be invalid, caller may test for null secret.
-ec_secret new_key(const data_chunk& seed)
+system::ec_secret new_key(const system::data_chunk& seed)
 {
-    const wallet::hd_private key(seed);
+    const system::wallet::hd_private key(seed);
     return key.secret();
 }
 
 // Not testable due to lack of random engine injection.
-data_chunk new_seed(size_t bit_length)
+system::data_chunk new_seed(size_t bit_length)
 {
     size_t fill_seed_size = bit_length / byte_bits;
-    data_chunk seed(fill_seed_size);
-    pseudo_random_fill(seed);
+    system::data_chunk seed(fill_seed_size);
+    system::pseudo_random_fill(seed);
     return seed;
 }
 
-string_list numbers_to_strings(const chain::point::indexes& indexes)
+system::string_list numbers_to_strings(
+    const system::chain::point::indexes& indexes)
 {
-    string_list stringlist;
+    system::string_list stringlist;
 
     for (const auto index: indexes)
         stringlist.push_back(std::to_string(index));
@@ -98,7 +99,7 @@ name_value_pairs split_pairs(const std::vector<std::string> tokens,
 
     for (const auto& token: tokens)
     {
-        const auto words = split(token, delimiter);
+        const auto words = system::split(token, delimiter);
         const auto& left = words[0];
 
         std::string right;
@@ -124,26 +125,26 @@ bool starts_with(const std::string& value, const std::string& prefix)
 }
 
 // This verifies the checksum.
-bool unwrap(wallet::wrapped_data& data, data_slice wrapped)
+bool unwrap(system::wallet::wrapped_data& data, system::data_slice wrapped)
 {
     if (!verify_checksum(wrapped))
         return false;
 
     data.version = wrapped.data()[0];
     const auto payload_begin = std::begin(wrapped) + 1;
-    const auto checksum_begin = std::end(wrapped) - checksum_size;
+    const auto checksum_begin = std::end(wrapped) - system::checksum_size;
     data.payload.resize(checksum_begin - payload_begin);
     std::copy(payload_begin, checksum_begin, data.payload.begin());
-    data.checksum = from_little_endian_unsafe<uint32_t>(checksum_begin);
+    data.checksum = system::from_little_endian_unsafe<uint32_t>(checksum_begin);
     return true;
 }
 
 // This recalculates the checksum, ignoring what is in data.checksum.
-data_chunk wrap(const wallet::wrapped_data& data)
+system::data_chunk wrap(const system::wallet::wrapped_data& data)
 {
-    auto bytes = to_chunk(data.version);
-    extend_data(bytes, data.payload);
-    append_checksum(bytes);
+    auto bytes = system::to_chunk(data.version);
+    system::extend_data(bytes, data.payload);
+    system::append_checksum(bytes);
     return bytes;
 }
 

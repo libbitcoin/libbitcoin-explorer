@@ -26,7 +26,9 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::explorer::config;
+using namespace bc::system;
 using namespace pt;
 
 console_result commands::settings::invoke(std::ostream& output,
@@ -73,7 +75,7 @@ console_result commands::settings::invoke(std::ostream& output,
     list["network.error_file"] =
         get_network_error_file_setting().string();
 
-    network::settings settings(bc::config::settings::mainnet);
+    network::settings settings(system::config::settings::mainnet);
     const auto& nodes = get_network_seeds_setting();
     const auto& seeds = nodes.empty() ? settings.seeds : nodes;
 

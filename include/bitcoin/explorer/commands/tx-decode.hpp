@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -97,7 +97,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("TRANSACTION", 1);
@@ -120,7 +120,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -142,7 +142,7 @@ public:
         )
         (
             "TRANSACTION",
-            value<bc::config::transaction>(&argument_.transaction),
+            value<system::config::transaction>(&argument_.transaction),
             "The Base16 transaction. If not specified the transaction is read from STDIN."
         );
 
@@ -163,7 +163,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -171,7 +171,7 @@ public:
     /**
      * Get the value of the TRANSACTION argument.
      */
-    virtual bc::config::transaction& get_transaction_argument()
+    virtual system::config::transaction& get_transaction_argument()
     {
         return argument_.transaction;
     }
@@ -180,7 +180,7 @@ public:
      * Set the value of the TRANSACTION argument.
      */
     virtual void set_transaction_argument(
-        const bc::config::transaction& value)
+        const system::config::transaction& value)
     {
         argument_.transaction = value;
     }
@@ -216,7 +216,7 @@ private:
         {
         }
 
-        bc::config::transaction transaction;
+        system::config::transaction transaction;
     } argument_;
 
     /**

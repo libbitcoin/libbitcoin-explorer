@@ -20,15 +20,17 @@
 
 #include <iostream>
 #include <cstdint>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/config/signature.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::explorer::config;
-using namespace bc::wallet;
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 // This doesn't have to be WIF, but it incorporates the compression context.
 console_result message_sign::invoke(std::ostream& output, std::ostream& error)

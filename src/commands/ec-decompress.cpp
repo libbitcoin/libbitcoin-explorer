@@ -19,14 +19,15 @@
 #include <bitcoin/explorer/commands/ec-decompress.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc;
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result ec_decompress::invoke(std::ostream& output, std::ostream& error)
 {

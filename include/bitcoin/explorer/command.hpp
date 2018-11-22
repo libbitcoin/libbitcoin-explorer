@@ -24,7 +24,7 @@
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/address.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
@@ -128,10 +128,10 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& error)
     {
-        return console_result::failure;
+        return system::console_result::failure;
     }
 
     /**
@@ -139,7 +139,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -148,13 +148,13 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(options_metadata& definitions)
+    virtual void load_environment(system::options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
         (
             /* This composes with the command line options. */
-            BX_CONFIG_VARIABLE, 
+            BX_CONFIG_VARIABLE,
             value<boost::filesystem::path>()
                 ->composing()->default_value(config_default_path()),
             "The path to the configuration settings file."
@@ -176,7 +176,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         return option_metadata_;
     }
@@ -185,7 +185,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(options_metadata& definitions)
+    virtual void load_settings(system::options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -261,27 +261,27 @@ public:
         )
         (
             "network.seed",
-            value<std::vector<bc::config::endpoint>>(&setting_.network.seeds),
+            value<std::vector<system::config::endpoint>>(&setting_.network.seeds),
             "A seed node for initializing the host pool, multiple entries allowed."
         )
         (
             "server.url",
-            value<bc::config::endpoint>(&setting_.server.url)->default_value({ "tcp://mainnet.libbitcoin.net:9091" }),
+            value<system::config::endpoint>(&setting_.server.url)->default_value({ "tcp://mainnet.libbitcoin.net:9091" }),
             "The URL of the Libbitcoin query service."
         )
         (
             "server.block_url",
-            value<bc::config::endpoint>(&setting_.server.block_url)->default_value({ "tcp://mainnet.libbitcoin.net:9093" }),
+            value<system::config::endpoint>(&setting_.server.block_url)->default_value({ "tcp://mainnet.libbitcoin.net:9093" }),
             "The URL of the Libbitcoin block service."
         )
         (
             "server.transaction_url",
-            value<bc::config::endpoint>(&setting_.server.transaction_url)->default_value({ "tcp://mainnet.libbitcoin.net:9094" }),
+            value<system::config::endpoint>(&setting_.server.transaction_url)->default_value({ "tcp://mainnet.libbitcoin.net:9094" }),
             "The URL of the Libbitcoin transaction service."
         )
         (
             "server.socks_proxy",
-            value<bc::config::authority>(&setting_.server.socks_proxy)->default_value({ "0.0.0.0:0" }),
+            value<system::config::authority>(&setting_.server.socks_proxy)->default_value({ "0.0.0.0:0" }),
             "The address of a SOCKS5 proxy to use, defaults to none."
         )
         (
@@ -296,12 +296,12 @@ public:
         )
         (
             "server.server_public_key",
-            value<bc::config::sodium>(&setting_.server.server_public_key),
+            value<system::config::sodium>(&setting_.server.server_public_key),
             "The Z85-encoded public key of the server."
         )
         (
             "server.client_private_key",
-            value<bc::config::sodium>(&setting_.server.client_private_key),
+            value<system::config::sodium>(&setting_.server.client_private_key),
             "The Z85-encoded private key of the client."
         );
     }
@@ -331,18 +331,18 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        bc::config::printer help(options, arguments, BX_PROGRAM_NAME,
+        system::config::printer help(options, arguments, BX_PROGRAM_NAME,
             description(), name());
         help.initialize();
         help.commandline(output);
     }
 
     /* Properties */
-    
+
     /**
      * Get command line argument metadata.
      */
-    virtual arguments_metadata& get_argument_metadata()
+    virtual system::arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -350,7 +350,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    virtual options_metadata& get_option_metadata()
+    virtual system::options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -582,7 +582,7 @@ public:
     /**
      * Get the value of the network.seed settings.
      */
-    virtual std::vector<bc::config::endpoint> get_network_seeds_setting() const
+    virtual std::vector<system::config::endpoint> get_network_seeds_setting() const
     {
         return setting_.network.seeds;
     }
@@ -590,7 +590,7 @@ public:
     /**
      * Set the value of the network.seed settings.
      */
-    virtual void set_network_seeds_setting(std::vector<bc::config::endpoint> value)
+    virtual void set_network_seeds_setting(std::vector<system::config::endpoint> value)
     {
         setting_.network.seeds = value;
     }
@@ -598,7 +598,7 @@ public:
     /**
      * Get the value of the server.url setting.
      */
-    virtual bc::config::endpoint get_server_url_setting() const
+    virtual system::config::endpoint get_server_url_setting() const
     {
         return setting_.server.url;
     }
@@ -606,7 +606,7 @@ public:
     /**
      * Set the value of the server.url setting.
      */
-    virtual void set_server_url_setting(bc::config::endpoint value)
+    virtual void set_server_url_setting(system::config::endpoint value)
     {
         setting_.server.url = value;
     }
@@ -614,7 +614,7 @@ public:
     /**
      * Get the value of the server.block_url setting.
      */
-    virtual bc::config::endpoint get_server_block_url_setting() const
+    virtual system::config::endpoint get_server_block_url_setting() const
     {
         return setting_.server.block_url;
     }
@@ -622,7 +622,7 @@ public:
     /**
      * Set the value of the server.block_url setting.
      */
-    virtual void set_server_block_url_setting(bc::config::endpoint value)
+    virtual void set_server_block_url_setting(system::config::endpoint value)
     {
         setting_.server.block_url = value;
     }
@@ -630,7 +630,7 @@ public:
     /**
      * Get the value of the server.transaction_url setting.
      */
-    virtual bc::config::endpoint get_server_transaction_url_setting() const
+    virtual system::config::endpoint get_server_transaction_url_setting() const
     {
         return setting_.server.transaction_url;
     }
@@ -638,7 +638,7 @@ public:
     /**
      * Set the value of the server.transaction_url setting.
      */
-    virtual void set_server_transaction_url_setting(bc::config::endpoint value)
+    virtual void set_server_transaction_url_setting(system::config::endpoint value)
     {
         setting_.server.transaction_url = value;
     }
@@ -646,7 +646,7 @@ public:
     /**
      * Get the value of the server.socks_proxy setting.
      */
-    virtual bc::config::authority get_server_socks_proxy_setting() const
+    virtual system::config::authority get_server_socks_proxy_setting() const
     {
         return setting_.server.socks_proxy;
     }
@@ -654,7 +654,7 @@ public:
     /**
      * Set the value of the server.socks_proxy setting.
      */
-    virtual void set_server_socks_proxy_setting(bc::config::authority value)
+    virtual void set_server_socks_proxy_setting(system::config::authority value)
     {
         setting_.server.socks_proxy = value;
     }
@@ -694,7 +694,7 @@ public:
     /**
      * Get the value of the server.server_public_key setting.
      */
-    virtual bc::config::sodium get_server_server_public_key_setting() const
+    virtual system::config::sodium get_server_server_public_key_setting() const
     {
         return setting_.server.server_public_key;
     }
@@ -702,7 +702,8 @@ public:
     /**
      * Set the value of the server.server_public_key setting.
      */
-    virtual void set_server_server_public_key_setting(bc::config::sodium value)
+    virtual void set_server_server_public_key_setting(
+        system::config::sodium value)
     {
         setting_.server.server_public_key = value;
     }
@@ -710,7 +711,7 @@ public:
     /**
      * Get the value of the server.client_private_key setting.
      */
-    virtual bc::config::sodium get_server_client_private_key_setting() const
+    virtual system::config::sodium get_server_client_private_key_setting() const
     {
         return setting_.server.client_private_key;
     }
@@ -718,7 +719,8 @@ public:
     /**
      * Set the value of the server.client_private_key setting.
      */
-    virtual void set_server_client_private_key_setting(bc::config::sodium value)
+    virtual void set_server_client_private_key_setting(
+        system::config::sodium value)
     {
         setting_.server.client_private_key = value;
     }
@@ -726,7 +728,7 @@ public:
 protected:
 
     /**
-     * This base class is abstract but not pure virtual, so prevent direct 
+     * This base class is abstract but not pure virtual, so prevent direct
      * construction here.
      */
     command()
@@ -734,16 +736,16 @@ protected:
     }
 
 private:
-    
+
     /**
      * Command line argument metadata.
      */
-    arguments_metadata argument_metadata_;
+    system::arguments_metadata argument_metadata_;
 
     /**
      * Command line option metadata.
      */
-    options_metadata option_metadata_;
+    system::options_metadata option_metadata_;
 
     /**
      * Environment variable bound variables.
@@ -808,7 +810,7 @@ private:
             boost::filesystem::path hosts_file;
             boost::filesystem::path debug_file;
             boost::filesystem::path error_file;
-            std::vector<bc::config::endpoint> seeds;
+            std::vector<system::config::endpoint> seeds;
         } network;
 
         struct server
@@ -825,14 +827,14 @@ private:
             {
             }
 
-            bc::config::endpoint url;
-            bc::config::endpoint block_url;
-            bc::config::endpoint transaction_url;
-            bc::config::authority socks_proxy;
+            system::config::endpoint url;
+            system::config::endpoint block_url;
+            system::config::endpoint transaction_url;
+            system::config::authority socks_proxy;
             explorer::config::byte connect_retries;
             uint16_t connect_timeout_seconds;
-            bc::config::sodium server_public_key;
-            bc::config::sodium client_private_key;
+            system::config::sodium server_public_key;
+            system::config::sodium client_private_key;
         } server;
 
         setting()

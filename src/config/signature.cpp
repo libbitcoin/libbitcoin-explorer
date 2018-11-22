@@ -24,13 +24,14 @@
 #include <string>
 #include <cstdint>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace bc::system;
 using namespace po;
 
 // message_signature format is currently private to bx.

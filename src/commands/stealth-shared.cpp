@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/stealth-shared.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 
@@ -29,6 +29,8 @@ namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
+using namespace bc::system;
+
 console_result stealth_shared::invoke(std::ostream& output,
     std::ostream& error)
 {
@@ -37,7 +39,7 @@ console_result stealth_shared::invoke(std::ostream& output,
     const auto& pubkey = get_pubkey_argument();
 
     ec_compressed product(pubkey);
-    if (!bc::ec_multiply(product, secret))
+    if (!system::ec_multiply(product, secret))
     {
         error << BX_STEALTH_SHARED_OUT_OF_RANGE << std::endl;
         return console_result::failure;

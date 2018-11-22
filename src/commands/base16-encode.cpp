@@ -19,15 +19,18 @@
 #include <bitcoin/explorer/commands/base16-encode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::config;
 
-console_result base16_encode::invoke(std::ostream& output, std::ostream& error)
+using namespace bc::system;
+using namespace bc::system::config;
+
+console_result base16_encode::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
     const auto& data = get_data_argument();

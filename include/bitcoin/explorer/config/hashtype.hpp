@@ -20,7 +20,7 @@
 #define BX_HASHTYPE_HPP
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -49,7 +49,7 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    hashtype(const machine::sighash_algorithm& value);
+    hashtype(const system::machine::sighash_algorithm& value);
 
     /**
      * Copy constructor.
@@ -61,7 +61,7 @@ public:
      * Return a reference to the data member.
      * @return  A reference to the object's internal data.
      */
-    operator machine::sighash_algorithm() const;
+    operator system::machine::sighash_algorithm() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -86,7 +86,7 @@ private:
     /**
      * The state of this object's sighash engine data.
      */
-    machine::sighash_algorithm value_;
+    system::machine::sighash_algorithm value_;
 };
 
 } // namespace config

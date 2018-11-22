@@ -19,13 +19,15 @@
 #include <bitcoin/explorer/commands/ec-add.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result ec_add::invoke(std::ostream& output, std::ostream& error)
 {
@@ -37,7 +39,7 @@ console_result ec_add::invoke(std::ostream& output, std::ostream& error)
     ec_compressed sum(point);
 
     // Elliptic curve function POINT + (INTEGER * curve-generator-point).
-    if (!bc::ec_add(sum, secret))
+    if (!system::ec_add(sum, secret))
     {
         error << BX_EC_ADD_OUT_OF_RANGE << std::endl;
         return console_result::failure;

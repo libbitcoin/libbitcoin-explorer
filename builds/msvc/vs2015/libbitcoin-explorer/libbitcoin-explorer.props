@@ -6,7 +6,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
- 
+
   <!-- Configuration -->
 
   <ItemDefinitionGroup>
@@ -22,9 +22,9 @@
   </ItemDefinitionGroup>
 
   <!-- Dependencies -->
-  
+
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(SolutionDir)libbitcoin.import.props" />
+    <Import Project="$(SolutionDir)libbitcoin-system.import.props" />
     <Import Project="$(SolutionDir)libbitcoin-protocol.import.props" />
     <Import Project="$(SolutionDir)libbitcoin-client.import.props" />
     <Import Project="$(SolutionDir)libbitcoin-network.import.props" />
@@ -37,7 +37,7 @@
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'dynamic'">
     <Linkage-secp256k1>dynamic</Linkage-secp256k1>
     <Linkage-libzmq>dynamic</Linkage-libzmq>
-    <Linkage-libbitcoin>dynamic</Linkage-libbitcoin>
+    <Linkage-libbitcoin-system>dynamic</Linkage-libbitcoin-system>
     <Linkage-libbitcoin-protocol>dynamic</Linkage-libbitcoin-protocol>
     <Linkage-libbitcoin-client>dynamic</Linkage-libbitcoin-client>
     <Linkage-libbitcoin-network>dynamic</Linkage-libbitcoin-network>
@@ -45,7 +45,7 @@
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'ltcg'">
     <Linkage-secp256k1>ltcg</Linkage-secp256k1>
     <Linkage-libzmq>ltcg</Linkage-libzmq>
-    <Linkage-libbitcoin>ltcg</Linkage-libbitcoin>
+    <Linkage-libbitcoin-system>ltcg</Linkage-libbitcoin-system>
     <Linkage-libbitcoin-protocol>ltcg</Linkage-libbitcoin-protocol>
     <Linkage-libbitcoin-client>ltcg</Linkage-libbitcoin-client>
     <Linkage-libbitcoin-network>ltcg</Linkage-libbitcoin-network>
@@ -53,18 +53,18 @@
   <PropertyGroup Condition="'$(DefaultLinkage)' == 'static'">
     <Linkage-secp256k1>static</Linkage-secp256k1>
     <Linkage-libzmq>static</Linkage-libzmq>
-    <Linkage-libbitcoin>static</Linkage-libbitcoin>
+    <Linkage-libbitcoin-system>static</Linkage-libbitcoin-system>
     <Linkage-libbitcoin-protocol>static</Linkage-libbitcoin-protocol>
     <Linkage-libbitcoin-client>static</Linkage-libbitcoin-client>
     <Linkage-libbitcoin-network>static</Linkage-libbitcoin-network>
   </PropertyGroup>
 
   <!-- Messages -->
-  
+
   <Target Name="LinkageInfo" BeforeTargets="PrepareForBuild">
     <Message Text="Linkage-secp256k1 : $(Linkage-secp256k1)" Importance="high"/>
     <Message Text="Linkage-libzmq    : $(Linkage-libzmq)" Importance="high"/>
-    <Message Text="Linkage-libbitcoin: $(Linkage-libbitcoin)" Importance="high"/>
+    <Message Text="Linkage-_system   : $(Linkage-libbitcoin-system)" Importance="high"/>
     <Message Text="Linkage-_protocol : $(Linkage-libbitcoin-protocol)" Importance="high"/>
     <Message Text="Linkage-_client   : $(Linkage-libbitcoin-client)" Importance="high"/>
     <Message Text="Linkage-_network  : $(Linkage-libbitcoin-network)" Importance="high"/>

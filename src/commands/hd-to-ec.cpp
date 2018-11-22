@@ -19,7 +19,7 @@
 
 #include <bitcoin/explorer/commands/hd-to-ec.hpp>
 
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
@@ -27,6 +27,8 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
 {
@@ -44,11 +46,11 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
 
     if (key.version() == private_version)
     {
-        const auto prefixes = bc::wallet::hd_private::to_prefixes(
+        const auto prefixes = system::wallet::hd_private::to_prefixes(
             key.version(), public_version);
 
         // Create the private key from hd_key and the public version.
-        const auto private_key = bc::wallet::hd_private(key, prefixes);
+        const auto private_key = wallet::hd_private(key, prefixes);
         if (private_key)
         {
             output << encode_base16(private_key.secret()) << std::endl;
@@ -58,10 +60,10 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
     else
     {
         // Create the public key from hd_key and the public version.
-        const auto public_key = bc::wallet::hd_public(key, public_version);
+        const auto public_key = wallet::hd_public(key, public_version);
         if (public_key)
         {
-            output << bc::wallet::ec_public(public_key) << std::endl;
+            output << wallet::ec_public(public_key) << std::endl;
             return console_result::okay;
         }
     }

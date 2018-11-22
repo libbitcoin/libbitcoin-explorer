@@ -20,7 +20,7 @@
 #include <bitcoin/explorer/commands/fetch-header.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -31,8 +31,10 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::client;
 using namespace bc::explorer::config;
+using namespace bc::system;
 
 console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
 {
@@ -56,7 +58,7 @@ console_result fetch_header::invoke(std::ostream& output, std::ostream& error)
         if (!state.succeeded(ec))
             return;
 
-        state.output(bc::property_tree(header));
+        state.output(property_tree(header));
     };
 
     // Height is ignored if both are specified.

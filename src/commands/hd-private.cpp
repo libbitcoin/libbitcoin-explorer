@@ -19,13 +19,15 @@
 #include <bitcoin/explorer/commands/hd-private.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result hd_private::invoke(std::ostream& output, std::ostream& error)
 {
@@ -34,7 +36,7 @@ console_result hd_private::invoke(std::ostream& output, std::ostream& error)
     const auto index = get_index_option();
     const auto& private_key = get_hd_private_key_argument();
 
-    static constexpr auto first = bc::wallet::hd_first_hardened_key;
+    static constexpr auto first = wallet::hd_first_hardened_key;
     const auto position = hard ? first + index : index;
     const auto child_private_key = private_key.derive_private(position);
 

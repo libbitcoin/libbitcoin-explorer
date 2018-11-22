@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/ec-multiply-secrets.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
@@ -27,6 +27,8 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& error)
 {
@@ -44,7 +46,7 @@ console_result ec_multiply_secrets::invoke(std::ostream& output, std::ostream& e
         }
 
         // Elliptic curve function (INTEGER * INTEGER) % curve-order.
-        if (!bc::ec_multiply(product, secret))
+        if (!system::ec_multiply(product, secret))
         {
             error << BX_EC_MULITPLY_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;

@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -97,7 +97,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("ADDRESS", 1);
@@ -118,7 +118,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -150,7 +150,7 @@ public:
         )
         (
             "request,r",
-            value<bc::config::endpoint>(&option_.request),
+            value<system::config::endpoint>(&option_.request),
             "The value of the payment request parameter."
         )
         (
@@ -176,7 +176,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -252,7 +252,7 @@ public:
     /**
      * Get the value of the request option.
      */
-    virtual bc::config::endpoint& get_request_option()
+    virtual system::config::endpoint& get_request_option()
     {
         return option_.request;
     }
@@ -261,7 +261,7 @@ public:
      * Set the value of the request option.
      */
     virtual void set_request_option(
-        const bc::config::endpoint& value)
+        const system::config::endpoint& value)
     {
         option_.request = value;
     }
@@ -301,7 +301,7 @@ private:
         explorer::config::btc amount;
         std::string label;
         std::string message;
-        bc::config::endpoint request;
+        system::config::endpoint request;
     } option_;
 };
 

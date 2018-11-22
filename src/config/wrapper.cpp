@@ -20,7 +20,7 @@
 
 #include <iostream>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
@@ -28,8 +28,9 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace bc::system;
+using namespace bc::system::config;
 using namespace po;
-using namespace bc::config;
 
 wrapper::wrapper()
   : value_()

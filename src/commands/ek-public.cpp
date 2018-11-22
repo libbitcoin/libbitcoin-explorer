@@ -20,13 +20,15 @@
 
 #include <algorithm>
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result commands::ek_public::invoke(std::ostream& output,
     std::ostream& error)
@@ -51,7 +53,7 @@ console_result commands::ek_public::invoke(std::ostream& output,
     ec_compressed unused2;
     create_key_pair(unused1, key, unused2, token, bytes, version, compressed);
 
-    output << bc::wallet::ek_public(key) << std::endl;
+    output << wallet::ek_public(key) << std::endl;
     return console_result::okay;
 }
 
