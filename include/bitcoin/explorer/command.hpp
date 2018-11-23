@@ -702,8 +702,7 @@ public:
     /**
      * Set the value of the server.server_public_key setting.
      */
-    virtual void set_server_server_public_key_setting(
-        system::config::sodium value)
+    virtual void set_server_server_public_key_setting(system::config::sodium value)
     {
         setting_.server.server_public_key = value;
     }
@@ -719,8 +718,7 @@ public:
     /**
      * Set the value of the server.client_private_key setting.
      */
-    virtual void set_server_client_private_key_setting(
-        system::config::sodium value)
+    virtual void set_server_client_private_key_setting(system::config::sodium value)
     {
         setting_.server.client_private_key = value;
     }

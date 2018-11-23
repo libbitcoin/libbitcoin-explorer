@@ -104,8 +104,7 @@ bool callback_state::stopped()
     return stopped_;
 }
 
-bool callback_state::succeeded(const system::code& ec,
-    const std::string& format)
+bool callback_state::succeeded(const code& ec, const std::string& format)
 {
     if (ec)
     {

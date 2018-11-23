@@ -320,7 +320,7 @@ BCX_API pt::ptree prop_list(const system::hash_digest& hash);
  * @param[in]  hash    The block hash.
  * @returns            A new property tree containing the hash.
  */
-BCX_API pt::ptree prop_tree(const hash_digest& hash);
+BCX_API pt::ptree prop_tree(const system::hash_digest& hash);
 
 /**
  * Create a property tree for a hash_list.

@@ -46,7 +46,7 @@ console_result hd_to_ec::invoke(std::ostream& output, std::ostream& error)
 
     if (key.version() == private_version)
     {
-        const auto prefixes = system::wallet::hd_private::to_prefixes(
+        const auto prefixes = wallet::hd_private::to_prefixes(
             key.version(), public_version);
 
         // Create the private key from hd_key and the public version.

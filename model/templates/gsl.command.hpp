@@ -131,13 +131,13 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(options_metadata& definitions)
+    virtual void load_environment(system::options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
         (
             /* This composes with the command line options. */
-            BX_CONFIG_VARIABLE, 
+            BX_CONFIG_VARIABLE,
             value<boost::filesystem::path>()
                 ->composing()->default_value(config_default_path()),
             "$(config_description)"
@@ -168,7 +168,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(options_metadata& definitions)
+    virtual void load_settings(system::options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -214,14 +214,14 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        bc::config::printer help(options, arguments, BX_PROGRAM_NAME,
+        system::config::printer help(options, arguments, BX_PROGRAM_NAME,
             description(), name());
         help.initialize();
         help.commandline(output);
     }
 
     /* Properties */
-    
+
     /**
      * Get command line argument metadata.
      */
@@ -266,7 +266,7 @@ public:
 protected:
 
     /**
-     * This base class is abstract but not pure virtual, so prevent direct 
+     * This base class is abstract but not pure virtual, so prevent direct
      * construction here.
      */
     command()
@@ -274,16 +274,16 @@ protected:
     }
 
 private:
-    
+
     /**
      * Command line argument metadata.
      */
-    arguments_metadata argument_metadata_;
+    system::arguments_metadata argument_metadata_;
 
     /**
      * Command line option metadata.
      */
-    options_metadata option_metadata_;
+    system::options_metadata option_metadata_;
 
     /**
      * Environment variable bound variables.

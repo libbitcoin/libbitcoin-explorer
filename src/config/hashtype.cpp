@@ -28,6 +28,7 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace bc::system;
 using namespace po;
 
 // DRY
@@ -36,7 +37,7 @@ static auto hashtype_none = "none";
 static auto hashtype_single = "single";
 
 hashtype::hashtype()
-  : hashtype(system::machine::sighash_algorithm::all)
+  : hashtype(machine::sighash_algorithm::all)
 {
 }
 
@@ -45,7 +46,7 @@ hashtype::hashtype(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-hashtype::hashtype(const system::machine::sighash_algorithm& value)
+hashtype::hashtype(const machine::sighash_algorithm& value)
   : value_(value)
 {
 }
@@ -55,7 +56,7 @@ hashtype::hashtype(const hashtype& other)
 {
 }
 
-hashtype::operator system::machine::sighash_algorithm() const
+hashtype::operator machine::sighash_algorithm() const
 {
     return value_;
 }
@@ -66,11 +67,11 @@ std::istream& operator>>(std::istream& input, hashtype& argument)
     input >> text;
 
     if (text == hashtype_all)
-        argument.value_ = system::machine::sighash_algorithm::all;
+        argument.value_ = machine::sighash_algorithm::all;
     else if (text == hashtype_none)
-        argument.value_ = system::machine::sighash_algorithm::none;
+        argument.value_ = machine::sighash_algorithm::none;
     else if (text == hashtype_single)
-        argument.value_ = system::machine::sighash_algorithm::single;
+        argument.value_ = machine::sighash_algorithm::single;
     else
     {
         BOOST_THROW_EXCEPTION(invalid_option_value(text));
@@ -85,13 +86,13 @@ std::ostream& operator<<(std::ostream& output, const hashtype& argument)
 
     switch (argument.value_)
     {
-        case system::machine::sighash_algorithm::all:
+        case machine::sighash_algorithm::all:
             value = hashtype_all;
             break;
-        case system::machine::sighash_algorithm::none:
+        case machine::sighash_algorithm::none:
             value = hashtype_none;
             break;
-        case system::machine::sighash_algorithm::single:
+        case machine::sighash_algorithm::single:
             value = hashtype_single;
             break;
         default:

@@ -25,6 +25,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/system.hpp>
 
+using namespace bc::system;
 using namespace boost::filesystem;
 using namespace boost::program_options;
 using namespace boost::system;
@@ -42,26 +43,26 @@ bool parser::help() const
     return help_;
 }
 
-system::options_metadata parser::load_options()
+options_metadata parser::load_options()
 {
     return instance_.load_options();
 }
 
-system::arguments_metadata parser::load_arguments()
+arguments_metadata parser::load_arguments()
 {
     return instance_.load_arguments();
 }
 
-system::options_metadata parser::load_settings()
+options_metadata parser::load_settings()
 {
-    system::options_metadata settings("settings");
+    options_metadata settings("settings");
     instance_.load_settings(settings);
     return settings;
 }
 
-system::options_metadata parser::load_environment()
+options_metadata parser::load_environment()
 {
-    system::options_metadata environment("environment");
+    options_metadata environment("environment");
     instance_.load_environment(environment);
     return environment;
 }

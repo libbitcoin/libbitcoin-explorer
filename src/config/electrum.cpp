@@ -29,6 +29,7 @@ namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace bc::system;
 using namespace po;
 
 static auto electrum_standard = "standard";
@@ -36,7 +37,7 @@ static auto electrum_witness = "witness";
 static auto electrum_two_factor_authentication = "dual";
 
 electrum::electrum()
-  : value_(system::wallet::electrum::seed::standard)
+  : value_(wallet::electrum::seed::standard)
 {
 }
 
@@ -45,7 +46,7 @@ electrum::electrum(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-electrum::electrum(system::wallet::electrum::seed& electrum)
+electrum::electrum(wallet::electrum::seed& electrum)
   : value_(electrum)
 {
 }
@@ -55,7 +56,7 @@ electrum::electrum(const electrum& other)
 {
 }
 
-electrum::operator system::wallet::electrum::seed() const
+electrum::operator wallet::electrum::seed() const
 {
     return value_;
 }
@@ -67,15 +68,15 @@ std::istream& operator>>(std::istream& input, electrum& argument)
 
     if (text == electrum_standard)
     {
-        argument.value_ = system::wallet::electrum::seed::standard;
+        argument.value_ = wallet::electrum::seed::standard;
     }
     else if (text == electrum_witness)
     {
-        argument.value_ = system::wallet::electrum::seed::witness;
+        argument.value_ = wallet::electrum::seed::witness;
     }
     else if (text == electrum_two_factor_authentication)
     {
-        argument.value_ = system::wallet::electrum::seed::two_factor_authentication;
+        argument.value_ = wallet::electrum::seed::two_factor_authentication;
     }
     else
     {
@@ -89,15 +90,15 @@ std::ostream& operator<<(std::ostream& output, const electrum& argument)
 {
     std::string text;
 
-    if (argument.value_ == system::wallet::electrum::seed::standard)
+    if (argument.value_ == wallet::electrum::seed::standard)
     {
         text = electrum_standard;
     }
-    else if (argument.value_ == system::wallet::electrum::seed::witness)
+    else if (argument.value_ == wallet::electrum::seed::witness)
     {
         text = electrum_witness;
     }
-    else if (argument.value_ == system::wallet::electrum::seed::two_factor_authentication)
+    else if (argument.value_ == wallet::electrum::seed::two_factor_authentication)
     {
         text = electrum_two_factor_authentication;
     }

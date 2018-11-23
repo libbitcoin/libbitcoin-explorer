@@ -57,7 +57,7 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
         if (!state.succeeded(ec))
             return;
 
-        state.output(bc::property_tree(hash, height, index));
+        state.output(system::property_tree(hash, height, index));
     };
 
     client.blockchain_fetch_transaction_index(on_done, hash);

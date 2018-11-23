@@ -103,7 +103,7 @@ console_result commands::settings::invoke(std::ostream& output,
     list["server.client_private_key"] =
         serialize(get_server_client_private_key_setting());
 
-    write_stream(output, bc::property_tree(list), encoding);
+    write_stream(output, system::property_tree(list), encoding);
     return console_result::okay;
 }
 

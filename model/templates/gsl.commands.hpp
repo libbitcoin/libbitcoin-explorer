@@ -144,7 +144,7 @@ public:
 .endfor
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -337,10 +337,10 @@ private:
 .for argument
 .   is_vector = !is_default(limit, 1)
 .   argument_type = normalize_type(!true(), !true(), type)
-.   vector_type = vectored_type(argument_type, is_vector)        
+.   vector_type = vectored_type(argument_type, is_vector)
 .   pluralized_name = pluralize(name, is_vector)
         $(vector_type) $(pluralized_name:lower,c);
-.endfor            
+.endfor
     } argument_;
 
     /**
