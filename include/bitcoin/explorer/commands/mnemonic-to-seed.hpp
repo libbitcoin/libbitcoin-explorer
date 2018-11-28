@@ -54,13 +54,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE \
+#define BX_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE \
     "The number of words must be divisible by 3."
-#define BX_EC_MNEMONIC_TO_SEED_REQUIRES_ICU \
+#define BX_MNEMONIC_TO_SEED_REQUIRES_ICU \
     "The passphrase option requires an ICU build."
-#define BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE \
-    "The specified words are not a valid mnemonic in the specified dictionary."
-#define BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES \
+#define BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE \
+    "WARNING: The specified words are not a valid mnemonic in the specified dictionary."
+#define BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES \
     "WARNING: The specified words are not a valid mnemonic in any supported dictionary."
 
 /**

@@ -38,7 +38,7 @@ console_result mnemonic_new::invoke(std::ostream& output,
 
     if ((entropy_size % bc::wallet::mnemonic_seed_multiple) != 0)
     {
-        error << BX_EC_MNEMONIC_NEW_INVALID_SEED << std::endl;
+        error << BX_MNEMONIC_NEW_INVALID_SEED << std::endl;
         return console_result::failure;
     }
 

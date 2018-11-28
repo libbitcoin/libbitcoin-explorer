@@ -40,7 +40,7 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
 
     if ((word_count % bc::wallet::mnemonic_word_multiple) != 0)
     {
-        error << BX_EC_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE << std::endl;
+        error << BX_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE << std::endl;
         return console_result::failure;
     }
 
@@ -49,12 +49,12 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
     if (!valid && language.size() == 1)
     {
         // This is fatal because a dictionary was specified explicitly.
-        error << BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE << std::endl;
+        error << BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGE << std::endl;
         return console_result::failure;
     }
 
     if (!valid && language.size() > 1)
-        error << BX_EC_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES << std::endl;
+        error << BX_MNEMONIC_TO_SEED_INVALID_IN_LANGUAGES << std::endl;
 
 #ifdef WITH_ICU
     // Any word set divisible by 3 works regardless of language validation.
@@ -62,7 +62,7 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
 #else
     if (!passphrase.empty())
     {
-        error << BX_EC_MNEMONIC_TO_SEED_REQUIRES_ICU << std::endl;
+        error << BX_MNEMONIC_TO_SEED_REQUIRES_ICU << std::endl;
         return console_result::failure;
     }
 

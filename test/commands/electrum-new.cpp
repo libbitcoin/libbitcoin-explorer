@@ -50,14 +50,14 @@ BOOST_AUTO_TEST_CASE(electrum_new__invoke__es_dictionary_prefix__okay_output)
     set_utf8_stdout();
 
     // Verify the UTF8 initialization.
-    BOOST_REQUIRE(bc::wallet::language::es[0] == std::string("ábaco"));
+    BOOST_REQUIRE(bc::wallet::language::es[0] == std::string("ábaco"));
 
     BX_DECLARE_COMMAND(electrum_new);
     command.set_seed_argument({ "05e669b4270f4e25bce6fc3736170d423c" });
     command.set_language_option({ "es" });
     command.set_prefix_option({ "standard" });
     BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("gigante codo ámbar insecto verbo cráter celoso entrar tarjeta sala coco frito\n");
+    BX_REQUIRE_OUTPUT(to_normal_nfkd_form("gráfico codo ámbar insecto verbo cráter celoso entrar tarjeta sala coco frito") + "\n");
 }
 
 BOOST_AUTO_TEST_CASE(electrum_new__invoke__32_bytes__okay_output)
