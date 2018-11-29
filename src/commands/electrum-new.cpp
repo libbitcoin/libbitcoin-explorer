@@ -27,12 +27,12 @@ namespace explorer {
 namespace commands {
 using namespace bc::wallet;
 
-// Requires a seed of at least 17 bytes (136 bits).
-static const size_t minimum_electrum_words = 12;
-
 console_result electrum_new::invoke(std::ostream& output, std::ostream& error)
 {
 #ifdef WITH_ICU
+    // Requires a seed of at least 17 bytes (136 bits).
+    static const size_t minimum_electrum_words = 12;
+
     // Bound parameters.
     const dictionary_list& language = get_language_option();
     const data_chunk& seed = get_seed_argument();

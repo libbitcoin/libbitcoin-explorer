@@ -37,20 +37,17 @@ console_result electrum_to_seed::invoke(std::ostream& output,
     const auto& words = get_words_argument();
 
 #ifdef WITH_ICU
-    const auto seed = electrum::decode_mnemonic(words, passphrase);
-#else
-    // The passphrase requires ICU normalization.
-    if (!passphrase.empty())
-    {
-        error << BX_ELECTRUM_TO_SEED_REQUIRES_ICU << std::endl;
-        return console_result::failure;
-    }
+    if (passphrase.empty())
+        output << base16(electrum::decode_mnemonic(words)) << std::endl;
+    else
+        output << base16(electrum::decode_mnemonic(words, passphrase)) << std::endl;
 
-    const auto seed = electrum::decode_mnemonic(words);
+    return console_result::okay;
+#else
+    error << BX_ELECTRUM_REQUIRES_ICU << std::endl;
+    return console_result::failure;
 #endif
 
-    output << base16(seed) << std::endl;
-    return console_result::okay;
 }
 
 } //namespace commands
