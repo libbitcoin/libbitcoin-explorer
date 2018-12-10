@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2018 libbitcoin developers (see AUTHORS)
+ * Copyright (c) 2011-2017 libbitcoin developers (see AUTHORS)
  *
  * This file is part of libbitcoin.
  *
@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/fetch-tx-index.hpp>
+#include <bitcoin/explorer/commands/fetch-block-height.hpp>
 
+#include <cstddef>
 #include <iostream>
-#include <boost/format.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
@@ -33,13 +33,11 @@ namespace commands {
 using namespace bc::client;
 using namespace bc::explorer::config;
 
-// This call is deprecated at the server.
-console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
+console_result fetch_block_height::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& encoding = get_format_option();
-    const auto& hash = get_hash_argument();
-    const auto connection = get_connection(*this);
+    const hash_digest& hash = get_hash_argument();
+    auto connection = get_connection(*this);
 
     obelisk_client client(connection.retries);
     if (!client.connect(connection))
@@ -48,22 +46,21 @@ console_result fetch_tx_index::invoke(std::ostream& output, std::ostream& error)
         return console_result::failure;
     }
 
-    callback_state state(error, output, encoding);
+    callback_state state(error, output);
 
-    auto on_done = [&state, &hash](const code& ec, size_t height, size_t index)
+    auto on_done = [&state](const code& ec, size_t height)
     {
         if (!state.succeeded(ec))
             return;
 
-        state.output(bc::property_tree(hash, height, index));
+        state.output(height);
     };
 
-    client.blockchain_fetch_transaction_index(on_done, hash);
+    client.blockchain_fetch_block_height(on_done, hash);
     client.wait();
 
     return state.get_result();
 }
-
 
 } //namespace commands
 } //namespace explorer

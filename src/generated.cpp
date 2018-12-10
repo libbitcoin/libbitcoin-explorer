@@ -73,6 +73,8 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<electrum_to_seed>());
     func(make_shared<fetch_balance>());
     func(make_shared<fetch_block>());
+    func(make_shared<fetch_block_hashes>());
+    func(make_shared<fetch_block_height>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_height>());
     func(make_shared<fetch_history>());
@@ -211,6 +213,10 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_balance>();
     if (symbol == fetch_block::symbol())
         return make_shared<fetch_block>();
+    if (symbol == fetch_block_hashes::symbol())
+        return make_shared<fetch_block_hashes>();
+    if (symbol == fetch_block_height::symbol())
+        return make_shared<fetch_block_height>();
     if (symbol == fetch_header::symbol())
         return make_shared<fetch_header>();
     if (symbol == fetch_height::symbol())

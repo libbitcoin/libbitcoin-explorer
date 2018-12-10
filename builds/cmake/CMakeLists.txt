@@ -229,6 +229,8 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/electrum-new.cpp"
     "../../src/commands/electrum-to-seed.cpp"
     "../../src/commands/fetch-balance.cpp"
+    "../../src/commands/fetch-block-hashes.cpp"
+    "../../src/commands/fetch-block-height.cpp"
     "../../src/commands/fetch-block.cpp"
     "../../src/commands/fetch-header.cpp"
     "../../src/commands/fetch-height.cpp"

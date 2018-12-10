@@ -306,24 +306,26 @@ BCX_API pt::ptree prop_tree(const client::stealth& row);
 BCX_API pt::ptree prop_tree(const client::stealth::list& rows, bool json);
 
 /**
- * Create a property list for the fetch-tx-index command.
+ * Create a property tree for single hash.
  * @param[in]  hash    The block hash.
- * @param[in]  height  The block height.
- * @param[in]  index   The tx index.
- * @returns            A new property list containing the list.
+ * @returns            A new property tree containing the hash.
  */
-BCX_API pt::ptree prop_list(const bc::hash_digest& hash, size_t height,
-    size_t index);
+BCX_API pt::ptree prop_list(const hash_digest& hash);
 
 /**
- * Create a property tree for the fetch-tx-index command.
+ * Create a property tree for a single hash.
  * @param[in]  hash    The block hash.
- * @param[in]  height  The block height.
- * @param[in]  index   The tx index.
+ * @returns            A new property tree containing the hash.
+ */
+BCX_API pt::ptree prop_tree(const hash_digest& hash);
+
+/**
+ * Create a property tree for a hash_list.
+ * @param[in]  hashes  The list of block hashes.
+ * @param[in]  json    Use json array formatting.
  * @returns            A new property tree containing the list.
  */
-BCX_API pt::ptree prop_tree(const bc::hash_digest& hash, size_t height,
-    size_t index);
+BCX_API pt::ptree prop_tree(const hash_list& hashes, bool json);
 
 /**
  * Create a property tree for the settings command.

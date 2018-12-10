@@ -198,35 +198,26 @@ ptree prop_tree(const client::stealth::list& rows, bool json)
     return tree;
 }
 
-// metadata
+// hash_list (base16 encoded values)
 
-ptree prop_list(const hash_digest& hash, size_t height, size_t index)
+ptree prop_list(const hash_digest& hash)
 {
     ptree tree;
-    tree.put("hash", hash256(hash));
-    tree.put("height", height);
-    tree.put("index", index);
+    tree.put_value(encode_base16(hash));
     return tree;
 }
 
-ptree prop_tree(const hash_digest& hash, size_t height, size_t index)
+ptree prop_tree(const hash_digest& hash)
 {
     ptree tree;
-    tree.add_child("metadata", prop_list(hash, height, index));
+    tree.add_child("hash", prop_list(hash));
     return tree;
 }
 
-// settings
-
-ptree prop_tree(const settings_list& settings)
+ptree prop_tree(const hash_list& hashes, bool json)
 {
-    ptree list;
-
-    for (const auto& setting: settings)
-        list.put(setting.first, setting.second);
-
     ptree tree;
-    tree.add_child("settings", list);
+    tree.add_child("hashes", prop_tree_list("hash", hashes, json));
     return tree;
 }
 

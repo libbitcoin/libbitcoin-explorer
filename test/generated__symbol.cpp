@@ -213,6 +213,16 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_block__returns_expected_value)
     BOOST_REQUIRE_EQUAL(fetch_block::symbol(), "fetch-block");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_block_hashes__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(fetch_block_hashes::symbol(), "fetch-block-hashes");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_block_height__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(fetch_block_height::symbol(), "fetch-block-height");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(fetch_header::symbol(), "fetch-header");
