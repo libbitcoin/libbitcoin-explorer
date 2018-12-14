@@ -67,7 +67,7 @@ options_metadata parser::load_environment()
     return environment;
 }
 
-void parser::load_command_variables(variables_map& variables,
+void parser::load_command_variables(system::variables_map& variables,
     std::istream& input, int argc, const char* argv[])
 {
     system::config::parser::load_command_variables(variables, argc, argv);
@@ -83,7 +83,7 @@ bool parser::parse(std::string& out_error, std::istream& input,
 {
     try
     {
-        variables_map variables;
+        system::variables_map variables;
 
         // Must store before environment in order for commands to supercede.
         load_command_variables(variables, input, argc, argv);
