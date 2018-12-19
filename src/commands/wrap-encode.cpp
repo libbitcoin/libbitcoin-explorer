@@ -19,14 +19,16 @@
 #include <bitcoin/explorer/commands/wrap-encode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::explorer::config;
+using namespace bc::system;
 
 console_result wrap_encode::invoke(std::ostream& output, std::ostream& error)
 {

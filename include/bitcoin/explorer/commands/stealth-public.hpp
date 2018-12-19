@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -110,14 +110,14 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("SPEND_PUBKEY", 1)
             .add("SHARED_SECRET", 1);
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -134,7 +134,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -151,7 +151,7 @@ public:
         )
         (
             "SPEND_PUBKEY",
-            value<bc::wallet::ec_public>(&argument_.spend_pubkey)->required(),
+            value<system::wallet::ec_public>(&argument_.spend_pubkey)->required(),
             "The Base16 EC spend public key of a stealth address."
         )
         (
@@ -177,7 +177,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -185,7 +185,7 @@ public:
     /**
      * Get the value of the SPEND_PUBKEY argument.
      */
-    virtual bc::wallet::ec_public& get_spend_pubkey_argument()
+    virtual system::wallet::ec_public& get_spend_pubkey_argument()
     {
         return argument_.spend_pubkey;
     }
@@ -194,7 +194,7 @@ public:
      * Set the value of the SPEND_PUBKEY argument.
      */
     virtual void set_spend_pubkey_argument(
-        const bc::wallet::ec_public& value)
+        const system::wallet::ec_public& value)
     {
         argument_.spend_pubkey = value;
     }
@@ -231,7 +231,7 @@ private:
         {
         }
 
-        bc::wallet::ec_public spend_pubkey;
+        system::wallet::ec_public spend_pubkey;
         explorer::config::ec_private shared_secret;
     } argument_;
 

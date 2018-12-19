@@ -18,7 +18,7 @@
  */
 
 #include "command.hpp"
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 
 BX_USING_NAMESPACES()
 

@@ -20,13 +20,15 @@
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result watch_tx::invoke(std::ostream& output, std::ostream& error)
 {

@@ -21,13 +21,15 @@
 
 #include <sstream>
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result qrcode::invoke(std::ostream& output, std::ostream& error)
 {
@@ -64,7 +66,7 @@ console_result qrcode::invoke(std::ostream& output, std::ostream& error)
     }
 
     // The qr data is written to the output stream in 'qrencode' format.
-    bc::ostream_writer sink(output);
+    ostream_writer sink(output);
     sink.write_bytes(qr_data);
     output.flush();
 

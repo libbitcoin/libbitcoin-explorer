@@ -20,7 +20,7 @@
 #define BX_WRAPPER_HPP
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -50,26 +50,26 @@ public:
      * Initialization constructor.
      * @param[in]  wrapped  The wrapped value to initialize with.
      */
-    wrapper(const data_chunk& wrapped);
+    wrapper(const system::data_chunk& wrapped);
 
     /**
      * Initialization constructor.
      * @param[in]  wrapped  The wrapped value to initialize with.
      */
-    wrapper(const wallet::wrapped_data& wrapped);
+    wrapper(const system::wallet::wrapped_data& wrapped);
 
     /**
      * Initialization constructor.
      * @param[in]  address  The payment address to initialize with.
      */
-    wrapper(const wallet::payment_address& address);
+    wrapper(const system::wallet::payment_address& address);
 
     /**
      * Initialization constructor.
      * @param[in]  version  The version for the new wrapped value.
      * @param[in]  payload  The payload for the new wrapped value.
      */
-    wrapper(uint8_t version, const data_chunk& payload);
+    wrapper(uint8_t version, const system::data_chunk& payload);
 
     /**
      * Copy constructor.
@@ -81,13 +81,13 @@ public:
      * Serialize the wrapper to bytes according to the wire protocol.
      * @return  The byte serialized copy of the wrapper.
      */
-    const bc::data_chunk to_data() const;
+    const system::data_chunk to_data() const;
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const wallet::wrapped_data&() const;
+    operator const system::wallet::wrapped_data&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -112,7 +112,7 @@ private:
     /**
      * The state of this object's data.
      */
-    wallet::wrapped_data value_;
+    system::wallet::wrapped_data value_;
 };
 
 } // namespace explorer

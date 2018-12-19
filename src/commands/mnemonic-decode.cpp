@@ -20,13 +20,15 @@
 #include <bitcoin/explorer/commands/mnemonic-decode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result mnemonic_decode::invoke(std::ostream& output,
     std::ostream& error)

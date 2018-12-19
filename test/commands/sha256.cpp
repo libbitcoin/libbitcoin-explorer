@@ -34,7 +34,8 @@ BOOST_AUTO_TEST_SUITE(sha256__invoke)
 BOOST_AUTO_TEST_CASE(sha256__invoke__NIST_SHA256_A__okay_output)
 {
     BX_DECLARE_COMMAND(sha256);
-    command.set_base16_argument(bc::config::base16(raw(BX_SHA256_NIST_MESSAGE_A)));
+    command.set_base16_argument(system::config::base16(
+        raw(BX_SHA256_NIST_MESSAGE_A)));
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SHA256_NIST_DIGEST_A "\n");
 }
@@ -42,7 +43,8 @@ BOOST_AUTO_TEST_CASE(sha256__invoke__NIST_SHA256_A__okay_output)
 BOOST_AUTO_TEST_CASE(sha256__invoke__NIST_SHA256_B__okay_output)
 {
     BX_DECLARE_COMMAND(sha256);
-    command.set_base16_argument(bc::config::base16(raw(BX_SHA256_NIST_MESSAGE_B)));
+    command.set_base16_argument(system::config::base16(
+        raw(BX_SHA256_NIST_MESSAGE_B)));
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_SHA256_NIST_DIGEST_B "\n");
 }

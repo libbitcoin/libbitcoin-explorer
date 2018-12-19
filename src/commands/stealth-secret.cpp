@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/stealth-secret.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
@@ -29,6 +29,8 @@ namespace libbitcoin {
 namespace explorer {
 namespace commands {
 
+using namespace bc::system;
+
 console_result stealth_secret::invoke(std::ostream& output,
     std::ostream& error)
 {
@@ -37,7 +39,7 @@ console_result stealth_secret::invoke(std::ostream& output,
     const auto& shared_secret = get_shared_secret_argument();
 
     ec_secret sum(scan_secret);
-    if (!bc::ec_add(sum, shared_secret))
+    if (!system::ec_add(sum, shared_secret))
     {
         error << BX_STEALTH_SECRET_OUT_OF_RANGE << std::endl;
         return console_result::failure;

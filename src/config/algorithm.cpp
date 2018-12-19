@@ -22,20 +22,21 @@
 #include <sstream>
 #include <string>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace bc::system;
 using namespace po;
 
 static auto algorithm_greedy = "greedy";
 static auto algorithm_individual = "individual";
 
 algorithm::algorithm()
-  : value_(bc::wallet::select_outputs::algorithm::greedy)
+  : value_(wallet::select_outputs::algorithm::greedy)
 {
 }
 
@@ -44,7 +45,7 @@ algorithm::algorithm(const std::string& token)
     std::stringstream(token) >> *this;
 }
 
-algorithm::algorithm(bc::wallet::select_outputs::algorithm& algorithm)
+algorithm::algorithm(wallet::select_outputs::algorithm& algorithm)
   : value_(algorithm)
 {
 }
@@ -54,7 +55,7 @@ algorithm::algorithm(const algorithm& other)
 {
 }
 
-algorithm::operator bc::wallet::select_outputs::algorithm() const
+algorithm::operator wallet::select_outputs::algorithm() const
 {
     return value_;
 }
@@ -66,11 +67,11 @@ std::istream& operator>>(std::istream& input, algorithm& argument)
 
     if (text == algorithm_greedy)
     {
-        argument.value_ = bc::wallet::select_outputs::algorithm::greedy;
+        argument.value_ = wallet::select_outputs::algorithm::greedy;
     }
     else if (text == algorithm_individual)
     {
-        argument.value_ = bc::wallet::select_outputs::algorithm::individual;
+        argument.value_ = wallet::select_outputs::algorithm::individual;
     }
     else
     {
@@ -84,11 +85,11 @@ std::ostream& operator<<(std::ostream& output, const algorithm& argument)
 {
     std::string text;
 
-    if (argument.value_ == bc::wallet::select_outputs::algorithm::greedy)
+    if (argument.value_ == wallet::select_outputs::algorithm::greedy)
     {
         text = algorithm_greedy;
     }
-    else if (argument.value_ == bc::wallet::select_outputs::algorithm::individual)
+    else if (argument.value_ == wallet::select_outputs::algorithm::individual)
     {
         text = algorithm_individual;
     }

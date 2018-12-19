@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -104,13 +104,13 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("SCRIPT", 1);
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -127,7 +127,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -149,7 +149,7 @@ public:
         )
         (
             "SCRIPT",
-            value<bc::config::script>(&argument_.script),
+            value<system::config::script>(&argument_.script),
             "The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."
         );
 
@@ -176,7 +176,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -184,7 +184,7 @@ public:
     /**
      * Get the value of the SCRIPT argument.
      */
-    virtual bc::config::script& get_script_argument()
+    virtual system::config::script& get_script_argument()
     {
         return argument_.script;
     }
@@ -193,7 +193,7 @@ public:
      * Set the value of the SCRIPT argument.
      */
     virtual void set_script_argument(
-        const bc::config::script& value)
+        const system::config::script& value)
     {
         argument_.script = value;
     }
@@ -229,7 +229,7 @@ private:
         {
         }
 
-        bc::config::script script;
+        system::config::script script;
     } argument_;
 
     /**

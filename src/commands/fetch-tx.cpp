@@ -30,8 +30,10 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::client;
 using namespace bc::explorer::config;
+using namespace bc::system;
 
 console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
 {
@@ -58,7 +60,7 @@ console_result fetch_tx::invoke(std::ostream& output, std::ostream& error)
         if (!state.succeeded(ec))
             return;
 
-        state.output(bc::property_tree(tx, json));
+        state.output(property_tree(tx, json));
     };
 
     if (witness)

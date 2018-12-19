@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/ec-add-secrets.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
@@ -27,6 +27,8 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
 {
@@ -44,14 +46,14 @@ console_result ec_add_secrets::invoke(std::ostream& output, std::ostream& error)
         }
 
         // Elliptic curve function (INTEGER + INTEGER) % curve-order.
-        if (!bc::ec_add(sum, secret))
+        if (!system::ec_add(sum, secret))
         {
             error << BX_EC_ADD_SECRETS_OUT_OF_RANGE << std::endl;
             return console_result::failure;
         }
     }
 
-    // We don't use bc::ec_private serialization (WIF) here.
+    // We don't use ec_private serialization (WIF) here.
     output << config::ec_private(sum) << std::endl;
     return console_result::okay;
 }

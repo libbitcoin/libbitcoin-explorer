@@ -25,8 +25,10 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::config;
+
 using namespace bc::protocol;
+using namespace bc::system;
+using namespace bc::system::config;
 
 console_result cert_new::invoke(std::ostream& output, std::ostream& error)
 {

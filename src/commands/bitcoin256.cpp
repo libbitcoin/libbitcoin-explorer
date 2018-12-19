@@ -19,14 +19,16 @@
 #include <bitcoin/explorer/commands/bitcoin256.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::config;
+
 using namespace bc::explorer::config;
+using namespace bc::system;
+using namespace bc::system::config;
 
 console_result bitcoin256::invoke(std::ostream& output, std::ostream& error)
 {

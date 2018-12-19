@@ -21,7 +21,7 @@
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 .primitives()
 #include <bitcoin/explorer/utility.hpp>
@@ -111,10 +111,10 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& error)
     {
-        return console_result::failure;
+        return system::console_result::failure;
     }
 
     /**
@@ -122,7 +122,7 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return argument_metadata_;
     }
@@ -131,13 +131,13 @@ public:
      * Load environment variable definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_environment(options_metadata& definitions)
+    virtual void load_environment(system::options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
         (
             /* This composes with the command line options. */
-            BX_CONFIG_VARIABLE, 
+            BX_CONFIG_VARIABLE,
             value<boost::filesystem::path>()
                 ->composing()->default_value(config_default_path()),
             "$(config_description)"
@@ -159,7 +159,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         return option_metadata_;
     }
@@ -168,7 +168,7 @@ public:
      * Load configuration setting definitions.
      * @param[out] definitions  The defined program argument definitions.
      */
-    virtual void load_settings(options_metadata& definitions)
+    virtual void load_settings(system::options_metadata& definitions)
     {
         using namespace po;
         definitions.add_options()
@@ -214,18 +214,18 @@ public:
     {
         const auto& options = get_option_metadata();
         const auto& arguments = get_argument_metadata();
-        bc::config::printer help(options, arguments, BX_PROGRAM_NAME,
+        system::config::printer help(options, arguments, BX_PROGRAM_NAME,
             description(), name());
         help.initialize();
         help.commandline(output);
     }
 
     /* Properties */
-    
+
     /**
      * Get command line argument metadata.
      */
-    virtual arguments_metadata& get_argument_metadata()
+    virtual system::arguments_metadata& get_argument_metadata()
     {
         return argument_metadata_;
     }
@@ -233,7 +233,7 @@ public:
     /**
      * Get command line option metadata.
      */
-    virtual options_metadata& get_option_metadata()
+    virtual system::options_metadata& get_option_metadata()
     {
         return option_metadata_;
     }
@@ -266,7 +266,7 @@ public:
 protected:
 
     /**
-     * This base class is abstract but not pure virtual, so prevent direct 
+     * This base class is abstract but not pure virtual, so prevent direct
      * construction here.
      */
     command()
@@ -274,16 +274,16 @@ protected:
     }
 
 private:
-    
+
     /**
      * Command line argument metadata.
      */
-    arguments_metadata argument_metadata_;
+    system::arguments_metadata argument_metadata_;
 
     /**
      * Command line option metadata.
      */
-    options_metadata option_metadata_;
+    system::options_metadata option_metadata_;
 
     /**
      * Environment variable bound variables.

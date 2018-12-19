@@ -62,47 +62,47 @@ function global.map_type(type)
 
     my.type_address_bx = "explorer::config::address"
     my.type_algorithm_bx = "explorer::config::algorithm"
-    my.type_authority_bx = "bc::config::authority"
-    my.type_base16_bx = "bc::config::base16"
-    my.type_base2_bx = "bc::config::base2"
-    my.type_base58_bx = "bc::config::base58"
-    my.type_base64_bx = "bc::config::base64"
-    my.type_base85_bx = "bc::config::base85"
+    my.type_authority_bx = "system::config::authority"
+    my.type_base16_bx = "system::config::base16"
+    my.type_base2_bx = "system::config::base2"
+    my.type_base58_bx = "system::config::base58"
+    my.type_base64_bx = "system::config::base64"
+    my.type_base85_bx = "system::config::base85"
     my.type_btc_bx = "explorer::config::btc"
     my.type_byte_bx = "explorer::config::byte"
     my.type_cert_key_bx = "explorer::config::cert_key"
     my.type_ec_private_bx = "explorer::config::ec_private"
-    my.type_ec_public_bx = "bc::wallet::ec_public"
-    my.type_ek_private_bx = "bc::wallet::ek_private"
-    my.type_ek_public_bx = "bc::wallet::ek_public"
-    my.type_ek_token_bx = "bc::wallet::ek_token"
+    my.type_ec_public_bx = "system::wallet::ec_public"
+    my.type_ek_private_bx = "system::wallet::ek_private"
+    my.type_ek_public_bx = "system::wallet::ek_public"
+    my.type_ek_token_bx = "system::wallet::ek_token"
     my.type_electrum_bx = "explorer::config::electrum"
     my.type_encoding_bx = "explorer::config::encoding"
     my.type_endorsement_bx = "explorer::config::endorsement"
-    my.type_endpoint_bx = "bc::config::endpoint"
+    my.type_endpoint_bx = "system::config::endpoint"
     my.type_file_bx = "explorer::config::file"
-    my.type_hash160_bx = "bc::config::hash160"
-    my.type_hash256_bx = "bc::config::hash256"
+    my.type_hash160_bx = "system::config::hash160"
+    my.type_hash256_bx = "system::config::hash256"
     my.type_hashtype_bx = "explorer::config::hashtype"
     my.type_hd_key_bx = "explorer::config::hd_key"
-    my.type_hd_private_bx = "bc::wallet::hd_private"
-    my.type_hd_public_bx = "bc::wallet::hd_public"
-    my.type_header_bx = "bc::config::header"
-    my.type_input_bx = "bc::config::input"
+    my.type_hd_private_bx = "system::wallet::hd_private"
+    my.type_hd_public_bx = "system::wallet::hd_public"
+    my.type_header_bx = "system::config::header"
+    my.type_input_bx = "system::config::input"
     my.type_language_bx = "explorer::config::language"
-    my.type_output_bx = "bc::config::output"
+    my.type_output_bx = "system::config::output"
     my.type_path_boost = "boost::filesystem::path"
-    my.type_payment_address_bx = "bc::wallet::payment_address"
-    my.type_point_bx = "bc::config::point"
+    my.type_payment_address_bx = "system::wallet::payment_address"
+    my.type_point_bx = "system::config::point"
     my.type_raw_bx = "explorer::config::raw"
-    my.type_script_bx = "bc::config::script"
+    my.type_script_bx = "system::config::script"
     my.type_signature_bx = "explorer::config::signature"
-    my.type_sodium_bx = "bc::config::sodium"
-    my.type_stealth_address_bx = "bc::wallet::stealth_address"
+    my.type_sodium_bx = "system::config::sodium"
+    my.type_stealth_address_bx = "system::wallet::stealth_address"
     my.type_string_std = "std::string"
-    my.type_transaction_bx = "bc::config::transaction"
-    my.type_uri_bx = "bc::wallet::bitcoin_uri"
-    my.type_wif_bx = "bc::wallet::ec_private"
+    my.type_transaction_bx = "system::config::transaction"
+    my.type_uri_bx = "system::wallet::bitcoin_uri"
+    my.type_wif_bx = "system::wallet::ec_private"
     my.type_wrapper_bx = "explorer::config::wrapper"
 
     if my.type = my.type_address
@@ -224,16 +224,16 @@ endfunction
 
 function global.is_braced_type(type)
     return (my.type = "explorer::config::uri") | \
-        (my.type = "bc::config::endpoint") | \
-        (my.type = "bc::config::authority")
+        (my.type = "system::config::endpoint") | \
+        (my.type = "system::config::authority")
 endfunction
 
 function global.is_quoted_type(type)
     return ((my.type = "boost::filesystem::path") | \
         (my.type = "std::string") | \
         (my.type = "explorer::config::uri") | \
-        (my.type = "bc::config::endpoint") | \
-        (my.type = "bc::config::authority"))
+        (my.type = "system::config::endpoint") | \
+        (my.type = "system::config::authority"))
 endfunction
 
 ###############################################################################

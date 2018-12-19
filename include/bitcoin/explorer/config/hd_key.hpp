@@ -22,7 +22,7 @@
 #include <cstdint>
 #include <iostream>
 #include <string>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -59,7 +59,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const wallet::hd_key&() const;
+    operator const system::wallet::hd_key&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -74,7 +74,7 @@ private:
     /**
      * The private key state of this object.
      */
-    wallet::hd_key value_;
+    system::wallet::hd_key value_;
 };
 
 } // namespace config

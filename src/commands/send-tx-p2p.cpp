@@ -36,9 +36,11 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace boost;
 using namespace bc::explorer::config;
 using namespace bc::network;
+using namespace bc::system;
 
 static const uint32_t hosts_pool_capacity = 1000;
 static std::promise<code> complete;
@@ -74,7 +76,7 @@ console_result send_tx_p2p::invoke(std::ostream& output, std::ostream& error)
     const auto& seeds = get_network_seeds_setting();
 
     // Defaults to 8 outbound connections.
-    network::settings settings(bc::config::settings::mainnet);
+    network::settings settings(system::config::settings::mainnet);
 
     // Defaulted by bx.
     settings.connect_timeout_seconds = connect;

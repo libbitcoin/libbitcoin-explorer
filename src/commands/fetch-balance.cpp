@@ -20,7 +20,7 @@
 #include <bitcoin/explorer/commands/fetch-balance.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -31,9 +31,11 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::chain;
+
 using namespace bc::client;
 using namespace bc::explorer::config;
+using namespace bc::system;
+using namespace bc::system::chain;
 
 console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 {
@@ -51,7 +53,8 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &address](const code& ec, const history::list& rows)
+    auto on_done = [&state, &address](const code& ec,
+        const history::list& rows)
     {
         if (!state.succeeded(ec))
             return;

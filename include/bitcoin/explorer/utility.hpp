@@ -132,21 +132,22 @@ BCX_API client::connection_settings get_connection(const command& command);
  * @param[in]  seed  The seed for key randomness.
  * @return           The new key.
  */
-BCX_API ec_secret new_key(const data_chunk& seed);
+BCX_API system::ec_secret new_key(const system::data_chunk& seed);
 
 /**
  * Generate a new pseudorandom seed.
  * @param[in]  seed  The seed length in bits. Will be aligned to nearest byte.
  * @return           The new key.
  */
-BCX_API data_chunk new_seed(size_t bit_length=minimum_seed_bits);
+BCX_API system::data_chunk new_seed(size_t bit_length=minimum_seed_bits);
 
 /**
  * Convert a list of indexes to a list of strings. This could be generalized.
  * @param[in]  indexes  The list of indexes to convert.
  * @return              The list of strings.
  */
-BCX_API string_list numbers_to_strings(const chain::point::indexes& indexes);
+BCX_API system::string_list numbers_to_strings(
+    const system::chain::point::indexes& indexes);
 
 /**
  * Get a message from the specified input stream.
@@ -160,7 +161,8 @@ BCX_API std::string read_stream(std::istream& stream);
  * @param[in]  script  The script to convert.
  * @return             The data script.
  */
-BCX_API chain::script script_to_raw_data_script(const chain::script& script);
+BCX_API system::chain::script script_to_raw_data_script(
+    const system::chain::script& script);
 
 /**
  * Split a list of tokens with delimiters into a name-value pair list.
@@ -185,14 +187,15 @@ BCX_API bool starts_with(const std::string& value, const std::string& prefix);
  * @param[in]  wrapped  The wrapped data to unwrap.
  * @return              True if input checksum validates.
  */
-BCX_API bool unwrap(wallet::wrapped_data& data, data_slice wrapped);
+BCX_API bool unwrap(system::wallet::wrapped_data& data,
+    system::data_slice wrapped);
 
 /**
  * Wrap arbitrary data.
  * @param[in]  data  The data structure to wrap.
  * @return           The wrapped data.
  */
-BCX_API data_chunk wrap(const wallet::wrapped_data& data);
+BCX_API system::data_chunk wrap(const system::wallet::wrapped_data& data);
 
 /**
  * Serialize a property tree using a specified encoding.

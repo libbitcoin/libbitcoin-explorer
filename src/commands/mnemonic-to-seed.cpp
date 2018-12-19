@@ -19,14 +19,16 @@
 #include <bitcoin/explorer/commands/mnemonic-to-seed.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::config;
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::config;
+using namespace bc::system::wallet;
 
 console_result mnemonic_to_seed::invoke(std::ostream& output,
     std::ostream& error)
@@ -38,7 +40,7 @@ console_result mnemonic_to_seed::invoke(std::ostream& output,
 
     const auto word_count = words.size();
 
-    if ((word_count % bc::wallet::mnemonic_word_multiple) != 0)
+    if ((word_count % wallet::mnemonic_word_multiple) != 0)
     {
         error << BX_MNEMONIC_TO_SEED_LENGTH_INVALID_SENTENCE << std::endl;
         return console_result::failure;

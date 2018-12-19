@@ -38,6 +38,7 @@
 #include <bitcoin/explorer/define.hpp>
 
 using namespace bc::client;
+using namespace bc::system;
 using boost::filesystem::path;
 
 namespace libbitcoin {
@@ -73,7 +74,8 @@ data_chunk new_seed(size_t bit_length)
     return seed;
 }
 
-string_list numbers_to_strings(const chain::point::indexes& indexes)
+string_list numbers_to_strings(
+    const chain::point::indexes& indexes)
 {
     string_list stringlist;
 

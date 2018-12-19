@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
 
@@ -27,6 +27,8 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result wif_to_ec::invoke(std::ostream& output, std::ostream& error)
 {

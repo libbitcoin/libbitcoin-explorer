@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <string>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -50,7 +50,7 @@ public:
      * Initialization constructor.
      * @param[in]  languages  The value to initialize with.
      */
-    language(bc::wallet::dictionary_list& languages);
+    language(system::wallet::dictionary_list& languages);
 
     /**
      * Copy constructor.
@@ -62,7 +62,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const bc::wallet::dictionary_list() const;
+    operator const system::wallet::dictionary_list() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -87,7 +87,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::wallet::dictionary_list value_;
+    system::wallet::dictionary_list value_;
 };
 
 } // namespace config

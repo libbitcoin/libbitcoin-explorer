@@ -19,13 +19,15 @@
 #include <bitcoin/explorer/commands/hd-to-public.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
 {
@@ -34,7 +36,7 @@ console_result hd_to_public::invoke(std::ostream& output, std::ostream& error)
     const auto& private_key = get_hd_private_key_argument();
 
     // Obtain private version and combine with specified public version.
-    using secret = bc::wallet::hd_private;
+    using secret = wallet::hd_private;
     const auto private_hd_key = private_key.to_hd_key();
     const auto prefix = secret::to_prefix(private_key.lineage().prefixes);
     const auto prefixes = secret::to_prefixes(prefix, version);

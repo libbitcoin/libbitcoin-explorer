@@ -21,13 +21,15 @@
 #include <algorithm>
 #include <cstddef>
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result stealth_encode::invoke(std::ostream& output,
     std::ostream& error)

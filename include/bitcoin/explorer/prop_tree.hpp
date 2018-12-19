@@ -23,7 +23,7 @@
 #include <string>
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/config/wrapper.hpp>
 
@@ -133,7 +133,7 @@ BCX_API pt::ptree prop_tree(const client::history::list& rows, bool json);
  * @return                      A property list.
  */
 BCX_API pt::ptree prop_list(const client::history::list& rows,
-    const wallet::payment_address& balance_address);
+    const system::wallet::payment_address& balance_address);
 
 /**
  * Generate a property tree from balance rows for an address.
@@ -143,7 +143,7 @@ BCX_API pt::ptree prop_list(const client::history::list& rows,
  * @return                      A property tree.
  */
 BCX_API pt::ptree prop_tree(const client::history::list& rows,
-    const wallet::payment_address& balance_address);
+    const system::wallet::payment_address& balance_address);
 
 /**
  * Generate a property list for a transaction input.
@@ -218,7 +218,7 @@ BCX_API pt::ptree prop_tree(const tx_output_type::list& tx_outputs,
  * @param[in]  point  The point value.
  * @return            A property list.
  */
-BCX_API pt::ptree prop_list(const chain::point_value& point);
+BCX_API pt::ptree prop_list(const system::chain::point_value& point);
 
 /**
  * Generate a property tree for points value.
@@ -226,7 +226,8 @@ BCX_API pt::ptree prop_list(const chain::point_value& point);
  * @param[in]  json  Use json array formatting.
  * @return           A property tree.
  */
-BCX_API pt::ptree prop_tree(const chain::points_value& values, bool json);
+BCX_API pt::ptree prop_tree(const system::chain::points_value& values,
+    bool json);
 
 /**
  * Generate a property list for a transaction.
@@ -258,14 +259,14 @@ BCX_API pt::ptree prop_tree(const std::vector<transaction>& transactions,
  * @param[in]  wrapper  The wrapper instance.
  * @return              A property list.
  */
-BCX_API pt::ptree prop_list(const wallet::wrapped_data& wrapper);
+BCX_API pt::ptree prop_list(const system::wallet::wrapped_data& wrapper);
 
 /**
  * Generate a property tree for a wrapper.
  * @param[in]  wrapper  The wrapper instance.
  * @return              A property tree.
  */
-BCX_API pt::ptree prop_tree(const wallet::wrapped_data& wrapper);
+BCX_API pt::ptree prop_tree(const system::wallet::wrapped_data& wrapper);
 
 /**
  * Generate a property list for a stealth address.
@@ -273,7 +274,8 @@ BCX_API pt::ptree prop_tree(const wallet::wrapped_data& wrapper);
  * @param[in]  json             Use json array formatting.
  * @return                      A property list.
  */
-BCX_API pt::ptree prop_list(const wallet::stealth_address& stealth, bool json);
+BCX_API pt::ptree prop_list(const system::wallet::stealth_address& stealth,
+    bool json);
 
 /**
  * Generate a property tree for a stealth address.
@@ -281,7 +283,8 @@ BCX_API pt::ptree prop_list(const wallet::stealth_address& stealth, bool json);
  * @param[in]  json             Use json array formatting.
  * @return                      A property tree.
  */
-BCX_API pt::ptree prop_tree(const wallet::stealth_address& stealth, bool json);
+BCX_API pt::ptree prop_tree(const system::wallet::stealth_address& stealth,
+    bool json);
 
 /**
  * Generate a property list for a stealth metadata row.
@@ -310,14 +313,14 @@ BCX_API pt::ptree prop_tree(const client::stealth::list& rows, bool json);
  * @param[in]  hash    The block hash.
  * @returns            A new property tree containing the hash.
  */
-BCX_API pt::ptree prop_list(const hash_digest& hash);
+BCX_API pt::ptree prop_list(const system::hash_digest& hash);
 
 /**
  * Create a property tree for a single hash.
  * @param[in]  hash    The block hash.
  * @returns            A new property tree containing the hash.
  */
-BCX_API pt::ptree prop_tree(const hash_digest& hash);
+BCX_API pt::ptree prop_tree(const system::hash_digest& hash);
 
 /**
  * Create a property tree for a hash_list.
@@ -325,7 +328,7 @@ BCX_API pt::ptree prop_tree(const hash_digest& hash);
  * @param[in]  json    Use json array formatting.
  * @returns            A new property tree containing the list.
  */
-BCX_API pt::ptree prop_tree(const hash_list& hashes, bool json);
+BCX_API pt::ptree prop_tree(const system::hash_list& hashes, bool json);
 
 /**
  * Create a property tree for the settings command.
@@ -339,7 +342,7 @@ BCX_API pt::ptree prop_tree(const settings_list& settings);
  * @param[in]  uri   The parsed uri.
  * @returns          A new property tree containing the settings.
  */
-BCX_API pt::ptree prop_tree(const wallet::bitcoin_uri& uri);
+BCX_API pt::ptree prop_tree(const system::wallet::bitcoin_uri& uri);
 
 } // namespace config
 } // namespace explorer

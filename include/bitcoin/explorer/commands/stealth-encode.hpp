@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -107,14 +107,14 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("SCAN_PUBKEY", 1)
             .add("SPEND_PUBKEY", -1);
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -129,7 +129,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -146,7 +146,7 @@ public:
         )
         (
             "filter,f",
-            value<bc::config::base2>(&option_.filter),
+            value<system::config::base2>(&option_.filter),
             "The Base2 stealth prefix filter that will be used to locate payments."
         )
         (
@@ -161,12 +161,12 @@ public:
         )
         (
             "SCAN_PUBKEY",
-            value<bc::wallet::ec_public>(&argument_.scan_pubkey)->required(),
+            value<system::wallet::ec_public>(&argument_.scan_pubkey)->required(),
             "The Base16 EC public key required to create a payment."
         )
         (
             "SPEND_PUBKEY",
-            value<std::vector<bc::wallet::ec_public>>(&argument_.spend_pubkeys),
+            value<std::vector<system::wallet::ec_public>>(&argument_.spend_pubkeys),
             "The set of Base16 EC public keys corresponding to private keys that will be able to spend payments to the address. Defaults to the value of SCAN_PUBKEY."
         );
 
@@ -193,7 +193,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -201,7 +201,7 @@ public:
     /**
      * Get the value of the SCAN_PUBKEY argument.
      */
-    virtual bc::wallet::ec_public& get_scan_pubkey_argument()
+    virtual system::wallet::ec_public& get_scan_pubkey_argument()
     {
         return argument_.scan_pubkey;
     }
@@ -210,7 +210,7 @@ public:
      * Set the value of the SCAN_PUBKEY argument.
      */
     virtual void set_scan_pubkey_argument(
-        const bc::wallet::ec_public& value)
+        const system::wallet::ec_public& value)
     {
         argument_.scan_pubkey = value;
     }
@@ -218,7 +218,7 @@ public:
     /**
      * Get the value of the SPEND_PUBKEY arguments.
      */
-    virtual std::vector<bc::wallet::ec_public>& get_spend_pubkeys_argument()
+    virtual std::vector<system::wallet::ec_public>& get_spend_pubkeys_argument()
     {
         return argument_.spend_pubkeys;
     }
@@ -227,7 +227,7 @@ public:
      * Set the value of the SPEND_PUBKEY arguments.
      */
     virtual void set_spend_pubkeys_argument(
-        const std::vector<bc::wallet::ec_public>& value)
+        const std::vector<system::wallet::ec_public>& value)
     {
         argument_.spend_pubkeys = value;
     }
@@ -235,7 +235,7 @@ public:
     /**
      * Get the value of the filter option.
      */
-    virtual bc::config::base2& get_filter_option()
+    virtual system::config::base2& get_filter_option()
     {
         return option_.filter;
     }
@@ -244,7 +244,7 @@ public:
      * Set the value of the filter option.
      */
     virtual void set_filter_option(
-        const bc::config::base2& value)
+        const system::config::base2& value)
     {
         option_.filter = value;
     }
@@ -298,8 +298,8 @@ private:
         {
         }
 
-        bc::wallet::ec_public scan_pubkey;
-        std::vector<bc::wallet::ec_public> spend_pubkeys;
+        system::wallet::ec_public scan_pubkey;
+        std::vector<system::wallet::ec_public> spend_pubkeys;
     } argument_;
 
     /**
@@ -316,7 +316,7 @@ private:
         {
         }
 
-        bc::config::base2 filter;
+        system::config::base2 filter;
         explorer::config::byte signatures;
         explorer::config::byte version;
     } option_;

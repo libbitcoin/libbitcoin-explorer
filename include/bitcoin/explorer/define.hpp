@@ -83,9 +83,9 @@ namespace pt = boost::property_tree;
  * Space-saving, clarifying and/or differentiating external type equivalents.
  */
 typedef boost::format format;
-typedef bc::chain::transaction tx_type;
-typedef bc::chain::input tx_input_type;
-typedef bc::chain::output tx_output_type;
+typedef bc::system::chain::transaction tx_type;
+typedef bc::system::chain::input tx_input_type;
+typedef bc::system::chain::output tx_output_type;
 
 /**
  * The minimum safe length of a seed in bits (multiple of 8).

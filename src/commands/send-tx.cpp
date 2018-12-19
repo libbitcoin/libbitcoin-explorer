@@ -30,7 +30,9 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::client;
+using namespace bc::system;
 
 console_result send_tx::invoke(std::ostream& output, std::ostream& error)
 {

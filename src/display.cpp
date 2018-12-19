@@ -31,7 +31,7 @@
 namespace libbitcoin {
 namespace explorer {
 
-using namespace bc::config;
+using namespace bc::system::config;
 
 #define BX_HOME_PAGE_URL "https://github.com/libbitcoin/libbitcoin-explorer"
 

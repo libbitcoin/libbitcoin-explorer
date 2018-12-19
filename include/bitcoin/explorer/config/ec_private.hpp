@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <string>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -52,13 +52,13 @@ public:
      * Initialization constructor.
      * @param[in]  secret  The value to initialize with.
      */
-    ec_private(const ec_secret& secret);
+    ec_private(const system::ec_secret& secret);
 
     /**
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const ec_secret&() const;
+    operator const system::ec_secret&() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -83,7 +83,7 @@ private:
     /**
      * The state of this object.
      */
-    ec_secret value_;
+    system::ec_secret value_;
 };
 
 } // namespace explorer

@@ -20,7 +20,7 @@
 #include <bitcoin/explorer/commands/fetch-block.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/client.hpp>
 #include <bitcoin/explorer/callback_state.hpp>
 #include <bitcoin/explorer/define.hpp>
@@ -31,8 +31,10 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
 using namespace bc::client;
 using namespace bc::explorer::config;
+using namespace bc::system;
 
 console_result fetch_block::invoke(std::ostream& output, std::ostream& error)
 {
@@ -54,12 +56,13 @@ console_result fetch_block::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, json](const code& ec, const chain::block& block)
+    auto on_done = [&state, json](const code& ec,
+        const chain::block& block)
     {
         if (!state.succeeded(ec))
             return;
 
-        state.output(bc::property_tree(block, json));
+        state.output(property_tree(block, json));
     };
 
     // Height is ignored if both are specified.

@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -97,12 +97,12 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata();
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -117,7 +117,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -139,7 +139,7 @@ public:
         )
         (
             "hash,s",
-            value<bc::config::hash256>(&option_.hash),
+            value<system::config::hash256>(&option_.hash),
             "The Base16 block hash."
         )
         (
@@ -165,7 +165,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -190,7 +190,7 @@ public:
     /**
      * Get the value of the hash option.
      */
-    virtual bc::config::hash256& get_hash_option()
+    virtual system::config::hash256& get_hash_option()
     {
         return option_.hash;
     }
@@ -199,7 +199,7 @@ public:
      * Set the value of the hash option.
      */
     virtual void set_hash_option(
-        const bc::config::hash256& value)
+        const system::config::hash256& value)
     {
         option_.hash = value;
     }
@@ -251,7 +251,7 @@ private:
         }
 
         explorer::config::encoding format;
-        bc::config::hash256 hash;
+        system::config::hash256 hash;
         uint32_t height;
     } option_;
 };

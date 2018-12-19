@@ -32,6 +32,7 @@
 namespace libbitcoin {
 namespace explorer {
 
+using namespace bc::system;
 using namespace pt;
 
 callback_state::callback_state(std::ostream& error, std::ostream& output,

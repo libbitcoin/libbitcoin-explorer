@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -112,13 +112,13 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("HASH", 1);
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -135,7 +135,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -157,7 +157,7 @@ public:
         )
         (
             "HASH",
-            value<bc::config::hash256>(&argument_.hash),
+            value<system::config::hash256>(&argument_.hash),
             "The Base16 transaction hash to watch. If not specified the hash is read from STDIN."
         );
 
@@ -178,7 +178,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -186,7 +186,7 @@ public:
     /**
      * Get the value of the HASH argument.
      */
-    virtual bc::config::hash256& get_hash_argument()
+    virtual system::config::hash256& get_hash_argument()
     {
         return argument_.hash;
     }
@@ -195,7 +195,7 @@ public:
      * Set the value of the HASH argument.
      */
     virtual void set_hash_argument(
-        const bc::config::hash256& value)
+        const system::config::hash256& value)
     {
         argument_.hash = value;
     }
@@ -231,7 +231,7 @@ private:
         {
         }
 
-        bc::config::hash256 hash;
+        system::config::hash256 hash;
     } argument_;
 
     /**

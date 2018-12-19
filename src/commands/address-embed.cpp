@@ -20,24 +20,28 @@
 
 #include <iostream>
 #include <utility>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::chain;
-using namespace bc::wallet;
 
-console_result address_embed::invoke(std::ostream& output, std::ostream& error)
+using namespace bc::system;
+using namespace bc::system::chain;
+using namespace bc::system::wallet;
+
+console_result address_embed::invoke(std::ostream& output,
+    std::ostream& error)
 {
     // Bound parameters.
     const auto& data = get_data_argument();
     const auto& version = get_version_option();
 
     // Create script from hash of data.
-    const auto ops = script::to_pay_key_hash_pattern(ripemd160_hash(data));
+    const auto ops = script::to_pay_key_hash_pattern(
+        ripemd160_hash(data));
     const auto script = chain::script(std::move(ops));
 
     // Make ripemd hash of serialized script.

@@ -20,7 +20,7 @@
 #define BX_DISPATCH_HPP
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -35,7 +35,7 @@ namespace explorer {
  * @param[in]  error   The error stream (e.g. STDERR).
  * @return             The appropriate console return code { -1, 0, 1 }.
  */
-BCX_API console_result dispatch(int argc, const char* argv[],
+BCX_API system::console_result dispatch(int argc, const char* argv[],
     std::istream& input, std::ostream& output, std::ostream& error);
 
 /**
@@ -48,7 +48,7 @@ BCX_API console_result dispatch(int argc, const char* argv[],
  * @param[in]  error   The error stream (e.g. STDERR).
  * @return            The appropriate console return code { -1, 0, 1 }.
  */
-BCX_API console_result dispatch_command(int argc, const char* argv[],
+BCX_API system::console_result dispatch_command(int argc, const char* argv[],
     std::istream& input, std::ostream& output, std::ostream& error);
 
 } // namespace explorer

@@ -19,13 +19,15 @@
 #include <bitcoin/explorer/commands/stealth-public.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 // This is nearly the same as ec-add.
 console_result stealth_public::invoke(std::ostream& output,
@@ -36,7 +38,7 @@ console_result stealth_public::invoke(std::ostream& output,
     const auto& shared_secret = get_shared_secret_argument();
 
     ec_compressed sum(spend_pubkey);
-    if (!bc::ec_add(sum, shared_secret))
+    if (!system::ec_add(sum, shared_secret))
     {
         error << BX_STEALTH_PUBLIC_OUT_OF_RANGE << std::endl;
         return console_result::failure;

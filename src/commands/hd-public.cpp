@@ -19,13 +19,15 @@
 #include <bitcoin/explorer/commands/hd-public.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result hd_public::invoke(std::ostream& output, std::ostream& error)
 {
@@ -51,14 +53,14 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
 
     if (key_version == private_version)
     {
-        const auto prefixes = bc::wallet::hd_private::to_prefixes(
+        const auto prefixes = wallet::hd_private::to_prefixes(
             key.version(), public_version);
 
         // Derive the public key from new private key and the public version.
-        const bc::wallet::hd_private private_key(key, prefixes);
+        const wallet::hd_private private_key(key, prefixes);
         if (private_key)
         {
-            static constexpr auto first = bc::wallet::hd_first_hardened_key;
+            static constexpr auto first = wallet::hd_first_hardened_key;
             const auto position = hard ? first + index : index;
 
             const auto child_public_key = private_key.derive_public(position);
@@ -72,7 +74,7 @@ console_result hd_public::invoke(std::ostream& output, std::ostream& error)
     else
     {
         // Derive the public key from new private key and the public version.
-        const bc::wallet::hd_public public_key(key, public_version);
+        const wallet::hd_public public_key(key, public_version);
         if (public_key)
         {
             const auto child_public_key = public_key.derive_public(index);

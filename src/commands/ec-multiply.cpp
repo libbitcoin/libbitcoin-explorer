@@ -19,13 +19,15 @@
 #include <bitcoin/explorer/commands/ec-multiply.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result ec_multiply::invoke(std::ostream& output, std::ostream& error)
 {
@@ -37,7 +39,7 @@ console_result ec_multiply::invoke(std::ostream& output, std::ostream& error)
     ec_compressed product(point);
 
     // Elliptic curve product (POINT * INTEGER).
-    if (!bc::ec_multiply(product, secret))
+    if (!system::ec_multiply(product, secret))
     {
         error << BX_EC_MULITPLY_OUT_OF_RANGE << std::endl;
         return console_result::failure;

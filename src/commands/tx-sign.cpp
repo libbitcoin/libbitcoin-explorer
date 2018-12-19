@@ -21,13 +21,15 @@
 
 #include <iostream>
 #include <boost/format.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result tx_sign::invoke(std::ostream& output, std::ostream& error)
 {

@@ -19,13 +19,14 @@
 #include <bitcoin/explorer/commands/mnemonic-new.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::wallet;
+using namespace bc::system;
+using namespace bc::system::wallet;
 
 console_result mnemonic_new::invoke(std::ostream& output,
     std::ostream& error)
@@ -36,7 +37,7 @@ console_result mnemonic_new::invoke(std::ostream& output,
 
     const auto entropy_size = entropy.size();
 
-    if ((entropy_size % bc::wallet::mnemonic_seed_multiple) != 0)
+    if ((entropy_size % wallet::mnemonic_seed_multiple) != 0)
     {
         error << BX_MNEMONIC_NEW_INVALID_SEED << std::endl;
         return console_result::failure;

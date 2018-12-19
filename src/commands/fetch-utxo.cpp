@@ -30,9 +30,11 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::chain;
+
 using namespace bc::client;
 using namespace bc::explorer::config;
+using namespace bc::system;
+using namespace bc::system::chain;
 
 console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
 {
@@ -60,7 +62,7 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
         if (!state.succeeded(ec))
             return;
 
-        state.output(bc::property_tree(unspent, json));
+        state.output(property_tree(unspent, json));
     };
 
     client.blockchain_fetch_unspent_outputs(on_done, address, satoshi,

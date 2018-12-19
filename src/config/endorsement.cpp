@@ -24,20 +24,21 @@
 #include <string>
 #include <cstdint>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace config {
 
+using namespace bc::system;
 using namespace po;
 
 // endorsement format is currently private to bx.
-static bool decode_endorsement(bc::endorsement& endorsement,
+static bool decode_endorsement(system::endorsement& endorsement,
     const std::string& encoded)
 {
-    bc::endorsement decoded;
+    system::endorsement decoded;
     if (!decode_base16(decoded, encoded) ||
         (decoded.size() > max_endorsement_size))
         return false;

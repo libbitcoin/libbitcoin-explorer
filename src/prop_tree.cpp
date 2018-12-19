@@ -33,9 +33,10 @@ namespace config {
 
 using namespace pt;
 using namespace bc::client;
-using namespace bc::config;
-using namespace bc::machine;
-using namespace bc::wallet;
+using namespace bc::system;
+using namespace bc::system::config;
+using namespace bc::system::machine;
+using namespace bc::system::wallet;
 
 // property_tree is very odd in that what one might consider a node or element,
 // having a "containing" name cannot be added into another node without
@@ -153,7 +154,8 @@ ptree prop_list(const stealth_address& stealth, bool json)
     // So instead we emit the reused key as one of the spend keys.
     // This means that it is typical to see the same key in scan and spend.
 
-    const auto spends = cast<ec_compressed, ec_public>(stealth.spend_keys());
+    const auto spends = cast<ec_compressed, ec_public>(
+        stealth.spend_keys());
     const auto spends_values = prop_value_list("public_key", spends, json);
 
     ptree tree;

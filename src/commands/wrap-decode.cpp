@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/wrap-decode.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/prop_tree.hpp>
 #include <bitcoin/explorer/utility.hpp>
@@ -28,6 +28,8 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
 {

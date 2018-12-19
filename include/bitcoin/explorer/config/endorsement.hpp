@@ -23,7 +23,7 @@
 #include <iostream>
 #include <string>
 #include <cstdint>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -52,14 +52,14 @@ public:
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
-    endorsement(const data_chunk& value);
+    endorsement(const system::data_chunk& value);
 
     /**
      * Initialization constructor.
      * @param[in]  value  The value to initialize with.
      */
     template<size_t Size>
-    endorsement(const byte_array<Size>& value)
+    endorsement(const system::byte_array<Size>& value)
       : value_(value.begin(), value.end())
     {
     }
@@ -74,13 +74,13 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator const data_chunk&() const;
+    operator const system::data_chunk&() const;
 
     /**
      * Overload cast to generic data reference.
      * @return  This object's value cast to a generic data reference.
      */
-    operator data_slice() const;
+    operator system::data_slice() const;
 
     /**
      * Overload stream in. If input is invalid sets no bytes in argument.
@@ -105,7 +105,7 @@ private:
     /**
      * The state of this object.
      */
-    data_chunk value_;
+    system::data_chunk value_;
 };
 
 } // namespace explorer

@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/hd-new.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 
@@ -28,6 +28,8 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result hd_new::invoke(std::ostream& output, std::ostream& error)
 {
@@ -42,8 +44,8 @@ console_result hd_new::invoke(std::ostream& output, std::ostream& error)
     }
 
     // We require the private version, but public is unused here.
-    const auto prefixes = bc::wallet::hd_private::to_prefixes(version, 0);
-    const bc::wallet::hd_private private_key(seed, prefixes);
+    const auto prefixes = wallet::hd_private::to_prefixes(version, 0);
+    const wallet::hd_private private_key(seed, prefixes);
 
     if (!private_key)
     {

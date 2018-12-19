@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <string>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
@@ -50,7 +50,7 @@ public:
      * Initialization constructor.
      * @param[in]  algorithms  The value to initialize with.
      */
-    algorithm(bc::wallet::select_outputs::algorithm& algorithm);
+    algorithm(system::wallet::select_outputs::algorithm& algorithm);
 
     /**
      * Copy constructor.
@@ -62,7 +62,7 @@ public:
      * Overload cast to internal type.
      * @return  This object's value cast to internal type.
      */
-    operator bc::wallet::select_outputs::algorithm() const;
+    operator system::wallet::select_outputs::algorithm() const;
 
     /**
      * Overload stream in. Throws if input is invalid.
@@ -87,7 +87,7 @@ private:
     /**
      * The state of this object.
      */
-    bc::wallet::select_outputs::algorithm value_;
+    system::wallet::select_outputs::algorithm value_;
 };
 
 } // namespace config

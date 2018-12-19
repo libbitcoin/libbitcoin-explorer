@@ -30,8 +30,8 @@ BC_USE_LIBBITCOIN_MAIN
  * @param argv  The array of arguments, including the process.
  * @return      The numeric result to return via console exit.
  */
-int bc::main(int argc, char* argv[])
+int bc::system::main(int argc, char* argv[])
 {
     return bc::explorer::dispatch(argc, const_cast<const char**>(argv),
-        bc::cin, bc::cout, bc::cerr);
+        bc::system::cin, bc::system::cout, bc::system::cerr);
 }

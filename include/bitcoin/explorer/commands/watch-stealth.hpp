@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include <boost/program_options.hpp>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/command.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
@@ -107,13 +107,13 @@ public:
      * A value of -1 indicates that the number of instances is unlimited.
      * @return  The loaded program argument definitions.
      */
-    virtual arguments_metadata& load_arguments()
+    virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
             .add("PREFIX", 1);
     }
 
-	/**
+    /**
      * Load parameter fallbacks from file or input as appropriate.
      * @param[in]  input  The input stream for loading the parameters.
      * @param[in]         The loaded variables.
@@ -130,7 +130,7 @@ public:
      * BUGBUG: see boost bug/fix: svn.boost.org/trac/boost/ticket/8009
      * @return  The loaded program option definitions.
      */
-    virtual options_metadata& load_options()
+    virtual system::options_metadata& load_options()
     {
         using namespace po;
         options_description& options = get_option_metadata();
@@ -152,7 +152,7 @@ public:
         )
         (
             "PREFIX",
-            value<bc::config::base2>(&argument_.prefix),
+            value<system::config::base2>(&argument_.prefix),
             "The Base2 stealth prefix to watch. Must be at least 8 bits in length. If not specified the prefix is read from STDIN."
         );
 
@@ -173,7 +173,7 @@ public:
      * @param[out]  error   The input stream for the command execution.
      * @return              The appropriate console return code { -1, 0, 1 }.
      */
-    virtual console_result invoke(std::ostream& output,
+    virtual system::console_result invoke(std::ostream& output,
         std::ostream& cerr);
 
     /* Properties */
@@ -181,7 +181,7 @@ public:
     /**
      * Get the value of the PREFIX argument.
      */
-    virtual bc::config::base2& get_prefix_argument()
+    virtual system::config::base2& get_prefix_argument()
     {
         return argument_.prefix;
     }
@@ -190,7 +190,7 @@ public:
      * Set the value of the PREFIX argument.
      */
     virtual void set_prefix_argument(
-        const bc::config::base2& value)
+        const system::config::base2& value)
     {
         argument_.prefix = value;
     }
@@ -226,7 +226,7 @@ private:
         {
         }
 
-        bc::config::base2 prefix;
+        system::config::base2 prefix;
     } argument_;
 
     /**

@@ -19,7 +19,7 @@
 #include <bitcoin/explorer/commands/ec-new.hpp>
 
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/utility.hpp>
 #include <bitcoin/explorer/config/ec_private.hpp>
@@ -30,6 +30,8 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
+
+using namespace bc::system;
 
 console_result ec_new::invoke(std::ostream& output, std::ostream& error)
 {

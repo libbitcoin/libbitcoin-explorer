@@ -20,12 +20,13 @@
 
 #include <iostream>
 #include <cstdint>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::chain;
+using namespace bc::system;
+using namespace bc::system::chain;
 
 console_result input_validate::invoke(std::ostream& output,
     std::ostream& error)

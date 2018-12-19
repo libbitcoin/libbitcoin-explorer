@@ -51,13 +51,13 @@ namespace explorer {
 template <typename Value>
 Value deserialize(std::istream& input, bool trim)
 {
-    return bc::deserialize<Value>(read_stream(input), trim);
+    return system::deserialize<Value>(read_stream(input), trim);
 }
 
 template <typename Value>
 void deserialize(Value& value, std::istream& input, bool trim)
 {
-    bc::deserialize(value, read_stream(input), trim);
+    system::deserialize(value, read_stream(input), trim);
 }
 
 template <typename Value>
@@ -87,13 +87,13 @@ void load_path(Value& parameter, const std::string& name,
         return;
     }
 
-    bc::ifstream file(path, std::ios::binary);
+    system::ifstream file(path, std::ios::binary);
     if (!file.good())
     {
         BOOST_THROW_EXCEPTION(po::invalid_option_value(path));
     }
 
-    bc::deserialize(parameter, file, !raw);
+    system::deserialize(parameter, file, !raw);
 }
 
 template <typename Instance>
@@ -108,7 +108,7 @@ void write_file(std::ostream& output, const std::string& path,
     }
     else
     {
-        bc::ofstream file(path, std::ofstream::binary);
+        system::ofstream file(path, std::ofstream::binary);
         file << instance;
         if (terminate)
             file << std::endl;

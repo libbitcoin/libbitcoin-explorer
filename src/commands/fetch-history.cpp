@@ -30,9 +30,11 @@
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::chain;
+
 using namespace bc::client;
 using namespace bc::explorer::config;
+using namespace bc::system;
+using namespace bc::system::chain;
 
 // When you restore your wallet, you should use fetch_history().
 // But for updating the wallet, use the [new] scan() method-

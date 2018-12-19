@@ -20,16 +20,17 @@
 
 #include <cstdint>
 #include <iostream>
-#include <bitcoin/bitcoin.hpp>
+#include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
 
 namespace libbitcoin {
 namespace explorer {
 namespace commands {
-using namespace bc::explorer::config;
 
-console_result btc_to_satoshi::invoke(std::ostream& output,
-    std::ostream& error)
+using namespace bc::explorer::config;
+using namespace bc::system;
+
+console_result btc_to_satoshi::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& btc = get_btc_argument();
