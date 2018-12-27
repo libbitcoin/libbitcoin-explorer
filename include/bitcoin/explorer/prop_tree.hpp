@@ -25,7 +25,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <bitcoin/system.hpp>
 #include <bitcoin/explorer/define.hpp>
-#include <bitcoin/explorer/config/wrapper.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -36,7 +35,6 @@ class header;
 class input;
 class output;
 class transaction;
-class wrapper;
 
 /**
  * A tuple to represent settings and serialized values.
@@ -255,38 +253,6 @@ BCX_API pt::ptree prop_tree(const std::vector<transaction>& transactions,
     bool json);
 
 /**
- * Generate a property list for a wrapper.
- * @param[in]  wrapper  The wrapper instance.
- * @return              A property list.
- */
-BCX_API pt::ptree prop_list(const system::wallet::wrapped_data& wrapper);
-
-/**
- * Generate a property tree for a wrapper.
- * @param[in]  wrapper  The wrapper instance.
- * @return              A property tree.
- */
-BCX_API pt::ptree prop_tree(const system::wallet::wrapped_data& wrapper);
-
-/**
- * Generate a property list for a stealth address.
- * @param[in]  stealth_address  The stealth address.
- * @param[in]  json             Use json array formatting.
- * @return                      A property list.
- */
-BCX_API pt::ptree prop_list(const system::wallet::stealth_address& stealth,
-    bool json);
-
-/**
- * Generate a property tree for a stealth address.
- * @param[in]  stealth_address  The stealth address.
- * @param[in]  json             Use json array formatting.
- * @return                      A property tree.
- */
-BCX_API pt::ptree prop_tree(const system::wallet::stealth_address& stealth,
-    bool json);
-
-/**
  * Generate a property list for a stealth metadata row.
  * @param[in]  rows  The stealth row.
  * @return           A property list.
@@ -309,40 +275,11 @@ BCX_API pt::ptree prop_tree(const client::stealth& row);
 BCX_API pt::ptree prop_tree(const client::stealth::list& rows, bool json);
 
 /**
- * Create a property tree for single hash.
- * @param[in]  hash    The block hash.
- * @returns            A new property tree containing the hash.
- */
-BCX_API pt::ptree prop_list(const system::hash_digest& hash);
-
-/**
- * Create a property tree for a single hash.
- * @param[in]  hash    The block hash.
- * @returns            A new property tree containing the hash.
- */
-BCX_API pt::ptree prop_tree(const system::hash_digest& hash);
-
-/**
- * Create a property tree for a hash_list.
- * @param[in]  hashes  The list of block hashes.
- * @param[in]  json    Use json array formatting.
- * @returns            A new property tree containing the list.
- */
-BCX_API pt::ptree prop_tree(const system::hash_list& hashes, bool json);
-
-/**
  * Create a property tree for the settings command.
  * @param[in]  settings   The list of settings.
  * @returns               A new property tree containing the settings.
  */
 BCX_API pt::ptree prop_tree(const settings_list& settings);
-
-/**
- * Create a property tree for a parsed bitcoin uri.
- * @param[in]  uri   The parsed uri.
- * @returns          A new property tree containing the settings.
- */
-BCX_API pt::ptree prop_tree(const system::wallet::bitcoin_uri& uri);
 
 } // namespace config
 } // namespace explorer

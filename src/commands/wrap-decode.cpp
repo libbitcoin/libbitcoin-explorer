@@ -37,7 +37,7 @@ console_result wrap_decode::invoke(std::ostream& output, std::ostream& error)
     const auto& wrapped = get_wrapped_argument();
     const auto& encoding = get_format_option();
 
-    const auto tree = prop_tree(wrapped);
+    const auto tree = property_tree(wrapped);
 
     write_stream(output, tree, encoding);
     return console_result::okay;

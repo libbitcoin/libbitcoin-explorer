@@ -41,7 +41,7 @@ console_result stealth_decode::invoke(std::ostream& output,
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    write_stream(output, prop_tree(address, json), encoding);
+    write_stream(output, property_tree(address, json), encoding);
     return console_result::okay;
 }
 
