@@ -37,7 +37,7 @@ using namespace bc::system;
      const auto& encoding = get_format_option();
      const auto& uri = get_uri_argument();
 
-     write_stream(output, prop_tree(uri), encoding);
+     write_stream(output, property_tree(uri), encoding);
      return console_result::okay;
  }
 

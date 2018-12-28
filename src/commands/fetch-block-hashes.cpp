@@ -26,7 +26,6 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/display.hpp>
 #include <bitcoin/explorer/utility.hpp>
-#include <bitcoin/explorer/prop_tree.hpp>
 
 namespace libbitcoin {
 namespace explorer {
@@ -61,7 +60,7 @@ system::console_result fetch_block_hashes::invoke(std::ostream& output,
         if (!state.succeeded(ec))
             return;
 
-        state.output(prop_tree(hashes, json));
+        state.output(property_tree(hashes, json));
     };
 
     // Height is ignored if both are specified.

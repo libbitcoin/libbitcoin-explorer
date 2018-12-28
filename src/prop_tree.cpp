@@ -126,55 +126,6 @@ ptree prop_tree(const client::history::list& rows,
     return tree;
 }
 
-// wrapper
-
-ptree prop_list(const wallet::wrapped_data& wrapper)
-{
-    ptree tree;
-    tree.put("checksum", wrapper.checksum);
-    tree.put("payload", base16(wrapper.payload));
-    tree.put("version", wrapper.version);
-    return tree;
-}
-
-ptree prop_tree(const wallet::wrapped_data& wrapper)
-{
-    ptree tree;
-    tree.add_child("wrapper", prop_list(wrapper));
-    return tree;
-}
-
-// stealth_address
-
-ptree prop_list(const stealth_address& stealth, bool json)
-{
-    // We don't serialize a "reuse key" value as this is strictly an
-    // optimization for the purpose of serialization and otherwise complicates
-    // understanding of what is actually otherwise very simple behavior.
-    // So instead we emit the reused key as one of the spend keys.
-    // This means that it is typical to see the same key in scan and spend.
-
-    const auto spends = cast<ec_compressed, ec_public>(
-        stealth.spend_keys());
-    const auto spends_values = prop_value_list("public_key", spends, json);
-
-    ptree tree;
-    tree.put("encoded", stealth);
-    tree.put("filter", stealth.filter());
-    tree.put("scan_public_key", ec_public(stealth.scan_key()));
-    tree.put("signatures", stealth.signatures());
-    tree.add_child("spends", spends_values);
-    tree.put("version", stealth.version());
-    return tree;
-}
-
-ptree prop_tree(const stealth_address& stealth, bool json)
-{
-    ptree tree;
-    tree.add_child("stealth_address", prop_list(stealth, json));
-    return tree;
-}
-
 // stealth
 
 ptree prop_list(const client::stealth& row)
@@ -197,57 +148,6 @@ ptree prop_tree(const client::stealth::list& rows, bool json)
 {
     ptree tree;
     tree.add_child("stealth", prop_tree_list("match", rows, json));
-    return tree;
-}
-
-// hash_list (base16 encoded values)
-
-ptree prop_list(const hash_digest& hash)
-{
-    ptree tree;
-    tree.put_value(encode_base16(hash));
-    return tree;
-}
-
-ptree prop_tree(const hash_digest& hash)
-{
-    ptree tree;
-    tree.add_child("hash", prop_list(hash));
-    return tree;
-}
-
-ptree prop_tree(const hash_list& hashes, bool json)
-{
-    ptree tree;
-    tree.add_child("hashes", prop_tree_list("hash", hashes, json));
-    return tree;
-}
-
-// uri
-
-ptree prop_tree(const bitcoin_uri& uri)
-{
-    ptree uri_props;
-
-    if (!uri.address().empty())
-        uri_props.put("address", uri.address());
-
-    if (uri.amount() != 0)
-        uri_props.put("amount", uri.amount());
-
-    if (!uri.label().empty())
-        uri_props.put("label", uri.label());
-
-    if (!uri.message().empty())
-        uri_props.put("message", uri.message());
-
-    if (!uri.r().empty())
-        uri_props.put("r", uri.r());
-
-    uri_props.put("scheme", "bitcoin");
-
-    ptree tree;
-    tree.add_child("uri", uri_props);
     return tree;
 }
 
