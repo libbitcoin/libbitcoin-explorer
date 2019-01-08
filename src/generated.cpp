@@ -128,6 +128,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<uri_decode>());
     func(make_shared<uri_encode>());
     func(make_shared<validate_tx>());
+    func(make_shared<version>());
     func(make_shared<watch_address>());
     func(make_shared<watch_stealth>());
     func(make_shared<watch_tx>());
@@ -323,6 +324,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<uri_encode>();
     if (symbol == validate_tx::symbol())
         return make_shared<validate_tx>();
+    if (symbol == version::symbol())
+        return make_shared<version>();
     if (symbol == watch_address::symbol())
         return make_shared<watch_address>();
     if (symbol == watch_stealth::symbol())

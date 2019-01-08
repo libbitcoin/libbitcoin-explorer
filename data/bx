@@ -95,6 +95,7 @@ _bx()
         uri-decode
         uri-encode
         validate-tx
+        version
         watch-address
         watch-stealth
         watch-tx

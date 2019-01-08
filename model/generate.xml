@@ -635,6 +635,12 @@
     <define name="BX_VALIDATE_TX_INVALID" value="The transaction is invalid for the current state of the node: %1%." />
   </command>
 
+  <command symbol="version" output="string" category="ONLINE" network="true" description="Fetch and display the libbitcoin server and client versions. Requires a Libbitcoin server connection.">
+    <define name="BX_VERSION_FAILED" value="Failed to retrieve server version: %1%." />
+    <define name="BX_SERVER_VERSION" value="libbitcoin-server version: %1%." />
+    <define name="BX_EXPLORER_VERSION" value="libbitcoin-explorer version: %1%." />
+  </command>
+
   <command symbol="watch-address" formerly="monitor" output="transaction" category="ONLINE" network="true" description="Watch the network for transactions in which an address participates. Requires a Libbitcoin server connection.">
     <option name="duration" type="uint32_t" default="600" description="The duration of the watch in seconds, defaults to 600." />
     <!--<option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />-->
