@@ -134,6 +134,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/uri-decode.cpp \
     src/commands/uri-encode.cpp \
     src/commands/validate-tx.cpp \
+    src/commands/version.cpp \
     src/commands/watch-address.cpp \
     src/commands/watch-stealth.cpp \
     src/commands/watch-tx.cpp \
@@ -399,6 +400,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/uri-decode.hpp \
     include/bitcoin/explorer/commands/uri-encode.hpp \
     include/bitcoin/explorer/commands/validate-tx.hpp \
+    include/bitcoin/explorer/commands/version.hpp \
     include/bitcoin/explorer/commands/watch-address.hpp \
     include/bitcoin/explorer/commands/watch-stealth.hpp \
     include/bitcoin/explorer/commands/watch-tx.hpp \

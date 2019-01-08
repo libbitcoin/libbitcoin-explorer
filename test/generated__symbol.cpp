@@ -488,6 +488,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__validate_tx__returns_expected_value)
     BOOST_REQUIRE_EQUAL(validate_tx::symbol(), "validate-tx");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__version__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(version::symbol(), "version");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__watch_address__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(watch_address::symbol(), "watch-address");

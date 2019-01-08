@@ -285,6 +285,7 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/uri-decode.cpp"
     "../../src/commands/uri-encode.cpp"
     "../../src/commands/validate-tx.cpp"
+    "../../src/commands/version.cpp"
     "../../src/commands/watch-address.cpp"
     "../../src/commands/watch-stealth.cpp"
     "../../src/commands/watch-tx.cpp"

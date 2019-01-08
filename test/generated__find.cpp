@@ -488,6 +488,11 @@ BOOST_AUTO_TEST_CASE(generated__find__validate_tx__returns_object)
     BOOST_REQUIRE(find("validate-tx") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__version__returns_object)
+{
+    BOOST_REQUIRE(find("version") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__watch_address__returns_object)
 {
     BOOST_REQUIRE(find("watch-address") != nullptr);
