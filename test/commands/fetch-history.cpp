@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_SUITE(fetch_history__invoke)
 BOOST_AUTO_TEST_CASE(fetch_history__invoke__mainnet_sx_demo1_info__okay_output)
 {
     BX_DECLARE_CLIENT_COMMAND(bc::explorer::commands::fetch_history);
-    command.set_payment_address_argument({ BX_FETCH_HISTORY_SX_DEMO1_ADDRESS });
+    command.set_payment_address_option({ BX_FETCH_HISTORY_SX_DEMO1_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_HISTORY_SX_DEMO1_INFO);
 }
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE(fetch_history__invoke__mainnet_sx_demo2_info__okay_output)
 {
     BX_DECLARE_CLIENT_COMMAND(bc::explorer::commands::fetch_history);
     command.set_format_option({ "info" });
-    command.set_payment_address_argument({ BX_FETCH_HISTORY_SX_DEMO2_ADDRESS });
+    command.set_payment_address_option({ BX_FETCH_HISTORY_SX_DEMO2_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_HISTORY_SX_DEMO2_INFO);
 }
@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE(fetch_history__invoke__testnet_demo_info__okay_output)
 {
     BX_DECLARE_CLIENT_TESTNET_COMMAND(bc::explorer::commands::fetch_history);
     command.set_format_option({ "info" });
-    command.set_payment_address_argument({ BX_FETCH_HISTORY_TESTNET_DEMO_ADDRESS });
+    command.set_payment_address_option({ BX_FETCH_HISTORY_TESTNET_DEMO_ADDRESS });
     BX_REQUIRE_OKAY(command.invoke(output, error));
     BX_REQUIRE_OUTPUT(BX_FETCH_HISTORY_TESTNET_DEMO_INFO);
 }

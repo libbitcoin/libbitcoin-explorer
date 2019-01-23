@@ -36,12 +36,14 @@ using namespace bc::client;
 using namespace bc::explorer::config;
 using namespace bc::system;
 using namespace bc::system::chain;
+using namespace bc::system::config;
 
 console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const auto& address = get_payment_address_argument();
+    const hash_digest& hash = get_hash_option();
+    const auto& address = get_payment_address_option();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection.retries);
@@ -53,18 +55,36 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &address](const code& ec,
+    auto on_done = [&state, &hash, &address](const code& ec,
         const history::list& rows)
     {
         if (!state.succeeded(ec))
             return;
 
         // This override summarizes the history response as balance.
-        state.output(prop_tree(rows, address));
+        if (hash == null_hash)
+            state.output(prop_tree(rows, address));
+        else
+            state.output(prop_tree(rows, hash));
     };
 
+    // Address is ignored if both are specified.
+    // Use the null_hash as sentinel to determine whether to use address or hash.
     // This does not include unconfirmed transactions.
-    client.blockchain_fetch_history4(on_done, address);
+    if (hash == null_hash)
+    {
+        client.blockchain_fetch_history4(on_done, address);
+    }
+    else
+    {
+        // If a hash option is provided directly, it's been reversed already and
+        // needs to be undone.
+        auto reversed_hash = hash;
+        std::reverse(reversed_hash.begin(), reversed_hash.end());
+
+        client.blockchain_fetch_history4(on_done, reversed_hash);
+    }
+
     client.wait();
 
     return state.get_result();

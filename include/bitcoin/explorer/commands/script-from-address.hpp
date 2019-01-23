@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_BALANCE_HPP
-#define BX_FETCH_BALANCE_HPP
+#ifndef BX_SCRIPT_FROM_ADDRESS_HPP
+#define BX_SCRIPT_FROM_ADDRESS_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -52,9 +52,9 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the fetch-balance command.
+ * Class to implement the script-from-address command.
  */
-class BCX_API fetch_balance
+class BCX_API script_from_address
   : public command
 {
 public:
@@ -64,7 +64,7 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-balance";
+        return "script-from-address";
     }
 
 
@@ -73,7 +73,7 @@ public:
      */
     virtual const char* name()
     {
-        return fetch_balance::symbol();
+        return script_from_address::symbol();
     }
 
     /**
@@ -81,7 +81,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "TRANSACTION";
     }
 
     /**
@@ -89,7 +89,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.";
+        return "Extract the Base16 script hash from an address.";
     }
 
     /**
@@ -99,7 +99,8 @@ public:
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("PAYMENT_ADDRESS", 1);
     }
 
     /**
@@ -110,6 +111,8 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
     }
 
     /**
@@ -133,19 +136,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
-            "hash,s",
-            value<system::config::hash256>(&option_.hash),
-            "The Base16 script hash."
-        )
-        (
-            "PAYMENT_ADDRESS,a",
-            value<system::wallet::payment_address>(&option_.payment_address),
-            "The payment address."
+            "PAYMENT_ADDRESS",
+            value<system::wallet::payment_address>(&argument_.payment_address),
+            "The participating payment address. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -171,54 +164,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the format option.
+     * Get the value of the PAYMENT_ADDRESS argument.
      */
-    virtual explorer::config::encoding& get_format_option()
+    virtual system::wallet::payment_address& get_payment_address_argument()
     {
-        return option_.format;
+        return argument_.payment_address;
     }
 
     /**
-     * Set the value of the format option.
+     * Set the value of the PAYMENT_ADDRESS argument.
      */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
-    /**
-     * Get the value of the hash option.
-     */
-    virtual system::config::hash256& get_hash_option()
-    {
-        return option_.hash;
-    }
-
-    /**
-     * Set the value of the hash option.
-     */
-    virtual void set_hash_option(
-        const system::config::hash256& value)
-    {
-        option_.hash = value;
-    }
-
-    /**
-     * Get the value of the PAYMENT_ADDRESS option.
-     */
-    virtual system::wallet::payment_address& get_payment_address_option()
-    {
-        return option_.payment_address;
-    }
-
-    /**
-     * Set the value of the PAYMENT_ADDRESS option.
-     */
-    virtual void set_payment_address_option(
+    virtual void set_payment_address_argument(
         const system::wallet::payment_address& value)
     {
-        option_.payment_address = value;
+        argument_.payment_address = value;
     }
 
 private:
@@ -231,9 +190,11 @@ private:
     struct argument
     {
         argument()
+          : payment_address()
         {
         }
 
+        system::wallet::payment_address payment_address;
     } argument_;
 
     /**
@@ -244,15 +205,9 @@ private:
     struct option
     {
         option()
-          : format(),
-            hash(),
-            payment_address()
         {
         }
 
-        explorer::config::encoding format;
-        system::config::hash256 hash;
-        system::wallet::payment_address payment_address;
     } option_;
 };
 

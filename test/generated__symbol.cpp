@@ -373,6 +373,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__script_encode__returns_expected_value)
     BOOST_REQUIRE_EQUAL(script_encode::symbol(), "script-encode");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__script_from_address__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(script_from_address::symbol(), "script-from-address");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__script_to_address__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(script_to_address::symbol(), "script-to-address");

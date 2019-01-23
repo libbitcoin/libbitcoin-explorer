@@ -111,6 +111,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/satoshi-to-btc.cpp \
     src/commands/script-decode.cpp \
     src/commands/script-encode.cpp \
+    src/commands/script-from-address.cpp \
     src/commands/script-to-address.cpp \
     src/commands/seed.cpp \
     src/commands/send-tx-node.cpp \
@@ -253,6 +254,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/satoshi-to-btc.cpp \
     test/commands/script-decode.cpp \
     test/commands/script-encode.cpp \
+    test/commands/script-from-address.cpp \
     test/commands/script-to-address.cpp \
     test/commands/seed.cpp \
     test/commands/send-tx-node.cpp \
@@ -377,6 +379,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/satoshi-to-btc.hpp \
     include/bitcoin/explorer/commands/script-decode.hpp \
     include/bitcoin/explorer/commands/script-encode.hpp \
+    include/bitcoin/explorer/commands/script-from-address.hpp \
     include/bitcoin/explorer/commands/script-to-address.hpp \
     include/bitcoin/explorer/commands/seed.hpp \
     include/bitcoin/explorer/commands/send-tx-node.hpp \

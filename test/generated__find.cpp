@@ -373,6 +373,11 @@ BOOST_AUTO_TEST_CASE(generated__find__script_encode__returns_object)
     BOOST_REQUIRE(find("script-encode") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__script_from_address__returns_object)
+{
+    BOOST_REQUIRE(find("script-from-address") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__script_to_address__returns_object)
 {
     BOOST_REQUIRE(find("script-to-address") != nullptr);

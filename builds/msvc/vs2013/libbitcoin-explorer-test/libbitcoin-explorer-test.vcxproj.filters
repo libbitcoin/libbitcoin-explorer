@@ -219,6 +219,9 @@
     <ClCompile Include="..\..\..\..\test\commands\script-encode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\script-from-address.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\script-to-address.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

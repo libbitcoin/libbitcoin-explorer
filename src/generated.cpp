@@ -105,6 +105,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<satoshi_to_btc>());
     func(make_shared<script_decode>());
     func(make_shared<script_encode>());
+    func(make_shared<script_from_address>());
     func(make_shared<script_to_address>());
     func(make_shared<seed>());
     func(make_shared<send_tx>());
@@ -278,6 +279,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<script_decode>();
     if (symbol == script_encode::symbol())
         return make_shared<script_encode>();
+    if (symbol == script_from_address::symbol())
+        return make_shared<script_from_address>();
     if (symbol == script_to_address::symbol())
         return make_shared<script_to_address>();
     if (symbol == seed::symbol())

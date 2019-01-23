@@ -127,6 +127,26 @@ BCX_API pt::ptree prop_tree(const client::history::list& rows, bool json);
  * Generate a property list from balance rows for an address.
  * This doesn't require array formatting because it summarizes the rows.
  * @param[in]  rows             The set of balance rows.
+ * @param[in]  balance_address  The script hash for the balance rows.
+ * @return                      A property list.
+ */
+BCX_API pt::ptree prop_list(const client::history::list& rows,
+    const system::hash_digest& script_hash);
+
+/**
+ * Generate a property tree from balance rows for an address.
+ * This doesn't require array formatting because it summarizes the rows.
+ * @param[in]  rows             The set of balance rows.
+ * @param[in]  balance_address  The script hash for the balance rows.
+ * @return                      A property tree.
+ */
+BCX_API pt::ptree prop_tree(const client::history::list& rows,
+    const system::hash_digest& script_hash);
+
+/**
+ * Generate a property list from balance rows for an address.
+ * This doesn't require array formatting because it summarizes the rows.
+ * @param[in]  rows             The set of balance rows.
  * @param[in]  balance_address  The payment address for the balance rows.
  * @return                      A property list.
  */

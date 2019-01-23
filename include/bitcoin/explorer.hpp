@@ -95,6 +95,7 @@
 #include <bitcoin/explorer/commands/satoshi-to-btc.hpp>
 #include <bitcoin/explorer/commands/script-decode.hpp>
 #include <bitcoin/explorer/commands/script-encode.hpp>
+#include <bitcoin/explorer/commands/script-from-address.hpp>
 #include <bitcoin/explorer/commands/script-to-address.hpp>
 #include <bitcoin/explorer/commands/seed.hpp>
 #include <bitcoin/explorer/commands/send-tx-node.hpp>

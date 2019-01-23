@@ -137,6 +137,7 @@
     <ClCompile Include="..\..\..\..\test\commands\satoshi-to-btc.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\script-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\script-encode.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\script-from-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\script-to-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\seed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\send-tx-node.cpp" />

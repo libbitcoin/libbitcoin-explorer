@@ -99,8 +99,7 @@ public:
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1);
+        return get_argument_metadata();
     }
 
     /**
@@ -111,8 +110,6 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
     }
 
     /**
@@ -141,9 +138,14 @@ public:
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "PAYMENT_ADDRESS",
-            value<system::wallet::payment_address>(&argument_.payment_address),
-            "The payment address. If not specified the address is read from STDIN."
+            "hash,s",
+            value<system::config::hash256>(&option_.hash),
+            "The Base16 script hash."
+        )
+        (
+            "PAYMENT_ADDRESS,a",
+            value<system::wallet::payment_address>(&option_.payment_address),
+            "The payment address.."
         );
 
         return options;
@@ -169,23 +171,6 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PAYMENT_ADDRESS argument.
-     */
-    virtual system::wallet::payment_address& get_payment_address_argument()
-    {
-        return argument_.payment_address;
-    }
-
-    /**
-     * Set the value of the PAYMENT_ADDRESS argument.
-     */
-    virtual void set_payment_address_argument(
-        const system::wallet::payment_address& value)
-    {
-        argument_.payment_address = value;
-    }
-
-    /**
      * Get the value of the format option.
      */
     virtual explorer::config::encoding& get_format_option()
@@ -202,6 +187,40 @@ public:
         option_.format = value;
     }
 
+    /**
+     * Get the value of the hash option.
+     */
+    virtual system::config::hash256& get_hash_option()
+    {
+        return option_.hash;
+    }
+
+    /**
+     * Set the value of the hash option.
+     */
+    virtual void set_hash_option(
+        const system::config::hash256& value)
+    {
+        option_.hash = value;
+    }
+
+    /**
+     * Get the value of the PAYMENT_ADDRESS option.
+     */
+    virtual system::wallet::payment_address& get_payment_address_option()
+    {
+        return option_.payment_address;
+    }
+
+    /**
+     * Set the value of the PAYMENT_ADDRESS option.
+     */
+    virtual void set_payment_address_option(
+        const system::wallet::payment_address& value)
+    {
+        option_.payment_address = value;
+    }
+
 private:
 
     /**
@@ -212,11 +231,9 @@ private:
     struct argument
     {
         argument()
-          : payment_address()
         {
         }
 
-        system::wallet::payment_address payment_address;
     } argument_;
 
     /**
@@ -227,11 +244,15 @@ private:
     struct option
     {
         option()
-          : format()
+          : format(),
+            hash(),
+            payment_address()
         {
         }
 
         explorer::config::encoding format;
+        system::config::hash256 hash;
+        system::wallet::payment_address payment_address;
     } option_;
 };
 
