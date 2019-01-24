@@ -50,7 +50,7 @@ console_result subscribe_tx::invoke(std::ostream& output, std::ostream& error)
 
     auto on_transaction = [&state](const chain::transaction& tx)
     {
-        state.output(encode_base16(tx.hash()));
+        state.output(encode_hash(tx.hash()));
     };
 
     obelisk_client client(connection.retries);
