@@ -35,12 +35,10 @@ using namespace po;
 // DRY
 static auto language_en = "en";
 static auto language_es = "es";
-static auto language_ja = "ja";
-static auto language_it = "it";
 static auto language_fr = "fr";
-static auto language_cs = "cs";
-static auto language_ru = "ru";
-static auto language_uk = "uk";
+static auto language_it = "it";
+static auto language_ja = "ja";
+static auto language_ko = "ko";
 static auto language_zh_Hans = "zh_Hans";
 static auto language_zh_Hant = "zh_Hant";
 static auto language_any = "any";
@@ -84,18 +82,14 @@ std::istream& operator>>(std::istream& input, language& argument)
         argument.value_.push_back(&wallet::language::en);
     else if (text == language_es)
         argument.value_.push_back(&wallet::language::es);
-    else if (text == language_ja)
-        argument.value_.push_back(&wallet::language::ja);
-    else if (text == language_it)
-        argument.value_.push_back(&wallet::language::it);
     else if (text == language_fr)
         argument.value_.push_back(&wallet::language::fr);
-    else if(text == language_cs)
-        argument.value_.push_back(&wallet::language::cs);
-    else if (text == language_ru)
-        argument.value_.push_back(&wallet::language::ru);
-    else if (text == language_uk)
-        argument.value_.push_back(&wallet::language::uk);
+    else if (text == language_it)
+        argument.value_.push_back(&wallet::language::it);
+    else if (text == language_ja)
+        argument.value_.push_back(&wallet::language::ja);
+    else if (text == language_ko)
+        argument.value_.push_back(&wallet::language::ko);
     else if (text == language_zh_Hans)
         argument.value_.push_back(&wallet::language::zh_Hans);
     else if (text == language_zh_Hant)
@@ -118,18 +112,14 @@ std::ostream& operator<<(std::ostream& output, const language& argument)
         text = language_en;
     else if (argument.value_.front() == &wallet::language::es)
         text = language_es;
-    else if (argument.value_.front() == &wallet::language::ja)
-        text = language_ja;
-    else if (argument.value_.front() == &wallet::language::it)
-        text = language_it;
     else if (argument.value_.front() == &wallet::language::fr)
         text = language_fr;
-    else if(argument.value_.front() == &wallet::language::cs)
-        text = language_cs;
-    else if (argument.value_.front() == &wallet::language::ru)
-        text = language_ru;
-    else if (argument.value_.front() == &wallet::language::uk)
-        text = language_uk;
+    else if (argument.value_.front() == &wallet::language::it)
+        text = language_it;
+    else if (argument.value_.front() == &wallet::language::ja)
+        text = language_ja;
+    else if (argument.value_.front() == &wallet::language::ko)
+        text = language_ko;
     else if (argument.value_.front() == &wallet::language::zh_Hans)
         text = language_zh_Hans;
     else if (argument.value_.front() == &wallet::language::zh_Hant)
