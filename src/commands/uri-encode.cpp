@@ -41,8 +41,9 @@ using namespace bc::system::wallet;
 
      bitcoin_uri uri;
 
+     // Address is already validated and cannot fail to reparse.
      if (!address.empty())
-         uri.set_address(address);
+         /* bool */ uri.set_address(address);
 
      if (amount > 0)
          uri.set_amount(amount);

@@ -38,7 +38,9 @@ console_result ec_to_ek::invoke(std::ostream& output, std::ostream& error)
     const auto& secret = get_ec_private_key_argument();
 
     encrypted_private point;
-    encrypt(point, secret, passphrase, version, !uncompressed);
+
+    // This cannot fail because the secret has been validated.
+    /* bool */ encrypt(point, secret, passphrase, version, !uncompressed);
 
     output << ek_private(point) << std::endl;
     return console_result::okay;

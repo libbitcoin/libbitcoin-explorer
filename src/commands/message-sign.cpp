@@ -40,7 +40,9 @@ console_result message_sign::invoke(std::ostream& output, std::ostream& error)
     const auto& message = get_message_argument();
 
     message_signature sign;
-    sign_message(sign, message, secret);
+
+    // This cannot fail because the secret has been validated.
+    /* bool */ sign_message(sign, message, secret);
 
     output << signature(sign) << std::endl;
     return console_result::okay;

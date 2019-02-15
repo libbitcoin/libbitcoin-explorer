@@ -61,15 +61,17 @@ console_result token_new::invoke(std::ostream& output, std::ostream& error)
     {
         ek_entropy bytes;
         std::copy(salt.begin(), salt.begin() + bytes.size(), bytes.begin());
-        create_token(token, passphrase, bytes);
+        /* bool */ create_token(token, passphrase, bytes);
     }
     else
     {
         ek_salt bytes;
         std::copy(salt.begin(), salt.begin() + bytes.size(), bytes.begin());
-        create_token(token, passphrase, bytes, lot, sequence);
+        /* bool */ create_token(token, passphrase, bytes, lot, sequence);
     }
 
+    // TODO: handle this scenario as hard error.
+    // In the case of creation failure a null token is presented.
     output << ek_token(token) << std::endl;
     return console_result::okay;
 #else

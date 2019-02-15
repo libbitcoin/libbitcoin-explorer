@@ -49,7 +49,10 @@ console_result ek_address::invoke(std::ostream& output, std::ostream& error)
 
     ec_compressed point;
     encrypted_private unused;
-    create_key_pair(unused, point, token, bytes, version, compressed);
+
+    // This cannot fail because the token has been validated.
+    /* bool */ create_key_pair(unused, point, token, bytes, version,
+        compressed);
     const payment_address address({ point, compressed }, version);
 
     output << address << std::endl;
