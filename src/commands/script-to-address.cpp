@@ -35,9 +35,7 @@ console_result script_to_address::invoke(std::ostream& output, std::ostream& err
     const auto& script = get_script_argument();
     const auto version = get_version_option();
 
-    const payment_address address(script, version);
-
-    output << address << std::endl;
+    output << payment_address(script, version) << std::endl;
     return console_result::okay;
 }
 
