@@ -27,6 +27,9 @@
     <ClCompile Include="..\..\..\..\test\commands\address-encode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\address-to-script.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\base16-decode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -217,9 +220,6 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\script-encode.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\script-from-address.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\script-to-address.cpp">

@@ -49,7 +49,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& encoding = get_format_option();
     const hash_digest& hash = get_hash_option();
-    const auto& address = get_payment_address_option();
+    const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection.retries);

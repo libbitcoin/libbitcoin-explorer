@@ -99,7 +99,8 @@ public:
      */
     virtual system::arguments_metadata& load_arguments()
     {
-        return get_argument_metadata();
+        return get_argument_metadata()
+            .add("PAYMENT_ADDRESS", 1);
     }
 
     /**
@@ -143,8 +144,8 @@ public:
             "The Base16 script hash."
         )
         (
-            "PAYMENT_ADDRESS,a",
-            value<system::wallet::payment_address>(&option_.payment_address),
+            "PAYMENT_ADDRESS",
+            value<system::wallet::payment_address>(&argument_.payment_address),
             "The payment address."
         );
 
@@ -169,6 +170,23 @@ public:
         std::ostream& cerr);
 
     /* Properties */
+
+    /**
+     * Get the value of the PAYMENT_ADDRESS argument.
+     */
+    virtual system::wallet::payment_address& get_payment_address_argument()
+    {
+        return argument_.payment_address;
+    }
+
+    /**
+     * Set the value of the PAYMENT_ADDRESS argument.
+     */
+    virtual void set_payment_address_argument(
+        const system::wallet::payment_address& value)
+    {
+        argument_.payment_address = value;
+    }
 
     /**
      * Get the value of the format option.
@@ -204,23 +222,6 @@ public:
         option_.hash = value;
     }
 
-    /**
-     * Get the value of the PAYMENT_ADDRESS option.
-     */
-    virtual system::wallet::payment_address& get_payment_address_option()
-    {
-        return option_.payment_address;
-    }
-
-    /**
-     * Set the value of the PAYMENT_ADDRESS option.
-     */
-    virtual void set_payment_address_option(
-        const system::wallet::payment_address& value)
-    {
-        option_.payment_address = value;
-    }
-
 private:
 
     /**
@@ -231,9 +232,11 @@ private:
     struct argument
     {
         argument()
+          : payment_address()
         {
         }
 
+        system::wallet::payment_address payment_address;
     } argument_;
 
     /**
@@ -245,14 +248,12 @@ private:
     {
         option()
           : format(),
-            hash(),
-            payment_address()
+            hash()
         {
         }
 
         explorer::config::encoding format;
         system::config::hash256 hash;
-        system::wallet::payment_address payment_address;
     } option_;
 };
 

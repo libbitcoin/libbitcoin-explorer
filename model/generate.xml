@@ -100,6 +100,10 @@
     <argument name="RIPEMD160" stdin="true" type="hash160" description="The Base16 hash to convert. If not specified the value is read from STDIN."/>
   </command>
 
+  <command symbol="address-to-script" output="base16" category="TRANSACTION" description="Extract the Base16 script hash from an address.">
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The participating payment address. If not specified the address is read from STDIN." />
+  </command>
+
   <command symbol="base16-decode" output="raw" category="ENCODING" description="Convert a Base16 value to binary data.">
     <argument name="BASE16" stdin="true" type="base16" description="The Base16 value to decode as binary data. If not specified the value is read from STDIN." />
   </command>
@@ -281,7 +285,7 @@
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="hash256" description="The Base16 script hash."/>
-    <option name="PAYMENT_ADDRESS" shortcut="a" type="payment_address" description="The payment address." />
+    <argument name="PAYMENT_ADDRESS" type="payment_address" description="The payment address." />
   </command>
 
   <command symbol="fetch-block" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -314,7 +318,7 @@
   <command symbol="fetch-history" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment address. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="hash256" description="The Base16 script hash."/>
-    <option name="PAYMENT_ADDRESS" shortcut="a" type="payment_address" description="The payment address.." />
+    <argument name="PAYMENT_ADDRESS" type="payment_address" description="The payment address." />
   </command>
 
   <command symbol="fetch-public-key" formerly="get-pubkey" output="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin server connection.">
@@ -490,10 +494,6 @@
 
   <command symbol="script-encode" formerly="rawscript" output="base16" category="TRANSACTION" description="Base16 encode a plain text script.">
     <argument name="SCRIPT" stdin="true" type="script" description="The plain text script tokens that make up the script. Multiple tokens must be quoted. If not specified the tokens are read from STDIN."/>
-  </command>
-
-  <command symbol="script-from-address" output="base16" category="TRANSACTION" description="Extract the Base16 script hash from an address.">
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The participating payment address. If not specified the address is read from STDIN." />
   </command>
 
   <command symbol="script-to-address" formerly="scripthash" output="payment_address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from a script.">

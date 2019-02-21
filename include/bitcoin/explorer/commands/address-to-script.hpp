@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_HISTORY_HPP
-#define BX_FETCH_HISTORY_HPP
+#ifndef BX_ADDRESS_TO_SCRIPT_HPP
+#define BX_ADDRESS_TO_SCRIPT_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -52,9 +52,9 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the fetch-history command.
+ * Class to implement the address-to-script command.
  */
-class BCX_API fetch_history
+class BCX_API address_to_script
   : public command
 {
 public:
@@ -64,7 +64,7 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-history";
+        return "address-to-script";
     }
 
 
@@ -73,7 +73,7 @@ public:
      */
     virtual const char* name()
     {
-        return fetch_history::symbol();
+        return address_to_script::symbol();
     }
 
     /**
@@ -81,7 +81,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "TRANSACTION";
     }
 
     /**
@@ -89,7 +89,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get list of output points, values, and spends for a payment address. Requires a Libbitcoin server connection.";
+        return "Extract the Base16 script hash from an address.";
     }
 
     /**
@@ -111,6 +111,8 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
     }
 
     /**
@@ -134,19 +136,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
-            "hash,s",
-            value<system::config::hash256>(&option_.hash),
-            "The Base16 script hash."
-        )
-        (
             "PAYMENT_ADDRESS",
             value<system::wallet::payment_address>(&argument_.payment_address),
-            "The payment address."
+            "The participating payment address. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -188,40 +180,6 @@ public:
         argument_.payment_address = value;
     }
 
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
-    /**
-     * Get the value of the hash option.
-     */
-    virtual system::config::hash256& get_hash_option()
-    {
-        return option_.hash;
-    }
-
-    /**
-     * Set the value of the hash option.
-     */
-    virtual void set_hash_option(
-        const system::config::hash256& value)
-    {
-        option_.hash = value;
-    }
-
 private:
 
     /**
@@ -247,13 +205,9 @@ private:
     struct option
     {
         option()
-          : format(),
-            hash()
         {
         }
 
-        explorer::config::encoding format;
-        system::config::hash256 hash;
     } option_;
 };
 

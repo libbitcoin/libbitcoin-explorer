@@ -43,6 +43,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__address_encode__returns_expected_value)
     BOOST_REQUIRE_EQUAL(address_encode::symbol(), "address-encode");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__address_to_script__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(address_to_script::symbol(), "address-to-script");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__base16_decode__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(base16_decode::symbol(), "base16-decode");
@@ -371,11 +376,6 @@ BOOST_AUTO_TEST_CASE(generated__symbol__script_decode__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__script_encode__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(script_encode::symbol(), "script-encode");
-}
-
-BOOST_AUTO_TEST_CASE(generated__symbol__script_from_address__returns_expected_value)
-{
-    BOOST_REQUIRE_EQUAL(script_from_address::symbol(), "script-from-address");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__script_to_address__returns_expected_value)

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <bitcoin/explorer/commands/script-from-address.hpp>
+#include <bitcoin/explorer/commands/address-to-script.hpp>
 
 #include <iostream>
 #include <bitcoin/system.hpp>
@@ -29,7 +29,7 @@ namespace commands {
 using namespace bc::system;
 using namespace bc::system::wallet;
 
-console_result script_from_address::invoke(std::ostream& output, std::ostream& error)
+console_result address_to_script::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& address = get_payment_address_argument();

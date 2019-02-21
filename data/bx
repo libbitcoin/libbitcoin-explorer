@@ -10,6 +10,7 @@ _bx()
         address-decode
         address-embed
         address-encode
+        address-to-script
         base16-decode
         base16-encode
         base58-decode
@@ -72,7 +73,6 @@ _bx()
         satoshi-to-btc
         script-decode
         script-encode
-        script-from-address
         script-to-address
         seed
         send-tx

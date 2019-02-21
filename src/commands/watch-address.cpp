@@ -70,6 +70,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
         if (tx_hash == null_hash)
             state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
+
         ++state;
 
         if (sequence > 0 && tx_hash != null_hash)
