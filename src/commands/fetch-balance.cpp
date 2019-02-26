@@ -46,6 +46,12 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
     const auto& address = get_payment_address_argument();
     const auto connection = get_connection(*this);
 
+    if (!address && hash == null_hash)
+    {
+        error << BX_FETCH_BALANCE_INVALID_ARGUMENTS << std::endl;
+        return console_result::failure;
+    }
+
     obelisk_client client(connection.retries);
     if (!client.connect(connection))
     {

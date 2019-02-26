@@ -52,6 +52,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_FETCH_HISTORY_INVALID_ARGUMENTS \
+    "A valid address or script_hash must be provided."
+
+/**
  * Class to implement the fetch-history command.
  */
 class BCX_API fetch_history

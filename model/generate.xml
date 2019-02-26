@@ -286,6 +286,7 @@
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="hash256" description="The Base16 script hash."/>
     <argument name="PAYMENT_ADDRESS" type="payment_address" description="The payment address." />
+    <define name="BX_FETCH_BALANCE_INVALID_ARGUMENTS" value="A valid address or script_hash must be provided." />
   </command>
 
   <command symbol="fetch-block" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -319,6 +320,7 @@
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="hash256" description="The Base16 script hash."/>
     <argument name="PAYMENT_ADDRESS" type="payment_address" description="The payment address." />
+    <define name="BX_FETCH_HISTORY_INVALID_ARGUMENTS" value="A valid address or script_hash must be provided." />
   </command>
 
   <command symbol="fetch-public-key" formerly="get-pubkey" output="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin server connection.">
