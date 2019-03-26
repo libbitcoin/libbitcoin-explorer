@@ -100,7 +100,7 @@
     <argument name="RIPEMD160" stdin="true" type="hash160" description="The Base16 hash to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="address-to-script" output="base16" category="TRANSACTION" description="Extract the Base16 script hash from an address.">
+  <command symbol="address-to-key" output="base16" category="WALLET" description="Derive the internal lookup key from an address.">
     <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The participating payment address. If not specified the address is read from STDIN." />
   </command>
 
@@ -501,6 +501,11 @@
   <command symbol="script-to-address" formerly="scripthash" output="payment_address" category="TRANSACTION" description="Create a BIP16 pay-to-script-hash address from a script.">
     <option name="version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The desired pay-to-script-hash address version, defaults to 5." />
     <argument name="SCRIPT" stdin="true" type="script" description="The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
+  </command>
+
+  <command symbol="script-to-key" output="base16" category="WALLET" description="Derive the internal lookup key from a script.">
+    <option name="version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The desired pay-to-script-hash address version, defaults to 5." />
+    <argument name="SCRIPT" stdin="true" type="script" description="The script to use in the address used for derivation. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
   </command>
 
   <command symbol="seed" output="base16" category="WALLET" description="Generate a pseudorandom seed.">

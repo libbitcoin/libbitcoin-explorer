@@ -39,7 +39,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<address_decode>());
     func(make_shared<address_embed>());
     func(make_shared<address_encode>());
-    func(make_shared<address_to_script>());
+    func(make_shared<address_to_key>());
     func(make_shared<base16_decode>());
     func(make_shared<base16_encode>());
     func(make_shared<base58_decode>());
@@ -107,6 +107,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<script_decode>());
     func(make_shared<script_encode>());
     func(make_shared<script_to_address>());
+    func(make_shared<script_to_key>());
     func(make_shared<seed>());
     func(make_shared<send_tx>());
     func(make_shared<send_tx_node>());
@@ -147,8 +148,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<address_embed>();
     if (symbol == address_encode::symbol())
         return make_shared<address_encode>();
-    if (symbol == address_to_script::symbol())
-        return make_shared<address_to_script>();
+    if (symbol == address_to_key::symbol())
+        return make_shared<address_to_key>();
     if (symbol == base16_decode::symbol())
         return make_shared<base16_decode>();
     if (symbol == base16_encode::symbol())
@@ -283,6 +284,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<script_encode>();
     if (symbol == script_to_address::symbol())
         return make_shared<script_to_address>();
+    if (symbol == script_to_key::symbol())
+        return make_shared<script_to_key>();
     if (symbol == seed::symbol())
         return make_shared<seed>();
     if (symbol == send_tx::symbol())

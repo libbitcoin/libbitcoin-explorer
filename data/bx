@@ -10,7 +10,7 @@ _bx()
         address-decode
         address-embed
         address-encode
-        address-to-script
+        address-to-key
         base16-decode
         base16-encode
         base58-decode
@@ -74,6 +74,7 @@ _bx()
         script-decode
         script-encode
         script-to-address
+        script-to-key
         seed
         send-tx
         send-tx-node
