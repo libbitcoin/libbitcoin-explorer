@@ -89,7 +89,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Derive the internal lookup key from a script.";
+        return "Derive the payments search key of an output script.";
     }
 
     /**
@@ -143,7 +143,7 @@ public:
         (
             "SCRIPT",
             value<system::config::script>(&argument_.script),
-            "The script to use in the address used for derivation. Multiple tokens must be quoted. If not specified the script is read from STDIN."
+            "The output script. Multiple tokens must be quoted. If not specified the script is read from STDIN."
         );
 
         return options;

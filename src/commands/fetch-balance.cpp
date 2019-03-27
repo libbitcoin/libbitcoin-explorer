@@ -42,11 +42,10 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const hash_digest& hash = get_hash_option();
-    const auto& address = get_payment_address_argument();
+    const hash_digest& hash = get_hash_argument();
     const auto connection = get_connection(*this);
 
-    if (!address && hash == null_hash)
+    if (hash == null_hash)
     {
         error << BX_FETCH_BALANCE_INVALID_ARGUMENTS << std::endl;
         return console_result::failure;
@@ -61,36 +60,16 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &hash, &address](const code& ec,
-        const history::list& rows)
+    auto on_done = [&state, &hash](const code& ec, const history::list& rows)
     {
         if (!state.succeeded(ec))
             return;
 
         // This override summarizes the history response as balance.
-        if (hash == null_hash)
-            state.output(prop_tree(rows, address));
-        else
-            state.output(prop_tree(rows, hash));
+        state.output(prop_tree(rows, hash));
     };
 
-    // Address is ignored if both are specified.
-    // Use the null_hash as sentinel to determine whether to use address or hash.
-    // This does not include unconfirmed transactions.
-    if (hash == null_hash)
-    {
-        client.blockchain_fetch_history4(on_done, address);
-    }
-    else
-    {
-        // If a hash option is provided directly, it's been reversed already and
-        // needs to be undone.
-        auto reversed_hash = hash;
-        std::reverse(reversed_hash.begin(), reversed_hash.end());
-
-        client.blockchain_fetch_history4(on_done, reversed_hash);
-    }
-
+    client.blockchain_fetch_history4(on_done, hash);
     client.wait();
 
     return state.get_result();

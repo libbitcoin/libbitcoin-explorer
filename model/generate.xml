@@ -100,8 +100,8 @@
     <argument name="RIPEMD160" stdin="true" type="hash160" description="The Base16 hash to convert. If not specified the value is read from STDIN."/>
   </command>
 
-  <command symbol="address-to-key" output="base16" category="WALLET" description="Derive the internal lookup key from an address.">
-    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The participating payment address. If not specified the address is read from STDIN." />
+  <command symbol="address-to-key" output="base16" category="WALLET" description="Derive the payments search key of a payment address.">
+    <argument name="PAYMENT_ADDRESS" stdin="true" type="payment_address" description="The payment address. If not specified the address is read from STDIN." />
   </command>
 
   <command symbol="base16-decode" output="raw" category="ENCODING" description="Convert a Base16 value to binary data.">
@@ -284,9 +284,8 @@
 
   <command symbol="fetch-balance" output="balance_row" category="ONLINE" network="true" description="Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <option name="hash" shortcut="s" type="hash256" description="The Base16 script hash."/>
-    <argument name="PAYMENT_ADDRESS" type="payment_address" description="The payment address." />
-    <define name="BX_FETCH_BALANCE_INVALID_ARGUMENTS" value="A valid address or script_hash must be provided." />
+    <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key."/>
+    <define name="BX_FETCH_BALANCE_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
   </command>
 
   <command symbol="fetch-block" category="ONLINE" output="block" network="true" description="Get the block from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
@@ -318,9 +317,8 @@
 
   <command symbol="fetch-history" output="history_row" category="ONLINE" network="true" description="Get list of output points, values, and spends for a payment address. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
-    <option name="hash" shortcut="s" type="hash256" description="The Base16 script hash."/>
-    <argument name="PAYMENT_ADDRESS" type="payment_address" description="The payment address." />
-    <define name="BX_FETCH_HISTORY_INVALID_ARGUMENTS" value="A valid address or script_hash must be provided." />
+    <argument name="hash" stdin="true" type="hash256" description="The Base16 payments search key."/>
+    <define name="BX_FETCH_HISTORY_INVALID_ARGUMENTS" value="A valid payments search key must be provided." />
   </command>
 
   <command symbol="fetch-public-key" formerly="get-pubkey" output="ec_public" category="ONLINE" stub="true" network="true" description="Get the EC public key of the address, if it exists on the blockchain. Requires a Libbitcoin server connection.">
@@ -503,9 +501,9 @@
     <argument name="SCRIPT" stdin="true" type="script" description="The script to use in the address. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
   </command>
 
-  <command symbol="script-to-key" output="base16" category="WALLET" description="Derive the internal lookup key from a script.">
+  <command symbol="script-to-key" output="base16" category="WALLET" description="Derive the payments search key of an output script.">
     <option name="version" type="byte" configuration="wallet.pay_to_script_hash_version" description="The desired pay-to-script-hash address version, defaults to 5." />
-    <argument name="SCRIPT" stdin="true" type="script" description="The script to use in the address used for derivation. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
+    <argument name="SCRIPT" stdin="true" type="script" description="The output script. Multiple tokens must be quoted. If not specified the script is read from STDIN."/>
   </command>
 
   <command symbol="seed" output="base16" category="WALLET" description="Generate a pseudorandom seed.">

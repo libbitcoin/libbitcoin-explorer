@@ -55,7 +55,7 @@ namespace commands {
  * Various localizable strings.
  */
 #define BX_FETCH_HISTORY_INVALID_ARGUMENTS \
-    "A valid address or script_hash must be provided."
+    "A valid payments search key must be provided."
 
 /**
  * Class to implement the fetch-history command.
@@ -106,7 +106,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1);
+            .add("hash", 1);
     }
 
     /**
@@ -117,6 +117,8 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_hash_argument(), "hash", variables, input, raw);
     }
 
     /**
@@ -145,14 +147,9 @@ public:
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "hash,s",
-            value<system::config::hash256>(&option_.hash),
-            "The Base16 script hash."
-        )
-        (
-            "PAYMENT_ADDRESS",
-            value<system::wallet::payment_address>(&argument_.payment_address),
-            "The payment address."
+            "hash",
+            value<system::config::hash256>(&argument_.hash),
+            "The Base16 payments search key."
         );
 
         return options;
@@ -178,20 +175,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PAYMENT_ADDRESS argument.
+     * Get the value of the hash argument.
      */
-    virtual system::wallet::payment_address& get_payment_address_argument()
+    virtual system::config::hash256& get_hash_argument()
     {
-        return argument_.payment_address;
+        return argument_.hash;
     }
 
     /**
-     * Set the value of the PAYMENT_ADDRESS argument.
+     * Set the value of the hash argument.
      */
-    virtual void set_payment_address_argument(
-        const system::wallet::payment_address& value)
+    virtual void set_hash_argument(
+        const system::config::hash256& value)
     {
-        argument_.payment_address = value;
+        argument_.hash = value;
     }
 
     /**
@@ -211,23 +208,6 @@ public:
         option_.format = value;
     }
 
-    /**
-     * Get the value of the hash option.
-     */
-    virtual system::config::hash256& get_hash_option()
-    {
-        return option_.hash;
-    }
-
-    /**
-     * Set the value of the hash option.
-     */
-    virtual void set_hash_option(
-        const system::config::hash256& value)
-    {
-        option_.hash = value;
-    }
-
 private:
 
     /**
@@ -238,11 +218,11 @@ private:
     struct argument
     {
         argument()
-          : payment_address()
+          : hash()
         {
         }
 
-        system::wallet::payment_address payment_address;
+        system::config::hash256 hash;
     } argument_;
 
     /**
@@ -253,13 +233,11 @@ private:
     struct option
     {
         option()
-          : format(),
-            hash()
+          : format()
         {
         }
 
         explorer::config::encoding format;
-        system::config::hash256 hash;
     } option_;
 };
 

@@ -74,7 +74,6 @@
     <ClCompile Include="..\..\..\..\test\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\address-to-key.cpp" />
-    <ClCompile Include="..\..\..\..\test\commands\address-to-script.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base16-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base16-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\base58-decode.cpp" />

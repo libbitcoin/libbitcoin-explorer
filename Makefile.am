@@ -46,7 +46,6 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/address-embed.cpp \
     src/commands/address-encode.cpp \
     src/commands/address-to-key.cpp \
-    src/commands/address-to-script.cpp \
     src/commands/base16-decode.cpp \
     src/commands/base16-encode.cpp \
     src/commands/base58-decode.cpp \
@@ -192,7 +191,6 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/address-embed.cpp \
     test/commands/address-encode.cpp \
     test/commands/address-to-key.cpp \
-    test/commands/address-to-script.cpp \
     test/commands/base16-decode.cpp \
     test/commands/base16-encode.cpp \
     test/commands/base58-decode.cpp \
@@ -318,7 +316,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/address-embed.hpp \
     include/bitcoin/explorer/commands/address-encode.hpp \
     include/bitcoin/explorer/commands/address-to-key.hpp \
-    include/bitcoin/explorer/commands/address-to-script.hpp \
     include/bitcoin/explorer/commands/base16-decode.hpp \
     include/bitcoin/explorer/commands/base16-encode.hpp \
     include/bitcoin/explorer/commands/base58-decode.hpp \
@@ -385,7 +382,6 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/satoshi-to-btc.hpp \
     include/bitcoin/explorer/commands/script-decode.hpp \
     include/bitcoin/explorer/commands/script-encode.hpp \
-    include/bitcoin/explorer/commands/script-from-address.hpp \
     include/bitcoin/explorer/commands/script-to-address.hpp \
     include/bitcoin/explorer/commands/script-to-key.hpp \
     include/bitcoin/explorer/commands/seed.hpp \

@@ -89,7 +89,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Derive the internal lookup key from an address.";
+        return "Derive the payments search key of a payment address.";
     }
 
     /**
@@ -138,7 +138,7 @@ public:
         (
             "PAYMENT_ADDRESS",
             value<system::wallet::payment_address>(&argument_.payment_address),
-            "The participating payment address. If not specified the address is read from STDIN."
+            "The payment address. If not specified the address is read from STDIN."
         );
 
         return options;

@@ -54,9 +54,6 @@
     <ClCompile Include="..\..\..\..\src\commands\address-to-key.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\commands\address-to-script.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\commands\base16-decode.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -437,9 +434,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-to-key.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-to-script.hpp">
-      <Filter>include\bitcoin\explorer\commands</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-decode.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
@@ -636,9 +630,6 @@
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-encode.hpp">
-      <Filter>include\bitcoin\explorer\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-from-address.hpp">
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-to-address.hpp">

@@ -37,22 +37,14 @@ using namespace bc::system;
 using namespace bc::system::chain;
 using namespace bc::system::config;
 
-// When you restore your wallet, you should use fetch_history().
-// But for updating the wallet, use the [new] scan() method-
-// which is faster because you avoid pulling the entire history.
-// We can eventually increase privacy and performance (fewer calls to scan())
-// by 'mining' addresses with the same prefix, allowing us to fetch the
-// prefix group. Obelisk will eventually support privacy enhanced history for
-// address scan by prefix.
 console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const hash_digest& hash = get_hash_option();
-    const auto& address = get_payment_address_argument();
+    const hash_digest& hash = get_hash_argument();
     const auto connection = get_connection(*this);
 
-    if (!address && hash == null_hash)
+    if (hash == null_hash)
     {
         error << BX_FETCH_BALANCE_INVALID_ARGUMENTS << std::endl;
         return console_result::failure;
@@ -70,8 +62,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
     // This enables json-style array formatting.
     const auto json = encoding == encoding_engine::json;
 
-    auto on_done = [&state, &address, json](const code& ec,
-        const history::list& rows)
+    auto on_done = [&state, json](const code& ec, const history::list& rows)
     {
         if (!state.succeeded(ec))
             return;
@@ -79,23 +70,7 @@ console_result fetch_history::invoke(std::ostream& output, std::ostream& error)
         state.output(prop_tree(rows, json));
     };
 
-    // Address is ignored if both are specified.
-    // Use the null_hash as sentinel to determine whether to use address or hash.
-    // This does not include unconfirmed transactions.
-    if (hash == null_hash)
-    {
-        client.blockchain_fetch_history4(on_done, address);
-    }
-    else
-    {
-        // If a hash option is provided directly, it's been reversed already and
-        // needs to be undone.
-        auto reversed_hash = hash;
-        std::reverse(reversed_hash.begin(), reversed_hash.end());
-
-        client.blockchain_fetch_history4(on_done, reversed_hash);
-    }
-
+    client.blockchain_fetch_history4(on_done, hash);
     client.wait();
 
     return state.get_result();

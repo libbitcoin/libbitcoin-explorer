@@ -78,7 +78,6 @@
     <ClCompile Include="..\..\..\..\src\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-to-key.cpp" />
-    <ClCompile Include="..\..\..\..\src\commands\address-to-script.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base16-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base16-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58-decode.cpp" />
@@ -207,7 +206,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-embed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-to-key.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-to-script.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58-decode.hpp" />
@@ -274,7 +272,6 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\satoshi-to-btc.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-encode.hpp" />
-    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-from-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-to-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-to-key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\seed.hpp" />
