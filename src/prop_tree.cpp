@@ -97,8 +97,7 @@ ptree prop_tree(const client::history::list& rows, bool json)
 
 // balance
 
-ptree prop_list(const client::history::list& rows,
-    const hash_digest& script_hash)
+ptree prop_list(const client::history::list& rows, const hash_digest& key)
 {
     ptree tree;
     uint64_t spent = 0;
@@ -112,17 +111,16 @@ ptree prop_list(const client::history::list& rows,
             spent = ceiling_add(spent, row.value);
     }
 
-    tree.put("script_hash", encode_hash(script_hash));
+    tree.put("key", encode_hash(key));
     tree.put("received", received);
     tree.put("spent", spent);
     return tree;
 }
 
-ptree prop_tree(const client::history::list& rows,
-    const hash_digest& script_hash)
+ptree prop_tree(const client::history::list& rows, const hash_digest& key)
 {
     ptree tree;
-    tree.add_child("balance", prop_list(rows, script_hash));
+    tree.add_child("balance", prop_list(rows, key));
     return tree;
 }
 

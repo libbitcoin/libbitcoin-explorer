@@ -42,10 +42,10 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
     const auto& encoding = get_format_option();
-    const hash_digest& hash = get_hash_argument();
+    const hash_digest& key = get_hash_argument();
     const auto connection = get_connection(*this);
 
-    if (hash == null_hash)
+    if (key == null_hash)
     {
         error << BX_FETCH_BALANCE_INVALID_ARGUMENTS << std::endl;
         return console_result::failure;
@@ -60,16 +60,16 @@ console_result fetch_balance::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output, encoding);
 
-    auto on_done = [&state, &hash](const code& ec, const history::list& rows)
+    auto on_done = [&state, &key](const code& ec, const history::list& rows)
     {
         if (!state.succeeded(ec))
             return;
 
         // This override summarizes the history response as balance.
-        state.output(prop_tree(rows, hash));
+        state.output(prop_tree(rows, key));
     };
 
-    client.blockchain_fetch_history4(on_done, hash);
+    client.blockchain_fetch_history4(on_done, key);
     client.wait();
 
     return state.get_result();
