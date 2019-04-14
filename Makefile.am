@@ -45,6 +45,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/address-decode.cpp \
     src/commands/address-embed.cpp \
     src/commands/address-encode.cpp \
+    src/commands/address-to-key.cpp \
     src/commands/base16-decode.cpp \
     src/commands/base16-encode.cpp \
     src/commands/base58-decode.cpp \
@@ -112,6 +113,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/script-decode.cpp \
     src/commands/script-encode.cpp \
     src/commands/script-to-address.cpp \
+    src/commands/script-to-key.cpp \
     src/commands/seed.cpp \
     src/commands/send-tx-node.cpp \
     src/commands/send-tx-p2p.cpp \
@@ -188,6 +190,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/address-decode.cpp \
     test/commands/address-embed.cpp \
     test/commands/address-encode.cpp \
+    test/commands/address-to-key.cpp \
     test/commands/base16-decode.cpp \
     test/commands/base16-encode.cpp \
     test/commands/base58-decode.cpp \
@@ -254,6 +257,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/script-decode.cpp \
     test/commands/script-encode.cpp \
     test/commands/script-to-address.cpp \
+    test/commands/script-to-key.cpp \
     test/commands/seed.cpp \
     test/commands/send-tx-node.cpp \
     test/commands/send-tx-p2p.cpp \
@@ -311,6 +315,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/address-decode.hpp \
     include/bitcoin/explorer/commands/address-embed.hpp \
     include/bitcoin/explorer/commands/address-encode.hpp \
+    include/bitcoin/explorer/commands/address-to-key.hpp \
     include/bitcoin/explorer/commands/base16-decode.hpp \
     include/bitcoin/explorer/commands/base16-encode.hpp \
     include/bitcoin/explorer/commands/base58-decode.hpp \
@@ -378,6 +383,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/script-decode.hpp \
     include/bitcoin/explorer/commands/script-encode.hpp \
     include/bitcoin/explorer/commands/script-to-address.hpp \
+    include/bitcoin/explorer/commands/script-to-key.hpp \
     include/bitcoin/explorer/commands/seed.hpp \
     include/bitcoin/explorer/commands/send-tx-node.hpp \
     include/bitcoin/explorer/commands/send-tx-p2p.hpp \

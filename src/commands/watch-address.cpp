@@ -68,7 +68,9 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
         if (!state.succeeded(ec))
             return;
 
-        state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
+        if (tx_hash == null_hash)
+            state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
+
         ++state;
 
         if (sequence > 0 && tx_hash != null_hash)
@@ -78,7 +80,6 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     };
 
     client.subscribe_address(on_update, address);
-    client.wait();
 
     if (state.stopped())
         return state.get_result();
@@ -87,8 +88,6 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
     signal(SIGTERM, handle_signal);
     signal(SIGINT, handle_signal);
 
-    // Handle updates until monitoring duration expires.
-    // TODO: revise client to allow for stop notification from another thread.
     client.monitor(duration_seconds * 1000);
 
     return state.get_result();

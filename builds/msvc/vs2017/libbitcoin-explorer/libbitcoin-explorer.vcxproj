@@ -77,6 +77,7 @@
     <ClCompile Include="..\..\..\..\src\commands\address-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-embed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\address-encode.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\address-to-key.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base16-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base16-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\base58-decode.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="..\..\..\..\src\commands\script-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\script-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\script-to-address.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\script-to-key.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\seed.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\send-tx-node.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\send-tx-p2p.cpp" />
@@ -203,6 +205,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-embed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-encode.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\address-to-key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base16-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\base58-decode.hpp" />
@@ -270,6 +273,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-to-address.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\script-to-key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\seed.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\send-tx-node.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\send-tx-p2p.hpp" />

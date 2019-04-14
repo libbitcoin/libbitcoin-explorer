@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_BALANCE_HPP
-#define BX_FETCH_BALANCE_HPP
+#ifndef BX_SCRIPT_TO_KEY_HPP
+#define BX_SCRIPT_TO_KEY_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -52,15 +52,9 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
+ * Class to implement the script-to-key command.
  */
-#define BX_FETCH_BALANCE_INVALID_ARGUMENTS \
-    "A valid payments search key must be provided."
-
-/**
- * Class to implement the fetch-balance command.
- */
-class BCX_API fetch_balance
+class BCX_API script_to_key
   : public command
 {
 public:
@@ -70,7 +64,7 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-balance";
+        return "script-to-key";
     }
 
 
@@ -79,7 +73,7 @@ public:
      */
     virtual const char* name()
     {
-        return fetch_balance::symbol();
+        return script_to_key::symbol();
     }
 
     /**
@@ -87,7 +81,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "WALLET";
     }
 
     /**
@@ -95,7 +89,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.";
+        return "Derive the payments search key of an output script.";
     }
 
     /**
@@ -106,7 +100,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("hash", 1);
+            .add("SCRIPT", 1);
     }
 
     /**
@@ -118,7 +112,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_hash_argument(), "hash", variables, input, raw);
+        load_input(get_script_argument(), "SCRIPT", variables, input, raw);
     }
 
     /**
@@ -142,14 +136,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
+            "version,v",
+            value<explorer::config::byte>(&option_.version)->default_value(5),
+            "The desired pay-to-script-hash address version, defaults to 5."
         )
         (
-            "hash",
-            value<system::config::hash256>(&argument_.hash),
-            "The Base16 payments search key."
+            "SCRIPT",
+            value<system::config::script>(&argument_.script),
+            "The output script. Multiple tokens must be quoted. If not specified the script is read from STDIN."
         );
 
         return options;
@@ -161,6 +155,12 @@ public:
      */
     virtual void set_defaults_from_config(po::variables_map& variables)
     {
+        const auto& option_version = variables["version"];
+        const auto& option_version_config = variables["wallet.pay_to_script_hash_version"];
+        if (option_version.defaulted() && !option_version_config.defaulted())
+        {
+            option_.version = option_version_config.as<explorer::config::byte>();
+        }
     }
 
     /**
@@ -175,37 +175,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the hash argument.
+     * Get the value of the SCRIPT argument.
      */
-    virtual system::config::hash256& get_hash_argument()
+    virtual system::config::script& get_script_argument()
     {
-        return argument_.hash;
+        return argument_.script;
     }
 
     /**
-     * Set the value of the hash argument.
+     * Set the value of the SCRIPT argument.
      */
-    virtual void set_hash_argument(
-        const system::config::hash256& value)
+    virtual void set_script_argument(
+        const system::config::script& value)
     {
-        argument_.hash = value;
+        argument_.script = value;
     }
 
     /**
-     * Get the value of the format option.
+     * Get the value of the version option.
      */
-    virtual explorer::config::encoding& get_format_option()
+    virtual explorer::config::byte& get_version_option()
     {
-        return option_.format;
+        return option_.version;
     }
 
     /**
-     * Set the value of the format option.
+     * Set the value of the version option.
      */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
+    virtual void set_version_option(
+        const explorer::config::byte& value)
     {
-        option_.format = value;
+        option_.version = value;
     }
 
 private:
@@ -218,11 +218,11 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : script()
         {
         }
 
-        system::config::hash256 hash;
+        system::config::script script;
     } argument_;
 
     /**
@@ -233,11 +233,11 @@ private:
     struct option
     {
         option()
-          : format()
+          : version()
         {
         }
 
-        explorer::config::encoding format;
+        explorer::config::byte version;
     } option_;
 };
 

@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_BALANCE_HPP
-#define BX_FETCH_BALANCE_HPP
+#ifndef BX_ADDRESS_TO_KEY_HPP
+#define BX_ADDRESS_TO_KEY_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -52,15 +52,9 @@ namespace explorer {
 namespace commands {
 
 /**
- * Various localizable strings.
+ * Class to implement the address-to-key command.
  */
-#define BX_FETCH_BALANCE_INVALID_ARGUMENTS \
-    "A valid payments search key must be provided."
-
-/**
- * Class to implement the fetch-balance command.
- */
-class BCX_API fetch_balance
+class BCX_API address_to_key
   : public command
 {
 public:
@@ -70,7 +64,7 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-balance";
+        return "address-to-key";
     }
 
 
@@ -79,7 +73,7 @@ public:
      */
     virtual const char* name()
     {
-        return fetch_balance::symbol();
+        return address_to_key::symbol();
     }
 
     /**
@@ -87,7 +81,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "WALLET";
     }
 
     /**
@@ -95,7 +89,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.";
+        return "Derive the payments search key of a payment address.";
     }
 
     /**
@@ -106,7 +100,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("hash", 1);
+            .add("PAYMENT_ADDRESS", 1);
     }
 
     /**
@@ -118,7 +112,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_hash_argument(), "hash", variables, input, raw);
+        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
     }
 
     /**
@@ -142,14 +136,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
-        )
-        (
-            "hash",
-            value<system::config::hash256>(&argument_.hash),
-            "The Base16 payments search key."
+            "PAYMENT_ADDRESS",
+            value<system::wallet::payment_address>(&argument_.payment_address),
+            "The payment address. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -175,37 +164,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the hash argument.
+     * Get the value of the PAYMENT_ADDRESS argument.
      */
-    virtual system::config::hash256& get_hash_argument()
+    virtual system::wallet::payment_address& get_payment_address_argument()
     {
-        return argument_.hash;
+        return argument_.payment_address;
     }
 
     /**
-     * Set the value of the hash argument.
+     * Set the value of the PAYMENT_ADDRESS argument.
      */
-    virtual void set_hash_argument(
-        const system::config::hash256& value)
+    virtual void set_payment_address_argument(
+        const system::wallet::payment_address& value)
     {
-        argument_.hash = value;
-    }
-
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
+        argument_.payment_address = value;
     }
 
 private:
@@ -218,11 +190,11 @@ private:
     struct argument
     {
         argument()
-          : hash()
+          : payment_address()
         {
         }
 
-        system::config::hash256 hash;
+        system::wallet::payment_address payment_address;
     } argument_;
 
     /**
@@ -233,11 +205,9 @@ private:
     struct option
     {
         option()
-          : format()
         {
         }
 
-        explorer::config::encoding format;
     } option_;
 };
 

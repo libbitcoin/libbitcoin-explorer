@@ -52,6 +52,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_FETCH_HISTORY_INVALID_ARGUMENTS \
+    "A valid payments search key must be provided."
+
+/**
  * Class to implement the fetch-history command.
  */
 class BCX_API fetch_history
@@ -100,7 +106,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("PAYMENT_ADDRESS", 1);
+            .add("hash", 1);
     }
 
     /**
@@ -112,7 +118,7 @@ public:
         po::variables_map& variables)
     {
         const auto raw = requires_raw_input();
-        load_input(get_payment_address_argument(), "PAYMENT_ADDRESS", variables, input, raw);
+        load_input(get_hash_argument(), "hash", variables, input, raw);
     }
 
     /**
@@ -141,9 +147,9 @@ public:
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "PAYMENT_ADDRESS",
-            value<system::wallet::payment_address>(&argument_.payment_address),
-            "The payment address. If not specified the address is read from STDIN."
+            "hash",
+            value<system::config::hash256>(&argument_.hash),
+            "The Base16 payments search key."
         );
 
         return options;
@@ -169,20 +175,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the PAYMENT_ADDRESS argument.
+     * Get the value of the hash argument.
      */
-    virtual system::wallet::payment_address& get_payment_address_argument()
+    virtual system::config::hash256& get_hash_argument()
     {
-        return argument_.payment_address;
+        return argument_.hash;
     }
 
     /**
-     * Set the value of the PAYMENT_ADDRESS argument.
+     * Set the value of the hash argument.
      */
-    virtual void set_payment_address_argument(
-        const system::wallet::payment_address& value)
+    virtual void set_hash_argument(
+        const system::config::hash256& value)
     {
-        argument_.payment_address = value;
+        argument_.hash = value;
     }
 
     /**
@@ -212,11 +218,11 @@ private:
     struct argument
     {
         argument()
-          : payment_address()
+          : hash()
         {
         }
 
-        system::wallet::payment_address payment_address;
+        system::config::hash256 hash;
     } argument_;
 
     /**

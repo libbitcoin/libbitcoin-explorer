@@ -43,6 +43,11 @@ BOOST_AUTO_TEST_CASE(generated__find__address_encode__returns_object)
     BOOST_REQUIRE(find("address-encode") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__address_to_key__returns_object)
+{
+    BOOST_REQUIRE(find("address-to-key") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__base16_decode__returns_object)
 {
     BOOST_REQUIRE(find("base16-decode") != nullptr);
@@ -376,6 +381,11 @@ BOOST_AUTO_TEST_CASE(generated__find__script_encode__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__script_to_address__returns_object)
 {
     BOOST_REQUIRE(find("script-to-address") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__script_to_key__returns_object)
+{
+    BOOST_REQUIRE(find("script-to-key") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__seed__returns_object)

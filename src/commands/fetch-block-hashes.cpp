@@ -33,6 +33,7 @@ namespace commands {
 using namespace bc::client;
 using namespace bc::explorer::config;
 using namespace bc::system;
+using namespace bc::system::config;
 
 system::console_result fetch_block_hashes::invoke(std::ostream& output,
     std::ostream& error)
