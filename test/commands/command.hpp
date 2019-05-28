@@ -41,6 +41,8 @@ using namespace bc::system;
 // Genesis block hash, transaction, address.
 #define BX_FIRST_ADDRESS \
 "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+#define BX_FIRST_KEY \
+"6191c3b590bfcfa0475e877c302da1e323497acf3b42c08d8fa28e364edf018b"
 #define BX_GENESIS_BLOCK_HASH \
 "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
 #define BX_SATOSHIS_WORDS_TX_HASH \
@@ -50,6 +52,8 @@ using namespace bc::system;
 
 #define BX_FIRST_TESTNET_ADDRESS \
 "n3GNqMveyvaPvUbH469vDRadqpJMPc84JA"
+#define BX_FIRST_TESTNET_KEY \
+"1abf6c34c4370673aee3ce1c1e6c16de549cc6baa065ff3e4b23414b1dc2eca7"
 
 // Default network parameters, uses libbitcoin community node.
 #define BX_MAINNET_HOST "mainnet.libbitcoin.net"

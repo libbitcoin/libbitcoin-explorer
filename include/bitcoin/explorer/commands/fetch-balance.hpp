@@ -149,7 +149,7 @@ public:
         (
             "hash",
             value<system::config::hash256>(&argument_.hash),
-            "The Base16 payments search key."
+            "The Base16 payments search key. If not specified the key is read from STDIN."
         );
 
         return options;

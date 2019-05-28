@@ -118,7 +118,7 @@
 #include <bitcoin/explorer/commands/uri-encode.hpp>
 #include <bitcoin/explorer/commands/validate-tx.hpp>
 #include <bitcoin/explorer/commands/version.hpp>
-#include <bitcoin/explorer/commands/watch-address.hpp>
+#include <bitcoin/explorer/commands/watch-key.hpp>
 #include <bitcoin/explorer/commands/watch-stealth.hpp>
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>

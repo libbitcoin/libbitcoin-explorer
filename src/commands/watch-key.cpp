@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/explorer/commands/watch-address.hpp>
+#include <bitcoin/explorer/commands/watch-key.hpp>
 
 #include <csignal>
 #include <cstddef>
@@ -46,10 +46,10 @@ static void handle_signal(int signal)
 
 // This command only halts on failure or timeout.
 // BUGBUG: the server may drop the connection, which is not presently detected.
-console_result watch_address::invoke(std::ostream& output, std::ostream& error)
+console_result watch_key::invoke(std::ostream& output, std::ostream& error)
 {
     // Bound parameters.
-    const auto& address = get_payment_address_argument();
+    const hash_digest& key = get_hash_argument();
     const auto connection = get_connection(*this);
     const auto duration_seconds = get_duration_option();
 
@@ -62,14 +62,14 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
 
     callback_state state(error, output);
 
-    auto on_update = [&output, &state, &address](const code& ec,
+    auto on_update = [&output, &state, &key](const code& ec,
         uint16_t sequence, size_t height, const hash_digest& tx_hash)
     {
         if (!state.succeeded(ec))
             return;
 
         if (tx_hash == null_hash)
-            state.output(format(BX_WATCH_ADDRESS_WAITING) % address);
+            state.output(format(BX_WATCH_KEY_WAITING) % encode_base16(key));
 
         ++state;
 
@@ -79,7 +79,7 @@ console_result watch_address::invoke(std::ostream& output, std::ostream& error)
                 << std::endl;
     };
 
-    client.subscribe_address(on_update, address);
+    client.subscribe_key(on_update, key);
 
     if (state.stopped())
         return state.get_result();

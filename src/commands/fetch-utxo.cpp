@@ -42,7 +42,7 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
     const auto& encoding = get_format_option();
     const auto algorithm = get_algorithm_option();
     const auto satoshi = get_satoshi_argument();
-    const auto& address = get_payment_address_argument();
+    const hash_digest& key = get_hash_argument();
     const auto connection = get_connection(*this);
 
     obelisk_client client(connection.retries);
@@ -65,8 +65,7 @@ console_result fetch_utxo::invoke(std::ostream& output, std::ostream& error)
         state.output(property_tree(unspent, json));
     };
 
-    client.blockchain_fetch_unspent_outputs(on_done, address, satoshi,
-        algorithm);
+    client.blockchain_fetch_unspent_outputs(on_done, key, satoshi, algorithm);
     client.wait();
 
     return state.get_result();

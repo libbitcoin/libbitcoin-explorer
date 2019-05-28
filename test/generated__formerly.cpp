@@ -193,9 +193,9 @@ BOOST_AUTO_TEST_CASE(generated__formerly__validate_tx_was_validtx__returns_objec
     BOOST_REQUIRE_EQUAL(formerly("validtx"), validate_tx::symbol());
 }
 
-BOOST_AUTO_TEST_CASE(generated__formerly__watch_address_was_monitor__returns_object)
+BOOST_AUTO_TEST_CASE(generated__formerly__watch_key_was_monitor__returns_object)
 {
-    BOOST_REQUIRE_EQUAL(formerly("monitor"), watch_address::symbol());
+    BOOST_REQUIRE_EQUAL(formerly("monitor"), watch_key::symbol());
 }
 
 BOOST_AUTO_TEST_CASE(generated__formerly__watch_tx_was_watchtx__returns_object)

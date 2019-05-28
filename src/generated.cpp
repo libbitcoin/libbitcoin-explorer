@@ -131,7 +131,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<uri_encode>());
     func(make_shared<validate_tx>());
     func(make_shared<version>());
-    func(make_shared<watch_address>());
+    func(make_shared<watch_key>());
     func(make_shared<watch_stealth>());
     func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
@@ -332,8 +332,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<validate_tx>();
     if (symbol == version::symbol())
         return make_shared<version>();
-    if (symbol == watch_address::symbol())
-        return make_shared<watch_address>();
+    if (symbol == watch_key::symbol())
+        return make_shared<watch_key>();
     if (symbol == watch_stealth::symbol())
         return make_shared<watch_stealth>();
     if (symbol == watch_tx::symbol())
@@ -418,8 +418,8 @@ std::string formerly(const string& former)
         return tx_sign::symbol();
     if (former == validate_tx::formerly())
         return validate_tx::symbol();
-    if (former == watch_address::formerly())
-        return watch_address::symbol();
+    if (former == watch_key::formerly())
+        return watch_key::symbol();
     if (former == watch_tx::formerly())
         return watch_tx::symbol();
     if (former == wrap_decode::formerly())

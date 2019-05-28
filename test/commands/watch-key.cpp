@@ -22,21 +22,21 @@
 BX_USING_NAMESPACES()
 
 BOOST_AUTO_TEST_SUITE(network)
-BOOST_AUTO_TEST_SUITE(watch_address__invoke)
+BOOST_AUTO_TEST_SUITE(watch_key__invoke)
 
-BOOST_AUTO_TEST_CASE(watch_address__invoke__one_second_duration__okay)
+BOOST_AUTO_TEST_CASE(watch_key__invoke__one_second_duration__okay)
 {
-    BX_DECLARE_CLIENT_COMMAND(watch_address);
+    BX_DECLARE_CLIENT_COMMAND(watch_key);
     command.set_duration_option(1);
-    command.set_payment_address_argument({ BX_FIRST_ADDRESS });
+    command.set_hash_argument({ BX_FIRST_KEY });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
-BOOST_AUTO_TEST_CASE(watch_address__invoke__testnet_one_second_duration__okay)
+BOOST_AUTO_TEST_CASE(watch_key__invoke__testnet_one_second_duration__okay)
 {
-    BX_DECLARE_CLIENT_TESTNET_COMMAND(watch_address);
+    BX_DECLARE_CLIENT_TESTNET_COMMAND(watch_key);
     command.set_duration_option(1);
-    command.set_payment_address_argument({ BX_FIRST_TESTNET_ADDRESS });
+    command.set_hash_argument({ BX_FIRST_TESTNET_KEY });
     BX_REQUIRE_OKAY(command.invoke(output, error));
 }
 
