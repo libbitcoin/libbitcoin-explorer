@@ -98,7 +98,7 @@ _bx()
         uri-encode
         validate-tx
         version
-        watch-address
+        watch-key
         watch-stealth
         watch-tx
         wif-to-ec

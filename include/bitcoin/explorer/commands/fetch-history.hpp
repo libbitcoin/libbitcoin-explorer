@@ -95,7 +95,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get list of output points, values, and spends for a payment address. Requires a Libbitcoin server connection.";
+        return "Get list of output points, values, and spends for a payment key. Requires a Libbitcoin server connection.";
     }
 
     /**
@@ -149,7 +149,7 @@ public:
         (
             "hash",
             value<system::config::hash256>(&argument_.hash),
-            "The Base16 payments search key."
+            "The Base16 payments search key. If not specified the key is read from STDIN."
         );
 
         return options;

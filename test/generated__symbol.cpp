@@ -503,9 +503,9 @@ BOOST_AUTO_TEST_CASE(generated__symbol__version__returns_expected_value)
     BOOST_REQUIRE_EQUAL(version::symbol(), "version");
 }
 
-BOOST_AUTO_TEST_CASE(generated__symbol__watch_address__returns_expected_value)
+BOOST_AUTO_TEST_CASE(generated__symbol__watch_key__returns_expected_value)
 {
-    BOOST_REQUIRE_EQUAL(watch_address::symbol(), "watch-address");
+    BOOST_REQUIRE_EQUAL(watch_key::symbol(), "watch-key");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__watch_stealth__returns_expected_value)

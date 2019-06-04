@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_BALANCE_HPP
-#define BX_FETCH_BALANCE_HPP
+#ifndef BX_WATCH_KEY_HPP
+#define BX_WATCH_KEY_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -54,13 +54,13 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_FETCH_BALANCE_INVALID_ARGUMENTS \
-    "A valid payments search key must be provided."
+#define BX_WATCH_KEY_WAITING \
+    "Watching key: %1%..."
 
 /**
- * Class to implement the fetch-balance command.
+ * Class to implement the watch-key command.
  */
-class BCX_API fetch_balance
+class BCX_API watch_key
   : public command
 {
 public:
@@ -70,16 +70,23 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-balance";
+        return "watch-key";
     }
 
+    /**
+     * The symbolic (not localizable) former command name, lower case.
+     */
+    static const char* formerly()
+    {
+        return "monitor";
+    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return fetch_balance::symbol();
+        return watch_key::symbol();
     }
 
     /**
@@ -95,7 +102,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the balance in satoshi of a payment address. Requires a Libbitcoin server connection.";
+        return "Watch the network for transactions in which a payment key participates. Requires a Libbitcoin server connection.";
     }
 
     /**
@@ -142,14 +149,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
+            "duration,d",
+            value<uint32_t>(&option_.duration)->default_value(600),
+            "The duration of the watch in seconds, defaults to 600."
         )
         (
             "hash",
             value<system::config::hash256>(&argument_.hash),
-            "The Base16 payments search key. If not specified the key is read from STDIN."
+            "The Base16 payments search key. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -192,20 +199,20 @@ public:
     }
 
     /**
-     * Get the value of the format option.
+     * Get the value of the duration option.
      */
-    virtual explorer::config::encoding& get_format_option()
+    virtual uint32_t& get_duration_option()
     {
-        return option_.format;
+        return option_.duration;
     }
 
     /**
-     * Set the value of the format option.
+     * Set the value of the duration option.
      */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
+    virtual void set_duration_option(
+        const uint32_t& value)
     {
-        option_.format = value;
+        option_.duration = value;
     }
 
 private:
@@ -233,11 +240,11 @@ private:
     struct option
     {
         option()
-          : format()
+          : duration()
         {
         }
 
-        explorer::config::encoding format;
+        uint32_t duration;
     } option_;
 };
 

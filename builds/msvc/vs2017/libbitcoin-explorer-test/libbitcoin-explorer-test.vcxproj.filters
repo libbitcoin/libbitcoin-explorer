@@ -294,7 +294,7 @@
     <ClCompile Include="..\..\..\..\test\commands\validate-tx.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\test\commands\watch-address.cpp">
+    <ClCompile Include="..\..\..\..\test\commands\watch-key.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\watch-stealth.cpp">
