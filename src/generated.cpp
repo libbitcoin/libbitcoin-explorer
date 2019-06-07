@@ -63,6 +63,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<ec_to_ek>());
     func(make_shared<ec_to_public>());
     func(make_shared<ec_to_wif>());
+    func(make_shared<ec_to_witness>());
     func(make_shared<ek_address>());
     func(make_shared<ek_new>());
     func(make_shared<ek_public>());
@@ -136,6 +137,7 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<watch_tx>());
     func(make_shared<wif_to_ec>());
     func(make_shared<wif_to_public>());
+    func(make_shared<witness_to_key>());
     func(make_shared<wrap_decode>());
     func(make_shared<wrap_encode>());
 }
@@ -196,6 +198,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<ec_to_public>();
     if (symbol == ec_to_wif::symbol())
         return make_shared<ec_to_wif>();
+    if (symbol == ec_to_witness::symbol())
+        return make_shared<ec_to_witness>();
     if (symbol == ek_address::symbol())
         return make_shared<ek_address>();
     if (symbol == ek_new::symbol())
@@ -342,6 +346,8 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<wif_to_ec>();
     if (symbol == wif_to_public::symbol())
         return make_shared<wif_to_public>();
+    if (symbol == witness_to_key::symbol())
+        return make_shared<witness_to_key>();
     if (symbol == wrap_decode::symbol())
         return make_shared<wrap_decode>();
     if (symbol == wrap_encode::symbol())

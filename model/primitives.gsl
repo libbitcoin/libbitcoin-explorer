@@ -58,6 +58,7 @@ function global.map_type(type)
     my.type_transaction = "transaction"
     my.type_uri = "uri"
     my.type_wif = "wif"
+    my.type_witness_address = "witness_address"
     my.type_wrapper = "wrapper"
 
     my.type_address_bx = "explorer::config::address"
@@ -103,6 +104,7 @@ function global.map_type(type)
     my.type_transaction_bx = "system::config::transaction"
     my.type_uri_bx = "system::wallet::bitcoin_uri"
     my.type_wif_bx = "system::wallet::ec_private"
+    my.type_witness_address_bx = "system::wallet::witness_address"
     my.type_wrapper_bx = "explorer::config::wrapper"
 
     if my.type = my.type_address
@@ -191,6 +193,8 @@ function global.map_type(type)
         return my.type_uri_bx
     elsif my.type = my.type_wif
         return my.type_wif_bx
+    elsif my.type = my.type_witness_address
+        return my.type_witness_address_bx
     elsif my.type = my.type_wrapper
         return my.type_wrapper_bx
     endif
