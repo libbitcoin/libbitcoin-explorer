@@ -34,7 +34,7 @@ console_result witness_to_key::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& witness = get_witness_address_argument();
 
-    output << encode_base16(sha256_hash(witness.output_script().to_data(false)))
+    output << encode_base16(witness.output_script().to_payments_key())
            << std::endl;
     return console_result::okay;
 }

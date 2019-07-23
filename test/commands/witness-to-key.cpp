@@ -24,28 +24,32 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(witness_to_key__invoke)
 
-// Vectors.
-#define BX_WITNESS_TO_KEY_WITNESS1 "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg"
-#define BX_WITNESS_TO_KEY_WITNESS2 "tb1qq82ajthl5mlm50h6x70esvxs7atp3vfnjwp8z5kjdepsjqqw3zcsj5rufw"
+using namespace bc::explorer;
+using namespace bc::system::wallet;
 
-// Expectations.
-#define BX_WITNESS_TO_KEY_KEY1 "31923086d7a16098a89b512c541c0bdea1f249b2bb3e9817382f7fbc087d5062\n"
-#define BX_WITNESS_TO_KEY_KEY2 "edd374bd7ae9fe2c2cb9f20adbc675724fbb20b6f40b995ad7c9deb617d09d7b\n"
-
-BOOST_AUTO_TEST_CASE(witness_to_key__invoke__witness1__okay_output)
+struct test_item
 {
-    BX_DECLARE_CLIENT_COMMAND(bc::explorer::commands::witness_to_key);
-    command.set_witness_address_argument({ BX_WITNESS_TO_KEY_WITNESS1, bc::system::wallet::witness_address::encoding::testnet_p2wpkh });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_WITNESS_TO_KEY_KEY1);
-}
+    std::string address;
+    uint8_t version;
+    std::string key;
+};
 
-BOOST_AUTO_TEST_CASE(witness_to_key__invoke__witness2__okay_output)
+const std::vector<test_item> test_list =
 {
-    BX_DECLARE_CLIENT_COMMAND(bc::explorer::commands::witness_to_key);
-    command.set_witness_address_argument({ BX_WITNESS_TO_KEY_WITNESS2, bc::system::wallet::witness_address::encoding::testnet_p2wsh });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT(BX_WITNESS_TO_KEY_KEY2);
+    // address, version, key
+    { "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg", witness_address::testnet_bech32_p2wpkh, "31923086d7a16098a89b512c541c0bdea1f249b2bb3e9817382f7fbc087d5062\n" },
+    { "tb1qq82ajthl5mlm50h6x70esvxs7atp3vfnjwp8z5kjdepsjqqw3zcsj5rufw", witness_address::testnet_bech32_p2wsh, "edd374bd7ae9fe2c2cb9f20adbc675724fbb20b6f40b995ad7c9deb617d09d7b\n" }
+};
+
+BOOST_AUTO_TEST_CASE(witness_to_key__invoke__test_list__valid_expected)
+{
+    for (const auto& test: test_list)
+    {
+        BX_DECLARE_CLIENT_COMMAND(commands::witness_to_key);
+        command.set_witness_address_argument({ test.address, test.version });
+        BX_REQUIRE_OKAY(command.invoke(output, error));
+        BX_REQUIRE_OUTPUT(test.key);
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

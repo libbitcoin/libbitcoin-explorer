@@ -52,6 +52,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_EC_TO_WITNESS_PREFIX_NOT_SPECIFIED \
+    "The seed is less than 192 bits long."
+
+/**
  * Class to implement the ec-to-witness command.
  */
 class BCX_API ec_to_witness
@@ -100,6 +106,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
+            .add("prefix", 1)
             .add("EC_PUBLIC_KEY", 1);
     }
 
@@ -136,9 +143,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "prefix,p",
-            value<std::string>(&option_.prefix)->default_value("bc"),
-            "The witness address human readable part, defaults to 'bc'."
+            "version,v",
+            value<explorer::config::byte>(&option_.version)->default_value(208),
+            "The desired Witness version, defaults to 208."
+        )
+        (
+            "prefix",
+            value<std::string>(&argument_.prefix)->required(),
+            "The witness address prefix."
         )
         (
             "EC_PUBLIC_KEY",
@@ -169,6 +181,23 @@ public:
     /* Properties */
 
     /**
+     * Get the value of the prefix argument.
+     */
+    virtual std::string& get_prefix_argument()
+    {
+        return argument_.prefix;
+    }
+
+    /**
+     * Set the value of the prefix argument.
+     */
+    virtual void set_prefix_argument(
+        const std::string& value)
+    {
+        argument_.prefix = value;
+    }
+
+    /**
      * Get the value of the EC_PUBLIC_KEY argument.
      */
     virtual system::wallet::ec_public& get_ec_public_key_argument()
@@ -186,20 +215,20 @@ public:
     }
 
     /**
-     * Get the value of the prefix option.
+     * Get the value of the version option.
      */
-    virtual std::string& get_prefix_option()
+    virtual explorer::config::byte& get_version_option()
     {
-        return option_.prefix;
+        return option_.version;
     }
 
     /**
-     * Set the value of the prefix option.
+     * Set the value of the version option.
      */
-    virtual void set_prefix_option(
-        const std::string& value)
+    virtual void set_version_option(
+        const explorer::config::byte& value)
     {
-        option_.prefix = value;
+        option_.version = value;
     }
 
 private:
@@ -212,10 +241,12 @@ private:
     struct argument
     {
         argument()
-          : ec_public_key()
+          : prefix(),
+            ec_public_key()
         {
         }
 
+        std::string prefix;
         system::wallet::ec_public ec_public_key;
     } argument_;
 
@@ -227,11 +258,11 @@ private:
     struct option
     {
         option()
-          : prefix()
+          : version()
         {
         }
 
-        std::string prefix;
+        explorer::config::byte version;
     } option_;
 };
 

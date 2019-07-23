@@ -24,38 +24,37 @@ BX_USING_NAMESPACES()
 BOOST_AUTO_TEST_SUITE(offline)
 BOOST_AUTO_TEST_SUITE(ec_to_witness__invoke)
 
-BOOST_AUTO_TEST_CASE(ec_to_witness__invoke__p2wpkh_key__okay_output)
-{
-    BX_DECLARE_COMMAND(ec_to_witness);
-    command.set_ec_public_key_argument({ "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4\n");
-}
+#define PUBLIC_KEY1 "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"
+#define PUBLIC_KEY2 "038262a6c6cec93c2d3ecd6c6072efea86d02ff8e3328bbd0242b20af3425990ac"
 
-BOOST_AUTO_TEST_CASE(ec_to_witness__invoke__p2wpkh_key_prefix_tb__okay_output)
+struct test_vector
 {
-    BX_DECLARE_COMMAND(ec_to_witness);
-    command.set_prefix_option({ "tb" });
-    command.set_ec_public_key_argument({ "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx\n");
-}
+    std::string public_key;
+    std::string prefix;
+    uint8_t version;
+    std::string output;
+};
 
-BOOST_AUTO_TEST_CASE(ec_to_witness__invoke__key__okay_output)
+const std::vector<test_vector> test_list =
 {
-    BX_DECLARE_COMMAND(ec_to_witness);
-    command.set_ec_public_key_argument({ "038262a6c6cec93c2d3ecd6c6072efea86d02ff8e3328bbd0242b20af3425990ac" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("bc1qr47dd36u96r0fjle36hdygdnp0v6pwfg2lppam\n");
-}
+    // public_key, prefix, version, address output
+    { PUBLIC_KEY1, "bc", 208, "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4\n" },
+    { PUBLIC_KEY1, "tb", 208, "tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx\n" },
+    { PUBLIC_KEY2, "bc", 208, "bc1qr47dd36u96r0fjle36hdygdnp0v6pwfg2lppam\n" },
+    { PUBLIC_KEY2, "tb", 208, "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg\n" }
+};
 
-BOOST_AUTO_TEST_CASE(ec_to_witness__invoke__key_prefix_tb__okay_output)
+BOOST_AUTO_TEST_CASE(ec_to_witness__invoke__test_list__valid_expected)
 {
-    BX_DECLARE_COMMAND(ec_to_witness);
-    command.set_ec_public_key_argument({ "038262a6c6cec93c2d3ecd6c6072efea86d02ff8e3328bbd0242b20af3425990ac" });
-    command.set_prefix_option({ "tb" });
-    BX_REQUIRE_OKAY(command.invoke(output, error));
-    BX_REQUIRE_OUTPUT("tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg\n");
+    for (const auto& test: test_list)
+    {
+        BX_DECLARE_COMMAND(ec_to_witness);
+        command.set_ec_public_key_argument({ test.public_key });
+        command.set_prefix_argument({ test.prefix });
+        command.set_version_option({ test.version });
+        BX_REQUIRE_OKAY(command.invoke(output, error));
+        BX_REQUIRE_OUTPUT(test.output);
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()
