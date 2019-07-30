@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\..\..\src\commands\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wrap-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\config\address.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\address_format.cpp" />
     <ClCompile Include="..\..\..\..\src\config\algorithm.cpp" />
     <ClCompile Include="..\..\..\..\src\config\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\config\byte.cpp" />
@@ -310,6 +311,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wrap-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wrap-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\address.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\address_format.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\algorithm.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\byte.hpp" />

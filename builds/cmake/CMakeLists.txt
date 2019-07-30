@@ -298,6 +298,7 @@ add_library( ${CANONICAL_LIB_NAME}
     "../../src/commands/wrap-decode.cpp"
     "../../src/commands/wrap-encode.cpp"
     "../../src/config/address.cpp"
+    "../../src/config/address_format.cpp"
     "../../src/config/algorithm.cpp"
     "../../src/config/btc.cpp"
     "../../src/config/byte.cpp"

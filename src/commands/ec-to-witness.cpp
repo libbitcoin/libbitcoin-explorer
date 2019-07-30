@@ -34,9 +34,9 @@ console_result ec_to_witness::invoke(std::ostream& output, std::ostream& error)
     // Bound parameters.
     const auto& point = get_ec_public_key_argument();
     const auto prefix = get_prefix_argument();
-    const auto version = get_version_option();
+    const auto format = get_address_format_option();
 
-    output << witness_address(point, version, prefix).bech32() << std::endl;
+    output << witness_address(point, format, prefix).encoded() << std::endl;
     return console_result::okay;
 }
 

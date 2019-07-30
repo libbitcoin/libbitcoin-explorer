@@ -30,15 +30,15 @@ using namespace bc::system::wallet;
 struct test_item
 {
     std::string address;
-    uint8_t version;
+    witness_address::address_format format;
     std::string key;
 };
 
 const std::vector<test_item> test_list =
 {
     // address, version, key
-    { "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg", witness_address::testnet_bech32_p2wpkh, "31923086d7a16098a89b512c541c0bdea1f249b2bb3e9817382f7fbc087d5062\n" },
-    { "tb1qq82ajthl5mlm50h6x70esvxs7atp3vfnjwp8z5kjdepsjqqw3zcsj5rufw", witness_address::testnet_bech32_p2wsh, "edd374bd7ae9fe2c2cb9f20adbc675724fbb20b6f40b995ad7c9deb617d09d7b\n" }
+    { "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg", witness_address::address_format::p2wpkh, "31923086d7a16098a89b512c541c0bdea1f249b2bb3e9817382f7fbc087d5062\n" },
+    { "tb1qq82ajthl5mlm50h6x70esvxs7atp3vfnjwp8z5kjdepsjqqw3zcsj5rufw", witness_address::address_format::p2wsh, "edd374bd7ae9fe2c2cb9f20adbc675724fbb20b6f40b995ad7c9deb617d09d7b\n" }
 };
 
 BOOST_AUTO_TEST_CASE(witness_to_key__invoke__test_list__valid_expected)
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(witness_to_key__invoke__test_list__valid_expected)
     for (const auto& test: test_list)
     {
         BX_DECLARE_CLIENT_COMMAND(commands::witness_to_key);
-        command.set_witness_address_argument({ test.address, test.version });
+        command.set_witness_address_argument({ test.address, test.format });
         BX_REQUIRE_OKAY(command.invoke(output, error));
         BX_REQUIRE_OUTPUT(test.key);
     }

@@ -357,6 +357,9 @@
     <ClCompile Include="..\..\..\..\src\config\address.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\config\address_format.cpp">
+      <Filter>src\config</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\config\algorithm.cpp">
       <Filter>src\config</Filter>
     </ClCompile>
@@ -744,6 +747,9 @@
       <Filter>include\bitcoin\explorer\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\address.hpp">
+      <Filter>include\bitcoin\explorer\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\address_format.hpp">
       <Filter>include\bitcoin\explorer\config</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\algorithm.hpp">

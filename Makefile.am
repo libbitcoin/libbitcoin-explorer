@@ -147,6 +147,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp \
     src/config/address.cpp \
+    src/config/address_format.cpp \
     src/config/algorithm.cpp \
     src/config/btc.cpp \
     src/config/byte.cpp \
@@ -425,6 +426,7 @@ include_bitcoin_explorer_commands_HEADERS = \
 include_bitcoin_explorer_configdir = ${includedir}/bitcoin/explorer/config
 include_bitcoin_explorer_config_HEADERS = \
     include/bitcoin/explorer/config/address.hpp \
+    include/bitcoin/explorer/config/address_format.hpp \
     include/bitcoin/explorer/config/algorithm.hpp \
     include/bitcoin/explorer/config/btc.hpp \
     include/bitcoin/explorer/config/byte.hpp \

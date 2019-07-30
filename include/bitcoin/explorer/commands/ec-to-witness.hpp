@@ -29,6 +29,7 @@
 #include <bitcoin/explorer/define.hpp>
 #include <bitcoin/explorer/generated.hpp>
 #include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>
@@ -143,9 +144,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "version,v",
-            value<explorer::config::byte>(&option_.version)->default_value(208),
-            "The desired Witness version, defaults to 208."
+            "address_format,a",
+            value<explorer::config::address_format>(&option_.address_format),
+            "The desired Witness address format, defaults to p2wpkh."
         )
         (
             "prefix",
@@ -215,20 +216,20 @@ public:
     }
 
     /**
-     * Get the value of the version option.
+     * Get the value of the address_format option.
      */
-    virtual explorer::config::byte& get_version_option()
+    virtual explorer::config::address_format& get_address_format_option()
     {
-        return option_.version;
+        return option_.address_format;
     }
 
     /**
-     * Set the value of the version option.
+     * Set the value of the address_format option.
      */
-    virtual void set_version_option(
-        const explorer::config::byte& value)
+    virtual void set_address_format_option(
+        const explorer::config::address_format& value)
     {
-        option_.version = value;
+        option_.address_format = value;
     }
 
 private:
@@ -258,11 +259,11 @@ private:
     struct option
     {
         option()
-          : version()
+          : address_format()
         {
         }
 
-        explorer::config::byte version;
+        explorer::config::address_format address_format;
     } option_;
 };
 

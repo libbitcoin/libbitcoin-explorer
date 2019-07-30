@@ -216,7 +216,7 @@
   </command>
 
   <command symbol="ec-to-witness" output="witness_address" category="WALLET" description="Convert an EC public key to a witness address.">
-    <option name="version" type="byte" default="208" description="The desired Witness version, defaults to 208." />
+    <option name="address_format" type="address_format" description="The desired Witness address format, defaults to p2wpkh." />
     <argument name="prefix" required="true" type="string" description="The witness address prefix." />
     <argument name="EC_PUBLIC_KEY" stdin="true" type="ec_public" description="The Base16 EC public key to convert. If not specified the key is read from STDIN." />
     <define name="BX_EC_TO_WITNESS_PREFIX_NOT_SPECIFIED" value="The seed is less than 192 bits long." />
