@@ -37,18 +37,18 @@ struct test_vector
     std::string output;
 };
 
-const std::vector<test_vector> test_list =
+const std::vector<test_vector> test_vectors =
 {
     // public_key, prefix, format, address output
-    { PUBLIC_KEY1, "bc", witness_address::address_format::p2wpkh, "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4\n" },
-    { PUBLIC_KEY1, "tb", witness_address::address_format::p2wpkh, "tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx\n" },
-    { PUBLIC_KEY2, "bc", witness_address::address_format::p2wpkh, "bc1qr47dd36u96r0fjle36hdygdnp0v6pwfg2lppam\n" },
-    { PUBLIC_KEY2, "tb", witness_address::address_format::p2wpkh, "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg\n" }
+    { PUBLIC_KEY1, "bc", witness_address::address_format::witness_pubkey_hash, "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4\n" },
+    { PUBLIC_KEY1, "tb", witness_address::address_format::witness_pubkey_hash, "tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx\n" },
+    { PUBLIC_KEY2, "bc", witness_address::address_format::witness_pubkey_hash, "bc1qr47dd36u96r0fjle36hdygdnp0v6pwfg2lppam\n" },
+    { PUBLIC_KEY2, "tb", witness_address::address_format::witness_pubkey_hash, "tb1qr47dd36u96r0fjle36hdygdnp0v6pwfgqe6jxg\n" }
 };
 
 BOOST_AUTO_TEST_CASE(ec_to_witness__invoke__test_list__valid_expected)
 {
-    for (const auto& test: test_list)
+    for (const auto& test: test_vectors)
     {
         BX_DECLARE_COMMAND(ec_to_witness);
         command.set_ec_public_key_argument({ test.public_key });

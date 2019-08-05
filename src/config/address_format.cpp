@@ -33,11 +33,11 @@ using namespace bc::system;
 using namespace bc::system::wallet;
 using namespace po;
 
-static const auto address_format_p2wpkh = "p2wpkh";
-static const auto address_format_p2wsh = "p2wsh";
+static const auto address_format_witness_pubkey_hash = "witness_pubkey_hash";
+static const auto address_format_witness_script_hash = "witness_script_hash";
 
 address_format::address_format()
-  : value_(witness_address::address_format::p2wpkh)
+  : value_(witness_address::address_format::witness_pubkey_hash)
 {
 }
 
@@ -66,13 +66,13 @@ std::istream& operator>>(std::istream& input, address_format& argument)
     std::string text;
     input >> text;
 
-    if (text == address_format_p2wpkh)
+    if (text == address_format_witness_pubkey_hash)
     {
-        argument.value_ = witness_address::address_format::p2wpkh;
+        argument.value_ = witness_address::address_format::witness_pubkey_hash;
     }
-    else if (text == address_format_p2wsh)
+    else if (text == address_format_witness_script_hash)
     {
-        argument.value_ = witness_address::address_format::p2wsh;
+        argument.value_ = witness_address::address_format::witness_script_hash;
     }
     else
     {
@@ -86,13 +86,13 @@ std::ostream& operator<<(std::ostream& output, const address_format& argument)
 {
     std::string text;
 
-    if (argument.value_ == witness_address::address_format::p2wpkh)
+    if (argument.value_ == witness_address::address_format::witness_pubkey_hash)
     {
-        text = address_format_p2wpkh;
+        text = address_format_witness_pubkey_hash;
     }
-    else if (argument.value_ == witness_address::address_format::p2wsh)
+    else if (argument.value_ == witness_address::address_format::witness_script_hash)
     {
-        text = address_format_p2wsh;
+        text = address_format_witness_script_hash;
     }
     else
     {
