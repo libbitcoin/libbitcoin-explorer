@@ -163,6 +163,11 @@ BOOST_AUTO_TEST_CASE(generated__find__ec_to_wif__returns_object)
     BOOST_REQUIRE(find("ec-to-wif") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__ec_to_witness__returns_object)
+{
+    BOOST_REQUIRE(find("ec-to-witness") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__ek_address__returns_object)
 {
     BOOST_REQUIRE(find("ek-address") != nullptr);
@@ -526,6 +531,11 @@ BOOST_AUTO_TEST_CASE(generated__find__wif_to_ec__returns_object)
 BOOST_AUTO_TEST_CASE(generated__find__wif_to_public__returns_object)
 {
     BOOST_REQUIRE(find("wif-to-public") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__witness_to_key__returns_object)
+{
+    BOOST_REQUIRE(find("witness-to-key") != nullptr);
 }
 
 BOOST_AUTO_TEST_CASE(generated__find__wrap_decode__returns_object)

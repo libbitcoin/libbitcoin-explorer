@@ -97,6 +97,7 @@
     <ClCompile Include="..\..\..\..\test\commands\ec-to-ek.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-to-public.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ec-to-wif.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\ec-to-witness.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ek-address.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ek-new.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\ek-public-to-address.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="..\..\..\..\test\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\witness-to-key.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\wrap-encode.cpp" />
     <ClCompile Include="..\..\..\..\test\config\address.cpp" />

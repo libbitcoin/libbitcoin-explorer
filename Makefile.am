@@ -69,6 +69,7 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/ec-to-ek.cpp \
     src/commands/ec-to-public.cpp \
     src/commands/ec-to-wif.cpp \
+    src/commands/ec-to-witness.cpp \
     src/commands/ek-address.cpp \
     src/commands/ek-new.cpp \
     src/commands/ek-public-to-address.cpp \
@@ -142,9 +143,11 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/watch-tx.cpp \
     src/commands/wif-to-ec.cpp \
     src/commands/wif-to-public.cpp \
+    src/commands/witness-to-key.cpp \
     src/commands/wrap-decode.cpp \
     src/commands/wrap-encode.cpp \
     src/config/address.cpp \
+    src/config/address_format.cpp \
     src/config/algorithm.cpp \
     src/config/btc.cpp \
     src/config/byte.cpp \
@@ -215,6 +218,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/ec-to-ek.cpp \
     test/commands/ec-to-public.cpp \
     test/commands/ec-to-wif.cpp \
+    test/commands/ec-to-witness.cpp \
     test/commands/ek-address.cpp \
     test/commands/ek-new.cpp \
     test/commands/ek-public-to-address.cpp \
@@ -285,6 +289,7 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/watch-tx.cpp \
     test/commands/wif-to-ec.cpp \
     test/commands/wif-to-public.cpp \
+    test/commands/witness-to-key.cpp \
     test/commands/wrap-decode.cpp \
     test/commands/wrap-encode.cpp \
     test/config/address.cpp
@@ -339,6 +344,7 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/ec-to-ek.hpp \
     include/bitcoin/explorer/commands/ec-to-public.hpp \
     include/bitcoin/explorer/commands/ec-to-wif.hpp \
+    include/bitcoin/explorer/commands/ec-to-witness.hpp \
     include/bitcoin/explorer/commands/ek-address.hpp \
     include/bitcoin/explorer/commands/ek-new.hpp \
     include/bitcoin/explorer/commands/ek-public-to-address.hpp \
@@ -413,12 +419,14 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/watch-tx.hpp \
     include/bitcoin/explorer/commands/wif-to-ec.hpp \
     include/bitcoin/explorer/commands/wif-to-public.hpp \
+    include/bitcoin/explorer/commands/witness-to-key.hpp \
     include/bitcoin/explorer/commands/wrap-decode.hpp \
     include/bitcoin/explorer/commands/wrap-encode.hpp
 
 include_bitcoin_explorer_configdir = ${includedir}/bitcoin/explorer/config
 include_bitcoin_explorer_config_HEADERS = \
     include/bitcoin/explorer/config/address.hpp \
+    include/bitcoin/explorer/config/address_format.hpp \
     include/bitcoin/explorer/config/algorithm.hpp \
     include/bitcoin/explorer/config/btc.hpp \
     include/bitcoin/explorer/config/byte.hpp \

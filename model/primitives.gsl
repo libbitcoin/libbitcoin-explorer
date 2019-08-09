@@ -15,6 +15,7 @@ function global.map_type(type)
 
     # Local type constants.
     my.type_address = "address"
+    my.type_address_format = "address_format"
     my.type_algorithm = "algorithm"
     my.type_authority = "authority"
     my.type_bool = "bool"
@@ -58,9 +59,11 @@ function global.map_type(type)
     my.type_transaction = "transaction"
     my.type_uri = "uri"
     my.type_wif = "wif"
+    my.type_witness_address = "witness_address"
     my.type_wrapper = "wrapper"
 
     my.type_address_bx = "explorer::config::address"
+    my.type_address_format_bx = "explorer::config::address_format"
     my.type_algorithm_bx = "explorer::config::algorithm"
     my.type_authority_bx = "system::config::authority"
     my.type_base16_bx = "system::config::base16"
@@ -103,10 +106,13 @@ function global.map_type(type)
     my.type_transaction_bx = "system::config::transaction"
     my.type_uri_bx = "system::wallet::bitcoin_uri"
     my.type_wif_bx = "system::wallet::ec_private"
+    my.type_witness_address_bx = "system::wallet::witness_address"
     my.type_wrapper_bx = "explorer::config::wrapper"
 
     if my.type = my.type_address
         return my.type_address_bx
+    elsif my.type = my.type_address_format
+        return my.type_address_format_bx
     elsif my.type = my.type_algorithm
         return my.type_algorithm_bx
     elsif my.type = my.type_authority
@@ -191,6 +197,8 @@ function global.map_type(type)
         return my.type_uri_bx
     elsif my.type = my.type_wif
         return my.type_wif_bx
+    elsif my.type = my.type_witness_address
+        return my.type_witness_address_bx
     elsif my.type = my.type_wrapper
         return my.type_wrapper_bx
     endif
@@ -265,6 +273,7 @@ endfunction
 .
 .macro global.primitives
 #include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>

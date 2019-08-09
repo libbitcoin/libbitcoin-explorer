@@ -53,6 +53,7 @@
 #include <bitcoin/explorer/commands/ec-to-ek.hpp>
 #include <bitcoin/explorer/commands/ec-to-public.hpp>
 #include <bitcoin/explorer/commands/ec-to-wif.hpp>
+#include <bitcoin/explorer/commands/ec-to-witness.hpp>
 #include <bitcoin/explorer/commands/ek-address.hpp>
 #include <bitcoin/explorer/commands/ek-new.hpp>
 #include <bitcoin/explorer/commands/ek-public-to-address.hpp>
@@ -127,9 +128,11 @@
 #include <bitcoin/explorer/commands/watch-tx.hpp>
 #include <bitcoin/explorer/commands/wif-to-ec.hpp>
 #include <bitcoin/explorer/commands/wif-to-public.hpp>
+#include <bitcoin/explorer/commands/witness-to-key.hpp>
 #include <bitcoin/explorer/commands/wrap-decode.hpp>
 #include <bitcoin/explorer/commands/wrap-encode.hpp>
 #include <bitcoin/explorer/config/address.hpp>
+#include <bitcoin/explorer/config/address_format.hpp>
 #include <bitcoin/explorer/config/algorithm.hpp>
 #include <bitcoin/explorer/config/btc.hpp>
 #include <bitcoin/explorer/config/byte.hpp>

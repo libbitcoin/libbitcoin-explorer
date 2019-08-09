@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_HEIGHT_HPP
-#define BX_FETCH_HEIGHT_HPP
+#ifndef BX_EC_TO_WITNESS_HPP
+#define BX_EC_TO_WITNESS_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -53,9 +53,15 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the fetch-height command.
+ * Various localizable strings.
  */
-class BCX_API fetch_height
+#define BX_EC_TO_WITNESS_PREFIX_NOT_SPECIFIED \
+    "The seed is less than 192 bits long."
+
+/**
+ * Class to implement the ec-to-witness command.
+ */
+class BCX_API ec_to_witness
   : public command
 {
 public:
@@ -65,23 +71,16 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-height";
+        return "ec-to-witness";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "fetch-last-height";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return fetch_height::symbol();
+        return ec_to_witness::symbol();
     }
 
     /**
@@ -89,7 +88,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "WALLET";
     }
 
     /**
@@ -97,7 +96,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the last block height. Requires a Libbitcoin server connection.";
+        return "Convert an EC public key to a witness address.";
     }
 
     /**
@@ -108,8 +107,8 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("server-url", 1)
-            .add("public-key", 1);
+            .add("prefix", 1)
+            .add("EC_PUBLIC_KEY", 1);
     }
 
     /**
@@ -120,6 +119,8 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_ec_public_key_argument(), "EC_PUBLIC_KEY", variables, input, raw);
     }
 
     /**
@@ -143,14 +144,19 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "server-url",
-            value<std::string>(&argument_.server_url),
-            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
+            "address_format,a",
+            value<explorer::config::address_format>(&option_.address_format),
+            "The desired Witness address format, defaults to p2wpkh."
         )
         (
-            "public-key",
-            value<std::string>(&argument_.public_key),
-            "The public key of the Libbitcoin server. If not specified the key is obtained from configuration settings or defaults."
+            "prefix",
+            value<std::string>(&argument_.prefix)->required(),
+            "The witness address prefix."
+        )
+        (
+            "EC_PUBLIC_KEY",
+            value<system::wallet::ec_public>(&argument_.ec_public_key),
+            "The Base16 EC public key to convert. If not specified the key is read from STDIN."
         );
 
         return options;
@@ -176,37 +182,54 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the server-url argument.
+     * Get the value of the prefix argument.
      */
-    virtual std::string& get_server_url_argument()
+    virtual std::string& get_prefix_argument()
     {
-        return argument_.server_url;
+        return argument_.prefix;
     }
 
     /**
-     * Set the value of the server-url argument.
+     * Set the value of the prefix argument.
      */
-    virtual void set_server_url_argument(
+    virtual void set_prefix_argument(
         const std::string& value)
     {
-        argument_.server_url = value;
+        argument_.prefix = value;
     }
 
     /**
-     * Get the value of the public-key argument.
+     * Get the value of the EC_PUBLIC_KEY argument.
      */
-    virtual std::string& get_public_key_argument()
+    virtual system::wallet::ec_public& get_ec_public_key_argument()
     {
-        return argument_.public_key;
+        return argument_.ec_public_key;
     }
 
     /**
-     * Set the value of the public-key argument.
+     * Set the value of the EC_PUBLIC_KEY argument.
      */
-    virtual void set_public_key_argument(
-        const std::string& value)
+    virtual void set_ec_public_key_argument(
+        const system::wallet::ec_public& value)
     {
-        argument_.public_key = value;
+        argument_.ec_public_key = value;
+    }
+
+    /**
+     * Get the value of the address_format option.
+     */
+    virtual explorer::config::address_format& get_address_format_option()
+    {
+        return option_.address_format;
+    }
+
+    /**
+     * Set the value of the address_format option.
+     */
+    virtual void set_address_format_option(
+        const explorer::config::address_format& value)
+    {
+        option_.address_format = value;
     }
 
 private:
@@ -219,13 +242,13 @@ private:
     struct argument
     {
         argument()
-          : server_url(),
-            public_key()
+          : prefix(),
+            ec_public_key()
         {
         }
 
-        std::string server_url;
-        std::string public_key;
+        std::string prefix;
+        system::wallet::ec_public ec_public_key;
     } argument_;
 
     /**
@@ -236,9 +259,11 @@ private:
     struct option
     {
         option()
+          : address_format()
         {
         }
 
+        explorer::config::address_format address_format;
     } option_;
 };
 

@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_HEIGHT_HPP
-#define BX_FETCH_HEIGHT_HPP
+#ifndef BX_WITNESS_TO_KEY_HPP
+#define BX_WITNESS_TO_KEY_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -53,9 +53,9 @@ namespace explorer {
 namespace commands {
 
 /**
- * Class to implement the fetch-height command.
+ * Class to implement the witness-to-key command.
  */
-class BCX_API fetch_height
+class BCX_API witness_to_key
   : public command
 {
 public:
@@ -65,23 +65,16 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-height";
+        return "witness-to-key";
     }
 
-    /**
-     * The symbolic (not localizable) former command name, lower case.
-     */
-    static const char* formerly()
-    {
-        return "fetch-last-height";
-    }
 
     /**
      * The member symbolic (not localizable) command name, lower case.
      */
     virtual const char* name()
     {
-        return fetch_height::symbol();
+        return witness_to_key::symbol();
     }
 
     /**
@@ -89,7 +82,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "WALLET";
     }
 
     /**
@@ -97,7 +90,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Get the last block height. Requires a Libbitcoin server connection.";
+        return "Derive the payments search key of a witness address.";
     }
 
     /**
@@ -108,8 +101,7 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("server-url", 1)
-            .add("public-key", 1);
+            .add("WITNESS_ADDRESS", 1);
     }
 
     /**
@@ -120,6 +112,8 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
+        const auto raw = requires_raw_input();
+        load_input(get_witness_address_argument(), "WITNESS_ADDRESS", variables, input, raw);
     }
 
     /**
@@ -143,14 +137,9 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "server-url",
-            value<std::string>(&argument_.server_url),
-            "The URL of the Libbitcoin server to use. If not specified the URL is obtained from configuration settings or defaults."
-        )
-        (
-            "public-key",
-            value<std::string>(&argument_.public_key),
-            "The public key of the Libbitcoin server. If not specified the key is obtained from configuration settings or defaults."
+            "WITNESS_ADDRESS",
+            value<system::wallet::witness_address>(&argument_.witness_address),
+            "The witness address. If not specified the address is read from STDIN."
         );
 
         return options;
@@ -176,37 +165,20 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the server-url argument.
+     * Get the value of the WITNESS_ADDRESS argument.
      */
-    virtual std::string& get_server_url_argument()
+    virtual system::wallet::witness_address& get_witness_address_argument()
     {
-        return argument_.server_url;
+        return argument_.witness_address;
     }
 
     /**
-     * Set the value of the server-url argument.
+     * Set the value of the WITNESS_ADDRESS argument.
      */
-    virtual void set_server_url_argument(
-        const std::string& value)
+    virtual void set_witness_address_argument(
+        const system::wallet::witness_address& value)
     {
-        argument_.server_url = value;
-    }
-
-    /**
-     * Get the value of the public-key argument.
-     */
-    virtual std::string& get_public_key_argument()
-    {
-        return argument_.public_key;
-    }
-
-    /**
-     * Set the value of the public-key argument.
-     */
-    virtual void set_public_key_argument(
-        const std::string& value)
-    {
-        argument_.public_key = value;
+        argument_.witness_address = value;
     }
 
 private:
@@ -219,13 +191,11 @@ private:
     struct argument
     {
         argument()
-          : server_url(),
-            public_key()
+          : witness_address()
         {
         }
 
-        std::string server_url;
-        std::string public_key;
+        system::wallet::witness_address witness_address;
     } argument_;
 
     /**

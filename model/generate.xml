@@ -215,6 +215,13 @@
     <argument name="EC_PRIVATE_KEY" stdin="true" type="ec_private" description="The Base16 EC private key to convert. If not specified the key is read from STDIN."/>
   </command>
 
+  <command symbol="ec-to-witness" output="witness_address" category="WALLET" description="Convert an EC public key to a witness address.">
+    <option name="address_format" type="address_format" description="The desired Witness address format, defaults to p2wpkh." />
+    <argument name="prefix" required="true" type="string" description="The witness address prefix." />
+    <argument name="EC_PUBLIC_KEY" stdin="true" type="ec_public" description="The Base16 EC public key to convert. If not specified the key is read from STDIN." />
+    <define name="BX_EC_TO_WITNESS_PREFIX_NOT_SPECIFIED" value="The seed is less than 192 bits long." />
+  </command>
+
   <command symbol="electrum-new" output="string" multipleX="true" category="WALLET" description="Create a mnemonic seed (Electrum) from entropy. WARNING: mnemonic should be created from properly generated entropy.">
     <option name="prefix" type="electrum" description="The electrum seed type identifier to use. Options are 'standard', 'witness', and 'dual' (for two factor authentication), defaults to 'standard'." />
     <option name="language" type="language" description="The language identifier of the mnemonic dictionary to use. Options are 'en', 'es', 'pt', 'ja', 'zh_Hans' and 'any', defaults to 'en'." />
@@ -684,6 +691,10 @@
 
   <command symbol="wif-to-public" output="ec_public" category="WALLET" description="Derive the EC public key from a WIF private key.">
     <argument name="WIF" stdin="true" type="wif" description="The WIF private key. If not specified the value is read from STDIN."/>
+  </command>
+
+  <command symbol="witness-to-key" output="base16" category="WALLET" description="Derive the payments search key of a witness address.">
+    <argument name="WITNESS_ADDRESS" stdin="true" type="witness_address" description="The witness address. If not specified the address is read from STDIN." />
   </command>
 
   <command symbol="wrap-decode" formerly="unwrap" output="wrapper" category="ENCODING" description="Validate the checksum of checked Base16 data and recover its version and payload.">

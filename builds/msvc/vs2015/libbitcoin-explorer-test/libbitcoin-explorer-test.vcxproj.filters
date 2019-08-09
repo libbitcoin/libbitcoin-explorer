@@ -99,6 +99,9 @@
     <ClCompile Include="..\..\..\..\test\commands\ec-to-wif.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\ec-to-witness.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\ek-address.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -307,6 +310,9 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\wif-to-public.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\witness-to-key.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\wrap-decode.cpp">

@@ -163,6 +163,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_wif__returns_expected_value)
     BOOST_REQUIRE_EQUAL(ec_to_wif::symbol(), "ec-to-wif");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__ec_to_witness__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(ec_to_witness::symbol(), "ec-to-witness");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__ek_address__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(ek_address::symbol(), "ek-address");
@@ -526,6 +531,11 @@ BOOST_AUTO_TEST_CASE(generated__symbol__wif_to_ec__returns_expected_value)
 BOOST_AUTO_TEST_CASE(generated__symbol__wif_to_public__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(wif_to_public::symbol(), "wif-to-public");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__witness_to_key__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(witness_to_key::symbol(), "witness-to-key");
 }
 
 BOOST_AUTO_TEST_CASE(generated__symbol__wrap_decode__returns_expected_value)

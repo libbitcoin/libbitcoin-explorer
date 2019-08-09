@@ -101,6 +101,7 @@
     <ClCompile Include="..\..\..\..\src\commands\ec-to-ek.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-to-public.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ec-to-wif.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\ec-to-witness.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-address.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-new.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\ek-public-to-address.cpp" />
@@ -174,9 +175,11 @@
     <ClCompile Include="..\..\..\..\src\commands\watch-tx.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-ec.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wif-to-public.cpp" />
+    <ClCompile Include="..\..\..\..\src\commands\witness-to-key.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wrap-decode.cpp" />
     <ClCompile Include="..\..\..\..\src\commands\wrap-encode.cpp" />
     <ClCompile Include="..\..\..\..\src\config\address.cpp" />
+    <ClCompile Include="..\..\..\..\src\config\address_format.cpp" />
     <ClCompile Include="..\..\..\..\src\config\algorithm.cpp" />
     <ClCompile Include="..\..\..\..\src\config\btc.cpp" />
     <ClCompile Include="..\..\..\..\src\config\byte.cpp" />
@@ -229,6 +232,7 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-ek.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-public.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-wif.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ec-to-witness.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-address.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-new.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\ek-public-to-address.hpp" />
@@ -303,9 +307,11 @@
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\watch-tx.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-ec.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wif-to-public.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\witness-to-key.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wrap-decode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\commands\wrap-encode.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\address.hpp" />
+    <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\address_format.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\algorithm.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\btc.hpp" />
     <ClInclude Include="..\..\..\..\include\bitcoin\explorer\config\byte.hpp" />
