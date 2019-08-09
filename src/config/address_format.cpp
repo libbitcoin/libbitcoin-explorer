@@ -90,7 +90,8 @@ std::ostream& operator<<(std::ostream& output, const address_format& argument)
     {
         text = address_format_witness_pubkey_hash;
     }
-    else if (argument.value_ == witness_address::address_format::witness_script_hash)
+    else if (argument.value_ ==
+        witness_address::address_format::witness_script_hash)
     {
         text = address_format_witness_script_hash;
     }
