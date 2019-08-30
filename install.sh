@@ -80,8 +80,8 @@ QRENCODE_ARCHIVE="qrencode-3.4.4.tar.bz2"
 
 # ZMQ archive.
 #------------------------------------------------------------------------------
-ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.2.5/zeromq-4.2.5.tar.gz"
-ZMQ_ARCHIVE="zeromq-4.2.5.tar.gz"
+ZMQ_URL="https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz"
+ZMQ_ARCHIVE="zeromq-4.3.2.tar.gz"
 
 # Boost archive.
 #------------------------------------------------------------------------------
@@ -654,7 +654,7 @@ initialize_boost_icu_configuration()
         BOOST_ICU_POSIX="off"
 
         # Extract ICU libs from package config variables and augment with -ldl.
-        ICU_LIBS=( `pkg-config icu-i18n --libs` "-ldl" )
+        ICU_LIBS="`pkg-config icu-i18n --libs` -ldl"
 
         # This is a hack for boost m4 scripts that fail with ICU dependency.
         # See custom edits in ax-boost-locale.m4 and ax_boost_regex.m4.
