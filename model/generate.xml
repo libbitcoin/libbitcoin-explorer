@@ -314,6 +314,7 @@
     <argument name="type" shortcut="t" type="uint8_t" default="0" description="The filter type."/>
     <argument name="height" shortcut="g" type="uint32_t" description="The block height."/>
     <argument name="hash" shortcut="s" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
+    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
   </command>
 
   <command symbol="fetch-compact-filter-checkpoint-node" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter checkpoint via a single Bitcoin network node.">
@@ -322,6 +323,7 @@
     <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
     <argument name="type" shortcut="t" type="uint8_t" default="0" description="The filter type."/>
     <argument name="hash" shortcut="s" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
+    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
   </command>
 
   <command symbol="fetch-compact-filter-headers-node" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter headers via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000.">
@@ -331,6 +333,7 @@
     <argument name="type" shortcut="t" type="uint8_t" default="0" description="The filter type."/>
     <argument name="height" shortcut="g" type="uint32_t" description="The block height."/>
     <argument name="hash" shortcut="s" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
+    <define name="BX_BIP157_UNSUPPORTED" value="The peer does not indicate support for BIP157." />
   </command>
 
   <command symbol="fetch-header" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">

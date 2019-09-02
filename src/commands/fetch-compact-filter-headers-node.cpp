@@ -79,9 +79,6 @@ console_result fetch_compact_filter_headers_node::invoke(std::ostream& output, s
 
     network::settings settings(system::config::settings::mainnet);
 
-    // bip157 support
-    settings.services |= message::version::service::node_compact_filters;
-
     // Manual connection only.
     settings.threads = 1;
     settings.outbound_connections = 0;
@@ -137,10 +134,21 @@ console_result fetch_compact_filter_headers_node::invoke(std::ostream& output, s
     {
         if (state.succeeded(ec))
         {
-            node->subscribe<message::compact_filter_headers>(
-                std::move(receive_handler));
+            bool supports_bip157 = (node->peer_version()->services() &
+                message::version::service::node_compact_filters) != 0;
 
-            node->send(request, send_handler);
+            if (supports_bip157)
+            {
+                node->subscribe<message::compact_filter_headers>(
+                    std::move(receive_handler));
+
+                node->send(request, send_handler);
+            }
+            else
+            {
+                state.error(BX_BIP157_UNSUPPORTED);
+                stop(error::posix_to_error_code(console_result::failure));
+            }
         }
         else
             stop(ec);

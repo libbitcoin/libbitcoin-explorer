@@ -79,9 +79,6 @@ console_result fetch_compact_filter_checkpoint_node::invoke(std::ostream& output
 
     network::settings settings(system::config::settings::mainnet);
 
-    // bip157 support
-    settings.services |= message::version::service::node_compact_filters;
-
     // Manual connection only.
     settings.threads = 1;
     settings.outbound_connections = 0;
@@ -132,15 +129,26 @@ console_result fetch_compact_filter_checkpoint_node::invoke(std::ostream& output
             stop(ec);
     };
 
-    const auto connect_handler = [&state, &request, &receive_handler, send_handler](
+    const auto connect_handler = [&state, &receive_handler, &request, send_handler](
         const code& ec, network::channel::ptr node)
     {
         if (state.succeeded(ec))
         {
-            node->template subscribe<message::compact_filter_checkpoint>(
-                std::move(receive_handler));
+            bool supports_bip157 = (node->peer_version()->services() &
+                message::version::service::node_compact_filters) != 0;
 
-            node->send(request, send_handler);
+            if (supports_bip157)
+            {
+                node->template subscribe<message::compact_filter_checkpoint>(
+                    std::move(receive_handler));
+
+                node->send(request, send_handler);
+            }
+            else
+            {
+                state.error(BX_BIP157_UNSUPPORTED);
+                stop(error::posix_to_error_code(console_result::failure));
+            }
         }
         else
             stop(ec);

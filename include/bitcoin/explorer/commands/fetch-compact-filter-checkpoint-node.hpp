@@ -53,6 +53,12 @@ namespace explorer {
 namespace commands {
 
 /**
+ * Various localizable strings.
+ */
+#define BX_BIP157_UNSUPPORTED \
+    "The peer does not indicate support for BIP157."
+
+/**
  * Class to implement the fetch-compact-filter-checkpoint-node command.
  */
 class BCX_API fetch_compact_filter_checkpoint_node
