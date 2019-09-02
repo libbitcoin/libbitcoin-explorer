@@ -105,6 +105,8 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/input-set.cpp \
     src/commands/input-sign.cpp \
     src/commands/input-validate.cpp \
+    src/commands/match-basic-filter-address.cpp \
+    src/commands/match-basic-filter-script.cpp \
     src/commands/message-sign.cpp \
     src/commands/message-validate.cpp \
     src/commands/mnemonic-decode.cpp \
@@ -252,6 +254,8 @@ test_libbitcoin_explorer_test_SOURCES = \
     test/commands/input-set.cpp \
     test/commands/input-sign.cpp \
     test/commands/input-validate.cpp \
+    test/commands/match-basic-filter-address.cpp \
+    test/commands/match-basic-filter-script.cpp \
     test/commands/message-sign.cpp \
     test/commands/message-validate.cpp \
     test/commands/mnemonic-decode.cpp \
@@ -383,6 +387,8 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/input-set.hpp \
     include/bitcoin/explorer/commands/input-sign.hpp \
     include/bitcoin/explorer/commands/input-validate.hpp \
+    include/bitcoin/explorer/commands/match-basic-filter-address.hpp \
+    include/bitcoin/explorer/commands/match-basic-filter-script.hpp \
     include/bitcoin/explorer/commands/message-sign.hpp \
     include/bitcoin/explorer/commands/message-validate.hpp \
     include/bitcoin/explorer/commands/mnemonic-decode.hpp \

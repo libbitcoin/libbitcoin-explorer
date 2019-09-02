@@ -192,6 +192,12 @@
     <ClCompile Include="..\..\..\..\test\commands\input-validate.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\match-basic-filter-address.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\test\commands\match-basic-filter-script.cpp">
+      <Filter>src\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\test\commands\message-sign.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>

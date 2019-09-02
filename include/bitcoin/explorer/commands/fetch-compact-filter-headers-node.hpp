@@ -150,7 +150,7 @@ public:
             "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
         )
         (
-            "host,a",
+            "host,t",
             value<std::string>(&option_.host)->default_value("localhost"),
             "The IP address or DNS name of the node. Defaults to localhost."
         )

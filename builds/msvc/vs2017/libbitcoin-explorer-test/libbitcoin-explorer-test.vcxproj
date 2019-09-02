@@ -128,6 +128,8 @@
     <ClCompile Include="..\..\..\..\test\commands\input-set.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\input-validate.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\match-basic-filter-address.cpp" />
+    <ClCompile Include="..\..\..\..\test\commands\match-basic-filter-script.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\message-sign.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\message-validate.cpp" />
     <ClCompile Include="..\..\..\..\test\commands\mnemonic-decode.cpp" />

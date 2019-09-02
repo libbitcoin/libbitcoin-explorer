@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// Sponsored in part by Digital Contract Design, LLC
+
 #include <bitcoin/explorer/commands/fetch-compact-filters-node.hpp>
 
 #include <cstddef>

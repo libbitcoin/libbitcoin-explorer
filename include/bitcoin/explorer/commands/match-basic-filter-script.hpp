@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef BX_FETCH_COMPACT_FILTERS_NODE_HPP
-#define BX_FETCH_COMPACT_FILTERS_NODE_HPP
+#ifndef BX_MATCH_BASIC_FILTER_SCRIPT_HPP
+#define BX_MATCH_BASIC_FILTER_SCRIPT_HPP
 
 #include <cstdint>
 #include <iostream>
@@ -55,13 +55,17 @@ namespace commands {
 /**
  * Various localizable strings.
  */
-#define BX_BIP157_UNSUPPORTED \
-    "The peer does not indicate support for BIP157."
+#define BX_FILTER_TYPE_NOT_BASIC \
+    "The filter provided contains an unrecognized type."
+#define BX_FILTER_MATCH_SCRIPT_SUCCESS \
+    "Script matched filter."
+#define BX_FILTER_MATCH_SCRIPT_FAILURE \
+    "Script did not match filter."
 
 /**
- * Class to implement the fetch-compact-filters-node command.
+ * Class to implement the match-basic-filter-script command.
  */
-class BCX_API fetch_compact_filters_node
+class BCX_API match_basic_filter_script
   : public command
 {
 public:
@@ -71,7 +75,7 @@ public:
      */
     static const char* symbol()
     {
-        return "fetch-compact-filters-node";
+        return "match-basic-filter-script";
     }
 
 
@@ -80,7 +84,7 @@ public:
      */
     virtual const char* name()
     {
-        return fetch_compact_filters_node::symbol();
+        return match_basic_filter_script::symbol();
     }
 
     /**
@@ -88,7 +92,7 @@ public:
      */
     virtual const char* category()
     {
-        return "ONLINE";
+        return "MATH";
     }
 
     /**
@@ -96,7 +100,7 @@ public:
      */
     virtual const char* description()
     {
-        return "Retrieve compact filters via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.";
+        return "Determine whether the provided filter probabilistically matches the provided script.";
     }
 
     /**
@@ -107,9 +111,8 @@ public:
     virtual system::arguments_metadata& load_arguments()
     {
         return get_argument_metadata()
-            .add("type", 1)
-            .add("height", 1)
-            .add("hash", 1);
+            .add("FILTER", 1)
+            .add("SCRIPT", 1);
     }
 
     /**
@@ -120,8 +123,6 @@ public:
     virtual void load_fallbacks(std::istream& input,
         po::variables_map& variables)
     {
-        const auto raw = requires_raw_input();
-        load_input(get_hash_argument(), "hash", variables, input, raw);
     }
 
     /**
@@ -145,34 +146,14 @@ public:
             "The path to the configuration settings file."
         )
         (
-            "format,f",
-            value<explorer::config::encoding>(&option_.format),
-            "The output format. Options are 'info', 'json' and 'xml', defaults to 'info'."
+            "FILTER",
+            value<system::config::compact_filter>(&argument_.filter)->required(),
+            "The basic compact filter to be evaluated."
         )
         (
-            "host,t",
-            value<std::string>(&option_.host)->default_value("localhost"),
-            "The IP address or DNS name of the node. Defaults to localhost."
-        )
-        (
-            "port,p",
-            value<uint16_t>(&option_.port)->default_value(8333),
-            "The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet."
-        )
-        (
-            "type",
-            value<uint8_t>(&argument_.type),
-            "The filter type."
-        )
-        (
-            "height",
-            value<uint32_t>(&argument_.height),
-            "The block height."
-        )
-        (
-            "hash",
-            value<system::config::hash256>(&argument_.hash),
-            "The Base16 block hash. If not specified the hash is read from STDIN."
+            "SCRIPT",
+            value<system::config::script>(&argument_.script),
+            "The script whose membership is in question."
         );
 
         return options;
@@ -198,105 +179,37 @@ public:
     /* Properties */
 
     /**
-     * Get the value of the type argument.
+     * Get the value of the FILTER argument.
      */
-    virtual uint8_t& get_type_argument()
+    virtual system::config::compact_filter& get_filter_argument()
     {
-        return argument_.type;
+        return argument_.filter;
     }
 
     /**
-     * Set the value of the type argument.
+     * Set the value of the FILTER argument.
      */
-    virtual void set_type_argument(
-        const uint8_t& value)
+    virtual void set_filter_argument(
+        const system::config::compact_filter& value)
     {
-        argument_.type = value;
+        argument_.filter = value;
     }
 
     /**
-     * Get the value of the height argument.
+     * Get the value of the SCRIPT argument.
      */
-    virtual uint32_t& get_height_argument()
+    virtual system::config::script& get_script_argument()
     {
-        return argument_.height;
+        return argument_.script;
     }
 
     /**
-     * Set the value of the height argument.
+     * Set the value of the SCRIPT argument.
      */
-    virtual void set_height_argument(
-        const uint32_t& value)
+    virtual void set_script_argument(
+        const system::config::script& value)
     {
-        argument_.height = value;
-    }
-
-    /**
-     * Get the value of the hash argument.
-     */
-    virtual system::config::hash256& get_hash_argument()
-    {
-        return argument_.hash;
-    }
-
-    /**
-     * Set the value of the hash argument.
-     */
-    virtual void set_hash_argument(
-        const system::config::hash256& value)
-    {
-        argument_.hash = value;
-    }
-
-    /**
-     * Get the value of the format option.
-     */
-    virtual explorer::config::encoding& get_format_option()
-    {
-        return option_.format;
-    }
-
-    /**
-     * Set the value of the format option.
-     */
-    virtual void set_format_option(
-        const explorer::config::encoding& value)
-    {
-        option_.format = value;
-    }
-
-    /**
-     * Get the value of the host option.
-     */
-    virtual std::string& get_host_option()
-    {
-        return option_.host;
-    }
-
-    /**
-     * Set the value of the host option.
-     */
-    virtual void set_host_option(
-        const std::string& value)
-    {
-        option_.host = value;
-    }
-
-    /**
-     * Get the value of the port option.
-     */
-    virtual uint16_t& get_port_option()
-    {
-        return option_.port;
-    }
-
-    /**
-     * Set the value of the port option.
-     */
-    virtual void set_port_option(
-        const uint16_t& value)
-    {
-        option_.port = value;
+        argument_.script = value;
     }
 
 private:
@@ -309,15 +222,13 @@ private:
     struct argument
     {
         argument()
-          : type(),
-            height(),
-            hash()
+          : filter(),
+            script()
         {
         }
 
-        uint8_t type;
-        uint32_t height;
-        system::config::hash256 hash;
+        system::config::compact_filter filter;
+        system::config::script script;
     } argument_;
 
     /**
@@ -328,15 +239,9 @@ private:
     struct option
     {
         option()
-          : format(),
-            host(),
-            port()
         {
         }
 
-        explorer::config::encoding format;
-        std::string host;
-        uint16_t port;
     } option_;
 };
 

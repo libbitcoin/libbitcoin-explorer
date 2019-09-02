@@ -68,6 +68,8 @@ _bx()
         input-set
         input-sign
         input-validate
+        match-basic-filter-address
+        match-basic-filter-script
         message-sign
         message-validate
         mnemonic-new
