@@ -233,6 +233,21 @@ BOOST_AUTO_TEST_CASE(generated__find__fetch_block_height__returns_object)
     BOOST_REQUIRE(find("fetch-block-height") != nullptr);
 }
 
+BOOST_AUTO_TEST_CASE(generated__find__fetch_compact_filter_checkpoint_node__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-compact-filter-checkpoint-node") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_compact_filter_headers_node__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-compact-filter-headers-node") != nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(generated__find__fetch_compact_filters_node__returns_object)
+{
+    BOOST_REQUIRE(find("fetch-compact-filters-node") != nullptr);
+}
+
 BOOST_AUTO_TEST_CASE(generated__find__fetch_header__returns_object)
 {
     BOOST_REQUIRE(find("fetch-header") != nullptr);

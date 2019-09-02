@@ -233,6 +233,21 @@ BOOST_AUTO_TEST_CASE(generated__symbol__fetch_block_height__returns_expected_val
     BOOST_REQUIRE_EQUAL(fetch_block_height::symbol(), "fetch-block-height");
 }
 
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_compact_filter_checkpoint_node__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(fetch_compact_filter_checkpoint_node::symbol(), "fetch-compact-filter-checkpoint-node");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_compact_filter_headers_node__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(fetch_compact_filter_headers_node::symbol(), "fetch-compact-filter-headers-node");
+}
+
+BOOST_AUTO_TEST_CASE(generated__symbol__fetch_compact_filters_node__returns_expected_value)
+{
+    BOOST_REQUIRE_EQUAL(fetch_compact_filters_node::symbol(), "fetch-compact-filters-node");
+}
+
 BOOST_AUTO_TEST_CASE(generated__symbol__fetch_header__returns_expected_value)
 {
     BOOST_REQUIRE_EQUAL(fetch_header::symbol(), "fetch-header");

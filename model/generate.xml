@@ -307,6 +307,32 @@
     <option name="height" shortcut="t" type="uint32_t" description="The block height."/>
   </command>
 
+  <command symbol="fetch-compact-filters-node" category="ONLINE" output="compact_filter::list" network="true" description="Retrieve compact filters via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 100.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <option name="host" shortcut="a" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
+    <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
+    <argument name="type" shortcut="t" type="uint8_t" default="0" description="The filter type."/>
+    <argument name="height" shortcut="g" type="uint32_t" description="The block height."/>
+    <argument name="hash" shortcut="s" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
+  </command>
+
+  <command symbol="fetch-compact-filter-checkpoint-node" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter checkpoint via a single Bitcoin network node.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <option name="host" shortcut="a" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
+    <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
+    <argument name="type" shortcut="t" type="uint8_t" default="0" description="The filter type."/>
+    <argument name="hash" shortcut="s" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
+  </command>
+
+  <command symbol="fetch-compact-filter-headers-node" category="ONLINE" output="compact_filter_headers" network="true" description="Retrieve compact filter headers via a single Bitcoin network node. The distance between provided height and hash must be strictly less than 2000.">
+    <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
+    <option name="host" shortcut="a" type="string" default="localhost" description="The IP address or DNS name of the node. Defaults to localhost." />
+    <option name="port" type="uint16_t" default="8333" description="The IP port of the Bitcoin service on the node. Defaults to 8333, the standard for mainnet." />
+    <argument name="type" shortcut="t" type="uint8_t" default="0" description="The filter type."/>
+    <argument name="height" shortcut="g" type="uint32_t" description="The block height."/>
+    <argument name="hash" shortcut="s" type="hash256" stdin="true" description="The Base16 block hash. If not specified the hash is read from STDIN."/>
+  </command>
+
   <command symbol="fetch-header" category="ONLINE" output="header" network="true" description="Get the block header from the specified hash or height. Height is ignored if both are specified. Requires a Libbitcoin server connection.">
     <option name="format" type="encoding" description="The output format. Options are 'info', 'json' and 'xml', defaults to 'info'." />
     <option name="hash" shortcut="s" type="hash256" description="The Base16 block hash."/>
@@ -435,6 +461,20 @@
     <define name="BX_INPUT_VALIDATE_INDEX_VALID_ENDORSEMENT" value="The endorsement is valid." />
     <define name="BX_INPUT_VALIDATE_INDEX_INVALID_ENDORSEMENT" value="The endorsement is not valid." />
   </command>
+
+  <!--
+  <command symbol="match-basic-filter-script" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided script.">
+    <argument name="FILTER" type="compact_filter" required="true" description="The basic compact filter to be evaluated." />
+    <argument name="SCRIPT" type="script" description="The script whose membership is in question." />
+    <define name="BX_FILTER_TYPE_NOT_BASIC" value="The filter provided contains an unrecognized type." />
+  </command>
+
+  <command symbol="match-basic-filter-address" output="bool" category="MATH" description="Determine whether the provided filter probabilistically matches the provided payment address.">
+    <argument name="FILTER" type="compact_filter" required="true" description="The basic compact filter to be evaluated." />
+    <argument name="ADDRESS" type="payment_address" description="The payment address whose membership is in question." />
+    <define name="BX_FILTER_TYPE_NOT_BASIC" value="The filter provided contains an unrecognized type." />
+  </command>
+  -->
 
   <command symbol="message-sign" output="signature" category="MESSAGING" description="Create a message signature.">
     <argument name="WIF" type="wif" required="true" description="The WIF private key to use for signing." />

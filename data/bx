@@ -48,6 +48,9 @@ _bx()
         fetch-block
         fetch-block-hashes
         fetch-block-height
+        fetch-compact-filter-checkpoint-node
+        fetch-compact-filter-headers-node
+        fetch-compact-filters-node
         fetch-header
         fetch-height
         fetch-history

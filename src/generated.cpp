@@ -77,6 +77,9 @@ void broadcast(const function<void(shared_ptr<command>)> func)
     func(make_shared<fetch_block>());
     func(make_shared<fetch_block_hashes>());
     func(make_shared<fetch_block_height>());
+    func(make_shared<fetch_compact_filter_checkpoint_node>());
+    func(make_shared<fetch_compact_filter_headers_node>());
+    func(make_shared<fetch_compact_filters_node>());
     func(make_shared<fetch_header>());
     func(make_shared<fetch_height>());
     func(make_shared<fetch_history>());
@@ -226,6 +229,12 @@ shared_ptr<command> find(const string& symbol)
         return make_shared<fetch_block_hashes>();
     if (symbol == fetch_block_height::symbol())
         return make_shared<fetch_block_height>();
+    if (symbol == fetch_compact_filter_checkpoint_node::symbol())
+        return make_shared<fetch_compact_filter_checkpoint_node>();
+    if (symbol == fetch_compact_filter_headers_node::symbol())
+        return make_shared<fetch_compact_filter_headers_node>();
+    if (symbol == fetch_compact_filters_node::symbol())
+        return make_shared<fetch_compact_filters_node>();
     if (symbol == fetch_header::symbol())
         return make_shared<fetch_header>();
     if (symbol == fetch_height::symbol())

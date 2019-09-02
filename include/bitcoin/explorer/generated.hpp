@@ -64,6 +64,9 @@
 #include <bitcoin/explorer/commands/fetch-block.hpp>
 #include <bitcoin/explorer/commands/fetch-block-hashes.hpp>
 #include <bitcoin/explorer/commands/fetch-block-height.hpp>
+#include <bitcoin/explorer/commands/fetch-compact-filter-checkpoint-node.hpp>
+#include <bitcoin/explorer/commands/fetch-compact-filter-headers-node.hpp>
+#include <bitcoin/explorer/commands/fetch-compact-filters-node.hpp>
 #include <bitcoin/explorer/commands/fetch-header.hpp>
 #include <bitcoin/explorer/commands/fetch-height.hpp>
 #include <bitcoin/explorer/commands/fetch-history.hpp>

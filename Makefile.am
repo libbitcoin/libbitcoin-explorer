@@ -83,6 +83,9 @@ src_libbitcoin_explorer_la_SOURCES = \
     src/commands/fetch-block-hashes.cpp \
     src/commands/fetch-block-height.cpp \
     src/commands/fetch-block.cpp \
+    src/commands/fetch-compact-filter-checkpoint-node.cpp \
+    src/commands/fetch-compact-filter-headers-node.cpp \
+    src/commands/fetch-compact-filters-node.cpp \
     src/commands/fetch-header.cpp \
     src/commands/fetch-height.cpp \
     src/commands/fetch-history.cpp \
@@ -358,6 +361,9 @@ include_bitcoin_explorer_commands_HEADERS = \
     include/bitcoin/explorer/commands/fetch-block-hashes.hpp \
     include/bitcoin/explorer/commands/fetch-block-height.hpp \
     include/bitcoin/explorer/commands/fetch-block.hpp \
+    include/bitcoin/explorer/commands/fetch-compact-filter-checkpoint-node.hpp \
+    include/bitcoin/explorer/commands/fetch-compact-filter-headers-node.hpp \
+    include/bitcoin/explorer/commands/fetch-compact-filters-node.hpp \
     include/bitcoin/explorer/commands/fetch-header.hpp \
     include/bitcoin/explorer/commands/fetch-height.hpp \
     include/bitcoin/explorer/commands/fetch-history.hpp \
